@@ -1,0 +1,21 @@
+{
+  "name": "reveal-md-slide-templates",
+  "version": "0.1.0",
+  "description": "Polkadot Blockchain Academy `reveal-md` Slide Templates",
+  "scripts": {
+    "start": "reveal-md instructions-how-to-use.md -w",
+    "build": "rm -rf build && reveal-md instructions-how-to-use.md --static build --static-dirs=assets",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:paritytech/polkadot-blockchain-academy.git"
+  },
+  "author": "Parity Technologies (UK) Ltd.",
+  "license": "UNLICENSED",
+  "private":"true",
+  "homepage": "https://parity.io",
+  "dependencies": {
+    "reveal-md": "^5.3.2"
+  }
+}

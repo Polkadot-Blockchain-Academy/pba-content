@@ -1,0 +1,7 @@
+{
+  "title": "Polkadot Blockchain Academy Slide Template",
+  "separator": "\n---\n",
+  "verticalSeparator": "\n----\n",
+  "css": "assets/custom-classes.css",
+  "highlightTheme": "shades-of-purple"
+}

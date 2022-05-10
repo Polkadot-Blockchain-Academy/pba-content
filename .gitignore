@@ -1,0 +1,12 @@
+.idea/
+*.iml
+*.iws
+*.eml
+*/build/
+.DS_Store
+.svn
+log/*.log
+tmp/**
+*/node_modules/
+.sass-cache
+_static/
