@@ -1,3 +1,6 @@
+_**Note**: this repository is being use to centralize all lesson plans, slide deck content and exercises being created for the Polkadot Blockchain Academy._
+_The intent is to move away from [the HackMDs we created at the April retreat](https://www.notion.so/paritytechnologies/Academy-Curriculum-7bf115da47354638827a86e87bf5c190) and use this as the source of truth for up to date content._
+_Using this repo, subject matter experts can propose changes to content directly in markdown as well as update other lesson material such as slides or exercises._
 # Polkadot Blockchain Academy
 
 The Polkadot Blockchain Academy is an intensive academic program teaching Blockchain, Substrate and Polkadot to talented developers.
