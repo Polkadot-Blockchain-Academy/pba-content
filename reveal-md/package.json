@@ -1,0 +1,23 @@
+{
+  "name": "pba-slide-template",
+  "version": "0.1.0",
+  "description": "Polkadot Blockchain Academy Slide Template, using reveal-md",
+  "scripts": {
+    "start": "reveal-md ../ -w",
+    "build": "rm -rf docs && reveal-md SLIDES/ --static docs --static-dirs=assets",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NukeManDan/pba-template-reveal-md.git"
+  },
+  "author": "Dan Shields (NukeManDan)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NukeManDan/pba-template-reveal-md/"
+  },
+  "homepage": "",
+  "dependencies": {
+    "reveal-md": "^5.3.2"
+  }
+}

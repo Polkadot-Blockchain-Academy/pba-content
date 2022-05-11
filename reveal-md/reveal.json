@@ -1,0 +1,9 @@
+{
+  "theme": "white",
+  "transition": "fade",
+  "controls": true,
+  "progress": true,
+  "center": false,
+  "slideNumber": true,
+  "backgroundImage": "./assets/background.png"
+}
