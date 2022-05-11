@@ -40,9 +40,8 @@ For simple css build on top of a theme, [use a css file](https://github.com/webp
 
 - [ ] set a ` --listing-template <filename> Template file for listing` used in the top level page for all slide decks (eventually replace with a popper nav in a more complete mono repo of materials for the academy)
 - [ ] Fix background, not a static image, but elements that live over the rest of the page
-     - [ ]  build not finding image
-- [ ] Get 2 colum working
-- [ ] favicon.ico working
+- [x] Get 2 colum working
+- [x] favicon.ico working
 - [ ] more plugins (from a custom template per slide type {math vs no math} is better likely) https://github.com/webpro/reveal-md/issues/102#issuecomment-692494366 -- possibly math from latex https://revealjs.com/math/
 - [ ] custom div to wrap slides of particular format, like a code view 
 
