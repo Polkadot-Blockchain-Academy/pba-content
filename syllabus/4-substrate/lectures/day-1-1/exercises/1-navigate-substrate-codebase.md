@@ -1,0 +1,28 @@
+# Navigate the Substrate Codebase
+
+In this exercise, students will navigate through the Substrate codebase, and familiarize themselves
+with the "lay of the land".
+
+## 1. Browse crates
+
+1. Have students clone and open Substrate
+2. [Visualize how the Substrate codebase](https://octo-repo-visualization.vercel.app/?repo=paritytech%2Fsubstrate) is split up and compare it to [Polkadot's](https://octo-repo-visualization.vercel.app/?repo=paritytech%2Fpolkadot)
+
+## Noteworthy Topics
+
+1. `sc-*` prefix
+2. `sp-*` prefix
+3. Rust does not allow cyclic dependencies
+4. what is in the:
+	- bin folder
+	- client folder
+	- frame folder
+	- primitives folder
+	- utils folder
+5. Tie this in with the Polkadot codebase, and how Substrate is used as a library.
+
+## 2. Scavenger Hunt
+
+1. Can you find where Substrate implements fixed point numbers?
+2. Can you find where you can add additional RPCs to a Substrate node?
+3. Can you find where the macro magic for the runtime interface is defined?

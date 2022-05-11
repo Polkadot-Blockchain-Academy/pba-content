@@ -26,7 +26,7 @@ List the core ideas of this topic **in the order in which they should be taught*
 
 * Describe the high-level architecture of Substrate (client and runtime)
 * Substrate high level diagram (wasm runtime / client (p2p, db. tq, native, telemetry, chain spec..)) ([example from docs](https://github.com/substrate-developer-hub/docs-sandbox/blob/sl/architecture-page/source/docs/main-docs/02-fundamentals/architecture.md))
-* Navigate Substrate’s codebase 
+* Navigate Substrate’s codebase
 * Describe the core design decisions for each component in Substrate.**
 * Walk through at the various `sc_*` and `sp_*` crates are and what their roles are as well as why the codebase is structured the way it is
     - Know the boundry of substrate while looking at the polkadot repo, or node-template.
@@ -34,7 +34,6 @@ List the core ideas of this topic **in the order in which they should be taught*
 
 ## Activities and Exercises
 
-- Draw a diagram of the lifecycle of a transaction (which components a transaction touches at a high level in a specific scenario)
 - Have students show what components of Substrate belong to Substrate and what components belong to Polkadot
 - Find where the logic of some behaviour exists
 - What crates contain what components
