@@ -95,6 +95,32 @@ Right
 
 ----
 
+### Meet your Instructor
+
+<div class="left text-center">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+![Profile Pic](assets/profile.png)
+
+</div>
+
+<!-- Put no content here -->
+
+<div class="right text-center">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<br>
+
+### Instructor Name
+
+- A bit about me
+- more
+- last
+
+</div>
+
+----
+
 <div class="left text-center">
 <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
@@ -102,6 +128,7 @@ Right
 
 - Some
 - Observations
+- Others
 
 </div>
 
@@ -110,7 +137,7 @@ Right
 <div class="right text-center fill">
 <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-```rust [4-8]
+```rust [0|1,13|4-8]
 fn largest_i32(list: &[i32]) -> i32 {
     let mut largest = list[0];
 
@@ -121,6 +148,32 @@ fn largest_i32(list: &[i32]) -> i32 {
     }
 
     largest
+}
+
+fn largest_char(list: &[char]) -> char {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest_i32(&number_list);
+    println!("The largest number is {}", result);
+    assert_eq!(result, 100);
+
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest_char(&char_list);
+    println!("The largest char is {}", result);
+    assert_eq!(result, 'y');
 }
 ```
 
@@ -154,11 +207,9 @@ _Examples are down from here in the slides_
 
 ----
 
-## Rust Example
+<div class="small">Rust Example<div>
 
-Example: a runtime `lib.rs` snippet
-
-<pre><code style="font-size: 0.5em !important" data-trim data-noescape data-line-numbers="0|1|4|5|10-12" class="rust">
+<div class="fill"><pre><code style="font-size: 0.8em !important" data-trim data-noescape data-line-numbers="0|1,6|13-22|25-26" class="rust">
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit = "256"]
@@ -199,14 +250,7 @@ pub type Executive = frame_executive::Executive<
 	Runtime,
 	AllPalletsWithSystem,
 >;
-</pre></code>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-This text appears after the code highlight views.
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-Note: Eurk. On va vite fais essayer de comprendre. WTF!
+</pre></code><div>
 
 ----
 

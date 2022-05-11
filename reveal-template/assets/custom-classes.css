@@ -39,7 +39,28 @@
     text-align: center;
 }
 
-.fill > * {
-    width: 100%;
+.text-right{
+    text-align: right;
+}
+
+/* fill vertical space */
+.fill {
+    height: 70vh;
+}
+
+/* expand code view to maximal size in div */
+.fill pre {
     height: 100%;
+    width: 100%;
+    margin: 0 0 0 0;
+}
+
+/* fragment code has shadow divs with different padding */
+.fill pre code{
+    padding: 0 0 0 0;
+}
+
+/* code lines have strange padding */
+.reveal p {
+    margin: 0 0 0 0;
 }
