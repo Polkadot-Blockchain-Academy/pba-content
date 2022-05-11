@@ -73,4 +73,9 @@ How are transactions
 
 ---
 
-TODO Revisit the slide
+## Exercises
+
+
+---
+
+TODO Revisit the lesson

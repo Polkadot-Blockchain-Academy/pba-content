@@ -1,6 +1,5 @@
 # Block concepts, transaction queue and block builder exercises
 
-
 Investigate Blocks and Transactions on Polkadot Network
 
 * Find some notable blocks in Polkadot, and lets discuss them and their contents.
