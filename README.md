@@ -30,3 +30,11 @@ We are launching the first wave this Summer in the UK with a target of 50 studen
 ## Resources
 
 * [Retreat Presentation by Alex](https://docs.google.com/presentation/d/1IyT5Wr31VPgoDk72RjC6BdE7NsmwDTWveZXfKQ3h9BA/edit#slide=id.g11b59dde554_0_52)
+
+## Get Started
+
+To generate the slides locally, run:
+
+```
+yarn && yarn start
+```
