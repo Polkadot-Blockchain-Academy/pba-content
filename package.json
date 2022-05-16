@@ -10,5 +10,7 @@
   "dependencies": {
     "reveal-md": "^5.3.2"
   },
-  "license": "CC-BY-SA-4.0"
+  "license": "Unlicensed",
+  "private": "true",
+  "packageManager": "yarn@3.2.1"
 }
