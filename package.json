@@ -11,5 +11,6 @@
     "reveal-md": "^5.3.2"
   },
   "license": "Unlicensed",
+  "private": "true",
   "packageManager": "yarn@3.2.1"
 }
