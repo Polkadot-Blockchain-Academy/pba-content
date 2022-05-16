@@ -7,5 +7,5 @@
     "./reveal-md/styles/2-col.css"
   ],
   "highlightTheme": "shades-of-purple",
-  "glob": "**/*Lesson.md"
+  "glob": "**/*Slides.md"
 }

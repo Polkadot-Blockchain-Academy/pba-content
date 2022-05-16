@@ -17,3 +17,10 @@
     font-size: 0.85em;
     line-height: 1.5;
 }
+
+.medium-text {
+    font-size: 0.85em;
+}
+.small-text {
+    font-size: 0.70em;
+}
