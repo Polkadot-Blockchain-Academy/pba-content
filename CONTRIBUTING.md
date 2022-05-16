@@ -3,60 +3,77 @@ This guide is to help content contributors understand how to navigate this repos
 > If this is your first time using `reveal.js`, have a look at [this official demo](https://revealjs.com/demo/#/2) to see what sort of things you can do with it. We'll keep things simple for now.
 
 # Table of contents
-* [Content organization](#content-organization)
-* [`reveal.js` basics](#-revealjs--basics)
-	+ [Slides](#slides)
-	+ [Using speaker notes](#using-speaker-notes)
-	+ [Transitions](#transitions)
-	+ [Code highlighting](#code-highlighting)
-	+ [Custom theme and CSS](#custom-theme-and-css)
-	+ [Presenting](#presenting)
-* [Install and launch locally](#install-and-launch-locally)
+
+- [Content organization](#content-organization)
+- [`reveal.js` basics](#-revealjs--basics)
+  - [Slides](#slides)
+  - [Using speaker notes](#using-speaker-notes)
+  - [Transitions](#transitions)
+  - [Code highlighting](#code-highlighting)
+  - [Custom theme and CSS](#custom-theme-and-css)
+  - [Presenting](#presenting)
+- [Install and launch locally](#install-and-launch-locally)
 
 ## Content organization
 
-The content is organized by module, where each module has a folder for a specific lecture, and every lecture has: 
-* A markdown file of the formatted slides (this is what `reveal.js` parses to render the final slides) 
-* A markdown file containing workshops and exercises for that lecture
-* A folder containing the markdown files of the original notes and lesson plans for each lecture
+The content is organized by module, where each module has a folder for a specific lecture, and every lecture has:
+
+- A markdown file of the formatted slides (this is what `reveal.js` parses to render the final slides)
+- A markdown file containing workshops and exercises for that lecture
+- A folder containing the markdown files of the original notes and lesson plans for each lecture
 
 Assuming you're in the `syllabus` directory, this structure looks like:
 
 ```
 syllabus/
-├─ 1-example-module-1/
+├─ 1-example-module/
 │  ├─ 1.1-Name_of_Lecture_1/
-│  │  ├─ 1.1-Exercises/
-│  │  │  ├─ 1.1-Exercise_1.md
+│  │  ├─ 1.1-Workshops_and_Activities/
+│  │  │  ├─ 1.1-Activity_1.
+│  │  │  ├─ 1.1-Workshop_1.
 │  │  ├─ 1.1-Lecture_Slides.md
 |  ├─ 1.2-Name_of_Lecture_2/
-│  │  ├─ 1.2-Exercises/
-│  │  │  ├─ 1.2-Exercise_1.md
+│  │  ├─ 1.2-Workshops_and_Activities/
+│  │  │  ├─ 1.2-Activity_1.
+│  │  │  ├─ 1.2-Workshop_1.
 │  │  ├─ 1.2-Lecture_Slides.md
 │  ├─ example-module-lesson-plans/
-│  |   ├─ 1.1-Lesson_Plan_1.md
-├  |   ├─ 1.2-Lesson_Plan_2.md
-├─ 2-example-module-2/
+│  |   ├─ 1.1-Lesson_Plan_Name_of_Lecture_1.md
+├  |   ├─ 1.2-Lesson_Plan_Name_of_Lecture_2.md
+├─ 2-another-example-module/
 │  ├─ ...
 ```
 
-When creating content for your slide, we recommend you: 
+When creating content for your slide, we recommend you:
 
 1. Start with copying the "Core Ideas to Convey" section of the original lesson plan.
 2. Build out the content slide by slide around those notes.
 3. Add TODOs to write notes to yourself for adding diagrams or things to get back to later.
 
-## `reveal.js` basics
+## `reveal-md` basics
 
-> The examples here are based on [this live site](https://nukemandan.github.io/pba-template-reveal-md/) using [this branch](https://github.com/NukeManDan/pba-template-reveal-md/).
+This section covers the basic things you need to know in order to get started with creating and customizing slides with `reveal.js`, and a tool built with it to allow for MarkDown only slides `reveal-md`.
 
-This section covers the basic things you need to know in order to get started with creating and customizing slides with `reveal.js`.
+## Install and launch all slides locally
+
+The only dependency we need is `reveal-md`, you can install it with:
+
+```sh
+yarn
+```
+
+Then, running this command will open a new tab and watch for local file changes in real time:
+
+```sh
+yarn start
+```
 
 ### Slides
 
 When writing slides, you can choose to separate slides either vertically or horizontally:
-* To separate slides horizontally, use `---` between slides.
-* To separate slides vertically, use `----` between slides.
+
+- To separate slides horizontally, use `---` between slides.
+- To separate slides vertically, use `----` between slides.
 
 If several slides fit closely with some core topic being presented, we recommend you stack those slides vertically.
 For example, imagine the core topic was "Code Highlight & Transitions":
@@ -65,8 +82,8 @@ For example, imagine the core topic was "Code Highlight & Transitions":
 
 ### Using speaker notes
 
-It's sometimes useful to have speaker notes for your slides. 
-This feature can be accessed when in presentation by pressing `s` when presenting (_you need to unblock popups to have the window open_). 
+It's sometimes useful to have speaker notes for your slides.
+This feature can be accessed when in presentation by pressing `s` when presenting (_you need to unblock popups to have the window open_).
 
 To include notes for a slide, use the "Note" keyword inside that slide.
 For example:
@@ -86,6 +103,7 @@ To add transitions in a slide:
 
 ```md
 _This will render only once the right or down arrow is pressed by presenter._
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 ```
 
@@ -120,30 +138,11 @@ You can use the pipes to select several lines too, for example: 1-14.
 
 TODO: once we have more details on the template for each lesson and how each `.md` links back to the `.html` page that renders it.
 
-### Presenting 
+### Presenting
 
 Once you've followed the set-up instructions and have the repository running locally, here are the basic ways to navigate through presenting your slides:
 
-* Use `down/up` arrow keys to navigate _vertical_ slides.
-* Use `left/right` arrow keys to navigate horizontal slides.
-* Press `Esc` or `o` to see an `overview` view that your arrow keys can navigate. This allows you to click a slide to open it).
-* Press `s` to open up speaker view.
-
-## Install and launch locally
-
-The only dependency we need is `reveal-md`. 
-One of the two commands will work:
-
-```sh
-# If you want it only locally
-npm i
-# Globally
-npm install --global reveal-md
-```
-
-Then, running this command will open a new tab and watch for local file changes:
-
-```sh
-npm start
-```
-
+- Use `down/up` arrow keys to navigate _vertical_ slides.
+- Use `left/right` arrow keys to navigate horizontal slides.
+- Press `Esc` or `o` to see an `overview` view that your arrow keys can navigate. This allows you to click a slide to open it).
+- Press `s` to open up speaker view.
