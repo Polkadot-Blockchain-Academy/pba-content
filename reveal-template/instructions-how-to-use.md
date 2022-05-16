@@ -209,7 +209,10 @@ _Examples are down from here in the slides_
 
 <div class="small">Rust Example<div>
 
-<div class="fill"><pre><code style="font-size: 0.8em !important" data-trim data-noescape data-line-numbers="0|1,6|13-22|25-26" class="rust">
+
+<div class="fill">
+
+```rust [0|1,6|15-25|30-31]
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit = "256"]
@@ -250,7 +253,9 @@ pub type Executive = frame_executive::Executive<
 	Runtime,
 	AllPalletsWithSystem,
 >;
-</pre></code><div>
+```
+
+<div>
 
 ----
 

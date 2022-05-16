@@ -59,8 +59,3 @@
 .fill pre code{
     padding: 0 0 0 0;
 }
-
-/* code lines have strange padding */
-.reveal p {
-    margin: 0 0 0 0;
-}
