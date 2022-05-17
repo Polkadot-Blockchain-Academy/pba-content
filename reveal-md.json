@@ -2,10 +2,7 @@
   "title": "Polkadot Blockchain Academy",
   "separator": "\n---\n",
   "verticalSeparator": "\n----\n",
-  "css": [
-    "./reveal-md/styles/default.css",
-    "./reveal-md/styles/2-col.css"
-  ],
+  "css": "./reveal-md/styles/custom-classes.css",
   "highlightTheme": "shades-of-purple",
   "glob": "**/*Slides.md"
 }
