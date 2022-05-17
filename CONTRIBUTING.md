@@ -5,6 +5,7 @@ This guide is to help content contributors understand how to navigate this repos
 # Table of contents
 
 - [Content organization](#content-organization)
+- [Exercises, workshops and activities](#exercises-workshops-and-activities)
 - [`reveal.js` basics](#-revealjs--basics)
   - [Slides](#slides)
   - [Using speaker notes](#using-speaker-notes)
