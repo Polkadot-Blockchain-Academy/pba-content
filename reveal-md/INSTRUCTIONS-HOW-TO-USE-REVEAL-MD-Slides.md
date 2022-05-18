@@ -1,8 +1,9 @@
 # Instructions for Template
 
-These are made with `reveal-md`.
+Please first view the [CONTRIBUTING.md](../CONTRIBUTING.md) guide on how to use these slides.
 
-> See the source for syntax.
+> See the source for syntax and to copy Markdown for these sides in your lessons!.
+> Avalible [on Github](](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/reveal-md/INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md))
 
 ---
 
@@ -64,7 +65,10 @@ subsequent lines are just seen in speaker view.
 
 # Template slides
 
-_vertically below this slide_
+The following slides are for use in your lessons.
+
+_These are **vertically** below this slide_
+<!-- .element: class="fragment" -->
 
 ----
 
