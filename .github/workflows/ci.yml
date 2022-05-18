@@ -9,20 +9,18 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Build
+      - name: Yarn install
         uses: bahmutov/npm-install@HEAD
         with:
           working-directory: .
+      - name: Build to `build` dir
         run: |
           yarn -v
           yarn install
           yarn build
-      -
-        name: Deploy to `gh-pages` branch
+      - name: Deploy to `gh-pages` branch
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh-pages
