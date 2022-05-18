@@ -1,6 +1,6 @@
 # Instructions for Template
 
-Please first view the [CONTRIBUTING.md](../CONTRIBUTING.md) guide on how to use these slides.
+Please first view the [CONTRIBUTING.md](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/CONTRIBUTING.md) guide on how to use these slides.
 
 > See the source for syntax and to copy Markdown for these sides in your lessons!.
 > Avalible [on Github](](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/reveal-md/INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md))
