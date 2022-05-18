@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Checkout `main` and build
+        name: Checkout
         uses: actions/checkout@v2
+      -
+        name: Build
         uses: bahmutov/npm-install@HEAD
         with:
           working-directory: .
