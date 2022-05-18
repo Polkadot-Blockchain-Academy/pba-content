@@ -1,28 +1,53 @@
 # Instructions for Template
 
-These are made with `reveal-md`.
+Please first view the [CONTRIBUTING.md](../CONTRIBUTING.md) guide on how to use these slides.
 
-See [the source](https://github.com/NukeManDan/pba-template-reveal-md/blob/main/SLIDES/instructions-how-to-use.md) for syntax.
+> See the source for syntax and to copy Markdown for these sides in your lessons!.
+> Avalible [on Github](](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/reveal-md/INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md))
 
 ---
 
 ## What are we going to see:
 
--   How to use this Template
-    - Speaker Notes & Viewer
--   Code Highlight & Transitions
+<div class="small-text">
 
+- How to use Reveal.js Features
+  - Useful `reveal.js` tips
+  - Speaker Notes 
+
+- Template Slides
+  - Columns
+  - Tables
+  - Images
+
+- Code Highlight & Transitions
+  - Rust Examples
+
+</div>
 ---
 
-## How to use this Template
+## How to use Reveal.js Features 
 
-Press the `down/up` keys to navigate _vertical_ slides
-
-> Press `Esc` or `o` to see an `overview` view that your arrow keys can navigate in, click one to open
-at this slide.
+> Press the `down/up` keys to navigate _vertical_ slides
 
 _Try doing down a slide._
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
+
+----
+
+### Use the keybindings!
+
+<div class="small-text">
+
+- **Overview mode**: “O” to see a birds-eye view of your presentation, “ESC” to return to the highlighted slide (you can quickly navigate with arrows)
+
+- **Fullscreen**: “F”, “ESC” to exit fullscreen mode
+
+- **Speaker mode**: “S” it synchronizes 2 windows: one with the presentation, and another with a timer and all speaker notes!
+
+- **Zoom-in**: ALT+click make the view zoom at the position of your mouse’s pointer; very useful to look closely at a picture or chart surrounded by too much bullet points.
+
+</div>
 
 ----
 
@@ -32,8 +57,147 @@ _Try doing down a slide._
 
 _You need to unblock popups to have the window open_
 
-Note: This is a note just for you. Set under a line in your slide starting with "`Note`:" all
+Note:
+This is a note just for you. Set under a line in your slide starting with "`Note`:" all
 subsequent lines are just seen in speaker view.
+
+---
+
+# Template slides
+
+The following slides are for use in your lessons.
+
+_These are **vertically** below this slide_
+<!-- .element: class="fragment" -->
+
+----
+
+## Columns
+
+<div class="left text-center">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+Left
+- some
+- points
+- you 
+- make
+
+</div>
+
+<!-- Put no content here -->
+
+<div class="right text-center">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+Right
+- more
+- stuff
+- here
+
+</div>
+
+----
+
+### Meet your Instructor
+
+<div class="left text-center">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+![Profile Pic](assets/profile.png)
+
+</div>
+
+<!-- Put no content here -->
+
+<div class="right text-center">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<br>
+
+### Instructor Name
+
+- A bit about me
+- more
+- last
+
+</div>
+
+----
+
+<div class="left text-center">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Colum + Code
+
+- Some
+- Observations
+- Others
+
+</div>
+
+<!-- Put no content here -->
+
+<div class="right text-center fill">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+```rust [0|1,13|4-8]
+fn largest_i32(list: &[i32]) -> i32 {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn largest_char(list: &[char]) -> char {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest_i32(&number_list);
+    println!("The largest number is {}", result);
+    assert_eq!(result, 100);
+
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest_char(&char_list);
+    println!("The largest char is {}", result);
+    assert_eq!(result, 'y');
+}
+```
+
+</div>
+
+----
+
+## Tables
+
+| Tables   |      Are      |  Cool |
+|----------|:-------------:|------:|
+| col 1 is |  left-aligned | $1600 |
+| col 2 is |    centered   |   $12 |
+| col 3 is | right-aligned |    $1 |
+
+----
+
+## Pictures
+
+![Landscape](assets/Landscape_mountain.jpg)
 
 ---
 
@@ -43,15 +207,16 @@ Syntax for many langs is possible, and very easy to style.
 You can _and should_ use highlighting of lines in a large snippets of code.
 
 _Examples are down from here in the slides_
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
 
 ----
 
-## Rust Example
+<div class="small-text">Rust Example<div>
 
-Example: a runtime `lib.rs` snippet
 
-<pre><code style="font-size: 0.5em !important" data-trim data-noescape data-line-numbers="0|1|4|5|10-12" class="rust">
+<div class="fill-vertical">
+
+```rust [0|1,6|15-25|30-31]
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit = "256"]
@@ -92,14 +257,9 @@ pub type Executive = frame_executive::Executive<
 	Runtime,
 	AllPalletsWithSystem,
 >;
-</pre></code>
-<!-- .element: class="fragment" data-fragment-index="2" -->
+```
 
-This text appears after the code highlight views.
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-Note: Eurk. On va vite fais essayer de comprendre. WTF!
+<div>
 
 ----
 

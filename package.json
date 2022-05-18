@@ -5,12 +5,11 @@
   "scripts": {
     "start": "reveal-md ./ --watch",
     "help": "reveal-md --help",
-    "build": "rm -rf docs && reveal-md ./ --static docs --static-dirs=assets"
+    "build": "rm -rf docs && reveal-md ./ --static docs --static-dirs=./reveal-md/assets"
   },
   "dependencies": {
     "reveal-md": "^5.3.2"
   },
   "license": "Unlicensed",
-  "private": "true",
   "packageManager": "yarn@3.2.1"
 }
