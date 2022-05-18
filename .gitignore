@@ -1,3 +1,7 @@
+# Build artifacts
+build/
+
+# Some common ones
 .vscode
 .idea/
 *.iml
