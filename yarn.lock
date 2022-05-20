@@ -2063,7 +2063,7 @@ __metadata:
     mustache: 4.2.0
     open: 8.4.0
     puppeteer: 1.19.0
-    reveal.js: 4.2.1
+    reveal.js: 4.3.1
     serve-favicon: 2.5.0
     try-require: 1.2.1
     update-notifier: 5.1.0
@@ -2078,10 +2078,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reveal.js@npm:4.2.1":
-  version: 4.2.1
-  resolution: "reveal.js@npm:4.2.1"
-  checksum: 44ac34b70ad42e7df027c327dee8bb89d8d4e21d7c49a60d459342a19318753d24fbc354d9cec6a710290158ca38efe95627b850e7349b1aef166be4d3a8ebb3
+"reveal.js@npm:4.3.1":
+  version: 4.3.1
+  resolution: "reveal.js@npm:4.3.1"
+  checksum: 351bff23674c85683a40bd67d0e69484726b1856e4df75a64bf5b509a80e8562185ddaac3e11d7542dcacb2b6e031a1a94a35f1081b04af920f8c4b7612a82df
   languageName: node
   linkType: hard
 
