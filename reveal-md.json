@@ -4,5 +4,7 @@
   "verticalSeparator": "\n----\n",
   "css": "./reveal-md/styles/custom-classes.css",
   "highlightTheme": "shades-of-purple",
+  "template": "./reveal-md/slide-template.html",
+  "listingTemplate": "./reveal-md/listing-template.html",
   "glob": "**/*Slides.md"
 }

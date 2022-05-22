@@ -4,5 +4,6 @@
   "controls": true,
   "progress": true,
   "center": false,
-  "slideNumber": true
+  "slideNumber": true,
+  "backgroundTransition": "concave"
 }
