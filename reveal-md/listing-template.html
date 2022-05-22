@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{pageTitle}}</title>
+    <link rel="stylesheet" href="{{{themeUrl}}}" id="theme" />
+  
+    {{#cssPaths}}
+    <link rel="stylesheet" href="{{{.}}}" />
+    {{/cssPaths}}
+  </head>
+
+  <body>
+    <h1>Polkadot Blockchain Academy Slides</h1>
+    <ul>
+      {{#files}}
+      <li>
+        <a href="{{filePath}}" title="{{title}}">
+          {{#title}}{{.}} ({{filePath}}){{/title}}{{^title}}{{filePath}}{{/title}}
+        </a>
+      </li>
+      {{/files}}
+    </ul>
+    <img src="{{{base}}}/assets/Polkadot_Pink-White.svg">
+  </body>
+</html>
