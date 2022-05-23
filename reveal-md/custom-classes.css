@@ -1,0 +1,25 @@
+/*********************************************
+  * CUSTOM CLASSES
+  *********************************************/
+
+.left {
+	text-align: left;
+	float: left;
+	z-index: -10;
+	width: 48%;
+}
+
+.right {
+	text-align: left;
+	float: right;
+	z-index: -10;
+	width: 48%;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-right {
+	text-align: right;
+}
