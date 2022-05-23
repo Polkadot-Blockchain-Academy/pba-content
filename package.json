@@ -8,7 +8,7 @@
     "build": "rm -rf build && reveal-md ./ --static build"
   },
   "dependencies": {
-    "reveal-md": "^5.3.3"
+    "reveal-md": "git@github.com:NukeManDan/reveal-md.git#patch-1"
   },
   "license": "Unlicensed",
   "packageManager": "yarn@3.2.1"
