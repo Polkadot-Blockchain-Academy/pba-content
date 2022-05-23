@@ -1,4 +1,9 @@
 /* https://github.com/hakimel/reveal.js/issues/566#issuecomment-554751744 */
+body {
+    background-color: #0d2378;
+}
+
+/* https://github.com/hakimel/reveal.js/issues/566#issuecomment-554751744 */
 .reveal-viewport {
     background-color: #0d2378;
 }
@@ -20,11 +25,11 @@
 }
 
 a:link, a:visited {
-    color: #8d3aed;
+    color: #e6007a;
 }
 
 a:hover, a:active {
-    color: #e6007a;
+    color: #8d3aed;
 }
 
 .left {

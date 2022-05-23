@@ -5,22 +5,22 @@
     <title>{{pageTitle}}</title>
     <link rel="stylesheet" href="{{{themeUrl}}}" id="theme" />
   
-    {{#cssPaths}}
-    <link rel="stylesheet" href="{{{.}}}" />
-    {{/cssPaths}}
+    <link rel="stylesheet" href="reveal-md/assets/styles/custom-classes.css" />
   </head>
 
   <body>
-    <h1>Polkadot Blockchain Academy Slides</h1>
+    <center>
+    <img width="30%" src="reveal-md/assets/Polkadot_Pink-White.svg">
+    <h1 style="color: white">Blockchain Academy Slides</h1>
     <ul>
       {{#files}}
-      <li>
+      <li> 
         <a href="{{filePath}}" title="{{title}}">
           {{#title}}{{.}} ({{filePath}}){{/title}}{{^title}}{{filePath}}{{/title}}
         </a>
       </li>
       {{/files}}
     </ul>
-    <img src="{{{base}}}/assets/Polkadot_Pink-White.svg">
+    </center>
   </body>
 </html>
