@@ -127,10 +127,14 @@ When writing slides, separate each one using `---`.
 
 Optionally, you can separate slides vertically using `----` between slides.
 
+> Note that Windows uses `\r\n` instead of `\n` as its linefeed character.
+> For a regex that supports all operating systems, use `\r?\n` instead of `\n`.
+> Ex: `"\r?\n---\r?\n"` and `"\r?\n----\r?\n"` as separators.
+
 If several slides fit closely with some core topic being presented, it may be a good idea to stack those slides vertically.
 For example, imagine the core topic was "Code Highlight & Transitions":
 
-<img src="./reveal-md/assets/contributing-examples/vertical-slides.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/place-holder/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 ### Using speaker notes
 
@@ -148,7 +152,7 @@ subsequent lines are just seen in speaker view.
 
 And here's an example of the result:
 
-<img src="./reveal-md/assets/contributing-examples/speaker-notes-view.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/place-holder/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 ### Transitions
 

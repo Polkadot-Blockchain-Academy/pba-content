@@ -1,4 +1,14 @@
-# Instructions for Template
+---
+title: Contributor Slides Guide
+description: How to use reveal.js
+theme: "reveal-md/PBA-theme.css"
+separator: "\r?\n---\r?\n"
+verticalSeparator: "\r?\n----\r?\n" 
+revealOptions:
+  transition: 'fade'
+---
+
+# Instructions for Contributors
 
 Please first view the [CONTRIBUTING.md](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/CONTRIBUTING.md) guide on how to use these slides.
 
@@ -8,8 +18,6 @@ Please first view the [CONTRIBUTING.md](https://github.com/paritytech/polkadot-b
 ---
 
 ## What are we going to see:
-
-<div class="small-text">
 
 - How to use Reveal.js Features
   - Useful `reveal.js` tips
@@ -23,7 +31,6 @@ Please first view the [CONTRIBUTING.md](https://github.com/paritytech/polkadot-b
 - Code Highlight & Transitions
   - Rust Examples
 
-</div>
 ---
 
 ## How to use Reveal.js Features 
@@ -37,8 +44,6 @@ _Try doing down a slide._
 
 ### Use the keybindings!
 
-<div class="small-text">
-
 - **Overview mode**: “O” to see a birds-eye view of your presentation, “ESC” to return to the highlighted slide (you can quickly navigate with arrows)
 
 - **Fullscreen**: “F”, “ESC” to exit fullscreen mode
@@ -46,8 +51,6 @@ _Try doing down a slide._
 - **Speaker mode**: “S” it synchronizes 2 windows: one with the presentation, and another with a timer and all speaker notes!
 
 - **Zoom-in**: ALT+click make the view zoom at the position of your mouse’s pointer; very useful to look closely at a picture or chart surrounded by too much bullet points.
-
-</div>
 
 ----
 
@@ -104,7 +107,7 @@ Right
 <div class="left text-center">
 <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-![Profile Pic](assets/profile.png)
+![Profile Pic](../assets/img/place-holder/profile.png)
 
 </div>
 
@@ -197,7 +200,7 @@ fn main() {
 
 ## Pictures
 
-![Landscape](assets/Landscape_mountain.jpg)
+![Landscape](../assets/img/place-holder/Landscape_mountain.jpg)
 
 ---
 
