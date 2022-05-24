@@ -18,21 +18,23 @@ These slides serve as a feature demo of reveal for you! 🎉
 ## What are we going to see:
 
 - How to use Reveal.js Features
+
   - Useful `reveal.js` tips
-  - Speaker Notes 
+  - Speaker Notes
 
 - [Template Slides](#template-slides)
 
 ---
 
-## How to use Reveal.js Features 
+## How to use Reveal.js Features
 
-_Press the `down/up` keys to navigate _vertical_ slides_
+_Press the `down/up` keys to navigate \_vertical_ slides\_
 
 <br>
 <br>
 
 Try doing down a slide.
+
 <!-- .element: class="fragment" -->
 
 ---v
@@ -64,7 +66,6 @@ subsequent lines are just seen in speaker view.
 # Template slides
 
 😎 Copy&paste development with the [lesson template slides](./lesson-template-slides.md)
-
 
 ---
 

@@ -46,10 +46,10 @@ Use the down arrow keys, or the space bar to progress.
 
 ### Instructor Name
 
--   A bit about me
--   My Day Job
--   Contect I am a Subject matter in
--   _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
+- A bit about me
+- My Day Job
+- I am a Subject matter in X
+- _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
 
 </div>
 
@@ -78,10 +78,10 @@ Speaker view ONLY notes
 
 ### Left side
 
--   some
--   points
--   you
--   make
+- some
+- points
+- you
+- make
 
 </div>
 
@@ -92,9 +92,9 @@ Speaker view ONLY notes
 
 ### Right side
 
--   more
--   stuff
--   here
+- more
+- stuff
+- here
 
 </div>
 
@@ -105,9 +105,9 @@ Speaker view ONLY notes
 
 ### Colum + Code
 
--   Some
--   Observations
--   Others
+- Some
+- Observations
+- Others
 
 </div>
 
@@ -162,12 +162,12 @@ fn main() {
 
 ## Tables
 
-| Tables   |      Are      |  Cool |
-| -------- | :-----------: | ----: |
-| col 1 is | left-aligned  | $1600 |
-| col 2 is |   centered    |   $12 |
-| col 3 is | right-aligned |    $1 |
-| This row sure has a | _lot_ of text so it |  spaces the columns outs |
+| Tables              |         Are         |                    Cool |
+| ------------------- | :-----------------: | ----------------------: |
+| col 1 is            |    left-aligned     |                   $1600 |
+| col 2 is            |      centered       |                     $12 |
+| col 3 is            |    right-aligned    |                      $1 |
+| This row sure has a | _lot_ of text so it | spaces the columns outs |
 
 ---v
 
@@ -177,11 +177,11 @@ KaTeX/LaTeX in line with "`\\(`" and "`\\)`" delimiters
 
 <br>
 
-This is inline: \\(J(\theta_0,\theta_1) = \sum_{i=0}\\)
+This is inline: \\(J(\theta*0,\theta_1) = \sum*{i=0}\\)
 
 <hr>
 
-Latex rendered within blocks with ```$$``` delimiters
+Latex rendered within blocks with `$$` delimiters
 
 $$
 asdf
@@ -256,4 +256,4 @@ Including line highlights
 
 # More help needed?
 
-_Please reach out to the academy content & docs team on element for support!_ 
+_Please reach out to the academy content & docs team on element for support!_
