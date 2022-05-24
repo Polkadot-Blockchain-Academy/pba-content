@@ -18,7 +18,7 @@ We are creating and customizing slides with [`reveal-md`](https://github.com/web
 
 ## Install and view slides locally
 
-### *Quick start*
+### _Quick start_
 
 Have `nvm` and `yarn` already installed? All you need to do is:
 
@@ -28,7 +28,7 @@ nvm i
 # For yarn 3, you need to enable some node features
 corepack enable
 # Install Dependancies
-yarn 
+yarn
 # Run a slide server watching for file changes
 yarn start
 ```
@@ -114,23 +114,37 @@ When creating content for your slide, we recommend you:
 
 Each lecture may have a set of exercises, workshops and/or activities:
 
-* **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and can be completing during the lecture.
-* **Workshops**: these are step-by-step, guided in-class workshops, intended to be more like individual labs, whose worksheet would live in a separate folder with a separate file called `Name_of_Lecture_Workshop.md`.
-* **Activities**: these are in-class activities too, however they are intended to be more like group activities, without the step-by-step guidance that a workshop would have.
-These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
+- **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and can be completing during the lecture.
+- **Workshops**: these are step-by-step, guided in-class workshops, intended to be more like individual labs, whose worksheet would live in a separate folder with a separate file called `Name_of_Lecture_Workshop.md`.
+- **Activities**: these are in-class activities too, however they are intended to be more like group activities, without the step-by-step guidance that a workshop would have.
+  These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
 
 > Note: not all lectures have workshops or activities.
 
 ## Editing `reveal-md` slides
 
+**There is a [base slide template example](./slide-templates/lesson-template-slides.md) that is guhly suggested to use as a base to start all lesson slides.**
+This template can be used just copy and change slide by slide the content, and not worry with styling.
+If you do need custom style, please just comment in the slides with a code comment that says as much:
+
+```md
+<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+
+<!-- TODO: I need this image to be rotated 45deg left -->
+```
+
 When writing slides, separate each one using `---`.
 
-Optionally, you can separate slides vertically using `----` between slides.
+Optionally, you can separate slides vertically using `---v` between slides.
+
+> Note that Windows uses `\r\n` instead of `\n` as its linefeed character.
+> For a regex that supports all operating systems, use `\r?\n` instead of `\n`.
+> Ex: `"\r?\n---\r?\n"` and `"\r?\n---v\r?\n"` as separators.
 
 If several slides fit closely with some core topic being presented, it may be a good idea to stack those slides vertically.
 For example, imagine the core topic was "Code Highlight & Transitions":
 
-<img src="./reveal-md/assets/contributing-examples/vertical-slides.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/place-holder/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 ### Using speaker notes
 
@@ -148,7 +162,7 @@ subsequent lines are just seen in speaker view.
 
 And here's an example of the result:
 
-<img src="./reveal-md/assets/contributing-examples/speaker-notes-view.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/place-holder/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 ### Transitions
 
@@ -167,10 +181,11 @@ TODO: update this once we're more familiar with the css stuff.
 You can add code snippets to your slides with line highlighting.
 You can also animate to step through each highlight with `|` delimited sections of lines as a _fragment_:
 
-```md
+````md
 <!-- first fragment is line 0, meaning NO highlight -->
 <!-- second fragment highlights lines 1 and 13 -->
 <!-- last highlight is the block of lines from 4 to 8 -->
+
 ```rust [0|1,13|4-8]
 fn largest_i32(list: &[i32]) -> i32 {
     let mut largest = list[0];
@@ -196,11 +211,19 @@ fn largest_char(list: &[char]) -> char {
     largest
 }
 ```
-```
+````
 
 ## Custom theme and CSS
 
-TODO: once we have more details on the template for each lesson and how each `.md` links back to the `.html` page that renders it.
+The [template](#editing-reveal-md-slides) can be used just copy and change slide by slide the content, and not worry with styling.
+
+If you do need custom style, please just comment in the slides with a code comment that says as much:
+
+```md
+<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+
+<!-- TODO: I need this image to be rotated 45deg left -->
+```
 
 ### Presenting
 

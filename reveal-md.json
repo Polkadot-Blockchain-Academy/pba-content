@@ -1,8 +1,17 @@
 {
   "title": "Polkadot Blockchain Academy",
-  "separator": "\n---\n",
-  "verticalSeparator": "\n----\n",
-  "css": "./reveal-md/styles/custom-classes.css",
+  "theme": "reveal-md/PBA-theme.css",
+  "assetsDir": ".",
+  "css": ["reveal-md/custom-classes.css"],
+  "separator": "\r?\n---\r?\n",
+  "verticalSeparator": "\r?\n---v\r?\n",
   "highlightTheme": "shades-of-purple",
-  "glob": "**/*Slides.md"
+  "template": "./reveal-md/slide-template.html",
+  "listingTemplate": "./reveal-md/listing-template.html",
+  "host": "localhost",
+  "staticDir": "build",
+  "scripts": [],
+  "staticDirs": ["assets"],
+  "preprocessor": null,
+  "glob": "**/*[Ss]lides.md"
 }
