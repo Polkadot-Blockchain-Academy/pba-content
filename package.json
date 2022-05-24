@@ -7,7 +7,7 @@
     "help": "reveal-md --help",
     "build": "rm -rf build && reveal-md ./ --static build",
     "format": "prettier --config .prettierrc.js --write '**/*.md'",
-	"format:code": "prettier --config .prettierrc.js --write '{**/*.{rs,js,ts,json},!**/*.md}'"
+    "format:code": "prettier --config .prettierrc.js --write '{**/*.{rs,js,ts,json},!**/*.md}'"
   },
   "dependencies": {
     "reveal-md": "git+https://github.com/NukeManDan/reveal-md.git#patch-1"
