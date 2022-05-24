@@ -16,6 +16,11 @@
 	z-index: 99;
 }
 
+/* Hover on watermark logo -> left side bar appears */
+a:hover .watermark-logo {
+	box-shadow: -10px 0px 5px -2px lightslategray;
+}
+
 .watermark-icon {
 	position: fixed;
 	width: 2%;
@@ -40,14 +45,14 @@ a:active {
 
 :root {
 	--r-background-color: #0d2378;
-	--r-main-font: Open Sans, sans-serif;
-	--r-main-font-size: 30px;
+	--r-main-font: sans-serif;
+	--r-main-font-size: 40px;
 	--r-main-color: #eee;
-	--r-block-margin: 1px;
-	--r-heading-margin: 0 0 0 0;
-	--r-heading-font: Montserrat, Impact, sans-serif;
-	--r-heading-color: #eee;
-	--r-heading-line-height: 1.2;
+	--r-block-margin: 0px 0px;
+	--r-heading-margin: 0px 0px 0px 0px;
+	--r-heading-font: monospace;
+	--r-heading-color: #8d3aed;
+	--r-heading-line-height: 2;
 	--r-heading-letter-spacing: -0.03em;
 	--r-heading-text-transform: none;
 	--r-heading-text-shadow: none;
@@ -127,6 +132,7 @@ section.has-light-background h6 {
 
 .reveal h1 {
 	font-size: var(--r-heading1-size);
+	font-weight: bold;
 }
 
 .reveal h2 {

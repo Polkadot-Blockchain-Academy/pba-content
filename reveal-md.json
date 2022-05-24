@@ -4,7 +4,7 @@
   "assetsDir": ".",
   "css": ["reveal-md/custom-classes.css"],
   "separator": "\r?\n---\r?\n",
-  "verticalSeparator": "\r?\n----\r?\n",
+  "verticalSeparator": "\r?\n---v\r?\n",
   "highlightTheme": "shades-of-purple",
   "template": "./reveal-md/slide-template.html",
   "listingTemplate": "./reveal-md/listing-template.html",
@@ -13,5 +13,5 @@
   "scripts": [],
   "staticDirs": ["assets"],
   "preprocessor": null,
-  "glob": "**/*Slides.md"
+  "glob": "**/*[Ss]lides.md"
 }

@@ -1,9 +1,9 @@
 # Syllabus
 
-| Module | Length | Name |
-|--------|--------|------|
-| M0     | 5 Days | [Rust (Optional Precourse)](./0-rust/) |
-| M1     | 3 Days | [Cryptography for Blockchain](./1-cryptography/) |
+| Module | Length | Name                                                              |
+| ------ | ------ | ----------------------------------------------------------------- |
+| M0     | 5 Days | [Rust (Optional Precourse)](./0-rust/)                            |
+| M1     | 3 Days | [Cryptography for Blockchain](./1-cryptography/)                  |
 | M2     | 3 Days | Interdisciplinary Concepts for Decentralized Devs (Econ, Polisci) |
 | M3     | 2 Days | Blockchain & Consensus                                            |
 | M4     | 2 Days | Substrate                                                         |
