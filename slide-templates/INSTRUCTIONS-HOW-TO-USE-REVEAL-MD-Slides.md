@@ -65,7 +65,7 @@ subsequent lines are just seen in speaker view.
 
 # Template slides
 
-😎 Copy&paste development with the [lesson template slides](./lesson-template-slides.md)
+😎 Copy&paste development with the [lesson template slides](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/slide-templates/lesson-template-slides.md)
 
 ---
 

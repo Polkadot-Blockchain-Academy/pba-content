@@ -3,12 +3,14 @@ title: Lesson Slide Template
 description: Describe your slides here
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
 theme: "reveal-md/PBA-theme.css"
+# Add custom css files for your slides here, comma separated:
+css: ["reveal-md/custom-classes.css"]
 separator: "\r?\n---\r?\n"
 verticalSeparator: "\r?\n---v\r?\n"
-# https://revealjs.com/config/ can be any of these
+# Below can be any of these: https://revealjs.com/config/
 revealOptions:
-    transition: "slide"
-	backgroundTransition: "fade"
+    transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
+	backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
 	slideNumber: true
 	controls: true
 	progress: true
