@@ -123,13 +123,23 @@ These live in a separate folder called `Workshops_and_Activities` in a separate 
 
 ## Editing `reveal-md` slides
 
+**There is a [base slide template example](./slide-templates/lesson-template-slides.md) that is guhly suggested to use as a base to start all lesson slides.**
+This template can be used just copy and change slide by slide the content, and not worry with styling.
+If you do need custom style, please just comment in the slides with a code comment that says as much:
+
+```md
+<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+
+<!-- TODO: I need this image to be rotated 45deg left -->
+```
+
 When writing slides, separate each one using `---`.
 
-Optionally, you can separate slides vertically using `----` between slides.
+Optionally, you can separate slides vertically using `---v` between slides.
 
 > Note that Windows uses `\r\n` instead of `\n` as its linefeed character.
 > For a regex that supports all operating systems, use `\r?\n` instead of `\n`.
-> Ex: `"\r?\n---\r?\n"` and `"\r?\n----\r?\n"` as separators.
+> Ex: `"\r?\n---\r?\n"` and `"\r?\n---v\r?\n"` as separators.
 
 If several slides fit closely with some core topic being presented, it may be a good idea to stack those slides vertically.
 For example, imagine the core topic was "Code Highlight & Transitions":
@@ -200,11 +210,18 @@ fn largest_char(list: &[char]) -> char {
     largest
 }
 ```
-```
 
 ## Custom theme and CSS
 
-TODO: once we have more details on the template for each lesson and how each `.md` links back to the `.html` page that renders it.
+The [template](#editing-reveal-md-slides) can be used just copy and change slide by slide the content, and not worry with styling.
+
+If you do need custom style, please just comment in the slides with a code comment that says as much:
+
+```md
+<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+
+<!-- TODO: I need this image to be rotated 45deg left -->
+```
 
 ### Presenting
 
