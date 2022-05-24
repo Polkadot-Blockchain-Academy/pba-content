@@ -1,12 +1,12 @@
 ---
-title: Lesson Slide Template
+title: Lesson Slide Template # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
 theme: "reveal-md/PBA-theme.css"
 # Add custom css files for your slides here, comma separated:
 css: ["reveal-md/custom-classes.css"]
 separator: "\r?\n---\r?\n"
-verticalSeparator: "\r?\n---v\r?\n"
+verticalSeparator: "\r?\n---\r?\n"
 # Below can be any of these: https://revealjs.com/config/
 revealOptions:
     transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
@@ -18,17 +18,27 @@ revealOptions:
 
 # Template Slides
 
+_{Delete this slide}_
+
 The following slides are for use in your lessons.
 
-**_These are vertically below this slide_**
+---
 
-<!-- .element: class="fragment" -->
+# Lesson Title 
 
-Use the down arrow keys, or the space bar to progress.
+## Lecture 1, Module 4
 
-<!-- .element: class="fragment" -->
+### Instructors:  <!-- TODO: fill this in  -->
 
----v
+<hr>
+
+***At the end of this lecture, you will be able to:***
+
+- Describe ... <!-- TODO: fill this in  -->
+- Navigate ... <!-- TODO: fill this in  -->
+- Justify ... <!-- TODO: fill this in  -->
+
+---
 
 ## Meet your Instructor
 
@@ -48,6 +58,8 @@ Use the down arrow keys, or the space bar to progress.
 
 ### Instructor Name
 
+<!-- TODO: fill this in  -->
+
 - A bit about me
 - My Day Job
 - I am a Subject matter in X
@@ -55,7 +67,7 @@ Use the down arrow keys, or the space bar to progress.
 
 </div>
 
----v
+---
 
 # Basic text
 
@@ -65,13 +77,13 @@ Use the down arrow keys, or the space bar to progress.
 Notes:
 Speaker view ONLY notes
 
----v
+---
 
 ## Pictures
 
 <img style="width: 50vw" src="../assets/img/place-holder/Landscape_mountain.jpg" alt="Some Pic">
 
----v
+---
 
 ## Columns
 
@@ -100,7 +112,7 @@ Speaker view ONLY notes
 
 </div>
 
----v
+---
 
 <div class="left text-center">
 <!-- Gotcha: You Need an empty line to render MD inside <div> -->
@@ -160,7 +172,7 @@ fn main() {
 
 </div>
 
----v
+---
 
 ## Tables
 
@@ -171,7 +183,7 @@ fn main() {
 | col 3 is            |    right-aligned    |                      $1 |
 | This row sure has a | _lot_ of text so it | spaces the columns outs |
 
----v
+---
 
 ## Math
 
@@ -183,7 +195,7 @@ $$
 
 More info: https://revealjs.com/math/
 
----v
+---
 
 ## Code Highlight & Transitions
 
@@ -194,7 +206,7 @@ _Examples are down from here in the slides_
 
 <!-- .element: class="fragment" -->
 
----v
+---
 
 ## Rust Example
 
