@@ -173,18 +173,9 @@ fn main() {
 
 ## Math
 
-KaTeX/LaTeX in line with "`\\(`" and "`\\)`" delimiters
-
-<br>
-
-This is inline: \\(J(\theta*0,\theta_1) = \sum*{i=0}\\)
-
-<hr>
-
-Latex rendered within blocks with `$$` delimiters
+KaTeX/LaTeX rendered within blocks with `$$` delimiters
 
 $$
-asdf
 J(\theta_0,\theta_1) = \sum_{i=0}
 $$
 
