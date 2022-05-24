@@ -24,15 +24,15 @@ The following slides are for use in your lessons.
 
 ---
 
-# Lesson Title 
+# Lesson Title
 
 ## Lecture 1, Module 4
 
-### Instructors:  <!-- TODO: fill this in  -->
+### Instructors: <!-- TODO: fill this in  -->
 
 <hr>
 
-***At the end of this lecture, you will be able to:***
+**_At the end of this lecture, you will be able to:_**
 
 - Describe ... <!-- TODO: fill this in  -->
 - Navigate ... <!-- TODO: fill this in  -->
