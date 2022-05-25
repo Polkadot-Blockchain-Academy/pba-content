@@ -79,6 +79,17 @@ Speaker view ONLY notes
 
 ---
 
+# More
+
+- Use some bullets on things
+
+- To make a few points
+
+Notes:
+Speaker view ONLY notes
+
+---
+
 ## Pictures
 
 <img style="width: 50vw" src="../assets/img/place-holder/Landscape_mountain.jpg" alt="Some Pic">
@@ -201,10 +212,6 @@ More info: https://revealjs.com/math/
 
 Syntax for many langs is possible, and very easy to style. You can _and should_ use highlighting of
 lines in a large snippets of code.
-
-_Examples are down from here in the slides_
-
-<!-- .element: class="fragment" -->
 
 ---
 
