@@ -21,7 +21,7 @@
    - Working with the Substrate abstraction on top of that
    - No need for details here
 
-<!-- TODO: The instructor should have a Rust console open and should be showing how a signature is made during this section. -->
+_Note: The instructor should have a Rust console open and should be showing how a signature is made during this section._
 
 ## Activities and Exercises
 
