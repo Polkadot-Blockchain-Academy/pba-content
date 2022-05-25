@@ -16,23 +16,33 @@ revealOptions:
 	progress: true
 ---
 
-# Template Slides
+# Lesson Title
 
-_{Delete this slide}_
-
-The following slides are for use in your lessons.
+### Lecture 1, Module 4
 
 ---
 
-# Lesson Title
+<div class="left text-right">  <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-## Lecture 1, Module 4
+<!-- TODO: add a good cicurarly cropped headshot of ou to the `assets/profile` folder  -->
+<img style="width: 40%" src="../assets/img/place-holder/profile.png"/>
 
-### Instructors: <!-- TODO: fill this in  -->
+</div>
+<div style="margin-top:20px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<hr>
+### Instructor Name
 
-**_At the end of this lecture, you will be able to:_**
+#### Position or Title
+
+- I am a Subject matter in X
+- A bit about me
+- _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
+
+</div>
+
+---
+
+### _At the end of this lecture, you will be able to:_
 
 - Describe ... <!-- TODO: fill this in  -->
 - Navigate ... <!-- TODO: fill this in  -->
@@ -40,36 +50,7 @@ The following slides are for use in your lessons.
 
 ---
 
-## Meet your Instructor
-
-<br>
-
-<div class="left text-right">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-<img style="width: 40%" src="../assets/img/place-holder/profile.png"/>
-
-</div>
-
-<!-- Put no content here -->
-
-<div style="margin-top:20px" class="right text-left">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Instructor Name
-
-<!-- TODO: fill this in  -->
-
-- A bit about me
-- My Day Job
-- I am a Subject matter in X
-- _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
-
-</div>
-
----
-
-# Basic text
+## Basic text
 
 - Use some bullets
 - To make a few points
@@ -79,10 +60,9 @@ Speaker view ONLY notes
 
 ---
 
-# More
+## More
 
 - Use some bullets on things
-
 - To make a few points
 
 Notes:
@@ -92,7 +72,9 @@ Speaker view ONLY notes
 
 ## Pictures
 
-<img style="width: 50vw" src="../assets/img/place-holder/Landscape_mountain.jpg" alt="Some Pic">
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 800px" src="../assets/img/place-holder/Landscape_mountain.jpg" alt="Some Pic">
 
 ---
 
@@ -200,9 +182,7 @@ fn main() {
 
 KaTeX/LaTeX rendered within blocks with `$$` delimiters
 
-$$
-J(\theta_0,\theta_1) = \sum_{i=0}
-$$
+$$J(\theta_0,\theta_1) = \sum_{i=0}$$
 
 More info: https://revealjs.com/math/
 
