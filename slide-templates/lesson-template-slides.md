@@ -83,6 +83,7 @@ Speaker view ONLY notes
 - some
 - points
 - you
+- can
 - make
 
 </div>
