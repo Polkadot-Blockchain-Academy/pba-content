@@ -1,4 +1,3 @@
-
 # Lesson 2: Digital Signatures (Part 1)
 
 ## Core Ideas to Convey

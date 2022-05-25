@@ -1,0 +1,27 @@
+name: Build and delpoy to `gh-pages`
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Yarn
+        uses: bahmutov/npm-install@HEAD
+        with:
+          working-directory: .
+      - name: Build to `build` dir
+        run: |
+          yarn build
+      - name: Deploy to `gh-pages` branch
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

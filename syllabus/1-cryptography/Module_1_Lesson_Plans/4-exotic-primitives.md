@@ -15,12 +15,13 @@ TODO
 ## Core Ideas to Convey
 
 1. All Other Signatures (some flexibiity to move some of this back to lesson 3)
-    * Aggregated Signatures (will use)
-    * Threshold Signatures (barely used)
-    * Ring Signatures (not used yet)
+
+   - Aggregated Signatures (will use)
+   - Threshold Signatures (barely used)
+   - Ring Signatures (not used yet)
 
 1. Erasure Coding
-    * *Question: should this move to Polkadot? Answer: This will be revisited during the Polkadot section, given that we actually do use this one in Polkadot)*
+   - _Question: should this move to Polkadot? Answer: This will be revisited during the Polkadot section, given that we actually do use this one in Polkadot)_
 1. zk-SNARKS
 
 **Transition:** — Blockchain can’t have secrets (everything is public), so 'personal' cryptography won't work the same way in the blockhain world.
@@ -33,7 +34,7 @@ Access to memory and lots of hashing imposes a performance cost, so developers s
 
 ## Activities and Exercises
 
-*Perhaps an activity in which learners solve problems in a blockchain scenario and decide which type of cryptography to use...?*
+_Perhaps an activity in which learners solve problems in a blockchain scenario and decide which type of cryptography to use...?_
 
 Cryptography could be tested as part of an oral examination asking them how they would use cryptography in a blockchain scenarios.
 

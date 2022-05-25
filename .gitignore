@@ -1,3 +1,7 @@
+# Build artifacts
+build/
+
+# Some common ones
 .vscode
 .idea/
 *.iml
@@ -11,3 +15,15 @@ tmp/**
 node_modules/
 .sass-cache
 _static/
+
+# Yarn, not using zero-installs
+# ref: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+# Yarn Integrity file
+.yarn-integrity
