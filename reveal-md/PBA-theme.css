@@ -9,24 +9,25 @@
  *********************************************/
 
 .watermark-logo {
-	position: fixed;
-	width: 7%;
-	top: 1%;
-	left: 1%;
+	width: 100px;
+	top: -20px;
+	left: 20px;
 	z-index: 99;
+	position: fixed;
+
 }
 
 /* Hover on watermark logo -> left side bar appears */
 a:hover .watermark-logo {
-	box-shadow: -10px 0px 5px -2px lightslategray;
+	box-shadow: -20px 0px 10px -5px lightslategray;
 }
 
 .watermark-icon {
-	position: fixed;
-	width: 2%;
-	top: 1%;
-	right: 1%;
+	width: 33px;
+	top: -20px;
+	right: 20px;
 	z-index: 99;
+	position: fixed;
 }
 
 body {
@@ -38,6 +39,64 @@ a:visited {
 	color: #e6007a;
 }
 
+/* https://google-webfonts-helper.herokuapp.com/fonts/work-sans?subsets=latin */
+/* work-sans-regular - latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('./fonts/work-sans-v17-latin-regular.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		 url('./fonts/work-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		 url('./fonts/work-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+		 url('./fonts/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+  
+  /* work-sans-800 - latin */
+  @font-face {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 800;
+	src: url('./fonts/work-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		 url('./fonts/work-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		 url('./fonts/work-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
+		 url('./fonts/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+  
+  /* work-sans-italic - latin */
+  @font-face {
+	font-family: 'Work Sans';
+	font-style: italic;
+	font-weight: 400;
+	src: url('./fonts/work-sans-v17-latin-italic.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		 url('./fonts/work-sans-v17-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		 url('./fonts/work-sans-v17-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		 url('./fonts/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+  
+  /* work-sans-800italic - latin */
+  @font-face {
+	font-family: 'Work Sans';
+	font-style: italic;
+	font-weight: 800;
+	src: url('./fonts/work-sans-v17-latin-800italic.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		 url('./fonts/work-sans-v17-latin-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		 url('./fonts/work-sans-v17-latin-800italic.woff2') format('woff2'), /* Super Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-800italic.woff') format('woff'), /* Modern Browsers */
+		 url('./fonts/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		 url('./fonts/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+  
+
 a:hover,
 a:active {
 	color: #8d3aed;
@@ -45,28 +104,29 @@ a:active {
 
 :root {
 	--r-background-color: #0d2378;
-	--r-main-font: sans-serif;
+	--r-main-font: "Work Sans";
 	--r-main-font-size: 40px;
-	--r-main-color: #eee;
-	--r-block-margin: 0px 0px;
+	--r-main-color: #fff;
+	--r-block-margin: 40px 0px;
 	--r-heading-margin: 0px 0px 0px 0px;
-	--r-heading-font: monospace;
-	--r-heading-color: #8d3aed;
+	--r-heading-font: "Work Sans";
+	--r-heading-color: #fff;
 	--r-heading-line-height: 2;
 	--r-heading-letter-spacing: -0.03em;
 	--r-heading-text-transform: none;
 	--r-heading-text-shadow: none;
-	--r-heading-font-weight: normal;
-	--r-heading1-text-shadow: none;
+	--r-heading-font-weight: bold;
+	--r-heading1-text-shadow: 1px 1px 30px #000;
 	--r-heading1-size: 3.77em;
-	--r-heading2-size: 2.11em;
-	--r-heading3-size: 1.55em;
+	--r-heading2-size: 2.55em;
+	--r-heading3-size: 1.33em;
 	--r-heading4-size: 1em;
 	--r-code-font: monospace;
-	--r-link-color: #e6007a;
+	--r-code-font-size: 0.65em; /* custom PBA var */
+	--r-link-color: #8d3aed;
 	--r-link-color-dark: #e6007a;
-	--r-link-color-hover: #8d3aed;
-	--r-selection-background-color: #e7ad52;
+	--r-link-color-hover: #e6007a;
+	--r-selection-background-color: #8d3aed;
 	--r-selection-color: #fff;
 }
 
@@ -131,11 +191,14 @@ section.has-light-background h6 {
 }
 
 .reveal h1 {
+	font-weight: bold; 
 	font-size: var(--r-heading1-size);
-	font-weight: bold;
+	text-shadow: var(--r-heading1-text-shadow);
+
 }
 
 .reveal h2 {
+	font-weight: bold;
 	font-size: var(--r-heading2-size);
 }
 
@@ -144,11 +207,8 @@ section.has-light-background h6 {
 }
 
 .reveal h4 {
+	font-weight: normal;
 	font-size: var(--r-heading4-size);
-}
-
-.reveal h1 {
-	text-shadow: var(--r-heading1-text-shadow);
 }
 
 /*********************************************
@@ -189,9 +249,19 @@ section.has-light-background h6 {
 .reveal ol,
 .reveal dl,
 .reveal ul {
-	display: inline-block;
 	text-align: left;
+	list-style: none !important; /* Remove default bullets */
+	line-height: 1.5em;
 	margin: 0 0 0 1em;
+}
+
+.reveal ul li::before {
+	font-family: monospace;
+	content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+	color: #a45cf6; /* Change the color */
+	font-weight: bold; /* If you want it to be bold */
+	display: inline-block; /* Needed to add space between the bullet and the text */
+	width: 1em; /* Also needed for space (tweak if needed) */
 }
 
 .reveal ol {
@@ -247,11 +317,11 @@ section.has-light-background h6 {
 }
 
 .reveal pre {
+	font-size: var(--r-code-font-size);
+	font-family: var(--r-code-font);
 	display: block;
 	position: relative;
 	margin: var(--r-block-margin) auto;
-	font-size: 0.55em;
-	font-family: var(--r-code-font);
 	line-height: 1.2em;
 	word-wrap: break-word;
 	text-align: left;
