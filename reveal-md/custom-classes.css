@@ -2,24 +2,46 @@
   * CUSTOM CLASSES
   *********************************************/
 
+.flex-container {
+  /* We first create a flex layout context */
+  display: flex;
+
+  /* Then we define the flow direction 
+	   and if we allow the items to wrap 
+	 * Remember this is the same as:
+	 * flex-direction: row;
+	 * flex-wrap: wrap;
+	 */
+  flex-flow: row nowrap;
+
+  /* Then we define how is distributed the remaining space */
+  justify-content: space-around;
+}
+.flex-container > * {
+  flex: 1 100%;
+}
+
 .left {
-	text-align: left;
-	float: left;
-	z-index: -10;
-	width: 48%;
+  order: 1;
 }
-
 .right {
-	text-align: left;
-	float: right;
-	z-index: -10;
-	width: 48%;
+  order: 2;
 }
 
-.text-center {
-	text-align: center;
+.centered * {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
-.text-right {
-	text-align: right;
+.text-center > * {
+  text-align: center !important;
+}
+
+.text-right > * {
+  text-align: right !important;
+}
+
+.text-left > * {
+	text-align: left !important;
 }

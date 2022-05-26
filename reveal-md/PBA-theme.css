@@ -9,24 +9,25 @@
  *********************************************/
 
 .watermark-logo {
-	position: fixed;
-	width: 8%;
-	top: 0%;
-	left: 2.5%;
+	width: 100px;
+	top: -20px;
+	left: 20px;
 	z-index: 99;
+	position: fixed;
+
 }
 
 /* Hover on watermark logo -> left side bar appears */
 a:hover .watermark-logo {
-	box-shadow: -10px 0px 5px -2px lightslategray;
+	box-shadow: -20px 0px 10px -5px lightslategray;
 }
 
 .watermark-icon {
-	position: fixed;
-	width: 2.5%;
-	top: 0%;
-	right: 2.5%;
+	width: 33px;
+	top: -20px;
+	right: 20px;
 	z-index: 99;
+	position: fixed;
 }
 
 body {
@@ -118,9 +119,10 @@ a:active {
 	--r-heading1-text-shadow: 1px 1px 30px #000;
 	--r-heading1-size: 3.77em;
 	--r-heading2-size: 2.55em;
-	--r-heading3-size: 1.11em;
+	--r-heading3-size: 1.33em;
 	--r-heading4-size: 1em;
 	--r-code-font: monospace;
+	--r-code-font-size: 0.65em; /* custom PBA var */
 	--r-link-color: #8d3aed;
 	--r-link-color-dark: #e6007a;
 	--r-link-color-hover: #e6007a;
@@ -214,7 +216,6 @@ section.has-light-background h6 {
    *********************************************/
 .reveal p {
 	margin: var(--r-block-margin) 0;
-	text-align: left;
 	line-height: 1.3;
 }
 
@@ -248,9 +249,9 @@ section.has-light-background h6 {
 .reveal ol,
 .reveal dl,
 .reveal ul {
+	text-align: left;
 	list-style: none !important; /* Remove default bullets */
 	line-height: 1.5em;
-	text-align: left;
 	margin: 0 0 0 1em;
 }
 
@@ -316,11 +317,11 @@ section.has-light-background h6 {
 }
 
 .reveal pre {
+	font-size: var(--r-code-font-size);
+	font-family: var(--r-code-font);
 	display: block;
 	position: relative;
 	margin: var(--r-block-margin) auto;
-	font-size: 0.55em;
-	font-family: var(--r-code-font);
 	line-height: 1.2em;
 	word-wrap: break-word;
 	text-align: left;

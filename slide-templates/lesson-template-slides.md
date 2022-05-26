@@ -18,26 +18,32 @@ revealOptions:
 
 # Lesson Title
 
-### Lecture 1, Module 4
+### _Lecture X, Module Y_
 
 ---
 
-<div class="left text-right">  <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+<div class="flex-container">
+<div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<!-- TODO: add a good cicurarly cropped headshot of ou to the `assets/profile` folder  -->
-<img style="width: 40%" src="../assets/img/place-holder/profile.png"/>
+<!-- TODO: add a good circularly cropped headshot of ou to the `assets/profile` folder  -->
+<img style="width: 550px; float:right; margin-right:30px" src="../assets/img/place-holder/profile.png"/>
 
 </div>
-<div style="margin-top:20px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+<div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
 ### Instructor Name
+<!-- .element: style="margin-bottom: -30px;" -->
 
-#### Position or Title
+#### _Position or Title_
+<!-- .element: style="margin-left: 20px;" -->
 
 - I am a Subject matter in X
 - A bit about me
-- _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
 
+
+_[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
+
+</div>
 </div>
 
 ---
@@ -50,7 +56,7 @@ revealOptions:
 
 ---
 
-## Basic text
+## Here is a topic
 
 - Use some bullets
 - To make a few points
@@ -60,138 +66,40 @@ Speaker view ONLY notes
 
 ---
 
-## More
+## Here is an important point
 
-- Use some bullets on things
-- To make a few points
+#### _Make it clear_
 
 Notes:
-Speaker view ONLY notes
+Stuff you should remember to say
 
 ---
 
 ## Pictures
 
-
 <!-- set height*width in px, where full screen is 1920*1080 -->
 <img style="width: 800px" src="../assets/img/place-holder/Landscape_mountain.jpg" alt="Some Pic">
 
----
-
-## Columns
-
-<div class="left text-center">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Left side
-
-- some
-- points
-- you
-- make
-
-</div>
-
-<!-- Put no content here -->
-
-<div class="right text-center">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Right side
-
-- more
-- stuff
-- here
-
-</div>
-
----
-
-<div class="left text-center">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Colum + Code
-
-- Some
-- Observations
-- Others
-
-</div>
-
-<!-- Put no content here -->
-
-<div class="right text-center">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-```rust [0|1,13|4-8]
-fn largest_i32(list: &[i32]) -> i32 {
-    let mut largest = list[0];
-
-    for &item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn largest_char(list: &[char]) -> char {
-    let mut largest = list[0];
-
-    for &item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let result = largest_i32(&number_list);
-    println!("The largest number is {}", result);
-    assert_eq!(result, 100);
-
-    let char_list = vec!['y', 'm', 'a', 'q'];
-
-    let result = largest_char(&char_list);
-    println!("The largest char is {}", result);
-    assert_eq!(result, 'y');
-}
-```
-
-</div>
-
----
-
-## Tables
-
-| Tables              |         Are         |                    Cool |
-| ------------------- | :-----------------: | ----------------------: |
-| col 1 is            |    left-aligned     |                   $1600 |
-| col 2 is            |      centered       |                     $12 |
-| col 3 is            |    right-aligned    |                      $1 |
-| This row sure has a | _lot_ of text so it | spaces the columns outs |
-
----
-
-## Math
-
-KaTeX/LaTeX rendered within blocks with `$$` delimiters
-
-$$J(\theta_0,\theta_1) = \sum_{i=0}$$
-
-More info: https://revealjs.com/math/
+#### _Leave a note on why this one matters_
 
 ---
 
 ## Code Highlight & Transitions
 
-Syntax for many langs is possible, and very easy to style. You can _and should_ use highlighting of
-lines in a large snippets of code.
+Syntax for many langs is possible, and very easy to style.
+You can _and should_ use highlighting of lines in a large snippets of code.
+
+You an also add comments to make "fragments" for specific components
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+_They can ordered how you see fit!_
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+See the source for syntax
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -240,9 +148,123 @@ pub type Executive = frame_executive::Executive<
 >;
 ```
 
-<br>
+---
 
-Including line highlights
+## Columns
+
+<div class="flex-container">
+<div class="left centered"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Left side (centered)
+
+- Some really important things to say
+- Lots of great stuff
+- Points here too
+
+center justified text
+
+This is the default for all but bullets
+
+</div>
+<div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Right side (non-centered)
+
+- some
+- more
+- points
+- you
+- make
+
+Left justified text with line brake <br>
+use `<br>` <br>
+(MarkDown comment below)
+<!-- .element: style="text-align: left;" -->
+
+</div>
+</div>
+
+---
+
+<div class="flex-container">
+<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Colum + Code
+
+- Some
+- Observations
+- Others
+
+</div>
+
+<!-- Put no content here -->
+
+<div class="right">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+```rust [0|1,13|4-8]
+fn largest_i32(list: &[i32]) -> i32 {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn largest_char(list: &[char]) -> char {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest_i32(&number_list);
+    println!("The largest number is {}", result);
+    assert_eq!(result, 100);
+
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest_char(&char_list);
+    println!("The largest char is {}", result);
+    assert_eq!(result, 'y');
+}
+```
+
+</div>
+</div>
+
+---
+
+## Tables
+
+| Tables              |         Are         |                    Cool |
+| ------------------- | :-----------------: | ----------------------: |
+| col 1 is            |    left-aligned     |                   $1600 |
+| col 2 is            |      centered       |                     $12 |
+| col 3 is            |    right-aligned    |                      $1 |
+| This row sure has a | _lot_ of text so it | spaces the columns outs |
+
+---
+
+## Math
+
+KaTeX/LaTeX rendered within blocks with `$$` delimiters
+
+$$J(\theta_0,\theta_1) = \sum_{i=0}$$
+
+More info: https://revealjs.com/math/
 
 ---
 
