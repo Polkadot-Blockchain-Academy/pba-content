@@ -28,7 +28,7 @@ Have `nvm` and `yarn` already installed? All you need to do is:
 nvm i
 # For yarn 3, you need to enable some node features
 corepack enable
-# Install Dependancies
+# Install Dependencies
 yarn
 # Run a slide server watching for file changes
 yarn start
@@ -43,7 +43,7 @@ If you are missing node or yarn, please install them as described below.
 ### Node.js
 
 For all linux and mac users We suggest to use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating) to install and manage multiple node versions.
-With `nvm` instailled, from the academy top level dir:
+With `nvm` installed, from the academy top level dir:
 
 ```sh
 nvm install
@@ -52,7 +52,7 @@ nvm install
 This will install (if needed) and set the correct version to use for this project set in the `.nvmrc` file here.
 
 If you choose to not use `nvm`, you need [node](https://nodejs.org/en/) of version greater than `16.10`.
-It is likely your [packagemanager](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) has this version for you.
+It is likely your [package manager](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions) has this version for you.
 
 ### Yarn
 
@@ -120,11 +120,11 @@ Each lecture may have a set of exercises, workshops and/or activities:
 - **Activities**: these are longer-form and self-directed activities for individuals and/or small groups that do not "hand-hold" like workshops with explicit step-by-step guidance.
   These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
 
- We highly suggest that most activities involving simple Rust examples use the [ecxvr](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+ We highly suggest that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
 
 > Note: not all lectures have workshops or activities.
 
-### Rust Jupyter notebooks with `evcxr`
+### Rust Jupyter notebooks with EvCxR
 
 REPLs are a fantastic way to experiment with a language interactively.
 [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) is best-in-class tooling that uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
@@ -134,17 +134,17 @@ REPLs are a fantastic way to experiment with a language interactively.
 
 1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
 2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
-  - Best-in-class _editing_ support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanila notebooks tooling.
+  - Best-in-class _editing_ support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling.
     After install, this can be started with the `jupyter-lab` command in a terminal. 
-  - Easiest and likely to be suggested to students to _use_ your noteboooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter). 
+  - Easiest and likely to be suggested to students to _use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter). 
     Install by searching for this plugin in the VSCode extensions menu.
-	Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based noteboooks like the example.
+	Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
 
 > TODO: figure out if you can, and document how to use rust-analyzer in VSCode with notebooks.
 
 ## Editing `reveal-md` slides
 
-**There is a [base slide template example](./slide-templates/lesson-template-slides.md) that is guhly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./slide-templates/lesson-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
