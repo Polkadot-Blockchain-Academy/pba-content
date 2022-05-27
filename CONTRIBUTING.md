@@ -8,6 +8,7 @@ We are creating and customizing slides with [`reveal-md`](https://github.com/web
 - [Install and view slides locally](#install-and-view-slides-locally)
 - [Content organization](#content-organization)
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
+	- []()
 - [`reveal.js` basics](#-revealjs--basics)
   - [Slides](#slides)
   - [Using speaker notes](#using-speaker-notes)
@@ -116,10 +117,30 @@ Each lecture may have a set of exercises, workshops and/or activities:
 
 - **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and can be completing during the lecture.
 - **Workshops**: these are step-by-step, guided in-class workshops, intended to be more like individual labs, whose worksheet would live in a separate folder with a separate file called `Name_of_Lecture_Workshop.md`.
-- **Activities**: these are in-class activities too, however they are intended to be more like group activities, without the step-by-step guidance that a workshop would have.
+- **Activities**: these are longer-form and self-directed activities for individuals and/or small groups that do not "hand-hold" like workshops with explicit step-by-step guidance.
   These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
 
+ We highly suggest that most activities involving simple Rust examples use the [ecxvr](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+
 > Note: not all lectures have workshops or activities.
+
+### Rust Jupyter notebooks with `evcxr`
+
+REPLs are a fantastic way to experiment with a language interactively.
+[`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) is best-in-class tooling that uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
+**For everyone using Jupyter, please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics**
+
+#### Jupyter Quick start
+
+1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
+2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
+  - Best-in-class _editing_ support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanila notebooks tooling.
+    After install, this can be started with the `jupyter-lab` command in a terminal. 
+  - Easiest and likely to be suggested to students to _use_ your noteboooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter). 
+    Install by searching for this plugin in the VSCode extensions menu.
+	Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based noteboooks like the example.
+
+> TODO: figure out if you can, and document how to use rust-analyzer in VSCode with notebooks.
 
 ## Editing `reveal-md` slides
 

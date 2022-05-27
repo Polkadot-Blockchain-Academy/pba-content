@@ -1,6 +1,10 @@
 # Build artifacts
 build/
 
+# Jupyter artifacts
+
+**/.ipynb_checkpoints/**
+
 # Some common ones
 .vscode
 .idea/
