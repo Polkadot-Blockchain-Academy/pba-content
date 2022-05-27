@@ -137,9 +137,9 @@ REPLs are a fantastic way to experiment with a language interactively.
 1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
 2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
   - Best-in-class _editing_ support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling.
-    After install, this can be started with the `jupyter-lab` command in a terminal. 
+    Installation [described here](https://jupyter.org/install). 
   - Easiest and likely to be suggested to students to _use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter). 
-    Install by searching for this plugin in the VSCode extensions menu.
+    Install by searching for this plugin (`@id:ms-toolsai.jupyter`) in the VSCode extensions menu.
 	Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
 
 > TODO: figure out if you can, and document how to use rust-analyzer in VSCode with notebooks.
