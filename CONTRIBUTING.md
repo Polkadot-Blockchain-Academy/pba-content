@@ -8,7 +8,7 @@ We are creating and customizing slides with [`reveal-md`](https://github.com/web
 - [Install and view slides locally](#install-and-view-slides-locally)
 - [Content organization](#content-organization)
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
-	- []()
+	- [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
 - [`reveal.js` basics](#-revealjs--basics)
   - [Slides](#slides)
   - [Using speaker notes](#using-speaker-notes)
@@ -127,10 +127,12 @@ Each lecture may have a set of exercises, workshops and/or activities:
 ### Rust Jupyter notebooks with EvCxR
 
 REPLs are a fantastic way to experiment with a language interactively.
-[`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) is best-in-class tooling that uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
-**For everyone using Jupyter, please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics**
+[`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
 
-#### Jupyter Quick start
+
+**Please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics before proceeding**
+
+#### _Quick start_
 
 1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
 2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
