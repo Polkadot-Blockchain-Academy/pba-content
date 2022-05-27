@@ -6,7 +6,7 @@ theme: "reveal-md/PBA-theme.css"
 # Add custom css files for your slides here, comma separated:
 css: ["reveal-md/custom-classes.css"]
 separator: "\r?\n---\r?\n"
-verticalSeparator: "\r?\n---\r?\n"
+verticalSeparator: "\r?\n---v\r?\n"
 # Below can be any of these: https://revealjs.com/config/
 revealOptions:
     transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
