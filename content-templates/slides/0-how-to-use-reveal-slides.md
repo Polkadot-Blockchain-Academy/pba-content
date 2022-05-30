@@ -1,9 +1,9 @@
 ---
-title: Contributor Slides Guide
+title: How-to use Reveal.js
 description: How to use reveal.js
 ---
 
-# How-to use Reveal
+# How-to use Reveal.js
 
 These slides are built with [reveal.js](https://revealjs.com/).
 
@@ -43,7 +43,7 @@ Try doing down a slide.
 
 - **Overview mode**: “O” to see a birds-eye view of your presentation, “ESC” to return to the highlighted slide (you can quickly navigate with arrows)
 
-- **Fullscreen**: “F”, “ESC” to exit fullscreen mode
+- **Full-screen**: “F”, “ESC” to exit full-screen mode
 
 - **Speaker mode**: “S” it synchronizes 2 windows: one with the presentation, and another with a timer and all speaker notes!
 

@@ -1,19 +1,6 @@
 ---
-title: Lesson Slide Template # Also update the h1 header on the first slide to the same name
+title: Lesson Template Slides # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
-# PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
-theme: "reveal-md/PBA-theme.css"
-# Add custom css files for your slides here, comma separated:
-css: ["reveal-md/custom-classes.css"]
-separator: "\r?\n---\r?\n"
-verticalSeparator: "\r?\n---v\r?\n"
-# Below can be any of these: https://revealjs.com/config/
-revealOptions:
-    transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
-	backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
-	slideNumber: true
-	controls: true
-	progress: true
 ---
 
 # Lesson Title
@@ -48,6 +35,29 @@ _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](m
 
 ---
 
+### Lesson outline
+
+<!--
+You can reference slides within this presentation like [this other slide](#at-the-end-of-this-lecture-you-will-be-able-to) by use of the header title.
+
+Please make your lecture precise. 
+
+- Limit the main points in a lecture to five or fewer.
+- Create effective visuals, analogies, demonstrations, and examples to reinforce the main points.
+  {TAs and the Parity design team can assist! Please let us know marking an item here as `TODO`}
+- Emphasize your objectives and key points in the beginning, as you get to them, and as a summary at the end.
+
+-->
+
+1. <!-- TODO: fill this in  -->
+1. <!-- TODO: fill this in  -->
+1. <!-- TODO: fill this in  -->
+1. [Conclusion](#conclusion)
+1. [Next Steps](#next-steps)
+1. [References](#references)
+
+---
+
 ### _At the end of this lecture, you will be able to:_
 
 - Describe ... <!-- TODO: fill this in  -->
@@ -66,208 +76,70 @@ Speaker view ONLY notes
 
 ---
 
-## Here is an important point
+# An important point
 
-#### _Make it clear_
+### _Make it clear_
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 Stuff you should remember to say
 
 ---
 
-## Pictures
+# Exercise title
 
-<!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../../assets/img/shared/Landscape_mountain.jpg" alt="Some Pic">
-
-#### _Leave a note on why this one matters_
+### _Describe it here_
 
 ---
 
-## Code Highlight & Transitions
+## Exercise instructions
 
-Syntax for many langs is possible, and very easy to style.
-You can _and should_ use highlighting of lines in a large snippets of code.
+<!--
+Detail what you want students to do in your exercise
+Most exercises are less than 15 minuets in length.
+-->
 
-You an also add comments to make "fragments" for specific components
+1. 
+1. 
+1. 
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+Notes:
+Make sure to include things here to say to students, perhaps a hint or two.
+Realize that students will be able to view the speaker's notes, as they will have access to them on their devices.
 
-_They can ordered how you see fit!_
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-See the source for syntax
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
----
-
-## Rust Example
-
-```rust [0|1,6|15-25|30-31]
-#![cfg_attr(not(feature = "std"), no_std)]
-// `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
-#![recursion_limit = "256"]
-
-// Make the WASM binary available.
-#[cfg(feature = "std")]
-include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
-
-mod weights;
-pub mod xcm_config;
-
-/// BlockId type as expected by this runtime.
-pub type BlockId = generic::BlockId<Block>;
-
-/// The SignedExtension to the basic transaction logic.
-pub type SignedExtra = (
-	frame_system::CheckNonZeroSender<Runtime>,
-	frame_system::CheckSpecVersion<Runtime>,
-	frame_system::CheckTxVersion<Runtime>,
-	frame_system::CheckGenesis<Runtime>,
-	frame_system::CheckEra<Runtime>,
-	frame_system::CheckNonce<Runtime>,
-	frame_system::CheckWeight<Runtime>,
-	pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
-);
-
-/// Unchecked extrinsic type as expected by this runtime.
-pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, SignedExtra>;
-
-/// Extrinsic type that has already been checked.
-pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, Call, SignedExtra>;
-
-/// Executive: handles dispatch to the various modules.
-pub type Executive = frame_executive::Executive<
-	Runtime,
-	Block,
-	frame_system::ChainContext<Runtime>,
-	Runtime,
-	AllPalletsWithSystem,
->;
-```
 
 ---
 
-## Columns
+## Conclusion
 
-<div class="flex-container">
-<div class="left centered"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Left side (centered)
-
-- Some really important things to say
-- Lots of great stuff
-- Points here too
-
-center justified text
-
-This is the default for all but bullets
-
-</div>
-<div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Right side (non-centered)
-
-- some
-- more
-- points
-- you
-- make
-
-Left justified text with line brake <br>
-use `<br>` <br>
-(MarkDown comment below)
-<!-- .element: style="text-align: left;" -->
-
-</div>
-</div>
+<!-- Summarize what we just learned, and put it in the bigger picture of what the Academy and Web3 are all about. -->
 
 ---
 
-<div class="flex-container">
-<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+## Next steps
 
-### Colum + Code
+<!--
+Compile a list of:
+- topics not covered here but students should consider learning about independently
+- examples of the concepts covered in this lesson applied to a project, to case-study
+- useful resources related to the lesson
 
-- Some
-- Observations
-- Others
+- Reference other slides/materials by relative directory in this repo, like the [copy-paste slide templates](../../content-templates/slides/copy-paste-reveal-template-slides.md)
+-->
 
-</div>
-
-<!-- Put no content here -->
-
-<div class="right">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-```rust [0|1,13|4-8]
-fn largest_i32(list: &[i32]) -> i32 {
-    let mut largest = list[0];
-
-    for &item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn largest_char(list: &[char]) -> char {
-    let mut largest = list[0];
-
-    for &item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let result = largest_i32(&number_list);
-    println!("The largest number is {}", result);
-    assert_eq!(result, 100);
-
-    let char_list = vec!['y', 'm', 'a', 'q'];
-
-    let result = largest_char(&char_list);
-    println!("The largest char is {}", result);
-    assert_eq!(result, 'y');
-}
-```
-
-</div>
-</div>
+1. <!-- TODO: fill this in  -->
+1. <!-- TODO: fill this in  -->
+1. <!-- TODO: fill this in  -->
 
 ---
 
-## Tables
+## References
 
-| Tables              |         Are         |                    Cool |
-| ------------------- | :-----------------: | ----------------------: |
-| col 1 is            |    left-aligned     |                   $1600 |
-| col 2 is            |      centered       |                     $12 |
-| col 3 is            |    right-aligned    |                      $1 |
-| This row sure has a | _lot_ of text so it | spaces the columns outs |
+<!--
+Compile an **annotated** list of URLs to source material referenced in making these lessons.
+Ideally this is exhaustive, it can be cleaned up before delivery to students, but must include _why_ a reference is used.
+For example:
 
----
-
-## Math
-
-KaTeX/LaTeX rendered within blocks with `$$` delimiters
-
-$$J(\theta_0,\theta_1) = \sum_{i=0}$$
-
-More info: https://revealjs.com/math/
-
----
-
-# More help needed?
-
-_Please reach out to the academy content & docs team on element for support!_
+- [ss58-registry](https://github.com/paritytech/ss58-registry) - A list of known SS58 account types as an enum, typically used by the Polkadot, Kusama or Substrate ecosystems.
+- [wiki on parathreads](https://wiki.polkadot.network/docs/learn-parathreads) - A description of the parathread model.
+-->

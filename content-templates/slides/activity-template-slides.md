@@ -1,3 +1,9 @@
+---
+title: Activity Template Slides # Also update the h1 header on the first slide to the same name
+description: Describe your activity in one line here
+---
+
+
 <!--- An Activity is an experience that individual students (or groups of students) are completing on their own. --->
 
 # Activity Title
@@ -83,7 +89,7 @@ For the last instruction, clarify what 'success' looks like at the end of the wo
 
 <!--- If there is any kind of template that learners are filling in to complete this activity, link to it here.
 
-If you want to use Rust code outside of the Substrate context, you may want to use a EVCXR template.
+If you want to use Rust code outside of the Substrate context, you may want to use a EvCxR template.
 
 If you want to use Substrate or other proprietary tools,
 --->

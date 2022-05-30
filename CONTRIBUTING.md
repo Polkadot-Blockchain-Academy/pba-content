@@ -1,15 +1,15 @@
-This guide is to help content contributors understand how to navigate this repository, format slides using `reveal.js` and run the repository locally.
+# Polkadot Blockchain Academy Contributors Guide
 
-**If this is your first time using `reveal.js`, we encourage you to explore [the official demo](https://revealjs.com/demo/#/2) to see what sort of things you can do with it!**
-We are creating and customizing slides with [`reveal-md`](https://github.com/webpro/reveal-md): a tool built with `reveal.js` to allow for [Markdown](https://commonmark.org/help/) only slides, with a few extra syntax items to make _your slides look and feel awesome_ with very little effort.
+This guide is to help Academy contributors understand how all materials contained this repository are structured, how to interact with and modify them.
+Multiple tools are provided for contributors to make slideshows, leader-guided workshops, and self-directed activities.
 
-# Table of contents
+## Table of contents
 
 - [Install and view slides locally](#install-and-view-slides-locally)
 - [Content organization](#content-organization)
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
-	- [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
-- [`reveal.js` basics](#-revealjs--basics)
+  - [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
+- [Install and view `reveal.js` slides locally](#install-and-view-revealjs-slides-locally)
   - [Slides](#slides)
   - [Using speaker notes](#using-speaker-notes)
   - [Transitions](#transitions)
@@ -17,11 +17,46 @@ We are creating and customizing slides with [`reveal-md`](https://github.com/web
   - [Custom theme and CSS](#custom-theme-and-css)
   - [Presenting](#presenting)
 
-## Install and view slides locally
+## Content organization
+
+The content is organized by module, where each module has a folder for a specific lesson, and every lesson has:
+
+- A markdown file of the `reveal-md` formatted **_lecture_** slides including **_exercises_** described within
+- A markdown file outlining **_workshops_** and/or **_activities_** for that lesson.
+- A folder containing the markdown files of the original lesson plan notes (from the Academy retreat)
+
+The `syllabus` directory houses these, where `*` is the name of the lesson:
+
+```
+syllabus/
+├─ 1-example-module/
+│  ├─ 1.1-*/
+│  │  ├─ 1.1-Workshops_and_Activities/
+│  │  │  ├─ 1.1-*_Activity.md
+│  │  │  ├─ 1.1-*_Workshop.md
+│  │  ├─ 1.1-*_Slides.md
+│  ├─ example-module-lesson-plans/
+│  |   ├─ 1.1-Lesson_Plan_*_1.md
+├  |   ├─ 1.2-Lesson_Plan_*_2.md
+├─ 2-another-example-module/
+│  ├─ ...
+```
+
+When creating content for your lecture (and exercise) slides, we recommend you:
+
+1. Start with copying the "Core Ideas to Convey" section of the original lesson plan.
+1. Build out the content slide by slide around those notes.
+1. Add TODOs as markdown comments (`<!-- this is a comment  -->`) to write notes to yourself and to the TAs for adding diagrams or things to get back to later.
+1. Place content for workshops and activities in the appropriate files, cross-referencing lecture and exercise content for reference to be build out around.
+
+## Lesson slides with Reveal.js
+
+**If this is your first time using `reveal.js`, we encourage you to explore [the official demo](https://revealjs.com/demo/#/2) to see what sort of things you can do with it!**
+We are creating and customizing slides with [`reveal-md`](https://github.com/webpro/reveal-md): a tool built with `reveal.js` to allow for [Markdown](https://commonmark.org/help/) only slides, with a few extra syntax items to make _your slides look and feel awesome_ with very little effort.
 
 ### _Quick start_
 
-Have `nvm` and `yarn` already installed? All you need to do is:
+Have `nvm` and `yarn` already installed? All you need to do is execute this from the top level directory of the Academy repo:
 
 ```sh
 # Ensure you have the right node
@@ -36,9 +71,9 @@ yarn start
 
 This should open a new tab with a listing of all slide decks to choose from.
 Please start with the [INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md](./reveal-md/INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md) slides to see what is possible with the slides features and some template slides.
-Next, jump to the [Content organization](#content-organization) section to see how this repository is structured ad why before you jump to the [Editing `reveal-md` slides](#editing-reveal-md-slides) section to learn how to create and edit your own slides!
 
-If you are missing node or yarn, please install them as described below.
+<details>
+<summary>If you are missing node or yarn, please install them as described below. (click to toggle)</summary>
 
 ### Node.js
 
@@ -77,39 +112,7 @@ Running this command will open a new browser tab and _watch for file changes_ (u
 yarn start
 ```
 
-This should open a new tab with a listing of all slide decks to choose from.
-Please start with the [INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md](./reveal-md/INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md) slides to see what is possible with the slides features and some template slides.
-
-## Content organization
-
-The content is organized by module, where each module has a folder for a specific lecture, and every lecture has:
-
-- A markdown file of the formatted slides (this is what `reveal.js` parses to render the final slides)
-- A markdown file containing workshops and exercises for that lecture
-- A folder containing the markdown files of the original notes and lesson plans for each lecture
-
-Assuming you're in the `syllabus` directory, this structure looks like (where `*` is the name of the lecture):
-
-```
-syllabus/
-├─ 1-example-module/
-│  ├─ 1.1-*/
-│  │  ├─ 1.1-Workshops_and_Activities/
-│  │  │  ├─ 1.1-*_Activity.md
-│  │  │  ├─ 1.1-*_Workshop.md
-│  │  ├─ 1.1-*_Slides.md
-│  ├─ example-module-lesson-plans/
-│  |   ├─ 1.1-Lesson_Plan_Name_of_Lecture_1.md
-├  |   ├─ 1.2-Lesson_Plan_Name_of_Lecture_2.md
-├─ 2-another-example-module/
-│  ├─ ...
-```
-
-When creating content for your slide, we recommend you:
-
-1. Start with copying the "Core Ideas to Convey" section of the original lesson plan.
-2. Build out the content slide by slide around those notes.
-3. Add TODOs to write notes to yourself for adding diagrams or things to get back to later.
+</details>
 
 ## Exercises, workshops and activities
 
@@ -120,7 +123,7 @@ Each lecture may have a set of exercises, workshops and/or activities:
 - **Activities**: these are longer-form and self-directed activities for individuals and/or small groups that do not "hand-hold" like workshops with explicit step-by-step guidance.
   These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
 
- We highly suggest that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+We highly suggest that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
 
 > Note: not all lectures have workshops or activities.
 
@@ -129,18 +132,18 @@ Each lecture may have a set of exercises, workshops and/or activities:
 REPLs are a fantastic way to experiment with a language interactively.
 [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
 
-
 **Please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics before proceeding**
 
 #### _Quick start_
 
 1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
 2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
-  - Best-in-class _editing_ support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling.
-    Installation [described here](https://jupyter.org/install). 
-  - Easiest and likely to be suggested to students to _use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter). 
-    Install by searching for this plugin (`@id:ms-toolsai.jupyter`) in the VSCode extensions menu.
-	Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
+
+- Best-in-class _editing_ support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling.
+  Installation [described here](https://jupyter.org/install).
+- Easiest and likely to be suggested to students to _use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter).
+  Install by searching for this plugin (`@id:ms-toolsai.jupyter`) in the VSCode extensions menu.
+  Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
 
 > TODO: figure out if you can, and document how to use rust-analyzer in VSCode with notebooks.
 
