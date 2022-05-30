@@ -123,9 +123,9 @@ a:active {
 	--r-heading4-size: 1em;
 	--r-code-font: monospace;
 	--r-code-font-size: 0.65em; /* custom PBA var */
-	--r-link-color: #8d3aed;
+	--r-link-color: #e6007a;
 	--r-link-color-dark: #e6007a;
-	--r-link-color-hover: #e6007a;
+	--r-link-color-hover: #8d3aed;
 	--r-selection-background-color: #8d3aed;
 	--r-selection-color: #fff;
 }

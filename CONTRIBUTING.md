@@ -266,7 +266,7 @@ REPLs are a fantastic way to experiment with a language interactively.
 
 > Note that sadly `rust-analyzer` [does not work with notebooks](https://github.com/rust-lang/rust-analyzer/issues/5141) at this time.
 > Thus student's will have a harder time using unfamiliar crate's features (they are all new to rust).
-> Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use. 
+> Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use.
 
 #### EvCxR Templates
 
@@ -284,6 +284,8 @@ While the full CLI tool to make things interactive ins't required, all the [exam
 
 **Please place stand-alone crates into the [./assets/materials-downloads/<the correct module>/<source>](./assets/materials-downloads/) directory for distribution to students.**
 These can be referenced and then linked to from any slides for them to download or use in an online IDE.
+
+Please make **a new branch in this repo** to store the solutions for your workshops and activities so that we can reference them, but will not be generally available on the deployed resources that students can access.
 
 #### Local IDE
 
