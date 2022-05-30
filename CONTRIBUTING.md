@@ -46,7 +46,7 @@ When creating content for your lecture (and exercise) slides, we recommend you:
 
 1. Start with copying the "Core Ideas to Convey" section of the original lesson plan.
 1. Build out the content slide by slide around those notes.
-1. Add TODOs as markdown comments (`<!-- this is a comment  -->`) to write notes to yourself and to the TAs for adding diagrams or things to get back to later.
+1. Add TODOs as markdown comments (`<!-- this is a comment -->`) to write notes to yourself and to the TAs for adding diagrams or things to get back to later.
 1. Place content for workshops and activities in the appropriate files, cross-referencing lecture and exercise content for reference to be build out around.
 
 ## Lesson slides with Reveal.js
@@ -114,42 +114,22 @@ yarn start
 
 </details>
 
-## Exercises, workshops and activities
+---
 
-Each lecture may have a set of exercises, workshops and/or activities:
+**To see what reveal can do, please view the slides and their source for details:**
 
-- **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and can be completing during the lecture.
-- **Workshops**: these are step-by-step, guided in-class workshops, intended to be more like individual labs, whose worksheet would live in a separate folder with a separate file called `Name_of_Lecture_Workshop.md`.
-- **Activities**: these are longer-form and self-directed activities for individuals and/or small groups that do not "hand-hold" like workshops with explicit step-by-step guidance.
-  These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
+- The [how-to use reveal slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/0-how-to-use-reveal-slides.html) and the [source](./content-templates/slides/0-how-to-use-reveal-slides.md)
+- The [copy & paste slide templates](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/1-copy-paste-reveal-template-slides.html) that are styled to use in your content and their [source](./content-templates/slides/1-copy-paste-reveal-template-slides.md)
+- The [lesson template slides](https://paritytech.github.io/polkadot-blockchain-academy//content-templates/slides/lesson-template-slides.html) and their [source](/content-templates/slides/lesson-template-slides.md) that give the structure most lessons should use to start with.
 
-We highly suggest that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+---
 
-> Note: not all lectures have workshops or activities.
-
-### Rust Jupyter notebooks with EvCxR
-
-REPLs are a fantastic way to experiment with a language interactively.
-[`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
-
-**Please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics before proceeding**
-
-#### _Quick start_
-
-1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
-2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
-
-- Best-in-class _editing_ support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling.
-  Installation [described here](https://jupyter.org/install).
-- Easiest and likely to be suggested to students to _use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter).
-  Install by searching for this plugin (`@id:ms-toolsai.jupyter`) in the VSCode extensions menu.
-  Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
-
-> TODO: figure out if you can, and document how to use rust-analyzer in VSCode with notebooks.
+<details>
+<summary>If you need more of an explanation on how to use `reveal-md`'s features, see below (click to toggle) </summary>
 
 ## Editing `reveal-md` slides
 
-**There is a [base slide template example](./slide-templates/lesson-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./content-templates/slides/lesson-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -163,14 +143,10 @@ When writing slides, separate each one using `---`.
 
 Optionally, you can separate slides vertically using `---v` between slides.
 
-> Note that Windows uses `\r\n` instead of `\n` as its linefeed character.
-> For a regex that supports all operating systems, use `\r?\n` instead of `\n`.
-> Ex: `"\r?\n---\r?\n"` and `"\r?\n---v\r?\n"` as separators.
-
-If several slides fit closely with some core topic being presented, it may be a good idea to stack those slides vertically.
+For distinct parts of the lecture, with some core topic being presented as the, it may be a good idea to stack those slides vertically for easier navigation.
 For example, imagine the core topic was "Code Highlight & Transitions":
 
-<img src="./assets/img/place-holder/vertical-slides.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/shared/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 ### Using speaker notes
 
@@ -188,7 +164,7 @@ subsequent lines are just seen in speaker view.
 
 And here's an example of the result:
 
-<img src="./assets/img/place-holder/speaker-notes-view.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 ### Transitions
 
@@ -259,3 +235,70 @@ Once you've followed the set-up instructions and have the repository running loc
 - Use `left/right` arrow keys to navigate horizontal slides.
 - Press `Esc` or `o` to see an `overview` view that your arrow keys can navigate. This allows you to click a slide to open it).
 - Press `s` to open up speaker view.
+</details>
+
+## Exercises, workshops and activities
+
+Each lecture may have a set of exercises, workshops and/or activities:
+
+- **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and can be completing during the lecture.
+- **Workshops**: these are step-by-step, guided in-class workshops, intended to be more like individual labs, whose worksheet would live in a separate folder with a separate file called `Name_of_Lecture_Workshop.md`.
+- **Activities**: these are longer-form and self-directed activities for individuals and/or small groups that do not "hand-hold" like workshops with explicit step-by-step guidance.
+  These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
+
+We highly suggest that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+
+> Note: not all lectures have workshops or activities.
+
+### Rust Jupyter notebooks with EvCxR
+
+REPLs are a fantastic way to experiment with a language interactively.
+[`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
+
+**Please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics before proceeding**
+
+#### _Quick start_
+
+1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
+2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
+
+- Easiest and likely to be suggested to students to _edit and use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter).
+  Install by searching for this plugin (`@id:ms-toolsai.jupyter`) in the VSCode extensions menu.
+  Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
+- Best-in-class support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling and VSCode.
+  Although most instructors and students will not need this.
+  Installation [described here](https://jupyter.org/install).
+
+> Note that sadly `rust-analyzer` [does not work with notebooks](https://github.com/rust-lang/rust-analyzer/issues/5141) at this time.
+> Thus student's will have a harder time using unfamiliar crate's features (they are all new to rust).
+> Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use. 
+
+## Stand-alone Rust workshops and activities
+
+For non-trivial Rust work, it's best to use a full IDE and cargo properly, over the REPL examples discussed above.
+For these, please create well documented crates that stand alone for each workshop or activity.
+
+** https://github.com/rust-lang/rustlings is a fantastic place to draw inspiration from.**
+While the full CLI tool to make things interactive ins't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
+
+**Please place stand-alone crates into the [./assets/source-code/](./assets/source-code/) directory for distribution to students.**
+These can be referenced and then linked to from any slides for them to download or use in an online IDE.
+
+### Local IDE
+
+It is very likely that all students will want to run your code locally.
+We suggest that most users will use VSCode as it's most all-around featureful for academy work more than just Rust itself.
+
+**NOTE: The build times for you project need to be taken into account!**
+Please time on your build machine as a reference and report this to the TAs so we can all plan around the rough timeline to have students start to build things.
+We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students!
+
+### Online IDE
+
+There are some great (but limited) options for anyone lacking the ability to do things locally, or real-time collaboration is needed.
+
+- [REPL.it](https://replit.com/languages/rust) - This online IDE includes a low-powered machine to compile Rust on, but provides _real-time collaboration_ where multiple users can follow-the-leader and edit simultaneously.
+  It also features github integrations to save and share progress.
+- [Substrate Playground](https://docs.substrate.io/playground/) - This is a Parity hosted very powerful build machine that anyone can access using a pre-compiled docker image of the base [substrate node template](https://github.com/substrate-developer-hub/substrate-node-template) to build on top of in an online VSCode-like IDE.
+  The session is limited to 2 hours per user, before all data is cleared. There is no simple way to capture your work though, so this is only to be used in simple examples of substrate to iterate very quickly.
+  _Note that it is unclear if 50+ students can access this at the same time, thus please let the TAs know if you plan to use this first!_  
