@@ -5,17 +5,12 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
 
 ## Table of contents
 
-- [Install and view slides locally](#install-and-view-slides-locally)
 - [Content organization](#content-organization)
+- [Lesson slides with Reveal.js](#lesson-slides-with-revealjs)
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
   - [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
-- [Install and view `reveal.js` slides locally](#install-and-view-revealjs-slides-locally)
-  - [Slides](#slides)
-  - [Using speaker notes](#using-speaker-notes)
-  - [Transitions](#transitions)
-  - [Code highlighting](#code-highlighting)
-  - [Custom theme and CSS](#custom-theme-and-css)
-  - [Presenting](#presenting)
+  - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
+  - [Conceptual workshops and exercises]
 
 ## Content organization
 
@@ -124,10 +119,7 @@ yarn start
 
 ---
 
-<details>
-<summary>If you need more of an explanation on how to use `reveal-md`'s features, see below (click to toggle) </summary>
-
-## Editing `reveal-md` slides
+### Editing `reveal-md` slides
 
 **There is a [base slide template example](./content-templates/slides/lesson-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
@@ -139,6 +131,9 @@ If you do need custom style, please just comment in the slides with a code comme
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
 
+<details>
+<summary>If you need more of an explanation on how to use `reveal-md`'s features, see below (click to toggle) </summary>
+
 When writing slides, separate each one using `---`.
 
 Optionally, you can separate slides vertically using `---v` between slides.
@@ -148,7 +143,7 @@ For example, imagine the core topic was "Code Highlight & Transitions":
 
 <img src="./assets/img/shared/vertical-slides.png" alt="vertical-slides" width="300"/>
 
-### Using speaker notes
+#### Using speaker notes
 
 It's sometimes useful to have speaker notes for your slides.
 This feature can be accessed when in presentation by pressing `s` when presenting (_you need to unblock popups to have the window open_).
@@ -166,7 +161,7 @@ And here's an example of the result:
 
 <img src="./assets/img/shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
-### Transitions
+#### Transitions
 
 To add transitions in a slide:
 
@@ -178,7 +173,7 @@ _This will render only once the right or down arrow is pressed by presenter._
 
 TODO: update this once we're more familiar with the css stuff.
 
-### Code highlighting
+#### Code highlighting
 
 You can add code snippets to your slides with line highlighting.
 You can also animate to step through each highlight with `|` delimited sections of lines as a _fragment_:
@@ -215,7 +210,7 @@ fn largest_char(list: &[char]) -> char {
 ```
 ````
 
-## Custom theme and CSS
+### Custom theme and CSS
 
 The [template](#editing-reveal-md-slides) can be used just copy and change slide by slide the content, and not worry with styling.
 
@@ -227,7 +222,7 @@ If you do need custom style, please just comment in the slides with a code comme
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
 
-### Presenting
+#### Presenting
 
 Once you've followed the set-up instructions and have the repository running locally, here are the basic ways to navigate through presenting your slides:
 
@@ -273,7 +268,13 @@ REPLs are a fantastic way to experiment with a language interactively.
 > Thus student's will have a harder time using unfamiliar crate's features (they are all new to rust).
 > Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use. 
 
-## Stand-alone Rust workshops and activities
+#### EvCxR Templates
+
+1. Please start with the [tour notebook](./content-templates/jupyter-notebooks/evcxr_jupyter_tour.ipynb) to see what EvCxR can do!
+2. Then see the [activity notebook template](./content-templates/jupyter-notebooks/activity-template.ipynb) that you are encouraged to use as a base for all activities.
+3. Finally see the [substrate example notebook](./content-templates/jupyter-notebooks/substrate_example.ipynb) that demonstrates using substrate crates.
+
+### Stand-alone Rust workshops and activities
 
 For non-trivial Rust work, it's best to use a full IDE and cargo properly, over the REPL examples discussed above.
 For these, please create well documented crates that stand alone for each workshop or activity.
@@ -281,10 +282,10 @@ For these, please create well documented crates that stand alone for each worksh
 ** https://github.com/rust-lang/rustlings is a fantastic place to draw inspiration from.**
 While the full CLI tool to make things interactive ins't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
 
-**Please place stand-alone crates into the [./assets/source-code/](./assets/source-code/) directory for distribution to students.**
+**Please place stand-alone crates into the [./assets/materials-downloads/<the correct module>/<source>](./assets/materials-downloads/) directory for distribution to students.**
 These can be referenced and then linked to from any slides for them to download or use in an online IDE.
 
-### Local IDE
+#### Local IDE
 
 It is very likely that all students will want to run your code locally.
 We suggest that most users will use VSCode as it's most all-around featureful for academy work more than just Rust itself.
@@ -293,7 +294,7 @@ We suggest that most users will use VSCode as it's most all-around featureful fo
 Please time on your build machine as a reference and report this to the TAs so we can all plan around the rough timeline to have students start to build things.
 We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students!
 
-### Online IDE
+#### Online IDE
 
 There are some great (but limited) options for anyone lacking the ability to do things locally, or real-time collaboration is needed.
 
@@ -301,4 +302,10 @@ There are some great (but limited) options for anyone lacking the ability to do 
   It also features github integrations to save and share progress.
 - [Substrate Playground](https://docs.substrate.io/playground/) - This is a Parity hosted very powerful build machine that anyone can access using a pre-compiled docker image of the base [substrate node template](https://github.com/substrate-developer-hub/substrate-node-template) to build on top of in an online VSCode-like IDE.
   The session is limited to 2 hours per user, before all data is cleared. There is no simple way to capture your work though, so this is only to be used in simple examples of substrate to iterate very quickly.
-  _Note that it is unclear if 50+ students can access this at the same time, thus please let the TAs know if you plan to use this first!_  
+  _Note that it is unclear if 50+ students can access this at the same time, thus please let the TAs know if you plan to use this first!_
+
+### Conceptual workshops and activities
+
+While _most_ work students are doing should highlight _practical applications_ of the concepts, sometimes code isn't the best way to engage.
+For non-code based work, please see the [workshop outline template](content-templates/workshop-outline-template.md) that structures what we should include in workshops or activities.
+This should be included in the [./assets/materials-downloads/<the correct module>/<source>](./assets/materials-downloads/) directory for distribution to students.
