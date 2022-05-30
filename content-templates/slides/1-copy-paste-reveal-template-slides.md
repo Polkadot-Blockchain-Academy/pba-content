@@ -1,12 +1,12 @@
 ---
-title: Lesson Slide Template # Also update the h1 header on the first slide to the same name
-description: Describe your slides here
+title: Copy and Paste Slide Templates # Also update the h1 header on the first slide to the same name
+description: Use the `---` delineated slides here in your content!
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
 theme: "reveal-md/PBA-theme.css"
 # Add custom css files for your slides here, comma separated:
 css: ["reveal-md/custom-classes.css"]
 separator: "\r?\n---\r?\n"
-verticalSeparator: "\r?\n---\r?\n"
+verticalSeparator: "\r?\n---v\r?\n"
 # Below can be any of these: https://revealjs.com/config/
 revealOptions:
     transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
@@ -16,17 +16,17 @@ revealOptions:
 	progress: true
 ---
 
-# Lesson Title
+# Copy and Paste Slide Templates
 
-### _Lecture X, Module Y_
+### _Use the `---` delineated slides here in your content!_
 
 ---
 
 <div class="flex-container">
 <div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<!-- TODO: add a good circularly cropped headshot of ou to the `assets/profile` folder  -->
-<img style="width: 550px; float:right; margin-right:30px" src="../assets/img/place-holder/profile.png"/>
+<!-- TODO: add a good circularly cropped head-shot of ou to the `assets/profile` folder  -->
+<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/shared/profile.png"/>
 
 </div>
 <div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
@@ -78,7 +78,7 @@ Stuff you should remember to say
 ## Pictures
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../assets/img/place-holder/Landscape_mountain.jpg" alt="Some Pic">
+<img style="width: 800px" src="../../assets/img/shared/Landscape_mountain.jpg" alt="Some Pic">
 
 #### _Leave a note on why this one matters_
 
