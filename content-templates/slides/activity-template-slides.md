@@ -4,7 +4,13 @@ description: Describe your activity in one line here
 ---
 
 
-<!--- An Activity is an experience that individual students (or groups of students) are completing on their own. --->
+<!--- 
+**********
+**********
+An Activity is an experience that individual students (or groups of students) are completing on their own.
+**********
+**********
+--->
 
 # Activity Title
 
