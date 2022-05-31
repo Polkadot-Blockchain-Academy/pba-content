@@ -5,7 +5,7 @@ description: Describe your slides here
 
 # Lecture Title
 
-### _Lecture X, Module Y_
+### _Module X, Lecture Y_
 
 ---
 
