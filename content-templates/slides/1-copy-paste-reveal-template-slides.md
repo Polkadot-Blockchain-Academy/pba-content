@@ -1,6 +1,9 @@
 ---
 title: Copy and Paste Slide Templates # Also update the h1 header on the first slide to the same name
 description: Use the `---` delineated slides here in your content!
+duration: 15 minuets
+instructors: ["some one","another gal"]
+teaching-assistants: ["Dan Shields"]
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
 theme: "reveal-md/PBA-theme.css"
 # Add custom css files for your slides here, comma separated:
