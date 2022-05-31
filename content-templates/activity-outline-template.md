@@ -1,4 +1,10 @@
-# Workshop Outline Template
+<!--
+This is a skeleton outline to help you scope your activities (and workshops).
+
+This could be all that is needed to provide to the students if no associated materials (like source code) is needed.
+ -->
+
+# Activity Outline Template
 
 ### _Module X, Lesson Y_
 

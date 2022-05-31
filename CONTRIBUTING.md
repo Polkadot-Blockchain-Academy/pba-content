@@ -234,16 +234,24 @@ Once you've followed the set-up instructions and have the repository running loc
 
 ## Exercises, workshops and activities
 
-Each lecture may have a set of exercises, workshops and/or activities:
+Each lecture may have a set of exercises, workshops and/or activities.
+Not all lectures _must_ have workshops or activities... but almost all _should_.
+**The academy is focused on _practical application_ of Web3 concepts we cover, more than simply understanding.**
+Here is how we define these:
 
-- **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and can be completing during the lecture.
-- **Workshops**: these are step-by-step, guided in-class workshops, intended to be more like individual labs, whose worksheet would live in a separate folder with a separate file called `Name_of_Lecture_Workshop.md`.
-- **Activities**: these are longer-form and self-directed activities for individuals and/or small groups that do not "hand-hold" like workshops with explicit step-by-step guidance.
-  These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
+- **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and will be completing during the lecture.
+- **Workshops**: these are step-by-step, longer (30 min to 3 hours) guided in-class material.
+  These are instructor lead, and hand-held to get everyone to the same result.
+- **Activities**: these are self-directed assignments for individuals and/or small groups that do not "hand-hold" like workshops.
+  Student's completed work is expected to have some variety and a canonical solutions should be produced to review when students submit to compare to.
 
-We highly suggest that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+We _highly suggest_ that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+All materials needed for these that cannot exist in the code (like notebooks or custom source crates students need to download & use) should be included in the [assets/<the type>/<the module>](./assets/) directory.
 
-> Note: not all lectures have workshops or activities.
+Solutions should (when possible) be provided in _a separate branch of this repository_ such that material published on the `main` branch does not include these.
+For example, skeleton code with code-comments providing instructions in a crate on `main` should have a `solution-modX-lessonY-*` branch where a completed reference that fulfills the requirements is available.
+
+The following outline some suggested tools to use for these.
 
 ### Rust Jupyter notebooks with EvCxR
 

@@ -3,6 +3,14 @@ title: Workshop Slide Template # Also update the h1 header on the first slide to
 description: Describe your slides here
 ---
 
+<!--- 
+**********
+**********
+A Workshop is an instructor-lead experience that individual students follow-along with them on.
+**********
+**********
+--->
+
 # Workshop Slide Template
 
 ### _Module X, Lesson Y_
@@ -71,3 +79,5 @@ For the last instruction, clarify what 'success' looks like at the end of the wo
 ### Hints:
 
 <!--- Add hints for any instructions or steps that are particularly complicated. Hints should not entirely provide the answer, but should provide a reference point for users to find the answer. --->
+
+<!-- Solutions should be provided **in a seporate branch** within this repository. -->

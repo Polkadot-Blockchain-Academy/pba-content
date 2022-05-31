@@ -1,9 +1,9 @@
 ---
-title: Lesson Template Slides # Also update the h1 header on the first slide to the same name
+title: Lecture Template Slides # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
 ---
 
-# Lesson Title
+# Lecture Title
 
 ### _Lecture X, Module Y_
 
@@ -35,7 +35,7 @@ _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](m
 
 ---
 
-### Lesson outline
+### Outline
 
 <!--
 You can reference slides within this presentation like [this other slide](#at-the-end-of-this-lecture-you-will-be-able-to) by use of the header title.
@@ -49,9 +49,10 @@ Please make your lecture precise.
 
 -->
 
-1. <!-- TODO: fill this in  -->
-1. <!-- TODO: fill this in  -->
-1. <!-- TODO: fill this in  -->
+1. [Major topic A](#major-topic-a)
+1. Major topic B
+1. [Exercise X](#exercise-title)
+1. Major topic C
 1. [Conclusion](#conclusion)
 1. [Next Steps](#next-steps)
 1. [References](#references)
@@ -60,13 +61,15 @@ Please make your lecture precise.
 
 ### _At the end of this lecture, you will be able to:_
 
-- Describe ... <!-- TODO: fill this in  -->
-- Navigate ... <!-- TODO: fill this in  -->
-- Justify ... <!-- TODO: fill this in  -->
+<!-- TODO: fill this in  -->
+
+- Describe ...
+- Navigate ...
+- Justify ...
 
 ---
 
-## Here is a topic
+## Major topic A
 
 - Use some bullets
 - To make a few points
