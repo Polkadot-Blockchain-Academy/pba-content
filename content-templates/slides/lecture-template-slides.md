@@ -49,6 +49,7 @@ Please make your lecture precise.
 
 -->
 
+1. [Pre-requisites](#pre-requisites)
 1. [Major topic A](#major-topic-a)
 1. Major topic B
 1. [Exercise X](#exercise-title)
@@ -56,6 +57,15 @@ Please make your lecture precise.
 1. [Conclusion](#conclusion)
 1. [Next Steps](#next-steps)
 1. [References](#references)
+
+---
+
+## Pre-requisites
+
+No background in X is necessary. However, the following are expected:
+- Y
+- Z
+- \\(\alpha\\)
 
 ---
 
@@ -93,6 +103,9 @@ Stuff you should remember to say
 
 ### _Describe it here_
 
+
+<!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
+
 ---
 
 ## Exercise instructions
@@ -110,6 +123,7 @@ Notes:
 Make sure to include things here to say to students, perhaps a hint or two.
 Realize that students will be able to view the speaker's notes, as they will have access to them on their devices.
 
+<!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
 
 ---
 

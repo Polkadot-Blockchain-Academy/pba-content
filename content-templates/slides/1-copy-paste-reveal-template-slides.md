@@ -260,9 +260,12 @@ fn main() {
 
 ## Math
 
-KaTeX/LaTeX rendered within blocks with `$$` delimiters
+KaTeX/LaTeX rendered within blocks with "`$$`" delimiters
 
 $$J(\theta_0,\theta_1) = \sum_{i=0}$$
+
+In line uses "`\\(`" and "`\\)`" to render: \\(\alpha\beta\gamma\\)
+.
 
 More info: https://revealjs.com/math/
 
