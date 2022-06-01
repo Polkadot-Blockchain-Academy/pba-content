@@ -2,8 +2,8 @@
 title: Lecture Template Slides # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
 duration: 1 hour
-instructors: ["some one","another gal"]
-teaching-assistants: ["some one","another gal"]
+instructors: ["some one", "another gal"]
+teaching-assistants: ["some one", "another gal"]
 ---
 
 # Lecture Title
@@ -22,14 +22,15 @@ teaching-assistants: ["some one","another gal"]
 <div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
 ### Instructor Name
+
 <!-- .element: style="margin-bottom: -30px;" -->
 
 #### _Position or Title_
+
 <!-- .element: style="margin-left: 20px;" -->
 
 - I am a Subject matter in X
 - A bit about me
-
 
 _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
 
@@ -43,7 +44,7 @@ _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](m
 <!--
 You can reference slides within this presentation like [this other slide](#at-the-end-of-this-lecture-you-will-be-able-to) by use of the header title.
 
-Please make your lecture precise. 
+Please make your lecture precise.
 
 - Limit the main points in a lecture to five or fewer.
 - Create effective visuals, analogies, demonstrations, and examples to reinforce the main points.
@@ -66,6 +67,7 @@ Please make your lecture precise.
 ## Pre-requisites
 
 No background in X is necessary. However, the following are expected:
+
 - Y
 - Z
 - \\(\alpha\\)
@@ -95,6 +97,7 @@ Speaker view ONLY notes
 # An important point
 
 ### _Make it clear_
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -105,7 +108,6 @@ Stuff you should remember to say
 # Exercise title
 
 ### _Describe it here_
-
 
 <!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
 
@@ -118,9 +120,9 @@ Detail what you want students to do in your exercise
 Most exercises are less than 15 minuets in length.
 -->
 
-1. 
-1. 
-1. 
+1.
+1.
+1.
 
 Notes:
 Make sure to include things here to say to students, perhaps a hint or two.
