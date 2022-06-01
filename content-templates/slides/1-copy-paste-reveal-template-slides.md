@@ -35,14 +35,15 @@ revealOptions:
 <div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
 ### Instructor Name
+
 <!-- .element: style="margin-bottom: -30px;" -->
 
 #### _Position or Title_
+
 <!-- .element: style="margin-left: 20px;" -->
 
 - I am a Subject matter in X
 - A bit about me
-
 
 _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
 
@@ -182,6 +183,7 @@ This is the default for all but bullets
 Left justified text with line brake <br>
 use `<br>` <br>
 (MarkDown comment below)
+
 <!-- .element: style="text-align: left;" -->
 
 </div>
