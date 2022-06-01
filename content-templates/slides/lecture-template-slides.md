@@ -1,6 +1,9 @@
 ---
 title: Lecture Template Slides # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
+duration: 1 hour
+instructors: ["some one","another gal"]
+teaching-assistants: ["some one","another gal"]
 ---
 
 # Lecture Title

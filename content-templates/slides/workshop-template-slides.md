@@ -1,6 +1,9 @@
 ---
 title: Workshop Slide Template # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
+duration: 2.5 hours (including 15 minute coffee break)
+instructors: ["some one","another gal"]
+teaching-assistants: ["some one","another gal"]
 ---
 
 <!--- 
