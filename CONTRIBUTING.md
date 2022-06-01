@@ -126,7 +126,7 @@ This template can be used just copy and change slide by slide the content, and n
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
 ```md
-<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+<img src="./assets/img/<module or shared>/some-tilted-thing.png" alt="tilted!">
 
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
@@ -141,7 +141,7 @@ Optionally, you can separate slides vertically using `---v` between slides.
 For distinct parts of the lecture, with some core topic being presented as the, it may be a good idea to stack those slides vertically for easier navigation.
 For example, imagine the core topic was "Code Highlight & Transitions":
 
-<img src="./assets/img/shared/vertical-slides.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/Shared/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 #### Using speaker notes
 
@@ -159,7 +159,7 @@ subsequent lines are just seen in speaker view.
 
 And here's an example of the result:
 
-<img src="./assets/img/shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/Shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 #### Transitions
 
@@ -290,7 +290,7 @@ For these, please create well documented crates that stand alone for each worksh
 ** https://github.com/rust-lang/rustlings is a fantastic place to draw inspiration from.**
 While the full CLI tool to make things interactive ins't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
 
-**Please place stand-alone crates into the [./assets/materials-downloads/<the correct module>/<source>](./assets/materials-downloads/) directory for distribution to students.**
+**Please place stand-alone crates into the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.**
 These can be referenced and then linked to from any slides for them to download or use in an online IDE.
 
 Please make **a new branch in this repo** to store the solutions for your workshops and activities so that we can reference them, but will not be generally available on the deployed resources that students can access.
@@ -318,4 +318,4 @@ There are some great (but limited) options for anyone lacking the ability to do 
 
 While _most_ work students are doing should highlight _practical applications_ of the concepts, sometimes code isn't the best way to engage.
 For non-code based work, please see the [workshop outline template](content-templates/workshop-outline-template.md) that structures what we should include in workshops or activities.
-This should be included in the [./assets/materials-downloads/<the correct module>/<source>](./assets/materials-downloads/) directory for distribution to students.
+This should be included in the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.
