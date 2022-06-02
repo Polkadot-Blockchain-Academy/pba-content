@@ -1881,7 +1881,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "polkadot-blockchain-academy@workspace:."
   dependencies:
-    reveal-md: ^5.3.3
+    prettier: ^2.6.2
+    reveal-md: "git+https://github.com/NukeManDan/reveal-md.git#patch-1"
   languageName: unknown
   linkType: soft
 
@@ -1889,6 +1890,15 @@ __metadata:
   version: 2.0.0
   resolution: "prepend-http@npm:2.0.0"
   checksum: 7694a9525405447662c1ffd352fcb41b6410c705b739b6f4e3a3e21cf5fdede8377890088e8934436b8b17ba55365a615f153960f30877bf0d0392f9e93503ea
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "prettier@npm:2.6.2"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 48d08dde8e9fb1f5bccdd205baa7f192e9fc8bc98f86e1b97d919de804e28c806b0e6cc685e4a88211aa7987fa9668f30baae19580d87ced3ed0f2ec6572106f
   languageName: node
   linkType: hard
 
@@ -2086,9 +2096,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reveal-md@npm:^5.3.3":
+"reveal-md@git+https://github.com/NukeManDan/reveal-md.git#patch-1":
   version: 5.3.3
-  resolution: "reveal-md@npm:5.3.3"
+  resolution: "reveal-md@https://github.com/NukeManDan/reveal-md.git#commit=89fda17dd9404e0d2b0a6dd6b1bf5cb66ec9d441"
   dependencies:
     debug: 4.3.4
     express: 4.18.1
@@ -2111,7 +2121,7 @@ __metadata:
       optional: true
   bin:
     reveal-md: bin/reveal-md.js
-  checksum: ebf4f9c70141b1db9ba992db2fc057f6a288744d44d232d707f1728432e95cbf12063cd92bd611f443cfbb6cb3c6e3d97a897faf2b3f783e0fa5f9f00a44efad
+  checksum: 27882956cace67b6ffddffb31d33965125df2b9c11e038ed09b71ac7b186fc45f71c159014344bd22b5dde33be146c6a9ba5a94573c9a19907650e62047e9181
   languageName: node
   linkType: hard
 

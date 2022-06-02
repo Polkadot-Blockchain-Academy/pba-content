@@ -17,10 +17,9 @@
     <link rel="stylesheet" href="{{{themeUrl}}}" id="theme" />
     <link rel="stylesheet" href="{{{base}}}{{{highlightThemeUrl}}}" />
 
-    <link rel="stylesheet" href="./assets/styles/custom-classes.css" />
 
     {{#cssPaths}}
-    <link rel="stylesheet" href="{{{.}}}" />
+    <link rel="stylesheet" href="{{{base}}}/{{{.}}}" />
     {{/cssPaths}}
 
     {{#watch}}
@@ -38,8 +37,10 @@
   <body>
     <div class="reveal">
       <div class="slides">{{{slides}}}</div>
-      <img class="watermark-logo" src="./assets/PBA-logo-white.svg"/>
-      <img class="watermark-icon" src="./assets/DOT-pink.svg"/>
+      <a href="{{{base}}}/..">
+	 	 <img class="watermark-logo" src="{{{base}}}/assets/img/Shared/PBA-logo-white.svg" alt="PBA Logo">
+	  </a>
+      <img class="watermark-icon" src="{{{base}}}/assets/img/Shared/DOT-pink.svg" alt="DOT">
     </div>
 
     <script src="{{{base}}}/dist/reveal.js"></script>
