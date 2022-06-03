@@ -302,7 +302,24 @@ We suggest that most users will use VSCode as it's most all-around featureful fo
 
 **NOTE: The build times for you project need to be taken into account!**
 Please time on your build machine as a reference and report this to the TAs so we can all plan around the rough timeline to have students start to build things.
-We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students!
+
+- We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students! If you want to use it globally, you need to add this with the right path to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [build]
+  rustc-wrapper = "<path to where>/.cargo/bin/sccache"
+  ```
+
+  Use `which sccache` to find the path.
+
+- To get more power out of `sccache` and maybe overall faster linking, install and use the [`lld` linker](https://lld.llvm.org/) and while noteboooks using EvCxR use this by default if detected, if you want to use it globally, see [this post](https://stackoverflow.com/questions/57812916/how-do-i-change-the-default-rustc-cargo-linker) on how to enable it. You need to add something like this to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [target.x86_64-unknown-linux-gnu]
+  rustflags = [
+    "-C", "link-arg=-fuse-ld=lld",
+  ]
+  ```
 
 #### Online IDE
 
