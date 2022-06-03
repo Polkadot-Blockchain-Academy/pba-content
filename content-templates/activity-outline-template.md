@@ -20,6 +20,7 @@ This could be all that is needed to provide to the students if no associated mat
 <!---
 Insert Skills that are being practiced. Simple syntax is fine, e.g., "Using pallets." "Building a hash function"
 --->
+
 - Skill 1
 - Skill 2
 - Skill 3
@@ -31,6 +32,7 @@ Insert Skills that are being practiced. Simple syntax is fine, e.g., "Using pall
 <!--
 If there are materials needed for this exercise, please insert a links or describe what is needed to them here.
 -->
+
 - Source from a dedicated repo
 - Source included in `assets/...` directory of this repo
 - A Jupyter notebook, see templates in `content-templates/jupyter-notebooks`
@@ -49,16 +51,15 @@ If any particular instruction is complicated, use multiple sentences or insert a
 For the last instruction, clarify what 'success' looks like at the end of the workshop.
 --->
 
-1. 
-2. 
+1.
+2.
 
---- 
+---
 
-3. 
-4. 
+3.
+4.
 
--- 
-
+--
 
 ---
 

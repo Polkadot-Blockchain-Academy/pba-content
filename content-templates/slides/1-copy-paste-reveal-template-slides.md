@@ -29,20 +29,21 @@ revealOptions:
 <div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
 <!-- TODO: add a good circularly cropped head-shot of ou to the `assets/profile` folder  -->
-<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/shared/profile.png"/>
+<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/Shared/profile.png"/>
 
 </div>
 <div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
 ### Instructor Name
+
 <!-- .element: style="margin-bottom: -30px;" -->
 
 #### _Position or Title_
+
 <!-- .element: style="margin-left: 20px;" -->
 
 - I am a Subject matter in X
 - A bit about me
-
 
 _[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
 
@@ -81,7 +82,7 @@ Stuff you should remember to say
 ## Pictures
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../../assets/img/shared/Landscape_mountain.jpg" alt="Some Pic">
+<img style="width: 800px" src="../../assets/img/Shared/Landscape_mountain.jpg" alt="Some Pic">
 
 #### _Leave a note on why this one matters_
 
@@ -182,6 +183,7 @@ This is the default for all but bullets
 Left justified text with line brake <br>
 use `<br>` <br>
 (MarkDown comment below)
+
 <!-- .element: style="text-align: left;" -->
 
 </div>
