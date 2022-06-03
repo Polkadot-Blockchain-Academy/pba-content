@@ -15,7 +15,7 @@ teaching-assistants: ["some one", "another gal"]
 <div class="flex-container">
 <div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<!-- TODO: add a good circularly cropped headshot of ou to the `assets/profile` folder  -->
+<!-- TODO: add a good circularly cropped head-shot of ou to the `assets/profile` folder  -->
 <img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/profile.png"/>
 
 </div>
