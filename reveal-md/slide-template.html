@@ -33,17 +33,20 @@
     </script>
     {{/watch}}
   </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">{{{slides}}}</div>
+  <body class="site">
+    <header class="site-header">
       <a href="{{{base}}}/..">
         <img class="watermark-logo" src="{{{base}}}/assets/img/theme/PBA-logo-white.svg" alt="PBA Logo">
       </a>
       <img class="watermark-icon" src="{{{base}}}/assets/img/theme/DOT-pink.svg" alt="DOT">
-    </div>
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        {{{slides}}}
+      </article>
+    </main>
 
     <script src="{{{base}}}/dist/reveal.js"></script>
-
     <script src="{{{base}}}/plugin/markdown/markdown.js"></script>
     <script src="{{{base}}}/plugin/highlight/highlight.js"></script>
     <script src="{{{base}}}/plugin/zoom/zoom.js"></script>
