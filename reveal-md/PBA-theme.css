@@ -1,5 +1,5 @@
 /**
- * PBA slide theme 
+ * PBA slide theme
  * Derived from the night theme in reveal.js
  * More info https://github.com/webpro/reveal-md#theme & https://revealjs.com/themes/
 **/
@@ -53,7 +53,7 @@ a:visited {
 		 url('./fonts/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
 		 url('./fonts/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
   }
-  
+
   /* work-sans-800 - latin */
   @font-face {
 	font-family: 'Work Sans';
@@ -67,7 +67,7 @@ a:visited {
 		 url('./fonts/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
 		 url('./fonts/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
   }
-  
+
   /* work-sans-italic - latin */
   @font-face {
 	font-family: 'Work Sans';
@@ -81,7 +81,7 @@ a:visited {
 		 url('./fonts/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
 		 url('./fonts/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
   }
-  
+
   /* work-sans-800italic - latin */
   @font-face {
 	font-family: 'Work Sans';
@@ -95,7 +95,7 @@ a:visited {
 		 url('./fonts/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
 		 url('./fonts/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
   }
-  
+
 
 a:hover,
 a:active {
@@ -191,7 +191,7 @@ section.has-light-background h6 {
 }
 
 .reveal h1 {
-	font-weight: bold; 
+	font-weight: bold;
 	font-size: var(--r-heading1-size);
 	text-shadow: var(--r-heading1-text-shadow);
 
