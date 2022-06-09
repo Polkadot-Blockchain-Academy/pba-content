@@ -17,7 +17,7 @@
       html {
         --font-size: 18px;
         --container: 70em;
-        --size: 1.5em;
+        --size: 1.5rem;
       }
 
       /* general layout elements */
@@ -36,7 +36,13 @@
         margin: 0;
       }
       a:hover {
+        color: var(--r-link-color);
+      }
+      a:hover {
         color: var(--r-link-color-hover);
+      }
+      ul {
+        margin: 0;
       }
       /* site layout */
       .site {
@@ -64,23 +70,46 @@
       }
       .site-logo {
         width: calc(var(--size) * 6);
+        margin-left: calc(var(--size) / 2);
       }
       .site-main {
         padding: var(--size);
       }
-      .site-main ul {
-        font-size: calc(var(--font-size) * 1.2);
-      }
       .site-main li {
-        margin-bottom: calc(var(--size) / 2);
+        color: var(--r-link-color-hover);
+        display: flex;
+        align-items: center;
       }
+      .site-main li::before {
+        font-size: calc(var(--font-size) * 3);
+        content: "";
+        display: list-item;
+        list-style-type: circle;
+        line-height: 0;
+        color: var(--r-link-color-hover);
+        transition: color 700ms ease-out, font-size 200ms ease-out;
+      }
+      .site-main li:hover::before {
+        color: var(--r-link-color);
+        font-size: calc(var(--font-size) * 5);
+        list-style-type: initial;
+      }
+
       .site-main li a {
+        padding-top: calc(var(--size) / 3);
+        padding-bottom: calc(var(--size) / 3);
+        font-size: calc(var(--font-size) * 1.2);
         color: var(--r-main-color);
         text-decoration: none;
         word-break: break-word;
       }
       .site-main li a:hover {
         color: var(--r-link-color-hover);
+        transition: color 200ms ease-out;
+      }
+      .site-main li a:hover {
+        color: var(--r-link-color-hover);
+        transition: color 200ms ease-out;
       }
       /* menuigation bar, sticky */
       .menu {
@@ -125,6 +154,9 @@
     </header>
 
     <main class="site-main">
+      <p>
+        All slides available for the academy.
+      </p>
       <ul>
         {{#files}}
         <li>
