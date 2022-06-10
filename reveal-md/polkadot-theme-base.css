@@ -1,0 +1,112 @@
+/* variables */
+html {
+	--size: 1.5em;
+}
+
+/* layout  */
+body {
+	background-color: var(--r-background-color);
+}
+
+/* default elements */
+a:link,
+a:visited {
+	color: var(--r-link-color-dark);
+}
+
+/* fonts: work-sans-regular - latin
+  https://google-webfonts-helper.herokuapp.com/fonts/work-sans?subsets=latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('./fonts/work-sans-v17-latin-regular.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		   url('./fonts/work-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		   url('./fonts/work-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+		   url('./fonts/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-800 - latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 800;
+	src: url('./fonts/work-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		   url('./fonts/work-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		   url('./fonts/work-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
+		   url('./fonts/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-italic - latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: italic;
+	font-weight: 400;
+	src: url('./fonts/work-sans-v17-latin-italic.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		   url('./fonts/work-sans-v17-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		   url('./fonts/work-sans-v17-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		   url('./fonts/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-800italic - latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: italic;
+	font-weight: 800;
+	src: url('./fonts/work-sans-v17-latin-800italic.eot'); /* IE9 Compat Modes */
+	src: local(''),
+		   url('./fonts/work-sans-v17-latin-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		   url('./fonts/work-sans-v17-latin-800italic.woff2') format('woff2'), /* Super Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-800italic.woff') format('woff'), /* Modern Browsers */
+		   url('./fonts/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
+		   url('./fonts/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* site layout */
+.site-reveal .site-header img {
+  margin: 0;
+}
+
+.site-header .watermark-logo {
+	width: 100%;
+  max-width: 20vh;
+}
+
+/* Hover on watermark logo -> left side bar appears */
+.site-header a:hover .watermark-logo {
+	box-shadow: -20px 0px 10px -5px lightslategray;
+}
+
+.site-header .watermark-icon {
+	width: 100%;
+  max-width: 4vh;
+}
+
+.site-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 99;
+	display: flex;
+	justify-content: space-between;
+  padding: 10px;
+}
+
+/* custom reveal */
+.site-reveal.reveal h1,
+.site-reveal.reveal h2,
+.site-reveal.reveal h3,
+.site-reveal.reveal h4,
+.site-reveal.reveal h5 {
+  line-height: 1.2;
+}

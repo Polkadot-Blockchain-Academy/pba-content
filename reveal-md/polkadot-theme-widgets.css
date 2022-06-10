@@ -1,0 +1,9 @@
+/* a widget to display columns of things */
+widget-columns {
+  display: flex;
+}
+widget-column {
+  text-align: left;;
+  flex-basis: 50%;
+  padding: var(--size);
+}
