@@ -103,10 +103,38 @@ a:visited {
 }
 
 /* custom reveal */
+.site-reveal.reveal p {
+  margin-top: 0;
+  margin-bottom: calc(var(--size) / 2);
+}
 .site-reveal.reveal h1,
 .site-reveal.reveal h2,
 .site-reveal.reveal h3,
 .site-reveal.reveal h4,
 .site-reveal.reveal h5 {
   line-height: 1.2;
+  margin-bottom: calc(var(--size) / 2);
+}
+
+.site-reveal.reveal ul {
+  list-style: none;
+}
+.site-reveal.reveal li {
+  display: flex;
+  align-items: flex-start;
+  list-style: none;
+  margin-bottom: calc(var(--size) / 2);
+  font-size: 0.8em;
+}
+.site-reveal.reveal li::before {
+  margin-top: 0.3em;
+  width: auto;
+  position: static;
+  font-size: 2em;
+  content: "";
+  display: list-item;
+  list-style-type: disc;
+  line-height: 0;
+  color: var(--r-link-color);
+  transition: color 700ms ease-out, font-size 200ms ease-out;
 }
