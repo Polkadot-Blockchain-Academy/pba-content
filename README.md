@@ -4,6 +4,8 @@ _Using this repo, subject matter experts can propose changes to content directly
 
 # Polkadot Blockchain Academy
 
+## NOTE: Subject Matter Experts (SMEs) should use [./CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
+
 The Polkadot Blockchain Academy is an intensive academic program teaching Blockchain, Substrate and Polkadot to talented developers.
 
 This program aims at:
