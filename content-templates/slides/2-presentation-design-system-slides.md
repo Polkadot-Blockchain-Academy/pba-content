@@ -7,7 +7,7 @@ description: A design system to use within slides of a presentation
 
 For the polkadot academy slides.
 
-<widget-speaker name="Speaker Name Surname" position="Position/Department" image=""></widget-speaker>
+<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/theme/DOT-pink.svg"></widget-speaker>
 
 ---v
 ```html
@@ -16,9 +16,10 @@ For the polkadot academy slides.
 For the polkadot academy slides.
 
 <widget-speaker
+  small
   name="Speaker Name Surname"
   position="Position/Department"
-  image=""
+  image="/assets/img/theme/DOT-pink.svg"
 ></widget-speaker>
 ```
 
@@ -51,16 +52,19 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 
 ---
 
-<widget-speaker name="Speaker Name Surname" position="Position/Department" image=""></widget-speaker>
+<widget-speaker name="Speaker Name Surname" position="Position/Department" image="/assets/img/theme/DOT-pink.svg" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood" telegram="PolkadotOfficial"></widget-speaker>
 
 ---v
 
 ```html
 <widget-speaker
-  open="true"
   name="Speaker Name Surname"
   position="Position/Department"
-  image=""
+  image="/assets/img/theme/DOT-pink.svg"
+  github="gavofyork"
+  twitter="gavofyork"
+  linkedin="gavin-wood"
+  telegram="PolkadotOfficial"
 ></widget-speaker>
 ```
 

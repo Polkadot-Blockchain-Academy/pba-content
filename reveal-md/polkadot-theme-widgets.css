@@ -26,13 +26,50 @@ widget-text[right] {
 */
 /* speaker card */
 widget-speaker {
+  /* local variables */
+  --size-image: 20rem;
+
+  display: flex;
+  text-align: left;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--size) * 2);
+}
+
+widget-speaker[small] widget-speaker-social {
+  display: none;
+}
+
+widget-speaker[small] widget-speaker-image {
+  width: calc(var(--size-image) / 2);
+}
+widget-speaker[small] widget-speaker-position {
+  margin-bottom: 0;
+}
+
+widget-speaker-body {
   display: flex;
   flex-direction: column;
 }
+widget-speaker-image {
+  width: var(--size-image);
+  margin-right: 2em;
+}
 widget-speaker-name {
-  font-size: var(--r-heading2-size);
+  font-size: var(--r-heading3-size);
   font-weight: bold;
 }
 widget-speaker-position {
-  font-size: var(--r-heading2-size);
+  font-size: var(--r-heading3-size);
+  margin-bottom: 1em;
+}
+
+widget-speaker-social {
+  display: flex;
+  flex-direction: column;
+}
+widget-speaker-social-link {}
+widget-speaker-social-link-title {
+  margin-right: 0.5em;
+  text-transform: capitalize;
 }
