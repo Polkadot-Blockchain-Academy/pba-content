@@ -1,4 +1,7 @@
-/* a widget to display columns of things */
+/*
+  custom-elements
+*/
+/* columns:  a widget to display columns of things */
 widget-columns {
   display: flex;
   align-items: center;
@@ -9,11 +12,27 @@ widget-column {
   padding: var(--size);
 }
 
-/* text */
+/* text: some text base styling */
 
 widget-text {
   text-align: left;
 }
 widget-text[right] {
   text-align: right;
+}
+
+/*
+  web-components
+*/
+/* speaker card */
+widget-speaker {
+  display: flex;
+  flex-direction: column;
+}
+widget-speaker-name {
+  font-size: var(--r-heading2-size);
+  font-weight: bold;
+}
+widget-speaker-position {
+  font-size: var(--r-heading2-size);
 }
