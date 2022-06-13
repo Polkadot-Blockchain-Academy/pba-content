@@ -141,7 +141,7 @@ Optionally, you can separate slides vertically using `---v` between slides.
 For distinct parts of the lecture, with some core topic being presented as the, it may be a good idea to stack those slides vertically for easier navigation.
 For example, imagine the core topic was "Code Highlight & Transitions":
 
-<img src="./assets/img/Shared/vertical-slides.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/0-Shared/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 #### Using speaker notes
 
@@ -159,7 +159,7 @@ subsequent lines are just seen in speaker view.
 
 And here's an example of the result:
 
-<img src="./assets/img/Shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/0-Shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 #### Transitions
 
@@ -302,7 +302,24 @@ We suggest that most users will use VSCode as it's most all-around featureful fo
 
 **NOTE: The build times for you project need to be taken into account!**
 Please time on your build machine as a reference and report this to the TAs so we can all plan around the rough timeline to have students start to build things.
-We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students!
+
+- We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students! If you want to use it globally, you need to add this with the right path to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [build]
+  rustc-wrapper = "<path to where>/.cargo/bin/sccache"
+  ```
+
+  Use `which sccache` to find the path.
+
+- To get more power out of `sccache` and maybe overall faster linking, install and use the [`lld` linker](https://lld.llvm.org/) and while notebooks using EvCxR use this by default if detected, if you want to use it globally, see [this post](https://stackoverflow.com/questions/57812916/how-do-i-change-the-default-rustc-cargo-linker) on how to enable it. You need to add something like this to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [target.x86_64-unknown-linux-gnu]
+  rustflags = [
+    "-C", "link-arg=-fuse-ld=lld",
+  ]
+  ```
 
 #### Online IDE
 
