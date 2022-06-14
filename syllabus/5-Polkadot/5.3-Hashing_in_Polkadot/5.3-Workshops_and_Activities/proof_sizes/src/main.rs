@@ -127,14 +127,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// Can be displayed and compared.
     #[derive(Debug, PartialEq, Eq)]
     pub struct BlockExecutionStats {
-        /// height
-        block_number: u32,
-        /// Size of proof
-        proof_size: usize,
-        /// Size of compact proof (lookup in susbstrate for `encode_compact`).
-        compact_proof_size: usize,
-        /// Size of compressed proof (from compact with zsh).
-        compressed_proof_size: usize,
+			/// height
+			block_number: u32,
+			/// Size of proof
+			proof_size: usize,
+			/// Size of compact proof (lookup in susbstrate for `encode_compact`).
+			compact_proof_size: usize,
+			/// Size of compressed proof (from compact with zsh).
+			compressed_proof_size: usize,
+			/// Size of the full db. Facultative.
+			full_db_size: usize,
+			/// Size of the last db state (reflect more the state of a parachain with pruning). Facultative.
+			last_state_db_size: usize,
     }
 
     fn run_blocks<SR: SimpleRun>(
@@ -212,6 +216,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 proof_size,
                 compact_proof_size,
                 compressed_proof_size,
+								full_db_size: 0, // TODO from trie backend memory db
+								last_state_db_size: 0, // TODO from trie backend node iterator
             });
 
             let changes = change_overlay
