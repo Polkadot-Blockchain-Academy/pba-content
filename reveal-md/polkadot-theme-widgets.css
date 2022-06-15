@@ -34,7 +34,11 @@ widget-speaker {
   text-align: left;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--size) * 2);
+  padding: var(--size);
+}
+
+* + widget-speaker {
+  padding-top: calc(var(--size) * 2);
 }
 
 widget-speaker[small] widget-speaker-social {
