@@ -10,7 +10,7 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
   - [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
   - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
-  - [Conceptual workshops and exercises]
+  - [Conceptual workshops and exercises](#conceptual-workshops-and-activities)
 
 ## Content organization
 
@@ -65,7 +65,7 @@ yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
-Please start with the [INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md](./reveal-md/INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md) slides to see what is possible with the slides features and some template slides.
+Please start with the ["How to use Reveal slides"](./content-templates/slides/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
 
 <details>
 <summary>If you are missing node or yarn, please install them as described below. (click to toggle)</summary>
@@ -115,18 +115,18 @@ yarn start
 
 - The [how-to use reveal slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/0-how-to-use-reveal-slides.html) and the [source](./content-templates/slides/0-how-to-use-reveal-slides.md)
 - The [copy & paste slide templates](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/1-copy-paste-reveal-template-slides.html) that are styled to use in your content and their [source](./content-templates/slides/1-copy-paste-reveal-template-slides.md)
-- The [lesson template slides](https://paritytech.github.io/polkadot-blockchain-academy//content-templates/slides/lesson-template-slides.html) and their [source](/content-templates/slides/lesson-template-slides.md) that give the structure most lessons should use to start with.
+- The [lecture template slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/lecture-template-slides.html) and their [source](/content-templates/slides/lecture-template-slides.md) that give the structure most lessons should use to start with.
 
 ---
 
 ### Editing `reveal-md` slides
 
-**There is a [base slide template example](./content-templates/slides/lesson-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./content-templates/slides/lecture-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
 ```md
-<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+<img src="./assets/img/<module or shared>/some-tilted-thing.png" alt="tilted!">
 
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
@@ -141,7 +141,7 @@ Optionally, you can separate slides vertically using `---v` between slides.
 For distinct parts of the lecture, with some core topic being presented as the, it may be a good idea to stack those slides vertically for easier navigation.
 For example, imagine the core topic was "Code Highlight & Transitions":
 
-<img src="./assets/img/shared/vertical-slides.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/0-Shared/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 #### Using speaker notes
 
@@ -159,7 +159,7 @@ subsequent lines are just seen in speaker view.
 
 And here's an example of the result:
 
-<img src="./assets/img/shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
+<img src="./assets/img/0-Shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 #### Transitions
 
@@ -234,16 +234,24 @@ Once you've followed the set-up instructions and have the repository running loc
 
 ## Exercises, workshops and activities
 
-Each lecture may have a set of exercises, workshops and/or activities:
+Each lecture may have a set of exercises, workshops and/or activities.
+Not all lectures _must_ have workshops or activities... but almost all _should_.
+**The academy is focused on _practical application_ of Web3 concepts we cover, more than simply understanding.**
+Here is how we define these:
 
-- **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and can be completing during the lecture.
-- **Workshops**: these are step-by-step, guided in-class workshops, intended to be more like individual labs, whose worksheet would live in a separate folder with a separate file called `Name_of_Lecture_Workshop.md`.
-- **Activities**: these are longer-form and self-directed activities for individuals and/or small groups that do not "hand-hold" like workshops with explicit step-by-step guidance.
-  These live in a separate folder called `Workshops_and_Activities` in a separate file called `Name_of_Lecture_Activities.md`.
+- **Exercises**: these are short (5-10 minutes) exercises that are included as part of the slide deck and will be completing during the lecture.
+- **Workshops**: these are step-by-step, longer (30 min to 3 hours) guided in-class material.
+  These are instructor lead, and hand-held to get everyone to the same result.
+- **Activities**: these are self-directed assignments for individuals and/or small groups that do not "hand-hold" like workshops.
+  Student's completed work is expected to have some variety and a canonical solutions should be produced to review when students submit to compare to.
 
-We highly suggest that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+We _highly suggest_ that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
+All materials needed for these that cannot exist in the code (like notebooks or custom source crates students need to download & use) should be included in the [assets/<the type>/<the module>](./assets/) directory.
 
-> Note: not all lectures have workshops or activities.
+Solutions should (when possible) be provided in _a separate branch of this repository_ such that material published on the `main` branch does not include these.
+For example, skeleton code with code-comments providing instructions in a crate on `main` should have a `solution-modX-lessonY-*` branch where a completed reference that fulfills the requirements is available.
+
+The following outline some suggested tools to use for these.
 
 ### Rust Jupyter notebooks with EvCxR
 
@@ -266,7 +274,7 @@ REPLs are a fantastic way to experiment with a language interactively.
 
 > Note that sadly `rust-analyzer` [does not work with notebooks](https://github.com/rust-lang/rust-analyzer/issues/5141) at this time.
 > Thus student's will have a harder time using unfamiliar crate's features (they are all new to rust).
-> Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use. 
+> Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use.
 
 #### EvCxR Templates
 
@@ -279,11 +287,13 @@ REPLs are a fantastic way to experiment with a language interactively.
 For non-trivial Rust work, it's best to use a full IDE and cargo properly, over the REPL examples discussed above.
 For these, please create well documented crates that stand alone for each workshop or activity.
 
-** https://github.com/rust-lang/rustlings is a fantastic place to draw inspiration from.**
-While the full CLI tool to make things interactive ins't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
+**[Rustlings](https://github.com/rust-lang/rustlings) is a fantastic place to draw inspiration from.**
+While the full CLI tool to make things interactive isn't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
 
-**Please place stand-alone crates into the [./assets/materials-downloads/<the correct module>/<source>](./assets/materials-downloads/) directory for distribution to students.**
+**Please place stand-alone crates into the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.**
 These can be referenced and then linked to from any slides for them to download or use in an online IDE.
+
+Please make **a new branch in this repo** to store the solutions for your workshops and activities so that we can reference them, but will not be generally available on the deployed resources that students can access.
 
 #### Local IDE
 
@@ -292,7 +302,24 @@ We suggest that most users will use VSCode as it's most all-around featureful fo
 
 **NOTE: The build times for you project need to be taken into account!**
 Please time on your build machine as a reference and report this to the TAs so we can all plan around the rough timeline to have students start to build things.
-We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students!
+
+- We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students! If you want to use it globally, you need to add this with the right path to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [build]
+  rustc-wrapper = "<path to where>/.cargo/bin/sccache"
+  ```
+
+  Use `which sccache` to find the path.
+
+- To get more power out of `sccache` and maybe overall faster linking, install and use the [`lld` linker](https://lld.llvm.org/) and while notebooks using EvCxR use this by default if detected, if you want to use it globally, see [this post](https://stackoverflow.com/questions/57812916/how-do-i-change-the-default-rustc-cargo-linker) on how to enable it. You need to add something like this to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [target.x86_64-unknown-linux-gnu]
+  rustflags = [
+    "-C", "link-arg=-fuse-ld=lld",
+  ]
+  ```
 
 #### Online IDE
 
@@ -307,5 +334,5 @@ There are some great (but limited) options for anyone lacking the ability to do 
 ### Conceptual workshops and activities
 
 While _most_ work students are doing should highlight _practical applications_ of the concepts, sometimes code isn't the best way to engage.
-For non-code based work, please see the [workshop outline template](content-templates/workshop-outline-template.md) that structures what we should include in workshops or activities.
-This should be included in the [./assets/materials-downloads/<the correct module>/<source>](./assets/materials-downloads/) directory for distribution to students.
+For non-code based work, please see the [workshop template](content-templates/slides/workshop-template-slides.md) that structures what we should include in workshops or activities.
+This should be included in the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.

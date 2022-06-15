@@ -4,7 +4,7 @@
 	"margin": 0.04,
 	"minScale": 0.2,
 	"maxScale": 2.0,
-	"transition": "slide",
+	"transition": "none",
 	"controls": true,
 	"progress": true,
 	"center": true,

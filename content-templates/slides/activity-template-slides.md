@@ -1,10 +1,18 @@
 ---
 title: Activity Template Slides # Also update the h1 header on the first slide to the same name
 description: Describe your activity in one line here
+duration: 2.5 hours (including 15 minute coffee break)
+instructors: ["some one", "another gal"]
+teaching-assistants: ["some one", "another gal"]
 ---
 
-
-<!--- An Activity is an experience that individual students (or groups of students) are completing on their own. --->
+<!---
+**********
+**********
+An Activity is an experience that individual students (or groups of students) are completing on their own.
+**********
+**********
+--->
 
 # Activity Title
 
@@ -26,7 +34,7 @@ description: Describe your activity in one line here
 
 ### _describe this section_
 
-_Slides are vertically below this one_ 
+_Slides are vertically below this one_
 
 ---v
 
@@ -57,7 +65,7 @@ For the last instruction, clarify what 'success' looks like at the end of the wo
 
 ### _describe this section_
 
-_Slides are vertically below this one_ 
+_Slides are vertically below this one_
 
 ---v
 
