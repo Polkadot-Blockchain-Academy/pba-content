@@ -71,11 +71,11 @@ widget-speaker-image img {
   height: 100%;
 }
 widget-speaker-name {
-  font-size: var(--r-heading3-size);
+  font-size: var(--r-heading4-size);
   font-weight: bold;
 }
 widget-speaker-position {
-  font-size: var(--r-heading3-size);
+  font-size: var(--r-heading4-size);
   margin-bottom: 1em;
 }
 

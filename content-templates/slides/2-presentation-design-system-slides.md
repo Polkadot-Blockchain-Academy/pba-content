@@ -39,7 +39,6 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 </widget-text>
 
 ---v
----
 
 ```html
 <widget-text>
