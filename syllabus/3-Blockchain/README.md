@@ -27,3 +27,9 @@
 **3.5 - Substrate Network Launch**
 
 - Leader: Joshy
+
+**3.6 - AMA / Panel Discussion**
+
+- Leader: Emre
+- Participants: Joshy, Kian, Shawn, other core devs around. Really a chance to see where people are
+  at before the real FRAME sessions begin.
