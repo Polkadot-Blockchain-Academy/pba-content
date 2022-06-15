@@ -120,16 +120,16 @@ a:visited {
   list-style: none;
 }
 .site-reveal.reveal li {
-  display: flex;
-  align-items: flex-start;
   list-style: none;
   margin-bottom: calc(var(--size) / 2);
   font-size: 0.8em;
 }
 .site-reveal.reveal li::before {
-  margin-top: 0.3em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 0.35em;
   width: auto;
-  position: static;
   font-size: 2em;
   content: "";
   display: list-item;
