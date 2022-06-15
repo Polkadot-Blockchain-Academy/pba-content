@@ -34,8 +34,6 @@ In 1808, Georges Cuvier concluded that the skulls belonged to a giant marine liz
 
 Mosasaurus had jaws capable of swinging back and forth and was capable of powerful bites, using dozens of teeth designed for cutting prey. Its four limbs were shaped into paddles to steer underwater. Mosasaurus was a predator with excellent vision but a poor sense of smell, and a high metabolic rate suggesting it was warm-blooded.
 
-It lived in much of the Atlantic and in a wide range of oceanic climates including tropical, subtropical, temperate, and subpolar.
-
 </widget-text>
 
 ---v
@@ -50,8 +48,6 @@ It lived from about 82 to 66 million years ago during the Late Cretaceous. Its e
 In 1808, Georges Cuvier concluded that the skulls belonged to a giant marine lizard with similarities to monitors but otherwise unlike any known living animal, supporting the then-developing idea of extinction. Scientists continue to debate whether its closest living relatives are monitors or snakes.
 
 Mosasaurus had jaws capable of swinging back and forth and was capable of powerful bites, using dozens of teeth designed for cutting prey. Its four limbs were shaped into paddles to steer underwater. Mosasaurus was a predator with excellent vision but a poor sense of smell, and a high metabolic rate suggesting it was warm-blooded.
-
-It lived in much of the Atlantic and in a wide range of oceanic climates including tropical, subtropical, temperate, and subpolar.
 
 </widget-text>
 ```
