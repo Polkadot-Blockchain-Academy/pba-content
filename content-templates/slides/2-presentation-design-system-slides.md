@@ -5,21 +5,20 @@ description: A design system to use within slides of a presentation
 
 # Design System
 
-For the polkadot academy slides.
+### _For the polkadot academy slides._
 
-<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/theme/PBA-logo-white.svg"></widget-speaker>
+<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/0-Shared/profile.png"></widget-speaker>
 
 ---v
-```html
-# Design system
 
-For the polkadot academy slides.
+```html
+# Design system For the polkadot academy slides.
 
 <widget-speaker
   small
   name="Speaker Name Surname"
   position="Position/Department"
-  image="/assets/img/theme/PBA-logo-white.svg"
+  image="/assets/img/0-Shared/profile.png"
 ></widget-speaker>
 ```
 
@@ -38,6 +37,7 @@ Mosasaurus had jaws capable of swinging back and forth and was capable of powerf
 It lived in much of the Atlantic and in a wide range of oceanic climates including tropical, subtropical, temperate, and subpolar.
 
 </widget-text>
+
 ---v
 
 ### Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles. It lived from about 82 to 66 million years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
@@ -52,7 +52,7 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 
 ---
 
-<widget-speaker name="Speaker Name Surname" position="Position/Department" image="/assets/img/theme/DOT-pink.svg" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood" telegram="PolkadotOfficial"></widget-speaker>
+<widget-speaker name="Speaker Name Surname" position="Position/Department" image="/assets/img/0-Shared/profile.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood" telegram="PolkadotOfficial"></widget-speaker>
 
 ---v
 
@@ -60,7 +60,7 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 <widget-speaker
   name="Speaker Name Surname"
   position="Position/Department"
-  image="/assets/img/theme/DOT-pink.svg"
+  image="/assets/img/0-Shared/profile.png"
   github="gavofyork"
   twitter="gavofyork"
   linkedin="gavin-wood"
@@ -74,10 +74,57 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 
 ---
 
+## Rust Example
+
+```rust [0|1,6|15-25|30-31]
+#![cfg_attr(not(feature = "std"), no_std)]
+// `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
+#![recursion_limit = "256"]
+
+// Make the WASM binary available.
+#[cfg(feature = "std")]
+include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
+
+mod weights;
+pub mod xcm_config;
+
+/// BlockId type as expected by this runtime.
+pub type BlockId = generic::BlockId<Block>;
+
+/// The SignedExtension to the basic transaction logic.
+pub type SignedExtra = (
+	frame_system::CheckNonZeroSender<Runtime>,
+	frame_system::CheckSpecVersion<Runtime>,
+	frame_system::CheckTxVersion<Runtime>,
+	frame_system::CheckGenesis<Runtime>,
+	frame_system::CheckEra<Runtime>,
+	frame_system::CheckNonce<Runtime>,
+	frame_system::CheckWeight<Runtime>,
+	pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
+);
+
+/// Unchecked extrinsic type as expected by this runtime.
+pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, SignedExtra>;
+
+/// Extrinsic type that has already been checked.
+pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, Call, SignedExtra>;
+
+/// Executive: handles dispatch to the various modules.
+pub type Executive = frame_executive::Executive<
+	Runtime,
+	Block,
+	frame_system::ChainContext<Runtime>,
+	Runtime,
+	AllPalletsWithSystem,
+>;
+```
+
+---
+
 <widget-columns>
   <widget-column>
 
-## Lorem ipsum dolor  sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
 
   </widget-column>
   <widget-column>
@@ -94,43 +141,38 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 
 ```html
 <widget-columns>
+  <widget-column> ### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. </widget-column>
   <widget-column>
-
-## Lorem ipsum dolor  sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-
-  </widget-column>
-  <widget-column>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in
-- Excepteur sint occaecat cupidatat non proident, sunt in
-
+    - Lorem ipsum dolor sit amet, consectetur adipiscing elit - Ut enim ad minim veniam, quis nostrud exercitation -
+    Duis aute irure dolor in reprehenderit in - Excepteur sint occaecat cupidatat non proident, sunt in
   </widget-column>
 </widget-columns>
 ```
 
 ---
 
-<widget-image src="/assets/img/4-substrate/WebAssembly.png"></widget-image>
+<widget-image src="/assets/img/4-Substrate/WebAssembly.png"></widget-image>
 
 ---v
 
 ```html
-<widget-image src="/assets/img/4-substrate/WebAssembly.png"></widget-image>
+<widget-image src="/assets/img/4-Substrate/WebAssembly.png"></widget-image>
 ```
 
 ---
-<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg-2.png" -->
+
+<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 
 ---v
+
 ```html
-<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg-2.png" -->
+<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 ```
 
 <widget-text>
 
 More info on reveal/reveal-md backgrounds:
+
 - https://revealjs.com/backgrounds/
 - https://www.npmjs.com/package/reveal-md custom styles attributes
 
@@ -138,7 +180,7 @@ More info on reveal/reveal-md backgrounds:
 
 ---
 
-<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg-2.png" -->
+<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 <widget-columns>
   <widget-column>
 
@@ -154,26 +196,28 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg.png" -->
+<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 <widget-columns>
   <widget-column>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-- Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-
+    - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    magna aliqua. - Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. - Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    - Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
   </widget-column>
   <widget-column></widget-column>
 </widget-columns>
 ```
 
 ---
+
 <!-- .slide: data-background-color="#8D3AED" -->
+
 # Section title
 
 ---v
+
 <!-- .slide: data-background-color="#8D3AED" -->
+
 ```html
 <!-- .slide: data-background-color="#8D3AED" -->
 # Section title
@@ -181,7 +225,7 @@ More info on reveal/reveal-md backgrounds:
 
 ---
 
-# Slide Title
+## Slide Title
 
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 - Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

@@ -152,11 +152,6 @@ pub type Executive = frame_executive::Executive<
 >;
 ```
 
-### here
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-
 ---
 
 ## Columns
