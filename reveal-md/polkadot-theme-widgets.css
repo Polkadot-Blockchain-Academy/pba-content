@@ -15,6 +15,7 @@ widget-column {
 /* text: some text base styling */
 
 widget-text {
+  display: block;
   text-align: left;
 }
 widget-text[right] {
@@ -41,7 +42,8 @@ widget-speaker[small] widget-speaker-social {
 }
 
 widget-speaker[small] widget-speaker-image {
-  width: calc(var(--size-image) / 2);
+  width: calc(var(--size-image) / 3) !important;
+  height: calc(var(--size-image) / 3) !important;
 }
 widget-speaker[small] widget-speaker-position {
   margin-bottom: 0;
@@ -52,8 +54,21 @@ widget-speaker-body {
   flex-direction: column;
 }
 widget-speaker-image {
-  width: var(--size-image);
+  width: var(--size-image) !important;
+  height: var(--size-image) !important;
+
   margin-right: 2em;
+  border-radius: 50%;
+  overflow: hidden;
+  transform: scale(0.2);
+  opacity: 0;
+  transition: transform 808ms ease-in-out, opacity 707ms ease-in-out;
+}
+widget-speaker-image img {
+  margin-top: 0 !important;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 widget-speaker-name {
   font-size: var(--r-heading3-size);
@@ -72,4 +87,28 @@ widget-speaker-social-link {}
 widget-speaker-social-link-title {
   margin-right: 0.5em;
   text-transform: capitalize;
+}
+
+/* speaker card when within slides */
+.stack.present widget-speaker-image {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* widget-image */
+widget-image img {
+  margin-top: 0 !important;
+  max-height: 90vh !important;
+}
+/* widget-image when fullscreen*/
+widget-image[fullscreen] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+widget-image[fullscreen] img {
+  max-height: 90vh !important;
+  object-fit: cover;
 }

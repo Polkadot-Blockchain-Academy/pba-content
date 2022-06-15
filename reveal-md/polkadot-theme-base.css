@@ -138,3 +138,8 @@ a:visited {
   color: var(--r-link-color);
   transition: color 700ms ease-out, font-size 200ms ease-out;
 }
+
+
+.code-wrapper + * {
+  margin-top: var(--size);
+}

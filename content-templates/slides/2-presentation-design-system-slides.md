@@ -7,7 +7,7 @@ description: A design system to use within slides of a presentation
 
 For the polkadot academy slides.
 
-<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/theme/DOT-pink.svg"></widget-speaker>
+<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/theme/PBA-logo-white.svg"></widget-speaker>
 
 ---v
 ```html
@@ -19,7 +19,7 @@ For the polkadot academy slides.
   small
   name="Speaker Name Surname"
   position="Position/Department"
-  image="/assets/img/theme/DOT-pink.svg"
+  image="/assets/img/theme/PBA-logo-white.svg"
 ></widget-speaker>
 ```
 
@@ -112,26 +112,33 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 
 ---
 
-<widget-image src=""></widget-image>
+<widget-image src="/assets/img/4-substrate/WebAssembly.png"></widget-image>
 
 ---v
 
 ```html
-<widget-image src=""></widget-image>
+<widget-image src="/assets/img/4-substrate/WebAssembly.png"></widget-image>
 ```
 
 ---
-
-<widget-image fullscreen src=""></widget-image>
+<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg-2.png" -->
 
 ---v
-
 ```html
-<widget-image fullscreen src=""></widget-image>
+<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg-2.png" -->
 ```
 
+<widget-text>
+
+More info on reveal/reveal-md backgrounds:
+- https://revealjs.com/backgrounds/
+- https://www.npmjs.com/package/reveal-md custom styles attributes
+
+</widget-text>
+
 ---
-<widget-image halfscreen="right" src=""></widget-image>
+
+<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg-2.png" -->
 <widget-columns>
   <widget-column>
 
@@ -147,6 +154,7 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
 ---v
 
 ```html
+<!-- .slide: data-background="/assets/img/theme/dynamic-wang-bg.png" -->
 <widget-columns>
   <widget-column>
 
@@ -158,21 +166,17 @@ It lived in much of the Atlantic and in a wide range of oceanic climates includi
   </widget-column>
   <widget-column></widget-column>
 </widget-columns>
-<widget-image halfscreen="right" src=""></widget-image>
 ```
 
 ---
-
+<!-- .slide: data-background-color="#8D3AED" -->
 # Section title
-
-<widget-background color="purple"></widget-background>
 
 ---v
-
+<!-- .slide: data-background-color="#8D3AED" -->
 ```html
+<!-- .slide: data-background-color="#8D3AED" -->
 # Section title
-
-<widget-background color="purple"></widget-background>
 ```
 
 ---
