@@ -145,7 +145,7 @@ a:visited {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 0.35em;
+  margin-top: 0.29em;
   width: auto;
   font-size: 2em;
   content: "";
@@ -154,6 +154,9 @@ a:visited {
   line-height: 0;
   color: var(--r-link-color);
   transition: color 700ms ease-out, font-size 200ms ease-out;
+}
+.site-reveal.reveal li ul {
+  padding-top: var(--size);
 }
 
 
