@@ -21,7 +21,7 @@ After the quiz is administered, the answers are discussed for everyone's betterm
 * Something they got wrong and learned from
 * What they got wrong but still don't get
 
-The quiz and following discussion allows the students and instructors to have a shared understanding of everyones progress, as well as foreshadow the upcoming topics. This technique, known as "formative assessment" can prime students minds for the upcoming material, make the curious, and encourage them to explore their own intuitions about a topic before recieving the standard course.
+The quiz and following discussion allows the students and instructors to have a shared understanding of everyones progress, as well as foreshadow the upcoming topics. This technique, known as "formative assessment" can prime students' minds for the upcoming material, make them curious, and encourage them to explore their own intuitions about a topic before receiving the standard course.
 
 ## Evening Reflection questions
 
