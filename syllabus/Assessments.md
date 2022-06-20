@@ -43,7 +43,7 @@ Exmple content-specific prompts:
 
 ~ 3 hours per week
 
-At the end of each week, students will be split into groups and assigned a project. Some weeks each group may be doing the same project, and in others, there may be multiple projects to choose from. In either case there should be some degrees of freedom in the solution space. Ie Not just one correct solution. Students work hackathon-style, primrily self-guided, but with TAs and instructors around to support and mentor at all times. We should provide at least 3 hours at the end of each week for such projects, but possibly more.
+At the end of each week, students will be split into groups and assigned a project. Some weeks each group may be doing the same project, and in others, there may be multiple projects to choose from. In either case there should be some degrees of freedom in the solution space (i.e. not just one correct solution). Students work hackathon-style, primarily self-guided, but with TAs and instructors around to support and mentor at all times. We should provide at least 3 hours at the end of each week for such projects, but possibly more.
 
 Afterward each student group (or maybe a subset of them) should give a presentation. The criteria for the presentation is open ended and the main guidange is that it should be valuable to their classmates somehow. For example they may present:
 * The problem and their solution
