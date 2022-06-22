@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="{{{themeUrl}}}" id="theme" />
     <link rel="stylesheet" href="{{{base}}}{{{highlightThemeUrl}}}" />
 
-
     {{#cssPaths}}
     <link rel="stylesheet" href="{{{base}}}/{{{.}}}" />
     {{/cssPaths}}
@@ -34,22 +33,26 @@
     </script>
     {{/watch}}
   </head>
-  <body>
-    <div class="reveal">
-      <div class="slides">{{{slides}}}</div>
+  <body class="site">
+    <header class="site-header">
       <a href="{{{base}}}/..">
-	 	 <img class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/PBA-logo-white.svg" alt="PBA Logo">
-	  </a>
-      <img class="watermark-icon" src="{{{base}}}/assets/img/0-Shared/DOT-pink.svg" alt="DOT">
-    </div>
+        <img class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="{{{base}}}/assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        {{{slides}}}
+      </article>
+    </main>
 
     <script src="{{{base}}}/dist/reveal.js"></script>
-
     <script src="{{{base}}}/plugin/markdown/markdown.js"></script>
     <script src="{{{base}}}/plugin/highlight/highlight.js"></script>
     <script src="{{{base}}}/plugin/zoom/zoom.js"></script>
     <script src="{{{base}}}/plugin/notes/notes.js"></script>
     <script src="{{{base}}}/plugin/math/math.js"></script>
+    <script type="module" src="{{{base}}}/plugin/design-system/design-system.js"></script>
     <script>
       function extend() {
         var target = {};
