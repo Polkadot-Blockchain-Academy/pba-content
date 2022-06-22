@@ -1,6 +1,6 @@
 {
   "title": "Polkadot Blockchain Academy",
-  "theme": "reveal-md/PBA-theme.css",
+  "theme": "reveal-md/polkadot-theme.css",
   "assetsDir": ".",
   "css": ["reveal-md/custom-classes.css", "reveal-md/fonts/"],
   "separator": "\r?\n---\r?\n",
