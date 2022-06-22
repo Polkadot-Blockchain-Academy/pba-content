@@ -1,30 +1,27 @@
 export default class WidgetSpeaker extends HTMLElement {
   static get observerdAttributes() {
-    return [
-      'name', 'position', 'image',
-      'github', 'twitter', 'telegram', 'linkedin',
-    ]
+    return ['name', 'position', 'image', 'github', 'twitter', 'matrix', 'linkedin'];
   }
   get name() {
-    return this.getAttribute('name') || 'Speaker Name Surname'
+    return this.getAttribute('name') || 'Speaker Name Surname';
   }
   get position() {
-    return this.getAttribute('position') || 'Position/Department'
+    return this.getAttribute('position') || 'Position/Department';
   }
   get image() {
-    return this.getAttribute('image')
+    return this.getAttribute('image');
   }
   get github() {
-    return this.getAttribute('github')
+    return this.getAttribute('github');
   }
   get twitter() {
-    return this.getAttribute('twitter')
+    return this.getAttribute('twitter');
   }
-  get telegram() {
-    return this.getAttribute('telegram')
+  get matrix() {
+    return this.getAttribute('matrix');
   }
   get linkedin() {
-    return this.getAttribute('linkedin')
+    return this.getAttribute('linkedin');
   }
 
   socialLinks = [
@@ -37,58 +34,63 @@ export default class WidgetSpeaker extends HTMLElement {
       url: 'https://twitter.com',
     },
     {
-      name: 'telegram',
-      url: 'https://t.me',
+      name: 'matrix',
+      url: 'https://matrix.to/#/@',
     },
     {
       name: 'linkedin',
       url: 'https://linkedin.com/in',
-    }
-  ]
+    },
+  ];
 
   connectedCallback() {
-		this.render()
+    this.render();
   }
 
   render() {
-    const $name = document.createElement('widget-speaker-name')
-    $name.innerText = this.name
+    const $name = document.createElement('widget-speaker-name');
+    $name.innerText = this.name;
 
-    const $position = document.createElement('widget-speaker-position')
-    $position.innerText = this.position
+    const $position = document.createElement('widget-speaker-position');
+    $position.innerText = this.position;
 
-    const $speakerImage = document.createElement('widget-speaker-image')
-    const $img = document.createElement('img')
-    $img.src = this.image
-    $speakerImage.append($img)
+    const $speakerImage = document.createElement('widget-speaker-image');
+    const $img = document.createElement('img');
+    $img.src = this.image;
+    $speakerImage.append($img);
 
-    const $socialLinks = document.createElement('widget-speaker-social')
+    const $socialLinks = document.createElement('widget-speaker-social');
     this.socialLinks.forEach(socialLink => {
-      const socialHandle = this[socialLink.name]
+      let socialHandle = this[socialLink.name];
       if (!socialHandle) {
-        return
+        return;
       }
 
-      const $socialLink = document.createElement('widget-speaker-social-link')
+      if (socialLink.name == 'twitter' || socialLink.name == 'github' || socialLink.name == 'matrix') {
+        socialHandle = '@' + socialHandle;
+      }
 
-      const $title = document.createElement('widget-speaker-social-link-title')
-      $title.innerText = `${socialLink.name}:`
+      const $socialLink = document.createElement('widget-speaker-social-link');
 
-      const $link = document.createElement('a')
-      $link.href = `${socialLink.url}/${socialHandle}`
-      $link.innerText = socialHandle
+      const $title = document.createElement('widget-speaker-social-link-title');
+      $title.innerText = `${socialLink.name}:`;
 
-      $socialLink.append($title)
-      $socialLink.append($link)
-      $socialLinks.append($socialLink)
-    })
+      const $link = document.createElement('a');
+      $link.href = `${socialLink.url}/${socialHandle}`;
+      $link.target = '_blank';
+      $link.innerText = socialHandle;
 
-    const $speakerBody = document.createElement('widget-speaker-body')
-    this.name && $speakerBody.append($name)
-    this.position && $speakerBody.append($position)
-    $speakerBody.append($socialLinks)
+      $socialLink.append($title);
+      $socialLink.append($link);
+      $socialLinks.append($socialLink);
+    });
 
-    this.image && this.append($speakerImage)
-    this.append($speakerBody)
+    const $speakerBody = document.createElement('widget-speaker-body');
+    this.name && $speakerBody.append($name);
+    this.position && $speakerBody.append($position);
+    $speakerBody.append($socialLinks);
+
+    this.image && this.append($speakerImage);
+    this.append($speakerBody);
   }
 }

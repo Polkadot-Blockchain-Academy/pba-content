@@ -92,7 +92,7 @@ a:visited {
 
 .site-header .watermark-logo {
   width: 100%;
-  max-width: 20vh;
+  max-width: 18vh;
 }
 
 /* Hover on watermark logo -> left side bar appears */
@@ -101,8 +101,7 @@ a:visited {
 }
 
 .site-header .watermark-icon {
-  width: 100%;
-  max-width: 4vh;
+  max-width: 6.5vh;
 }
 
 .site-header {
@@ -113,7 +112,7 @@ a:visited {
   z-index: 99;
   display: flex;
   justify-content: space-between;
-  padding: calc(var(--size) * 2);
+  padding: calc(var(--size) * 1.2);
 }
 .site-header--small {
   padding: var(--size);

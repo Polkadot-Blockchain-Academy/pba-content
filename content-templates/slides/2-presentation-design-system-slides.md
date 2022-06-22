@@ -7,7 +7,7 @@ description: A design system to use within slides of a presentation
 
 ### _For the polkadot academy slides._
 
-<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/0-Shared/profile.png"></widget-speaker>
+<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/0-Shared/placeholder/profile.png"></widget-speaker>
 
 ---v
 
@@ -18,21 +18,23 @@ description: A design system to use within slides of a presentation
   small
   name="Speaker Name Surname"
   position="Position/Department"
-  image="/assets/img/0-Shared/profile.png"
+  image="/assets/img/0-Shared/placeholder/profile.png"
 ></widget-speaker>
 ```
 
 ---
+
+# Mosasaurus
+
+_see down from here_
+
+---v
 
 <widget-text>
 
 Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles.
 
 It lived from about 82 to 66 million years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
-
-In 1808, Georges Cuvier concluded that the skulls belonged to a giant marine lizard with similarities to monitors but otherwise unlike any known living animal, supporting the then-developing idea of extinction. Scientists continue to debate whether its closest living relatives are monitors or snakes.
-
-Mosasaurus had jaws capable of swinging back and forth and was capable of powerful bites, using dozens of teeth designed for cutting prey. Its four limbs were shaped into paddles to steer underwater. Mosasaurus was a predator with excellent vision but a poor sense of smell, and a high metabolic rate suggesting it was warm-blooded.
 
 </widget-text>
 
@@ -40,32 +42,14 @@ Mosasaurus had jaws capable of swinging back and forth and was capable of powerf
 
 ```html
 <widget-text>
-
-Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles.
-
-It lived from about 82 to 66 million years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
-
-In 1808, Georges Cuvier concluded that the skulls belonged to a giant marine lizard with similarities to monitors but otherwise unlike any known living animal, supporting the then-developing idea of extinction. Scientists continue to debate whether its closest living relatives are monitors or snakes.
-
-Mosasaurus had jaws capable of swinging back and forth and was capable of powerful bites, using dozens of teeth designed for cutting prey. Its four limbs were shaped into paddles to steer underwater. Mosasaurus was a predator with excellent vision but a poor sense of smell, and a high metabolic rate suggesting it was warm-blooded.
-
+  Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles. It lived from about 82 to 66 million
+  years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 </widget-text>
 ```
----v
-
-### Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles. It lived from about 82 to 66 million years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
-
----v
-
-## Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles. It lived from about 82 to 66 million years ago during the Late Cretaceous.
-
----v
-
-# Mosasaurus
 
 ---
 
-<widget-speaker name="Speaker Name Surname" position="Position/Department" image="/assets/img/0-Shared/profile.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood" telegram="PolkadotOfficial"></widget-speaker>
+<widget-speaker name="Gavin Wood" position="Founder Parity & Web3 Foundation" image="/assets/img/0-Shared/people/gav.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood-88843316" matrix="gav:matrix.parity.io"></widget-speaker>
 
 ---v
 
@@ -73,7 +57,7 @@ Mosasaurus had jaws capable of swinging back and forth and was capable of powerf
 <widget-speaker
   name="Speaker Name Surname"
   position="Position/Department"
-  image="/assets/img/0-Shared/profile.png"
+  image="/assets/img/0-Shared/people/gav.png"
   github="gavofyork"
   twitter="gavofyork"
   linkedin="gavin-wood"
@@ -195,6 +179,7 @@ More info on reveal/reveal-md backgrounds:
 
 <!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 <widget-columns>
+  <widget-column></widget-column>
   <widget-column>
 
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -203,7 +188,6 @@ More info on reveal/reveal-md backgrounds:
 - Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 
   </widget-column>
-  <widget-column></widget-column>
 </widget-columns>
 
 ---v
@@ -211,13 +195,13 @@ More info on reveal/reveal-md backgrounds:
 ```html
 <!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 <widget-columns>
+  <widget-column></widget-column>
   <widget-column>
     - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
     magna aliqua. - Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
     consequat. - Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
     - Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
   </widget-column>
-  <widget-column></widget-column>
 </widget-columns>
 ```
 
@@ -253,7 +237,7 @@ Source: me™ at the last event
 
 ---
 
-Testing **bold** and *italic* markdown texts!
+Testing **bold** and _italic_ markdown texts!
 
 ```html
 Testing **bold** and *italic* markdown texts!

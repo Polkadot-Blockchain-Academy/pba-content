@@ -15,8 +15,8 @@
       }
       /* local variables */
       html {
-        --font-size: 18px;
-        --container: 70em;
+        --font-size: 16px;
+        --container: 100em;
         --size: 1.5rem;
       }
 
@@ -53,22 +53,22 @@
       .site-header {
         position: sticky;
         top: 0;
-        background-color: var(--r-background-color);
+        background-color: var(--r-selection-background-color);
       }
+	  /* https://stackoverflow.com/questions/22340081/css-transition-eases-in-but-doesnt-ease-out */
       a.site-title {
         text-decoration: none;
         color: var(--r-main-color);
+		transition: color 200ms ease-in-out;
       }
       a.site-title:hover {
-        color: var(--r-link-color-hover);
+        color: var(--r-link-color);
       }
       .site-title h1 {
         margin: 0;
         text-transform: uppercase;
         font-size: calc(var(--font-size) * 1.5);
         text-shadow: var(--r-heading1-text-shadow);
-        /* font-weight: normal; */
-        /* white-space: pre-line; */
       }
       .site-logo {
         width: calc(var(--size) * 6);
@@ -83,17 +83,17 @@
         align-items: center;
       }
       .site-main li::before {
-        font-size: calc(var(--font-size) * 3);
+        font-size: calc(var(--font-size) * 2);
         content: "";
         display: list-item;
         list-style-type: circle;
         line-height: 0;
         color: var(--r-link-color-hover);
-        transition: color 700ms ease-out, font-size 200ms ease-out;
+        transition: color 200ms ease-in-out, font-size 200ms ease-in-out;
       }
       .site-main li:hover::before {
         color: var(--r-link-color);
-        font-size: calc(var(--font-size) * 5);
+        font-size: calc(var(--font-size) * 3);
         list-style-type: initial;
       }
 
@@ -104,29 +104,25 @@
         color: var(--r-main-color);
         text-decoration: none;
         word-break: break-word;
+		transition: color 200ms ease-in-out;
       }
       .site-main li a:hover {
         color: var(--r-link-color-hover);
-        transition: color 200ms ease-out;
       }
-      .site-main li a:hover {
-        color: var(--r-link-color-hover);
-        transition: color 200ms ease-out;
-      }
-      /* menuigation bar, sticky */
+      /* menu navigation bar, sticky */
       .menu {
         display: flex;
         list-style: none;
         margin: 0;
-        padding: calc(var(--size) / 2) var(--size);
+        padding: 0;
       }
       .menu--header {
         flex-grow: 1;
         justify-content: space-between;
       }
       .menu--footer {
-        justify-content: flex-end;
-        padding: calc(var(--size) * 1.5);
+        justify-content: center;
+        padding-bottom: calc(var(--size) * 1);
       }
       .menu-item {
         display: flex;
@@ -149,17 +145,12 @@
           </a>
         </li>
         <li class="menu-item">
-          <a href="https://polkadot.network" class="menu-item">
-            <img class="site-logo" src="./assets/img/0-Shared/Polkadot_Pink-White.svg"/>
-          </a>
+            <img class="site-logo" src="./assets/img/0-Shared/logo/Polkadot_Pink-White.svg"/>
         </li>
       </menu>
     </header>
 
     <main class="site-main">
-      <p>
-        All slides available for the academy.
-      </p>
       <ul>
         {{#files}}
         <li>
