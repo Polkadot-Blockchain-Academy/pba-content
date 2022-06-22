@@ -5,7 +5,7 @@ duration: 15 minuets
 instructors: ["some one","another gal"]
 teaching-assistants: ["Dan Shields"]
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
-theme: "reveal-md/PBA-theme.css"
+theme: "reveal-md/polkadot-theme.css"
 # Add custom css files for your slides here, comma separated:
 css: ["reveal-md/custom-classes.css"]
 separator: "\r?\n---\r?\n"
@@ -151,11 +151,6 @@ pub type Executive = frame_executive::Executive<
 	AllPalletsWithSystem,
 >;
 ```
-
-### here
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
 
 ---
 

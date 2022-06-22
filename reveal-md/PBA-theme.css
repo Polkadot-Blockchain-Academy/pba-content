@@ -1,5 +1,5 @@
 /**
- * PBA slide theme 
+ * PBA slide theme
  * Derived from the night theme in reveal.js
  * More info https://github.com/webpro/reveal-md#theme & https://revealjs.com/themes/
 **/
@@ -7,100 +7,6 @@
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
-
-.watermark-logo {
-	width: 100px;
-	top: -20px;
-	left: 20px;
-	z-index: 99;
-	position: fixed;
-
-}
-
-/* Hover on watermark logo -> left side bar appears */
-a:hover .watermark-logo {
-	box-shadow: -20px 0px 10px -5px lightslategray;
-}
-
-.watermark-icon {
-	width: 33px;
-	top: -20px;
-	right: 20px;
-	z-index: 99;
-	position: fixed;
-}
-
-body {
-	background-color: #0d2378;
-}
-
-a:link,
-a:visited {
-	color: #e6007a;
-}
-
-/* https://google-webfonts-helper.herokuapp.com/fonts/work-sans?subsets=latin */
-/* work-sans-regular - latin */
-@font-face {
-	font-family: 'Work Sans';
-	font-style: normal;
-	font-weight: 400;
-	src: url('./fonts/work-sans-v17-latin-regular.eot'); /* IE9 Compat Modes */
-	src: local(''),
-		 url('./fonts/work-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-		 url('./fonts/work-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-		 url('./fonts/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
-  }
-  
-  /* work-sans-800 - latin */
-  @font-face {
-	font-family: 'Work Sans';
-	font-style: normal;
-	font-weight: 800;
-	src: url('./fonts/work-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
-	src: local(''),
-		 url('./fonts/work-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-		 url('./fonts/work-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
-		 url('./fonts/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
-  }
-  
-  /* work-sans-italic - latin */
-  @font-face {
-	font-family: 'Work Sans';
-	font-style: italic;
-	font-weight: 400;
-	src: url('./fonts/work-sans-v17-latin-italic.eot'); /* IE9 Compat Modes */
-	src: local(''),
-		 url('./fonts/work-sans-v17-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-		 url('./fonts/work-sans-v17-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
-		 url('./fonts/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
-  }
-  
-  /* work-sans-800italic - latin */
-  @font-face {
-	font-family: 'Work Sans';
-	font-style: italic;
-	font-weight: 800;
-	src: url('./fonts/work-sans-v17-latin-800italic.eot'); /* IE9 Compat Modes */
-	src: local(''),
-		 url('./fonts/work-sans-v17-latin-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-		 url('./fonts/work-sans-v17-latin-800italic.woff2') format('woff2'), /* Super Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-800italic.woff') format('woff'), /* Modern Browsers */
-		 url('./fonts/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
-		 url('./fonts/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
-  }
-  
-
-a:hover,
-a:active {
-	color: #8d3aed;
-}
 
 :root {
 	--r-background-color: #0d2378;
@@ -171,8 +77,8 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-   * HEADERS
-   *********************************************/
+	 * HEADERS
+	 *********************************************/
 .reveal h1,
 .reveal h2,
 .reveal h3,
@@ -191,7 +97,7 @@ section.has-light-background h6 {
 }
 
 .reveal h1 {
-	font-weight: bold; 
+	font-weight: bold;
 	font-size: var(--r-heading1-size);
 	text-shadow: var(--r-heading1-text-shadow);
 
@@ -212,8 +118,8 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-   * OTHER
-   *********************************************/
+	 * OTHER
+	 *********************************************/
 .reveal p {
 	margin: var(--r-block-margin) 0;
 	line-height: 1.3;
@@ -254,13 +160,18 @@ section.has-light-background h6 {
 	line-height: 1.5em;
 	margin: 0 0 0 1em;
 }
-
+.reveal ul li {
+  position: relative;
+}
 .reveal ul li::before {
+  position: absolute;
+  top: -0.1em;
+  left: -1em;
 	font-family: monospace;
-	content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-	color: #a45cf6; /* Change the color */
+	content: "\2022";	 /* Add content: \2022 is the CSS Code/unicode for a bullet */
+	color: var(--r-link-color-dark); /* Change the color */
 	font-weight: bold; /* If you want it to be bold */
-	display: inline-block; /* Needed to add space between the bullet and the text */
+	display: list-item; /* Needed to add space between the bullet and the text */
 	width: 1em; /* Also needed for space (tweak if needed) */
 }
 
@@ -406,8 +317,8 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-   * LINKS
-   *********************************************/
+	 * LINKS
+	 *********************************************/
 .reveal a {
 	color: var(--r-link-color);
 	text-decoration: none;
@@ -426,8 +337,8 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-   * Frame helper
-   *********************************************/
+	 * Frame helper
+	 *********************************************/
 .reveal .r-frame {
 	border: 4px solid var(--r-main-color);
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
@@ -443,23 +354,23 @@ section.has-light-background h6 {
 }
 
 /*********************************************
-   * NAVIGATION CONTROLS
-   *********************************************/
+	 * NAVIGATION CONTROLS
+	 *********************************************/
 .reveal .controls {
 	color: var(--r-link-color);
 }
 
 /*********************************************
-   * PROGRESS BAR
-   *********************************************/
+	 * PROGRESS BAR
+	 *********************************************/
 .reveal .progress {
 	background: rgba(0, 0, 0, 0.2);
 	color: var(--r-link-color);
 }
 
 /*********************************************
-   * PRINT BACKGROUND
-   *********************************************/
+	 * PRINT BACKGROUND
+	 *********************************************/
 @media print {
 	.backgrounds {
 		background-color: var(--r-background-color);
