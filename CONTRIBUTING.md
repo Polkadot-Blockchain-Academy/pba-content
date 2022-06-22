@@ -139,9 +139,6 @@ When writing slides, separate each one using `---`.
 Optionally, you can separate slides vertically using `---v` between slides.
 
 For distinct parts of the lecture, with some core topic being presented as the, it may be a good idea to stack those slides vertically for easier navigation.
-For example, imagine the core topic was "Code Highlight & Transitions":
-
-<img src="./assets/img/0-Shared/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 #### Using speaker notes
 
@@ -156,10 +153,6 @@ Note: This is a note just for you.
 Set under a line in your slide starting with "`Note`:" all
 subsequent lines are just seen in speaker view.
 ```
-
-And here's an example of the result:
-
-<img src="./assets/img/0-Shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 #### Transitions
 
