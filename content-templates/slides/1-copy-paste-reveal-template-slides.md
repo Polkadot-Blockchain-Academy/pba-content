@@ -5,7 +5,7 @@ duration: 15 minuets
 instructors: ["some one","another gal"]
 teaching-assistants: ["Dan Shields"]
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
-theme: "reveal-md/PBA-theme.css"
+theme: "reveal-md/polkadot-theme.css"
 # Add custom css files for your slides here, comma separated:
 css: ["reveal-md/custom-classes.css"]
 separator: "\r?\n---\r?\n"
@@ -29,7 +29,7 @@ revealOptions:
 <div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
 <!-- TODO: add a good circularly cropped head-shot of ou to the `assets/profile` folder  -->
-<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/profile.png"/>
+<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/placeholder/profile.png"/>
 
 </div>
 <div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
@@ -82,7 +82,7 @@ Stuff you should remember to say
 ## Pictures
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../../assets/img/0-Shared/Landscape_mountain.jpg" alt="Some Pic">
+<img style="width: 800px" src="../../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic">
 
 #### _Leave a note on why this one matters_
 
@@ -151,11 +151,6 @@ pub type Executive = frame_executive::Executive<
 	AllPalletsWithSystem,
 >;
 ```
-
-### here
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
 
 ---
 
