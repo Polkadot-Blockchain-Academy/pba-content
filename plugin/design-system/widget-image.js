@@ -1,4 +1,4 @@
-export default class WidgetSpeaker extends HTMLElement {
+export default class WidgetImage extends HTMLElement {
   static get observerdAttributes() {
     return ['src', 'fullscreen'];
   }
