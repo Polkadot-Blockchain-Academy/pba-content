@@ -155,6 +155,18 @@ pub type Executive = frame_executive::Executive<
 ```html
 <widget-image src="/assets/img/4-Substrate/WebAssembly.png"></widget-image>
 ```
+---v
+<widget-image fullscreen src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
+---v
+```html
+<widget-image fullscreen src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
+```
+---v
+<widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
+---v
+```html
+<widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
+```
 
 ---
 
@@ -197,10 +209,11 @@ More info on reveal/reveal-md backgrounds:
 <widget-columns>
   <widget-column></widget-column>
   <widget-column>
-    - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-    magna aliqua. - Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. - Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-    - Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. - Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+- Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+- Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+
   </widget-column>
 </widget-columns>
 ```
