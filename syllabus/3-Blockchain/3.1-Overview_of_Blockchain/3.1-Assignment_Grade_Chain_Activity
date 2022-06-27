@@ -1,0 +1,24 @@
+**Name:** Lets build a blockchain (assignment grade chain)
+
+**Style:** Group exercise
+
+**Description:** This group exercise will emulate a PoW blockchain where the students will build a blockchain as a group. Students will build blocks by drawing them and filling out fields. A block can have a header and a body, the body will be the data(grades), and the header will be the metadata(hash and prevHash). Once a block has been created, a hash will need to be created for the block. This can be a simple implementation, in which the hash can simply be a sum of all the fields numerical values(string values numerical value can be the number of indices) or a more involved one where we use a hashing algorithm to do the hashing (SHA-256 or BLAKE2). Once the hash has been generated the block can be passed around the room for confirmations. With 6 confirmations, the block can be added to the chain. We can perform a malicious attack, by having someone try and change data in an old block and show how the hashes will need to be recalculated. Based on the students comfort with the subject, the exercise can be increased in difficulty. If comfortable, we can try to do a 51% attack with a malicious version of the chain.
+
+**Levels (the higher the level the more granular the exercise will get in terms of representing a blockchain network, by gauging the level of the class we can choose a higher level):**
+
+1.  Everyone builds on the same chain on the whiteboard, taking turns to generate blocks.
+2.  Everyone has a copy of the blockchain on their own sheet of paper that they keep updating as the network grows.
+3.  Groups of students create mining pools to increase their odds of mining a block.
+
+**Learning objectives:**
+
+ By the end of this activity, the students will be able to:
+
+1.  Provide an in depth explanation of the blockchain data structure
+2.  Articulate what a block is comprised of (data wise)
+3.  Understand how hashing and chaining of blocks work
+4.  Understand how PoW mining and mining pools work
+5.  Understand what orphan/uncle branches are and how consensus protects against this
+6.  Understand the crypto economic incentives baked into the network that keeps nodes competitive without being malicious
+7.  Know what a nonce is and its role in PoW?
+8.  Sneak peek on consensus, and merkle trees?
