@@ -104,17 +104,21 @@ a:visited {
 }
 
 .site-header .watermark-logo {
-  width: 100%;
-  max-width: 18vh;
+  width: 12rem;
+  max-width: 20vw;
+  max-height: 10vh;
+  transition: transform 0.4s ease;
 }
 
-/* Hover on watermark logo -> left side bar appears */
+
 .site-header a:hover .watermark-logo {
-  box-shadow: -20px 0px 10px -5px lightslategray;
+  transform: scale(1.05);
 }
 
 .site-header .watermark-icon {
-  max-width: 6.5vh;
+  width: 4rem;
+  max-width: 10vw;
+  max-height: 10vh;
 }
 
 .site-header {
@@ -125,7 +129,8 @@ a:visited {
   z-index: 99;
   display: flex;
   justify-content: space-between;
-  padding: calc(var(--size) * 1.2);
+  align-items: center;
+  padding: var(--r-padding);
 }
 .site-header--small {
   padding: var(--size);
@@ -179,5 +184,5 @@ a:visited {
 
 .site-reveal section {
   left: 0;
-  padding: calc(var(--size) / 4);
+  padding: var(--r-padding);
 }
