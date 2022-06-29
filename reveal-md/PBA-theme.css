@@ -31,7 +31,7 @@
 	--r-code-font: monospace;
 	--r-code-font-size: 0.65em; /* custom PBA var */
 	--r-link-color: #e6007a;
-	--r-link-color-dark: #e6007a;
+	--r-link-color-dark: #A45CF6;
 	--r-link-color-hover: #8d3aed;
 	--r-selection-background-color: #8d3aed;
 	--r-selection-color: #fff;
@@ -165,16 +165,16 @@ section.has-light-background h6 {
 .reveal ul {
 	text-align: left;
 	list-style: none !important; /* Remove default bullets */
-	line-height: 1.5em;
+	line-height: 1.1;
 	margin: 0 0 0 1em;
 }
 .reveal ul li {
   position: relative;
 }
 .reveal ul li::before {
-  position: absolute;
-  top: -0.1em;
-  left: -1em;
+	position: absolute;
+	top: 0.1em;
+	left: -2.5rem;
 	font-family: monospace;
 	content: "\2022";	 /* Add content: \2022 is the CSS Code/unicode for a bullet */
 	color: var(--r-link-color-dark); /* Change the color */

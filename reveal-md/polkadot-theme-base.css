@@ -157,7 +157,7 @@ a:visited {
 
 .site-reveal.reveal ul {
   list-style: none;
-  margin-left: var(--size);
+  margin-left: 2.5rem;
 }
 .site-reveal.reveal li {
   list-style: none;
@@ -165,8 +165,8 @@ a:visited {
   font-size: 0.8em;
 }
 .site-reveal.reveal li::before {
-  font-size: 2em;
-  color: var(--r-link-color);
+  font-size: 1em;
+  color: var(--r-link-color-dark);
   transition: color 700ms ease-out, font-size 200ms ease-out;
   font-family: inherit;
   line-height: 1.1;

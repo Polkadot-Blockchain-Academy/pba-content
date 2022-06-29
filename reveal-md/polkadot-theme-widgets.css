@@ -5,11 +5,35 @@
 widget-columns {
   display: flex;
   align-items: center;
+  gap: var(--r-padding);
 }
+
+widget-columns[padded] {
+  gap: calc(var(--r-padding) * 4);
+}
+
 widget-column {
-  text-align: left;;
+  text-align: left;
   flex-basis: 50%;
-  padding: var(--size);
+  padding: var(--r-padding);
+  padding-left: 0;
+}
+
+widget-column:nth-of-type(2) {
+  padding: var(--r-padding);
+  padding-right: 0;
+}
+
+widget-column[color] h1,
+widget-column[color] h2,
+widget-column[color] h3,
+widget-column[color] h4,
+widget-column[color] p {
+  color: var(--r-link-color-dark);
+}
+
+.site-reveal.reveal widget-column[contrast] ul li:before {
+  color: var(--r-background-color);
 }
 
 /* text: some text base styling */
@@ -20,6 +44,10 @@ widget-text {
 }
 widget-text[right] {
   text-align: right;
+}
+
+widget-text[color] {
+  color: var(--r-link-color-dark);
 }
 
 /*
@@ -104,6 +132,7 @@ widget-image {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* pointer-events: none; */
 }
 widget-image img {
   margin-top: 0 !important;
@@ -126,10 +155,45 @@ widget-image[fullscreen] img {
 
 widget-image[fullscreen="fill"] img {
   position: absolute;
+  display: block;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
   width: 100%;
   height: 100%;
+}
+
+widget-image[halfscreen-bg] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+widget-image[halfscreen-bg] img {
+  max-height: none !important;
+  max-width: none !important;
+  object-fit: cover;
+  object-position: 0 50%;
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 57%;
+  height: 100%;
+}
+
+widget-image[top-left-bg] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+widget-image[top-left-bg] img {
+  max-width: 42vw;
+  max-height: 50vh !important;
+  object-fit: contain;
+  display: block;
 }

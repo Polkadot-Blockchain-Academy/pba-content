@@ -3,6 +3,8 @@ title: Design System
 description: A design system to use within slides of a presentation
 ---
 
+<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
+
 # Design System
 
 ### _For the polkadot academy slides._
@@ -42,6 +44,25 @@ It lived from about 82 to 66 million years ago during the Late Cretaceous. Its e
 
 ```html
 <widget-text>
+  Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles. It lived from about 82 to 66 million
+  years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
+</widget-text>
+```
+
+---v
+
+<widget-text color>
+
+Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles.
+
+It lived from about 82 to 66 million years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
+
+</widget-text>
+
+---v
+
+```html
+<widget-text color>
   Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles. It lived from about 82 to 66 million
   years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 </widget-text>
@@ -146,6 +167,36 @@ pub type Executive = frame_executive::Executive<
 </widget-columns>
 ```
 
+---v
+
+<widget-columns>
+  <widget-column color>
+
+### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+
+  </widget-column>
+  <widget-column>
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit
+- Ut enim ad minim veniam, quis nostrud exercitation
+- Duis aute irure dolor in reprehenderit in
+- Excepteur sint occaecat cupidatat non proident, sunt in
+
+  </widget-column>
+</widget-columns>
+
+---v
+
+```html
+<widget-columns>
+  <widget-column color> ### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor. </widget-column>
+  <widget-column>
+    - Lorem ipsum dolor sit amet, consectetur adipiscing elit - Ut enim ad minim veniam, quis nostrud exercitation -
+    Duis aute irure dolor in reprehenderit in - Excepteur sint occaecat cupidatat non proident, sunt in
+  </widget-column>
+</widget-columns>
+```
+
 ---
 
 <widget-image src="/assets/img/4-Substrate/WebAssembly.png"></widget-image>
@@ -156,16 +207,43 @@ pub type Executive = frame_executive::Executive<
 <widget-image src="/assets/img/4-Substrate/WebAssembly.png"></widget-image>
 ```
 ---v
+
 <widget-image fullscreen src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
+
 ---v
+
 ```html
 <widget-image fullscreen src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
 ```
+
 ---v
+
 <widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
+
 ---v
+
 ```html
 <widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
+```
+
+---v
+
+<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+
+---v
+
+```html
+<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+```
+
+---v
+
+<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
+
+---v
+
+```html
+<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
 ```
 
 ---
@@ -213,6 +291,76 @@ More info on reveal/reveal-md backgrounds:
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. - Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 - Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 - Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+
+  </widget-column>
+</widget-columns>
+```
+
+---v
+<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+
+<widget-columns padded>
+  <widget-column>
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit
+- Ut enim ad minim veniam, quis nostrud exercitation
+- Duis aute irure dolor in reprehenderit in
+- Excepteur sint occaecat cupidatat non proident, sunt in
+
+  </widget-column>
+</widget-columns>
+
+---v
+```html
+<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+
+<widget-columns padded>
+  <widget-column>
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit
+- Ut enim ad minim veniam, quis nostrud exercitation
+- Duis aute irure dolor in reprehenderit in
+- Excepteur sint occaecat cupidatat non proident, sunt in
+
+  </widget-column>
+</widget-columns>
+```
+
+---v
+<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-color.png"></widget-image>
+
+<widget-columns padded>
+  <widget-column color>
+
+### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+
+  </widget-column>
+  <widget-column contrast>
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit
+- Ut enim ad minim veniam, quis nostrud exercitation
+- Duis aute irure dolor in reprehenderit in
+- Excepteur sint occaecat cupidatat non proident, sunt in
+
+  </widget-column>
+</widget-columns>
+
+---v
+```html
+<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-color.png"></widget-image>
+
+<widget-columns padded>
+  <widget-column color>
+
+### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+
+  </widget-column>
+  <widget-column contrast>
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit
+- Ut enim ad minim veniam, quis nostrud exercitation
+- Duis aute irure dolor in reprehenderit in
+- Excepteur sint occaecat cupidatat non proident, sunt in
 
   </widget-column>
 </widget-columns>
