@@ -62,6 +62,17 @@ html {
   font-family: 'Work Sans';
 }
 
+/*
+  Universal Box Sizing with Inheritance
+  https://css-tricks.com/box-sizing/#aa-universal-box-sizing-with-inheritance
+*/
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 /* layout  */
 body {
   background-color: var(--r-background-color);
@@ -72,7 +83,9 @@ a:link,
 a:visited {
   color: var(--r-link-color-dark);
 }
-
+.site-reveal p:last-of-type {
+  margin-bottom: 0;
+}
 .site-reveal blockquote {
   width: 100%;
   margin: 0;
@@ -91,17 +104,21 @@ a:visited {
 }
 
 .site-header .watermark-logo {
-  width: 100%;
-  max-width: 18vh;
+  width: 12rem;
+  max-width: 20vw;
+  max-height: 10vh;
+  transition: transform 0.4s ease;
 }
 
-/* Hover on watermark logo -> left side bar appears */
+
 .site-header a:hover .watermark-logo {
-  box-shadow: -20px 0px 10px -5px lightslategray;
+  transform: scale(1.05);
 }
 
 .site-header .watermark-icon {
-  max-width: 6.5vh;
+  width: 4rem;
+  max-width: 10vw;
+  max-height: 10vh;
 }
 
 .site-header {
@@ -112,13 +129,19 @@ a:visited {
   z-index: 99;
   display: flex;
   justify-content: space-between;
-  padding: calc(var(--size) * 1.2);
+  align-items: center;
+  padding: var(--r-padding);
 }
 .site-header--small {
   padding: var(--size);
 }
 
 /* custom reveal */
+.site-reveal.reveal .slides {
+  height: 100vh !important;
+  width: 100vw !important;
+  margin: 0;
+}
 .site-reveal p {
   margin-top: 0;
   margin-bottom: calc(var(--size) / 2);
@@ -134,6 +157,7 @@ a:visited {
 
 .site-reveal.reveal ul {
   list-style: none;
+  margin-left: 2.5rem;
 }
 .site-reveal.reveal li {
   list-style: none;
@@ -141,24 +165,24 @@ a:visited {
   font-size: 0.8em;
 }
 .site-reveal.reveal li::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin-top: 0.29em;
-  width: auto;
-  font-size: 2em;
-  content: "";
-  display: list-item;
-  list-style-type: disc;
-  line-height: 0;
-  color: var(--r-link-color);
+  font-size: 1em;
+  color: var(--r-link-color-dark);
   transition: color 700ms ease-out, font-size 200ms ease-out;
+  font-family: inherit;
+  line-height: 1.1;
 }
 .site-reveal.reveal li ul {
   padding-top: var(--size);
 }
+.site-reveal.reveal li:last-of-type {
+  margin-bottom: 0;
+}
 
-
-.code-wrapper + * {
+.site-reveal .code-wrapper + * {
   margin-top: var(--size);
+}
+
+.site-reveal section {
+  left: 0;
+  padding: var(--r-padding);
 }
