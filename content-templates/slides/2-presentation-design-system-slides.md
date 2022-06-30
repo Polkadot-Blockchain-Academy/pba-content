@@ -426,7 +426,8 @@ pub type Executive = frame_executive::Executive<
 
 ---v
 
-```html
+~~~
+
 ## Rust Example
 
 ```rust [0|1,6|15-25|30-31]
@@ -471,7 +472,8 @@ pub type Executive = frame_executive::Executive<
 	AllPalletsWithSystem,
 >;
 ```
-```
+
+~~~
 
 ---
 
@@ -534,17 +536,56 @@ fn main() {
 
 ````html
 <widget-columns>
-  <widget-column> ### Colum + Code - Some - Observations - Others </widget-column>
-  <widget-column>
-    ```rust [0|1,13|4-8] fn largest_i32(list: &[i32]) -> i32 { let mut largest = list[0]; for &item in list { if item >
-    largest { largest = item; } } largest } fn largest_char(list: &[char]) -> char { let mut largest = list[0]; for
-    &item in list { if item > largest { largest = item; } } largest } fn main() { let number_list = vec![34, 50, 25,
-    100, 65]; let result = largest_i32(&number_list); println!("The largest number is {}", result); assert_eq!(result,
-    100); let char_list = vec!['y', 'm', 'a', 'q']; let result = largest_char(&char_list); println!("The largest char is
-    {}", result); assert_eq!(result, 'y'); }</widget-column
-  ></widget-columns
->
-````
+<widget-column>
+
+### Colum + Code
+
+- Some
+- Observations
+- Others
+
+</widget-column>
+<widget-column>
+
+```rust [0|1,13|4-8]
+fn largest_i32(list: &[i32]) -> i32 {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn largest_char(list: &[char]) -> char {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest_i32(&number_list);
+    println!("The largest number is {}", result);
+    assert_eq!(result, 100);
+
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest_char(&char_list);
+    println!("The largest char is {}", result);
+    assert_eq!(result, 'y');
+}
+```
 
 </widget-column>
 </widget-columns>
