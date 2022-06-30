@@ -2,7 +2,18 @@
   "title": "Polkadot Blockchain Academy",
   "theme": "reveal-md/polkadot-theme.css",
   "assetsDir": ".",
-  "css": ["reveal-md/custom-classes.css", "reveal-md/fonts/"],
+  "css": [
+    "reveal-md/custom-classes.css",
+    "reveal-md/fonts/",
+    "reveal-md/polkadot-theme-base.css",
+    "reveal-md/polkadot-theme-widgets.css",
+    "reveal-md/PBA-theme.css"
+  ],
+  "scripts": [
+    "plugin/design-system/design-system.js",
+    "plugin/design-system/widget-speaker.js",
+    "plugin/design-system/widget-image.js"
+  ],
   "separator": "\r?\n---\r?\n",
   "verticalSeparator": "\r?\n---v\r?\n",
   "highlightTheme": "shades-of-purple",
@@ -10,7 +21,6 @@
   "listingTemplate": "./reveal-md/listing-template.html",
   "host": "localhost",
   "staticDir": "build",
-  "scripts": [],
   "staticDirs": ["assets"],
   "preprocessor": null,
   "glob": "**/*[Ss]lides.md"
