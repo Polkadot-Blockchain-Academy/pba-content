@@ -21,7 +21,7 @@
   "listingTemplate": "./reveal-md/listing-template.html",
   "host": "localhost",
   "staticDir": "build",
-  "staticDirs": ["assets", "plugin"],
+  "staticDirs": ["assets"],
   "preprocessor": null,
   "glob": "**/*[Ss]lides.md"
 }
