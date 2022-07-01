@@ -9,11 +9,11 @@
  *********************************************/
 
 :root {
+	--r-main-font-size: 16px;
+	--r-main-font: "Work Sans";
+	--r-main-color: #fff;
 	--r-background-color: #0d2378;
 	--r-code-background-color: #272822;
-	--r-main-font: "Work Sans";
-	--r-main-font-size: 40px;
-	--r-main-color: #fff;
 	--r-block-margin: 40px 0px;
 	--r-heading-margin: 0px 0px 0px 0px;
 	--r-heading-font: "Work Sans";
@@ -38,11 +38,28 @@
 	--r-padding: 2rem;
 }
 
-@media (min-width: 768px) {
-	:root {
+@media (min-width: 40em) {
+  :root {
+    --r-main-font-size: 25px;
 		--r-padding: 3.5rem;
-	}
+  }
 }
+@media (min-width: 60em) {
+  :root {
+    --r-main-font-size: 30px;
+  }
+}
+@media (min-width: 90em) {
+  :root {
+    --r-main-font-size: 35px;
+  }
+}
+@media (min-width: 110em) {
+  :root {
+    --r-main-font-size: 40px;
+  }
+}
+
 
 .reveal-viewport {
 	background: #111;
