@@ -12,8 +12,6 @@ export default class WidgetImage extends HTMLElement {
     const $base = document.querySelector('head base')
     if ($base && $base.href) {
       return $base.href
-    } else {
-      return '/'
     }
   }
 

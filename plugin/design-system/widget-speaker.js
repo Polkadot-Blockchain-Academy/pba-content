@@ -27,8 +27,6 @@ export default class WidgetSpeaker extends HTMLElement {
     const $base = document.querySelector('head base')
     if ($base && $base.href) {
       return $base.href
-    } else {
-      return '/'
     }
   }
 
