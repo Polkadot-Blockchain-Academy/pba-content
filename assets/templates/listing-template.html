@@ -151,11 +151,17 @@
     </header>
 
     <main class="site-main">
-      <ul>
+      <ul class="slide-list">
         {{#files}}
         <li>
-          <a href="{{filePath}}" title="{{title}}">
-            {{#title}}{{.}} ({{filePath}}){{/title}}{{^title}}{{filePath}}{{/title}}
+          <a href="{{filePath}}" title="{{title}}" class="slide-card">
+            {{#title}}
+            <span class="slide-card-name">{{.}}</span>
+            <span class="slide-card-path">{{filePath}}</span>
+            {{/title}}
+            {{^title}}
+            {{filePath}}
+            {{/title}}
           </a>
         </li>
         {{/files}}

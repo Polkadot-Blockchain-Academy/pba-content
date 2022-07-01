@@ -186,3 +186,13 @@ a:visited {
   left: 0;
   padding: var(--r-padding);
 }
+
+/* slides list */
+.slide-card {}
+.slide-card-name {
+  font-size: 1.2em;
+}
+
+.slide-card-path {
+  font-size: 0.9em;
+}
