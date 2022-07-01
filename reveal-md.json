@@ -5,7 +5,6 @@
   "baseUrl": "/polkadot-blockchain-academy",
   "css": [
     "reveal-md/custom-classes.css",
-    "reveal-md/fonts/",
     "reveal-md/polkadot-theme-base.css",
     "reveal-md/PBA-theme.css",
     "plugin/design-system/index.css"
