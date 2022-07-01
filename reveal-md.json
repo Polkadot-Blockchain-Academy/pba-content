@@ -6,8 +6,8 @@
     "reveal-md/custom-classes.css",
     "reveal-md/fonts/",
     "reveal-md/polkadot-theme-base.css",
-    "reveal-md/polkadot-theme-widgets.css",
-    "reveal-md/PBA-theme.css"
+    "reveal-md/PBA-theme.css",
+    "plugin/design-system/index.css"
   ],
   "scripts": [
     "plugin/design-system/design-system.js",
