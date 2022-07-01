@@ -5,9 +5,24 @@ export { WidgetSpeaker, WidgetImage };
 
 export default {
   id: 'designSystem',
-  init: () => {
-    console.log('Reveal Polkadot design-system');
-    customElements.define('widget-speaker', WidgetSpeaker);
+  init: (options) => {
+    const {
+      getRevealElement,
+      getConfig,
+    } = options
+
+    const {baseUrl} = getConfig()
+
+    /* change this if the site is served from a subdomain */
+    if (baseUrl) {
+      WidgetImage.baseUrl = baseUrl
+      WidgetSpeaker.baseUrl = baseUrl
+    }
     customElements.define('widget-image', WidgetImage);
+    customElements.define('widget-speaker', WidgetSpeaker);
+
+    const $reveal =  getRevealElement()
+    $reveal.setAttribute('is-loaded', true)
+    console.log('Reveal Polkadot design-system');
   }
 };
