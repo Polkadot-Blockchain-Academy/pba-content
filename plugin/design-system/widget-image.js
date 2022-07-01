@@ -13,7 +13,6 @@ export default class WidgetImage extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    console.log('WidgetImage', WidgetImage.baseUrl)
   }
 
   render() {

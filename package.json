@@ -5,8 +5,8 @@
   "scripts": {
     "start": "reveal-md ./ --watch",
     "help": "reveal-md --help",
-    "build": "rm -rf build && reveal-md ./ --static build --absolute-url https://paritytech.github.io/polkadot-blockchain-academy --featured-slide 0",
-    "build-github-pages": "rm -rf build && reveal-md ./ --static build --absolute-url https://paritytech.github.io/polkadot-blockchain-academy ",
+    "build": "rm -rf build && reveal-md ./ --static build",
+    "build-github-pages": "rm -rf build && reveal-md ./ --static build --absolute-url https://paritytech.github.io/polkadot-blockchain-yolo ",
     "format": "prettier --config .prettierrc.js --write '**/*.md'",
     "format:code": "prettier --config .prettierrc.js --write '{**/*.{rs,js,ts,json},!**/*.md}'"
   },

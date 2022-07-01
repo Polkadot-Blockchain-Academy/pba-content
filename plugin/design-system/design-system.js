@@ -23,6 +23,6 @@ export default {
 
     const $reveal =  getRevealElement()
     $reveal.setAttribute('is-loaded', true)
-    console.log('Reveal Polkadot design-system');
+    console.log('Polkadot (reveal.js)');
   }
 };
