@@ -13,11 +13,14 @@ export default {
 
     const {baseUrl} = getConfig()
 
+    /* insert <base href="https://www.example.com/"> in the <head/> */
     /* change this if the site is served from a subdomain */
     if (baseUrl) {
-      WidgetImage.baseUrl = baseUrl
-      WidgetSpeaker.baseUrl = baseUrl
+      const $base = document.createElement('base')
+      $base.href = baseUrl
+      document.querySelector('head').append($base)
     }
+
     customElements.define('widget-image', WidgetImage);
     customElements.define('widget-speaker', WidgetSpeaker);
 

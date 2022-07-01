@@ -8,8 +8,14 @@ export default class WidgetImage extends HTMLElement {
   get fullscreen() {
     return this.getAttribute('fullscreen') === 'true';
   }
-
-  static baseUrl = ''
+  get baseUrl() {
+    const $base = document.querySelector('head base')
+    if ($base && $base.href) {
+      return $base.href
+    } else {
+      return '/'
+    }
+  }
 
   connectedCallback() {
     this.render();

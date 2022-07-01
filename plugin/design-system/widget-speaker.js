@@ -23,8 +23,14 @@ export default class WidgetSpeaker extends HTMLElement {
   get linkedin() {
     return this.getAttribute('linkedin');
   }
-
-  static baseUrl = ''
+  get baseUrl() {
+    const $base = document.querySelector('head base')
+    if ($base && $base.href) {
+      return $base.href
+    } else {
+      return '/'
+    }
+  }
 
   socialLinks = [
     {
