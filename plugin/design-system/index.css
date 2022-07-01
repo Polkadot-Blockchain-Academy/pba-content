@@ -62,7 +62,7 @@ widget-speaker {
   text-align: left;
   align-items: center;
   justify-content: center;
-  padding: var(--size);
+  padding: calc(var(--size) / 2);
 }
 
 * + widget-speaker {
@@ -92,9 +92,9 @@ widget-speaker-image {
   margin-right: calc(var(--size) / 2);
   border-radius: 50%;
   overflow: hidden;
-  transform: scale(0.2);
+  transform: scale(0.7);
   opacity: 0;
-  transition: transform 808ms ease-in-out, opacity 707ms ease-in-out;
+  transition: transform 444ms ease-in-out, opacity 333ms ease-in-out;
 }
 widget-speaker-image img {
   margin-top: 0 !important;

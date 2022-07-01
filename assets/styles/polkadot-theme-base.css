@@ -83,10 +83,21 @@ a:link,
 a:visited {
   color: var(--r-link-color-dark);
 }
-.site-reveal p:last-of-type {
+
+/* loaded */
+.site-reveal {
+  opacity: 0;
+  transition: 333ms ease-in-out;
+}
+.site-reveal[is-loaded="true"] {
+  opacity: 1;
+}
+
+/* default reveal slide DOM elements */
+.site-reveal.reveal p:last-of-type {
   margin-bottom: 0;
 }
-.site-reveal blockquote {
+.site-reveal.reveal blockquote {
   width: 100%;
   margin: 0;
   padding: calc(var(--size) / 2);

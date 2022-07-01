@@ -24,6 +24,8 @@ export default class WidgetSpeaker extends HTMLElement {
     return this.getAttribute('linkedin');
   }
 
+  static baseUrl = ''
+
   socialLinks = [
     {
       name: 'github',
@@ -56,7 +58,11 @@ export default class WidgetSpeaker extends HTMLElement {
 
     const $speakerImage = document.createElement('widget-speaker-image');
     const $img = document.createElement('img');
-    $img.src = this.image;
+    if (this.baseUrl) {
+      $img.src = `${this.baseUrl}/${this.image}`;
+    } else {
+      $img.src = this.image;
+    }
     $speakerImage.append($img);
 
     const $socialLinks = document.createElement('widget-speaker-social');
