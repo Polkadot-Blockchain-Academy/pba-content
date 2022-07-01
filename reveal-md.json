@@ -2,6 +2,7 @@
   "title": "Polkadot Blockchain Academy",
   "theme": "reveal-md/polkadot-theme.css",
   "assetsDir": ".",
+  "baseUrl": "/polkadot-blockchain-academy",
   "css": [
     "reveal-md/custom-classes.css",
     "reveal-md/fonts/",
@@ -21,7 +22,7 @@
   "listingTemplate": "./reveal-md/listing-template.html",
   "host": "localhost",
   "staticDir": "build",
-  "staticDirs": ["assets"],
+  "staticDirs": ["assets", "plugin"],
   "preprocessor": null,
   "glob": "**/*[Ss]lides.md"
 }

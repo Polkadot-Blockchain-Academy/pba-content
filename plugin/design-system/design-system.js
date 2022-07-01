@@ -1,7 +1,13 @@
 import WidgetSpeaker from './widget-speaker.js';
 import WidgetImage from './widget-image.js';
 
-customElements.define('widget-speaker', WidgetSpeaker);
-customElements.define('widget-image', WidgetImage);
-
 export { WidgetSpeaker, WidgetImage };
+
+export default {
+  id: 'designSystem',
+  init: () => {
+    console.log('Reveal Polkadot design-system');
+    customElements.define('widget-speaker', WidgetSpeaker);
+    customElements.define('widget-image', WidgetImage);
+  }
+};
