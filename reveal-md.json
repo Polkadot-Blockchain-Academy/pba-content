@@ -2,7 +2,6 @@
   "title": "Polkadot Blockchain Academy",
   "theme": "assets/styles/polkadot-theme.css",
   "assetsDir": ".",
-  "baseUrl": "/polkadot-blockchain-academy",
   "css": [
     "assets/styles/custom-classes.css",
     "assets/styles/polkadot-theme-base.css",
