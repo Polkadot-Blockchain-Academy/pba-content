@@ -109,6 +109,10 @@ a:visited {
   margin-bottom: 0;
 }
 
+.site-reveal.reveal pre code {
+  max-height: 60vh;
+}
+
 /* site layout */
 .site-reveal .site-header img {
   margin: 0;

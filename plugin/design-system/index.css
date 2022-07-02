@@ -74,7 +74,7 @@ widget-speaker[small] widget-speaker-social {
 }
 
 widget-speaker[small] widget-speaker-image {
-  min-width: calc(var(--size-image) / 3);
+  min-width: calc(var(--size-image) / 2);
   max-width: calc(var(--size-image) / 1.5);
 }
 widget-speaker[small] widget-speaker-position {
