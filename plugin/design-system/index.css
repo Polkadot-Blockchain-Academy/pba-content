@@ -5,11 +5,14 @@
 widget-columns {
   display: flex;
   align-items: center;
-  gap: var(--r-padding);
 }
-
-widget-columns[padded] {
-  gap: calc(var(--r-padding) * 4);
+@media (min-width: 40em) {
+  widget-columns {
+    gap: var(--r-padding);
+  }
+  widget-columns[padded] {
+    gap: calc(var(--r-padding) * 4);
+  }
 }
 
 widget-column {
@@ -72,7 +75,7 @@ widget-speaker {
   text-align: left;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--size) / 2);
+  padding: var(--size);
 }
 
 * + widget-speaker {
@@ -84,8 +87,8 @@ widget-speaker[small] widget-speaker-social {
 }
 
 widget-speaker[small] widget-speaker-image {
-  min-width: calc(var(--size-image) / 2);
-  max-width: calc(var(--size-image) / 1.5);
+  min-width: calc(var(--size-image) / 4);
+  max-width: calc(var(--size-image) / 2);
 }
 widget-speaker[small] widget-speaker-position {
   margin-bottom: 0;
@@ -96,15 +99,18 @@ widget-speaker-body {
   flex-direction: column;
 }
 widget-speaker-image {
-  width: var(--size-image) !important;
-  height: var(--size-image) !important;
-
+  width: calc(var(--size-image) / 3);
   margin-right: calc(var(--size) / 2);
   border-radius: 50%;
   overflow: hidden;
   transform: scale(0.7);
   opacity: 0;
   transition: transform 444ms ease-in-out, opacity 333ms ease-in-out;
+}
+@media (min-width: 50em) {
+  widget-speaker-image {
+    width: var(--size-image);
+  }
 }
 widget-speaker-image img {
   margin-top: 0 !important;

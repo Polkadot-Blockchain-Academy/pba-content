@@ -132,8 +132,14 @@ a:visited {
 
 .site-header .watermark-icon {
   width: 4rem;
-  max-width: 10vw;
-  max-height: 10vh;
+  max-width: 6vw;
+  max-height: 6vh;
+}
+@media (min-width: 40em) {
+  .site-header .watermark-icon {
+    max-width: 10vw;
+    max-height: 10vh;
+  }
 }
 
 .site-header {
@@ -172,7 +178,7 @@ a:visited {
 .site-reveal.reveal h4,
 .site-reveal.reveal h5 {
   line-height: 1.2;
-  margin-bottom: calc(var(--size) / 3);
+  margin-bottom: calc(var(--size) / 4);
 }
 
 .site-reveal.reveal ul {
@@ -194,8 +200,16 @@ a:visited {
   font-family: inherit;
   line-height: 1.1;
 }
+
 .site-reveal.reveal li ul {
-  padding-top: var(--size);
+  padding-top: calc(var(--size) / 2);
+  padding-bottom: calc(var(--size) / 2);
+}
+@media (min-width: 40em) {
+  .site-reveal.reveal li ul {
+    padding-top: calc(var(--size) / 1.7);
+    padding-bottom: calc(var(--size) / 1.7);
+  }
 }
 .site-reveal.reveal li:last-of-type {
   margin-bottom: 0;
@@ -207,7 +221,12 @@ a:visited {
 
 .site-reveal section {
   left: 0;
-  padding: var(--r-padding);
+  padding: calc(var(--r-padding) / 2);
+}
+@media (min-width: 40em) {
+  .site-reveal section {
+    padding: var(--r-padding);
+  }
 }
 
 /* slides list */

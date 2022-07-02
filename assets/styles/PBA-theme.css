@@ -205,13 +205,18 @@ section.has-light-background h6 {
 .reveal ul li::before {
 	position: absolute;
 	top: 0.1em;
-	left: -2.5rem;
+	left: -1rem;
 	font-family: monospace;
 	content: "\2022";	 /* Add content: \2022 is the CSS Code/unicode for a bullet */
 	color: var(--r-link-color-dark); /* Change the color */
 	font-weight: bold; /* If you want it to be bold */
 	display: list-item; /* Needed to add space between the bullet and the text */
 	width: 1em; /* Also needed for space (tweak if needed) */
+}
+@media (min-width: 40em) {
+  .reveal ul li::before {
+	  left: -2.5rem;
+  }
 }
 
 .reveal ol {
