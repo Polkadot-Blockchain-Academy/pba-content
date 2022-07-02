@@ -18,14 +18,14 @@
 	--r-heading-margin: 0px 0px 0px 0px;
 	--r-heading-font: "Work Sans";
 	--r-heading-color: #fff;
-	--r-heading-line-height: 2;
+	--r-heading-line-height: 1.6;
 	--r-heading-letter-spacing: -0.03em;
 	--r-heading-text-transform: none;
 	--r-heading-text-shadow: none;
 	--r-heading-font-weight: bold;
 	--r-heading1-text-shadow: none;
-	--r-heading1-size: 3.77em;
-	--r-heading2-size: 2.55em;
+	--r-heading1-size: 3em;
+	--r-heading2-size: 2em;
 	--r-heading3-size: 1.33em;
 	--r-heading4-size: 1em;
 	--r-code-font: monospace;
@@ -40,33 +40,33 @@
 
 /* min-width */
 @media and (min-width: 40em) and (min-height: 70em) {
-  :root {
-    --r-main-font-size: 20px;
+	:root {
+		--r-main-font-size: 20px;
 		--r-padding: 1.5rem;
-  }
+	}
 }
 
 @media (min-width: 50em) {
-  :root {
-    --r-main-font-size: 25px;
+	:root {
+		--r-main-font-size: 25px;
 		--r-padding: 2rem;
-  }
+	}
 }
 @media (min-width: 60em) {
-  :root {
-    --r-main-font-size: 30px;
-    --r-padding: 3.5rem;
-  }
+	:root {
+		--r-main-font-size: 30px;
+		--r-padding: 3.5rem;
+	}
 }
 @media (min-width: 90em) {
-  :root {
-    --r-main-font-size: 35px;
-  }
+	:root {
+		--r-main-font-size: 35px;
+	}
 }
 @media (min-width: 110em) {
-  :root {
-    --r-main-font-size: 40px;
-  }
+	:root {
+		--r-main-font-size: 40px;
+	}
 }
 
 
@@ -155,8 +155,13 @@ section.has-light-background h6 {
 	 * OTHER
 	 *********************************************/
 .reveal p {
-	margin: var(--r-block-margin) 0;
+	margin: calc(var(--r-block-margin) / 2) 0;
 	line-height: 1.3;
+}
+@media and (min-width: 40em) {
+	.reveal p {
+		margin: var(--r-block-margin) 0;
+	}
 }
 
 /* Remove trailing margins after titles */
@@ -195,7 +200,7 @@ section.has-light-background h6 {
 	margin: 0 0 0 1em;
 }
 .reveal ul li {
-  position: relative;
+	position: relative;
 }
 .reveal ul li::before {
 	position: absolute;

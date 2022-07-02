@@ -15,13 +15,23 @@ widget-columns[padded] {
 widget-column {
   text-align: left;
   flex-basis: 50%;
-  padding: var(--r-padding);
-  padding-left: 0;
+  padding-right: calc(var(--r-padding) / 2);
+}
+widget-column:nth-of-type(2) {
+  padding-left: calc(var(--r-padding) / 2);
 }
 
-widget-column:nth-of-type(2) {
-  padding: var(--r-padding);
-  padding-right: 0;
+@media and (min-width: 40em) {
+  widget-column {
+    padding-right: var(--r-padding);
+  }
+  widget-column:nth-of-type(2) {
+    padding-left: var(--r-padding);
+  }
+}
+
+widget-column ul {
+  margin: 0;
 }
 
 widget-column[color] h1,

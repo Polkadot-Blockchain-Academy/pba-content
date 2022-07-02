@@ -145,7 +145,12 @@ a:visited {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--r-padding);
+  padding: calc(var(--r-padding) / 2);
+}
+@media and (min-width: 40em) {
+  .site-header {
+    padding: var(--r-padding);
+  }
 }
 .site-header--small {
   padding: var(--size);
@@ -172,7 +177,10 @@ a:visited {
 
 .site-reveal.reveal ul {
   list-style: none;
-  margin-left: 2.5rem;
+  margin-left: var(--size);
+}
+.site-reveal.reveal widget-column ul {
+  margin: 0;
 }
 .site-reveal.reveal li {
   list-style: none;
