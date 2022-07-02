@@ -244,12 +244,14 @@ a:visited {
 
 widget-image {
   transition: opacity 666ms ease-in-out;
+  transition-delay: 222ms;
   transform: scale(1);
+  opacity: 0;
 }
-.present widget-image {
+.present widget-image[is-loaded] {
   opacity: 1;
 }
-.future widget-image,
-.past widget-image {
+.future widget-image[is-loaded],
+.past widget-image[is-loaded] {
   opacity: 0;
 }

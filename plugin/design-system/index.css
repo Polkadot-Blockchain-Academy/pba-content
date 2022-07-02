@@ -138,7 +138,7 @@ widget-speaker-social-link-title {
 }
 
 /* speaker card when within slides */
-.stack.present widget-speaker-image {
+.stack.present widget-speaker-image[is-loaded] {
   transform: scale(1);
   opacity: 1;
 }
