@@ -248,14 +248,6 @@ pub type Executive = frame_executive::Executive<
 
 ---
 
-<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
-
----v
-
-```html
-<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
-```
-
 <widget-text>
 
 More info on reveal/reveal-md backgrounds:
@@ -267,7 +259,6 @@ More info on reveal/reveal-md backgrounds:
 
 ---
 
-<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 <widget-columns>
   <widget-column></widget-column>
   <widget-column>
@@ -283,7 +274,6 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<!-- .slide: data-background="/assets/img/0-Shared/dynamic-wang-bg-2.png" -->
 <widget-columns>
   <widget-column></widget-column>
   <widget-column>
