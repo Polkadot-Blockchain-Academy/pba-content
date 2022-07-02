@@ -238,3 +238,18 @@ a:visited {
 .slide-card-path {
   font-size: 0.9em;
 }
+
+
+/* customization of wigets for slides */
+
+widget-image {
+  transition: opacity 666ms ease-in-out;
+  transform: scale(1);
+}
+.present widget-image {
+  opacity: 1;
+}
+.future widget-image,
+.past widget-image {
+  opacity: 0;
+}
