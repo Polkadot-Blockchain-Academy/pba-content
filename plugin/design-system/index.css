@@ -167,6 +167,7 @@ widget-image[fullscreen] img {
   max-width: none !important;
   object-fit: cover;
   width: 100%;
+  height: 100%;
 }
 
 widget-image[fullscreen="fill"] img {
