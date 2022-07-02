@@ -22,6 +22,9 @@ export default class WidgetImage extends HTMLElement {
   render() {
     if (this.src) {
       const $img = document.createElement('img');
+      $img.addEventListener('load', () => {
+        this.setAttribute('is-loaded', true)
+      })
       if (this.baseUrl) {
         $img.src = `${this.baseUrl}/${this.src}`;
       } else {
