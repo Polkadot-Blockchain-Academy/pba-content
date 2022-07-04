@@ -14,6 +14,8 @@ description: A design system to use within slides of a presentation
 ---v
 
 ```html
+<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
+
 # Design system For the polkadot academy slides.
 
 <widget-speaker
@@ -25,6 +27,29 @@ description: A design system to use within slides of a presentation
 ```
 
 Note that in `.md` files, you have to keep the widget element all in a single line to work
+
+---
+
+## Design system examples
+
+Use `o` to open the overview mode and explore slides here.
+
+You can see the source of these slides to copy&paste<br>
+as slide templates in your slides!
+
+<br>
+
+<widget-text center>
+
+1. Images
+   - full screen backgrounds
+1. Columns
+   - split screen backgrounds 
+   - images in columns
+1. MarkDown examples
+   - code `fragment` transitions
+
+</widget-text>
 
 ---
 
