@@ -182,14 +182,12 @@ a:visited {
 }
 
 .site-reveal.reveal ul {
-  list-style: none;
   margin-left: var(--size);
 }
 .site-reveal.reveal widget-column ul {
   margin: 0;
 }
 .site-reveal.reveal li {
-  list-style: none;
   margin-bottom: calc(var(--size) / 2);
   font-size: 0.8em;
 }
