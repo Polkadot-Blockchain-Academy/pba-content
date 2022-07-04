@@ -195,10 +195,14 @@ section.has-light-background h6 {
 .reveal dl,
 .reveal ul {
 	text-align: left;
-	list-style: none !important; /* Remove default bullets */
 	line-height: 1.1;
 	margin: 0 0 0 1em;
 }
+
+.reveal ul {
+	list-style: none !important; /* Remove default bullets */
+}
+
 .reveal ul li {
 	position: relative;
 }
@@ -217,30 +221,6 @@ section.has-light-background h6 {
   .reveal ul li::before {
 	  left: -2.5rem;
   }
-}
-
-.reveal ol {
-	list-style-type: decimal;
-}
-
-.reveal ul {
-	list-style-type: disc;
-}
-
-.reveal ul ul {
-	list-style-type: square;
-}
-
-.reveal ul ul ul {
-	list-style-type: circle;
-}
-
-.reveal ul ul,
-.reveal ul ol,
-.reveal ol ol,
-.reveal ol ul {
-	display: block;
-	margin-left: 40px;
 }
 
 .reveal dt {
