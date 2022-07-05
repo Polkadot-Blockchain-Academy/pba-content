@@ -8,7 +8,7 @@ widget-columns {
 }
 @media (min-width: 40em) {
   widget-columns {
-    gap: var(--r-padding);
+    gap: cacl(var(--r-padding) / 2);
   }
   widget-columns[padded] {
     gap: calc(var(--r-padding) * 4);
@@ -22,9 +22,10 @@ widget-column {
 }
 widget-column:nth-of-type(2) {
   padding-left: calc(var(--r-padding) / 2);
+  padding-right: 0;
 }
 
-@media and (min-width: 40em) {
+@media (min-width: 40em) {
   widget-column {
     padding-right: var(--r-padding);
   }
@@ -88,7 +89,7 @@ widget-speaker[small] widget-speaker-social {
 
 widget-speaker[small] widget-speaker-image {
   min-width: calc(var(--size-image) / 4);
-  max-width: calc(var(--size-image) / 2);
+  max-width: 20vh;
 }
 widget-speaker[small] widget-speaker-position {
   margin-bottom: 0;
