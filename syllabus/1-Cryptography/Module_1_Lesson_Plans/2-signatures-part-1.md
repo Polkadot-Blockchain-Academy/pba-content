@@ -31,10 +31,10 @@ _Note: The instructor should have a Rust console open and should be showing how 
 	- We use things like account nonces and checkpoint blocks to limit validity to some context
 - Signature schemes: What are Sr25519 and Ed25519?
 	- ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures, but today new applications are discuraged from deploying ECDSA.
-	- ECDSA complicates more advanced cryptographic techniques, like threshold signatures.  ECDSA's usage by blockchains has resulted in a minfield of problematic advanced ECDSA protocols, including broken or insanely complex threshold signatures schemes.
-	- Dan Bernstein's Ed25519 is Schnorr signature designed to reduce mistakes in implementaiton and usage in classical applications, like TLS certificates.
+	- ECDSA complicates more advanced cryptographic techniques, like threshold signatures.  ECDSA's usage by blockchains has resulted in a minefield of problematic advanced ECDSA protocols, including broken or insanely complex threshold signatures schemes.
+	- Dan Bernstein's Ed25519 is Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
 	- Sr25519 addresses several small risk factors that emerged from Ed25519 usage by blockchains
-- HDKD ([See example](#hdkd-example))
+- HDKD
 	- Possible to derive several keys from a "parent"
 	- Hard vs. soft
 	- Hard derivation requires the secret key and derives new secret keys
@@ -44,7 +44,7 @@ _Note: The instructor should have a Rust console open and should be showing how 
 		- However, contrary to hard derivation, they all have related or effectively the same private key.
 		- They typically leak information about related addresses.
 		- Soft derivations are used by UTXO-like chains so that wallet front ends, or others services without the secret keys, can scan the chain for incoming transactions on the derived addresses.
-		- Soft derivations can break some niche advanced protocols, but our sr25519 crate avoids supporting protocols that conflict with soft derivations .
+		- Soft derivations can break some niche advanced protocols, but our sr25519 crate avoids supporting protocols that conflict with soft derivations.
 - Mnemonics and secret seed creation
 	- Many wallets use a dictionary of words and give people phrases, often 12 or 24 words, as these are easier to back up/recover than byte arrays.
 		- Some people create their own phrases. This is usually stupid.
