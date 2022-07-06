@@ -126,7 +126,6 @@ a:visited {
 }
 
 .site-header .watermark-logo {
-  width: 12rem;
   max-width: 20vw;
   max-height: 10vh;
   transition: transform 0.4s ease;
@@ -138,7 +137,8 @@ a:visited {
 }
 
 .site-header .watermark-icon {
-  width: 4rem;
+  width: 3em;
+  display: block;
   max-width: 6vw;
   max-height: 6vh;
 }
