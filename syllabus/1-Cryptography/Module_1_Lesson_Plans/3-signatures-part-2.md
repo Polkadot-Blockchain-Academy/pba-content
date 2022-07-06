@@ -19,9 +19,9 @@ This section will be less hands on, but will cover some more advanced usage of s
 	- Signer enforce aka off-chain cryptographic threshold multi-signatures require two multi-party computations (MPCs):
 		- Initially all signers run distributed key generation (DKG) protocol that collaboratively constructs secret key shares whose structure encodes the desired threshold behavior.  DKGs break hard key derivations.
 		- After this, each signing demands some threshold of signers provide signature fragments, which necessarily cover previously agreed upon mesages.
-	- Third flavor
-		- Aside from on-chain multi-signatures, we have cryptographic multi-signatures with both threshold and non-threshold cryptography.  We do not discuss the non-threshold flavor because applying them remains subtle and out of scope.
 		- Threshold multi-signatures require special keys built with a multi-party computation called a distributed key generation (DKG) protocol/ceremony, but the resulting key encodes the threshold verification logic.
+	- Third flavor
+		- Cryptographic multi-signatures with non-threshold cryptography. We do not discuss the non-threshold flavor because applying them remains subtle and out of scope.
 - Schnorr (threshold cryptographic) multi-signatures
 	- Improves operational security without altering or complicating verifier logic.
 	- Also reduces verifier costs in bandwidth & CPU time, so great for certificates.
