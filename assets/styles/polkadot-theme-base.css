@@ -126,7 +126,6 @@ a:visited {
 }
 
 .site-header .watermark-logo {
-  width: 12rem;
   max-width: 20vw;
   max-height: 10vh;
   transition: transform 0.4s ease;
@@ -138,7 +137,8 @@ a:visited {
 }
 
 .site-header .watermark-icon {
-  width: 4rem;
+  width: 3em;
+  display: block;
   max-width: 6vw;
   max-height: 6vh;
 }
@@ -191,9 +191,6 @@ a:visited {
 .site-reveal.reveal ul {
   margin-left: var(--size);
 }
-.site-reveal.reveal widget-column ul {
-  margin: 0;
-}
 .site-reveal.reveal li {
   margin-bottom: calc(var(--size) / 2);
   font-size: 0.8em;
@@ -209,12 +206,6 @@ a:visited {
 .site-reveal.reveal li ul {
   padding-top: calc(var(--size) / 2);
   padding-bottom: calc(var(--size) / 2);
-}
-@media (min-width: 40em) {
-  .site-reveal.reveal li ul {
-    padding-top: calc(var(--size) / 1.7);
-    padding-bottom: calc(var(--size) / 1.7);
-  }
 }
 .site-reveal.reveal li:last-of-type {
   margin-bottom: 0;
@@ -256,7 +247,6 @@ a:visited {
 widget-image {
   transition: opacity 666ms ease-in-out;
   transition-delay: 222ms;
-  transform: scale(1);
   opacity: 0;
 }
 .present widget-image[is-loaded] {
