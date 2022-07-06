@@ -97,6 +97,9 @@ a:visited {
 .site-reveal.reveal p:last-of-type {
   margin-bottom: 0;
 }
+.site-reveal.reveal p:last-of-type + * {
+  margin-top: calc(var(--size) / 2);
+}
 .site-reveal.reveal blockquote {
   width: 100%;
   margin: 0;
@@ -113,6 +116,10 @@ a:visited {
   max-height: 60vh;
 }
 
+/* controls */
+.site-reveal.reveal .controls {
+  font-size: 0.4em;
+}
 /* site layout */
 .site-reveal .site-header img {
   margin: 0;
@@ -219,9 +226,15 @@ a:visited {
 
 .site-reveal section {
   left: 0;
-  padding: calc(var(--r-padding) / 2);
+  padding: calc(var(--r-padding) / 4);
 }
 @media (min-width: 40em) {
+  .site-reveal section {
+    padding: calc(var(--r-padding) / 2);
+  }
+}
+
+@media (min-width: 70em) {
   .site-reveal section {
     padding: var(--r-padding);
   }
