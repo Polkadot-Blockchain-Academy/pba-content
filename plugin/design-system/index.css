@@ -63,6 +63,11 @@ widget-text[right] {
 widget-text[color] {
   color: var(--r-link-color-dark);
 }
+widget-text[center] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 /*
   web-components
@@ -199,8 +204,13 @@ widget-image[halfscreen-bg] img {
   top: 0;
   right: 0;
   bottom: 0;
-  width: 57%;
+  width: 63%;
   height: 100%;
+}
+@media (min-width: 50em) {
+  widget-image[halfscreen-bg] img {
+    width: 57%;
+  }
 }
 
 widget-image[top-left-bg] {
@@ -210,10 +220,8 @@ widget-image[top-left-bg] {
   z-index: -1;
   display: block;
   overflow: visible;
-  /* min-height: 10em; */
-  max-height: 10vh;
   width: 12em;
-  max-width: 35vw;
+  max-width: 40vh;
 }
 
 widget-image[top-left-bg] img {
