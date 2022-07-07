@@ -9,7 +9,7 @@
  *********************************************/
 
 :root {
-	--r-main-font-size: 16px;
+	--r-main-font-size: 15px;
 	--r-main-font: "Work Sans";
 	--r-main-color: #fff;
 	--r-background-color: #0d2378;
@@ -24,9 +24,9 @@
 	--r-heading-text-shadow: none;
 	--r-heading-font-weight: bold;
 	--r-heading1-text-shadow: none;
-	--r-heading1-size: 3em;
-	--r-heading2-size: 2em;
-	--r-heading3-size: 1.33em;
+	--r-heading1-size: 2.6em;
+	--r-heading2-size: 1.7em;
+	--r-heading3-size: 1.22em;
 	--r-heading4-size: 1em;
 	--r-code-font: monospace;
 	--r-code-font-size: 0.65em; /* custom PBA var */
@@ -39,26 +39,19 @@
 }
 
 /* min-width */
-@media and (min-width: 40em) and (min-height: 70em) {
+@media (min-width: 40em) {
 	:root {
-		--r-main-font-size: 20px;
-		--r-padding: 1.5rem;
-	}
-}
-
-@media (min-width: 50em) {
-	:root {
-		--r-main-font-size: 25px;
+		--r-main-font-size: 3vh;
 		--r-padding: 2rem;
 	}
 }
-@media (min-width: 60em) {
+@media (min-width: 70em) {
 	:root {
-		--r-main-font-size: 30px;
+		--r-main-font-size: 4vh;
 		--r-padding: 3.5rem;
 	}
 }
-@media (min-width: 90em) {
+@media (min-width: 100em) {
 	:root {
 		--r-main-font-size: 35px;
 	}
@@ -217,7 +210,7 @@ section.has-light-background h6 {
 	display: list-item; /* Needed to add space between the bullet and the text */
 	width: 1em; /* Also needed for space (tweak if needed) */
 }
-@media (min-width: 40em) {
+@media (min-width: 70em) {
   .reveal ul li::before {
 	  left: -2.5rem;
   }
