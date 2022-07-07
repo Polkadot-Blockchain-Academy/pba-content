@@ -9,7 +9,7 @@
  *********************************************/
 
 :root {
-	--r-main-font-size: 16px;
+	--r-main-font-size: 15px;
 	--r-main-font: "Work Sans";
 	--r-main-color: #fff;
 	--r-background-color: #0d2378;
@@ -18,15 +18,15 @@
 	--r-heading-margin: 0px 0px 0px 0px;
 	--r-heading-font: "Work Sans";
 	--r-heading-color: #fff;
-	--r-heading-line-height: 2;
+	--r-heading-line-height: 1.6;
 	--r-heading-letter-spacing: -0.03em;
 	--r-heading-text-transform: none;
 	--r-heading-text-shadow: none;
 	--r-heading-font-weight: bold;
 	--r-heading1-text-shadow: none;
-	--r-heading1-size: 3.77em;
-	--r-heading2-size: 2.55em;
-	--r-heading3-size: 1.33em;
+	--r-heading1-size: 2.6em;
+	--r-heading2-size: 1.7em;
+	--r-heading3-size: 1.22em;
 	--r-heading4-size: 1em;
 	--r-code-font: monospace;
 	--r-code-font-size: 0.65em; /* custom PBA var */
@@ -39,34 +39,27 @@
 }
 
 /* min-width */
-@media and (min-width: 40em) and (min-height: 70em) {
-  :root {
-    --r-main-font-size: 20px;
-		--r-padding: 1.5rem;
-  }
-}
-
-@media (min-width: 50em) {
-  :root {
-    --r-main-font-size: 25px;
+@media (min-width: 40em) {
+	:root {
+		--r-main-font-size: 3vh;
 		--r-padding: 2rem;
-  }
+	}
 }
-@media (min-width: 60em) {
-  :root {
-    --r-main-font-size: 30px;
-    --r-padding: 3.5rem;
-  }
+@media (min-width: 70em) {
+	:root {
+		--r-main-font-size: 4vh;
+		--r-padding: 3.5rem;
+	}
 }
-@media (min-width: 90em) {
-  :root {
-    --r-main-font-size: 35px;
-  }
+@media (min-width: 100em) {
+	:root {
+		--r-main-font-size: 35px;
+	}
 }
 @media (min-width: 110em) {
-  :root {
-    --r-main-font-size: 40px;
-  }
+	:root {
+		--r-main-font-size: 40px;
+	}
 }
 
 
@@ -155,8 +148,13 @@ section.has-light-background h6 {
 	 * OTHER
 	 *********************************************/
 .reveal p {
-	margin: var(--r-block-margin) 0;
+	margin: calc(var(--r-block-margin) / 2) 0;
 	line-height: 1.3;
+}
+@media and (min-width: 40em) {
+	.reveal p {
+		margin: var(--r-block-margin) 0;
+	}
 }
 
 /* Remove trailing margins after titles */
@@ -190,17 +188,21 @@ section.has-light-background h6 {
 .reveal dl,
 .reveal ul {
 	text-align: left;
-	list-style: none !important; /* Remove default bullets */
 	line-height: 1.1;
 	margin: 0 0 0 1em;
 }
+
+.reveal ul {
+	list-style: none !important; /* Remove default bullets */
+}
+
 .reveal ul li {
-  position: relative;
+	position: relative;
 }
 .reveal ul li::before {
 	position: absolute;
 	top: 0.1em;
-	left: -2.5rem;
+	left: -1rem;
 	font-family: monospace;
 	content: "\2022";	 /* Add content: \2022 is the CSS Code/unicode for a bullet */
 	color: var(--r-link-color-dark); /* Change the color */
@@ -208,29 +210,10 @@ section.has-light-background h6 {
 	display: list-item; /* Needed to add space between the bullet and the text */
 	width: 1em; /* Also needed for space (tweak if needed) */
 }
-
-.reveal ol {
-	list-style-type: decimal;
-}
-
-.reveal ul {
-	list-style-type: disc;
-}
-
-.reveal ul ul {
-	list-style-type: square;
-}
-
-.reveal ul ul ul {
-	list-style-type: circle;
-}
-
-.reveal ul ul,
-.reveal ul ol,
-.reveal ol ol,
-.reveal ol ul {
-	display: block;
-	margin-left: 40px;
+@media (min-width: 70em) {
+  .reveal ul li::before {
+	  left: -2.5rem;
+  }
 }
 
 .reveal dt {

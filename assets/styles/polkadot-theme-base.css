@@ -97,6 +97,9 @@ a:visited {
 .site-reveal.reveal p:last-of-type {
   margin-bottom: 0;
 }
+.site-reveal.reveal p:last-of-type + * {
+  margin-top: calc(var(--size) / 2);
+}
 .site-reveal.reveal blockquote {
   width: 100%;
   margin: 0;
@@ -113,13 +116,16 @@ a:visited {
   max-height: 60vh;
 }
 
+/* controls */
+.site-reveal.reveal .controls {
+  font-size: 0.4em;
+}
 /* site layout */
 .site-reveal .site-header img {
   margin: 0;
 }
 
 .site-header .watermark-logo {
-  width: 12rem;
   max-width: 20vw;
   max-height: 10vh;
   transition: transform 0.4s ease;
@@ -131,9 +137,16 @@ a:visited {
 }
 
 .site-header .watermark-icon {
-  width: 4rem;
-  max-width: 10vw;
-  max-height: 10vh;
+  width: 3em;
+  display: block;
+  max-width: 6vw;
+  max-height: 6vh;
+}
+@media (min-width: 40em) {
+  .site-header .watermark-icon {
+    max-width: 10vw;
+    max-height: 10vh;
+  }
 }
 
 .site-header {
@@ -145,7 +158,12 @@ a:visited {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--r-padding);
+  padding: calc(var(--r-padding) / 2);
+}
+@media and (min-width: 40em) {
+  .site-header {
+    padding: var(--r-padding);
+  }
 }
 .site-header--small {
   padding: var(--size);
@@ -167,15 +185,13 @@ a:visited {
 .site-reveal.reveal h4,
 .site-reveal.reveal h5 {
   line-height: 1.2;
-  margin-bottom: calc(var(--size) / 3);
+  margin-bottom: calc(var(--size) / 4);
 }
 
 .site-reveal.reveal ul {
-  list-style: none;
-  margin-left: 2.5rem;
+  margin-left: var(--size);
 }
 .site-reveal.reveal li {
-  list-style: none;
   margin-bottom: calc(var(--size) / 2);
   font-size: 0.8em;
 }
@@ -186,8 +202,10 @@ a:visited {
   font-family: inherit;
   line-height: 1.1;
 }
+
 .site-reveal.reveal li ul {
-  padding-top: var(--size);
+  padding-top: calc(var(--size) / 2);
+  padding-bottom: calc(var(--size) / 2);
 }
 .site-reveal.reveal li:last-of-type {
   margin-bottom: 0;
@@ -199,7 +217,18 @@ a:visited {
 
 .site-reveal section {
   left: 0;
-  padding: var(--r-padding);
+  padding: calc(var(--r-padding) / 4);
+}
+@media (min-width: 40em) {
+  .site-reveal section {
+    padding: calc(var(--r-padding) / 2);
+  }
+}
+
+@media (min-width: 70em) {
+  .site-reveal section {
+    padding: var(--r-padding);
+  }
 }
 
 /* slides list */
@@ -210,4 +239,20 @@ a:visited {
 
 .slide-card-path {
   font-size: 0.9em;
+}
+
+
+/* customization of wigets for slides */
+
+widget-image {
+  transition: opacity 666ms ease-in-out;
+  transition-delay: 222ms;
+  opacity: 0;
+}
+.present widget-image[is-loaded] {
+  opacity: 1;
+}
+.future widget-image[is-loaded],
+.past widget-image[is-loaded] {
+  opacity: 0;
 }

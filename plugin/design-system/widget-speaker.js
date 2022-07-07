@@ -62,6 +62,9 @@ export default class WidgetSpeaker extends HTMLElement {
 
     const $speakerImage = document.createElement('widget-speaker-image');
     const $img = document.createElement('img');
+    $img.addEventListener('load', () => {
+      $speakerImage.setAttribute('is-loaded', true)
+    })
     if (this.baseUrl) {
       $img.src = `${this.baseUrl}/${this.image}`;
     } else {
