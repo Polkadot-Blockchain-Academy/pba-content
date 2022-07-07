@@ -35,10 +35,12 @@
   </head>
   <body class="site">
     <header class="site-header">
-      <a href="{{{base}}}/..">
+      <a href="{{{absoluteUrl}}}">
         <img class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
       </a>
-      <img class="watermark-icon" src="{{{base}}}/assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+      <a href="https://polkadot.network">
+        <img class="watermark-icon" src="{{{base}}}/assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+      </a>
     </header>
     <main class="site-reveal reveal">
       <article class="slides">
@@ -52,8 +54,10 @@
     <script src="{{{base}}}/plugin/zoom/zoom.js"></script>
     <script src="{{{base}}}/plugin/notes/notes.js"></script>
     <script src="{{{base}}}/plugin/math/math.js"></script>
-    <script type="module" src="{{{base}}}/plugin/design-system/design-system.js"></script>
-    <script>
+
+    <script type="module">
+      import DesignSystem from "{{{base}}}/plugin/design-system/design-system.js"
+
       function extend() {
         var target = {};
         for (var i = 0; i < arguments.length; i++) {
@@ -79,21 +83,16 @@
           RevealHighlight,
           RevealZoom,
           RevealNotes,
-          RevealMath
+          RevealMath,
+          DesignSystem
         ]
       };
 
       // options from URL query string
-      var queryOptions = Reveal().getQueryHash() || {};
+      const queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {{{revealOptionsStr}}}, queryOptions);
-    </script>
-
-    {{#scriptPaths}}
-    <script src="{{{.}}}"></script>
-    {{/scriptPaths}}
-
-    <script>
+      const options = extend(defaultOptions, {{{revealOptionsStr}}}, queryOptions);
+      options.baseUrl = '{{{absoluteUrl}}}';
       Reveal.initialize(options);
     </script>
   </body>
