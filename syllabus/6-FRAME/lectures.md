@@ -6,9 +6,10 @@
 
 ## FRAME Lectures
 
-> Ordering constraint
-- call refund >> weight
--
+> Ordering constraint: things that I think should come before one another.
+- error and call refund >> weight. Because of this, weight is explained broadly as a part of
+  transactions (quite early), and then there is a separate lecture toward the end about the details
+  and benchmarking.
 
 ### Essentials
 
@@ -44,11 +45,11 @@
 
 ---
 
-### Essential.. But a bit less.
+### Slightly Less Important.
 
 - Inherents
 
-- Frame metadata
+- Metadata
 
 - Benchmarking (shawn)
   - Weight classes
@@ -66,7 +67,7 @@
   - ExtBuilder patter
   - `sp_io::TestExternalities`
 
-### Part 2: Advance Topics
+### Advance Topics
 
 - Pallets that receive/store calls + Dispatch Them
   - `type Call` and how to deal with it.
@@ -82,7 +83,7 @@
 - Custom RPCs + Runtime APIs (maybe, we will probably deprecate it)
 - Pallet Instancing
 
-### Part 3: Pallet Gallery!
+### Pallet Gallery!
 
 - Common Pallets: High level, no detail, as they might be subject to change.
   - Balances
