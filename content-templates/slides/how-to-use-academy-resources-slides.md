@@ -17,7 +17,7 @@ teaching-assistants: ["some one", "another gal"]
 <div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
 <!-- TODO: add a good circularly cropped head shot of ou to the `assets/profile` folder  -->
-<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/BUFFICORN_2521_ALT_smol.gif"/>
+<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/people/BUFFICORN_2521_ALT_smol.gif"/>
 
 </div>
 <div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
@@ -304,7 +304,7 @@ My mission is to make help you be a fantastic instructor with minimal effort.
 
 ---
 
-<img style="height: 980px;" src="../../assets/img/0-Shared/carry-you.png"/>
+<img style="height: 980px;" src="../../assets/img/0-Shared/placeholder/carry-you.png"/>
 
 Notes:
 TAs are not SMEs!
@@ -312,7 +312,7 @@ We cannot write the content as well as you can, and in the end you ar every very
 
 ---
 
-<img style="height: 600px;" src="../../assets/img/0-Shared/we-can-do-it.png"/>
+<img style="height: 600px;" src="../../assets/img/0-Shared/placeholder/we-can-do-it.png"/>
 
 _Team work makes the dream work!_
 
