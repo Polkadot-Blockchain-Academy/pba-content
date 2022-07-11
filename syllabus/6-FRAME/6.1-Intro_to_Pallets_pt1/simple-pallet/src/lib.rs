@@ -37,8 +37,8 @@ pub mod pallet {
   #[pallet::call]
   impl<T: Config> Pallet<T> {
     // this a dummy transaction that allows any user to submit a number (that is converted to
-      // `ValueType`) exactly once. It already increments a counter everyone someone submits something
-      // new. a maximum of `Config::MAX_VALUE` is allowed, and the associated hooks are called.
+      // `ValueType`) exactly once. It already increments a counter every time someone submits something
+      // new. A maximum of `Config::MAX_VALUE` is allowed, and the associated hooks are called.
       #[pallet::weight(0)]
       pub fn inc_user_counter(origin: OriginFor<T>, inc: u32) -> DispatchResult {
         // checks the origin to be signed -- more on this later.
