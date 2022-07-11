@@ -34,7 +34,7 @@ pub type BlockNumber = u32;
 pub type Balance = u128;
 pub type Index = u32;
 
-// One of apis that the runtime needs to implement require it to know its version!
+// One of apis that the runtime needs to implement requires it to know its version!
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
   spec_name: create_runtime_str!("simple-runtime"),
