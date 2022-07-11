@@ -36,7 +36,7 @@ pub mod pallet {
 
   #[pallet::call]
   impl<T: Config> Pallet<T> {
-    // this a dummy transaction that allows any user to submit a number (that is converted to
+      // this a dummy transaction that allows any user to submit a number (that is converted to
       // `ValueType`) exactly once. It already increments a counter every time someone submits something
       // new. A maximum of `Config::MAX_VALUE` is allowed, and the associated hooks are called.
       #[pallet::weight(0)]
