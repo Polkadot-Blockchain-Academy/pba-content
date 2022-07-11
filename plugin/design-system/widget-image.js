@@ -22,6 +22,7 @@ export default class WidgetImage extends HTMLElement {
   render() {
     if (this.src) {
       const $img = document.createElement('img');
+      $img.setAttribute('loading', 'lazy')
       $img.addEventListener('load', () => {
         this.setAttribute('is-loaded', true)
       })
