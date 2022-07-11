@@ -109,9 +109,6 @@ widget-speaker-image {
   margin-right: calc(var(--size) / 2);
   border-radius: 50%;
   overflow: hidden;
-  transform: scale(0.7);
-  opacity: 0;
-  transition: transform 444ms ease-in-out, opacity 333ms ease-in-out;
 }
 @media (min-width: 50em) {
   widget-speaker-image {
@@ -144,10 +141,7 @@ widget-speaker-social-link-title {
 }
 
 /* speaker card when within slides */
-.stack.present widget-speaker-image[is-loaded] {
-  transform: scale(1);
-  opacity: 1;
-}
+.stack.present widget-speaker-image[is-loaded] {}
 
 /* widget-image */
 widget-image {
