@@ -3,8 +3,6 @@ title: Design System
 description: A design system to use within slides of a presentation
 ---
 
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-
 # Design System
 
 ### _For the polkadot academy slides._
@@ -14,8 +12,6 @@ description: A design system to use within slides of a presentation
 ---v
 
 ```html
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-
 # Design system For the polkadot academy slides.
 
 <widget-speaker
@@ -130,7 +126,7 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 <widget-columns>
 <widget-column>
 
-### This colum has a bit of a statement to make.
+### This column has a bit of a statement to make.
 
 </widget-column>
 <widget-column>
@@ -220,37 +216,7 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 ```
 
 ---
-
-<widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
-
----v
-
-```html
-<widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
-```
-
----
-
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
-
----v
-
-```html
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
-```
-
----
-
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-
----v
-
-```html
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-```
-
----
-
+<!-- .slide: data-background="/assets/img/0-Shared/bg-circles-image.png" -->
 <widget-text>
 
 More info on reveal/reveal-md backgrounds:
@@ -291,8 +257,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
-
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+<!-- .slide: data-background="/assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
 <widget-columns padded>
 <widget-column>
@@ -308,7 +273,7 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+<!-- .slide: data-background="/assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
 <widget-columns padded>
 <widget-column>
@@ -323,8 +288,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
-
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-color.png"></widget-image>
+<!-- .slide: data-background="/assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
 <widget-columns padded>
 <widget-column color>
@@ -345,7 +309,7 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-color.png"></widget-image>
+<!-- .slide: data-background="/assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
 <widget-columns padded>
 <widget-column color>
@@ -505,7 +469,7 @@ pub type Executive = frame_executive::Executive<
 <widget-columns>
 <widget-column>
 
-### Colum + Code
+### Column + Code
 
 - Some
 - Observations
@@ -558,12 +522,11 @@ fn main() {
 </widget-columns>
 
 ---v
-
 ````html
 <widget-columns>
 <widget-column>
 
-### Colum + Code
+### Column + Code
 
 - Some
 - Observations
@@ -571,6 +534,7 @@ fn main() {
 
 </widget-column>
 <widget-column>
+
 
 ```rust [0|1,13|4-8]
 fn largest_i32(list: &[i32]) -> i32 {
@@ -614,7 +578,8 @@ fn main() {
 
 </widget-column>
 </widget-columns>
-```
+```` 
+
 ---
 
 ## Tables
@@ -625,6 +590,17 @@ fn main() {
 | col 2 is            |      centered       |                     $12 |
 | col 3 is            |    right-aligned    |                      $1 |
 | This row sure has a | _lot_ of text so it | spaces the columns outs |
+
+---v
+
+```
+| Tables              |         Are         |                    Cool |
+| ------------------- | :-----------------: | ----------------------: |
+| col 1 is            |    left-aligned     |                   $1600 |
+| col 2 is            |      centered       |                     $12 |
+| col 3 is            |    right-aligned    |                      $1 |
+| This row sure has a | _lot_ of text so it | spaces the columns outs |
+```
 
 ---
 

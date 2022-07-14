@@ -3,6 +3,7 @@
 use std::prelude::rust_2021::*;
 #[macro_use]
 extern crate std;
+pub use pallet::*;
 ///
 ///			The module that hosts all the
 ///			[FRAME](https://docs.substrate.io/v3/runtime/frame)
@@ -10,37 +11,19 @@ extern crate std;
 ///			runtime.
 ///
 pub mod pallet {
-    use codec::{Codec, FullEncode};
-    use frame_support::pallet_prelude::*;
+    use codec::{Encode, Decode};
+    use frame_support::{
+        pallet_prelude::*,
+        dispatch::{DispatchResultWithPostInfo, PostDispatchInfo},
+        weights::Pays,
+    };
     use frame_system::pallet_prelude::*;
     ///
     ///			Configuration trait of this pallet.
     ///
     ///			Implement this type for a runtime in order to customize this pallet.
     ///
-    pub trait Config: frame_system::Config {
-        fn on_value_update(new_value: Self::ValueType);
-        type ValueType: From<u32>
-            + Codec
-            + Default
-            + TypeInfo
-            + FullEncode
-            + sp_std::ops::AddAssign
-            + PartialOrd
-            + Copy;
-        const MAX_VALUE: u32;
-    }
-    #[allow(type_alias_bounds)]
-    pub type Accumulators<T: Config> = StorageMap<
-        _GeneratedPrefixForStorageAccumulators<T>,
-        Twox64Concat,
-        T::AccountId,
-        T::ValueType,
-        ValueQuery,
-    >;
-    #[allow(type_alias_bounds)]
-    pub type Counter<T: Config> =
-        StorageValue<_GeneratedPrefixForStorageCounter<T>, u32, ValueQuery>;
+    pub trait Config: frame_system::Config {}
     ///
     ///			The [pallet](https://docs.substrate.io/v3/runtime/frame#pallets) implementing
     ///			the on-chain logic.
@@ -70,50 +53,208 @@ pub mod pallet {
             }
         }
     };
-    impl<T: Config> Pallet<T> {
-        pub fn inc_user_counter(origin: OriginFor<T>, inc: u32) -> DispatchResult {
-            let who = ensure_signed(origin)?;
-            if !<Accumulators<T>>::contains_key(&who) {
-                Counter::<T>::mutate(|x| *x += 1);
-                let mut current = Accumulators::<T>::get(&who);
-                current += inc.into();
-                if current > T::MAX_VALUE.into() {
-                    return Err("failed".into());
-                }
-                T::on_value_update(current);
-                Accumulators::<T>::insert(who, current);
-            } else {
-                return Err("already submitted".into());
+    pub struct TransferConfig<AccountId> {
+        from: AccountId,
+        to: AccountId,
+        amount: u64,
+    }
+    #[allow(deprecated)]
+    const _: () = {
+        #[automatically_derived]
+        impl<AccountId> ::codec::Encode for TransferConfig<AccountId>
+        where
+            AccountId: ::codec::Encode,
+            AccountId: ::codec::Encode,
+            AccountId: ::codec::Encode,
+            AccountId: ::codec::Encode,
+        {
+            fn encode_to<__CodecOutputEdqy: ::codec::Output + ?::core::marker::Sized>(
+                &self,
+                __codec_dest_edqy: &mut __CodecOutputEdqy,
+            ) {
+                ::codec::Encode::encode_to(&self.from, __codec_dest_edqy);
+                ::codec::Encode::encode_to(&self.to, __codec_dest_edqy);
+                ::codec::Encode::encode_to(&self.amount, __codec_dest_edqy);
             }
-            Ok(())
+        }
+        #[automatically_derived]
+        impl<AccountId> ::codec::EncodeLike for TransferConfig<AccountId>
+        where
+            AccountId: ::codec::Encode,
+            AccountId: ::codec::Encode,
+            AccountId: ::codec::Encode,
+            AccountId: ::codec::Encode,
+        {
+        }
+    };
+    #[allow(deprecated)]
+    const _: () = {
+        #[automatically_derived]
+        impl<AccountId> ::codec::Decode for TransferConfig<AccountId>
+        where
+            AccountId: ::codec::Decode,
+            AccountId: ::codec::Decode,
+            AccountId: ::codec::Decode,
+            AccountId: ::codec::Decode,
+        {
+            fn decode<__CodecInputEdqy: ::codec::Input>(
+                __codec_input_edqy: &mut __CodecInputEdqy,
+            ) -> ::core::result::Result<Self, ::codec::Error> {
+                ::core::result::Result::Ok(TransferConfig::<AccountId> {
+                    from: {
+                        let __codec_res_edqy =
+                            <AccountId as ::codec::Decode>::decode(__codec_input_edqy);
+                        match __codec_res_edqy {
+                            ::core::result::Result::Err(e) => {
+                                return ::core::result::Result::Err(
+                                    e.chain("Could not decode `TransferConfig::from`"),
+                                )
+                            }
+                            ::core::result::Result::Ok(__codec_res_edqy) => __codec_res_edqy,
+                        }
+                    },
+                    to: {
+                        let __codec_res_edqy =
+                            <AccountId as ::codec::Decode>::decode(__codec_input_edqy);
+                        match __codec_res_edqy {
+                            ::core::result::Result::Err(e) => {
+                                return ::core::result::Result::Err(
+                                    e.chain("Could not decode `TransferConfig::to`"),
+                                )
+                            }
+                            ::core::result::Result::Ok(__codec_res_edqy) => __codec_res_edqy,
+                        }
+                    },
+                    amount: {
+                        let __codec_res_edqy = <u64 as ::codec::Decode>::decode(__codec_input_edqy);
+                        match __codec_res_edqy {
+                            ::core::result::Result::Err(e) => {
+                                return ::core::result::Result::Err(
+                                    e.chain("Could not decode `TransferConfig::amount`"),
+                                )
+                            }
+                            ::core::result::Result::Ok(__codec_res_edqy) => __codec_res_edqy,
+                        }
+                    },
+                })
+            }
+        }
+    };
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl<AccountId: ::core::fmt::Debug> ::core::fmt::Debug for TransferConfig<AccountId> {
+        fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+            ::core::fmt::Formatter::debug_struct_field3_finish(
+                f,
+                "TransferConfig",
+                "from",
+                &&self.from,
+                "to",
+                &&self.to,
+                "amount",
+                &&self.amount,
+            )
         }
     }
-    impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
-        fn on_initialize(n: T::BlockNumber) -> Weight {
-            if n % 10u32.into() == sp_runtime::traits::Zero::zero() {
-                {
-                    let lvl = ::log::Level::Info;
-                    if lvl <= ::log::STATIC_MAX_LEVEL && lvl <= ::log::max_level() {
-                        ::log::__private_api_log(
-                            ::core::fmt::Arguments::new_v1(
-                                &["count of users is "],
-                                &[::core::fmt::ArgumentV1::new_display(&Counter::<T>::get())],
-                            ),
-                            lvl,
-                            &(
-                                "simple_pallet::pallet",
-                                "simple_pallet::pallet",
-                                "src/lib.rs",
-                                75u32,
-                            ),
-                            ::log::__private_api::Option::None,
-                        );
-                    }
-                };
-            }
-            0
+    impl<AccountId> ::core::marker::StructuralPartialEq for TransferConfig<AccountId> {}
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl<AccountId: ::core::cmp::PartialEq> ::core::cmp::PartialEq for TransferConfig<AccountId> {
+        #[inline]
+        fn eq(&self, other: &TransferConfig<AccountId>) -> bool {
+            self.from == other.from && self.to == other.to && self.amount == other.amount
         }
-        fn on_finalize(_n: T::BlockNumber) {}
+        #[inline]
+        fn ne(&self, other: &TransferConfig<AccountId>) -> bool {
+            self.from != other.from || self.to != other.to || self.amount != other.amount
+        }
+    }
+    impl<AccountId> ::core::marker::StructuralEq for TransferConfig<AccountId> {}
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl<AccountId: ::core::cmp::Eq> ::core::cmp::Eq for TransferConfig<AccountId> {
+        #[inline]
+        #[doc(hidden)]
+        #[no_coverage]
+        fn assert_receiver_is_total_eq(&self) -> () {
+            {
+                let _: ::core::cmp::AssertParamIsEq<AccountId>;
+                let _: ::core::cmp::AssertParamIsEq<AccountId>;
+                let _: ::core::cmp::AssertParamIsEq<u64>;
+            }
+        }
+    }
+    #[automatically_derived]
+    #[allow(unused_qualifications)]
+    impl<AccountId: ::core::clone::Clone> ::core::clone::Clone for TransferConfig<AccountId> {
+        #[inline]
+        fn clone(&self) -> TransferConfig<AccountId> {
+            TransferConfig {
+                from: ::core::clone::Clone::clone(&self.from),
+                to: ::core::clone::Clone::clone(&self.to),
+                amount: ::core::clone::Clone::clone(&self.amount),
+            }
+        }
+    }
+    #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+    const _: () = {
+        impl<AccountId> ::scale_info::TypeInfo for TransferConfig<AccountId>
+        where
+            AccountId: ::scale_info::TypeInfo + 'static,
+            AccountId: ::scale_info::TypeInfo + 'static,
+            AccountId: ::scale_info::TypeInfo + 'static,
+        {
+            type Identity = Self;
+            fn type_info() -> ::scale_info::Type {
+                ::scale_info::Type::builder()
+                    .path(::scale_info::Path::new(
+                        "TransferConfig",
+                        "simple_pallet::pallet",
+                    ))
+                    .type_params(<[_]>::into_vec(
+                        #[rustc_box]
+                        ::alloc::boxed::Box::new([::scale_info::TypeParameter::new(
+                            "AccountId",
+                            ::core::option::Option::Some(::scale_info::meta_type::<AccountId>()),
+                        )]),
+                    ))
+                    .docs(&[])
+                    .composite(
+                        ::scale_info::build::Fields::named()
+                            .field(|f| {
+                                f.ty::<AccountId>()
+                                    .name("from")
+                                    .type_name("AccountId")
+                                    .docs(&[])
+                            })
+                            .field(|f| {
+                                f.ty::<AccountId>()
+                                    .name("to")
+                                    .type_name("AccountId")
+                                    .docs(&[])
+                            })
+                            .field(|f| f.ty::<u64>().name("amount").type_name("u64").docs(&[])),
+                    )
+            }
+        };
+    };
+    impl<T: Config> Pallet<T> {
+        pub fn first_transaction(_origin: OriginFor<T>, _inc: u32) -> DispatchResult {
+            Ok(())
+        }
+        pub fn transfer(
+            _origin: OriginFor<T>,
+            config: TransferConfig<T::AccountId>,
+        ) -> DispatchResultWithPostInfo {
+            if config.amount == 42 {
+                Ok(PostDispatchInfo {
+                    actual_weight: Some(0),
+                    pays_fee: Pays::No,
+                })
+            } else {
+                Ok(None.into())
+            }
+        }
     }
     impl<T: Config> Pallet<T> {
         #[doc(hidden)]
@@ -201,14 +342,6 @@ pub mod pallet {
         fn storage_info() -> frame_support::sp_std::vec::Vec<frame_support::traits::StorageInfo> {
             #[allow(unused_mut)]
             let mut res = ::alloc::vec::Vec::new();
-            {
-                let mut storage_info = < Accumulators < T > as frame_support :: traits :: PartialStorageInfoTrait > :: partial_storage_info () ;
-                res.append(&mut storage_info);
-            }
-            {
-                let mut storage_info = < Counter < T > as frame_support :: traits :: PartialStorageInfoTrait > :: partial_storage_info () ;
-                res.append(&mut storage_info);
-            }
             res
         }
     }
@@ -230,9 +363,14 @@ pub mod pallet {
             frame_support::Never,
         ),
         #[codec(index = 0u8)]
-        inc_user_counter {
+        first_transaction {
             #[allow(missing_docs)]
             inc: u32,
+        },
+        #[codec(index = 1u8)]
+        transfer {
+            #[allow(missing_docs)]
+            config: TransferConfig<T::AccountId>,
         },
     }
     const _: () = {
@@ -244,9 +382,13 @@ pub mod pallet {
                         .field(&_0)
                         .field(&_1)
                         .finish(),
-                    Self::inc_user_counter { ref inc } => fmt
-                        .debug_struct("Call::inc_user_counter")
+                    Self::first_transaction { ref inc } => fmt
+                        .debug_struct("Call::first_transaction")
                         .field("inc", &inc)
+                        .finish(),
+                    Self::transfer { ref config } => fmt
+                        .debug_struct("Call::transfer")
+                        .field("config", &config)
                         .finish(),
                 }
             }
@@ -259,8 +401,11 @@ pub mod pallet {
                     Self::__Ignore(ref _0, ref _1) => {
                         Self::__Ignore(core::clone::Clone::clone(_0), core::clone::Clone::clone(_1))
                     }
-                    Self::inc_user_counter { ref inc } => Self::inc_user_counter {
+                    Self::first_transaction { ref inc } => Self::first_transaction {
                         inc: core::clone::Clone::clone(inc),
+                    },
+                    Self::transfer { ref config } => Self::transfer {
+                        config: core::clone::Clone::clone(config),
                     },
                 }
             }
@@ -276,11 +421,18 @@ pub mod pallet {
                     (Self::__Ignore(_0, _1), Self::__Ignore(_0_other, _1_other)) => {
                         true && _0 == _0_other && _1 == _1_other
                     }
-                    (Self::inc_user_counter { inc }, Self::inc_user_counter { inc: _0 }) => {
+                    (Self::first_transaction { inc }, Self::first_transaction { inc: _0 }) => {
                         true && inc == _0
                     }
-                    (Self::__Ignore { .. }, Self::inc_user_counter { .. }) => false,
-                    (Self::inc_user_counter { .. }, Self::__Ignore { .. }) => false,
+                    (Self::transfer { config }, Self::transfer { config: _0 }) => {
+                        true && config == _0
+                    }
+                    (Self::__Ignore { .. }, Self::first_transaction { .. }) => false,
+                    (Self::__Ignore { .. }, Self::transfer { .. }) => false,
+                    (Self::first_transaction { .. }, Self::__Ignore { .. }) => false,
+                    (Self::first_transaction { .. }, Self::transfer { .. }) => false,
+                    (Self::transfer { .. }, Self::__Ignore { .. }) => false,
+                    (Self::transfer { .. }, Self::first_transaction { .. }) => false,
                 }
             }
         }
@@ -295,9 +447,13 @@ pub mod pallet {
                 __codec_dest_edqy: &mut __CodecOutputEdqy,
             ) {
                 match *self {
-                    Call::inc_user_counter { ref inc } => {
+                    Call::first_transaction { ref inc } => {
                         __codec_dest_edqy.push_byte(0u8 as ::core::primitive::u8);
                         ::codec::Encode::encode_to(inc, __codec_dest_edqy);
+                    }
+                    Call::transfer { ref config } => {
+                        __codec_dest_edqy.push_byte(1u8 as ::core::primitive::u8);
+                        ::codec::Encode::encode_to(config, __codec_dest_edqy);
                     }
                     _ => (),
                 }
@@ -319,15 +475,35 @@ pub mod pallet {
                     .map_err(|e| e.chain("Could not decode `Call`, failed to read variant byte"))?
                 {
                     __codec_x_edqy if __codec_x_edqy == 0u8 as ::core::primitive::u8 => {
-                        ::core::result::Result::Ok(Call::<T>::inc_user_counter {
+                        ::core::result::Result::Ok(Call::<T>::first_transaction {
                             inc: {
                                 let __codec_res_edqy =
                                     <u32 as ::codec::Decode>::decode(__codec_input_edqy);
                                 match __codec_res_edqy {
                                     ::core::result::Result::Err(e) => {
                                         return ::core::result::Result::Err(e.chain(
-                                            "Could not decode `Call::inc_user_counter::inc`",
+                                            "Could not decode `Call::first_transaction::inc`",
                                         ))
+                                    }
+                                    ::core::result::Result::Ok(__codec_res_edqy) => {
+                                        __codec_res_edqy
+                                    }
+                                }
+                            },
+                        })
+                    }
+                    __codec_x_edqy if __codec_x_edqy == 1u8 as ::core::primitive::u8 => {
+                        ::core::result::Result::Ok(Call::<T>::transfer {
+                            config: {
+                                let __codec_res_edqy =
+                                    <TransferConfig<T::AccountId> as ::codec::Decode>::decode(
+                                        __codec_input_edqy,
+                                    );
+                                match __codec_res_edqy {
+                                    ::core::result::Result::Err(e) => {
+                                        return ::core::result::Result::Err(
+                                            e.chain("Could not decode `Call::transfer::config`"),
+                                        )
                                     }
                                     ::core::result::Result::Ok(__codec_res_edqy) => {
                                         __codec_res_edqy
@@ -348,6 +524,7 @@ pub mod pallet {
         impl<T: Config> ::scale_info::TypeInfo for Call<T>
         where
             frame_support::sp_std::marker::PhantomData<(T,)>: ::scale_info::TypeInfo + 'static,
+            TransferConfig<T::AccountId>: ::scale_info::TypeInfo + 'static,
             T: Config + 'static,
         {
             type Identity = Self;
@@ -364,45 +541,82 @@ pub mod pallet {
                     .docs_always(&[
                         "Contains one variant per dispatchable that can be called by an extrinsic.",
                     ])
-                    .variant(::scale_info::build::Variants::new().variant(
-                        "inc_user_counter",
-                        |v| {
-                            v.index(0u8 as ::core::primitive::u8)
-                                .fields(::scale_info::build::Fields::named().field(|f| {
-                                    f.ty::<u32>().name("inc").type_name("u32").docs_always(&[])
-                                }))
-                                .docs_always(&[])
-                        },
-                    ))
+                    .variant(
+                        ::scale_info::build::Variants::new()
+                            .variant("first_transaction", |v| {
+                                v.index(0u8 as ::core::primitive::u8)
+                                    .fields(::scale_info::build::Fields::named().field(|f| {
+                                        f.ty::<u32>().name("inc").type_name("u32").docs_always(&[])
+                                    }))
+                                    .docs_always(&[])
+                            })
+                            .variant("transfer", |v| {
+                                v.index(1u8 as ::core::primitive::u8)
+                                    .fields(::scale_info::build::Fields::named().field(|f| {
+                                        f.ty::<TransferConfig<T::AccountId>>()
+                                            .name("config")
+                                            .type_name("TransferConfig<T::AccountId>")
+                                            .docs_always(&[])
+                                    }))
+                                    .docs_always(&[])
+                            }),
+                    )
             }
         };
     };
     impl<T: Config> Call<T> {
-        ///Create a call with the variant `inc_user_counter`.
-        pub fn new_call_variant_inc_user_counter(inc: u32) -> Self {
-            Self::inc_user_counter { inc }
+        ///Create a call with the variant `first_transaction`.
+        pub fn new_call_variant_first_transaction(inc: u32) -> Self {
+            Self::first_transaction { inc }
+        }
+        ///Create a call with the variant `transfer`.
+        pub fn new_call_variant_transfer(config: TransferConfig<T::AccountId>) -> Self {
+            Self::transfer { config }
         }
     }
     impl<T: Config> frame_support::dispatch::GetDispatchInfo for Call<T> {
         fn get_dispatch_info(&self) -> frame_support::dispatch::DispatchInfo {
             match *self {
-                Self::inc_user_counter { ref inc } => {
-                    let __pallet_base_weight = 0;
+                Self::first_transaction { inc: ref _inc } => {
+                    let __pallet_base_weight = 42;
                     let __pallet_weight =
                         <dyn frame_support::dispatch::WeighData<(&u32,)>>::weigh_data(
                             &__pallet_base_weight,
-                            (inc,),
+                            (_inc,),
                         );
                     let __pallet_class =
                         <dyn frame_support::dispatch::ClassifyDispatch<(&u32,)>>::classify_dispatch(
                             &__pallet_base_weight,
-                            (inc,),
+                            (_inc,),
                         );
                     let __pallet_pays_fee =
                         <dyn frame_support::dispatch::PaysFee<(&u32,)>>::pays_fee(
                             &__pallet_base_weight,
-                            (inc,),
+                            (_inc,),
                         );
+                    frame_support::dispatch::DispatchInfo {
+                        weight: __pallet_weight,
+                        class: __pallet_class,
+                        pays_fee: __pallet_pays_fee,
+                    }
+                }
+                Self::transfer { ref config } => {
+                    let __pallet_base_weight = 42;
+                    let __pallet_weight = <dyn frame_support::dispatch::WeighData<(
+                        &TransferConfig<T::AccountId>,
+                    )>>::weigh_data(
+                        &__pallet_base_weight, (config,)
+                    );
+                    let __pallet_class = <dyn frame_support::dispatch::ClassifyDispatch<(
+                        &TransferConfig<T::AccountId>,
+                    )>>::classify_dispatch(
+                        &__pallet_base_weight, (config,)
+                    );
+                    let __pallet_pays_fee = <dyn frame_support::dispatch::PaysFee<(
+                        &TransferConfig<T::AccountId>,
+                    )>>::pays_fee(
+                        &__pallet_base_weight, (config,)
+                    );
                     frame_support::dispatch::DispatchInfo {
                         weight: __pallet_weight,
                         class: __pallet_class,
@@ -423,7 +637,8 @@ pub mod pallet {
     impl<T: Config> frame_support::dispatch::GetCallName for Call<T> {
         fn get_call_name(&self) -> &'static str {
             match *self {
-                Self::inc_user_counter { .. } => "inc_user_counter",
+                Self::first_transaction { .. } => "first_transaction",
+                Self::transfer { .. } => "transfer",
                 Self::__Ignore(_, _) => {
                     ::core::panicking::panic_fmt(::core::fmt::Arguments::new_v1(
                         &["internal error: entered unreachable code: "],
@@ -438,7 +653,7 @@ pub mod pallet {
             }
         }
         fn get_call_names() -> &'static [&'static str] {
-            &["inc_user_counter"]
+            &["first_transaction", "transfer"]
         }
     }
     impl<T: Config> frame_support::traits::UnfilteredDispatchable for Call<T> {
@@ -448,17 +663,17 @@ pub mod pallet {
             origin: Self::Origin,
         ) -> frame_support::dispatch::DispatchResultWithPostInfo {
             match self {
-                Self::inc_user_counter { inc } => {
+                Self::first_transaction { inc: _inc } => {
                     let __within_span__ = {
                         use ::tracing::__macro_support::Callsite as _;
                         static CALLSITE: ::tracing::callsite::DefaultCallsite = {
                             static META: ::tracing::Metadata<'static> = {
                                 ::tracing_core::metadata::Metadata::new(
-                                    "inc_user_counter",
+                                    "first_transaction",
                                     "simple_pallet::pallet",
                                     ::tracing::Level::TRACE,
                                     Some("src/lib.rs"),
-                                    Some(3u32),
+                                    Some(5u32),
                                     Some("simple_pallet::pallet"),
                                     ::tracing_core::field::FieldSet::new(
                                         &[],
@@ -493,7 +708,57 @@ pub mod pallet {
                     };
                     let __tracing_guard__ = __within_span__.enter();
                     frame_support::storage::in_storage_layer(|| {
-                        <Pallet<T>>::inc_user_counter(origin, inc)
+                        <Pallet<T>>::first_transaction(origin, _inc)
+                            .map(Into::into)
+                            .map_err(Into::into)
+                    })
+                }
+                Self::transfer { config } => {
+                    let __within_span__ = {
+                        use ::tracing::__macro_support::Callsite as _;
+                        static CALLSITE: ::tracing::callsite::DefaultCallsite = {
+                            static META: ::tracing::Metadata<'static> = {
+                                ::tracing_core::metadata::Metadata::new(
+                                    "transfer",
+                                    "simple_pallet::pallet",
+                                    ::tracing::Level::TRACE,
+                                    Some("src/lib.rs"),
+                                    Some(5u32),
+                                    Some("simple_pallet::pallet"),
+                                    ::tracing_core::field::FieldSet::new(
+                                        &[],
+                                        ::tracing_core::callsite::Identifier(&CALLSITE),
+                                    ),
+                                    ::tracing::metadata::Kind::SPAN,
+                                )
+                            };
+                            ::tracing::callsite::DefaultCallsite::new(&META)
+                        };
+                        let mut interest = ::tracing::subscriber::Interest::never();
+                        if ::tracing::Level::TRACE <= ::tracing::level_filters::STATIC_MAX_LEVEL
+                            && ::tracing::Level::TRACE
+                                <= ::tracing::level_filters::LevelFilter::current()
+                            && {
+                                interest = CALLSITE.interest();
+                                !interest.is_never()
+                            }
+                            && ::tracing::__macro_support::__is_enabled(
+                                CALLSITE.metadata(),
+                                interest,
+                            )
+                        {
+                            let meta = CALLSITE.metadata();
+                            ::tracing::Span::new(meta, &{ meta.fields().value_set(&[]) })
+                        } else {
+                            let span =
+                                ::tracing::__macro_support::__disabled_span(CALLSITE.metadata());
+                            {};
+                            span
+                        }
+                    };
+                    let __tracing_guard__ = __within_span__.enter();
+                    frame_support::storage::in_storage_layer(|| {
+                        <Pallet<T>>::transfer(origin, config)
                             .map(Into::into)
                             .map_err(Into::into)
                     })
@@ -531,32 +796,8 @@ pub mod pallet {
     impl<T: Config> Pallet<T> {
         #[doc(hidden)]
         pub fn storage_metadata() -> frame_support::metadata::PalletStorageMetadata {
-            frame_support :: metadata :: PalletStorageMetadata { prefix : < < T as frame_system :: Config > :: PalletInfo as frame_support :: traits :: PalletInfo > :: name :: < Pallet < T > > () . expect ("Every active pallet has a name in the runtime; qed") , entries : { # [allow (unused_mut)] let mut entries = :: alloc :: vec :: Vec :: new () ; { < Accumulators < T > as frame_support :: storage :: StorageEntryMetadataBuilder > :: build_metadata (:: alloc :: vec :: Vec :: new () , & mut entries) ; } { < Counter < T > as frame_support :: storage :: StorageEntryMetadataBuilder > :: build_metadata (:: alloc :: vec :: Vec :: new () , & mut entries) ; } entries } , }
+            frame_support :: metadata :: PalletStorageMetadata { prefix : < < T as frame_system :: Config > :: PalletInfo as frame_support :: traits :: PalletInfo > :: name :: < Pallet < T > > () . expect ("Every active pallet has a name in the runtime; qed") , entries : { # [allow (unused_mut)] let mut entries = :: alloc :: vec :: Vec :: new () ; entries } , }
         }
-    }
-    #[doc(hidden)]
-    pub struct _GeneratedPrefixForStorageAccumulators<T>(core::marker::PhantomData<(T,)>);
-    impl<T: Config> frame_support::traits::StorageInstance
-        for _GeneratedPrefixForStorageAccumulators<T>
-    {
-        fn pallet_prefix() -> &'static str {
-            <<T as frame_system::Config>::PalletInfo as frame_support::traits::PalletInfo>::name::<
-                Pallet<T>,
-            >()
-            .expect("Every active pallet has a name in the runtime; qed")
-        }
-        const STORAGE_PREFIX: &'static str = "Accumulators";
-    }
-    #[doc(hidden)]
-    pub struct _GeneratedPrefixForStorageCounter<T>(core::marker::PhantomData<(T,)>);
-    impl<T: Config> frame_support::traits::StorageInstance for _GeneratedPrefixForStorageCounter<T> {
-        fn pallet_prefix() -> &'static str {
-            <<T as frame_system::Config>::PalletInfo as frame_support::traits::PalletInfo>::name::<
-                Pallet<T>,
-            >()
-            .expect("Every active pallet has a name in the runtime; qed")
-        }
-        const STORAGE_PREFIX: &'static str = "Counter";
     }
     #[doc(hidden)]
     pub mod __substrate_inherent_check {
@@ -567,6 +808,10 @@ pub mod pallet {
     /// instance.
     #[doc(hidden)]
     pub type __InherentHiddenInstance = ();
+    impl<T: Config> frame_support::traits::Hooks<<T as frame_system::Config>::BlockNumber>
+        for Pallet<T>
+    {
+    }
     impl<T: Config> frame_support::traits::OnFinalize<<T as frame_system::Config>::BlockNumber>
         for Pallet<T>
     {
@@ -580,7 +825,7 @@ pub mod pallet {
                             "simple_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(3u32),
+                            Some(5u32),
                             Some("simple_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
@@ -637,7 +882,7 @@ pub mod pallet {
                             "simple_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(3u32),
+                            Some(5u32),
                             Some("simple_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
@@ -680,7 +925,7 @@ pub mod pallet {
                             "simple_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(3u32),
+                            Some(5u32),
                             Some("simple_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
@@ -723,7 +968,7 @@ pub mod pallet {
                             frame_support::LOG_TARGET,
                             "simple_pallet::pallet",
                             "src/lib.rs",
-                            3u32,
+                            5u32,
                         ),
                         ::log::__private_api::Option::None,
                     );
