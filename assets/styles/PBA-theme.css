@@ -29,7 +29,8 @@
 	--r-heading3-size: 58px;
 	--r-heading4-size: 32px;
 	--r-code-font: monospace;
-	--r-code-font-size: 0.65em; /* custom PBA var */
+	/* custom PBA var */
+	--r-code-font-size: 0.65em;
 	--r-link-color: #e6007a;
 	--r-link-color-dark: #A45CF6;
 	--r-link-color-hover: #8d3aed;
@@ -74,7 +75,7 @@ section.has-light-background h6 {
 }
 
 .reveal .slides section,
-.reveal .slides section > section {
+.reveal .slides section>section {
 	line-height: 1.3;
 	font-weight: inherit;
 }
@@ -143,6 +144,7 @@ section.has-light-background h6 {
 .reveal video,
 .reveal iframe {
 	max-height: 772px;
+	max-width: 1500px;
 }
 
 .reveal strong,
@@ -163,22 +165,29 @@ section.has-light-background h6 {
 }
 
 .reveal ul {
-	list-style: none !important; /* Remove default bullets */
+	/* Remove default bullets */
+	list-style: none !important;
 }
 
 .reveal ul li {
 	position: relative;
 }
+
 .reveal ul li::before {
 	position: absolute;
 	top: 2px;
 	left: -40px;
 	font-family: monospace;
-	content: "\2022";	 /* Add content: \2022 is the CSS Code/unicode for a bullet */
-	color: var(--r-link-color-dark); /* Change the color */
-	font-weight: bold; /* If you want it to be bold */
-	display: list-item; /* Needed to add space between the bullet and the text */
-	width: 32px; /* Also needed for space (tweak if needed) */
+	/* Add content: \2022 is the CSS Code/unicode for a bullet */
+	content: "\2022";
+	/* Change the color */
+	color: var(--r-link-color-dark);
+	/* If you want it to be bold */
+	font-weight: bold;
+	/* Needed to add space between the bullet and the text */
+	display: list-item;
+	/* Also needed for space (tweak if needed) */
+	width: 32px;
 }
 
 .reveal dt {
