@@ -27,7 +27,13 @@
 }
 
 .left-small {
+  order: 1;
   flex-shrink: 2;
+}
+
+.left-large {
+  order: 1;
+  flex-grow: 2;
 }
 
 .right {
