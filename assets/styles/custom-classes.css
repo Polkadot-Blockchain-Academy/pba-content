@@ -134,3 +134,20 @@ th {
   color: white;
   padding: 30px;
 }
+
+.overlay-table {
+  width: 800px;
+}
+
+.overlay-table,
+.overlay-table tr,
+.overlay-table td {
+  border: 2px solid;
+  border-color: white;
+  border-collapse: separate;
+  text-align: center !important;
+}
+
+.overlay-table td {
+  width: 200px;
+}
