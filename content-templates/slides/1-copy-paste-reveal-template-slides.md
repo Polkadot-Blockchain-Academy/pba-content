@@ -192,7 +192,7 @@ use `<br>` <br>
 <div class="flex-container">
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-### Colum + Code
+### Column + Code
 
 - Some
 - Observations

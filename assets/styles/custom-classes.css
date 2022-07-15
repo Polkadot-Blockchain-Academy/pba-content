@@ -6,8 +6,8 @@
   /* We first create a flex layout context */
   display: flex;
 
-  /* Then we define the flow direction 
-	   and if we allow the items to wrap 
+  /* Then we define the flow direction
+	   and if we allow the items to wrap
 	 * Remember this is the same as:
 	 * flex-direction: row;
 	 * flex-wrap: wrap;
@@ -17,13 +17,25 @@
   /* Then we define how is distributed the remaining space */
   justify-content: space-around;
 }
-.flex-container > * {
+
+.flex-container>* {
   flex: 1 100%;
 }
 
 .left {
   order: 1;
 }
+
+.left-small {
+  order: 1;
+  flex-shrink: 2;
+}
+
+.left-large {
+  order: 1;
+  flex-grow: 2;
+}
+
 .right {
   order: 2;
 }
@@ -34,14 +46,85 @@
   transform: translate(-50%, 0%);
 }
 
-.text-center > * {
+.text-center>* {
   text-align: center !important;
 }
 
-.text-right > * {
+.text-right>* {
   text-align: right !important;
 }
 
-.text-left > * {
-	text-align: left !important;
+.text-left>* {
+  text-align: left !important;
+}
+
+/* Classes for Table in 4.5*/
+
+.storage-layer-table {
+  position: fixed;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.storage-layer-table td {
+  padding: 20px !important;
+  background-color: white;
+  color: black;
+}
+
+.storage-layer-table .active {
+  background-color: pink;
+  color: black;
+}
+
+.storage-layer-table .ends {
+  background-color: transparent;
+  color: white;
+}
+
+th {
+  font-weight: 400;
+}
+
+/* positioning within a container */
+.image-container {
+  position: relative;
+  text-align: center;
+}
+
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+.center-right {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
