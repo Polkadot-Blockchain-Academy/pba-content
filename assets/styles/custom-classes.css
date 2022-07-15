@@ -128,3 +128,9 @@ th {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.black-box {
+  background-color: black;
+  color: white;
+  padding: 30px;
+}
