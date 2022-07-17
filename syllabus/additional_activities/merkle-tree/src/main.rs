@@ -48,7 +48,7 @@ fn calculate_merkle_root(sentence: &str) -> HashValue {
   todo!()
 }
 
-/// A representation of a sinbling node along the Merkle path from the data
+/// A representation of a sibling node along the Merkle path from the data
 /// to the root. It is necessary to specify which side the sibling is on
 /// so that the hash values can be combined in the same order.
 enum SiblingNode {
