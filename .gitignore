@@ -5,6 +5,9 @@ build/
 
 **/.ipynb_checkpoints/**
 
+# Rust artifacts
+**/target
+
 # Some common ones
 .vscode
 .idea/
