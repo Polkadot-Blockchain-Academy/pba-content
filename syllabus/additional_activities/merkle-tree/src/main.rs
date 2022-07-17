@@ -27,7 +27,7 @@ fn pad_base_layer(blocks: &mut Vec<&str>) {
   todo!()
 }
 
-/// Helper function to combine two hashes and compute the has of the combination.
+/// Helper function to combine two hashes and compute the hash of the combination.
 /// This will be useful when building the intermediate nodes in the Merkle tree.
 /// 
 /// There are many correct ways to do this, but the easiest one and the one that I recommend
