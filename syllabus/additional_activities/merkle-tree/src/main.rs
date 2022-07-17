@@ -27,7 +27,7 @@ fn pad_base_layer(blocks: &mut Vec<&str>) {
   todo!()
 }
 
-/// Helper function to combine two hashes and compute the has of the combination.
+/// Helper function to combine two hashes and compute the hash of the combination.
 /// This will be useful when building the intermediate nodes in the Merkle tree.
 /// 
 /// There are many correct ways to do this, but the easiest one and the one that I recommend
@@ -48,7 +48,7 @@ fn calculate_merkle_root(sentence: &str) -> HashValue {
   todo!()
 }
 
-/// A representation of a sinbling node along the Merkle path from the data
+/// A representation of a sibling node along the Merkle path from the data
 /// to the root. It is necessary to specify which side the sibling is on
 /// so that the hash values can be combined in the same order.
 enum SiblingNode {
