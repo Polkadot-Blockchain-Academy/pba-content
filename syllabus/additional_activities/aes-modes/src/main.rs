@@ -122,6 +122,13 @@ fn ecb_decrypt(cipher_text: Vec<u8>, key: [u8; BLOCK_SIZE]) -> Vec<u8> {
 ///
 /// In this mode, the ciphertext from the first block is XORed with the
 /// plaintext of the next block before it is encrypted.
+/// 
+/// For more information, and a very clear diagram,
+/// see https://de.wikipedia.org/wiki/Cipher_Block_Chaining_Mode
+/// 
+/// You will need to generate a random initialization vector (IV) to encrypt the
+/// very first block because it doesn't have a previous block. Typically this IV
+/// is inserted as the first block of ciphertext.
 fn cbc_encrypt(plain_text: Vec<u8>, key: [u8; BLOCK_SIZE]) -> Vec<u8> {
 	// Remember to generate a random initialization vector for the first block.
 
