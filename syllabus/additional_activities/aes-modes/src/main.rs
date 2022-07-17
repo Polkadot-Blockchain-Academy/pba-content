@@ -24,11 +24,11 @@ fn main(){todo!("Maybe this should be a libraray crate. TBD")}
 
 /// Simple AES encryption
 /// Helper function to make the core AES block cipher easier to understand.
-fn aes_encrypt(data: [u8; 16], key: [u8; 16]) -> [u8; 16] {
+fn aes_encrypt(data: [u8; 16], key: &[u8; 16]) -> [u8; 16] {
 
 	// Convert the inputs to the necessary data type
 	let mut block = GenericArray::from(data);
-	let key = GenericArray::from(key);
+	let key = GenericArray::from(*key);
 
 	let cipher = Aes128::new(&key);
 
@@ -39,11 +39,11 @@ fn aes_encrypt(data: [u8; 16], key: [u8; 16]) -> [u8; 16] {
 
 /// Simple AES encryption
 /// Helper function to make the core AES block cipher easier to understand.
-fn aes_decrypt(data: [u8; 16], key: [u8; 16]) -> [u8; 16] {
+fn aes_decrypt(data: [u8; 16], key: &[u8; 16]) -> [u8; 16] {
 
 	// Convert the inputs to the necessary data type
 	let mut block = GenericArray::from(data);
-	let key = GenericArray::from(key);
+	let key = GenericArray::from(*key);
 
 	let cipher = Aes128::new(&key);
 
@@ -91,7 +91,7 @@ fn pad(mut data: Vec<u8>) -> Vec<[u8; 16]> {
 }
 
 /// Does the opposite of the pad function.
-fn un_pad(data: &mut [u8]) {
+fn un_pad(data: Vec<[u8; 16]>) -> Vec<u8>{
 	todo!()
 }
 
@@ -103,6 +103,7 @@ fn un_pad(data: &mut [u8]) {
 /// One good thing about this mode is that it is parallelizable. But to see why it is
 /// insecure look at: https://www.ubiqsecurity.com/wp-content/uploads/2022/02/ECB2.png
 fn ecb_encrypt(plain_text: Vec<u8>, key: [u8; 16]) -> Vec<u8> {
+
 	todo!()
 }
 
