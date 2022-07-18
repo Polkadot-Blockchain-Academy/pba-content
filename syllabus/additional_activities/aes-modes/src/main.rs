@@ -3,16 +3,18 @@
 //! When your data is too short, you can simply pad it up to the correct length.
 //! When your data is too long, you have some options.
 //!
-//! In this exercise, we will explore a few of the common ways that large pieces of data can be broken
-//! up and combined in order to encrypt it with a fixed-length block cipher.
+//! In this exercise, we will explore a few of the common ways that large pieces of data can be
+//! broken up and combined in order to encrypt it with a fixed-length block cipher.
 //!
 //! WARNING: ECB MODE IS NOT SECURE.
-//! Seriously, ECB is NOT secure. Don't use it irl. We are implementing it here to understand _why_ it
-//! is not secure and make the point that the most straight-forward approach isn't always the best, and
-//! can sometimes be trivially broken.
+//! Seriously, ECB is NOT secure. Don't use it irl. We are implementing it here to understand _why_
+//! it is not secure and make the point that the most straight-forward approach isn't always the
+//! best, and can sometimes be trivially broken.
 
-use aes::cipher::{generic_array::GenericArray, BlockCipher, BlockDecrypt, BlockEncrypt, KeyInit};
-use aes::Aes128;
+use aes::{
+	cipher::{generic_array::GenericArray, BlockCipher, BlockDecrypt, BlockEncrypt, KeyInit},
+	Aes128,
+};
 
 ///We're using AES 128 which has 16-byte (128 bit) blocks.
 const BLOCK_SIZE: usize = 16;
@@ -122,10 +124,10 @@ fn ecb_decrypt(cipher_text: Vec<u8>, key: [u8; BLOCK_SIZE]) -> Vec<u8> {
 ///
 /// In this mode, the ciphertext from the first block is XORed with the
 /// plaintext of the next block before it is encrypted.
-/// 
+///
 /// For more information, and a very clear diagram,
 /// see https://de.wikipedia.org/wiki/Cipher_Block_Chaining_Mode
-/// 
+///
 /// You will need to generate a random initialization vector (IV) to encrypt the
 /// very first block because it doesn't have a previous block. Typically this IV
 /// is inserted as the first block of ciphertext.
