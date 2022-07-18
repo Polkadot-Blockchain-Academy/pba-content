@@ -24,9 +24,9 @@
 	--r-heading-text-shadow: none;
 	--r-heading-font-weight: bold;
 	--r-heading1-text-shadow: none;
-	--r-heading1-size: 128px;
-	--r-heading2-size: 75px;
-	--r-heading3-size: 58px;
+	--r-heading1-size: 100px;
+	--r-heading2-size: 60px;
+	--r-heading3-size: 48px;
 	--r-heading4-size: 32px;
 	--r-code-font: monospace;
 	/* custom PBA var */
@@ -161,7 +161,7 @@ section.has-light-background h6 {
 .reveal ul {
 	text-align: left;
 	line-height: 1.1;
-	margin: 0 0 0 1em;
+	margin-top: 1em;
 }
 
 .reveal ul {
