@@ -99,7 +99,7 @@ fn un_group(blocks: Vec<[u8; BLOCK_SIZE]>) -> Vec<u8> {
 }
 
 /// Does the opposite of the pad function.
-fn un_pad(data: Vec<[u8; 16]>) -> Vec<u8> {
+fn un_pad(data: Vec<u8>) -> Vec<u8> {
 	todo!()
 }
 
