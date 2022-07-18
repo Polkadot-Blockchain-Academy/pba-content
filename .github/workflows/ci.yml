@@ -17,7 +17,7 @@ jobs:
           working-directory: .
       - name: Build to `build` dir
         run: |
-          yarn build
+          yarn build-github-pages
       - name: Deploy to `gh-pages` branch
         uses: crazy-max/ghaction-github-pages@v2
         with:

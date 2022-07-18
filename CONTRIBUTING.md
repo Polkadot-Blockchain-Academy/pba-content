@@ -10,7 +10,7 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
   - [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
   - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
-  - [Conceptual workshops and exercises]
+  - [Conceptual workshops and exercises](#conceptual-workshops-and-activities)
 
 ## Content organization
 
@@ -65,7 +65,7 @@ yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
-Please start with the [INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md](./reveal-md/INSTRUCTIONS-HOW-TO-USE-REVEAL-MD-Slides.md) slides to see what is possible with the slides features and some template slides.
+Please start with the ["How to use Reveal slides"](./content-templates/slides/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
 
 <details>
 <summary>If you are missing node or yarn, please install them as described below. (click to toggle)</summary>
@@ -115,13 +115,13 @@ yarn start
 
 - The [how-to use reveal slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/0-how-to-use-reveal-slides.html) and the [source](./content-templates/slides/0-how-to-use-reveal-slides.md)
 - The [copy & paste slide templates](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/1-copy-paste-reveal-template-slides.html) that are styled to use in your content and their [source](./content-templates/slides/1-copy-paste-reveal-template-slides.md)
-- The [lesson template slides](https://paritytech.github.io/polkadot-blockchain-academy//content-templates/slides/lesson-template-slides.html) and their [source](/content-templates/slides/lesson-template-slides.md) that give the structure most lessons should use to start with.
+- The [lecture template slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/lecture-template-slides.html) and their [source](/content-templates/slides/lecture-template-slides.md) that give the structure most lessons should use to start with.
 
 ---
 
 ### Editing `reveal-md` slides
 
-**There is a [base slide template example](./content-templates/slides/lesson-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./content-templates/slides/lecture-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -139,9 +139,6 @@ When writing slides, separate each one using `---`.
 Optionally, you can separate slides vertically using `---v` between slides.
 
 For distinct parts of the lecture, with some core topic being presented as the, it may be a good idea to stack those slides vertically for easier navigation.
-For example, imagine the core topic was "Code Highlight & Transitions":
-
-<img src="./assets/img/Shared/vertical-slides.png" alt="vertical-slides" width="300"/>
 
 #### Using speaker notes
 
@@ -156,10 +153,6 @@ Note: This is a note just for you.
 Set under a line in your slide starting with "`Note`:" all
 subsequent lines are just seen in speaker view.
 ```
-
-And here's an example of the result:
-
-<img src="./assets/img/Shared/speaker-notes-view.png" alt="vertical-slides" width="300"/>
 
 #### Transitions
 
@@ -287,8 +280,8 @@ REPLs are a fantastic way to experiment with a language interactively.
 For non-trivial Rust work, it's best to use a full IDE and cargo properly, over the REPL examples discussed above.
 For these, please create well documented crates that stand alone for each workshop or activity.
 
-** https://github.com/rust-lang/rustlings is a fantastic place to draw inspiration from.**
-While the full CLI tool to make things interactive ins't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
+**[Rustlings](https://github.com/rust-lang/rustlings) is a fantastic place to draw inspiration from.**
+While the full CLI tool to make things interactive isn't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
 
 **Please place stand-alone crates into the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.**
 These can be referenced and then linked to from any slides for them to download or use in an online IDE.
@@ -302,7 +295,24 @@ We suggest that most users will use VSCode as it's most all-around featureful fo
 
 **NOTE: The build times for you project need to be taken into account!**
 Please time on your build machine as a reference and report this to the TAs so we can all plan around the rough timeline to have students start to build things.
-We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students!
+
+- We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students! If you want to use it globally, you need to add this with the right path to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [build]
+  rustc-wrapper = "<path to where>/.cargo/bin/sccache"
+  ```
+
+  Use `which sccache` to find the path.
+
+- To get more power out of `sccache` and maybe overall faster linking, install and use the [`lld` linker](https://lld.llvm.org/) and while notebooks using EvCxR use this by default if detected, if you want to use it globally, see [this post](https://stackoverflow.com/questions/57812916/how-do-i-change-the-default-rustc-cargo-linker) on how to enable it. You need to add something like this to your `~/.cargo/config.toml` file:
+
+  ```toml
+  [target.x86_64-unknown-linux-gnu]
+  rustflags = [
+    "-C", "link-arg=-fuse-ld=lld",
+  ]
+  ```
 
 #### Online IDE
 
@@ -317,5 +327,5 @@ There are some great (but limited) options for anyone lacking the ability to do 
 ### Conceptual workshops and activities
 
 While _most_ work students are doing should highlight _practical applications_ of the concepts, sometimes code isn't the best way to engage.
-For non-code based work, please see the [workshop outline template](content-templates/workshop-outline-template.md) that structures what we should include in workshops or activities.
+For non-code based work, please see the [workshop template](content-templates/slides/workshop-template-slides.md) that structures what we should include in workshops or activities.
 This should be included in the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{pageTitle}}</title>
+    <link rel="stylesheet" href="{{{themeUrl}}}" id="theme" />
+    <style>
+      /* box sizing;
+         https://css-tricks.com/box-sizing/#aa-universal-box-sizing-with-inheritance */
+      html {
+        box-sizing: border-box;
+      }
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+      /* local variables */
+      html {
+        --font-size: 16px;
+        --container: 100em;
+        --size: 1.5rem;
+      }
+
+      /* general layout elements */
+      html,
+      body,
+      .site {
+        display: flex;
+        flex-direction: column;
+      }
+      html {
+        align-items: center;
+        font-size: var(--font-size);
+        color: var(--r-main-color);
+        background-color: var(--r-background-color);
+      }
+      body {
+        margin: 0;
+      }
+      a,
+      a:visited {
+        color: var(--r-link-color);
+      }
+      a:hover {
+        color: var(--r-link-color-hover);
+      }
+      ul {
+        margin: 0;
+      }
+      /* site layout */
+      .site {
+        max-width: var(--container);
+      }
+      .site-header {
+        position: sticky;
+        top: 0;
+        background-color: var(--r-selection-background-color);
+      }
+      /* https://stackoverflow.com/questions/22340081/css-transition-eases-in-but-doesnt-ease-out */
+      a.site-title {
+        text-decoration: none;
+        color: var(--r-main-color);
+        transition: color 200ms ease-in-out;
+      }
+      a.site-title:hover {
+        color: var(--r-link-color);
+      }
+      .site-title h1 {
+        margin: 0;
+        text-transform: uppercase;
+        font-size: calc(var(--font-size) * 1.5);
+        text-shadow: var(--r-heading1-text-shadow);
+      }
+      .site-logo {
+        width: calc(var(--size) * 6);
+        margin-left: calc(var(--size) / 2);
+      }
+      .site-main {
+        padding: var(--size);
+      }
+      .slide-list li[data-template^="content-templates/"]::before {
+        color: var(--r-link-color);
+      }
+      .slide-list li[data-template^="syllabus/"]::before {}
+      .slide-list li[data-template^="syllabus/1"] {}
+      .slide-list li {
+        color: var(--r-link-color-hover);
+        display: flex;
+        align-items: center;
+      }
+      .slide-list li::before {
+        font-size: calc(var(--font-size) * 2);
+        content: "";
+        display: list-item;
+        list-style-type: circle;
+        line-height: 0;
+        color: var(--r-link-color-hover);
+        transition: color 200ms ease-in-out, font-size 200ms ease-in-out;
+      }
+      .slide-list li:hover::before {
+        color: var(--r-link-color);
+        font-size: calc(var(--font-size) * 3);
+        list-style-type: initial;
+      }
+
+      .slide-list li a {
+        padding-top: calc(var(--size) / 3);
+        padding-bottom: calc(var(--size) / 3);
+        font-size: calc(var(--font-size) * 1.2);
+        color: var(--r-main-color);
+        text-decoration: none;
+        word-break: break-word;
+        transition: color 200ms ease-in-out;
+      }
+      .slide-list li a:hover {
+        color: var(--r-link-color-hover);
+      }
+      /* menu navigation bar, sticky */
+      .menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .menu--header {
+        flex-grow: 1;
+        justify-content: space-between;
+      }
+      .menu--footer {
+        justify-content: center;
+        padding-bottom: calc(var(--size) * 1);
+      }
+      .menu-item {
+        display: flex;
+        align-items: center;
+      }
+      .menu--footer .menu-item {
+        font-size: calc(var(--font-size) * 1.5);
+      }
+    </style>
+  </head>
+
+  <body class="site">
+    <header class="site-header site-header--small">
+      <menu class="menu menu--header">
+        <li class="menu-item">
+          <a href="/" class="site-title">
+            <h1>Blockchain
+              Academy
+              Slides</h1>
+          </a>
+        </li>
+        <li class="menu-item">
+            <img class="site-logo" src="./assets/img/0-Shared/logo/Polkadot_Pink-White.svg"/>
+        </li>
+      </menu>
+    </header>
+
+    <main class="site-main">
+      <ul class="slide-list">
+        {{#files}}
+        <li {{#filePath}}data-template="{{filePath}}"{{/filePath}}>
+          <a href="{{filePath}}" title="{{title}}" class="slide-card">
+            {{#title}}
+            <span class="slide-card-name">{{.}}</span>
+            <span class="slide-card-path">{{filePath}}</span>
+            {{/title}}
+            {{^title}}
+            {{filePath}}
+            {{/title}}
+          </a>
+        </li>
+        {{/files}}
+      </ul>
+    </main>
+
+    <footer class="site-footer">
+      <menu class="menu menu--footer">
+        <li class="menu-item">
+          <a class="menu-link"
+            href="https://github.com/paritytech/polkadot-blockchain-academy">GitHub</a>
+        </li>
+      </menu>
+    </footer>
+  </body>
+
+</html>
