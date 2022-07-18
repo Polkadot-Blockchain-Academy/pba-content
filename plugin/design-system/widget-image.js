@@ -8,6 +8,12 @@ export default class WidgetImage extends HTMLElement {
   get fullscreen() {
     return this.getAttribute('fullscreen') === 'true';
   }
+  get baseUrl() {
+    const $base = document.querySelector('head base')
+    if ($base && $base.href) {
+      return $base.href
+    }
+  }
 
   connectedCallback() {
     this.render();
@@ -16,7 +22,15 @@ export default class WidgetImage extends HTMLElement {
   render() {
     if (this.src) {
       const $img = document.createElement('img');
-      $img.src = this.src;
+      $img.setAttribute('loading', 'lazy')
+      $img.addEventListener('load', () => {
+        this.setAttribute('is-loaded', true)
+      })
+      if (this.baseUrl) {
+        $img.src = `${this.baseUrl}/${this.src}`;
+      } else {
+        $img.src = this.src;
+      }
       this.append($img);
     }
   }
