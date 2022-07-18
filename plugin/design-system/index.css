@@ -5,33 +5,21 @@
 widget-columns {
   display: flex;
   align-items: center;
+  gap: calc(var(--r-padding) / 2);
 }
-@media (min-width: 40em) {
-  widget-columns {
-    gap: cacl(var(--r-padding) / 2);
-  }
-  widget-columns[padded] {
-    gap: calc(var(--r-padding) * 4);
-  }
+
+widget-columns[padded] {
+  gap: calc(var(--r-padding) * 4);
 }
 
 widget-column {
   text-align: left;
   flex-basis: 50%;
-  padding-right: calc(var(--r-padding) / 2);
+  padding-right: var(--r-padding);
 }
 widget-column:nth-of-type(2) {
-  padding-left: calc(var(--r-padding) / 2);
+  padding-left: var(--r-padding);
   padding-right: 0;
-}
-
-@media (min-width: 40em) {
-  widget-column {
-    padding-right: var(--r-padding);
-  }
-  widget-column:nth-of-type(2) {
-    padding-left: var(--r-padding);
-  }
 }
 
 widget-column ul {
@@ -75,7 +63,7 @@ widget-text[center] {
 /* speaker card */
 widget-speaker {
   /* local variables */
-  --size-image: 20rem;
+  --size-image: 250px;
 
   display: flex;
   text-align: left;
@@ -93,8 +81,8 @@ widget-speaker[small] widget-speaker-social {
 }
 
 widget-speaker[small] widget-speaker-image {
-  min-width: calc(var(--size-image) / 4);
-  max-width: 20vh;
+  margin-right: calc(var(--size));
+  width: calc(var(--size-image) / 2.5);
 }
 widget-speaker[small] widget-speaker-position {
   margin-bottom: 0;
@@ -105,20 +93,13 @@ widget-speaker-body {
   flex-direction: column;
 }
 widget-speaker-image {
-  width: calc(var(--size-image) / 3);
-  margin-right: calc(var(--size) / 2);
+  width: var(--size-image);
+  margin-right: calc(var(--size) * 2);
   border-radius: 50%;
   overflow: hidden;
-  transform: scale(0.7);
-  opacity: 0;
-  transition: transform 444ms ease-in-out, opacity 333ms ease-in-out;
-}
-@media (min-width: 50em) {
-  widget-speaker-image {
-    width: var(--size-image);
-  }
 }
 widget-speaker-image img {
+  display: block;
   margin-top: 0 !important;
   object-fit: contain;
   width: 100%;
@@ -144,10 +125,7 @@ widget-speaker-social-link-title {
 }
 
 /* speaker card when within slides */
-.stack.present widget-speaker-image[is-loaded] {
-  transform: scale(1);
-  opacity: 1;
-}
+.stack.present widget-speaker-image[is-loaded] {}
 
 /* widget-image */
 widget-image {
@@ -158,7 +136,7 @@ widget-image {
 }
 widget-image img {
   margin-top: 0 !important;
-  max-height: 90vh !important;
+  max-height: 772px;
 }
 /* widget-image when fullscreen*/
 widget-image[fullscreen] {
@@ -205,12 +183,7 @@ widget-image[halfscreen-bg] img {
   right: 0;
   bottom: 0;
   width: 63%;
-  height: 100%;
-}
-@media (min-width: 50em) {
-  widget-image[halfscreen-bg] img {
-    width: 57%;
-  }
+  width: 57%;
 }
 
 widget-image[top-left-bg] {

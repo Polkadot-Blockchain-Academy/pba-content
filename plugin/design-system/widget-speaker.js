@@ -23,12 +23,7 @@ export default class WidgetSpeaker extends HTMLElement {
   get linkedin() {
     return this.getAttribute('linkedin');
   }
-  get baseUrl() {
-    const $base = document.querySelector('head base')
-    if ($base && $base.href) {
-      return $base.href
-    }
-  }
+
 
   socialLinks = [
     {
@@ -62,14 +57,11 @@ export default class WidgetSpeaker extends HTMLElement {
 
     const $speakerImage = document.createElement('widget-speaker-image');
     const $img = document.createElement('img');
+    $img.setAttribute('loading', 'lazy')
     $img.addEventListener('load', () => {
       $speakerImage.setAttribute('is-loaded', true)
     })
-    if (this.baseUrl) {
-      $img.src = `${this.baseUrl}/${this.image}`;
-    } else {
-      $img.src = this.image;
-    }
+    $img.src = this.image;
     $speakerImage.append($img);
 
     const $socialLinks = document.createElement('widget-speaker-social');

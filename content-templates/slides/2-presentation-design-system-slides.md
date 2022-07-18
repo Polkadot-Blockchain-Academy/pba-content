@@ -3,26 +3,22 @@ title: Design System
 description: A design system to use within slides of a presentation
 ---
 
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-
 # Design System
 
 ### _For the polkadot academy slides._
 
-<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="/assets/img/0-Shared/placeholder/profile.png"></widget-speaker>
+<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="../../assets/img/0-Shared/placeholder/profile.png"></widget-speaker>
 
 ---v
 
 ```html
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-
 # Design system For the polkadot academy slides.
 
 <widget-speaker
   small
   name="Speaker Name Surname"
   position="Position/Department"
-  image="/assets/img/0-Shared/placeholder/profile.png"
+  image="../../assets/img/0-Shared/placeholder/profile.png"
 ></widget-speaker>
 ```
 
@@ -103,7 +99,7 @@ Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 
 ---
 
-<widget-speaker name="Gavin Wood" position="Founder Parity & Web3 Foundation" image="/assets/img/0-Shared/people/gav.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood-88843316" matrix="gav:matrix.parity.io"></widget-speaker>
+<widget-speaker name="Gavin Wood" position="Founder Parity & Web3 Foundation" image="../../assets/img/0-Shared/people/gav.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood-88843316" matrix="gav:matrix.parity.io"></widget-speaker>
 
 ---v
 
@@ -111,7 +107,7 @@ Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 <widget-speaker
   name="Speaker Name Surname"
   position="Position/Department"
-  image="/assets/img/0-Shared/people/gav.png"
+  image="../../assets/img/0-Shared/people/gav.png"
   github="gavofyork"
   twitter="gavofyork"
   linkedin="gavin-wood"
@@ -130,7 +126,7 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 <widget-columns>
 <widget-column>
 
-### This colum has a bit of a statement to make.
+### This column has a bit of a statement to make.
 
 </widget-column>
 <widget-column>
@@ -201,56 +197,16 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 
 ---
 
-<widget-image src="/assets/img/4-Substrate/WebAssembly.png"></widget-image>
+<img  src="../../assets/img/4-Substrate/WebAssembly.png"/>
 
 ---v
 
 ```html
-<widget-image src="/assets/img/4-Substrate/WebAssembly.png"></widget-image>
+<img  src="../../assets/img/4-Substrate/WebAssembly.png"/>
 ```
 
 ---
-
-<widget-image fullscreen src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
-
----v
-
-```html
-<widget-image fullscreen src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
-```
-
----
-
-<widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
-
----v
-
-```html
-<widget-image fullscreen="fill" src="/assets/img/0-Shared/dynamic-wang-bg-2.png"></widget-image>
-```
-
----
-
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
-
----v
-
-```html
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
-```
-
----
-
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-
----v
-
-```html
-<widget-image top-left-bg src="/assets/img/0-Shared/bg-top-left.svg"></widget-image>
-```
-
----
-
+<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image.png" -->
 <widget-text>
 
 More info on reveal/reveal-md backgrounds:
@@ -291,8 +247,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
-
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
 <widget-columns padded>
 <widget-column>
@@ -308,7 +263,7 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-image.png"></widget-image>
+<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
 <widget-columns padded>
 <widget-column>
@@ -323,8 +278,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
-
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-color.png"></widget-image>
+<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
 <widget-columns padded>
 <widget-column color>
@@ -345,7 +299,7 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<widget-image halfscreen-bg src="/assets/img/0-Shared/bg-circles-color.png"></widget-image>
+<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
 <widget-columns padded>
 <widget-column color>
@@ -505,7 +459,7 @@ pub type Executive = frame_executive::Executive<
 <widget-columns>
 <widget-column>
 
-### Colum + Code
+### Column + Code
 
 - Some
 - Observations
@@ -558,12 +512,11 @@ fn main() {
 </widget-columns>
 
 ---v
-
 ````html
 <widget-columns>
 <widget-column>
 
-### Colum + Code
+### Column + Code
 
 - Some
 - Observations
@@ -571,6 +524,7 @@ fn main() {
 
 </widget-column>
 <widget-column>
+
 
 ```rust [0|1,13|4-8]
 fn largest_i32(list: &[i32]) -> i32 {
@@ -614,7 +568,8 @@ fn main() {
 
 </widget-column>
 </widget-columns>
-```
+```` 
+
 ---
 
 ## Tables
@@ -625,6 +580,17 @@ fn main() {
 | col 2 is            |      centered       |                     $12 |
 | col 3 is            |    right-aligned    |                      $1 |
 | This row sure has a | _lot_ of text so it | spaces the columns outs |
+
+---v
+
+```
+| Tables              |         Are         |                    Cool |
+| ------------------- | :-----------------: | ----------------------: |
+| col 1 is            |    left-aligned     |                   $1600 |
+| col 2 is            |      centered       |                     $12 |
+| col 3 is            |    right-aligned    |                      $1 |
+| This row sure has a | _lot_ of text so it | spaces the columns outs |
+```
 
 ---
 

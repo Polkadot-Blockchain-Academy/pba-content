@@ -58,7 +58,7 @@
 
 /* variables */
 html {
-  --size: 1.5em;
+  --size: 48px;
   font-family: 'Work Sans';
 }
 
@@ -108,12 +108,17 @@ a:visited {
 .site-reveal.reveal blockquote ~ * {
   margin-top: var(--size);
 }
+
+.site-reveal.reveal blockquote p:first-of-type {
+  margin-top: 0;
+}
+
 .site-reveal.reveal blockquote p:last-of-type {
   margin-bottom: 0;
 }
 
 .site-reveal.reveal pre code {
-  max-height: 60vh;
+  max-height: 590px;
 }
 
 /* controls */
@@ -142,7 +147,7 @@ a:visited {
   max-width: 6vw;
   max-height: 6vh;
 }
-@media (min-width: 40em) {
+@media (min-width: 800px) {
   .site-header .watermark-icon {
     max-width: 10vw;
     max-height: 10vh;
@@ -158,23 +163,26 @@ a:visited {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: calc(var(--r-padding) / 2);
+  padding: 8px;
 }
-@media and (min-width: 40em) {
+
+@media (min-width: 540px) {
   .site-header {
-    padding: var(--r-padding);
+    padding: 16px;
   }
 }
+
+@media (min-width: 800px) {
+  .site-header {
+    padding: 32px;
+  }
+}
+
 .site-header--small {
   padding: var(--size);
 }
 
 /* custom reveal */
-.site-reveal.reveal .slides {
-  height: 100vh !important;
-  width: 100vw !important;
-  margin: 0;
-}
 .site-reveal p {
   margin-top: 0;
   margin-bottom: calc(var(--size) / 2);
@@ -188,15 +196,21 @@ a:visited {
   margin-bottom: calc(var(--size) / 4);
 }
 
+.site-reveal h2 {
+  max-width: 70%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .site-reveal.reveal ul {
   margin-left: var(--size);
 }
 .site-reveal.reveal li {
   margin-bottom: calc(var(--size) / 2);
-  font-size: 0.8em;
+  font-size: 32px;
 }
 .site-reveal.reveal li::before {
-  font-size: 1em;
+  font-size: 32px;
   color: var(--r-link-color-dark);
   transition: color 700ms ease-out, font-size 200ms ease-out;
   font-family: inherit;
@@ -217,18 +231,7 @@ a:visited {
 
 .site-reveal section {
   left: 0;
-  padding: calc(var(--r-padding) / 4);
-}
-@media (min-width: 40em) {
-  .site-reveal section {
-    padding: calc(var(--r-padding) / 2);
-  }
-}
-
-@media (min-width: 70em) {
-  .site-reveal section {
-    padding: var(--r-padding);
-  }
+  padding: var(--r-padding);
 }
 
 /* slides list */
@@ -238,15 +241,13 @@ a:visited {
 }
 
 .slide-card-path {
-  font-size: 0.9em;
+  font-size: 0.em;
 }
 
 
 /* customization of wigets for slides */
 
 widget-image {
-  transition: opacity 666ms ease-in-out;
-  transition-delay: 222ms;
   opacity: 0;
 }
 .present widget-image[is-loaded] {
