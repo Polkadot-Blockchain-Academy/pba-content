@@ -1,6 +1,5 @@
-
 //! We begin our hands on exploration of state machines with two very simple examples.
-//! In these examples, we use actualy switch boards as the state machine. The state is,
+//! In these examples, we use actually switch boards as the state machine. The state is,
 //! well, just the state of the switches.
 
 use super::StateMachine;
@@ -12,7 +11,6 @@ pub struct LightSwitch;
 /// We model this simple system as a state machine with a single transition - toggling the switch
 /// Because there is only a single kind of transition, we can use a unit struct.
 impl StateMachine for LightSwitch {
-
     type State = bool;
     type Transition = ();
 
@@ -26,20 +24,20 @@ impl StateMachine for LightSwitch {
 pub struct WeirdSwitchMachine;
 
 /// The state is now two switches instead of one so we use a struct.
+#[derive(Debug, Copy, Clone, PartialEq)]
 pub struct TwoSwitches {
-    first_switch: bool,
-    second_switch: bool,
+	first_switch: bool,
+	second_switch: bool,
 }
 
 /// Now there are two switches so we need a proper type for the transition.
 pub enum Toggle {
-    FirstSwitch,
-    SecondSwitch,
+	FirstSwitch,
+	SecondSwitch,
 }
 
 /// We model this system as a state machine with two possible transitions
 impl StateMachine for TwoSwitches {
-
     type State = TwoSwitches;
     type Transition = Toggle;
 
@@ -48,38 +46,64 @@ impl StateMachine for TwoSwitches {
     }
 }
 
-
 #[test]
 fn sm_1_light_switch_toggles_off() {
-    assert!(!LightSwitch::next_state(&true, &()));
+	assert!(!LightSwitch::next_state(&true, &()));
 }
 
 #[test]
 fn sm_1_light_switch_toggles_on() {
-    assert!(LightSwitch::next_state(&false, &()));
+	assert!(LightSwitch::next_state(&false, &()));
 }
 
 #[test]
 fn sm_1_two_switches_first_goes_on() {
+	let state = TwoSwitches { first_switch: false, second_switch: false };
 
+	assert_eq!(TwoSwitches::next_state(&state, &Toggle::FirstSwitch), TwoSwitches {
+        first_switch: true,
+        second_switch: false,
+    });
 }
 
 #[test]
 fn sm_1_two_switches_first_goes_off_second_was_on() {
-    // This is the special case. We have to make sure the second one goes off with it.
+	// This is the special case. We have to make sure the second one goes off with it.
+    let state = TwoSwitches { first_switch: true, second_switch: true };
+
+	assert_eq!(TwoSwitches::next_state(&state, &Toggle::FirstSwitch), TwoSwitches {
+        first_switch: false,
+        second_switch: false,
+    });
 }
 
 #[test]
 fn sm_1_two_switches_first_goes_off_second_was_off() {
-    // This is adjascent to the special case. We have to make sure the second one stays off.
+	// This is adjascent to the special case. We have to make sure the second one stays off.
+        let state = TwoSwitches { first_switch: true, second_switch: false };
+
+        assert_eq!(TwoSwitches::next_state(&state, &Toggle::FirstSwitch), TwoSwitches {
+            first_switch: false,
+            second_switch: false,
+        });
 }
 
 #[test]
 fn sm_1_two_switches_second_goes_on() {
+    let state = TwoSwitches { first_switch: false, second_switch: false };
 
+    assert_eq!(TwoSwitches::next_state(&state, &Toggle::SecondSwitch), TwoSwitches {
+        first_switch: false,
+        second_switch: true,
+    });
 }
 
 #[test]
 fn sm_1_two_switches_second_goes_off() {
+    let state = TwoSwitches { first_switch: true, second_switch: true };
 
+    assert_eq!(TwoSwitches::next_state(&state, &Toggle::SecondSwitch), TwoSwitches {
+        first_switch: true,
+        second_switch: false,
+    });
 }
