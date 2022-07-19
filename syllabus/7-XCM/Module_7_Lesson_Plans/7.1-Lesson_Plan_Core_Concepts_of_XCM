@@ -4,7 +4,7 @@
 
 ### Why is this topic Important?
 
-- Fundemental to all aspects here, the syntax and concepts must be well understood.
+- Fundamental to all aspects here, the syntax and concepts must be well understood.
 
 ### Prerequisite Knowledge or Skills
 
@@ -13,7 +13,7 @@
 
 ### Learning Outcome
 
-- Define the terms and concepts that XCM relies on, and know where the sourses of truth are when in doubt to reference.
+- Define the terms and concepts that XCM relies on, and know where the sources of truth are when in doubt to reference.
 - 
 
 ### Learning Objectives
@@ -21,7 +21,7 @@
 ### Core Ideas to Convey
 
 - Cover all of https://github.com/paritytech/xcm-format
-    - Walkthough of document.... maybe too verbose? Needs to be parsed into slides. Likely V3 as we will deliver in July 2022.
+    - Walk though of document.... maybe too verbose? Needs to be parsed into slides. Likely V3 as we will deliver in July 2022.
 * Instancing
 * Aggregation
     * What does this mean?
@@ -40,7 +40,7 @@
 
 
 - Activities
-  - Make XCM that does some logic, given the account balance you have on a single parachain to execute a few incresingly more complex routes to things. 
+  - Make XCM that does some logic, given the account balance you have on a single parachain to execute a few increasingly more complex routes to things. 
   - XCM message that is overly complex. Have student identify and rewrite with less program steps & routes
   - XCM that is HERE only, and thus should be a local extrinsic instead, have them discover this and outline the right calls.
   - Open channels manually on a testnet, configure correctly.
@@ -49,15 +49,15 @@
 ### Keith meeting 2022-05-05
 
 - XCMP has two _meanings_
-    - Generelaize catagory of transp mechanisms (HRMP, DMP, UMP)
-        - These are not all concretely defined, an incorrectly used intechcangably
+    - Generalized category of transp mechanisms (HRMP, DMP, UMP)
+        - These are not all concretely defined, an incorrectly used interchangeably
     - Concretely the one transp protocol for parachains on the same relay chain.
 - HRMP
     - Uses relay to store XCM between parachains, not optimal
-- How can a soverign account be verified exaclty? TODO
+- How can a sovereign account be verified exactly? TODO
 - NOTE paraID CAN change over time!
     - Don't hard code these into a dapp!!
-    - **SOVERIGN ACCOUNT FOR PARACHAINS SWITHCIN ID MIGHT BE TAKEN OVER!**
+    - **SOVEREIGN ACCOUNT FOR PARACHAINS SWITCHING ID MIGHT BE TAKEN OVER!**
         - Reserve assets & Barriers would be lost / given to other chains
         - This would be most explicit for HRMP, XCMP might have less reliance to paraID.
         - MultiLocation is based on paraID...
@@ -74,16 +74,16 @@
 
 ### TODO
 
-- Wiki updates, VMP could replace XCMP, this is flase
+- Wiki updates, VMP could replace XCMP, this is false
 - meeting with Rob and other impl people to about XCMP and actual things in the works now and planned
     - [ ] Start with a forum post on this instead of a call to start.
         - Clarify XCMP details about UMP/DMP use etc.
         - What interaction does XCMP have with relay chian now and in the future? In detail, stepwise.
 - https://github.com/paritytech/xcm-format
     - updates to american english
-    - ensure that terms used are unifor for ALL of us, internally and get this as the source of truth. (also update glossary for academy)
+    - ensure that terms used are uniform for ALL of us, internally and get this as the source of truth. (also update glossary for academy)
 
-- we need support team to get up to date on XCM to answer basic questions!! AND alumni of accademy!
+- we need support team to get up to date on XCM to answer basic questions!! AND alumni of academy!
     - seed the idea that they can make HUGE REP GAINS for these Q&A on SE!
 
 - MORE CONTENT: XCM testing and troubleshooting with Nacho & DS team

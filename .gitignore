@@ -1,9 +1,15 @@
+# Rust artifacts
+**/target
+
 # Build artifacts
 build/
 
 # Jupyter artifacts
 
 **/.ipynb_checkpoints/**
+
+# Rust artifacts
+**/target
 
 # Some common ones
 .vscode
