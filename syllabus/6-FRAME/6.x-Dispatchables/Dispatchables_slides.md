@@ -592,8 +592,6 @@ NOTE:
 
 ---
 
----
-
 ### Dispatchables: Call Index
 
 ```rust [9]
@@ -621,5 +619,3 @@ impl<T: Config> Pallet<T> {
 ### A Note on Dispatch Filtering
 
 * Much more in the origin lecture.
-
-### A Note on `Debug` in Runtime
