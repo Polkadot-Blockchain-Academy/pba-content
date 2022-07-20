@@ -4,6 +4,36 @@ use std::prelude::rust_2021::*;
 #[macro_use]
 extern crate std;
 pub use pallet::*;
+pub struct WithDebug {
+    foo: u32,
+    bar: u32,
+}
+#[automatically_derived]
+#[allow(unused_qualifications)]
+impl ::core::fmt::Debug for WithDebug {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
+        ::core::fmt::Formatter::debug_struct_field2_finish(
+            f,
+            "WithDebug",
+            "foo",
+            &&self.foo,
+            "bar",
+            &&self.bar,
+        )
+    }
+}
+pub struct WithRuntimeDebug {
+    foo: u32,
+    bar: u32,
+}
+impl core::fmt::Debug for WithRuntimeDebug {
+    fn fmt(&self, fmt: &mut core::fmt::Formatter) -> core::fmt::Result {
+        fmt.debug_struct("WithRuntimeDebug")
+            .field("foo", &self.foo)
+            .field("bar", &self.bar)
+            .finish()
+    }
+}
 ///
 ///			The module that hosts all the
 ///			[FRAME](https://docs.substrate.io/v3/runtime/frame)
@@ -209,7 +239,7 @@ pub mod pallet {
                 ::scale_info::Type::builder()
                     .path(::scale_info::Path::new(
                         "TransferConfig",
-                        "simple_pallet::pallet",
+                        "dispatch_pallet::pallet",
                     ))
                     .type_params(<[_]>::into_vec(
                         #[rustc_box]
@@ -530,7 +560,7 @@ pub mod pallet {
             type Identity = Self;
             fn type_info() -> ::scale_info::Type {
                 ::scale_info::Type::builder()
-                    .path(::scale_info::Path::new("Call", "simple_pallet::pallet"))
+                    .path(::scale_info::Path::new("Call", "dispatch_pallet::pallet"))
                     .type_params(<[_]>::into_vec(
                         #[rustc_box]
                         ::alloc::boxed::Box::new([::scale_info::TypeParameter::new(
@@ -670,11 +700,11 @@ pub mod pallet {
                             static META: ::tracing::Metadata<'static> = {
                                 ::tracing_core::metadata::Metadata::new(
                                     "first_transaction",
-                                    "simple_pallet::pallet",
+                                    "dispatch_pallet::pallet",
                                     ::tracing::Level::TRACE,
                                     Some("src/lib.rs"),
-                                    Some(5u32),
-                                    Some("simple_pallet::pallet"),
+                                    Some(11u32),
+                                    Some("dispatch_pallet::pallet"),
                                     ::tracing_core::field::FieldSet::new(
                                         &[],
                                         ::tracing_core::callsite::Identifier(&CALLSITE),
@@ -720,11 +750,11 @@ pub mod pallet {
                             static META: ::tracing::Metadata<'static> = {
                                 ::tracing_core::metadata::Metadata::new(
                                     "transfer",
-                                    "simple_pallet::pallet",
+                                    "dispatch_pallet::pallet",
                                     ::tracing::Level::TRACE,
                                     Some("src/lib.rs"),
-                                    Some(5u32),
-                                    Some("simple_pallet::pallet"),
+                                    Some(11u32),
+                                    Some("dispatch_pallet::pallet"),
                                     ::tracing_core::field::FieldSet::new(
                                         &[],
                                         ::tracing_core::callsite::Identifier(&CALLSITE),
@@ -822,11 +852,11 @@ pub mod pallet {
                     static META: ::tracing::Metadata<'static> = {
                         ::tracing_core::metadata::Metadata::new(
                             "on_finalize",
-                            "simple_pallet::pallet",
+                            "dispatch_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(5u32),
-                            Some("simple_pallet::pallet"),
+                            Some(11u32),
+                            Some("dispatch_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
                                 ::tracing_core::callsite::Identifier(&CALLSITE),
@@ -879,11 +909,11 @@ pub mod pallet {
                     static META: ::tracing::Metadata<'static> = {
                         ::tracing_core::metadata::Metadata::new(
                             "on_initialize",
-                            "simple_pallet::pallet",
+                            "dispatch_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(5u32),
-                            Some("simple_pallet::pallet"),
+                            Some(11u32),
+                            Some("dispatch_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
                                 ::tracing_core::callsite::Identifier(&CALLSITE),
@@ -922,11 +952,11 @@ pub mod pallet {
                     static META: ::tracing::Metadata<'static> = {
                         ::tracing_core::metadata::Metadata::new(
                             "on_runtime_update",
-                            "simple_pallet::pallet",
+                            "dispatch_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(5u32),
-                            Some("simple_pallet::pallet"),
+                            Some(11u32),
+                            Some("dispatch_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
                                 ::tracing_core::callsite::Identifier(&CALLSITE),
@@ -966,9 +996,9 @@ pub mod pallet {
                         lvl,
                         &(
                             frame_support::LOG_TARGET,
-                            "simple_pallet::pallet",
+                            "dispatch_pallet::pallet",
                             "src/lib.rs",
-                            5u32,
+                            11u32,
                         ),
                         ::log::__private_api::Option::None,
                     );
