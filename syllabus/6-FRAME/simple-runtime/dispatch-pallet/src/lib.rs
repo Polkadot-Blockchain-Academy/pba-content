@@ -2,6 +2,12 @@
 
 pub use pallet::*;
 
+#[derive(Debug)]
+pub struct WithDebug { foo: u32, bar: u32 }
+
+#[derive(frame_support::RuntimeDebug)]
+pub struct WithRuntimeDebug { foo: u32, bar: u32 }
+
 #[frame_support::pallet]
 pub mod pallet {
   use codec::{Encode, Decode};
