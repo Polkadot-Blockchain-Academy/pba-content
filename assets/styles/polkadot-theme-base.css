@@ -1,0 +1,250 @@
+/* fonts: work-sans-regular - latin
+  https://google-webfonts-helper.herokuapp.com/fonts/work-sans?subsets=latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/work-sans-v17-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('./fonts/work-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/work-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('./fonts/work-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-800 - latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: url('./fonts/work-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('./fonts/work-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/work-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
+       url('./fonts/work-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-italic - latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url('./fonts/work-sans-v17-latin-italic.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('./fonts/work-sans-v17-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/work-sans-v17-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('./fonts/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-800italic - latin */
+@font-face {
+  font-family: 'Work Sans';
+  font-style: italic;
+  font-weight: 800;
+  src: url('./fonts/work-sans-v17-latin-800italic.eot'); /* IE9 Compat Modes */
+  src: local(''),
+       url('./fonts/work-sans-v17-latin-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('./fonts/work-sans-v17-latin-800italic.woff2') format('woff2'), /* Super Modern Browsers */
+       url('./fonts/work-sans-v17-latin-800italic.woff') format('woff'), /* Modern Browsers */
+       url('./fonts/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('./fonts/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+
+/* variables */
+html {
+  --size: 48px;
+  font-family: 'Work Sans';
+}
+
+/*
+  Universal Box Sizing with Inheritance
+  https://css-tricks.com/box-sizing/#aa-universal-box-sizing-with-inheritance
+*/
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* layout  */
+body {
+  background-color: var(--r-background-color);
+}
+
+/* default elements */
+a:link,
+a:visited {
+  color: var(--r-link-color-dark);
+}
+
+/* loaded */
+.site-reveal {
+  opacity: 0;
+  transition: 333ms ease-in-out;
+}
+.site-reveal[is-loaded="true"] {
+  opacity: 1;
+}
+
+/* default reveal slide DOM elements */
+.site-reveal.reveal p:last-of-type {
+  margin-bottom: 0;
+}
+.site-reveal.reveal p:last-of-type + * {
+  margin-top: calc(var(--size) / 2);
+}
+.site-reveal.reveal blockquote {
+  width: 100%;
+  margin: 0;
+  padding: calc(var(--size) / 2);
+}
+.site-reveal.reveal blockquote ~ * {
+  margin-top: var(--size);
+}
+
+.site-reveal.reveal blockquote p:first-of-type {
+  margin-top: 0;
+}
+
+.site-reveal.reveal blockquote p:last-of-type {
+  margin-bottom: 0;
+}
+
+.site-reveal.reveal pre code {
+  max-height: 590px;
+}
+
+/* controls */
+.site-reveal.reveal .controls {
+  font-size: 0.4em;
+}
+/* site layout */
+.site-reveal .site-header img {
+  margin: 0;
+}
+
+.site-header .watermark-logo {
+  width: 12vw;
+  transition: transform 0.4s ease;
+}
+
+
+.site-header a:hover .watermark-logo {
+  transform: scale(1.05);
+}
+
+.site-header .watermark-icon {
+  width: 3vw;
+  display: block;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+}
+
+@media (min-width: 540px) {
+  .site-header {
+    padding: 16px;
+  }
+}
+
+@media (min-width: 800px) {
+  .site-header {
+    padding: 32px;
+  }
+}
+
+.site-header--small {
+  padding: var(--size);
+}
+
+/* custom reveal */
+.site-reveal p {
+  margin-top: 0;
+  margin-bottom: calc(var(--size) / 2);
+}
+.site-reveal.reveal h1,
+.site-reveal.reveal h2,
+.site-reveal.reveal h3,
+.site-reveal.reveal h4,
+.site-reveal.reveal h5 {
+  line-height: 1.2;
+  margin-bottom: calc(var(--size) / 4);
+}
+
+.site-reveal h2 {
+  max-width: 70%;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.site-reveal.reveal ul {
+  margin-left: var(--size);
+}
+.site-reveal.reveal li {
+  margin-bottom: calc(var(--size) / 2);
+  font-size: 32px;
+}
+.site-reveal.reveal li::before {
+  font-size: 32px;
+  color: var(--r-link-color-dark);
+  transition: color 700ms ease-out, font-size 200ms ease-out;
+  font-family: inherit;
+  line-height: 1.1;
+}
+
+.site-reveal.reveal li ul {
+  padding-top: calc(var(--size) / 2);
+  padding-bottom: calc(var(--size) / 2);
+}
+.site-reveal.reveal li:last-of-type {
+  margin-bottom: 0;
+}
+
+.site-reveal .code-wrapper + * {
+  margin-top: var(--size);
+}
+
+.site-reveal section {
+  left: 0;
+  padding: var(--r-padding);
+}
+
+/* slides list */
+.slide-card {}
+.slide-card-name {
+  font-size: 1.2em;
+}
+
+.slide-card-path {
+  font-size: 0.em;
+}
+
+
+/* customization of wigets for slides */
+
+widget-image {
+  opacity: 0;
+}
+.present widget-image[is-loaded] {
+  opacity: 1;
+}
+.future widget-image[is-loaded],
+.past widget-image[is-loaded] {
+  opacity: 0;
+}
