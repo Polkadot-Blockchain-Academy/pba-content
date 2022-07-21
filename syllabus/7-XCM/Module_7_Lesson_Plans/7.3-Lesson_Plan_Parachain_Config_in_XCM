@@ -8,7 +8,7 @@
 
 ### Learning Outcome
 
-- Understand and correctly configure XCM (pallet, executor, ...) for a parachain (exectutor and pallet) based on buisness needs
+- Understand and correctly configure XCM (pallet, executor, ...) for a parachain (executor and pallet) based on business needs
 - Barriers & filters
 - Asset transactors
 
