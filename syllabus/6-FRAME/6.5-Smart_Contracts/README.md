@@ -3,14 +3,14 @@
 This software must be installed on the presentation computer
 for the demos:
 
-- `cargo-contract`: Installation instructions can be found [here](https://github.com/paritytech/cargo-contract#installation)
+- `cargo-contract`: Installation instructions can be found [here](https://github.com/paritytech/cargo-contract#installation).
 - `binaryen`: The installation instructions above should have covered this if you have a mainstream os.
 - `wabt`: The installation instructions above should have covered this if you have a mainstream os.
-- `bat`: [Installation instructions](https://github.com/sharkdp/bat#installation)
-- `substrate-contracts-node`: [Download here](https://github.com/paritytech/substrate-contracts-node/releases)
-- `jq`: [Installation instructions](https://stedolan.github.io/jq/download)
+- `bat`: [Installation instructions](https://github.com/sharkdp/bat#installation).
+- `substrate-contracts-node`: [Download here](https://github.com/paritytech/substrate-contracts-node/releases).
+- `jq`: [Installation instructions](https://stedolan.github.io/jq/download).
 - `cargo-expand`: [Installation instructions](https://github.com/dtolnay/cargo-expand#installation).
-- Clone ink! repository : `git clone https://github.com/paritytech/ink.git`
+- Clone ink! repository : `git clone https://github.com/paritytech/ink.git`.
 
 If everything is installed you can test that all necessary stuff is there by checking this:
 
