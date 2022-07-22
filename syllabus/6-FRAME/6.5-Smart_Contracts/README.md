@@ -5,7 +5,9 @@ for the demos:
 
 - `cargo-contract`: Installation instructions can be found [here](https://github.com/paritytech/cargo-contract#installation)
 - `binaryen`: The installation instructions above should have covered this if you have a mainstream os.
+- `wabt`: The installation instructions above should have covered this if you have a mainstream os.
 - `bat`: [Installation instructions](https://github.com/sharkdp/bat#installation)
+- `substrate-contracts-node`: [Download here](https://github.com/paritytech/substrate-contracts-node/releases)
 - `jq`: [Installation instructions](https://stedolan.github.io/jq/download)
 - Clone ink! repository : `git clone https://github.com/paritytech/ink.git`
 
