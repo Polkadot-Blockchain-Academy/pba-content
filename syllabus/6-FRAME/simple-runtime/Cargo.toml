@@ -12,6 +12,7 @@ scale-info = { version = "2.1.1", default-features = false, features = ["derive"
 log = { version = "0.4.17", default-features = false }
 
 simple-pallet = { path = "./simple-pallet", default-features = false }
+dispatch-pallet = { path = "./dispatch-pallet", default-features = false }
 
 frame-support = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 frame-system = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
@@ -35,6 +36,7 @@ std = [
 	"log/std",
 
 	"simple-pallet/std",
+	"dispatch-pallet/std",
 
 	"frame-system/std",
 	"frame-system/std",
