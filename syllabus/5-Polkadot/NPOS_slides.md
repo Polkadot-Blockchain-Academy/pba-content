@@ -10,12 +10,12 @@ Module 5
 
 Why do we use PoS?
 
-
 <div>
 
 Economic Security 💸🤑
 
 Tokens locked + prone to being slashed.
+
 </div>
 
 <!-- .element: class="fragment" -->
@@ -36,7 +36,7 @@ Nominators/Delegators: Those who wish to support wanna-be authors.
 Validation and nomination intentions can change, therefore we need periodic elections to always
 choose the best validators + hold them slashable.
 
-Every election period is called an *Era*, e.g. 24hrs.
+Every election period is called an _Era_, e.g. 24hrs.
 
 ---v
 
@@ -47,7 +47,7 @@ Every election period is called an *Era*, e.g. 24hrs.
 Authority-wanna-bees aka. validators bring their own stake. No further participation. Top validators
 are elected.
 
-NOTE:
+Notes:
 
 Low amount of stake that we can capture, impossible for those who don't want to run the hardware to join.
 
@@ -55,12 +55,11 @@ Low amount of stake that we can capture, impossible for those who don't want to 
 
 ### What is NPoS: Re-inventing the Wheel
 
-
 **Single-Delegation-POS**
 
 Anyone can dilute themselves in any given validators. Top validator based on total stake are elected.
 
-NOTE:
+Notes:
 
 Better, but funds might be delegated to non-winners, which get wasted.
 
@@ -72,7 +71,7 @@ Better, but funds might be delegated to non-winners, which get wasted.
 
 Your stake is divided `1/n`th among N validators.
 
-NOTE:
+Notes:
 
 Same issue as before.
 
@@ -104,7 +103,7 @@ Nominators: Those who wish to support wanna-be authors.
 Validation and nomination intentions can change, therefore we need periodic elections to always
 choose the best validators + hold them slashable.
 
-Ever election period is called an *Era*, consisting of 6 *sessions*.
+Ever election period is called an _Era_, consisting of 6 _sessions_.
 
 ---v
 
@@ -116,7 +115,6 @@ episodes.
 ---v
 
 ### NPoS Protocol Overview
-
 
 1. Validator + Nominator **Snapshot**
 
@@ -151,13 +149,12 @@ If all of the above fails, the chain won't rotate validators and the governance 
 - dictate the next validator set
 - trigger an onchain election (limited in what it can do)
 
-
 ---
 
 ## Why NPoS
 
 1. Polkadot validators are the source of truth for the state transition of both the relay chain and
-all of the parachains + bridges.
+   all of the parachains + bridges.
 
 2. Polkadot validator are assigned to parachains, and swapped over time.
 
@@ -187,6 +184,7 @@ pub struct ElectionScore {
   pub sum_stake_squared: ExtendedBalance,
 }
 ```
+
 ---v
 
 ### Why NPoS: Election Score
@@ -257,5 +255,3 @@ priority for us either.
 - minimum-untrusted score.
 - PJR checking: why we don't do it.
 - `reduce` optimization.
-
-
