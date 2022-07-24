@@ -24,7 +24,7 @@ Instructor: Kian
 
 ### Dispatchables: Recap on Taxonomy
 
-* You might know them as transactions, but there is a difference..
+- You might know them as transactions, but there is a difference..
 
 1. Extrinsic: Transaction / Inherent
 2. Transaction: Signed or Unsigned.
@@ -91,11 +91,11 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: Weight
 
-Weight = u64*
+Weight = u64\*
 
 A measure of how much resources this dispatch is consuming, alongside more **static** information.
 
-NOTE:
+Notes:
 
 Elaborate a lot on why weight is a static term: You want to know it, pre-dispatch. If you would
 execute something, then you would already know its real weight.
@@ -107,7 +107,7 @@ Later on, when we peek into `apply`, you should see that the weight
 
 ---v
 
-* The weight expression must be something that implement all 3 of these..
+- The weight expression must be something that implement all 3 of these..
 
 ```rust
 pub type Weight = u64;
@@ -231,7 +231,7 @@ A block is limited by at least two axis:
 - Length
 - Weight
 
-> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents *time*.
+> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents _time_.
 
 ---v
 
@@ -264,11 +264,10 @@ pub struct BlockLength {
 }
 ```
 
-NOTE:
+Notes:
 
 Do you see a weak API design here? That if we alter variants of `DispatchClass` in one place, you
-need to update it somewhere else as well. You could solve this by something like `trait
-DispatchClass` etc etc.
+need to update it somewhere else as well. You could solve this by something like `trait DispatchClass` etc etc.
 
 ---v
 
@@ -317,20 +316,20 @@ pub RuntimeBlockWeights: limits::BlockWeights = limits::BlockWeights::builder()
 
 ### Block Limits: Weight
 
-* Code Time: Now walk over `with_sensible_defaults`, also in Polkadot.
+- Code Time: Now walk over `with_sensible_defaults`, also in Polkadot.
 
 ---v
 
 ### Block Limits: Wrapping Up
 
-* Code time: look at the expanded pallet from the previous lecture, and see how all of this leads to
+- Code time: look at the expanded pallet from the previous lecture, and see how all of this leads to
   implementing `GetDispatchInfo`.
 
-* And do you remember who used `get_dispatch_info`
+- And do you remember who used `get_dispatch_info`
 
 <!-- .element: class="fragment" -->
 
-* In executive..
+- In executive..
 
 <!-- .element: class="fragment" -->
 
@@ -338,7 +337,7 @@ Code time again: Re-visit `Executive`'s `apply`.
 
 <!-- .element: class="fragment" -->
 
-> To be continued in *Signed Extensions*.
+> To be continued in _Signed Extensions_.
 
 <!-- .element: class="fragment" -->
 
@@ -353,7 +352,6 @@ TLDR:
 - `Length` has a similar path.
 - `Pays` is used by another (optional) pallet (transaction-payment) to charge for fees. The fee is a
   function of both the weight, and other stuff.
-
 
 ...
 
@@ -392,9 +390,9 @@ Where the message was coming from.
 Deserves, and will have its own lecture, but for now, get to know a few common helpers from `frame_system`.
 
 - `ensure_signed()`: makes sure that this message was coming from a signed origin.
-- `ensure_none()`:  makes sure that this message was coming from an unsigned origin.
+- `ensure_none()`: makes sure that this message was coming from an unsigned origin.
 
-NOTE:
+Notes:
 
 look into the documentation of these two from crates.io.
 
@@ -464,7 +462,6 @@ impl<T: Config> Pallet<T> {
   }
 }
 ```
-
 
 ---v
 
@@ -574,7 +571,7 @@ impl<T: Config> Pallet<T> {
 
 ---v
 
-NOTE:
+Notes:
 
 - `#[pallet::compact]`
 - Why derive each type.
@@ -586,7 +583,7 @@ NOTE:
 
 ### Dispatchable: Revisiting An Expanded `Call`
 
-NOTE:
+Notes:
 
 - Talk about the encoding of `Call`.
 
@@ -614,8 +611,11 @@ impl<T: Config> Pallet<T> {
     // implementation
   }
 ```
+
 }
+
+---
 
 ### A Note on Dispatch Filtering
 
-* Much more in the origin lecture.
+- Much more in the origin lecture.

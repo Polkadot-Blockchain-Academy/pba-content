@@ -135,6 +135,16 @@ th {
   padding: 30px;
 }
 
+.black-box ol,
+.black-box ul {
+  margin-top: 0px !important;
+  margin-left: 24px;
+}
+
+.text-small * {
+  font-size: 24px !important;
+}
+
 .overlay-table {
   width: 800px;
 }

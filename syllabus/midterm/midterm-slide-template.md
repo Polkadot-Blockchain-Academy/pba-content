@@ -10,7 +10,7 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 ---
 
-##  Introduction
+## Introduction
 
 <widget-text style="padding: 0 3em 0 3em">
 
@@ -18,7 +18,7 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 2. What blockchain or blockchain project are you analyzing? Please insert a link to the original whitepaper.
 
-3. What are the core offerings of this blockchain/project? 
+3. What are the core offerings of this blockchain/project?
 
 4. What does it allow users to do?
 
@@ -48,10 +48,10 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 **Goal:** Evaluate the use of cryptography in this project; name at least two things you liked and two things you would want to improve.
 
-* What are the main cryptographic primitives used in this blockchain project?
-* Does this project use any exotic primitives?  If so, which ones?
-* How does this project use digital signatures for security?
-* How does this project use hashing and hash-based data structures to ensure security?
+- What are the main cryptographic primitives used in this blockchain project?
+- Does this project use any exotic primitives? If so, which ones?
+- How does this project use digital signatures for security?
+- How does this project use hashing and hash-based data structures to ensure security?
 
 ---
 
@@ -65,13 +65,13 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 **Goal:** Evaluate the use of tokenomics in this project; name at least two things you like and two things you would want to improve.
 
-* Does this project involve a native coin or currency? What are the tokenomics of the coin? How is the coin earned?
-* How does this project use economic incentives to drive behavior?
-* Use at least 3 of the following economic concepts in your answer:
-    * Market Equilibrium (Supply and Demand): What is the supply schedule of the token, does it have inflation or deflation? Who will want to use the coin, and for what?
-    * Economic Specialization
-    * Game Theoretical Models
-    * Auction Mechanics and Price Discovery Methods
+- Does this project involve a native coin or currency? What are the tokenomics of the coin? How is the coin earned?
+- How does this project use economic incentives to drive behavior?
+- Use at least 3 of the following economic concepts in your answer:
+  - Market Equilibrium (Supply and Demand): What is the supply schedule of the token, does it have inflation or deflation? Who will want to use the coin, and for what?
+  - Economic Specialization
+  - Game Theoretical Models
+  - Auction Mechanics and Price Discovery Methods
 
 ---
 
@@ -85,10 +85,10 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 **Goal:** Evaluate the use of governance in this project; name at least two things you like and two things you would want to improve.
 
-* How does this project solve the collective decision making problem?
-* What are the structures of governance in this project? How are changes proposed and voted on?
-* What voting mechanisms are used in this project?
-* Who is allowed to vote in this project? What are the voting criteria?
+- How does this project solve the collective decision making problem?
+- What are the structures of governance in this project? How are changes proposed and voted on?
+- What voting mechanisms are used in this project?
+- Who is allowed to vote in this project? What are the voting criteria?
 
 ---
 
@@ -102,10 +102,10 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 **How does this blockchain/project guarantee the following?**
 
-* **Liveness:** That the blockchain is always adding more transactions and that service will not be interrupted. 
-* **Fairness:** No systemic discrimination that is against the rules of the protocol
-* **Censorship-resistance:** No individual actor or coalition can prevent the access of another to the system.
-* **Safety:** No conflicting information.
+- **Liveness:** That the blockchain is always adding more transactions and that service will not be interrupted.
+- **Fairness:** No systemic discrimination that is against the rules of the protocol
+- **Censorship-resistance:** No individual actor or coalition can prevent the access of another to the system.
+- **Safety:** No conflicting information.
 
 ---
 
@@ -119,10 +119,10 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 **Goal:** Evaluate the blockchain structure of this project; name at least two things you like and two things you would want to improve.
 
-* What is the state transition function of this blockchain/project?
-* What are the core elements of the application stack?
-* What is the anatomy of a block in this system?
-* What is the consensus algorithm that is used? How does it work?
+- What is the state transition function of this blockchain/project?
+- What are the core elements of the application stack?
+- What is the anatomy of a block in this system?
+- What is the consensus algorithm that is used? How does it work?
 
 ---
 
@@ -136,13 +136,14 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 **Goal:** Evaluate the security protocols of this project; name at least two things you like and two things you would want to improve.
 
-* How does this project protect against threats?
-    * Byzantine Generals Problem
-    * 51% Attack
-    * Sybil Attack
-    * Other Attacks
+- How does this project protect against threats?
 
-* How does this project provide secure transactions? 
+  - Byzantine Generals Problem
+  - 51% Attack
+  - Sybil Attack
+  - Other Attacks
+
+- How does this project provide secure transactions?
 
 ---
 
@@ -154,7 +155,7 @@ This is the slide template for the Polkadot Blockchain Academy July, 2022 midter
 
 <widget-text style="padding: 0 3em 0 3em">
 
-Summarize your findings by connecting the most important ideas together and answering these questions: 
+Summarize your findings by connecting the most important ideas together and answering these questions:
 
 1. How do the cryptographic elements, the economic incentives and the blockchain parameters all contribute to the core goals of this blockchain?
 
@@ -170,13 +171,8 @@ Summarize your findings by connecting the most important ideas together and answ
 
 <widget-text style="padding: 0 3em 0 3em">
 
-* Implement the attack described in the conclusion
+- Implement the attack described in the conclusion
 
-* Propose an improvement to one or two aspects of your critique and implement it
+- Propose an improvement to one or two aspects of your critique and implement it
 
 ---
-
-
-
-
-
