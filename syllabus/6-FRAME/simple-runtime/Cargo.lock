@@ -451,6 +451,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "dispatch-pallet"
+version = "0.1.0"
+dependencies = [
+ "frame-support",
+ "frame-system",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
 name = "downcast-rs"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1864,6 +1878,7 @@ dependencies = [
 name = "simple-runtime"
 version = "0.1.0"
 dependencies = [
+ "dispatch-pallet",
  "frame-executive",
  "frame-support",
  "frame-system",

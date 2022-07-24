@@ -46,7 +46,7 @@ Secret Key URI `master ostrich insect boost sword cigar balance agent crater ass
   Public key (hex):  0xfa8e9bae4f80275a1bf6a0b582461d949bbd64a06f82c817d236ba1f4193b502
   Account ID:        0xfa8e9bae4f80275a1bf6a0b582461d949bbd64a06f82c817d236ba1f4193b502
   SS58 Address:      5HjEC5U39iEJ71TDHLS7Tmzjsb412jNRkk4QPSz5DX18UQBu
-  
+
 > subkey inspect 'master ostrich insect boost sword cigar balance agent crater assist cheese play//kusama'
 Secret Key URI `master ostrich insect boost sword cigar balance agent crater assist cheese play//kusama` is account:
   Secret seed:       0xf800549f4f3f0910e05476e30647411ef380642a4794b0c25efcaa1e60c97900
