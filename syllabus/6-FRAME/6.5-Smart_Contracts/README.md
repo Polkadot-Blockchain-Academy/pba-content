@@ -27,5 +27,16 @@ wasm2wat target/ink/flipper.wasm | bat
 
 This should display a file starting with `(module`.
 
-Please let us know in which folder on the presentation computer
-the `ink` repository is cloned to.
+Please then check that this also works:
+
+```
+substrate-contracts-node --tmp
+```
+
+The node should be starting up, you won't see blocks being produced though
+due to the node configuration (occurs only when transactions are issued and
+then instantaneous).
+
+_Please let us know:_
+* _In which folder on the presentation computer the `ink` repository is cloned to._
+* _In which folder the `substrate-contracts-node` binary resides._
