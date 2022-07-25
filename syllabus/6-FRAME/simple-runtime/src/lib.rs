@@ -25,10 +25,13 @@ pub use frame_support::{
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
 
-// TODO: make things work with concrete variants of this as well?
-// NOTE: some of these types are fed into the system pallet!
 pub type Signature = MultiSignature;
+// TODO: exercise: let's decrypt this line! AccountId32
 pub type AccountId = <<Signature as Verify>::Signer as IdentifyAccount>::AccountId;
+
+// pub type Signature = sp_core::sr25519::Signature;
+// pub type AccountId = sp_core::sr25519::Public;
+
 pub type Hash = sp_core::H256;
 pub type BlockNumber = u32;
 pub type Balance = u128;
