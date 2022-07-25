@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "std"), no_std)]
 pub use pallet::*;
 
 #[frame_support::pallet]
@@ -64,6 +65,12 @@ pub mod pallet {
           return Err("already submitted".into())
         }
 
+        Ok(())
+      }
+
+      #[pallet::weight(0)]
+      pub fn other_signed_extrinsic(origin: OriginFor<T>) -> DispatchResult {
+        let _ = ensure_signed(origin)?;
         Ok(())
       }
     }

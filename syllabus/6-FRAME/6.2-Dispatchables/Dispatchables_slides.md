@@ -1,17 +1,6 @@
 ## FRAME: Dispatchables
 
-Lecture X, Module 6
-
-Instructor: Kian
-
----v
-
-## Background
-
-- `trait Get`
-- `sp-arithmetic` and namely `per_thing`
-- `scale-codec`
-- basics of `FRAME` lecture.
+Module 6
 
 ---v
 
@@ -24,10 +13,7 @@ Instructor: Kian
 
 ### Dispatchables: Recap on Taxonomy
 
-- You might know them as transactions, but there is a difference..
-
-1. Extrinsic: Transaction / Inherent
-2. Transaction: Signed or Unsigned.
+> Extrinsic: Signed / Unsigned / Inherent
 
 In this lecture, we care more about the concept of `Call`.
 
@@ -107,17 +93,22 @@ Later on, when we peek into `apply`, you should see that the weight
 
 ---v
 
-- The weight expression must be something that implement all 3 of these..
+### Dispatchables: Weight
+
+* The weight expression must be something that implement all 3 of these..
 
 ```rust
 pub type Weight = u64;
 
+// first trait that needs to be implemented.
 pub trait WeighData<T> {
 	fn weigh_data(&self, target: T) -> Weight;
 }
 ```
 
 ---v
+
+### Dispatchables: Weight
 
 ```rust
 pub enum DispatchClass {
@@ -126,12 +117,15 @@ pub enum DispatchClass {
 	Mandatory,
 }
 
+// second trait that needs to be implemented.
 pub trait ClassifyDispatch<T> {
 	fn classify_dispatch(&self, target: T) -> DispatchClass;
 }
 ```
 
 ---v
+
+### Dispatchables: Weight
 
 ```rust
 #[derive(Clone, Copy, Eq, PartialEq, RuntimeDebug, Encode, Decode, TypeInfo)]
@@ -140,12 +134,15 @@ pub enum Pays {
 	No,
 }
 
+// third trait that needs to be implemented.
 pub trait PaysFee<T> {
 	fn pays_fee(&self, _target: T) -> Pays;
 }
 ```
 
 ---v
+
+### Dispatchables: Weight
 
 But we have some auto-implementations:
 
@@ -171,6 +168,23 @@ impl<T> PaysFee<T> for Weight {
 
 ---v
 
+### Dispatchables: Weight
+
+Therefore:
+
+```rust
+#[pallet::weight(128_000_000)]
+fn dispatch(..) {..}
+
+// is essentially
+#[pallet::weight((128_000_000, DispatchClass::Normal, Pays::Yes))]
+fn dispatch(..) {..}
+```
+
+---v
+
+### Dispatchables: Weight
+
 And we have partial implementations for things like `(Weight, Pays)` etc.
 
 - `(u64, DispatchClass, Pays)`
@@ -179,7 +193,7 @@ And we have partial implementations for things like `(Weight, Pays)` etc.
 
 ---v
 
-```rust [1,2 | 4,5 | 7,8 | 10,11]
+```rust [1,2 | 4,5 | 7,8 | 10,11 | 13,14 | 16,17 | 19-26 | 28-38]
 #[pallet::weight(128_000_000)]
 fn dispatch(..) {..}
 
@@ -199,8 +213,8 @@ fn dispatch(..) {..}
 fn dispatch(_: OriginFor<T>, a: u32, b: u32) {..}
 
 #[pallet::weight(
-  if a % 2 == {
-    a * 100
+  if *a % 2 == {
+    *a * 100
   } else {
     0
   }
@@ -209,8 +223,8 @@ fn dispatch(_: OriginFor<T>, a: u32, b: u32) {..}
 
 #[pallet::weight(
   (
-      if a % 2 == {
-      a * 100
+    if *a % 2 == {
+      *a * 100
     } else {
       0
     },
@@ -220,7 +234,7 @@ fn dispatch(_: OriginFor<T>, a: u32, b: u32) {..}
 fn dispatch(_: OriginFor<T>, a: u32, b: u32) {..}
 ```
 
----V
+---v
 
 ### Block Limits
 
@@ -231,7 +245,9 @@ A block is limited by at least two axis:
 - Length
 - Weight
 
-> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents _time_.
+<br>
+
+> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents *time*.
 
 ---v
 
@@ -322,22 +338,11 @@ pub RuntimeBlockWeights: limits::BlockWeights = limits::BlockWeights::builder()
 
 ### Block Limits: Wrapping Up
 
-- Code time: look at the expanded pallet from the previous lecture, and see how all of this leads to
-  implementing `GetDispatchInfo`.
+Code time: look at the expanded pallet from the previous lecture, and see how all of this leads to
+implementing `GetDispatchInfo`.
 
-- And do you remember who used `get_dispatch_info`
 
-<!-- .element: class="fragment" -->
-
-- In executive..
-
-<!-- .element: class="fragment" -->
-
-Code time again: Re-visit `Executive`'s `apply`.
-
-<!-- .element: class="fragment" -->
-
-> To be continued in _Signed Extensions_.
+> `GetDispatchInfo` is used in Executive and *Signed Extensions*, but that's a story for another lecture.
 
 <!-- .element: class="fragment" -->
 
@@ -350,6 +355,7 @@ TLDR:
 - `Weight` is extracted by the `Executive`, passed down the dispatch stack, and is eventually
   tracked in the system pallet.
 - `Length` has a similar path.
+- `DispatchClass`: 3 opinionated categories of weight/length used in FRAME.
 - `Pays` is used by another (optional) pallet (transaction-payment) to charge for fees. The fee is a
   function of both the weight, and other stuff.
 
@@ -359,7 +365,7 @@ TLDR:
 
 ### Dispatchables: Origin
 
-```rust [11]
+```rust [12]
 #[derive(Decode)]
 struct Foo {
   x: Vec<u32>
@@ -480,9 +486,9 @@ type DispatchResult = Result<(), DispatchError>;
 ```rust
 pub struct PostDispatchInfo {
   // if set, this is the real consumed weight, else, whatever we set in pre-dispatch.
-	pub actual_weight: Option<Weight>,
+  pub actual_weight: Option<Weight>,
   // if set, overwrite the previous weight.
-	pub pays_fee: Pays,
+  pub pays_fee: Pays,
 }
 
 pub type DispatchResultWithPostInfo = Result<
@@ -614,7 +620,9 @@ impl<T: Config> Pallet<T> {
 
 }
 
----
+Call indexing matters!
+
+https://github.com/paritytech/substrate/issues/11896
 
 ### A Note on Dispatch Filtering
 
