@@ -7,7 +7,8 @@ for the demos:
 - `binaryen`: The installation instructions above should have covered this if you have a mainstream os.
 - `wabt`: The installation instructions above should have covered this if you have a mainstream os.
 - `bat`: [Installation instructions](https://github.com/sharkdp/bat#installation).
-- `substrate-contracts-node`: [Download here](https://github.com/paritytech/substrate-contracts-node/releases).
+- `substrate-contracts-node`: [Download here](https://github.com/paritytech/substrate-contracts-node/releases) and extract
+  to a meaningful folder.
 - `jq`: [Installation instructions](https://stedolan.github.io/jq/download).
 - `cargo-expand`: [Installation instructions](https://github.com/dtolnay/cargo-expand#installation).
 - Clone ink! repository : `git clone https://github.com/paritytech/ink.git`.
@@ -37,7 +38,7 @@ cargo expand
 Please then check that this also works:
 
 ```
-substrate-contracts-node --tmp
+./substrate-contracts-node --tmp
 ```
 
 The node should be starting up, you won't see blocks being produced though
