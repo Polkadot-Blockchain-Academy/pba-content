@@ -1,4 +1,4 @@
-# Required Software for Demos
+# Required Software on Presentation Computer
 
 This software must be installed on the presentation computer
 for the demos:
