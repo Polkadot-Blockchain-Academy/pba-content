@@ -1,8 +1,13 @@
-# Polkadot’s Nominated Proof of Stake
+---
+title: Nominated Proof of Stake
+description: An introduction to Nominated Proof of Stake in Polkadot
+duration: 1 hour
+instructors: ["Kain Paimani"]
+---
 
-What, Why, How?
+# Nominated Proof of Stake
 
-Module 5
+## _in Polkadot_
 
 ---
 
@@ -75,7 +80,7 @@ Better, but funds might be delegated to non-winners, which get wasted.
 
 **Multi-Delegation-POS**
 
-Your stake is divided `1/n`th among N validators.
+Your stake is divided $\frac{1}{N}$ among $N$ validators.
 
 Problems?
 
@@ -89,7 +94,7 @@ Same issue as before.
 
 **Nominated Proof of Stake**
 
-You name up to `N` nominees, an *arbitrary algorithm*, computed either onchain or offchain, decides
+You name up to `N` nominees, an _arbitrary algorithm_, computed either onchain or offchain, decides
 the **winners** and **how to distribute the stake among them**.
 
 - ✅ Can optimize other criteria other than "who had more approval votes".
@@ -148,18 +153,15 @@ If all of the above fails, the chain won't rotate validators and the governance 
 
 ## Why NPoS
 
-1. Polkadot validators are the source of truth for the state transition of both the relay chain and
-   all of the parachains + bridges.
-
-2. Polkadot validator are assigned to parachains as backing group, and swapped over time.
-
-3. Polkadot validators all author the same number of blocks.
+1. Polkadot validators are the source of truth for the state transition of both the relay chain and all of the parachains + bridges.
+1. Polkadot validator are assigned to parachains as backing group, and swapped over time.
+1. Polkadot validators all author the same number of blocks.
 
 <br>
 
 > What properties to we want a validator set have for the above requirements?
 
-NOTE:
+Notes:
 
 Point 2 is not to imply that the polkadot validator set's security is partitioned among parachains,
 security comes from approval voters.
@@ -198,19 +200,23 @@ pub struct ElectionScore {
 
 ## NPoS Drawbacks
 
-- scalability.
-- scalability.
-- scalability.
-- scalability.
-- and scalability.
+<widget-text center>
 
-But we (strive to) get much better economic security measures in return.
+- scalability. <!-- .element: class="fragment" -->
+- scalability. <!-- .element: class="fragment" -->
+- scalability. <!-- .element: class="fragment" -->
+- scalability. <!-- .element: class="fragment" -->
+- and scalability. <!-- .element: class="fragment" -->
 
+</widget-text>
+
+But we (strive to) get much better economic security measures in return.<br>
 And solve the scalability in the mid-term too 🤫
+<!-- .element: class="fragment" -->
 
 ---
 
-## NPoS Protocol: Proportional Representation:
+## NPoS Protocol: Proportional Representation
 
 Not strictly checked at the moment, but a core component in w3f's initial design to make NPoS what
 it is now.
@@ -233,8 +239,8 @@ priority for us either.
 
 - First, repay any technical debt, make everything ready for any further scaling.
 - Infra for multi-block election
-  - onchain
-  - offchain
+  - Onchain
+  - Offchain
 - Staking/Election parachain
 - More (tax) friendly/configurable reward payout.
 
@@ -251,8 +257,8 @@ priority for us either.
 
 ## NPoS Protocol: More Details, Backup Slides
 
-- bags-list: how to store an unbounded semi-sorted linked-list onchain.
+- `bags-list`: how to store an unbounded semi-sorted linked-list onchain.
 - Nomination pools: best of both.
-- minimum-untrusted score.
+- Minimum-untrusted score.
 - PJR checking: why we don't do it.
 - `reduce` optimization.
