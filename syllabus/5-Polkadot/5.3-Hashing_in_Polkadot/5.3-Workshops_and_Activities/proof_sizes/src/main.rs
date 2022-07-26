@@ -236,5 +236,112 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Ok(results)
     }
     println!("{:?}", run_blocks(5, Example1));
+
+		// Write a simple Runtime that writes {block_number} world at key hello. Display result for the three first blocks.
+    #[derive(Clone)]
+    struct Example2;
+
+    impl SimpleRun for Example2 {
+        fn run_runtime(&self, _method: &str, ext: &mut dyn Externalities) -> (u32, Vec<u8>) {
+            // block number usually is in init_block of system
+            let previous_block: u32 = ext
+                .storage(b":block_number")
+                .and_then(|encoded| Decode::decode(&mut encoded.as_slice()).ok())
+                .unwrap_or(0);
+            let current_block = previous_block + 1;
+            ext.set_storage(b":block_number".to_vec(), current_block.encode());
+
+
+						let mut value = current_block.encode();
+						value.extend_from_slice(b" world");
+            ext.set_storage(b"hello".to_vec(), value);
+            // finalize block
+            let final_root = ext.storage_root(STATE_VERSION);
+            (current_block, final_root)
+        }
+    }
+
+
+    println!("{:?}", run_blocks(3, Example2));
+
+		//Write a simple Runtime that appends {block_number} world to current value at key hello. Run 100 block and display result of three first blocks, then every ten blocks.
+    #[derive(Clone)]
+    struct Example3;
+
+    impl SimpleRun for Example3 {
+        fn run_runtime(&self, _method: &str, ext: &mut dyn Externalities) -> (u32, Vec<u8>) {
+            // block number usually is in init_block of system
+            let previous_block: u32 = ext
+                .storage(b":block_number")
+                .and_then(|encoded| Decode::decode(&mut encoded.as_slice()).ok())
+                .unwrap_or(0);
+            let current_block = previous_block + 1;
+            ext.set_storage(b":block_number".to_vec(), current_block.encode());
+
+
+						let mut value = ext.storage(b"hello")
+							.unwrap_or_else(|| Default::default());
+						value.extend_from_slice(&current_block.encode()[..]);
+						value.extend_from_slice(b" world");
+            ext.set_storage(b"hello".to_vec(), value);
+            // finalize block
+            let final_root = ext.storage_root(STATE_VERSION);
+            (current_block, final_root)
+        }
+    }
+
+    println!("{:?}", run_blocks(100, Example3));
+
+		// Write a simple Runtime that writes writes world at key hello {block_number}, with BE encoding for block number (key of a trie looks way better with BE). Run 100 block and display result of three first blocks, then every ten blocks.
+    #[derive(Clone)]
+    struct Example4;
+    impl SimpleRun for Example4 {
+        fn run_runtime(&self, _method: &str, ext: &mut dyn Externalities) -> (u32, Vec<u8>) {
+            // block number usually is in init_block of system
+            let previous_block: u32 = ext
+                .storage(b":block_number")
+                .and_then(|encoded| Decode::decode(&mut encoded.as_slice()).ok())
+                .unwrap_or(0);
+            let current_block = previous_block + 1;
+            ext.set_storage(b":block_number".to_vec(), current_block.encode());
+
+
+						let mut key = b"hello".to_vec();
+						key.extend_from_slice(&current_block.to_be_bytes()[..]);
+            ext.set_storage(key, b"world".to_vec());
+            // finalize block
+            let final_root = ext.storage_root(STATE_VERSION);
+            (current_block, final_root)
+        }
+    }
+
+    println!("{:?}", run_blocks(100, Example4));
+
+		// Write a simple Runtime that writes writes scale encoded ("hello {block_number}", "world") at key blake256("hello {block_number}"), with scale encoding (maybe compact) for block number. Run 100 block and display result of three first blocks, then every ten blocks
+    #[derive(Clone)]
+    struct Example5;
+    impl SimpleRun for Example5 {
+        fn run_runtime(&self, _method: &str, ext: &mut dyn Externalities) -> (u32, Vec<u8>) {
+            // block number usually is in init_block of system
+            let previous_block: u32 = ext
+                .storage(b":block_number")
+                .and_then(|encoded| Decode::decode(&mut encoded.as_slice()).ok())
+                .unwrap_or(0);
+            let current_block = previous_block + 1;
+            ext.set_storage(b":block_number".to_vec(), current_block.encode());
+
+
+						let mut key = b"hello".to_vec();
+						key.extend_from_slice(&current_block.to_be_bytes()[..]);
+						use sp_core::Hasher;
+            ext.set_storage(BlakeTwo256::hash(key.as_slice())[..].to_vec(), (key, b"world".to_vec()).encode());
+            // finalize block
+            let final_root = ext.storage_root(STATE_VERSION);
+            (current_block, final_root)
+        }
+    }
+
+    println!("{:?}", run_blocks(100, Example5));
+
     Ok(())
 }
