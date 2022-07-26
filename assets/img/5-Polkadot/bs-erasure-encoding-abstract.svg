@@ -85,10 +85,10 @@
      inkscape:deskcolor="#505050"
      showgrid="false"
      inkscape:zoom="0.88516383"
-     inkscape:cx="747.88415"
-     inkscape:cy="476.18303"
-     inkscape:window-width="2560"
-     inkscape:window-height="1363"
+     inkscape:cx="743.36521"
+     inkscape:cy="723.59486"
+     inkscape:window-width="1920"
+     inkscape:window-height="1003"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -229,7 +229,7 @@
      id="path6964" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="83.208359"
      y="290.37015"
      id="text7023"><tspan
@@ -239,7 +239,7 @@
        id="tspan7025">Original Data *</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="143.74222"
      y="814.40863"
      id="text7031"><tspan
@@ -249,7 +249,7 @@
        id="tspan7033">*: in case of a systematic code</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="1131.619"
      y="318.83545"
      id="text7039"><tspan
@@ -259,7 +259,7 @@
        y="318.83545">Redundant elements</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="515.96704"
      y="121.75423"
      id="text7043"><tspan
@@ -269,7 +269,7 @@
        y="121.75423">[u8]</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="517.76288"
      y="213.15427"
      id="text7047"><tspan
@@ -279,7 +279,7 @@
        y="213.15427">map to field elements**</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="145.39839"
      y="38.988041"
      id="text7051"><tspan
@@ -289,7 +289,7 @@
        y="38.988041">original payload</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="151.61197"
      y="857.22876"
      id="text7055"><tspan
@@ -304,7 +304,7 @@
      sodipodi:nodetypes="cc" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
      x="565.55933"
      y="385.91644"
      id="text8125"><tspan

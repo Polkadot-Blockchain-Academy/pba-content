@@ -6,7 +6,7 @@
    fill="none"
    version="1.1"
    id="svg6968"
-   sodipodi:docname="bs-erasure-encoding-data-layout-2.svg"
+   sodipodi:docname="bs-erasure-encoding-data-layout-3.svg"
    inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -112,8 +112,8 @@
      inkscape:deskcolor="#505050"
      showgrid="false"
      inkscape:zoom="0.88516383"
-     inkscape:cx="531.54002"
-     inkscape:cy="485.22091"
+     inkscape:cx="635.47558"
+     inkscape:cy="454.71808"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
      inkscape:window-x="0"
@@ -145,7 +145,7 @@
      style="fill:#8d3aed;fill-opacity:1" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
      x="204.35596"
      y="48.336895"
      id="text7051"><tspan
@@ -153,79 +153,82 @@
        id="tspan7049"
        x="204.35596"
        y="48.336895">original payload</tspan></text>
-  <rect
-     x="384.52792"
-     y="133.09712"
-     width="77"
-     height="77"
-     rx="10"
-     fill="#8d3aed"
-     id="rect9737"
-     style="fill:#727272;fill-opacity:1" />
-  <rect
-     x="385.17215"
-     y="231.73706"
-     width="77"
-     height="77"
-     rx="10"
-     fill="#8d3aed"
-     id="rect9739"
-     style="fill:#727272;fill-opacity:1" />
-  <rect
-     x="385.28238"
-     y="326.08313"
-     width="77"
-     height="77"
-     rx="10"
-     fill="#8d3aed"
-     id="rect9741"
-     style="fill:#727272;fill-opacity:1" />
-  <rect
-     x="387.72711"
-     y="417.73724"
-     width="77"
-     height="77"
-     rx="10"
-     fill="#8d3aed"
-     id="rect9743"
-     style="fill:#727272;fill-opacity:1" />
-  <rect
-     x="387.60339"
-     y="605.78949"
-     width="77"
-     height="77"
-     rx="10"
-     fill="#8d3aed"
-     id="rect9745"
-     style="fill:#727272;fill-opacity:1" />
-  <rect
-     x="388.35367"
-     y="511.65964"
-     width="77"
-     height="77"
-     rx="10"
-     fill="#8d3aed"
-     id="rect9749"
-     style="fill:#727272;fill-opacity:1" />
+  <g
+     id="g9570">
+    <rect
+       x="384.52792"
+       y="133.09712"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9737"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="385.17215"
+       y="231.73706"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9739"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="385.28238"
+       y="326.08313"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9741"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="387.72711"
+       y="417.73724"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9743"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="387.60339"
+       y="605.78949"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9745"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="388.35367"
+       y="511.65964"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9749"
+       style="fill:#727272;fill-opacity:1" />
+  </g>
   <path
      style="fill:none;stroke:#cfe68d;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-     d="m 471.10032,697.62338 c -32.1088,1.7561 2.00423,76.48255 -34.68131,76.92706 47.12255,10.7322 8.80907,80.28461 37.80566,79.48555"
+     d="m 571.10032,697.62338 c -32.1088,1.7561 2.00423,76.48255 -34.68131,76.92706 47.12255,10.7322 8.80907,80.28461 37.80566,79.48555"
      id="path13056"
      sodipodi:nodetypes="ccc" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#cfe68d;fill-opacity:1;stroke:none"
-     x="242.77039"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#cfe68d;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     x="342.77039"
      y="784.01361"
      id="text13078"><tspan
        sodipodi:role="line"
        id="tspan13076"
-       x="242.77039"
+       x="342.77039"
        y="784.01361">Discarded</tspan></text>
   <text
      xml:space="preserve"
      id="text13321"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect13323);display:inline;fill:#000000;fill-opacity:1;stroke:none" />
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';white-space:pre;shape-inside:url(#rect13323);display:inline;fill:#000000;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal" />
   <rect
      x="715.02844"
      width="77"
@@ -234,7 +237,7 @@
      fill="#8d3aed"
      id="rect6896-9"
      y="0.90831298"
-     style="fill:#bf3aed;fill-opacity:1" />
+     style="fill:#8d3aed;fill-opacity:1" />
   <rect
      x="808.02844"
      width="77"
@@ -243,7 +246,7 @@
      fill="#8d3aed"
      id="rect6902-2"
      y="0.90831298"
-     style="fill:#bf3aed;fill-opacity:1" />
+     style="fill:#8d3aed;fill-opacity:1" />
   <rect
      x="898.01898"
      width="77"
@@ -251,7 +254,8 @@
      rx="10"
      fill="#8d3aed"
      id="rect6896-9-2"
-     y="1.0053983" />
+     y="1.0053983"
+     style="fill:#bf3aed;fill-opacity:1" />
   <rect
      x="991.01898"
      width="77"
@@ -259,10 +263,11 @@
      rx="10"
      fill="#8d3aed"
      id="rect6902-2-8"
-     y="1.0053983" />
+     y="1.0053983"
+     style="fill:#bf3aed;fill-opacity:1" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
      x="50.440872"
      y="172.85378"
      id="text15096"><tspan
@@ -272,7 +277,7 @@
        y="172.85378">validator idx 0</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
      x="51.197838"
      y="288.17065"
      id="text15096-1"><tspan
@@ -282,17 +287,18 @@
        y="288.17065">validator idx 1</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
      x="50.330166"
      y="656.56555"
      id="text15096-1-9"><tspan
        sodipodi:role="line"
        id="tspan15094-2-3"
        x="50.330166"
-       y="656.56555">validator idx n-1</tspan></text>
+       y="656.56555"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Sans Bold';-inkscape-font-specification:'Fira Sans Bold, '">validator idx n-1</tspan></text>
   <g
      id="g8070"
-     transform="translate(188)">
+     transform="translate(372)">
     <path
        style="fill:none;stroke:#bf3aed;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="m 529.24464,95.037564 c 1.59119,32.141726 87.54806,0.371474 87.5787,37.046126 C 629.71865,85.326048 699.53656,129.00773 699,100.00587"
@@ -300,13 +306,13 @@
        sodipodi:nodetypes="ccc" />
     <path
        style="fill:none;stroke:url(#linearGradient7632);stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow3)"
-       d="m 617.26176,128.13845 c 1.49991,109.76604 -58.99935,186.71323 -126.69955,226.68199"
+       d="m 617.26176,128.13845 c 1.49991,109.76604 -235.70569,209.78894 -303.40589,249.7577"
        id="path7500"
        sodipodi:nodetypes="cc" />
   </g>
   <g
-     id="g8604"
-     transform="translate(100)">
+     id="g9542"
+     transform="translate(200)">
     <rect
        x="384.52792"
        y="133.09712"
@@ -314,7 +320,7 @@
        height="77"
        rx="10"
        fill="#8d3aed"
-       id="rect8588"
+       id="rect9526"
        style="fill:#bf3aed;fill-opacity:1" />
     <rect
        x="385.17215"
@@ -323,7 +329,7 @@
        height="77"
        rx="10"
        fill="#8d3aed"
-       id="rect8590"
+       id="rect9528"
        style="fill:#bf3aed;fill-opacity:1" />
     <rect
        x="385.28238"
@@ -332,7 +338,7 @@
        height="77"
        rx="10"
        fill="#8d3aed"
-       id="rect8592"
+       id="rect9530"
        style="fill:#3eb6d4;fill-opacity:1" />
     <rect
        x="387.72711"
@@ -341,7 +347,7 @@
        height="77"
        rx="10"
        fill="#8d3aed"
-       id="rect8594"
+       id="rect9532"
        style="fill:#3eb6d4;fill-opacity:1" />
     <rect
        x="387.60339"
@@ -350,7 +356,7 @@
        height="77"
        rx="10"
        fill="#8d3aed"
-       id="rect8596"
+       id="rect9534"
        style="fill:#3eb6d4;fill-opacity:1" />
     <rect
        x="388.35367"
@@ -359,7 +365,7 @@
        height="77"
        rx="10"
        fill="#8d3aed"
-       id="rect8598"
+       id="rect9536"
        style="fill:#3eb6d4;fill-opacity:1" />
     <rect
        x="387.59531"
@@ -368,7 +374,7 @@
        height="77"
        rx="10"
        fill="#3eb6d4"
-       id="rect8600"
+       id="rect9538"
        style="fill:#cfe68d;fill-opacity:1" />
     <rect
        x="386.46555"
@@ -377,7 +383,83 @@
        height="77"
        rx="10"
        fill="#3eb6d4"
-       id="rect8602"
+       id="rect9540"
        style="fill:#cfe68d;fill-opacity:1" />
   </g>
+  <g
+     id="g9646"
+     transform="translate(100)">
+    <rect
+       x="384.52792"
+       y="133.09712"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9634"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="385.17215"
+       y="231.73706"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9636"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="385.28238"
+       y="326.08313"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9638"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="387.72711"
+       y="417.73724"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9640"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="387.60339"
+       y="605.78949"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9642"
+       style="fill:#727272;fill-opacity:1" />
+    <rect
+       x="388.35367"
+       y="511.65964"
+       width="77"
+       height="77"
+       rx="10"
+       fill="#8d3aed"
+       id="rect9644"
+       style="fill:#727272;fill-opacity:1" />
+  </g>
+  <rect
+     style="fill:none;fill-opacity:1;stroke:#eda93a;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     id="rect9722"
+     width="312.80728"
+     height="99.188629"
+     x="365.34409"
+     y="594.63336"
+     rx="10" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#eda93a;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     x="734.88782"
+     y="649.45605"
+     id="text10270"><tspan
+       sodipodi:role="line"
+       id="tspan10268"
+       x="734.88782"
+       y="649.45605">Availability Data Chunk</tspan></text>
 </svg>
