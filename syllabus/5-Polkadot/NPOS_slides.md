@@ -20,7 +20,7 @@ Tokens locked + prone to being slashed.
 
 <!-- .element: class="fragment" -->
 
-Everything else (finality, parachains, etc.) is built on top of this assumption
+Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
 
 <!-- .element: class="fragment" -->
 
@@ -30,13 +30,14 @@ Everything else (finality, parachains, etc.) is built on top of this assumption
 
 Assumptions:
 
-Validators: those who wish to author blocks.
-Nominators/Delegators: Those who wish to support wanna-be authors.
+- **Validators**: those who wish to author blocks.
+- **Nominators/Delegators**: Those who wish to support wanna-be authors.
 
-Validation and nomination intentions can change, therefore we need periodic elections to always
-choose the best validators + hold them slashable.
+<br>
 
-Every election period is called an _Era_, e.g. 24hrs.
+- Validation and nomination intentions can change, therefore we need **periodic elections** to
+  always choose the best validators + hold them slashable.
+- Every election period is called an **_Era_**, e.g. 24hrs in Polkadot.
 
 ---v
 
@@ -46,6 +47,8 @@ Every election period is called an _Era_, e.g. 24hrs.
 
 Authority-wanna-bees aka. validators bring their own stake. No further participation. Top validators
 are elected.
+
+Problems?
 
 Notes:
 
@@ -57,7 +60,10 @@ Low amount of stake that we can capture, impossible for those who don't want to 
 
 **Single-Delegation-POS**
 
-Anyone can dilute themselves in any given validators. Top validator based on total stake are elected.
+Anyone can dilute themselves in any given validators. Top validator based on total stake are
+elected.
+
+Problems?
 
 Notes:
 
@@ -71,6 +77,8 @@ Better, but funds might be delegated to non-winners, which get wasted.
 
 Your stake is divided `1/n`th among N validators.
 
+Problems?
+
 Notes:
 
 Same issue as before.
@@ -81,10 +89,10 @@ Same issue as before.
 
 **Nominated Proof of Stake**
 
-You name up to `N` nominees, an arbitrary algorithm, computed either onchain or offchain decides the
-winners and how to distribute the stake among them.
+You name up to `N` nominees, an *arbitrary algorithm*, computed either onchain or offchain, decides
+the **winners** and **how to distribute the stake among them**.
 
-- ✅ Can optimize other criteria other than "who had more votes"
+- ✅ Can optimize other criteria other than "who had more approval votes".
 - ✅ Has a much higher chance to make sure staked tokens won't get wasted.
 
 <br>
@@ -93,23 +101,9 @@ winners and how to distribute the stake among them.
 
 ---
 
-## NPoS Protocol Overview
-
-Assumptions:
-
-Validators: those who wish to author blocks.
-Nominators: Those who wish to support wanna-be authors.
-
-Validation and nomination intentions can change, therefore we need periodic elections to always
-choose the best validators + hold them slashable.
-
-Ever election period is called an _Era_, consisting of 6 _sessions_.
-
----v
-
 ### NPoS Protocol Overview
 
-THe current NPoS protocol revolves around an **election round**, which is itself made up of 4
+The current NPoS protocol revolves around an **election round**, which is itself made up of 4
 episodes.
 
 ---v
@@ -127,8 +121,9 @@ episodes.
 
 2. Signed Phase
 
-Any signed account can come up with a **NPoS solution** based on that snapshot. Deposits, rewards,
-game theory, all that stuff.
+Any signed account can come up with a **NPoS solution** based on that snapshot.
+
+Deposits, rewards, slash, other game-theoretic tools incorporated to make to secure.
 
 ---v
 
@@ -156,13 +151,19 @@ If all of the above fails, the chain won't rotate validators and the governance 
 1. Polkadot validators are the source of truth for the state transition of both the relay chain and
    all of the parachains + bridges.
 
-2. Polkadot validator are assigned to parachains, and swapped over time.
+2. Polkadot validator are assigned to parachains as backing group, and swapped over time.
 
 3. Polkadot validators all author the same number of blocks.
 
 <br>
 
 > What properties to we want a validator set have for the above requirements?
+
+NOTE:
+
+Point 2 is not to imply that the polkadot validator set's security is partitioned among parachains,
+security comes from approval voters.
+https://polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/
 
 ---v
 
@@ -173,15 +174,15 @@ pub struct ElectionScore {
   /// The minimal winner, in terms of total backing stake.
   ///
   /// This parameter should be maximized.
-  pub minimal_stake: ExtendedBalance,
+  pub minimal_stake: u128,
   /// The sum of the total backing of all winners.
   ///
   /// This parameter should maximized
-  pub sum_stake: ExtendedBalance,
+  pub sum_stake: u128,
   /// The sum squared of the total backing of all winners, aka. the variance.
   ///
   /// Ths parameter should be minimized.
-  pub sum_stake_squared: ExtendedBalance,
+  pub sum_stake_squared: u128,
 }
 ```
 
@@ -230,7 +231,7 @@ priority for us either.
 
 ## NPoS Future
 
-- First, clean repay any technical debt, make everything ready for any further scaling.
+- First, repay any technical debt, make everything ready for any further scaling.
 - Infra for multi-block election
   - onchain
   - offchain
