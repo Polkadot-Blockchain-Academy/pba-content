@@ -56,13 +56,15 @@ pub type BlockNumber = u32;
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
 /// to even the core datas-tructures.
 pub mod opaque {
-	use sp_runtime::OpaqueExtrinsic;
-
 	use super::*;
 
 	/// Opaque block header type.
 	pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 	/// Opaque block type.
+	/// TODO: we set this for now to the same transaction type as the runtime, to easily be able to
+	/// send encoded transactions. Ideally, this should be `sp_runtime::OpaqueExtrinsic`.
+	/// As it stands now, you can simply encode `BasicExtrinsic` and send that as your transaction
+	/// when sending with `curl`.
 	pub type Block = generic::Block<Header, BasicExtrinsic>;
 
 	// This part is necessary for generating session keys in the runtime
@@ -302,3 +304,24 @@ impl_runtime_apis! {
 	}
 
 }
+
+#[cfg(test)]
+mod tests {
+	use sp_runtime::OpaqueExtrinsic;
+	use super::*;
+
+	#[test]
+	fn host_function_call_works() {
+		sp_io::TestExternalities::new_empty().execute_with(|| {
+			sp_io::storage::get(&HEADER_KEY);
+		})
+	}
+
+	#[test]
+	fn encode_examples() {
+		println!("{:#02x?}", BasicExtrinsic(10).encode());
+		// just to print stuff in test, alternatively use `--nocapture`
+		panic!();
+	}
+}
+

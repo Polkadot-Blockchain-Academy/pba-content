@@ -161,3 +161,32 @@ th {
 .overlay-table td {
   width: 200px;
 }
+
+.layers-table,
+.layers-table tr,
+.layers-table td {
+  border: 2px solid;
+  border-color: white;
+  border-collapse: separate;
+  text-align: center !important;
+  background-color: lightgray;
+  color: black;
+}
+
+.layers-table td {
+  min-width: 200px;
+  height: 100px;
+}
+
+.spec-block {
+  width: 100px;
+  height: 100px;
+  color: white;
+  display: block;
+  font-size: 24px;
+  float: left;
+  margin: 10px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 100px;
+}
