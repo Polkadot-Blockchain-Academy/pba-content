@@ -308,7 +308,7 @@ My mission is to make help you be a fantastic instructor with minimal effort.
 
 ---
 
-<img style="height: 980px;" src="../../assets/img/0-Shared/placeholder/carry-you.png"/>
+<img style="width: 980px;" src="../../assets/img/0-Shared/placeholder/carry-you.png"/>
 
 Notes:
 TAs are not SMEs!
@@ -316,7 +316,7 @@ We cannot write the content as well as you can, and in the end you ar every very
 
 ---
 
-<img style="height: 600px;" src="../../assets/img/0-Shared/placeholder/we-can-do-it.png"/>
+<img style="width: 600px;" src="../../assets/img/0-Shared/placeholder/we-can-do-it.png"/>
 
 _Team work makes the dream work!_
 
