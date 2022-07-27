@@ -5,9 +5,7 @@ duration: 15 minuets
 instructors: ["some one","another gal"]
 teaching-assistants: ["Dan Shields"]
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
-theme: "reveal-md/polkadot-theme.css"
 # Add custom css files for your slides here, comma separated:
-css: ["reveal-md/custom-classes.css"]
 separator: "\r?\n---\r?\n"
 verticalSeparator: "\r?\n---v\r?\n"
 # Below can be any of these: https://revealjs.com/config/
@@ -194,7 +192,7 @@ use `<br>` <br>
 <div class="flex-container">
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-### Colum + Code
+### Column + Code
 
 - Some
 - Observations
