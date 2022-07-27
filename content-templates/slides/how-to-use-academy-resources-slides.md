@@ -1,5 +1,5 @@
 ---
-title: How to use Academy Resources  # Also update the h1 header on the first slide to the same name
+title: How to use Academy Resources # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
 duration: 1 hour
 instructors: ["some one", "another gal"]
@@ -7,6 +7,7 @@ teaching-assistants: ["some one", "another gal"]
 ---
 
 # How to use
+
 # Academy Resources
 
 ### _SME Developer Meta-lecture_
@@ -32,7 +33,7 @@ teaching-assistants: ["some one", "another gal"]
 
 - I am a Subject matter in Academy Support
 - <- This is my ETHDenver PFP
-- I **_love_** to hike! 
+- I **_love_** to hike!
 
 _[Twitter](https://twitter.com/NukeManDan) // [LinkedIn](https://linkedin.com/in/danwshields) // [Email](mailto:dan.shields@parity.io)_
 
@@ -75,8 +76,8 @@ _An Open Mind_
 ### At the end of this lecture, you will be able to:
 
 - Navigate the Academy github repo
-- Use the tools available to build your lectures and workshops 
-- Have high confidence in your ability craft your academy materials 
+- Use the tools available to build your lectures and workshops
+- Have high confidence in your ability craft your academy materials
 
 ---
 
@@ -84,12 +85,12 @@ _An Open Mind_
 
 _Problem_: Many are uncomfortable getting started with content generation.
 
-_Solution_: Meta-lecture to demonstrate **_SOME_*** tools at your disposal!
+_Solution_: Meta-lecture to demonstrate **_SOME_** tools at your disposal!
 
 <hr>
 
 We need to craft on **_practical, hands-on learning_** wherever practical.
-We all strive to **_demonstrate application_** of conceptual lecture content. 
+We all strive to **_demonstrate application_** of conceptual lecture content.
 
 Notes:
 These tools are SUGGESTIONS!
@@ -119,7 +120,7 @@ This is what I have been toiling to make easy for you to do, using the best-clas
 ## Exercise: Explore Jupyter Lab
 
 Notes:
-OPEN the jupyter-lab and jump to the [paired notebook for this lecture](../jupyter-notebooks/how-to-use-academy-resources.ipynb) 
+OPEN the jupyter-lab and jump to the [paired notebook for this lecture](../jupyter-notebooks/how-to-use-academy-resources.ipynb)
 
 ---v
 
@@ -143,7 +144,7 @@ OPEN the jupyter-lab and jump to the [paired notebook for this lecture](../jupyt
 # Launch Jupyter Lab
 jupyter-lab
 
-# Navigate to the source notebooks in 
+# Navigate to the source notebooks in
 # `content-templates/jupyter-notebooks` of the Academy repo
 ```
 
@@ -188,14 +189,14 @@ Grab your machine!
 # Get the right node installed
 nvm i
 
-# Get the dependencies 
+# Get the dependencies
 yarn
 
 # Start the show!
 yarn start
 
 # Default has http://localhost:1948/ as the hosted slides version
-# Open this in a browser! 
+# Open this in a browser!
 ```
 
 </div>
@@ -246,6 +247,7 @@ Use the IDE you like, or not. I will demo VSCode.
 
 Notes:
 TAs are here to help ask questions to help us curate content.
+
 - You will be here for round one, but we will run 3 to 4 times A YEAR!
 - Please help those that take over and may not be SMEs at your level can deliver this content.
 
@@ -256,6 +258,7 @@ TAs are here to help ask questions to help us curate content.
 ### _In your content slides/notebooks!_
 
 Compile an **annotated** list of:
+
 - Topics students should consider learning about independently
 - Examples of the concepts covered & applied to a project / case studies
 - Useful resources related to the lesson
@@ -263,7 +266,7 @@ Compile an **annotated** list of:
   - Like the [copy-paste slide templates](../../content-templates/slides/copy-paste-reveal-template-slides.md)
 
 Notes:
-there is no such thing as too much! anything with a NOTE ABOUT WHY IT'S USED! 
+there is no such thing as too much! anything with a NOTE ABOUT WHY IT'S USED!
 
 ANNOTATE!
 
@@ -285,8 +288,9 @@ Ideally this is exhaustive, it can be cleaned up before delivery to students, bu
 
 For now, make a note however you like indicating sources _in context_
 <br><br>
+
 - [Zotero](https://www.zotero.org/) integrations {latter on}
-  -  We will have a linked bibliographic source list in all class materials
+  - We will have a linked bibliographic source list in all class materials
   - Here is the [Library of sources so far](https://www.zotero.org/groups/4677582/polkadot-blockchain-academy/library)
 
 Notes:
@@ -304,15 +308,15 @@ My mission is to make help you be a fantastic instructor with minimal effort.
 
 ---
 
-<img style="height: 980px;" src="../../assets/img/0-Shared/placeholder/carry-you.png"/>
+<img style="width: 980px;" src="../../assets/img/0-Shared/placeholder/carry-you.png"/>
 
 Notes:
 TAs are not SMEs!
-We cannot write the content as well as you can, and in the end you ar every very likely to deliver this first run of the Academy. 
+We cannot write the content as well as you can, and in the end you ar every very likely to deliver this first run of the Academy.
 
 ---
 
-<img style="height: 600px;" src="../../assets/img/0-Shared/placeholder/we-can-do-it.png"/>
+<img style="width: 600px;" src="../../assets/img/0-Shared/placeholder/we-can-do-it.png"/>
 
 _Team work makes the dream work!_
 

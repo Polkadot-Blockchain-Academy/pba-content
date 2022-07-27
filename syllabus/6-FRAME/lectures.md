@@ -7,6 +7,7 @@
 ## FRAME Lectures
 
 > Ordering constraint: things that I think should come before one another.
+
 - error and call refund >> weight. Because of this, weight is explained broadly as a part of
   transactions (quite early), and then there is a separate lecture toward the end about the details
   and benchmarking.
@@ -14,6 +15,7 @@
 ### Essentials
 
 - Intro to FRAME (kian)
+
   - simple-pallet
   - breeze over system, covers
     - Transient Storage Items
@@ -22,6 +24,7 @@
   - executive
 
 - Dispatchable, Calls and Transactions
+
   - Call Encoding (indices)
   - Weight basics
 
@@ -30,11 +33,13 @@
 - Pallet Hooks
 
 - Error
+
   - nested errors
   - sp_runtime DispatchError
   - PostInfo and WeightRefund
 
 - Events
+
   - Phases,
 
 - Origin
@@ -52,15 +57,16 @@
 - Metadata
 
 - Benchmarking (shawn)
+
   - Weight classes
 
 - Frame System: Revisiting and Leftover
+
   - PalletInfoAccess
   - Account Details: consumers, providers, sufficiency, etc
   - ChainContext, whatever the fuck it is.
 
 - Frame Executive: Revisiting and Leftover
-  -
 
 - Testing a Pallet (kian)
   - How to write tests for a pallet.
@@ -70,9 +76,11 @@
 ### Advance Topics
 
 - Pallets that receive/store calls + Dispatch Them
+
   - `type Call` and how to deal with it.
 
 - Parity Patterns + Best-Practices
+
   - sanity-checks by Kian
   - ...
 
@@ -93,7 +101,7 @@
   - MultiSig + Proxy
   - Babe + Aura + Grandpa
 
-
 ### Part 4: Interesting Case Studies (for Q&A Sessions and such)
+
 - Staking, Offchain Workers etc.
 -
