@@ -27,26 +27,6 @@
          offset="1"
          id="stop7628" />
     </linearGradient>
-    <marker
-       style="overflow:visible"
-       id="Arrow3"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Arrow3"
-       markerWidth="4.2071066"
-       markerHeight="7"
-       viewBox="0 0 4.2071068 7"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
-         d="M 3,-3 0,0 3,3"
-         id="arrow3"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc" />
-    </marker>
     <rect
        x="1289.9934"
        y="519.05557"
@@ -112,8 +92,8 @@
      inkscape:deskcolor="#505050"
      showgrid="false"
      inkscape:zoom="0.88516383"
-     inkscape:cx="635.47558"
-     inkscape:cy="454.71808"
+     inkscape:cx="636.04045"
+     inkscape:cy="268.31191"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
      inkscape:window-x="0"
@@ -300,15 +280,23 @@
      id="g8070"
      transform="translate(372)">
     <path
-       style="fill:none;stroke:#bf3aed;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="m 529.24464,95.037564 c 1.59119,32.141726 87.54806,0.371474 87.5787,37.046126 C 629.71865,85.326048 699.53656,129.00773 699,100.00587"
-       id="path13056-9"
-       sodipodi:nodetypes="ccc" />
-    <path
-       style="fill:none;stroke:url(#linearGradient7632);stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow3)"
-       d="m 617.26176,128.13845 c 1.49991,109.76604 -235.70569,209.78894 -303.40589,249.7577"
-       id="path7500"
-       sodipodi:nodetypes="cc" />
+       style="color:#000000;fill:#bf3aed;-inkscape-stroke:none"
+       d="m 530.74219,94.962891 -2.9961,0.148437 c 0.21569,4.356869 1.93982,7.831742 4.70703,10.351562 2.76722,2.51982 6.48774,4.12514 10.77149,5.21875 8.56749,2.18722 19.51683,2.34839 30.34961,2.67774 10.83278,0.32934 21.54572,0.83602 29.30469,3.4082 3.87948,1.28608 6.98807,3.06615 9.10742,5.49805 2.11935,2.43189 3.3343,5.52709 3.33789,9.81835 l 2.94531,0.39844 c 3.11568,-11.29727 9.42339,-16.83841 17.40625,-19.64258 7.98286,-2.80416 17.7198,-2.67759 27.1582,-1.95703 9.43841,0.72057 18.52215,2.03643 25.52539,1.28711 3.50163,-0.37466 6.55708,-1.27333 8.78907,-3.25586 2.23199,-1.98252 3.42413,-5.01303 3.35156,-8.935544 l -3,0.05468 c 0.0616,3.32795 -0.8099,5.27626 -2.34375,6.63868 -1.53385,1.36241 -3.9454,2.17451 -7.11523,2.51367 -6.33968,0.67831 -15.41762,-0.56501 -24.97852,-1.29492 -9.5609,-0.72992 -19.66284,-0.94327 -28.38086,2.11914 -7.25262,2.54765 -13.45447,7.55002 -17.26562,16.09765 -0.6919,-2.21634 -1.74033,-4.17431 -3.16797,-5.8125 -2.5935,-2.97597 -6.21765,-4.97996 -10.42578,-6.375 -8.41627,-2.79007 -19.29907,-3.22845 -30.15821,-3.55859 -10.85914,-0.33014 -21.69938,-0.54414 -29.69726,-2.58594 -3.99895,-1.0209 -7.25591,-2.49312 -9.49414,-4.53125 -2.23824,-2.03813 -3.54836,-4.602695 -3.73047,-8.281249 z"
+       id="path13056-9" />
+    <g
+       id="path7500">
+      <path
+         style="color:#000000;fill:url(#linearGradient7632);-inkscape-stroke:none"
+         d="m 618.76172,128.11719 -3,0.041 c 0.36755,26.89827 -13.92242,53.40267 -36.86524,78.6836 -22.94281,25.28093 -54.47765,49.26915 -88.20312,71.08984 -67.45094,43.64138 -143.56081,78.57609 -177.59961,98.67188 l 1.52539,2.58398 c 33.66134,-19.87294 110.00328,-54.93265 177.70508,-98.73633 33.8509,-21.90184 65.56795,-45.99971 88.79492,-71.59375 23.22697,-25.59404 38.02498,-52.75554 37.64258,-80.74023 z"
+         id="path48218" />
+      <g
+         id="g48210">
+        <path
+           style="color:#000000;fill:url(#linearGradient7632);stroke-linecap:round;-inkscape-stroke:none"
+           d="m 316.75781,364.5 a 1.5,1.5 0 0 0 -1.82617,1.07812 l -3.54883,13.77735 13.7793,3.54883 a 1.5,1.5 0 0 0 1.82617,-1.07813 A 1.5,1.5 0 0 0 325.91016,380 l -10.87305,-2.80078 2.80078,-10.87305 A 1.5,1.5 0 0 0 316.75781,364.5 Z"
+           id="path48212" />
+      </g>
+    </g>
   </g>
   <g
      id="g9542"
@@ -454,12 +442,13 @@
      rx="10" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#eda93a;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold';fill:#eda93a;fill-opacity:1;stroke:none"
      x="734.88782"
      y="649.45605"
      id="text10270"><tspan
        sodipodi:role="line"
        id="tspan10268"
        x="734.88782"
-       y="649.45605">Availability Data Chunk</tspan></text>
+       y="649.45605"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold'">Availability Data Chunk</tspan></text>
 </svg>
