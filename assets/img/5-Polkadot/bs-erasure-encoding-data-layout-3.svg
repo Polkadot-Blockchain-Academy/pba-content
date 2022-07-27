@@ -33,44 +33,6 @@
        width="529.40411"
        height="101.98059"
        id="rect13323" />
-    <pattern
-       inkscape:collect="always"
-       xlink:href="#Strips1_1"
-       id="pattern12073"
-       patternTransform="matrix(10,0,0,10,-1225.4652,-563.2821)" />
-    <pattern
-       inkscape:collect="always"
-       patternUnits="userSpaceOnUse"
-       width="2"
-       height="1"
-       patternTransform="translate(0,0) scale(10,10)"
-       id="Strips1_1"
-       inkscape:stockid="Stripes 1:1"
-       inkscape:isstock="true">
-      <rect
-         style="fill:black;stroke:none"
-         x="0"
-         y="-0.5"
-         width="1"
-         height="2"
-         id="rect10991" />
-    </pattern>
-    <pattern
-       patternUnits="userSpaceOnUse"
-       width="77"
-       height="77"
-       patternTransform="translate(1225.4652,563.2821)"
-       id="pattern12070">
-      <rect
-         x="0"
-         y="0"
-         width="77"
-         height="77"
-         rx="10"
-         fill="#8d3aed"
-         id="rect9741-2"
-         style="fill:url(#pattern12073);fill-opacity:1" />
-    </pattern>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient7630"
@@ -93,7 +55,7 @@
      showgrid="false"
      inkscape:zoom="0.88516383"
      inkscape:cx="636.04045"
-     inkscape:cy="268.31191"
+     inkscape:cy="368.85827"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
      inkscape:window-x="0"
@@ -125,7 +87,7 @@
      style="fill:#8d3aed;fill-opacity:1" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
      x="204.35596"
      y="48.336895"
      id="text7051"><tspan
@@ -197,7 +159,7 @@
      sodipodi:nodetypes="ccc" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#cfe68d;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#cfe68d;fill-opacity:1;stroke:none;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
      x="342.77039"
      y="784.01361"
      id="text13078"><tspan
@@ -208,7 +170,7 @@
   <text
      xml:space="preserve"
      id="text13321"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';white-space:pre;shape-inside:url(#rect13323);display:inline;fill:#000000;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal" />
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;white-space:pre;shape-inside:url(#rect13323);display:inline;fill:#000000;fill-opacity:1;stroke:none" />
   <rect
      x="715.02844"
      width="77"
@@ -247,7 +209,7 @@
      style="fill:#bf3aed;fill-opacity:1" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
      x="50.440872"
      y="172.85378"
      id="text15096"><tspan
@@ -257,7 +219,7 @@
        y="172.85378">validator idx 0</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
      x="51.197838"
      y="288.17065"
      id="text15096-1"><tspan
@@ -267,7 +229,7 @@
        y="288.17065">validator idx 1</tspan></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans Bold';fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:'Fira Sans Bold, ';font-stretch:normal;font-variant:normal"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none;-inkscape-font-specification:sans-serif;font-stretch:normal;font-variant:normal"
      x="50.330166"
      y="656.56555"
      id="text15096-1-9"><tspan
@@ -275,7 +237,7 @@
        id="tspan15094-2-3"
        x="50.330166"
        y="656.56555"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Fira Sans Bold';-inkscape-font-specification:'Fira Sans Bold, '">validator idx n-1</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">validator idx n-1</tspan></text>
   <g
      id="g8070"
      transform="translate(372)">
@@ -442,7 +404,7 @@
      rx="10" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:40px;line-height:1.25;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold';fill:#eda93a;fill-opacity:1;stroke:none"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:sans-serif;fill:#eda93a;fill-opacity:1;stroke:none"
      x="734.88782"
      y="649.45605"
      id="text10270"><tspan
@@ -450,5 +412,5 @@
        id="tspan10268"
        x="734.88782"
        y="649.45605"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Fira Sans';-inkscape-font-specification:'Fira Sans Bold'">Availability Data Chunk</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:sans-serif">Availability Data Chunk</tspan></text>
 </svg>
