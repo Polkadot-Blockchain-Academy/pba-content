@@ -1,6 +1,11 @@
-## FRAME: Dispatchables
+---
+title: FRAME Dispatchables
+description: FRAME Dispatchables for Web3 engineers.
+duration: 1 hour
+instructors: ["Shawn Tabrizi, Kian Paimani"]
+---
 
-Module 6
+# FRAME: Dispatchables
 
 ---v
 
