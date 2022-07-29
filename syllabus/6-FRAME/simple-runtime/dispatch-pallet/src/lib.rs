@@ -24,21 +24,21 @@ pub mod pallet {
 
   #[pallet::call]
   impl<T: Config> Pallet<T> {
-      #[pallet::weight(42)]
-      pub fn first_transaction(_origin: OriginFor<T>, _inc: u32) -> DispatchResult {
-        Ok(())
-      }
+    #[pallet::weight(42)]
+    pub fn first_transaction(_origin: OriginFor<T>, _inc: u32) -> DispatchResult {
+      Ok(())
+    }
 
-      #[pallet::weight(42)]
-      pub fn transfer(_origin: OriginFor<T>, config: TransferConfig<T::AccountId>) -> DispatchResultWithPostInfo {
-        if config.amount == 42 {
-          Ok(PostDispatchInfo {
-            actual_weight: Some(0),
-            pays_fee: Pays::No,
-          })
-        } else {
-          Ok(None.into())
-        }
+    #[pallet::weight(42)]
+    pub fn transfer(_origin: OriginFor<T>, config: TransferConfig<T::AccountId>) -> DispatchResultWithPostInfo {
+      if config.amount == 42 {
+        Ok(PostDispatchInfo {
+          actual_weight: Some(0),
+          pays_fee: Pays::No,
+        })
+      } else {
+        Ok(None.into())
       }
     }
   }
+}

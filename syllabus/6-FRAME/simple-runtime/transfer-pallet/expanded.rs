@@ -32,8 +32,8 @@ pub mod pallet {
         const MAX_VALUE: u32;
     }
     #[allow(type_alias_bounds)]
-    pub type Values<T: Config> = StorageMap<
-        _GeneratedPrefixForStorageValues<T>,
+    pub type Accumulators<T: Config> = StorageMap<
+        _GeneratedPrefixForStorageAccumulators<T>,
         Twox64Concat,
         T::AccountId,
         T::ValueType,
@@ -72,23 +72,20 @@ pub mod pallet {
         }
     };
     impl<T: Config> Pallet<T> {
-        pub fn set_value(origin: OriginFor<T>, value: u32) -> DispatchResult {
+        pub fn inc_user_counter(origin: OriginFor<T>, inc: u32) -> DispatchResult {
             let who = ensure_signed(origin)?;
-            if !<Values<T>>::contains_key(&who) {
-                if value > T::MAX_VALUE.into() {
+            if !<Accumulators<T>>::contains_key(&who) {
+                Counter::<T>::mutate(|x| *x += 1);
+                let mut current = Accumulators::<T>::get(&who);
+                current += inc.into();
+                if current > T::MAX_VALUE.into() {
                     return Err("failed".into());
                 }
-                Counter::<T>::mutate(|x| *x += 1);
-                let value: T::ValueType = value.into();
-                <Values<T>>::insert(who, value);
-                T::on_value_update(value);
+                T::on_value_update(current);
+                Accumulators::<T>::insert(who, current);
             } else {
                 return Err("already submitted".into());
             }
-            Ok(())
-        }
-        pub fn other_signed_extrinsic(origin: OriginFor<T>) -> DispatchResult {
-            let _ = ensure_signed(origin)?;
             Ok(())
         }
     }
@@ -206,7 +203,7 @@ pub mod pallet {
             #[allow(unused_mut)]
             let mut res = ::alloc::vec::Vec::new();
             {
-                let mut storage_info = < Values < T > as frame_support :: traits :: PartialStorageInfoTrait > :: partial_storage_info () ;
+                let mut storage_info = < Accumulators < T > as frame_support :: traits :: PartialStorageInfoTrait > :: partial_storage_info () ;
                 res.append(&mut storage_info);
             }
             {
@@ -234,12 +231,10 @@ pub mod pallet {
             frame_support::Never,
         ),
         #[codec(index = 0u8)]
-        set_value {
+        inc_user_counter {
             #[allow(missing_docs)]
-            value: u32,
+            inc: u32,
         },
-        #[codec(index = 1u8)]
-        other_signed_extrinsic {},
     }
     const _: () = {
         impl<T: Config> core::fmt::Debug for Call<T> {
@@ -250,13 +245,10 @@ pub mod pallet {
                         .field(&_0)
                         .field(&_1)
                         .finish(),
-                    Self::set_value { ref value } => fmt
-                        .debug_struct("Call::set_value")
-                        .field("value", &value)
+                    Self::inc_user_counter { ref inc } => fmt
+                        .debug_struct("Call::inc_user_counter")
+                        .field("inc", &inc)
                         .finish(),
-                    Self::other_signed_extrinsic {} => {
-                        fmt.debug_struct("Call::other_signed_extrinsic").finish()
-                    }
                 }
             }
         }
@@ -268,10 +260,9 @@ pub mod pallet {
                     Self::__Ignore(ref _0, ref _1) => {
                         Self::__Ignore(core::clone::Clone::clone(_0), core::clone::Clone::clone(_1))
                     }
-                    Self::set_value { ref value } => Self::set_value {
-                        value: core::clone::Clone::clone(value),
+                    Self::inc_user_counter { ref inc } => Self::inc_user_counter {
+                        inc: core::clone::Clone::clone(inc),
                     },
-                    Self::other_signed_extrinsic {} => Self::other_signed_extrinsic {},
                 }
             }
         }
@@ -286,16 +277,11 @@ pub mod pallet {
                     (Self::__Ignore(_0, _1), Self::__Ignore(_0_other, _1_other)) => {
                         true && _0 == _0_other && _1 == _1_other
                     }
-                    (Self::set_value { value }, Self::set_value { value: _0 }) => {
-                        true && value == _0
+                    (Self::inc_user_counter { inc }, Self::inc_user_counter { inc: _0 }) => {
+                        true && inc == _0
                     }
-                    (Self::other_signed_extrinsic {}, Self::other_signed_extrinsic {}) => true,
-                    (Self::__Ignore { .. }, Self::set_value { .. }) => false,
-                    (Self::__Ignore { .. }, Self::other_signed_extrinsic { .. }) => false,
-                    (Self::set_value { .. }, Self::__Ignore { .. }) => false,
-                    (Self::set_value { .. }, Self::other_signed_extrinsic { .. }) => false,
-                    (Self::other_signed_extrinsic { .. }, Self::__Ignore { .. }) => false,
-                    (Self::other_signed_extrinsic { .. }, Self::set_value { .. }) => false,
+                    (Self::__Ignore { .. }, Self::inc_user_counter { .. }) => false,
+                    (Self::inc_user_counter { .. }, Self::__Ignore { .. }) => false,
                 }
             }
         }
@@ -310,12 +296,9 @@ pub mod pallet {
                 __codec_dest_edqy: &mut __CodecOutputEdqy,
             ) {
                 match *self {
-                    Call::set_value { ref value } => {
+                    Call::inc_user_counter { ref inc } => {
                         __codec_dest_edqy.push_byte(0u8 as ::core::primitive::u8);
-                        ::codec::Encode::encode_to(value, __codec_dest_edqy);
-                    }
-                    Call::other_signed_extrinsic {} => {
-                        __codec_dest_edqy.push_byte(1u8 as ::core::primitive::u8);
+                        ::codec::Encode::encode_to(inc, __codec_dest_edqy);
                     }
                     _ => (),
                 }
@@ -337,15 +320,15 @@ pub mod pallet {
                     .map_err(|e| e.chain("Could not decode `Call`, failed to read variant byte"))?
                 {
                     __codec_x_edqy if __codec_x_edqy == 0u8 as ::core::primitive::u8 => {
-                        ::core::result::Result::Ok(Call::<T>::set_value {
-                            value: {
+                        ::core::result::Result::Ok(Call::<T>::inc_user_counter {
+                            inc: {
                                 let __codec_res_edqy =
                                     <u32 as ::codec::Decode>::decode(__codec_input_edqy);
                                 match __codec_res_edqy {
                                     ::core::result::Result::Err(e) => {
-                                        return ::core::result::Result::Err(
-                                            e.chain("Could not decode `Call::set_value::value`"),
-                                        )
+                                        return ::core::result::Result::Err(e.chain(
+                                            "Could not decode `Call::inc_user_counter::inc`",
+                                        ))
                                     }
                                     ::core::result::Result::Ok(__codec_res_edqy) => {
                                         __codec_res_edqy
@@ -353,9 +336,6 @@ pub mod pallet {
                                 }
                             },
                         })
-                    }
-                    __codec_x_edqy if __codec_x_edqy == 1u8 as ::core::primitive::u8 => {
-                        ::core::result::Result::Ok(Call::<T>::other_signed_extrinsic {})
                     }
                     _ => ::core::result::Result::Err(<_ as ::core::convert::Into<_>>::into(
                         "Could not decode `Call`, variant doesn't exist",
@@ -385,78 +365,45 @@ pub mod pallet {
                     .docs_always(&[
                         "Contains one variant per dispatchable that can be called by an extrinsic.",
                     ])
-                    .variant(
-                        ::scale_info::build::Variants::new()
-                            .variant("set_value", |v| {
-                                v.index(0u8 as ::core::primitive::u8)
-                                    .fields(::scale_info::build::Fields::named().field(|f| {
-                                        f.ty::<u32>()
-                                            .name("value")
-                                            .type_name("u32")
-                                            .docs_always(&[])
-                                    }))
-                                    .docs_always(&[])
-                            })
-                            .variant("other_signed_extrinsic", |v| {
-                                v.index(1u8 as ::core::primitive::u8)
-                                    .fields(::scale_info::build::Fields::named())
-                                    .docs_always(&[])
-                            }),
-                    )
+                    .variant(::scale_info::build::Variants::new().variant(
+                        "inc_user_counter",
+                        |v| {
+                            v.index(0u8 as ::core::primitive::u8)
+                                .fields(::scale_info::build::Fields::named().field(|f| {
+                                    f.ty::<u32>().name("inc").type_name("u32").docs_always(&[])
+                                }))
+                                .docs_always(&[])
+                        },
+                    ))
             }
         };
     };
     impl<T: Config> Call<T> {
-        ///Create a call with the variant `set_value`.
-        pub fn new_call_variant_set_value(value: u32) -> Self {
-            Self::set_value { value }
-        }
-        ///Create a call with the variant `other_signed_extrinsic`.
-        pub fn new_call_variant_other_signed_extrinsic() -> Self {
-            Self::other_signed_extrinsic {}
+        ///Create a call with the variant `inc_user_counter`.
+        pub fn new_call_variant_inc_user_counter(inc: u32) -> Self {
+            Self::inc_user_counter { inc }
         }
     }
     impl<T: Config> frame_support::dispatch::GetDispatchInfo for Call<T> {
         fn get_dispatch_info(&self) -> frame_support::dispatch::DispatchInfo {
             match *self {
-                Self::set_value { ref value } => {
+                Self::inc_user_counter { ref inc } => {
                     let __pallet_base_weight = 0;
                     let __pallet_weight =
                         <dyn frame_support::dispatch::WeighData<(&u32,)>>::weigh_data(
                             &__pallet_base_weight,
-                            (value,),
+                            (inc,),
                         );
                     let __pallet_class =
                         <dyn frame_support::dispatch::ClassifyDispatch<(&u32,)>>::classify_dispatch(
                             &__pallet_base_weight,
-                            (value,),
+                            (inc,),
                         );
                     let __pallet_pays_fee =
                         <dyn frame_support::dispatch::PaysFee<(&u32,)>>::pays_fee(
                             &__pallet_base_weight,
-                            (value,),
+                            (inc,),
                         );
-                    frame_support::dispatch::DispatchInfo {
-                        weight: __pallet_weight,
-                        class: __pallet_class,
-                        pays_fee: __pallet_pays_fee,
-                    }
-                }
-                Self::other_signed_extrinsic {} => {
-                    let __pallet_base_weight = 0;
-                    let __pallet_weight = <dyn frame_support::dispatch::WeighData<()>>::weigh_data(
-                        &__pallet_base_weight,
-                        (),
-                    );
-                    let __pallet_class =
-                        <dyn frame_support::dispatch::ClassifyDispatch<()>>::classify_dispatch(
-                            &__pallet_base_weight,
-                            (),
-                        );
-                    let __pallet_pays_fee = <dyn frame_support::dispatch::PaysFee<()>>::pays_fee(
-                        &__pallet_base_weight,
-                        (),
-                    );
                     frame_support::dispatch::DispatchInfo {
                         weight: __pallet_weight,
                         class: __pallet_class,
@@ -477,8 +424,7 @@ pub mod pallet {
     impl<T: Config> frame_support::dispatch::GetCallName for Call<T> {
         fn get_call_name(&self) -> &'static str {
             match *self {
-                Self::set_value { .. } => "set_value",
-                Self::other_signed_extrinsic { .. } => "other_signed_extrinsic",
+                Self::inc_user_counter { .. } => "inc_user_counter",
                 Self::__Ignore(_, _) => {
                     ::core::panicking::panic_fmt(::core::fmt::Arguments::new_v1(
                         &["internal error: entered unreachable code: "],
@@ -493,7 +439,7 @@ pub mod pallet {
             }
         }
         fn get_call_names() -> &'static [&'static str] {
-            &["set_value", "other_signed_extrinsic"]
+            &["inc_user_counter"]
         }
     }
     impl<T: Config> frame_support::traits::UnfilteredDispatchable for Call<T> {
@@ -503,17 +449,17 @@ pub mod pallet {
             origin: Self::Origin,
         ) -> frame_support::dispatch::DispatchResultWithPostInfo {
             match self {
-                Self::set_value { value } => {
+                Self::inc_user_counter { inc } => {
                     let __within_span__ = {
                         use ::tracing::__macro_support::Callsite as _;
                         static CALLSITE: ::tracing::callsite::DefaultCallsite = {
                             static META: ::tracing::Metadata<'static> = {
                                 ::tracing_core::metadata::Metadata::new(
-                                    "set_value",
+                                    "inc_user_counter",
                                     "simple_pallet::pallet",
                                     ::tracing::Level::TRACE,
                                     Some("src/lib.rs"),
-                                    Some(4u32),
+                                    Some(3u32),
                                     Some("simple_pallet::pallet"),
                                     ::tracing_core::field::FieldSet::new(
                                         &[],
@@ -548,57 +494,7 @@ pub mod pallet {
                     };
                     let __tracing_guard__ = __within_span__.enter();
                     frame_support::storage::in_storage_layer(|| {
-                        <Pallet<T>>::set_value(origin, value)
-                            .map(Into::into)
-                            .map_err(Into::into)
-                    })
-                }
-                Self::other_signed_extrinsic {} => {
-                    let __within_span__ = {
-                        use ::tracing::__macro_support::Callsite as _;
-                        static CALLSITE: ::tracing::callsite::DefaultCallsite = {
-                            static META: ::tracing::Metadata<'static> = {
-                                ::tracing_core::metadata::Metadata::new(
-                                    "other_signed_extrinsic",
-                                    "simple_pallet::pallet",
-                                    ::tracing::Level::TRACE,
-                                    Some("src/lib.rs"),
-                                    Some(4u32),
-                                    Some("simple_pallet::pallet"),
-                                    ::tracing_core::field::FieldSet::new(
-                                        &[],
-                                        ::tracing_core::callsite::Identifier(&CALLSITE),
-                                    ),
-                                    ::tracing::metadata::Kind::SPAN,
-                                )
-                            };
-                            ::tracing::callsite::DefaultCallsite::new(&META)
-                        };
-                        let mut interest = ::tracing::subscriber::Interest::never();
-                        if ::tracing::Level::TRACE <= ::tracing::level_filters::STATIC_MAX_LEVEL
-                            && ::tracing::Level::TRACE
-                                <= ::tracing::level_filters::LevelFilter::current()
-                            && {
-                                interest = CALLSITE.interest();
-                                !interest.is_never()
-                            }
-                            && ::tracing::__macro_support::__is_enabled(
-                                CALLSITE.metadata(),
-                                interest,
-                            )
-                        {
-                            let meta = CALLSITE.metadata();
-                            ::tracing::Span::new(meta, &{ meta.fields().value_set(&[]) })
-                        } else {
-                            let span =
-                                ::tracing::__macro_support::__disabled_span(CALLSITE.metadata());
-                            {};
-                            span
-                        }
-                    };
-                    let __tracing_guard__ = __within_span__.enter();
-                    frame_support::storage::in_storage_layer(|| {
-                        <Pallet<T>>::other_signed_extrinsic(origin)
+                        <Pallet<T>>::inc_user_counter(origin, inc)
                             .map(Into::into)
                             .map_err(Into::into)
                     })
@@ -636,19 +532,21 @@ pub mod pallet {
     impl<T: Config> Pallet<T> {
         #[doc(hidden)]
         pub fn storage_metadata() -> frame_support::metadata::PalletStorageMetadata {
-            frame_support :: metadata :: PalletStorageMetadata { prefix : < < T as frame_system :: Config > :: PalletInfo as frame_support :: traits :: PalletInfo > :: name :: < Pallet < T > > () . expect ("Every active pallet has a name in the runtime; qed") , entries : { # [allow (unused_mut)] let mut entries = :: alloc :: vec :: Vec :: new () ; { < Values < T > as frame_support :: storage :: StorageEntryMetadataBuilder > :: build_metadata (:: alloc :: vec :: Vec :: new () , & mut entries) ; } { < Counter < T > as frame_support :: storage :: StorageEntryMetadataBuilder > :: build_metadata (:: alloc :: vec :: Vec :: new () , & mut entries) ; } entries } , }
+            frame_support :: metadata :: PalletStorageMetadata { prefix : < < T as frame_system :: Config > :: PalletInfo as frame_support :: traits :: PalletInfo > :: name :: < Pallet < T > > () . expect ("Every active pallet has a name in the runtime; qed") , entries : { # [allow (unused_mut)] let mut entries = :: alloc :: vec :: Vec :: new () ; { < Accumulators < T > as frame_support :: storage :: StorageEntryMetadataBuilder > :: build_metadata (:: alloc :: vec :: Vec :: new () , & mut entries) ; } { < Counter < T > as frame_support :: storage :: StorageEntryMetadataBuilder > :: build_metadata (:: alloc :: vec :: Vec :: new () , & mut entries) ; } entries } , }
         }
     }
     #[doc(hidden)]
-    pub struct _GeneratedPrefixForStorageValues<T>(core::marker::PhantomData<(T,)>);
-    impl<T: Config> frame_support::traits::StorageInstance for _GeneratedPrefixForStorageValues<T> {
+    pub struct _GeneratedPrefixForStorageAccumulators<T>(core::marker::PhantomData<(T,)>);
+    impl<T: Config> frame_support::traits::StorageInstance
+        for _GeneratedPrefixForStorageAccumulators<T>
+    {
         fn pallet_prefix() -> &'static str {
             <<T as frame_system::Config>::PalletInfo as frame_support::traits::PalletInfo>::name::<
                 Pallet<T>,
             >()
             .expect("Every active pallet has a name in the runtime; qed")
         }
-        const STORAGE_PREFIX: &'static str = "Values";
+        const STORAGE_PREFIX: &'static str = "Accumulators";
     }
     #[doc(hidden)]
     pub struct _GeneratedPrefixForStorageCounter<T>(core::marker::PhantomData<(T,)>);
@@ -683,7 +581,7 @@ pub mod pallet {
                             "simple_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(4u32),
+                            Some(3u32),
                             Some("simple_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
@@ -740,7 +638,7 @@ pub mod pallet {
                             "simple_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(4u32),
+                            Some(3u32),
                             Some("simple_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
@@ -783,7 +681,7 @@ pub mod pallet {
                             "simple_pallet::pallet",
                             ::tracing::Level::TRACE,
                             Some("src/lib.rs"),
-                            Some(4u32),
+                            Some(3u32),
                             Some("simple_pallet::pallet"),
                             ::tracing_core::field::FieldSet::new(
                                 &[],
@@ -826,7 +724,7 @@ pub mod pallet {
                             frame_support::LOG_TARGET,
                             "simple_pallet::pallet",
                             "src/lib.rs",
-                            4u32,
+                            3u32,
                         ),
                         ::log::__private_api::Option::None,
                     );
