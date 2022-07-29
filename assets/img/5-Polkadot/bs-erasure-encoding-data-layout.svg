@@ -27,26 +27,6 @@
          offset="1"
          id="stop7628" />
     </linearGradient>
-    <marker
-       style="overflow:visible"
-       id="Arrow3"
-       refX="0"
-       refY="0"
-       orient="auto-start-reverse"
-       inkscape:stockid="Arrow3"
-       markerWidth="4.2071066"
-       markerHeight="7"
-       viewBox="0 0 4.2071068 7"
-       inkscape:isstock="true"
-       inkscape:collect="always"
-       preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:round"
-         d="M 3,-3 0,0 3,3"
-         id="arrow3"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc" />
-    </marker>
     <rect
        x="1289.9934"
        y="519.05557"
@@ -112,8 +92,8 @@
      inkscape:deskcolor="#505050"
      showgrid="false"
      inkscape:zoom="0.88516383"
-     inkscape:cx="531.54002"
-     inkscape:cy="360.95013"
+     inkscape:cx="532.10489"
+     inkscape:cy="362.07986"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
      inkscape:window-x="0"
@@ -321,9 +301,18 @@
        id="tspan15094-2-3"
        x="50.330166"
        y="656.56555">validator idx n-1</tspan></text>
-  <path
-     style="fill:none;stroke:url(#linearGradient7632);stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow3)"
-     d="m 617.26176,128.13845 c 1.49991,109.76604 -58.99935,186.71323 -126.69955,226.68199"
-     id="path7500"
-     sodipodi:nodetypes="cc" />
+  <g
+     id="path7500">
+    <path
+       style="color:#000000;fill:url(#linearGradient7632);-inkscape-stroke:none"
+       d="m 618.76172,128.11719 -3,0.041 c 1.49225,109.20535 -58.65164,185.63197 -125.96289,225.3711 l 1.52539,2.58203 C 559.41324,315.91302 620.26929,238.4437 618.76172,128.11719 Z"
+       id="path51589" />
+    <g
+       id="g51581">
+      <path
+         style="color:#000000;fill:url(#linearGradient7632);stroke-linecap:round;-inkscape-stroke:none"
+         d="m 493.46484,341.42383 a 1.5,1.5 0 0 0 -1.82617,1.07812 l -3.54883,13.77735 13.77735,3.54882 a 1.5,1.5 0 0 0 1.82812,-1.07812 1.5,1.5 0 0 0 -1.08008,-1.82617 l -10.87304,-2.80078 2.80078,-10.87305 a 1.5,1.5 0 0 0 -1.07813,-1.82617 z"
+         id="path51583" />
+    </g>
+  </g>
 </svg>

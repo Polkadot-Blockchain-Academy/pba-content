@@ -25,14 +25,14 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.914906"
-     inkscape:cx="332.82108"
-     inkscape:cy="363.42531"
+     inkscape:cx="124.05646"
+     inkscape:cy="364.51832"
      inkscape:window-width="1920"
      inkscape:window-height="1003"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g2799-3"
      showguides="true">
     <sodipodi:guide
        position="145.71249,81.320297"
@@ -43,24 +43,40 @@
   <defs
      id="defs2">
     <marker
-       style="overflow:visible"
-       id="Arrow1"
-       refX="0"
-       refY="0"
        orient="auto-start-reverse"
-       inkscape:stockid="Arrow1"
-       markerWidth="4.0606604"
-       markerHeight="6.7071066"
-       viewBox="0 0 4.0606602 6.7071068"
+       refY="0"
+       refX="0"
+       id="three_dots"
+       inkscape:stockid="three_dots"
+       style="overflow:visible"
+       markerWidth="5.5"
+       markerHeight="1.5"
+       viewBox="0 0 5.5 1.5"
        inkscape:isstock="true"
        inkscape:collect="always"
        preserveAspectRatio="xMidYMid">
-      <path
-         style="fill:none;stroke:context-stroke;stroke-width:1;stroke-linecap:butt"
-         d="M 3,-3 0,0 3,3"
-         id="path5057"
-         transform="rotate(180,0.125,0)"
-         sodipodi:nodetypes="ccc" />
+      <g
+         id="g1246"
+         transform="scale(0.5)">
+        <circle
+           cx="4"
+           cy="0"
+           r="1"
+           id="circle237"
+           style="fill:context-stroke;stroke:context-stroke" />
+        <circle
+           cx="8"
+           cy="0"
+           r="1"
+           id="circle239"
+           style="fill:context-stroke;stroke:context-stroke" />
+        <circle
+           cx="12"
+           cy="0"
+           r="1"
+           id="circle241"
+           style="fill:context-stroke;stroke:context-stroke" />
+      </g>
     </marker>
   </defs>
   <g
@@ -144,10 +160,20 @@
            x="-176.81575"
            y="230.16672">Approval</tspan></text>
     </g>
-    <path
-       style="fill:none;stroke:#ffffff;stroke-width:1.05833;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1)"
-       d="M 26.005039,286.09203 238.00411,285.09002"
-       id="path1799" />
+    <g
+       id="path1799">
+      <path
+         style="color:#000000;fill:#ffffff;stroke-linecap:round;-inkscape-stroke:none"
+         d="M 238.00195,284.56055 26.001953,285.5625 a 0.52916503,0.52916503 0 0 0 -0.525391,0.53125 0.52916503,0.52916503 0 0 0 0.53125,0.52734 l 211.998048,-1.00195 a 0.52916503,0.52916503 0 0 0 0.52734,-0.53125 0.52916503,0.52916503 0 0 0 -0.53125,-0.52734 z"
+         id="path52012" />
+      <g
+         id="g52004">
+        <path
+           style="color:#000000;fill:#ffffff;-inkscape-stroke:none"
+           d="m 235.45117,281.55273 -0.74414,0.75196 2.8125,2.78711 -2.78711,2.81445 0.75195,0.74414 3.53321,-3.56445 z"
+           id="path52006" />
+      </g>
+    </g>
     <g
        id="g2805">
       <text
@@ -319,7 +345,7 @@
            inkscape:connection-start="#circle2789-5"
            inkscape:connection-end="#circle2791-6" />
         <path
-           style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:1.05833;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#three_dots)"
            d="m 145.09253,194.81298 20.15687,-0.27275"
            id="path2970"
            inkscape:connector-type="polyline"
