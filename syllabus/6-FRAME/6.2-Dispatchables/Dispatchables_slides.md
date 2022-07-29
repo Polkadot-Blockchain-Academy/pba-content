@@ -236,13 +236,10 @@ Weight = u64\*
 A measure of how much **resources** this dispatch is consuming, alongside more **static** information.
 
 The **tx-fee** of a typical FRAME-based runtime is also *partially* a function of weight.
-<<<<<<< HEAD
 
 <br>
 
 > Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents *time*.
-=======
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 
 Notes:
 
@@ -450,7 +447,6 @@ TWO ✌️ important points to remember:
 ---v
 
 ### Block Limits: Length
-<<<<<<< HEAD
 
 2. Static/Stack size ([size_of in std::mem -
    Rust](https://doc.rust-lang.org/std/mem/fn.size_of.html)) of the transactions need to be as small
@@ -459,15 +455,10 @@ TWO ✌️ important points to remember:
 <br>
 
 Our transaction is composed of `enum Call`. What is the stack size of an `enum`?
-=======
-
-TWO ✌️ important points to remember:
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 
 1. Encoded length of the transactions needs to be lower than some other limited defined in system pallet.
 
 
-<<<<<<< HEAD
 
 ```rust
 struct ComplicatedStuff {
@@ -485,20 +476,10 @@ std::mem::size_of::<ComplicatedStuff>() // 1056
 std::mem::size_of::<Vec<u8>>(); // 24
 std::mem::size_of::<Calls>() // 1056;
 ```
-=======
-2. Static/Stack size ([size_of in std::mem - Rust](https://doc.rust-lang.org/std/mem/fn.size_of.html)) of the transactions need to be as small as possible. Let's see why:
-
-<hr>
-
-Once `Decode`, we allocates memory based on this "static size hint".
-
-Our transaction is composed of `enum Call`. What is the static size of an `enum`?
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 
 ---v
 
 ### Block Limits: Length
-<<<<<<< HEAD
 
 
 ```rust
@@ -516,20 +497,12 @@ enum Calls {
 std::mem::size_of::<ComplicatedStuff>() // 1056
 std::mem::size_of::<Vec<u8>>(); // 24
 std::mem::size_of::<Calls>() // 72;
-=======
-
-Let's explore in the playground.
-
-NOTE:
-
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 ```
 struct ComplicatedStuff {
     who: [u8; 32],
     data: [u8; 1024],
 }
 
-<<<<<<< HEAD
 ---v
 
 ### Block Limits: Length
@@ -544,31 +517,6 @@ struct ComplicatedStuff {
 > is all about how much data is ***allocated*** in the stack.
 
 - Further reading: [Using Box&lt;T&gt; to Point to Data on the Heap - The Rust Programming Language](https://doc.rust-lang.org/book/ch15-01-box.html)
-=======
-enum Calls {
-    Transfer(u32, [u8; 32], [u8; 32]),
-    SetCode(Vec<u8>),
-    Complicated(u32, ComplicatedStuff),
-}
-
-fn main() {
-    dbg!(std::mem::size_of::<Calls>());
-    dbg!(std::mem::size_of::<Vec<u8>>());
-    dbg!(std::mem::size_of::<Calls>());
-}
-```
-
----v
-
-### Block Limits: Length
-
-> `Box` 🎁! Using it reduces the size of the Call enum.
-
-<hr>
-
-> Not to be mistaken, `Box` has nothing to do with how much data you actually decode, it is all
-> about how much data is *allocated*.
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 
 ---v
 
@@ -696,77 +644,18 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: Return Type
 
-<<<<<<< HEAD
 ([src](https://paritytech.github.io/substrate/master/frame_support/dispatch/enum.DispatchError.html))
 
 ```rust
 type DispatchResult = Result<(), DispatchError>;
 ```
 
-=======
-
-```rust
-type DispatchResult = Result<(), DispatchError>;
-```
-
-https://paritytech.github.io/substrate/master/frame_support/dispatch/enum.DispatchError.html
 
 ---v
 
 ### Dispatchables: Return Type
 
-```rust [16]
-#[derive(Decode, Default, Eq, PartialEq, Debug, Clone)]
-struct Foo {
-  x: Vec<u32>
-  y: Option<String>
-}
-
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-  #[pallet::call_index(12)]
-  #[pallet::weight(128_000_000)]
-  fn dispatch(
-    origin: OriginFor<T>,
-    arg1: u32,
-    #[pallet::compact] arg1_compact: u32,
-    arg2: Foo,
-  ) -> DispatchResultWithPostInfo {
-    // implementation
-  }
-}
-```
-
----v
-
-### Dispatchables: (The Advanced) Return Type
-
-```rust
-pub struct PostDispatchInfo {
-  // if set, this is the real consumed weight, else, whatever we set in pre-dispatch.
-  pub actual_weight: Option<Weight>,
-  // if set, overwrite the previous weight.
-  pub pays_fee: Pays,
-}
-
-pub type DispatchResultWithPostInfo = Result<
-  PostDispatchInfo,
-  DispatchErrorWithPostInfo<PostDispatchInfo>
->;
-```
-
-Code time: Look at the `From<_>` implementations of `PostDispatchInfo`.
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
-
----v
-
-### Dispatchables: Return Type
-
-<<<<<<< HEAD
 ```rust [1-4 | 6-9 | 11-14]
-=======
-```rust [1-4 | 6-9 | 11-14 | 16-29 | 31-35 |  37-42 | 44-50]
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 fn dispatch(origin: OriginFor<T>) -> DispatchResult {
   // stuff
   Ok(())
@@ -781,70 +670,9 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResult {
   // stuff
   Err(DispatchError::BadOrigin)
 }
-<<<<<<< HEAD
 ```
 
 ---v
-=======
-
-#[pallet::weight(typical_weight)]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
-  // stuff
-
-  if condition {
-    return Err(PostDispatchInfo {
-      actual_weight: less_weight,
-      ..Default::default()
-    })
-  }
-
-  // recall `impl From<()> for PostDispatchInfo`
-  Ok(().into())
-}
-
-#[pallet::weight(more_weight)]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
-  // stuff
-  Ok(Some(success_full_execution_weight).into())
-}
-
-#[pallet::weight((accurate_weight, Pays::Yes))]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
-
-  // useful dispatch, one time only, let's make it free.
-  Ok(Pays::No.into())
-}
-
-#[pallet::weight((worse_weight, Pays::Yes))]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
-
-  // useful dispatch, one time only, let's make it free.
-  Ok((Some(accurate_weight), Pays::No))
-  // Question 🤔: why would we want to refund the
-}
-
-// You probably NEVER want to do this ❌.
-#[pallet::weight(lenient_weight)]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
-
-  // Any error beforehand might have consumed less weight.
-  Ok(Some(accurate_weight))
-}
-```
-
----v
-
-### Dispatchables: Return Type / Weight
-
-> An inaccurate weight will cause an overweight block. This could potentially cause blocks that
-> exceed the desired block-time (forgiving in a solo-chain, not so much in a parachain).
-
-NOTE:
-
-which
-
----
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 
 ### Dispatchables: (The Advanced) Return Type 💪🏻
 
@@ -909,11 +737,6 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
       ..Default::default()
     })
   }
-<<<<<<< HEAD
-=======
-}
-```
->>>>>>> baf3faa4355e339107fdffb25070937d4cf3b4a4
 
   // recall `impl From<()> for PostDispatchInfo`
   Ok(().into())
