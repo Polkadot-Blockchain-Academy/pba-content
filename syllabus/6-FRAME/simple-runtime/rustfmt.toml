@@ -1,5 +1,6 @@
 # Basic
-hard_tabs = true
+hard_tabs = false
+tab_spaces = 2
 max_width = 100
 use_small_heuristics = "Max"
 # Imports
@@ -21,3 +22,4 @@ match_block_trailing_comma = true
 trailing_comma = "Vertical"
 trailing_semicolon = false
 use_field_init_shorthand = true
+edition = "2021"

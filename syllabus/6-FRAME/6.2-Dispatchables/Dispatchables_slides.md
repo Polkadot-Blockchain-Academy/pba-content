@@ -84,7 +84,9 @@ impl<T: Config> Pallet<T> {
 
 Weight = u64\*
 
-A measure of how much resources this dispatch is consuming, alongside more **static** information.
+A measure of how much **resources** this dispatch is consuming, alongside more **static** information.
+
+The **tx-fee** of a typical FRAME-based runtime is also *partially* a function of weight.
 
 Notes:
 
@@ -256,16 +258,45 @@ A block is limited by at least two axis:
 
 ---v
 
-### Block Limits: System Pallet.
+### Block Limits: Length
 
-```rust
-// frame-system
-pub trait Config {
-  #[pallet::constant]
-  type BlockWeights: Get<limits::BlockWeights>;
+TWO ✌️ important points to remember:
 
-  #[pallet::constant]
-  type BlockLength: Get<limits::BlockLength>;
+1. Encoded length of the transactions needs to be lower than some other limited defined in system pallet.
+
+
+2. Static/Stack size ([size_of in std::mem - Rust](https://doc.rust-lang.org/std/mem/fn.size_of.html)) of the transactions need to be as small as possible. Let's see why:
+
+<hr>
+
+Once `Decode`, we allocates memory based on this "static size hint".
+
+Our transaction is composed of `enum Call`. What is the static size of an `enum`?
+
+---v
+
+### Block Limits: Length
+
+Let's explore in the playground.
+
+NOTE:
+
+```
+struct ComplicatedStuff {
+    who: [u8; 32],
+    data: [u8; 1024],
+}
+
+enum Calls {
+    Transfer(u32, [u8; 32], [u8; 32]),
+    SetCode(Vec<u8>),
+    Complicated(u32, ComplicatedStuff),
+}
+
+fn main() {
+    dbg!(std::mem::size_of::<Calls>());
+    dbg!(std::mem::size_of::<Vec<u8>>());
+    dbg!(std::mem::size_of::<Calls>());
 }
 ```
 
@@ -273,83 +304,12 @@ pub trait Config {
 
 ### Block Limits: Length
 
-```rust
-pub struct PerDispatchClass<T> {
-	normal: T,
-	operational: T,
-	mandatory: T,
-}
+> `Box` 🎁! Using it reduces the size of the Call enum.
 
-pub struct BlockLength {
-	pub max: PerDispatchClass<u32>,
-}
-```
+<hr>
 
-Notes:
-
-Do you see a weak API design here? That if we alter variants of `DispatchClass` in one place, you
-need to update it somewhere else as well. You could solve this by something like `trait DispatchClass` etc etc.
-
----v
-
-### Block Limits: Weight
-
-```rust
-pub struct BlockWeights {
-	pub base_block: Weight,
-	pub max_block: Weight,
-	pub per_class: PerDispatchClass<WeightsPerClass>,
-}
-
-pub struct WeightsPerClass {
-	pub base_extrinsic: Weight,
-	pub max_extrinsic: Option<Weight>,
-	pub max_total: Option<Weight>,
-	pub reserved: Option<Weight>,
-}
-```
-
----v
-
-```rust
-pub RuntimeBlockWeights: limits::BlockWeights = limits::BlockWeights::builder()
-  .base_block(10)
-  .max_block(100)
-  .for_class(DispatchClass::all(), |weights| {
-  	weights.base_extrinsic = 1;
-  })
-  .for_class(DispatchClass::Normal, |weights| {
-  	weights.max_total = Some(80);
-    weights.max_extrinsic = 10;
-  })
-  .for_class(DispatchClass::Operational, |weights| {
-    // reserve the other 20
-  	weights.reserved = Some(20);
-  })
-  .for_class(DispatchClass::Mandatory, |weights| {
-    // ...
-  })
-  .avg_block_initialization(10%)
-  .build_or_panic();
-```
-
----v
-
-### Block Limits: Weight
-
-- Code Time: Now walk over `with_sensible_defaults`, also in Polkadot.
-
----v
-
-### Block Limits: Wrapping Up
-
-Code time: look at the expanded pallet from the previous lecture, and see how all of this leads to
-implementing `GetDispatchInfo`.
-
-
-> `GetDispatchInfo` is used in Executive and *Signed Extensions*, but that's a story for another lecture.
-
-<!-- .element: class="fragment" -->
+> Not to be mistaken, `Box` has nothing to do with how much data you actually decode, it is all
+> about how much data is *allocated*.
 
 ---v
 
@@ -357,14 +317,12 @@ implementing `GetDispatchInfo`.
 
 TLDR:
 
-- `Weight` is extracted by the `Executive`, passed down the dispatch stack, and is eventually
-  tracked in the system pallet.
-- `Length` has a similar path.
+- `Weight` measure of how much time (and other resources) is consumed, tracked in the system pallet.
+- `Length` Similarly.
 - `DispatchClass`: 3 opinionated categories of weight/length used in FRAME.
 - `Pays` is used by another (optional) pallet (transaction-payment) to charge for fees. The fee is a
   function of both the weight, and other stuff.
-
-...
+- `Box`: useful utility to lessen the size of a `Call` enum.
 
 ---
 
@@ -396,12 +354,13 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: Origin
 
-Where the message was coming from.
+<br>
 
-Deserves, and will have its own lecture, but for now, get to know a few common helpers from `frame_system`.
+> **Where the message was coming from.**
 
-- `ensure_signed()`: makes sure that this message was coming from a signed origin.
-- `ensure_none()`: makes sure that this message was coming from an unsigned origin.
+- [`ensure_signed()`](https://paritytech.github.io/substrate/master/frame_system/fn.ensure_signed.html).
+- `ensure_none()`.
+- `ensure_root()`.
 
 Notes:
 
@@ -478,11 +437,38 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: Return Type
 
+
 ```rust
 type DispatchResult = Result<(), DispatchError>;
 ```
 
-- as you already saw, one variant of `DispatchError` is to build it from `&'static str`
+https://paritytech.github.io/substrate/master/frame_support/dispatch/enum.DispatchError.html
+
+---v
+
+### Dispatchables: Return Type
+
+```rust [16]
+#[derive(Decode, Default, Eq, PartialEq, Debug, Clone)]
+struct Foo {
+  x: Vec<u32>
+  y: Option<String>
+}
+
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+  #[pallet::call_index(12)]
+  #[pallet::weight(128_000_000)]
+  fn dispatch(
+    origin: OriginFor<T>,
+    arg1: u32,
+    #[pallet::compact] arg1_compact: u32,
+    arg2: Foo,
+  ) -> DispatchResultWithPostInfo {
+    // implementation
+  }
+}
+```
 
 ---v
 
@@ -498,19 +484,17 @@ pub struct PostDispatchInfo {
 
 pub type DispatchResultWithPostInfo = Result<
   PostDispatchInfo,
-  DispatchErrorWithPostInfo<T>
+  DispatchErrorWithPostInfo<PostDispatchInfo>
 >;
 ```
 
 Code time: Look at the `From<_>` implementations of `PostDispatchInfo`.
 
-Question: Why correct the weight if you are `pays_fee = Pays::No`?
-
 ---v
 
 ### Dispatchables: Return Type
 
-```rust
+```rust [1-4 | 6-9 | 11-14 | 16-29 | 31-35 |  37-42 | 44-50]
 fn dispatch(origin: OriginFor<T>) -> DispatchResult {
   // stuff
   Ok(())
@@ -547,12 +531,40 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
   Ok(Some(success_full_execution_weight).into())
 }
 
-#[pallet::weight((accurate_weight, Pays::Yes)]
+#[pallet::weight((accurate_weight, Pays::Yes))]
 fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
-  // stuff
+
+  // useful dispatch, one time only, let's make it free.
   Ok(Pays::No.into())
 }
+
+#[pallet::weight((worse_weight, Pays::Yes))]
+fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
+
+  // useful dispatch, one time only, let's make it free.
+  Ok((Some(accurate_weight), Pays::No))
+  // Question 🤔: why would we want to refund the
+}
+
+// You probably NEVER want to do this ❌.
+#[pallet::weight(lenient_weight)]
+fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
+
+  // Any error beforehand might have consumed less weight.
+  Ok(Some(accurate_weight))
+}
 ```
+
+---v
+
+### Dispatchables: Return Type / Weight
+
+> An inaccurate weight will cause an overweight block. This could potentially cause blocks that
+> exceed the desired block-time (forgiving in a solo-chain, not so much in a parachain).
+
+NOTE:
+
+which
 
 ---
 
@@ -621,6 +633,7 @@ impl<T: Config> Pallet<T> {
   ) -> DispatchResult {
     // implementation
   }
+}
 ```
 
 }

@@ -24,7 +24,7 @@ pub mod pallet {
 
   // T::AccountId comes from system, T::ValueType comes form us.
   #[pallet::storage]
-  pub type Accumulators<T: Config> = StorageMap<_, Twox64Concat, T::AccountId, T::ValueType, ValueQuery>;
+  pub type Values<T: Config> = StorageMap<_, Twox64Concat, T::AccountId, T::ValueType, ValueQuery>;
   // A simpler storage item.
   #[pallet::storage]
   pub type Counter<T: Config> = StorageValue<_, u32, ValueQuery>;
@@ -35,57 +35,50 @@ pub mod pallet {
 
   #[pallet::call]
   impl<T: Config> Pallet<T> {
-      // this a dummy transaction that allows any user to submit a number (that is converted to
-      // `ValueType`) exactly once. It already increments a counter every time someone submits something
-      // new. A maximum of `Config::MAX_VALUE` is allowed, and the associated hooks are called.
-      #[pallet::weight(0)]
-      pub fn inc_user_counter(origin: OriginFor<T>, inc: u32) -> DispatchResult {
-        // checks the origin to be signed -- more on this later.
-        let who = ensure_signed(origin)?;
+    // this a dummy transaction that allows any user to submit a number (that is converted to
+    // `ValueType`) exactly once. It already increments a counter every time someone submits something
+    // new. A maximum of `Config::MAX_VALUE` is allowed, and the associated hooks are called.
+    #[pallet::weight(0)]
+    pub fn set_value(origin: OriginFor<T>, value: u32) -> DispatchResult {
+      // checks the origin to be signed -- more on this later.
+      let who = ensure_signed(origin)?;
 
-        // check that this user has not submitted already.
-        if !<Accumulators<T>>::contains_key(&who) {
-          // increment the counter .
-          Counter::<T>::mutate(|x| *x += 1);
-
-          // get the accumulator associated with this user.
-          let mut current = Accumulators::<T>::get(&who);
-          // convert `inc` to `ValueType`.
-          current += inc.into();
-          // check reaching .
-          if current > T::MAX_VALUE.into() {
-            return Err("failed".into())
-          }
-
-          // all good! call hook..
-          T::on_value_update(current);
-          // ..and write to storage.
-          Accumulators::<T>::insert(who, current);
-        } else {
-          return Err("already submitted".into())
+      // check that this user has not submitted already.
+      if !<Values<T>>::contains_key(&who) {
+        if value > T::MAX_VALUE.into() {
+          return Err("failed".into())
         }
 
-        Ok(())
+        // increment the counter .
+        Counter::<T>::mutate(|x| *x += 1);
+        let value: T::ValueType = value.into();
+        <Values<T>>::insert(who, value);
+        T::on_value_update(value);
+      } else {
+        return Err("already submitted".into())
       }
 
-      #[pallet::weight(0)]
-      pub fn other_signed_extrinsic(origin: OriginFor<T>) -> DispatchResult {
-        let _ = ensure_signed(origin)?;
-        Ok(())
-      }
+      Ok(())
     }
 
-    #[pallet::hooks]
-    impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
-      fn on_initialize(n: T::BlockNumber) -> Weight {
-        if n % 10u32.into() == sp_runtime::traits::Zero::zero() {
-          log::info!("count of users is {}", Counter ::<T>::get());
-        }
-        0
-      }
-
-      fn on_finalize(_n: T::BlockNumber) {
-        // other stuff..
-      }
+    #[pallet::weight(0)]
+    pub fn other_signed_extrinsic(origin: OriginFor<T>) -> DispatchResult {
+      let _ = ensure_signed(origin)?;
+      Ok(())
     }
   }
+
+  #[pallet::hooks]
+  impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
+    fn on_initialize(n: T::BlockNumber) -> Weight {
+      if n % 10u32.into() == sp_runtime::traits::Zero::zero() {
+        log::info!("count of users is {}", Counter ::<T>::get());
+      }
+      0
+    }
+
+    fn on_finalize(_n: T::BlockNumber) {
+      // other stuff..
+    }
+  }
+}
