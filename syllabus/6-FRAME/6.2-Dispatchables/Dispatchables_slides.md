@@ -11,6 +11,8 @@ instructors: ["Shawn Tabrizi, Kian Paimani"]
 
 ### Dispatchables
 
+<br>
+
 > Core of a blockchain is **state transition**, and dispatchables are one of the main common ways to
 > do that.
 
@@ -18,12 +20,48 @@ instructors: ["Shawn Tabrizi, Kian Paimani"]
 
 ### Dispatchables: Recap on Taxonomy
 
+<br>
+
 > Extrinsic: Signed / Unsigned / Inherent
 
-In this lecture, we care more about the concept of `Call`.
+`Call` is the part of the extrinsic that can be *executed*, i.e. *dispatched*.
 
-Call is a piece of runtime logic, denoted by some arguments, that can be dispatched. This denoted by
-a trait called `Dispatchable`, that we talk about later.
+```rust
+struct Extrinsic {
+  call: Call,
+  signature_stuff: Option<_>
+}
+```
+
+---
+
+### Dispatchables: Recap On `Call`
+
+```rust
+// somewhere in your pallet, called `my_pallet`
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+  fn transfer(origin: OriginFor<T>, from: T::AccountId, to: T::AccountId, amount: u128);
+  fn update_runtime(origin: OriginFor<T>, new_code: Vec<u8>);
+}
+
+// expanded in your pallet
+enum Call {
+  transfer { from: T::AccountId, to: T::AccountId, amount: u128 },
+  update_runtime { new_code: Vec<u8> },
+}
+
+// in your outer runtime
+enum Call {
+  System(frame_system::Call),
+  MyPallet(my_pallet::Call),
+}
+
+// Calls can be dispatched.
+Call::MyPallet(my_pallet::Call::transfer { .. }).dispatch();
+// Which merely forwards the call to:
+my_pallet::Pallet::transfer( .. )
+```
 
 ---
 
@@ -49,7 +87,118 @@ impl<T: Config> Pallet<T> {
     // implementation
   }
 }
+```
 
+---
+
+### Dispatchables: Arguments
+
+```rust [1-5,13-15]
+#[derive(Decode, Eq, PartialEq, Debug, Clone)]
+struct Foo {
+  x: Vec<u32>
+  y: Option<String>
+}
+
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+  #[pallet::call_index(12)]
+  #[pallet::weight(128_000_000)]
+  fn dispatch(
+    origin: OriginFor<T>,
+    arg1: u32,
+    #[pallet::compact] arg1_compact: u32,
+    arg2: Foo,
+  ) -> DispatchResult {
+    // implementation
+  }
+}
+```
+
+Notes:
+
+- `#[pallet::compact]`
+- Why derive each type.
+  - Debug
+  - Eq, PartialEq for making the outer Call dispatchable.
+
+---
+
+### Dispatchables: Call Index
+
+```rust [9]
+#[derive(Decode, Eq, PartialEq, Debug, Clone)]
+struct Foo {
+  x: Vec<u32>
+  y: Option<String>
+}
+
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+  #[pallet::call_index(12)]
+  #[pallet::weight(128_000_000)]
+  fn dispatch(
+    origin: OriginFor<T>,
+    arg1: u32,
+    #[pallet::compact] arg1_compact: u32,
+    arg2: Foo,
+  ) -> DispatchResult {
+    // implementation
+  }
+}
+```
+
+---v
+
+### Dispatchables: Call Index
+
+```rust
+// somewhere in your pallet, called `my_pallet`
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+  fn transfer(from: T::AccountId, to: T::AccountId, amount: u128);
+  fn update_runtime(new_code: Vec<u8>);
+}
+
+// expanded in your pallet
+enum Call {
+  transfer { from: T::AccountId, to: T::AccountId, amount: u128 },
+  update_runtime { new_code: Vec<u8> },
+}
+
+// in your outer runtime
+enum Call {
+  System(frame_system::Call),
+  MyPallet(my_pallet::Call),
+}
+
+// Think about what this is:
+Call::MyPallet(my_pallet::Call::transfer { .. }).encode()
+```
+
+NOTE:
+
+example of how it can be a PITA: https://github.com/paritytech/substrate/issues/11896
+
+---v
+
+### Dispatchables: Call Index
+
+By default, **order of functions**, and pallets in `construct_runtime` MATTER.
+
+Nowadays, you can overwrite both if needed.
+
+```rust
+#[pallet::call_index(5)]
+fn dispatchable() {}
+
+frame_support::construct_runtime!(
+	pub enum Runtime where
+	{
+		System: frame_system = 1,
+		Example: pallet_template = 0,
+	}
+);
 ```
 
 ---
@@ -88,6 +237,10 @@ A measure of how much **resources** this dispatch is consuming, alongside more *
 
 The **tx-fee** of a typical FRAME-based runtime is also *partially* a function of weight.
 
+<br>
+
+> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents *time*.
+
 Notes:
 
 Elaborate a lot on why weight is a static term: You want to know it, pre-dispatch. If you would
@@ -98,107 +251,38 @@ exhaust the block or not, without actually needing to execute it.
 
 Later on, when we peek into `apply`, you should see that the weight
 
----v
 
-### Dispatchables: Weight
-
-* The weight expression must be something that implement all 3 of these..
-
-```rust
-pub type Weight = u64;
-
-// first trait that needs to be implemented.
-pub trait WeighData<T> {
-	fn weigh_data(&self, target: T) -> Weight;
-}
-```
 
 ---v
 
-### Dispatchables: Weight
+### Dispatchables: Weight Examples
+
+`#[weight]` attribute  is technically a shorthand for:
 
 ```rust
-pub enum DispatchClass {
-	Normal,
-	Operational,
-	Mandatory,
-}
+type Weight = u64;
 
-// second trait that needs to be implemented.
-pub trait ClassifyDispatch<T> {
-	fn classify_dispatch(&self, target: T) -> DispatchClass;
-}
-```
-
----v
-
-### Dispatchables: Weight
-
-```rust
-#[derive(Clone, Copy, Eq, PartialEq, RuntimeDebug, Encode, Decode, TypeInfo)]
 pub enum Pays {
-	Yes,
-	No,
+  // Default, if you only provide a weight.
+  Yes,
+  No,
 }
 
-// third trait that needs to be implemented.
-pub trait PaysFee<T> {
-	fn pays_fee(&self, _target: T) -> Pays;
-}
-```
-
----v
-
-### Dispatchables: Weight
-
-But we have some auto-implementations:
-
-```rust
-impl<T> WeighData<T> for Weight {
-	fn weigh_data(&self, _: T) -> Weight {
-		*self
-	}
-}
-
-impl<T> ClassifyDispatch<T> for Weight {
-	fn classify_dispatch(&self, _: T) -> DispatchClass {
-		DispatchClass::Normal
-	}
-}
-
-impl<T> PaysFee<T> for Weight {
-	fn pays_fee(&self, _: T) -> Pays {
-		Pays::Yes
-	}
+pub enum DispatchClass {
+  // User operation, normal stuff.
+  Normal,
+  // User operations that are useful for the chain: runtime upgrade etc.
+  Operational,
+  // Operations that MUST happen e.g. some hooks controller by pallets.
+  Mandatory,
 }
 ```
 
----v
-
-### Dispatchables: Weight
-
-Therefore:
-
-```rust
-#[pallet::weight(128_000_000)]
-fn dispatch(..) {..}
-
-// is essentially
-#[pallet::weight((128_000_000, DispatchClass::Normal, Pays::Yes))]
-fn dispatch(..) {..}
-```
+- Default `DispatchClass::Normal`, `Pays::Yes`.
 
 ---v
 
-### Dispatchables: Weight
-
-And we have partial implementations for things like `(Weight, Pays)` etc.
-
-- `(u64, DispatchClass, Pays)`
-- `(u64, DispatchClass)`
-- `(u64, Pays)`
-
----v
+### Dispatchables: Weight Examples
 
 ```rust [1,2 | 4,5 | 7,8 | 10,11 | 13,14 | 16,17 | 19-26 | 28-38]
 #[pallet::weight(128_000_000)]
@@ -241,9 +325,108 @@ fn dispatch(_: OriginFor<T>, a: u32, b: u32) {..}
 fn dispatch(_: OriginFor<T>, a: u32, b: u32) {..}
 ```
 
+---
+
+### Dispatchables: Weight: Under The Hood
+
+* The weight expression must be something that implement all 3 of these..
+
+```rust
+pub type Weight = u64;
+
+// first trait that needs to be implemented.
+pub trait WeighData<T> {
+	fn weigh_data(&self, target: T) -> Weight;
+}
+```
+
 ---v
 
-### Block Limits
+### Dispatchables: Weight: Under The Hood
+
+```rust
+pub enum DispatchClass {
+	Normal,
+	Operational,
+	Mandatory,
+}
+
+// second trait that needs to be implemented.
+pub trait ClassifyDispatch<T> {
+	fn classify_dispatch(&self, target: T) -> DispatchClass;
+}
+```
+
+---v
+
+### Dispatchables: Weight: Under The Hood
+
+```rust
+pub enum Pays {
+	Yes,
+	No,
+}
+
+// third trait that needs to be implemented.
+pub trait PaysFee<T> {
+	fn pays_fee(&self, _target: T) -> Pays;
+}
+```
+
+---v
+
+### Dispatchables: Weight: Under The Hood
+
+But we have some auto-implementations:
+
+```rust
+impl<T> WeighData<T> for Weight {
+	fn weigh_data(&self, _: T) -> Weight {
+		*self
+	}
+}
+
+impl<T> ClassifyDispatch<T> for Weight {
+	fn classify_dispatch(&self, _: T) -> DispatchClass {
+		DispatchClass::Normal
+	}
+}
+
+impl<T> PaysFee<T> for Weight {
+	fn pays_fee(&self, _: T) -> Pays {
+		Pays::Yes
+	}
+}
+```
+
+---v
+
+### Dispatchables: Weight: Under The Hood
+
+And we have partial implementations for things like `(Weight, Pays)` etc.
+
+- `(u64, DispatchClass, Pays)`
+- `(u64, DispatchClass)`
+- `(u64, Pays)`
+
+---v
+
+### Dispatchables: Weight: Under The Hood
+
+Therefore:
+
+```rust
+#[pallet::weight(128_000_000)]
+fn dispatch(..) {..}
+
+// rust blanket implementation expands this to:
+#[pallet::weight((128_000_000, DispatchClass::Normal, Pays::Yes))]
+fn dispatch(..) {..}
+```
+
+---
+
+## Block Limits: Length
 
 Now that we know about weight, let's expand it a bit further.
 
@@ -252,36 +435,32 @@ A block is limited by at least two axis:
 - Length
 - Weight
 
-<br>
-
-> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents *time*.
-
 ---v
 
 ### Block Limits: Length
 
 TWO ✌️ important points to remember:
 
-1. Encoded length of the transactions needs to be lower than some other limited defined in system pallet.
-
-
-2. Static/Stack size ([size_of in std::mem - Rust](https://doc.rust-lang.org/std/mem/fn.size_of.html)) of the transactions need to be as small as possible. Let's see why:
-
-<hr>
-
-Once `Decode`, we allocates memory based on this "static size hint".
-
-Our transaction is composed of `enum Call`. What is the static size of an `enum`?
+1. Encoded length of the transactions needs to be lower than some other limited defined in system
+   pallet (default: `5MB`).
 
 ---v
 
 ### Block Limits: Length
 
-Let's explore in the playground.
+2. Static/Stack size ([size_of in std::mem -
+   Rust](https://doc.rust-lang.org/std/mem/fn.size_of.html)) of the transactions need to be as small
+   as possible.
 
-NOTE:
+<br>
 
-```
+Our transaction is composed of `enum Call`. What is the stack size of an `enum`?
+
+1. Encoded length of the transactions needs to be lower than some other limited defined in system pallet.
+
+
+
+```rust
 struct ComplicatedStuff {
     who: [u8; 32],
     data: [u8; 1024],
@@ -293,23 +472,51 @@ enum Calls {
     Complicated(u32, ComplicatedStuff),
 }
 
-fn main() {
-    dbg!(std::mem::size_of::<Calls>());
-    dbg!(std::mem::size_of::<Vec<u8>>());
-    dbg!(std::mem::size_of::<Calls>());
-}
+std::mem::size_of::<ComplicatedStuff>() // 1056
+std::mem::size_of::<Vec<u8>>(); // 24
+std::mem::size_of::<Calls>() // 1056;
 ```
 
 ---v
 
 ### Block Limits: Length
 
+
+```rust
+struct ComplicatedStuff {
+    who: [u8; 32],
+    data: [u8; 1024],
+}
+
+enum Calls {
+    Transfer(u32, [u8; 32], [u8; 32]),
+    SetCode(Vec<u8>),
+    Complicated(u32, Box<ComplicatedStuff>),
+}
+
+std::mem::size_of::<ComplicatedStuff>() // 1056
+std::mem::size_of::<Vec<u8>>(); // 24
+std::mem::size_of::<Calls>() // 72;
+```
+struct ComplicatedStuff {
+    who: [u8; 32],
+    data: [u8; 1024],
+}
+
+---v
+
+### Block Limits: Length
+
+<br>
+
 > `Box` 🎁! Using it reduces the size of the Call enum.
 
 <hr>
 
-> Not to be mistaken, `Box` has nothing to do with how much data you actually decode, it is all
-> about how much data is *allocated*.
+> Not to be mistaken, `Box` has nothing to do with how much data you actually **decode/encode**, it
+> is all about how much data is ***allocated*** in the stack.
+
+- Further reading: [Using Box&lt;T&gt; to Point to Data on the Heap - The Rust Programming Language](https://doc.rust-lang.org/book/ch15-01-box.html)
 
 ---v
 
@@ -437,16 +644,37 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: Return Type
 
+([src](https://paritytech.github.io/substrate/master/frame_support/dispatch/enum.DispatchError.html))
 
 ```rust
 type DispatchResult = Result<(), DispatchError>;
 ```
 
-https://paritytech.github.io/substrate/master/frame_support/dispatch/enum.DispatchError.html
 
 ---v
 
 ### Dispatchables: Return Type
+
+```rust [1-4 | 6-9 | 11-14]
+fn dispatch(origin: OriginFor<T>) -> DispatchResult {
+  // stuff
+  Ok(())
+}
+
+fn dispatch(origin: OriginFor<T>) -> DispatchResult {
+  // stuff
+  Err("SomeError".into())
+}
+
+fn dispatch(origin: OriginFor<T>) -> DispatchResult {
+  // stuff
+  Err(DispatchError::BadOrigin)
+}
+```
+
+---v
+
+### Dispatchables: (The Advanced) Return Type 💪🏻
 
 ```rust [16]
 #[derive(Decode, Default, Eq, PartialEq, Debug, Clone)]
@@ -474,6 +702,9 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: (The Advanced) Return Type
 
+
+([src](https://paritytech.github.io/substrate/master/frame_support/weights/struct.PostDispatchInfo.html))
+
 ```rust
 pub struct PostDispatchInfo {
   // if set, this is the real consumed weight, else, whatever we set in pre-dispatch.
@@ -491,30 +722,16 @@ pub type DispatchResultWithPostInfo = Result<
 Code time: Look at the `From<_>` implementations of `PostDispatchInfo`.
 
 ---v
+### Dispatchables: (The Advanced) Return Type
 
-### Dispatchables: Return Type
 
-```rust [1-4 | 6-9 | 11-14 | 16-29 | 31-35 |  37-42 | 44-50]
-fn dispatch(origin: OriginFor<T>) -> DispatchResult {
-  // stuff
-  Ok(())
-}
-
-fn dispatch(origin: OriginFor<T>) -> DispatchResult {
-  // stuff
-  Err("SomeError".into())
-}
-
-fn dispatch(origin: OriginFor<T>) -> DispatchResult {
-  // stuff
-  Err(DispatchError::BadOrigin)
-}
-
-#[pallet::weight(typical_weight)]
+```rust [1-14 | 16-20 | 22-27 | 29-35 | 37-43]
+#[pallet::weight(worse_weight)]
 fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
   // stuff
 
   if condition {
+    // early exist
     return Err(PostDispatchInfo {
       actual_weight: less_weight,
       ..Default::default()
@@ -543,7 +760,7 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
 
   // useful dispatch, one time only, let's make it free.
   Ok((Some(accurate_weight), Pays::No))
-  // Question 🤔: why would we want to refund the
+  // Question 🤔: why would we want to refund the weight if it is free?
 }
 
 // You probably NEVER want to do this ❌.
@@ -559,89 +776,7 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
 
 ### Dispatchables: Return Type / Weight
 
-> An inaccurate weight will cause an overweight block. This could potentially cause blocks that
+<br>
+
+> An inaccurate weight will cause an **overweight block** 😱. This could potentially cause blocks that
 > exceed the desired block-time (forgiving in a solo-chain, not so much in a parachain).
-
-NOTE:
-
-which
-
----
-
-### Dispatchables: Arguments
-
-```rust [1-5,13-15]
-#[derive(Decode, Eq, PartialEq, Debug, Clone)]
-struct Foo {
-  x: Vec<u32>
-  y: Option<String>
-}
-
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-  #[pallet::call_index(12)]
-  #[pallet::weight(128_000_000)]
-  fn dispatch(
-    origin: OriginFor<T>,
-    arg1: u32,
-    #[pallet::compact] arg1_compact: u32,
-    arg2: Foo,
-  ) -> DispatchResult {
-    // implementation
-  }
-}
-```
-
----v
-
-Notes:
-
-- `#[pallet::compact]`
-- Why derive each type.
-  - Debug
-  - Eq, PartialEq for making the outer Call dispatchable.
-- Question: What are the
-
----
-
-### Dispatchable: Revisiting An Expanded `Call`
-
-Notes:
-
-- Talk about the encoding of `Call`.
-
----
-
-### Dispatchables: Call Index
-
-```rust [9]
-#[derive(Decode, Eq, PartialEq, Debug, Clone)]
-struct Foo {
-  x: Vec<u32>
-  y: Option<String>
-}
-
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-  #[pallet::call_index(12)]
-  #[pallet::weight(128_000_000)]
-  fn dispatch(
-    origin: OriginFor<T>,
-    arg1: u32,
-    #[pallet::compact] arg1_compact: u32,
-    arg2: Foo,
-  ) -> DispatchResult {
-    // implementation
-  }
-}
-```
-
-}
-
-Call indexing matters!
-
-https://github.com/paritytech/substrate/issues/11896
-
-### A Note on Dispatch Filtering
-
-- Much more in the origin lecture.
