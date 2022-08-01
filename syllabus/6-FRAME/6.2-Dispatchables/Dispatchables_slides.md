@@ -730,7 +730,7 @@ assert_eq!(Some(42).into(), PostDispatchInfo { actual_fee: Some(42), pays_fee: P
 
 ```rust [1-14 | 16-20 | 22-27 | 29-35 | 37-43]
 #[pallet::weight(worse_weight)]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
+fn dispatch(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
   // stuff
 
   if condition {
@@ -746,20 +746,20 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
 }
 
 #[pallet::weight(more_weight)]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
+fn dispatch(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
   // stuff
   Ok(Some(success_full_execution_weight).into())
 }
 
 #[pallet::weight((accurate_weight, Pays::Yes))]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
+fn dispatch(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 
   // useful dispatch, one time only, let's make it free.
   Ok(Pays::No.into())
 }
 
 #[pallet::weight((worse_weight, Pays::Yes))]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
+fn dispatch(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 
   // useful dispatch, one time only, let's make it free.
   Ok((Some(accurate_weight), Pays::No))
@@ -768,7 +768,7 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
 
 // You probably NEVER want to do this ❌.
 #[pallet::weight(lenient_weight)]
-fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
+fn dispatch(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 
   // Any error beforehand might have consumed less weight.
   Ok(Some(accurate_weight))
