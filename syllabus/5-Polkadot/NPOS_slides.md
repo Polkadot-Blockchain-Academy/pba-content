@@ -38,8 +38,6 @@ Assumptions:
 - **Validators**: those who wish to author blocks.
 - **Nominators/Delegators**: Those who wish to support wanna-be authors.
 
-<br>
-
 - Validation and nomination intentions can change, therefore we need **periodic elections** to
   always choose the best validators + hold them slashable.
 - Every election period is called an **_Era_**, e.g. 24hrs in Polkadot.
@@ -100,8 +98,6 @@ the **winners** and **how to distribute the stake among them**.
 - ✅ Can optimize other criteria other than "who had more approval votes".
 - ✅ Has a much higher chance to make sure staked tokens won't get wasted.
 
-<br>
-
 > NPoS is **approval-based, multi-winner election**.
 
 ---
@@ -157,8 +153,6 @@ If all of the above fails, the chain won't rotate validators and the governance 
 1. Polkadot validator are assigned to parachains as backing group, and swapped over time.
 1. Polkadot validators all author the same number of blocks.
 
-<br>
-
 > What properties to we want a validator set have for the above requirements?
 
 Notes:
@@ -192,8 +186,6 @@ pub struct ElectionScore {
 
 ### Why NPoS: Election Score
 
-<br>
-
 > NPoS allows us to incentivize the formation of a validator set that optimized the aforementioned `ElectionScore`.
 
 ---
@@ -212,6 +204,7 @@ pub struct ElectionScore {
 
 But we (strive to) get much better economic security measures in return.<br>
 And solve the scalability in the mid-term too 🤫
+
 <!-- .element: class="fragment" -->
 
 ---

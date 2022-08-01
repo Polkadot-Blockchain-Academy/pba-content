@@ -14,7 +14,7 @@
 	--r-main-color: #fff;
 	--r-background-color: #07154b;
 	--r-code-background-color: #272822;
-	--r-block-margin: 40px 0px;
+	--r-block-margin: 40px 0px 0px 0px;
 	--r-heading-margin: 0px 0px 20px 0px;
 	--r-heading-font: "Work Sans";
 	--r-heading-color: #fff;
@@ -202,7 +202,8 @@ section.has-light-background h6 {
 	display: block;
 	position: relative;
 	width: 70%;
-	margin: var(--r-block-margin) auto;
+	margin: var(--r-block-margin);
+	margin: 1em !important;
 	padding: 5px;
 	font-style: italic;
 	background: rgba(255, 255, 255, 0.05);
@@ -224,6 +225,7 @@ section.has-light-background h6 {
 	display: block;
 	position: relative;
 	margin: var(--r-block-margin) auto;
+	margin-top: 2em !important;
 	line-height: 1.2em;
 	word-wrap: break-word;
 	text-align: left;

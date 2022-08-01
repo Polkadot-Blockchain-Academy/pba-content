@@ -11,8 +11,6 @@ instructors: ["Shawn Tabrizi, Kian Paimani"]
 
 ### Dispatchables
 
-<br>
-
 > Core of a blockchain is **state transition**, and dispatchables are one of the main common ways to
 > do that.
 
@@ -20,11 +18,9 @@ instructors: ["Shawn Tabrizi, Kian Paimani"]
 
 ### Dispatchables: Recap on Taxonomy
 
-<br>
-
 > Extrinsic: Signed / Unsigned / Inherent
 
-`Call` is the part of the extrinsic that can be *executed*, i.e. *dispatched*.
+`Call` is the part of the extrinsic that can be _executed_, i.e. _dispatched_.
 
 ```rust
 struct Extrinsic {
@@ -235,11 +231,9 @@ Weight = u64\*
 
 A measure of how much **resources** this dispatch is consuming, alongside more **static** information.
 
-The **tx-fee** of a typical FRAME-based runtime is also *partially* a function of weight.
+The **tx-fee** of a typical FRAME-based runtime is also _partially_ a function of weight.
 
-<br>
-
-> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents *time*.
+> Weight, in itself, can be multi-dimensional, but for now assume it is one, and it represents _time_.
 
 Notes:
 
@@ -251,13 +245,11 @@ exhaust the block or not, without actually needing to execute it.
 
 Later on, when we peek into `apply`, you should see that the weight
 
-
-
 ---v
 
 ### Dispatchables: Weight Examples
 
-`#[weight]` attribute  is technically a shorthand for:
+`#[weight]` attribute is technically a shorthand for:
 
 ```rust
 type Weight = u64;
@@ -329,7 +321,7 @@ fn dispatch(_: OriginFor<T>, a: u32, b: u32) {..}
 
 ### Dispatchables: Weight: Under The Hood
 
-* The weight expression must be something that implement all 3 of these..
+- The weight expression must be something that implement all 3 of these..
 
 ```rust
 pub type Weight = u64;
@@ -454,7 +446,6 @@ TWO ✌️ important points to remember:
 
 Our transaction is composed of `enum Call`. What is the stack size of an `enum`?
 
-
 ```rust
 struct ComplicatedStuff {
     who: [u8; 32],
@@ -480,7 +471,6 @@ std::mem::size_of::<Calls>() // 1056;
 
 ### Block Limits: Length
 
-
 ```rust
 struct ComplicatedStuff {
     who: [u8; 32],
@@ -499,9 +489,10 @@ std::mem::size_of::<Vec<u8>>(); // 24
 std::mem::size_of::<ComplicatedStuff>() // 1056
 std::mem::size_of::<Calls>() // 72;
 ```
+
 struct ComplicatedStuff {
-    who: [u8; 32],
-    data: [u8; 1024],
+who: [u8; 32],
+data: [u8; 1024],
 }
 
 <!-- .element: class="fragment" -->
@@ -510,14 +501,12 @@ struct ComplicatedStuff {
 
 ### Block Limits: Length
 
-<br>
-
 > `Box` 🎁! Using it reduces the size of the Call enum.
 
 <hr>
 
 > Not to be mistaken, `Box` has nothing to do with how much data you actually **decode/encode**, it
-> is all about how much data is ***allocated*** in the stack.
+> is all about how much data is **_allocated_** in the stack.
 
 - Further reading: [Using Box&lt;T&gt; to Point to Data on the Heap - The Rust Programming Language](https://doc.rust-lang.org/book/ch15-01-box.html)
 
@@ -563,8 +552,6 @@ impl<T: Config> Pallet<T> {
 ---v
 
 ### Dispatchables: Origin
-
-<br>
 
 > **Where the message was coming from.**
 
@@ -653,7 +640,6 @@ impl<T: Config> Pallet<T> {
 type DispatchResult = Result<(), DispatchError>;
 ```
 
-
 ---v
 
 ### Dispatchables: Return Type
@@ -705,7 +691,6 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: (The Advanced) Return Type
 
-
 ([src](https://paritytech.github.io/substrate/master/frame_support/weights/struct.PostDispatchInfo.html))
 
 ```rust
@@ -723,13 +708,10 @@ pub type DispatchResultWithPostInfo = Result<
 ```
 
 ---v
-### Dispatchables: (The Advanced) Return Type
 
 ### Dispatchables: (The Advanced) Return Type
 
 Conversions to build `PostDispatchInfo` easily:
-
-<br>
 
 ```rust
 // impl From<()> for PostDispatchInfo
@@ -743,8 +725,8 @@ assert_eq!(Some(42).into(), PostDispatchInfo { actual_fee: Some(42), pays_fee: P
 ```
 
 ---v
-### Dispatchables: (The Advanced) Return Type
 
+### Dispatchables: (The Advanced) Return Type
 
 ```rust [1-14 | 16-20 | 22-27 | 29-35 | 37-43]
 #[pallet::weight(worse_weight)]
@@ -796,8 +778,6 @@ fn dispatch(origin: OriginFor<T>) -> DispatchResultWithInfo {
 ---v
 
 ### Dispatchables: Return Type / Weight
-
-<br>
 
 > An inaccurate weight will cause an **overweight block** 😱. This could potentially cause blocks that
 > exceed the desired block-time (forgiving in a solo-chain, not so much in a parachain).
