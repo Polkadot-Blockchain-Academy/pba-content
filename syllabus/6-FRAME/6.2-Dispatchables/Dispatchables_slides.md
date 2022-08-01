@@ -499,6 +499,10 @@ std::mem::size_of::<Vec<u8>>(); // 24
 std::mem::size_of::<ComplicatedStuff>() // 1056
 std::mem::size_of::<Calls>() // 72;
 ```
+struct ComplicatedStuff {
+    who: [u8; 32],
+    data: [u8; 1024],
+}
 
 <!-- .element: class="fragment" -->
 
@@ -719,6 +723,7 @@ pub type DispatchResultWithPostInfo = Result<
 ```
 
 ---v
+### Dispatchables: (The Advanced) Return Type
 
 ### Dispatchables: (The Advanced) Return Type
 
