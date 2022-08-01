@@ -452,12 +452,7 @@ TWO ✌️ important points to remember:
    Rust](https://doc.rust-lang.org/std/mem/fn.size_of.html)) of the transactions need to be as small
    as possible.
 
-<br>
-
 Our transaction is composed of `enum Call`. What is the stack size of an `enum`?
-
-1. Encoded length of the transactions needs to be lower than some other limited defined in system pallet.
-
 
 
 ```rust
@@ -471,11 +466,15 @@ enum Calls {
     SetCode(Vec<u8>),
     Complicated(u32, ComplicatedStuff),
 }
+```
 
-std::mem::size_of::<ComplicatedStuff>() // 1056
+```rust
 std::mem::size_of::<Vec<u8>>(); // 24
+std::mem::size_of::<ComplicatedStuff>() // 1056
 std::mem::size_of::<Calls>() // 1056;
 ```
+
+<!-- .element: class="fragment" -->
 
 ---v
 
@@ -493,15 +492,19 @@ enum Calls {
     SetCode(Vec<u8>),
     Complicated(u32, Box<ComplicatedStuff>),
 }
+```
 
-std::mem::size_of::<ComplicatedStuff>() // 1056
+```rust
 std::mem::size_of::<Vec<u8>>(); // 24
+std::mem::size_of::<ComplicatedStuff>() // 1056
 std::mem::size_of::<Calls>() // 72;
 ```
 struct ComplicatedStuff {
     who: [u8; 32],
     data: [u8; 1024],
 }
+
+<!-- .element: class="fragment" -->
 
 ---v
 
@@ -719,7 +722,25 @@ pub type DispatchResultWithPostInfo = Result<
 >;
 ```
 
-Code time: Look at the `From<_>` implementations of `PostDispatchInfo`.
+---v
+### Dispatchables: (The Advanced) Return Type
+
+### Dispatchables: (The Advanced) Return Type
+
+Conversions to build `PostDispatchInfo` easily:
+
+<br>
+
+```rust
+// impl From<()> for PostDispatchInfo
+assert_eq!(().into(), PostDispatchInfo { actual_fee: None, pays_fee: Pays::Yes });
+
+// impl From<Pays> for PostDispatchInfo
+assert_eq!(Pays::No.into(), PostDispatchInfo { actual_fee: None, pays_fee: Pays::No });
+
+// impl From<Option<u64>> for PostDispatchInfo
+assert_eq!(Some(42).into(), PostDispatchInfo { actual_fee: Some(42), pays_fee: Pays::Yes });
+```
 
 ---v
 ### Dispatchables: (The Advanced) Return Type
