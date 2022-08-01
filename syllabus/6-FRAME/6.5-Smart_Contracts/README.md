@@ -46,5 +46,6 @@ due to the node configuration (occurs only when transactions are issued and
 then instantaneous).
 
 _Please let us know:_
-* _In which folder on the presentation computer the `ink` repository is cloned to._
-* _In which folder the `substrate-contracts-node` binary resides._
+
+- _In which folder on the presentation computer the `ink` repository is cloned to._
+- _In which folder the `substrate-contracts-node` binary resides._
