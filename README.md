@@ -21,9 +21,5 @@ We are launching the first wave this Summer in the UK with a target of 50 studen
 
 | Cohort | Location  | Dates |
 | ------ | --------- | ----- |
-| 1      | Cambridge | TBD   |
-| 2      | TBD       | TBD   |
-
-## Get Started
-
-See [./CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
+| 1      | Cambridge | July 2022   |
+| 2      | TBD       | January 2023 |
