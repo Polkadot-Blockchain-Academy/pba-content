@@ -1,7 +1,5 @@
 # Polkadot Blockchain Academy
 
-## NOTICE: Subject Matter Experts (SMEs) should use [./CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
-
 The Polkadot Blockchain Academy is an intensive academic program teaching Blockchain, Substrate and Polkadot to talented developers.
 
 This program aims at:
@@ -12,6 +10,10 @@ This program aims at:
 - Improving our non-dev onboarding processes
 
 Selected through an admission process, candidates will receive an intensive education taught by a mix of professionals from Parity, Web3 and some visiting professors.
+
+## Contributing
+
+Subject Matter Experts (SMEs) should explore [./CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
 
 ## Rollout Plan
 
