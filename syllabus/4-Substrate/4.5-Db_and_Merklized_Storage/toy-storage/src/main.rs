@@ -9,14 +9,16 @@ fn main() {
 	let values_to_store = vec!["parity", "participate", "party", "process", "procure", "prospective"];
 
 	// This represents our Key-Value Database. In Substrate this would
-	// be RocksDB or ParityDB.
-	let mut kvdb = HashMap::new();
+	// be RocksDB or ParityDB. The key type is the hash of the Node itself.
+	let mut kvdb = HashMap::<u64, Node<String>>::new();
 
 	println!("Hello, world!");
 }
 
 /// The key type is arbitrary data modelled as a simple bitstring Vec<bool>
 /// This choice also allows the use of a binary tree.
+/// Nodes need to be hashable so we ca nuse them in the underlying kvdb.
+#[derive(Hash)]
 pub enum Node<Value> {
 	Empty,
 	Leaf {
