@@ -44,15 +44,11 @@ pub enum Node<Value> {
 /// Underlying KeyValue storage is a simple hashmap.
 pub type StorageInstance<Value>{
 	kvdb: HashMap::<u64, Node<Value>>,
-	//TODO I need to know the root node _somehow_. One option is to track
-	// it explicitly like this. Another is to store it in the kvdb at a fixed key.
-	// I guess the empty vec would would be an appropriate key. I'll do that actually.
-	root_node: Node<Value>,
 }
 
 impl StorageInstance<Value> {
 	//! Check whether a particular key is in the trie and if it is, return its value.
-	pub fn get(Vec<bool>) -> Option<Value> {
+	pub fn get(key: Vec<bool>) -> Option<Value> {
 		todo!("Exercise")
 	}
 
@@ -61,8 +57,14 @@ impl StorageInstance<Value> {
 		todo!("exercise")
 	}
 
+	//! The root node is stored in the kvdb just like every other node.
+	//! It is always stored at the same fixed key, namely, the empty vector.
 	pub fn root() -> Node<Value> {
 		todo!("exercise")
+	}
+
+	pub fn insert(key: Vec<bool>, value: Value) {
+		todo!("Exercise")
 	}
 }
 
