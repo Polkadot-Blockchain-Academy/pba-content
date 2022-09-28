@@ -1,6 +1,9 @@
 use std::containers::HashMap;
 
 fn main() {
+	//  We'll use Strings like Shawn's slides
+	let values_to_store = vec!["parity", "participate", "party", "process", "procure", "prospective"];
+
 	// This represents our Key-Value Database. In Substrate this would
 	// be RocksDB or ParityDB.
 	let mut kvdb = HashMap::new();
