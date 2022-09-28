@@ -1,4 +1,6 @@
-use std::containers::HashMap;
+
+
+use std::collections::HashMap;
 
 fn main() {
 	//  We'll use Strings like Shawn's slides
