@@ -1,4 +1,6 @@
-
+//! This project builds a demonstration version of the kind of MerklePatricia-based
+//! storage described in the Storage lecture. By building this somewhat simplified
+//! of the storage, you will learn
 
 use std::collections::HashMap;
 
@@ -13,17 +15,23 @@ fn main() {
 	println!("Hello, world!");
 }
 
-pub enum NodeType {
+/// The key type is arbitrary data modelled as a simple bitstring Vec<bool>
+/// This choice also allows the use of a binary tree.
+pub enum Node<Value> {
 	Empty,
-	Leaf,
-	BranchNoValue,
-	BranchWithValue,
-}
-
-pub struct Node {
-	header: (),
-	key: (),
-	children: (), // I want to make this simple so we will use binary trees
-	// maybe I should have two fields leftChild and rightChild?
-	value: (),
+	Leaf {
+		remaining_key: Vec<bool>,
+		value: Value,
+	},
+	BranchNoValue {
+		partial_key: Vec<bool>,
+		leftChild: Box<Self>,
+		rightChild: Box<Self>,
+	},
+	BranchWithValue {
+		partial_key: Vec<bool>,
+		leftChild: Box<Self>,
+		rightChild: Box<Self>,
+		value: Value,
+	},
 }
