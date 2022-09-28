@@ -54,16 +54,31 @@ impl StorageInstance<Value> {
 
 	//! Check whether the 
 	pub fn is_empty() -> bool {
-		todo!("exercise")
+		todo!("Exercise")
 	}
 
 	//! The root node is stored in the kvdb just like every other node.
 	//! It is always stored at the same fixed key, namely, the empty vector.
 	pub fn root() -> Node<Value> {
-		todo!("exercise")
+		todo!("Exercise")
 	}
 
+	//! Insert a KV pair into the storage. If a value already exists at this key,
+	//! just replace it
 	pub fn insert(key: Vec<bool>, value: Value) {
+		todo!("Exercise")
+	}
+
+	//! Remove a key value pair from the trie. If the key does not exist,
+	//! return None, otherwise, return the value that was removed.
+	pub fn remove(key: Vec<bool>) -> Option<Value> {
+		todo!("Exercise")
+	}
+
+	//! Remove all KV pairs whose keys start with this prefix.
+	//! Isn't this supposed to be efficient? Seems like we'll still need
+	//! to remove a bunch of nodes from the underlying HashMap.
+	pub fn remove_prefix(key: Vec<bool>) {
 		todo!("Exercise")
 	}
 }
