@@ -1,10 +1,6 @@
-# Instructors
+# Substrate
 
-Primary lecturers: Shawn, Basti, André and Pierre
-
-Standby lecturers: Kian, Émeric and Arkadiy
-
-# Schedule
+## Lessons OVerview
 
 - DAY 1 - Substrate Overview, Block Concepts, Tx Queue
 - DAY 2 - Host and Runtime Interface, Database and Merklized Storage
