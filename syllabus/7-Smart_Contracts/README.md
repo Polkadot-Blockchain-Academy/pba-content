@@ -1,4 +1,19 @@
-# Required Software on Presentation Computer
+# Smart Contracts
+
+## Lessons Overview
+
+### Day 1 (Half Day)
+
+TODO
+### Day 2
+
+TODO
+
+### Day 3
+
+TODO
+
+## Required Software on Presentation Computer
 
 This software must be installed on the presentation computer
 for the demos:
