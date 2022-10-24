@@ -44,22 +44,6 @@ This assignment is a project covering the material you've learned about writing 
 
 > To the contrary, when needed, make a `Trait` that is supposed to deliver some functionality, and do a *mock* implementation of it, to abstract away components that you want to interact with and are not readily available in FRAME.
 
-## Topic selection
-
-You are expected to share your selected topic **no later than Sunday July 31st**.
-
-If there is something you would like to implement that’s not in the proposed list, please come talk to either your TA, Shawn, or Kian for approval. Whomever approves your project will also grade your project, so keep them informed of your work.
-
-It is your responsibility to make sure you have all your questions answered by your TA or other instructors before the final deadline.
-
-## Deadline
-
-The submission due date is **Wednesday, August 3rd at 12PM**.
-
-## Submission
-
-Send a link to a GitHub repository containing your implementation to your TA in order to submit. In fairness to all students, please refrain from updating your code past **12 PM of the due date**.
-
 ## Grading rubric
 
 Your implementation will be reviewed for code quality and implementation details.
