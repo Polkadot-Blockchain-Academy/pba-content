@@ -1,7 +1,7 @@
 Graded Projects
 ===============
 
-In order to assess student understanding and provide more hands on experience, we will assign four graded assignments throughout the course.
+In order to assess student understanding and provide an thoroughly hands-on learning experience, we assign four graded assignments throughout the course, and an optional ungraded final assignment.
 
 Assignment Style
 ----------------
