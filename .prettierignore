@@ -9,4 +9,4 @@ package-lock.json
 yarn.lock
 
 # Ignore files that don't need *text* formatting
-assets
+img-shared

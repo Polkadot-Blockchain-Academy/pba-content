@@ -7,7 +7,7 @@ description: A design system to use within slides of a presentation
 
 ### _For the polkadot academy slides._
 
-<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="../../assets/img/0-Shared/placeholder/profile.png"></widget-speaker>
+<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="../../img-shared/0-Shared/placeholder/profile.png"></widget-speaker>
 
 ---v
 
@@ -18,7 +18,7 @@ description: A design system to use within slides of a presentation
   small
   name="Speaker Name Surname"
   position="Position/Department"
-  image="../../assets/img/0-Shared/placeholder/profile.png"
+  image="../../img-shared/0-Shared/placeholder/profile.png"
 ></widget-speaker>
 ```
 
@@ -99,7 +99,7 @@ Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 
 ---
 
-<widget-speaker name="Gavin Wood" position="Founder Parity & Web3 Foundation" image="../../assets/img/0-Shared/people/gav.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood-88843316" matrix="gav:matrix.parity.io"></widget-speaker>
+<widget-speaker name="Gavin Wood" position="Founder Parity & Web3 Foundation" image="../../img-shared/0-Shared/people/gav.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood-88843316" matrix="gav:matrix.parity.io"></widget-speaker>
 
 ---v
 
@@ -107,7 +107,7 @@ Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 <widget-speaker
   name="Speaker Name Surname"
   position="Position/Department"
-  image="../../assets/img/0-Shared/people/gav.png"
+  image="../../img-shared/0-Shared/people/gav.png"
   github="gavofyork"
   twitter="gavofyork"
   linkedin="gavin-wood"
@@ -197,16 +197,16 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 
 ---
 
-<img  src="../../assets/img/4-Substrate/WebAssembly.png"/>
+<img  src="../../img-shared/4-Substrate/WebAssembly.png"/>
 
 ---v
 
 ```html
-<img  src="../../assets/img/4-Substrate/WebAssembly.png"/>
+<img  src="../../img-shared/4-Substrate/WebAssembly.png"/>
 ```
 
 ---
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image.png" -->
+<!-- .slide: data-background="../../img-shared/0-Shared/bg-circles-image.png" -->
 <widget-text>
 
 More info on reveal/reveal-md backgrounds:
@@ -247,7 +247,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
+<!-- .slide: data-background="../../img-shared/0-Shared/bg-circles-image-transparent.png" -->
 
 <widget-columns padded>
 <widget-column>
@@ -263,7 +263,7 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
+<!-- .slide: data-background="../../img-shared/0-Shared/bg-circles-image-transparent.png" -->
 
 <widget-columns padded>
 <widget-column>
@@ -278,7 +278,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
+<!-- .slide: data-background="../../img-shared/0-Shared/bg-circles-color-transparent.png" -->
 
 <widget-columns padded>
 <widget-column color>
@@ -299,7 +299,7 @@ More info on reveal/reveal-md backgrounds:
 ---v
 
 ```html
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
+<!-- .slide: data-background="../../img-shared/0-Shared/bg-circles-color-transparent.png" -->
 
 <widget-columns padded>
 <widget-column color>
