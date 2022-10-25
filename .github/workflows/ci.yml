@@ -1,4 +1,4 @@
-name: Build and delpoy to `gh-pages`
+name: Build slides and deploy to `gh-pages`
 
 on:
   push:

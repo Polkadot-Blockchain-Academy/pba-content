@@ -65,9 +65,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 18.0.6
-  resolution: "@types/node@npm:18.0.6"
-  checksum: 780f8885a6b6eb12f4c0246617747fdc37a451931b3c01ce8148d356c0903b705dcb16cc6a914de63d48b0dc1b002c7a3dfae681f580e1761aa551d3cd996813
+  version: 18.11.5
+  resolution: "@types/node@npm:18.11.5"
+  checksum: ac54e9287dd4549ea3dc8aabc0cf7bfa04c52f02925d7fd68414789617ec770f034c8ae2e111e8bd00d446a46fcac42587b5a316a1303e2f6ea094854248c9ff
   languageName: node
   linkType: hard
 
@@ -1372,13 +1372,13 @@ __metadata:
   linkType: hard
 
 "get-intrinsic@npm:^1.0.2":
-  version: 1.1.2
-  resolution: "get-intrinsic@npm:1.1.2"
+  version: 1.1.3
+  resolution: "get-intrinsic@npm:1.1.3"
   dependencies:
     function-bind: ^1.1.1
     has: ^1.0.3
     has-symbols: ^1.0.3
-  checksum: 252f45491f2ba88ebf5b38018020c7cc3279de54b1d67ffb70c0cdf1dfa8ab31cd56467b5d117a8b4275b7a4dde91f86766b163a17a850f036528a7b2faafb2b
+  checksum: 152d79e87251d536cf880ba75cfc3d6c6c50e12b3a64e1ea960e73a3752b47c69f46034456eae1b0894359ce3bc64c55c186f2811f8a788b75b638b06fab228a
   languageName: node
   linkType: hard
 
@@ -2147,9 +2147,9 @@ __metadata:
   linkType: hard
 
 "livereload-js@npm:^3.3.1":
-  version: 3.4.0
-  resolution: "livereload-js@npm:3.4.0"
-  checksum: 5f3759ff6f2711554f6ef10df732b21bcb6ec3f911dc87275da629e0079fa905cb5598c952516ff6c833eec06190183b9af7d12926f77d58476319e47bd79f60
+  version: 3.4.1
+  resolution: "livereload-js@npm:3.4.1"
+  checksum: 31a432b6ea7aafb445e2ec1f5d4c2db9ea20ff47816fdcb36e238b13798b11e9b2e731e5f10993a566b5bc6e5fb595f39000a6939d3d2d0baf1c16f4933cf8cf
   languageName: node
   linkType: hard
 
@@ -2362,9 +2362,9 @@ __metadata:
   linkType: hard
 
 "minimist@npm:^1.2.0, minimist@npm:^1.2.6":
-  version: 1.2.6
-  resolution: "minimist@npm:1.2.6"
-  checksum: d15428cd1e11eb14e1233bcfb88ae07ed7a147de251441d61158619dfb32c4d7e9061d09cab4825fdee18ecd6fce323228c8c47b5ba7cd20af378ca4048fb3fb
+  version: 1.2.7
+  resolution: "minimist@npm:1.2.7"
+  checksum: 7346574a1038ca23c32e02252f603801f09384dd1d78b69a943a4e8c2c28730b80e96193882d3d3b22a063445f460e48316b29b8a25addca2d7e5e8f75478bec
   languageName: node
   linkType: hard
 
@@ -3101,7 +3101,7 @@ __metadata:
 
 "reveal-md@git+https://github.com/NukeManDan/reveal-md.git#patch-1":
   version: 5.3.4
-  resolution: "reveal-md@https://github.com/NukeManDan/reveal-md.git#commit=89e177024fb2d75e87f077cfc224c033ee85a158"
+  resolution: "reveal-md@https://github.com/NukeManDan/reveal-md.git#commit=54c9757ad9c76c4ac6069410f4fad61e788d0aae"
   dependencies:
     debug: 4.3.4
     express: 4.18.1
@@ -3124,7 +3124,7 @@ __metadata:
       optional: true
   bin:
     reveal-md: bin/reveal-md.js
-  checksum: 0143375b45338794f0fa648f4b32c7165e4255e3c7f435b72815268b642554e3655824abbf6625daa592594bfa7412a74f9db2e3cc18bb6c9d419d68166477a6
+  checksum: 8a528402f4b051cf668523487ecd3b7e02624effed54a17f617d4b8ffdf5d56cf98725a0e46ef7e6ab7341175b2c9192e618c0e9e6a5b49c4a5e62a524d70c5a
   languageName: node
   linkType: hard
 
@@ -3212,7 +3212,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.3.4, semver@npm:^7.3.5":
+"semver@npm:^7.3.4":
+  version: 7.3.8
+  resolution: "semver@npm:7.3.8"
+  dependencies:
+    lru-cache: ^6.0.0
+  bin:
+    semver: bin/semver.js
+  checksum: ba9c7cbbf2b7884696523450a61fee1a09930d888b7a8d7579025ad93d459b2d1949ee5bbfeb188b2be5f4ac163544c5e98491ad6152df34154feebc2cc337c1
+  languageName: node
+  linkType: hard
+
+"semver@npm:^7.3.5":
   version: 7.3.7
   resolution: "semver@npm:7.3.7"
   dependencies:
