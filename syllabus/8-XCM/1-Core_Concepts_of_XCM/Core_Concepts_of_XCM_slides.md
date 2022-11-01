@@ -230,26 +230,6 @@ Call on students to state their path and where they want to go.
 
 ---
 
-## Cross-Consensus Accounts
-
-### Sovereign Account
-
-Within a consensus system, an account which belongs to another consensus system
-
-encoded_bits = encoded(b"para") ++ encoded(ParaID) ++ 000000...
-
-Parachain sovereign account = decoded(encoded_bits)
-
-**ParaID CAN change over time!** Don't hard code these into a dapp!!
-
-Notes:
-
-A parachain sovereign account is created via encoding the byte string "para" first, then concatenated with the encoded `ParaId`, and after that, padded with a number of 0's until a 32-byte array is created out of it.
-Note that the concatenation of an encoded "para" byte string and an encoded `ParaId` is always equal to 8 bytes, since the "para" byte string is only 4 characters long and the `ParaId` is defined as a 32-bit unsigned integer, therefore we can never grow beyond 32 bytes and will always need additional trailing zeroes to pad it until the resultant array becomes 32 bytes large.
-We must have a 32-byte array, because that is how an `AccountId32` can be decoded from.
-
----
-
 ## Cross-Consensus Origins
 
 A `MultiLocation` denoting where an XCM originated from
