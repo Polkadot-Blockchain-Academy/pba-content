@@ -8,27 +8,6 @@ duration: 1 hour
 
 # Academy Instructional Staff Briefing
 
-Notes:
-
-- 10 min - Kahoot game
-- 5 min - Reaffirm commitment of all contributors in from of one another
-- 15 min (2 min/module) - Inventory of what's currently in the content repo
-  - Econ module is basically done
-  - Polkadot module is only just started
-  - Each instructional team should have done this for their module in advance, so put instructors on the spot and praise/shame their efforts so far accordingly
-- 3 min - Review total time and specific dates for each module
-  - NOTION CALENDAR!
-- 3 min - Reminder: No more than 50% time in lecture/monologue
-  - Avoid the fallacy of thinking that everything must be lectured first - Consider pre-reading assignments or just learning on the fly
-- 3 min - Get buy-in on order of content
-- 10 min - Brainstorm activities module by module
-- 10 min - Reach consensus on assignment schedule
-- 4 assignments total.
-- Each one can be a project or problem set. Assign Thursday, Due Monday.
-- Brainstorm assignment content
-- 5 min - Describe Plan for guest lecturers
-  DROP if no time.
-- Recommendations / Brainstorms welcome
 
 ---
 
