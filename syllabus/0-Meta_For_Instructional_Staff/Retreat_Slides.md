@@ -404,3 +404,115 @@ Notes:
 
 Education team is counting on you and we are here in full force to help you succeed!
 Please reach out anytime and don't wait for us to get started or ask you how things are going.
+
+---
+
+### Moooor Slides
+
+---
+
+## Beta Testing 🧪
+
+<br>
+
+Eager internal contributors and wannabe students...
+
+<br>
+
+**_What do \*you\* need they could assist with?_**
+
+
+Note:
+
+We don't explicitly require working with those interested, but it's an option we should consider as a team!
+
+---v
+
+## Beta Testing 🧪
+
+Maybe...?
+
+<widget-text center>
+
+- Review content
+- Try exercises & activities
+- Add fresh ideas
+- Inform on what is confusing or missing
+
+</widget-text>
+
+---v
+
+## Beta Testing 🧪
+
+They need fresh content to help us...
+
+<br>
+
+### ⏰ The sooner you create this, the more we can help! ⭐
+
+---
+
+## `#BUILD` a Thing!
+
+Idea: Students produce a portfolio project to showcase a _synthesis_ of their work.
+
+Perhaps A capstone style project _composed_ of the products of assignments and exercises.
+
+### 🤔 WDYT? 🤔 
+
+
+Notes:
+
+Ideally, we can work together to coordinate across modules to have students build upon their work from previous modules as they progress.
+Similar in flavor to the final project last time, but here it can be a bigger, more complete, and on the way to a deployable product. 
+
+---v
+
+## Kudos Idea
+
+<br>
+
+### _A fully functional parachain, incorporating custom pallets, contracts, and XCM integrations_
+
+
+---v
+
+## Kudos Idea (Mod 4&5)
+
+1. Build a minimal chain with: 
+	- identity style pallet serving as an address book (perhaps on a relay chain) for individuals and eventually for parachains (XCM to send to other people via address book)
+	- assets and uniques pallets for managing tokens, add required remark in transfer extrinsic for reasoning behind sending (a Kudos), consider adding "soul bound" option for minting assets.
+
+---v
+
+## Kudos Idea (Mod 6)
+
+2. Migrate to parachain with group:
+	-  coordinate with group to add a minimal gov pallet
+	-  Consensus update to allow any group member to run a collator node, with tiny PoW or first to make a block (unix time) wins to progress testnet parachain.
+	-  Setup ID pallet profiles on a common good parachain (collectives) registrar is edu team
+
+---v
+
+## Kudos Idea (Mod 7)
+
+3. Contracts integrations:
+	-  Make contracts that build on top of assets pallet (chain extensions) to compose logic
+	-  plan on another chain extension from hector to execute xcm from this student's chain to another chain (student with same or similar pallet, common good one perhaps)
+
+---v
+
+## Kudos Idea (Mod 8)
+
+4. XCM integrations:
+	-  Setup channels to other groups
+	-  Add IDs of other peers in other chains with multi-locations
+	-  XCM reserve-backed tx Kudos to people on other parachains. Thus you have a double entry accounting method (check sending and receiving side for assets, to assert no manipulation by one side)
+
+
+Notes:
+
+XCM flow:
+- Deposit asset in sov account
+- Send XCM notification of deposit and request mint of asset derivative
