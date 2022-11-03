@@ -1,13 +1,27 @@
 ---
-title: Instructional Staff Briefing
+title: Content Workshop - Instructional Staff Briefing
 description: Briefing for Instructors and TAs contributing to the Academy
 duration: 1 hour
 ---
 
 <!-- .slide: data-background-color="#8D3AED" -->
 
-# Academy Instructional Staff Briefing
+# Content Workshop
 
+<br>
+
+### _Instructional Staff Briefing_
+
+---
+
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Kahoot Game
+
+Notes:
+
+- start quiz game: https://play.kahoot.it/v2/?quizId=54f680c9-5040-4c6d-9d02-480843ee53a4
+- edit : https://create.kahoot.it/share/academyretreatsession/54f680c9-5040-4c6d-9d02-480843ee53a4
 
 ---
 
@@ -24,17 +38,6 @@ duration: 1 hour
 1. Guest Lessons
 
 </widget-text>
-
----
-
-<!-- .slide: data-background-color="#8D3AED" -->
-
-# Kahoot Game
-
-Notes:
-
-- start quiz game: https://play.kahoot.it/v2/?quizId=54f680c9-5040-4c6d-9d02-480843ee53a4
-- edit : https://create.kahoot.it/share/academyretreatsession/54f680c9-5040-4c6d-9d02-480843ee53a4
 
 ---
 
@@ -64,30 +67,30 @@ Notes:
 
 <widget-text style="font-size: 3px;">
 
-- 1 - Cryptography - 2 Days
-- 2 - Econ & Game Theory - 2 Days
-- Assignment 1
-- 3 - Blockchain - 2.5 Days
-- 4 - Substrate - 2.5 Days
-- Assignment 2
+1. Cryptography - 2 Days
+2. Econ & Game Theory - 2 Days
+3. Assignment 1
+4. Blockchain - 2.5 Days
+5. Substrate - 2.5 Days
+6. Assignment 2
+7. FRAME - _5 Days_
 
 </widget-column>
 <widget-column>
 
-- 5 - FRAME - 5 Days
-- Assignment 3
-- 6 - Polkadot - 2.5 Days
-- 7 - Smart Contracts - 2.5 Days
-- Assignment 4
-- 8 - XCM - 2.5 Days
-- Maybe Optional Ungraded Assignment
+8. Assignment 3
+9. Polkadot - 2.5 Days
+10. Smart Contracts - 2.5 Days
+11. Assignment 4
+12. XCM - 2.5 Days
+13. Maybe Optional Ungraded Assignment
 
 </widget-column>
 </widget-columns>
 
 <br><br>
 
-Reminder: All of this is available [in notion](https://matrix.to/#/!fVneSIMtbteSVGIGXU:matrix.parity.io/$L8bbSHUCv3dG_Xi15BvVh55kg3es5Tve88C7625oDU4?via=matrix.parity.io&via=web3.foundation&via=matrix.org)
+### > Reminder: All of this is available [in Notion](https://www.notion.so/paritytechnologies/385305f8c2104a1197b95f0569404e28?v=4cb070e8286f4887aa305e1ca40945ea) <
 
 </widget-text>
 
@@ -123,24 +126,63 @@ Reminder: All of this is available [in notion](https://matrix.to/#/!fVneSIMtbteS
 
 ---
 
-## Dates and Commitment
+<!-- .slide: data-background-color="#8D3AED" -->
 
-- Review exact dates for each module
-- Make some Formal Commitments
+## Commitment Time
+
+<widget-text center>
+
+1. Review exact dates for each module
+1. Make some **Formal Commitments**
+
+</widget-text>
 
 Notes:
 
-This is the part where I'm asking each of you to make a formal commitment in front of each other. Don't take this lightly.
+This is the part where I'm asking each of you to make a formal commitment in front of each other. Don't take this lightly! Don't say you will expecting this to be low priority and last minute work for you.
+This endeavor will only succeed with everyone doing their part. If you cannot commit to the dates & to deliver content, we need to know now.
+
+---v
+
+## What am I signing up for?
+
+<br>
+
+### Instructors are the _Owner_ of content creation and delivery.
+
+<br>
+
+<widget-columns>
+<widget-column>
+
+<center>
+<img src="./img/pledge.png" style="width: 300px; border-radius: 20px;">
+</center>
+
+</widget-column>
+<widget-column>
+
+- Ultimately responsible for the success of the module.
+- Coordinate with edu. team and TAs to do this.
+
+</widget-column>
+</widget-columns>
+
+<!-- .element: class="fragment"-->
 
 ---v
 
 ### Module 1 - Cryptography
 
+<widget-text center>
+
 - Instructor: (Hopefully) Isaac DeFrain
 - TAs: Dan, Giulia, Hector
 - Dates: January 10 - 11
 
-Can you commit?
+<br>
+
+**_Do you commit?_**
 
 Notes:
 
@@ -150,11 +192,15 @@ We are still struggling to get an offer to Isaac. I've done everything I can to 
 
 ### Module 2 - Economics
 
+<widget-text center>
+
 - Instructors: Samuel
 - TAs: Jonas, Florian, Alfonso
 - Dates: January 12 - 13
 
-Can you commit?
+<br>
+
+**_Do you commit?_**
 
 Notes:
 
@@ -164,9 +210,13 @@ Understood that, unfortunately, Jonas cannot be present this time. He has done g
 
 ### Module 3 - Blockchain
 
+<widget-text center>
+
 - Instructor: Joshy Orndorff
 - TAs: Dan, Andrew, Isaac (Hopefully)
 - Dates: January 16 - 18
+
+<br>
 
 ✅ Already committed
 
@@ -176,33 +226,45 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 
 ---v
 
-### Module 4- Substrate
+### Module 4 - Substrate
+
+<widget-text center>
 
 - Instructor: Kian
 - TAs: Andrew, Shawn, Dan, Joshy
 - Dates: January 18 - 20
 
-Can you commit?
+<br>
+
+**_Do you commit?_**
 
 ---v
 
 ### Module 5 - FRAME
 
+<widget-text center>
+
 - Instructor: Shawn
 - TAs: Kian, Dan, Hector, Alex T
 - Dates: January 23 - 27
 
-Can you commit?
+<br>
+
+**_Do you commit?_**
 
 ---v
 
 ### Module 6 - Polkadot
 
+<widget-text center>
+
 - Instructors: Rob, Andronik
 - TAs: Kian, Shawn
 - Dates: January 30 - February 1
 
-Can you commit?
+<br>
+
+**_Do you commit?_**
 
 Notes:
 
@@ -212,25 +274,43 @@ Understood that Rob cannot be present for February 1st.
 
 ### Module 7 - Smart Contracts
 
+<widget-text center>
+
 - Instructors: Michi, Alex T
 - TAs: Ricardo, Hector
 - Dates: February 1 - 3
 
-Can you commit?
+<br>
+
+**_Do you commit?_**
 
 ---v
 
 ### Module 8 - XCM
 
+<widget-text center>
+
 - Instructors: Kieth, Gorka
 - TAs: Hector, Andrew
 - Dates: February 6 - 8
 
-Can you commit?
+<br>
+
+**_Do you commit?_**
 
 Notes:
 
 Gorka is from the Moonbeam team and has already committed.
+
+---v
+
+<!-- .slide: data-background-color="#8D3AED" -->
+
+## Alright! We have a TEAM!
+
+<br>
+
+<img src="./img/salute-team.jpg" style="width: 900px; border-radius: 20px;">
 
 ---
 
@@ -238,9 +318,14 @@ Gorka is from the Moonbeam team and has already committed.
 
 <widget-text center>
 
-Biggest feedback from wave 1:
+_The approach to teaching, is the theory and practice of learning,_
 
-Too much boring lecture
+<br>
+
+Biggest feedback from wave 1:
+**_Too much boring lecture_**
+
+<!-- .element: class="fragment"-->
 
 </widget-text >
 
@@ -250,21 +335,23 @@ You are all very smart and have many interesting things to teach our students. B
 
 ---v
 
-### Common Fallacy: Lecture comes first
+### Common Fallacy: Lectures in all Lessons
 
-> I want to do more hands-on stuff... but the time is short and I **have** to lecture first....
+> I want to do more hands-on stuff...
+>
+> but the time is short and I **have** to lecture first....
 
-### This is _WRONG_!
+### This is WRONG!
 
 <!-- .element: class="fragment"-->
 
-**_Lecture for 50% of time maximum_**!
+**_Lecture for 50% of time maximum!_**
 
 <!-- .element: class="fragment"-->
 
 Notes:
 
-Even if you decide that you absolutely must do a long lecture, you aren't going to get the value you think.
+Even if you decide that you absolutely must do a long lecture, you aren't going to be delivering the value you think.
 
 ---v
 
@@ -292,15 +379,60 @@ Teachers imagine eery student is like this one guy. But look at most of them.
 
 ### What to do Instead
 
-- **Code-along** - students write the same code you do
+- Consider assigning pre-reading or _short_ pre-recorded lectures: explore the [flipped classroom](https://en.wikipedia.org/wiki/Flipped_classroom) and [active learning](https://bokcenter.harvard.edu/active-learning)
 - Treat them as **apprentices**
-- Consider assigning pre-reading or _short_ pre-recorded lectures
-  - To dive deeper, explore the [flipped classroom](https://en.wikipedia.org/wiki/Flipped_classroom)
+
+<br>
+
+<img src="./img/chefs.jpg" style="width: 600px; border-radius: 20px;">
 
 Notes:
 
-It's okay to treat students as apprentices. Let them learn through their work. It's okay to assign them a task that they don't yet know how to do. This will get them to ask you how and they will be motivated to hear and understand the answer.
 In the old day, the long long ago, it was expensive to duplicate books and impossible to distribute video. In that setting a teacher explaining a concept live really added value. Today we have the internet and it is trivial to distribute text or video resources. In this setting the teacher's biggest value is interacting with students, answering questions, guiding their work, giving feedback.
+It's okay to treat students as apprentices. Let them learn through their work. It's okay to assign them a task that they don't yet know how to do. This will get them to ask you how and they will be motivated to hear and understand the answer.
+
+---v
+
+### Flipped Classroom
+
+1. **Decide how you will use your class time and design those activities.**
+1. **Find or create resources for students to use outside class time.** You do not need to create all sources, but you must make sure that all students have a way to access these materials.
+1. **Teach students how to use the material at home.** Unlike when they are in a lecture, students cannot ask question as they arise, making note taking especially important to bring to class. _Be mindful of other demands on their time at the academy._
+
+Notes:
+
+If you create the materials for students to use at home, solicit for and use their feedback to revise it.
+
+---v
+
+## Active Learning
+
+- Real-time feedback about what students are learning.
+- By grappling with ideas, students connect new concepts to prior knowledge in meaningful ways and construct their own understanding.
+- Collaborating with classmates promotes community and connection between students, which can enhance a sense of belonging as well as motivation.
+- It creates a low bar to participation for quiet or passive students by encouraging every student to think and do.
+
+---v
+
+## Active Learning
+
+- **Think-pair-share**: In this exercise, students are given a minute to think about—and perhaps respond in writing—to a question on their own. Students next exchange ideas with a partner. Finally, some students share with the entire class.
+
+- **Statement correction, or intentional mistakes**: The instructor provides a prompt containing errors. The students are charged with finding and correcting the errors. Concepts that students commonly misunderstand are well suited for this activity.
+
+Notes:
+
+A think-pair-share engages every student, and also encourages more participation than simply asking for volunteers to respond to a question.
+
+Errors -> Concepts that students commonly misunderstand are well suited for this activity.
+
+---v
+
+## Active Learning
+
+- **Code-along**: student write the same code as you real time. Consider pauses to allow students to try some parts themselves or in small groups, or simply ask what they think should be next. Write in a few bugs for them to spot.
+
+- **Concept map**: Students are provided with a list of terms.They arrange the terms on paper and draw arrows between related concepts, labeling each arrow to explain the relationship.
 
 ---v
 
@@ -334,14 +466,16 @@ Exercise: Students will do it if you tell them to. I've gotten theaters of 50+ a
 <widget-text center>
 
 ...in-class activities<br>
-...after-class assignments
+...after-class assignments<br>
+...active learning ideas
 
 </widget-text>
 
-<br><br>
+<br>
 
 There are no stupid ideas!<br>
-Keep 'em coming, write them down! 😁
+Keep 'em coming...<br>
+**📝 write them down! 📝**
 
 Notes:
 
@@ -421,7 +555,6 @@ Eager internal contributors and wannabe students...
 
 **_What do \*you\* need they could assist with?_**
 
-
 Note:
 
 We don't explicitly require working with those interested, but it's an option we should consider as a team!
@@ -459,13 +592,12 @@ Idea: Students produce a portfolio project to showcase a _synthesis_ of their wo
 
 Perhaps A capstone style project _composed_ of the products of assignments and exercises.
 
-### 🤔 WDYT? 🤔 
-
+### 🤔 WDYT? 🤔
 
 Notes:
 
 Ideally, we can work together to coordinate across modules to have students build upon their work from previous modules as they progress.
-Similar in flavor to the final project last time, but here it can be a bigger, more complete, and on the way to a deployable product. 
+Similar in flavor to the final project last time, but here it can be a bigger, more complete, and on the way to a deployable product.
 
 ---v
 
@@ -475,44 +607,43 @@ Similar in flavor to the final project last time, but here it can be a bigger, m
 
 ### _A fully functional parachain, incorporating custom pallets, contracts, and XCM integrations_
 
-
 ---v
 
 ## Kudos Idea (Mod 4&5)
 
-1. Build a minimal chain with: 
-	- identity style pallet serving as an address book (perhaps on a relay chain) for individuals and eventually for parachains (XCM to send to other people via address book)
-	- assets and uniques pallets for managing tokens, add required remark in transfer extrinsic for reasoning behind sending (a Kudos), consider adding "soul bound" option for minting assets.
+1. Build a minimal chain with:
+   - identity style pallet serving as an address book (perhaps on a relay chain) for individuals and eventually for parachains (XCM to send to other people via address book)
+   - assets and uniques pallets for managing tokens, add required remark in transfer extrinsic for reasoning behind sending (a Kudos), consider adding "soul bound" option for minting assets.
 
 ---v
 
 ## Kudos Idea (Mod 6)
 
 2. Migrate to parachain with group:
-	-  coordinate with group to add a minimal gov pallet
-	-  Consensus update to allow any group member to run a collator node, with tiny PoW or first to make a block (unix time) wins to progress testnet parachain.
-	-  Setup ID pallet profiles on a common good parachain (collectives) registrar is edu team
+   - coordinate with group to add a minimal gov pallet
+   - Consensus update to allow any group member to run a collator node, with tiny PoW or first to make a block (unix time) wins to progress testnet parachain.
+   - Setup ID pallet profiles on a common good parachain (collectives) registrar is edu team
 
 ---v
 
 ## Kudos Idea (Mod 7)
 
 3. Contracts integrations:
-	-  Make contracts that build on top of assets pallet (chain extensions) to compose logic
-	-  plan on another chain extension from hector to execute xcm from this student's chain to another chain (student with same or similar pallet, common good one perhaps)
+   - Make contracts that build on top of assets pallet (chain extensions) to compose logic
+   - plan on another chain extension from hector to execute xcm from this student's chain to another chain (student with same or similar pallet, common good one perhaps)
 
 ---v
 
 ## Kudos Idea (Mod 8)
 
 4. XCM integrations:
-	-  Setup channels to other groups
-	-  Add IDs of other peers in other chains with multi-locations
-	-  XCM reserve-backed tx Kudos to people on other parachains. Thus you have a double entry accounting method (check sending and receiving side for assets, to assert no manipulation by one side)
-
+   - Setup channels to other groups
+   - Add IDs of other peers in other chains with multi-locations
+   - XCM reserve-backed tx Kudos to people on other parachains. Thus you have a double entry accounting method (check sending and receiving side for assets, to assert no manipulation by one side)
 
 Notes:
 
 XCM flow:
+
 - Deposit asset in sov account
 - Send XCM notification of deposit and request mint of asset derivative
