@@ -8,7 +8,6 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
 - [Content organization](#content-organization)
 - [Lesson slides with Reveal.js](#lesson-slides-with-revealjs)
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
-  - [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
   - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
   - [Conceptual workshops and exercises](#conceptual-workshops-and-activities)
 
@@ -238,42 +237,10 @@ Here is how we define these:
 - **Activities**: these are self-directed assignments for individuals and/or small groups that do not "hand-hold" like workshops.
   Student's completed work is expected to have some variety and a canonical solutions should be produced to review when students submit to compare to.
 
-We _highly suggest_ that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
-All materials needed for these that cannot exist in the code (like notebooks or custom source crates students need to download & use) should be included in the [assets/<the type>/<the module>](./assets/) directory.
-
 Solutions should (when possible) be provided in _a separate branch of this repository_ such that material published on the `main` branch does not include these.
 For example, skeleton code with code-comments providing instructions in a crate on `main` should have a `solution-modX-lessonY-*` branch where a completed reference that fulfills the requirements is available.
 
 The following outline some suggested tools to use for these.
-
-### Rust Jupyter notebooks with EvCxR
-
-REPLs are a fantastic way to experiment with a language interactively.
-[`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
-
-**Please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics before proceeding**
-
-#### _Quick start_
-
-1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
-2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
-
-- Easiest and likely to be suggested to students to _edit and use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter).
-  Install by searching for this plugin (`@id:ms-toolsai.jupyter`) in the VSCode extensions menu.
-  Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
-- Best-in-class support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling and VSCode.
-  Although most instructors and students will not need this.
-  Installation [described here](https://jupyter.org/install).
-
-> Note that sadly `rust-analyzer` [does not work with notebooks](https://github.com/rust-lang/rust-analyzer/issues/5141) at this time.
-> Thus student's will have a harder time using unfamiliar crate's features (they are all new to rust).
-> Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use.
-
-#### EvCxR Templates
-
-1. Please start with the [tour notebook](./content-templates/jupyter-notebooks/evcxr_jupyter_tour.ipynb) to see what EvCxR can do!
-2. Then see the [activity notebook template](./content-templates/jupyter-notebooks/activity-template.ipynb) that you are encouraged to use as a base for all activities.
-3. Finally see the [substrate example notebook](./content-templates/jupyter-notebooks/substrate_example.ipynb) that demonstrates using substrate crates.
 
 ### Stand-alone Rust workshops and activities
 
