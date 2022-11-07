@@ -58,7 +58,6 @@ Please make your lecture precise.
 
 - [Pre-requisites](#pre-requisites)
 - [The "Why" of this lecture](#the-why-of-this-lecture)
-- [Exercise: Explore Jupyter Lab](#exercise-explore-jupyter-lab)
 - [Workshop: Open an Academy PR](#workshop-open-an-academy-pr)
 - [Best Practices for SMEs Content](#best-practices-for-smes-content)
 - [Conclusion](#conclusion)
@@ -114,47 +113,6 @@ Class take mind: I am giving you a lecture with all the tools that I like and ca
 Notes:
 "the lecture must make it look effortless so they can demonstrate as they teach. if they can't then they haven't gotten it right."
 This is what I have been toiling to make easy for you to do, using the best-class tooling loved by many CS students.
-
----
-
-## Exercise: Explore Jupyter Lab
-
-Notes:
-OPEN the jupyter-lab and jump to the [paired notebook for this lecture](../jupyter-notebooks/how-to-use-academy-resources.ipynb)
-
----v
-
-<div class="flex-container">
-<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Install EvCxR Jupyter Lab
-
-- Install Python {if needed} ([instructions here](https://wiki.python.org/moin/BeginnersGuide/Download))
-- Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
-- Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
-
-</div>
-
-<!-- Put no content here -->
-
-<div class="right">
-<!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-```sh
-# Launch Jupyter Lab
-jupyter-lab
-
-# Navigate to the source notebooks in
-# `content-templates/jupyter-notebooks` of the Academy repo
-```
-
-</div>
-</div>
-
-Notes:
-You might need to read the CONTRIBUTING.md guide to get links to install node and yarn themselves.
-Other tooling install and basic use is described there too.
-You MAY use ExCvR in a shell only, not a notebook. Notebooks are by far better in every way.
 
 ---
 
@@ -329,7 +287,7 @@ We are gonna make a HUGE impact in Web3 with this content, for us and for the ec
 ## Conclusion
 
 - We demoed how you might give a lecture in three ways:<br>
-  Pure slides // Jupyter notebooks // VSCode
+  Pure slides // VSCode
 - TAs are _here to help you succeed_!
 - We have _one month_ to get this done... **time to start grooving**!
 
