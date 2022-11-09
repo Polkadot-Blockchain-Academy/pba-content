@@ -1,3 +1,8 @@
+---
+title: Consensus Finality
+description: Finality providing methods and mechanisms for blockchains, for Web3 engineers
+---
+
 TODO split this out of existing consensus slides.
 
 ---
