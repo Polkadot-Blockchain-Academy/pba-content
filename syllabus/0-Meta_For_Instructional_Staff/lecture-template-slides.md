@@ -32,7 +32,7 @@ teaching-assistants: ["some one", "another gal"]
 - I am a Subject matter in X
 - A bit about me
 
-_[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
+_[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:you@example.com)_
 
 </div>
 </div>
