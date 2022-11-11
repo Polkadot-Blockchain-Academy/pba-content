@@ -132,6 +132,8 @@ Grab your machine!
 
 ### Install & launch slides
 
+<!-- TODO Remove this ignore once the repo is public -->
+<!-- markdown-link-check-disable-next-line -->
 - Open https://github.com/polkadot-blockchain-academy/pba-content
 - Clone the repo
 - Open up the [CONTRIBUTING.md](../../CONTRIBUTING.md) doc

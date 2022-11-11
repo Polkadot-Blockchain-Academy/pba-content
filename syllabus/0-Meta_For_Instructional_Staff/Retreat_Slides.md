@@ -508,6 +508,8 @@ Flip through the repository instead of showing this slide
 
 <widget-text center style="font-size: 43px">
 
+<!-- TODO Remove this ignore once the repo is public -->
+<!-- markdown-link-check-disable-next-line -->
 https://github.com/Polkadot-Blockchain-Academy/pba-content
 
 </widget-text>
