@@ -35,6 +35,8 @@ teaching-assistants: ["some one", "another gal"]
 - <- This is my ETHDenver PFP
 - I **_love_** to hike!
 
+<!-- disable link checking because linkedin only available to authenticated users -->
+<!-- markdown-link-check-disable-next-line -->
 _[Twitter](https://twitter.com/NukeManDan) // [LinkedIn](https://linkedin.com/in/danwshields) // [Email](mailto:dan.shields@parity.io)_
 
 </div>
@@ -130,7 +132,7 @@ Grab your machine!
 
 ### Install & launch slides
 
-- Open https://github.com/paritytech/polkadot-blockchain-academy
+- Open https://github.com/polkadot-blockchain-academy/pba-content
 - Clone the repo
 - Open up the [CONTRIBUTING.md](../../CONTRIBUTING.md) doc
 - Follow instructions to setup `node` and `yarn` as needed
