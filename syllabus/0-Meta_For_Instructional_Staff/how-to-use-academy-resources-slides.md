@@ -35,6 +35,8 @@ teaching-assistants: ["some one", "another gal"]
 - <- This is my ETHDenver PFP
 - I **_love_** to hike!
 
+<!-- disable link checking because linkedin only available to authenticated users -->
+<!-- markdown-link-check-disable-next-line -->
 _[Twitter](https://twitter.com/NukeManDan) // [LinkedIn](https://linkedin.com/in/danwshields) // [Email](mailto:dan.shields@parity.io)_
 
 </div>
@@ -130,7 +132,9 @@ Grab your machine!
 
 ### Install & launch slides
 
-- Open https://github.com/paritytech/polkadot-blockchain-academy
+<!-- TODO Remove this ignore once the repo is public -->
+<!-- markdown-link-check-disable-next-line -->
+- Open https://github.com/polkadot-blockchain-academy/pba-content
 - Clone the repo
 - Open up the [CONTRIBUTING.md](../../CONTRIBUTING.md) doc
 - Follow instructions to setup `node` and `yarn` as needed
@@ -220,8 +224,6 @@ Compile an **annotated** list of:
 - Topics students should consider learning about independently
 - Examples of the concepts covered & applied to a project / case studies
 - Useful resources related to the lesson
-- Reference other slides/materials by relative directory in this repo,
-  - Like the [copy-paste slide templates](../../content-templates/slides/copy-paste-reveal-template-slides.md)
 
 Notes:
 there is no such thing as too much! anything with a NOTE ABOUT WHY IT'S USED!
@@ -308,4 +310,5 @@ In this _meta-lecture_ we experienced a lot of tools and techniques to make your
 
 ## References
 
+<!-- markdown-link-check-disable-next-line -->
 - [These slides](TODO) - in your repo (once that PR is approved and merged ;) )

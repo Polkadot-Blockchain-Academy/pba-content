@@ -88,10 +88,6 @@ Notes:
 </widget-column>
 </widget-columns>
 
-<br><br>
-
-### > Reminder: All of this is available [in Notion](https://www.notion.so/paritytechnologies/385305f8c2104a1197b95f0569404e28?v=4cb070e8286f4887aa305e1ca40945ea) <
-
 </widget-text>
 
 ---
@@ -512,6 +508,8 @@ Flip through the repository instead of showing this slide
 
 <widget-text center style="font-size: 43px">
 
+<!-- TODO Remove this ignore once the repo is public -->
+<!-- markdown-link-check-disable-next-line -->
 https://github.com/Polkadot-Blockchain-Academy/pba-content
 
 </widget-text>

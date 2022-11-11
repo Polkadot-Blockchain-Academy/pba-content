@@ -691,7 +691,7 @@ impl<T: Config> Pallet<T> {
 
 ### Dispatchables: (The Advanced) Return Type
 
-([src](https://paritytech.github.io/substrate/master/frame_support/weights/struct.PostDispatchInfo.html))
+([src](https://paritytech.github.io/substrate/master/frame_support/dispatch/struct.PostDispatchInfo.html))
 
 ```rust
 pub struct PostDispatchInfo {

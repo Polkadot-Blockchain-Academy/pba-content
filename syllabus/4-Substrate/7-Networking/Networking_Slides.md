@@ -152,8 +152,8 @@ Note: discuss things you need to consider when writing networking code and diffe
 
 Two main crates:
 
-- [`sc_network`](https://docs.substrate.io/rustdocs/latest/sc_network/index.html)
-- [`sc_consenus`](https://paritytech.github.io/substrate/latest/sc_consensus/)
+- [`sc_network`](https://paritytech.github.io/substrate/master/sc_network/index.html)
+- [`sc_consenus`](https://paritytech.github.io/substrate/master/sc_consensus/index.html)
 
 ---
 
@@ -273,4 +273,4 @@ Note: Have a look at https://github.com/paritytech/polkadot/tree/master/node/net
 Readings:
 
 - [Why Libp2p](https://www.parity.io/blog/why-libp2p)
-- [Overseer](https://w3f.github.io/parachain-implementers-guide/node/overseer.html) (from the Polkadot Parachain Host Implementer's Guide)
+- [Overseer](https://paritytech.github.io/polkadot/book/node/overseer.html) (from the Polkadot Parachain Host Implementer's Guide)

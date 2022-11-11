@@ -1,6 +1,6 @@
 # Blockchain Fundamentals Module
 
-TODO update based on https://github.com/Polkadot-Blockchain-Academy/pba-content/pull/360 moving forward
+<!--TODO update based on https://github.com/Polkadot-Blockchain-Academy/pba-content/pull/360 moving forward-->
 
 This module introduces students to the problem space that blockchain is trying to solve (resilient, equitable, trustless infrastructure) as well as the technical aspects of how it solves those problems and to what extent it falls short.
 

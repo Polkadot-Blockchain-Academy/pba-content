@@ -146,7 +146,7 @@ Emergence of obscure/niche "Proof of X" algorithms to shelter from attack only g
 
 <img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
 
-Source: [Dollar Cost Bitcoin](https://dollarcostbitcoin.com/tools/51attack)
+Source: [Dollar Cost Bitcoin](https://dollarcostbitcoin.1998.vn/tools/51attack)
 
 ---
 

@@ -10,7 +10,7 @@ teaching-assistants: ["Dan Shields"]
 
 These slides are built with [reveal.js](https://revealjs.com/).
 
-Please first view the [CONTRIBUTING.md](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/CONTRIBUTING.md) guide on how to use these slides.
+Please first view the [CONTRIBUTING.md](../../CONTRIBUTING.md) guide on how to use these slides.
 
 <br>
 
@@ -68,7 +68,7 @@ subsequent lines are just seen in speaker view.
 
 # Template slides
 
-😎 Copy&paste development with the [lesson template slides](https://github.com/paritytech/polkadot-blockchain-academy/blob/main/slide-templates/lesson-template-slides.md)
+😎 Copy&paste development with the [lesson template slides](./lecture-template-slides.md)
 
 ---
 

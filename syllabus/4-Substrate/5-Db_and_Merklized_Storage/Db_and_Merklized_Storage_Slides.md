@@ -1343,5 +1343,4 @@ But probably this use case (only hitting partial_key) is not that predominant (m
 
 ### Workshop and Activity
 
-- [Database and Merklized Storage Workshop](./4.5-Workshops_and_Activities/4.5-Db_and_Merklized_Storage_Workshop.md)
-- [Database and Merklized Storage Activity](./4.5-Workshops_and_Activities/4.5-Db_and_Merklized_Storage_Activities.md)
+- [Database and Merklized Storage Activity](./Db_and_Merklized_Storage_Activities.md)

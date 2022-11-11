@@ -64,7 +64,7 @@ yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
-Please start with the ["How to use Reveal slides"](./content-templates/slides/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
+Please start with the ["How to use Reveal slides"](./syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
 
 <details>
 <summary>If you are missing node or yarn, please install them as described below. (click to toggle)</summary>
@@ -112,15 +112,15 @@ yarn start
 
 **To see what reveal can do, please view the slides and their source for details:**
 
-- The [how-to use reveal slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/0-how-to-use-reveal-slides.html) and the [source](./content-templates/slides/0-how-to-use-reveal-slides.md)
-- The [copy & paste slide templates](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/1-copy-paste-reveal-template-slides.html) that are styled to use in your content and their [source](./content-templates/slides/1-copy-paste-reveal-template-slides.md)
-- The [lecture template slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/lecture-template-slides.html) and their [source](/content-templates/slides/lecture-template-slides.md) that give the structure most lessons should use to start with.
+- The [how-to use reveal slides](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.html#/) and the [source](./syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.md)
+- The [copy & paste slide templates](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.html#/) that are styled to use in your content and their [source](./syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.md)
+- The [lecture template slides](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/lecture-template-slides.html#/) and their [source](./syllabus/0-Meta_For_Instructional_Staff/lecture-template-slides.md) that give the structure most lessons should use to start with.
 
 ---
 
 ### Editing `reveal-md` slides
 
-**There is a [base slide template example](./content-templates/slides/lecture-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -244,16 +244,9 @@ The following outline some suggested tools to use for these.
 
 ### Stand-alone Rust workshops and activities
 
-For non-trivial Rust work, it's best to use a full IDE and cargo properly, over the REPL examples discussed above.
-For these, please create well documented crates that stand alone for each workshop or activity.
-
-**[Rustlings](https://github.com/rust-lang/rustlings) is a fantastic place to draw inspiration from.**
-While the full CLI tool to make things interactive isn't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
-
-**Please place stand-alone crates into the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.**
-These can be referenced and then linked to from any slides for them to download or use in an online IDE.
-
-Please make **a new branch in this repo** to store the solutions for your workshops and activities so that we can reference them, but will not be generally available on the deployed resources that students can access.
+For non-trivial Rust work, it's best to use a full IDE and cargo properly.
+For these, please create well documented crates in their own repository that stand alone for each workshop or activity.
+We will use github classrooms to give each student their own fork of such repositories.
 
 #### Local IDE
 
@@ -294,5 +287,3 @@ There are some great (but limited) options for anyone lacking the ability to do 
 ### Conceptual workshops and activities
 
 While _most_ work students are doing should highlight _practical applications_ of the concepts, sometimes code isn't the best way to engage.
-For non-code based work, please see the [workshop template](content-templates/slides/workshop-template-slides.md) that structures what we should include in workshops or activities.
-This should be included in the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.

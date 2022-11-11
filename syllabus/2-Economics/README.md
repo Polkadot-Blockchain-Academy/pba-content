@@ -4,7 +4,7 @@
 ### Day 1
 
 2.1 -[Economics Basics](./2.1-Economics_Basics)
-2.2 - [Game Theory](./2-Economics/2.2-Game_Theory)
+2.2 - [Game Theory](./2.2-Game_Theory)
 
 ### Day 2
 
