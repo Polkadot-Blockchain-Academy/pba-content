@@ -3,8 +3,6 @@
 In this activity, students will get hands on experience operating a blockchain node and seeing it interact with other blockchain nodes.
 In particular, they will use the Substrate node template software.
 
-This activity is basically a guided walkthrough of the start a [private network (trusted node) tutorial](https://docs.substrate.io/tutorials/get-started/trusted-network/) combined with a classwide network a la the [old Substrate beginner workshop](https://github.com/substrate-developer-hub/substrate-beginner-workshop)
-
 ## Learning objectives:
 
 1.  How to run a node
