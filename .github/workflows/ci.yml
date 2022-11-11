@@ -1,0 +1,29 @@
+name: Build and delpoy to `gh-pages`
+
+on:
+  push:
+    branches:
+      - ds/try
+
+jobs:
+  gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ds/try
+      - name: Yarn
+        uses: bahmutov/npm-install@HEAD
+        with:
+          working-directory: slide-generator
+      - name: Build to `slide-generator/build` dir
+        run: yarn build-github-pages
+        working-directory: slide-generator
+      - name: Deploy to `gh-pages` branch
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh-pages
+          build_dir: slide-generator/build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
