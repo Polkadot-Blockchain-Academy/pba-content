@@ -273,4 +273,4 @@ Note: Have a look at https://github.com/paritytech/polkadot/tree/master/node/net
 Readings:
 
 - [Why Libp2p](https://www.parity.io/blog/why-libp2p)
-- [Overseer](https://w3f.github.io/parachain-implementers-guide/node/overseer.html) (from the Polkadot Parachain Host Implementer's Guide)
+- [Overseer](https://paritytech.github.io/polkadot/book/node/overseer.html) (from the Polkadot Parachain Host Implementer's Guide)
