@@ -120,7 +120,7 @@ yarn start
 
 ### Editing `reveal-md` slides
 
-**There is a [base slide template example](./content-templates/slides/lecture-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -244,16 +244,9 @@ The following outline some suggested tools to use for these.
 
 ### Stand-alone Rust workshops and activities
 
-For non-trivial Rust work, it's best to use a full IDE and cargo properly, over the REPL examples discussed above.
-For these, please create well documented crates that stand alone for each workshop or activity.
-
-**[Rustlings](https://github.com/rust-lang/rustlings) is a fantastic place to draw inspiration from.**
-While the full CLI tool to make things interactive isn't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
-
-**Please place stand-alone crates into the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.**
-These can be referenced and then linked to from any slides for them to download or use in an online IDE.
-
-Please make **a new branch in this repo** to store the solutions for your workshops and activities so that we can reference them, but will not be generally available on the deployed resources that students can access.
+For non-trivial Rust work, it's best to use a full IDE and cargo properly.
+For these, please create well documented crates in their own repository that stand alone for each workshop or activity.
+We will use github classrooms to give each student their own fork of such repositories.
 
 #### Local IDE
 
