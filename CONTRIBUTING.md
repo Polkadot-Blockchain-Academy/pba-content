@@ -64,7 +64,7 @@ yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
-Please start with the ["How to use Reveal slides"](./content-templates/slides/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
+Please start with the ["How to use Reveal slides"](./syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
 
 <details>
 <summary>If you are missing node or yarn, please install them as described below. (click to toggle)</summary>
@@ -112,9 +112,9 @@ yarn start
 
 **To see what reveal can do, please view the slides and their source for details:**
 
-- The [how-to use reveal slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/0-how-to-use-reveal-slides.html) and the [source](./content-templates/slides/0-how-to-use-reveal-slides.md)
-- The [copy & paste slide templates](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/1-copy-paste-reveal-template-slides.html) that are styled to use in your content and their [source](./content-templates/slides/1-copy-paste-reveal-template-slides.md)
-- The [lecture template slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/lecture-template-slides.html) and their [source](/content-templates/slides/lecture-template-slides.md) that give the structure most lessons should use to start with.
+- The [how-to use reveal slides](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.html#/) and the [source](./syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.md)
+- The [copy & paste slide templates](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.html#/) that are styled to use in your content and their [source](./syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.md)
+- The [lecture template slides](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/lecture-template-slides.html#/) and their [source](./syllabus/0-Meta_For_Instructional_Staff/lecture-template-slides.md) that give the structure most lessons should use to start with.
 
 ---
 
