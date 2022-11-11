@@ -287,5 +287,3 @@ There are some great (but limited) options for anyone lacking the ability to do 
 ### Conceptual workshops and activities
 
 While _most_ work students are doing should highlight _practical applications_ of the concepts, sometimes code isn't the best way to engage.
-For non-code based work, please see the [workshop template](content-templates/slides/workshop-template-slides.md) that structures what we should include in workshops or activities.
-This should be included in the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.
