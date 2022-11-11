@@ -345,9 +345,9 @@ Substrate Runtime
 
 ### License
 
-Substrate Primitives (`sp-*`), Frame (`frame-*`) and the pallets (`pallets-*`), binaries (`/bin`) and all other utilities are licensed under [Apache 2.0](LICENSE-APACHE2).
+Substrate Primitives (`sp-*`), Frame (`frame-*`) and the pallets (`pallets-*`), binaries (`/bin`) and all other utilities are licensed under [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0.html).
 
-Substrate Client (`/client/*` / `sc-*`) is licensed under [GPL v3.0 with a classpath linking exception](LICENSE-GPL3).
+Substrate Client (`/client/*` / `sc-*`) is licensed under [GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.html) with a [classpath linking exception](https://www.gnu.org/software/classpath/license.html).
 
 - Apache2 allows teams full freedom over what and how they release, and giving licensing clarity to commercial teams.
 
