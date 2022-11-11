@@ -9,4 +9,4 @@
 | M5     | 5 days   | [Pallets and FRAME](./5-FRAME/)                                                     |
 | M6     | 2.5 Days | [Polkadot, Cumulus and Parachains](./6-Polkadot/)                                   |
 | M7     | 2.5 Days | [Smart Contracts](./7-Smart_Contracts)                                              |
-| M8     | 2 days   | [XCM](./7-XCM/)                                                                     |
+| M8     | 2 days   | [XCM](./8-XCM/)                                                                     |
