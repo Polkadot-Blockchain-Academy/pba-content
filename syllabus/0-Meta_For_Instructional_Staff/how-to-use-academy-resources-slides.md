@@ -222,8 +222,6 @@ Compile an **annotated** list of:
 - Topics students should consider learning about independently
 - Examples of the concepts covered & applied to a project / case studies
 - Useful resources related to the lesson
-- Reference other slides/materials by relative directory in this repo,
-  - Like the [copy-paste slide templates](../../content-templates/slides/copy-paste-reveal-template-slides.md)
 
 Notes:
 there is no such thing as too much! anything with a NOTE ABOUT WHY IT'S USED!
