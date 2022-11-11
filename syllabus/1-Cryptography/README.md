@@ -8,7 +8,7 @@ Personal Cryptography and How It's Used
 
 ### Day 1
 
-1. [Introduction to Cryptography](./1-Crypto-Introduction/lesson-plan.md)
+1. [Introduction to Cryptography](./1-Crypto_Introduction/lesson-plan.md)
 2. [Digital Signatures (Part 1)](./2-Digital_Signatures_Basic/lesson-plan.md)
 
 ### Day 2
