@@ -308,4 +308,5 @@ In this _meta-lecture_ we experienced a lot of tools and techniques to make your
 
 ## References
 
+<!-- markdown-link-check-disable-next-line -->
 - [These slides](TODO) - in your repo (once that PR is approved and merged ;) )
