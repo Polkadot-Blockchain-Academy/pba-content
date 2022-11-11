@@ -328,4 +328,4 @@ All extrinsics must have some kind of check, else they are not sybil resistant.
 
 ## Workshops and Activities
 
-- [Block Iteration Workshop](./4.2-Workshops_and_Activities/4.2-Block_Concepts_Workshop.md) (1 hour)
+- [Block Iteration Workshop](./Block_Concepts_Workshop.md) (1 hour)
