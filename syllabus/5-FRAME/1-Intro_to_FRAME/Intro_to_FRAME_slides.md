@@ -385,8 +385,8 @@ Let's look at the full code, and expand it.
 An alternative to expanding macros:
 
 https://paritytech.github.io/polkadot/doc/polkadot_runtime/
-https://paritytech.github.io/substrate/master/node_runtime/index.html
-https://paritytech.github.io/substrate/master/node_runtime/type.AllPalletsWithSystem.html
+https://paritytech.github.io/substrate/master/kitchensink_runtime/index.html
+https://paritytech.github.io/substrate/master/kitchensink_runtime/type.AllPalletsWithSystem.html
 
 ---v
 
