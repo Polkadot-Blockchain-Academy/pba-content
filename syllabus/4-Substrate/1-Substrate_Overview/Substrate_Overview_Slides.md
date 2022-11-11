@@ -390,5 +390,5 @@ Goal: identify how Substrate is used as a library in Polkadot.
 
 ## Workshops and Activities
 
-- [Scavenger Hunt Activity](./4.1-Workshops_and_Activities/4.1-Substrate_Overview_Workshop.md) (20 minutes)
-- [Cyclic Dependency Workshop](./4.1-Workshops_and_Activities/4.1-Substrate_Overview_Workshop.md) (45 minutes)
+- [Scavenger Hunt Activity](./Substrate_Overview_Activities.md) (20 minutes)
+- [Cyclic Dependency Workshop](./Substrate_Overview_Workshop.md) (45 minutes)
