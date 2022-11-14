@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "xcm-related-code/xcm-simulator-for-exercises",
+    "3-Parachain_Config_in_XCM/versioning-with-simulator"
+]
