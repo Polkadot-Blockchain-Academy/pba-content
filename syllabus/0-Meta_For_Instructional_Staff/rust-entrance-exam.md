@@ -2,7 +2,7 @@
 
 Source Available here: https://github.com/Polkadot-Blockchain-Academy/Rust-Entrance-Exam
 
-> At time of writinfg this is a private repo to only reveal the exam to that developing it or assigned to take it.
+> At time of writing this is a private repo to only reveal the exam to that developing it or assigned to take it.
 > Instructions are explicitly not to share it outside this group on the repo itself.
 
 All students who attend the academy must be familiar with the [Rust programming language](https://rust-lang.org/).
@@ -43,7 +43,6 @@ For those completely new to Github, please checkout [this video](https://www.you
 Here is what an active assignment page should resemble:
 
 <img src="./img/gh-classroom.png" style="width: 800px; border-radius: 20px;">
-
 
 ## Automated Assessment
 
