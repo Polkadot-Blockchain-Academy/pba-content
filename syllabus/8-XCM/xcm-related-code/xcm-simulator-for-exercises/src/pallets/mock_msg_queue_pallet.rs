@@ -1,4 +1,4 @@
-use xcm::{latest::prelude::*, Version as XcmVersion, VersionedXcm};
+use xcm::{latest::prelude::*, VersionedXcm};
 use sp_runtime::traits::Hash;
 
 #[frame_support::pallet]

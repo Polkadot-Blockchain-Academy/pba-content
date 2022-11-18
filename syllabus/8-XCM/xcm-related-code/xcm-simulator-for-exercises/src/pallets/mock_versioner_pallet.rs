@@ -14,12 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 #![allow(dead_code)]
-
-use crate::parachain::{Runtime, RuntimeEvent, XcmConfig};
-use sp_runtime::traits::Hash;
-use xcm::{latest::prelude::*, Version as XcmVersion, VersionedXcm};
-use xcm_executor::XcmExecutor;
-
+use xcm::Version as XcmVersion;
 
 // Pallet to provide the version, used to test runtime upgrade version changes
 #[frame_support::pallet]
