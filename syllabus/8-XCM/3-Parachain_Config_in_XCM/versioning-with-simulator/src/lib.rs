@@ -17,13 +17,8 @@
 #[cfg(test)]
 mod tests {
 	use xcm_simulator_for_exercises::{
-		relay_chain,
-		parachain,
-		MockNet,
-		Relay, RelayChainPalletXcm,
-		ParaA, ParachainPalletXcm,
-		ParaB,
-		TestExt,
+		parachain, relay_chain, MockNet, ParaA, ParaB, ParachainPalletXcm, Relay,
+		RelayChainPalletXcm, TestExt,
 	};
 
 	use frame_support::assert_ok;

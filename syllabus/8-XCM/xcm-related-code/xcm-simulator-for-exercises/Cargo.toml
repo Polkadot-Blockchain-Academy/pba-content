@@ -25,3 +25,9 @@ pallet-xcm = { git = "https://github.com/paritytech/polkadot", branch = "master"
 polkadot-core-primitives = { git = "https://github.com/paritytech/polkadot", branch = "master" }
 polkadot-runtime-parachains = { git = "https://github.com/paritytech/polkadot", branch = "master" }
 polkadot-parachain = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+xcm-transactor-pallet = { path = "../xcm-transactor-pallet"}
+
+[features]
+with-xcm-transactor = []
+
+with-mock-versioner = []
