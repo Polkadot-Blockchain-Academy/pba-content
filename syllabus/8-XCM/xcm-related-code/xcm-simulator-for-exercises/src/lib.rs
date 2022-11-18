@@ -15,7 +15,9 @@
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
 pub mod parachain;
-mod parachain_mock_pallets;
+mod mock_msg_queue_pallet;
+mod mock_versioner_pallet;
+
 pub mod relay_chain;
 
 use polkadot_parachain::primitives::Id as ParaId;

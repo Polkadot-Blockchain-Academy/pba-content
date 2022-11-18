@@ -36,7 +36,8 @@ use xcm_builder::{
 };
 use xcm_executor::{Config, XcmExecutor};
 
-use crate::parachain_mock_pallets::*;
+use crate::mock_versioner_pallet::*;
+use crate::mock_msg_queue_pallet::*;
 
 pub type AccountId = AccountId32;
 pub type Balance = u128;
@@ -163,6 +164,11 @@ impl pallet_xcm::Config for Runtime {
 	type AdvertisedXcmVersion = XcmVersioner;
 	#[cfg(not(feature = "with-mock-versioner"))]
 	type AdvertisedXcmVersion = ();
+}
+
+impl mock_msg_queue::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type XcmExecutor = XcmExecutor<XcmConfig>;
 }
 
 #[cfg(feature = "with-mock-versioner")]
