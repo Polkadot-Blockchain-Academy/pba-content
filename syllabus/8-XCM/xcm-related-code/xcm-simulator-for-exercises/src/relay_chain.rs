@@ -191,10 +191,9 @@ construct_runtime!(
 	}
 );
 
-#[cfg(test)]
 use frame_support::traits::{OnFinalize, OnInitialize};
-#[cfg(test)]
-pub(crate) fn relay_roll_to(n: u64) {
+
+pub fn relay_roll_to(n: u64) {
 	while System::block_number() < n {
 		XcmPallet::on_finalize(System::block_number());
 		Balances::on_finalize(System::block_number());
@@ -206,8 +205,7 @@ pub(crate) fn relay_roll_to(n: u64) {
 	}
 }
 
-#[cfg(test)]
-pub(crate) fn relay_events() -> Vec<RuntimeEvent> {
+pub fn relay_events() -> Vec<RuntimeEvent> {
 	System::events()
 		.into_iter()
 		.map(|r| r.event)

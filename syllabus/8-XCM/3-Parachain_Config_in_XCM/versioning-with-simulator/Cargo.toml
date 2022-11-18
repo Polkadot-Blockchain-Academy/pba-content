@@ -1,27 +1,14 @@
 [package]
-name = "xcm-simulator-parachain-config"
+name = "xcm-simulator-versioning-exercise"
 version = "0.9.31"
 authors = ["Parity Technologies <admin@parity.io>"]
-description = "Examples of xcm-simulator usage."
+description = "XCM Versioning exercise"
 edition = "2021"
 
 [dependencies]
-codec = { package = "parity-scale-codec", version = "3.0.0" }
-scale-info = { version = "2.1.2", features = ["derive"] }
-
-frame-system = { git = "https://github.com/paritytech/substrate", branch = "master" }
 frame-support = { git = "https://github.com/paritytech/substrate", branch = "master" }
-pallet-balances = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-std = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master" }
-sp-io = { git = "https://github.com/paritytech/substrate", branch = "master" }
-
+xcm-simulator-for-exercises = { path = "../../xcm-related-code/xcm-simulator-for-exercises" }
 xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }
 xcm-simulator = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-xcm-executor = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-xcm-builder = { git = "https://github.com/paritytech/polkadot", branch = "master" }
 pallet-xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-polkadot-core-primitives = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-polkadot-runtime-parachains = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-polkadot-parachain = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+

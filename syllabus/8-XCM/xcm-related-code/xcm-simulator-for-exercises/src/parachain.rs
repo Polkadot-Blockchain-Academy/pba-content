@@ -382,8 +382,7 @@ construct_runtime!(
 	}
 );
 
-#[cfg(test)]
-pub(crate) fn para_events() -> Vec<RuntimeEvent> {
+pub fn para_events() -> Vec<RuntimeEvent> {
 	System::events()
 		.into_iter()
 		.map(|r| r.event)
@@ -391,15 +390,12 @@ pub(crate) fn para_events() -> Vec<RuntimeEvent> {
 		.collect::<Vec<_>>()
 }
 
-#[cfg(test)]
 use frame_support::traits::{OnFinalize, OnInitialize, OnRuntimeUpgrade};
-#[cfg(test)]
-pub(crate) fn on_runtime_upgrade() {
+pub fn on_runtime_upgrade() {
 	PolkadotXcm::on_runtime_upgrade();
 }
 
-#[cfg(test)]
-pub(crate) fn para_roll_to(n: u64) {
+pub fn para_roll_to(n: u64) {
 	while System::block_number() < n {
 		PolkadotXcm::on_finalize(System::block_number());
 		Balances::on_finalize(System::block_number());

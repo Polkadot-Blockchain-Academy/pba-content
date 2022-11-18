@@ -3503,7 +3503,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "xcm-simulator-common"
+name = "xcm-simulator-for-exercises"
 version = "0.9.31"
 dependencies = [
  "frame-support",
@@ -3533,7 +3533,7 @@ dependencies = [
  "pallet-xcm",
  "xcm",
  "xcm-simulator",
- "xcm-simulator-common",
+ "xcm-simulator-for-exercises",
 ]
 
 [[package]]
