@@ -45,41 +45,35 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 	let block_number = args.block_number;
 
-	let block_hash = api.rpc().block_hash(Some(block_number.into())).await?;
+	let block_hash = api
+		.rpc()
+		.block_hash(Some(block_number.into()))
+		.await?
+		.expect("block number not found");
 
-	if let Some(hash) = block_hash {
-		let block = api.clone().rpc().block(Some(hash)).await?;
-		if let Some(block) = block {
-			for extrinsic in block.block.extrinsics {
-				let mut sliced = &extrinsic.0[1..];
+	let block = api.clone().rpc().block(Some(block_hash)).await?.expect("block not found");
 
-				let decoded: Result<RuntimeCall, codec::Error> = codec::Decode::decode(&mut sliced);
-				match decoded {
-					Ok(RuntimeCall::ParaInherent(ParasInherentCall::enter { data })) => {
-						for candidate in data.backed_candidates {
-							if candidate.candidate.descriptor.para_id == ParaId(args.para_id) {
-								for (index, upward_message) in candidate
-									.candidate
-									.commitments
-									.upward_messages
-									.iter()
-									.enumerate()
-								{
-									let xcm: VersionedXcm =
-										codec::Decode::decode(&mut upward_message.as_slice())
-											.expect("unable to decode");
-									println!("Xcm message {:?} is  {:?}", index, xcm)
-								}
-							}
+	for extrinsic in block.block.extrinsics {
+		let mut sliced = &extrinsic.0[1..];
+
+		let decoded: Result<RuntimeCall, codec::Error> = codec::Decode::decode(&mut sliced);
+		match decoded {
+			Ok(RuntimeCall::ParaInherent(ParasInherentCall::enter { data })) => {
+				for candidate in data.backed_candidates {
+					if candidate.candidate.descriptor.para_id == ParaId(args.para_id) {
+						for (index, upward_message) in
+							candidate.candidate.commitments.upward_messages.iter().enumerate()
+						{
+							let xcm: VersionedXcm =
+								codec::Decode::decode(&mut upward_message.as_slice())
+									.expect("unable to decode");
+							println!("Xcm message {:?} is  {:?}", index, xcm)
 						}
-					},
-					_ => continue,
+					}
 				}
-			}
+			},
+			_ => continue,
 		}
-	} else {
-		println!("Block number {block_number} not found.");
 	}
-
 	Ok(())
 }
