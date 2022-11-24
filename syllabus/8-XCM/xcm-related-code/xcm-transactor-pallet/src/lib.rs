@@ -174,7 +174,7 @@ pub mod pallet {
 		///
 		/// This time we are giving the currency as a currencyId instead of multilocation
 		#[pallet::weight(0)]
-		pub fn transact_through_signed(
+		pub fn transact_through_descended_sovereign(
 			origin: OriginFor<T>,
 			// destination to which the message should be sent
 			dest: Box<VersionedMultiLocation>,

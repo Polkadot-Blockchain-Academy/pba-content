@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
-pub mod parachain;
 mod pallets;
+pub mod parachain;
 pub mod relay_chain;
 
 use polkadot_parachain::primitives::Id as ParaId;
@@ -101,3 +101,4 @@ pub fn relay_ext() -> sp_io::TestExternalities {
 
 pub type RelayChainPalletXcm = pallet_xcm::Pallet<relay_chain::Runtime>;
 pub type ParachainPalletXcm = pallet_xcm::Pallet<parachain::Runtime>;
+pub type RelayBalances = pallet_balances::Pallet<relay_chain::Runtime>;

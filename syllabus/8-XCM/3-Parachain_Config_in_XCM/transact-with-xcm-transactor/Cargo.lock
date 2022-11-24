@@ -3503,7 +3503,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "xcm-simulator-for-exercises"
+name = "xcm-simulator-common"
 version = "0.9.31"
 dependencies = [
  "frame-support",
@@ -3523,7 +3523,6 @@ dependencies = [
  "xcm-builder",
  "xcm-executor",
  "xcm-simulator",
- "xcm-transactor-pallet",
 ]
 
 [[package]]
@@ -3534,41 +3533,7 @@ dependencies = [
  "pallet-xcm",
  "xcm",
  "xcm-simulator",
- "xcm-simulator-for-exercises",
-]
-
-[[package]]
-name = "xcm-transact-with-transactor-exercise"
-version = "0.9.31"
-dependencies = [
- "frame-support",
- "frame-system",
- "pallet-balances",
- "pallet-xcm",
- "xcm",
- "xcm-builder",
- "xcm-executor",
- "xcm-simulator",
- "xcm-simulator-for-exercises",
- "xcm-transactor-pallet",
-]
-
-[[package]]
-name = "xcm-transactor-pallet"
-version = "0.2.0"
-dependencies = [
- "frame-support",
- "frame-system",
- "log",
- "parity-scale-codec",
- "scale-info",
- "serde",
- "sp-io",
- "sp-runtime",
- "sp-std",
- "xcm",
- "xcm-builder",
- "xcm-executor",
+ "xcm-simulator-common",
 ]
 
 [[package]]

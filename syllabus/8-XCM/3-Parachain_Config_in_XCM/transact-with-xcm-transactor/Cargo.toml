@@ -1,0 +1,18 @@
+[package]
+name = "xcm-transact-with-transactor-exercise"
+version = "0.9.31"
+authors = ["Parity Technologies <admin@parity.io>"]
+description = "XCM Versioning exercise"
+edition = "2021"
+
+[dependencies]
+frame-support = { git = "https://github.com/paritytech/substrate", branch = "master" }
+frame-system = { git = "https://github.com/paritytech/substrate", branch = "master" }
+pallet-balances = { git = "https://github.com/paritytech/substrate", branch = "master" }
+xcm-simulator-for-exercises = { path = "../../xcm-related-code/xcm-simulator-for-exercises", features = ["with-xcm-transactor"] }
+xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+xcm-builder = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+xcm-executor = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+xcm-simulator = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+pallet-xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+xcm-transactor-pallet = { path = "../../xcm-related-code/xcm-transactor-pallet" }

@@ -26,12 +26,15 @@ use sp_runtime::{testing::Header, traits::IdentityLookup, AccountId32};
 use polkadot_parachain::primitives::Id as ParaId;
 use polkadot_runtime_parachains::{configuration, origin, shared, ump};
 use xcm::latest::prelude::*;
+#[cfg(feature = "with-xcm-transactor")]
+use xcm_builder::Account32Hash;
 use xcm_builder::{
 	AccountId32Aliases, AllowUnpaidExecutionFrom, ChildParachainAsNative,
 	ChildParachainConvertsVia, ChildSystemParachainAsSuperuser,
 	CurrencyAdapter as XcmCurrencyAdapter, FixedRateOfFungible, FixedWeightBounds, IsConcrete,
 	LocationInverter, SignedAccountId32AsNative, SignedToAccountId32, SovereignSignedViaLocation,
 };
+
 use xcm_executor::{Config, XcmExecutor};
 
 pub type AccountId = AccountId32;
@@ -100,8 +103,16 @@ parameter_types! {
 	pub UnitWeightCost: u64 = 1_000;
 }
 
+#[cfg(not(feature = "with-xcm-transactor"))]
 pub type SovereignAccountOf =
 	(ChildParachainConvertsVia<ParaId, AccountId>, AccountId32Aliases<KusamaNetwork, AccountId>);
+
+#[cfg(feature = "with-xcm-transactor")]
+pub type SovereignAccountOf = (
+	ChildParachainConvertsVia<ParaId, AccountId>,
+	AccountId32Aliases<KusamaNetwork, AccountId>,
+	Account32Hash<KusamaNetwork, AccountId>,
+);
 
 pub type LocalAssetTransactor =
 	XcmCurrencyAdapter<Balances, IsConcrete<KsmLocation>, SovereignAccountOf, AccountId, ()>;

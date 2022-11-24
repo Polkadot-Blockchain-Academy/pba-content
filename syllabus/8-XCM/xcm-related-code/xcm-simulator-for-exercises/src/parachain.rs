@@ -36,8 +36,7 @@ use xcm_builder::{
 };
 use xcm_executor::{Config, XcmExecutor};
 
-use crate::pallets::mock_versioner_pallet::*;
-use crate::pallets::mock_msg_queue_pallet::*;
+use crate::pallets::{mock_msg_queue_pallet::*, mock_versioner_pallet::*};
 
 pub type AccountId = AccountId32;
 pub type Balance = u128;

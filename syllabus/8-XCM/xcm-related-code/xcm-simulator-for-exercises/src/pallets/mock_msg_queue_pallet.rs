@@ -15,8 +15,8 @@
 // along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
 
 // Mock msg queue pallet
-use xcm::{latest::prelude::*, VersionedXcm};
 use sp_runtime::traits::Hash;
+use xcm::{latest::prelude::*, VersionedXcm};
 
 #[frame_support::pallet]
 pub mod mock_msg_queue {
