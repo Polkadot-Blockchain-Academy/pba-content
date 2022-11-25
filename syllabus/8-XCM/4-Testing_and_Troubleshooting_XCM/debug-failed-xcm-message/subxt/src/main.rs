@@ -2,15 +2,6 @@
 // This file is dual-licensed as Apache-2.0 or GPL-3.0.
 // see LICENSE for license details.
 
-//! To run this example, a local polkadot node should be running. Example verified against polkadot
-//! v0.9.28-9ffe6e9e3da.
-//!
-//! E.g.
-//! ```bash
-//! curl "https://github.com/paritytech/polkadot/releases/download/v0.9.28/polkadot" --output /usr/local/bin/polkadot --location
-//! polkadot --dev --tmp
-//! ```
-
 use subxt::{OnlineClient, PolkadotConfig};
 
 // Generate the API from a static metadata path.
@@ -33,8 +24,13 @@ type ParasInherentCall =
 	polkadot::runtime_types::polkadot_runtime_parachains::paras_inherent::pallet::Call;
 type RuntimeCall = polkadot::runtime_types::polkadot_runtime::RuntimeCall;
 type VersionedXcm = polkadot::runtime_types::xcm::VersionedXcm;
-use polkadot::runtime_types::polkadot_parachain::primitives::Id as ParaId;
 
+use crate::polkadot::runtime_types::xcm::{
+	v2::{Instruction as InstructionV2, Xcm as XcmV2},
+	VersionedXcm::V2,
+};
+
+use polkadot::runtime_types::polkadot_parachain::primitives::Id as ParaId;
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
 	let args = Arguments::parse();
@@ -67,7 +63,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 							let xcm: VersionedXcm =
 								codec::Decode::decode(&mut upward_message.as_slice())
 									.expect("unable to decode");
-							println!("Xcm message {:?} is  {:?}", index, xcm)
+							let instructions = match xcm {
+								V2(XcmV2(instructions)) => instructions,
+								_ => panic!("Only v2 supported"),
+							};
+							pretty_print_xcm(index as u32, instructions);
 						}
 					}
 				}
@@ -76,4 +76,22 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 		}
 	}
 	Ok(())
+}
+
+fn pretty_print_xcm(index: u32, instructions: Vec<InstructionV2>) {
+	println!("Xcm message number {:?}", index + 1);
+
+	for instruction in instructions {
+		match instruction {
+			InstructionV2::Transact { origin_type, require_weight_at_most, call } => {
+				println!(
+					"{{ origin_type {:?}, require_weight_at_most: {:?}, call: {:?} }}",
+					origin_type,
+					require_weight_at_most,
+					hex::encode(call.encoded)
+				)
+			},
+			_ => println!("{:?}", instruction),
+		}
+	}
 }
