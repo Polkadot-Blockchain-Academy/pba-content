@@ -6,7 +6,7 @@
     "start": "reveal-md ./ --watch --absolute-url http://localhost:1948",
     "help": "reveal-md --help",
     "build": "rm -rf build && reveal-md ./ --static build",
-    "build-github-pages": "rm -rf build && reveal-md ./ --static build --absolute-url https://paritytech.github.io/polkadot-blockchain-academy",
+    "build-github-pages": "rm -rf build && reveal-md ./ --static build --absolute-url https://polkadot-blockchain-academy.on.fleek.co/",
     "format": "prettier --config .prettierrc.js --write '**/*.md'",
     "format:code": "prettier --config .prettierrc.js --write '{**/*.{rs,js,ts,json},!**/*.md}'"
   },
