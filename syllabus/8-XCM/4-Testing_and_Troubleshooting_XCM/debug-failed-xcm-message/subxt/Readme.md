@@ -3,6 +3,7 @@
 cargo build
 
 # Test examples:
+Why did these messages fail?
 
 ## Example 1: Barrier error: 
 Block failture: 10946380
