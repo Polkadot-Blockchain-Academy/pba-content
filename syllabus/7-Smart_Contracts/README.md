@@ -5,6 +5,7 @@
 ### Day 1 (Half Day)
 
 TODO
+
 ### Day 2
 
 TODO
