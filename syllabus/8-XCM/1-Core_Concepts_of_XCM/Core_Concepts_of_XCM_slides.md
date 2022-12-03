@@ -535,7 +535,7 @@ They are _temporarily_ held in what in the Holding Register.
 ```rust
 WithdrawAsset(MultiAssets),
 
-// There are a number of instructions 
+// There are a number of instructions
 // which operate on the Holding Register.
 // One very simple one is the
 // `DepositAsset` instruction.
