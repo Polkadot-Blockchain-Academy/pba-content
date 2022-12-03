@@ -7,19 +7,11 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
 
 - [Content organization](#content-organization)
 - [Lesson slides with Reveal.js](#lesson-slides-with-revealjs)
+  - [Developing slides](#developing-slides)
+  - [Check embedded links](#check-embedded-links)
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
   - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
   - [Conceptual workshops and exercises](#conceptual-workshops-and-activities)
-
-## Content organization
-
-The content is organized by module, where each module has a folder for a specific lesson, and every lesson has:
-
-- A markdown file of the `reveal-md` formatted **_lecture_** slides including **_exercises_** described within
-- A markdown file outlining **_workshops_** and/or **_activities_** for that lesson.
-- A folder containing the markdown files of the original lesson plan notes (from the Academy retreat)
-
-The `syllabus` directory houses these, where `*` is the name of the lesson:
 
 ```
 syllabus/
@@ -98,14 +90,6 @@ The only dependencies we need for this project can now all be installed with:
 yarn
 ```
 
-### Run to view slides
-
-Running this command will open a new browser tab and _watch for file changes_ (update on every time you save a file in this repo):
-
-```sh
-yarn start
-```
-
 </details>
 
 ---
@@ -118,7 +102,13 @@ yarn start
 
 ---
 
-### Editing `reveal-md` slides
+### Developing slides
+
+Running this command will open a new browser tab and _watch for file changes_ (update on every time you save a file in this repo):
+
+```sh
+yarn start
+```
 
 **There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
@@ -202,7 +192,7 @@ fn largest_char(list: &[char]) -> char {
 ```
 ````
 
-### Custom theme and CSS
+#### Custom theme and CSS
 
 The [template](#editing-reveal-md-slides) can be used just copy and change slide by slide the content, and not worry with styling.
 
@@ -222,7 +212,22 @@ Once you've followed the set-up instructions and have the repository running loc
 - Use `left/right` arrow keys to navigate horizontal slides.
 - Press `Esc` or `o` to see an `overview` view that your arrow keys can navigate. This allows you to click a slide to open it).
 - Press `s` to open up speaker view.
+
 </details>
+
+### Check embedded links
+
+To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:
+
+```sh
+yarn links <Module Number>
+```
+
+This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
+
+A the same too is also run by our CI on all files.
+See [.github/workflows/link-check.yml](.github/workflows/link-check.yml) for details.
+Both use the same [config file](.github/workflows/mlc_config.json).
 
 ## Exercises, workshops and activities
 
