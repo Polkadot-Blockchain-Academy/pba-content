@@ -25,12 +25,3 @@ This curriculum is designed to be taught as an in-person course with ~25-60 stud
 ## Contributing
 
 Subject Matter Experts (SMEs) should explore [./CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
-
-## Rollout Plan
-
-We are launching the first wave this Summer in the UK with a target of 50 students before growing to three in-person waves of 100 students each in rotating geographies.
-
-| Cohort | Location  | Dates        |
-| ------ | --------- | ------------ |
-| 1      | Cambridge | July 2022    |
-| 2      | TBD       | January 2023 |
