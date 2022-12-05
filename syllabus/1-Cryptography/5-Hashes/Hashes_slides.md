@@ -142,6 +142,8 @@ Attacker has intention to impersonate the signer with the other.
 
 ## Birthday Paradox
 
+But, remember, collision exists!
+
 _With 23 people, there is a 50% chance that two share a birthday._
 
 Need to compare each output with every other, not with a single one.
@@ -154,32 +156,13 @@ e.g., a 256 bit hash output yields 2^128 security
 
 ---
 
-## Hash Functions Available in Substrate
-
-<widget-text center>
-
-Hash functions are available in Substrate
-as part of the runtime primitives.
-
-- Blake2 (cryptographic)
-- XX
-- Keccak (cryptographic)
-
-Notes:
-
-Substrate also implements traits that provide 160, 256, and 512 bit outputs for each hasher.
-
-Exercise: Write your own benchmarking script that compares the performance of these algorithms with various input sizes.
-
----
-
 ## Hash Function Selection
 
 <widget-text center>
 
-When users have control of the input, use cryptographic hash functions (in Substrate, Blake2).
+When users have control of the input, use cryptographic hash functions.
 
-- Non-cryptographic (TwoX) is faster.
+- Non-cryptographic is faster.
 - Safe _only_ when the users cannot select the pre-image.
 
 Notes:
@@ -222,7 +205,7 @@ The hash of the large file can also serve as a signal to the protocol that trans
 
 Public keys can be used to authorize actions by signing of instructions.
 
-The properties of hash functions allow other kinds of representations.
+The properties of hash functions allow other kinds of representations, a.k.a one can change the form of the key without changing it's properties to make it fit in specific functions.
 
 ---
 
@@ -254,7 +237,9 @@ By hashing a concatenation of several public keys, a system can create new IDs t
 
 Modules within a system may have their own information stored in other parts of the system.
 
-Storage they authorize use of by the module's internal logic.
+Storage they authorize use of by the module's internal logic. 
+
+Similar intuition to account abstraction and database key.
 
 Notes:
 
@@ -264,10 +249,12 @@ The hash of some input (e.g. a byte-string representing the module) can be used 
 
 ## Commitment Schemes
 
-It is often useful to commit to some information without storing or revealing it:
+It is often useful to commit to some information without storing or revealing it.
 
+Examples:
 - A prediction market would want to reveal predictions only after the confirming/refuting event occurred.
 - Users of a system may want to discuss proposals without storing the proposal on the system.
+- Citizens vote for a decision and want to reveal that they voted, but not what they voted for.
 
 However, participants should not be able to modify their predictions or proposals.
 
@@ -327,11 +314,41 @@ That is, pointer-based linked lists are not tamper evident.
 
 ---
 
+<!--
+Add linked list picture here
+-->
+
+---
+
 ## Hash-Based Linked Lists
 
 Hash-based lists make the reference related to the data they are referencing. The properties of hash functions make them a good choice for this application.
 
 Any change at any point in the list would create downstream changes to all hashes.
+
+---
+
+<!--
+Add hash-based list picture here
+-->
+
+---
+# Trees
+
+But lists are unidimensional... What if we need each cell to have multiple children?
+
+That is a tree
+
+---
+
+<!--
+Add tree picture here
+-->
+---
+
+## Merkle Trees
+
+Just like we have hash-based lists, we can have hash-based trees, right?
 
 ---
 
