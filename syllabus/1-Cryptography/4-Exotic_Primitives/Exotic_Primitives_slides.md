@@ -26,7 +26,9 @@ teaching-assistants: ["Dan Shields, Sacha Lansky"]
 
 <widget-center>
 
-- Used to obtain <ins>private randomness</ins>, that is <ins>publicly verifiable</ins>
+Deterministic commitment to an exponentially large pseudorandom sequence that seems random.
+
+- Used to obtain <ins>private pseudorandomness</ins>, that is <ins>publicly verifiable</ins>
 
 - A variation on a signature scheme:
   - still have private/public key pairs, input as message
@@ -106,7 +108,7 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ## Erasure Coding Classical use
 
-- Used for noisy channels
+Used for noisy channels:
 - If a few bits of the coded data are randomly flipped, we can still recover the original data
 - Typically $n$ is not much bigger than $k$
 
@@ -123,17 +125,13 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ---
 
-# ZK Proofs
+# 
+
+How do we do private operations on a public network and have everyone know that they were done correctly?
 
 ---
 
-## ZK Proofs
-
-How do we do private operations on a public blockchain and have everyone know that they were done correctly?
-
-Notes:
-
-(we are working on substrate support for these and will use them for protocols)
+## Zero-Knowledge Proofs
 
 ---
 
