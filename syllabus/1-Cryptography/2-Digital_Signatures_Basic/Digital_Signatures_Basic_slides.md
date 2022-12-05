@@ -87,63 +87,40 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
 
 Signing payloads are an important part of system design. Users should have credible expectations about how their messages are used.
 
-For example, when a user authorises a transfer, they almost always mean just one time.
+For example, when a user authorizes a transfer, they almost always mean just one time.
 
 ---
 
 ## Replay Attacks
 
-Replay attacks occur when someone intercepts and resends a valid message. The receiver will carry out the instructions since the message contains a valid signature.
+Replay attacks occur when someone intercepts and resends a valid message.
+The receiver will carry out the instructions since the message contains a valid signature.
 
 <widget-text center>
 
 - Since we assume that channels are insecure, all messages should be considered intercepted.
 - The "receiver", for blockchain purposes, is actually an automated system.
 
+</widget-text>
+
+Notes:
+
+Lack of _context_ is the problem.
+Solve by embedding the context and intent _within the message being signed.
+Tell the story of Ethereum Classic replays.
+
 ---
 
 ## Replay Attack Prevention
 
-Signing payloads should be designed so that they can only be used one time and in one context. Examples:
+Signing payloads should be designed so that they can only be used _one time_ and in _one context_.
+Examples:
 
 <widget-text center>
 
 - Monotonically increasing account nonces
 - Timestamps (or previous blocks)
 - Context identifiers like genesis hash and spec versions
-
----
-
-# Signature Schemes
-
----
-
-## ECDSA
-
-- Uses Secp256k1 elliptic curve.
-- ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.
-- ECDSA complicates more advanced cryptographic techniques, like threshold signatures.
-
----
-
-## Ed25519
-
-- Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
-- Signing is 20-30x faster than ECDSA signatures.
-
----
-
-## Sr25519
-
-Sr25519 addresses several small risk factors that emerged from Ed25519 usage by blockchains.
-
----
-
-## Use in Substrate
-
-- Sr25519 is the default key type in most Substrate-based applications.
-- Its public key is 32 bytes and generally used to identify key holders (likewise for ed25519).
-- Secp256k1 public keys are _33_ bytes, so their _hash_ is used to represent their holders.
 
 ---
 
@@ -195,31 +172,20 @@ Let's imagine we want to use this key on multiple networks, but we don't want th
 
 Notes:
 
-See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
-
-Mention that these derivations create entirely new secret seeds.
+Hard keys: Take a _path_ (data like a name/index), concatenate with the original key, and hash it for a new key.
+They reveal nothing about keys above them, and only with the _path_ between it and children could they be recovered.
 
 ---
 
 ## Soft Derivation
 
-Soft derivation allows one to create derived addresses from only the public key. Contrary to hard derivation, all addresses have related or effectively the same private key.
+Soft derivation allows one to create derived addresses from only the public key.
+Contrary to hard derivation, _all_ keys are related.
 
 Notes:
 
-Soft derivations can break some niche advanced protocols, but our sr25519 crate avoids supporting protocols that conflict with soft derivations.
-
----
-
-## Soft Derivation in Wallets
-
-Wallets can use soft derivation to link all payments controlled by a single private key, without the need to expose the private key for the address derivation.
-
-**Use case:** _A business wants to generate a new address for each payment, but should be able to automatically give customers an address without the secret key owner deriving a new child._
-
-Notes:
-
-See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
+- With any key and the paths to children and. or parents, the public _and_ private keys can be recovered.
+- Soft derivations can break some niche advanced protocols, but our sr25519 crate avoids supporting protocols that conflict with soft derivations.
 
 ---
 
@@ -228,21 +194,32 @@ See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
 - Note that these generate new addresses, but use the same secret seed.
 - We can also use the same paths, but only using the Account ID from `//polkadot`. It generates the same addresses!
 
-Notes:
-
-Let's go back to Rust to soft derive more children.
-
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#8D3AED" -->
 
 # Rust Demo
 
-## Soft Derivation
+## Key Derivation
 
 Notes:
 
 See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
+
+Mention that these derivations create entirely new secret seeds.
+
+---
+
+## Hard vs. Soft in Practice
+
+Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
+
+Always do hard paths first, then conclude in soft paths.
+
+Notes:
+
+Soft private keys if compromised, compromise all children and parent private keys!
+Consider using multiple seeds to further isolate keys.
 
 ---
 
@@ -254,7 +231,12 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
 
 Many wallets use a dictionary of words and give people phrases, often 12 or 24 words, as these are easier to back up/recover than byte arrays.
 
-Some people create their own phrases. This is usually stupid.
+
+Notes:
+
+High entropy needed.
+People are _bad_ at being random.
+Some people create their own phrases... this is usually stupid.
 
 ---
 
@@ -301,9 +283,69 @@ Different key derivation functions affect the ability to use the same mnemonic i
 
 ---
 
-## Next Lesson
+<!-- .slide: data-background-color="#8D3AED" -->
 
-<widget-text center>
+# Questions
 
-- Certificates
-- Multi-signature schemes
+Notes:
+
+Last slide, the rest are additional if needed and for student reference.
+
+---
+
+## Hard Derivation in Wallets
+
+Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
+
+<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
+
+Notes:
+
+Example: You want to use this key on multiple networks, but don't want the public keys to be connected to each other.
+
+--
+
+## Soft Derivation in Wallets
+
+Wallets can use soft derivation to link all payments controlled by a single private key, without the need to expose the private key for the address derivation.
+
+**Use case:** _A business wants to generate a new address for each payment, but should be able to automatically give customers an address without the secret key owner deriving a new child._
+
+Notes:
+
+See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
+
+---
+
+<!-- TODO: Gav comments in Cambridge already covered before HDHK? consider moving to Substrate module? -->
+
+# Signature Schemes
+
+---
+
+## ECDSA
+
+- Uses Secp256k1 elliptic curve.
+- ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.
+- ECDSA complicates more advanced cryptographic techniques, like threshold signatures.
+
+---
+
+## Ed25519
+
+- Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
+- Signing is 20-30x faster than ECDSA signatures.
+
+---
+
+## Sr25519
+
+Sr25519 addresses several small risk factors that emerged from Ed25519 usage by blockchains.
+
+---
+
+## Use in Substrate
+
+- Sr25519 is the default key type in most Substrate-based applications.
+- Its public key is 32 bytes and generally used to identify key holders (likewise for ed25519).
+- Secp256k1 public keys are _33_ bytes, so their _hash_ is used to represent their holders.

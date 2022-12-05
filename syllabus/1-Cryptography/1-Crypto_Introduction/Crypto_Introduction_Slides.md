@@ -312,8 +312,7 @@ A plaintext can be converted to ciphertext, and vice versa, by applying a bitwis
 </widget-column>
 </widget-columns>
 
-// TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK
-// entropy discussion
+<!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -->
 
 ---
 
@@ -472,11 +471,17 @@ Typically in the form of a _signature_ on:
 - Information about its ownership, its use and any other properties that the signer is capable of attesting/authorizing/witnessing.
 - _(Meta-)information_ about this information itself, such as how long it is valid for and external considerations which would invalidate it.
 
+Notes:
+
+- Real application is the hierarchy of SSL certs.
+  - Root keys -> State level entities -> Smaller entities.
+- Web of Trust & GPG cross-signing
+
 ---
 
 ## Digital Signatures (again)
 
-_Signing_ large amounts of data is _not_ efficient.
+_Signing_ large amounts of data _is not_ efficient.
 
 _Hashing_ large amounts of data _is_ efficient.
 
@@ -501,9 +506,9 @@ This requires that the verifier also compute the hash.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Exercise
+# Discussion
 
-## Discuss some reasons why the 6 listed <br> hash properties are so important.
+## The significance of [Hash Function Properties](#hash-function-properties).
 
 Notes:
 
@@ -528,9 +533,17 @@ Cryptography is much more than encryption.
 
 ---
 
-# END
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Questions
+
+Notes:
+
+Last slide, the rest are additional if needed and for student reference.
 
 ---
+
+<!-- TODO: migrate below to Substrate slides? Or...?  -->
 
 ## Hash Examples in Substrate
 

@@ -1,4 +1,4 @@
-# Subkey Signature and KDKD Demo
+# Subkey Signature and HDKD Demo
 
 All the subkey examples from the first draft have been translated into Rust in a Jupyter notebook to run in the lecture. Just in case there are any mishaps, here are all the subkey examples.
 
