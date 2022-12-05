@@ -3503,8 +3503,6 @@ dependencies = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "xcm-simulator-constructing-message-and-send-exercise"
 version = "0.9.31"
 dependencies = [
@@ -3516,7 +3514,6 @@ dependencies = [
 ]
 
 [[package]]
->>>>>>> main
 name = "xcm-simulator-for-exercises"
 version = "0.9.31"
 dependencies = [
