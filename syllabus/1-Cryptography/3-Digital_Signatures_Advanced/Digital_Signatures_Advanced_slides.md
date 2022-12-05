@@ -12,7 +12,7 @@ teaching-assistants: ["Dan Shields, Sacha Lansky"]
 
 ### Certificates
 
-A certificate is one issuing key signing a message containing another certified key, which attests to some properties or relationship about the certified key.
+A certificate is one issuing key that signs a message containing another certified key, which attests to some properties or relationship about the certified key.
 
 Notes:
 
@@ -43,15 +43,15 @@ Potential example to give verbally:
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+#
 
-## Multi-Signatures
+What if there is no sufficiently permanent central authority or trusted network to provide a certificate's properties?
+
+Maybe multiple individual parties could unite forces and create that same effect...
 
 ---
 
 ### Multi-Signatures
-
-We often want signatures that must be signed by multiple parties to become valid.
 
 - Require some threshold of members to agree to a message
 - Protect against key loss
@@ -92,20 +92,19 @@ This good experience comes at the cost of using state and more user interactions
 Cryptographic multi-signatures can be achieved purely on the signer side (without support from the verifier).
 This makes more compact signatures compatible with legacy systems.
 
+These require multi-party computation (MPC) protocols, which add some complexity for the signing users. A.k.a there need to be some sort of sync communication to be able to build the unified signature.
+
 <widget-text center>
 
 _Example: "5 of 7 key holders have signed this message."_
 
-Notes:
-
-These require multi-party computation (MPC) protocols, which add some complexity for the signing users.
-
 ---
 
-### Cryptographic Non-Threshold Multi-Sigs
+### Cryptographic Non-Threshold Multi-Sigs (aggregation)
 
 Sometimes we do not need a threshold represented in a public key.
 But we want a succinct way to demonstrate that multiple parties have signed a message.
+That can be obtained by simply keeping count and aggregating async individual signatures.
 
 <widget-text center>
 
@@ -157,8 +156,6 @@ Signatures can be aggregated without advanced agreement upon the signer list, wh
 
 Verifying individual signatures is _slow_, but verifying aggregated ones is relatively fast.
 
-(Coming to Substrate soon.)
-
 ---
 
 ### BLS Signatures
@@ -192,11 +189,16 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic, but introduce 
 - Verification speed
 
 ---
+# 
 
+But what if a group wants to publish a signature without specifically relating it to the subset of individuals who signed it? 
+
+Example: a commitee agreed on a decision and no-one should be more responsible for it than the others, but the groups is so large it is impractical for all of them to sign the document
+---
 ### Ring Signatures
 
-- Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
-- Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
+- Prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
+- Come in many sizes, with many ways of presenting their anonymity sets.
 - Anonymous blockchain transactions typically employ ring signatures.
 
 Notes:
