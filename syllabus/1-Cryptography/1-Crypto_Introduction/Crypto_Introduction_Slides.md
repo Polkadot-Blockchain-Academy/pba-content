@@ -3,7 +3,7 @@ title: Introduction to Cryptography
 description: Cryptographic primitives for Web3 engineers
 duration: 1 hour
 instructors: ["Gavin Wood"]
-teaching-assistants: ["Dan Shields"]
+teaching-assistants: ["Dan Shields, Giulia Vieira"]
 ---
 
 # Introduction to Cryptography
@@ -89,18 +89,26 @@ It also provides other powerful guarantees:
 
 <center>
 
-- Data accessibility
-- Message authenticity
-- Data integrity
-- Nonrepudiation (later)
+- Secrecy
+- Unforgeability
+- Authenticity
+- Integrity
+- Non-repudiation
 
 </center>
 
 ---
 
-## Data Accessibility
+## Secrecy
 
 A party may gain access to information if and only if they know some secret (a key).
+
+Subtypes: 
+- Forward Secrecy: when a party stops having access to the key, it must not be able to read any future information.
+  Example: your house's old owner must not be able to get in your house once they sell it to you.
+- Backwards Secrecy: when a new party starts having access to the key, it must not be able to read any previous information.
+  Example: your parents must not be able to notice if you threw a house party when they were away once you cleaned the place.
+ 
 
 Notes:
 
@@ -110,31 +118,65 @@ Mention use of the term "plaintext".
 
 ---
 
-## Message Authenticity
+## Unforgeability
 
-Like physical signatures, cryptography may be used to give a reasonable expectation of a message's provenance (origin), in order to give the users the credible expectation that the stated origin is authentic.
+An adversarial is not able to convince others they produced valid information.
 
-Notes:
+Example: someone with a fake passport must not be able to go through airport immigration without being caught.
 
-- Digital signatures should be difficult (practically speaking: impossible) to forge.
-- Digital signatures should verify that the signer knows some secret, without revealing the secret itself.
+---
+
+## Authenticity
+
+Anyone (with access to the verification key) should be able to verify the origin of the information. 
+
+Exameple: an unknown artist signs a collection. Pattern recognition should be able to bundle the legitimate pieces together.
+
+Attention: It does not mean the origin needs to be known, just trackeable.
+
+Example: One does not need to know who the artist is to run pattern recognition on the signatures to verify which pieces are legitimate.
+
+Observation: Physical signatures provide weak authenticity guarantees (i.e. they are quite easy to forge), and no integrity guarantees.
 
 ---
 
 ## Data Integrity
 
-Physical signatures provide weak authenticity guarantees (i.e. they are quite easy to forge), and no integrity guarantees.
+Anyone (with access to the verification key) should be able to check if the present state of an information piece in consistent with it's previous state.
 
----
-
-## Data Integrity
+Example: if you change the dates in your graduation certificate it should be invalid.
 
 <img style="width: 900px;" src="../../../assets/img/1-Cryptography/Data-Integrity.png"/>
 
-Notes:
+---
 
-For example, if you change the year on your university diploma, the dean's signature is still valid.
-Digital signatures provide a guarantee that the signed information has not been tampered with.
+## Non-repudiation
+
+Once information is published, the publisher cannot dispute it's autorship or validity.
+
+Example: your girlfriend tells you she does not love you anymore. She can't pretend she did not say it.
+
+---
+
+## Note
+
+All examples given are high level abstractions for the concepts so you can remember it easily. Nevertheless, they are in reality arguibly easy to break. That is why we want those properties in computational systems governed by the laws of mathematics and nature (cryptograpy), rather than people.
+
+---
+
+## Review
+
+- Secrecy: A party may gain access to information if and only if they know some secret (a key).
+- Unforgeability: An adversarial is not able to convince others they produced valid information.
+- Authenticity: Anyone (with access to the verification key) should be able to verify the origin of the information. 
+- Integrity: Anyone (with access to the verification key) should be able to check if the present state of an information piece in consistent with it's previous state.
+- Non-repudiation: Once information is published, the publisher cannot dispute it's autorship or validity.
+
+---
+
+## 
+
+Ok, but how do we harness the forces of mathematics and nature to provide these properties?
 
 ---
 
@@ -146,13 +188,15 @@ One-way functions form the basis of both **(cryptographic) hashing** and **asymm
 - But for which we believe to be hard to invert
 - And for which there may be some secret which makes it easy
 
+Example: from a color pallet it is easy to make new colors. Nevertheless, once the new color is created it is hard to guess which colors and proportions were specifically used to create it. 
+
 Notes:
 
 There are a lot of assumptions about why these functions are hard to invert, but we cannot rigorously prove it. We often express inversion problems in terms of mathematical games or oracles.
 
 ---
 
-## Hash Functions
+## Use case in computer systems: Hash Functions
 
 **Motivation:** We often want a succinct representation of some data with the expectation that we are referring to the same data. A "fingerprint".
 
@@ -177,9 +221,9 @@ Hashes can be useful for many applications:
 1. Accept unbounded size input
 1. Map to a bounded output
 1. Be fast to compute
-1. Be computable strictly one-way (difficult to find a pre-image for a hash)
-1. Resist pre-image attacks (attacker controls one input)
-1. Resist collisions (attacker controls both inputs)
+1. Be computable strictly one-way
+1. Resist pre-image attacks: guess an input that generates a desired output
+1. Resist collisions: guessing two inputs that generate the same output
 
 Notes:
 
@@ -209,9 +253,7 @@ Cryptographic hash functions provide stronger guarantees on the last three prope
 
 But non-cryptographic hash functions are much faster.
 
-Notes:
-
-Substrate uses both (more on that later).
+- This is something you will see a lot in this course, cryptographic operations are most often more expensive than non-cryptographic ones, but are more trustworthy (arguibly the only trustworthy solutions).
 
 ---
 
@@ -257,6 +299,8 @@ Source: https://github.com/Cyan4973/xxHash#benchmarks
 ---
 
 ## Symmetric Encryption
+
+Called symetric because both parties share the same secret. That means, at some point in the past there must have been a trusted channel where this key was shared or some sophisticated scheme must have been used to securely share the common secret without it being leaked (preserve secrecy).
 
 <img style="width: 1100px" src="../../../assets/img/1-Cryptography/Symmetric-Cryptography.png"/>
 
@@ -330,6 +374,11 @@ Notes:
 Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png and https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png
 
 ---
+## 
+
+Ok, but what if we don't want to go through the hustle of sharing the secret?
+
+---
 
 ## Asymmetric Cryptography
 
@@ -386,7 +435,7 @@ Hybrid cryptography mixes symmetric and asymmetric cryptography.
 
 ## Digital Signatures
 
-Digital signatures provide message authenticity and integrity guarantees.
+Digital signatures provide authenticity, integrity, unforgeability and non-repudiation guarantees.
 
 _The next two lectures are dedicated to digital signatures, this is strictly an intro._
 
@@ -398,7 +447,7 @@ _The next two lectures are dedicated to digital signatures, this is strictly an 
 
 A **signature** _proves_ that the signer had knowledge of the secret, without revealing the secret itself.
 
-The signature cannot be used to create other signatures.
+The signature cannot be used to create other signatures (unforgeability).
 
 Notes:
 
@@ -423,24 +472,25 @@ Digital signatures still guarantee that the message is authentic and has not bee
 
 ---
 
-## Nonrepudiation
+## Unforgeability and non-repudiation
 
 Only those with knowledge of some secret information could have produced a valid signature.
 
 The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.
-Symmetric cryptography does not provide this guarantee: someone else knows the secret.
+Symmetric cryptography does not provide this guarantee: someone else knows the secret. Nevertheless, one could argue that at least one of the parties signed the message, regardless of who it is.
 
 ---
 
 ## Certifications
 
 Certifications are used to make attestations about public key relationships.
-
 Typically in the form of a _signature_ on:
 
 - One or more cryptographically strong identifiers (e.g. public keys, hashes).
-- Information about its ownership, its use and any other properties that the signer is capable of attesting/authorising/witnessing.
+- Information about it's ownership, it's use and any other properties that the signer is capable of attesting/authorising/witnessing.
 - _(Meta-)information_ about this information itself, such as how long it is valid for and external considerations which would invalidate it.
+
+Example: your graduation certificate is only relevant if the person who signs it is actually related to the Polkadot Blockchain Academy.
 
 ---
 
@@ -499,6 +549,7 @@ Cryptography is much more than encryption.
 
 # END
 
+<!---
 ---
 
 ## Hash Examples in Substrate
@@ -536,7 +587,7 @@ Hashes are also used for:
 - Representing claims (e.g. the asset trap)
 
 </center>
-
+--->
 ---
 
 ## Commutative En-/Decryption
@@ -570,7 +621,7 @@ C &=> D_A(D_B(C)) == D_B(D_A(C)) \ => M
 Elliptic curve cryptography is based on _commutative_ algebraic structures.
 
 ---
-
+<!---
 ## Polkadot in Practice
 
 In Substrate and Polkadot, we use ECDSA, ed25519, and sr25519.
@@ -593,3 +644,4 @@ Practically speaking, in Substrate we will use certifications to:
 Notes:
 
 See: https://docs.substrate.io/main-docs/fundamentals/accounts-addresses-keys/#specialized-accounts
+--->
