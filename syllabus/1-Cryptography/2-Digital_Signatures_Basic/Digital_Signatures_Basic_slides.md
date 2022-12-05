@@ -27,6 +27,8 @@ The input `r` could be anything, for example the movement pattern of a mouse.
 
 <!-- .slide: data-background-color="#8D3AED" -->
 
+<!-- This part can become an exercise
+
 # Rust Demo
 
 ## Key Generation and Signing
@@ -39,7 +41,7 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
 1. Sign a message
 1. Verify the signature
 1. Attempt to alter the message
-
+ -->
 ---
 
 ## Hash Functions
@@ -68,7 +70,8 @@ Where `H` is a hash function (for our purposes, Blake2). This means the verifier
 ---
 
 <!-- .slide: data-background-color="#8D3AED" -->
-
+ <!--  This part can become an exercise
+ 
 # Rust Demo
 
 ## Hashing a Message
@@ -80,14 +83,14 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
 1. Use a longer message
 1. Hash it
 1. Verify the signature on the hash
-
+-->
 ---
 
 ## Signing Payloads
 
 Signing payloads are an important part of system design. Users should have credible expectations about how their messages are used.
 
-For example, when a user authorises a transfer, they almost always mean just one time.
+Example: when a user authorises a transfer, they almost always mean just one time.
 
 ---
 
@@ -104,7 +107,9 @@ Replay attacks occur when someone intercepts and resends a valid message. The re
 
 ## Replay Attack Prevention
 
-Signing payloads should be designed so that they can only be used one time and in one context. Examples:
+Signing payloads should be designed so that they can only be used one time and in one context. 
+
+Examples:
 
 <widget-text center>
 
@@ -138,13 +143,14 @@ Signing payloads should be designed so that they can only be used one time and i
 Sr25519 addresses several small risk factors that emerged from Ed25519 usage by blockchains.
 
 ---
-
+<!---
 ## Use in Substrate
 
 - Sr25519 is the default key type in most Substrate-based applications.
 - Its public key is 32 bytes and generally used to identify key holders (likewise for ed25519).
 - Secp256k1 public keys are _33_ bytes, so their _hash_ is used to represent their holders.
 
+--->
 ---
 
 ## HDKD
@@ -160,6 +166,11 @@ Hierarchical Deterministic Key Derivation
 Key derivation allows one to derive (virtually limitless) child keys from one "parent".
 
 Derivations can either be "hard" or "soft".
+
+Intuition: 
+I have a bunch of things,
+Hard derivation: and I need to be able to track them.
+Soft derivation: and others need to be able to track them (not necessarily to me, but to a common origin).
 
 ---
 
@@ -189,6 +200,7 @@ Let's imagine we want to use this key on multiple networks, but we don't want th
 
 <!-- .slide: data-background-color="#8D3AED" -->
 
+<!-- This can be an exercise
 # Rust Demo
 
 ## Hard Derivation
@@ -198,7 +210,7 @@ Notes:
 See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
 
 Mention that these derivations create entirely new secret seeds.
-
+-->
 ---
 
 ## Soft Derivation
@@ -236,6 +248,7 @@ Let's go back to Rust to soft derive more children.
 
 <!-- .slide: data-background-color="#8D3AED" -->
 
+<!-- This can be an exercise
 # Rust Demo
 
 ## Soft Derivation
@@ -243,6 +256,12 @@ Let's go back to Rust to soft derive more children.
 Notes:
 
 See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
+-->
+---
+
+# 
+
+Ok, but what is this seed that rules them all we have been mentioning all the time?
 
 ---
 
@@ -287,7 +306,9 @@ _The first 5 words of the [BIP39 English dictionary](https://github.com/bitcoin/
 
 ## Mnemonic to Secret Key
 
-Of course, the secret key is a point on an elliptic curve, not a phrase.
+Of course, the secret key is a point on an elliptic curve, not a phrase. 
+
+But we all start somewhere...
 
 BIP39 applies 2,048 rounds of the SHA-512 hash function to the mnemonic to derive a 64 byte key.
 
