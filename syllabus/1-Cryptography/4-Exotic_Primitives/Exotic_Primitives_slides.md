@@ -273,3 +273,13 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 - VRF: Private randomness that is later publicly verifiable
 - Erasure Coding: Making data robust against losses with redundancy
 - ZK Proofs: Just magic, but expensive magic
+
+---
+
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Questions
+
+Notes:
+
+Last slide, the rest are additional if needed and for student reference.

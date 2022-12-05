@@ -206,7 +206,11 @@ Notes:
 
 ---
 
-### Next Lesson
 
-- Exotic Primitives
-- Hash functions and data structures
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Questions
+
+Notes:
+
+Last slide, the rest are additional if needed and for student reference.

@@ -5,7 +5,6 @@
 ## Preamble
 
 ```rust
-:sccache 1
 :dep sp-core = { version = "6.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.25" }
 :dep rand = { version = "0.8.5", features = ["small_rng"] }
 use sp_core::*;
