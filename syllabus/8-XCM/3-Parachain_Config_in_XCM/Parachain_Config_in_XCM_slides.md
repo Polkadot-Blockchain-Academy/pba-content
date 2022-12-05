@@ -26,6 +26,51 @@ This then leads naturally into a concept like fee payments, which is entirely a 
 
 ### XCM Version Negotiation
 
+XCM is an **extensible message format**.
+
+Versioning allows chains to communicate as XCM evolves.
+
+```rust
+pub enum VersionedXcm {
+    V0(v0::Xcm),
+    V1(v1::Xcm),
+    V2(v2::Xcm),
+}
+```
+
+But chains need to be aware of the version supported by each other. `SubscribeVersion` and `QueryResponse` play a key role here:
+
+```rust
+enum Instruction {
+  /* snip */
+  SubscribeVersion {
+        query_id: QueryId,
+        max_response_weight: u64,
+  },
+  QueryResponse {
+        query_id: QueryId,
+        response: Response,
+        max_weight: u64,
+  },
+  /* snip */
+}
+```
+
+XCM version negotiation:
+<widget-text center>
+
+1. Chain A sends `SubscribeVersion` to chain B.
+2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, but the XCM version in the response
+3. Chain A stores chain B's supported version on storage.
+4. The same procedure happens from chain B to chain A.
+5. Communication is stablished in the highest common supported version.
+
+<widget-columns>
+<widget-column>
+<img style="width: 500px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
+</widget-column>
+<widget-column>
+
 <!--
 
 TODO add slide somewhere about this. Basically scaffold gav's second blog
