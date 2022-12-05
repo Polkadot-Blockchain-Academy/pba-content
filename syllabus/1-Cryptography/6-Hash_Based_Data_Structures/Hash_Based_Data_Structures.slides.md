@@ -45,6 +45,10 @@ A binary Merkle tree
 
 ## Proofs: Merkle Copaths
 
+<!---
+Here we can make the image a bit more splicit, as the one in the previous set of slides
+Show why we only need the node's siblings to go up the next level
+--->
 <center>
 <img  style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-Copaths.png"/>
 </center>
@@ -59,9 +63,9 @@ If we compute the correct root, this proves that the leaf was in the tree
 
 ## Security
 
-- collision resistance
-  - can give only-one preimage for each hash
-  - so a binding commitment to the link
+Collision resistance:
+  - can give only-one preimage for each hash: larger the tree higher the amout of collisions that needed to happen to forge a valid final result
+  - binding commitment to the link
 
 Notes:
 
@@ -69,7 +73,7 @@ explain what could happen when this fails.
 
 ---
 
-- Proof of a leaf has size $O(\log n)$
+- Proof of a leaf has size $O(\log n)$ , for n = total nodes in the Merkle Tree
 - and so do proofs of updates of a leaf
 
 ---
@@ -160,6 +164,8 @@ If only one option for a sequence we merge them.
 
 - Append only data structure
 - Lookup elements by number
+
+Intuition: iterative way of building a Merkle Forest that tends to a Merkle Tree, keeping each tree as balanced as possible
 
 ---
 
