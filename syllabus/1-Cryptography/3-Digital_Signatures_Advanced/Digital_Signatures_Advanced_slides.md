@@ -3,7 +3,7 @@ title: Advanced Digital Signatures
 description: More exotic digital signature methods
 duration: 1 hour
 instructors: ["Alistair Stewart"]
-teaching-assistants: ["Dan Shields, Sacha Lansky"]
+teaching-assistants: ["Dan Shields, Sacha Lansky, Giulia Vieira"]
 ---
 
 # Advanced Digital Signatures

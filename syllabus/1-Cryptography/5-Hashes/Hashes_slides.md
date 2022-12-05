@@ -3,7 +3,7 @@ title: Hash Functions
 description: Hash functions in Substrate
 duration: 1 hour
 instructors: ["Gavin Wood"]
-teaching-assistants: ["Dan Shields"]
+teaching-assistants: ["Dan Shields, Giulia Vieira"]
 ---
 
 # Hash Functions
