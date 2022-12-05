@@ -373,5 +373,3 @@ pub trait Hooks<BlockNumber> {
 ```
 
 [Source: `/frame/support/src/traits/hooks.rs`](https://github.com/paritytech/substrate/blob/33c518e/frame/support/src/traits/hooks.rs)
-
-

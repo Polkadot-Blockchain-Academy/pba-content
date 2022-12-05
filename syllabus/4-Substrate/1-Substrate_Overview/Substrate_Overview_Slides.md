@@ -384,6 +384,7 @@ This can be a 10 - 15 min exercise.
 Goal: identify how Substrate is used as a library in Polkadot.
 
 <!-- TODO Fix these broken links -->
+
 - Check out <!--[a visualization of the Substrate codebase](https://octo-repo-visualization.vercel.app/?repo=paritytech%2Fsubstrate)--> and compare it to <!--[Polkadot's](https://octo-repo-visualization.vercel.app/?repo=paritytech%2Fpolkadot)-->.
 - Can you tell what parts are unique to Substrate and which are unique to Polkadot?
 

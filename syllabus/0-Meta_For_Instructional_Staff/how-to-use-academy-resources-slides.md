@@ -37,6 +37,7 @@ teaching-assistants: ["some one", "another gal"]
 
 <!-- disable link checking because linkedin only available to authenticated users -->
 <!-- markdown-link-check-disable-next-line -->
+
 _[Twitter](https://twitter.com/NukeManDan) // [LinkedIn](https://linkedin.com/in/danwshields) // [Email](mailto:dan.shields@parity.io)_
 
 </div>
@@ -134,6 +135,7 @@ Grab your machine!
 
 <!-- TODO Remove this ignore once the repo is public -->
 <!-- markdown-link-check-disable-next-line -->
+
 - Open https://github.com/polkadot-blockchain-academy/pba-content
 - Clone the repo
 - Open up the [CONTRIBUTING.md](../../CONTRIBUTING.md) doc
@@ -311,4 +313,5 @@ In this _meta-lecture_ we experienced a lot of tools and techniques to make your
 ## References
 
 <!-- markdown-link-check-disable-next-line -->
+
 - [These slides](TODO) - in your repo (once that PR is approved and merged ;) )

@@ -3,8 +3,9 @@
 Dive into the purpose, implementation, and protocols of Polkadot, the sharded multichain system.
 
 Draw content from:
-* https://polkadot.network/blog/the-path-of-a-parachain-block/
-* https://github.com/paritytech/polkadot/tree/master/roadmap/implementers-guide
+
+- https://polkadot.network/blog/the-path-of-a-parachain-block/
+- https://github.com/paritytech/polkadot/tree/master/roadmap/implementers-guide
 
 ## Lessons Overview
 

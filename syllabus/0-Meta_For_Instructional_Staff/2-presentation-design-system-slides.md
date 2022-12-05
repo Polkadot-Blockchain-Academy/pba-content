@@ -11,6 +11,7 @@ description: A design system to use within slides of a presentation
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 # Design system For the polkadot academy slides.
 
@@ -40,7 +41,7 @@ as slide templates in your slides!
 1. Images
    - full screen backgrounds
 1. Columns
-   - split screen backgrounds 
+   - split screen backgrounds
    - images in columns
 1. MarkDown examples
    - code `fragment` transitions
@@ -63,6 +64,7 @@ It lived from about 82 to 66 million years ago during the Late Cretaceous. Its e
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <widget-text>
 
@@ -86,6 +88,7 @@ Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <widget-text color>
 
@@ -103,6 +106,7 @@ Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <widget-speaker
   name="Speaker Name Surname"
@@ -141,6 +145,7 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <widget-columns>
 <widget-column> 
@@ -177,6 +182,7 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <widget-columns>
 <widget-column color>
@@ -201,11 +207,13 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <img  src="../../assets/img/4-Substrate/WebAssembly.png"/>
 ```
 
 ---
+
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image.png" -->
 <widget-text>
 
@@ -232,6 +240,7 @@ More info on reveal/reveal-md backgrounds:
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <widget-columns>
 <widget-column></widget-column>
@@ -247,6 +256,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
+
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
 <widget-columns padded>
@@ -262,6 +272,7 @@ More info on reveal/reveal-md backgrounds:
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
@@ -278,6 +289,7 @@ More info on reveal/reveal-md backgrounds:
 ```
 
 ---
+
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
 <widget-columns padded>
@@ -298,6 +310,7 @@ More info on reveal/reveal-md backgrounds:
 
 ---v
 
+<!-- prettier-ignore -->
 ```html
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
@@ -328,6 +341,7 @@ More info on reveal/reveal-md backgrounds:
 
 <!-- .slide: data-background-color="#8D3AED" -->
 
+<!-- prettier-ignore -->
 ```html
 <!-- .slide: data-background-color="#8D3AED" -->
 # Section title
@@ -352,6 +366,7 @@ Source: me™ at the last event
 
 Testing **bold** and _italic_ markdown texts!
 
+<!-- prettier-ignore -->
 ```html
 Testing **bold** and *italic* markdown texts!
 ```
@@ -405,6 +420,7 @@ pub type Executive = frame_executive::Executive<
 
 ---v
 
+<!-- prettier-ignore -->
 ~~~
 
 ## Rust Example
@@ -512,7 +528,9 @@ fn main() {
 </widget-columns>
 
 ---v
-````html
+
+<!-- prettier-ignore -->
+```html
 <widget-columns>
 <widget-column>
 
@@ -568,7 +586,7 @@ fn main() {
 
 </widget-column>
 </widget-columns>
-```` 
+````
 
 ---
 
