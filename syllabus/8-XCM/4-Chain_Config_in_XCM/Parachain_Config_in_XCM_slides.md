@@ -65,6 +65,18 @@ Notes: Xcm-builder and Xcm-pallet are your friends!
 
 ---
 
+### Grab your chains requirements before starting
+
+Things you should question is:
+
+- *Is my chain gonna transfer just the native token? is my chain going to receive several assets?*
+
+- *Is my chain going to allow the free execution? Maybe for some parachains/relay chain?*
+
+- *Is my chain a 20 byte account chain? a 32 byte account chain?*
+
+- *How will my chain accept fee payment? In one asset? in several?*
+
 ### Configuring asset-transactors with xcm-builder
 Asset transactors define how we are going to withdraw and deposit assets. What we set in here depends heavily on what do we want our chain to be able to transfer:
 
@@ -113,14 +125,12 @@ WeightTrader allows to specify how to charge for weight inside the xcm execution
 ---
 ### Configuring assetTrap, assetClaim, ResponseHandler and SubscriptionService with pallet-xcm
 
-The last 4 elements will be set to be handled by pallet-xcm. 
+The last 2 elements will be set to be handled by pallet-xcm. 
 
 ```rust
  impl Config for XcmConfig {
   /* snip */
 	type ResponseHandler = PalletXcm;
-	type AssetTrap = PalletXcm;
-	type AssetClaims = PalletXcm;
 	type SubscriptionService = PalletXcm;
  }
 ```
