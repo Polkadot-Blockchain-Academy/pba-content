@@ -17,7 +17,9 @@
 
 ### Core Ideas to Convey
 
-- Testnet configuration (mostly pre-req, refreshed)
+- Inspect Polkadots XCM config (source)
+- Understand what information we have when we see a failed message
+- Polkadot Launch/ Scale decoding to debug
 
 ### Activities and Exercises
 
