@@ -1,9 +1,9 @@
 ---
-title: Substrate Overview
+title: Introduction to Substrate
 description: Substrate Overview for Web3 engineers
-duration: 1 hour
-instructors: ["Shawn Tabrizi"]
-teaching-assistants: ["Sacha Lansky"]
+duration: 15 minutes
+instructors: ["Kian Paimani"]
+teaching-assistants: ["..."]
 ---
 
 # Substrate Overview
