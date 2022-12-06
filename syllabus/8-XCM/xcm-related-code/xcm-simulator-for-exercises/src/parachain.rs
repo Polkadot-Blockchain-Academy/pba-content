@@ -122,23 +122,13 @@ parameter_types! {
 	pub type Parent: impl Contains<MultiLocation> = {
 		MultiLocation { parents: 1, interior: Here } |
 	};
-	pub type ParentOrSiblings: impl Contains<MultiLocation> = {
-		MultiLocation { parents: 1, interior: Here } |
-		MultiLocation { parents: 1, interior: X1(_) }
-	};
 }
 
 pub type LocalAssetTransactor =
 	XcmCurrencyAdapter<Balances, IsConcrete<KsmLocation>, LocationToAccountId, AccountId, ()>;
 
 pub type XcmRouter = super::ParachainXcmRouter<MsgQueue>;
-pub type Barrier = (
-	AllowUnpaidExecutionFrom<Parent>,
-	// Expected responses are OK.
-	AllowKnownQueryResponses<PolkadotXcm>,
-	// Subscriptions for version tracking are OK.
-	AllowSubscriptionsFrom<ParentOrSiblings>,
-);
+pub type Barrier = AllowUnpaidExecutionFrom<Parent>;
 
 pub struct XcmConfig;
 impl Config for XcmConfig {
