@@ -37,7 +37,15 @@ Notes:
 
 ## Configurables in XCM-config
 
+
 ```rust
+
+// Means of converting a multilocation into an accountId
+// Used later for:
+//  - OriginConverter
+//  - AssetTransactor
+pub type LocationToAccountId = ?;
+
 pub struct XcmConfig;
 impl Config for XcmConfig {
 	type RuntimeCall = RuntimeCall;
@@ -77,11 +85,41 @@ Things you should question is:
 
 - *How will my chain accept fee payment? In one asset? in several?*
 
+### Our starting example setup requirements
+1. Parachain that does not charge for relay incoming messages.
+2. Parachain that trusts the relay as the reserve chain for the relay token
+3. Parachain that mints in pallet-balances when it receives relay chain tokens.
+4. Parachain that uses 32 byte accounts and that makes it possible for users to execute local XCM.
+---
+
+### Configuring LocationToAccountId
+This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
+
+Xcm-builder allows us to configure LocationToAccountId conversions in an easy manner. Let's look at our options:
+
+1. `Account32Hash`: The most generic locationToAccountIdConverter. It basically hashes the multilocation and takes the lowest 32 bytes to make a 32 byte account.
+
+2. `ParentIsPreset`: A structure that allows to convert only the parent multilocation into an account of the form `b'Parent' + trailing 0s`
+
+2. `ChildParachainConvertsVia`: A structure that allows to convert the child parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+
+3. `SiblingParachainConvertsVia`: A structure that allows to convert the sibling parachain multilocation into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+
+4. `AccountId32Aliases`: A structure that allows to convert a local AccountId32 multilocation into a accountId of 32 bytes.
+
+5. `AccountId20Aliases`: A structure that allows to convert a local AccountKey20 multilocation into a accountId of 20 bytes.
+
+For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
+
+---
+
 ### Configuring asset-transactors with xcm-builder
 Asset transactors define how we are going to withdraw and deposit assets. What we set in here depends heavily on what do we want our chain to be able to transfer:
 
 1. `CurrencyAdapter`: A simple adapter that uses a single currency as the assetTransactor. This is usually used for withdrawing/depositing the native token of the chain.
 2. `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens. An example of these would be `pallet-assets` tokens.
+
+For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balance) whenever we receive the relay token.
 
 ---
 ### Configuring origin-converter with xcm-builder
@@ -94,6 +132,8 @@ Allows us to configure how we convert an origin, defined by a MultiLocation, int
 3. `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
 
 4. `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
+
+To meet our requirements, we only require number 3. This will allow us to execute (locally) Transact dispatchables.
 
 ---
 ### Configuring Barriers with xcm-builder
@@ -111,11 +151,8 @@ Barriers specify whether or not an XCM is allowed to be executed on the local co
 5. `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it is a `SubscribeVersion` message
 ---
 
-### Configuring Weigher with xcm-builder
-Weigher allows you to define how your xcm messages is measured in terms of weight. In other words, it lets you define how much each of the instructions will cost in terms of execution time.
+To meet our example usecase, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
 
-1. `FixedWeightBounds<T, C, M>`: Fixed weight bounds allows us to specify a fixed amount of weight we will charge per instruction.
----
 ### Configuring WeightTrader with xcm-builder
 WeightTrader allows to specify how to charge for weight inside the xcm execution. In `xcm-builder` we can find the following pre-defined traders already:
 
@@ -123,52 +160,6 @@ WeightTrader allows to specify how to charge for weight inside the xcm execution
 2. `UsingComponents`: uses `TransactionPayment` pallet to set the right price for weight.
 
 ---
-### Configuring assetTrap, assetClaim, ResponseHandler and SubscriptionService with pallet-xcm
-
-The last 2 elements will be set to be handled by pallet-xcm. 
-
-```rust
- impl Config for XcmConfig {
-  /* snip */
-	type ResponseHandler = PalletXcm;
-	type SubscriptionService = PalletXcm;
- }
-```
-But what do all these elements mean:
-
-1. `ResponseHandler`: The component in charge of handling response messages from other chains
-
-2. `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
-
-Wait, version subscription notifications?
-
----
-
-## Configuring pallet-xcm
-Pallet-xcm plays a critical role in every chains xcm-setup:
-
-1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages
-2. It handles XCM version negotiation
- 
-
-```rust
-impl pallet_xcm::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	type XcmRouter = XcmRouter;
-	type ExecuteXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	type XcmExecuteFilter = Everything;
-	type XcmExecutor = XcmExecutor;
-	type XcmTeleportFilter = Everything;
-	type XcmReserveTransferFilter = Everything;
-	type Weigher = XcmWeigher;
-	type LocationInverter = LocationInverter<Ancestry>;
-	type RuntimeOrigin = RuntimeOrigin;
-	type RuntimeCall = RuntimeCall;
-	const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
-	type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
-}
-```
 
 ## XCM Version Negotiation
 
@@ -218,8 +209,54 @@ XCM version negotiation:
 <widget-column>
 
 
-### Additional config for version negotiation
+## Additional config for version negotiation
 
+### Configuring, ResponseHandler and SubscriptionService with pallet-xcm
+
+The last 2 elements will be set to be handled by pallet-xcm. 
+
+```rust
+ impl Config for XcmConfig {
+  /* snip */
+	type ResponseHandler = PalletXcm;
+	type SubscriptionService = PalletXcm;
+ }
+```
+But what do all these elements mean:
+
+1. `ResponseHandler`: The component in charge of handling response messages from other chains
+
+2. `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
+
+Wait, version subscription notifications?
+
+---
+
+### Configuring pallet-xcm
+Pallet-xcm plays a critical role in every chains xcm-setup:
+
+1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages
+2. It handles XCM version negotiation
+ 
+
+```rust
+impl pallet_xcm::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type XcmRouter = XcmRouter;
+	type ExecuteXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type XcmExecuteFilter = Everything;
+	type XcmExecutor = XcmExecutor;
+	type XcmTeleportFilter = Everything;
+	type XcmReserveTransferFilter = Everything;
+	type Weigher = XcmWeigher;
+	type LocationInverter = LocationInverter<Ancestry>;
+	type RuntimeOrigin = RuntimeOrigin;
+	type RuntimeCall = RuntimeCall;
+	const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
+	type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
+}
+```
 <!--
 
 TODO add slide somewhere about this. Basically scaffold gav's second blog
