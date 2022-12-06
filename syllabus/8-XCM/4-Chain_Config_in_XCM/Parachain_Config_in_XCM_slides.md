@@ -233,9 +233,11 @@ But what do all these elements mean:
 ### Configuring pallet-xcm
 Pallet-xcm plays a critical role in every chains xcm-setup:
 
-1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages
-2. It handles XCM version negotiation
- 
+1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
+2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The locations to which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
+3. It handles XCM version negotiation duties
+4. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`
+
 ```rust
 impl pallet_xcm::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
