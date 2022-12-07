@@ -125,7 +125,7 @@ For our example, it suffices to uses `CurrencyAdapter`, as all we are going to d
 ### Configuring origin-converter with xcm-builder
 Allows us to configure how we convert an origin, defined by a MultiLocation, into a local dispatch origin. Used in the `Transact` instruction.
 
-1. `SovereignSignedViaLocation`: Converts the multilocation origin (tipically, a parachain origin) into a signed origin.
+1. `SovereignSignedViaLocation`: Converts the multilocation origin (typically, a parachain origin) into a signed origin.
 
 2. `ParentAsSuperuser`: Converts the parent origin into the root origin.
 
