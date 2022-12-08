@@ -216,3 +216,93 @@ impl pallet_xcm::Config for Runtime {
 
 As we can see, there is no filter on the Exeuction, Teleporting or Reserve transferring side. Custom XCM sending is also allowed.
 
+---
+
+## Statemine Xcm Config
+Statemine is a common-good parachain that allows hosting arbitrary assets.
+
+You can visit the whole xcm configuration [here](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/statemine/src/xcm_config.rs)
+
+---
+### Statemine Asset Transactors
+Statemine has **two asset transactors**
+
+**Currency Asset Transactor**
+```rust
+parameter_types! {
+
+  pub const KsmLocation:  MultiLocation = MultiLocation::parent();
+}
+
+/// Means for transacting the native currency on this chain.
+pub type CurrencyTransactor = CurrencyAdapter<
+	// Use this currency:
+	Balances,
+	// Use this currency when it is a fungible asset matching the given location or name:
+	IsConcrete<KsmLocation>,
+	// Convert an XCM MultiLocation into a local account id:
+	LocationToAccountId,
+	// Our chain's account ID type (we can't get away without mentioning it explicitly):
+	AccountId,
+	// We don't track any teleports of `Balances`.
+	(),
+>;
+```
+Notice how KsmLocation is equal to **Parent**. Everytime we receive a token with the parent multilocation, we mint in Balances.
+
+**Fungibles Asset Transactor**
+```rust
+/// Means for transacting assets besides the native currency on this chain.
+pub type FungiblesTransactor = FungiblesAdapter<
+	// Use this fungibles implementation:
+	Assets,
+	// Use this currency when it is a fungible asset matching the given location or name:
+	ConvertedConcreteAssetId<
+		AssetId,
+		Balance,
+		AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
+		JustTry,
+	>,
+	// Convert an XCM MultiLocation into a local account id:
+	LocationToAccountId,
+	// Our chain's account ID type (we can't get away without mentioning it explicitly):
+	AccountId,
+	// We only want to allow teleports of known assets. We use non-zero issuance as an indication
+	// that this asset is known.
+	parachains_common::impls::NonZeroIssuance<AccountId, Assets>,
+	// The account to use for tracking teleports.
+	CheckingAccount,
+>;
+````
+FungiblesTransactor refers to the way in which assets created in Statemine are Withdrawn/Deposited in the xcm-executor. It is critical that these assets are sendable to other chains!
+
+---
+### Statemine Trusted Teleporters
+Only alowed if the token multilocation matches the origin
+
+```rust
+pub struct XcmConfig;
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+  type IsTeleporter = NativeAsset;
+}
+```
+---
+### Statemine Barriers
+Similar to Polkadots, but unpaid execution is allowed from the relay chain
+
+```rust
+pub type Barrier = DenyThenTry<
+	DenyReserveTransferToRelayChain,
+	(
+		TakeWeightCredit,
+		AllowTopLevelPaidExecutionFrom<Everything>,
+		// Parent and its exec plurality get free execution
+		AllowUnpaidExecutionFrom<ParentOrParentsExecutivePlurality>,
+		// Expected responses are OK.
+		AllowKnownQueryResponses<PolkadotXcm>,
+		// Subscriptions for version tracking are OK.
+		AllowSubscriptionsFrom<ParentOrSiblings>,
+	),
+>;
+```
