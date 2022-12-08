@@ -1,22 +1,32 @@
 ## Activities
+### Grab funds in rococo
+- Create a Rococo account and a Rocmint account.
+- Go to the Westend faucet and obtain some ROC. Follow https://substrate.io/developers/rococo-network/
 
-### Teleport Westies to Westmint
-- Create a Westend account and a Westmint account.
-- Go to the Westend faucet and obtain some Westies. Follow https://wiki.polkadot.network/docs/learn-DOT#getting-westies.
+### Perform a local XCM execution in rococo
+- Use **PalletXCM** to Withdraw from your account and deposit in any other account using XCM locally. Does it work? Why can you do this'
+- Use **PalletXCM** to issue a remark transaction with XCM. Does it work? Why can you do this?
 
-- Use **PalletXCM** to teleport Westies from Westend to Westmint
+### Teleport ROC to Rocmint
 
-### Try teleporting back the Westies from Westmint to Westnend.
+- Use **PalletXCM** to teleport ROC from Rococo to Rocmint. Can you do this? Why?
 
-- Use **PalletXCM** to teleport Westies from Westmint to Westned
+### Try teleporting back the Westies from Rocmint to Rococo.
 
-### Try reserve transferring Westies from Westmint to Westend.
+- Use **PalletXCM** to teleport ROC from Rocmint to Rococo
+
+### Try reserve transferring Westies from Rocmint to Rococo.
 - Does it work? Why?
+
+### Try sending a custom XCM message from Rocmint to Rococo.
+- Use the **send** extrinsic from PalletXCM.
+- Does Westend process it? Why not?
 
 ### SubbXT to debug failed messages
 
-Messages to debug:
+Messages to debug in Polkadot:
 - Block failture: 10946380 ./target/release/debug-failed-dmp -p 2012 -b 10946379
 
 - Block failure: 10557896 ./target/release/debug-failed-dmp -p 1000 -b 10557895
 
+- Block failure: 11884750 ./target/release/debug-failed-dmp -p 1000 -b 10557895

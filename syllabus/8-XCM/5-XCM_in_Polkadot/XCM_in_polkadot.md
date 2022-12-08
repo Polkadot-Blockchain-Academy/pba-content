@@ -27,8 +27,8 @@ teaching-assistants: ["Dan Shields"]
 - Fee payment
 - Proper XCM Instruction Weighting
 
-Notes: From now on, we will use the Westend runtime as a reference. Westend is a testnet for 
-Polkadot and Kusama that we will use in to test our XCM messages. Most of the Westend configuration
+Notes: From now on, we will use the Rococo runtime as a reference. Rococo is a testnet for 
+Polkadot and Kusama that we will use in to test our XCM messages. Most of the Rococo configuration
 is identical to that in Polkadot.
 ## XCM barriers in Polkadot
 
@@ -62,17 +62,28 @@ Polkadot configures which are the chains allowed to teleport tokens in the follo
 
 ```rust
 parameter_types! {
-  pub const WndLocation: MultiLocation = Here.into();
-	pub const Westmint: MultiLocation = Parachain(1000).into();
-	pub const Collectives: MultiLocation = Parachain(1001).into();
-	pub const WestendForWestmint: (MultiAssetFilter, MultiLocation) =
-		(Wild(AllOf { fun: WildFungible, id: Concrete(WndLocation::get()) }), Westmint::get());
-	pub const WestendForCollectives: (MultiAssetFilter, MultiLocation) =
-		(Wild(AllOf { fun: WildFungible, id: Concrete(WndLocation::get()) }), Collectives::get());
+  pub const RocLocation: MultiLocation = Here.into();
+  pub const Rococo: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
+
+	pub const Statemine: MultiLocation = Parachain(1000).into();
+	pub const Contracts: MultiLocation = Parachain(1002).into();
+	pub const Encointer: MultiLocation = Parachain(1003).into();
+
+	pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Statemine::get());
+	pub const RococoForContracts: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Contracts::get());
+	pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Encointer::get());
 }
 
-pub type TrustedTeleporters =
-	(xcm_builder::Case<WestendForWestmint>, xcm_builder::Case<WestendForCollectives>);
+pub type TrustedTeleporters = (
+  /* Ignore */
+	xcm_builder::Case<RococoForTick>,
+	xcm_builder::Case<RococoForTrick>,
+	xcm_builder::Case<RococoForTrack>,
+
+	xcm_builder::Case<RococoForStatemine>,
+	xcm_builder::Case<RococoForContracts>,
+	xcm_builder::Case<RococoForEncointer>,
+);
 ```
 
 ```rust
@@ -83,7 +94,7 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
-In this case both parachains 1000 (Westmint) and 1001 (Collectives) are allowed to teleport tokens represented by the **Here** multilocation.
+In this case both parachains 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here** multilocation.
 
 ## Trusted reserves in Polkadot
 Polkadot does not recognize any chain as reserve
@@ -101,7 +112,11 @@ As we know, the conversion between a multilocation to an AccountId is a key comp
 
 ```rust
 pub type LocationConverter =
-	(ChildParachainConvertsVia<ParaId, AccountId>, AccountId32Aliases<WestendNetwork, AccountId>);
+	(// We can convert a child parachain using the standard `AccountId` conversion.
+	ChildParachainConvertsVia<ParaId, AccountId>,
+	// We can directly alias an `AccountId32` into a local account.
+	AccountId32Aliases<RococoNetwork, AccountId>,
+  );
 ```
 This means that:
 - Parachain origins will be converted to their corresponding sovereign account
@@ -115,7 +130,7 @@ pub type LocalAssetTransactor = XcmCurrencyAdapter<
 	// Use this currency:
 	Balances,
 	// Use this currency when it is a fungible asset matching the given location or name:
-	IsConcrete<WndLocation>,
+	IsConcrete<RocLocation>,
 	// We can convert the MultiLocations with our converter above:
 	LocationConverter,
 	// Our chain's account ID type (we can't get away without mentioning it explicitly):
@@ -168,15 +183,36 @@ Finally we are going to check how Polkadot charges for xcm execution time. In th
 ```rust
 impl xcm_executor::Config for XcmConfig {
   /* snip */
-  type Trader = UsingComponents<WeightToFee, WndLocation, AccountId, Balances, ToAuthor<Runtime>>;
+  type Trader = UsingComponents<WeightToFee, RocLocation, AccountId, Balances, ToAuthor<Runtime>>;
   /* snip */
 }
 ```
 In other words:
 
 - Weight is converted to fee with the **WeightToFee** structure.
-- The asset in which we charge for fee is **WndLocation**. This means we can only pay for xcm execution in the **native currency**
+- The asset in which we charge for fee is **RocLocation**. This means we can only pay for xcm execution in the **native currency**
 - Fees will go to the block author thanks to **ToAuthor**
 
-### Activities and Exercises
+## XcmPallet in Polkadot
+The last thing to be checked is how palletXcm is configured.
+
+```rust
+impl pallet_xcm::Config for Runtime {
+	/* snip */
+  type SendXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type XcmRouter = XcmRouter;
+	// Anyone can execute XCM messages locally.
+	type ExecuteXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type XcmExecuteFilter = Everything;
+	type XcmExecutor = xcm_executor::XcmExecutor<XcmConfig>;
+	// Anyone is able to use teleportation regardless of who they are and what they want to teleport.
+	type XcmTeleportFilter = Everything;
+	// Anyone is able to use reserve transfers regardless of who they are and what they want to
+	// transfer.
+	type XcmReserveTransferFilter = Everything;
+	/* snip */
+}
+```
+
+As we can see, there is no filter on the Exeuction, Teleporting or Reserve transferring side. Custom XCM sending is also allowed.
 
