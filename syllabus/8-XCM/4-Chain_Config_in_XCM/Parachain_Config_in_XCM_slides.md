@@ -36,7 +36,9 @@ Notes:
 ---
 
 ## Configurables in XCM-config
+Common vs configurable implementation in xcm-executor
 
+Configurable parts are defined in the xcm-executor config!
 
 ```rust
 
@@ -49,14 +51,23 @@ pub type LocationToAccountId = ?;
 pub struct XcmConfig;
 impl Config for XcmConfig {
 	type RuntimeCall = RuntimeCall;
+	// How we route the XCM outside this chain
 	type XcmSender = XcmRouter;
+	// How we withdraw/deposit assets
 	type AssetTransactor = ?;
+	// How we convert a ML to a dispatch origin
 	type OriginConverter = ?;
+	// What do we trust as reserve chains
 	type IsReserve = Everything;
+	// What do we trust as teleporters
 	type IsTeleporter = Nothing;
+	// How do we reanchor
 	type LocationInverter = LocationInverter<Ancestry>;
+	// Pre-execution filters
 	type Barrier = ?;
+	// How do we weight a message
 	type Weigher = ?;
+	// How do we charge for fees
 	type Trader = ?;
 	type ResponseHandler = ?;
 	type AssetTrap = ();
@@ -98,16 +109,74 @@ This will define how we convert a multilocation into a local accountId. This is 
 Xcm-builder allows us to configure LocationToAccountId conversions in an easy manner. Let's look at our options:
 
 1. `Account32Hash`: The most generic locationToAccountIdConverter. It basically hashes the multilocation and takes the lowest 32 bytes to make a 32 byte account.
+```rust
+fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+		Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
+	}
+```
 
 2. `ParentIsPreset`: A structure that allows to convert only the parent multilocation into an account of the form `b'Parent' + trailing 0s`
+
+```rust
+fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+		if location.borrow().contains_parents_only(1) {
+			Ok(b"Parent"
+				.using_encoded(|b| AccountId::decode(&mut TrailingZeroInput::new(b)))
+				.expect("infinite length input; no invalid inputs for type; qed"))
+		} else {
+			Err(())
+		}
+	}
+```
 
 2. `ChildParachainConvertsVia`: A structure that allows to convert the child parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
 
 3. `SiblingParachainConvertsVia`: A structure that allows to convert the sibling parachain multilocation into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
 
+```rust
+fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+		match location.borrow() {
+			MultiLocation { parents: 1, interior: X1(Parachain(id)) } =>
+				Ok(ParaId::from(*id).into_account_truncating()),
+			_ => Err(()),
+		}
+	}
+```
+
 4. `AccountId32Aliases`: A structure that allows to convert a local AccountId32 multilocation into a accountId of 32 bytes.
+```rust
+fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
+		let id = match location {
+			MultiLocation {
+				parents: 0,
+				interior: X1(AccountId32 { id, network: NetworkId::Any }),
+			} => id,
+			MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
+				if network == Network::get() =>
+				id,
+			_ => return Err(location),
+		};
+		Ok(id.into())
+	}
+```
 
 5. `AccountId20Aliases`: A structure that allows to convert a local AccountKey20 multilocation into a accountId of 20 bytes.
+
+```rust
+fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
+		let key = match location {
+			MultiLocation {
+				parents: 0,
+				interior: X1(AccountKey20 { key, network: NetworkId::Any }),
+			} => key,
+			MultiLocation { parents: 0, interior: X1(AccountKey20 { key, network }) }
+				if network == Network::get() =>
+				key,
+			_ => return Err(location),
+		};
+		Ok(key.into())
+	}
+```
 
 For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
 
@@ -117,15 +186,41 @@ For our example, we only need the 4th. We have a requirement of users being able
 Asset transactors define how we are going to withdraw and deposit assets. What we set in here depends heavily on what do we want our chain to be able to transfer:
 
 1. `CurrencyAdapter`: A simple adapter that uses a single currency as the assetTransactor. This is usually used for withdrawing/depositing the native token of the chain.
+
+```rust
+pub struct CurrencyAdapter<Currency, Matcher, AccountIdConverter, AccountId, CheckedAccount>(
+	PhantomData<(Currency, Matcher, AccountIdConverter, AccountId, CheckedAccount)>,
+);
+impl
+ TransactAsset
+	for CurrencyAdapter<Currency, Matcher, AccountIdConverter, AccountId, CheckedAccount>
+{
+	/* snip */
+	fn deposit_asset(what: &MultiAsset, who: &MultiLocation) -> Result {
+		log::trace!(target: "xcm::currency_adapter", "deposit_asset what: {:?}, who: {:?}", what, who);
+		// Check we handle this asset.
+		let amount: u128 =
+			Matcher::matches_fungible(&what).ok_or(Error::AssetNotFound)?.saturated_into();
+		let who =
+			AccountIdConverter::convert_ref(who).map_err(|()| Error::AccountIdConversionFailed)?;
+		let balance_amount =
+			amount.try_into().map_err(|_| Error::AmountToBalanceConversionFailed)?;
+		let _imbalance = Currency::deposit_creating(&who, balance_amount);
+		Ok(())
+	}
+}
+```
+
 2. `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens. An example of these would be `pallet-assets` tokens.
 
-For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balance) whenever we receive the relay token.
+For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
 
 ---
 ### Configuring origin-converter with xcm-builder
-Allows us to configure how we convert an origin, defined by a MultiLocation, into a local dispatch origin. Used in the `Transact` instruction.
+Allows us to configure how we convert an origin, defined by a MultiLocation, into a dispatch origin. Used mainly in the `Transact` instruction.
 
-1. `SovereignSignedViaLocation`: Converts the multilocation origin (typically, a parachain origin) into a signed origin.
+1. `SovereignSignedViaLocation`: Converts the multilocation origin (tipically, a parachain origin) into a signed origin.
+
 
 2. `ParentAsSuperuser`: Converts the parent origin into the root origin.
 
@@ -236,7 +331,7 @@ Pallet-xcm plays a critical role in every chains xcm-setup:
 1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
 2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The locations to which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
 3. It handles XCM version negotiation duties
-4. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`
+4. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
 
 ```rust
 impl pallet_xcm::Config for Runtime {
