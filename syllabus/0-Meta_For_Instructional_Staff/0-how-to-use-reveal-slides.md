@@ -6,7 +6,7 @@ instructors: ["no one"]
 teaching-assistants: ["Dan Shields"]
 ---
 
-# How-to use Reveal.js *asdf* **1234**1234
+# How-to use Reveal.js
 
 These slides are built with [reveal.js](https://revealjs.com/).
 

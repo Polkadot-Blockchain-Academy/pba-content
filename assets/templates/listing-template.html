@@ -68,6 +68,7 @@
       .site-title h1 {
         margin: 0;
         text-transform: uppercase;
+      	font-family: var(--r-heading-font);
         font-size: calc(var(--font-size) * 1.5);
         text-shadow: var(--r-heading1-text-shadow);
       }
@@ -78,11 +79,9 @@
       .site-main {
         padding: var(--size);
       }
-      .slide-list li[data-template^="content-templates/"]::before {
+      .slide-list li::before {
         color: var(--r-link-color);
       }
-      .slide-list li[data-template^="syllabus/"]::before {}
-      .slide-list li[data-template^="syllabus/1"] {}
       .slide-list li {
         color: var(--r-link-color-hover);
         display: flex;
@@ -101,6 +100,10 @@
         color: var(--r-link-color);
         font-size: calc(var(--font-size) * 3);
         list-style-type: initial;
+      }
+
+      .slide-card-name{
+        font-family: var(--r-heading-font);
       }
 
       .slide-list li a {
