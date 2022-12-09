@@ -2,4 +2,14 @@
 
 Due to the proximity to the end of the course, this assignment will be ungraded or graded only based on effort.
 
-Upgrade the code of several of the parachains launched during the week 4 assignment to support XCM. Do the on-chain runtime upgrades, open the XCM channels, and execute the XCM messages.
+# Exercise 1 - Ink! Smart contract
+
+Write an ink! smart contract. Deploy it somewhere we provide?
+
+# Exercise 2 - Write an EVM precompile
+
+Write a precompile that makes the features of a FRAME pallet accessible to the  EVM
+
+# Exercise 3 - Write a pallet-contracts Chain Extension
+
+Write a chain extension that makes the features of a FRAME pallet accessible to the  EVM
