@@ -17,6 +17,10 @@ This assignment is a project covering the material you've learned about writing 
 
 ## Option 3: Blockchain UI
 
-Take the <TODO> Runtime that we built in class and design a User interface for it. Your user interface should allow users to see <Some Chainstate> and submit signed transactions. To achieve this you will need to make use of Substrate's RPC methods.
+Choose one fo the Frameless Runtimes that we built in class and design a user interface for it. Your user interface should allow users to read all relevant chain state and submit signed transactions. To achieve this you will need to make use of Substrate's RPC methods.
+
+This user interface does not need to be a beautiful webapp, although that is certainly welcome). A simple CLI based UI is enough.
 
 ## Option 4: Block Explorer / Indexer
+
+TODO
