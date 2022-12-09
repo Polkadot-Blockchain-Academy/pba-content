@@ -12,6 +12,7 @@ This assignment is a project covering the material you've learned about writing 
 - Fees come from leftover amount of coins
 
 ## Option 2: Hybrid Consensus
+
 - Hybrid consensus - Proof of Work Authoring with Grandpa Finality (PoA is fine)
 
 ## Option 3: Blockchain UI
