@@ -162,22 +162,6 @@ fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
 
 5. `AccountId20Aliases`: A structure that allows to convert a local AccountKey20 multilocation into a accountId of 20 bytes.
 
-```rust
-fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
-		let key = match location {
-			MultiLocation {
-				parents: 0,
-				interior: X1(AccountKey20 { key, network: NetworkId::Any }),
-			} => key,
-			MultiLocation { parents: 0, interior: X1(AccountKey20 { key, network }) }
-				if network == Network::get() =>
-				key,
-			_ => return Err(location),
-		};
-		Ok(key.into())
-	}
-```
-
 For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
 
 ---
@@ -197,7 +181,6 @@ impl
 {
 	/* snip */
 	fn deposit_asset(what: &MultiAsset, who: &MultiLocation) -> Result {
-		log::trace!(target: "xcm::currency_adapter", "deposit_asset what: {:?}, who: {:?}", what, who);
 		// Check we handle this asset.
 		let amount: u128 =
 			Matcher::matches_fungible(&what).ok_or(Error::AssetNotFound)?.saturated_into();
