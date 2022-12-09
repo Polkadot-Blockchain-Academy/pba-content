@@ -62,3 +62,4 @@ Your implementation will be reviewed for code quality and implementation details
         - Value functionality over beauty.
     - Integrate node as a working parachain on a relay chain.
     - Working cross chain scenarios for your runtime logic using XCM and XCMP.
+- TODO: Add something about benchmarking
