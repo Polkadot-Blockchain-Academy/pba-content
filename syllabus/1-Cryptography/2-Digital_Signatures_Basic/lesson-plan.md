@@ -16,8 +16,7 @@ _Note: The instructor should have a Rust console open and should be showing how 
 ## Outline
 
 - Getting a bit more into the primitives
-  <!-- markdown-link-check-disable-next-line -->
-  - Signature API, e.g. https://github.com/paritytech/polkadot-blockchain-academy/pull/127/files#diff-7635ccd71356c216312500ec4fdf67647047fd0024ffe7ea4c642b5adc4ee93fR57-R65
+  - Signature API, e.g. https://github.com/paritytech/polkadot-blockchain-academy/pull/127/files#diff-7635ccd71356c216312500ec4fdf67647047fd0024ffe7ea4c642b5adc4ee93fR57-R65 <!-- TODO Remove this check disable once repo is public ? likely not... --> <!-- markdown-link-check-disable-line -->
 - Sign a message
   - Easy to do from console
   - Import `sp_core::sr25519` and sign a message

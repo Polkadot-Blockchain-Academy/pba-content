@@ -46,7 +46,7 @@ Substrate provides different Smart Contracts' options.
 - Pallet Contracts - WASM execution environment
 - Frontier - EVM execution environment
 
-<img style="width: 1000px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime">
+<img style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime">
 
 Notes:
 
@@ -67,8 +67,8 @@ Smart contracts on [Frontier](https://github.com/paritytech/frontier) can be imp
 </div>
 
 <div class="right">
-<img style="width: 200px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/solidity.png" alt="Solidity Logo">
-<img style="width: 200px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/vyper.png" alt="Solidity Logo">
+<img style="width: 200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/solidity.png" alt="Solidity Logo">
+<img style="width: 200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/vyper.png" alt="Solidity Logo">
 </div>
 
 Notes:
@@ -85,7 +85,7 @@ Frontier aims to provide a low-friction and secure environment for the developme
 Frontier is the software suite that provides an Ethereum compatibility layer for Substrate.
 It has two components that can be activated separately.
 
-<img style="width: 1000px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Frontier.png" alt="Frontier Logo">
+<img style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Frontier.png" alt="Frontier Logo">
 
 Notes:
 
@@ -274,7 +274,7 @@ impl pallet_evm::Config for Runtime {
 - On Substrate, we call this format H160, for 160-bit hash.
 - The EVM environment has its own balance called the EVM deposit, which can be withdrawn by Substrate native accounts.
 
-<img style="width: 1000px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/EVM-accounts.png" alt="JS-Events">
+<img style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/EVM-accounts.png" alt="JS-Events">
 
 Notes:
 
@@ -286,7 +286,7 @@ The EVM environment has its own balance called the EVM deposit, which can be wit
 
 ## Pallet EVM - AddressMapping
 
-<img style="width: 800px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Polkadot-JS-EVM-Events.png" alt="JS-Events">
+<img style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Polkadot-JS-EVM-Events.png" alt="JS-Events">
 
 Notes:
 

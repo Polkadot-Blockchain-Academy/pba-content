@@ -12,7 +12,7 @@ teaching-assistants: ["Dan Shields, Sacha Lansky"]
 
 # Outline
 
-1. [Verifiable Random Functions (VRFs)](#verifiable-random-functions-vrfs)
+1. [Verifiable Random Functions (VRFs)](#verifiable-random-functionsvrfs)
 1. [Erasure coding](#erasure-coding)
 1. [ZK Proofs](#zk-proofs)
 

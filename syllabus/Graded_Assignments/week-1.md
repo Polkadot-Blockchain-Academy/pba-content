@@ -28,7 +28,7 @@ Implement a hash-based commit reveal-scheme. The user takes these actions:
 2. Receive a Salt and a Commitment in exchange.
 3. Commit to data by sharing the commitment publicly
 4. Reveal by sharing the Salt publicly
-3. Check others' commitments by providing a commitment and a salt
+5. Check others' commitments by providing a commitment and a salt
 
 ## Exercise 5: Auctions
 

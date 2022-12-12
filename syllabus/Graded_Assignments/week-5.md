@@ -8,8 +8,8 @@ Write an ink! smart contract. Deploy it somewhere we provide?
 
 # Exercise 2 - Write an EVM precompile
 
-Write a precompile that makes the features of a FRAME pallet accessible to the  EVM
+Write a precompile that makes the features of a FRAME pallet accessible to the EVM
 
 # Exercise 3 - Write a pallet-contracts Chain Extension
 
-Write a chain extension that makes the features of a FRAME pallet accessible to the  EVM
+Write a chain extension that makes the features of a FRAME pallet accessible to the EVM
