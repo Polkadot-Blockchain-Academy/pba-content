@@ -18,13 +18,13 @@
 mod tests {
     use xcm::latest::prelude::*;
     use xcm::VersionedXcm;
-    use frame_support::dispatch::RawOrigin;
 	use xcm_simulator_for_exercises::{
 		MockNet,
 		ParaA,
 		TestExt,
         ParachainPalletXcm,
-        ALICE, parachain,
+        ParachainPalletBalances,
+        ALICE, INITIAL_BALANCE, parachain,
 	};
     use frame_support::assert_ok;
 
@@ -33,17 +33,25 @@ mod tests {
         MockNet::reset();
 
         let withdraw_amount = 100;
+        let location = MultiLocation {
+            parents: 0,
+            interior: X1(AccountId32{network: Any, id: ALICE.into()}),
+        };
 
         ParaA::execute_with(|| {
             let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
-                WithdrawAsset((Here, withdraw_amount).into())
+                WithdrawAsset((location, withdraw_amount).into()),
             ]);
             assert_ok!(
                 ParachainPalletXcm::execute(
-                    RawOrigin::Signed(ALICE).into(),
+                    parachain::RuntimeOrigin::signed(ALICE),
                     Box::new(VersionedXcm::V2(message.into())),
                     10_000_000
                 )
+            );
+            assert_eq!(
+                ParachainPalletBalances::free_balance(ALICE),
+                INITIAL_BALANCE - withdraw_amount
             );
         });
     }
