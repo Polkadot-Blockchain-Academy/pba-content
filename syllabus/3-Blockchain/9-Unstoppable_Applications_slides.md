@@ -2,8 +2,6 @@
 title: Unstoppable Applications
 description: Unstoppable Applications in Web3
 duration: 1 hour
-instructors: ["Joe Petrowski"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Unstoppable Applications
@@ -24,13 +22,15 @@ But spent little time addressing the contexts in which they operate.
 
 Notes:
 
+Key point: your "perfect" system in is likely weak to things outside of the "rules"!
+
 Source: [XKCD](https://xkcd.com/538/)
 
 ---
 
 ## People over Platforms
 
-Web3 should prioritise _people_ over _platforms_.
+Web3 should prioritize _people_ over _platforms_.
 
 Platforms are OK as service providers, but peer-to-peer guarantees must be upheld without requiring trust in a service provider.
 
@@ -44,7 +44,8 @@ Platforms are OK as service providers, but peer-to-peer guarantees must be uphel
 
 ## A Lot More Than Blockchain
 
-Blockchains only form one part of the stack. Web3 applications must prevent attacks at all layers. For discussion today:
+Blockchains only form one part of the stack. Web3 applications must prevent attacks at all layers.
+For discussion today:
 
 <widget-text center>
 
@@ -64,13 +65,13 @@ There are valid criticisms of how many blockchain applications operate today.
 
 <widget-text center>
 
-- Mining pools (and other centralising factors)
+- Mining pools (and other centralizing factors)
 - RPC providers
 - Bridges
 
 </widget-text>
 
-We will discuss these and what we're building to realise a better stack.
+We will discuss these and what we're building to realize a better stack.
 
 ---
 
@@ -104,9 +105,9 @@ We will discuss these and what we're building to realise a better stack.
 
 ## Mining Pools
 
-Proof of Work authority sets have no finite bound. But people like to organise.
+Proof of Work authority sets have no finite bound. But people like to organize.
 
-We actually don't want authority sets to organise because it creates risk.
+We actually don't want authority sets to organize because it creates risk.
 
 ---
 
@@ -124,7 +125,7 @@ Security is always a finite resource:
 
 <widget-text center>
 
-- Centralised: Cost of corruption/influence
+- Centralized: Cost of corruption/influence
 - Proof of Work: Number of CPUs in the world
 - Proof of Stake: Value (by definition, finite)
 
@@ -198,7 +199,7 @@ A few interesting design decisions in Polkadot w/r/t its architecture:
 
 - More validators increases the state transition throughput of the network.
 - Individual shards have full economic freedom by being members of a larger consensus system.
-- Superlinear slashing puts colluding validators at existential risk (while well-meaning ones should have little to worry about).
+- Superliner slashing puts colluding validators at existential risk (while well-meaning ones should have little to worry about).
 
 ---
 
@@ -285,8 +286,8 @@ If the chain does split into two, who decides which chain is which?
 <widget-text center>
 
 - Greater hashpower or value at stake
-- Whatever is recognised by service providers
-- Whatever is recognised by data aggregators
+- Whatever is recognized by service providers
+- Whatever is recognized by data aggregators
 
 **But not the stakeholders of the system**
 
@@ -335,7 +336,7 @@ Deterministic finality helps.
 
 ---
 
-## Miner Extractable Value
+## Maximal Extractable Value (MEV)
 
 A measure of the value that block authors can extract based on their knowledge of pending transactions and ability to order them.
 
@@ -344,6 +345,38 @@ A measure of the value that block authors can extract based on their knowledge o
 - Frontrunning
 - Backrunning
 - Sandwiching
+
+> https://www.mev.wiki/
+
+Notes:
+
+Emergent behavior.
+Not realized as possible by many until it quietly became the norm.
+
+---
+
+## Maximal Extractable Value
+
+#### "[Ethereum is a Dark Forrest](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest)"
+
+> An environment in which detection means certain death...
+> ...publicly identifying someone else’s location is as good as directly destroying them.
+
+---
+
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Classroom Discussions
+
+Front-running as a Service (FaaS) & MEV Auctions (MEVA)
+
+_A solution or crutch?_
+
+Notes:
+
+- Flashbots & Friends
+
+<!-- TODO Forest game on Ethereum testnet... or other zk game? -->
 
 ---
 

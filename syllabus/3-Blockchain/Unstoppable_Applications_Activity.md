@@ -2,12 +2,6 @@
 
 ---
 
-### Lead
-
-Emre Surmeli
-
----
-
 ## Architect an unstoppable application
 
 In this activity the students will work together or in groups to talk about existing structures in society (Google, Twitter, US Treasury, IMF, ICC) that require too much trust.
