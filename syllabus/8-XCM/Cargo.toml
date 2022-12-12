@@ -1,6 +1,7 @@
 [workspace]
 members = [
     "xcm-related-code/xcm-simulator-for-exercises",
-    "2-Writing_Sending_Executing_XCM/constructing-messages-with-simulator",
-    "3-Parachain_Config_in_XCM/versioning-with-simulator"
+    "2-XCVM/execution_exercises",
+    "3-Writing_Sending_Executing_XCM/constructing-messages-with-simulator",
+    "4-Chain_Config_in_XCM/versioning-with-simulator"
 ]

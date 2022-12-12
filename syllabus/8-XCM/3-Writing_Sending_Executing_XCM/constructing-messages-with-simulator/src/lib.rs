@@ -21,7 +21,7 @@ mod tests {
 		MockNet,
 		Relay,
 		ParaA,
-		// ParaB, Might be useful for one of the exercises :)
+		// ParaB, // Might be useful for one of the exercises :)
 		TestExt,
         ALICE, INITIAL_BALANCE, para_account_id,
 	};

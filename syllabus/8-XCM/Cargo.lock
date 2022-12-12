@@ -3458,6 +3458,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "xcm-execution-exercise"
+version = "0.9.31"
+dependencies = [
+ "frame-support",
+ "pallet-xcm",
+ "xcm",
+ "xcm-executor",
+ "xcm-simulator",
+ "xcm-simulator-for-exercises",
+]
+
+[[package]]
 name = "xcm-executor"
 version = "0.9.31"
 source = "git+https://github.com/paritytech/polkadot?branch=master#624ae5764086cc7edbe6e455e816b73765219906"
