@@ -12,7 +12,7 @@ duration: 1 hour
 
 So far, we have discussed state machines and consensus.
 
-But spent little time addressing the contexts in which they operate.
+But spent little time addressing the _contexts in which they operate_.
 
 ---
 
@@ -28,6 +28,26 @@ Source: [XKCD](https://xkcd.com/538/)
 
 ---
 
+## Expectations vs. Reality
+
+<widget-columns>
+<widget-column>
+
+### This column has a bit of a statement to make.
+
+</widget-column>
+<widget-column>
+
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit
+- Ut enim ad minim veniam, quis nostrud exercitation
+- Duis aute irure dolor in reprehenderit in
+- Excepteur sint occaecat cupidatat non proident, sunt in
+
+</widget-column>
+</widget-columns>
+
+---
+
 ## People over Platforms
 
 Web3 should prioritize _people_ over _platforms_.
@@ -40,11 +60,14 @@ Platforms are OK as service providers, but peer-to-peer guarantees must be uphel
 
 <img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
 
+TODO: update this graphic, rather stale (Joe mentioned in Cambridge)
+
 ---
 
 ## A Lot More Than Blockchain
 
-Blockchains only form one part of the stack. Web3 applications must prevent attacks at all layers.
+Blockchains only form one part of the stack.
+Web3 applications must prevent attacks at all layers.
 For discussion today:
 
 <widget-text center>
@@ -73,6 +96,10 @@ There are valid criticisms of how many blockchain applications operate today.
 
 We will discuss these and what we're building to realize a better stack.
 
+Notes:
+
+https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the state of the space.
+
 ---
 
 # Network Level
@@ -83,7 +110,7 @@ We will discuss these and what we're building to realize a better stack.
 
 <center>
 
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.4-P2P-network.svg"/>
+<img style="width: 900px" src="../../assets/img/3-Blockchain/3.4-network-topologies.png"/>
 
 </center>
 
@@ -93,9 +120,17 @@ We will discuss these and what we're building to realize a better stack.
 
 <widget-text center>
 
-- Entry nodes and peer discovery
+- Entry/Boot nodes and peer discovery
 - Data center faults
 - Traffic analysis and targeted takedowns
+- Eclipse attacks
+
+Notes:
+
+Boot nodes typically _hard coded_ to "bootstrap" and start peer discovery.
+Boot nodes can decide what peers to advertize, or can be inaccessible.
+Common data centers (AWS, GCP, ...) could fail or censor, potentially large number of peers go dark.
+Hard to hide! Most p2p traffic is easy to identify vs. web2 traffic.
 
 ---
 
@@ -105,7 +140,8 @@ We will discuss these and what we're building to realize a better stack.
 
 ## Mining Pools
 
-Proof of Work authority sets have no finite bound. But people like to organize.
+Proof of Work authority sets have no finite bound.
+But people like to organize.
 
 We actually don't want authority sets to organize because it creates risk.
 
@@ -299,7 +335,8 @@ If the chain does split into two, who decides which chain is which?
 
 Substrate separates the state transition _logic_ from the _executor_.
 
-The executor is WebAssembly. The STF is part of the state and can be upgraded.
+The executor is WebAssembly
+The STF is part of the state and can be upgraded.
 
 **Authority nodes should _execute_ the STF, not be trusted to _choose_ it.**
 
@@ -384,7 +421,9 @@ Notes:
 
 Transactional execution means that logic must be "woken up" by transactions.
 
-Free execution provides more power to application developers to deliver behavior guarantees. Function calls can be scheduled and automatically dispatched. Uses include:
+Free execution provides more power to application developers to deliver behavior guarantees.
+Function calls can be scheduled and automatically dispatched.
+Uses include:
 
 <widget-text center>
 
@@ -440,6 +479,53 @@ Asynchronous systems can also share finality (i.e., be members of the same conse
 
 ---
 
+## Human Nature
+
+People are **_LAZY_**, expect them to trend towards the easiest option.
+
+---
+
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Classroom Discussions
+
+Minimum viable decentralization.
+
+_What key aspects should be considered?_
+
+Notes:
+
+- Quantitative: nodes needed (for what), incentives, ... TODO
+- Qualitative: social norms, ... TODO
+
+---
+
+## Governance
+
+<iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Unstoppable Code: The Difference Between Can't and Won't](https://www.youtube-nocookie.com/embed/Q6euy5W1js4)
+
+Notes:
+
+Watch if time allows for class discussions.
+More likely to assign informally to everyone to watch in the next few days.
+Also ensure everyone researches the effects of OFAC has had on validator compliance because of Tornado Cash.
+
+---
+
+## Modeling Behavior
+
+https://tokenengineeringcommunity.github.io/website/
+
+Notes:
+
+Mostly free education and tools to dive deeper on tokenomics.
+Remember, these are _models_ of idealized systems in general, real world conditions will differ!
+
+---
+
 ## Wrap Up
 
-End of Module 3. Goal is that you now have the primitives and concepts necessary to dive into Substrate and Polkadot and start building unstoppable Web3 applications.
+End of Module 3.
+Goal is that you now have the primitives and concepts necessary to dive into Substrate and Polkadot and start building unstoppable Web3 applications.
