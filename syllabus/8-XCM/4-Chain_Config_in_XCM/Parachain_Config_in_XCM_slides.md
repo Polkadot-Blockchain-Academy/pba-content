@@ -2,8 +2,8 @@
 title: Parachain Configuration for XCM # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
 duration: 1 hour
-instructors: ["Gavin Wood", "Keith Yeung"]
-teaching-assistants: ["Dan Shields"]
+instructors: ["Keith Yeung", "Gorka Irazoqui"]
+teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Parachain Configuration for XCM
@@ -88,7 +88,7 @@ Notes: Xcm-builder and Xcm-pallet are your friends!
 
 Things you should question is:
 
-- *Is my chain gonna transfer just the native token? is my chain going to receive several assets?*
+- *Is my chain going to transfer just the native token? is my chain going to receive several assets?*
 
 - *Is my chain going to allow the free execution? Maybe for some parachains/relay chain?*
 
