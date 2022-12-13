@@ -109,24 +109,25 @@ This will define how we convert a multilocation into a local accountId. This is 
 Xcm-builder allows us to configure LocationToAccountId conversions in an easy manner. Let's look at our options:
 
 1. `Account32Hash`: The most generic locationToAccountIdConverter. It basically hashes the multilocation and takes the lowest 32 bytes to make a 32 byte account.
+
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
-		Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
-	}
+	Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
+}
 ```
 
 2. `ParentIsPreset`: A structure that allows to convert only the parent multilocation into an account of the form `b'Parent' + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
-		if location.borrow().contains_parents_only(1) {
-			Ok(b"Parent"
+	if location.borrow().contains_parents_only(1) {
+		Ok(b"Parent"
 				.using_encoded(|b| AccountId::decode(&mut TrailingZeroInput::new(b)))
 				.expect("infinite length input; no invalid inputs for type; qed"))
-		} else {
-			Err(())
-		}
+	} else {
+		Err(())
 	}
+}
 ```
 
 2. `ChildParachainConvertsVia`: A structure that allows to convert the child parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
@@ -135,29 +136,29 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
-		match location.borrow() {
-			MultiLocation { parents: 1, interior: X1(Parachain(id)) } =>
-				Ok(ParaId::from(*id).into_account_truncating()),
+	match location.borrow() {
+		MultiLocation { parents: 1, interior: X1(Parachain(id)) } =>
+			Ok(ParaId::from(*id).into_account_truncating()),
 			_ => Err(()),
-		}
 	}
+}
 ```
 
 4. `AccountId32Aliases`: A structure that allows to convert a local AccountId32 multilocation into a accountId of 32 bytes.
+
 ```rust
 fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
-		let id = match location {
-			MultiLocation {
-				parents: 0,
-				interior: X1(AccountId32 { id, network: NetworkId::Any }),
-			} => id,
-			MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
-				if network == Network::get() =>
-				id,
+	let id = match location {
+		MultiLocation {
+			parents: 0,
+			interior: X1(AccountId32 { id, network: NetworkId::Any }),
+		} => id,
+		MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
+			if network == Network::get() => id,
 			_ => return Err(location),
-		};
-		Ok(id.into())
-	}
+	};
+	Ok(id.into())
+}
 ```
 
 5. `AccountId20Aliases`: A structure that allows to convert a local AccountKey20 multilocation into a accountId of 20 bytes.
