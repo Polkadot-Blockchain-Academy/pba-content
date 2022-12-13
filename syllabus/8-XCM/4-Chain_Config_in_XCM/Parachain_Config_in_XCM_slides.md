@@ -88,13 +88,13 @@ Notes: Xcm-builder and Xcm-pallet are your friends!
 
 Things you should question is:
 
-- *Is my chain going to transfer just the native token? is my chain going to receive several assets?*
+- *Is my chain going to transfer just the native token? Is my chain going to receive several assets?*
 
 - *Is my chain going to allow the free execution? Maybe for some parachains/relay chain?*
 
 - *Is my chain a 20 byte account chain? a 32 byte account chain?*
 
-- *How will my chain accept fee payment? In one asset? in several?*
+- *How will my chain accept fee payment? In one asset? In several?*
 
 ### Our starting example setup requirements
 1. Parachain that does not charge for relay incoming messages.
