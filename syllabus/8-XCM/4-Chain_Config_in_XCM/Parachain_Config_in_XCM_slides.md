@@ -112,6 +112,7 @@ Xcm-builder allows us to configure LocationToAccountId conversions in an easy ma
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+	// Blake2(b"multiloc"+ multilocation)
 	Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
 }
 ```
@@ -147,17 +148,26 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 4. `AccountId32Aliases`: A structure that allows to convert a local AccountId32 multilocation into a accountId of 32 bytes.
 
 ```rust
-fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
-	let id = match location {
-		MultiLocation {
-			parents: 0,
-			interior: X1(AccountId32 { id, network: NetworkId::Any }),
-		} => id,
-		MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
-			if network == Network::get() => id,
-		_ => return Err(location),
-	};
-	Ok(id.into())
+/// Extracts the `AccountId32` from the passed `location` if the network matches.
+pub struct AccountId32Aliases<Network, AccountId>(PhantomData<(Network, AccountId)>);
+impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone>
+	Convert<MultiLocation, AccountId> for AccountId32Aliases<Network, AccountId>
+{
+	fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
+		// Converts if networkId matches Any or <Network>
+		let id = match location {
+			MultiLocation {
+				parents: 0,
+				interior: X1(AccountId32 { id, network: NetworkId::Any }),
+			} => id,
+			MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
+				if network == Network::get() =>
+				id,
+			_ => return Err(location),
+		};
+		Ok(id.into())
+	}
+	/* snip */
 }
 ```
 
@@ -185,10 +195,13 @@ impl
 		// Check we handle this asset.
 		let amount: u128 =
 			Matcher::matches_fungible(&what).ok_or(Error::AssetNotFound)?.saturated_into();
+		// Convert multilocation to accountId
 		let who =
 			AccountIdConverter::convert_ref(who).map_err(|()| Error::AccountIdConversionFailed)?;
+		// Convert amount to balance
 		let balance_amount =
 			amount.try_into().map_err(|_| Error::AmountToBalanceConversionFailed)?;
+		// Deposit currency on the account
 		let _imbalance = Currency::deposit_creating(&who, balance_amount);
 		Ok(())
 	}
@@ -224,7 +237,9 @@ where
 	) -> Result<RuntimeOrigin, MultiLocation> {
 		let origin = origin.into();
 		if let OriginKind::SovereignAccount = kind {
+			// Convert multilocation to account
 			let location = LocationConverter::convert(origin)?;
+			// Return signed origin using the account
 			Ok(RuntimeOrigin::signed(location).into())
 		} else {
 			Err(origin)
