@@ -432,18 +432,28 @@ Pallet-xcm plays a critical role in every chains xcm-setup:
 ```rust
 impl pallet_xcm::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
+	// Who can send XCM messages?
+	// How are origins handled?
 	type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	// How do we route messages?
 	type XcmRouter = XcmRouter;
+	// Who can execute XCM?
+	// How are origins handled?
 	type ExecuteXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	// What messages are allowed to be executed?
 	type XcmExecuteFilter = Everything;
+	// The XCM executor itself
 	type XcmExecutor = XcmExecutor;
+	// What asset teleporting is allowed?
 	type XcmTeleportFilter = Everything;
+	// What asset reserve transfer is allowed?
 	type XcmReserveTransferFilter = Everything;
 	type Weigher = XcmWeigher;
 	type LocationInverter = LocationInverter<Ancestry>;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
 	const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
+	// What XCM version do we advertise as supported
 	type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
 }
 ```
