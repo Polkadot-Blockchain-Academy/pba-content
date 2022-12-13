@@ -122,8 +122,8 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 	if location.borrow().contains_parents_only(1) {
 		Ok(b"Parent"
-				.using_encoded(|b| AccountId::decode(&mut TrailingZeroInput::new(b)))
-				.expect("infinite length input; no invalid inputs for type; qed"))
+			.using_encoded(|b| AccountId::decode(&mut TrailingZeroInput::new(b)))
+			.expect("infinite length input; no invalid inputs for type; qed"))
 	} else {
 		Err(())
 	}
@@ -139,7 +139,7 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 	match location.borrow() {
 		MultiLocation { parents: 1, interior: X1(Parachain(id)) } =>
 			Ok(ParaId::from(*id).into_account_truncating()),
-			_ => Err(()),
+		_ => Err(()),
 	}
 }
 ```
@@ -155,7 +155,7 @@ fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
 		} => id,
 		MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
 			if network == Network::get() => id,
-			_ => return Err(location),
+		_ => return Err(location),
 	};
 	Ok(id.into())
 }
