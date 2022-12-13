@@ -204,10 +204,61 @@ Allows us to configure how we convert an origin, defined by a MultiLocation, int
 
 1. `SovereignSignedViaLocation`: Converts the multilocation origin (tipically, a parachain origin) into a signed origin.
 
+```rust
+/// Sovereign accounts use the system's `Signed` origin with an account ID derived from the `LocationConverter`.
+pub struct SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>(
+	PhantomData<(LocationConverter, RuntimeOrigin)>,
+);
+impl<
+		// Converts a multilocation into account
+		LocationConverter: Convert<MultiLocation, RuntimeOrigin::AccountId>,
+		RuntimeOrigin: OriginTrait,
+	> ConvertOrigin<RuntimeOrigin> for SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>
+where
+	RuntimeOrigin::AccountId: Clone,
+{
+	fn convert_origin(
+		origin: impl Into<MultiLocation>,
+		kind: OriginKind,
+	) -> Result<RuntimeOrigin, MultiLocation> {
+		let origin = origin.into();
+		if let OriginKind::SovereignAccount = kind {
+			let location = LocationConverter::convert(origin)?;
+			Ok(RuntimeOrigin::signed(location).into())
+		} else {
+			Err(origin)
+		}
+	}
+}
+```
 
 2. `ParentAsSuperuser`: Converts the parent origin into the root origin.
 
 3. `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
+
+```rust
+pub struct SignedAccountId32AsNative<Network, RuntimeOrigin>(PhantomData<(Network, RuntimeOrigin)>);
+impl<Network: Get<NetworkId>, RuntimeOrigin: OriginTrait> ConvertOrigin<RuntimeOrigin>
+	for SignedAccountId32AsNative<Network, RuntimeOrigin>
+where
+	RuntimeOrigin::AccountId: From<[u8; 32]>,
+{
+	fn convert_origin(
+		origin: impl Into<MultiLocation>,
+		kind: OriginKind,
+	) -> Result<RuntimeOrigin, MultiLocation> {
+		let origin = origin.into();
+		match (kind, origin) {
+			(
+				OriginKind::Native,
+				MultiLocation { parents: 0, interior: X1(Junction::AccountId32 { id, network }) },
+			) if matches!(network, NetworkId::Any) || network == Network::get() =>
+				Ok(RuntimeOrigin::signed(id.into())),
+			(_, origin) => Err(origin),
+		}
+	}
+}
+```
 
 4. `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
 
@@ -224,6 +275,22 @@ Barriers specify whether or not an XCM is allowed to be executed on the local co
 
 3. `AllowUnpaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, allows free execution from such origin (i.e., does not check anything from the message). Useful for chains that "trust" each other (e.g., Statemine or any system parachain with the relay)
 
+```rust
+/// Allows execution from any origin that is contained in `T` (i.e. `T::Contains(origin)`) without any payments.
+/// Use only for executions from trusted origin groups.
+pub struct AllowUnpaidExecutionFrom<T>(PhantomData<T>);
+impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
+	fn should_execute<RuntimeCall>(
+		origin: &MultiLocation,
+		_message: &mut Xcm<RuntimeCall>,
+		_max_weight: Weight,
+		_weight_credit: &mut Weight,
+	) -> Result<(), ()> {
+		ensure!(T::contains(origin), ());
+		Ok(())
+	}
+}
+```
 4. `AllowKnownQueryResponses<ResponseHandler>`: Allows the execution of the message if it is a `QueryResponse` message and the `ResponseHandler` is expecting such response
 
 5. `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it is a `SubscribeVersion` message
@@ -235,6 +302,36 @@ To meet our example usecase, we only need the relay to have free execution. Henc
 WeightTrader allows to specify how to charge for weight inside the xcm execution. In `xcm-builder` we can find the following pre-defined traders already:
 
 1. `FixedRateOfFungible`: Converts weight to fee at a fixed rate and charges in a specific fungible asset
+```rust
+/// Simple fee calculator that requires payment in a single fungible at a fixed rate.
+///
+/// The constant `Get` type parameter should be the fungible ID and the amount of it required for
+/// one second of weight.
+pub struct FixedRateOfFungible<T: Get<(AssetId, u128)>, R: TakeRevenue>(
+	Weight,
+	u128,
+	PhantomData<(T, R)>,
+);
+impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungible<T, R> {
+	/* snip */
+	fn buy_weight(&mut self, weight: Weight, payment: Assets) -> Result<Assets, XcmError> {
+		// get the assetId and amount per second to charge
+		let (id, units_per_second) = T::get();
+		// Calculate the amount to charge for the weight bought
+		let amount = units_per_second * (weight as u128) / (WEIGHT_REF_TIME_PER_SECOND as u128);
+		if amount == 0 {
+			return Ok(payment)
+		}
+		// Take amount from payment
+		let unused =
+			payment.checked_sub((id, amount).into()).map_err(|_| XcmError::TooExpensive)?;
+		self.0 = self.0.saturating_add(weight);
+		self.1 = self.1.saturating_add(amount);
+		Ok(unused)
+	}
+	/* snip */
+}
+```
 2. `UsingComponents`: uses `TransactionPayment` pallet to set the right price for weight.
 
 ---
