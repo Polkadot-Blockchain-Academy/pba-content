@@ -20,7 +20,7 @@ Notes:
 
 - FRAME (Storage Items, Dispatchables, Event, Errors, etc.)
 - Polkadot & parachains conceptually
-- XcVm
+- XCVM
 - Core concepts of XCM
 
 ---
