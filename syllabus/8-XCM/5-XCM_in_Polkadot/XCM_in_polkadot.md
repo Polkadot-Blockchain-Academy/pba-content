@@ -2,8 +2,8 @@
 title: XCM in the Polkadot Context # Also update the h1 header on the first slide to the same name
 description: XCM in the Polkadot Context for web3 Engineers
 duration: 1 hour
-instructors: ["Gavin Wood", "Keith Yeung"]
-teaching-assistants: ["Dan Shields"]
+instructors: ["Keith Yeung", "Gorka Irazoqui"]
+teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 ## _At the end of this lecture, you will be able to:_
@@ -289,7 +289,7 @@ impl xcm_executor::Config for XcmConfig {
 ```
 ---
 ### Statemine Barriers
-Similar to Polkadots, but unpaid execution is allowed from the relay chain
+Similar to Polkadot, but unpaid execution is allowed from the relay chain
 
 ```rust
 pub type Barrier = DenyThenTry<
