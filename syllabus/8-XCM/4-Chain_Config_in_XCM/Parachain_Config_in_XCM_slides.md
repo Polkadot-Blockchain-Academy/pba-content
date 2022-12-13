@@ -408,7 +408,7 @@ The last 2 elements will be set to be handled by pallet-xcm.
 
 ```rust
  impl Config for XcmConfig {
-  /* snip */
+	/* snip */
 	type ResponseHandler = PalletXcm;
 	type SubscriptionService = PalletXcm;
  }
