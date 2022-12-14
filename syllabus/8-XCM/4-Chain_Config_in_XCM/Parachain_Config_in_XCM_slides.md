@@ -57,7 +57,7 @@ impl Config for XcmConfig {
 	type IsReserve = Everything;
 	// Who do we trust as teleporters
 	type IsTeleporter = Nothing;
-	// How we reanchor
+	// How we invert locations
 	type LocationInverter = ?;
 	// Pre-execution filters
 	type Barrier = ?;
