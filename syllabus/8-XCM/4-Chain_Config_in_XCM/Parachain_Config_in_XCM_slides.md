@@ -12,10 +12,6 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 
 # Chain XCM Configurations
 
-## _Core Concepts, Terms, and Logic_
-
-Notes:
-
 **Pre-requisites**
 
 - FRAME (Storage Items, Dispatchables, Event, Errors, etc.)
@@ -55,19 +51,19 @@ impl Config for XcmConfig {
 	type XcmSender = XcmRouter;
 	// How we withdraw/deposit assets
 	type AssetTransactor = ?;
-	// How we convert a ML to a dispatch origin
+	// How we convert a ML to a FRAME dispatch origin
 	type OriginConverter = ?;
-	// What do we trust as reserve chains
+	// Who we trust as reserve chains
 	type IsReserve = Everything;
-	// What do we trust as teleporters
+	// Who do we trust as teleporters
 	type IsTeleporter = Nothing;
 	// How do we reanchor
 	type LocationInverter = LocationInverter<Ancestry>;
 	// Pre-execution filters
 	type Barrier = ?;
-	// How do we weight a message
+	// How we weigh a message
 	type Weigher = ?;
-	// How do we charge for fees
+	// How we charge for fees
 	type Trader = ?;
 	type ResponseHandler = ?;
 	type AssetTrap = ();
@@ -84,13 +80,13 @@ Notes: Xcm-builder and Xcm-pallet are your friends!
 
 ---
 
-### Grab your chains requirements before starting
+### Grab your chain's requirements before starting
 
-Things you should question is:
+Questions that you should have answers for:
 
-- *Is my chain going to transfer just the native token? Is my chain going to receive several assets?*
+- *Is my chain going to transfer just the native token? Is my chain going to receive several other kinds of assets?*
 
-- *Is my chain going to allow the free execution? Maybe for some parachains/relay chain?*
+- *Is my chain going to allow free execution? Maybe only limited to some parachains/relay chain?*
 
 - *Is my chain a 20 byte account chain? a 32 byte account chain?*
 
@@ -98,9 +94,9 @@ Things you should question is:
 
 ### Our starting example setup requirements
 1. Parachain that does not charge for relay incoming messages.
-2. Parachain that trusts the relay as the reserve chain for the relay token
+2. Parachain that trusts the relay as the reserve chain for the relay chain tokens
 3. Parachain that mints in pallet-balances when it receives relay chain tokens.
-4. Parachain that uses 32 byte accounts and that makes it possible for users to execute local XCM.
+4. Parachain that uses 32 byte accounts and that makes it possible for users to execute XCMs locally.
 ---
 
 ### Configuring LocationToAccountId
