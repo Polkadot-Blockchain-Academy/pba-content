@@ -57,8 +57,8 @@ impl Config for XcmConfig {
 	type IsReserve = Everything;
 	// Who do we trust as teleporters
 	type IsTeleporter = Nothing;
-	// How do we reanchor
-	type LocationInverter = LocationInverter<Ancestry>;
+	// How we reanchor
+	type LocationInverter = ?;
 	// Pre-execution filters
 	type Barrier = ?;
 	// How we weigh a message
@@ -103,7 +103,7 @@ Questions that you should have answers for:
 4. Parachain that uses 32 byte accounts and that makes it possible for users to execute XCMs locally.
 ---
 
-### Configuring LocationToAccountId
+### Configuring LocationToAccountId with xcm-builder
 This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
 
 Xcm-builder allows us to configure LocationToAccountId conversions in an easy manner. Let's look at our options:
@@ -352,6 +352,25 @@ impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungib
 
 ---
 
+### Configuring LocationInverter with xcm-builder
+The concept of `LocationInverter` is simple: knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
+
+Xcm builder provides an easy way of doing this with the `LocationInverter<Ancestry>` struct. The only thing we need to configure is the **Ancestry**, which indicates how to go from `root` (the top-level consensus system) to your chain.
+
+Example:
+- **Ancestry**: `para_1000`
+- **Souce to target**: `../../../para_2/account32_default`
+- **Target to source**: `../../para_1000`
+
+**Important Notes!:**
+
+**`LocationInverter` configuration will dissapear in XcmV3!**. Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept. However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**. `UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system:
+
+Example for parachain 1000 in Kusama:
+- **Ancestry**: `para_1000`
+- **UniversalLocation**: `GlobalConsensus(Kusama)/para_1000`
+
+---
 ### Configuring pallet-xcm
 Pallet-xcm plays a critical role in every chains xcm-setup:
 
