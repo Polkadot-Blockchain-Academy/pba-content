@@ -65,9 +65,13 @@ impl Config for XcmConfig {
 	type Weigher = ?;
 	// How we charge for fees
 	type Trader = ?;
+  // How we handle responses
 	type ResponseHandler = ?;
-	type AssetTrap = ();
-	type AssetClaims = ();
+  // How we handle asset traps
+	type AssetTrap = ?;
+  // How we handle asset claims
+	type AssetClaims = ?;
+  // How we handle version subscriptions
 	type SubscriptionService = ?;
 }
 ```
@@ -348,6 +352,64 @@ impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungib
 
 ---
 
+### Configuring pallet-xcm
+Pallet-xcm plays a critical role in every chains xcm-setup:
+
+1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
+2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The locations to which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
+3. It handles XCM version negotiation duties
+4. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
+
+```rust
+impl pallet_xcm::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	// Who can send XCM messages?
+	// How are origins handled?
+	type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	// How do we route messages?
+	type XcmRouter = XcmRouter;
+	// Who can execute XCM?
+	// How are origins handled?
+	type ExecuteXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	// What messages are allowed to be executed?
+	type XcmExecuteFilter = Everything;
+	// The XCM executor itself
+	type XcmExecutor = XcmExecutor;
+	// What asset teleporting is allowed?
+	type XcmTeleportFilter = Everything;
+	// What asset reserve transfer is allowed?
+	type XcmReserveTransferFilter = Everything;
+	type Weigher = XcmWeigher;
+	type LocationInverter = LocationInverter<Ancestry>;
+	type RuntimeOrigin = RuntimeOrigin;
+	type RuntimeCall = RuntimeCall;
+	const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
+	// What XCM version do we advertise as supported
+	type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
+}
+```
+---
+
+### Configuring Asset Trap/Claims with PalletXcm
+The `AssetTrap` configuration type allows us to decide what to do with assets that remain in the holding register after the XCM instructions are executed. Similarly `AssetClaim` allows use to decide how to claim back assets that were trapped.
+
+```rust
+impl Config for XcmConfig {
+	/* snip */
+	type AssetClaim = PalletXcm;
+	type AssetTrap = PalletXcm;
+  /* snip */
+}
+```
+
+**PalletXcm asset trapper**: PalletXcm stores Trapped assets in the `AssetTraps` storage item. For an efficient Trap management, traps are indexed by `BlakeTwo256((origin, assets))`, each holding a counter of how many times such origin has trapped such multiAsset.
+
+**PalletXcm asset claimer**: Similarly to how assets are trapped, PalletXcm also allows for claiming trapped assets, providing that:
+- the origin claiming the assets is identical to the one that trapped them.
+- the multiAsset being claimed is identical to the one that was trapped
+
+---
+
 ## XCM Version Negotiation
 
 XCM is an **extensible message format**.
@@ -398,9 +460,9 @@ XCM version negotiation:
 
 ## Additional config for version negotiation
 
-### Configuring, ResponseHandler and SubscriptionService with pallet-xcm
+### Configuring, ResponseHandler, SubscriptionService and AssetTraps with pallet-xcm
 
-The last 2 elements will be set to be handled by pallet-xcm. 
+The last 4 elements will be set to be handled by pallet-xcm. 
 
 ```rust
  impl Config for XcmConfig {
@@ -417,39 +479,3 @@ But what do all these elements mean:
 
 ---
 
-### Configuring pallet-xcm
-Pallet-xcm plays a critical role in every chains xcm-setup:
-
-1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
-2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The locations to which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
-3. It handles XCM version negotiation duties
-4. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
-
-```rust
-impl pallet_xcm::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	// Who can send XCM messages?
-	// How are origins handled?
-	type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	// How do we route messages?
-	type XcmRouter = XcmRouter;
-	// Who can execute XCM?
-	// How are origins handled?
-	type ExecuteXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	// What messages are allowed to be executed?
-	type XcmExecuteFilter = Everything;
-	// The XCM executor itself
-	type XcmExecutor = XcmExecutor;
-	// What asset teleporting is allowed?
-	type XcmTeleportFilter = Everything;
-	// What asset reserve transfer is allowed?
-	type XcmReserveTransferFilter = Everything;
-	type Weigher = XcmWeigher;
-	type LocationInverter = LocationInverter<Ancestry>;
-	type RuntimeOrigin = RuntimeOrigin;
-	type RuntimeCall = RuntimeCall;
-	const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
-	// What XCM version do we advertise as supported
-	type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
-}
-```
