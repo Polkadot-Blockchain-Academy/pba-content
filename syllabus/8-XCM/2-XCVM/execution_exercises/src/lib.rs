@@ -20,11 +20,11 @@ mod tests {
     use xcm::VersionedXcm;
 	use xcm_simulator_for_exercises::{
 		MockNet,
-		ParaA,
+        Relay,
 		TestExt,
-        ParachainPalletXcm,
-        ParachainPalletBalances,
-        ALICE, INITIAL_BALANCE, parachain,
+        RelayChainPalletXcm,
+        RelayChainPalletBalances,
+        ALICE, INITIAL_BALANCE, parachain, relay_chain
 	};
     use frame_support::assert_ok;
 
@@ -34,22 +34,23 @@ mod tests {
 
         let withdraw_amount = 100;
 
-        ParaA::execute_with(|| {
+
+        Relay::execute_with(|| {
             let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
                 WithdrawAsset((Here, withdraw_amount).into()),
             ]);
             assert_ok!(
-                ParachainPalletXcm::execute(
-                    parachain::RuntimeOrigin::signed(ALICE),
+                RelayChainPalletXcm::execute(
+                    relay_chain::RuntimeOrigin::signed(ALICE),
                     Box::new(VersionedXcm::V2(message.into())),
                     100_000_000_000
                 )
             );
 
-            // assert_eq!(
-            //     ParachainPalletBalances::free_balance(ALICE),
-            //     INITIAL_BALANCE - withdraw_amount
-            // );
+            assert_eq!(
+                RelayChainPalletBalances::free_balance(ALICE),
+                INITIAL_BALANCE - withdraw_amount
+            );
         });
     }
 }
