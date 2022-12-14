@@ -100,4 +100,20 @@ mod tests {
             // Insert Here the appropriate code to execute the XCM message asked for.
         });
     }
+
+    #[test]
+    fn execute_transact_on_own_dispatchable() {
+        MockNet::reset();
+
+        // Task
+        // 1.) Add your own dispatchable in the `parachain` module via your own custom pallet or in an
+        //      existing pallet
+        // 2.) Construct the call for your new dispatchable
+        // 3.) Send a Transact instruction for your new dispatchable
+        // 4.) Verify the call was dispatched
+
+        ParaA::execute_with(|| {
+            // Insert Here the appropriate code to execute the XCM message asked for.
+        });
+    }
 }
