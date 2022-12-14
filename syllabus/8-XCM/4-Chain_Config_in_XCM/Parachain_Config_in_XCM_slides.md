@@ -479,9 +479,9 @@ XCM version negotiation:
 
 ## Additional config for version negotiation
 
-### Configuring, ResponseHandler, SubscriptionService and AssetTraps with pallet-xcm
+### Configuring, ResponseHandler and SubscriptionService with pallet-xcm
 
-The last 4 elements will be set to be handled by pallet-xcm. 
+The last 2 elements will be set to be handled by pallet-xcm. 
 
 ```rust
  impl Config for XcmConfig {
