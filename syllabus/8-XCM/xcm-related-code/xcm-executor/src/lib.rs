@@ -272,14 +272,20 @@ impl<Config: config::Config> XcmExecutor<Config> {
 		&mut self,
 		instr: Instruction<Config::RuntimeCall>,
 	) -> Result<(), XcmError> {
-		match instr {
+		println!("instruction: {:?}", instr);
+		println!("origin: {:?}", self.origin);
+		println!("holding_reg before execution: {:?}", &self.holding);
+		let res = match instr {
 			WithdrawAsset(assets) => {
+				println!("Got into withdraw asset");
 				// Take `assets` from the origin account (on-chain) and place in holding.
 				let origin = self.origin.as_ref().ok_or(XcmError::BadOrigin)?;
+				println!("Got passed origin check");
 				for asset in assets.drain().into_iter() {
 					Config::AssetTransactor::withdraw_asset(&asset, origin)?;
 					self.holding.subsume(asset);
 				}
+				println!("Got to last part after loop");
 				Ok(())
 			},
 			ReserveAssetDeposited(assets) => {
@@ -507,7 +513,9 @@ impl<Config: config::Config> XcmExecutor<Config> {
 			HrmpNewChannelOpenRequest { .. } => Err(XcmError::Unimplemented),
 			HrmpChannelAccepted { .. } => Err(XcmError::Unimplemented),
 			HrmpChannelClosing { .. } => Err(XcmError::Unimplemented),
-		}
+		};
+		println!("holding_reg after execution: {:?}", self.holding);
+		res
 	}
 
 	/// NOTE: Any assets which were unable to be reanchored are introduced into `failed_bin`.

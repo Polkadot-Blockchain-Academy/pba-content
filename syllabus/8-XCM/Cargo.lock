@@ -3800,7 +3800,6 @@ dependencies = [
  "frame-support",
  "pallet-xcm",
  "xcm",
- "xcm-executor",
  "xcm-simulator",
  "xcm-simulator-for-exercises",
 ]
