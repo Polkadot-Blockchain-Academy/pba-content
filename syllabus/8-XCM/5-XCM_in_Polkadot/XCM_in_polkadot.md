@@ -306,6 +306,7 @@ pub type Barrier = DenyThenTry<
 	),
 >;
 ```
+---
 
 # Debugging XCM message failures
 Involves knowledge of the chain XCM configuration!:
@@ -315,6 +316,7 @@ Common steps to debug:
 1. Identify what the error means. This will help you identify the context in which the error happened
 2. Retrieve the received XCM message.
 3. Check the chain XCM configuration to verify what could have failed
+---
 
 ## Identifying the error kind
 Look at the `ump.ExecutedUpward` event:
@@ -325,6 +327,26 @@ Look at the `ump.ExecutedUpward` event:
 </widget-column>
 <widget-column>
 
-Common errors are:
+Some common errors are:
+- `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve
+- `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
+- `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the runtime. Usually happens when the multilocation representing an asset does not match to those handled by the chain.
+- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be done, typically its because the account does not hold such asset, or because we cannot convert the multilocation to an account.
+- `FailedToDecode`: tied to the `Transact` instruction, in whcih the byte-blob representing the dispatchable cannot be decoded.
+- `MaxWeightInvalid`: the weiht specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
+- `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is non-sufficient.
+- `Barrier`: One of the barriers failed, we need to check the barriers individually.
 
+---
 ## Decoding scale-encoded messages
+
+The second step is to retrieve the xcm message received by the chain. We can make clear distinctions on this:
+- **RelayChain**: usually the xcm message can be retrieved in the `paraInherent.enter` inherent, where the candidate for a specific parachain contains the ump messages sent to the relay. **UMP messages are usually executed one block after they are received**
+- **Parachain**: usually the xcm message can be retrieved in the `parachainSystem.setValidationData` inherent, inside the field `downWardMessage` or `horizontalMessages`. **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
+
+One of the main drawbacks is that all we see is a **scale-encoded message** which does not give us much information. To cope with this:
+
+- We build a scale-decoder to retrieve the xcm message (the hard way).
+- We rely on subscan/polkaholic to see the XCM message received.
+
+Guess which one will try out? :)
