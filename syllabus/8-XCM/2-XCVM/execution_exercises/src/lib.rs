@@ -24,8 +24,9 @@ mod tests {
 		TestExt,
         ParachainPalletXcm,
         ParachainPalletBalances,
-        ALICE, INITIAL_BALANCE, parachain,
+        ALICE, BOB, INITIAL_BALANCE, parachain,
 	};
+    use codec::{Encode};
     use frame_support::assert_ok;
 
     #[test]
@@ -33,10 +34,14 @@ mod tests {
         MockNet::reset();
 
         let withdraw_amount = 100;
+        let location = MultiLocation {
+            parents: 1, // For executing for any parachain must be parents: 1
+            interior: Here
+        };
 
         ParaA::execute_with(|| {
             let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
-                WithdrawAsset((Here, withdraw_amount).into()),
+                WithdrawAsset((location, withdraw_amount).into()),
             ]);
             assert_ok!(
                 ParachainPalletXcm::execute(
@@ -46,10 +51,53 @@ mod tests {
                 )
             );
 
-            // assert_eq!(
-            //     ParachainPalletBalances::free_balance(ALICE),
-            //     INITIAL_BALANCE - withdraw_amount
-            // );
+            assert_eq!(
+                ParachainPalletBalances::free_balance(ALICE),
+                INITIAL_BALANCE - withdraw_amount
+            );
+        });
+    }
+
+    #[test]
+    fn execute_buy_execution() {
+        MockNet::reset();
+
+        // Task
+        // Create a BuyExecution Instruction
+        // 1.) Who is buying the execution?
+        // 2.) How to verify we executed this instruction correctly?
+
+        ParaA::execute_with(|| {
+           // Insert here the appropriate code to execute the XCM message asked for.
+        });
+    }
+
+    #[test]
+    fn execute_send_funds_to_bob() {
+        MockNet::reset();
+
+        // Task
+        // Send 100 from Alice to Bob from a parachain locally and verify it.
+        // 1.) Where to send it from?
+        // 2.) how to verify Bob received the funds?
+
+        ParaA::execute_with(|| {
+            // Insert here the appropriate code to execute the XCM message asked for.
+         });
+    }
+
+    #[test]
+    fn execute_transact_message() {
+        MockNet::reset();
+
+        // Task
+        // Create a call which we can dispatch locally
+        // 1.) What kinds of calls do we have to choose from?
+        //      (Hint system pallet might be useful here but any call can do(Which we can verify))
+        // 2.) How can we verify the call was dispatched correctly?(Hint events could be a way :)
+
+        ParaA::execute_with(|| {
+            // Insert Here the appropriate code to execute the XCM message asked for.
         });
     }
 }

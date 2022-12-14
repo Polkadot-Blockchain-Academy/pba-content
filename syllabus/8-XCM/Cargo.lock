@@ -3798,7 +3798,9 @@ name = "xcm-execution-exercise"
 version = "0.9.31"
 dependencies = [
  "frame-support",
+ "frame-system",
  "pallet-xcm",
+ "parity-scale-codec",
  "xcm",
  "xcm-simulator",
  "xcm-simulator-for-exercises",
