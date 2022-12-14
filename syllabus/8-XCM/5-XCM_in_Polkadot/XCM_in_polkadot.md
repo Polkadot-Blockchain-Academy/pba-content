@@ -308,7 +308,23 @@ pub type Barrier = DenyThenTry<
 ```
 
 # Debugging XCM message failures
+Involves knowledge of the chain XCM configuration!:
+
+Common steps to debug:
+
+1. Identify what the error means. This will help you identify the context in which the error happened
+2. Retrieve the received XCM message.
+3. Check the chain XCM configuration to verify what could have failed
 
 ## Identifying the error kind
+Look at the `ump.ExecutedUpward` event:
+
+<widget-columns>
+<widget-column>
+<img style="width: 500px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure"/>
+</widget-column>
+<widget-column>
+
+Common errors are:
 
 ## Decoding scale-encoded messages
