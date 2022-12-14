@@ -20,13 +20,13 @@ mod tests {
     use xcm::VersionedXcm;
 	use xcm_simulator_for_exercises::{
 		MockNet,
-		ParaA,
+        ParaA,
 		TestExt,
         ParachainPalletXcm,
         ParachainPalletBalances,
         ALICE, BOB, INITIAL_BALANCE, parachain,
 	};
-    use codec::{Encode};
+    use codec::Encode;
     use frame_support::assert_ok;
 
     #[test]
