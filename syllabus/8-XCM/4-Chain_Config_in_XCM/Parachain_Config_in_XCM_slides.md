@@ -31,7 +31,7 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 
 ---
 
-## Configurables in XCM-config
+## ⚙️ Configurables in XCM-config
 Common vs configurable implementation in xcm-executor
 
 Configurable parts are defined in the xcm-executor config!
@@ -84,7 +84,7 @@ Notes: Xcm-builder and Xcm-pallet are your friends!
 
 ---
 
-### Grab your chain's requirements before starting
+### 🤔 Grab your chain's requirements before starting
 
 Questions that you should have answers for:
 
@@ -103,7 +103,7 @@ Questions that you should have answers for:
 4. Parachain that uses 32 byte accounts and that makes it possible for users to execute XCMs locally.
 ---
 
-### Configuring LocationToAccountId with xcm-builder
+### 📁 Configuring LocationToAccountId with xcm-builder
 This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
 
 Xcm-builder allows us to configure LocationToAccountId conversions in an easy manner. Let's look at our options:
@@ -177,7 +177,7 @@ For our example, we only need the 4th. We have a requirement of users being able
 
 ---
 
-### Configuring asset-transactors with xcm-builder
+### 👍 Configuring asset-transactors with xcm-builder
 Asset transactors define how we are going to withdraw and deposit assets. What we set in here depends heavily on what do we want our chain to be able to transfer:
 
 1. `CurrencyAdapter`: A simple adapter that uses a single currency as the assetTransactor. This is usually used for withdrawing/depositing the native token of the chain.
@@ -213,7 +213,7 @@ impl
 For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
 
 ---
-### Configuring origin-converter with xcm-builder
+### 📍 Configuring origin-converter with xcm-builder
 Allows us to configure how we convert an origin, defined by a MultiLocation, into a dispatch origin. Used mainly in the `Transact` instruction.
 
 1. `SovereignSignedViaLocation`: Converts the multilocation origin (tipically, a parachain origin) into a signed origin.
@@ -281,7 +281,7 @@ where
 To meet our requirements, we only require number 3. This will allow us to execute (locally) Transact dispatchables.
 
 ---
-### Configuring Barriers with xcm-builder
+### 🚧 Configuring Barriers with xcm-builder
 
 Barriers specify whether or not an XCM is allowed to be executed on the local consensus system. In `xcm-builder` we can find the following pre-defined barriers already:
 
@@ -314,7 +314,7 @@ impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
 
 To meet our example usecase, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
 
-### Configuring WeightTrader with xcm-builder
+### ⚖️ Configuring WeightTrader with xcm-builder
 WeightTrader allows to specify how to charge for weight inside the xcm execution. In `xcm-builder` we can find the following pre-defined traders already:
 
 1. `FixedRateOfFungible`: Converts weight to fee at a fixed rate and charges in a specific fungible asset
@@ -352,7 +352,7 @@ impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungib
 
 ---
 
-### Configuring LocationInverter with xcm-builder
+### 🔃 Configuring LocationInverter with xcm-builder
 The concept of `LocationInverter` is simple: knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
 
 Xcm builder provides an easy way of doing this with the `LocationInverter<Ancestry>` struct. The only thing we need to configure is the **Ancestry**, which indicates how to go from `root` (the top-level consensus system) to your chain.
@@ -371,7 +371,7 @@ Example for parachain 1000 in Kusama:
 - **UniversalLocation**: `GlobalConsensus(Kusama)/para_1000`
 
 ---
-### Configuring pallet-xcm
+### 🎨 Configuring pallet-xcm
 Pallet-xcm plays a critical role in every chains xcm-setup:
 
 1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
@@ -409,7 +409,7 @@ impl pallet_xcm::Config for Runtime {
 ```
 ---
 
-### Configuring Asset Trap/Claims with PalletXcm
+### 🛄 Configuring Asset Trap/Claims with PalletXcm
 The `AssetTrap` configuration type allows us to decide what to do with assets that remain in the holding register after the XCM instructions are executed. Similarly `AssetClaim` allows use to decide how to claim back assets that were trapped.
 
 ```rust
@@ -429,7 +429,7 @@ impl Config for XcmConfig {
 
 ---
 
-## XCM Version Negotiation
+## 🗣️ XCM Version Negotiation
 
 XCM is an **extensible message format**.
 
@@ -476,8 +476,9 @@ XCM version negotiation:
 </widget-column>
 <widget-column>
 
+---
 
-## Additional config for version negotiation
+## ⚙️ Additional config for version negotiation
 
 ### Configuring, ResponseHandler and SubscriptionService with pallet-xcm
 
