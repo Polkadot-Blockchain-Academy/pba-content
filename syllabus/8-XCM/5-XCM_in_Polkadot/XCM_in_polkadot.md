@@ -14,14 +14,17 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 - Send real-world messages between parachain A <-> Polkadot
 - Identify potential errors on XCM messages
 
-## What considerations we need to take into account?
+---
+
+## 🤔 What considerations we need to take into account?
 
 - There should be no trust assumption between chains unless explicitely requested.
 - We cannot assume chains will not act maliciously
 - Spamming XCM messages creates a DoS problem
 
+---
 
-## How does Polkadot configure XCM to take these considerations into account?
+## 🛠️ How does Polkadot configure XCM to take these considerations into account?
 - Barriers
 - Teleport filtering
 - Fee payment
@@ -30,7 +33,10 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 Notes: From now on, we will use the Rococo runtime as a reference. Rococo is a testnet for 
 Polkadot and Kusama that we will use in to test our XCM messages. Most of the Rococo configuration
 is identical to that in Polkadot.
-## XCM barriers in Polkadot
+
+---
+
+## 🚧 XCM barriers in Polkadot
 
 There are 5 barriers that are being used in Polkadot:
 
@@ -54,7 +60,9 @@ pub type Barrier = (
 `AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
 `AllowKnownQueryResponses` and  `AllowSubscriptionsFrom`, as we know already, are mostly used for versioning.
 
-## Trusted teleporters in Polkadot
+---
+
+## 🤝 Trusted teleporters in Polkadot
 Teleporting involves trust between chains, as the token is being burnt in one chain to be minted in the other.
 As such, teleporting should be only enabled with very specific chains.
 
@@ -96,7 +104,7 @@ impl xcm_executor::Config for XcmConfig {
 
 In this case both parachains 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here** multilocation.
 
-## Trusted reserves in Polkadot
+## 💱Trusted reserves in Polkadot
 Polkadot does not recognize any chain as reserve
 
 ```rust
@@ -107,7 +115,9 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
-## LocationToAccountId in Polkadot
+---
+
+## 📁 LocationToAccountId in Polkadot
 As we know, the conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue Transact operations. In the case of Polkadot
 
 ```rust
@@ -122,7 +132,7 @@ This means that:
 - Parachain origins will be converted to their corresponding sovereign account
 - Local 32 byte origins will be converted to a 32 byte defined AccountId.
 
-## Asset Transactors in Polkadot
+## 👍 Asset Transactors in Polkadot
 There is just a single asset-transactor in Polkadot, defined by
 
 ```rust
@@ -150,7 +160,9 @@ impl xcm_executor::Config for XcmConfig {
 
 The asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **pallet-balances**. Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
 
-## Origin Converters in Polkadot
+---
+
+## 📍Origin Converters in Polkadot
 Origin converters defined ways in which we can convert a multilocation to a dispatch origin, tipically used by the **Transact** instruction:
 
 ```rust
@@ -177,6 +189,8 @@ impl xcm_executor::Config for XcmConfig {
 
 Here two things should catch our eye. First, there exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). Second, system parachins are able to dispatch as root origins, as they can bee seen as an extension to the polkadot runtime itself.
 
+---
+
 ## Traders in Polkadot
 Finally we are going to check how Polkadot charges for xcm execution time. In this case, we need to check the **Trader** field in the Config:
 
@@ -193,7 +207,9 @@ In other words:
 - The asset in which we charge for fee is **RocLocation**. This means we can only pay for xcm execution in the **native currency**
 - Fees will go to the block author thanks to **ToAuthor**
 
-## XcmPallet in Polkadot
+---
+
+## 🎨 XcmPallet in Polkadot
 The last thing to be checked is how palletXcm is configured.
 
 ```rust
@@ -218,7 +234,7 @@ As we can see, there is no filter on the Exeuction, Teleporting or Reserve trans
 
 ---
 
-## Statemine Xcm Config
+## ⚙️ Statemine Xcm Config
 Statemine is a common-good parachain that allows hosting arbitrary assets.
 
 You can visit the whole xcm configuration [here](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/statemine/src/xcm_config.rs)
@@ -308,7 +324,7 @@ pub type Barrier = DenyThenTry<
 ```
 ---
 
-# Debugging XCM message failures
+# 🧐 Debugging XCM message failures
 Involves knowledge of the chain XCM configuration!:
 
 Common steps to debug:
@@ -318,7 +334,7 @@ Common steps to debug:
 3. Check the chain XCM configuration to verify what could have failed
 ---
 
-## Identifying the error kind
+## ⚠️ Identifying the error kind
 Look at the `ump.ExecutedUpward` event:
 
 <widget-columns>
@@ -338,7 +354,7 @@ Some common errors are:
 - `Barrier`: One of the barriers failed, we need to check the barriers individually.
 
 ---
-## Decoding scale-encoded messages
+## 🔨 Decoding scale-encoded messages
 
 The second step is to retrieve the xcm message received by the chain. We can make clear distinctions on this:
 - **RelayChain**: usually the xcm message can be retrieved in the `paraInherent.enter` inherent, where the candidate for a specific parachain contains the ump messages sent to the relay. **UMP messages are usually executed one block after they are received**
