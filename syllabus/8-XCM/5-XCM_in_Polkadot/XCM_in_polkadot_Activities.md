@@ -30,3 +30,9 @@ Messages to debug in Polkadot:
 - Block failure: 10557896 ./target/release/debug-failed-dmp -p 1000 -b 10557895
 
 - Block failure: 11884750 ./target/release/debug-failed-dmp -p 1000 -b 10557895
+
+Messages to debug in Rococo:
+- Block failture: 3119881 ./target/release/debug-failed-dmp -p 2087 -b 3119880
+- Block failture: 1457441 ./target/release/debug-failed-dmp -p 2087 -b 1457440
+- Block failture: 1450755 ./target/release/debug-failed-dmp -p 2087 -b 1450754
+- Block failture: 754859 ./target/release/debug-failed-dmp -p 2087 -b 754858

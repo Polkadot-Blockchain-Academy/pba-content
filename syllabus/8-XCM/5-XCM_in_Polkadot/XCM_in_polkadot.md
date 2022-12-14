@@ -306,3 +306,9 @@ pub type Barrier = DenyThenTry<
 	),
 >;
 ```
+
+# Debugging XCM message failures
+
+## Identifying the error kind
+
+## Decoding scale-encoded messages
