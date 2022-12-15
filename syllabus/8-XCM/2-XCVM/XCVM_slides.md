@@ -107,6 +107,16 @@ Notes:
 <widget-column>
 
 ### 💁 The Holding Register
+Expresses a number of assets in control of the xcm-execution but that have no representation on-chain.
+
+It can be seen as the register holding "unspent assets".
+
+
+Example:  Let’s take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
+But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation. These assets are held in the holding register until they are deposited anywhere else.
+
+
+### 💁 XCM by example: The `WithdrawAsset` instruction
 
 `WithdrawAsset` has no location specified for assets.
 
@@ -116,8 +126,28 @@ They are _temporarily_ held in what in the Holding Register.
 <widget-column>
 
 ```rust
-WithdrawAsset(MultiAssets),
+// There are a number of instructions
+// which place assets on the Holding Register.
+// One very simple one is the
+// `WithdrawAsset` instruction.
 
+enum Instruction {
+   WithdrawAsset(MultiAssets), 
+}
+```
+</widget-column>
+</widget-columns>
+
+---
+### 💁 XCM by example: The `DepositAsset` instruction
+Takes assets from the holding register and deposits them in a beneficiary.
+
+Typically an instruction that places assets into the holding register would have been executed.
+
+</widget-column>
+<widget-column>
+
+```rust
 // There are a number of instructions
 // which operate on the Holding Register.
 // One very simple one is the
@@ -136,11 +166,50 @@ enum Instruction {
 </widget-column>
 </widget-columns>
 
-Notes:
+---
+### 💁 XCM by example: The `Transact` instruction
+Executes a scale-encoded transaction.
 
-Let’s take a look at another XCM instruction: `WithdrawAsset`. On the face of it, this is a bit like the first half of `TransferAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
-But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation.
+It dispatches from a FRAME origin derived from the origin register.
+
+OriginKind defines the type of FRAME origin that should be derived: *root*, *signed*, *parachain*..
+</widget-column>
+</widget-columns>
+
+```rust
+// Transact allows to execute arbitrary calls in a chain
+// It is the most generic instruction, as it allows the
+// interaction with any runtime pallet
+enum Instruction {
+    Transact {
+		origin_type: OriginKind,
+		require_weight_at_most: u64,
+		call: DoubleEncoded<RuntimeCall>,
+	},
+    /* snip */
+}
+
+```
+</widget-column>
+</widget-columns>
 
 ---
+### 💁 XCM by example: The `ClearOrigin` instruction
+It clears the origin stored in the origin register.
 
-<!--- TODO Add more things relating to XCM discuss with Keith and Gorka --->
+Useful to execute subsequent messages without a potentially-abusable origin.
+
+Example: we withdraw assets from a parachain controlled account, but then we dont want Transact to be executed
+ 
+</widget-column>
+</widget-columns>
+
+```rust
+// Clear Origin is key to maintain isolation between instructions that are executed with a particular origin and instructions that are not
+enum Instruction {
+    ClearOrigin
+    /* snip */
+}
+```
+</widget-column>
+</widget-columns>
