@@ -449,6 +449,7 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 ---
 
+
 ## 🤹 Many models for <br> transferring assets
 
 <widget-text center>
@@ -459,7 +460,7 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 Notes:
 
-We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain.
+We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain. Addresses that are controllable by a remote chain are often referred to as **Sovereign accounts**.
 
 ---
 
