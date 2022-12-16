@@ -20,7 +20,7 @@ use codec::{Decode, Encode};
 use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{Everything, Nothing},
-	weights::{constants::WEIGHT_PER_SECOND, Weight},
+	weights::Weight,
 };
 use sp_core::H256;
 use sp_runtime::{
@@ -97,39 +97,33 @@ impl pallet_balances::Config for Runtime {
 }
 
 parameter_types! {
-	pub const ReservedXcmpWeight: Weight = WEIGHT_PER_SECOND.saturating_div(4);
-	pub const ReservedDmpWeight: Weight = WEIGHT_PER_SECOND.saturating_div(4);
-}
-
-parameter_types! {
 	pub const KsmLocation: MultiLocation = MultiLocation::parent();
 	pub const RelayNetwork: NetworkId = NetworkId::Kusama;
 	pub Ancestry: MultiLocation = Parachain(MsgQueue::parachain_id().into()).into();
 }
 
 pub type LocationToAccountId = (
-	ParentIsPreset<AccountId>,
-	SiblingParachainConvertsVia<Sibling, AccountId>,
 	AccountId32Aliases<RelayNetwork, AccountId>,
 );
 
 pub type XcmOriginToCallOrigin = (
-	SovereignSignedViaLocation<LocationToAccountId, RuntimeOrigin>,
 	SignedAccountId32AsNative<RelayNetwork, RuntimeOrigin>,
-	XcmPassthrough<RuntimeOrigin>,
 );
 
 parameter_types! {
 	pub const UnitWeightCost: u64 = 1;
 	pub KsmPerSecond: (AssetId, u128) = (Concrete(Parent.into()), 1);
 	pub const MaxInstructions: u32 = 100;
+	pub type Parent: impl Contains<MultiLocation> = {
+		MultiLocation { parents: 1, interior: Here } |
+	};
 }
 
 pub type LocalAssetTransactor =
 	XcmCurrencyAdapter<Balances, IsConcrete<KsmLocation>, LocationToAccountId, AccountId, ()>;
 
 pub type XcmRouter = super::ParachainXcmRouter<MsgQueue>;
-pub type Barrier = AllowUnpaidExecutionFrom<Everything>;
+pub type Barrier = AllowUnpaidExecutionFrom<Parent>;
 
 pub struct XcmConfig;
 impl Config for XcmConfig {
@@ -142,10 +136,10 @@ impl Config for XcmConfig {
 	type LocationInverter = LocationInverter<Ancestry>;
 	type Barrier = Barrier;
 	type Weigher = FixedWeightBounds<UnitWeightCost, RuntimeCall, MaxInstructions>;
-	type Trader = FixedRateOfFungible<KsmPerSecond, ()>;
+	type Trader = ();
 	type ResponseHandler = PolkadotXcm;
-	type AssetTrap = PolkadotXcm;
-	type AssetClaims = PolkadotXcm;
+	type AssetTrap = ();
+	type AssetClaims = ();
 	type SubscriptionService = PolkadotXcm;
 }
 
