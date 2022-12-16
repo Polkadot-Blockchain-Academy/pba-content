@@ -10,7 +10,7 @@ teaching-assistants: ["Dan Shields"]
 
 ---
 
-<widget-speaker name="Joe Petrowski" position="Common Good Parachains Team Lead at Web3 Foundation" image="../../../assets/img/0-Shared/people/joe.png" github=" joepetrowski" twitter="joepetrowski" linkedin="joe-petrowski-73538929" matrix="joe:web3.foundation"></widget-speaker>
+<widget-speaker name="Joe Petrowski" position="Common Good Parachains Team Lead at Web3 Foundation" image="../../assets/img/0-Shared/people/joe.png" github=" joepetrowski" twitter="joepetrowski" linkedin="joe-petrowski-73538929" matrix="joe:web3.foundation"></widget-speaker>
 
 ---
 
@@ -153,9 +153,9 @@ When users have credible guarantees that they are interacting with the same data
 
 ## Application Disentanglement
 
-<img style="width: 800px" src="../../../assets/img/3-Blockchain/3.1-application-disentanglement.png"/>
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.1-application-disentanglement.png"/>
 
-Note:
+Notes:
 
 The idea here is to discuss how applications are often seen as an entire bundle: e.g.
 Instagram is the database, the algorithms, the UX.
@@ -177,7 +177,7 @@ Opens the door to new application stacks:
 
 ## State Machine
 
-<img style="width: 900px;" src="../../../assets/img/3-Blockchain/3.1-state-machine.png"/>
+<img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-state-machine.png"/>
 
 ---
 
@@ -275,7 +275,7 @@ This example is from Substrate, which we will cover more in depth in the next mo
 
 ## Anatomy
 
-<img style="width: 1100px" src="../../../assets/img/3-Blockchain/3.1-anatomy.png"/>
+<img style="width: 1100px" src="../../assets/img/3-Blockchain/3.1-anatomy.png"/>
 
 ---
 
@@ -477,7 +477,7 @@ Bug fixes, new functionality, new information.
 
 This can be tricky in blockchains...
 
-Note:
+Notes:
 
 We'll be getting to this soon and also in 3.4.
 
@@ -489,7 +489,7 @@ We'll be getting to this soon and also in 3.4.
 
 ## Bitcoin
 
-<img style="width: 900px;" src="../../../assets/img/3-Blockchain/3.1-bitcoin-blocks.png"/>
+<img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-bitcoin-blocks.png"/>
 
 Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus.
 
@@ -526,7 +526,7 @@ Historically, upgrading blockchains meant getting everyone to update their node 
 
 ---
 
-<img style="width: 500px;" src="../../../assets/img/0-Shared/logo/Polkadot_Pink-White.svg"/>
+<img style="width: 500px;" src="../../assets/img/0-Shared/logo/Polkadot_Pink-White.svg"/>
 
 Notes:
 

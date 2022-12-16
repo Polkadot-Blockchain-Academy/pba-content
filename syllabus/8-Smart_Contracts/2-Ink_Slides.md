@@ -5,7 +5,7 @@ duration: 1 hour
 instructors: ["Michael Müller"]
 ---
 
-# <img style="width: 60%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />
+# <img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />
 
 ---
 
@@ -15,7 +15,7 @@ instructors: ["Michael Müller"]
 
 ## How does ink! tie into Substrate?
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego0.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego0.png" />
 
 Notes:
 How does ink! tie into Substrate?
@@ -24,35 +24,35 @@ How does ink! tie into Substrate?
 
 ## How does ink! tie into Substrate?
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego1.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego1.png" />
 
 ---
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema0.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema0.png" />
 
 ---
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema1.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema1.png" />
 
 ---
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema2.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema2.png" />
 
 ---
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema3.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema3.png" />
 
 ---
 
-<img style="width: 70%; " src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain1.png" />
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain1.png" />
 
 ---
 
-<img style="width: 70%; " src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain2.png" />
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain2.png" />
 
 ---
 
-<img style="width: 70%; " src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain3.png" />
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain3.png" />
 
 Notes:
 
@@ -70,7 +70,7 @@ Smart Contracts:
 
 ---
 
-<img style="width: 80%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case0.jpg" />
+<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case0.jpg" />
 
 Notes:
 
@@ -81,7 +81,7 @@ Notes:
 
 ---
 
-<img style="width: 80%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case1.jpg" />
+<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case1.jpg" />
 
 Notes:
 
@@ -91,7 +91,7 @@ Notes:
 
 ---
 
-<img style="width: 80%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case2.jpg" />
+<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case2.jpg" />
 
 Notes:
 
@@ -255,11 +255,11 @@ mod tests {
 ## Metadata?
 
 <br>
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/matrix-transparent.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/matrix-transparent.png" />
 
 ---
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts1.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts1.png" />
 
 Notes:
 
@@ -267,41 +267,41 @@ Build Artifacts
 
 ---
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts2.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts2.png" />
 
 ---
 
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts3.png" />
-
----
-
-# ink!-ternals
-
-<img style="width: 90%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals1.png" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts3.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals2.png" />
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals1.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals3.png" />
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals2.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals4.png" />
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals3.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals5.png" />
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals4.png" />
+
+---
+
+# ink!-ternals
+
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals5.png" />
 
 ---
 
@@ -311,14 +311,14 @@ Build Artifacts
 <div class="flex-container">
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/substrate-contracts-node.png" />
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/substrate-contracts-node.png" />
 
 [`substrate-contracts-node`](https://github.com/paritytech/substrate-contracts-node)
 
 </div>
 <div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rococo.png" />
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rococo.png" />
 
 [Rococo Testnet](https://ink.substrate.io/testnet)
 
@@ -333,14 +333,14 @@ Build Artifacts
 <div class="flex-container">
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-ui.png" />
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-ui.png" />
 
 [https://contracts-ui.substrate.io](https://contracts-ui.substrate.io)
 
 </div>
 <div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/polkadot-js-contracts.png" />
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/polkadot-js-contracts.png" />
 
 [https://polkadot.js.org/apps](https://polkadot.js.org/apps)
 
@@ -352,14 +352,14 @@ Build Artifacts
 ## Developer UIs
 
 <br>
-<img style="width: 70%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/developer-uis-2.svg" />
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/developer-uis-2.svg" />
 
 ---
 
 ## Documentation
 
 <br>
-<img style="width: 70%; " src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/documentation.svg" />
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/documentation.svg" />
 
 ---
 
@@ -370,7 +370,7 @@ Build Artifacts
 ## Reading Contract Values: RPC
 
 <br>
-<img style="width: 60%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rpc.png" />
+<img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rpc.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
@@ -378,12 +378,12 @@ Build Artifacts
 ## Reading Contract Values: Events
 
 <br>
-<img style="width: 65%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/events.png" />
+<img style="width: 65%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/events.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
-<img style="width: 50%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/venn.png" />
+<img style="width: 50%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/venn.png" />
 
 ---
 
@@ -393,7 +393,7 @@ Build Artifacts
 
 <div class="flex-container">
 <div class="left fragment" data-fragment-index="1">
-<img style="width: 150px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
 
 ```solidity
 pragma solidity 0.7.0;
@@ -413,7 +413,7 @@ contract ChangeBalance {
 
 </div>
 <div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
-<img style="width: 150px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
 
 - Build-in underflow/overflow protection
 - `checked_add()`
@@ -431,12 +431,12 @@ Notes:
 
 <div class="flex-container">
 <div class="left fragment" data-fragment-index="1">
-<img style="width: 150px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
 <br/>
-<img style="width: 100%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity-reentrancy-attack.jpg" />
+<img style="width: 100%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity-reentrancy-attack.jpg" />
 </div>
 <div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
-<img style="width: 150px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
 
 - Built-in reentrancy protection
 - Fine-grained control
@@ -452,7 +452,7 @@ Re-entrancy Protection
 
 <div class="flex-container">
 <div class="left fragment" data-fragment-index="1">
-<img style="width: 150px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
 
 ```solidity
 pragma solidity 0.7.0;
@@ -473,7 +473,7 @@ contract Lottery {
 
 </div>
 <div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
-<img style="width: 150px;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
 
 - Functions private by default
 - Needs to be annotated explicitly
@@ -484,17 +484,17 @@ contract Lottery {
 
 ---
 
-<img style="width: 80%" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc.png" />
+<img style="width: 80%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc.png" />
 
 ---
 
-<img style="width: 100%" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc0.png" />
+<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc0.png" />
 
-<img style="width: 100%" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc1.png" />
+<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc1.png" />
 
-<img style="width: 100%" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc2.png" />
+<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc2.png" />
 
-<img style="width: 7%" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/dots-white.svg" />
+<img style="width: 7%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/dots-white.svg" />
 
 Notes:
 
@@ -503,11 +503,11 @@ Notes:
 
 ---
 
-<img style="width: 20%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
+<img style="width: 20%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
 
 ---
 
-<img style="width: 100%;" src="../../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qrs.png" />
+<img style="width: 100%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qrs.png" />
 
 ---
 
