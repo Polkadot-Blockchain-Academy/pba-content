@@ -11,7 +11,7 @@
 ### Learning Outcome
 
 - Launch testnets and send XCM on them in, using `polkadot-launch` {or other tooling}
--
+- Debug failed XCM messages
 
 ### Learning Objectives
 
@@ -22,10 +22,14 @@
 - Polkadot Launch/ Scale decoding to debug
 
 ### Activities and Exercises
+- Transfer native tokens from ChainA → ChainB **on Rococo** {no setup needed, }
+  - Teleport
+  - Reserve Asset
+  - Explain what to use these given a scenario:
+    - Within a chain itself `Here`
+    - Relay → ParaA (Common good)
+    - ParaA -> Relay
 
-- Test XCM using:
-  - XCM simulator in Polkadot (no channels)
-  - `polkadot-launch` and Apps UI
 - Troubleshoot XCM
   - SCALE knowledge needed to inspect raw XCM bytes
   - Identify versioning issues
