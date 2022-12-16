@@ -220,14 +220,21 @@ Once you've followed the set-up instructions and have the repository running loc
 To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:
 
 ```sh
+# This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
 yarn links <Module Number>
+
+# This will check a single file
+
+yarn links <relative-link-to/the-top-working-dir/file.md>
 ```
 
-This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
-
-A the same too is also run by our CI on all files.
+The same tool is also run by our CI on all files for all pushes to all branches.
 See [.github/workflows/link-check.yml](.github/workflows/link-check.yml) for details.
 Both use the same [config file](.github/workflows/mlc_config.json).
+
+> You can ignore the link check for a single line by post-fixing it with:
+>
+> `Some private or intentionally broken link. <!-- TODO Remove this check disable once ... --> <!-- markdown-link-check-disable-line -->`
 
 ## Exercises, workshops and activities
 

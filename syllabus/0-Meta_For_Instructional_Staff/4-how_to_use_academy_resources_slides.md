@@ -14,37 +14,6 @@ teaching-assistants: ["some one", "another gal"]
 
 ---
 
-<div class="flex-container">
-<div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-<!-- TODO: add a good circularly cropped head shot of ou to the `assets/profile` folder  -->
-<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/people/BUFFICORN_2521_ALT_smol.gif"/>
-
-</div>
-<div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
-
-### Dan Shields (NukeManDan)
-
-<!-- .element: style="margin-bottom: -30px;" -->
-
-#### _Developer Experience Engineer @ Parity_
-
-<!-- .element: style="margin-left: 20px;" -->
-
-- I am a Subject matter in Academy Support
-- <- This is my ETHDenver PFP
-- I **_love_** to hike!
-
-<!-- disable link checking because linkedin only available to authenticated users -->
-<!-- markdown-link-check-disable-next-line -->
-
-_[Twitter](https://twitter.com/NukeManDan) // [LinkedIn](https://linkedin.com/in/danwshields) // [Email](mailto:dan.shields@parity.io)_
-
-</div>
-</div>
-
----
-
 ### Outline
 
 <!--
@@ -133,10 +102,7 @@ Grab your machine!
 
 ### Install & launch slides
 
-<!-- TODO Remove this ignore once the repo is public -->
-<!-- markdown-link-check-disable-next-line -->
-
-- Open https://github.com/polkadot-blockchain-academy/pba-content
+- Open https://github.com/polkadot-blockchain-academy/pba-content <!-- TODO Remove this check disable once repo is public --> <!-- markdown-link-check-disable-line -->
 - Clone the repo
 - Open up the [CONTRIBUTING.md](../../CONTRIBUTING.md) doc
 - Follow instructions to setup `node` and `yarn` as needed
@@ -312,6 +278,4 @@ In this _meta-lecture_ we experienced a lot of tools and techniques to make your
 
 ## References
 
-<!-- markdown-link-check-disable-next-line -->
-
-- [These slides](TODO) - in your repo (once that PR is approved and merged ;) )
+- [These slides](TODO) - in your repo (once that PR is approved and merged ;) ) <!-- TODO Remove this check disable once repo is public --> <!-- markdown-link-check-disable-line -->
