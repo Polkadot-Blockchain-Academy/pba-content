@@ -500,7 +500,7 @@ Notes:
 
 ---
 
-## Governance
+## Governance... unstopable?
 
 <iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -511,6 +511,33 @@ Notes:
 Watch if time allows for class discussions.
 More likely to assign informally to everyone to watch in the next few days.
 Also ensure everyone researches the effects of OFAC has had on validator compliance because of Tornado Cash.
+
+---
+
+## Democratic Systems
+
+Democratic Mediums is a directory of patterns for decision, deliberation, and noise.
+
+> https://medlabboulder.gitlab.io/democraticmediums/
+> https://metagov.org/ -- weekly seminar
+> https://daocollective.xyz/
+> https://www.smartcontractresearch.org/
+
+Notes:
+
+Many novel and niece definitions in this wiki.
+Very much encouraged to explore after class!
+
+---
+
+## DAOs
+
+Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech/what-dao/)).
+
+> A **coordination** mechanism.
+
+
+
 
 ---
 
