@@ -10,6 +10,7 @@ Ideas:
 ## Day 1 (6 hours)
 
 * lecture: WASM-meta protocol lecture (120m)
+* lecture: Merkle Storage (30m)
 
 * lecture: SCALE (30m)
 * lecture: JSON-RPC protocol (30m)
@@ -21,8 +22,7 @@ Ideas:
 
 ## Day 2 (6 hours)
 
-* High level lecture on Consensus (30m)
-* High level lecture on Merkle Storage (30m)
+* High level lecture on Consensus (30m) (Probably will be done by Joshy and remove)
 * High level lecture on Transaction Queue (30m)
 
 * activity: FRAME-less activity
