@@ -348,8 +348,8 @@ Some common errors are:
 - `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
 - `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the runtime. Usually happens when the multilocation representing an asset does not match to those handled by the chain.
 - `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be done, typically its because the account does not hold such asset, or because we cannot convert the multilocation to an account.
-- `FailedToDecode`: tied to the `Transact` instruction, in whcih the byte-blob representing the dispatchable cannot be decoded.
-- `MaxWeightInvalid`: the weiht specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
+- `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
+- `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
 - `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is non-sufficient.
 - `Barrier`: One of the barriers failed, we need to check the barriers individually.
 
