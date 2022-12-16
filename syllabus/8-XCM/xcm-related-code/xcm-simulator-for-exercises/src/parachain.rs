@@ -20,7 +20,7 @@ use codec::{Decode, Encode};
 use frame_support::{
 	construct_runtime, parameter_types,
 	traits::{Everything, Nothing},
-	weights::{constants::WEIGHT_PER_SECOND, Weight},
+	weights::Weight,
 };
 use sp_core::H256;
 use sp_runtime::{
@@ -94,11 +94,6 @@ impl pallet_balances::Config for Runtime {
 	type WeightInfo = ();
 	type MaxReserves = MaxReserves;
 	type ReserveIdentifier = [u8; 8];
-}
-
-parameter_types! {
-	pub const ReservedXcmpWeight: Weight = WEIGHT_PER_SECOND.saturating_div(4);
-	pub const ReservedDmpWeight: Weight = WEIGHT_PER_SECOND.saturating_div(4);
 }
 
 parameter_types! {
