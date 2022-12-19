@@ -35,7 +35,7 @@ mod tests {
 
         let withdraw_amount = 100;
         let location = MultiLocation {
-            parents: 1, // For executing for any parachain must be parents: 1
+            parents: 1,
             interior: Here
         };
 
