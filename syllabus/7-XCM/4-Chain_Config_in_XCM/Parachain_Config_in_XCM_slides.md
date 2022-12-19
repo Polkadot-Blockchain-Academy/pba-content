@@ -390,16 +390,16 @@ impl pallet_xcm::Config for Runtime {
 	type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
 	// How do we route messages?
 	type XcmRouter = XcmRouter;
-	// Who can execute XCM?
+	// Who can execute XCMs/teleport assets/reserve-transfer assets?
 	// How are origins handled?
 	type ExecuteXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	// What messages are allowed to be executed?
+	// Who and what messages are allowed to be executed?
 	type XcmExecuteFilter = Everything;
 	// The XCM executor itself
 	type XcmExecutor = XcmExecutor;
-	// What asset teleporting is allowed?
+	// Who and what kind of assets are allowed to be teleported via the `teleport_asset` extrinsic?
 	type XcmTeleportFilter = Everything;
-	// What asset reserve transfer is allowed?
+	// Who and what kind of assets are allowed to be transferred as a reserve asset via the `reserve_transfer_assets` extrinsic?
 	type XcmReserveTransferFilter = Everything;
 	type Weigher = XcmWeigher;
 	type LocationInverter = LocationInverter<Ancestry>;
@@ -413,7 +413,7 @@ impl pallet_xcm::Config for Runtime {
 ---
 
 ### 🛄 Configuring Asset Trap/Claims with PalletXcm
-The `AssetTrap` configuration type allows us to decide what to do with assets that remain in the holding register after the XCM instructions are executed. Similarly `AssetClaim` allows use to decide how to claim back assets that were trapped.
+The `AssetTrap` configuration item allows us to decide what to do with assets that remain in the holding register after the XCM instructions are executed. Similarly `AssetClaim` allows us to decide how to reclaim assets that were trapped.
 
 ```rust
 impl Config for XcmConfig {
@@ -468,10 +468,10 @@ XCM version negotiation:
 <widget-text center>
 
 1. Chain A sends `SubscribeVersion` to chain B.
-2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, but the XCM version in the response
+2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
 3. Chain A stores chain B's supported version on storage.
 4. The same procedure happens from chain B to chain A.
-5. Communication is stablished in the highest common supported version.
+5. Communication is established using in the highest mutually supported version.
 
 <widget-columns>
 <widget-column>

@@ -121,11 +121,11 @@ impl xcm_executor::Config for XcmConfig {
 As we know, the conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue Transact operations. In the case of Polkadot
 
 ```rust
-pub type LocationConverter =
-	(// We can convert a child parachain using the standard `AccountId` conversion.
+pub type LocationConverter = (
+	// We can convert a child parachain using the standard `AccountId` conversion.
 	ChildParachainConvertsVia<ParaId, AccountId>,
 	// We can directly alias an `AccountId32` into a local account.
-	AccountId32Aliases<RococoNetwork, AccountId>,
+	AccountId32Aliases<PolkadotNetwork, AccountId>,
   );
 ```
 This means that:
