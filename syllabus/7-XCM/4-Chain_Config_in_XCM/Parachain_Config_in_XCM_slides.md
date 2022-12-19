@@ -377,7 +377,7 @@ Pallet-xcm plays a critical role in every chains xcm-setup. It is the main conne
 Pallet-xcm can be configured to filter executions/teleporting or sending among others. The most important components are:
 
 1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
-2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The locations to which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
+2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The origins from which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
 3. It handles XCM version negotiation duties
 4. It handles asset-trap/claim dutties
 5. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
