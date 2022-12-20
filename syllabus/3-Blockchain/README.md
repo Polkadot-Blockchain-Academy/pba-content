@@ -13,13 +13,15 @@ The module is taught over 2.5 days - roughly
 - 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class.
 - 🗣️ Overview of Blockchain Lecture
 - ⌨️ Begin BFS coding activity - specifically state machine part
+- ☕ Break
 - 🗣️ Blockchain Structure Lecture
 - ⌨️ Continue BFS coding activity. Students should start the blockchain portion and finish the first lesson in that part even if they are not done with the state machine stuff yet (which is very likely). Then they can continue whichever part moves them
 
 ### Day 1 - Afternoon Session
 
 - 🗣️ Consensus Part 1 Lecture - Authoring - Agreeing on Possibilities
-- Manual Consensus Activity (aka BitStory)
+- 🎲 Manual Consensus Activity (aka BitStory)
+- ☕ Break
 - 🗣️ Accounts vs UTXOs Lecture
 - ⌨️ Continue coding on BFS
 
@@ -27,12 +29,14 @@ The module is taught over 2.5 days - roughly
 
 - 🗣️ Consensus Part 2 Lecture - Finality - Agreeing on Ordering
 - 🎲 Grandpa Board Game Activity
+- ☕ Break
 - 🗣️ Resource Allocation lecture
 - ⌨️ Continue Coding on BFS
 
 ### Day 2 - Afternoon Session
 - 🗣️ P2P Networking Lecture
 - ⌨️ BFS
+- ☕ Break
 - 🗣️ Light Clients Bridges
 - ⌨️ BFS
 
