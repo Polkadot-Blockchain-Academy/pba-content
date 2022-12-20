@@ -471,7 +471,7 @@ XCM version negotiation:
 2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
 3. Chain A stores chain B's supported version on storage.
 4. The same procedure happens from chain B to chain A.
-5. Communication is established using in the highest mutually supported version.
+5. Communication is established using the highest mutually supported version.
 
 <widget-columns>
 <widget-column>
@@ -485,7 +485,7 @@ XCM version negotiation:
 
 ### Configuring, ResponseHandler and SubscriptionService with pallet-xcm
 
-The last 2 elements will be set to be handled by pallet-xcm. 
+The last 2 items will be set to be handled by pallet-xcm. 
 
 ```rust
  impl Config for XcmConfig {

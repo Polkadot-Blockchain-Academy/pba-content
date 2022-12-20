@@ -7,7 +7,7 @@
 - Use **PalletXCM** to Withdraw from your account and deposit in any other account using XCM locally. Does it work? Why can you do this'
 - Use **PalletXCM** to issue a remark transaction with XCM. Does it work? Why can you do this?
 
-### Teleport ROC to Rocmint
+### Teleport ROC to Rockmint
 
 - Use **PalletXCM** to teleport ROC from Rococo to Rocmint. Can you do this? Why?
 

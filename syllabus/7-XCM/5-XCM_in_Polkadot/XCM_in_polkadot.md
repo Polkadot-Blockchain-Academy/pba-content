@@ -203,7 +203,7 @@ impl xcm_executor::Config for XcmConfig {
 ```
 In other words:
 
-- Weight is converted to fee with the **WeightToFee** structure.
+- Weight is converted to fee with the **WeightToFee** type.
 - The asset in which we charge for fee is **RocLocation**. This means we can only pay for xcm execution in the **native currency**
 - Fees will go to the block author thanks to **ToAuthor**
 
