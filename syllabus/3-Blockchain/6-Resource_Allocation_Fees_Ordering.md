@@ -1,12 +1,12 @@
 ---
-title: Fees, Ordering, and Bridges
-description: Fees, ordering, and bridges in blockchains
+title: Fees, Ordering
+description: Fees and ordering in blockchains
 duration: 1 hour
 instructors: ["Joe Petrowski"]
 teaching-assistants: ["Sacha Lansky"]
 ---
 
-# Fees, Ordering, and Bridges
+# Fees, Ordering
 
 ---
 
@@ -20,7 +20,6 @@ teaching-assistants: ["Sacha Lansky"]
 
 1. [Fees and ordering](#fees--ordering)
 1. [Execution models](#execution-models)
-1. [Bridges](#fees-ordering-and-bridges)
 
 </center>
 
