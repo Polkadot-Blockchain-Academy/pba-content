@@ -332,9 +332,10 @@ Involves knowledge of the chain XCM configuration!:
 
 Common steps to debug:
 
-1. Identify what the error means. This will help you identify the context in which the error happened
-2. Retrieve the received XCM message.
-3. Check the chain XCM configuration to verify what could have failed
+1. Identify what the error means. This will help you identify the context in which the error happened.
+2. Look in the xcm codebase to check where this error might have been thrown. Was it thrown in the barrier? Or in any specific instruction?
+3. Retrieve the failed received XCM.
+4. Check the chain XCM configuration to verify what could have failed.
 ---
 
 ## ⚠️ Identifying the error kind
@@ -355,6 +356,7 @@ Some common errors are:
 - `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
 - `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is non-sufficient.
 - `Barrier`: One of the barriers failed, we need to check the barriers individually.
+- `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown. In those cases the chain falls back to the safe XCM version but if it is not set, the communication  then the destination is unreachable.
 
 ---
 ## 🔨 Decoding scale-encoded messages
