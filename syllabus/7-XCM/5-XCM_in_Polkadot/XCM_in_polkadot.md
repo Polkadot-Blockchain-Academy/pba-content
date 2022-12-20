@@ -160,6 +160,7 @@ impl xcm_executor::Config for XcmConfig {
 
 The asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **pallet-balances**. Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
 
+Notes: Rococo is tracking teleports in the **CheckAccount**, which is defined in **palletXcm**. This aims at maintaining the total issuance even if assets have been teleported to another chain
 ---
 
 ## 📍Origin Converters in Polkadot
@@ -264,7 +265,9 @@ pub type CurrencyTransactor = CurrencyAdapter<
 	(),
 >;
 ```
-Notice how KsmLocation is equal to **Parent**. Everytime we receive a token with the parent multilocation, we mint in Balances.
+Notes: 
+- Notice how KsmLocation is equal to **Parent**. Everytime we receive a token with the parent multilocation, we mint in Balances.
+- Teleports are not being tracked in any account in Statemine, only in the relay chain.
 
 **Fungibles Asset Transactor**
 ```rust
