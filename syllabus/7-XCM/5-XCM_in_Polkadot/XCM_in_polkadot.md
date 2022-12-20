@@ -10,8 +10,8 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 
 <widget-text center>
 
-- Understand the configuration of the Polkadot chain
-- Send real-world messages between parachain A <-> Polkadot
+- Understand the configuration of the Rococo chain
+- Send real-world messages between parachain A <-> Rococo
 - Identify potential errors on XCM messages
 
 ---
@@ -24,7 +24,7 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 
 ---
 
-## 🛠️ How does Polkadot configure XCM to take these considerations into account?
+## 🛠️ How does Rococo configure XCM to take these considerations into account?
 - Barriers
 - Teleport filtering
 - Fee payment
@@ -36,9 +36,9 @@ is identical to that in Polkadot.
 
 ---
 
-## 🚧 XCM barriers in Polkadot
+## 🚧 XCM barriers in Rococo
 
-There are 5 barriers that are being used in Polkadot:
+There are 5 barriers that are being used in Rococo:
 
 ```rust
 /// The barriers one of which must be passed for an XCM message to be executed.
@@ -62,11 +62,11 @@ pub type Barrier = (
 
 ---
 
-## 🤝 Trusted teleporters in Polkadot
+## 🤝 Trusted teleporters in Rococo
 Teleporting involves trust between chains, as the token is being burnt in one chain to be minted in the other.
 As such, teleporting should be only enabled with very specific chains.
 
-Polkadot configures which are the chains allowed to teleport tokens in the following manner:
+Rococo configures which are the chains allowed to teleport tokens in the following manner:
 
 ```rust
 parameter_types! {
@@ -104,8 +104,8 @@ impl xcm_executor::Config for XcmConfig {
 
 In this case both parachains 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here** multilocation.
 
-## 💱Trusted reserves in Polkadot
-Polkadot does not recognize any chain as reserve
+## 💱Trusted reserves in Rococo
+Rococo does not recognize any chain as reserve
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -117,23 +117,23 @@ impl xcm_executor::Config for XcmConfig {
 
 ---
 
-## 📁 LocationToAccountId in Polkadot
-As we know, the conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue Transact operations. In the case of Polkadot
+## 📁 LocationToAccountId in Rococo
+As we know, the conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue Transact operations. In the case of Rococo
 
 ```rust
 pub type LocationConverter = (
 	// We can convert a child parachain using the standard `AccountId` conversion.
 	ChildParachainConvertsVia<ParaId, AccountId>,
 	// We can directly alias an `AccountId32` into a local account.
-	AccountId32Aliases<PolkadotNetwork, AccountId>,
+	AccountId32Aliases<RococoNetwork, AccountId>,
   );
 ```
 This means that:
 - Parachain origins will be converted to their corresponding sovereign account
 - Local 32 byte origins will be converted to a 32 byte defined AccountId.
 
-## 👍 Asset Transactors in Polkadot
-There is just a single asset-transactor in Polkadot, defined by
+## 👍 Asset Transactors in Rococo
+There is just a single asset-transactor in Rococo, defined by
 
 ```rust
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
@@ -163,7 +163,7 @@ The asset-transactor is matching the **Here** multilocation id to the Currency d
 Notes: Rococo is tracking teleports in the **CheckAccount**, which is defined in **palletXcm**. This aims at maintaining the total issuance even if assets have been teleported to another chain
 ---
 
-## 📍Origin Converters in Polkadot
+## 📍Origin Converters in Rococo
 Origin converters defined ways in which we can convert a multilocation to a dispatch origin, tipically used by the **Transact** instruction:
 
 ```rust
@@ -188,12 +188,12 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
-Here two things should catch our eye. First, there exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). Second, system parachins are able to dispatch as root origins, as they can bee seen as an extension to the polkadot runtime itself.
+Here two things should catch our eye. First, there exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). Second, system parachins are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.
 
 ---
 
-## Traders in Polkadot
-Finally we are going to check how Polkadot charges for xcm execution time. In this case, we need to check the **Trader** field in the Config:
+## Traders in Rococo
+Finally we are going to check how Rococo charges for xcm execution time. In this case, we need to check the **Trader** field in the Config:
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -210,7 +210,7 @@ In other words:
 
 ---
 
-## 🎨 XcmPallet in Polkadot
+## 🎨 XcmPallet in Rococo
 The last thing to be checked is how palletXcm is configured.
 
 ```rust
@@ -308,7 +308,7 @@ impl xcm_executor::Config for XcmConfig {
 ```
 ---
 ### Statemine Barriers
-Similar to Polkadot, but unpaid execution is allowed from the relay chain
+Similar to Rococo, but unpaid execution is allowed from the relay chain
 
 ```rust
 pub type Barrier = DenyThenTry<
