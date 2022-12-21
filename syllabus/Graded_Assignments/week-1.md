@@ -72,3 +72,14 @@ Only the bids that are placed before the ending time are actually counted. Of th
 ```rust
 fn candle_auction(Vec<Bid>, end_time: Duration) -> AuctionWinner
 ```
+
+## Exercise 6: A Nash Solver
+Code a Nash equilibrium solver for 2x2 matrix games. The solver takes as input two 2x2 matrices of payofs, $P_1$ and $P_2$, for the two players and returns the set of pure-strategy profiles.
+
+For example, for the coordination game, the matrices are as follows:
+
+$$P_1 = \begin{pmatrix} 1 & 0 \\ 0 & 2 \end{pmatrix} \text{ and } P_2 = \begin{pmatrix} 1 & 0 \\ 0 & 2 \end{pmatrix}$$
+
+The solver should then return a list $N$ of action profiles that correspond to Nash equilibria. If we encode the actions as $1$ and $2$, then the output should be $N = \{(1,1),(2,2)\}$, meaning that it is an equilibrium for both players to choose strategy $1$ and one for both players to choose strategy $2$.
+
+If the game has no pure-strategy equilibrium, then the function should return an empty list.
