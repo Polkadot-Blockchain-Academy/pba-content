@@ -9,9 +9,8 @@ use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use log::info;
 
 use sp_api::impl_runtime_apis;
-use sp_block_builder::runtime_decl_for_BlockBuilder::BlockBuilder;
 use sp_runtime::{
-	create_runtime_str, generic, impl_opaque_keys,
+	create_runtime_str, generic::{self, UncheckedExtrinsic}, impl_opaque_keys,
 	traits::{BlakeTwo256, Block as BlockT, Extrinsic},
 	transaction_validity::{
 		InvalidTransaction, TransactionSource, TransactionValidity, TransactionValidityError,
@@ -26,7 +25,7 @@ use sp_storage::well_known_keys;
 #[cfg(any(feature = "std", test))]
 use sp_runtime::{BuildStorage, Storage};
 
-use sp_core::{OpaqueMetadata, H256, hexdisplay::HexDisplay};
+use sp_core::{hexdisplay::HexDisplay, OpaqueMetadata, H256};
 use sp_runtime::traits::Hash;
 
 #[cfg(feature = "std")]
@@ -46,22 +45,17 @@ Ideas:
 
 idea: metadata
 idea: a timestamp inherent set by the block author.
+
+Orphan topics that have to be covered in lectures:
+
+- SKIP_WASM_BUILD=1
+- metdata
+- extrinsic types
+- block format, the fact that extrinsics are generic.
 */
 
 /*
-curl http://localhost:9933 -H "Content-Type:application/json;charset=utf-8" -d   '{
-	"jsonrpc":"2.0",
-	"id":1,
-	"method":"author_submitExtrinsic",
-	"params": ["0x"]
-}'
 
-curl http://localhost:9933 -H "Content-Type:application/json;charset=utf-8" -d   '{
-	"jsonrpc":"2.0",
-	"id":1,
-	"method":"state_getStorage",
-	"params": ["0x626F6F6C65616E"]
-}'
 */
 
 /// An index to a block.
@@ -84,7 +78,7 @@ pub mod opaque {
 	/// Opaque block header type.
 	pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 	/// Opaque block type.
-	pub type Block = generic::Block<Header, BasicExtrinsic>;
+	pub type Block = generic::Block<Header, OpaqueExtrinsic>;
 
 	// This part is necessary for generating session keys in the runtime
 	impl_opaque_keys! {
@@ -154,8 +148,14 @@ pub enum Call {
 
 // this extrinsic type does nothing other than fulfill the compiler.
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, parity_util_mem::MallocSizeOf))]
-#[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct BasicExtrinsic(Call);
+
+impl BasicExtrinsic {
+	fn new_unsigned(call: Call) -> Self {
+		<Self as Extrinsic>::new(call, None).unwrap()
+	}
+}
 
 impl Extrinsic for BasicExtrinsic {
 	type Call = Call;
@@ -166,11 +166,51 @@ impl Extrinsic for BasicExtrinsic {
 	}
 }
 
+impl sp_runtime::traits::GetNodeBlockType for Runtime {
+	type NodeBlock = opaque::Block;
+}
+
+impl sp_runtime::traits::GetRuntimeBlockType for Runtime {
+	type RuntimeBlock = Block;
+}
+
+use parity_scale_codec::Compact;
+impl Encode for BasicExtrinsic {
+	fn encode_to<T: parity_scale_codec::Output + ?Sized>(&self, dest: &mut T) {
+		let call = self.0.encode();
+		let size = Compact::<u32>(call.len() as u32).encode();
+		dest.write(&size);
+		dest.write(&call);
+	}
+}
+
+impl Decode for BasicExtrinsic {
+	fn decode<I: parity_scale_codec::Input>(
+		input: &mut I,
+	) -> Result<Self, parity_scale_codec::Error> {
+		// we don't really need th length when we decode this to its concrete type.
+		let _expected_length: Compact<u32> = Decode::decode(input)?;
+		let call: Call = Decode::decode(input)?;
+		Ok(BasicExtrinsic(call))
+	}
+}
+
+#[test]
+fn vec_encoding_works() {
+	let ext = BasicExtrinsic::new_unsigned(Call::Set(42));
+	let mut encoded = ext.encode();
+	let concrete_decoded: BasicExtrinsic = Decode::decode(&mut encoded.as_slice()).unwrap();
+	let opaque_decoded: Vec<u8> = Decode::decode(&mut encoded.as_slice()).unwrap();
+	let concrete_call_from_opaque: Call = Decode::decode(&mut opaque_decoded.as_slice()).unwrap();
+	assert_eq!(concrete_call_from_opaque, Call::Set(42))
+}
+
 const LOG_TARGET: &'static str = "frameless";
 
 pub const VALUE_KEY: &[u8] = b"value"; // 76616c7565
 pub const HEADER_KEY: &[u8] = b"header"; // 686561646572
 pub const EXTRINSICS_KEY: &[u8] = b"extrinsic"; // 65787472696e736963
+// :code => 3a636f6465
 
 /// The main struct in this module. In frame this comes from `construct_runtime!`
 pub struct Runtime;
@@ -186,7 +226,12 @@ impl Runtime {
 		let mut key = vec![];
 		while let Some(next) = sp_io::storage::next_key(&key) {
 			let val = sp_io::storage::get(&next).unwrap().to_vec();
-			log::trace!(target: LOG_TARGET, "{} <=> {}", HexDisplay::from(&next), HexDisplay::from(&val));
+			log::trace!(
+				target: LOG_TARGET,
+				"{} <=> {}",
+				HexDisplay::from(&next),
+				HexDisplay::from(&val)
+			);
 			key = next;
 		}
 	}
@@ -211,9 +256,16 @@ impl Runtime {
 		Ok(())
 	}
 
-	// TODO: this header is different when you are importing a block, and when you are executing a block..
+	// TODO: this header is different when you are importing a block, and when you are executing a
+	// block..
 	fn do_initialize_block(header: &<Block as BlockT>::Header) {
-		info!(target: LOG_TARGET, "Entering initialize_block. header: {:?} / version: {:?}-{:?}", header, VERSION.spec_name, VERSION.spec_version);
+		info!(
+			target: LOG_TARGET,
+			"Entering initialize_block. header: {:?} / version: {:?}-{:?}",
+			header,
+			VERSION.spec_name,
+			VERSION.spec_version
+		);
 		sp_io::storage::set(&HEADER_KEY, &header.encode());
 		sp_io::storage::clear(&EXTRINSICS_KEY);
 	}
@@ -228,7 +280,6 @@ impl Runtime {
 		// dependency..). Make sure in execute block path we have the same rule.
 		sp_io::storage::clear(&HEADER_KEY);
 
-
 		let mut header = <Block as BlockT>::Header::decode(&mut &*raw_header)
 			.expect("we put a valid header in in the first place, qed");
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
@@ -237,7 +288,8 @@ impl Runtime {
 			let bytes = sp_io::storage::get(&EXTRINSICS_KEY).unwrap_or_default();
 			<Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).unwrap_or_default()
 		};
-		let extrinsics_root = BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
+		let extrinsics_root =
+			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
 
 		header.extrinsics_root = extrinsics_root;
 		header.state_root = sp_core::H256::decode(&mut &raw_state_root[..]).unwrap();
@@ -267,7 +319,8 @@ impl Runtime {
 			let bytes = sp_io::storage::get(&EXTRINSICS_KEY).unwrap_or_default();
 			<Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).unwrap_or_default()
 		};
-		let extrinsics_root = BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
+		let extrinsics_root =
+			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
 	}
 
@@ -286,7 +339,13 @@ impl Runtime {
 		tx: <Block as BlockT>::Extrinsic,
 		block_hash: <Block as BlockT>::Hash,
 	) -> TransactionValidity {
-		log::debug!(target: LOG_TARGET, "Entering validate_transaction. source: {:?}, tx: {:?}, block hash: {:?}", source, tx, block_hash);
+		log::debug!(
+			target: LOG_TARGET,
+			"Entering validate_transaction. source: {:?}, tx: {:?}, block hash: {:?}",
+			source,
+			tx,
+			block_hash
+		);
 
 		// we don't know how to validate this -- It should be fine??
 
@@ -294,27 +353,6 @@ impl Runtime {
 		Ok(ValidTransaction { provides: vec![data.encode()], ..Default::default() })
 	}
 }
-
-impl sp_runtime::traits::GetNodeBlockType for Runtime {
-	type NodeBlock = opaque::Block;
-}
-
-impl sp_runtime::traits::GetRuntimeBlockType for Runtime {
-	type RuntimeBlock = Block;
-}
-
-// impl Encode for BasicExtrinsic {
-// 	fn encode(&self) -> Vec<u8> {
-// 		todo!();
-// 	}
-// }
-
-// impl Decode for BasicExtrinsic {
-// 	fn decode<I: parity_scale_codec::Input>(input: &mut I) -> Result<Self, parity_scale_codec::Error>
-// {
-
-// 	}
-// }
 
 impl_runtime_apis! {
 	// https://substrate.dev/rustdocs/master/sp_api/trait.Core.html
@@ -342,12 +380,10 @@ impl_runtime_apis! {
 			Self::do_finalize_block()
 		}
 
-		// This runtime does not expect any inherents so it does not insert any into blocks it builds.
 		fn inherent_extrinsics(_data: sp_inherents::InherentData) -> Vec<<Block as BlockT>::Extrinsic> {
-			Vec::new()
+			vec![]
 		}
 
-		// This runtime does not expect any inherents, so it does not do any inherent checking.
 		fn check_inherents(
 			_block: Block,
 			_data: sp_inherents::InherentData
@@ -451,7 +487,6 @@ mod tests {
 	use super::*;
 	use parity_scale_codec::Encode;
 	use sp_core::hexdisplay::HexDisplay;
-	use sp_runtime::OpaqueExtrinsic;
 
 	#[test]
 	fn host_function_call_works() {
@@ -461,10 +496,23 @@ mod tests {
 	}
 
 	#[test]
+	fn upgrade_call() {
+		use std::io::Write;
+		let wasm = include_bytes!("../../frameless_runtime.wasm");
+		let call = Call::Upgrade(wasm.to_vec());
+		let ext = BasicExtrinsic::new(call, None).unwrap();
+		let mut file = std::fs::File::create("../code").unwrap();
+		let payload = format!(r#"{{
+				"jsonrpc":"2.0",
+				"id":1, "method":"author_submitExtrinsic",
+				"params": ["0x{:?}"]
+			}}"#, HexDisplay::from(&ext.encode()));
+		file.write_all(payload.as_bytes()).unwrap();
+	}
+
+	#[test]
 	fn encode_examples() {
-		let extrinsic = BasicExtrinsic::new(Call::Set(42), None).unwrap();
-		println!("basic {:?}", HexDisplay::from(&extrinsic.encode()));
-		// just to print stuff in test, alternatively use `--nocapture`
-		panic!();
+		let extrinsic = BasicExtrinsic::new_unsigned(Call::Set(42));
+		println!("ext {:?}", HexDisplay::from(&extrinsic.encode()));
 	}
 }

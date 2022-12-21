@@ -11,25 +11,28 @@ Ideas:
 
 * lecture: WASM-meta protocol lecture (120m)
 
+* lecture: SCALE (30m)
 * lecture: JSON-RPC protocol (30m)
 * activity: JSON-RPC
-* lecture: SCALE (30m)
 
+* workshop: Substrate CLI (30m)
+* activity: part 2 of running a local network.
+* activity: FRAME-less activity part1
+
+Maybe:
 * ~~lecture: PJS-API library (30m)~~
 * activity: build a `sub-du`
   * sub-xt
 
-* activity: FRAME-less activity part1
-* workshop: Substrate CLI (30m)
-* activity: part 2 of running a local network.
+> Assignments announced.
 
 ## Day 2 (6 hours)
 
 * lecture: Merkle Storage (60m)
+* High level lecture on Consensus (60m) (Probably will be done by Joshy and remove)
 
-~~* High level lecture on Consensus (30m) (Probably will be done by Joshy and remove)~~
 ~~* High level lecture on Transaction Queue (30m)~~
 
-* activity: FRAME-less activity part2
 * activity: Writing a basic executor
+* activity: FRAME-less activity part2
 * upgrade the local network to frame-less.
