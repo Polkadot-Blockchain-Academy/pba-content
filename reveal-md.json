@@ -18,7 +18,7 @@
   "highlightTheme": "shades-of-purple",
   "template": "./assets/templates/slide-template.html",
   "listingTemplate": "./assets/templates/listing-template.html",
-  "host": "0.0.0.0",
+  "host": "localhost",
   "staticDir": "build",
   "staticDirs": ["assets", "plugin"],
   "preprocessor": null,
