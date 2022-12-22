@@ -1591,12 +1591,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "frame-metadata"
+version = "15.0.0"
+source = "git+https://github.com/paritytech/frame-metadata/?tag=v15.0.0#d241ab9c1ba89e119263812f963a601be158e661"
+dependencies = [
+ "cfg-if",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+]
+
+[[package]]
 name = "frame-support"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate.git?branch=polkadot-v0.9.35#2a0eeff4008573f6ead70eb9bd43cf6d268d2e7d"
 dependencies = [
  "bitflags",
- "frame-metadata",
+ "frame-metadata 15.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "frame-support-procedural",
  "impl-trait-for-tuples",
  "k256",
@@ -1680,6 +1691,7 @@ dependencies = [
 name = "frameless-runtime"
 version = "1.0.0-dev"
 dependencies = [
+ "frame-metadata 15.0.0 (git+https://github.com/paritytech/frame-metadata/?tag=v15.0.0)",
  "hex-literal",
  "log",
  "parity-scale-codec",
@@ -1691,6 +1703,7 @@ dependencies = [
  "sp-block-builder",
  "sp-consensus-aura",
  "sp-core",
+ "sp-debug-derive",
  "sp-finality-grandpa",
  "sp-inherents",
  "sp-io",

@@ -10,7 +10,9 @@ use log::info;
 
 use sp_api::impl_runtime_apis;
 use sp_runtime::{
-	create_runtime_str, generic::{self, UncheckedExtrinsic}, impl_opaque_keys,
+	create_runtime_str,
+	generic::{self},
+	impl_opaque_keys,
 	traits::{BlakeTwo256, Block as BlockT, Extrinsic},
 	transaction_validity::{
 		InvalidTransaction, TransactionSource, TransactionValidity, TransactionValidityError,
@@ -35,31 +37,39 @@ use sp_version::RuntimeVersion;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
 
-/*
-Ideas:
-
-- Track the right state root and extrinsics root. The extrinsics root will fail in all blocks. The state root only if we write something to state.
-	- In order to get a good extrinsics root check, make sure you are writing with debug-assertions.
-- Make your chain upgradable. Do an upgrade that tweaks the `BasicExtrinsic` such that the encoding changes. Now try and submit an extrinsic again. Now try and have a new node sync your chain. This should bring you to realize that you should be using `OpaqueExtrinsic` in `mod opaque`.
-
-
-idea: metadata
-idea: a timestamp inherent set by the block author.
-
-Orphan topics that have to be covered in lectures:
-
-- SKIP_WASM_BUILD=1
-- metdata
-- extrinsic types
-- block format, the fact that extrinsics are generic.
-*/
-
-/*
-
-*/
-
+// Lesson ideas:
+//
+// 1 Track the right state root and extrinsics root. The extrinsics root will fail in all blocks.
+//   The state root only if we write something to state.
+//
+//  > In order to get a good extrinsics root check, make sure you are writing with debug-assertions.
+//
+// 2. Submit a bunch of extrinsics, and make sure a second chain can still sync your chain.
+//
+// ```
+// ./node-template --dev -lframeless=trace
+// ./node-template --dev --bob -lframeless=trace --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWL1pLnrDHr8j73Zr2zFfcqMoQC61HEYzZWsTFse4rAsM
+// ```
+//
+// 3. Make your chain upgradable.
+//
+// 4. Now change the format of BasicExtrinsic (e.g. u32 -> u128 + bump spec version), upgrade your
+// runtime.
+//
+// 5. Now try and submit a new transaction... can you? This will fail, until you you make the
+//    extrinsic type opaque. Sources of inspiration:
+// * https://github.com/paritytech/substrate/blob/cd2fdcf85eb96c53ce2a5d418d4338eb92f5d4f5/primitives/runtime/src/generic/unchecked_extrinsic.rs#L283
+// * https://github.com/paritytech/substrate/blob/0798d52690cad7db103f9d0e1eeb77f2351dfb2a/frame/support/src/traits/misc.rs#L918-L919
+//
+// idea: metadata idea: a timestamp inherent set by the block author.
+//
+// Orphan topics that have to be covered in lectures:
+//
+// - SKIP_WASM_BUILD=1
+// - metdata
+// - extrinsic types
+// - block format, the fact that extrinsics are generic. */
 /// An index to a block.
-pub type BlockNumber = u32;
 
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
@@ -68,12 +78,8 @@ pub type BlockNumber = u32;
 pub mod opaque {
 	use super::*;
 
-	/// TODO: we set this for now to the same transaction type as the runtime, to easily be able to
-	/// send encoded transactions. Ideally, this should be `sp_runtime::OpaqueExtrinsic`.
-	/// As it stands now, you can simply encode `BasicExtrinsic` and send that as your transaction
-	/// when sending with `curl`.
-	/// https://paritytech.github.io/substrate/master/src/sp_runtime/generic/unchecked_extrinsic.rs.html#363-377
 	type OpaqueExtrinsic = sp_runtime::OpaqueExtrinsic;
+	// type OpaqueExtrinsic = BasicExtrinsic;
 
 	/// Opaque block header type.
 	pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
@@ -107,7 +113,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("frameless-runtime"),
 	impl_name: create_runtime_str!("frameless-runtime"),
 	authoring_version: 1,
-	spec_version: 1,
+	spec_version: 2,
 	impl_version: 1,
 	apis: RUNTIME_API_VERSIONS,
 	transaction_version: 1,
@@ -134,23 +140,24 @@ impl BuildStorage for GenesisConfig {
 	}
 }
 
-/// Block header type as expected by this runtime.
+pub type BlockNumber = u32;
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
-/// Block type as expected by this runtime.
 pub type Block = generic::Block<Header, BasicExtrinsic>;
 
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, parity_util_mem::MallocSizeOf))]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
 pub enum Call {
-	Set(u32),
+	Set(u128),
 	Upgrade(Vec<u8>),
 }
 
 // this extrinsic type does nothing other than fulfill the compiler.
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, parity_util_mem::MallocSizeOf))]
 #[derive(Debug, PartialEq, Eq, Clone)]
+// #[derive(Encode, Decode)]
 pub struct BasicExtrinsic(Call);
 
+#[cfg(test)]
 impl BasicExtrinsic {
 	fn new_unsigned(call: Call) -> Self {
 		<Self as Extrinsic>::new(call, None).unwrap()
@@ -198,8 +205,9 @@ impl Decode for BasicExtrinsic {
 #[test]
 fn vec_encoding_works() {
 	let ext = BasicExtrinsic::new_unsigned(Call::Set(42));
-	let mut encoded = ext.encode();
+	let encoded = ext.encode();
 	let concrete_decoded: BasicExtrinsic = Decode::decode(&mut encoded.as_slice()).unwrap();
+	assert_eq!(concrete_decoded, ext);
 	let opaque_decoded: Vec<u8> = Decode::decode(&mut encoded.as_slice()).unwrap();
 	let concrete_call_from_opaque: Call = Decode::decode(&mut opaque_decoded.as_slice()).unwrap();
 	assert_eq!(concrete_call_from_opaque, Call::Set(42))
@@ -210,7 +218,7 @@ const LOG_TARGET: &'static str = "frameless";
 pub const VALUE_KEY: &[u8] = b"value"; // 76616c7565
 pub const HEADER_KEY: &[u8] = b"header"; // 686561646572
 pub const EXTRINSICS_KEY: &[u8] = b"extrinsic"; // 65787472696e736963
-// :code => 3a636f6465
+												// :code => 3a636f6465
 
 /// The main struct in this module. In frame this comes from `construct_runtime!`
 pub struct Runtime;
@@ -218,8 +226,16 @@ pub struct Runtime;
 type DispatchResult = Result<(), ()>;
 
 impl Runtime {
-	fn metadata() -> OpaqueMetadata {
-		OpaqueMetadata::new(vec![0])
+	fn metadata() -> sp_core::OpaqueMetadata {
+		use frame_metadata::*;
+		let v14 = RuntimeMetadataV14 {
+			extrinsic: ExtrinsicMetadata { signed_extensions: vec![], version: 0, ty: todo!() },
+			types: todo!(),
+			pallets: vec![],
+			ty: todo!(),
+		};
+		let frame_metadata = frame_metadata::RuntimeMetadata::V14(v14);
+		sp_core::OpaqueMetadata::new(vec![])
 	}
 
 	fn print_state() {
@@ -261,9 +277,8 @@ impl Runtime {
 	fn do_initialize_block(header: &<Block as BlockT>::Header) {
 		info!(
 			target: LOG_TARGET,
-			"Entering initialize_block. header: {:?} / version: {:?}-{:?}",
+			"Entering initialize_block. header: {:?} / version: {:?}",
 			header,
-			VERSION.spec_name,
 			VERSION.spec_version
 		);
 		sp_io::storage::set(&HEADER_KEY, &header.encode());
@@ -501,12 +516,15 @@ mod tests {
 		let wasm = include_bytes!("../../frameless_runtime.wasm");
 		let call = Call::Upgrade(wasm.to_vec());
 		let ext = BasicExtrinsic::new(call, None).unwrap();
-		let mut file = std::fs::File::create("../code").unwrap();
-		let payload = format!(r#"{{
+		let mut file = std::fs::File::create("../payload.json").unwrap();
+		let payload = format!(
+			r#"{{
 				"jsonrpc":"2.0",
 				"id":1, "method":"author_submitExtrinsic",
 				"params": ["0x{:?}"]
-			}}"#, HexDisplay::from(&ext.encode()));
+			}}"#,
+			HexDisplay::from(&ext.encode())
+		);
 		file.write_all(payload.as_bytes()).unwrap();
 	}
 
