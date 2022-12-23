@@ -60,7 +60,7 @@ _Press the `s` key to bring up a popup window with speaker view_
 
 **You need to unblock popups to have the window open**
 
-Note:
+Notes:
 This is a note just for you. Set under a line in your slide starting with "`Note`:" all
 subsequent lines are just seen in speaker view.
 

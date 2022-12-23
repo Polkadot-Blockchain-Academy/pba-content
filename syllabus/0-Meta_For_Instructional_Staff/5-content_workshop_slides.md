@@ -520,7 +520,7 @@ Everyone should have access to this repo, let Dan know if not.
 
 **_📝 New issue by instructors on inventory to kick things off ⏰_**
 
-Note:
+Notes:
 
 Dan will push you before sub0 to do this!
 
@@ -551,7 +551,7 @@ Eager internal contributors and wannabe students...
 
 **_What do \*you\* need they could assist with?_**
 
-Note:
+Notes:
 
 We don't explicitly require working with those interested, but it's an option we should consider as a team!
 
