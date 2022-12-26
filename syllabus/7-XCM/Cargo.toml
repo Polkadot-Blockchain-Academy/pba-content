@@ -6,5 +6,6 @@ members = [
     "xcm-related-code/xcm-simulator-for-exercises",
     "2-XCVM/execution_exercises",
     "3-Writing_Sending_Executing_XCM/constructing-messages-with-simulator",
-    "4-Chain_Config_in_XCM/versioning-with-simulator"
+    "4-Chain_Config_in_XCM/versioning-with-simulator",
+    "5-XCM_in_Polkadot/debug-failed-xcm-message/subxt"
 ]
