@@ -34,12 +34,11 @@ mod tests {
 		MockNet::reset();
 
 		ParaA::execute_with(|| {
-			// Set version
-			parachain::XcmVersioner::set_version(1);
+			// Set version 1 to parachain
 		});
 
 		Relay::execute_with(|| {
-			// This sets the default version, for not known destinations
+			// This sets the default version in the relay to 2, for not known destinations
 			assert_ok!(RelayChainPalletXcm::force_default_xcm_version(
 				relay_chain::RuntimeOrigin::root(),
 				Some(2)
@@ -66,8 +65,8 @@ mod tests {
 		// We received 1 as the supported version from paraA
 		let expected_supported_version: relay_chain::RuntimeEvent =
 			pallet_xcm::Event::SupportedVersionChanged(
-				MultiLocation { parents: 0, interior: X1(Parachain(1)) },
-				1,
+				// parachain multilocation as seen by the relay,
+				// version that the relay received?
 			)
 			.into();
 
@@ -78,16 +77,15 @@ mod tests {
 
 		let expected_version_notified: parachain::RuntimeEvent =
 			pallet_xcm::Event::VersionChangeNotified(
-				MultiLocation { parents: 1, interior: Here },
-				2,
+				// Relay as seen by the para,
+				// version that the para received?
 			)
 			.into();
 
 		// ParaA changes version to 2, and calls on_runtime_upgrade. This should notify the targets
 		// of the new version change
 		ParaA::execute_with(|| {
-			// Set version
-			parachain::XcmVersioner::set_version(2);
+			// Set version 2
 			// Do runtime upgrade
 			parachain::on_runtime_upgrade();
 			// Initialize block, to call on_initialize and notify targets
@@ -99,93 +97,14 @@ mod tests {
 		// This event should have been seen in the relay
 		let expected_supported_version_2: relay_chain::RuntimeEvent =
 			pallet_xcm::Event::SupportedVersionChanged(
-				MultiLocation { parents: 0, interior: X1(Parachain(1)) },
-				2,
+				// Para multilocation as seen by the relay,
+				// version that the relay received?
 			)
 			.into();
 
 		Relay::execute_with(|| {
 			// Assert that the events vector contains the new version change
 			assert!(relay_chain::relay_events().contains(&expected_supported_version_2));
-		});
-	}
-	#[test]
-	fn test_automatic_versioning_on_runtime_upgrade_with_para_b() {
-		MockNet::reset();
-
-		ParaA::execute_with(|| {
-			// advertised version
-			parachain::XcmVersioner::set_version(2);
-		});
-
-		ParaB::execute_with(|| {
-			// advertised version
-			parachain::XcmVersioner::set_version(1);
-		});
-
-		ParaA::execute_with(|| {
-			// This sets the default version, for not known destinations
-			assert_ok!(ParachainPalletXcm::force_default_xcm_version(
-				parachain::RuntimeOrigin::root(),
-				Some(2)
-			));
-			// Wrap version, which sets VersionedStorage
-			// This will trigger negotiation
-			assert_ok!(<ParachainPalletXcm as xcm::WrapVersion>::wrap_version(
-				&MultiLocation::new(1, X1(Parachain(2))).into(),
-				Xcm::<()>(vec![])
-			));
-
-			parachain::para_roll_to(2);
-
-			// queries should have been updated
-			assert!(ParachainPalletXcm::query(0).is_some());
-		});
-
-		let expected_supported_version: parachain::RuntimeEvent =
-			pallet_xcm::Event::SupportedVersionChanged(
-				MultiLocation { parents: 1, interior: X1(Parachain(2)) },
-				1,
-			)
-			.into();
-
-		ParaA::execute_with(|| {
-			// Assert that the events vector contains the version change
-			assert!(parachain::para_events().contains(&expected_supported_version));
-		});
-
-		let expected_version_notified: parachain::RuntimeEvent =
-			pallet_xcm::Event::VersionChangeNotified(
-				MultiLocation { parents: 1, interior: X1(Parachain(1)) },
-				2,
-			)
-			.into();
-
-		// ParaB changes version to 2, and calls on_runtime_upgrade. This should notify the targets
-		// of the new version change
-		ParaB::execute_with(|| {
-			// Set version
-			parachain::XcmVersioner::set_version(2);
-			// Do runtime upgrade
-			parachain::on_runtime_upgrade();
-			// Initialize block, to call on_initialize and notify targets
-			parachain::para_roll_to(2);
-			// Expect the event in the parachain
-			assert!(parachain::para_events().contains(&expected_version_notified));
-		});
-
-		// This event should have been seen in para A
-		let expected_supported_version_2: parachain::RuntimeEvent =
-			pallet_xcm::Event::SupportedVersionChanged(
-				MultiLocation { parents: 1, interior: X1(Parachain(2)) },
-				2,
-			)
-			.into();
-
-		// Para A should have received the version change
-		ParaA::execute_with(|| {
-			// Assert that the events vector contains the new version change
-			assert!(parachain::para_events().contains(&expected_supported_version_2));
 		});
 	}
 }

@@ -115,6 +115,8 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
+This means Rococo will prevent reception of any **ReserveAssetDeposited** message
+
 ---
 
 ## 📁 LocationToAccountId in Rococo
