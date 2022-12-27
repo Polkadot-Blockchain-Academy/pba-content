@@ -56,7 +56,7 @@ Notes:
 * We must verify that the resulting state which has been provided is a valid one(We define what this is)
 * In the case of money or just a raw value we can assume that you cannot take some piece of moneys worth 10 and create a list of new outputs which have more than 10 moneys
 ---
-## UTXOS solved...
+## Unspent Transaction Outputs(UTXOS) solved...
 * Now whenever someone mentions UTXO's and the UTXO model you can now fundamentally know what actually is being referenced..(Hopefully!) 
 Notes:
     TODO: Add some picture of a person cheering and happy
