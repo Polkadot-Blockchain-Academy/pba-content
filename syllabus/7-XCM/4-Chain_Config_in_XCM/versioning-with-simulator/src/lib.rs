@@ -21,8 +21,7 @@ mod tests {
 		parachain,
 		MockNet,
 		Relay, RelayChainPalletXcm,
-		ParaA, ParachainPalletXcm,
-		ParaB,
+		ParaA,
 		TestExt,
 	};
 
