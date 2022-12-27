@@ -99,14 +99,42 @@ Notes:
     TODO: Insert scalability differences
 ---
 ## Size(Storage)
+### Accounts wins this one...
+* Question: UTXOS are much heavier in terms of raw data stored + transaction size can anyone think of why...?
 ---
-## Sharding
+## Answer..
+* In Accounts model just a single balance or data value is stored.
+* In UTXO model each data item has a specific unique ID assosciated with it and as such data items are unique/non-fungible as represented in the system. 
+* In UTXO model as more items are consumed more are being produced and storage size can grow much more quickly  
+* Transactions are generally more simple in the Accounts model because no output state must be specified.(Sender, Receiver, value to change)
 ---
 ## Privacy
+* Both have their merits in different ways regarding privacy can anyone think of an advantage to one over the other in this regard and why?  
+---
+## Answer..
+* Accounts model in its default state utilizes the efficiency of address reuse but this makes transaction history easy to aggregate.
+* UTXO model can utilize a change address such that the resulting Output is assigned to a completely new user whom is unknown to the system
+* If no change addresses are used in the UTXO model there is perfect linking between transactions providing a very obvious chain of events
+* Accounts model when using mixing allows for obfuscation due to fungability. There is no differentiator between values of a single account.
 ---
 ## Smart contracts of general compute platforms
+* Based on all previous information can we think of which model is more intuitive and seems to make more sense..?
 ---
-## Final differences
+## Answer..
+* Verification is easier if all that is needed is to check a value assosciated with a pubkey rather than verifying if an Output has been consumed 
+* No necessity on defining output state that is the point of the computer to determine it for you!
+* Smart contract UTXO would need to select which outputs to use when trasacting as well as how to handle state outputs causing huge overhead and bloat
+* A specific contract(or program) which a specific ID is easy to track and to transact with other programs by simple checks of values
+---
+## Parallelization
+* Which model seems easier to paraellelize and why??
+---
+## Answer..
+* Multiple transactions which touch a single Account generally should be executed in sequence.
+* Seperate UTXOs have no relation making them easy to execute on seperately given there is no race conditions..
+---
+## Conclusion..
+* Both are good depending on the usecase!! 
 ---
 ## At the end of the day it is just a state machine
 Notes:
