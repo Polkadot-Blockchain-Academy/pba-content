@@ -11,7 +11,7 @@ Notes:
 It’s an ultra-high level non-Turing-complete computer whose instructions are designed to be roughly at the same level as transactions.
 Messages are one or more XCM instructions.
 The program executes until it either runs to the end or hits an error, at which point it finishes up and halts.
-An XCM executor following the XCVM specification in an opinionated manner is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
+An XCM executor following the XCVM specification is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
 ---
 ### XCVM Instructions
 
@@ -106,6 +106,12 @@ Notes:
 <widget-columns>
 <widget-column>
 
+### 📍 The Origin Register
+Contains the `Multilocation` of the cross-consensus origin where the XCM originated from.
+
+It is always the relative view from the consensus system in which the XCM is executed.
+
+---
 ### 💁 The Holding Register
 Expresses a number of assets in control of the xcm-execution but that have no representation on-chain.
 
@@ -115,7 +121,7 @@ It can be seen as the register holding "unspent assets".
 Example:  Let’s take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
 But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation. These assets are held in the holding register until they are deposited anywhere else.
 
-
+---
 ### 💁 XCM by example: The `WithdrawAsset` instruction
 
 `WithdrawAsset` has no location specified for assets.
