@@ -352,24 +352,24 @@ Look at the `ump.ExecutedUpward` event:
 Some common errors are:
 - `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve
 - `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
-- `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the runtime. Usually happens when the multilocation representing an asset does not match to those handled by the chain.
-- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be done, typically its because the account does not hold such asset, or because we cannot convert the multilocation to an account.
+- `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor. Usually happens when the multilocation representing an asset does not match to those handled by the chain.
+- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
 - `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
 - `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
-- `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is non-sufficient.
+- `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
 - `Barrier`: One of the barriers failed, we need to check the barriers individually.
-- `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown. In those cases the chain falls back to the safe XCM version but if it is not set, the communication  then the destination is unreachable.
+- `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown. When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination. In such a case, the safe XCM version is used instead. However, if it is not set, then this error will be thrown.
 
 ---
-## 🔨 Decoding scale-encoded messages
+## 🔨 Decoding SCALE-encoded messages
 
-The second step is to retrieve the xcm message received by the chain. We can make clear distinctions on this:
+The second step is to retrieve the XCM received by the chain. We can clearly identify a chain by how it processes received XCMs:
 - **RelayChain**: usually the xcm message can be retrieved in the `paraInherent.enter` inherent, where the candidate for a specific parachain contains the ump messages sent to the relay. **UMP messages are usually executed one block after they are received**
 - **Parachain**: usually the xcm message can be retrieved in the `parachainSystem.setValidationData` inherent, inside the field `downWardMessage` or `horizontalMessages`. **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
 
-One of the main drawbacks is that all we see is a **scale-encoded message** which does not give us much information. To cope with this:
+One of the main drawbacks is that all we see is a **SCALE-encoded message** which does not give us much information. To cope with this:
 
-- We build a scale-decoder to retrieve the xcm message (the hard way).
+- We build a SCALE-decoder to retrieve the xcm message (the hard way).
 - We rely on subscan/polkaholic to see the XCM message received.
 
 Guess which one will try out? :)

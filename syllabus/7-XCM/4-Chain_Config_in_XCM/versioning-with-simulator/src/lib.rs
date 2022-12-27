@@ -62,7 +62,7 @@ mod tests {
 			assert!(RelayChainPalletXcm::query(0).is_some());
 		});
 
-		// We received 1 as the supported version from paraA
+		/*  FILL in class
 		let expected_supported_version: relay_chain::RuntimeEvent =
 			pallet_xcm::Event::SupportedVersionChanged(
 				// parachain multilocation as seen by the relay,
@@ -73,14 +73,15 @@ mod tests {
 		Relay::execute_with(|| {
 			// Assert that the events vector contains the version change
 			assert!(relay_chain::relay_events().contains(&expected_supported_version));
-		});
+		});*/
 
+		/*  FILL in class
 		let expected_version_notified: parachain::RuntimeEvent =
 			pallet_xcm::Event::VersionChangeNotified(
 				// Relay as seen by the para,
 				// version that the para received?
 			)
-			.into();
+			.into();*/
 
 		// ParaA changes version to 2, and calls on_runtime_upgrade. This should notify the targets
 		// of the new version change
@@ -91,9 +92,10 @@ mod tests {
 			// Initialize block, to call on_initialize and notify targets
 			parachain::para_roll_to(2);
 			// Expect the event in the parachain
-			assert!(parachain::para_events().contains(&expected_version_notified));
+			// assert!(parachain::para_events().contains(&expected_version_notified));
 		});
 
+		/*  FILL in class
 		// This event should have been seen in the relay
 		let expected_supported_version_2: relay_chain::RuntimeEvent =
 			pallet_xcm::Event::SupportedVersionChanged(
@@ -105,6 +107,6 @@ mod tests {
 		Relay::execute_with(|| {
 			// Assert that the events vector contains the new version change
 			assert!(relay_chain::relay_events().contains(&expected_supported_version_2));
-		});
+		});*/
 	}
 }
