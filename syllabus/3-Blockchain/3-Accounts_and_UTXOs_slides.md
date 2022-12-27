@@ -8,19 +8,26 @@
 * Blockchain structure (The overall blockchain primitive, a hash list)
 ---
 ## Where do we go from here?
-* We have some base elements ideas and concepts now lets put them together into something cool..
+* We have some base elements ideas and concepts 
+* now lets put them together into something cool..
+<img style="width: 700px;" src="../../assets/img/3-Blockchain/3.2-assembling-cartoon.png"/>
 Notes:
-    TODO: Show some generic picture of assembling things
+    TODO: Help format images to look better 
 ---
 ## What do we want to talk about today?
-* Now that we have this structured decentralized tamper proof state machine lets think of ways we can formulate a state and a state transition in terms of representing users 
+* Now that we have this structured decentralized tamper proof state machine..
+* Let's think of ways we can formulate a state and a state transition in terms of representing users 
+<img style="width: 400px; height 400px; float:right; margin-right:5px" src="../../assets/img/3-Blockchain/3.2-thinking-cartoon.png"/>
 Notes:
-    TODO: Insert generic picture of someone thinking
+    TODO: Help format image to look better on slide 
 ---
 ## Let us think of two different paradigms:
 * A.) We craft a model in which the system acts as a global and trustless verifier
 Notes:
     TODO: Insert picture here which shows some money being sent from person A to person B and the System box is verifying whether the money I am attempting to spend is mine and the result that I am specifying to happen is valid 
+---
+## Example
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.png"/>
 ---
 ## Paradigm A How would we do this?
 * 1.) You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In more computer science terms we have some data that can be altered only by a specific entity so we want to provide proof we can alter it. 
@@ -61,7 +68,7 @@ Notes:
 Notes:
     TODO: Add some picture of a person cheering and happy
 ---
-## Next paradigm..
+## Paradigm B..
 * B.) We craft a model in which the system acts as a computer and by submitting some input it will determine the result from my input.
 Notes:
 ---
@@ -93,10 +100,6 @@ Notes:
 * Oh the fun begins..
 Notes:
    TODO: Insert picture of Homer
----
-## Scalability
-Notes:
-    TODO: Insert scalability differences
 ---
 ## Size(Storage)
 ### Accounts wins this one...
