@@ -11,7 +11,7 @@ Notes:
 It’s an ultra-high level non-Turing-complete computer whose instructions are designed to be roughly at the same level as transactions.
 Messages are one or more XCM instructions.
 The program executes until it either runs to the end or hits an error, at which point it finishes up and halts.
-An XCM executor following the XCVM specification is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
+An XCM executor following the XCVM specification in an opinionated manner is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
 ---
 ### XCVM Instructions
 
