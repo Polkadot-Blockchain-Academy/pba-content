@@ -16,23 +16,23 @@ Ideas:
 * activity: JSON-RPC
 
 * workshop: Substrate CLI (30m)
-* activity: part 2 of running a local network.
-* activity: FRAME-less activity part1
-
-Maybe:
-* ~~lecture: PJS-API library (30m)~~
-* activity: build a `sub-du`
-  * sub-xt
+* activity: FRAME-less node-template
+* activity: Activity around consensus by Joshy
 
 > Assignments announced.
 
 ## Day 2 (6 hours)
 
 * lecture: Merkle Storage (60m)
-* High level lecture on Consensus (60m) (Probably will be done by Joshy and remove)
-
-~~* High level lecture on Transaction Queue (30m)~~
+* lecture: Blocks and Extrinsics (30min)
+* lecture: Consensus by Joshy (30min)
 
 * activity: Writing a basic executor
 * activity: FRAME-less activity part2
-* upgrade the local network to frame-less.
+* activity
+
+
+ideas:
+* lecture: PJS-API library
+* activity: build a `sub-du`
+* sub-xt
