@@ -1,8 +1,12 @@
-# Rust Code for Hashes
+# Rust Demo for Hashes
+
+> See [the instructions for Evcxr](../../0-Meta_For_Instructional_Staff/6b-how-to-use-evcxr-in-a-shell.md) REPL before you begin.
 
 ---
 
 ## Preamble
+
+Run this ASAP to get our deps built before you need them.
 
 ```rust
 :dep sp-core = { version = "6.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.25" }
@@ -23,7 +27,13 @@ fn sized_compare<H:std::cmp::PartialEq+?Sized>(a: &H, b: &H) -> bool {
 let short_input_hash = blake2_256(&b"abcd"[..]);
 let long_input_hash = blake2_256(&[0u8; 1024][..]);
 assert_eq!(short_input_hash.len(), long_input_hash.len());
+```
+
+```rust
 HexDisplay::from(&short_input_hash)
+```
+
+```rust
 HexDisplay::from(&long_input_hash)
 ```
 
@@ -36,24 +46,35 @@ use std::time::{Instant};
 // Let's give the function 1kb of data to hash
 let value_to_hash = [0u8; 1024];
 
+```
+
+```rust
 // Blake2
 let blake2_start = Instant::now();
 for _ in 0..1000 {
 	let _ = blake2_256(&value_to_hash[..]);
 }
 let blake2_elapsed_time = blake2_start.elapsed().as_micros();
+```
 
+```rust
 // TwoX
 let twox_start = Instant::now();
 for _ in 0..1000 {
 	let _ = twox_256(&value_to_hash[..]);
 }
 let twox_elapsed_time = twox_start.elapsed().as_micros();
+```
 
-// Compare times. We expect TwoX to be about 10x faster.
-// Note this is native hardware. Wasm may be different.
-println!("Time (us) for 1k rounds of Blake2: {:?}", blake2_elapsed_time);
-println!("Time (us) for 1k rounds of TwoX:   {:?}", twox_elapsed_time);
+```rust
+// Compare times for the 1000 rounds we did for each.
+// We expect TwoX to be about 10x faster.
+// Note this is native hardware, Wasm may be different.
+blake2_elapsed_time
+```
+
+```rust
+twox_elapsed_time
 ```
 
 ---
@@ -63,8 +84,8 @@ println!("Time (us) for 1k rounds of TwoX:   {:?}", twox_elapsed_time);
 ```rust
 use rand::prelude::*;
 
-// We want to find some other pre-image that will give the same hash as "cambridge".
-let attack_target: [u8; 32] = blake2_256(b"cambridge");
+// We want to find some other pre-image that will give the same hash as "blockchain".
+let attack_target: [u8; 32] = blake2_256(b"blockchain");
 
 // Hopefully we could not actually succeed in this! So let's cheat, and truncate the hash to just
 // its first few bytes. We'll look for a collision on this truncated hash.
