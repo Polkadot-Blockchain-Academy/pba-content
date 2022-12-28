@@ -21,7 +21,8 @@ teaching-assistants: ["Sacha Lansky"]
 - Write a the full a runtime upgrade that includes migrations, end-to-end.
 - Test runtime upgrades before executing on a network using `try-runtime` and `remote-externalities`.
 
-note:
+Notes:
+
 Reference material:
 https://docs.google.com/presentation/d/1hr3fiqOI0JlXw0ISs8uV9BXiDQ5mGOQLc3b_yWK6cxU/edit#slide=id.g43d9ae013f_0_82
 https://www.crowdcast.io/e/substrate-seminar/41
@@ -222,7 +223,8 @@ This does _not_ require a migration.
 
 ## Writing Runtime Migrations
 
-note:
+Notes:
+
 Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
 
 ---v

@@ -1,0 +1,521 @@
+---
+title: ink!
+description: An introduction on what ink! is and how it ties into Substrate.
+duration: 1 hour
+instructors: ["Michael Müller"]
+---
+
+# <img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />
+
+---
+
+<widget-speaker name="Michi" position="ink! Team Lead @ Parity " image="/assets/img/0-Shared/people/michi.png" github="cmichi" matrix="michi:matrix.parity.io"></widget-speaker>
+
+---
+
+## How does ink! tie into Substrate?
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego0.png" />
+
+Notes:
+How does ink! tie into Substrate?
+
+---
+
+## How does ink! tie into Substrate?
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego1.png" />
+
+---
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema0.png" />
+
+---
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema1.png" />
+
+---
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema2.png" />
+
+---
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema3.png" />
+
+---
+
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain1.png" />
+
+---
+
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain2.png" />
+
+---
+
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain3.png" />
+
+Notes:
+
+Smart Contract vs. Parachain
+Parachain:
+
+- Only requirement: Minimal Polkadot API
+- Trusted Code
+
+Smart Contracts:
+
+- Untrusted Code
+- Requires Metering
+- Fixed payment paradigm (gas fees)
+
+---
+
+<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case0.jpg" />
+
+Notes:
+
+- Motivation
+- Use Case 1: Wrap Pallet
+- Smart Contracts as “first class citizen”
+  - ➜ Smart Contract Parachain + $UVP_for_Contracts
+
+---
+
+<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case1.jpg" />
+
+Notes:
+
+- Use Case 2: Expose Business Logic
+- Smart Contracts as “second class citizen”
+  - ➜ Parachain adding customizability for its business logic
+
+---
+
+<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case2.jpg" />
+
+Notes:
+
+- Use Case 3: Embrace Prototyping
+- Prototyping before going for own parachain
+
+---
+
+# The ink! language
+
+Notes:
+
+Just Rust
+Debugging, Testing, Tooling, clippy, cargo fmt, fuzzing
+
+---
+
+```rust [1-48]
+mod my_contract {
+
+    struct MyContract {
+        value: bool,
+    }
+
+
+    impl MyContract {
+
+        fn new() ➜ Self {
+            MyContract { value: true }
+        }
+
+
+        fn get(&self) ➜ bool {
+            self.value
+        }
+
+
+        fn flip(&mut self) {
+            self.value = !self.value;
+        }
+    }
+}
+```
+
+Notes:
+
+Hello ink!
+
+---
+
+```rust [1-24|1-2|3-6|9-12|14-17|19-22]
+#[ink::contract]
+mod my_contract {
+    #[ink(storage)]
+    struct MyContract {
+        value: bool,
+    }
+
+    impl MyContract {
+        #[ink(constructor)]
+        pub fn new() ➜ Self {
+            MyContract { value: true }
+        }
+
+        #[ink(message)]
+        pub fn get(&self) ➜ bool {
+            self.value
+        }
+
+        #[ink(message)]
+        pub fn flip(&mut self) {
+            self.value = !self.value;
+        }
+    }
+}
+```
+
+---
+
+## Idiomatic Rust
+
+```rust
+#[ink(message)]
+pub fn do_it(&self) -> Result<(), Error> {
+  Err(Error:OhNo)
+}
+```
+
+---
+
+## Trait Definitions
+
+```rust [1-2,8|3-7]
+#[ink::trait_definition]
+pub trait BaseErc20 {
+  #[ink(message)]
+  fn total_supply(&self) -> Balance;
+
+  #[ink(message)]
+  fn transfer(&mut self, to: AccountId, amount: Balance) -> Result;
+}
+```
+
+Notes:
+
+Can be implemented by multiple contracts.
+
+---
+
+## Unit Tests
+
+```rust
+#[cfg(test)]
+mod tests {
+
+    #[test]
+    fn default_works() {
+        let flipper = Flipper::default();
+        assert_eq!(flipper.get(), true);
+    }
+
+}
+```
+
+---
+
+## Integration Tests
+
+```rust [1-5,17,19|6-9|11-13|15-16]
+#[cfg(test)]
+mod tests {
+
+    #[ink::test]
+    fn default_works() {
+        // given
+        let my_contract = MyContract::default();
+        let accounts =
+            ink_env::test::default_accounts::<ink_env::DefaultEnvironment>();
+
+        // when
+        ink_env::test::set_caller::<ink_env::DefaultEnvironment>(accounts.alice);
+        ink_env::test::set_value_transferred::<ink_env::DefaultEnvironment>(10);
+
+        // then
+        assert!(my_contract.received_ten());
+    }
+
+}
+```
+
+---
+
+# `$ cargo contract`
+
+[https://crates.io/crates/cargo-contract](https://crates.io/crates/cargo-contract)
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+## Metadata?
+
+<br>
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/matrix-transparent.png" />
+
+---
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts1.png" />
+
+Notes:
+
+Build Artifacts
+
+---
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts2.png" />
+
+---
+
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts3.png" />
+
+---
+
+# ink!-ternals
+
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals1.png" />
+
+---
+
+# ink!-ternals
+
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals2.png" />
+
+---
+
+# ink!-ternals
+
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals3.png" />
+
+---
+
+# ink!-ternals
+
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals4.png" />
+
+---
+
+# ink!-ternals
+
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals5.png" />
+
+---
+
+## Development Chains
+
+<br>
+<div class="flex-container">
+<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/substrate-contracts-node.png" />
+
+[`substrate-contracts-node`](https://github.com/paritytech/substrate-contracts-node)
+
+</div>
+<div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rococo.png" />
+
+[Rococo Testnet](https://ink.substrate.io/testnet)
+
+</div>
+</div>
+
+---
+
+## Developer UIs
+
+<br>
+<div class="flex-container">
+<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-ui.png" />
+
+[https://contracts-ui.substrate.io](https://contracts-ui.substrate.io)
+
+</div>
+<div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/polkadot-js-contracts.png" />
+
+[https://polkadot.js.org/apps](https://polkadot.js.org/apps)
+
+</div>
+</div>
+
+---
+
+## Developer UIs
+
+<br>
+<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/developer-uis-2.svg" />
+
+---
+
+## Documentation
+
+<br>
+<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/documentation.svg" />
+
+---
+
+# Building a Dapp on ink!
+
+---
+
+## Reading Contract Values: RPC
+
+<br>
+<img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rpc.png" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+## Reading Contract Values: Events
+
+<br>
+<img style="width: 65%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/events.png" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+<img style="width: 50%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/venn.png" />
+
+---
+
+# Security Comparison Solidity
+
+---
+
+<div class="flex-container">
+<div class="left fragment" data-fragment-index="1">
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+
+```solidity
+pragma solidity 0.7.0;
+
+contract ChangeBalance {
+  uint8 public balance;
+
+  function decrease() public {
+    balance--;
+  }
+
+  function increase() public {
+    balance++;
+  }
+}
+```
+
+</div>
+<div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+
+- Build-in underflow/overflow protection
+- `checked_add()`
+- `saturating_add()`
+
+</div>
+</div>
+
+Notes:
+
+- Build-in overflow/underflow protection
+- Unless explicitly disabled by setting `overflow-checks = false` in `Cargo.toml`
+
+---
+
+<div class="flex-container">
+<div class="left fragment" data-fragment-index="1">
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+<br/>
+<img style="width: 100%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity-reentrancy-attack.jpg" />
+</div>
+<div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+
+- Built-in reentrancy protection
+- Fine-grained control
+
+</div>
+</div>
+
+Notes:
+
+Re-entrancy Protection
+
+---
+
+<div class="flex-container">
+<div class="left fragment" data-fragment-index="1">
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+
+```solidity
+pragma solidity 0.7.0;
+
+contract Lottery {
+
+  function withdrawWinnings() {
+    require(msg.sender = …);
+    _sendWinnings(msg.sender);
+  }
+
+  function _sendWinnings() {
+    msg.sender.transfer(this.balance);
+  }
+
+}
+```
+
+</div>
+<div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
+<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+
+- Functions private by default
+- Needs to be annotated explicitly
+- Required: `pub` + `#[ink(message)]`
+
+</div>
+</div>
+
+---
+
+<img style="width: 80%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc.png" />
+
+---
+
+<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc0.png" />
+
+<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc1.png" />
+
+<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc2.png" />
+
+<img style="width: 7%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/dots-white.svg" />
+
+Notes:
+
+- Mutating values
+- Ownership & Borrow checker
+
+---
+
+<img style="width: 20%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
+
+---
+
+<img style="width: 100%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qrs.png" />
+
+---
+
+## References
+
+- [ink! Repository](https://github.com/paritytech/ink)
+- [ink! Documentation Portal](https://ink.substrate.io)
+- [Beginners Tutorial to ink!](https://docs.substrate.io/tutorials/smart-contracts/)
+- [Chain Extensions in ink!](https://ink.substrate.io/macros-attributes/chain-extension)<br/><br/>
+- [SWC Registry](https://swcregistry.io) ‒ Smart Contract Weakness Classification and Test Cases.
+- [Ethereum Smart Contract Best Practices](https://consensys.github.io/smart-contract-best-practices/attacks/reentrancy/)

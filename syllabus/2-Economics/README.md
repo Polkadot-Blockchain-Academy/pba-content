@@ -1,6 +1,7 @@
 # Economics and Game Theory
 
 ## Lessons Overview
+
 ### Day 1
 
 2.1 -[Economics Basics](./2.1-Economics_Basics)
