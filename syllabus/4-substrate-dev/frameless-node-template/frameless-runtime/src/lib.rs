@@ -549,6 +549,7 @@ mod tests {
 
 	#[test]
 	fn host_function_call_works() {
+		sp_io::storage::get(&HEADER_KEY);
 		sp_io::TestExternalities::new_empty().execute_with(|| {
 			sp_io::storage::get(&HEADER_KEY);
 		})
@@ -556,20 +557,20 @@ mod tests {
 
 	#[test]
 	fn upgrade_call() {
-		use std::io::Write;
-		let wasm = include_bytes!("../../frameless_runtime.wasm");
-		let call = Call::Upgrade(wasm.to_vec());
-		let ext = BasicExtrinsic::new(call, None).unwrap();
-		let mut file = std::fs::File::create("../payload.json").unwrap();
-		let payload = format!(
-			r#"{{
-				"jsonrpc":"2.0",
-				"id":1, "method":"author_submitExtrinsic",
-				"params": ["0x{:?}"]
-			}}"#,
-			HexDisplay::from(&ext.encode())
-		);
-		file.write_all(payload.as_bytes()).unwrap();
+		// use std::io::Write;
+		// let wasm = include_bytes!("../../frameless_runtime.wasm");
+		// let call = Call::Upgrade(wasm.to_vec());
+		// let ext = BasicExtrinsic::new(call, None).unwrap();
+		// let mut file = std::fs::File::create("../payload.json").unwrap();
+		// let payload = format!(
+		// 	r#"{{
+		// 		"jsonrpc":"2.0",
+		// 		"id":1, "method":"author_submitExtrinsic",
+		// 		"params": ["0x{:?}"]
+		// 	}}"#,
+		// 	HexDisplay::from(&ext.encode())
+		// );
+		// file.write_all(payload.as_bytes()).unwrap();
 	}
 
 	#[test]

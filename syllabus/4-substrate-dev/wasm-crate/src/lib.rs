@@ -24,6 +24,11 @@ pub extern "C" fn add_float(x: f32, y: f32) -> f32 {
     x + y
 }
 
+#[no_mangle]
+pub extern "C" fn div(x: i32, y: i32) -> i32 {
+    x / y
+}
+
 /*
 cargo build --target wasm32-unknown-unknown --release
 cargo build --target wasm32-wasi --release
