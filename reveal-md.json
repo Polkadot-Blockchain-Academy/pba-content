@@ -5,13 +5,7 @@
   "css": [
     "assets/styles/custom-classes.css",
     "assets/styles/polkadot-theme-base.css",
-    "assets/styles/PBA-theme.css",
-    "plugin/design-system/index.css"
-  ],
-  "scripts": [
-    "plugin/design-system/design-system.js",
-    "plugin/design-system/widget-speaker.js",
-    "plugin/design-system/widget-image.js"
+    "assets/styles/PBA-theme.css"
   ],
   "separator": "\r?\n---\r?\n",
   "verticalSeparator": "\r?\n---v\r?\n",
@@ -20,7 +14,7 @@
   "listingTemplate": "./assets/templates/listing-template.html",
   "host": "localhost",
   "staticDir": "build",
-  "staticDirs": ["assets", "plugin"],
+  "staticDirs": ["assets"],
   "preprocessor": null,
   "glob": "**/*[Ss]lides.md"
 }
