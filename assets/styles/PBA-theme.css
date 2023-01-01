@@ -121,26 +121,27 @@ section.has-light-background h6 {
 	 * OTHER
 	 *********************************************/
 .reveal p {
-	margin: var(--r-block-margin) 0;
+	margin: var(--r-block-margin);
 	line-height: 1.3;
 }
 
 /* Remove trailing margins after titles */
-.reveal h1:last-child,
+/* .reveal h1:last-child,
 .reveal h2:last-child,
 .reveal h3:last-child,
 .reveal h4:last-child,
 .reveal h5:last-child,
 .reveal h6:last-child {
 	margin-bottom: 0;
-}
+} */
 
 /* Ensure certain elements are never larger than the slide itself */
+/* Set in ./reveal.json -> "width": 1400, "height": 900, */
 .reveal img,
 .reveal video,
 .reveal iframe {
-	max-height: 772px;
-	max-width: 1500px;
+  max-width: 1350px;
+	max-height: 850px;
 }
 
 .reveal strong,
@@ -170,9 +171,11 @@ section.has-light-background h6 {
 }
 
 .reveal ul li::before {
+  font-size: 44px;
+  transition: color 700ms ease-out, font-size 200ms ease-out;
+  line-height: 1;
 	position: absolute;
-	top: 2px;
-	left: -40px;
+	left: -44px;
 	font-family: monospace;
 	/* Add content: \2022 is the CSS Code/unicode for a bullet */
 	content: "\2022";
@@ -300,10 +303,6 @@ section.has-light-background h6 {
 
 .reveal small * {
 	vertical-align: top;
-}
-
-.reveal img {
-	margin: var(--r-block-margin) 0;
 }
 
 /*********************************************

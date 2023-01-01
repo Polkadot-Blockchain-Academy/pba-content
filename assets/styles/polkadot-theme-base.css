@@ -153,7 +153,7 @@ a:visited {
 
 /* controls */
 .site-reveal.reveal .controls {
-  font-size: 0.4em;
+  font-size: 0.3em;
 }
 /* site layout */
 .site-reveal .site-header img {
@@ -184,19 +184,7 @@ a:visited {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
-}
-
-@media (min-width: 540px) {
-  .site-header {
-    padding: 16px;
-  }
-}
-
-@media (min-width: 800px) {
-  .site-header {
-    padding: 32px;
-  }
+  padding: 3%;
 }
 
 .site-header--small {
@@ -215,7 +203,7 @@ a:visited {
 .site-reveal.reveal h5 {
   line-height: 1.2;
   font-family: 'Unbounded';
-  margin-bottom: calc(var(--size) / 4);
+  margin-bottom: var(--size);
 }
 
 .site-reveal h2 {
@@ -231,15 +219,9 @@ a:visited {
   margin-bottom: calc(var(--size) / 2);
   font-size: 32px;
 }
-.site-reveal.reveal li::before {
-  font-size: 32px;
-  color: var(--r-link-color-dark);
-  transition: color 700ms ease-out, font-size 200ms ease-out;
-  font-family: inherit;
-  line-height: 1.1;
-}
 
 .site-reveal.reveal li ul {
+  margin-top: 0;
   padding-top: calc(var(--size) / 2);
   padding-bottom: calc(var(--size) / 2);
 }
