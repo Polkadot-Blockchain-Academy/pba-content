@@ -357,8 +357,6 @@ Notes:
     It is like Solidity's ABI file.
   - Drop the json file first and then you will be asked for the wasm file.
 
-<!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
-
 ---
 
 ## Architecture of pallet-contracts

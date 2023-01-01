@@ -247,17 +247,3 @@ a:visited {
 .slide-card-path {
   font-size: 0.em;
 }
-
-
-/* customization of widgets for slides */
-
-widget-image {
-  opacity: 0;
-}
-.present widget-image[is-loaded] {
-  opacity: 1;
-}
-.future widget-image[is-loaded],
-.past widget-image[is-loaded] {
-  opacity: 0;
-}

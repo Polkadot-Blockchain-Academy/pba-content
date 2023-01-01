@@ -109,8 +109,6 @@ Stuff you should remember to say
 
 ### _Describe it here_
 
-<!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
-
 ---
 
 ## Exercise instructions
@@ -127,8 +125,6 @@ Most exercises are less than 15 minuets in length.
 Notes:
 Make sure to include things here to say to students, perhaps a hint or two.
 Realize that students will be able to view the speaker's notes, as they will have access to them on their devices.
-
-<!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
 
 ---
 

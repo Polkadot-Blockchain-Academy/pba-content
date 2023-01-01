@@ -80,6 +80,54 @@ section.has-light-background h6 {
 	font-weight: inherit;
 }
 
+/*
+  custom-elements
+*/
+/* columns:  a widget to display columns of things */
+widget-columns {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--r-padding) / 2);
+}
+
+widget-columns[padded] {
+  gap: calc(var(--r-padding) * 4);
+}
+
+widget-column {
+  text-align: left;
+  flex-basis: 50%;
+  padding-right: var(--r-padding);
+}
+widget-column:nth-of-type(2) {
+  padding-left: var(--r-padding);
+  padding-right: 0;
+}
+
+widget-column ul {
+  margin: 0;
+}
+
+/* text: some text base styling */
+
+widget-text {
+  display: block;
+  text-align: left;
+}
+widget-text[right] {
+  text-align: right;
+}
+
+widget-text[color] {
+  color: var(--r-link-color-dark);
+}
+widget-text[center] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 /*********************************************
 	 * HEADERS
 	 *********************************************/

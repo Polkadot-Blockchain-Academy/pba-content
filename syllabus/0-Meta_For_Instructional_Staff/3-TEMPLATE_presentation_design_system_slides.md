@@ -7,24 +7,6 @@ description: A design system to use within slides of a presentation
 
 ### _For the polkadot academy slides._
 
-<widget-speaker small name="Speaker Name Surname" position="Position/Department" image="../../assets/img/0-Shared/placeholder/profile.png"></widget-speaker>
-
----v
-
-<!-- prettier-ignore -->
-```html
-# Design system For the polkadot academy slides.
-
-<widget-speaker
-  small
-  name="Speaker Name Surname"
-  position="Position/Department"
-  image="../../assets/img/0-Shared/placeholder/profile.png"
-></widget-speaker>
-```
-
-Note that in `.md` files, you have to keep the widget element all in a single line to work
-
 ---
 
 ## Design system examples
@@ -102,27 +84,6 @@ Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
 
 ---
 
-<widget-speaker name="Gavin Wood" position="Founder Parity & Web3 Foundation" image="../../assets/img/0-Shared/people/gav.png" github="gavofyork" twitter="gavofyork" linkedin="gavin-wood-88843316" matrix="gav:matrix.parity.io"></widget-speaker>
-
----v
-
-<!-- prettier-ignore -->
-```html
-<widget-speaker
-  name="Speaker Name Surname"
-  position="Position/Department"
-  image="../../assets/img/0-Shared/people/gav.png"
-  github="gavofyork"
-  twitter="gavofyork"
-  linkedin="gavin-wood"
-  telegram="PolkadotOfficial"
-></widget-speaker>
-```
-
-Note that in `.md` files, you have to keep the widget element all in a single line to work
-
----
-
 ## We believe in a decentralized and fair internet where users control their own data, identity and destiny.
 
 ---
@@ -148,7 +109,7 @@ Note that in `.md` files, you have to keep the widget element all in a single li
 <!-- prettier-ignore -->
 ```html
 <widget-columns>
-<widget-column> 
+<widget-column>
 
 ### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
 
