@@ -18,278 +18,213 @@ as slide templates in your slides!
 
 <br>
 
-<widget-text center>
+<pba-flex center>
 
-1. Images
-   - full screen backgrounds
 1. Columns
-   - split screen backgrounds
-   - images in columns
+1. Images
 1. MarkDown examples
-   - code `fragment` transitions
 
-</widget-text>
-
----
-
-# Mosasaurus
+</pba-flex>
 
 ---
 
-<widget-text>
+## Columns
 
-Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles.
+<pba-cols>
+<pba-col center>
 
-It lived from about 82 to 66 million years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
+### Center 1
 
-</widget-text>
+Using<br>`<pba-col center>`
+
+</pba-col>
+<pba-col center>
+
+### Center 2
+
+Using<br>`<pba-col center>`
+
+</pba-col>
+</pba-cols>
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<widget-text>
+<pba-cols>
+<pba-col center>
 
-Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles.
+### Center 1
 
-It lived from about 82 to 66 million years ago during the Late Cretaceous. Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
+Using<br>`<pba-col center>`
 
-</widget-text>
+</pba-col>
+<pba-col center>
+
+### Center 2
+
+Using<br>`<pba-col center>`
+
+</pba-col>
+</pba-cols>
 ```
 
 ---
 
-<widget-text color>
+## Columns
 
-Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles.
+<pba-cols>
+<pba-col left>
 
-It lived from about 82 to 66 million years ago during the Late Cretaceous.
-Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
+### Left
 
-</widget-text>
+Using<br>`<pba-col left>`
+
+</pba-col>
+<pba-col center>
+
+### Center
+
+Using<br>`<pba-col center>`
+
+</pba-col>
+<pba-col right>
+
+### Right
+
+Using<br>`<pba-col right>`
+
+</pba-col>
+</pba-cols>
+
+**_TODO: fix spacing here, use with caution!_**
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<widget-text color>
+## Columns
 
-Mosasaurus is a genus of mosasaurs, an extinct group of aquatic scaly reptiles.
+<pba-cols>
+<pba-col left>
 
-It lived from about 82 to 66 million years ago during the Late Cretaceous.
-Its earliest fossils were found as skulls near the River Meuse (Mosa in Latin).
+### Left
 
-</widget-text>
+Using<br>`<pba-col left>`
+
+</pba-col>
+<pba-col center>
+
+### Center
+
+Using<br>`<pba-col center>`
+
+</pba-col>
+<pba-col right>
+
+### Right
+
+Using<br>`<pba-col right>`
+
+</pba-col>
+</pba-cols>
 ```
 
 ---
 
-## We believe in a decentralized and fair internet where users control their own data, identity and destiny.
-
----
-
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 ### This column has a bit of a statement to make.
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit
 - Ut enim ad minim veniam, quis nostrud exercitation
 - Duis aute irure dolor in reprehenderit in
 - Excepteur sint occaecat cupidatat non proident, sunt in
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
-### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+### This column has a bit of a statement to make.
 
-</widget-column>
-<widget-column>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit - Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in - Excepteur sint occaecat cupidatat non proident, sunt in
-
-</widget-column>
-</widget-columns>
-```
-
----v
-
-<widget-columns>
-<widget-column color>
-
-### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit
 - Ut enim ad minim veniam, quis nostrud exercitation
 - Duis aute irure dolor in reprehenderit in
 - Excepteur sint occaecat cupidatat non proident, sunt in
 
-</widget-column>
-</widget-columns>
-
----v
-
-<!-- prettier-ignore -->
-```html
-<widget-columns>
-<widget-column color>
-
-### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-
-</widget-column>
-<widget-column>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in
-- Excepteur sint occaecat cupidatat non proident, sunt in
-
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 ```
 
 ---
 
-<img  src="../../assets/img/4-Substrate/WebAssembly.png"/>
+## Images
+
+<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png"/>
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<img  src="../../assets/img/4-Substrate/WebAssembly.png"/>
+<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png"/>
 ```
 
 ---
 
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image.png" -->
-<widget-text>
-
+<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 More info on reveal/reveal-md backgrounds:
 
 - https://revealjs.com/backgrounds/
 - https://www.npmjs.com/package/reveal-md custom styles attributes
 
-</widget-text>
-
----
-
-<widget-columns>
-<widget-column></widget-column>
-<widget-column>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-- Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-
-</widget-column>
-</widget-columns>
-
----v
-
-<!-- prettier-ignore -->
-```html
-<widget-columns>
-<widget-column></widget-column>
-<widget-column>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-- Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-
-</widget-column>
-</widget-columns>
-```
-
----
-
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
-
-<widget-columns padded>
-<widget-column>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in
-- Excepteur sint occaecat cupidatat non proident, sunt in
-
-</widget-column>
-</widget-columns>
-
 ---v
 
 <!-- prettier-ignore -->
 ```html
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
-<widget-columns padded>
-<widget-column>
+More info on reveal/reveal-md backgrounds:
 
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in
-- Excepteur sint occaecat cupidatat non proident, sunt in
-
-</widget-column>
-</widget-columns>
+- https://revealjs.com/backgrounds/
+- https://www.npmjs.com/package/reveal-md custom styles attributes
 ```
 
----
+---v
 
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
-
-<widget-columns padded>
-<widget-column color>
-
-### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
-
-</widget-column>
-<widget-column contrast>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in
-- Excepteur sint occaecat cupidatat non proident, sunt in
-
-</widget-column>
-</widget-columns>
-
----v
 
 <!-- prettier-ignore -->
 ```html
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
-<widget-columns padded>
-<widget-column color>
+<pba-cols padded>
+<pba-col color>
 
 ### Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
 
-</widget-column>
-<widget-column contrast>
+</pba-col>
+<pba-col contrast>
 
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit
 - Ut enim ad minim veniam, quis nostrud exercitation
 - Duis aute irure dolor in reprehenderit in
 - Excepteur sint occaecat cupidatat non proident, sunt in
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 ```
 
 ---
@@ -305,17 +240,9 @@ More info on reveal/reveal-md backgrounds:
 <!-- prettier-ignore -->
 ```html
 <!-- .slide: data-background-color="#8D3AED" -->
+
 # Section title
 ```
-
----
-
-## Slide Title
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-- Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
 
 ---
 
@@ -433,8 +360,8 @@ pub type Executive = frame_executive::Executive<
 
 ---
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 ### Column + Code
 
@@ -442,8 +369,8 @@ pub type Executive = frame_executive::Executive<
 - Observations
 - Others
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 ```rust [0|1,13|4-8]
 fn largest_i32(list: &[i32]) -> i32 {
@@ -485,15 +412,15 @@ fn main() {
 }
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 ### Column + Code
 
@@ -501,8 +428,8 @@ fn main() {
 - Observations
 - Others
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 
 ```rust [0|1,13|4-8]
@@ -545,8 +472,8 @@ fn main() {
 }
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 ````
 
 ---

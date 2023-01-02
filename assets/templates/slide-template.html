@@ -35,10 +35,13 @@
   </head>
   <body class="site">
     <header class="site-header">
+      <img class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      <!-- This is only rendered on the watching server, not the production build -->
+      {{#watch}}
       <a href="{{{absoluteUrl}}}">
-        <img class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+        <p style="font-size: larger;"> [Go To All Slides]</p>
       </a>
-      <img class="watermark-icon" src="{{{base}}}/assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+      {{/watch}}
     </header>
     <main class="reveal">
       <article class="slides">

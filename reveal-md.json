@@ -1,12 +1,7 @@
 {
   "title": "Polkadot Blockchain Academy",
-  "theme": "assets/styles/polkadot-theme.css",
+  "theme": "assets/styles/PBA-theme.css",
   "assetsDir": ".",
-  "css": [
-    "assets/styles/custom-classes.css",
-    "assets/styles/polkadot-theme-base.css",
-    "assets/styles/PBA-theme.css"
-  ],
   "separator": "\r?\n---\r?\n",
   "verticalSeparator": "\r?\n---v\r?\n",
   "highlightTheme": "shades-of-purple",
