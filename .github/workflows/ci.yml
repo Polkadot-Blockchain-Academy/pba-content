@@ -1,5 +1,7 @@
-name: Build and delpoy to `gh-pages`
+# Note gh-pages is *not* the host presently, fleek is.
+# Fleek renders files when a push to `gh-pages` by this CI happens.
 
+name: Build and deploy to `gh-pages`
 on:
   push:
     branches:
