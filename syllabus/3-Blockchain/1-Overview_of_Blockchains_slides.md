@@ -522,7 +522,7 @@ Historically, upgrading blockchains meant getting everyone to update their node 
 
 ---
 
-<img style="width: 500px;" src="../../assets/img/0-Shared/logo/Polkadot_Pink-White.svg"/>
+<img style="width: 500px;" src="../../assets/img/0-Shared/logo/polkadot_pink-white.svg"/>
 
 Notes:
 

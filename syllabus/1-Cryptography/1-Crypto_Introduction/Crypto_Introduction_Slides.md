@@ -468,7 +468,7 @@ This requires that the verifier also compute the hash.
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Exercise
 
@@ -547,7 +547,7 @@ The output does not depend on the order of operations.
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 <img style="height: 900px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange.svg"/>
 

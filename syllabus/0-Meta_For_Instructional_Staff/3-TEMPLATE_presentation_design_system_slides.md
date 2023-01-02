@@ -230,17 +230,17 @@ More info on reveal/reveal-md backgrounds:
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Section title
 
 ---v
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 <!-- prettier-ignore -->
 ```html
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Section title
 ```

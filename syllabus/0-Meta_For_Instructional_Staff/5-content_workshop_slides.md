@@ -4,7 +4,7 @@ description: Briefing for Instructors and TAs contributing to the Academy
 duration: 1 hour
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Content Workshop
 
@@ -14,7 +14,7 @@ duration: 1 hour
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Kahoot Game
 
@@ -122,7 +122,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 ## Commitment Time
 
@@ -300,7 +300,7 @@ Gorka is from the Moonbeam team and has already committed.
 
 ---v
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 ## Alright! We have a TEAM!
 
@@ -451,7 +451,7 @@ Exercise: Students will do it if you tell them to. I've gotten theaters of 50+ a
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Content Brainstorming
 
@@ -526,7 +526,7 @@ Dan will push you before sub0 to do this!
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 <img src="./img/do-it.webp" style="width: 900px; border-radius: 20px;">
 

@@ -1024,6 +1024,6 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 <img style="width: 20%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
