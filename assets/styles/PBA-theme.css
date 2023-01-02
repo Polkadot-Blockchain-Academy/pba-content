@@ -12,7 +12,7 @@
 	--r-main-font-size: 35px;
 	--r-main-font: "Work Sans";
 	--r-main-color: #fff;
-	--r-background-color: #07154b;
+	--r-background-color: #140526;
 	--r-code-background-color: #272822;
 	--r-block-margin: 1.15em 0em 0em 0em;
 	--r-heading-margin: 0em 0em 0.6em 0em;
@@ -31,7 +31,7 @@
 	--r-code-font: monospace;
 	/* custom PBA var */
 	--r-code-font-size: 0.6em;
-	--r-link-color: #e6007a;
+	--r-link-color: #d92f78;
 	--r-link-color-dark: #A45CF6;
 	--r-link-color-hover: #8d3aed;
 	--r-selection-background-color: #8d3aed;
@@ -93,7 +93,6 @@ section.has-light-background h6 {
   custom-elements
 */
 /* columns:  a widget to display columns of things */
-
 
 .site-header {
   position: fixed;
@@ -197,6 +196,15 @@ pba-flex[right] {
 	text-transform: var(--r-heading-text-transform);
 	text-shadow: var(--r-heading-text-shadow);
 	word-wrap: break-word;
+}
+
+.reveal h1:first-of-type,
+.reveal h2:first-of-type,
+.reveal h3:first-of-type,
+.reveal h4:first-of-type,
+.reveal h5:first-of-type,
+.reveal h6:first-of-type {
+	color: var(--r-link-color);
 }
 
 .reveal h1 {

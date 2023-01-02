@@ -8,8 +8,6 @@ teaching-assistants: ["some one", "another gal"]
 
 # Lecture Title
 
-### _Module X, Lecture Y_
-
 ---
 
 ### Outline
