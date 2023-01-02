@@ -4,8 +4,6 @@ description: Briefing for Instructors and TAs contributing to the Academy
 duration: 1 hour
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
-
 # Content Workshop
 
 <br>
@@ -94,31 +92,31 @@ Notes:
 
 ## Universidad De Buenos Aires
 
-<img src="./img/uba1.png" style="width: 800px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba1.png" style="width: 800px;">
 
 ---v
 
-<img src="./img/uba2.png" style="width: 800px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba2.png" style="width: 800px;">
 
 ---v
 
-<img src="./img/uba3.png" style="width: 800px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba3.png" style="width: 800px;">
 
 ---v
 
-<img src="./img/uba4.png" style="width: 800px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba4.png" style="width: 800px;">
 
 ---v
 
-<img src="./img/uba5.png" style="width: 800px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba5.png" style="width: 800px;">
 
 ---v
 
-<img src="./img/uba6.png" style="width: 800px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba6.png" style="width: 800px;">
 
 ---v
 
-<img src="./img/uba7.png" style="width: 800px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba7.png" style="width: 800px;">
 
 ---
 
@@ -152,7 +150,7 @@ This endeavor will only succeed with everyone doing their part. If you cannot co
 <widget-column>
 
 <center>
-<img src="./img/pledge.png" style="width: 300px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/pledge.png" style="width: 300px;">
 </center>
 
 </widget-column>
@@ -306,7 +304,7 @@ Gorka is from the Moonbeam team and has already committed.
 
 <br>
 
-<img src="./img/salute-team.jpg" style="width: 900px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/salute-team.jpg" style="width: 900px;">
 
 ---
 
@@ -353,7 +351,7 @@ Even if you decide that you absolutely must do a long lecture, you aren't going 
 
 ### Teachers Imagine
 
-<img src="./img/hand.png" style="width: 900px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/hand.png" style="width: 900px;">
 
 Notes:
 
@@ -363,13 +361,13 @@ Teachers imagine eery student is like this one guy. But look at most of them.
 
 ### But Really
 
-<img src="./img/sleep.png" style="width: 900px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/sleep.png" style="width: 900px;">
 
 ---v
 
 ### But Really
 
-<img src="./img/phone.png" style="width: 900px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/phone.png" style="width: 900px;">
 
 ---v
 
@@ -380,7 +378,7 @@ Teachers imagine eery student is like this one guy. But look at most of them.
 
 <br>
 
-<img src="./img/chefs.jpg" style="width: 600px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/chefs.jpg" style="width: 600px;">
 
 Notes:
 
@@ -528,7 +526,7 @@ Dan will push you before sub0 to do this!
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-<img src="./img/do-it.webp" style="width: 900px; border-radius: 20px;">
+<img src="../../assets/img/0-Shared/meta-slides/do-it.webp" style="width: 900px;">
 
 Notes:
 
