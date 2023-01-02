@@ -28,7 +28,7 @@ as slide templates in your slides!
 
 ---
 
-## Columns
+## Two Column
 
 <pba-cols>
 <pba-col center>
@@ -48,6 +48,8 @@ Using<br>`<pba-col center>`
 </pba-cols>
 
 ---v
+
+## Two Column
 
 <!-- prettier-ignore -->
 ```html
@@ -71,7 +73,7 @@ Using<br>`<pba-col center>`
 
 ---
 
-## Columns
+## Three Columns
 
 <pba-cols>
 <pba-col left>
@@ -97,14 +99,12 @@ Using<br>`<pba-col right>`
 </pba-col>
 </pba-cols>
 
-**_TODO: fix spacing here, use with caution!_**
-
 ---v
+
+## Three Columns
 
 <!-- prettier-ignore -->
 ```html
-## Columns
-
 <pba-cols>
 <pba-col left>
 
@@ -185,6 +185,7 @@ Using<br>`<pba-col right>`
 ---
 
 <!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
+
 More info on reveal/reveal-md backgrounds:
 
 - https://revealjs.com/backgrounds/
