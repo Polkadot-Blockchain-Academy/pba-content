@@ -25,7 +25,7 @@ The input `r` could be anything, for example the movement pattern of a mouse.
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Rust Demo
 
@@ -67,7 +67,7 @@ Where `H` is a hash function (for our purposes, Blake2). This means the verifier
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Rust Demo
 
@@ -187,7 +187,7 @@ Let's imagine we want to use this key on multiple networks, but we don't want th
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Rust Demo
 
@@ -234,7 +234,7 @@ Let's go back to Rust to soft derive more children.
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Rust Demo
 
