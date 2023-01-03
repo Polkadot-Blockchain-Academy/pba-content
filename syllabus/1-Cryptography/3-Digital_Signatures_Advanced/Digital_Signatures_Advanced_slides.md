@@ -43,7 +43,7 @@ Potential example to give verbally:
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 ## Multi-Signatures
 
