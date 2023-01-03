@@ -5,7 +5,18 @@ instructors: ["Joshy Orndorff"]
 teaching-assistants: ["Sacha Lansky", "Dan Shields", "Emre Surmeli"]
 ---
 
+
+participants are incentivized to behave honestly.
+Four areas:
+- state machine validity - quick
+- arbitrary - quick
+- authorship throttling - this lesson
+- finality - two lessons from now
+
+
 # Consensus Systems
+
+Decentralized systems that sell blockspace to their customers - app deployers and users
 
 ---
 

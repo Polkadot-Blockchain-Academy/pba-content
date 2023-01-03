@@ -137,6 +137,8 @@ But we do not yet see disintermediation. In web 2, the masses because beholden t
 
 A provision of digital services without the need to trust a service _provider_.
 
+Participants do not need to be trusted; they are economically incentivized to behave honestly.
+
 Notes:
 We want to maintain the value, versatility, and richness of Web2, but remove the trust, and possibility of extractive behavior.
 
