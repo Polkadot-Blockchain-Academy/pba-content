@@ -19,10 +19,11 @@ teaching-assistants: ["Dan Shields"]
 What is the core problem we want to solve?
 
 Notes:
-
 Potential for some discussion here, engage the audience.
+Joshy's Answer: Coming to a shared understanding of a common history, and therefore a common state, of a system.
 
 ---
+
 
 ## Comparison with Cryptography
 
@@ -46,6 +47,12 @@ Platforms started offering digital services.
 
 However, users must place faith in the service provider.
 Any cryptographic guarantees are about interactions with the service provider, not peers.
+
+## Distributed Applications in Web 2
+
+Providers run redundant data centers in different geographical regions. This prevents accidents.
+
+But it assumes benevolent participants and some kind of trusted leader.
 
 ---
 
@@ -103,13 +110,9 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ---
 
-## Trust
-
-What is trust in this context? Blind faith.
-
----
-
 ## Trust Example
+
+TODO figure out what to do with this old slide
 
 Two users on Twitter:
 
@@ -181,7 +184,6 @@ Opens the door to new application stacks:
 
 ---
 
-# Blockchain, Finally
 
 ---
 
@@ -248,30 +250,7 @@ A state transition function (STF) defines:
 
 ---
 
-## Example: A Simple Storage Item Write
-
-```rust
-/// The ideal number of staking participants.
-#[pallet::storage]
-#[pallet::getter(fn validator_count)]
-pub type ValidatorCount<T> = StorageValue<_, u32, ValueQuery>;
-
-/// Sets the ideal number of validators.
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-	pub fn set_validator_count(origin: OriginFor<T>, new: u32) -> DispatchResult {
-		ensure_root(origin)?;
-		ValidatorCount::<T>::put(new);
-		Ok(())
-	}
-}
-```
-
-Notes:
-
-This example is from Substrate, which we will cover more in depth in the next module.
-
----
+TODO Move these to next lecture
 
 ## Anatomy
 
@@ -440,7 +419,7 @@ What actually backs up the system's guarantees?
 
 - Lazy: Omnipotence (AWS, Twitter, Bank)
 - Some "proof" of authority, as defined within the system itself
-  - Wasting energy (trivial)
+  - Consuming energy
   - Putting stake at risk
   - Being elected by participants via their willingness to put their own stake at risk
 
@@ -458,30 +437,6 @@ In blockchains, this is usually accomplished via either lack of reward or explic
 
 **The _system_ should uphold its credibility even if individual participants do not.**
 
-| Technical Design               | Economic Design    |
-| ------------------------------ | ------------------ |
-| Key choices                    | Cost of misuse     |
-| Public API                     | Fees & Deposits    |
-| Hash choices                   | Slashing & Rewards |
-| Stored data                    |                    |
-| Transactional/Autonomous Logic |                    |
-| Authorship & Censorship        |                    |
-
----
-
-## STF Upgrades
-
-All systems need to upgrade to stay relevant.
-
-Bug fixes, new functionality, new information.
-
-This can be tricky in blockchains...
-
-Notes:
-
-We'll be getting to this soon and also in 3.4.
-
----
 
 # Short History Lesson
 
@@ -508,48 +463,11 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 
 ---
 
-## Proof of Stake
-
-Ethereum uses Proof of Work, but planned\* to transition to Proof of Stake.
-
-Many new protocols came out in the coming years with suggested implementations of PoS (NXT, Ouroboros).
-
-Covered more in depth in the next lecture.
-
----
-
 ## Hard Forks
 
 Historically, upgrading blockchains meant getting everyone to update their node software.
 
 "This had made many people very angry and has been widely regarded as a bad move."
-
----
-
-<img style="width: 500px;" src="../../assets/img/0-Shared/logo/Polkadot_Pink-White.svg"/>
-
-Notes:
-
-Wrap up with some notes about Polkadot
-
----
-
-## Consensus Over the STF
-
-Who actually defines the STF?
-
-In Substrate chains (like Polkadot), it's part of the state itself!
-
-`:CODE => <some-wasm-executable>`
-
----
-
-## Many State Machines
-
-- If one state machine with such guarantees is useful, people will probably want more.
-- But security can be diluted.
-- Polkadot is designed to _host_ a large number of sovereign state machines.
-  We call them parachains.
 
 ---
 
@@ -563,13 +481,3 @@ So these state machines should have a messaging protocol to interact with each o
 
 ---
 
-## Substrate
-
-Practically, these parachains will have a lot in common:
-
-- Similar needs for accounting units, databases, RPCs, etc.
-- All need to "speak the same language", i.e. compile to Wasm
-
-Substrate was created to make this part easy.
-
----
