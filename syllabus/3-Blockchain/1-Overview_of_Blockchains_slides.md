@@ -324,7 +324,7 @@ TODO diagram comparing Web2 server model to Web3 consensus model side by side.
 Learn more:
 Article: https://a16zcrypto.com/blockspace-explained/
 Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
-Podcast: https://www.youtube.com/watch?v=jezH_7qEk50
+Podcast: https://youtu.be/jezH_7qEk50?t=5330
 
 Notes:
 A Blockchain network is a replacement for a centralized server. It sells a product to application deployers. The state machine is the application layer, and the blockchain is the server replacement. In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc. Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
