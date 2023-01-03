@@ -1,104 +1,125 @@
 ---
 title: Blockchain Structure
-description: Blockchain Structure for Web3 engineers
+description: The Blockchain data structure including hash-linking, forks, header vs body, and extrinsics.
+duration: 30 min
+instructors: ["Joshy Orndorff"]
 ---
 
+# Blockchain Structure
 
-TODO Emphasize that state is not part of block.
+<widget-speaker name="Joshy Orndorff" position="Blockchain Chef" image="../../../assets/img/0-Shared/people/joshy.png" github="JoshOrndorff" twitter="JoshyOrndorff"></widget-speaker>
 
-TODO important idea
+TODO Figure of a blockchain with forks
 
 ## Shared Story
 
-Blockchain allows participants to tell a shared story, and know when someone rewrites history
+A Blockchain **cryptographically guarantees** that a history of events has not been tampered with.
+This allows interested parties to have a **shared history**.
 
 ---
-## State Machine
+
+## Hash Linked List
+
+TODO figure like my sub0 talk
+
+Notes:
+This is a simplified blockchain. Each block has a pointer to the parent block as well as a payload. The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
+
+---v
+
+### Genesis Block
+
+TODO figure
+
+Notes:
+The first block in the chain is typically called a the "Genesis block" named after the first book in the judaeo-christian mythology - The beginning of our shared story. The parent hash is chosen to be some specific value. Typically we use the all-zero hash, although any fixed widely agreed-upon value would also do.
+
+---
+
+## State Machines (Again)
+
+A state machine defines:
+
+- the set of valid states
+- the rules for transitioning between those states.
 
 <img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-state-machine.png"/>
 
-## Blockchains
+---v
 
-<widget-columns>
-<widget-column>
+### Blockchain meet State Machine
 
-<center>
+TODO Figure
 
-**Consensus**
+Notes:
+The simplest way to join a blockchain to a state machine is to to make the blockchain's payload a state machine transition.
+By doing so, we effectively track the history of a state machine in a cryptographically guaranteed way.
 
-How does the state advance?
+---v
 
-Which changes are final?
+### Where do the States Live?
 
-</center>
-</widget-column>
-<widget-column>
-<center>
+Somewhere else!
 
-**State Transition Function**
-
-What does the state hold?
-
-What are the _rules_ to change it?
-
-</center>
-</widget-column>
-</widget-columns>
-
----
-
-## State Transition Function
-
-A state transition function (STF) defines:
-
-| Data Stored   | API & Behavior |
-| :------------ | :------------- |
-| Account Info  | Function calls |
-| Balances      | Implementation |
-| Authority Set | Responses      |
-| Timestamp     |                |
-| &c.           |                |
-
----
-
-## Example: A Simple Storage Item Write
-
-```rust
-/// The ideal number of staking participants.
-#[pallet::storage]
-#[pallet::getter(fn validator_count)]
-pub type ValidatorCount<T> = StorageValue<_, u32, ValueQuery>;
-
-/// Sets the ideal number of validators.
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-	pub fn set_validator_count(origin: OriginFor<T>, new: u32) -> DispatchResult {
-		ensure_root(origin)?;
-		ValidatorCount::<T>::put(new);
-		Ok(())
-	}
-}
-```
+Figure with states outside of blocks.
 
 Notes:
 
-This example is from Substrate, which we will cover more in depth in the next module.
+There is a state associated with each block. But typically the state is NOT stored in the block. This state information is redundant because it can always be obtained by just re-executing the history of the transitions.
+It is possible to store the state in the blocks, but the redundancy is often undesirable. It wastes disk space for anyone who wants to store the history of the chain. Storing the state in the block is not done by any moderately popular blockchain today.
+If you _want_ to store the states, you are welcome to do so. Software that does this is known as an Archive node or an indexer.
+
+---v
+
+### State Roots
+
+TODO: Figure that adds a state root field to the blocks
+
+Notes:
+Some data redundancy can be good to help avoid corruption etc. It is common for a block to contain a cryptographic fingerprint of
+the state. This is known as a state root. You think of it as a hash of the state. In practice, the state is typically built into a Merkle tree like structure and the tree root is included. Not all blockchains do this. Notably bitcoin doesn't. But most do. We'll go into details about exactly how this state root is calculated for Substrate in the next two modules, but for now we just consider the state root to be some kind of cryptographic fingerprint.
 
 ---
 
-## Anatomy
+## Forks
 
-<img style="width: 1100px" src="../../assets/img/3-Blockchain/3.1-anatomy.png"/>
+TODO Diagram
+
+A state machine can have different possible histories. These are called forks.
+
+Notes:
+You can think of them like alternate realities. We need to decide which of the many possible forks is ultimately the "real" one. This is the core job of consensus and we will talk about it in two upcoming lessons in this module.
+
+---v
+
+## Invalid Transitions
+
+TODO Diagram with some forks crossed out
+
+Notes:
+Before we even get to hardcore consensus, we can rule out _some_ possibilities based on the state machine itself
 
 ---
 
-## Blocks
+## Realistic Blockchain Structure
 
-- Includes a header and a body.
-- Header includes consensus-related info: number, parent hash, some digests.
-- Body contains an ordered set of _extrinsics_: Packets from the outside world with _zero_ or more signatures attached.
+TODO Diagram
 
----
+Separated into two parts
+
+- Header: Summary of minimal important information about this block
+- Body: A batched list of state transitions
+
+Notes:
+The header is a minimal amount of information. In some ways it is like metadata.
+The body contains the real "payload". It is almost always a batch of state transitions.
+There are many name aliases for what is included in the body:
+
+- Transitions
+- Transactions
+- Extrinsics
+
+---v
 
 ## Blocks in Substrate
 
@@ -114,25 +135,22 @@ pub struct Block<Header, Extrinsic: MaybeSerialize> {
 
 Notes:
 
-This example is also from Substrate, we will cover more in depth in the next module.
+This example is from Substrate and as such it strives to be a general and flexible format, we will cover Substrate in more depth in the next module. This is representative of nearly all real-world blockchains
 
 ---
 
 ## Headers
 
-Consensus-related info. Varies per blockchain, but in Substrate:
+Exact content varies per blockchain.
+Always contains the parent hash.
+Headers are the _actual_ hash-linked list, not entire blocks.
 
-- Parent hash
-- Number
-- State root
-- Extrinsics root
-- Digest
-
+Notes:
 The parent hash links blocks together (cryptographically linked list). The other info is handy for other infrastructure and applications (more on that later).
 
----
+---v
 
-## Other Headers
+## Header Examples
 
 <widget-columns>
 <widget-column>
@@ -171,6 +189,20 @@ The parent hash links blocks together (cryptographically linked list). The other
 </widget-column>
 </widget-columns>
 
+---v
+
+## Substrate Header
+
+- Parent hash
+- Number
+- State root
+- Extrinsics root
+- Consensus Digest
+
+Notes:
+Extrinsics root is a crypto link to the body of the block. It is very similar to the state root.
+Consensus Digest is information necessary for the consensus algorithm to determine a block's validity. It varies widely with the consensus algorithm used and we will discuss it in two upcoming lectures.
+
 ---
 
 ## Extrinsics
@@ -183,8 +215,41 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 ---
 
-### Consensus
+## Nodes
 
-Whole next lecture is dedicated to consensus, going to stay strictly conceptual here.
+Software agent that participates in blockchain network. May perform these jobs:
 
----
+- Gossip blocks
+- Execute and Validate blocks
+- Store blocks
+- Store states
+- Gossip transactions
+- Maintain a transaction pool
+- Author blocks
+- Store block headers
+- Answer user requests for data (RPC)
+
+Notes:
+Many nodes only perform a subset of these tasks
+
+---v
+
+## Types of Nodes
+
+- Full Nodes
+- Light Nodes (aka Light clients)
+- Authoring nodes
+- Archive nodes
+- RPC nodes
+
+## Transaction Pool
+
+TODO revise this
+
+Contains transactions that are not yet in blocks.
+
+Constantly prioritizing and reprioritizing transactions.
+
+Authoring nodes determine the order of upcoming transactions. In some sense they can see the future.
+
+Operates as a blockspace market.
