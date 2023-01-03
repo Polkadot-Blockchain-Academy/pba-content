@@ -1,12 +1,13 @@
 ---
-title: Overview of Blockchains
-description: Overview of blockchains for Web3 engineers
-duration: 1 hour
-instructors: ["Joe Petrowski"]
-teaching-assistants: ["Dan Shields"]
+title: Blockchain Overview
+description: Initial look at web history and the problems blockchain and web3 are solving
+duration: 45 minutes
+instructors: ["Joshy Orndorff"]
 ---
 
 # Overview of Blockchains
+
+<widget-speaker name="Joshy Orndorff" position="Blockchain Chef" image="../../../assets/img/0-Shared/people/joshy.png" github="JoshOrndorff" twitter="JoshyOrndorff"></widget-speaker>
 
 ---
 
@@ -27,88 +28,62 @@ Cryptography provides strong guarantees about _messages_ without a trusted party
 
 ---
 
+## Web 0
+
+Telegraph, Telephone
+
+Users transmit information peer-to-peer.
+
+Crypto not typically used except by military, but upheld guarantees when used.
+
+TODO image of users connected by telephone wire.
+
+---
+
 ## Web 1
 
-Users generally transmit information peer-to-peer.
+Introduction of always-on servers.
 
-Cryptography upholds its guarantees when used like this.
+Still mostly peer-to-peer.
+
+Cryptography more often, but still not ubiquitous.
+
+TODO image of users connecting to servers.
 
 ---
 
 ## Web 2
 
-"Send _us_ your information."
+Introduction of **Digital Services** with **Rich State**.
 
-Platforms started offering digital services.
+Administered by service providers: "Send _us_ your information."
 
 However, users must place faith in the service provider.
-Any cryptographic guarantees are about interactions with the service provider, not peers.
 
-## Distributed Applications in Web 2
+Cryptographic guarantees are about interactions with the service provider, not peers.
 
-Providers run redundant data centers in different geographical regions. This prevents accidents.
+TODO image of servers with all users interacting with the same server.
 
-But it assumes benevolent participants and some kind of trusted leader.
+---v
 
----
+## Digital Services
 
-## Web3
+People rely on digital services every day.
+They are inescapable and valuable.
 
-A provision of digital services without the need to trust a service _provider_.
+- Twitter, Instagram, Facebook, etc.
+- Journalism and sources
+- Banks
+- Lawyers, notaries, regulators
 
----
+Notes:
 
-## Desired Properties
+- Ask class for more examples
+- Digital services are not bad in and of themselves. They are very valuable. We use all of these every day. We are even using some to administer this course. But they are also hard to escape.
 
-### _Permissionless access_
-
-Anyone should be able to access and interact with the system.
-
----
-
-## Desired Properties
-
-### _Privacy_
-
-Users should have credible expectations about what information they give up about themselves.
-
----
-
-## Desired Properties
-
-### _Authenticity_
-
-Users should have credible expectations about the messages they see, regardless of the platform the messages are on.
-
----
-
-## Desired Properties
-
-### _Finality_
-
-Users should be able to form credible expectations about when a state transition is final.
-
----
-
-## Desired Properties
-
-### _Behavior_
-
-The system should behave as expected, even if system operators do not.
-
----
-
-## Desired Properties
-
-### _Unstoppability_
-
-No individual actor, company, state, or coalition should be able to degrade any of these properties.
-
----
+---v
 
 ## Trust Example
-
-TODO figure out what to do with this old slide
 
 Two users on Twitter:
 
@@ -122,35 +97,66 @@ Notes:
 
 - Cryptography actually provides a lot of these guarantees, but not when an intermediary has stepped in between users.
 - This is one example, but class should discuss.
-  Also possible activity.
 
----
+---v
 
-## Digital Services
+## God Mode Enabled
 
-People rely on digital services every day.
-They are inescapable (and valuable).
+In web 2, service providers can perform abuses:
 
-- Twitter, Instagram, Facebook, etc.
-- Journalism and sources
-- Banks
-- Lawyers, notaries, regulators
+- Censoring user interaction
+- Restricting users interaction
+- Failing to produce requested data
+- Mutating state opaquely
+
+---v
+
+## Thought experiment: Digital Currency
+
+Bitcoin's application was digital currency - a trivially simple application.
+
+Could this be built with Web2 technology?
 
 Notes:
+Yep it could. This is the kind of simple app you might build in a Freshman year course
+on modern web interfaces. It just needs to maintain a set of bank notes and their owners (or alternatively a set of accounts and their balances.) So why didn't this exist in web 2? Because the provider could print money. Or steal money. Or freeze funds.
+Side thought. How different is this from fiat currencies?
 
-- Ask class for more examples
+## Distributed Applications in Web 2
+
+Providers run redundant data centers to prevents accidents.
+
+But it still assumes benevolent participants and some trusted leader.
+
+Notes:
+Even in web2 we start to see the idea of redundancy to prevent accidents from natural disasters, sabotage, hardware failure etc.
+But we do not yet see disintermediation. In web 2, the masses because beholden to the service providers who were free to extract value and manipulate the users
 
 ---
 
-## Disintermediation
+## Web3
 
-Removing trust allows us to unpackage applications.
+A provision of digital services without the need to trust a service _provider_.
 
-When users have credible guarantees that they are interacting with the same data and logic, many applications can be built on the same system.
+Notes:
+We want to maintain the value, versatility, and richness of Web2, but remove the trust, and possibility of extractive behavior.
 
----
+---v
+
+## Desired Approach
+
+Allow users to interact with a common system without trusting any intermediaries.
+
+Opens the door to new application stacks:
+
+- Shared state and state change rules
+- Custom rendering, moderation, interfaces
+
+---v
 
 ## Application Disentanglement
+
+Removing trust allows us to unpackage applications.
 
 <img style="width: 800px" src="../../assets/img/3-Blockchain/3.1-application-disentanglement.png"/>
 
@@ -163,64 +169,114 @@ It also removes the need for a central authority to deal with all appeals/compla
 
 ---
 
-## Desired Approach
+# Desired Properties
 
-Allow users to interact with a common system without trusting any intermediaries.
+---V
+## Permissionless access
 
-Opens the door to new application stacks:
+Anyone should be able to access and interact with the system.
 
-- Shared state and state change rules
-- Custom rendering, moderation, interfaces
+---v
+## Privacy
+
+Users should have credible expectations about what information they give up about themselves.
+
+---v
+## Authenticity
+
+Users should have credible expectations about the messages they see, regardless of the platform the messages are on.
+
+---v
+## Finality
+
+Users should be able to form credible expectations about when a state transition is final.
+
+---v
+## Behavior
+
+The system should behave as expected, even if system operators do not.
+
+---v
+
+## _Unstoppability_
+
+No individual actor, company, state, or coalition should be able to degrade any of these properties.
 
 ---
 
-## State Machine
+# A Shared History
+
+TODO Yuval Noah Harari Quote. Something along the lines of: The telling of myths and stories allow Homo sapiens to collaborate in large numbers in extremely flexible ways. This separates us from all other animals.
+
+TODO Stephen Hawking Quote
+
+Notes:
+So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2 users have no visibility into the history of the app. They must trust the provider to accurately represent the current state.
+---
+
+# State Machines
+
+We can formalize this notion of shared story with state machine model.
 
 <img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-state-machine.png"/>
 
----
+Notes:
+Most systems that we care about can be modeled as state machines. A state machine is not a real machine that you can touch. It is a model is comprised of a set of states and a set of rules about how to transition between the states.
 
+---v
 
----
+## State Machine Example: Digital Cash
 
-## Just Kidding
+Each state is a set of bank notes. Where a bank note has an amount and an owner.
+A transition involves a user consuming (spending) some bank notes and creating new ones.
 
-Blockchains were not the first attempt at distributed state machines.
+Notes:
+Not all conceivable transitions are valid. Imagine a user consuming a bank note worth 5 coins. and creating two new ones each worth 3 coins.
 
-- Redundant systems in mission-critical engineering
-- Data centers
-- High availability applications
+---v
 
----
+## Sate Machine Example: Social Media
 
-## Constraints
+Each state is a set of posts and their associated comments and emoji reaction counts.
+A transition involves, making a new post, or reacting to someone elses, or commenting
 
-However, most of these examples assume benevolent participants.
-And an admin.
+Notes:
+There is not a single model here. Some state machines will allow deleting or editing posts, while others will not. Some will allow disliking posts while others only allow liking.
 
-Blockchains are adversarial, with no admins.
+---v
 
----
+## More State Machine Examples:
 
-## Blockchains
+* Ride sharing platform
+* Voting system
+* Blackjack table
+
+Notes:
+Let's brainstorm what the state and the transitions might be for each of these.
+
+---v
+
+## Shared Story of a State Machine
+
+If we agree on:
+* The starting state (aka genesis state)
+* The history of transitions
+
+Then we MUST agree on
+* The current state
+
+Notes:
+Now that we have a formal mathy model of systems that we care about, we can see that the notion shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
+
+## Blockchains (Finally)
+
+A blockchain can be thought of in three parts
 
 <widget-columns>
 <widget-column>
-
 <center>
 
-**Consensus**
-
-How does the state advance?
-
-Which changes are final?
-
-</center>
-</widget-column>
-<widget-column>
-<center>
-
-**State Transition Function**
+**State Machine**
 
 What does the state hold?
 
@@ -228,215 +284,54 @@ What are the _rules_ to change it?
 
 </center>
 </widget-column>
-</widget-columns>
-
----
-
-## State Transition Function
-
-A state transition function (STF) defines:
-
-| Data Stored   | API & Behavior |
-| :------------ | :------------- |
-| Account Info  | Function calls |
-| Balances      | Implementation |
-| Authority Set | Responses      |
-| Timestamp     |                |
-| &c.           |                |
-
----
-
-TODO Move these to next lecture
-
-## Anatomy
-
-<img style="width: 1100px" src="../../assets/img/3-Blockchain/3.1-anatomy.png"/>
-
----
-
-## Blocks
-
-- Includes a header and a body.
-- Header includes consensus-related info: number, parent hash, some digests.
-- Body contains an ordered set of _extrinsics_: Packets from the outside world with _zero_ or more signatures attached.
-
----
-
-## Blocks in Substrate
-
-```rust
-/// Abstraction over a Substrate block.
-pub struct Block<Header, Extrinsic: MaybeSerialize> {
-	/// The block header.
-	pub header: Header,
-	/// The accompanying extrinsics.
-	pub extrinsics: Vec<Extrinsic>,
-}
-```
-
-Notes:
-
-This example is also from Substrate, we will cover more in depth in the next module.
-
----
-
-## Headers
-
-Consensus-related info. Varies per blockchain, but in Substrate:
-
-- Parent hash
-- Number
-- State root
-- Extrinsics root
-- Digest
-
-The parent hash links blocks together (cryptographically linked list). The other info is handy for other infrastructure and applications (more on that later).
-
----
-
-## Other Headers
-
-<widget-columns>
 <widget-column>
-
 <center>
 
-**Bitcoin**
+**Data Structure**
+
+How can we cryptographically represent a history so it is tamper-proof
 
 </center>
-
-- Version
-- Previous Hash
-- Tx Merkle Root
-- Time
-- N_Bits
-- Nonce
-
 </widget-column>
 <widget-column>
 
 <center>
 
-**Ethereum**
+**Consensus**
+
+Which history is the real one?
+
+What part of history is final?
 
 </center>
-
-- Time
-- Block NUmber
-- Base Fee
-- Difficulty
-- Mix Hash
-- Parent Hash
-- State Root
-- Nonce
-
 </widget-column>
 </widget-columns>
 
----
+Notes:
+First, each blockchain tracks some state machine. We've discussed several examples of what that might be already, we'll code some simple examples shortly, and we'll spend all of module 5 digging into how to create a blockchain-friendly production-ready state machine.
 
-## Extrinsics
+Next is the Blockchain Data structure. This data structure is basically a linked list of state transitions. But unlike the linked lists you studied in your data structures course, it isn't just linked by memory addresses or any other malleable thing. Instead it is cryptographically linked so that if anyone presents a different history, you can tell right away that you don't agree on a shared history. We'll dive into this data structure in the next lesson.
 
-Packets from the outside world with _zero_ or more signatures attached.
-
-- Function calls to the STF
-- Some functions require signatures (e.g., transfer some tokens)
-- Others don't, but usually have some validation means
+Finally, is a consensus mechanism. Defining a state machine alone does not uniquely define a history. There are many possible valid histories. Just like the many worlds interpretation of quantum mechanics. To really agree on the current state, we need to agree on which of the possible histories is the real one.
 
 ---
 
-### Consensus
 
-Whole next lecture is dedicated to consensus, going to stay strictly conceptual here.
+# Blockspace
 
----
+TODO diagram comparing Web2 server model to Web3 consensus model side by side.
 
-## Liveness
-
-- Property that ensures state transitions will happen.
-  The system should be _available_.
-- Someone needs to propose a state transition (within a block) and a resultant state.
-- Motivation for actors to do so?
+Learn more:
+Article: https://a16zcrypto.com/blockspace-explained/
+Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
+Podcast: https://www.youtube.com/watch?v=jezH_7qEk50
 
 Notes:
+A Blockchain network is a replacement for a centralized server. It sells a product to application deployers. The state machine is the application layer, and the blockchain is the server replacement. In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc. Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
 
-Class Discussion: What are some motivations?
+# Short History of Blockchains
 
----
-
-## Liveness Examples
-
-- Static leader
-- Round robin
-- Proof of Work
-- Random assignment protocols
-
----
-
-## Safety
-
-Once a state transition occurs, under what conditions can users have a credible expectation that it will never revert?
-
-- Probabilistic
-- Deterministic
-
----
-
-## Safety Examples
-
-- Longest chain
-- Most difficulty
-- Practical Byzantine Fault Tolerance (PBFT) (per state transition)
-- PBFT (on batches)
-
----
-
-## Deterministic Finality
-
-What does is mean when a final block is reverted?
-
----
-
-## View
-
-No node has an omniscient view of the network.
-Therefore, one node may always have more information than another node.
-
-But they should never believe an incongruity.
-
-Example: I believe that block $B$ is final.
-You may not see $B$ as final _yet_, but you should never believe that a chain that excludes $B$ is final.
-
----
-
-## Security
-
-What actually backs up the system's guarantees?
-
-- Lazy: Omnipotence (AWS, Twitter, Bank)
-- Some "proof" of authority, as defined within the system itself
-  - Consuming energy
-  - Putting stake at risk
-  - Being elected by participants via their willingness to put their own stake at risk
-
----
-
-## Punishment
-
-If some of the authorities in a system fail to uphold their guarantees, the system should have a way to hold them accountable.
-
-In blockchains, this is usually accomplished via either lack of reward or explicit seizure/destruction.
-
----
-
-## Unscrupulous Actors
-
-**The _system_ should uphold its credibility even if individual participants do not.**
-
-
-# Short History Lesson
-
----
+---v
 
 ## Bitcoin
 
@@ -448,7 +343,7 @@ Notes:
 
 Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 
----
+---v
 
 ## Ethereum
 
@@ -457,23 +352,11 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 - Accounts can store balances, but can also store executable code (smart contracts)
 - Each contract can have its own internal state and API
 
----
+---v
 
 ## Hard Forks
 
 Historically, upgrading blockchains meant getting everyone to update their node software.
 
 "This had made many people very angry and has been widely regarded as a bad move."
-
----
-
-## Specialisation
-
-Different state machines will specialise in different things (assets, privacy, credentials, social media).
-
-But applications will want to pull from many of these capabilities.
-
-So these state machines should have a messaging protocol to interact with each other.
-
----
 
