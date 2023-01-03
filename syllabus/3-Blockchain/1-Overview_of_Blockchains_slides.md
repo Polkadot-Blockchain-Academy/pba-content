@@ -21,7 +21,6 @@ Joshy's Answer: Coming to a shared understanding of a common history, and theref
 
 ---
 
-
 ## Comparison with Cryptography
 
 Cryptography provides strong guarantees about _messages_ without a trusted party, regardless of the conduit over which a message was transported.
@@ -171,27 +170,32 @@ It also removes the need for a central authority to deal with all appeals/compla
 
 # Desired Properties
 
----V
+---v
+
 ## Permissionless access
 
 Anyone should be able to access and interact with the system.
 
 ---v
+
 ## Privacy
 
 Users should have credible expectations about what information they give up about themselves.
 
 ---v
+
 ## Authenticity
 
 Users should have credible expectations about the messages they see, regardless of the platform the messages are on.
 
 ---v
+
 ## Finality
 
 Users should be able to form credible expectations about when a state transition is final.
 
 ---v
+
 ## Behavior
 
 The system should behave as expected, even if system operators do not.
@@ -212,6 +216,7 @@ TODO Stephen Hawking Quote
 
 Notes:
 So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2 users have no visibility into the history of the app. They must trust the provider to accurately represent the current state.
+
 ---
 
 # State Machines
@@ -247,9 +252,9 @@ There is not a single model here. Some state machines will allow deleting or edi
 
 ## More State Machine Examples:
 
-* Ride sharing platform
-* Voting system
-* Blackjack table
+- Ride sharing platform
+- Voting system
+- Blackjack table
 
 Notes:
 Let's brainstorm what the state and the transitions might be for each of these.
@@ -259,11 +264,13 @@ Let's brainstorm what the state and the transitions might be for each of these.
 ## Shared Story of a State Machine
 
 If we agree on:
-* The starting state (aka genesis state)
-* The history of transitions
+
+- The starting state (aka genesis state)
+- The history of transitions
 
 Then we MUST agree on
-* The current state
+
+- The current state
 
 Notes:
 Now that we have a formal mathy model of systems that we care about, we can see that the notion shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
@@ -316,7 +323,6 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 
 ---
 
-
 # Blockspace
 
 TODO diagram comparing Web2 server model to Web3 consensus model side by side.
@@ -347,7 +353,7 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 
 ## Ethereum
 
-- Generalisation of Bitcoin: provides a quasi-Turing-complete VM
+- Generalization of Bitcoin: provides a quasi-Turing-complete VM
 - Uses an account-based system
 - Accounts can store balances, but can also store executable code (smart contracts)
 - Each contract can have its own internal state and API
@@ -359,4 +365,3 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 Historically, upgrading blockchains meant getting everyone to update their node software.
 
 "This had made many people very angry and has been widely regarded as a bad move."
-
