@@ -178,7 +178,7 @@ The parent hash links blocks together (cryptographically linked list). The other
 </center>
 
 - Time
-- Block NUmber
+- Block Number
 - Base Fee
 - Difficulty
 - Mix Hash
