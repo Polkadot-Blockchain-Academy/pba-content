@@ -3,7 +3,7 @@
 ## Core Ideas to Convey
 
 The introduction was very conceptual.
-This lecture will be hands on and actually use some of the primitives.
+This lesson will be hands on and actually use some of the primitives.
 
 - Signature API
 - Using hash functions in Substrate

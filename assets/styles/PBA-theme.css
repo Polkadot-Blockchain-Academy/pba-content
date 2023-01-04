@@ -30,7 +30,7 @@
 	--r-heading4-size: 1.15em;
 	--r-code-font: monospace;
 	/* custom PBA var */
-	--r-code-font-size: 0.6em;
+	--r-code-font-size: 0.75em;
 	--r-link-color: #d92f78;
 	--r-link-color-dark: #A45CF6;
 	--r-link-color-hover: #8d3aed;
@@ -63,7 +63,7 @@ section.has-light-background h5,
 section.has-light-background h6 {
 	color: #222;
 }
-	
+
 .reveal {
 	font-family: var(--r-main-font);
 	font-size: var(--r-main-font-size);
@@ -239,6 +239,9 @@ pba-flex[right] {
 .reveal iframe {
   max-width: 1300px;
 	max-height: 800px;
+}
+
+.reveal img[rounded] {
 	border-radius: 0.6em;
 }
 
@@ -261,7 +264,7 @@ pba-flex[right] {
 
 .reveal ol li,
 .reveal ul li {
-	margin: 0.5em 0em 0.5em 0em;
+	margin: 0.5em 0em 0.5em 1em;
 }
 
 .reveal ul {
@@ -279,7 +282,7 @@ pba-flex[right] {
 	font-size: 0.8em;
 	line-height: 1.5em;
 	position: absolute;
-	padding-left: 2em;
+	padding-left: 3em;
 	left: -0.5em;
 	font-family: monospace;
 	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
