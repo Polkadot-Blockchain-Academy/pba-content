@@ -2,8 +2,6 @@
 title: Introduction to Cryptography
 description: Cryptographic primitives for Web3 engineers
 duration: 1 hour
-instructors: ["Gavin Wood"]
-teaching-assistants: ["Dan Shields"]
 ---
 
 # Introduction to Cryptography

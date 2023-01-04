@@ -2,8 +2,6 @@
 title: Exotic Primitives
 description: More cutting edge cryptography used in blockchain
 duration: 1 hour
-instructors: ["Alistair Stewart"]
-teaching-assistants: ["Dan Shields, Sacha Lansky"]
 ---
 
 # Exotic Primitives

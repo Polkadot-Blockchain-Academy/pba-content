@@ -2,8 +2,6 @@
 title: Digital Signature Basics
 description: Hands-on application of digital signature
 duration: 1 hour
-instructors: ["Gavin Wood"]
-teaching-assistants: ["Dan Shields"]
 ---
 
 # Digital Signatures Basics
