@@ -2,7 +2,7 @@
 
 [GitHub Education](https://education.github.com/) provides a lot of nice features for formal educational institutions and their students.
 One of the tools we can leverage in the PBA is [GitHub Classroom](https://classroom.github.com/) that allows for **using a base git repo as a source for assignments**.
-Our [Rust Entrance Exam](https://github.com/Polkadot-Blockchain-Academy/Rust-Entrance-Exam) uses this feature, so we can have individuals or groups work privately from each other, while staff can see and assess everyone's work.
+Our [Rust Entrance Exam](https://github.com/Polkadot-Blockchain-Academy/Rust-Entrance-Exam) uses this feature, so we can have individuals or groups work privately from each other, while staff can see and assess everyone's work. <!-- markdown-link-check-disable-line -->
 It also can allow for automated testing (via a version of GitHub Actions / CI).
 
 > If you want to create an assignment, please let the **owners of the [PBA org](https://github.com/orgs/Polkadot-Blockchain-Academy/people?query=role%3Aowner)** know so, as you will need to get permissions updated.
@@ -17,10 +17,10 @@ The basic workflow for this for an instructor is to:
    1. Ensure a README exists with clear instructions.
    1. Create a _dedicated branch_ to write up a solution.
    1. Integrate unit and/or integration tests that students can run to check their work.<br>
-      > Note: these can be run as [GitHub Actions](https://docs.github.com/en/actions) on student's pushing commit's to their work, like a `cargo test ...` or script for example.
-      > See [docs on autograding](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/use-autograding)
+      > Note: these can be run as [GitHub Actions](https://docs.github.com/en/actions) on student's pushing commit's to their work, like a `cargo test ...` or script for example. <!-- markdown-link-check-disable-line -->
+      > See [docs on autograding](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/use-autograding) <!-- markdown-link-check-disable-line -->
    1. Ensure `main` of the repository is the assignment as it should be delivered to students.
-   1. In the github repo's general settings, switch the repository to a [template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository).
+   1. In the github repo's general settings, switch the repository to a [template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository). <!-- markdown-link-check-disable-line -->
 
 1. Create a new assignment on [GitHub Classroom](https://classroom.github.com/) under the right one, there is one per cohort.
    1. Unless otherwise needed, best to keep default settings as the student repo will be private and not give them admin to it.
@@ -58,6 +58,6 @@ Please reach out to ask us anything!
 
 ### GitHub's Docs on Classroom
 
-- [Basics of setting up GitHub Classroom](https://docs.github.com/en/education/manage-coursework-with-github-classroom/get-started-with-github-classroom/basics-of-setting-up-github-classroom)
-- [Create an individual assignment](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/create-an-individual-assignment)
-- [Create a group assignment](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/create-a-group-assignment)
+- [Basics of setting up GitHub Classroom](https://docs.github.com/en/education/manage-coursework-with-github-classroom/get-started-with-github-classroom/basics-of-setting-up-github-classroom) <!-- markdown-link-check-disable-line -->
+- [Create an individual assignment](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/create-an-individual-assignment) <!-- markdown-link-check-disable-line -->
+- [Create a group assignment](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/create-a-group-assignment) <!-- markdown-link-check-disable-line -->
