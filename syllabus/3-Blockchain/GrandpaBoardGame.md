@@ -74,6 +74,7 @@ Each player begins a round by casting their prevote. A prevote can be thought of
 TODO Figure
 
 TODO what if a player hasn't yet seen the block I'm prevoting for. Some options:
+
 1. Add the block to their view in addition to the prevote. Models gossip and block requests.
 2. Add your prevote for the closest ancestor that they have
 3. Don't add your prevote at all
@@ -122,6 +123,7 @@ Grandpa is intended to continue finalizing blocks forever. Since you likely don'
 The honest players win when they all finalize the goal number of blocks chosen at the beginning without a safety violation.
 
 The Byzantine players (if any; see next section) win when two honest players finalize conflicting blocks or the honest players get fed up and flip the whiteboard over.
+
 ## Byzantine Actors
 
 Once you have played a few rounds of the game and are able reliably finalize new blocks, you can spice things up by assigning one or more players to be Byzantine. Byzantine players are not required to follow the protocol rules. For example they may:
