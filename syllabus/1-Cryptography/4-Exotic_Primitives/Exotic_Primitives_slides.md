@@ -10,13 +10,13 @@ duration: 1 hour
 
 # Outline
 
+<pba-flex center>
+
 1. [Verifiable Random Functions (VRFs)](#verifiable-random-functionsvrfs)
 1. [Erasure coding](#erasure-coding)
 1. [ZK Proofs](#zk-proofs)
 
----
-
-# Verifiable Random Functions<br>(VRFs)
+</pba-flex>
 
 ---
 
@@ -90,10 +90,6 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ---
 
-# Erasure Coding
-
----
-
 ## Erasure Coding
 
 - Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
@@ -118,10 +114,6 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
   - but we don't trust everyone who is storing pieces
 
 - Typically we use $n$ much bigger than $k$
-
----
-
-# ZK Proofs
 
 ---
 
@@ -213,7 +205,7 @@ e.g. Mina do a blockchain with a constant size proof (of correctness of executio
 
 ## Scaling via ZK Proofs in Blockchain
 
-- The verifier is a blockchain, with very expensive data and computation costs
+- The verifier is a blockchain: very expensive data and computation costs.
 
 - Layer 2s using ZK rollups
 
@@ -226,13 +218,15 @@ Polkadot already scales better!
 
 ## Privacy
 
-A user has private data, but we can show publicly that this private data is correctly used.
+A user has private data, but we can show publicly that this private data is correctly used. An example would a private cryptocurrency:
 
-Example: private cryptocurrency
+<pba-flex center>
 
-- Keep amounts secret
-  - but show they are positive!
 - Keep who pays who secret
+- Keep amounts secret
+  - _But show they are positive!_
+
+</pba-flex>
 
 Notes:
 
@@ -274,10 +268,6 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
-
-Notes:
-
-Last slide, the rest are additional if needed and for student reference.

@@ -117,7 +117,7 @@ loop {
 	// for all previous...
 	/*
 	Note: looping through this vec every time and checking each value is obviously really
-	inefficient. After the hash-based data structure lecture, perhaps students could code up a
+	inefficient. After the hash-based data structure lesson, perhaps students could code up a
 	better solution, like a sorted list with binary search.
 	*/
 	for hh in &previous {

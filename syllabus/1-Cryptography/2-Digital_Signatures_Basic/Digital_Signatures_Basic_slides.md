@@ -31,7 +31,7 @@ The input `r` could be anything, for example the movement pattern of a mouse.
 
 Notes:
 
-See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
+See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 1. Generate a secret key
 1. Sign a message
@@ -42,7 +42,7 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
 
 ## Hash Functions
 
-There are two lectures dedicated to hash functions. But they are used as part of all signing processes.
+There are two lessons dedicated to hash functions. But they are used as part of all signing processes.
 
 For now, we only concern ourselves with using Blake2.
 
@@ -54,12 +54,12 @@ As mentioned in the introduction, it's often more practical to sign the hash of 
 
 Therefore, the sign/verify API may be _used_ like:
 
-<widget-text center>
+<pba-flex center>
 
 - `fn sign(sk, H(msg)) -> signature;`
 - `fn verify(pk, H(msg), signature) -> bool;`
 
-</widget-text>
+</pba-flex>
 
 Where `H` is a hash function (for our purposes, Blake2). This means the verifier will need to run the correct hash function on the message.
 
@@ -73,7 +73,7 @@ Where `H` is a hash function (for our purposes, Blake2). This means the verifier
 
 Notes:
 
-See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
+See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 1. Use a longer message
 1. Hash it
@@ -94,17 +94,17 @@ For example, when a user authorizes a transfer, they almost always mean just one
 Replay attacks occur when someone intercepts and resends a valid message.
 The receiver will carry out the instructions since the message contains a valid signature.
 
-<widget-text center>
+<pba-flex center>
 
 - Since we assume that channels are insecure, all messages should be considered intercepted.
 - The "receiver", for blockchain purposes, is actually an automated system.
 
-</widget-text>
+</pba-flex>
 
 Notes:
 
 Lack of _context_ is the problem.
-Solve by embedding the context and intent _within the message being signed.
+Solve by embedding the context and intent \_within the message being signed.
 Tell the story of Ethereum Classic replays.
 
 ---
@@ -114,7 +114,7 @@ Tell the story of Ethereum Classic replays.
 Signing payloads should be designed so that they can only be used _one time_ and in _one context_.
 Examples:
 
-<widget-text center>
+<pba-flex center>
 
 - Monotonically increasing account nonces
 - Timestamps (or previous blocks)
@@ -194,7 +194,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Rust Demo
 
@@ -202,7 +202,7 @@ Notes:
 
 Notes:
 
-See the Jupyter notebook and/or HackMD cheat sheet for this lecture.
+See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 Mention that these derivations create entirely new secret seeds.
 
@@ -229,7 +229,6 @@ Consider using multiple seeds to further isolate keys.
 
 Many wallets use a dictionary of words and give people phrases, often 12 or 24 words, as these are easier to back up/recover than byte arrays.
 
-
 Notes:
 
 High entropy needed.
@@ -240,13 +239,13 @@ Some people create their own phrases... this is usually stupid.
 
 ## Dictionaries
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 There are some standard dictionaries to define which words (and character sets) are included in the generation of a phrase. Substrate uses the dictionary from BIP39.
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 | No. | word    |
 | --- | ------- |
@@ -256,12 +255,12 @@ There are some standard dictionaries to define which words (and character sets) 
 | 4   | about   |
 | 5   | above   |
 
-<widget-text style="font-size: .6em;" center>
+<pba-flex style="font-size: .6em;" center>
 
 _The first 5 words of the [BIP39 English dictionary](https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt)_
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -281,7 +280,7 @@ Different key derivation functions affect the ability to use the same mnemonic i
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
 
@@ -347,3 +346,9 @@ Sr25519 addresses several small risk factors that emerged from Ed25519 usage by 
 - Sr25519 is the default key type in most Substrate-based applications.
 - Its public key is 32 bytes and generally used to identify key holders (likewise for ed25519).
 - Secp256k1 public keys are _33_ bytes, so their _hash_ is used to represent their holders.
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

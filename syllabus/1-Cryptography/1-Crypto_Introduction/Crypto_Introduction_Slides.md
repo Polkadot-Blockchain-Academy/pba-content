@@ -10,31 +10,31 @@ duration: 1 hour
 
 ## Goals for this lesson
 
-<widget-text center>
+<pba-flex center>
 
 - Understand the goals of cryptography
 - Understand some network and contextual assumptions
 - Learn what expectations cryptography upholds
 - Learn the primitives
 
-</widget-text>
+</pba-flex>
 
 ---
 
 ## Operating Context
 
-### _The internet is a public space._
+##### _The internet is a public space._
 
 We communicate over public channels.
 Adversaries may want to:
 
-<widget-text center>
+<pba-flex center>
 
 - Read messages not intended for them
 - Impersonate others
 - Tamper with messages
 
-</widget-text>
+</pba-flex>
 
 Notes:
 
@@ -52,7 +52,7 @@ not just person-to-person messages.
 
 ## Operating Context
 
-### _Resources are constrained._
+##### _Resources are constrained._
 
 - **Network, storage, computation, etc.**: We don't want to send, store, or operate on the same data, but we want guarantees about it, e.g. that we agree on a message's contents.
 - **Privacy**: We must assume that all channels can be monitored, and thus closed channels are heavily constrained (i.e. assumed to not exist).
@@ -78,7 +78,7 @@ There is no such thing as a "closed channel" :)
 
 ## Cryptographic Guarantees\*
 
-<widget-text center>
+<pba-flex center>
 
 - Secure communication
 - Data accessibility
@@ -86,7 +86,7 @@ There is no such thing as a "closed channel" :)
 - Data integrity
 - Non-repudiation (later)
 
-</widget-text>
+</pba-flex>
 
 Notes:
 
@@ -166,7 +166,7 @@ Notes:
 
 The following slides serve as an intro.
 Many terms may be glossed over, and covered in detail later.
-There are lectures later in this module dedicated to hashes and hash-based data structures.\_
+There are lessons later in this module dedicated to hashes and hash-based data structures.\_
 
 ---
 
@@ -184,8 +184,8 @@ Hashes can be useful for many applications:
 
 ## Hash Function Properties
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 - Accept unbounded size input
 - Map to a bounded output
@@ -194,13 +194,13 @@ Hashes can be useful for many applications:
 - Resist pre-image attacks (attacker controls one input)
 - Resist collisions (attacker controls both inputs)
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 <img style="width: 475px" src="../../../assets/img/1-Cryptography/hash-inputs-pre-image.png"/>
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 Notes:
 
@@ -218,12 +218,12 @@ A.k.a. Dirichlet's Drawer Principle, a.k.a. pigeonhole principle.
 ## Input Sensitivity
 
 Changes to a hash are not related to the magnitude of change in the input.
-
+<br><br>
 <img style="width: 1100px" src="../../../assets/img/1-Cryptography/Input-Sensitivity.png"/>
 
 ---
 
-## Cryptographic vs. <br> Non-Cryptographic
+## Cryptographic vs. Non-Cryptographic
 
 Cryptographic hash functions provide stronger guarantees on the last three properties.
 
@@ -237,7 +237,7 @@ Substrate uses both (more on that later).
 
 ## Famous Hash Algorithms
 
-<widget-text center>
+<pba-flex center>
 
 - xxHash (non-cryptographic)
 - MD5
@@ -250,7 +250,7 @@ Substrate uses both (more on that later).
 
 TwoX64 is about 20x faster.
 
-</widget-text>
+</pba-flex>
 
 ---
 
@@ -288,12 +288,12 @@ Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
 
 ### _Example: XOR Cipher_
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 The encryption and decryption functions are identical: applying a bitwise XOR operation with a key.
 
-</widget-column>
+</pba-col>
 <widget-column style="padding-right: 100px">
 
 ```text
@@ -307,8 +307,8 @@ Notes:
 
 A plaintext can be converted to ciphertext, and vice versa, by applying a bitwise XOR operation with a key known to both parties.
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 <!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -- MENTION ACTIVITY that will use OTP exploit to find key -->
 
@@ -316,15 +316,19 @@ A plaintext can be converted to ciphertext, and vice versa, by applying a bitwis
 
 ## Symmetric Encryption
 
-### Warning
+#### ⚠ Warning ⚠
 
 We typically expect symmetric encryption to preserve little about the original plaintext.
 We caution however that constructing these protocols remains delicate, even given secure primitives, with two classical examples being unsalted passwords and the [ECB penguin](https://tonybox.net/posts/ecb-penguin/).
 
 ---
 
-<widget-columns>
-<widget-column>
+### ECB penguin
+
+<br>
+
+<pba-cols>
+<pba-col>
 
 <center>
 
@@ -334,8 +338,8 @@ _Original image_
 
 </center>
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 <center>
 
@@ -345,8 +349,8 @@ _Encrypted image_
 
 </center>
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 Notes:
 
@@ -413,7 +417,7 @@ Hybrid cryptography mixes symmetric and asymmetric cryptography.
 
 Digital signatures provide message authenticity and integrity guarantees.
 
-_The next two lectures are dedicated to digital signatures, this is strictly an intro._
+_The next two lessons are dedicated to digital signatures, this is strictly an intro._
 
 ---
 
@@ -519,7 +523,7 @@ Notes:
 
 Cryptography is much more than encryption.
 
-<widget-text center>
+<pba-flex center>
 
 - Communicate on public networks, in the open
 - Access information
@@ -527,11 +531,11 @@ Cryptography is much more than encryption.
 - Prove knowledge of some secret information
 - Represent large amounts of data succinctly
 
-</widget-text>
+</pba-flex>
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
 
@@ -561,7 +565,7 @@ In transactions in Substrate, key holders sign a _hash of the instructions_ when
 
 **Blake2b** should be used for everything else.
 
-_Again, there is a whole lecture on hash-based data structures._
+_Again, there is a whole lesson on hash-based data structures._
 
 ---
 
@@ -569,7 +573,7 @@ _Again, there is a whole lecture on hash-based data structures._
 
 Hashes are also used for:
 
-<widget-text center>
+<pba-flex center>
 
 - Generating multisig accounts
 - Generating system-controlled accounts
@@ -577,7 +581,7 @@ Hashes are also used for:
 - Representing proposals
 - Representing claims (e.g. the asset trap)
 
-</widget-text>
+</pba-flex>
 
 ---
 
@@ -634,3 +638,9 @@ Practically speaking, in Substrate we will use certifications to:
 Notes:
 
 See: https://docs.substrate.io/main-docs/fundamentals/accounts-addresses-keys/#specialized-accounts
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

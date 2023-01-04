@@ -6,10 +6,10 @@ Think of a real world non blockchain problem that you think can be solved with t
 
 Grading:
 Mandatory: Focus on one specific instance of the problem and show it's explicit solution
-Extra: generalise your solution to something as close to an automation as you can develop
-Number of properties ensured is multiplicative to your grade. 
+Extra: generalize your solution to something as close to an automation as you can develop
+Number of properties ensured is multiplicative to your grade.
 Example:
 -- Suppose the basic route means 10 points and the extra route +5 points.
-    If you ensure 2 properties on the mandatory route you get 2*10 = 20 points
-                                      mandatory AND extra routes you get 2*10 + 2*5 = 20 + 10 = 30 points
+If you ensure 2 properties on the mandatory route you get 2*10 = 20 points
+mandatory AND extra routes you get 2*10 + 2\*5 = 20 + 10 = 30 points
 Items 1 and 2 should be written in your project's README.md whatever route you choose
