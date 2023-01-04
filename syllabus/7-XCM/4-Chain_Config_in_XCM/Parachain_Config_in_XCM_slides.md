@@ -96,6 +96,8 @@ Questions that you should have answers for:
 
 - *How will my chain accept fee payment? In one asset? In several?*
 
+---
+
 ### Our starting example setup requirements
 1. Parachain that does not charge for relay incoming messages.
 2. Parachain that trusts the relay as the reserve chain for the relay chain tokens
@@ -104,9 +106,15 @@ Questions that you should have answers for:
 ---
 
 ### 📁 Configuring LocationToAccountId with xcm-builder
-This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
+- Defines how we convert a multilocation into a local accountId. 
+- Useful when we want to withdraw/deposit tokens from a multilocation-defined origin
+- Useful when we want to dispatch as signed origins from a multilocation-defined origin.
 
-Xcm-builder allows us to configure LocationToAccountId conversions in an easy manner. Let's look at our options:
+
+Notes: This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
+
+---v
+### 📁 Configuring LocationToAccountId with xcm-builder
 
 1. `Account32Hash`: The most generic locationToAccountIdConverter. It basically hashes the multilocation and takes the lowest 32 bytes to make a 32 byte account.
 
@@ -130,10 +138,12 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 	}
 }
 ```
+---v
+### 📁 Configuring LocationToAccountId with xcm-builder
 
-2. `ChildParachainConvertsVia`: A structure that allows to convert the child parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+3. `ChildParachainConvertsVia`: A structure that allows to convert the child parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
 
-3. `SiblingParachainConvertsVia`: A structure that allows to convert the sibling parachain multilocation into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+4. `SiblingParachainConvertsVia`: A structure that allows to convert the sibling parachain multilocation into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
@@ -145,7 +155,10 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 }
 ```
 
-4. `AccountId32Aliases`: A structure that allows to convert a local AccountId32 multilocation into a accountId of 32 bytes.
+---v
+### 📁 Configuring LocationToAccountId with xcm-builder
+
+5. `AccountId32Aliases`: A structure that allows to convert a local AccountId32 multilocation into a accountId of 32 bytes.
 
 ```rust
 /// Extracts the `AccountId32` from the passed `location` if the network matches.
@@ -171,14 +184,16 @@ impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone
 }
 ```
 
-5. `AccountId20Aliases`: A structure that allows to convert a local AccountKey20 multilocation into a accountId of 20 bytes.
-
-For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
+Notes: For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
 
 ---
 
 ### 👍 Configuring asset-transactors with xcm-builder
-Asset transactors define how we are going to withdraw and deposit assets. What we set in here depends heavily on what do we want our chain to be able to transfer:
+- Define how we are going to withdraw and deposit assets
+- Heavily dependant on the assets we want our chain to transfer
+
+---v
+### 👍 Configuring asset-transactors with xcm-builder
 
 1. `CurrencyAdapter`: A simple adapter that uses a single currency as the assetTransactor. This is usually used for withdrawing/depositing the native token of the chain.
 
@@ -207,14 +222,20 @@ impl
 	}
 }
 ```
+---v
+### 👍 Configuring asset-transactors with xcm-builder
 
 2. `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens. An example of these would be `pallet-assets` tokens.
 
-For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
+Notes: For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
 
 ---
 ### 📍 Configuring origin-converter with xcm-builder
-Allows us to configure how we convert an origin, defined by a MultiLocation, into a dispatch origin. Used mainly in the `Transact` instruction.
+- Defines how to convert an XCM origin, defined by a MultiLocation, into a frame dispatch origin.
+- Used mainly in the `Transact` instruction.
+
+---v
+### 📍 Configuring origin-converter with xcm-builder
 
 1. `SovereignSignedViaLocation`: Converts the multilocation origin (tipically, a parachain origin) into a signed origin.
 
@@ -247,10 +268,10 @@ where
 	}
 }
 ```
+---v
+### 📍 Configuring origin-converter with xcm-builder
 
-2. `ParentAsSuperuser`: Converts the parent origin into the root origin.
-
-3. `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
+2. `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
 
 ```rust
 pub struct SignedAccountId32AsNative<Network, RuntimeOrigin>(PhantomData<(Network, RuntimeOrigin)>);
@@ -276,18 +297,29 @@ where
 }
 ```
 
+---v
+### 📍 Configuring origin-converter with xcm-builder
+
+3. `ParentAsSuperuser`: Converts the parent origin into the root origin.
+
 4. `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
 
-To meet our requirements, we only require number 3. This will allow us to execute (locally) Transact dispatchables.
+Notes: To meet our requirements, we only require number 3. This will allow us to execute (locally) Transact dispatchables.
 
 ---
 ### 🚧 Configuring Barriers with xcm-builder
+- Barriers specify whether or not an XCM is allowed to be executed on the local consensus system.
+- They are checked before the actual xcm instruction execution
 
-Barriers specify whether or not an XCM is allowed to be executed on the local consensus system. In `xcm-builder` we can find the following pre-defined barriers already:
+---v
+### 🚧 Configuring Barriers with xcm-builder
 
 1. `TakeWeightCredit`: A barrier that substracts the maxixum weight the message can consume from the available weight credit. Usually configured for local xcm-execution
 
 2. `AllowTopLevelPaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, this is a barrier that ensures the message contains weight payment instructions. In other words, it makes sure the first instruction puts asset into the holding register (`TeleportAsset`, `WithdrawAsset`, `ClaimAsset`, `ReserveAssetDeposit`), and then it checkes that there exists a `BuyExecution` instruction that is able to pay for the message weight. **Critical to avoid free DOS**.
+
+---v
+### 🚧 Configuring Barriers with xcm-builder
 
 3. `AllowUnpaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, allows free execution from such origin (i.e., does not check anything from the message). Useful for chains that "trust" each other (e.g., Statemine or any system parachain with the relay)
 
@@ -307,22 +339,27 @@ impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
 	}
 }
 ```
+
+---v
+### 🚧 Configuring Barriers with xcm-builder
 4. `AllowKnownQueryResponses<ResponseHandler>`: Allows the execution of the message if it is a `QueryResponse` message and the `ResponseHandler` is expecting such response
 
 5. `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it contains only a `SubscribeVersion` or `UnsubscribeVersion` instruction.
+
+Notes: To meet our example usecase, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
+
 ---
 
-To meet our example usecase, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
-
 ### ⚖️ Configuring WeightTrader with xcm-builder
-WeightTrader allows to specify how to charge for weight inside the xcm execution. In `xcm-builder` we can find the following pre-defined traders already:
+- Specifies how to charge for weight inside the xcm execution.
+- Used in the `BuyExecution` instruction
+- Used in the `RefundSurplus` instruction
+
+---v
+### ⚖️ Configuring WeightTrader with xcm-builder
 
 1. `FixedRateOfFungible`: Converts weight to fee at a fixed rate and charges in a specific fungible asset
 ```rust
-/// Simple fee calculator that requires payment in a single fungible at a fixed rate.
-///
-/// The constant `Get` type parameter should be the fungible ID and the amount of it required for
-/// one second of weight.
 pub struct FixedRateOfFungible<T: Get<(AssetId, u128)>, R: TakeRevenue>(
 	Weight,
 	u128,
@@ -353,14 +390,18 @@ impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungib
 ---
 
 ### 🔃 Configuring LocationInverter with xcm-builder
-The concept of `LocationInverter` is simple: knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
+- The concept of `LocationInverter` is simple: knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
 
-Xcm builder provides an easy way of doing this with the `LocationInverter<Ancestry>` struct. The only thing we need to configure is the **Ancestry**, which indicates how to go from `root` (the top-level consensus system) to your chain.
+-  Xcm-builder provides an easy way of doing this with the `LocationInverter<Ancestry>` struct. The only thing we need to configure is the **Ancestry**, which indicates how to go from `root` (the top-level consensus system) to your chain.
 
 Example:
 - **Ancestry**: `para_1000`
 - **Source to target**: `../../../para_2/account32_default`
 - **Target to source**: `../../para_1000`
+
+---v
+
+### 🔃 Configuring LocationInverter with xcm-builder
 
 **Important Notes!:**
 
@@ -372,9 +413,9 @@ Example for parachain 1000 in Kusama:
 
 ---
 ### 🎨 Configuring pallet-xcm
-Pallet-xcm plays a critical role in every chains xcm-setup. It is the main connection between the FRAME subsystem and the XCM subsystem. Essentially **pallet-xcm allows us to send/execute XCM and interact with the xcm-executor**.
+- Pallet-xcm plays a critical role in every chains xcm-setup. It is the main connection between the FRAME subsystem and the XCM subsystem. Essentially **pallet-xcm allows us to send/execute XCM and interact with the xcm-executor**.
 
-Pallet-xcm can be configured to filter executions/teleporting or sending among others. The most important components are:
+- Pallet-xcm can be configured to filter executions/teleporting or sending among others. The most important components are:
 
 1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
 2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The origins from which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
@@ -382,6 +423,8 @@ Pallet-xcm can be configured to filter executions/teleporting or sending among o
 4. It handles asset-trap/claim duties
 5. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
 
+---v
+### 🎨 Configuring pallet-xcm
 ```rust
 impl pallet_xcm::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
@@ -424,11 +467,14 @@ impl Config for XcmConfig {
 }
 ```
 
-**PalletXcm asset trapper**: PalletXcm stores Trapped assets in the `AssetTraps` storage item. For an efficient Trap management, traps are indexed by `BlakeTwo256((origin, assets))`, each holding a counter of how many times such origin has trapped such multiAsset.
+---v
+### 🛄 Configuring Asset Trap/Claims with PalletXcm
 
-**PalletXcm asset claimer**: Similarly to how assets are trapped, PalletXcm also allows for claiming trapped assets, providing that:
-- the origin claiming the assets is identical to the one that trapped them.
-- the multiAsset being claimed is identical to the one that was trapped
+- **PalletXcm asset trapper**: PalletXcm stores Trapped assets in the `AssetTraps` storage item. For an efficient Trap management, traps are indexed by `BlakeTwo256((origin, assets))`, each holding a counter of how many times such origin has trapped such multiAsset.
+
+- **PalletXcm asset claimer**: Similarly to how assets are trapped, PalletXcm also allows for claiming trapped assets, providing that:
+	- the origin claiming the assets is identical to the one that trapped them.
+	- the multiAsset being claimed is identical to the one that was trapped
 
 ---
 
@@ -464,6 +510,9 @@ enum Instruction {
 }
 ```
 
+---v
+## 🗣️ XCM Version Negotiation
+
 XCM version negotiation:
 <widget-text center>
 
@@ -473,11 +522,11 @@ XCM version negotiation:
 4. The same procedure happens from chain B to chain A.
 5. Communication is established using the highest mutually supported version.
 
-<widget-columns>
-<widget-column>
-<img style="width: 500px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
-</widget-column>
-<widget-column>
+---v
+## 🗣️ XCM Version Negotiation
+<center>
+<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
+</center>
 
 ---
 

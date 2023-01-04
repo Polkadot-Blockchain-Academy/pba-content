@@ -6,6 +6,10 @@ instructors: ["Keith Yeung", "Gorka Irazoqui"]
 teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
+# XCM in Polkadot
+
+---
+
 ## _At the end of this lecture, you will be able to:_
 
 <widget-text center>
@@ -134,6 +138,7 @@ This means that:
 - Parachain origins will be converted to their corresponding sovereign account
 - Local 32 byte origins will be converted to a 32 byte defined AccountId.
 
+---
 ## 👍 Asset Transactors in Rococo
 There is just a single asset-transactor in Rococo, defined by
 
@@ -190,7 +195,7 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
-Here two things should catch our eye. First, there exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). Second, system parachins are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.
+Notes: Here two things should catch our eye. First, there exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). Second, system parachins are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.
 
 ---
 
@@ -329,7 +334,12 @@ pub type Barrier = DenyThenTry<
 ```
 ---
 
-# 🧐 Debugging XCM message failures
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Debugging XCM
+---
+
+## 🧐 Debugging XCM message failures
 Involves knowledge of the chain XCM configuration!:
 
 Common steps to debug:
@@ -340,14 +350,15 @@ Common steps to debug:
 4. Check the chain XCM configuration to verify what could have failed.
 ---
 
-## ⚠️ Identifying the error kind
+## ⚠️ Debugging: Identifying the error kind
 Look at the `ump.ExecutedUpward` event:
 
-<widget-columns>
-<widget-column>
+<center>
 <img style="width: 500px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure"/>
-</widget-column>
-<widget-column>
+</center>
+
+---v
+## ⚠️ Debugging: Identifying the error kind
 
 Some common errors are:
 - `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve
@@ -357,19 +368,23 @@ Some common errors are:
 - `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
 - `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
 - `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
+
+---v
+## ⚠️ Debugging: Identifying the error kind
 - `Barrier`: One of the barriers failed, we need to check the barriers individually.
 - `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown. When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination. In such a case, the safe XCM version is used instead. However, if it is not set, then this error will be thrown.
 
 ---
-## 🔨 Decoding SCALE-encoded messages
+## 🔨 Debugging: Decoding SCALE-encoded messages
 
 The second step is to retrieve the XCM received by the chain. We can clearly identify a chain by how it processes received XCMs:
 - **RelayChain**: usually the xcm message can be retrieved in the `paraInherent.enter` inherent, where the candidate for a specific parachain contains the ump messages sent to the relay. **UMP messages are usually executed one block after they are received**
 - **Parachain**: usually the xcm message can be retrieved in the `parachainSystem.setValidationData` inherent, inside the field `downWardMessage` or `horizontalMessages`. **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
 
+---v
+## 🔨 Decoding SCALE-encoded messages
+
 One of the main drawbacks is that all we see is a **SCALE-encoded message** which does not give us much information. To cope with this:
 
 - We build a SCALE-decoder to retrieve the xcm message (the hard way).
 - We rely on subscan/polkaholic to see the XCM message received.
-
-Guess which one will try out? :)
