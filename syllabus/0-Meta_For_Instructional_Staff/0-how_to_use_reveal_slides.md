@@ -68,7 +68,7 @@ subsequent lines are just seen in speaker view.
 
 # Template slides
 
-😎 Copy&paste development with the [lesson template slides](./lecture-template-slides.md)
+😎 Copy&paste development with the [lesson template slides](./1-TEMPLATE_lecture_slides.md)
 
 ---
 

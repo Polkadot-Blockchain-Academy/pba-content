@@ -23,6 +23,7 @@ use xcm_simulator::{decl_test_network, decl_test_parachain, decl_test_relay_chai
 pub use xcm_simulator::TestExt;
 
 pub const ALICE: sp_runtime::AccountId32 = sp_runtime::AccountId32::new([0u8; 32]);
+pub const BOB: sp_runtime::AccountId32 = sp_runtime::AccountId32::new([5u8; 32]);
 pub const INITIAL_BALANCE: u128 = 1_000_000_000;
 
 decl_test_parachain! {
@@ -99,4 +100,6 @@ pub fn relay_ext() -> sp_io::TestExternalities {
 }
 
 pub type RelayChainPalletXcm = pallet_xcm::Pallet<relay_chain::Runtime>;
+pub type RelayChainPalletBalances = pallet_balances::Pallet<relay_chain::Runtime>;
 pub type ParachainPalletXcm = pallet_xcm::Pallet<parachain::Runtime>;
+pub type ParachainPalletBalances = pallet_balances::Pallet<parachain::Runtime>;

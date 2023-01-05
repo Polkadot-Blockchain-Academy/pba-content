@@ -10,10 +10,6 @@ teaching-assistants: ["Sacha Lansky"]
 
 ---
 
-<widget-speaker name="Joe Petrowski" position="Common Good Parachains Team Lead at Web3 Foundation" image="/assets/img/0-Shared/people/joe.png" github=" joepetrowski" twitter="joepetrowski" linkedin="joe-petrowski-73538929" matrix="joe:web3.foundation"></widget-speaker>
-
----
-
 ## Motivation
 
 So far, we have discussed state machines and consensus.

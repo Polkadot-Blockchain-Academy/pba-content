@@ -2,8 +2,6 @@
 title: Hash Functions
 description: Hash functions in Substrate
 duration: 1 hour
-instructors: ["Gavin Wood"]
-teaching-assistants: ["Dan Shields"]
 ---
 
 # Hash Functions
@@ -20,12 +18,16 @@ A "fingerprint".
 
 ## Hash Function Properties
 
+<pba-flex center>
+
 1. Accept unbounded size input
 1. Map to a bounded output
 1. Be fast to compute
 1. Be computable strictly one-way (difficult to find a pre-image for a hash)
 1. Resist pre-image attacks (attacker controls one input)
 1. Resist collisions (attacker controls both inputs)
+
+</pba-flex>
 
 ---
 
@@ -156,7 +158,7 @@ e.g., a 256 bit hash output yields 2^128 security
 
 ## Hash Functions Available in Substrate
 
-<widget-text center>
+<pba-flex center>
 
 Hash functions are available in Substrate
 as part of the runtime primitives.
@@ -175,7 +177,7 @@ Exercise: Write your own benchmarking script that compares the performance of th
 
 ## Hash Function Selection
 
-<widget-text center>
+<pba-flex center>
 
 When users have control of the input, use cryptographic hash functions (in Substrate, Blake2).
 
@@ -190,7 +192,7 @@ Keccak is available for Ethereum compatibility.
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Applications
 
@@ -242,7 +244,7 @@ Hash of pub key:   0x8fea32b38ed87b4739378aa48f73ea5d0333b973ee72c5cb7578b143f82
 
 ## Multi-Signatures
 
-<img style="width: 1200px" src="../../../assets/img/1-Cryptography/Multi-Signatures.png"/>
+<img style="width: 1200px; border-radius: 0" src="../../../assets/img/1-Cryptography/Multi-Signatures.png"/>
 
 Notes:
 
@@ -282,7 +284,7 @@ It is normal to add some randomness to the message to expand the input set size.
 
 $$ hash(message + randomness) => commitment $$
 
-<widget-text style="font-size: smaller;">
+<pba-flex style="font-size: smaller;">
 
 Commitment: `0x97c9b8d5019e51b227b7a13cd2c753cae2df9d3b435e4122787aff968e666b0b`
 
@@ -292,7 +294,7 @@ Commitment: `0x97c9b8d5019e51b227b7a13cd2c753cae2df9d3b435e4122787aff968e666b0b`
 
 Message with some added randomness:
 
-<widget-text style="font-size: smaller;">
+<pba-flex style="font-size: smaller;">
 
 > "I predict Boris Johnson will resign on 7 July 2022. facc8d3303c61ec1808f00ba612c680f"
 
@@ -310,7 +312,7 @@ The hash of the information can succinctly represent the information and commit 
 
 ## Data Structures (in Brief)
 
-This is the focus of the next lecture.
+This is the focus of the next lesson.
 
 Notes:
 For now, just a brief introduction.
@@ -349,4 +351,10 @@ Each leaf is the hash of some data object and each node is the hash of its child
 
 Merkle trees allow many proofs relevant to the rest of this course, e.g. that some data object is a member of the tree without passing the entire tree.
 
-**_More info in the next lecture._**
+**_More info in the next lesson._**
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
