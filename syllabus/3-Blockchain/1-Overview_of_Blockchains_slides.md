@@ -1,7 +1,7 @@
 ---
 title: Blockchain Overview
 description: Initial look at web history and the problems blockchain and web3 are solving
-duration: 45 minutes
+duration: 30 - 45 minutes
 instructors: ["Joshy Orndorff"]
 ---
 
@@ -15,15 +15,27 @@ instructors: ["Joshy Orndorff"]
 
 What is the core problem we want to solve?
 
+Trustless provisioning of infrastructure.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
 Notes:
 Potential for some discussion here, engage the audience.
-Joshy's Answer: Coming to a shared understanding of a common history, and therefore a common state, of a system.
+
+Something kind of like a server, that doesn't rely on a server operator, and has strong guarantees like Cryptography has to offer.
+
+One framing: Coming to a shared understanding of a common history, and therefore a common state, of a system.
 
 ---
 
 ## Comparison with Cryptography
 
 Cryptography provides strong guarantees about _messages_ without a trusted party, regardless of the conduit over which a message was transported.
+
+Notes:
+Crypto guarantees:
+- No tampering
+- No eavesdropping
+- Authorship
 
 ---
 
@@ -35,7 +47,7 @@ Users transmit information peer-to-peer.
 
 Crypto not typically used except by military, but upheld guarantees when used.
 
-TODO image of users connected by telephone wire.
+<img src="./img/Web0.png" />
 
 ---
 
@@ -47,7 +59,7 @@ Still mostly peer-to-peer.
 
 Cryptography more often, but still not ubiquitous.
 
-TODO image of users connecting to servers.
+<img src="./img/Web1.png" />
 
 ---
 
@@ -61,7 +73,7 @@ However, users must place faith in the service provider.
 
 Cryptographic guarantees are about interactions with the service provider, not peers.
 
-TODO image of servers with all users interacting with the same server.
+<img src="./img/Web2.png" />
 
 ---v
 
@@ -121,6 +133,8 @@ Yep it could. This is the kind of simple app you might build in a Freshman year 
 on modern web interfaces. It just needs to maintain a set of bank notes and their owners (or alternatively a set of accounts and their balances.) So why didn't this exist in web 2? Because the provider could print money. Or steal money. Or freeze funds.
 Side thought. How different is this from fiat currencies?
 
+---v
+
 ## Distributed Applications in Web 2
 
 Providers run redundant data centers to prevents accidents.
@@ -129,7 +143,9 @@ But it still assumes benevolent participants and some trusted leader.
 
 Notes:
 Even in web2 we start to see the idea of redundancy to prevent accidents from natural disasters, sabotage, hardware failure etc.
-But we do not yet see disintermediation. In web 2, the masses because beholden to the service providers who were free to extract value and manipulate the users
+But we do not yet see disintermediation. In web 2, the masses because beholden to the service providers who were free to extract value and manipulate the users.
+
+In fact redundant systems were widely studied even before web 2. Consider a flight computer that has sensors for things like air speed and altitude. If one sensor fails we want the plane to keep flying.
 
 ---
 
@@ -137,7 +153,7 @@ But we do not yet see disintermediation. In web 2, the masses because beholden t
 
 A provision of digital services without the need to trust a service _provider_.
 
-Participants do not need to be trusted; they are economically incentivized to behave honestly.
+Providers do not need to be trusted; they are economically incentivized to behave honestly.
 
 Notes:
 We want to maintain the value, versatility, and richness of Web2, but remove the trust, and possibility of extractive behavior.
@@ -159,7 +175,7 @@ Opens the door to new application stacks:
 
 Removing trust allows us to unpackage applications.
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/3.1-application-disentanglement.png"/>
+<img style="width: 800px" src="./img/application-disentanglement.png"/>
 
 Notes:
 
@@ -238,7 +254,7 @@ Telling effective stories is not easy. The difficulty lies ... in convincing eve
 
 We can formalize this notion of shared story with state machine model.
 
-<img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-state-machine.png"/>
+<img src="./img/state-machine-general.png"/>
 
 Notes:
 Most systems that we care about can be modeled as state machines. A state machine is not a real machine that you can touch. It is a model is comprised of a set of states and a set of rules about how to transition between the states.
@@ -250,8 +266,26 @@ Most systems that we care about can be modeled as state machines. A state machin
 Each state is a set of bank notes. Where a bank note has an amount and an owner.
 A transition involves a user consuming (spending) some bank notes and creating new ones.
 
+<img src="./img/state-machine-cash.png"/>
+
 Notes:
 Not all conceivable transitions are valid. Imagine a user consuming a bank note worth 5 coins. and creating two new ones each worth 3 coins.
+
+---v
+
+## Tracing State Machine History
+
+Simple Switch - Has two states
+
+<img src="./img/state-machine-switch-history.png"/>
+
+---v
+
+## Tracing State Machine History
+
+Arbitrarily Complex Machine - We can track an entire history
+
+<img src="./img/state-machine-arbitrary-history.png"/>
 
 ---v
 
@@ -259,6 +293,8 @@ Not all conceivable transitions are valid. Imagine a user consuming a bank note 
 
 Each state is a set of posts and their associated comments and emoji reaction counts.
 A transition involves, making a new post, or reacting to someone elses, or commenting
+
+<img src="./img/state-machine-social.png"/>
 
 Notes:
 There is not a single model here. Some state machines will allow deleting or editing posts, while others will not. Some will allow disliking posts while others only allow liking.
@@ -338,27 +374,14 @@ Next is the Blockchain Data structure. This data structure is basically a linked
 
 Finally, is a consensus mechanism. Defining a state machine alone does not uniquely define a history. There are many possible valid histories. Just like the many worlds interpretation of quantum mechanics. To really agree on the current state, we need to agree on which of the possible histories is the real one.
 
----
-
-# Blockspace
-
-TODO diagram comparing Web2 server model to Web3 consensus model side by side.
-
-Learn more:
-Article: https://a16zcrypto.com/blockspace-explained/
-Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
-Podcast: https://youtu.be/jezH_7qEk50?t=5330
-
-Notes:
-A Blockchain network is a replacement for a centralized server. It sells a product to application deployers. The state machine is the application layer, and the blockchain is the server replacement. In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc. Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
-
-# Short History of Blockchains
-
 ---v
 
+## Short History of Blockchains
+
+---v
 ## Bitcoin
 
-<img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-bitcoin-blocks.png"/>
+<img src="./img/bitcoin-transaction.png"/>
 
 Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus.
 
@@ -382,3 +405,20 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 Historically, upgrading blockchains meant getting everyone to update their node software.
 
 "This had made many people very angry and has been widely regarded as a bad move."
+
+---
+
+# Blockspace
+
+A resource created, and often sold, by a decentralized blockchain network.
+
+<img src="./img/Web2Web3Stacks.png" />
+
+Learn more:
+- Article: https://a16zcrypto.com/blockspace-explained/
+- Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
+- Podcast: https://youtu.be/jezH_7qEk50?t=5330
+
+Notes:
+A Blockchain network is a replacement for a centralized server. It sells a product to application deployers. The state machine is the application layer, and the blockchain is the server replacement. In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc. Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
+
