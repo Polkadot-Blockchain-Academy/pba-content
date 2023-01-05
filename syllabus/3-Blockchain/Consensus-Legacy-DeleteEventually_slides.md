@@ -1,18 +1,7 @@
 ---
 title: Consensus Systems
 description: Consensus systems for Web3 Engineers.
-instructors: ["Joshy Orndorff"]
-teaching-assistants: ["Sacha Lansky", "Dan Shields", "Emre Surmeli"]
 ---
-
-
-participants are incentivized to behave honestly.
-Four areas:
-- state machine validity - quick
-- arbitrary - quick
-- authorship throttling - this lesson
-- finality - two lessons from now
-
 
 # Consensus Systems
 
@@ -67,21 +56,21 @@ Another desireable property that is sometimes too obvious to say.
 
 ## Example 1: Where to go for dinner
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 <img style="width: 20em" src="../../assets/img/3-Blockchain/3.2-south-park-consensus.png"/>
 
-</widget-column>
+</pba-col>
 
-<widget-column>
+<pba-col>
 
 - Termination - Stan, Kyle, and Kenny will each eventually decide where to eat.
 - Agreement - Stan, Kyle, and Kenny will each decide to eat at the same place.
 - Integrity - Stan, Kyle, and Kenny will eat at either Whistlin' Willies or Casa Bonita.
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 Notes:
 
@@ -123,21 +112,21 @@ Someone please volunteer to describe what one of these means in this example.
 
 ## Byzantine Generals Problem
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 <img style="width: 26em" src="../../assets/img/3-Blockchain/3.2-Byzantine-Generals.png"/>
 
-</widget-column>
+</pba-col>
 
-<widget-column>
+<pba-col>
 
 - Divisions plan to attack
 - Must make coordinated attack to succeed
 - Some generals might be traitors and behave maliciously
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 Notes:
 
@@ -169,14 +158,14 @@ These examples and many others are _instances_ of the Byzantine Generals Problem
 
 ## Mistake or Malice?
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 <img style="width: 600px" src="https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg"/>
 
-</widget-column>
+</pba-col>
 
-<widget-column>
+<pba-col>
 
 - Consider an Airplane flight computer.
 - The pilot _must_ know the airspeed at all times.
@@ -184,8 +173,8 @@ These examples and many others are _instances_ of the Byzantine Generals Problem
 - Sensors can be buggy.
 - Are these malicious?
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 Notes:
 

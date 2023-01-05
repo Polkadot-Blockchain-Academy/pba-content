@@ -2,8 +2,6 @@
 title: Fees, Ordering
 description: Fees and ordering in blockchains
 duration: 1 hour
-instructors: ["Joe Petrowski"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Fees, Ordering
@@ -12,12 +10,12 @@ teaching-assistants: ["Sacha Lansky"]
 
 ## Overview
 
-<center>
+<pba-flex center>
 
 1. [Fees and ordering](#fees--ordering)
 1. [Execution models](#execution-models)
 
-</center>
+</pba-flex>
 
 Notes:
 

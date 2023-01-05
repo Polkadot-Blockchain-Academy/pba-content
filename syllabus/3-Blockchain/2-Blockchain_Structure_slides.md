@@ -2,14 +2,13 @@
 title: Blockchain Structure
 description: The Blockchain data structure including hash-linking, forks, header vs body, and extrinsics.
 duration: 30 min
-instructors: ["Joshy Orndorff"]
 ---
 
 # Blockchain Structure
 
-<widget-speaker name="Joshy Orndorff" position="Blockchain Chef" image="../../../assets/img/0-Shared/people/joshy.png" github="JoshOrndorff" twitter="JoshyOrndorff"></widget-speaker>
-
 TODO Figure of a blockchain with forks
+
+---
 
 ## Shared Story
 
@@ -40,8 +39,12 @@ The first block in the chain is typically called a the "Genesis block" named aft
 
 A state machine defines:
 
+<pba-flex center style="margin-top:0">
+
 - the set of valid states
 - the rules for transitioning between those states.
+
+</pba-flex>
 
 <img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-state-machine.png"/>
 
@@ -152,14 +155,14 @@ The parent hash links blocks together (cryptographically linked list). The other
 
 ## Header Examples
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
-<center>
+<pba-flex center>
 
 **Bitcoin**
 
-</center>
+</pba-flex>
 
 - Version
 - Previous Hash
@@ -168,14 +171,14 @@ The parent hash links blocks together (cryptographically linked list). The other
 - N_Bits
 - Nonce
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
-<center>
+<pba-flex center>
 
 **Ethereum**
 
-</center>
+</pba-flex>
 
 - Time
 - Block Number
@@ -186,8 +189,8 @@ The parent hash links blocks together (cryptographically linked list). The other
 - State Root
 - Nonce
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---v
 
@@ -217,18 +220,33 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 ## Nodes
 
-Software agent that participates in blockchain network. May perform these jobs:
+Software agent that participates in blockchain network.
+<br>
+May perform these jobs:
+
+<pba-cols style="margin-top:0">
+<pba-col>
+<pba-flex center>
 
 - Gossip blocks
 - Execute and Validate blocks
 - Store blocks
 - Store states
 - Gossip transactions
+
+</pba-flex>
+</pba-col>
+<pba-col>
+<pba-flex center>
+
 - Maintain a transaction pool
 - Author blocks
 - Store block headers
 - Answer user requests for data (RPC)
 
+</pba-flex>
+</pba-col>
+</pba-cols>
 Notes:
 Many nodes only perform a subset of these tasks
 
@@ -236,11 +254,17 @@ Many nodes only perform a subset of these tasks
 
 ## Types of Nodes
 
+<pba-flex center>
+
 - Full Nodes
 - Light Nodes (aka Light clients)
 - Authoring nodes
 - Archive nodes
 - RPC nodes
+
+</pba-flex>
+
+---v
 
 ## Transaction Pool
 

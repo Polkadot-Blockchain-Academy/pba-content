@@ -4,7 +4,7 @@ This module introduces students to the problem space that blockchain is trying t
 
 The primary coding activity, which will run throughout the module is [Blockchain From Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/).
 
-The module is taught over 2.5 days - roughly 
+The module is taught over 2.5 days - roughly
 
 ## Lessons Overview
 
@@ -34,6 +34,7 @@ The module is taught over 2.5 days - roughly
 - ⌨️ Continue Coding on BFS
 
 ### Day 2 - Afternoon Session
+
 - 🗣️ P2P Networking Lecture
 - ⌨️ BFS
 - ☕ Break
@@ -43,5 +44,6 @@ The module is taught over 2.5 days - roughly
 ### Day 3 (Half Day)
 
 The activity and lecture can bleed together. I imagine launching a chain and getting some basic tokens
+
 - ⌨️ Launch a blockchain activity
 - 🗣️ Unstoppable Applications Lecture
