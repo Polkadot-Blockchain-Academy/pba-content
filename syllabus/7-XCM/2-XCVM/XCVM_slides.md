@@ -1,3 +1,11 @@
+---
+title: XCVM
+description: Learning about the XCVM state machine
+duration: 1 hour
+instructors: ["Keith Yeung", "Gorka Irazoqui"]
+teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
+---
+
 # XCVM
 
 ---
