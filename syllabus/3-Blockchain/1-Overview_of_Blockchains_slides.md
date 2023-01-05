@@ -212,12 +212,25 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 # A Shared History
 
-TODO Yuval Noah Harari Quote. Something along the lines of: The telling of myths and stories allow Homo sapiens to collaborate in large numbers in extremely flexible ways. This separates us from all other animals.
-
-TODO Stephen Hawking Quote
+![Cover of Sapiens by Yuval Noah Harari](./img/sapiens.jpg)
 
 Notes:
-So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2 users have no visibility into the history of the app. They must trust the provider to accurately represent the current state.
+So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2 users have no visibility into the history of the app. They must trust the provider to accurately represent the current state. By giving the service provider the power to change the story, we give them the power to shape our understanding of reality and consequently our behavior.
+
+---v
+# A Shared History
+
+<blockquote>
+Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
+</blockquote>
+
+
+<blockquote>
+Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
+</blockquote>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+-- Yuval Noah Harari, Sapiens
 
 ---
 
@@ -276,6 +289,8 @@ Then we MUST agree on
 
 Notes:
 Now that we have a formal mathy model of systems that we care about, we can see that the notion shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
+
+---
 
 ## Blockchains (Finally)
 
