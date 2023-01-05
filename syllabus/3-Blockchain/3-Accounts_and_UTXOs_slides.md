@@ -1,4 +1,7 @@
-# Accounting Models & User Abstractions on Blockchains
+---
+title: Accounting Models & User Abstractions in Blockchains
+---
+# Accounting Models & User Abstractions in Blockchains
 * Andrew Burger
 * Parity, Integritee. Yay blockchain and things
 ---
@@ -30,8 +33,8 @@ Notes:
 <img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.png"/>
 ---
 ## Paradigm A How would we do this?
-* 1.) You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In more computer science terms we have some data that can be altered only by a specific entity so we want to provide proof we can alter it. 
-* 2.) You have some value assosciated with this piece of data and an owner(Value + Pubkey) Some data which can be altered along with a key stating who can alter it.
+* 1.) You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In other words we have some data that can be altered only by a specific entity so we want to provide proof we can alter it. 
+* 2.) You have data which can be altered along with a key stating who can alter it.(Value + Pubkey)
 * Thing 1 we can refer to as an input
 * Thing 2 we can refer to as an output
 ---
@@ -40,11 +43,13 @@ Notes:
 Notes:
     TODO: Insert picture showing a table of hash values mapping to these "outputs"(Data + owner)
 ---
+## Visual What are we talking about here?
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-state-table.png"/>
+---
 ## So what is the notion of a User?
 * A public key and all of the uniquely identifiable data which can be manipulated by that public key
 ---
-### Make a request for verification by this system (A transition)(We described somewhat of the `State`) Now lets talk about how to transition the state using this new verification model.
-* We described somewhat of the `State` Now lets talk about how to transition the State using this new verification model.
+### We described somewhat of the `State` Now lets talk about how to transition the State using this new verification model.
 Notes:
     TODO: Show some image of something transitioning
 ---
@@ -54,6 +59,7 @@ Notes:
 * A list of inputs + a list of outputs
 ---
 ### What were those input output thingies again?
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.png"/>
 Notes:
     TODO: Show picture of inputs and outputs in a transaction similar to UTXO frameless explain how new outputs are derived from previously specified outputs from the input 
 ---
@@ -63,8 +69,12 @@ Notes:
 * We must verify that the resulting state which has been provided is a valid one(We define what this is)
 * In the case of money or just a raw value we can assume that you cannot take some piece of moneys worth 10 and create a list of new outputs which have more than 10 moneys
 ---
+## Transition
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.png"/>
+---
 ## Unspent Transaction Outputs(UTXOS) solved...
 * Now whenever someone mentions UTXO's and the UTXO model you can now fundamentally know what actually is being referenced..(Hopefully!) 
+<img style="width: 400px; height 300px; float:middle;" src="../../assets/img/3-Blockchain/3.2-cartoon-cheering.png"/>
 Notes:
     TODO: Add some picture of a person cheering and happy
 ---
@@ -82,6 +92,9 @@ Notes:
 Notes:
     TODO: Show picture of a table mapping a pubkey to a value or data item(in its simplest form a value)
 ---
+## Accounts State Table
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-state-table.png"/>
+---
 ## Now that state is much easier to comprehend!!
 * What about transitioning my state or account?
 ---
@@ -89,6 +102,9 @@ Notes:
 * What does a transaction look like now?
 Notes:
     TODO: Insert some picture here which shows some money being sent from person A to person B but instead person A just signs a message saying to send to person B and the system determines what the updated output result or state will be
+---
+## Transaction + Transition
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.png"/>
 ---
 ## So what happens in a State transition in this computation model?
 * We still verify but we verify less and determine more!
@@ -98,8 +114,6 @@ Notes:
 ---
 ## Accounts vs UTXO model
 * Oh the fun begins..
-Notes:
-   TODO: Insert picture of Homer
 ---
 ## Size(Storage)
 ### Accounts wins this one...
@@ -140,6 +154,7 @@ Notes:
 * Both are good depending on the usecase!! 
 ---
 ## At the end of the day it is just a state machine
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-homer-cartoon.png"/>
 Notes:
     TODO: Insert some fun picture and hint at how to agree on all of these now understood (Transactions) to come...
 ---
