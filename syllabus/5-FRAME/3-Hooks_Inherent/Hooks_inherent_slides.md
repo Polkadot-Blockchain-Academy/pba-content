@@ -136,7 +136,7 @@ Offchain workers have their own **special host functions**: http, dedicated stor
 
 Offchain workers have the same **execution limits** as WASM (limited memory, custom allocator).
 
-NOTE:
+Notes:
 
 Word on allocator limit in Substrate WASM execution (subject to change).
 

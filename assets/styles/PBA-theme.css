@@ -9,29 +9,29 @@
  *********************************************/
 
 :root {
-	--r-main-font-size: 32px;
+	--r-main-font-size: 35px;
 	--r-main-font: "Work Sans";
 	--r-main-color: #fff;
-	--r-background-color: #07154b;
-	--r-code-background-color: #272822;
-	--r-block-margin: 40px 0px 0px 0px;
-	--r-heading-margin: 0px 0px 20px 0px;
+	--r-background-color: #140526;
+	--r-code-background-color: #000000;
+	--r-block-margin: 1.15em 0em 0em 0em;
+	--r-heading-margin: 0em 0em 0.6em 0em;
 	--r-heading-font: "Unbounded";
 	--r-heading-color: #fff;
-	--r-heading-line-height: 1.6;
-	--r-heading-letter-spacing: 0em;
+	--r-heading-line-height: 1.5em;
+	--r-heading-letter-spacing: 0.02em;
 	--r-heading-text-transform: none;
 	--r-heading-text-shadow: none;
 	--r-heading-font-weight: normal;
 	--r-heading1-text-shadow: none;
-	--r-heading1-size: 80px;
-	--r-heading2-size: 45px;
-	--r-heading3-size: 35px;
-	--r-heading4-size: 20px;
+	--r-heading1-size: 2em;
+	--r-heading2-size: 1.35em;
+	--r-heading3-size: 1.25em;
+	--r-heading4-size: 1.15em;
 	--r-code-font: monospace;
 	/* custom PBA var */
-	--r-code-font-size: 0.65em;
-	--r-link-color: #e6007a;
+	--r-code-font-size: 0.75em;
+	--r-link-color: #d92f78;
 	--r-link-color-dark: #A45CF6;
 	--r-link-color-hover: #8d3aed;
 	--r-selection-background-color: #8d3aed;
@@ -39,6 +39,14 @@
 	--r-padding: 24px;
 }
 
+/* box sizing;
+	https://css-tricks.com/box-sizing/#aa-universal-box-sizing-with-inheritance */
+html {
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
 
 .reveal-viewport {
 	background: #111;
@@ -46,6 +54,7 @@
 }
 
 section.has-light-background,
+section.has-light-background p,
 section.has-light-background h1,
 section.has-light-background h2,
 section.has-light-background h3,
@@ -80,6 +89,95 @@ section.has-light-background h6 {
 	font-weight: inherit;
 }
 
+/*
+  custom-elements
+*/
+/* columns:  a widget to display columns of things */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3%;
+}
+
+.site-header--small {
+  padding: var(--size);
+}
+
+.reveal section {
+  left: 0;
+  padding: var(--r-padding);
+}
+
+pba-cols {
+	margin: var(--r-block-margin);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--r-padding) * 4);
+}
+
+/* TODO: Columns hard coded in style for 2 only, for best results 3 and more need more styling calculated on total columns in slide... Seems to overflow slide on  right side...*/
+pba-col {
+  flex-basis: 44%;
+}
+
+pba-col:nth-of-type(2) {
+	padding-right: 0;
+}
+
+pba-col[left] {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+	text-align: left;
+}
+
+pba-col[center] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+	text-align: center;
+}
+
+pba-col[right] {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+	text-align: right;
+}
+
+pba-flex {
+	margin: var(--r-block-margin);
+}
+
+pba-flex[left] {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+	text-align: right;
+}
+
+pba-flex[center] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+pba-flex[right] {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+	text-align: right;
+}
+
+
 /*********************************************
 	 * HEADERS
 	 *********************************************/
@@ -98,6 +196,15 @@ section.has-light-background h6 {
 	text-transform: var(--r-heading-text-transform);
 	text-shadow: var(--r-heading-text-shadow);
 	word-wrap: break-word;
+}
+
+.reveal h1:first-of-type,
+.reveal h2:first-of-type,
+.reveal h3:first-of-type,
+.reveal h4:first-of-type,
+.reveal h5:first-of-type,
+.reveal h6:first-of-type {
+	color: var(--r-link-color);
 }
 
 .reveal h1 {
@@ -121,26 +228,21 @@ section.has-light-background h6 {
 	 * OTHER
 	 *********************************************/
 .reveal p {
-	margin: var(--r-block-margin) 0;
+	margin: var(--r-block-margin);
 	line-height: 1.3;
 }
 
-/* Remove trailing margins after titles */
-.reveal h1:last-child,
-.reveal h2:last-child,
-.reveal h3:last-child,
-.reveal h4:last-child,
-.reveal h5:last-child,
-.reveal h6:last-child {
-	margin-bottom: 0;
-}
-
 /* Ensure certain elements are never larger than the slide itself */
+/* Set in ./reveal.json -> "width": 1400, "height": 900, */
 .reveal img,
 .reveal video,
 .reveal iframe {
-	max-height: 772px;
-	max-width: 1500px;
+  max-width: 1300px;
+	max-height: 800px;
+}
+
+.reveal img[rounded] {
+	border-radius: 0.6em;
 }
 
 .reveal strong,
@@ -155,60 +257,61 @@ section.has-light-background h6 {
 .reveal ol,
 .reveal dl,
 .reveal ul {
+	position: relative;
 	text-align: left;
-	line-height: 1.1;
-	margin-top: 1em;
+	line-height: 1.2;
+}
+
+.reveal ol li,
+.reveal ul li {
+	margin: 0.5em 0em 0.5em 1em;
 }
 
 .reveal ul {
-	/* Remove default bullets */
+	/* Remove default bullets/numbers on lists */
 	list-style: none !important;
+	padding-left:2em;
 }
 
-.reveal ul li {
-	position: relative;
+.reveal ol li {
+  counter-increment: count-ol;
 }
 
 .reveal ul li::before {
+	font-family: "Unbounded";
+	font-size: 0.8em;
+	line-height: 1.5em;
 	position: absolute;
-	top: 2px;
-	left: -40px;
+	padding-left: 3em;
+	left: -0.5em;
 	font-family: monospace;
-	/* Add content: \2022 is the CSS Code/unicode for a bullet */
-	content: "\2022";
+	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
+	content: "\2688";
+	color: var(--r-link-color-dark);
+}
+
+.reveal ol li::marker {
+	font-family: "Unbounded";
+	font-size: 0.75em;
+	position: relative;
+	font-family: monospace;
+	/* Custom numbers and list item delimiter */
+	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
+	content: counters(count-ol,".") ": ";
 	/* Change the color */
 	color: var(--r-link-color-dark);
-	/* If you want it to be bold */
 	font-weight: bold;
-	/* Needed to add space between the bullet and the text */
-	display: list-item;
-	/* Also needed for space (tweak if needed) */
-	width: 32px;
-}
-
-.reveal dt {
-	font-weight: bold;
-}
-
-.reveal dd {
-	margin-left: 40px;
 }
 
 .reveal blockquote {
-	display: block;
-	position: relative;
-	width: 70%;
-	margin: var(--r-block-margin);
-	margin: 1em !important;
-	padding: 5px;
+	display: inline-block;
+	padding: 1em;
 	font-style: italic;
-	background: rgba(255, 255, 255, 0.05);
-	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+	background: rgba(255, 255, 255, 0.1);
 }
 
-.reveal blockquote p:first-child,
-.reveal blockquote p:last-child {
-	display: inline-block;
+.reveal blockquote * {
+	margin: 0em !important;
 }
 
 .reveal q {
@@ -221,7 +324,6 @@ section.has-light-background h6 {
 	display: block;
 	position: relative;
 	margin: var(--r-block-margin) auto;
-	margin-top: 2em !important;
 	line-height: 1.2em;
 	word-wrap: break-word;
 	text-align: left;
@@ -237,7 +339,7 @@ section.has-light-background h6 {
 .reveal pre code {
 	display: block;
 	overflow: auto;
-	max-height: 600px;
+	max-height: 650px;
 	word-wrap: break-word;
 }
 
@@ -302,13 +404,15 @@ section.has-light-background h6 {
 	vertical-align: top;
 }
 
-.reveal img {
-	margin: var(--r-block-margin) 0;
-}
-
 /*********************************************
 	 * LINKS
 	 *********************************************/
+
+/* default elements, used in slide temple */
+a {
+  color: var(--r-link-color-dark);
+}
+
 .reveal a {
 	color: var(--r-link-color);
 	text-decoration: none;
@@ -365,4 +469,92 @@ section.has-light-background h6 {
 	.backgrounds {
 		background-color: var(--r-background-color);
 	}
+}
+
+/*********************************************
+ * FONTS
+ *********************************************/
+/* font: unbounded https://unbounded.polkadot.network/ */
+@font-face {
+	font-family: 'Unbounded';
+	font-style: normal;
+	font-weight: 300;
+	src: url('./fonts/unbounded/Unbounded-Light.woff2');
+	src: local(''),
+				url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'), /* Super Modern Browsers */
+				url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+
+@font-face {
+	font-family: 'Unbounded';
+	font-style: normal;
+	font-weight: 400;
+	src: url('./fonts/unbounded/Unbounded-Regular.woff2');
+	src: local(''),
+				url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+				url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+
+@font-face {
+	font-family: 'Unbounded';
+	font-style: normal;
+	font-weight: 700;
+	src: url('./fonts/unbounded/Unbounded-Bold.woff2');
+	src: local(''),
+				url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+				url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+}
+
+/* fonts: work-sans-regular - latin	https://google-webfonts-helper.herokuapp.com/fonts/work-sans/work-sans?subsets=latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: local(''),
+			 url('./fonts/work-sans/work-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			 url('./fonts/work-sans/work-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+			 url('./fonts/work-sans/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-800 - latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 800;
+	src: url('./fonts/work-sans/work-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
+	src: local(''),
+			 url('./fonts/work-sans/work-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			 url('./fonts/work-sans/work-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
+			 url('./fonts/work-sans/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
+
+/* work-sans-italic - latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: italic;
+	font-weight: 400;
+	src: url('./fonts/work-sans/work-sans-v17-latin-italic.eot'); /* IE9 Compat Modes */
+	src: local(''),
+			 url('./fonts/work-sans/work-sans-v17-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+			 url('./fonts/work-sans/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+
+/* work-sans-800italic - latin */
+@font-face {
+	font-family: 'Work Sans';
+	font-style: italic;
+	font-weight: 800;
+	src: url('./fonts/work-sans/work-sans-v17-latin-800italic.eot'); /* IE9 Compat Modes */
+	src: local(''),
+			 url('./fonts/work-sans/work-sans-v17-latin-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+			 url('./fonts/work-sans/work-sans-v17-latin-800italic.woff2') format('woff2'), /* Super Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-800italic.woff') format('woff'), /* Modern Browsers */
+			 url('./fonts/work-sans/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
+			 url('./fonts/work-sans/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
 }

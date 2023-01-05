@@ -47,7 +47,7 @@ type BalanceOf<T, I> = <
 
 ## Detour: Traits, Generics, Associated Types
 
-NOTE:
+Notes:
 
 ```
 trait Engine {

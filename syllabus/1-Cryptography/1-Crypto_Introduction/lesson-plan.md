@@ -68,7 +68,7 @@
   - Serve as keys in a database
   - Many data structures based on hashing (state trie, blockchain itself, some accounts)
 - Erasure Coding
-  - Need to introduce in this lecture? Or too early?
+  - Need to introduce in this lesson? Or too early?
 - Don't roll your own => it can probably be broken
 - Attackers will always go for the weakest link => large key space does not equal security
 

@@ -5,7 +5,6 @@
 ## Preamble
 
 ```rust
-:sccache 1
 :dep sp-core = { version = "6.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.25" }
 :dep rand = { version = "0.8.5", features = ["small_rng"] }
 use sp_core::*;
@@ -118,7 +117,7 @@ loop {
 	// for all previous...
 	/*
 	Note: looping through this vec every time and checking each value is obviously really
-	inefficient. After the hash-based data structure lecture, perhaps students could code up a
+	inefficient. After the hash-based data structure lesson, perhaps students could code up a
 	better solution, like a sorted list with binary search.
 	*/
 	for hh in &previous {
