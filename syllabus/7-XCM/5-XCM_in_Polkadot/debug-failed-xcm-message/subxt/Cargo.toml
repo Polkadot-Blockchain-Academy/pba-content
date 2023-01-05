@@ -1,13 +1,11 @@
-
 [package]
 name = "xcm-debug-excercise"
 version = "0.1.1"
 authors = ["Parity Technologies <admin@parity.io>"]
 edition = "2021"
 
-
 [[bin]]
-name = "debug-failed-dmp"
+name = "debug-failed-ump"
 path = "src/main.rs"
 
 [dependencies]

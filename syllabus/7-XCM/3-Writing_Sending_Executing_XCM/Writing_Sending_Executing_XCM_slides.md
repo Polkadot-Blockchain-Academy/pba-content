@@ -2,8 +2,8 @@
 title: Writing, Sending, and Execution of XCM
 description: Writing, Sending, and Execution of XCM for Web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung"]
-teaching-assistants: ["Dan Shields"]
+instructors: ["Keith Yeung", "Gorka Irazoqui"]
+teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Writing, Sending, and Execution of XCM
@@ -69,78 +69,6 @@ Notes:
 
 ---
 
-## XCM Communication Model
-
-XCM is designed around four 'A's:
-
-<widget-text center>
-
-- **Agnostic**: No assumptions about Consensus System messaged
-- **Absolute**: Guaranteed delivery, interpretation, and ordering
-- **Asynchronous**: No assumption of blocking for sender/receiver
-- **Asymmetric**: No results or callbacks (separately communicated!)
-
-Notes:
-
-- **Agnostic**: XCM makes no assumptions about the nature of the Consensus System between which messages are being passed.
-- **Absolute**: XCM messages are guaranteed to be delivered and interpreted accurately, in order and in a timely fashion.
-- **Asynchronous**: XCM messages in no way assume that the sender will be blocking on its completion.
-- **Asymmetric**: XCM messages do not have results.
-  Any results must be separately communicated to the sender with an additional message.
-
----
-
-## Async vs Sync
-
-XCM crossing the barrier between a single consensus system cannot generally be synchronous.
-
-<br>
-
-No guarantees on delivery time.
-
-Notes:
-
-Generally, consensus systems are not designed to operate in sync with external systems.
-They intrinsically need to have a uniform state to reason about and do not, by default, have the means to verify states of other consensus systems.
-Thus, each consensus system cannot make any guarantees on the expected time required to deliver results; doing so haphazardly would cause the recipient to be blocked waiting for responses that are either late or would never be delivered, and one of the possible reasons for that would be an impending runtime upgrade that caused a change in how responses are delivered.
-
----
-
-## XCM is "fire and forget"
-
-<br>
-
-XCM has no results:
-
-<widget-text center>
-
-- No errors reported to sender
-- No callbacks for sender
-
-Similar to UDP
-
-Notes:
-
-The receiver side can and does handle errors, but the sender will not be notified, unless the error handler specifically tries to send back an XCM that makes some sort of XCM that notifies status back to the origin, but such an action should be considered as constructing a separate XCM for the sole purpose of reporting information, rather than an intrinsic functionality built into XCM, akin to how UDP can also create a "response" to an incoming datagram, yet the response is too considered as a separate UDP datagram instance.
-
----
-
-## Async XCM
-
-We _could_ have XCM describe async behavior but do not because:
-
-<widget-text center>
-
-- Complexity, custom per sender/receiver pair
-- Expense of operating in fee-based systems
-
-Notes:
-
-Asynchronous systems vary widely by implementation, and as a protocol that attempts to bridge between disparate consensus systems, XCM does not attempt to define the behavior or architecture of its interlocutors.
-Rather, XCM defines and standardizes the interface and semantics that two or more consensus systems can use to interact with each other, but leaves the ultimate implementation details to its participating systems.
-
----
-
 ## Basic Top-Level Format
 
 ```rust
@@ -163,37 +91,6 @@ Notes:
 
 All the XCM format documentation does is state that the SCALE encoding index for the enums are in `u8`, and is defined by the `#[codec(index)]` attribute as we see in the code.
 It also concretely states that in XCMv2, the `v2::Xcm` struct is simply defined as a wrapper type around a `Vec<Instruction>`, where `Instruction` is the enum representing the XCM instruction set that exists in version 2.
-
----
-
-## Basic XCVM Operation
-
-XCVM operates as a fetch-dispatch loop
-
-<widget-text center>
-
-- Common in state machines
-
-<!-- TODO: Graphics about a state machine similar to how the XCVM operates -->
-
----
-
-## XCM vs. Standard State Machine
-
-<widget-text center>
-
-1. Error register
-1. Error _handler_ register
-1. Appendix register
-
-Notes:
-
-1. The error register is _not_ cleared when an XCM program completes successfully.
-   This allows the code in the Appendix register to use its value.
-1. Code that is run in the case where the XCM program fails or errors.
-   Regardless of the result, when the program completes, the error handler register is cleared.
-   This ensures that error handling logic from a previous program does not affect any appended code (i.e. the code in the error handler register does not loop infinitely, the code in the Appendix register cannot access the result of the code execution in the error handler).
-1. Code that is run regardless of the execution result of the XCM program.
 
 ---
 
@@ -337,6 +234,23 @@ The dispatchable call function is an optional operation that XCM author can spec
 
 ---
 
+## Information
+
+Offering some requested information that the local system is expecting
+
+```rust
+enum Instruction {
+    QueryResponse { query_id: QueryId, response: Response, max_weight: Weight, querier: Option<MultiLocation> },
+}
+```
+
+Notes:
+
+This instruction is generally safe to execute, the only tidbit here is that the local system may not be expecting the response from the sender.
+Therefore, the `querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
+
+---
+
 ## Version Negotiation Instructions
 
 ```rust
@@ -351,7 +265,26 @@ Notes:
 SubscribeVersion - instructs the local system to notify the sender whenever the former has its XCM version upgraded or downgraded.
 UnsubscribeVersion - if the sender was previously subscribed to XCM version change notifications for the local system, then this instruction tells the local system to stop notifying the sender on version changes.
 
+---v
+## 🗣️ XCM Version Negotiation
+
+XCM version negotiation:
+<widget-text center>
+
+1. Chain A sends `SubscribeVersion` to chain B.
+2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
+3. Chain A stores chain B's supported version on storage.
+4. The same procedure happens from chain B to chain A.
+5. Communication is established using the highest mutually supported version.
+
+---v
+## 🗣️ XCM Version Negotiation
+<center>
+<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
+</center>
+
 ---
+
 
 ## Assertion Instructions
 
@@ -428,23 +361,6 @@ The exact definition of "asset locking" is defined by the sender; however this w
 
 ---
 
-## Information
-
-Offering some requested information that the local system is expecting
-
-```rust
-enum Instruction {
-    QueryResponse { query_id: QueryId, response: Response, max_weight: Weight, querier: Option<MultiLocation> },
-}
-```
-
-Notes:
-
-This instruction is generally safe to execute, the only tidbit here is that the local system may not be expecting the response from the sender.
-Therefore, the `querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
-
----
-
 ## System Notification
 
 Handling operations for the underlying transport layer
@@ -493,3 +409,62 @@ Notes:
 
 The error register also includes a `u32` which denotes the instruction index that can be used to locate which XCM instruction failed.
 The code in the error handler register can only be used once, otherwise the executor can go into an infinite loop if it too errors during execution.
+
+---
+
+<widget-columns>
+<widget-column>
+
+### XCM with Fees Example
+
+For systems that do require some fee payment though, XCM provides the ability to buy execution resources with assets. Doing so, broadly speaking, consists of three parts:
+
+<widget-text center>
+
+1. Assets provided
+1. Negotiate exchange of assets for compute time (weight)
+1. XCM operations will be performed as instructed
+
+</widget-column>
+<widget-column>
+
+```rust [1|]
+WithdrawAsset((Here, 10_000_000_000).into()),
+BuyExecution {
+    fees: (Here, 10_000_000_000).into(), // MultiAsset
+    weight: 3_000_000, // u64
+},
+DepositAsset {
+    assets: All.into(), // MultiAssets
+    max_assets: 1,
+    beneficiary: Parachain(1000).into(), // MultiLocation
+},
+```
+
+</widget-column>
+</widget-columns>
+
+Notes:
+
+The first part is managed by one of a number of XCM instructions which provide assets.
+We already know one of these (WithdrawAsset), but there are several others which we will see later.
+The resultant assets in the Holding Register will of course be used for paying fees associated with executing the XCM.
+Any assets not used to pay fees we will be depositing in some destination account.
+For our example, we’ll assume that the XCM is happening on the Polkadot Relay Chain and that it’s for 1 DOT (which is 10,000,000,000 indivisible units).
+This brings us to the second part, exchanging (some of) these assets for compute time to pay for our XCM.
+For this we have the XCM instruction BuyExecution.
+Let’s take a look at it:
+The first item fees is the amount which should be taken from the Holding Register and used for fee-payment.
+It’s technically just the maximum since any unused balance is immediately returned.
+The amount that ends up being spent is determined by the interpreting system — fees only limits it and if the interpreting system needs to be paid more for the execution desired, then the BuyExecution instruction will result in error.
+The second item specifies an amount of execution time to be purchased.
+This should generally be no less than the weight of the XCM programme in total.
+In our example we’ll assume that all XCM instructions take a million weight, so that’s two million for our two items so far (WithdrawAsset and BuyExecution) and a further one for what’s coming next.
+We’ll just use all the DOT that we have to pay those fees (which is only a good idea if we trust the destination chain not to have crazy fees — we’ll assume that we do).
+The third part of our XCM comes in depositing the funds remaining in the Holding Register.
+For this we will just use the DepositAsset instruction.
+We don’t actually know how much is remaining in the Holding Register, but that doesn’t matter since we can specify a wildcard for the asset(s) which should be deposited.
+We’ll place them in the sovereign account of Statemint (which is identified as Parachain(1000).
+
+---
+

@@ -21,14 +21,13 @@
 - Asset transactors
 - Weight Traders
 - wildcards? {maybe out of scope}
+- pallet-xcm
 
 ### Activities and Exercises
 
-- Transfer native tokens from ChainA → ChainB **on Rococo** {no setup needed, }
-  - Teleport
-  - Reserve Asset
-  - Explain what to use these given a scenario:
-    - Within a chain itself `Here`
-    - ParaA → ParaB
-    - Relay Chain Native token to ParaA (not common good chain)
-    - ... others?
+- Versioning excercise to understand how versioning works
+- Modify different parts of the configuration to understand their implications (in groups). Each group picks one topic
+  - Remove free execution from relay and add a trader to charge for fee
+  - Add pallet-assets to the parachain and add an asset transactor for it.
+  - Modify your chain to be a 20 byte account instead of a 32 byte account.
+  - Change the configuration to accept teleporting instead of reserve transfer assets.
