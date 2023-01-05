@@ -240,6 +240,14 @@ Restores clear economic incentives
 Notes:
 There is an economic game called staking as part of the state machine that allows selecting the authorities who will participate in the PoA scheme.
 
+---v
+
+Coupling the consensus and the state machine
+
+Runtime api
+
+difficulty adjustment
+
 ---
 
 ## Fork Choice Heuristics
