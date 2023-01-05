@@ -510,24 +510,6 @@ enum Instruction {
 }
 ```
 
----v
-## 🗣️ XCM Version Negotiation
-
-XCM version negotiation:
-<widget-text center>
-
-1. Chain A sends `SubscribeVersion` to chain B.
-2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
-3. Chain A stores chain B's supported version on storage.
-4. The same procedure happens from chain B to chain A.
-5. Communication is established using the highest mutually supported version.
-
----v
-## 🗣️ XCM Version Negotiation
-<center>
-<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
-</center>
-
 ---
 
 ## ⚙️ Additional config for version negotiation

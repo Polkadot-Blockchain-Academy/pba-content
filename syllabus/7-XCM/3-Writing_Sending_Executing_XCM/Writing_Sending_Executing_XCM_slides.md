@@ -234,6 +234,23 @@ The dispatchable call function is an optional operation that XCM author can spec
 
 ---
 
+## Information
+
+Offering some requested information that the local system is expecting
+
+```rust
+enum Instruction {
+    QueryResponse { query_id: QueryId, response: Response, max_weight: Weight, querier: Option<MultiLocation> },
+}
+```
+
+Notes:
+
+This instruction is generally safe to execute, the only tidbit here is that the local system may not be expecting the response from the sender.
+Therefore, the `querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
+
+---
+
 ## Version Negotiation Instructions
 
 ```rust
@@ -248,7 +265,26 @@ Notes:
 SubscribeVersion - instructs the local system to notify the sender whenever the former has its XCM version upgraded or downgraded.
 UnsubscribeVersion - if the sender was previously subscribed to XCM version change notifications for the local system, then this instruction tells the local system to stop notifying the sender on version changes.
 
+---v
+## 🗣️ XCM Version Negotiation
+
+XCM version negotiation:
+<widget-text center>
+
+1. Chain A sends `SubscribeVersion` to chain B.
+2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
+3. Chain A stores chain B's supported version on storage.
+4. The same procedure happens from chain B to chain A.
+5. Communication is established using the highest mutually supported version.
+
+---v
+## 🗣️ XCM Version Negotiation
+<center>
+<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
+</center>
+
 ---
+
 
 ## Assertion Instructions
 
@@ -322,23 +358,6 @@ ReceiveTeleportedAsset - The specified assets must have been removed out of tota
 Like `ReserveAssetDeposited`, the sender needs to configured as a trusted teleport location via `IsTeleport`.
 NoteUnlockable - The specified assets must have been locked by the sender.
 The exact definition of "asset locking" is defined by the sender; however this would not cause any incompatibilities as long as "asset unlocking" as defined by the sender undoes the asset lock.
-
----
-
-## Information
-
-Offering some requested information that the local system is expecting
-
-```rust
-enum Instruction {
-    QueryResponse { query_id: QueryId, response: Response, max_weight: Weight, querier: Option<MultiLocation> },
-}
-```
-
-Notes:
-
-This instruction is generally safe to execute, the only tidbit here is that the local system may not be expecting the response from the sender.
-Therefore, the `querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
 
 ---
 
