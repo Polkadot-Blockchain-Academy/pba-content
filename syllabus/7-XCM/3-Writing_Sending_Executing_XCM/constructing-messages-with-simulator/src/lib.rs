@@ -22,14 +22,99 @@ mod tests {
 		Relay,
 		ParaA,
         parachain,
-        ParachainPalletXcm,
         RelayChainPalletXcm,
+        
 		// ParaB, // Might be useful for one of the exercises :)
 		TestExt,
         ALICE, INITIAL_BALANCE, para_account_id,
 	};
     use frame_support::assert_ok;
     use xcm::latest::prelude::*;
+
+    #[test]
+    fn execute_initiate_teleport_to_para_a() {
+        /* ------------------------------------------------------------------------- */
+        // In this section we do some initialization for our XCM exercise
+        // 1.) Create a new Test net scenario
+        MockNet::reset();
+
+        // 2.) Declare an amount to withdraw and teleport
+        let withdraw_amount = 100;
+
+        // 3.) Create 2-tuple with item 1 being the junction/s to send from and item 2 the withdraw_amount
+        // let withdraw_assets_from = $CREATE_TUPLE_HERE;
+
+        /*  ------------------------------------------------------------------------ */
+        // In this next section we focus on constructing the instructions necessary create our XCM message
+        // 1.) Takes some assets and place in the holding register.
+        // First we need to use an Instruction which can withdraw assets and place them in the holding register
+        // let instruction_1: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+
+        // 2.) Inform a destination chain that we are teleporting the previously withdrawn assets
+        // Second we need to use an Instruction which informs the other chain about the assets being teleported
+        // let instruction_2: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+
+        // 4.) XCM Message for parachain
+        // Create the XCM message for the given instructions above
+        // let message = $INSERT_CONSTRUCTED_XCM_MESSAGE_HERE
+
+        Relay::execute_with(|| {
+        // 5.) Execute send_xcm from the XCM pallet
+        //     assert_ok!(
+        //         // RelayChainPalletXcm::execute(
+                        /* $INSERT_CORRECT_PARAMS_TO_EXECUTE_XCM */
+        //         // )
+        //     );
+        });
+
+        ParaA::execute_with(|| {
+            // let expected_message_received = $INSERT_EXPECTED_MESSAGE_RECEIVED_BY_PARA_A
+            // assert_eq!(parachain::MsgQueue::received_dmp(), expected_message_received);
+        })
+    }
+
+    #[test]
+    fn execute_initiate_reserve_withdraw_to_para_a() {
+        /* ------------------------------------------------------------------------- */
+        // In this section we do some initialization for our XCM exercise
+        // 1.) Create a new Test net scenario
+        MockNet::reset();
+
+        // 2.) Declare an amount to withdraw and teleport
+        let withdraw_amount = 100;
+
+        // 3.) Create 2-tuple with item 1 being the junction/s to send from and item 2 the withdraw_amount
+        // let withdraw_assets_from = $CREATE_TUPLE_HERE;
+
+        /*  ------------------------------------------------------------------------ */
+        // In this next section we focus on constructing the instructions necessary create our XCM message
+        // 1.) Takes some assets and place in the holding register.
+        // First we need to use an Instruction which can withdraw assets and place them in the holding register
+        // let instruction_1: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+
+        // 2.) Inform a destination chain that we are placing the previously withdrawn reserve assets
+        // Second we need to use an Instruction which informs the other chain about the assets being teleported
+        // let instruction_2: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+
+        // 4.) XCM Message for parachain
+        // Create the XCM message for the given instructions above
+        // let message = $INSERT_CONSTRUCTED_XCM_MESSAGE_HERE
+
+        Relay::execute_with(|| {
+        // 5.) Execute send_xcm from the XCM pallet
+        //     assert_ok!(
+        //         // RelayChainPalletXcm::execute(
+                        /* $INSERT_CORRECT_PARAMS_TO_EXECUTE_XCM */
+        //         // )
+        //     );
+        });
+
+        ParaA::execute_with(|| {
+            // let expected_message_received = $INSERT_EXPECTED_MESSAGE_RECEIVED_BY_PARA_A
+            // assert_eq!(parachain::MsgQueue::received_dmp(), expected_message_received);
+        })
+    }
+
 
     #[test]
     fn send_ump_withdraw_deposit_alice() {
@@ -49,6 +134,9 @@ mod tests {
         // 1.) Takes some assets and place in the holding register.
         // First we need to use an Instruction which can withdraw assets and place them in the holding register
         // let instruction_1: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+        // HINT: when a message is sent from Para A to the relay, the para A multilocation origin is converted
+        // to:
+        // let para_a_account = xcm_simulator_for_exercises::para_account_id(Para_A_para_id)
 
         // 2.) Purchase execution for this message to be executed appropriately on the destination chain
         // Second we need to use an Instruction which can obtain execution some execution
@@ -78,12 +166,13 @@ mod tests {
     }
 
     #[test]
-    fn withdraw_and_deposit_and_query_holding_xcmp() {
+    fn withdraw_and_query_holding_xcmp() {
         /* ----------------------------------------------------- */
         // Now do it on your own!!!
         // 1.) Construct XCM Instructions
-        // 2.) Send correct XCM Message
+        // 2.) Send correct XCM Message from Para_A to Relay
         // 3.) Verify correct message was received and state was updated correctly on destination
+        // 4.) Verify a response was received by the request originating chain
 
         MockNet::reset();
 
@@ -98,6 +187,7 @@ mod tests {
 
 		ParaA::execute_with(|| {
 			// Set version 1 to parachain
+            // HINT: you can use parachain::XcmVersioner
 		});
 
 		Relay::execute_with(|| {

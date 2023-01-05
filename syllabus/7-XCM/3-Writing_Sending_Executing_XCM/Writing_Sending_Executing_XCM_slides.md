@@ -2,8 +2,8 @@
 title: Writing, Sending, and Execution of XCM
 description: Writing, Sending, and Execution of XCM for Web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung"]
-teaching-assistants: ["Dan Shields"]
+instructors: ["Keith Yeung", "Gorka Irazoqui"]
+teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Writing, Sending, and Execution of XCM
