@@ -2,12 +2,9 @@
 title: Blockchain Overview
 description: Initial look at web history and the problems blockchain and web3 are solving
 duration: 30 - 45 minutes
-instructors: ["Joshy Orndorff"]
 ---
 
 # Overview of Blockchains
-
-<widget-speaker name="Joshy Orndorff" position="Blockchain Chef" image="../../../assets/img/0-Shared/people/joshy.png" github="JoshOrndorff" twitter="JoshyOrndorff"></widget-speaker>
 
 ---
 
@@ -16,6 +13,7 @@ instructors: ["Joshy Orndorff"]
 What is the core problem we want to solve?
 
 Trustless provisioning of infrastructure.
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
@@ -33,6 +31,7 @@ Cryptography provides strong guarantees about _messages_ without a trusted party
 
 Notes:
 Crypto guarantees:
+
 - No tampering
 - No eavesdropping
 - Authorship
@@ -59,7 +58,7 @@ Still mostly peer-to-peer.
 
 Cryptography more often, but still not ubiquitous.
 
-<img src="./img/Web1.png" />
+<img style="width: 300px;" src="./img/Web1.png" />
 
 ---
 
@@ -73,7 +72,7 @@ However, users must place faith in the service provider.
 
 Cryptographic guarantees are about interactions with the service provider, not peers.
 
-<img src="./img/Web2.png" />
+<img style="width: 300px;" src="./img/Web2.png" />
 
 ---v
 
@@ -175,7 +174,7 @@ Opens the door to new application stacks:
 
 Removing trust allows us to unpackage applications.
 
-<img style="width: 800px" src="./img/application-disentanglement.png"/>
+<img style="width: 800px; padding-right: 2em" src="./img/application-disentanglement.png"/>
 
 Notes:
 
@@ -226,20 +225,20 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ---
 
-# A Shared History
+## A Shared History
 
-![Cover of Sapiens by Yuval Noah Harari](./img/sapiens.jpg)
+<img style="height: 500px;" src="img/sapiens.jpg">
 
 Notes:
 So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2 users have no visibility into the history of the app. They must trust the provider to accurately represent the current state. By giving the service provider the power to change the story, we give them the power to shape our understanding of reality and consequently our behavior.
 
 ---v
-# A Shared History
+
+## A Shared History
 
 <blockquote>
 Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
 </blockquote>
-
 
 <blockquote>
 Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
@@ -250,7 +249,7 @@ Telling effective stories is not easy. The difficulty lies ... in convincing eve
 
 ---
 
-# State Machines
+## State Machines
 
 We can formalize this notion of shared story with state machine model.
 
@@ -303,9 +302,13 @@ There is not a single model here. Some state machines will allow deleting or edi
 
 ## More State Machine Examples:
 
+<pba-flex center>
+
 - Ride sharing platform
 - Voting system
 - Blackjack table
+
+</pba-flex>
 
 Notes:
 Let's brainstorm what the state and the transitions might be for each of these.
@@ -314,14 +317,29 @@ Let's brainstorm what the state and the transitions might be for each of these.
 
 ## Shared Story of a State Machine
 
+<pba-cols>
+<pba-col>
+<pba-flex center>
+
 If we agree on:
 
-- The starting state (aka genesis state)
+- The starting state<br>(aka genesis state)
 - The history of transitions
 
-Then we MUST agree on
+</pba-col>
+<pba-col>
+</pba-flex>
+
+Then we _MUST_ agree on:
+
+<pba-flex center>
 
 - The current state
+
+</pba-flex>
+
+</pba-col>
+</pba-cols>
 
 Notes:
 Now that we have a formal mathy model of systems that we care about, we can see that the notion shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
@@ -332,9 +350,9 @@ Now that we have a formal mathy model of systems that we care about, we can see 
 
 A blockchain can be thought of in three parts
 
-<widget-columns>
-<widget-column>
-<center>
+<pba-cols>
+<pba-col>
+<pba-flex center>
 
 **State Machine**
 
@@ -342,20 +360,21 @@ What does the state hold?
 
 What are the _rules_ to change it?
 
-</center>
-</widget-column>
-<widget-column>
-<center>
+</pba-flex>
+</pba-col>
+<pba-col>
+<pba-flex center>
 
 **Data Structure**
 
-How can we cryptographically represent a history so it is tamper-proof
+How can we cryptographically represent a history so it is tamper-proof?
+<br><br>
 
-</center>
-</widget-column>
-<widget-column>
+</pba-flex>
+</pba-col>
+<pba-col>
 
-<center>
+<pba-flex center>
 
 **Consensus**
 
@@ -363,9 +382,9 @@ Which history is the real one?
 
 What part of history is final?
 
-</center>
-</widget-column>
-</widget-columns>
+</pba-flex>
+</pba-col>
+</pba-cols>
 
 Notes:
 First, each blockchain tracks some state machine. We've discussed several examples of what that might be already, we'll code some simple examples shortly, and we'll spend all of module 5 digging into how to create a blockchain-friendly production-ready state machine.
@@ -379,9 +398,12 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 ## Short History of Blockchains
 
 ---v
+
 ## Bitcoin
 
-<img src="./img/bitcoin-transaction.png"/>
+<img style="width: 500px;" src="./img/bitcoin-transaction.png"/>
+
+<!-- TODO update above image to styled diagram -->
 
 Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus.
 
@@ -408,17 +430,19 @@ Historically, upgrading blockchains meant getting everyone to update their node 
 
 ---
 
-# Blockspace
+## Blockspace
 
 A resource created, and often sold, by a decentralized blockchain network.
 
-<img src="./img/Web2Web3Stacks.png" />
+<img style="width: 700px;" src="./img/Web2Web3Stacks.png" />
 
-Learn more:
+---
+
+## Learn more:
+
 - Article: https://a16zcrypto.com/blockspace-explained/
 - Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
 - Podcast: https://youtu.be/jezH_7qEk50?t=5330
 
 Notes:
 A Blockchain network is a replacement for a centralized server. It sells a product to application deployers. The state machine is the application layer, and the blockchain is the server replacement. In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc. Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
-

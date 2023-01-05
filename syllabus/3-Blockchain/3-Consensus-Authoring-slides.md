@@ -2,20 +2,17 @@
 title: Consensus Authoring
 description: Authoring restrictions related to consensus
 duration: 30min
-instructors: ["Joshy Orndorff"]
 ---
 
 # Consensus: Authoring
 
-<widget-speaker name="Joshy Orndorff" position="Blockchain Chef" image="../../../assets/img/0-Shared/people/joshy.png" github="JoshOrndorff" twitter="JoshyOrndorff"></widget-speaker>
-
-# Consensus is
+### Consensus is:
 
 A decision making process that strives to achieve acceptance of a decision by all participants.
 
 ---v
 
-## Blockchain Consensus is
+## Blockchain Consensus is:
 
 A decentralized consensus system to reach agreement over a shared history of a state machine.
 
@@ -32,7 +29,7 @@ As we discussed blockspace represents the right to contribute to the shared hist
 
 ---
 
-# Forks Review
+## Forks Review
 
 TODO Figure
 
@@ -40,7 +37,9 @@ There are going to be forks. We need to decide which one is the real one.
 
 We can rule some forks out to reduce the problem space. Then we are left to decide which is canonical.
 
-# Five Aspects
+---
+
+## Five Aspects
 
 - State machine validity
 - Arbitrary / Political validity
@@ -64,24 +63,31 @@ Example spending more money than you have. Noting your present location such tha
 
 TODO Figure
 
---v
+---v
 
 ## Arbitrary / Political Validity
 
 Similar to state machine validity.
-
+<br>
 Examples:
+
+<pba-flex center style="margin-top:0">
+
 - Blocks that are too big
 - Blocks that have hack transactions
 - Empty blocks
 - Block with Even state roots
 
+</pba-flex>
+
 Notes:
 This concept is similar to the previous slide. In some sense this is even the same. This allows us to rule out some forks just for not having properties that we like.
 
-# Authorship Throttling
+---
 
-Realworld blockchains impose additional restrictions on who can author blocks. Why?
+## Authorship Throttling
+
+Real-world blockchains impose additional restrictions on who can author blocks. Why?
 
 Notes:
 These blockchains are supposed to be permissionless right? At least many of them are. Some are even very hardcore about that goal. So why would we want to restrict the authoring.
@@ -106,7 +112,7 @@ Before we go on, I want to introduce the concept of liveness. It is a desireable
 
 ---
 
-# Proof of Work
+## Proof of Work
 
 Satoshi's Big invention.
 
@@ -143,7 +149,7 @@ Secondly, the block time is only probabilistically known. When waiting for block
 
 ---
 
-# Proof of Authority
+## Proof of Authority
 
 Traditional class of solutions.
 
@@ -179,7 +185,7 @@ Does anything bad happen if they misbehave?
 
 Reminder: PoA is a family of leader election schemes
 
----s
+---v
 
 ## Aura
 
@@ -189,10 +195,12 @@ Everyone takes turns in order.
 
 Notes:
 Pros:
+
 - Simple
 - Single leader elected in each slot
 
 Cons:
+
 - Not blind - welcome targeted attacks
 
 ---v
@@ -205,12 +213,13 @@ Each authority reveals a VRF. If it is below a threshold, they are eligible to a
 
 Notes:
 Pros:
+
 - No fixed order helps alleviate DOS attacks
 
 Cons:
+
 - Some slots have no authors - There is a workaround for this
 - Other slots have multiple authors which leads to forks. There is no workaround for this
-
 
 ---v
 
@@ -221,9 +230,9 @@ New and upcoming
 Single blind VRF-based leader election
 
 Notes:
+
 - Has most of the Pros of PoW (except for the external resource based valuation hint)
 - Has all the Pros of PoA
-
 
 ---
 
@@ -244,7 +253,7 @@ There is an economic game called staking as part of the state machine that allow
 
 Coupling the consensus and the state machine
 
-Runtime api
+Runtime API
 
 difficulty adjustment
 
@@ -257,4 +266,5 @@ Your subjective preference for which fork is best
 Eg - Longest chain rule
 
 Notes:
+
 - Most accumulated work

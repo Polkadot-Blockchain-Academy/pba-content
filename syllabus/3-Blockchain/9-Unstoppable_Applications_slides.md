@@ -2,8 +2,6 @@
 title: Unstoppable Applications
 description: Unstoppable Applications in Web3
 duration: 1 hour
-instructors: ["Joe Petrowski"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Unstoppable Applications
@@ -80,11 +78,11 @@ We will discuss these and what we're building to realise a better stack.
 
 ## Peer-to-Peer Networks
 
-<center>
+<pba-flex center>
 
 <img style="width: 500px" src="../../assets/img/3-Blockchain/3.4-P2P-network.svg"/>
 
-</center>
+</pba-flex>
 
 ---
 
