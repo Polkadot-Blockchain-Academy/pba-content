@@ -2,8 +2,8 @@
 title: Cross Consensus Messaging (XCM)
 description: XCM Core Concepts, Terms, and Logic for Web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung"]
-teaching-assistants: ["Dan Shields"]
+instructors: ["Keith Yeung", "Gorka Irazoqui"]
+teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Cross Consensus Messaging (XCM)
