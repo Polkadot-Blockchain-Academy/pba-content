@@ -1,0 +1,17 @@
+[package]
+name = "xcm-debug-excercise"
+version = "0.1.1"
+authors = ["Parity Technologies <admin@parity.io>"]
+edition = "2021"
+
+[[bin]]
+name = "debug-failed-ump"
+path = "src/main.rs"
+
+[dependencies]
+subxt = { version = "0.25" }
+tokio = { version = "1.8", features = ["rt-multi-thread", "macros", "time"] }
+tracing-subscriber = "0.3.11"
+codec = { package = "parity-scale-codec", version = "3.0.0", default-features = false, features = ["derive", "full", "bit-vec"] }
+hex = "0.4.3"
+clap = { version = "3.1.6", features = ["derive"] }

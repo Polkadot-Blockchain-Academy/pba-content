@@ -131,7 +131,7 @@ pub type Values<T: Config> = StorageMap<_, T::AccountId, T::ValueType>;
 pub type Counter<T: Config> = StorageValue<_, u32>;
 ```
 
-NOTE: hash of the storage map.
+Notice: hash of the storage map.
 
 ---v
 
@@ -173,7 +173,7 @@ impl<T: Config> Pallet<T> {
 }
 ```
 
-note:
+Notes:
 
 - expand `DispatchError`, and how you can convert from string into it.
 - expand `OriginFor`.
@@ -251,8 +251,9 @@ A container for common **types**, **functionality**, and opinionated **OS-style 
   - events
   - runtime version, code update
 
-NOTE:
-it stores all of the accounts as well, but that can be changed.
+Notes:
+
+It stores all of the accounts as well, but that can be changed.
 
 ---v
 
@@ -300,7 +301,7 @@ pub(super) type ParentHash<T: Config> = StorageValue<_, T::Hash, ValueQuery>;
 
 > set before block execution, deleted in the beginning of the next block.
 
-NOTE:
+Notes:
 
 You now know what to query from PJS api if you want to read the block number.
 

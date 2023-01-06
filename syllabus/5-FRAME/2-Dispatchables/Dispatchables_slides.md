@@ -172,7 +172,7 @@ enum Call {
 Call::MyPallet(my_pallet::Call::transfer { .. }).encode()
 ```
 
-NOTE:
+Notes:
 
 example of how it can be a PITA: https://github.com/paritytech/substrate/issues/11896
 
