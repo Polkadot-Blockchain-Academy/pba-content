@@ -1,7 +1,18 @@
 {
   "title": "Polkadot Blockchain Academy",
-  "theme": "assets/styles/PBA-theme.css",
+  "theme": "assets/styles/polkadot-theme.css",
   "assetsDir": ".",
+  "css": [
+    "assets/styles/custom-classes.css",
+    "assets/styles/polkadot-theme-base.css",
+    "assets/styles/PBA-theme.css",
+    "plugin/design-system/index.css"
+  ],
+  "scripts": [
+    "plugin/design-system/design-system.js",
+    "plugin/design-system/widget-speaker.js",
+    "plugin/design-system/widget-image.js"
+  ],
   "separator": "\r?\n---\r?\n",
   "verticalSeparator": "\r?\n---v\r?\n",
   "highlightTheme": "shades-of-purple",
@@ -9,7 +20,7 @@
   "listingTemplate": "./assets/templates/listing-template.html",
   "host": "localhost",
   "staticDir": "build",
-  "staticDirs": ["assets"],
+  "staticDirs": ["assets", "plugin"],
   "preprocessor": null,
   "glob": "**/*[Ss]lides.md"
 }

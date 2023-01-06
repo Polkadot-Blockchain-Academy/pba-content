@@ -2,6 +2,8 @@
 title: Hash Based Data Structures
 description: Hash functions in Substrate
 duration: 1 hour
+instructors: ["Gavin Wood"]
+teaching-assistants: ["Dan Shields"]
 ---
 
 # Hash Based Data Structures
@@ -18,13 +20,17 @@ duration: 1 hour
 
 ## Hash Chains
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Hash-Chains.png"/>
+<center>
+<img  style="width: 800px" src="../../../assets/img/1-Cryptography/Hash-Chains.png"/>
+</center>
 
 ---
 
 ## Merkle Trees
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-tree-all-purple.png"/>
+<center>
+<img  style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-tree-all-purple.png"/>
+</center>
 
 A binary Merkle tree
 
@@ -39,7 +45,9 @@ A binary Merkle tree
 
 ## Proofs: Merkle Copaths
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-Copaths.png"/>
+<center>
+<img  style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-Copaths.png"/>
+</center>
 
 Notes:
 
@@ -51,17 +59,18 @@ If we compute the correct root, this proves that the leaf was in the tree
 
 ## Security
 
-Collision resistance: only one preimage for each hash,<br>binding commitment to the link.
+- collision resistance
+  - can give only-one preimage for each hash
+  - so a binding commitment to the link
 
 Notes:
 
-Explain what could happen when this fails.
+explain what could happen when this fails.
 
 ---
 
-## Security
-
-Proof of a leaf has size $O(\log n)$<br>and so do proofs of updates of a leaf
+- Proof of a leaf has size $O(\log n)$
+- and so do proofs of updates of a leaf
 
 ---
 
@@ -71,7 +80,9 @@ Proof of a leaf has size $O(\log n)$<br>and so do proofs of updates of a leaf
 
 ## Key-value database
 
-The data structure stores a map `key -> value`. We should be able to:
+The data structure stores a map `key -> value`
+
+We should be able to:
 
 1. Add new `<key,value>` pairs.
 1. Change the value associated with an existing key.
@@ -101,7 +112,7 @@ Just a selection we'll cover in this course.
 _Words:_ to, tea, ted, ten, inn, A.
 
 <center>
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Trie.png"/>
+<img  style="width: 800px" src="../../../assets/img/1-Cryptography/Trie.png"/>
 </center>
 
 Each node splits on the next digit in base $r$
@@ -113,7 +124,7 @@ Each node splits on the next digit in base $r$
 _Words:_ to, tea, ted, ten, inn, A.
 
 <center>
-<img style="width: 700px" src="../../../assets/img/1-Cryptography/Patricia-Trie.png"/>
+<img  style="width: 700px" src="../../../assets/img/1-Cryptography/Patricia-Trie.png"/>
 </center>
 
 If only one option for a sequence we merge them.
@@ -134,14 +145,13 @@ If only one option for a sequence we merge them.
 
 ## Computational and Storage <br>Trade-offs
 
-What radix $r$ is best?
-
+- What radix $r$ is best?
 - Proof size of a leaf is $r \log_r n$
   - $r=2$ gives the smallest proof for one leaf
 
 ...but:
 
-- Higher branching at high levels of the tree can give smaller batch proofs.
+- higher branching at high levels of the tree can give smaller batch proofs.
 - For storage, it is best to read consecutive data so high $r$ is better.
 
 ---
@@ -156,7 +166,7 @@ What radix $r$ is best?
 ## Merkle Mountain Ranges
 
 <center>
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-13.png"/>
+<img  style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-13.png"/>
 </center>
 
 Notes:
@@ -169,7 +179,7 @@ The trees that are here correspond to the binary digits of 13 that are 1.
 ## Merkle Mountain Ranges
 
 <center>
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-14.png"/>
+<img  style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-14.png"/>
 </center>
 
 ---
@@ -177,7 +187,7 @@ The trees that are here correspond to the binary digits of 13 that are 1.
 ## Merkle Mountain Ranges
 
 <center>
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/MMR-13.png"/>
+<img  style="width: 800px" src="../../../assets/img/1-Cryptography/MMR-13.png"/>
 </center>
 
 Notes:
@@ -194,9 +204,3 @@ Notes:
   - RSA accumulators
   - Polynomial commitment based
     - Verkle trees
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Questions

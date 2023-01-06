@@ -9,6 +9,12 @@ teaching-assistants: ["Sacha Lansky", "Dan Shields", "Emre Surmeli"]
 
 ---
 
+## Speaker
+
+<widget-speaker name="Joshy Orndorff" position="Blockchain Chef" image="/assets/img/0-Shared/people/joshy.png" github="https://github.com/JoshOrndorff" twitter="joshyorndorff" matrix="joshyorndorff:matrix.org"></widget-speaker>
+
+---
+
 ## Consensus is
 
 A decision making process that strives to achieve acceptance of a decision by all participants.

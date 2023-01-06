@@ -35,26 +35,27 @@
   </head>
   <body class="site">
     <header class="site-header">
-      <img style="height: 2.5vw;"class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/pba-logo-white.svg" alt="PBA Logo">
-      <!-- This is only rendered on the watching server, not the production build -->
-      {{#watch}}
-      <a style="font-size: larger; text-decoration: none;" href="{{{absoluteUrl}}}"> 🮸 All Slides</a>
-      {{/watch}}
+      <a href="{{{absoluteUrl}}}">
+        <img class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="{{{base}}}/assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
     </header>
-    <main class="reveal">
+    <main class="site-reveal reveal">
       <article class="slides">
         {{{slides}}}
       </article>
     </main>
 
     <script src="{{{base}}}/dist/reveal.js"></script>
-
     <script src="{{{base}}}/plugin/markdown/markdown.js"></script>
     <script src="{{{base}}}/plugin/highlight/highlight.js"></script>
     <script src="{{{base}}}/plugin/zoom/zoom.js"></script>
     <script src="{{{base}}}/plugin/notes/notes.js"></script>
     <script src="{{{base}}}/plugin/math/math.js"></script>
-    <script>
+
+    <script type="module">
+      import DesignSystem from "{{{base}}}/plugin/design-system/design-system.js"
+
       function extend() {
         var target = {};
         for (var i = 0; i < arguments.length; i++) {
@@ -75,27 +76,21 @@
         history: true,
         center: true,
         transition: 'default', // none/fade/slide/convex/concave/zoom
-        slideNumber: true,
         plugins: [
           RevealMarkdown,
           RevealHighlight,
           RevealZoom,
           RevealNotes,
-          RevealMath
+          RevealMath,
+          DesignSystem
         ]
       };
 
       // options from URL query string
-      var queryOptions = Reveal().getQueryHash() || {};
+      const queryOptions = Reveal().getQueryHash() || {};
 
-      var options = extend(defaultOptions, {{{revealOptionsStr}}}, queryOptions);
-    </script>
-
-    {{#scriptPaths}}
-    <script src="{{{.}}}"></script>
-    {{/scriptPaths}}
-
-    <script>
+      const options = extend(defaultOptions, {{{revealOptionsStr}}}, queryOptions);
+      options.baseUrl = '{{{absoluteUrl}}}';
       Reveal.initialize(options);
     </script>
   </body>

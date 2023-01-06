@@ -8,6 +8,35 @@ teaching-assistants: ["some one", "another gal"]
 
 # Lecture Title
 
+### _Module X, Lecture Y_
+
+---
+
+<div class="flex-container">
+<div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<!-- TODO: add a good circularly cropped headshot of ou to the `assets/profile` folder  -->
+<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/placeholder/profile.png"/>
+
+</div>
+<div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Instructor Name
+
+<!-- .element: style="margin-bottom: -30px;" -->
+
+#### _Position or Title_
+
+<!-- .element: style="margin-left: 20px;" -->
+
+- I am a Subject matter in X
+- A bit about me
+
+_[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:you@example.com)_
+
+</div>
+</div>
+
 ---
 
 ### Outline
@@ -24,8 +53,6 @@ Please make your lecture precise.
 
 -->
 
-<pba-flex center>
-
 1. [Pre-requisites](#pre-requisites)
 1. [Major topic A](#major-topic-a)
 1. Major topic B
@@ -35,23 +62,15 @@ Please make your lecture precise.
 1. [Next Steps](#next-steps)
 1. [References](#references)
 
-</pba-flex>
-
 ---
 
 ## Pre-requisites
 
-No background in X is necessary.
-
-However, the following are expected:
-
-<pba-flex center>
+No background in X is necessary. However, the following are expected:
 
 - Y
 - Z
 - \\(\alpha\\)
-
-</pba-flex>
 
 ---
 
@@ -59,70 +78,57 @@ However, the following are expected:
 
 <!-- TODO: fill this in  -->
 
-<pba-flex center>
-
 - Describe ...
 - Navigate ...
 - Justify ...
-
-</pba-flex>
 
 ---
 
 ## Major topic A
 
-<pba-flex center>
-
 - Use some bullets
 - To make a few points
 
-</pba-flex>
-
-More context here.
-
-And even more here... and more and more...
-
 Notes:
-
 Speaker view ONLY notes
 
 ---
 
-# An Important Point
+# An important point
 
-### _Make it clear_ <!-- .element: class="fragment" -->
+### _Make it clear_
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
-
 Stuff you should remember to say
 
 ---
 
-# Exercise Title
+# Exercise title
 
 ### _Describe it here_
 
+<!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
+
 ---
 
-## Exercise Instructions
+## Exercise instructions
 
 <!--
 Detail what you want students to do in your exercise
 Most exercises are less than 15 minuets in length.
 -->
 
-<pba-flex center>
-
-1. Uno
-1. Dos
-1. Tres
-
-</pba-flex>
+1.
+1.
+1.
 
 Notes:
-
 Make sure to include things here to say to students, perhaps a hint or two.
 Realize that students will be able to view the speaker's notes, as they will have access to them on their devices.
+
+<!-- TODO: exercise indicator https://github.com/paritytech/polkadot-blockchain-academy/issues/67 -->
 
 ---
 
@@ -132,7 +138,7 @@ Realize that students will be able to view the speaker's notes, as they will hav
 
 ---
 
-## Next Steps
+## Next steps
 
 <!--
 Compile a list of:
@@ -143,13 +149,9 @@ Compile a list of:
 - Reference other slides/materials by relative directory in this repo, like the [copy-paste slide templates](../../content-templates/slides/copy-paste-reveal-template-slides.md)
 -->
 
-<pba-flex center>
-
-1. Eins
-1. Zwei
-1. Drei
-
-</pba-flex>
+1. <!-- TODO: fill this in  -->
+1. <!-- TODO: fill this in  -->
+1. <!-- TODO: fill this in  -->
 
 ---
 

@@ -2,6 +2,8 @@
 title: Advanced Digital Signatures
 description: More exotic digital signature methods
 duration: 1 hour
+instructors: ["Alistair Stewart"]
+teaching-assistants: ["Dan Shields, Sacha Lansky"]
 ---
 
 # Advanced Digital Signatures
@@ -41,6 +43,12 @@ Potential example to give verbally:
 
 ---
 
+<!-- .slide: data-background-color="#8D3AED" -->
+
+## Multi-Signatures
+
+---
+
 ### Multi-Signatures
 
 We often want signatures that must be signed by multiple parties to become valid.
@@ -52,7 +60,7 @@ We often want signatures that must be signed by multiple parties to become valid
 
 ### Types of Multi-Signature
 
-<pba-flex center>
+<widget-text center>
 
 - Verifier enforced
 - Cryptographic threshold
@@ -84,7 +92,7 @@ This good experience comes at the cost of using state and more user interactions
 Cryptographic multi-signatures can be achieved purely on the signer side (without support from the verifier).
 This makes more compact signatures compatible with legacy systems.
 
-<pba-flex center>
+<widget-text center>
 
 _Example: "5 of 7 key holders have signed this message."_
 
@@ -99,7 +107,7 @@ These require multi-party computation (MPC) protocols, which add some complexity
 Sometimes we do not need a threshold represented in a public key.
 But we want a succinct way to demonstrate that multiple parties have signed a message.
 
-<pba-flex center>
+<widget-text center>
 
 _Example: "5 key holders have signed this message."_
 
@@ -157,7 +165,7 @@ Verifying individual signatures is _slow_, but verifying aggregated ones is rela
 
 Allows multiple signatures generated under multiple public keys for multiple messages to be aggregated into a single signature.
 
-<pba-flex center>
+<widget-text center>
 
 - Uses heavier pairing friendly elliptic curves than ECDSA/Schnorr.
 - Very popular for consensus.
@@ -198,6 +206,7 @@ Notes:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+### Next Lesson
 
-# Questions
+- Exotic Primitives
+- Hash functions and data structures

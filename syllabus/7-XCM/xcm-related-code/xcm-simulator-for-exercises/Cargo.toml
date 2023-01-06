@@ -6,7 +6,7 @@ description = "Common xcm-simulator to use for hacking during PBA"
 edition = "2021"
 
 [dependencies]
-codec = { package = "parity-scale-codec", default-features = false, version = "3.0.0" }
+codec = { package = "parity-scale-codec", version = "3.0.0" }
 scale-info = { version = "2.1.2", features = ["derive"] }
 
 frame-system = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -25,22 +25,3 @@ pallet-xcm = { git = "https://github.com/paritytech/polkadot", branch = "master"
 polkadot-core-primitives = { git = "https://github.com/paritytech/polkadot", branch = "master" }
 polkadot-runtime-parachains = { git = "https://github.com/paritytech/polkadot", branch = "master" }
 polkadot-parachain = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-
-[features]
-default = ["std"]
-std = [
-	"codec/std",
-    "frame-system/std",
-    "frame-support/std",
-    "pallet-balances/std",
-    "sp-std/std",
-    "sp-core/std",
-    "sp-runtime/std",
-    "sp-io/std",
-	"xcm/std",
-	"xcm-executor/std",
-	"xcm-builder/std",
-	"pallet-xcm/std",
-	"polkadot-core-primitives/std",
-	"polkadot-parachain/std",
-]
