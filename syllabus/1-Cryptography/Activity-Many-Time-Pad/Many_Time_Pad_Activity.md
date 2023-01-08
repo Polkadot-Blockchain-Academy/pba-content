@@ -8,13 +8,16 @@ The goal of this activity is to illustrate that while the one-time pad is uncrac
 
 ## Introduction
 
-The symmetric one-time pad is known to be secure when the key is only used once. In practice key distribution is not always practical, and users sometimes make the critical mistake of reusing a pre-shared key.
+The symmetric one-time pad is known to be secure when the key is only used once.
+In practice key distribution is not always practical, and users sometimes make the critical mistake of reusing a pre-shared key.
 
 In this activity, students will experience first hand why reusing the key is detrimental to security.
 
 ## The Challenge
 
-The following several ciphertexts were all intercepted. We believe they may have been encrypted with the same key. Your task is to extract _all_ of the plaintexts as well as the original key.
+The following several ciphertexts were all intercepted.
+We believe they may have been encrypted with the same key.
+Your task is to extract _all_ of the plaintexts as well as the original key.
 
 ```text
 15481555260c011c535055565d671501024255554b00350d131d0a0a024c0014000a024501061b0105490c464312160b4f190b550e05490d03191b5746001c4c0b0f0b4b034f
@@ -41,7 +44,8 @@ These instructions are meant to serve as guidelines to help you complete the act
 
 - Team up with 2-4 students to complete this activity.
 
-- Write a program, preferably in Rust, that finds the key to generate the plaintext from the provided cipher texts (consider the hints). The general steps are:
+- Write a program, preferably in Rust, that finds the key to generate the plaintext from the provided cipher texts (consider the hints).<br>
+  The general steps are:
 
   1. Find the length of the longest input cipher text.
   1. Generate a key of that length.
@@ -51,4 +55,9 @@ These instructions are meant to serve as guidelines to help you complete the act
 
 - Spend 1-2 hours to crack the Many Time Pad.
 
-- If you've cracked it before other teams have, find ways to improve your solution. Some suggestions: create a tool that automates the cipher key generation, add a way to generate new cipher texts, create your own cipher texts using other cipher methods, provide a new set of ciphertexts that were intentionally constructed not to use the most common English words.
+- If you've cracked it before other teams have, find ways to improve your solution.<br>
+Some suggestions:
+  - Create a tool that automates the cipher key generation
+  - Add a way to generate new cipher texts
+  - Create your own cipher texts using other cipher methods
+  - Provide a new set of ciphertexts that were intentionally constructed not to use the most common English words.
