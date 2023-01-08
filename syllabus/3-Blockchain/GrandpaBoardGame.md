@@ -31,7 +31,7 @@ The grandpa protocol operates in a decentralized asynchronous blockchain network
 
 Divide the whiteboard into a dedicated space for each player in the protocol. Each player should have roughly 50cm X 50cm. The author does not need their own dedicated space.
 
-TODO FIGURE
+<img src = "./img/grandpa-game-board-setup.svg" />
 
 Throughout the game all participants including the author are responsible for communicating with other players by adding information _to other players dedicated spaces_. In fact, most of the marks that you make during the game will be on someone else's space rather than your own. For a more realistic game, take care to share information with other players in a different order each time.
 
@@ -39,13 +39,13 @@ Throughout the game all participants including the author are responsible for co
 
 Before game play begins, the author draws a single genesis block labeled `G` on each player's view. Each player marks the genesis block as final by shading it with their color in their own view.
 
-TODO Figure
+<img src = "./img/grandpa-game-genesis.svg" />
 
 #### Simplified Version - A Universal View
 
 If you are relatively new to the game or the grandpa protocol itself, it may be helpful to play a few rounds with a single universal view. While this approach is less realistic, it removes some complexity and opportunities for confusion. In this simplified mode, every player considers the single universal view to be their own view. Once you have played a few rounds, you should switch to the more realistic mode where each player has a unique view.
 
-TODO Figure (including finalized genesis block)
+<img src = "./img/grandpa-game-universal-genesis.svg" />
 
 ## Authoring
 
@@ -53,13 +53,19 @@ The author is responsible for creating the blockchain data structure and gossipi
 
 When the author creates a block they should gossip it to all players by drawing it on each player's view. A block is drawn with a pointer to its parent block and a short unique block identifier like a few characters or digits. The author should take care to vary to order in which they place new blocks on various players' views. In fact, the author may even gossip multiple blocks to a single player before going back and gossiping any of them to other players. However the author should ensure that all blocks are eventually gossiped to all players.
 
-TODO Figures
+<figure>
+    <img src="./img/grandpa-game-authoring-gossip.svg" />
+    <figcaption><b>Two blocks have been authored since genesis. Not all players have heard about block <code>DEF</code> yet.</b></figcaption>
+</figure>
 
-In some ways the author acts as a "party host" or "dungeon master" for the game. They should observe the players progress, struggles, and enthusiasm, and author accordingly. If players are struggling to keep up or getting frustrated or overwhelmed the author should slow down the authoring rate or build a simpler chain with fewer forks. If players are easily finalizing blocks or getting bored the author should speed up or create more complex tree structures with many forks.
+In some ways the author acts as a "party host" or "dungeon master" for the game. They should observe the players progress, struggles, and enthusiasm, and author accordingly. If players are struggling to keep up or getting frustrated or overwhelmed the author should slow down the authoring rate or build a simpler chain with fewer forks. If players are easily finalizing blocks or getting bored the author should speed up,create a more complex tree with many forks, or decrease the synchrony.
 
 When playing the unified view mode, the author should only create blocks that are descendants of the latest finalized block. In the more realistic mode, the notion of latest finalized block is a little more vague, but still the author should avoid extending chains that have been ruled out by all or even most players.
 
-TODO Figure
+<figure>
+    <img src="./img/grandpa-game-extend-finalized.svg" />
+    <figcaption><b>Once block <code>ABC</code> has been finalized, the author will never again draw a direct descendant of <code>G</code>.</b></figcaption>
+</figure>
 
 ## Game Play
 
@@ -69,9 +75,12 @@ Like many other BFT protocols, Grandpa requires strictly greater than 2/3 of pla
 
 ### Prevoting
 
-Each player begins a round by casting their prevote. A prevote can be thought of as a non-binding signal for what the player hopes to finalize in this round. A player casts their prevote by writing the current round number off to the right of the block they are prevoting for first on their own view, and then on other players' views. Remember you should send your prevotes out to other players in a different order each time, and it is okay to allow some latency between sending it to each player.
+Each player begins a round by casting their prevote. A prevote can be thought of as a non-binding signal for what the player hopes to finalize in this round. Generally the prevote should be for the longest chain that extends the best finalized block. A player casts their prevote by writing the current round number off to the right of the block they are prevoting for first on their own view, and then on other players' views. Remember you should send your prevotes out to other players in a different order each time, and it is okay to allow some latency between sending it to each player.
 
-TODO Figure
+<figure>
+    <img src="./img/grandpa-game-prevote.svg" />
+    <figcaption><b>Players 1 and 4 have cast prevotes for block <code>ABC</code> in round 2. Their prevote has not yet been gossiped to all players. Players 2 and 4 have not yet cast prevotes for round 2.</b></figcaption>
+</figure>
 
 TODO what if a player hasn't yet seen the block I'm prevoting for. Some options:
 
@@ -82,9 +91,12 @@ TODO what if a player hasn't yet seen the block I'm prevoting for. Some options:
 
 ### The Prevote Ghost
 
-Once a player has seen a threshold of prevotes in the current round, they can mark the round's "Prevote Ghost" on their own view. The prevote ghost is defined as the highest block that has a threshold of prevotes, and it is marked by drawing the letters `PG` and a round number off to the left of the block. For example `PG4` for round four's prevote ghost. (Or optionally `👻4` if you are feeling artistic).
+Once a player has seen a threshold of prevotes in the current round, they can mark the round's "Prevote Ghost" on their own view. The prevote ghost is defined as the highest block that has a threshold of prevotes, and it is marked by drawing the letters `PG` and a round number off to the left of the block. For example `PG2` for round four's prevote ghost. (Or optionally `👻2` if you are feeling artistic).
 
-TODO Figure
+<figure>
+    <img src="./img/grandpa-game-prevote-ghost.svg" />
+    <figcaption><b>Now that player 1 has seen a threshold of prevotes (3 in this case of 4 players), they can mark the prevote ghost. No other players have seen enough prevotes to mark a prevote ghost yet.</b></figcaption>
+</figure>
 
 Note that the prevote ghost may change over time as more votes come in. You may update your markings if you wish and doing so may help you finalize more blocks. However, the protocol does not required players to update it; after all, players may never even have seen those later votes.
 
@@ -92,29 +104,43 @@ Note that the prevote ghost may change over time as more votes come in. You may 
 
 Once the prevote ghost is marked, each player marks the estimate on their own view to the left of the same block that is the prevote ghost with the letter `E` and a round number. For example, `E4` for round four's estimate.
 
-TODO Figure
+<figure>
+    <img src="./img/grandpa-game-mark-estimate.svg" />
+    <figcaption><b>In round 4, Player 1 has marked their prevote ghost previously, and is now setting the estimate tothe same slide.</b></figcaption>
+</figure>
 
 A round's estimate is defined as the highest block that is in the chain of the prevote ghost that could possibly achieve a threshold of precommits. So while the estimate _begins_ at the same block as the prevote ghost, it may change as more votes come in. It is especially likely to change if you are also willing to update your prevote ghost as described in the previous section.
 
 ### Precomitting
 
-Once you have marked a prevote ghost and an estimate, you may wait a short time for any more prevotes to come in. Once you get tired of waiting (or when it is impossible for the prevote ghost to move any higher), you may cast your precommit for the block that you see as the prevote ghost. Mark your precommit first on your own view and then on other players' views by writing the round number off to the right of the block and circling it. Precommits are distinguished from prevotes by the circle. Remember not all players will agree on which block is the prevote ghost, so others may precommit for blocks different then you have. Mark your precommit for a given round by writing the round number in
+Once you have marked a prevote ghost and an estimate, you may wait a short time for any more prevotes to come in. Once you get tired of waiting (or when it is impossible for the prevote ghost to move any higher), you may cast your precommit for the block that you see as the prevote ghost. Mark your precommit first on your own view and then on other players' views by writing the round number off to the right of the block and circling it. Precommits are distinguished from prevotes by the circle. Remember not all players will agree on which block is the prevote ghost, so others may precommit for blocks different then you have.
 
-TODO Figure
+<figure>
+    <img src="./img/grandpa-game-precommiting.svg" />
+    <figcaption><b>Player 1 casts their round 4 precommit for the block that they see as the prevote ghost. They have also observed a Player 2's precommit.</b></figcaption>
+</figure>
 
-As you observe more prevotes appearing on your view, your estimate may change. Specifically it may move up the chain to ancestor blocks.
+As you observe more precommits appearing on your view, your estimate may change. Specifically it may move up the chain to ancestor blocks.
 
-TODO Figure of estimate changing
+<figure>
+    <img src="./img/grandpa-game-estimate-moves.svg" />
+    <figcaption><b>As Player 1 observes more precommits arriving, it becomes impossible for block<code>GHI</code> to achieve a threshold of precommits, and thus the estimate moves up the chain.</b></figcaption>
+</figure>
 
 ### Completing a Round
 
 We will decide that _some_ block is finalized in each round, although it may be a block that was already finalized in a previous round. We will only ever finalize an ancestor of the estimate. Once some ancestor of the estimate has achieved a threshold of precommits, you can declare that block finalized by shading it with your color on your view.
 
-TODO Figure
+<img src="./img/grandpa-game-finalizing.svg" />
 
 After a round has completed, you may choose to erase the votes for that round from your view to keep the board tidy. But you are not required to do so. Be careful not to erase votes for _future_ rounds by accident as some players may have advanced to the next round before you.
 
-Proceed to the next round
+<figure>
+    <img src="./img/grandpa-game-erasing.svg" />
+    <figcaption><b>As Player 1 has completed round 4 and has erased markings related to round 4. They have NOT erased marking related to round 5.</b></figcaption>
+</figure>
+
+Proceed to the next round.
 
 ## Ending the Game
 
