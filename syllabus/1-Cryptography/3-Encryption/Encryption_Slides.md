@@ -129,14 +129,11 @@ The output does not depend on the order of operations.
 
 ---
 
-TODO: Technical diagram
----
+## Diffie-Hellman Key Exchange
 
-## Mixing Paint Example
+<img style="height: 500px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange_horizontal.svg"/>
 
-TODO: make horizontal
-
-<img style="height: 900px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange.png"/>
+Mixing Paint Visualization
 
 Notes:
 
