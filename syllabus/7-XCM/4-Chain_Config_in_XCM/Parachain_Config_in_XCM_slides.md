@@ -313,6 +313,27 @@ Notes: To meet our requirements, we only require number 3. This will allow us to
 
 ---v
 ### 🚧 Configuring Barriers with xcm-builder
+Physical vs Computed origin
+
+- Physical origin: the consensus system that built this particular XCM and sent it to the recipient
+- Computed origin: the entity that ultimately instructed the consensus system to build the XCM
+
+**Must make sure which origin a barrier should apply to!** Those that filter on the origin (e.g.
+`AllowTopLevelPaidExecutionFrom<T>`) would most likely be operating upon the *computed origin*.
+
+---v
+### 🚧 Configuring Barriers with xcm-builder
+
+Barriers that operate upon **computed origins** must be put inside of `WithComputedOrigin`:
+
+```rust
+pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>(
+	PhantomData<(InnerBarrier, LocalUniversal, MaxPrefixes)>,
+);
+```
+
+---v
+### 🚧 Configuring Barriers with xcm-builder
 
 1. `TakeWeightCredit`: A barrier that substracts the maxixum weight the message can consume from the available weight credit. Usually configured for local xcm-execution
 
