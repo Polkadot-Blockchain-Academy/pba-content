@@ -6,7 +6,7 @@ duration: 30 min
 
 # Blockchain Structure
 
-TODO Figure of a blockchain with forks
+![An opaque blockchain structure](./img/opaque-blockchain.svg)
 
 ---
 
@@ -19,16 +19,34 @@ This allows interested parties to have a **shared history**.
 
 ## Hash Linked List
 
-TODO figure like my sub0 talk
+![Blockchain with payload shown](./img/hash-linked-1.svg)
 
 Notes:
-This is a simplified blockchain. Each block has a pointer to the parent block as well as a payload. The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
+This is a simplified blockchain. Each block has a pointer to the parent block as well as a payload.
+
+---v
+
+## Hash Linked List
+
+![Blockchain with payload shown and parent hash calculated](./img/hash-linked-2.svg)
+
+Notes:
+The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
+
+---v
+
+## Hash Linked List
+
+![Blockchain with payload and parent hash included](./img/hash-linked-3.svg)
+
+Notes:
+This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
 
 ---v
 
 ### Genesis Block
 
-TODO figure
+![Beginning of blockchain. Genesis block's "parent" is 0x0000](./img/hash-linked-genesis.svg)
 
 Notes:
 The first block in the chain is typically called a the "Genesis block" named after the first book in the judaeo-christian mythology - The beginning of our shared story. The parent hash is chosen to be some specific value. Typically we use the all-zero hash, although any fixed widely agreed-upon value would also do.
@@ -41,18 +59,18 @@ A state machine defines:
 
 <pba-flex center style="margin-top:0">
 
-- the set of valid states
-- the rules for transitioning between those states.
+- Set of valid states
+- Rules for transitioning between states
 
 </pba-flex>
 
-<img style="width: 900px;" src="../../assets/img/3-Blockchain/3.1-state-machine.png"/>
+<img style="width: 900px;" src="./img/state-machine-general.png"/>
 
 ---v
 
 ### Blockchain meet State Machine
 
-TODO Figure
+![Blockchain where payload is state machine transition](./img/blockchain-meet-state-machine.svg)
 
 Notes:
 The simplest way to join a blockchain to a state machine is to to make the blockchain's payload a state machine transition.
@@ -64,19 +82,23 @@ By doing so, we effectively track the history of a state machine in a cryptograp
 
 Somewhere else!
 
-Figure with states outside of blocks.
+![Blockchain with state shown outside of the blocks](./img/blockchain-with-state-outside.svg)
 
 Notes:
 
 There is a state associated with each block. But typically the state is NOT stored in the block. This state information is redundant because it can always be obtained by just re-executing the history of the transitions.
-It is possible to store the state in the blocks, but the redundancy is often undesirable. It wastes disk space for anyone who wants to store the history of the chain. Storing the state in the block is not done by any moderately popular blockchain today.
-If you _want_ to store the states, you are welcome to do so. Software that does this is known as an Archive node or an indexer.
+It is possible to store the state in the blocks, but the redundancy is undesirable. It wastes disk space for anyone who wants to store the history of the chain. Storing the state in the block is not done by any moderately popular blockchain today.
+If you _want_ to store the states, you are welcome to do so. Software that does this is known as an Archive node or an indexer. But it is stored separately from the block
+...Pause...
+One more time to make sure it sinks in: The state is NOT in the block.
 
 ---v
 
 ### State Roots
 
-TODO: Figure that adds a state root field to the blocks
+A cryptographic anchor to the state
+
+![State roots cryptographically tie the block to its state](./img/blockchain-with-state-roots.svg)
 
 Notes:
 Some data redundancy can be good to help avoid corruption etc. It is common for a block to contain a cryptographic fingerprint of
@@ -86,7 +108,7 @@ the state. This is known as a state root. You think of it as a hash of the state
 
 ## Forks
 
-TODO Diagram
+![forks represent alternate histories](./img/forks.svg)
 
 A state machine can have different possible histories. These are called forks.
 
@@ -97,7 +119,7 @@ You can think of them like alternate realities. We need to decide which of the m
 
 ## Invalid Transitions
 
-TODO Diagram with some forks crossed out
+![Not all transitions are valid. Forks containing them need not be considered](./img/forks-some-invalid.svg)
 
 Notes:
 Before we even get to hardcore consensus, we can rule out _some_ possibilities based on the state machine itself
