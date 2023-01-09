@@ -49,7 +49,7 @@ We plan to cover the following content:
 
 ### Activity (90-120min)
 
-In this non-lecture part, we want the participants to solve specific games.
+In this non-lesson part, we want the participants to solve specific games.
 
 - Calculate Nash equilibrium in different games.
 - Some other problem sets from GT
@@ -105,7 +105,7 @@ We plan to cover the following content:
 
 ### Activity (90-120min)
 
-In this non-lecture part, we want the participants to solve specific games.
+In this non-lesson part, we want the participants to solve specific games.
 
 - Calculate Nash equilibrium in different games.
 - Some other problem sets from GT

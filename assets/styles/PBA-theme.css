@@ -159,8 +159,8 @@ pba-flex {
 pba-flex[left] {
   display: flex;
   flex-direction: column;
-  align-items: right;
-	text-align: right;
+  align-items: left;
+	text-align: left;
 }
 
 pba-flex[center] {

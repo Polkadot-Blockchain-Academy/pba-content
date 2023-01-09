@@ -1,90 +1,122 @@
-# Subkey Signature and HDKD Demo
+# Subkey Signature and HDKD (Hierarchical Deterministic Key Derivation) Demo
 
-All the subkey examples from the first draft have been translated into Rust in a Jupyter notebook to run in the lesson. Just in case there are any mishaps, here are all the subkey examples.
+All the subkey examples also exist in [a jupyter notebook](./signature-demo.ipynb) for reference.
+As an alternative, here are subkey examples to compliment/replace using the REPL.
 
 ## Key Generation
 
-```
-> subkey generate
-Secret phrase:       thank liberty fame metal illegal project behind join armed afraid welcome act
-  Secret seed:       0xa959ae8546c355d25e7dacdffac94d6f5d2ee8c28a0b5b0511a60f0d2aa5c595
-  Public key (hex):  0x7498c845882ffa046a994d3f4d0e6422fbc6ff85aa61f294ab293158e7e6381d
+```sh
+subkey generate
+
+Secret phrase:       desert piano add owner tuition tail melt rally height faint thunder immune
+  Network ID:        substrate
+  Secret seed:       0x6a0ea68072cfd0ffbabb40801570fa5e9f3a88966eaed9dedaeb0cf140b9cd8d
+  Public key (hex):  0x7acdc47530002fbc50f413859093b7df90c27874aee732dca940ea4842751d58
+  Account ID:        0x7acdc47530002fbc50f413859093b7df90c27874aee732dca940ea4842751d58
+  Public key (SS58): 5Eqipnpt5asTm7sCFWQeJjsNJX5cYVJMid3zjKHjDUGKBJTo
+  SS58 Address:      5Eqipnpt5asTm7sCFWQeJjsNJX5cYVJMid3zjKHjDUGKBJTo
 ```
 
 ## Sign
 
+```sh
+echo -n 'Hello Polkadot Blockchain Academy' | subkey sign --suri 'desert piano add owner tuition tail melt rally height faint thunder immune'
 ```
-> echo -n 'Hello Polkadot Blockchain Academy, Cambridge 2022' | subkey sign \
-    --suri 'master ostrich insect boost sword cigar balance agent crater assist cheese play'
-58dd5fafab68b27bf7019f10610438be7bab34309d418ce8ceff4c12c262a0598d98c9c4c412c57dff78cb7bd1fd4dfd0445ad8c3aa1192893db815e21f92b84
-```
+
+> Note, this changes each execution, this is one viable signature: `f261d56b80e4b53c70dd2ba1de6b9384d85a8f4c6d912fd86acab3439a47992aa85ded04ac55c7525082dcbc815001cd5cc94ec1a907bbd8e3138cfc8a382683`
 
 ## Verify
 
+```sh
+echo -n 'Hello Polkadot Blockchain Academy' | subkey verify  '0xf261d56b80e4b53c70dd2ba1de6b9384d85a8f4c6d912fd86acab3439a47992aa85ded04ac55c7525082dcbc815001cd5cc94ec1a907bbd8e3138cfc8a382683' \
+    '0x7acdc47530002fbc50f413859093b7df90c27874aee732dca940ea4842751d58'
 ```
-> echo -n 'Hello Polkadot Blockchain Academy, Cambridge 2022' | subkey verify \
-    '0x58dd5fafab68b27bf7019f10610438be7bab34309d418ce8ceff4c12c262a0598d98c9c4c412c57dff78cb7bd1fd4dfd0445ad8c3aa1192893db815e21f92b84' \
-    '0x846ef3e2cdb5afc57c718762b1bdd761a3e85e8b4bc37c755d663b5c0e805b39'
-Signature verifies correctly.
-```
+
+> Expect `Signature verifies correctly.`
 
 ## Tamper with the Message
 
-```
-> echo -n 'Hello Polkadot Blockchain Academy, Cambridge 2021' | subkey verify \
-	'0x58dd5fafab68b27bf7019f10610438be7bab34309d418ce8ceff4c12c262a0598d98c9c4c412c57dff78cb7bd1fd4dfd0445ad8c3aa1192893db815e21f92b84' \
-    '0x846ef3e2cdb5afc57c718762b1bdd761a3e85e8b4bc37c755d663b5c0e805b39'
+> Last char in `Public key (hex)` - AKA URI - is changed:
+
+```sh
+echo -n 'Hello Polkadot Blockchain Academy' | subkey verify \
+	'0xf261d56b80e4b53c70dd2ba1de6b9384d85a8f4c6d912fd86acab3439a47992aa85ded04ac55c7525082dcbc815001cd5cc94ec1a907bbd8e3138cfc8a382683' \
+    '0x7acdc47530002fbc50f413859093b7df90c27874aee732dca940ea4842751d59'
 Error: SignatureInvalid
 ```
 
 ## Hard Derivation
 
-```
-> subkey inspect 'master ostrich insect boost sword cigar balance agent crater assist cheese play//polkadot'
-Secret Key URI `master ostrich insect boost sword cigar balance agent crater assist cheese play//polkadot` is account:
-  Secret seed:       0xae84d8131fc9639013c16927a9c97f0fb25f1ec110ec239705a84fbe51694d12
-  Public key (hex):  0xfa8e9bae4f80275a1bf6a0b582461d949bbd64a06f82c817d236ba1f4193b502
-  Account ID:        0xfa8e9bae4f80275a1bf6a0b582461d949bbd64a06f82c817d236ba1f4193b502
-  SS58 Address:      5HjEC5U39iEJ71TDHLS7Tmzjsb412jNRkk4QPSz5DX18UQBu
+```sh
+subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//polkadot'
 
-> subkey inspect 'master ostrich insect boost sword cigar balance agent crater assist cheese play//kusama'
-Secret Key URI `master ostrich insect boost sword cigar balance agent crater assist cheese play//kusama` is account:
-  Secret seed:       0xf800549f4f3f0910e05476e30647411ef380642a4794b0c25efcaa1e60c97900
-  Public key (hex):  0x12211e2cba7a01b5b1c086e7e40e56578843127109431848e129942555113957
-  Account ID:        0x12211e2cba7a01b5b1c086e7e40e56578843127109431848e129942555113957
-  SS58 Address:      5CUUZGVoWGY9LeFAJSBpDBVrZetTGiHfCMF4hsWK5JxMbK2Q
+Secret Key URI `desert piano add owner tuition tail melt rally height faint thunder immune//polkadot` is account:
+  Network ID:        substrate
+ Secret seed:       0x3d764056127d0c1b4934725cb9faecf00ed0996daa84d24a903b906f319e06bf
+  Public key (hex):  0xce6ccb0af417ade10062ac9b553d506b67d16c61cd2b6ce85330bc023db7e906
+  Account ID:        0xce6ccb0af417ade10062ac9b553d506b67d16c61cd2b6ce85330bc023db7e906
+  Public key (SS58): 5GjN3FsnqTCFZD2b1wbvJAWsVaneHbqz9HJoWeQuLFLBnwwj
+  SS58 Address:      5GjN3FsnqTCFZD2b1wbvJAWsVaneHbqz9HJoWeQuLFLBnwwj
+```
+
+```sh
+subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//kusama'
+
+Secret Key URI `desert piano add owner tuition tail melt rally height faint thunder immune//kusama` is account:
+  Network ID:        substrate
+ Secret seed:       0xabd92064a63df86174acfd29ab3204897974f0a39f5d61efdd30099aa5f90bd9
+  Public key (hex):  0xf62e5d444f89e704bb9b412adc472f990e9a9f40725ac6ff3abee1c9b7625a63
+  Account ID:        0xf62e5d444f89e704bb9b412adc472f990e9a9f40725ac6ff3abee1c9b7625a63
+  Public key (SS58): 5HdVQj5uqGYNsEFyzYb3nJ8dArhcS5BNVYhioFPQ3EptS9Yo
+  SS58 Address:      5HdVQj5uqGYNsEFyzYb3nJ8dArhcS5BNVYhioFPQ3EptS9Yo
 ```
 
 ## Soft Derivation from Secret
 
-```
-> subkey inspect 'master ostrich insect boost sword cigar balance agent crater assist cheese play//polkadot/0'
-Secret Key URI `master ostrich insect boost sword cigar balance agent crater assist cheese play//polkadot/0` is account:
-  Secret seed:       n/a
-  Public key (hex):  0xa68af0a0883030efb2d4eb7e7adb9a8de684508de90dc4b4a4f84232ff83ff3a
-  SS58 Address:      5Fq55aj4dfriNvF8wmVoCJo5NiTx8xpN4XkpDEaZQKTgP5mc
+```sh
+subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/0'
 
-> subkey inspect 'master ostrich insect boost sword cigar balance agent crater assist cheese play//polkadot/1'
-Secret Key URI `master ostrich insect boost sword cigar balance agent crater assist cheese play//polkadot/1` is account:
-  Secret seed:       n/a
-  Public key (hex):  0x1e901acf62f90c32e10518063b30600a1bdf010d399ce6fb06350042b1b6af3c
-  SS58 Address:      5Ckn6rXjTmsYABZSLcHQLEyfzegscFfZT9qyARN1jw7WrcXZ
+Secret Key URI `desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/0` is account:
+  Network ID:        substrate
+ Secret seed:       n/a
+  Public key (hex):  0x4e8dfdd8a386ae37b8731dba5480d5cc65739023ea24f1a09d88be1bd9dff86b
+  Account ID:        0x4e8dfdd8a386ae37b8731dba5480d5cc65739023ea24f1a09d88be1bd9dff86b
+  Public key (SS58): 5DqhmkscaMJRbBE7vRGtcjDySwSgGwtc611SjPZMFV2WBw51
+  SS58 Address:      5DqhmkscaMJRbBE7vRGtcjDySwSgGwtc611SjPZMFV2WBw51
 ```
 
-## Soft Derivation from Public Key
+```sh
+subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/1'
 
-Note: We use addresses here because Subkey does not derive paths from a public key (AFAIK).
-
+Secret Key URI `desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/0` is account:
+  Network ID:        substrate
+ Secret seed:       n/a
+  Public key (hex):  0x4e8dfdd8a386ae37b8731dba5480d5cc65739023ea24f1a09d88be1bd9dff86b
+  Account ID:        0x4e8dfdd8a386ae37b8731dba5480d5cc65739023ea24f1a09d88be1bd9dff86b
+  Public key (SS58): 5DqhmkscaMJRbBE7vRGtcjDySwSgGwtc611SjPZMFV2WBw51
+  SS58 Address:      5DqhmkscaMJRbBE7vRGtcjDySwSgGwtc611SjPZMFV2WBw51
 ```
-> subkey inspect 5HjEC5U39iEJ71TDHLS7Tmzjsb412jNRkk4QPSz5DX18UQBu/0
-Public Key URI `5HjEC5U39iEJ71TDHLS7Tmzjsb412jNRkk4QPSz5DX18UQBu/0` is account:
-  Network ID/version: substrate
-  Public key (hex):   0xa68af0a0883030efb2d4eb7e7adb9a8de684508de90dc4b4a4f84232ff83ff3a
-  SS58 Address:       5Fq55aj4dfriNvF8wmVoCJo5NiTx8xpN4XkpDEaZQKTgP5mc
 
-> subkey inspect 5HjEC5U39iEJ71TDHLS7Tmzjsb412jNRkk4QPSz5DX18UQBu/1
-Public Key URI `5HjEC5U39iEJ71TDHLS7Tmzjsb412jNRkk4QPSz5DX18UQBu/1` is account:
-  Network ID/version: substrate
-  Public key (hex):   0x1e901acf62f90c32e10518063b30600a1bdf010d399ce6fb06350042b1b6af3c
-  SS58 Address:       5Ckn6rXjTmsYABZSLcHQLEyfzegscFfZT9qyARN1jw7WrcXZ
+## Soft Derivation from Public
+
+Note: We use addresses here because Subkey does not derive paths from a raw public key (AFAIK).
+
+```sh
+subkey inspect 5Eqipnpt5asTm7sCFWQeJjsNJX5cYVJMid3zjKHjDUGKBJTo/0
+
+Public Key URI `5Eqipnpt5asTm7sCFWQeJjsNJX5cYVJMid3zjKHjDUGKBJTo/0` is account:
+  Network ID/Version: substrate
+  Public key (hex):   0xc4f4c8ee96476b56222b7fd10849f09893d4f1f7f41128d0109e3c86bd10d338
+  Account ID:         0xc4f4c8ee96476b56222b7fd10849f09893d4f1f7f41128d0109e3c86bd10d338
+  Public key (SS58):  5GWwxZsVJCwVuTsJP99X6Y6txonmMK3s73C4JB3DoY6UEwXq
+  SS58 Address:       5GWwxZsVJCwVuTsJP99X6Y6txonmMK3s73C4JB3DoY6UEwXq
+```
+
+```sh
+Public Key URI `5Eqipnpt5asTm7sCFWQeJjsNJX5cYVJMid3zjKHjDUGKBJTo/1` is account:
+  Network ID/Version: substrate
+  Public key (hex):   0x96450b4deeaf79aaae878c96d83b31b90375467439914c2b3a360842eba0c476
+  Account ID:         0x96450b4deeaf79aaae878c96d83b31b90375467439914c2b3a360842eba0c476
+  Public key (SS58):  5FTjYsLzGV2u7pudhPUpyV9A6u3ZiBKBAcuRJdeS4ZgyTYoS
+  SS58 Address:       5FTjYsLzGV2u7pudhPUpyV9A6u3ZiBKBAcuRJdeS4ZgyTYoS
 ```
