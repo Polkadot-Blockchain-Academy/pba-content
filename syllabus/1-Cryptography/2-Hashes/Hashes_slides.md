@@ -144,17 +144,40 @@ Attacker has intention to impersonate the signer with the other.
 
 ---
 
-## Birthday Paradox
+## Birthday Problem
 
-_With 23 people, there is a 50% chance that two share a birthday._
+<pba-cols>
+<pba-col>
 
-Need to compare each output with every other, not with a single one.
 
-Result: Hash function security is only half of the bit space.
+_With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday._
+
+This is because we must to compare each output with every other, not with a single one.<br>
+The number of possible "hits" increases exponentially with the number of attempts,<br>thereby reducing the effective security to only the square-root of what it would be with a single fixed target to hit.
+
+</pba-col>
+<pba-col>
+
+<img style="width: 600px; border-radius: 0" src="../../../assets/img/1-Cryptography/birthday-problem.png"/>
+
+</pba-col>
+</pba-cols>
+
+---
+
+## Birthday Attack
+
+With a birthday attack, it is possible to find a collision of a hash function in $\sqrt {2^{n}}=2^{\frac{n}{2}}$, with $\cdot 2^{n}$ being the classical preimage resistance security.
+
+Thus, Hash function security is only half of the bit space.
 
 Notes:
 
 e.g., a 256 bit hash output yields 2^128 security
+
+- https://en.wikipedia.org/wiki/Birthday_attack
+
+- https://en.wikipedia.org/wiki/Birthday_problem
 
 ---
 
