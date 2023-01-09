@@ -54,7 +54,7 @@ duration: 1 hour
 ## VRF Usage
 
 - Choose input after key, then the key holder cannot influence the output
-- The output then is effectively a random number knownonly to the key holder
+- The output then is effectively a random number known only to the key holder
 - But they can later reveal it, by publishing the VRF proof (signature)
 
 Notes:
@@ -93,9 +93,17 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ## Erasure Coding
 
+_Magical data expansion_
+
 - Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
 
 - A message of $k$ symbols is turned into a coded message of $n$ symbols and can be recovered from any $k$ of these $n$ symbols
+
+---
+
+## Erasure Coding
+
+<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/erasure-code.svg"/>
 
 ---
 
@@ -259,6 +267,20 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 - So if you want to use this for a component,<br>expect a team of skilled people to work for at least a year on it...
 - But if you are watching this 5 years later,<br>people have built tools to make it less painful.
+
+---
+
+## Succinct Proving<br>with Cryptography?
+
+<pba-flex center>
+
+- ZK friendly hashes
+- Non-hashed based data structures
+  - RSA accumulators
+  - Polynomial commitment based<br>
+    (Verkle trees)
+
+</pba-flex>
 
 ---
 
