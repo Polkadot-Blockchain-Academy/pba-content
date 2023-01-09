@@ -346,8 +346,6 @@ impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
 
 - `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it contains only a `SubscribeVersion` or `UnsubscribeVersion` instruction.
 
-Notes: To meet our example usecase, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
-
 ---v
 
 ### 🚧 Configuring Barriers with xcm-builder: XCMV3 notes!
