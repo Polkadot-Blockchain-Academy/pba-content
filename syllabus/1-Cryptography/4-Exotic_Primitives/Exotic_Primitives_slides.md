@@ -47,14 +47,14 @@ duration: 1 hour
 - Output is a deterministic function of _key_ and _input_
   - i.e. eval should be deterministic
 - It should be pseudo-random
-- But until the VRF is revealed, only the holder of the secret key knows the output
+- But until the VRF is revealed, only the holder<br>of the secret key knows the output
 
 ---
 
 ## VRF Usage
 
 - Choose input after key, then the key holder cannot influence the output
-- The output then is effectively a random number known only to the key holder
+- The output then is effectively a random number knownonly to the key holder
 - But they can later reveal it, by publishing the VRF proof (signature)
 
 Notes:
@@ -77,10 +77,11 @@ The signature proves that this is the output associated to their input and publi
 
 - Threshold VRFs / Common coin
 
-  - generate the same random number if $t$ out of $n$ people participate
+  - Generate the same random number if $t$ out of $n$ people participate
 
 - RingVRFs
-  - the VRF output could be from any one of a group of public keys.
+
+  - The VRF output could be from any one of a group of public keys.
 
 Notes:
 
@@ -101,7 +102,7 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 ## Erasure Coding Classical use
 
 - Used for noisy channels
-- If a few bits of the coded data are randomly flipped, we can still recover the original data
+- If a few bits of the coded data are randomly flipped,<br> we can still recover the original data
 - Typically $n$ is not much bigger than $k$
 
 ---
@@ -119,7 +120,7 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ## ZK Proofs
 
-How do we do private operations on a public blockchain and have everyone know that they were done correctly?
+How do we do private operations on a public blockchain<br>and have everyone know that they were done correctly?
 
 Notes:
 
@@ -141,9 +142,9 @@ Notes:
 
 - Prover knows a witness for a statement:
 
-  - they want to show that they know it (_a proof of knowledge_)
+  - They want to show that they know it (_a proof of knowledge_)
 
-  - ... without revealing anything about the witness (_ZK_)
+  - ... Without revealing anything about the witness (_ZK_)
 
 ---
 
@@ -174,11 +175,11 @@ _Example:_ Schnorr signatures are ZK Proofs
 
 - NP relation: `function(statement, witness) -> bool`
 
-  - they want to show that they know it (_a proof of knowledge_)
+  - They want to show that they know it (_a proof of knowledge_)
 
-  - ... without revealing anything about the witness (_ZK_)
+  - ... Without revealing anything about the witness (_ZK_)
 
-- with a small proof even if the witness is large (_succinctness_)
+- With a small proof even if the witness is large (_succinctness_)
 
 ---
 
@@ -218,13 +219,13 @@ Polkadot already scales better!
 
 ## Privacy
 
-A user has private data, but we can show publicly that this private data is correctly used. An example would a private cryptocurrency:
-
 <pba-flex center>
 
+A user has private data, but we can show<br>publicly that this private data is correctly used.<br>
+An example would a private cryptocurrency:
+
 - Keep who pays who secret
-- Keep amounts secret
-  - _But show they are positive!_
+- Keep amounts secret, <br> _But show they are positive!_
 
 </pba-flex>
 
@@ -249,14 +250,15 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 - Slow prover time for general computation
 - To be fast, need to hand optimize
-- Very weird computation model: Non-deterministic arithmetic circuits
+- Very weird computation model:<br>
+  Non-deterministic arithmetic circuits
 
 ---
 
 ## Downsides Conclusion?
 
-- So if you want to use this for a component, expect a team of skilled people to work for at least a year on it...
-- But if you are watching this 5 years later, people have built tools to make it less painful.
+- So if you want to use this for a component,<br>expect a team of skilled people to work for at least a year on it...
+- But if you are watching this 5 years later,<br>people have built tools to make it less painful.
 
 ---
 
