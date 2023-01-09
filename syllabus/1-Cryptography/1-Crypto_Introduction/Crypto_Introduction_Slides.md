@@ -194,120 +194,19 @@ Substrate uses both (more on that later).
 
 ---
 
-## Famous Hash Algorithms
+## Symmetric Cryptography
 
-<pba-flex center>
+Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br>The shared secret can then be used to protect further communications from others who do not know this secret.
 
-- xxHash (non-cryptographic)
-- MD5
-- SHA1
-- RIPEMD-160
-- SHA2-256 (aka SHA256) &c.
-- SHA3
-- Keccak
-- Blake2
-
-TwoX64 is about 20x faster.
-
-</pba-flex>
-
----
-
-### Cryptographic Hashing - Benchmarks
-
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
-
-Notes:
-
-Benchmarks for the XX-hash algorithms.
-Source: https://www.blake2.net/
-
----
-
-#### xxHash - _Fast_ hashing algorithm
-
-<img rounded style="width: 1100px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
-
-##### _Benchmarks_
-
-Notes:
-
-Benchmarks for the XX-hash algorithms.
-Source: https://github.com/Cyan4973/xxHash#benchmarks
+In essence, it gives a way of *extending* a shared secret over time.
 
 ---
 
 ## Symmetric Encryption
 
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Symmetric-Cryptography.png"/>
+For example, the Enigma cipher in WW2. A *channel* was initiated by sharing a secret ("key") between two participants. Using the cipher, those participants could then exchange information securely.
 
-Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
-
----
-
-## Symmetric Encryption
-
-#### _Example: XOR Cipher_
-
-<pba-cols>
-<pba-col>
-
-The encryption and decryption functions are identical: applying a bitwise XOR operation with a key.
-
-</pba-col>
-<widget-column style="padding-right: 100px">
-
-```text
-Plain: 1010  -->Cipher: 0110
-Key:   1100  |          1100
-       ----  |          ----
-       0110--^          1010
-```
-
-Notes:
-
-A plaintext can be converted to ciphertext, and vice versa, by applying a bitwise XOR operation with a key known to both parties.
-
-</pba-col>
-</pba-cols>
-
-<!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -- MENTION ACTIVITY that will use OTP exploit to find key -->
-
----
-
-## Symmetric Encryption
-
-#### ⚠ Warning ⚠
-
-We typically expect symmetric encryption to preserve little about the original plaintext.
-We caution however that constructing these protocols remains delicate, even given secure primitives, with two classical examples being unsalted passwords and the [ECB penguin](https://tonybox.net/posts/ecb-penguin/).
-
----
-
-### ECB penguin
-
-<br>
-
-<pba-cols>
-<pba-col>
-
-<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin.png"/>
-
-_Original image_
-
-</pba-col>
-<pba-col>
-
-<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin-Encrypted.png"/>
-
-_Encrypted image_
-
-</pba-col>
-</pba-cols>
-
-Notes:
-
-Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png and https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png
+However, since the key contained only limited *entropy* ("information"), enough usage of it eventually compromised the secret and allowed the allies to decode messages. Even altering it once per day was not enough.
 
 ---
 
@@ -321,7 +220,7 @@ Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.
 
 ---
 
-## Encryption
+## Asymmetric Encryption
 
 - _Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
 
@@ -354,6 +253,15 @@ It has a special property: it proves (beyond reasonable doubt) that the signer (
 
 ---
 
+## Non-repudiation
+
+Only those with knowledge of some secret information<br>could have produced a valid signature.
+
+The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.
+Symmetric cryptography does not provide this guarantee: someone else knows the secret.
+
+---
+
 ## Practical Considerations
 
 **Symmetric cryptography** is much faster, but requires more setup (key establishment) and trust (someone else knows the secret).
@@ -364,20 +272,12 @@ It has a special property: it proves (beyond reasonable doubt) that the signer (
 
 ## Hybrid Cryptography
 
-Hybrid cryptography mixes symmetric and asymmetric cryptography.
+Hybrid cryptography composes new mechanisms from different cryptographic primitives.
 
+For example:
 - Symmetric encryption can provide speed, and often confidentiality,
-
+- Hash functions can reduce the size of data while preserving identity,
 - And asymmetric can dictate relations among the participants.
-
----
-
-## Non-repudiation
-
-Only those with knowledge of some secret information<br>could have produced a valid signature.
-
-The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.
-Symmetric cryptography does not provide this guarantee: someone else knows the secret.
 
 ---
 
@@ -399,13 +299,24 @@ Notes:
 
 ---
 
+
+## Commutative En-/Decryption
+
+In a commutative structure, a message may be encrypted/decrypted<br>multiple times with potentially multiple keys.
+
+The output does not depend on the order of operations.
+
+
+---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Discussion
 
 ### What questions and insights do you have about crypto now?
 
-TODO mind map graph from above (kian) 
+TODO mind map graph from above (kian)
+https://docs.google.com/drawings/d/1HbhcCzSfa6hXvOlJFjv52juYnkU5B4pMYwquh5EZEmk/edit
 
 ---
 
@@ -475,14 +386,6 @@ Hashes are also used for:
 
 ---
 
-## Commutative En-/Decryption
-
-In a commutative structure, a message may be encrypted/decrypted<br>multiple times with potentially multiple keys.
-
-The output does not depend on the order of operations.
-
----
-
 <img style="height: 900px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange.png"/>
 
 Notes:
@@ -507,4 +410,118 @@ Elliptic curve cryptography is based on _commutative_ algebraic structures.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+---
+## Symmetric Encryption
+
+<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Symmetric-Cryptography.png"/>
+
+Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
+
+---
+
+## Symmetric Encryption
+
+#### _Example: XOR Cipher_
+
+<pba-cols>
+<pba-col>
+
+The encryption and decryption functions are identical: applying a bitwise XOR operation with a key.
+
+</pba-col>
+<widget-column style="padding-right: 100px">
+
+```text
+Plain: 1010  -->Cipher: 0110
+Key:   1100  |          1100
+       ----  |          ----
+       0110--^          1010
+```
+
+Notes:
+
+A plaintext can be converted to ciphertext, and vice versa, by applying a bitwise XOR operation with a key known to both parties.
+
+</pba-col>
+</pba-cols>
+
+<!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -- MENTION ACTIVITY that will use OTP exploit to find key -->
+
+---
+
+## Symmetric Encryption
+
+#### ⚠ Warning ⚠
+
+We typically expect symmetric encryption to preserve little about the original plaintext.
+We caution however that constructing these protocols remains delicate, even given secure primitives, with two classical examples being unsalted passwords and the [ECB penguin](https://tonybox.net/posts/ecb-penguin/).
+
+---
+
+## Famous Hash Algorithms
+
+<pba-flex center>
+
+- xxHash (non-cryptographic)
+- MD5
+- SHA1
+- RIPEMD-160
+- SHA2-256 (aka SHA256) &c.
+- SHA3
+- Keccak
+- Blake2
+
+TwoX64 is about 20x faster.
+
+</pba-flex>
+
+---
+
+### Cryptographic Hashing - Benchmarks
+
+<img style="width: 1100px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
+
+Notes:
+
+Benchmarks for the XX-hash algorithms.
+Source: https://www.blake2.net/
+
+---
+
+#### xxHash - _Fast_ hashing algorithm
+
+<img rounded style="width: 1100px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
+
+##### _Benchmarks_
+
+Notes:
+
+Benchmarks for the XX-hash algorithms.
+Source: https://github.com/Cyan4973/xxHash#benchmarks
+
+---
+
+### ECB penguin
+
+<br>
+
+<pba-cols>
+<pba-col>
+
+<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin.png"/>
+
+_Original image_
+
+</pba-col>
+<pba-col>
+
+<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin-Encrypted.png"/>
+
+_Encrypted image_
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png and https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png
