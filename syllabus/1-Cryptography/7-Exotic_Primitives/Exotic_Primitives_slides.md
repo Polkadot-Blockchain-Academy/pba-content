@@ -101,7 +101,9 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ---
 
-## TODO: Diagram for erasure coding
+## Visualization
+
+<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/erasure-code.svg"/>
 
 ---
 

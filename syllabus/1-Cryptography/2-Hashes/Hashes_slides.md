@@ -90,11 +90,62 @@ For our purposes, we generally want them to be fast.
 
 ---
 
-## Speed
+## Famous Hash Algorithms
 
-<center>
-<img  style="width: 25em" src="../../../assets/img/1-Cryptography/hash-speed.png"/>
-</center>
+<pba-flex center>
+
+- xxHash (non-cryptographic)
+- MD5
+- SHA1
+- RIPEMD-160
+- SHA2-256 (aka SHA256) &c.
+- SHA3
+- Keccak
+- Blake2
+
+TwoX64 is about 20x faster.
+
+</pba-flex>
+
+---
+
+## Examples of Hash Functions in use Blockchains
+
+<pba-flex center>
+
+- Bitcoin: SHA2-256 & RIPMD-160
+- Ethereum: Keccak-256 (though others supported via EVM)
+- Polkadot: Blake2b & XX (though others supported via host functions)
+
+</pba-flex>
+
+Notes:
+
+Substrate also implements traits that provide 160, 256, and 512 bit outputs for each hasher.
+
+Exercise: Write your own benchmarking script that compares the performance of these algorithms with various input sizes.
+
+---
+
+### Cryptographic Hashing - Benchmarks
+
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
+
+Notes:
+
+Benchmarks for the XX-hash algorithms.
+Source: https://www.blake2.net/
+
+---
+
+#### xxHash - _Fast_ hashing algorithm
+
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
+
+Notes:
+
+Benchmarks for the XX-hash algorithms.
+Source: https://github.com/Cyan4973/xxHash#benchmarks
 
 ---
 
@@ -208,25 +259,6 @@ It should be difficult for someone to partially (for a substring of the hash out
 - Bitcoin PoW is a partial pre-image attack.
 - Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.
 - Prefix collision resistance important to rationalize costs for some cryptographic data structures.
-
----
-
-## Hash Functions Available in Substrate
-
-<pba-flex center>
-
-Hash functions are available in Substrate
-as part of the runtime primitives.
-
-- Blake2 (cryptographic)
-- XX (aka "TwoX")
-- Keccak (cryptographic)
-
-Notes:
-
-Substrate also implements traits that provide 160, 256, and 512 bit outputs for each hasher.
-
-Exercise: Write your own benchmarking script that compares the performance of these algorithms with various input sizes.
 
 ---
 
@@ -414,3 +446,43 @@ Merkle trees allow many proofs relevant to the rest of this course,<br>e.g. that
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
+
+---
+
+<!-- TODO: migrate below to Substrate slides? Or...?  -->
+
+## Hash Examples in Substrate
+
+**Sr25519 Signatures**
+
+Sr25519 hashes the message as part of its signing process.
+
+**Transactions**
+
+In transactions in Substrate, key holders sign a<br>_hash of the instructions_ when the instructions<br>are longer than 256 bytes.
+
+---
+
+## Database Keys
+
+**TwoX64** is safe to use when users (read: attackers)<br>cannot control the input, e.g. when a<br>database key is a system-assigned index.
+
+**Blake2b** should be used for everything else.
+
+_Again, there is a whole lesson on hash-based data structures._
+
+---
+
+## Other Uses of Hashes in Substrate
+
+Hashes are also used for:
+
+<pba-flex center>
+
+- Generating multisig accounts
+- Generating system-controlled accounts
+- Generating proxy-controlled accounts
+- Representing proposals
+- Representing claims (e.g. the asset trap)
+
+</pba-flex>
