@@ -182,47 +182,6 @@ Hashes can be useful for many applications:
 
 ---
 
-## Hash Function Properties
-
-<pba-cols>
-<pba-col>
-
-- Accept unbounded size input
-- Map to a bounded output
-- Be fast to compute
-- Be computable strictly one-way (_Difficult_ to find a pre-image for a hash)
-- Resist pre-image attacks (attacker controls one input)
-- Resist collisions (attacker controls both inputs)
-
-</pba-col>
-<pba-col>
-
-<img style="width: 475px" src="../../../assets/img/1-Cryptography/hash-inputs-pre-image.png"/>
-
-</pba-col>
-</pba-cols>
-
-Notes:
-
-Based on the first two properties, _there must exist_ infinite collisions.
-A.k.a. Dirichlet's Drawer Principle, a.k.a. pigeonhole principle.
-
----
-
-## Hash Function
-
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Hash-Function-Properties.png"/>
-
----
-
-## Input Sensitivity
-
-Changes to a hash are not related to the magnitude of change in the input.
-<br><br>
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Input-Sensitivity.png"/>
-
----
-
 ## Cryptographic vs. Non-Cryptographic
 
 Cryptographic hash functions provide stronger guarantees<br>on the last three properties.
@@ -332,24 +291,16 @@ We caution however that constructing these protocols remains delicate, even give
 <pba-cols>
 <pba-col>
 
-<center>
-
 <img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin.png"/>
 
 _Original image_
 
-</center>
-
 </pba-col>
 <pba-col>
-
-<center>
 
 <img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin-Encrypted.png"/>
 
 _Encrypted image_
-
-</center>
 
 </pba-col>
 </pba-cols>
@@ -551,32 +502,6 @@ C &=> D_A(D_B(C)) == D_B(D_A(C)) \ => M
 \end{align}
 
 Elliptic curve cryptography is based on _commutative_ algebraic structures.
-
----
-
-## Polkadot in Practice
-
-In Substrate and Polkadot, we use ECDSA, ed25519, and sr25519.
-
-Of course a valid signature is a valid signature, and there are lots of libraries.
-Some specific to Polkadot/Substrate:
-
-- Subkey (CLI)
-- Substrate Primitives (runtime)
-- Polkadot JS Crypto (applications)
-
----
-
-## Certifications in Substrate
-
-Practically speaking, in Substrate we will use certifications to:
-
-- Associate physical hardware with on-chain accounts (called session keys)
-- Link disparate and potentially keyless on-chain accounts in certain contexts (proxies)
-
-Notes:
-
-See: https://docs.substrate.io/main-docs/fundamentals/accounts-addresses-keys/#specialized-accounts
 
 ---
 
