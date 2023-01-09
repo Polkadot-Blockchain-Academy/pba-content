@@ -368,7 +368,15 @@ Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.
 
 - Aside from preserving certain properties, we believe this counterpart (the "public key") reveals no information about the secret.
 
+---
+
+## Encryption
+
 - _Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
+
+---
+
+## Encryption
 
 - _Using the secret key_, information can be transformed ("signed") such that anyone with knowledge of the information and the counterpart public key is able to affirm the operation.
 
