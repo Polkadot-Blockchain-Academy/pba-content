@@ -10,9 +10,11 @@ duration: 1 hour
 
 ### Certificates
 
-A certificate is one issuing key signing a message containing another certified key, which attests to some properties or relationship about the certified key.
+A certificate is essentially a witness statement concerning one or more public keys. It is a common usage of digital signatures, but *it is not a cryptographic primitive*!
 
 Notes:
+
+A certificate is one issuing key signing a message containing another certified key, which attests to some properties or relationship about the certified key.
 
 We must already trust the issuing key to give this attestation any significance, traditionally provided under "Certificate Authority" or "Web of Trust" schemes.
 
@@ -20,7 +22,7 @@ We must already trust the issuing key to give this attestation any significance,
 
 ### Certificates
 
-Issuing keys do not necessarily have unilateral certification capabilities, although some do.
+A certification system specified conventions on who is allowed to issue certificates, the rules over their issuance (e.g. time limits and revocation) as well as their format and semantics.
 
 For example, the certificate transparency protocol for TLS certificates helps protect against compromised Certificate Authorities.
 
@@ -83,10 +85,29 @@ This good experience comes at the cost of using state and more user interactions
 
 ---
 
+### Cryptographic Multi-Sigs
+
+We want a succinct way to demonstrate that everyone from some set of parties have signed a message. This is achieved purely on the signer side (without support from the verifier).
+
+<pba-flex center>
+
+_Example: "The five key holders have signed this message."_
+
+---
+
+### Key Generation for Multi-Sigs
+
+In regular multi-signatures,<br>signatures from individual public keys are aggregated.
+
+Each participant can choose their own key to use for the multi-signature.
+
+---
+
 ### Cryptographic Threshold Multi-Sigs
 
-Cryptographic multi-signatures can be achieved purely on the signer side (without support from the verifier).
-This makes more compact signatures compatible with legacy systems.
+This makes more compact signatures compatible with legacy systems. Unlike a regular multi-sig, the public key is associated with a *threshold* number of signing parties, so not all parties are needed to take part in the signing process to create a valid signature.
+
+This requires MPC protocols and may need multiple rounds of interaction to generate the final signature. They may be vulnerable to DoS from a malfunctioning (or malicious) key-holder.
 
 <pba-flex center>
 
@@ -98,17 +119,6 @@ These require multi-party computation (MPC) protocols, which add some complexity
 
 ---
 
-### Cryptographic Non-Threshold Multi-Sigs
-
-Sometimes we do not need a threshold represented in a public key.<br>
-But we want a succinct way to demonstrate that multiple parties have signed a message.
-
-<pba-flex center>
-
-_Example: "5 key holders have signed this message."_
-
----
-
 ### Key Generation - Threshold
 
 Threshold multi-signature schemes require that all signers run a _distributed key generation_ (DKG) protocol that constructs key _shares_.
@@ -116,14 +126,6 @@ Threshold multi-signature schemes require that all signers run a _distributed ke
 The secret encodes the threshold behavior, and signing demands some threshold of signature _fragments_.
 
 This DKG protocol breaks other useful things, like hard key derivation.
-
----
-
-### Key Generation - Non-Threshold
-
-In non-threshold multi-signatures,<br>signatures from individual public keys are aggregated.
-
-Each participant can choose their own key to use for the multi-signature.
 
 ---
 
@@ -149,7 +151,7 @@ We need agreement upon the final signer list and two random nonce contributions 
 
 BLS signatures are especially useful for aggregated (non-threshold) multi-signatures (but can be used for threshold as well).
 
-Signatures can be aggregated without advanced agreement upon the signer list, which simplifies automation and makes them useful in consensus.
+Signatures can be aggregated without advance agreement upon the signer list, which simplifies automation and makes them useful in consensus.
 
 Verifying individual signatures is _slow_, but verifying aggregated ones is relatively fast.
 
