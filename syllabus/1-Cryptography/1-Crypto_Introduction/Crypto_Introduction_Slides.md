@@ -63,7 +63,7 @@ not just person-to-person messages.
 
 _Cryptography based on public systems is more sound anyway._
 
-**Kerckhoff's Principle:** Security should not rely on secret _methods_, but rather on secret _information_.
+**Kerckhoff's Principle:** Security should not rely on secret _methods_,<br>but rather on secret _information_.
 
 Notes:
 
@@ -101,7 +101,7 @@ Do note the assumptions and monitor their validity over time (like quantum tech)
 
 ## Data Accessibility
 
-A party may gain access to information if and only if they know some secret (a key).
+A party may gain access to information<br>if and only if they know some secret (a key).
 
 Notes:
 
@@ -127,7 +127,7 @@ Notes:
 
 ## Data Integrity
 
-Physical signatures provide weak authenticity guarantees (i.e. they are quite easy to forge), and no integrity guarantees.
+Physical signatures provide weak authenticity guarantees<br>(i.e. they are quite easy to forge), and no integrity guarantees.
 
 ---
 
@@ -144,7 +144,7 @@ Digital signatures provide a guarantee that the signed information has not been 
 
 ## One-Way Functions
 
-One-way functions form the basis of both **(cryptographic) hashing** and **asymmetric cryptography**.
+One-way functions form the basis of both<br>**(cryptographic) hashing** and **asymmetric cryptography**.
 
 - Functions for which we know fast algorithms to compute
 - But for which we believe to be hard to invert
@@ -225,7 +225,7 @@ Changes to a hash are not related to the magnitude of change in the input.
 
 ## Cryptographic vs. Non-Cryptographic
 
-Cryptographic hash functions provide stronger guarantees on the last three properties.
+Cryptographic hash functions provide stronger guarantees<br>on the last three properties.
 
 But non-cryptographic hash functions are much faster.
 
@@ -265,9 +265,11 @@ Source: https://www.blake2.net/
 
 ---
 
-### xxHash - Extremely fast hash algorithm - Benchmarks
+#### xxHash - _Fast_ hashing algorithm
 
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
+<img rounded style="width: 1100px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
+
+##### _Benchmarks_
 
 Notes:
 
@@ -286,7 +288,7 @@ Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
 
 ## Symmetric Encryption
 
-### _Example: XOR Cipher_
+#### _Example: XOR Cipher_
 
 <pba-cols>
 <pba-col>
@@ -417,15 +419,15 @@ Hybrid cryptography mixes symmetric and asymmetric cryptography.
 
 Digital signatures provide message authenticity and integrity guarantees.
 
-_The next two lessons are dedicated to digital signatures, this is strictly an intro._
+_The next two lessons are dedicated to digital signatures,<br>this is strictly an intro._
 
 ---
 
 ## Digital Signatures
 
-**signing function**: a pure function which operates on some _message data_ and some _secret_ to yield a _signature_.
+**signing function**: a pure function which operates on some<br> _message data_ and some _secret_ to yield a _signature_.
 
-A **signature** _proves_ that the signer had knowledge of the secret, without revealing the secret itself.
+A **signature** _proves_ that the signer had knowledge of the secret,<br> without revealing the secret itself.
 
 The signature cannot be used to create other signatures.
 
@@ -456,7 +458,7 @@ Digital signatures still guarantee that the message is authentic and has not bee
 
 ## Non-repudiation
 
-Only those with knowledge of some secret information could have produced a valid signature.
+Only those with knowledge of some secret information<br>could have produced a valid signature.
 
 The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.
 Symmetric cryptography does not provide this guarantee: someone else knows the secret.
@@ -487,7 +489,7 @@ _Signing_ large amounts of data _is not_ efficient.
 
 _Hashing_ large amounts of data _is_ efficient.
 
-A signature on the hash of some data implies a signature on the data itself.
+A signature on the hash of some data<br>implies a signature on the data itself.
 
 This requires that the verifier also compute the hash.
 
@@ -502,7 +504,7 @@ This requires that the verifier also compute the hash.
 
 ## Digital Signatures (again)
 
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Digital-Signatures.png"/>
+<img style="width: 1200px" src="../../../assets/img/1-Cryptography/Digital-Signatures.png"/>
 
 ---
 
@@ -510,7 +512,7 @@ This requires that the verifier also compute the hash.
 
 # Discussion
 
-## The significance of [Hash Function Properties](#hash-function-properties).
+### The significance of<br>[Hash Function Properties](#hash-function-properties)
 
 Notes:
 
@@ -555,13 +557,13 @@ Sr25519 hashes the message as part of its signing process.
 
 **Transactions**
 
-In transactions in Substrate, key holders sign a _hash of the instructions_ when the instructions are longer than 256 bytes.
+In transactions in Substrate, key holders sign a<br>_hash of the instructions_ when the instructions<br>are longer than 256 bytes.
 
 ---
 
 ## Database Keys
 
-**TwoX64** is safe to use when users (read: attackers) cannot control the input, e.g. when a database key is a system-assigned index.
+**TwoX64** is safe to use when users (read: attackers)<br>cannot control the input, e.g. when a<br>database key is a system-assigned index.
 
 **Blake2b** should be used for everything else.
 
@@ -587,7 +589,7 @@ Hashes are also used for:
 
 ## Commutative En-/Decryption
 
-In a commutative structure, a message may be encrypted/decrypted multiple times with potentially multiple keys.
+In a commutative structure, a message may be encrypted/decrypted<br>multiple times with potentially multiple keys.
 
 The output does not depend on the order of operations.
 
