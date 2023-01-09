@@ -349,7 +349,7 @@ impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
 ---v
 
 ### 🚧 Configuring Barriers with xcm-builder: XCMV3 notes!
-- `WithComputedOrigin<(InnerBarrier, LocalUniversal, MaxPrefixes)>`: Scans up to `MaxPrefixes` instructions for origin-alterers (`DescendOrigin` or `UniversalOrigin`) and the evaluates the inner barriers with the new computed origin. **Key to distinguish between barriers for derivative locations or for origins trying to send a message for themeselves**.
+- `WithComputedOrigin<(InnerBarrier, LocalUniversal, MaxPrefixes)>`: Scans up to `MaxPrefixes` instructions for origin-alterers (`DescendOrigin` or `UniversalOrigin`) and the evaluates the inner barriers with the new computed origin. **Key to distinguish between barriers for derivative locations or for origins trying to send a message for themselves**.
 
 Notes: To meet our example usecase, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
 
