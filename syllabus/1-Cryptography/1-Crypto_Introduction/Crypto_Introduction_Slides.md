@@ -311,14 +311,6 @@ Notes:
 
 ---
 
-## Commutative En-/Decryption
-
-In a commutative structure, a message may be encrypted/decrypted<br>multiple times with potentially multiple keys.
-
-The output does not depend on the order of operations.
-
----
-
 ## Discussion
 
 ##### _What insights did you gain? Questions?_

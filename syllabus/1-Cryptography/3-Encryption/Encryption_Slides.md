@@ -12,8 +12,7 @@ duration: 1 hour
 
 <pba-flex center>
 
-- Learn about symmetric and asymmetric cryptography.
-- Understand how symmetric and asymmetric encryption works.
+- Learn about the differences between symmetric and asymmetric encryption.
 
 </pba-flex>
 
@@ -100,19 +99,25 @@ Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.
 
 ---
 
-## Asymmetric Cryptography
+## Asymmetric Encryption
 
-- In asymmetric cryptography, we devise a means to transform one value (the "secret") into some corresponding counterpart (the "public" key), preserving certain properties.
-
-- We believe that this is a one-way function (that there is no easy/fast inverse of this function).
-
-- Aside from preserving certain properties, we believe this counterpart (the "public key") reveals no information about the secret.
+- Assumes the sender does not know the recipient's secret "key" 🎉😎
+- Sender only knows a special identifier of this secret
+- Messages encrypted with the special identifier can only be decrypted with knowledge of the secret.
+- Knowledge of this identifier does not imply knowledge of the secret, and thus cannot be used to decrypt messages encrypted with it.
+- For this reason, the identifier may be shared publicly and is known as the *public key*.
 
 ---
 
-## Asymmetric Encryption
+TODO: add gav's diagram
 
-- _Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
+---
+
+## Why "Asymmetric"?
+
+_Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
+
+i.e. Public key is used to encrypt but a different, *secret*, key must be used to decrypt.
 
 ---
 
@@ -123,6 +128,13 @@ In a commutative structure, a message may be encrypted/decrypted<br>multiple tim
 The output does not depend on the order of operations.
 
 ---
+
+TODO: Technical diagram
+---
+
+## Mixing Paint Example
+
+TODO: make horizontal
 
 <img style="height: 900px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange.png"/>
 
@@ -143,3 +155,7 @@ C &=> D_A(D_B(C)) == D_B(D_A(C)) \ => M
 \end{align}
 
 Elliptic curve cryptography is based on _commutative_ algebraic structures.
+
+---
+
+# Questions?
