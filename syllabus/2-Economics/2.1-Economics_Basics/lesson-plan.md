@@ -54,7 +54,7 @@ We want to go through the following concepts:
 
   - Has an intrinsic economic value; creates options and evolution.
 
-- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lecture part):
+- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lesson part):
   - Incentives: Slashing
   - Tokenomics Model
     - Compare Bitcoin, Ethereum and Polkadot's tokenomics. Is Bitcoin secure if it has no slashing?
@@ -124,7 +124,7 @@ We want to go through the following concepts:
 
   - Has an intrinsic economic value; creates options and evolution.
 
-- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lecture part):
+- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lesson part):
   - Incentives: Slashing
   - Tokenomics Model
     - Compare Bitcoin, Ethereum and Polkadot's tokenomics. Is Bitcoin secure if it has no slashing?

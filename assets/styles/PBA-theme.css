@@ -80,6 +80,95 @@ section.has-light-background h6 {
 	font-weight: inherit;
 }
 
+/*
+  custom-elements
+*/
+/* columns:  a widget to display columns of things */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3%;
+}
+
+.site-header--small {
+  padding: var(--size);
+}
+
+.reveal section {
+  left: 0;
+  padding: var(--r-padding);
+}
+
+pba-cols {
+	margin: var(--r-block-margin);
+  display: flex;
+  align-items: center;
+  gap: calc(var(--r-padding) * 4);
+}
+
+/* TODO: Columns hard coded in style for 2 only, for best results 3 and more need more styling calculated on total columns in slide... Seems to overflow slide on  right side...*/
+pba-col {
+  flex-basis: 44%;
+}
+
+pba-col:nth-of-type(2) {
+	padding-right: 0;
+}
+
+pba-col[left] {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+	text-align: left;
+}
+
+pba-col[center] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+	text-align: center;
+}
+
+pba-col[right] {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+	text-align: right;
+}
+
+pba-flex {
+	margin: var(--r-block-margin);
+}
+
+pba-flex[left] {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+	text-align: left;
+}
+
+pba-flex[center] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+pba-flex[right] {
+  display: flex;
+  flex-direction: column;
+  align-items: right;
+	text-align: right;
+}
+
+
 /*********************************************
 	 * HEADERS
 	 *********************************************/
