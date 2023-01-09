@@ -60,7 +60,7 @@ A plaintext can be converted to ciphertext, and vice versa, by applying a bitwis
 </pba-col>
 </pba-cols>
 
-## <!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -- MENTION ACTIVITY that will use OTP exploit to find key -->
+---
 
 ## Symmetric Encryption
 
