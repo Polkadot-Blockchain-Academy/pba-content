@@ -322,6 +322,10 @@ Notes:
 - Key size: Upper limit of possible entropy contained in a key. Keys with less random (more predictable) data have less entropy than this upper bound.
 - One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.
 
+Notes:
+
+Mention the upcoming "many time pad" activity, that exploits using a one time pad multiple times.
+
 ---
 
 ## Randomness Generation
