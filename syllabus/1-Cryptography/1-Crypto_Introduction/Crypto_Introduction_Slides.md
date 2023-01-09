@@ -21,6 +21,17 @@ duration: 1 hour
 
 ---
 
+## Cryptography Landscape
+
+<img style="height: 700px; padding-left:100px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg"/>
+
+Notes:
+
+What is covered in this course is all connected subjects.
+We will not cover any details for hybrid or interactive protocols in the course.
+
+---
+
 ## Operating Context
 
 ##### _The internet is a public space._
@@ -198,15 +209,15 @@ Substrate uses both (more on that later).
 
 Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br>The shared secret can then be used to protect further communications from others who do not know this secret.
 
-In essence, it gives a way of *extending* a shared secret over time.
+In essence, it gives a way of _extending_ a shared secret over time.
 
 ---
 
 ## Symmetric Encryption
 
-For example, the Enigma cipher in WW2. A *channel* was initiated by sharing a secret ("key") between two participants. Using the cipher, those participants could then exchange information securely.
+For example, the Enigma cipher in WW2. A _channel_ was initiated by sharing a secret ("key") between two participants. Using the cipher, those participants could then exchange information securely.
 
-However, since the key contained only limited *entropy* ("information"), enough usage of it eventually compromised the secret and allowed the allies to decode messages. Even altering it once per day was not enough.
+However, since the key contained only limited _entropy_ ("information"), enough usage of it eventually compromised the secret and allowed the allies to decode messages. Even altering it once per day was not enough.
 
 ---
 
@@ -275,6 +286,7 @@ Symmetric cryptography does not provide this guarantee: someone else knows the s
 Hybrid cryptography composes new mechanisms from different cryptographic primitives.
 
 For example:
+
 - Symmetric encryption can provide speed, and often confidentiality,
 - Hash functions can reduce the size of data while preserving identity,
 - And asymmetric can dictate relations among the participants.
@@ -299,7 +311,6 @@ Notes:
 
 ---
 
-
 ## Commutative En-/Decryption
 
 In a commutative structure, a message may be encrypted/decrypted<br>multiple times with potentially multiple keys.
@@ -308,38 +319,19 @@ The output does not depend on the order of operations.
 
 ---
 
-## Entropy, Randomness and Key Size
+## Discussion
 
-- Entropy: Amount of non-redundant information contained within some data.
-- Randomness: Unpredictability of some information. Less random implies lower entropy.
-- Key size: Upper limit of possible entropy contained in a key. Keys with less random (more predictable) data have less entropy than this upper bound.
-- One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.
+##### _What insights did you gain? Questions?_
 
----
+<br>
 
-## Sources of Randomness
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg"/>
 
-```
-fn roll_die() -> u32 {
-  // Guaranteed random: it was achieved through a real-life die-roll.
-  4u32
-}
-```
+<br>
 
-- Pseudo-random sequences
-- Physical data collection (e.g. cursor movement, LSB of microphone)
-- Specialised hardware (e.g. low-level noise on silicon gates, quantum-amplifiers)
+Notes:
 
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Discussion
-
-### What questions and insights do you have about crypto now?
-
-TODO mind map graph from above (kian)
-https://docs.google.com/drawings/d/1HbhcCzSfa6hXvOlJFjv52juYnkU5B4pMYwquh5EZEmk/edit
+Class discussion.
 
 ---
 
@@ -409,7 +401,76 @@ Hashes are also used for:
 
 ---
 
+<img style="height: 700px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange.png"/>
+
+Notes:
+
+Mixing paint example.
+Image Source: https://upload.wikimedia.org/wikipedia/commons/4/46/Diffie-Hellman_Key_Exchange.svg
+
+---
+
+## Commutative En-/Decryption
+
+Encrypting a message with key $A$, and then encrypting the ciphertext with key $B$, would result in the same ciphertext had one encrypted with $B$ and then $A$.
+
+\begin{align}
+M &=> E_A(E_B(M)) == E_B(E_A(M)) => C \\\\
+C &=> D_A(D_B(C)) == D_B(D_A(C)) \ => M
+\end{align}
+
+Elliptic curve cryptography is based on _commutative_ algebraic structures.
+
+---
+
 <!-- .slide: data-background-color="#4A2439" -->
+
+---
+
+## Symmetric Encryption
+
+<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Symmetric-Cryptography.png"/>
+
+Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
+
+---
+
+## Symmetric Encryption
+
+#### _Example: XOR Cipher_
+
+<pba-cols>
+<pba-col>
+
+The encryption and decryption functions are identical: applying a bitwise XOR operation with a key.
+
+</pba-col>
+<widget-column style="padding-right: 100px">
+
+```text
+Plain: 1010  -->Cipher: 0110
+Key:   1100  |          1100
+       ----  |          ----
+       0110--^          1010
+```
+
+Notes:
+
+A plaintext can be converted to ciphertext, and vice versa, by applying a bitwise XOR operation with a key known to both parties.
+
+</pba-col>
+</pba-cols>
+
+<!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -- MENTION ACTIVITY that will use OTP exploit to find key -->
+
+---
+
+## Symmetric Encryption
+
+#### ⚠ Warning ⚠
+
+We typically expect symmetric encryption to preserve little about the original plaintext.
+We caution however that constructing these protocols remains delicate, even given secure primitives, with two classical examples being unsalted passwords and the [ECB penguin](https://tonybox.net/posts/ecb-penguin/).
 
 ---
 
@@ -434,7 +495,7 @@ TwoX64 is about 20x faster.
 
 ### Cryptographic Hashing - Benchmarks
 
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
 
 Notes:
 
@@ -445,7 +506,7 @@ Source: https://www.blake2.net/
 
 #### xxHash - _Fast_ hashing algorithm
 
-<img rounded style="width: 1100px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
 
 ##### _Benchmarks_
 
@@ -453,3 +514,30 @@ Notes:
 
 Benchmarks for the XX-hash algorithms.
 Source: https://github.com/Cyan4973/xxHash#benchmarks
+
+---
+
+### ECB penguin
+
+<br>
+
+<pba-cols>
+<pba-col>
+
+<img rounded style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin.png"/>
+
+_Original image_
+
+</pba-col>
+<pba-col>
+
+<img rounded style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin-Encrypted.png"/>
+
+_Encrypted image_
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png and https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png
