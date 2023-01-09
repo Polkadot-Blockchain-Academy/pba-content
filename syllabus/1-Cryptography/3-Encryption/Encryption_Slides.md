@@ -12,10 +12,8 @@ duration: 1 hour
 
 <pba-flex center>
 
-- Learn about symmetric cryptography.
-- Understand how symmetric encryption works.
-- Learn about asymmetric cryptography.
-- Understand how asymmetric encryption works.
+- Learn about symmetric and asymmetric cryptography.
+- Understand how symmetric and asymmetric encryption works.
 
 </pba-flex>
 
