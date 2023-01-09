@@ -185,11 +185,15 @@ There are lessons later in this module dedicated to hashes and hash-based data s
 
 Hashes can be useful for many applications:
 
-- Representation of larger data object (history, commitment, file)
+<pba-flex center>
+
+- Representation of larger data object<br>(history, commitment, file)
 - Keys in a database
 - Digital signatures
 - Key derivation
 - Pseudorandom functions
+
+</pba-flex>
 
 ---
 
@@ -268,7 +272,7 @@ It has a special property: it proves (beyond reasonable doubt) that the signer (
 
 Only those with knowledge of some secret information<br>could have produced a valid signature.
 
-The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.
+The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br>
 Symmetric cryptography does not provide this guarantee: someone else knows the secret.
 
 ---
@@ -335,22 +339,6 @@ fn roll_die() -> u32 {
 
 ---
 
-## Discussion
-
-##### _What insights did you gain? Questions?_
-
-<br>
-
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg"/>
-
-<br>
-
-Notes:
-
-Class discussion.
-
----
-
 ## Summary
 
 Cryptography is much more than encryption.
@@ -369,8 +357,15 @@ Cryptography is much more than encryption.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+## Questions
+
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg"/>
+
+<br>
+
+##### _What insights did you gain?_
 
 Notes:
 
-Last slide, the rest are additional if needed and for student reference.
+Class discussion.
+Last slide.

@@ -108,7 +108,9 @@ Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.
 
 ---
 
-TODO: add gav's diagram
+## Asymmetric Encryption
+
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow.svg"/>
 
 ---
 

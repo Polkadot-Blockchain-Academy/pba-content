@@ -127,18 +127,18 @@ Exercise: Write your own benchmarking script that compares the performance of th
 
 ---
 
-### Cryptographic Hashing - Benchmarks
+### Hashing Benchmarks
 
-<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
+<img rounded style="height: 650px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
 
 Notes:
 
-Benchmarks for the XX-hash algorithms.
+Benchmarks for the _cryptographic_ hashing algorithms.
 Source: https://www.blake2.net/
 
 ---
 
-#### xxHash - _Fast_ hashing algorithm
+#### XXHash - _Fast_ hashing algorithm
 
 <img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
 
@@ -214,24 +214,20 @@ Attacker has intention to impersonate the signer with the other.
 ## Birthday Problem
 
 <pba-cols>
-<pba-col>
+<pba-col style="font-size:smaller">
 
-_With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday._
+> With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday.
 
-This is because we must to compare each output with every other, not with a single one.<br>
-The number of possible "hits" increases exponentially with the number of attempts,<br>thereby reducing the number of attempts for expected success to only the square-root of what it would be with a specific target.
+- Must to compare each output with every other, not with a single one.<br>
+- Number of possible "hits" increases exponentially for more attempts, reducing the expected success to the square-root of what a specific target would be.
 
 </pba-col>
 <pba-col>
 
-<img style="width: 600px; border-radius: 0;" src="../../../assets/img/1-Cryptography/birthday-problem.svg"/>
+<img style="width: 700px; border-radius: 0;" src="../../../assets/img/1-Cryptography/birthday-problem.svg"/>
 
 </pba-col>
 </pba-cols>
-
-Note:
-
-TODO, make this prettier
 
 ---
 
@@ -321,9 +317,12 @@ A system can map a plurality of key sizes to a fixed length<br>(e.g. for use as 
 For example, the ECDSA public key is 33 bytes:
 
 ```text
-Public key (hex):  0x02d82cdc83a966aaabf660c4496021918466e61455d2bc403c34bde8148b227d7a
-Hash of pub key:   0x8fea32b38ed87b4739378aa48f73ea5d0333b973ee72c5cb7578b143f82cf7e9
-                                                                                     ^^
+Public key (hex):
+  0x02d82cdc83a966aaabf660c4496021918466e61455d2bc403c34bde8148b227d7a
+
+Hash of pub key:
+  0x8fea32b38ed87b4739378aa48f73ea5d0333b973ee72c5cb7578b143f82cf7e9
+                                                                    ^^
 ```
 
 ---
@@ -363,8 +362,12 @@ However, participants should not be able to modify their predictions or proposal
 
 ## Commit-Reveal
 
+<pba-flex center>
+
 1. Share a hash of data as a commitment ($c$)
 1. Reveal the data itself ($d$)
+
+<pba-flex>
 
 It is normal to add some randomness to the message<br>to expand the input set size:
 

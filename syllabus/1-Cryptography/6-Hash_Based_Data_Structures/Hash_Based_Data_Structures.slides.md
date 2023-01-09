@@ -127,8 +127,6 @@ _Words:_ to, tea, ted, ten, inn, A.
 
 If only one option for a sequence we merge them.
 
-</center>
-
 <!-- TODO maybe some code stuff with extension nodes etc. -->
 
 ---
@@ -167,9 +165,7 @@ What radix $r$ is best?
 
 ## Merkle Mountain Ranges
 
-<center>
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-13.png"/>
-</center>
 
 Notes:
 
@@ -180,17 +176,13 @@ The trees that are here correspond to the binary digits of 13 that are 1.
 
 ## Merkle Mountain Ranges
 
-<center>
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-14.png"/>
-</center>
 
 ---
 
 ## Merkle Mountain Ranges
 
-<center>
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/MMR-13.png"/>
-</center>
 
 Notes:
 

@@ -75,6 +75,12 @@ For example, when a user authorizes a transfer,<br>they almost always mean just 
 
 ---
 
+## Asym. Encrypt. & Signatures
+
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow-and-sig.svg"/>
+
+---
+
 ## Replay Attacks
 
 Replay attacks occur when someone intercepts and resends a valid message.<br>
