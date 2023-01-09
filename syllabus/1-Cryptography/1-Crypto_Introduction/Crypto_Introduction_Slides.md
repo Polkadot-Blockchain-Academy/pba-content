@@ -376,32 +376,30 @@ Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.
 
 ---
 
-## Encryption
+## Digital Signatures
 
 - _Using the secret key_, information can be transformed ("signed") such that anyone with knowledge of the information and the counterpart public key is able to affirm the operation.
 
+- Digital signatures provide message authenticity and integrity guarantees.
+
+- _The next two lessons are dedicated to digital signatures,<br>this is strictly an intro._
+
 ---
 
-## Asymmetric Protocols
+## Digital Signatures
 
-- Asymmetric cryptography includes RSA, Elgamal, Elliptic Curve (slowest to fastest)
-- Elliptic Curve Cryptography (ECC) includes:
-  - ECDSA (SECP256k1, SECP256r1)
-  - Schnorr
-  - EdDSA (Ed25519, Ed448)
-  - Schnorr/Ristretto 25519
-  - BLS
-- ECC requires double the bits to the symmetric AES for the same level of security.
-  E.g. 128 bit security requires a 256 bit ECC key.
+**signing function**: a pure function which operates on some<br>_message data_ and some _secret_ to yield a _signature_.
+
+A **signature** _proves_ that the signer had knowledge of the secret,<br>without revealing the secret itself.
+
+The signature cannot be used to create other signatures.
 
 Notes:
 
-Discuss misuse resistance and motivation for support here.
-Or could be in more runtime focused lesson?
+A **signing function** is a pure function which operates on some _message data_ (which may or may not be small, depending on the function) and some _secret_ (a small piece of information known only to the operator).
+The result of this function is a small piece of data called a _signature_.
 
-- ECDSA: Lots of footguns, but we support for legacy Ethereum compatibility
-- Ed25519: Some misuse / insecure libraries, e.g. [this tweet](https://twitter.com/kostascrypto/status/1537245592019054593)
-- Sr25519: Reduces misuse risks, but mainly has adoption in Substrate ecosystem
+It has a special property: it proves (beyond reasonable doubt) that the signer (i.e. operator of the signing function) had knowledge of the secret and utilized this knowledge with the specific _message_ data, yet it does not reveal the secret itself, nor can knowledge of the signature be used to create other signatures (e.g. for alternative message data).
 
 ---
 
@@ -420,47 +418,6 @@ Hybrid cryptography mixes symmetric and asymmetric cryptography.
 - Symmetric encryption can provide speed, and often confidentiality,
 
 - And asymmetric can dictate relations among the participants.
-
----
-
-## Digital Signatures
-
-Digital signatures provide message authenticity and integrity guarantees.
-
-_The next two lessons are dedicated to digital signatures,<br>this is strictly an intro._
-
----
-
-## Digital Signatures
-
-**signing function**: a pure function which operates on some<br> _message data_ and some _secret_ to yield a _signature_.
-
-A **signature** _proves_ that the signer had knowledge of the secret,<br> without revealing the secret itself.
-
-The signature cannot be used to create other signatures.
-
-Notes:
-
-A **signing function** is a pure function which operates on some _message data_ (which may or may not be small, depending on the function) and some _secret_ (a small piece of information known only to the operator).
-The result of this function is a small piece of data called a _signature_.
-
-It has a special property: it proves (beyond reasonable doubt) that the signer (i.e. operator of the signing function) had knowledge of the secret and utilized this knowledge with the specific _message_ data, yet it does not reveal the secret itself, nor can knowledge of the signature be used to create other signatures (e.g. for alternative message data).
-
----
-
-## Digital Signatures
-
-In this model, secrets are identified not by their actual data (which we assume only the signer knows) but rather a derivative counterpart (known as the _public key_) which maps 1:1 with the secret (and so can be used to identify it), yet does not compromise it.
-
----
-
-## Digital Signatures on Plaintext
-
-Digital signatures are not limited to encryption.
-Some information you even want to share publicly.
-
-**Example:** Affirmation of a document's author.
-Digital signatures still guarantee that the message is authentic and has not been modified (e.g. to some other document).
 
 ---
 
@@ -491,41 +448,13 @@ Notes:
 
 ---
 
-## Digital Signatures (again)
-
-_Signing_ large amounts of data _is not_ efficient.
-
-_Hashing_ large amounts of data _is_ efficient.
-
-A signature on the hash of some data<br>implies a signature on the data itself.
-
-This requires that the verifier also compute the hash.
-
-Notes:
-
-Based on pre-image resistance, a signature on the hash of some data implies a signature on the data itself.
-That is, we assume that attackers are unable to find or construct some data that would generate the same output hash.
-
-This requires that the verifier also compute the hash.
-
----
-
-## Digital Signatures (again)
-
-<img style="width: 1200px" src="../../../assets/img/1-Cryptography/Digital-Signatures.png"/>
-
----
-
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Discussion
 
-### The significance of<br>[Hash Function Properties](#hash-function-properties)
+### What questions and insights do you have about crypto now?
 
-Notes:
-
-- If an attacker can find a colliding pre-image, they can "authorize" something unintended.
-- Or if they can find a collision on their own, attempt to trick you into signing one.
+TODO mind map graph from above (kian) 
 
 ---
 
