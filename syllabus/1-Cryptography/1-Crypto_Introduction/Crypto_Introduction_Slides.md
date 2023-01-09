@@ -61,7 +61,7 @@ not just person-to-person messages.
 
 ## Open vs. Closed Channels
 
-_Cryptography based on public systems is more sound anyway._
+_Cryptography based on public systems is more sound._
 
 **Kerckhoff's Principle:** Security should not rely on secret _methods_,<br>but rather on secret _information_.
 
