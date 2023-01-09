@@ -316,13 +316,11 @@ Notes:
 - Entropy: Amount of non-redundant information contained within some data.
 - Randomness: Unpredictability of some information. Less random implies lower entropy.
 - Key size: Upper limit of possible entropy contained in a key. Keys with less random (more predictable) data have less entropy than this upper bound.
+- One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.
 
 ---
 
-## Entropy, Randomness, and Key Size
-
-
-- One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.
+## Randomness Generation
 
 ```rust
 fn roll_die() -> u32 {

@@ -10,8 +10,8 @@ duration: 1 hour
 
 ## Comparison to<br>Pointer Based Data Structures
 
-- A hash is a commitment to what is in the linked part.<br>
-  A pointer tells you where it is.
+- A hash references the *content* of some data;
+- A pointer tells you where to find it;
 - We can not have cycles of hashes.
 
 ---
@@ -20,13 +20,15 @@ duration: 1 hour
 
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/Hash-Chains.png"/>
 
+A hash chain is a linked list using hashes to connect nodes.
+
 ---
 
 ## Merkle Trees
 
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-tree-all-purple.png"/>
 
-A binary Merkle tree
+A binary Merkle tree is a binary tree using hashes to connect nodes.
 
 ---
 
@@ -34,6 +36,8 @@ A binary Merkle tree
 
 - The root or head hash is a commitment to the entire data structure.
 - Generate a proof by expanding some but not all hashes.
+
+*Crucial for the trustless nature of decentralised cryptographic data systems!*
 
 ---
 
@@ -51,7 +55,7 @@ If we compute the correct root, this proves that the leaf was in the tree
 
 ## Security
 
-Collision resistance: only one preimage for each hash,<br>binding commitment to the link.
+Collision resistance: we reasonably assume only one preimage for each hash,<br>therefore making the data structure's linkage persistent and enduring (until the cryptography becomes compromised 😥).
 
 Notes:
 
@@ -131,8 +135,9 @@ If only one option for a sequence we merge them.
 
 ## Hash Trie
 
-- We may pre-hash the data before inserting it
-- This improves the balance... except under attack!
+- Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.
+- Solution: pre-hash the data before inserting it to make keys random.
+- *Resistance against partial collision is important.*
 - Could be a Merkle trie or regular.
 
 ---
@@ -191,20 +196,6 @@ Notes:
 
 - Not as balanced as a binary tree but close
 - Can update the peak nodes alone on-chain
-
----
-
-## Succinct Proving<br>with Cryptography?
-
-<pba-flex center>
-
-- ZK friendly hashes
-- Non-hashed based data structures
-  - RSA accumulators
-  - Polynomial commitment based<br>
-    (Verkle trees)
-
-</pba-flex>
 
 ---
 
