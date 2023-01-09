@@ -30,7 +30,7 @@ For example, the certificate transparency protocol for TLS certificates helps pr
 
 ### Certificates in Web3
 
-We are building systems that don't have a "Certificate Authority".<br>
+We are building systems that don't have a "Certificate Authority".
 But we can still use certificates in some niche instances.
 
 Notes:
@@ -51,14 +51,10 @@ Potential example to give verbally:
 
 ### Multi-Signatures
 
-We often want signatures that must be signed<br>by multiple parties to become valid.
+We often want signatures that must be signed by multiple parties to become valid.
 
-<pba-flex center>
-
-- Require some threshold of members to<br>agree to a message
+- Require some threshold of members to agree to a message
 - Protect against key loss
-
-</pba-flex>
 
 ---
 
@@ -68,7 +64,7 @@ We often want signatures that must be signed<br>by multiple parties to become va
 
 - Verifier enforced
 - Cryptographic threshold
-- Cryptographic non-threshold<br>(a.k.a. signature aggregation)
+- Cryptographic non-threshold (a.k.a. signature aggregation)
 
 ---
 
@@ -108,7 +104,7 @@ These require multi-party computation (MPC) protocols, which add some complexity
 
 ### Cryptographic Non-Threshold Multi-Sigs
 
-Sometimes we do not need a threshold represented in a public key.<br>
+Sometimes we do not need a threshold represented in a public key.
 But we want a succinct way to demonstrate that multiple parties have signed a message.
 
 <widget-text center>
@@ -129,7 +125,7 @@ This DKG protocol breaks other useful things, like hard key derivation.
 
 ### Key Generation - Non-Threshold
 
-In non-threshold multi-signatures,<br>signatures from individual public keys are aggregated.
+In non-threshold multi-signatures, signatures from individual public keys are aggregated.
 
 Each participant can choose their own key to use for the multi-signature.
 
@@ -174,8 +170,6 @@ Allows multiple signatures generated under multiple public keys for multiple mes
 - Uses heavier pairing friendly elliptic curves than ECDSA/Schnorr.
 - Very popular for consensus.
 
-<pba-flex>
-
 ---
 
 ### BLS Signatures
@@ -191,7 +185,7 @@ However...
 
 ### Schnorr and BLS Summary
 
-Schnorr & BLS multi-signatures avoid complicating verifier logic,<br>but introduce user experience costs such as:
+Schnorr & BLS multi-signatures avoid complicating verifier logic, but introduce user experience costs such as:
 
 - DKG protocols
 - Reduced key derivation ability

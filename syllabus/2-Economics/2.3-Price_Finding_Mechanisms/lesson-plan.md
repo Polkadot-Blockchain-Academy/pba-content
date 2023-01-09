@@ -43,7 +43,7 @@ In the first section we cover the following topics:
 
 ### Activity (90-120min)
 
-In this non-lesson part, we want to focus on classroom experiments.
+In this non-lecture part, we want to focus on classroom experiments.
 
 - Playing a candle auction on your own (can also vary activity rules), also a hard-closing auction with discrete time steps (to see sniping behaviors).
 - Experiment, Analysis of data, seeing if it was efficient - Compare it to the real polkadot auctions (graphs)
