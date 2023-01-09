@@ -210,7 +210,6 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 Mention that these derivations create entirely new secret seeds.
 
-
 ---
 
 # Mnemonics and Seed Creation

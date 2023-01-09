@@ -22,7 +22,7 @@ duration: 1 hour
 
 Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br>The shared secret can then be used to protect further communications from others who do not know this secret.
 
-In essence, it gives a way of *extending* a shared secret over time.
+In essence, it gives a way of _extending_ a shared secret over time.
 
 ---
 
@@ -60,8 +60,7 @@ A plaintext can be converted to ciphertext, and vice versa, by applying a bitwis
 </pba-col>
 </pba-cols>
 
-<!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -- MENTION ACTIVITY that will use OTP exploit to find key -->
----
+## <!-- TODO one time pad @ ~1:40:00 here: https://drive.google.com/drive/folders/1KgxglGwVf63NhFWf6oyZoDoTlLjihBdK and define entropy w/ discussion -- MENTION ACTIVITY that will use OTP exploit to find key -->
 
 ## Symmetric Encryption
 
@@ -105,7 +104,7 @@ Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.
 - Sender only knows a special identifier of this secret
 - Messages encrypted with the special identifier can only be decrypted with knowledge of the secret.
 - Knowledge of this identifier does not imply knowledge of the secret, and thus cannot be used to decrypt messages encrypted with it.
-- For this reason, the identifier may be shared publicly and is known as the *public key*.
+- For this reason, the identifier may be shared publicly and is known as the _public key_.
 
 ---
 
@@ -117,7 +116,7 @@ TODO: add gav's diagram
 
 _Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
 
-i.e. Public key is used to encrypt but a different, *secret*, key must be used to decrypt.
+i.e. Public key is used to encrypt but a different, _secret_, key must be used to decrypt.
 
 ---
 

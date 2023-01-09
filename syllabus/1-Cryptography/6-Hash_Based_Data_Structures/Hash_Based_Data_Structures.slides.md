@@ -10,7 +10,7 @@ duration: 1 hour
 
 ## Comparison to<br>Pointer Based Data Structures
 
-- A hash references the *content* of some data;
+- A hash references the _content_ of some data;
 - A pointer tells you where to find it;
 - We can not have cycles of hashes.
 
@@ -37,7 +37,7 @@ A binary Merkle tree is a binary tree using hashes to connect nodes.
 - The root or head hash is a commitment to the entire data structure.
 - Generate a proof by expanding some but not all hashes.
 
-*Crucial for the trustless nature of decentralised cryptographic data systems!*
+_Crucial for the trustless nature of decentralised cryptographic data systems!_
 
 ---
 
@@ -137,7 +137,7 @@ If only one option for a sequence we merge them.
 
 - Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.
 - Solution: pre-hash the data before inserting it to make keys random.
-- *Resistance against partial collision is important.*
+- _Resistance against partial collision is important._
 - Could be a Merkle trie or regular.
 
 ---

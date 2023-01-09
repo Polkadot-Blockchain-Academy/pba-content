@@ -54,7 +54,7 @@ duration: 1 hour
 ## VRF Usage
 
 - Choose input after key, then the key holder cannot influence the output
-- The output then is effectively a random number knownonly to the key holder
+- The output then is effectively a random number known only to the key holder
 - But they can later reveal it, by publishing the VRF proof (signature)
 
 Notes:
@@ -93,7 +93,7 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ## Erasure Coding
 
-*Magical data expansion*
+_Magical data expansion_
 
 - Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
 
@@ -101,7 +101,7 @@ But this needs a DKG, and it's unclear if a decentralized protocol can do those 
 
 ---
 
-## Visualization
+## Erasure Coding
 
 <img style="width: 1000px;" src="../../../assets/img/1-Cryptography/erasure-code.svg"/>
 

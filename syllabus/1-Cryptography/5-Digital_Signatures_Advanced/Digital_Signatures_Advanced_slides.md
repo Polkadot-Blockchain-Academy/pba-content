@@ -10,7 +10,7 @@ duration: 1 hour
 
 ### Certificates
 
-A certificate is essentially a witness statement concerning one or more public keys. It is a common usage of digital signatures, but *it is not a cryptographic primitive*!
+A certificate is essentially a witness statement concerning one or more public keys. It is a common usage of digital signatures, but _it is not a cryptographic primitive_!
 
 Notes:
 
@@ -105,7 +105,7 @@ Each participant can choose their own key to use for the multi-signature.
 
 ### Cryptographic Threshold Multi-Sigs
 
-This makes more compact signatures compatible with legacy systems. Unlike a regular multi-sig, the public key is associated with a *threshold* number of signing parties, so not all parties are needed to take part in the signing process to create a valid signature.
+This makes more compact signatures compatible with legacy systems. Unlike a regular multi-sig, the public key is associated with a _threshold_ number of signing parties, so not all parties are needed to take part in the signing process to create a valid signature.
 
 This requires MPC protocols and may need multiple rounds of interaction to generate the final signature. They may be vulnerable to DoS from a malfunctioning (or malicious) key-holder.
 

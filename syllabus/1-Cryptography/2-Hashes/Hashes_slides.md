@@ -216,7 +216,6 @@ Attacker has intention to impersonate the signer with the other.
 <pba-cols>
 <pba-col>
 
-
 _With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday._
 
 This is because we must to compare each output with every other, not with a single one.<br>
