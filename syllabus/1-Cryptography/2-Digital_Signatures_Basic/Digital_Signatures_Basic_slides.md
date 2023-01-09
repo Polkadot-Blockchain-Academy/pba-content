@@ -42,7 +42,7 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ## Hash Functions
 
-There are two lessons dedicated to hash functions. But they are used as part of all signing processes.
+There are two lessons dedicated to hash functions.<br>But they are used as part of all signing processes.
 
 For now, we only concern ourselves with using Blake2.
 
@@ -50,7 +50,7 @@ For now, we only concern ourselves with using Blake2.
 
 ## Hashed Messages
 
-As mentioned in the introduction, it's often more practical to sign the hash of a message.
+As mentioned in the introduction,<br>it's often more practical to sign the hash of a message.
 
 Therefore, the sign/verify API may be _used_ like:
 
@@ -61,7 +61,8 @@ Therefore, the sign/verify API may be _used_ like:
 
 </pba-flex>
 
-Where `H` is a hash function (for our purposes, Blake2). This means the verifier will need to run the correct hash function on the message.
+Where `H` is a hash function (for our purposes, Blake2).<br>
+This means the verifier will need to run the correct hash function on the message.
 
 ---
 
@@ -83,15 +84,16 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ## Signing Payloads
 
-Signing payloads are an important part of system design. Users should have credible expectations about how their messages are used.
+Signing payloads are an important part of system design.<br>
+Users should have credible expectations about how their messages are used.
 
-For example, when a user authorizes a transfer, they almost always mean just one time.
+For example, when a user authorizes a transfer,<br>they almost always mean just one time.
 
 ---
 
 ## Replay Attacks
 
-Replay attacks occur when someone intercepts and resends a valid message.
+Replay attacks occur when someone intercepts and resends a valid message.<br>
 The receiver will carry out the instructions since the message contains a valid signature.
 
 <pba-flex center>
@@ -111,7 +113,7 @@ Tell the story of Ethereum Classic replays.
 
 ## Replay Attack Prevention
 
-Signing payloads should be designed so that they can only be used _one time_ and in _one context_.
+Signing payloads should be designed so that they can<br>only be used _one time_ and in _one context_.<br>
 Examples:
 
 <pba-flex center>
@@ -132,7 +134,7 @@ Hierarchical Deterministic Key Derivation
 
 ## Hard vs. Soft
 
-Key derivation allows one to derive (virtually limitless) child keys from one "parent".
+Key derivation allows one to derive (virtually limitless)<br>child keys from one "parent".
 
 Derivations can either be "hard" or "soft".
 
@@ -150,6 +152,8 @@ Typical "operational security" usages should favor hard derivation over soft der
 
 Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
 
+<br>
+
 <img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
 
 ---
@@ -157,6 +161,8 @@ Wallets can derive keys for use in different consensus systems while only needin
 ## Hard Derivation in Wallets
 
 Let's imagine we want to use this key on multiple networks, but we don't want the public keys to be connected to each other.
+
+<br>
 
 <img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
 
@@ -227,7 +233,7 @@ Consider using multiple seeds to further isolate keys.
 
 ## Mnemonics
 
-Many wallets use a dictionary of words and give people phrases, often 12 or 24 words, as these are easier to back up/recover than byte arrays.
+Many wallets use a dictionary of words and give people phrases,<br>often 12 or 24 words, as these are easier to back up/recover than byte arrays.
 
 Notes:
 
@@ -268,7 +274,7 @@ _The first 5 words of the [BIP39 English dictionary](https://github.com/bitcoin/
 
 Of course, the secret key is a point on an elliptic curve, not a phrase.
 
-BIP39 applies 2,048 rounds of the SHA-512 hash function to the mnemonic to derive a 64 byte key.
+BIP39 applies 2,048 rounds of the SHA-512 hash function<br>to the mnemonic to derive a 64 byte key.
 
 Substrate uses the entropy byte array from the mnemonic.
 
@@ -276,7 +282,7 @@ Substrate uses the entropy byte array from the mnemonic.
 
 ## Portability
 
-Different key derivation functions affect the ability to use the same mnemonic in multiple wallets.
+Different key derivation functions affect the ability to use<br>the same mnemonic in multiple wallets.
 
 ---
 
@@ -294,13 +300,15 @@ Last slide, the rest are additional if needed and for student reference.
 
 Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
 
+<br>
+
 <img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
 
 Notes:
 
 Example: You want to use this key on multiple networks, but don't want the public keys to be connected to each other.
 
---
+---
 
 ## Soft Derivation in Wallets
 
@@ -337,7 +345,7 @@ See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
 
 ## Sr25519
 
-Sr25519 addresses several small risk factors that emerged from Ed25519 usage by blockchains.
+Sr25519 addresses several small risk factors that emerged<br>from Ed25519 usage by blockchains.
 
 ---
 

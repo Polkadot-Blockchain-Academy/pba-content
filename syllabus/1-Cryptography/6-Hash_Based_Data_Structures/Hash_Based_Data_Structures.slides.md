@@ -10,9 +10,9 @@ duration: 1 hour
 
 ## Comparison to<br>Pointer Based Data Structures
 
-- A hash is a commitment to what is in the linked part.
-  A pointer tells you where it is
-- We can't have cycles of hashes
+- A hash is a commitment to what is in the linked part.<br>
+  A pointer tells you where it is.
+- We can not have cycles of hashes.
 
 ---
 
@@ -32,8 +32,8 @@ A binary Merkle tree
 
 ## Proofs
 
-- The root or head hash is a commitment to the entire data structure
-- Generate a proof by expanding some but not all hashes
+- The root or head hash is a commitment to the entire data structure.
+- Generate a proof by expanding some but not all hashes.
 
 ---
 
@@ -71,7 +71,8 @@ Proof of a leaf has size $O(\log n)$<br>and so do proofs of updates of a leaf
 
 ## Key-value database
 
-The data structure stores a map `key -> value`. We should be able to:
+The data structure stores a map `key -> value`.<br>
+We should be able to:
 
 1. Add new `<key,value>` pairs.
 1. Change the value associated with an existing key.
@@ -100,9 +101,11 @@ Just a selection we'll cover in this course.
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<center>
+<br>
+
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/Trie.png"/>
-</center>
+
+<br>
 
 Each node splits on the next digit in base $r$
 
@@ -112,9 +115,11 @@ Each node splits on the next digit in base $r$
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<center>
+<br>
+
 <img style="width: 700px" src="../../../assets/img/1-Cryptography/Patricia-Trie.png"/>
-</center>
+
+<br>
 
 If only one option for a sequence we merge them.
 
@@ -138,6 +143,8 @@ What radix $r$ is best?
 
 - Proof size of a leaf is $r \log_r n$
   - $r=2$ gives the smallest proof for one leaf
+
+<br>
 
 ...but:
 
@@ -189,11 +196,15 @@ Notes:
 
 ## Succinct Proving<br>with Cryptography?
 
+<pba-flex center>
+
 - ZK friendly hashes
 - Non-hashed based data structures
   - RSA accumulators
-  - Polynomial commitment based
-    - Verkle trees
+  - Polynomial commitment based<br>
+    (Verkle trees)
+
+</pba-flex>
 
 ---
 
