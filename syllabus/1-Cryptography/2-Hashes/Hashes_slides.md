@@ -64,6 +64,22 @@ hash(polkadot_runtime-v9190.compact.compressed.wasm) =
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Rust Demo
+
+## Hashing a Message
+
+Notes:
+
+See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
+
+1. Use a longer message
+1. Hash it
+1. Verify the signature on the hash
+
+---
+
 ## Speed
 
 Some hash functions are designed to be slow.
