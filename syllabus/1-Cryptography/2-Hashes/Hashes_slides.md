@@ -94,7 +94,7 @@ For our purposes, we generally want them to be fast.
 
 <pba-flex center>
 
-- xxHash (non-cryptographic)
+- xxHash a.k.a TwoX (non-cryptographic)
 - MD5
 - SHA1
 - RIPEMD-160
@@ -109,13 +109,13 @@ xxHash64 is about 20x faster than Blake2.
 
 ---
 
-## Examples of Hash Functions in use Blockchains
+## Examples of Hash Functions used in Blockchains
 
 <pba-flex center>
 
 - Bitcoin: SHA2-256 & RIPMD-160
 - Ethereum: Keccak-256 (though others supported via EVM)
-- Polkadot: Blake2b & XX (though others supported via host functions)
+- Polkadot: Blake2 & xxHash (though others supported via host functions)
 
 </pba-flex>
 
@@ -469,7 +469,7 @@ In transactions in Substrate, key holders sign a<br>_hash of the instructions_ w
 
 **TwoX64** is safe to use when users (read: attackers)<br>cannot control the input, e.g. when a<br>database key is a system-assigned index.
 
-**Blake2b** should be used for everything else.
+**Blake2** should be used for everything else.
 
 _Again, there is a whole lesson on hash-based data structures._
 
