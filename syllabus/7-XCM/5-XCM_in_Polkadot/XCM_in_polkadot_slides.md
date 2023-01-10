@@ -237,7 +237,7 @@ In other words:
 
 - Weight is converted to fee with the **WeightToFee** type.
 - The asset in which we charge for fee is **RocLocation**.
-This means we can only pay for xcm execution in the **native currency**
+  This means we can only pay for xcm execution in the **native currency**
 - Fees will go to the block author thanks to **ToAuthor**
 
 ---
@@ -307,7 +307,7 @@ pub type CurrencyTransactor = CurrencyAdapter<
 Notes:
 
 - Notice how KsmLocation is equal to **Parent**.
-Every time we receive a token with the parent multilocation, we mint in Balances.
+  Every time we receive a token with the parent multilocation, we mint in Balances.
 - Teleports are not being tracked in any account in Statemine, only in the relay chain.
 
 **Fungibles Asset Transactor**
@@ -377,12 +377,6 @@ pub type Barrier = DenyThenTry<
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
-
-# Debugging XCM
-
----
-
 ## 🧐 Debugging XCM message failures
 
 Involves knowledge of the chain XCM configuration!:
@@ -390,9 +384,9 @@ Involves knowledge of the chain XCM configuration!:
 Common steps to debug:
 
 1. Identify what the error means.
-This will help you identify the context in which the error happened.
+   This will help you identify the context in which the error happened.
 1. Look in the xcm codebase to check where this error might have been thrown.
-Was it thrown in the barrier? Or in any specific instruction?
+   Was it thrown in the barrier? Or in any specific instruction?
 1. Retrieve the failed received XCM.
 1. Check the chain XCM configuration to verify what could have failed.
 
@@ -413,7 +407,7 @@ Some common errors are:
 - `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve
 - `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
 - `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
-Usually happens when the multilocation representing an asset does not match to those handled by the chain.
+  Usually happens when the multilocation representing an asset does not match to those handled by the chain.
 - `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
 - `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
 - `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
@@ -425,9 +419,9 @@ Usually happens when the multilocation representing an asset does not match to t
 
 - `Barrier`: One of the barriers failed, we need to check the barriers individually.
 - `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown.
-When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination.
-In such a case, the safe XCM version is used instead.
-However, if it is not set, then this error will be thrown.
+  When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination.
+  In such a case, the safe XCM version is used instead.
+  However, if it is not set, then this error will be thrown.
 
 ---
 
@@ -437,9 +431,9 @@ The second step is to retrieve the XCM received by the chain.
 We can clearly identify a chain by how it processes received XCMs:
 
 - **RelayChain**: usually the xcm message can be retrieved in the `paraInherent.enter` inherent, where the candidate for a specific parachain contains the ump messages sent to the relay.
-**UMP messages are usually executed one block after they are received**
+  **UMP messages are usually executed one block after they are received**
 - **Parachain**: usually the xcm message can be retrieved in the `parachainSystem.setValidationData` inherent, inside the field `downWardMessage` or `horizontalMessages`.
-**DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
+  **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
 
 ---v
 
