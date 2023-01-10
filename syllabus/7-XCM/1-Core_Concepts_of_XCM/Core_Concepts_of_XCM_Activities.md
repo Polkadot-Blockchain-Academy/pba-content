@@ -1,5 +1,6 @@
 ## Exercises
- Assume a setup where we have the relay chain, and two parachains with paraIds 1000 and 1001 respectively:
+
+Assume a setup where we have the relay chain, and two parachains with paraIds 1000 and 1001 respectively:
 
 - Using v2 multilocations, how would you represent each of the following locations?
   - The relay chain
@@ -10,7 +11,6 @@
   - A pallet whose index is 10 in the relay chain
   - An 80% backed governance origin in Parachain 1000
   - The technical committee origin in the relay chain
-
 
 Make sure you answer with the multilocation as seen from all three relative locations (relay, para100, para1001)
 
