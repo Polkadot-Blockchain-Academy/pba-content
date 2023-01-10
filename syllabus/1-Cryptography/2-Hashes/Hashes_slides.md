@@ -103,7 +103,7 @@ For our purposes, we generally want them to be fast.
 - Keccak
 - Blake2
 
-TwoX64 is about 20x faster.
+xxHash64 is about 20x faster than Blake2.
 
 </pba-flex>
 
