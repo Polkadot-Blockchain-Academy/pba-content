@@ -78,8 +78,6 @@ A consensus system does not necessarily have to be a blockchain or a smart contr
 
 ## 🤟 A Format, not a Protocol
 
-<br>
-
 XCM is a **_messaging format_**.
 
 It is akin to the post card from the post office
@@ -88,7 +86,7 @@ It is akin to the post card from the post office
 
 It is _not_ a messaging protocol!
 
-- A post card doesn't send itself!
+A post card doesn't send itself!
 
 Notes:
 
@@ -142,7 +140,7 @@ Notes:
 
 ## Async vs Sync
 
-XCM crossing the barrier between a single consensus system cannot generally be synchronous.
+XCM crossing the barrier between a single consensus system<br>cannot generally be synchronous.
 
 <br>
 
@@ -157,8 +155,6 @@ Thus, each consensus system cannot make any guarantees on the expected time requ
 ---
 
 ## XCM is "fire and forget"
-
-<br>
 
 XCM has no results:
 
@@ -197,6 +193,8 @@ Rather, XCM defines and standardizes the interface and semantics that two or mor
 
 All entities are addressed as paths to them, _relative_ to the current consensus system.
 
+<br>
+
 ```rust
 pub struct MultiLocation {
     pub parents: u8,
@@ -214,7 +212,7 @@ It is always represented as a location _relative_ to the current consensus syste
 
 ## Junction
 
-A single item in a path to describe the relative location of a consensus system:
+An item in a path to describe the<br>relative location of a consensus system:
 
 <pba-flex center>
 
@@ -231,8 +229,6 @@ This is akin to a directory on a file path, e.g. the `foo` in `/foo/bar`.
 
 ## Junction*s*\*
 
-Enum containing multiple `Junction`s
-
 ```rust
 enum Junctions {
     X1(Junction),
@@ -242,6 +238,8 @@ enum Junctions {
     X8(Junction, /*...*/),
 }
 ```
+
+Enum containing multiple `Junction`s
 
 Notes:
 
@@ -320,10 +318,7 @@ Notes:
 
 There are many _classes_ of assets (fungible, NFTs,...)
 
-The datatype `MultiAsset` describes them all.
-
-</pba-col>
-<pba-col>
+<br>
 
 ```rust
 struct MultiAsset {
@@ -332,12 +327,13 @@ struct MultiAsset {
 }
 ```
 
-</pba-col>
-</pba-cols>
+The datatype `MultiAsset` describes them all.
 
 ---
 
 ## Asset Representation
+
+<div style="font-size: smaller">
 
 ```rust
 struct MultiAsset {
@@ -365,6 +361,8 @@ enum AssetInstance {
 }
 ```
 
+</div>
+
 Notes:
 
 A MultiAsset is composed of an asset ID and an enum representing the fungibility of the asset.
@@ -384,7 +382,8 @@ Non-fungible assets will then also need to further specify which exact token it 
 
 ```rust
 /// Creates 10 billion units of fungible native tokens
-let fungible_asset: MultiAsset = (Here, 10_000_000_000u128).into(); // or MultiAsset::from((Here, 10_000_000_000u128))
+let fungible_asset: MultiAsset = (Here, 10_000_000_000u128).into();
+//          or MultiAsset::from((Here, 10_000_000_000u128)) ^^^^
 
 /// Creates an abstract NFT with an undefined asset instance
 let nft_asset: MultiAsset = ([0; 32], ()).into();
@@ -432,9 +431,8 @@ This is very useful in cases where we want to give an upper limit to the executi
 
 `MultiLocation`s are relative.
 
-Scenario:
-
-Current consensus system is `Para(1337)`.
+**Scenario:**<br>
+Current consensus system is `Para(1337)`.<br>
 Destination consensus system is `Para(6969)`.
 
 <pba-flex center>
@@ -464,17 +462,17 @@ We might want to simply control an account on a remote chain, allowing the local
 
 ## 🤹 Many models for <br> transferring assets
 
-<pba-cols
+<pba-cols>
 <pba-col>
 
-<img style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
 <br>
-<img style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
 
 </pba-col>
 <pba-col>
 
-<img style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer"/>
+<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer"/>
 
 </pba-col>
 </pba-cols>
@@ -520,4 +518,4 @@ TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-c
 
 ## Polkadot Network Diagram
 
-<img src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;"/>
+<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;"/>
