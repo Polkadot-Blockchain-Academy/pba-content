@@ -2,8 +2,6 @@
 title: Writing, Sending, and Execution of XCM
 description: Writing, Sending, and Execution of XCM for Web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung", "Gorka Irazoqui"]
-teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Writing, Sending, and Execution of XCM
@@ -377,7 +375,7 @@ enum Instruction {
 
 Notes:
 
-<!-- TODO: Get someone familiar with XCMP to comment on whether or not these XCM instructions would still exist when we switch over to XCMP -->
+TODO: Get someone familiar with XCMP to comment on whether or not these XCM instructions would still exist when we switch over to XCMP
 
 ---
 

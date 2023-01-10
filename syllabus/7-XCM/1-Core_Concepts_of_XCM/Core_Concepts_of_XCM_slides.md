@@ -2,8 +2,6 @@
 title: Cross Consensus Messaging (XCM)
 description: XCM Core Concepts, Terms, and Logic for Web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung", "Gorka Irazoqui"]
-teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Cross Consensus Messaging (XCM)
@@ -445,6 +443,7 @@ Destination consensus system is `Para(6969)`.
 - What happens when I send a `MultiAsset`<br>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
 
 Notes:
+
 MultiLocations are relative, so they must be updated and rewritten when sent to another chain.
 
 ---
@@ -482,7 +481,7 @@ We might want to simply control an account on a remote chain, allowing the local
 
 Notes:
 
-<!-- TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392 to describe the images -->
+TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392 to describe the images
 
 ---
 
@@ -490,7 +489,7 @@ Notes:
 
 <widget-text center>
 
-1. Gav's blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
+1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
 1. XCM Format [repository](https://github.com/paritytech/xcm-format)
 <!-- 1. TODO: fill this in - polkadot / cumulus / parachains repos?  -->
 

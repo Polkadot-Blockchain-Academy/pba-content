@@ -2,8 +2,6 @@
 title: XCM in the Polkadot Context # Also update the h1 header on the first slide to the same name
 description: XCM in the Polkadot Context for web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung", "Gorka Irazoqui"]
-teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # XCM in Polkadot
@@ -22,7 +20,7 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 
 ## 🤔 What considerations we need to take into account?
 
-- There should be no trust assumption between chains unless explicitely requested.
+- There should be no trust assumption between chains unless explicitly requested.
 - We cannot assume chains will not act maliciously
 - Spamming XCM messages creates a DoS problem
 
@@ -35,7 +33,9 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 - Fee payment
 - Proper XCM Instruction Weighting
 
-Notes: From now on, we will use the Rococo runtime as a reference. Rococo is a testnet for
+Notes:
+
+From now on, we will use the Rococo runtime as a reference. Rococo is a testnet for
 Polkadot and Kusama that we will use in to test our XCM messages. Most of the Rococo configuration
 is identical to that in Polkadot.
 
@@ -50,7 +50,7 @@ There are 5 barriers that are being used in Rococo:
 pub type Barrier = (
 	// Weight that is paid for may be consumed.
 	TakeWeightCredit,
-	// If the message is one that immediately attemps to pay for execution, then allow it.
+	// If the message is one that immediately attempts to pay for execution, then allow it.
 	AllowTopLevelPaidExecutionFrom<Everything>,
 	// Messages coming from system parachains need not pay for execution.
 	AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
@@ -183,7 +183,7 @@ Rococo is tracking teleports in the **CheckAccount**, which is defined in **pall
 
 ## 📍Origin Converters in Rococo
 
-Origin converters defined ways in which we can convert a multilocation to a dispatch origin, tipically used by the **Transact** instruction:
+Origin converters defined ways in which we can convert a multilocation to a dispatch origin, typically used by the **Transact** instruction:
 
 ```rust
 type LocalOriginConverter = (
@@ -207,7 +207,9 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
-Notes: Here two things should catch our eye. First, there exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). Second, system parachins are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.
+Notes:
+
+Here two things should catch our eye. First, there exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). Second, system parachains are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.
 
 ---
 
@@ -253,7 +255,7 @@ impl pallet_xcm::Config for Runtime {
 }
 ```
 
-As we can see, there is no filter on the Exeuction, Teleporting or Reserve transferring side. Custom XCM sending is also allowed.
+As we can see, there is no filter on the Execution, Teleporting or Reserve transferring side. Custom XCM sending is also allowed.
 
 ---
 
@@ -294,7 +296,7 @@ pub type CurrencyTransactor = CurrencyAdapter<
 
 Notes:
 
-- Notice how KsmLocation is equal to **Parent**. Everytime we receive a token with the parent multilocation, we mint in Balances.
+- Notice how KsmLocation is equal to **Parent**. Every time we receive a token with the parent multilocation, we mint in Balances.
 - Teleports are not being tracked in any account in Statemine, only in the relay chain.
 
 **Fungibles Asset Transactor**
@@ -329,7 +331,7 @@ FungiblesTransactor refers to the way in which assets created in Statemine are W
 
 ### Statemine Trusted Teleporters
 
-Only alowed if the token multilocation matches the origin
+Only allowed if the token multilocation matches the origin
 
 ```rust
 pub struct XcmConfig;

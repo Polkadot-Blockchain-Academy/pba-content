@@ -2,8 +2,6 @@
 title: XCVM
 description: Learning about the XCVM state machine
 duration: 1 hour
-instructors: ["Keith Yeung", "Gorka Irazoqui"]
-teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # XCVM
@@ -57,9 +55,9 @@ Four kinds of instructions:
 
 Notes:
 
-`Instruction` is a bad name for the kind of XCVM instructions that we have, but it means instructions that result in a state change in the local consensus system, or instruct the local consensus system to achieve some desired behaviour.
+`Instruction` is a bad name for the kind of XCVM instructions that we have, but it means instructions that result in a state change in the local consensus system, or instruct the local consensus system to achieve some desired behavior.
 
-<!-- TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them. Highlight LOCATION and ASSET instructions, that we will go into next -->
+TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them. Highlight LOCATION and ASSET instructions, that we will go into next
 
 ---
 
@@ -235,7 +233,7 @@ It clears the origin stored in the origin register.
 
 Useful to execute subsequent messages without a potentially-abusable origin.
 
-Example: we withdraw assets from a parachain controlled account, but then we dont want Transact to be executed
+Example: we withdraw assets from a parachain controlled account, but then we don't want Transact to be executed
 
 </widget-column>
 </widget-columns>

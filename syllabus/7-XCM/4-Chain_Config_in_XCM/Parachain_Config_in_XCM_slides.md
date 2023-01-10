@@ -2,8 +2,6 @@
 title: Parachain Configuration for XCM # Also update the h1 header on the first slide to the same name
 description: Describe your slides here
 duration: 1 hour
-instructors: ["Keith Yeung", "Gorka Irazoqui"]
-teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Parachain Configuration for XCM
@@ -27,7 +25,7 @@ teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 
 - Understand the different XCM configurable parts for a chain
 - Construct different XCM configurations for chains with different needs
-- Understand how Versioninig is handled across chains
+- Understand how Versioning is handled across chains
 
 ---
 
@@ -77,7 +75,9 @@ impl Config for XcmConfig {
 }
 ```
 
-Notes: Xcm-builder and Xcm-pallet are your friends!
+Notes:
+
+Xcm-builder and Xcm-pallet are your friends!
 
 `xcm-builder` is a polkadot module that contains a set of pre-defined structures to be set in some of the configurable sides of XCM.
 
@@ -114,7 +114,9 @@ Questions that you should have answers for:
 - Useful when we want to withdraw/deposit tokens from a multilocation-defined origin
 - Useful when we want to dispatch as signed origins from a multilocation-defined origin.
 
-Notes: This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
+Notes:
+
+This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
 
 ---v
 
@@ -191,7 +193,9 @@ impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone
 }
 ```
 
-Notes: For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
+Notes:
+
+For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
 
 ---
 
@@ -238,7 +242,9 @@ impl
 
 2. `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens. An example of these would be `pallet-assets` tokens.
 
-Notes: For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
+Notes:
+
+For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
 
 ---
 
@@ -251,7 +257,7 @@ Notes: For our example, it suffices to uses `CurrencyAdapter`, as all we are goi
 
 ### 📍 Configuring origin-converter with xcm-builder
 
-1. `SovereignSignedViaLocation`: Converts the multilocation origin (tipically, a parachain origin) into a signed origin.
+1. `SovereignSignedViaLocation`: Converts the multilocation origin (typically, a parachain origin) into a signed origin.
 
 ```rust
 /// Sovereign accounts use the system's `Signed` origin with an account ID derived from the `LocationConverter`.
@@ -321,7 +327,9 @@ where
 
 4. `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
 
-Notes: To meet our requirements, we only require number 3. This will allow us to execute (locally) Transact dispatchables.
+Notes:
+
+To meet our requirements, we only require number 3. This will allow us to execute (locally) Transact dispatchables.
 
 ---
 
@@ -358,9 +366,9 @@ pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>(
 
 ### 🚧 Configuring Barriers with xcm-builder
 
-1. `TakeWeightCredit`: A barrier that substracts the maxixum weight the message can consume from the available weight credit. Usually configured for local xcm-execution
+1. `TakeWeightCredit`: A barrier that subtracts the maximum weight the message can consume from the available weight credit. Usually configured for local xcm-execution
 
-2. `AllowTopLevelPaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, this is a barrier that ensures the message contains weight payment instructions. In other words, it makes sure the first instruction puts asset into the holding register (`TeleportAsset`, `WithdrawAsset`, `ClaimAsset`, `ReserveAssetDeposit`), and then it checkes that there exists a `BuyExecution` instruction that is able to pay for the message weight. **Critical to avoid free DOS**.
+2. `AllowTopLevelPaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, this is a barrier that ensures the message contains weight payment instructions. In other words, it makes sure the first instruction puts asset into the holding register (`TeleportAsset`, `WithdrawAsset`, `ClaimAsset`, `ReserveAssetDeposit`), and then it checks that there exists a `BuyExecution` instruction that is able to pay for the message weight. **Critical to avoid free DOS**.
 
 ---v
 
@@ -393,7 +401,9 @@ impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
 
 5. `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it contains only a `SubscribeVersion` or `UnsubscribeVersion` instruction.
 
-Notes: To meet our example usecase, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
+Notes:
+
+To meet our example use case, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
 
 ---
 
@@ -458,7 +468,7 @@ Example:
 
 **Important Notes!:**
 
-**`LocationInverter` configuration will dissapear in XcmV3!**. Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept. However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**. `UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system:
+**`LocationInverter` configuration will disappear in XcmV3!**. Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept. However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**. `UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system:
 
 Example for parachain 1000 in Kusama:
 
