@@ -57,7 +57,8 @@ Notes:
 
 `Instruction` is a bad name for the kind of XCVM instructions that we have, but it means instructions that result in a state change in the local consensus system, or instruct the local consensus system to achieve some desired behavior.
 
-TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them. Highlight LOCATION and ASSET instructions, that we will go into next
+TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them.
+Highlight LOCATION and ASSET instructions, that we will go into next
 
 ---
 
@@ -93,7 +94,7 @@ pub struct XcmExecutor<Config: config::Config> {
 
 XCVM operates as a fetch-dispatch loop
 
-<widget-text center>
+<pba-flex center>
 
 - Common in state machines
 
@@ -103,7 +104,7 @@ XCVM operates as a fetch-dispatch loop
 
 ## XCM vs. Standard State Machine
 
-<widget-text center>
+<pba-flex center>
 
 1. Error register
 1. Error _handler_ register
@@ -120,8 +121,8 @@ Notes:
 
 ---
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 ### 📍 The Origin Register
 
@@ -138,7 +139,8 @@ Expresses a number of assets in control of the xcm-execution but that have no re
 It can be seen as the register holding "unspent assets".
 
 Example: Let’s take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
-But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation. These assets are held in the holding register until they are deposited anywhere else.
+But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation.
+These assets are held in the holding register until they are deposited anywhere else.
 
 ---
 
@@ -148,8 +150,8 @@ But what does it do with them? — if they don’t get deposited anywhere then i
 
 They are _temporarily_ held in what in the Holding Register.
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 ```rust
 // There are a number of instructions
@@ -162,8 +164,8 @@ enum Instruction {
 }
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -173,8 +175,8 @@ Takes assets from the holding register and deposits them in a beneficiary.
 
 Typically an instruction that places assets into the holding register would have been executed.
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 ```rust
 // There are a number of instructions
@@ -192,8 +194,8 @@ enum Instruction {
 }
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -204,8 +206,8 @@ Executes a scale-encoded transaction.
 It dispatches from a FRAME origin derived from the origin register.
 
 OriginKind defines the type of FRAME origin that should be derived: _root_, _signed_, _parachain_..
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ```rust
 // Transact allows to execute arbitrary calls in a chain
@@ -222,8 +224,8 @@ enum Instruction {
 
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -235,8 +237,8 @@ Useful to execute subsequent messages without a potentially-abusable origin.
 
 Example: we withdraw assets from a parachain controlled account, but then we don't want Transact to be executed
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ```rust
 // Clear Origin is key to maintain isolation between instructions that are executed with a particular origin and instructions that are not
@@ -246,5 +248,5 @@ enum Instruction {
 }
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>

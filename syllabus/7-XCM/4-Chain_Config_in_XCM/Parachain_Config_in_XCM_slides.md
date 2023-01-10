@@ -21,7 +21,7 @@ duration: 1 hour
 
 ## _At the end of this lecture, you will be able to:_
 
-<widget-text center>
+<pba-flex center>
 
 - Understand the different XCM configurable parts for a chain
 - Construct different XCM configurations for chains with different needs
@@ -102,9 +102,9 @@ Questions that you should have answers for:
 ### Our starting example setup requirements
 
 1. Parachain that does not charge for relay incoming messages.
-2. Parachain that trusts the relay as the reserve chain for the relay chain tokens
-3. Parachain that mints in pallet-balances when it receives relay chain tokens.
-4. Parachain that uses 32 byte accounts and that makes it possible for users to execute XCMs locally.
+1. Parachain that trusts the relay as the reserve chain for the relay chain tokens
+1. Parachain that mints in pallet-balances when it receives relay chain tokens.
+1. Parachain that uses 32 byte accounts and that makes it possible for users to execute XCMs locally.
 
 ---
 
@@ -116,13 +116,15 @@ Questions that you should have answers for:
 
 Notes:
 
-This will define how we convert a multilocation into a local accountId. This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
+This will define how we convert a multilocation into a local accountId.
+This is useful when we want to withdraw/deposit tokens from a multilocation-defined origin or when we want to dispatch as signed origins from a multilocation-defined origin.
 
 ---v
 
 ### 📁 Configuring LocationToAccountId with xcm-builder
 
-1. `Account32Hash`: The most generic locationToAccountIdConverter. It basically hashes the multilocation and takes the lowest 32 bytes to make a 32 byte account.
+1. `Account32Hash`: The most generic locationToAccountIdConverter.
+   It basically hashes the multilocation and takes the lowest 32 bytes to make a 32 byte account.
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
@@ -195,7 +197,8 @@ impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone
 
 Notes:
 
-For our example, we only need the 4th. We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
+For our example, we only need the 4th.
+We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
 
 ---
 
@@ -208,7 +211,8 @@ For our example, we only need the 4th. We have a requirement of users being able
 
 ### 👍 Configuring asset-transactors with xcm-builder
 
-1. `CurrencyAdapter`: A simple adapter that uses a single currency as the assetTransactor. This is usually used for withdrawing/depositing the native token of the chain.
+1. `CurrencyAdapter`: A simple adapter that uses a single currency as the assetTransactor.
+   This is usually used for withdrawing/depositing the native token of the chain.
 
 ```rust
 pub struct CurrencyAdapter<Currency, Matcher, AccountIdConverter, AccountId, CheckedAccount>(
@@ -240,7 +244,8 @@ impl
 
 ### 👍 Configuring asset-transactors with xcm-builder
 
-2. `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens. An example of these would be `pallet-assets` tokens.
+2. `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens.
+   An example of these would be `pallet-assets` tokens.
 
 Notes:
 
@@ -329,7 +334,8 @@ where
 
 Notes:
 
-To meet our requirements, we only require number 3. This will allow us to execute (locally) Transact dispatchables.
+To meet our requirements, we only require number 3.
+This will allow us to execute (locally) Transact dispatchables.
 
 ---
 
@@ -366,15 +372,19 @@ pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>(
 
 ### 🚧 Configuring Barriers with xcm-builder
 
-1. `TakeWeightCredit`: A barrier that subtracts the maximum weight the message can consume from the available weight credit. Usually configured for local xcm-execution
+1. `TakeWeightCredit`: A barrier that subtracts the maximum weight the message can consume from the available weight credit.
+   Usually configured for local xcm-execution
 
-2. `AllowTopLevelPaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, this is a barrier that ensures the message contains weight payment instructions. In other words, it makes sure the first instruction puts asset into the holding register (`TeleportAsset`, `WithdrawAsset`, `ClaimAsset`, `ReserveAssetDeposit`), and then it checks that there exists a `BuyExecution` instruction that is able to pay for the message weight. **Critical to avoid free DOS**.
+2. `AllowTopLevelPaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, this is a barrier that ensures the message contains weight payment instructions.
+   In other words, it makes sure the first instruction puts asset into the holding register (`TeleportAsset`, `WithdrawAsset`, `ClaimAsset`, `ReserveAssetDeposit`), and then it checks that there exists a `BuyExecution` instruction that is able to pay for the message weight.
+   **Critical to avoid free DOS**.
 
 ---v
 
 ### 🚧 Configuring Barriers with xcm-builder
 
-3. `AllowUnpaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, allows free execution from such origin (i.e., does not check anything from the message). Useful for chains that "trust" each other (e.g., Statemine or any system parachain with the relay)
+3. `AllowUnpaidExecutionFrom<T>`: If the `origin` that sent the message is contained in `T`, allows free execution from such origin (i.e., does not check anything from the message).
+   Useful for chains that "trust" each other (e.g., Statemine or any system parachain with the relay)
 
 ```rust
 /// Allows execution from any origin that is contained in `T` (i.e. `T::Contains(origin)`) without any payments.
@@ -403,7 +413,8 @@ impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
 
 Notes:
 
-To meet our example use case, we only need the relay to have free execution. Hence using `AllowUnpaidExecutionFrom` should be enough.
+To meet our example use case, we only need the relay to have free execution.
+Hence using `AllowUnpaidExecutionFrom` should be enough.
 
 ---
 
@@ -454,7 +465,8 @@ impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungib
 
 - The concept of `LocationInverter` is simple: knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
 
-- Xcm-builder provides an easy way of doing this with the `LocationInverter<Ancestry>` struct. The only thing we need to configure is the **Ancestry**, which indicates how to go from `root` (the top-level consensus system) to your chain.
+- Xcm-builder provides an easy way of doing this with the `LocationInverter<Ancestry>` struct.
+  The only thing we need to configure is the **Ancestry**, which indicates how to go from `root` (the top-level consensus system) to your chain.
 
 Example:
 
@@ -468,7 +480,10 @@ Example:
 
 **Important Notes!:**
 
-**`LocationInverter` configuration will disappear in XcmV3!**. Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept. However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**. `UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system:
+**`LocationInverter` configuration will disappear in XcmV3!**.
+Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept.
+However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**.
+`UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system.
 
 Example for parachain 1000 in Kusama:
 
@@ -479,15 +494,21 @@ Example for parachain 1000 in Kusama:
 
 ### 🎨 Configuring pallet-xcm
 
-- Pallet-xcm plays a critical role in every chains xcm-setup. It is the main connection between the FRAME subsystem and the XCM subsystem. Essentially **pallet-xcm allows us to send/execute XCM and interact with the xcm-executor**.
+- Pallet-xcm plays a critical role in every chains xcm-setup.
+  It is the main connection between the FRAME subsystem and the XCM subsystem.
+  Essentially **pallet-xcm allows us to send/execute XCM and interact with the xcm-executor**.
 
-- Pallet-xcm can be configured to filter executions/teleporting or sending among others. The most important components are:
+- Pallet-xcm can be configured to filter executions/teleporting or sending among others.
+  The most important components are:
 
-1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages. These can be filtered through the `XcmExecuteFilter`.
-2. It provides an easier interface to do reserveTransferAssets and TeleportAssets. The origins from which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
-3. It handles XCM version negotiation duties
-4. It handles asset-trap/claim duties
-5. It allows sending arbitrary messages to other chains for certain origins. The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
+1. It allows for users to interact with the xcm-executor by allowing them to execute xcm messages.
+   These can be filtered through the `XcmExecuteFilter`.
+1. It provides an easier interface to do reserveTransferAssets and TeleportAssets.
+   The origins from which these messages can be sent can also be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`
+1. It handles XCM version negotiation duties
+1. It handles asset-trap/claim duties
+1. It allows sending arbitrary messages to other chains for certain origins.
+   The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
 
 ---v
 
@@ -526,7 +547,8 @@ impl pallet_xcm::Config for Runtime {
 
 ### 🛄 Configuring Asset Trap/Claims with PalletXcm
 
-The `AssetTrap` configuration item allows us to decide what to do with assets that remain in the holding register after the XCM instructions are executed. Similarly `AssetClaim` allows us to decide how to reclaim assets that were trapped.
+The `AssetTrap` configuration item allows us to decide what to do with assets that remain in the holding register after the XCM instructions are executed.
+Similarly `AssetClaim` allows us to decide how to reclaim assets that were trapped.
 
 ```rust
 impl Config for XcmConfig {
@@ -541,7 +563,8 @@ impl Config for XcmConfig {
 
 ### 🛄 Configuring Asset Trap/Claims with PalletXcm
 
-- **PalletXcm asset trapper**: PalletXcm stores Trapped assets in the `AssetTraps` storage item. For an efficient Trap management, traps are indexed by `BlakeTwo256((origin, assets))`, each holding a counter of how many times such origin has trapped such multiAsset.
+- **PalletXcm asset trapper**: PalletXcm stores Trapped assets in the `AssetTraps` storage item.
+  For an efficient Trap management, traps are indexed by `BlakeTwo256((origin, assets))`, each holding a counter of how many times such origin has trapped such multiAsset.
 
 - **PalletXcm asset claimer**: Similarly to how assets are trapped, PalletXcm also allows for claiming trapped assets, providing that:
   - the origin claiming the assets is identical to the one that trapped them.
@@ -563,7 +586,8 @@ pub enum VersionedXcm {
 }
 ```
 
-But chains need to be aware of the version supported by each other. `SubscribeVersion` and `QueryResponse` play a key role here:
+But chains need to be aware of the version supported by each other.
+`SubscribeVersion` and `QueryResponse` play a key role here:
 
 ```rust
 enum Instruction {
@@ -600,7 +624,6 @@ The last 2 items will be set to be handled by pallet-xcm.
 But what do all these elements mean:
 
 1. `ResponseHandler`: The component in charge of handling response messages from other chains
-
-2. `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
+1. `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
 
 ---

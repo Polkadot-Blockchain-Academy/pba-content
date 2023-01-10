@@ -96,7 +96,7 @@ It also concretely states that in XCMv2, the `v2::Xcm` struct is simply defined 
 
 Four kinds of XCM instructions:
 
-<widget-text center>
+<pba-flex center>
 
 - Instruction
 - Trusted Indication
@@ -117,7 +117,7 @@ These instructions usually originate from the relay chain.
 
 Split into a few categories. Instructions that:
 
-<widget-text center>
+<pba-flex center>
 
 - **handle assets**
 - changes the state of the XCVM registers
@@ -131,7 +131,7 @@ Split into a few categories. Instructions that:
 
 ## Instruction
 
-<widget-text center>
+<pba-flex center>
 
 handle assets:
 
@@ -268,21 +268,19 @@ UnsubscribeVersion - if the sender was previously subscribed to XCM version chan
 ## 🗣️ XCM Version Negotiation
 
 XCM version negotiation:
-<widget-text center>
+<pba-flex center>
 
 1. Chain A sends `SubscribeVersion` to chain B.
-2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
-3. Chain A stores chain B's supported version on storage.
-4. The same procedure happens from chain B to chain A.
-5. Communication is established using the highest mutually supported version.
+1. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
+1. Chain A stores chain B's supported version on storage.
+1. The same procedure happens from chain B to chain A.
+1. Communication is established using the highest mutually supported version.
 
 ---v
 
 ## 🗣️ XCM Version Negotiation
 
-<center>
 <img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
-</center>
 
 ---
 
@@ -412,21 +410,21 @@ The code in the error handler register can only be used once, otherwise the exec
 
 ---
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 ### XCM with Fees Example
 
 For systems that do require some fee payment though, XCM provides the ability to buy execution resources with assets. Doing so, broadly speaking, consists of three parts:
 
-<widget-text center>
+<pba-flex center>
 
 1. Assets provided
 1. Negotiate exchange of assets for compute time (weight)
 1. XCM operations will be performed as instructed
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 ```rust [1|]
 WithdrawAsset((Here, 10_000_000_000).into()),
@@ -441,8 +439,8 @@ DepositAsset {
 },
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 Notes:
 

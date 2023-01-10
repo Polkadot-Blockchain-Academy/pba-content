@@ -20,7 +20,7 @@ Notes:
 
 ## _At the end of this lecture, you will be able to:_
 
-<widget-text center>
+<pba-flex center>
 
 - Define the concepts, syntax, and terms of XCM
 - Navigate exiting resources that relate to XCM
@@ -42,7 +42,7 @@ EXERCISE: ask the class to raise hands and postulate on generally what one might
 
 ## 🎬 Some Concrete Use-cases
 
-<widget-text center>
+<pba-flex center>
 
 1. Cross-consensus asset transfers
 1. Execute platform-specific actions (extrinsics) such as governance voting
@@ -65,7 +65,7 @@ XCM enables a single chain to direct the actions of many other chains, which hid
 
 **Consensus systems**: A chain, contract or other global, encapsulated, state machine singleton.
 
-<widget-text center>
+<pba-flex center>
 
 - Can be any programmatic state-transition system that exists within consensus which can send/receive datagrams.
 - It does not even have to be a _distributed_ system, only that it can form _some_ kind of consensus.
@@ -102,7 +102,7 @@ A post card relies on the postal service to get itself sent towards its receiver
 
 Drawbacks of relying on native messaging or transaction format:
 
-<widget-text center>
+<pba-flex center>
 
 - Lack of uniformity between consensus systems on message format
 - Common cross-consensus use-cases do not map one-to-one to a single transaction
@@ -123,7 +123,7 @@ Notes:
 
 XCM is designed around four 'A's:
 
-<widget-text center>
+<pba-flex center>
 
 - **Agnostic**: No assumptions about Consensus System messaged
 - **Absolute**: Guaranteed delivery, interpretation, and ordering
@@ -162,7 +162,7 @@ Thus, each consensus system cannot make any guarantees on the expected time requ
 
 XCM has no results:
 
-<widget-text center>
+<pba-flex center>
 
 - No errors reported to sender
 - No callbacks for sender
@@ -179,7 +179,7 @@ The receiver side can and does handle errors, but the sender will not be notifie
 
 We _could_ have XCM describe async behavior but do not because:
 
-<widget-text center>
+<pba-flex center>
 
 - Complexity, custom per sender/receiver pair
 - Expense of operating in fee-based systems
@@ -216,7 +216,7 @@ It is always represented as a location _relative_ to the current consensus syste
 
 A single item in a path to describe the relative location of a consensus system:
 
-<widget-text center>
+<pba-flex center>
 
 - `Parachain`
 - `AccountId32`
@@ -271,7 +271,7 @@ This will be very powerful later on (Origins)
 
 ## Construct a `MultiLocation`!
 
-<widget-text center>
+<pba-flex center>
 
 1. What is _your_ location?
 1. Where do you _want to send to_?
@@ -313,8 +313,8 @@ Notes:
 
 ---
 
-<widget-columns>
-<widget-column>
+<pba-cols
+<pba-col>
 
 ### 💰 `MultiAsset` in XCM
 
@@ -322,8 +322,8 @@ There are many _classes_ of assets (fungible, NFTs,...)
 
 The datatype `MultiAsset` describes them all.
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 ```rust
 struct MultiAsset {
@@ -332,8 +332,8 @@ struct MultiAsset {
 }
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -437,7 +437,7 @@ Scenario:
 Current consensus system is `Para(1337)`.
 Destination consensus system is `Para(6969)`.
 
-<widget-text center>
+<pba-flex center>
 
 - Where is `Here`?
 - What happens when I send a `MultiAsset`<br>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
@@ -450,7 +450,7 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 ## 🤹 Many models for <br> transferring assets
 
-<widget-text center>
+<pba-flex center>
 
 1. "Remote control" an account on another system
 1. Reserve transfers
@@ -464,20 +464,20 @@ We might want to simply control an account on a remote chain, allowing the local
 
 ## 🤹 Many models for <br> transferring assets
 
-<widget-columns>
-<widget-column>
+<pba-cols
+<pba-col>
 
 <img style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
 <br>
 <img style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 <img style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer"/>
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 Notes:
 
@@ -487,7 +487,7 @@ TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-c
 
 ## Next steps
 
-<widget-text center>
+<pba-flex center>
 
 1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
 1. XCM Format [repository](https://github.com/paritytech/xcm-format)
