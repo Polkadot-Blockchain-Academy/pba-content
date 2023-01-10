@@ -24,11 +24,13 @@ It’s an ultra-high level non-Turing-complete computer whose instructions are d
 Messages are one or more XCM instructions.
 The program executes until it either runs to the end or hits an error, at which point it finishes up and halts.
 An XCM executor following the XCVM specification is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
+
 ---
+
 ### XCVM Instructions
 
 XCM Instructions might change a register, they might change the state of the consensus system or both.
-   
+
 One example of such an instruction would be `TransferAsset` which is used to transfer an asset to some other address on the remote system.
 It needs to be told which asset(s) to transfer and to whom/where the asset is to be transferred.
 
@@ -41,7 +43,9 @@ enum Instruction {
     /* snip */
 }
 ```
+
 ---
+
 ## XCVM Instructions preview
 
 Four kinds of instructions:
@@ -55,8 +59,10 @@ Notes:
 
 `Instruction` is a bad name for the kind of XCVM instructions that we have, but it means instructions that result in a state change in the local consensus system, or instruct the local consensus system to achieve some desired behaviour.
 
-<!-- TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them. Highlight LOCATION and ASSET instructions, that we will go into next -->  
+<!-- TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them. Highlight LOCATION and ASSET instructions, that we will go into next -->
+
 ---
+
 ## XCVM Registers
 
 ```rust
@@ -84,6 +90,7 @@ pub struct XcmExecutor<Config: config::Config> {
 - Note that XCVM registers are temporary/transient
 
 ---
+
 ## Basic XCVM Operation
 
 XCVM operates as a fetch-dispatch loop
@@ -92,7 +99,7 @@ XCVM operates as a fetch-dispatch loop
 
 - Common in state machines
 
-<!-- TODO: Graphics about a state machine similar to how the XCVM operates --> 
+<!-- TODO: Graphics about a state machine similar to how the XCVM operates -->
 
 ---
 
@@ -119,21 +126,24 @@ Notes:
 <widget-column>
 
 ### 📍 The Origin Register
+
 Contains the `Multilocation` of the cross-consensus origin where the XCM originated from.
 
 It is always the relative view from the consensus system in which the XCM is executed.
 
 ---
+
 ### 💁 The Holding Register
+
 Expresses a number of assets in control of the xcm-execution but that have no representation on-chain.
 
 It can be seen as the register holding "unspent assets".
 
-
-Example:  Let’s take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
+Example: Let’s take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
 But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation. These assets are held in the holding register until they are deposited anywhere else.
 
 ---
+
 ### 💁 XCM by example: The `WithdrawAsset` instruction
 
 `WithdrawAsset` has no location specified for assets.
@@ -150,14 +160,17 @@ They are _temporarily_ held in what in the Holding Register.
 // `WithdrawAsset` instruction.
 
 enum Instruction {
-   WithdrawAsset(MultiAssets), 
+   WithdrawAsset(MultiAssets),
 }
 ```
+
 </widget-column>
 </widget-columns>
 
 ---
+
 ### 💁 XCM by example: The `DepositAsset` instruction
+
 Takes assets from the holding register and deposits them in a beneficiary.
 
 Typically an instruction that places assets into the holding register would have been executed.
@@ -176,7 +189,7 @@ enum Instruction {
         assets: MultiAssetFilter,
         max_assets: u32,
         beneficiary: MultiLocation,
-    }, 
+    },
     /* snip */
 }
 ```
@@ -185,12 +198,14 @@ enum Instruction {
 </widget-columns>
 
 ---
+
 ### 💁 XCM by example: The `Transact` instruction
+
 Executes a scale-encoded transaction.
 
 It dispatches from a FRAME origin derived from the origin register.
 
-OriginKind defines the type of FRAME origin that should be derived: *root*, *signed*, *parachain*..
+OriginKind defines the type of FRAME origin that should be derived: _root_, _signed_, _parachain_..
 </widget-column>
 </widget-columns>
 
@@ -208,17 +223,20 @@ enum Instruction {
 }
 
 ```
+
 </widget-column>
 </widget-columns>
 
 ---
+
 ### 💁 XCM by example: The `ClearOrigin` instruction
+
 It clears the origin stored in the origin register.
 
 Useful to execute subsequent messages without a potentially-abusable origin.
 
 Example: we withdraw assets from a parachain controlled account, but then we dont want Transact to be executed
- 
+
 </widget-column>
 </widget-columns>
 
@@ -229,5 +247,6 @@ enum Instruction {
     /* snip */
 }
 ```
+
 </widget-column>
 </widget-columns>

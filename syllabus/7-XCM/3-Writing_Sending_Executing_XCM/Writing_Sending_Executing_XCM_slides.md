@@ -266,6 +266,7 @@ SubscribeVersion - instructs the local system to notify the sender whenever the 
 UnsubscribeVersion - if the sender was previously subscribed to XCM version change notifications for the local system, then this instruction tells the local system to stop notifying the sender on version changes.
 
 ---v
+
 ## 🗣️ XCM Version Negotiation
 
 XCM version negotiation:
@@ -278,13 +279,14 @@ XCM version negotiation:
 5. Communication is established using the highest mutually supported version.
 
 ---v
+
 ## 🗣️ XCM Version Negotiation
+
 <center>
 <img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
 </center>
 
 ---
-
 
 ## Assertion Instructions
 
@@ -467,4 +469,3 @@ We don’t actually know how much is remaining in the Holding Register, but that
 We’ll place them in the sovereign account of Statemint (which is identified as Parachain(1000).
 
 ---
-

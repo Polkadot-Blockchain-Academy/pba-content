@@ -152,7 +152,7 @@ No guarantees on delivery time.
 
 Notes:
 
-Generally, consensus systems are not designed to operate in sync with external systems. 
+Generally, consensus systems are not designed to operate in sync with external systems.
 They intrinsically need to have a uniform state to reason about and do not, by default, have the means to verify states of other consensus systems.
 Thus, each consensus system cannot make any guarantees on the expected time required to deliver results; doing so haphazardly would cause the recipient to be blocked waiting for responses that are either late or would never be delivered, and one of the possible reasons for that would be an impending runtime upgrade that caused a change in how responses are delivered.
 
@@ -448,7 +448,6 @@ Notes:
 MultiLocations are relative, so they must be updated and rewritten when sent to another chain.
 
 ---
-
 
 ## 🤹 Many models for <br> transferring assets
 
