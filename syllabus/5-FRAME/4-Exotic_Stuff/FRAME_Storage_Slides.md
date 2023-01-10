@@ -952,6 +952,8 @@ twox64concat("world") = 0xef51ee66fefb78e7776f726c64
 
 ## Better Balance Map
 
+<div class="text-small">
+
 We should use `Blake2_128Concat`!
 
 ```rust
@@ -981,6 +983,8 @@ fn better_balance_map() {
 [600, 500, 300, 100, 800, 400, 700, 900, 0, 200]
 [(6, 600), (5, 500), (3, 300), (1, 100), (8, 800), (4, 400), (7, 700), (9, 900), (0, 0), (2, 200)]
 ```
+
+</div>
 
 ---
 
