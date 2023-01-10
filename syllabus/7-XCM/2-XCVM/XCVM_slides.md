@@ -32,6 +32,8 @@ XCM Instructions might change a register, they might change the state of the con
 One example of such an instruction would be `TransferAsset` which is used to transfer an asset to some other address on the remote system.
 It needs to be told which asset(s) to transfer and to whom/where the asset is to be transferred.
 
+<br>
+
 ```rust
 enum Instruction {
     TransferAsset {
@@ -48,10 +50,14 @@ enum Instruction {
 
 Four kinds of instructions:
 
+<pba-flex center>
+
 - Instruction
 - Trusted Indication
 - Information
 - System Notification
+
+</pba-flex>
 
 Notes:
 
@@ -94,11 +100,11 @@ pub struct XcmExecutor<Config: config::Config> {
 
 XCVM operates as a fetch-dispatch loop
 
-<pba-flex center>
+_Common in state machines_
 
-- Common in state machines
+Notes:
 
-<!-- TODO: Graphics about a state machine similar to how the XCVM operates -->
+TODO: Graphics about a state machine similar to how the XCVM operates
 
 ---
 
@@ -121,14 +127,15 @@ Notes:
 
 ---
 
-<pba-cols>
-<pba-col>
-
 ### 📍 The Origin Register
 
 Contains the `Multilocation` of the cross-consensus origin where the XCM originated from.
 
 It is always the relative view from the consensus system in which the XCM is executed.
+
+Notes:
+
+TODO: should there be 2 columns for this slide and the other registers? (from Nuke)
 
 ---
 
@@ -150,9 +157,6 @@ These assets are held in the holding register until they are deposited anywhere 
 
 They are _temporarily_ held in what in the Holding Register.
 
-</pba-col>
-<pba-col>
-
 ```rust
 // There are a number of instructions
 // which place assets on the Holding Register.
@@ -164,12 +168,12 @@ enum Instruction {
 }
 ```
 
-</pba-col>
-</pba-cols>
-
 ---
 
 ### 💁 XCM by example: The `DepositAsset` instruction
+
+<pba-cols>
+<pba-col>
 
 Takes assets from the holding register and deposits them in a beneficiary.
 
@@ -197,22 +201,31 @@ enum Instruction {
 </pba-col>
 </pba-cols>
 
+Notes:
+
+TODO: this slide looks right, see above todo (from Nuke)
+
 ---
 
 ### 💁 XCM by example: The `Transact` instruction
+
+<pba-cols>
+<pba-col>
 
 Executes a scale-encoded transaction.
 
 It dispatches from a FRAME origin derived from the origin register.
 
 OriginKind defines the type of FRAME origin that should be derived: _root_, _signed_, _parachain_..
+
 </pba-col>
-</pba-cols>
+<pba-col>
 
 ```rust
-// Transact allows to execute arbitrary calls in a chain
-// It is the most generic instruction, as it allows the
-// interaction with any runtime pallet
+// Transact allows to execute arbitrary
+// calls in a chain. It is the most generic
+// instruction, as it allows the interaction
+// with any runtime pallet
 enum Instruction {
     Transact {
 		origin_type: OriginKind,
@@ -221,7 +234,6 @@ enum Instruction {
 	},
     /* snip */
 }
-
 ```
 
 </pba-col>
@@ -231,6 +243,9 @@ enum Instruction {
 
 ### 💁 XCM by example: The `ClearOrigin` instruction
 
+<pba-cols>
+<pba-col>
+
 It clears the origin stored in the origin register.
 
 Useful to execute subsequent messages without a potentially-abusable origin.
@@ -238,10 +253,13 @@ Useful to execute subsequent messages without a potentially-abusable origin.
 Example: we withdraw assets from a parachain controlled account, but then we don't want Transact to be executed
 
 </pba-col>
-</pba-cols>
+<pba-col>
 
 ```rust
-// Clear Origin is key to maintain isolation between instructions that are executed with a particular origin and instructions that are not
+// Clear Origin is key to maintain isolation
+// between instructions that are executed
+// with a particular origin and instructions
+// that are not.
 enum Instruction {
     ClearOrigin
     /* snip */
