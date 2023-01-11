@@ -65,7 +65,7 @@ Another desireable property that is sometimes too obvious to say.
 <widget-columns>
 <widget-column>
 
-<img style="width: 20em" src="../../../assets/img/3-Blockchain/3.2-south-park-consensus.png"/>
+<img style="width: 20em" src="../../assets/img/3-Blockchain/3.2-south-park-consensus.png"/>
 
 </widget-column>
 
@@ -121,7 +121,7 @@ Someone please volunteer to describe what one of these means in this example.
 <widget-columns>
 <widget-column>
 
-<img style="width: 26em" src="../../../assets/img/3-Blockchain/3.2-Byzantine-Generals.png"/>
+<img style="width: 26em" src="../../assets/img/3-Blockchain/3.2-Byzantine-Generals.png"/>
 
 </widget-column>
 
@@ -243,7 +243,7 @@ A system is one of:
 
 ## FLP Impossibility
 
-<img style="padding: 0 200px 0 0" src="../../../assets/img/3-Blockchain/3.2-FLP-impossible.png"/>
+<img style="padding: 0 200px 0 0" src="../../assets/img/3-Blockchain/3.2-FLP-impossible.png"/>
 
 Notes:
 

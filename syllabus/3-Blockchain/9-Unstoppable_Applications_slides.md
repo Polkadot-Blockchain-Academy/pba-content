@@ -10,10 +10,6 @@ teaching-assistants: ["Sacha Lansky"]
 
 ---
 
-<widget-speaker name="Joe Petrowski" position="Common Good Parachains Team Lead at Web3 Foundation" image="/assets/img/0-Shared/people/joe.png" github=" joepetrowski" twitter="joepetrowski" linkedin="joe-petrowski-73538929" matrix="joe:web3.foundation"></widget-speaker>
-
----
-
 ## Motivation
 
 So far, we have discussed state machines and consensus.
@@ -24,7 +20,7 @@ But spent little time addressing the contexts in which they operate.
 
 ## Attacking Web3
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-xkcd-security.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-security.png"/>
 
 Notes:
 
@@ -42,7 +38,7 @@ Platforms are OK as service providers, but peer-to-peer guarantees must be uphel
 
 ## Web3 Tech Stack
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
 
 ---
 
@@ -86,7 +82,7 @@ We will discuss these and what we're building to realise a better stack.
 
 <center>
 
-<img style="width: 500px" src="../../../assets/img/3-Blockchain/3.4-P2P-network.svg"/>
+<img style="width: 500px" src="../../assets/img/3-Blockchain/3.4-P2P-network.svg"/>
 
 </center>
 
@@ -116,7 +112,7 @@ We actually don't want authority sets to organise because it creates risk.
 
 ## Mining Pools
 
-<img  src="../../../assets/img/3-Blockchain/3.4-mining-pools.png"/>
+<img  src="../../assets/img/3-Blockchain/3.4-mining-pools.png"/>
 
 Source: [Buy Bitcoin Worldwide](https://www.buybitcoinworldwide.com/pages/mining/pools/img/pool-graph.png)
 
@@ -144,9 +140,7 @@ Emergence of obscure/niche "Proof of X" algorithms to shelter from attack only g
 
 ## Proof of Work Battles
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
-
-Source: [Dollar Cost Bitcoin](https://dollarcostbitcoin.1998.vn/tools/51attack)
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
 
 ---
 
@@ -164,7 +158,7 @@ Source: [Dollar Cost Bitcoin](https://dollarcostbitcoin.1998.vn/tools/51attack)
 
 ## Equivocation
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-equivocation.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-equivocation.png"/>
 
 ---
 
@@ -216,7 +210,7 @@ A few interesting design decisions in Polkadot w/r/t its architecture:
 
 Heavily based on trust.
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-web2stack.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-web2stack.png"/>
 
 Any cryptographic guarantees are between central authority and users.
 
@@ -234,7 +228,7 @@ But nodes can consume large amounts of storage, network, and CPU resources.
 
 So, most people outsource.
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-node-queries.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-node-queries.png"/>
 
 These service providers wield large amounts of power to deceive, censor, and surveil.
 
@@ -244,7 +238,7 @@ These service providers wield large amounts of power to deceive, censor, and sur
 
 If running _one_ node is burdensome, try multiple.
 
-<img style="width: 500px" src="../../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
+<img style="width: 500px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
 
 ---
 
@@ -260,7 +254,7 @@ Light clients only store block headers and consensus-critical information.
 
 ## Light Clients
 
-<img style="width: 1200px" src="../../../assets/img/3-Blockchain/3.4-light-clients.png"/>
+<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-light-clients.png"/>
 
 ---
 
@@ -381,13 +375,13 @@ When these systems interact, they must trust messages from the other system.
 
 ## Reversions
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-reversions-1.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-reversions-1.png"/>
 
 ---
 
 ## Reversions
 
-<img style="width: 1000px" src="../../../assets/img/3-Blockchain/3.4-reversions-2.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-reversions-2.png"/>
 
 ---
 

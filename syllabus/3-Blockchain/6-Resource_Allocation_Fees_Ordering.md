@@ -10,17 +10,13 @@ teaching-assistants: ["Sacha Lansky"]
 
 ---
 
-<widget-speaker name="Joe Petrowski" position="Common Good Parachains Team Lead at Web3 Foundation" image="/assets/img/0-Shared/people/joe.png" github=" joepetrowski" twitter="joepetrowski" linkedin="joe-petrowski-73538929" matrix="joe:web3.foundation"></widget-speaker>
-
----
-
 ## Overview
 
 <center>
 
 1. [Fees and ordering](#fees--ordering)
 1. [Execution models](#execution-models)
-1. [Bridges](#bridges)
+1. [Bridges](#fees-ordering-and-bridges)
 
 </center>
 
@@ -138,7 +134,7 @@ Block authors will normally choose the set of transactions that would yield the 
 
 ## Bitcoin Fee Market
 
-<img style="width: 800px" src="../../../assets/img/3-Blockchain/3.3-fees-bitcoin-average-fee.png"/>
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.3-fees-bitcoin-average-fee.png"/>
 
 Notes:
 
@@ -182,7 +178,7 @@ If it runs out of gas, it terminates the program.
 
 ## Gas Rates
 
-<img style="width: 800px" src="../../../assets/img/3-Blockchain/3.3-fees-ethereum-average-gas-price.png"/>
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.3-fees-ethereum-average-gas-price.png"/>
 
 Notes:
 

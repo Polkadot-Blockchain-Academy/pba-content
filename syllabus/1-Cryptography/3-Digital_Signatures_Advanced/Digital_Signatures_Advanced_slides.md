@@ -2,8 +2,6 @@
 title: Advanced Digital Signatures
 description: More exotic digital signature methods
 duration: 1 hour
-instructors: ["Alistair Stewart"]
-teaching-assistants: ["Dan Shields, Sacha Lansky"]
 ---
 
 # Advanced Digital Signatures
@@ -30,7 +28,7 @@ For example, the certificate transparency protocol for TLS certificates helps pr
 
 ### Certificates in Web3
 
-We are building systems that don't have a "Certificate Authority".
+We are building systems that don't have a "Certificate Authority".<br>
 But we can still use certificates in some niche instances.
 
 Notes:
@@ -43,28 +41,26 @@ Potential example to give verbally:
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
-
-## Multi-Signatures
-
----
-
 ### Multi-Signatures
 
-We often want signatures that must be signed by multiple parties to become valid.
+We often want signatures that must be signed<br>by multiple parties to become valid.
 
-- Require some threshold of members to agree to a message
+<pba-flex center>
+
+- Require some threshold of members to<br>agree to a message
 - Protect against key loss
+
+</pba-flex>
 
 ---
 
 ### Types of Multi-Signature
 
-<widget-text center>
+<pba-flex center>
 
 - Verifier enforced
 - Cryptographic threshold
-- Cryptographic non-threshold (a.k.a. signature aggregation)
+- Cryptographic non-threshold<br>(a.k.a. signature aggregation)
 
 ---
 
@@ -92,7 +88,7 @@ This good experience comes at the cost of using state and more user interactions
 Cryptographic multi-signatures can be achieved purely on the signer side (without support from the verifier).
 This makes more compact signatures compatible with legacy systems.
 
-<widget-text center>
+<pba-flex center>
 
 _Example: "5 of 7 key holders have signed this message."_
 
@@ -104,10 +100,10 @@ These require multi-party computation (MPC) protocols, which add some complexity
 
 ### Cryptographic Non-Threshold Multi-Sigs
 
-Sometimes we do not need a threshold represented in a public key.
+Sometimes we do not need a threshold represented in a public key.<br>
 But we want a succinct way to demonstrate that multiple parties have signed a message.
 
-<widget-text center>
+<pba-flex center>
 
 _Example: "5 key holders have signed this message."_
 
@@ -125,7 +121,7 @@ This DKG protocol breaks other useful things, like hard key derivation.
 
 ### Key Generation - Non-Threshold
 
-In non-threshold multi-signatures, signatures from individual public keys are aggregated.
+In non-threshold multi-signatures,<br>signatures from individual public keys are aggregated.
 
 Each participant can choose their own key to use for the multi-signature.
 
@@ -165,10 +161,12 @@ Verifying individual signatures is _slow_, but verifying aggregated ones is rela
 
 Allows multiple signatures generated under multiple public keys for multiple messages to be aggregated into a single signature.
 
-<widget-text center>
+<pba-flex center>
 
 - Uses heavier pairing friendly elliptic curves than ECDSA/Schnorr.
 - Very popular for consensus.
+
+<pba-flex>
 
 ---
 
@@ -185,7 +183,7 @@ However...
 
 ### Schnorr and BLS Summary
 
-Schnorr & BLS multi-signatures avoid complicating verifier logic, but introduce user experience costs such as:
+Schnorr & BLS multi-signatures avoid complicating verifier logic,<br>but introduce user experience costs such as:
 
 - DKG protocols
 - Reduced key derivation ability
@@ -206,7 +204,6 @@ Notes:
 
 ---
 
-### Next Lesson
+<!-- .slide: data-background-color="#4A2439" -->
 
-- Exotic Primitives
-- Hash functions and data structures
+# Questions

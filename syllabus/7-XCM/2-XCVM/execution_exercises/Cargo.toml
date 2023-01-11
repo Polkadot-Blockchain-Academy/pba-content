@@ -1,0 +1,15 @@
+[package]
+name = "xcm-execution-exercise"
+version = "0.9.31"
+authors = ["Parity Technologies <admin@parity.io>"]
+description = "XCM Message Construction and Sending Exercise"
+edition = "2021"
+
+[dependencies]
+codec = { package = "parity-scale-codec", default-features = false, version = "3.0.0" }
+frame-support = { git = "https://github.com/paritytech/substrate", branch = "master" }
+frame-system = { git = "https://github.com/paritytech/substrate", branch = "master" }
+xcm-simulator-for-exercises = { path = "../../xcm-related-code/xcm-simulator-for-exercises" }
+xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+xcm-simulator = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+pallet-xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }

@@ -13,6 +13,8 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
   - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
   - [Conceptual workshops and exercises](#conceptual-workshops-and-activities)
 
+## Content organization
+
 ```
 syllabus/
 ├─ 1-example-module/
@@ -56,7 +58,6 @@ yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
-Please start with the ["How to use Reveal slides"](./syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
 
 <details>
 <summary>If you are missing node or yarn, please install them as described below. (click to toggle)</summary>
@@ -96,9 +97,9 @@ yarn
 
 **To see what reveal can do, please view the slides and their source for details:**
 
-- The [how-to use reveal slides](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.html#/) and the [source](./syllabus/0-Meta_For_Instructional_Staff/0-how-to-use-reveal-slides.md)
-- The [copy & paste slide templates](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.html#/) that are styled to use in your content and their [source](./syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.md)
-- The [lecture template slides](https://polkadot-blockchain-academy.on.fleek.co/syllabus/0-Meta_For_Instructional_Staff/lecture-template-slides.html#/) and their [source](./syllabus/0-Meta_For_Instructional_Staff/lecture-template-slides.md) that give the structure most lessons should use to start with.
+- [How-to use reveal slides](./syllabus/0-Meta_For_Instructional_Staff/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
+- [Lecture template slides](./syllabus/0-Meta_For_Instructional_Staff/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
+- [Copy & paste slide templates](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
 
 ---
 
@@ -110,7 +111,7 @@ Running this command will open a new browser tab and _watch for file changes_ (u
 yarn start
 ```
 
-**There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/1-copy-paste-reveal-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -194,7 +195,7 @@ fn largest_char(list: &[char]) -> char {
 
 #### Custom theme and CSS
 
-The [template](#editing-reveal-md-slides) can be used just copy and change slide by slide the content, and not worry with styling.
+The templates can be used just copy and change slide by slide the content, and not worry with styling.
 
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -220,14 +221,21 @@ Once you've followed the set-up instructions and have the repository running loc
 To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:
 
 ```sh
+# This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
 yarn links <Module Number>
+
+# This will check a single file
+
+yarn links <relative-link-to/the-top-working-dir/file.md>
 ```
 
-This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
-
-A the same too is also run by our CI on all files.
+The same tool is also run by our CI on all files for all pushes to all branches.
 See [.github/workflows/link-check.yml](.github/workflows/link-check.yml) for details.
 Both use the same [config file](.github/workflows/mlc_config.json).
+
+> You can ignore the link check for a single line by post-fixing it with:
+>
+> `Some private or intentionally broken link. <!-- TODO Remove this check disable once ... --> <!-- markdown-link-check-disable-line -->`
 
 ## Exercises, workshops and activities
 
