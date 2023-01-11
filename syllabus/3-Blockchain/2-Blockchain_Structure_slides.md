@@ -127,10 +127,7 @@ Before we even get to hardcore consensus, we can rule out _some_ possibilities b
 ---
 
 ## Realistic Blockchain Structure
-
-TODO Diagram
-
-Separated into two parts
+<img width="60%" src="./img/header-body.svg" />
 
 - Header: Summary of minimal important information about this block
 - Body: A batched list of state transitions
@@ -228,7 +225,11 @@ Notes:
 Extrinsics root is a crypto link to the body of the block. It is very similar to the state root.
 Consensus Digest is information necessary for the consensus algorithm to determine a block's validity. It varies widely with the consensus algorithm used and we will discuss it in two upcoming lectures.
 
----
+---v
+
+## Substrate Header (Full Picture)
+
+![Header is cryptographically linked to parent, body, and state](./img/headers-link-state-body.svg)
 
 ## Extrinsics
 
@@ -242,7 +243,7 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 ## Nodes
 
-Software agent that participates in blockchain network.
+Software agents that participate in blockchain network.
 <br>
 May perform these jobs:
 
@@ -286,16 +287,16 @@ Many nodes only perform a subset of these tasks
 
 </pba-flex>
 
----v
+---
 
 ## Transaction Pool
 
-TODO revise this
-
 Contains transactions that are not yet in blocks.
 
-Constantly prioritizing and reprioritizing transactions.
-
-Authoring nodes determine the order of upcoming transactions. In some sense they can see the future.
+Constantly prioritizing and re-prioritizing transactions.
 
 Operates as a blockspace market.
+
+Notes:
+Sometimes known as mempool (thanks bitcoin 🙄)
+Authoring nodes determine the order of upcoming transactions. In some sense they can see the future.
