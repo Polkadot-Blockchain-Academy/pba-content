@@ -28,7 +28,6 @@ Notes:
 * Difficult to regulate illicit activity
 * The network is limited by nodes with the weakest hardware(Why we have hardware requirements for blockchain networks)
 ---
-
 ## Initial discovery
 * Must know someone who is participating in the network initially
 * Bootnode/bootnodes (More on this later in Substrate) 
@@ -44,15 +43,24 @@ Notes:
 * 4.) Repeat steps 2 and 3 
 ---
 ## Paritions
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-partition.png">
 Notes: 
     Talk about how when a partition happens in P2P vs Centralized
     In p2p only one node needs to have a full copy in order for the file to
     beable to be distributed accross the network
+    Show picture of centralized network and p2p network with part of the network with a green check mark and the other with a red X
+---v
+## Partitions cont..
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-partition2.png">
 ---
 ## Attacks
-Notes: Eclipse Attacks
+Notes: Show picture of something scary and devious here 
+---
+## Eclipse Attack
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-eclipse-topology.png">
 ---
 ## Preventing Attacks
+
 Notes: Concise but revealing here..
 ---
 ## libp2p
