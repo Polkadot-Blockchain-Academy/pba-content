@@ -2,8 +2,6 @@
 title: Writing, Sending, and Execution of XCM
 description: Writing, Sending, and Execution of XCM for Web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung", "Gorka Irazoqui"]
-teaching-assistants: ["Andrew Burger", "Hector Bulgarini"]
 ---
 
 # Writing, Sending, and Execution of XCM
@@ -27,32 +25,34 @@ Notes:
 XCM is a work-in-progress, versioned format!
 A goal of this module is to make you capable of contributing to it.
 
-<!-- TODO: activity to look at proposed but not finalized addition (something like a ZK instruction set) -->
+TODO: activity to look at proposed but not finalized addition (something like a ZK instruction set)
 
 ---
 
 ## The XCM format
 
-The specification document for the XCM format:
+#### https://github.com/paritytech/xcm-format
 
-<br>
-
-https://github.com/paritytech/xcm-format
+The specification document for the XCM format
 
 ---
 
 ## XCM Specification Main Sections
+
+<pba-flex center>
 
 1. [XCM Communication Model](#xcm-communication-model)
 1. [Basic Top-Level Format](#basic-top-level-format)
 1. XCVM Registers\*
 1. [Basic XCVM Operation](#basic-top-level-format)
 1. [XCVM Instruction Set](#instruction)
-1. Universal Asset Identifiers (`MultiAsset`)\*
-1. Universal Consensus Location Identifiers (`MultiLocation`)\*
+1. Universal Asset Identifiers<br>
+   (`MultiAsset`)\*
+1. Universal Consensus Location Identifiers<br>
+   (`MultiLocation`)\*
 1. [XCM Error Types](#xcm-errors)
 
-<br>
+</pba-flex>
 
 _\*covered in lesson 1_
 
@@ -98,7 +98,7 @@ It also concretely states that in XCMv2, the `v2::Xcm` struct is simply defined 
 
 Four kinds of XCM instructions:
 
-<widget-text center>
+<pba-flex center>
 
 - Instruction
 - Trusted Indication
@@ -119,7 +119,7 @@ These instructions usually originate from the relay chain.
 
 Split into a few categories. Instructions that:
 
-<widget-text center>
+<pba-flex center>
 
 - **handle assets**
 - changes the state of the XCVM registers
@@ -133,7 +133,7 @@ Split into a few categories. Instructions that:
 
 ## Instruction
 
-<widget-text center>
+<pba-flex center>
 
 handle assets:
 
@@ -236,13 +236,13 @@ The dispatchable call function is an optional operation that XCM author can spec
 
 ## Information
 
-Offering some requested information that the local system is expecting
-
 ```rust
 enum Instruction {
     QueryResponse { query_id: QueryId, response: Response, max_weight: Weight, querier: Option<MultiLocation> },
 }
 ```
+
+Offering some requested information that the local system is expecting
 
 Notes:
 
@@ -266,25 +266,25 @@ SubscribeVersion - instructs the local system to notify the sender whenever the 
 UnsubscribeVersion - if the sender was previously subscribed to XCM version change notifications for the local system, then this instruction tells the local system to stop notifying the sender on version changes.
 
 ---v
+
 ## 🗣️ XCM Version Negotiation
 
 XCM version negotiation:
-<widget-text center>
+<pba-flex center>
 
 1. Chain A sends `SubscribeVersion` to chain B.
-2. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
-3. Chain A stores chain B's supported version on storage.
-4. The same procedure happens from chain B to chain A.
-5. Communication is established using the highest mutually supported version.
+1. Chain B responds `QueryResponse` to chain A with the same query_id and max_weight params, and puts the XCM version in the response
+1. Chain A stores chain B's supported version on storage.
+1. The same procedure happens from chain B to chain A.
+1. Communication is established using the highest mutually supported version.
 
 ---v
+
 ## 🗣️ XCM Version Negotiation
-<center>
+
 <img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
-</center>
 
 ---
-
 
 ## Assertion Instructions
 
@@ -340,8 +340,6 @@ The result of executing the decoded `Call` parameter in `Transact` is stored in 
 
 ## Trusted Indication
 
-Sender must have state-altering action _prior_ to sending
-
 ```rust
 enum Instruction {
     ReserveAssetDeposited(MultiAssets),
@@ -349,6 +347,8 @@ enum Instruction {
     NoteUnlockable { asset: MultiAsset, owner: MultiLocation },
 }
 ```
+
+Sender must have state-altering action _prior_ to sending.
 
 Notes:
 
@@ -363,8 +363,6 @@ The exact definition of "asset locking" is defined by the sender; however this w
 
 ## System Notification
 
-Handling operations for the underlying transport layer
-
 ```rust
 enum Instruction {
     HrmpNewChannelOpenRequest { sender: u32, max_message_size: u32, max_capacity: u32 },
@@ -373,15 +371,15 @@ enum Instruction {
 }
 ```
 
+Handling operations for the underlying transport layer
+
 Notes:
 
-<!-- TODO: Get someone familiar with XCMP to comment on whether or not these XCM instructions would still exist when we switch over to XCMP -->
+TODO: Get someone familiar with XCMP to comment on whether or not these XCM instructions would still exist when we switch over to XCMP
 
 ---
 
 ## Common XCM patterns
-
-Most systems expect execution fee payment
 
 ```rust
 Xcm(vec![
@@ -391,6 +389,8 @@ Xcm(vec![
     // ... the rest of the instructions
  ])
 ```
+
+Most systems expect execution fee payment
 
 Notes:
 
@@ -412,23 +412,27 @@ The code in the error handler register can only be used once, otherwise the exec
 
 ---
 
-<widget-columns>
-<widget-column>
-
 ### XCM with Fees Example
+
+<pba-cols>
+<pba-col>
 
 For systems that do require some fee payment though, XCM provides the ability to buy execution resources with assets. Doing so, broadly speaking, consists of three parts:
 
-<widget-text center>
+<pba-flex center>
 
 1. Assets provided
 1. Negotiate exchange of assets for compute time (weight)
 1. XCM operations will be performed as instructed
 
-</widget-column>
-<widget-column>
+</pba-flex>
 
-```rust [1|]
+</pba-col>
+<pba-col>
+
+<div style="font-size: smaller">
+
+```rust
 WithdrawAsset((Here, 10_000_000_000).into()),
 BuyExecution {
     fees: (Here, 10_000_000_000).into(), // MultiAsset
@@ -441,8 +445,10 @@ DepositAsset {
 },
 ```
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
+
+</div>
 
 Notes:
 
@@ -465,6 +471,3 @@ The third part of our XCM comes in depositing the funds remaining in the Holding
 For this we will just use the DepositAsset instruction.
 We don’t actually know how much is remaining in the Holding Register, but that doesn’t matter since we can specify a wildcard for the asset(s) which should be deposited.
 We’ll place them in the sovereign account of Statemint (which is identified as Parachain(1000).
-
----
-

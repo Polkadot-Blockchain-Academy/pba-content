@@ -1,12 +1,12 @@
 (Andrew Gorka)
 Module 1
 - Discuss problem of interoperability of consensus systems more
-    - Current briding solutions(Andrew)
+    - Current bridging solutions(Andrew)
     - Nomad hack example(Gorka)
-- Why XCM handles these gurantees of interoperability differently
+- Why XCM handles these guarantees of interoperability differently
 - Remove Versioning from Module 1 and put in Module 3 
-- Remove convienience code section 
-- Renachoring section needs more depth and content (Reanchoring example in paper exercise in class exercise)
+- Remove convenience code section 
+- Reanchoring section needs more depth and content (Reanchoring example in paper exercise in class exercise)
 - End Module 1 at transferring assets part
 
 (Andrew)
@@ -16,7 +16,7 @@ Module 2 (Dedicated to XCVM)
 - Each group gets assigned a specific use case to execute and analyze.
 
 (Andrew Loop in Keith)
-Module 3 (Sending and Executin XCM)
+Module 3 (Sending and Execution XCM)
 - Left over after restructuring Mod 1 and 2
 - Focus on exercises(Day 2)
 

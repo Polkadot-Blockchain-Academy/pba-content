@@ -66,28 +66,18 @@ This means the verifier will need to run the correct hash function on the messag
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Rust Demo
-
-## Hashing a Message
-
-Notes:
-
-See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
-
-1. Use a longer message
-1. Hash it
-1. Verify the signature on the hash
-
----
-
 ## Signing Payloads
 
 Signing payloads are an important part of system design.<br>
 Users should have credible expectations about how their messages are used.
 
 For example, when a user authorizes a transfer,<br>they almost always mean just one time.
+
+---
+
+## Asym. Encrypt. & Signatures
+
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow-and-sig.svg"/>
 
 ---
 
@@ -146,6 +136,8 @@ Hard derivation requires the secret key and derives new child secret keys.
 
 Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
 
+Always do hard paths first, then conclude in soft paths.
+
 ---
 
 ## Hard Derivation in Wallets
@@ -200,30 +192,29 @@ Notes:
 
 ---
 
+## Soft Derivation in Wallets
+
+Wallets can use soft derivation to link all payments controlled by a single private key, without the need to expose the private key for the address derivation.
+
+**Use case:** _A business wants to generate a new address for each payment, but should be able to automatically give customers an address without the secret key owner deriving a new child._
+
+Notes:
+
+See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
+
+---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Rust Demo
 
-## Key Derivation
+## Soft Derivation
 
 Notes:
 
 See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 Mention that these derivations create entirely new secret seeds.
-
----
-
-## Hard vs. Soft in Practice
-
-Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
-
-Always do hard paths first, then conclude in soft paths.
-
-Notes:
-
-Soft private keys if compromised, compromise all children and parent private keys!
-Consider using multiple seeds to further isolate keys.
 
 ---
 
@@ -282,43 +273,7 @@ Substrate uses the entropy byte array from the mnemonic.
 
 ## Portability
 
-Different key derivation functions affect the ability to use<br>the same mnemonic in multiple wallets.
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
-
-Notes:
-
-Last slide, the rest are additional if needed and for student reference.
-
----
-
-## Hard Derivation in Wallets
-
-Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
-
-<br>
-
-<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
-
-Notes:
-
-Example: You want to use this key on multiple networks, but don't want the public keys to be connected to each other.
-
----
-
-## Soft Derivation in Wallets
-
-Wallets can use soft derivation to link all payments controlled by a single private key, without the need to expose the private key for the address derivation.
-
-**Use case:** _A business wants to generate a new address for each payment, but should be able to automatically give customers an address without the secret key owner deriving a new child._
-
-Notes:
-
-See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
+Different key derivation functions affect the ability to use the same mnemonic in multiple wallets as different wallets may use different functions to derive the secret from the mnemonic.
 
 ---
 
