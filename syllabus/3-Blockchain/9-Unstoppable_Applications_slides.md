@@ -30,21 +30,21 @@ Source: [XKCD](https://xkcd.com/538/)
 
 ## Expectations vs. Reality
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 ### This column has a bit of a statement to make.
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 - Lorem ipsum dolor sit amet, consectetur adipiscing elit
 - Ut enim ad minim veniam, quis nostrud exercitation
 - Duis aute irure dolor in reprehenderit in
 - Excepteur sint occaecat cupidatat non proident, sunt in
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -70,7 +70,7 @@ Blockchains only form one part of the stack.
 Web3 applications must prevent attacks at all layers.
 For discussion today:
 
-<widget-text center>
+<pba-flex center>
 
 - Networking
 - Consensus
@@ -78,7 +78,7 @@ For discussion today:
 - Validator power
 - Inter-consensus system trust
 
-</widget-text>
+</pba-flex>
 
 ---
 
@@ -86,13 +86,13 @@ For discussion today:
 
 There are valid criticisms of how many blockchain applications operate today.
 
-<widget-text center>
+<pba-flex center>
 
 - Mining pools (and other centralizing factors)
 - RPC providers
 - Bridges
 
-</widget-text>
+</pba-flex>
 
 We will discuss these and what we're building to realize a better stack.
 
@@ -118,7 +118,7 @@ https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the s
 
 ## Network Attacks
 
-<widget-text center>
+<pba-flex center>
 
 - Entry/Boot nodes and peer discovery
 - Data center faults
@@ -159,7 +159,7 @@ Source: [Buy Bitcoin Worldwide](https://www.buybitcoinworldwide.com/pages/mining
 
 Security is always a finite resource:
 
-<widget-text center>
+<pba-flex center>
 
 - Centralized: Cost of corruption/influence
 - Proof of Work: Number of CPUs in the world
@@ -183,7 +183,7 @@ Emergence of obscure/niche "Proof of X" algorithms to shelter from attack only g
 
 ## Authority Misbehavior
 
-<widget-text center>
+<pba-flex center>
 
 - Lack of availability
 - Equivocation
@@ -219,11 +219,22 @@ But validators are expensive, both economically and computationally.
 
 ---
 
+## TODO Validators
+
+- Parity saved ETH (alt clients, and diversity)
+  - same runtime on chain, it's impossible to have an alt runtime.
+- all on GCP
+- All run same hardware (CPU, etc.)
+-
+
+---
+
 ## Authority from Accountability
 
 Authority should imply accountability.
 
 No matter how you design an authority selection mechanism, some people will have a privileged position within it.
+TODO example or justification to back up.
 
 Those who _choose_ to become authorities should be liable for their actions.
 
@@ -259,6 +270,8 @@ In an ideal case, application users would run nodes themselves, so as to not tru
 
 But nodes can consume large amounts of storage, network, and CPU resources.
 
+TODO: social & culture of network users can influence - monero as example "run your own node"
+
 ---
 
 ## Node Queries
@@ -293,6 +306,10 @@ Light clients only store block headers and consensus-critical information.
 
 <img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-light-clients.png"/>
 
+TODO notes on attacks of BRIDGES with this, if not covered.
+Relayer is RPC on bridge, could be any _single_ one, but no consensus.
+DO NOT assume finalization is "real" as could be byzantine.
+
 ---
 
 # Validator Power
@@ -319,7 +336,7 @@ This gives node providers huge power: Even if every other group wants to make a 
 
 If the chain does split into two, who decides which chain is which?
 
-<widget-text center>
+<pba-flex center>
 
 - Greater hashpower or value at stake
 - Whatever is recognized by service providers
@@ -327,7 +344,7 @@ If the chain does split into two, who decides which chain is which?
 
 **But not the stakeholders of the system**
 
-</widget-text>
+</pba-flex>
 
 ---
 
@@ -346,7 +363,7 @@ The STF is part of the state and can be upgraded.
 
 Block authors choose the transactions they include and in what order.
 
-<widget-text center>
+<pba-flex center>
 
 - Censorship attacks
 - "Miner extractable value"
@@ -360,6 +377,10 @@ There are a lot more system users than system authorities.
 However, every transaction must be included by an authority.
 
 If no authority will include a user's transaction, they do not have permissionless access.
+
+TODO add diagram
+
+- If any authority (author) decides not to censor, it can be included.
 
 ---
 
@@ -377,7 +398,7 @@ Deterministic finality helps.
 
 A measure of the value that block authors can extract based on their knowledge of pending transactions and ability to order them.
 
-<widget-text center>
+<pba-flex center>
 
 - Frontrunning
 - Backrunning
@@ -394,14 +415,29 @@ Not realized as possible by many until it quietly became the norm.
 
 ## Maximal Extractable Value
 
-#### "[Ethereum is a Dark Forrest](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest)"
+#### "[Ethereum is a Dark Forest](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest)"
 
 > An environment in which detection means certain death...
 > ...publicly identifying someone else’s location is as good as directly destroying them.
 
+TODO describe more about MEV in depth
+
+- flashbots
+- MEV boost
+-
+
+Diagram:
+old way of all in one node
+now unbuilding into separate.
+
+Describe instability of more and more complex systems
+
+- unknown unknowns.
+- PoW -> stake -> unbounded systems.
+
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Classroom Discussions
 
@@ -425,7 +461,7 @@ Free execution provides more power to application developers to deliver behavior
 Function calls can be scheduled and automatically dispatched.
 Uses include:
 
-<widget-text center>
+<pba-flex center>
 
 - Automated decision enactment
 - Logic to execute at the start or end of each block
@@ -485,7 +521,7 @@ People are **_LAZY_**, expect them to trend towards the easiest option.
 
 ---
 
-<!-- .slide: data-background-color="#8D3AED" -->
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Classroom Discussions
 
@@ -518,10 +554,8 @@ Also ensure everyone researches the effects of OFAC has had on validator complia
 
 Democratic Mediums is a directory of patterns for decision, deliberation, and noise.
 
-> https://medlabboulder.gitlab.io/democraticmediums/
-> https://metagov.org/ -- weekly seminar
-> https://daocollective.xyz/
-> https://www.smartcontractresearch.org/
+> https://medlabboulder.gitlab.io/democraticmediums/ > https://metagov.org/ -- weekly seminar
+> https://daocollective.xyz/ > https://www.smartcontractresearch.org/
 
 Notes:
 
@@ -535,9 +569,6 @@ Very much encouraged to explore after class!
 Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech/what-dao/)).
 
 > A **coordination** mechanism.
-
-
-
 
 ---
 
