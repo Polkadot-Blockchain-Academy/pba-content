@@ -478,3 +478,9 @@ To solve this:
 
 - We build a SCALE-decoder to retrieve the xcm message (the hard way).
 - We rely on subscan/polkaholic to see the XCM message received.
+
+---v
+
+## 🔨 Subscan XCM retrieval
+
+<img style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab"/>
