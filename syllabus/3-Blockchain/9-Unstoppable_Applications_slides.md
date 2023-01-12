@@ -12,13 +12,71 @@ duration: 1 hour
 
 So far, we have discussed state machines and consensus.
 
-But spent little time addressing the _contexts in which they operate_.
+But what of the _contexts in which they operate within_?
+
+Notes:
+
+- So far _mostly_ on simplified, idealized systems.
+  - "Black boxes" of cryptography
+  - Rational actors and assumed complete models of behavior in economics
+  - Blockchains in theory.
+- In _practice_ there are far more "unknown unknowns" and "[black swan](#next-steps)" behavior.
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+## Discussion
+
+> What is an unstoppable application?
+
+<br>
+
+> What properties of a system make it "stoppable"?
+<!-- .element: class="fragment" -->
+
+Notes:
+
+- Web2 context: central providers & authorities, ...
+- Web3 context: decentralized, ...
+- What properties of a system make it "stoppable"?
+
+---
+
+### Unstoppable Apps Properties*
+
+<pba-flex center>
+
+- Incorruptible
+- Infallible
+- Censorship-proof
+- [Antifragile](#next-steps)
+
+</pba-flex>
+
+<pba-flex left style="font-size:0.7em">
+
+_\*oversimplified, extreme ends of the spectrum_
+
+</pba-flex>
+
+Notes:
+
+Not all of these can apply, nor is is possible all simultaneously apply.
+We need to craft the system properties based on what we must achieve.
+In reality we strive for Absolute Unstoppability, but likely cannot grantee it in _every possible scenario_.
+
+We contrast the following in order above:
+- corruption of :ctors, data, etc.
+Networking 
+- Authority layer
+- Robustness to extrema/outlier events.
 
 ---
 
 ## Attacking Web3
 
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-security.png"/>
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-security.png"/>
 
 Notes:
 
@@ -28,31 +86,12 @@ Source: [XKCD](https://xkcd.com/538/)
 
 ---
 
-## Expectations vs. Reality
-
-<pba-cols>
-<pba-col>
-
-### This column has a bit of a statement to make.
-
-</pba-col>
-<pba-col>
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Ut enim ad minim veniam, quis nostrud exercitation
-- Duis aute irure dolor in reprehenderit in
-- Excepteur sint occaecat cupidatat non proident, sunt in
-
-</pba-col>
-</pba-cols>
-
----
-
 ## People over Platforms
 
 Web3 should prioritize _people_ over _platforms_.
 
-Platforms are OK as service providers, but peer-to-peer guarantees must be upheld without requiring trust in a service provider.
+Platforms are OK as service providers,<br>
+but peer-to-peer guarantees must be upheld<br>without requiring trust in a service provider.
 
 ---
 
@@ -66,9 +105,8 @@ TODO: update this graphic, rather stale (Joe mentioned in Cambridge)
 
 ## A Lot More Than Blockchain
 
-Blockchains only form one part of the stack.
+Blockchains only form one part of the stack.<br>
 Web3 applications must prevent attacks at all layers.
-For discussion today:
 
 <pba-flex center>
 
@@ -80,6 +118,10 @@ For discussion today:
 
 </pba-flex>
 
+Notes:
+
+These are for discussion today, but there are _many more_ thank those listed here!
+
 ---
 
 ## Criticisms
@@ -88,8 +130,10 @@ There are valid criticisms of how many blockchain applications operate today.
 
 <pba-flex center>
 
-- Mining pools (and other centralizing factors)
-- RPC providers
+- Centralizing factors
+  - Mining & staking pools
+  - RPC providers
+  - ... 
 - Bridges
 
 </pba-flex>
@@ -98,7 +142,7 @@ We will discuss these and what we're building to realize a better stack.
 
 Notes:
 
-https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the state of the space.
+https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the state of the space, but founder of [Signal messenger](https://signal.org).
 
 ---
 
@@ -108,11 +152,7 @@ https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the s
 
 ## Peer-to-Peer Networks
 
-<center>
-
 <img style="width: 900px" src="../../assets/img/3-Blockchain/3.4-network-topologies.png"/>
-
-</center>
 
 ---
 
@@ -439,7 +479,7 @@ Describe instability of more and more complex systems
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Classroom Discussions
+# Discussion
 
 Front-running as a Service (FaaS) & MEV Auctions (MEVA)
 
@@ -523,7 +563,7 @@ People are **_LAZY_**, expect them to trend towards the easiest option.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Classroom Discussions
+# Discussion
 
 Minimum viable decentralization.
 
@@ -587,3 +627,23 @@ Remember, these are _models_ of idealized systems in general, real world conditi
 
 End of Module 3.
 Goal is that you now have the primitives and concepts necessary to dive into Substrate and Polkadot and start building unstoppable Web3 applications.
+
+---
+
+## Questions
+
+---
+
+## Next Steps
+
+1. 📔[Antifragile: Things That Gain From Disorder](https://en.wikipedia.org/wiki/Antifragile_(book))
+1. Black Swan Theory (Events)
+  - [Wiki](https://en.wikipedia.org/wiki/Black_swan_theory)
+  - 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
+1. Trilemas:
+  - [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
+  - [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
+1. 
+Notes:
+
+Citations from the slides, links to resources and next steps. 
