@@ -1,5 +1,5 @@
 ---
-title: XCM in the Polkadot Context # Also update the h1 header on the first slide to the same name
+title: XCM in the Polkadot # Also update the h1 header on the first slide to the same name
 description: XCM in the Polkadot Context for web3 Engineers
 duration: 1 hour
 ---
@@ -18,7 +18,7 @@ duration: 1 hour
 
 ---
 
-## 🤔 What considerations we need to take into account?
+## 🤔 Considerations
 
 - There should be no trust assumption between chains unless explicitly requested.
 - We cannot assume chains will not act maliciously
@@ -26,7 +26,7 @@ duration: 1 hour
 
 ---
 
-## 🛠️ How does Rococo configure XCM to take these considerations into account?
+## 🛠️ Rococo Configuration
 
 - Barriers
 - Teleport filtering
@@ -62,6 +62,7 @@ pub type Barrier = (
 ```
 
 ---v
+
 ## 🚧 XCM barriers in Rococo
 
 - `TakeWeightCredit` and `AllowTopLevelPaidExecutionFrom` are used to prevent spamming for local/remote XCM execution.
@@ -75,15 +76,19 @@ pub type Barrier = (
 ```rust
 parameter_types! {
 	pub const RocLocation: MultiLocation = Here.into();
-	pub const Rococo: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
+	pub const Rococo: MultiAssetFilter =
+	           Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
 
 	pub const Statemine: MultiLocation = Parachain(1000).into();
 	pub const Contracts: MultiLocation = Parachain(1002).into();
 	pub const Encointer: MultiLocation = Parachain(1003).into();
 
-	pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Statemine::get());
-	pub const RococoForContracts: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Contracts::get());
-	pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) = (Rococo::get(), Encointer::get());
+	pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) =
+	           (Rococo::get(), Statemine::get());
+	pub const RococoForContracts: (MultiAssetFilter, MultiLocation) =
+	           (Rococo::get(), Contracts::get());
+	pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) =
+	           (Rococo::get(), Encointer::get());
 }
 
 pub type TrustedTeleporters = (
@@ -98,7 +103,7 @@ pub type TrustedTeleporters = (
 ## 🤝 Trusted teleporters in Rococo
 
 - Teleporting involves trust between chains.
-- 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here** 
+- 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here**
 - **Here** represents the relay token
 
 ```rust
@@ -110,6 +115,7 @@ impl xcm_executor::Config for XcmConfig {
 ```
 
 ---
+
 ## 💱Trusted reserves in Rococo
 
 - Rococo does not recognize any chain as reserve
@@ -122,6 +128,7 @@ impl xcm_executor::Config for XcmConfig {
   /* snip */
 }
 ```
+
 ---
 
 ## 📁 LocationToAccountId in Rococo
@@ -143,33 +150,39 @@ pub type LocationConverter = (
 
 ## 🪙 Asset Transactors in Rococo
 
+<div style="font-size: smaller">
+
 ```rust
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
 	// Use this currency:
 	Balances,
-	// Use this currency when it is a fungible asset matching the given location or name:
+	// Use this currency when it is a fungible asset
+	// matching the given location or name:
 	IsConcrete<RocLocation>,
-	// We can convert the MultiLocations with our converter above:
+	// We can convert the MultiLocations
+	// with our converter above:
 	LocationConverter,
-	// Our chain's account ID type (we can't get away without mentioning it explicitly):
+	// Our chain's account ID type
+	// (we can't get away without mentioning it explicitly):
 	AccountId,
-	// It's a native asset so we keep track of the teleports to maintain total issuance.
+	// It's a native asset so we keep track of the teleports
+	// to maintain total issuance.
 	CheckAccount,
 >;
-```
 
-```rust
 impl xcm_executor::Config for XcmConfig {
   /* snip */
   type AssetTransactor = LocalAssetTransactor;
   /* snip */
 }
 ```
+
 ---v
+
 ## 🪙 Asset Transactors in Rococo
 
 - Single asset-transactor in Rococo
-- Asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **pallet-balances*
+- Asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to \*_pallet-balances_
 - Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
 
 Notes:
@@ -204,13 +217,13 @@ impl xcm_executor::Config for XcmConfig {
 ```
 
 ---v
+
 ## 📍Origin Converters in Rococo
 
 - Defined ways in which we can convert a multilocation to a dispatch origin, typically used by the **Transact** instruction:
-- Child parachain origins are converted to signed origins through **LocationConverter** (OriginKind == Sovereign).
-- Child parachains can also be converterd to native parachain origins (OriginKind == Native).
+- Child parachain origins are converted to signed origins through **LocationConverter** (`OriginKind == Sovereign`).
+- Child parachains can also be converted to native parachain origins (`OriginKind == Native`).
 - Local 32 byte origins are converted to signed 32 byte origins
-
 
 Notes:
 
@@ -230,7 +243,13 @@ Second, system parachains are able to dispatch as root origins, as they can bee 
 ```rust
 impl xcm_executor::Config for XcmConfig {
   /* snip */
-  type Trader = UsingComponents<WeightToFee, RocLocation, AccountId, Balances, ToAuthor<Runtime>>;
+  type Trader = UsingComponents<
+						WeightToFee,
+						RocLocation,
+						AccountId,
+						Balances,
+						ToAuthor<Runtime>
+						>;
   /* snip */
 }
 ```
@@ -243,19 +262,23 @@ impl xcm_executor::Config for XcmConfig {
 impl pallet_xcm::Config for Runtime {
 	/* snip */
 	type XcmRouter = XcmRouter;
-	type SendXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type SendXcmOrigin =
+	       xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
 	// Anyone can execute XCM messages locally.
-	type ExecuteXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type ExecuteXcmOrigin =
+	       xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
 	type XcmExecuteFilter = Everything;
 	type XcmExecutor = xcm_executor::XcmExecutor<XcmConfig>;
-	// Anyone is able to use teleportation regardless of who they are and what they want to teleport.
+	// Anyone is able to use teleportation
+	// regardless of who they are and what they want to teleport.
 	type XcmTeleportFilter = Everything;
-	// Anyone is able to use reserve transfers regardless of who they are and what they want to
-	// transfer.
+	// Anyone is able to use reserve transfers
+	// regardless of who they are and what they want to transfer.
 	type XcmReserveTransferFilter = Everything;
 	/* snip */
 }
 ```
+
 ---v
 
 ## 🎨 XcmPallet in Rococo
@@ -286,8 +309,6 @@ You can visit the whole xcm configuration [here](https://github.com/paritytech/c
 
 ## 🪙 Statemine Asset Transactors
 
-**Currency Asset Transactor**
-
 ```rust
 parameter_types! {
 
@@ -298,11 +319,13 @@ parameter_types! {
 pub type CurrencyTransactor = CurrencyAdapter<
 	// Use this currency:
 	Balances,
-	// Use this currency when it is a fungible asset matching the given location or name:
+	// Use this currency when it is a fungible asset
+	// matching the given location or name:
 	IsConcrete<KsmLocation>,
 	// Convert an XCM MultiLocation into a local account id:
 	LocationToAccountId,
-	// Our chain's account ID type (we can't get away without mentioning it explicitly):
+	// Our chain's account ID type
+	// (we can't get away without mentioning it explicitly):
 	AccountId,
 	// We don't track any teleports of `Balances`.
 	(),
@@ -310,25 +333,27 @@ pub type CurrencyTransactor = CurrencyAdapter<
 ```
 
 ---v
+
 ## 🪙 Statemine Asset Transactors
 
-**Fungibles Asset Transactor**
+<div style="font-size: smaller">
 
 ```rust
 /// Means for transacting assets besides the native currency on this chain.
 pub type FungiblesTransactor = FungiblesAdapter<
 	// Use this fungibles implementation:
 	Assets,
-	// Use this currency when it is a fungible asset matching the given location or name:
+	// Use this currency when it is a fungible asset
+	// matching the given location or name:
 	ConvertedConcreteAssetId<
-		AssetId,
-		Balance,
+		AssetId, Balance,
 		AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
 		JustTry,
 	>,
 	// Convert an XCM MultiLocation into a local account id:
 	LocationToAccountId,
-	// Our chain's account ID type (we can't get away without mentioning it explicitly):
+	// Our chain's account ID type
+	// (we can't get away without mentioning it explicitly):
 	AccountId,
 	// We only want to allow teleports of known assets.
 	// We use non-zero issuance as an indication that this asset is known.
@@ -338,7 +363,10 @@ pub type FungiblesTransactor = FungiblesAdapter<
 >;
 ```
 
+</div>
+
 ---v
+
 ## 🪙 Statemine Asset Transactors
 
 - **FungiblesTransactor** refers to the way in which assets created in Statemine are Withdrawn/Deposited in the xcm-executor.
@@ -353,7 +381,7 @@ pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor);
 
 Notes:
 
-- Notice how KsmLocation is equal to **Parent**.  
+- Notice how KsmLocation is equal to **Parent**.
 - Teleports are not being tracked in any account in Statemine, only in the relay chain.
 
 ---
@@ -362,7 +390,6 @@ Notes:
 
 - **NativeAsset**: Only allowed if the token multilocation matches the origin
 - This is the case for the relay token, `origin_multilocation == asset_multilocation`
-
 
 ```rust
 pub struct XcmConfig;
@@ -428,7 +455,9 @@ Common steps to debug:
 
 Look at the `ump.ExecutedUpward` event:
 
-<img style="width: 500px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure"/>
+<br>
+
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure"/>
 
 ---v
 
@@ -440,6 +469,7 @@ Look at the `ump.ExecutedUpward` event:
   Usually happens when the multilocation representing an asset does not match to those handled by the chain.
 
 ---v
+
 ## 🕵️‍♂️ Identifying the error kind
 
 - `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
@@ -461,13 +491,13 @@ Look at the `ump.ExecutedUpward` event:
 
 ## 🔨 Decoding SCALE-encoded messages
 
-- **RelayChain**: 
-	- XCM can be retrieved in the `paraInherent.enter` inherent
-	- The candidate for a specific parachain contains the ump messages sent to the relay.
-	- **UMP messages are usually executed one block after they are received**
-- **Parachain**: 
-	- XCM can be retrieved in the `parachainSystem.setValidationData` inherent.
-	- **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
+- **RelayChain**:
+  - XCM can be retrieved in the `paraInherent.enter` inherent
+  - The candidate for a specific parachain contains the ump messages sent to the relay.
+  - **UMP messages are usually executed one block after they are received**
+- **Parachain**:
+  - XCM can be retrieved in the `parachainSystem.setValidationData` inherent.
+  - **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
 
 ---v
 
@@ -483,4 +513,4 @@ To solve this:
 
 ## 🔨 Subscan XCM retrieval
 
-<img style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab"/>
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab"/>
