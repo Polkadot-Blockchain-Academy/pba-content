@@ -27,23 +27,24 @@ The module is taught over 2.5 days - roughly
 
 ### Day 2 - Morning Session
 
-- 🗣️ Consensus Part 2 Lecture - Finality - Agreeing on Ordering
-- 🎲 Grandpa Board Game Activity
-- ☕ Break
-- 🗣️ Resource Allocation lecture
-- ⌨️ Continue Coding on BFS
-
-### Day 2 - Afternoon Session
-
 - 🗣️ P2P Networking Lecture
 - ⌨️ BFS
 - ☕ Break
+- 🗣️ Consensus Part 2 Lecture - Finality - Agreeing on Ordering
+- 🎲 Grandpa Board Game Activity
+
+### Day 2 - Afternoon Session
+
 - 🗣️ Light Clients Bridges
+- ⌨️ Continue Coding on BFS
+- ☕ Break
+- 🗣️ Unstoppable Applications Lecture
 - ⌨️ BFS
 
 ### Day 3 (Half Day)
 
 The activity and lecture can bleed together. I imagine launching a chain and getting some basic tokens
 
+- 🗣️ Resource Allocation lecture
 - ⌨️ Launch a blockchain activity
-- 🗣️ Unstoppable Applications Lecture
+
