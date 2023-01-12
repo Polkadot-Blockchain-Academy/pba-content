@@ -45,8 +45,6 @@ is identical to that in Polkadot.
 
 ## 🚧 XCM barriers in Rococo
 
-There are 5 barriers that are being used in Rococo:
-
 ```rust
 /// The barriers one of which must be passed for an XCM message to be executed.
 pub type Barrier = (
@@ -63,23 +61,21 @@ pub type Barrier = (
 );
 ```
 
-`TakeWeightCredit` and `AllowTopLevelPaidExecutionFrom` are used to prevent spamming for local/remote XCM execution.
-`AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
-`AllowKnownQueryResponses` and `AllowSubscriptionsFrom`, as we know already, are mostly used for versioning.
+---v
+## 🚧 XCM barriers in Rococo
+
+- `TakeWeightCredit` and `AllowTopLevelPaidExecutionFrom` are used to prevent spamming for local/remote XCM execution.
+- `AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
+- `AllowKnownQueryResponses` and `AllowSubscriptionsFrom`, as we know already, are mostly used for versioning.
 
 ---
 
 ## 🤝 Trusted teleporters in Rococo
 
-Teleporting involves trust between chains, as the token is being burnt in one chain to be minted in the other.
-As such, teleporting should be only enabled with very specific chains.
-
-Rococo configures which are the chains allowed to teleport tokens in the following manner:
-
 ```rust
 parameter_types! {
-  pub const RocLocation: MultiLocation = Here.into();
-  pub const Rococo: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
+	pub const RocLocation: MultiLocation = Here.into();
+	pub const Rococo: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
 
 	pub const Statemine: MultiLocation = Parachain(1000).into();
 	pub const Contracts: MultiLocation = Parachain(1002).into();
@@ -91,16 +87,19 @@ parameter_types! {
 }
 
 pub type TrustedTeleporters = (
-  /* Ignore */
-	xcm_builder::Case<RococoForTick>,
-	xcm_builder::Case<RococoForTrick>,
-	xcm_builder::Case<RococoForTrack>,
-
 	xcm_builder::Case<RococoForStatemine>,
 	xcm_builder::Case<RococoForContracts>,
 	xcm_builder::Case<RococoForEncointer>,
 );
 ```
+
+---v
+
+## 🤝 Trusted teleporters in Rococo
+
+- Teleporting involves trust between chains.
+- 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here** 
+- **Here** represents the relay token
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -110,11 +109,11 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
-In this case both parachains 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here** multilocation.
-
+---
 ## 💱Trusted reserves in Rococo
 
-Rococo does not recognize any chain as reserve
+- Rococo does not recognize any chain as reserve
+- Rococo prevents reception of any **ReserveAssetDeposited** message
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -123,15 +122,13 @@ impl xcm_executor::Config for XcmConfig {
   /* snip */
 }
 ```
-
-This means Rococo will prevent reception of any **ReserveAssetDeposited** message
-
 ---
 
 ## 📁 LocationToAccountId in Rococo
 
-As we know, the conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue Transact operations.
-In the case of Rococo
+- Conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue Transact operations.
+- Parachain origins will be converted to their corresponding sovereign account
+- Local 32 byte origins will be converted to a 32 byte defined AccountId.
 
 ```rust
 pub type LocationConverter = (
@@ -142,16 +139,9 @@ pub type LocationConverter = (
   );
 ```
 
-This means that:
-
-- Parachain origins will be converted to their corresponding sovereign account
-- Local 32 byte origins will be converted to a 32 byte defined AccountId.
-
 ---
 
-## 👍 Asset Transactors in Rococo
-
-There is just a single asset-transactor in Rococo, defined by
+## 🪙 Asset Transactors in Rococo
 
 ```rust
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
@@ -175,9 +165,12 @@ impl xcm_executor::Config for XcmConfig {
   /* snip */
 }
 ```
+---v
+## 🪙 Asset Transactors in Rococo
 
-The asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **pallet-balances**.
-Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
+- Single asset-transactor in Rococo
+- Asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **pallet-balances*
+- Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
 
 Notes:
 
@@ -187,8 +180,6 @@ This aims at maintaining the total issuance even if assets have been teleported 
 ---
 
 ## 📍Origin Converters in Rococo
-
-Origin converters defined ways in which we can convert a multilocation to a dispatch origin, typically used by the **Transact** instruction:
 
 ```rust
 type LocalOriginConverter = (
@@ -212,6 +203,15 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
+---v
+## 📍Origin Converters in Rococo
+
+- Defined ways in which we can convert a multilocation to a dispatch origin, typically used by the **Transact** instruction:
+- Child parachain origins are converted to signed origins through **LocationConverter** (OriginKind == Sovereign).
+- Child parachains can also be converterd to native parachain origins (OriginKind == Native).
+- Local 32 byte origins are converted to signed 32 byte origins
+
+
 Notes:
 
 Here two things should catch our eye.
@@ -220,10 +220,12 @@ Second, system parachains are able to dispatch as root origins, as they can bee 
 
 ---
 
-## Traders in Rococo
+## 🔧 Traders in Rococo
 
-Finally we are going to check how Rococo charges for xcm execution time.
-In this case, we need to check the **Trader** field in the Config:
+- Weight is converted to fee with the **WeightToFee** type.
+- The asset in which we charge for fee is **RocLocation**.
+  This means we can only pay for xcm execution in the **native currency**
+- Fees will go to the block author thanks to **ToAuthor**
 
 ```rust
 impl xcm_executor::Config for XcmConfig {
@@ -233,24 +235,15 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
-In other words:
-
-- Weight is converted to fee with the **WeightToFee** type.
-- The asset in which we charge for fee is **RocLocation**.
-  This means we can only pay for xcm execution in the **native currency**
-- Fees will go to the block author thanks to **ToAuthor**
-
 ---
 
 ## 🎨 XcmPallet in Rococo
 
-The last thing to be checked is how palletXcm is configured.
-
 ```rust
 impl pallet_xcm::Config for Runtime {
 	/* snip */
-  type SendXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
 	type XcmRouter = XcmRouter;
+	type SendXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
 	// Anyone can execute XCM messages locally.
 	type ExecuteXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
 	type XcmExecuteFilter = Everything;
@@ -263,13 +256,27 @@ impl pallet_xcm::Config for Runtime {
 	/* snip */
 }
 ```
+---v
 
-As we can see, there is no filter on the Execution, Teleporting or Reserve transferring side.
-Custom XCM sending is also allowed.
+## 🎨 XcmPallet in Rococo
+
+- No filter on messages for Execution, Teleporting or Reserve transferring.
+- Only origins defined by **LocalOriginToLocation** are allowed to send/execute arbitrary messages.
+- **LocalOriginToLocation** defined to allow council and regular signed origin calls
+
+```rust
+pub type LocalOriginToLocation = (
+	// We allow an origin from the Collective pallet to be used in XCM as a corresponding Plurality of the
+	// `Unit` body.
+	CouncilToPlurality,
+	// And a usual Signed origin to be used in XCM as a corresponding AccountId32
+	SignedToAccountId32<RuntimeOrigin, AccountId, RococoNetwork>,
+);
+```
 
 ---
 
-## ⚙️ Statemine Xcm Config
+## 🛠️ Statemine Xcm Config
 
 Statemine is a common-good parachain that allows hosting arbitrary assets.
 
@@ -277,9 +284,7 @@ You can visit the whole xcm configuration [here](https://github.com/paritytech/c
 
 ---
 
-### Statemine Asset Transactors
-
-Statemine has **two asset transactors**
+## 🪙 Statemine Asset Transactors
 
 **Currency Asset Transactor**
 
@@ -304,11 +309,8 @@ pub type CurrencyTransactor = CurrencyAdapter<
 >;
 ```
 
-Notes:
-
-- Notice how KsmLocation is equal to **Parent**.
-  Every time we receive a token with the parent multilocation, we mint in Balances.
-- Teleports are not being tracked in any account in Statemine, only in the relay chain.
+---v
+## 🪙 Statemine Asset Transactors
 
 **Fungibles Asset Transactor**
 
@@ -336,14 +338,31 @@ pub type FungiblesTransactor = FungiblesAdapter<
 >;
 ```
 
-FungiblesTransactor refers to the way in which assets created in Statemine are Withdrawn/Deposited in the xcm-executor.
-It is critical that these assets are sendable to other chains!
+---v
+## 🪙 Statemine Asset Transactors
+
+- **FungiblesTransactor** refers to the way in which assets created in Statemine are Withdrawn/Deposited in the xcm-executor.
+- It is critical that Statemine assets are sendable to other chains!
+- **CurrencyTransactor** refers to the way in which teleports from the relay chain are handled.
+- Every time we receive a token with the parent multilocation, we mint in Balances.
+
+```rust
+/// Means for transacting assets on this chain.
+pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor);
+```
+
+Notes:
+
+- Notice how KsmLocation is equal to **Parent**.  
+- Teleports are not being tracked in any account in Statemine, only in the relay chain.
 
 ---
 
-### Statemine Trusted Teleporters
+## 🤝 Statemine Trusted Teleporters
 
-Only allowed if the token multilocation matches the origin
+- **NativeAsset**: Only allowed if the token multilocation matches the origin
+- This is the case for the relay token, `origin_multilocation == asset_multilocation`
+
 
 ```rust
 pub struct XcmConfig;
@@ -353,9 +372,17 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
+```rust
+impl FilterAssetLocation for NativeAsset {
+	fn filter_asset_location(asset: &MultiAsset, origin: &MultiLocation) -> bool {
+		matches!(asset.id, Concrete(ref id) if id == origin)
+	}
+}
+```
+
 ---
 
-### Statemine Barriers
+## 🚧 Statemine Barriers
 
 Similar to Rococo, but unpaid execution is allowed from the relay chain
 
@@ -377,14 +404,19 @@ pub type Barrier = DenyThenTry<
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Debugging XCM
+
+---
+
 ## 🧐 Debugging XCM message failures
 
-Involves knowledge of the chain XCM configuration!:
+Involves knowledge of the chain XCM configuration!
 
 Common steps to debug:
 
-1. Identify what the error means.
-   This will help you identify the context in which the error happened.
+1. Identify what the error means which will help you identify the context in which the error happened.
 1. Look in the xcm codebase to check where this error might have been thrown.
    Was it thrown in the barrier? Or in any specific instruction?
 1. Retrieve the failed received XCM.
@@ -392,7 +424,7 @@ Common steps to debug:
 
 ---
 
-## ⚠️ Debugging: Identifying the error kind
+## 🕵️‍♂️ Identifying the error kind
 
 Look at the `ump.ExecutedUpward` event:
 
@@ -400,14 +432,16 @@ Look at the `ump.ExecutedUpward` event:
 
 ---v
 
-## ⚠️ Debugging: Identifying the error kind
+## 🕵️‍♂️ Identifying the error kind
 
-Some common errors are:
-
-- `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve
+- `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve.
 - `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
 - `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
   Usually happens when the multilocation representing an asset does not match to those handled by the chain.
+
+---v
+## 🕵️‍♂️ Identifying the error kind
+
 - `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
 - `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
 - `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
@@ -415,7 +449,7 @@ Some common errors are:
 
 ---v
 
-## ⚠️ Debugging: Identifying the error kind
+## 🕵️‍♂️ Identifying the error kind
 
 - `Barrier`: One of the barriers failed, we need to check the barriers individually.
 - `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown.
@@ -425,22 +459,22 @@ Some common errors are:
 
 ---
 
-## 🔨 Debugging: Decoding SCALE-encoded messages
+## 🔨 Decoding SCALE-encoded messages
 
-The second step is to retrieve the XCM received by the chain.
-We can clearly identify a chain by how it processes received XCMs:
-
-- **RelayChain**: usually the xcm message can be retrieved in the `paraInherent.enter` inherent, where the candidate for a specific parachain contains the ump messages sent to the relay.
-  **UMP messages are usually executed one block after they are received**
-- **Parachain**: usually the xcm message can be retrieved in the `parachainSystem.setValidationData` inherent, inside the field `downWardMessage` or `horizontalMessages`.
-  **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
+- **RelayChain**: 
+	- XCM can be retrieved in the `paraInherent.enter` inherent
+	- The candidate for a specific parachain contains the ump messages sent to the relay.
+	- **UMP messages are usually executed one block after they are received**
+- **Parachain**: 
+	- XCM can be retrieved in the `parachainSystem.setValidationData` inherent.
+	- **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
 
 ---v
 
 ## 🔨 Decoding SCALE-encoded messages
 
-One of the main drawbacks is that all we see is a **SCALE-encoded message** which does not give us much information.
-To cope with this:
+But all we see is a **SCALE-encoded message** which does not give us much information.
+To solve this:
 
 - We build a SCALE-decoder to retrieve the xcm message (the hard way).
 - We rely on subscan/polkaholic to see the XCM message received.
