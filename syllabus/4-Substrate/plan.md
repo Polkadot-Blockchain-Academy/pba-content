@@ -10,27 +10,24 @@ Ideas:
 ## Day 1 (6 hours)
 
 * lecture: WASM-meta protocol lecture (120m)
-* lecture: SCALE (30m)
+* lecture: SCALE (45m)
+
 
 * lecture: JSON-RPC protocol (30m)
-* activity: JSON-RPC
+* activity: JSON-RPC (30)
+* activity: FRAME-less node-template part (120min)
 
-* activity: FRAME-less node-template part1
-* activity: Activity around consensus by Joshy
+* (optional) activity: Activity around consensus by Joshy
 
 > Assignments announced.
 
 ## Day 2 (6 hours)
 
 * lecture: Merkle Storage (60m)
-* lecture: Blocks and Extrinsics (30min)
-  * Extrinsics + Inherent
-  * Transaction Queue
-  * 'std' feature story
-* lecture: Consensus by Joshy (30min)
+* workshop: Substrate CLI + Misc + Advance (30m)
 
-* workshop: Substrate CLI (30m)
-* activity: FRAME-less activity part2
+* lecture: Consensus by Joshy (60min)
+* activity: FRAME-less activity part2 (120min)
 
 
 ideas:
