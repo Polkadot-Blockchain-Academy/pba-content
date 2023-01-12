@@ -29,7 +29,7 @@ duration: 1 hour
 
 ---
 
-## ⚙️ Configurables in XCM-config
+## 🛠️ Configurables in XCM-config
 
 - Common vs configurable implementation in xcm-executor
 
@@ -215,14 +215,14 @@ We have a requirement of users being able to execute local XCM, and as such we n
 
 ---
 
-### 👍 Configuring asset-transactors with xcm-builder
+### 🪙 Configuring asset-transactors with xcm-builder
 
 - Define how we are going to withdraw and deposit assets
 - Heavily dependant on the assets we want our chain to transfer
 
 ---v
 
-### xcm-builder asset-transactors
+### 🪙 Configuring asset-transactors with xcm-builder
 
 - `CurrencyAdapter`:  Single currency asset-transactor. Used for withdrawing/depositing the native token of the chain.
 
@@ -251,7 +251,7 @@ impl
 
 ---v
 
-### xcm-builder asset-transactors
+### 🪙 Configuring asset-transactors with xcm-builder
 
 2. `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens.
    An example of these would be `pallet-assets` tokens.
@@ -424,7 +424,7 @@ Hence using `AllowUnpaidExecutionFrom` should be enough.
 
 ---
 
-### ⚖️ Configuring WeightTrader with xcm-builder
+### 🔧 Configuring WeightTrader with xcm-builder
 
 - Specifies how to charge for weight inside the xcm execution.
 - Used in the `BuyExecution` instruction
@@ -432,7 +432,7 @@ Hence using `AllowUnpaidExecutionFrom` should be enough.
 
 ---v
 
-### ⚖️ Configuring WeightTrader with xcm-builder
+### 🔧 Configuring WeightTrader with xcm-builder
 
 - `FixedRateOfFungible`: Converts weight to fee at a fixed rate and charges in a specific fungible asset
 
@@ -465,7 +465,7 @@ impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungib
 
 ---v
 
-### ⚖️ Configuring WeightTrader with xcm-builder
+### 🔧 Configuring WeightTrader with xcm-builder
 
 - `UsingComponents`: uses `TransactionPayment` pallet to set the right price for weight.
 
@@ -504,8 +504,8 @@ Example for parachain 1000 in Kusama:
 
 ### 🎨 Configuring pallet-xcm
 
-- Main connection between the FRAME subsystem and the XCM subsystem. **Pallet-xcm allows us to send/execute XCM and interact with the xcm-executor**.
-
+- Main connection between the FRAME subsystem and the XCM subsystem. 
+- **Pallet-xcm allows us to send/execute XCM and interact with the xcm-executor**.
 - Configurable to filter executions/teleporting or sending among others.
 
 ---v
@@ -584,7 +584,7 @@ impl Config for XcmConfig {
 Notes: Each map element on AssetTraps holds a counter of how many times such origin has trapped such multiAsset.
 ---
 
-## ⚙️ Configuring version negotiation with pallet-xcm
+## 🗣️ Configuring version negotiation with pallet-xcm
 
 XCM is an **extensible message format**.
 
@@ -600,7 +600,7 @@ pub enum VersionedXcm {
 
 ---v
 
-## ⚙️ Configuring version negotiation with pallet-xcm
+## 🗣️ Configuring version negotiation with pallet-xcm
 But chains need to be aware of the version supported by each other.
 `SubscribeVersion` and `QueryResponse` play a key role here:
 
@@ -622,7 +622,7 @@ enum Instruction {
 
 ---v
 
-## ⚙️ Configuring version negotiation with pallet-xcm
+## 🗣️ Configuring version negotiation with pallet-xcm
 
 ```rust
  impl Config for XcmConfig {
@@ -634,4 +634,3 @@ enum Instruction {
 
 - `ResponseHandler`: The component in charge of handling response messages from other chains
 - `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
-
