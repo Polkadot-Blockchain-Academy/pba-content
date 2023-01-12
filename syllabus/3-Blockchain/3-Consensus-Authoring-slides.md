@@ -144,7 +144,7 @@ Solve a Pre-image search - earn the right to author.
 - Permissionless (or so we thought)
 - Requires an external scarce resource: Energy
 - Blind: Nobody knows the next author until the moment they publish their block
-- Expensive to author competing forks
+- Expensive to author competing forks - Clear incentive
 
 Notes:
 On the surface one big strength of PoW is that anyone can spin up a node and join at any time without anyone's permission. This is clearly how it was described in the whitepaper. In practice, many systems now have such a high hashrate that your home computer is useless. It is now permissioned by who can afford and acquire the right hardware.
@@ -153,7 +153,7 @@ The reliance on an external resource is good in some sense because it is an obje
 
 The blindness is a good property because it makes it impossible to perform a targeted attack (DOS or physical) on the next leader to stall the network.
 
-Some attacks rely on the leader authoring two competing forks and gossiping them to different parts of the network. With PoW, it costs energy for every block you author. This makes it expensive to perform such attacks.
+Some attacks rely on the leader authoring two competing forks and gossiping them to different parts of the network. With PoW, it costs energy for every block you author. This makes it expensive to perform such attacks. This provides an economic incentive for authors to only author blocks on the "correct" fork.
 
 ---v
 
@@ -161,6 +161,7 @@ Some attacks rely on the leader authoring two competing forks and gossiping them
 
 - Energy Intensive
 - Irregular block time
+- Not so permissionless
 
 Notes:
 Energy consumption is more often considered a negative property. Sometimes called proof of _waste_. I won't go that far, but in a world where climate change is a reality, it is certainly not ideal to be spending so much energy if we can get away with far less.
@@ -168,6 +169,24 @@ Energy consumption is more often considered a negative property. Sometimes calle
 Worth noting that some PoW schemes (eg Monero's) strive to minimize the energy impact by choosing algorithms that are "asic resistant". While these are decidedly better than Bitcoin's, they do not fundamentally solve the problem. Just alleviate it somewhat in practice.
 
 Secondly, the block time is only probabilistically known. When waiting for block to be authored, there are sometimes spurts of blocks followed by long stretches without any.
+
+Although it seems permissionless on its face, in practice, to be a bitcoin miner you need to have expensive specialized hardware.
+
+---v
+
+## Why Author at All?
+
+- Altruism - You feel good about making the world a better place
+- Your Transitions - Because you want to get your own transitions in
+- Explicit incentives - Eg block reward
+
+
+Notes:
+If it costs energy to author blocks, why would anyone want to author to begin with?
+
+Mining only when you want to get your transaction in seems like a good idea to me. People who don't want to self author, can pay other a fee to do it for them. This is the purpose of transaction fees. Most chains have transaction fees specified in the transactions themselves which go to the author
+
+Some networks also add an explicit incentives such as a 50BTC reward per block.
 
 ---
 
@@ -185,10 +204,12 @@ Prove your identity with a signature.
 
 ## Proof of Authority: Pros
 
-- Low Energy Consumption
+- Low energy consumption
 - Stable block time
 
 Notes:
+
+Stable block time is a property of high-quality block space. It allows applications that consume the blockspace to have expectations about throughput. In PoW you will occasionally have long periods without a block which can negatively affect applications.
 
 ---v
 
@@ -199,7 +220,7 @@ Notes:
 - Incentives for honesty are not always clear
 
 Notes:
-Does anything bad happen if they misbehave?
+Does anything bad happen if they misbehave? Not inherently. We will need an incentive for that.
 
 ---
 
@@ -215,6 +236,10 @@ The simple one.
 
 Everyone takes turns in order.
 
+```rust
+authority(slot) = authorities[slot % authorities.len()];
+```
+
 Notes:
 Pros:
 
@@ -229,9 +254,15 @@ Cons:
 
 ## Babe
 
-VRF based.
+**B**lind **A**ssignment for **B**lockchain **E**xtension
 
-Each authority reveals a VRF. If it is below a threshold, they are eligible to author.
+- In each slot, compute a VRF output.
+- If it is below a threshold, you are eligible to author.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- If eligible, author a block showing VRF proof
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- If NOT eligible, do nothing
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 Pros:
@@ -251,6 +282,8 @@ New and upcoming
 
 Single blind VRF-based leader election
 
+🙈TBH, IDK how it works internally.
+
 Notes:
 
 - Has most of the Pros of PoW (except for the external resource based valuation hint)
@@ -262,31 +295,79 @@ Notes:
 
 It's just PoA in disguise 🤯
 
-Uses an economic game to select the authorities.
+Uses an economic staking game to select the authorities.
 
 Restores the permissionlessness to at least PoW levels.
 
 Restores clear economic incentives
 
 Notes:
-There is an economic game called staking as part of the state machine that allows selecting the authorities who will participate in the PoA scheme.
+There is an economic game called staking as part of the state machine that allows selecting the authorities who will participate in the PoA scheme. Actually there isn't just _one_ way to do it, there are many. Kian will talk a lot more about this and about the way it is done in Polkadot later. I'll just give the flavor now.
+
+The basic idea is that anyone can lock up some tokens on chain (in the state machine). The participants with the most tokens staked are elected as the authorities. There is a state transition that allows reporting authority misbehavior (eg authoring competing blocks at the same height), and the authority loses their tokens. There are often block rewards too like PoW.
 
 ---v
 
-Coupling the consensus and the state machine
+## 💒 Consensus 🪢 State Machine
 
-Runtime API
+- Loose coupling between consensus and state machine is common
+- Eg Block rewards, slashing, authority election
+- In PoW there is a difficulty adjustment algorithm
 
-difficulty adjustment
+In Substrate there is a concept of a **Runtime API** - Consensus can read information from state machine.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Notes:
+So far I've presented consensus as orthogonal to the state machine. This is mostly true. But in practice it is extremely common for there to be some loose coupling. We already saw an example when we talked about block rewards. The consensus authors are rewarded with tokens (in the state machine) for authoring blocks. Now we see that they can have tokens slashed (in state machine) for breaking consensus protocol. And we see that even the very authorities can be elected in the state machine.
 
 ---
 
-## Fork Choice Heuristics
+# Fork Choice Heuristics
 
-Your subjective preference for which fork is best
+Each node's preference for which fork is best
 
-Eg - Longest chain rule
+- Longest chain rule
+- Most accumulated work
+- Most blocks authored by Alice
+- Most total transactions (or most gas)
+
+![](img/reorgs-1.svg)
 
 Notes:
 
-- Most accumulated work
+The fork choice allows you, as a network participant, to decide which fork you consider best for now. It is not binding. Your opinion can change as you see more blocks appear on the network
+
+---v
+
+## Reorganizations
+
+![](img/reorgs-1.svg)
+
+
+![](img/reorgs-2.svg)
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Dropped transactions re-enter tx pool and re-appear in new blocks shortly
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+Having seen more blocks appear, we now have a different opinion about what chain is best. This is known as a reorg. Re-orgs are nearly inevitable. There area ways to make sure they don't happen at all, but there are significant costs to preventing them entirely. Typically short reorgs are not a big problem, but deep reorgs are.
+
+You can experience this in a social way too.
+- Imagine that you are waiting for a colleague to submit a paper. You believe they have submitted it yesterday, but it turns out that they didn't submit it until today or won't submit it until tomorrow. Might be annoying, but not world shattering (usually)
+- Imagine that you believe the colleague submitted the paper months ago and the paper has been published. You have applied on a job having listed the publication 
+
+---v
+
+## Double Spends
+
+![](./img/double-spend-1.svg)
+
+Notes:
+The name comes from bitcoin, but the attack generalizes. It exploits the existence of forks. Attacker has to get two conflicting transactions into two forks. And convince a counterparty to believe one chain long enough to take an off-chain action before they see the reorg.
+
+---v
+
+## Double Spends
+
+![](./img/double-spend-2.svg)
