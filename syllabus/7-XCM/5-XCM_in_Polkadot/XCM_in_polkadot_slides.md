@@ -43,27 +43,27 @@ is identical to that in Polkadot.
 
 ---
 
-## 🚧 XCM barriers in Rococo
+## 🚧 XCM `Barrier` in Rococo
 
 ```rust
 /// The barriers one of which must be passed for an XCM message to be executed.
 pub type Barrier = (
-	// Weight that is paid for may be consumed.
-	TakeWeightCredit,
-	// If the message is one that immediately attempts to pay for execution, then allow it.
-	AllowTopLevelPaidExecutionFrom<Everything>,
-	// Messages coming from system parachains need not pay for execution.
-	AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
-	// Expected responses are OK.
-	AllowKnownQueryResponses<XcmPallet>,
-	// Subscriptions for version tracking are OK.
-	AllowSubscriptionsFrom<Everything>,
+  // Weight that is paid for may be consumed.
+  TakeWeightCredit,
+  // If the message is one that immediately attempts to pay for execution, then allow it.
+  AllowTopLevelPaidExecutionFrom<Everything>,
+  // Messages coming from system parachains need not pay for execution.
+  AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
+  // Expected responses are OK.
+  AllowKnownQueryResponses<XcmPallet>,
+  // Subscriptions for version tracking are OK.
+  AllowSubscriptionsFrom<Everything>,
 );
 ```
 
 ---v
 
-## 🚧 XCM barriers in Rococo
+## 🚧 XCM `Barrier in Rococo
 
 - `TakeWeightCredit` and `AllowTopLevelPaidExecutionFrom` are used to prevent spamming for local/remote XCM execution.
 - `AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
@@ -92,9 +92,9 @@ parameter_types! {
 }
 
 pub type TrustedTeleporters = (
-	xcm_builder::Case<RococoForStatemine>,
-	xcm_builder::Case<RococoForContracts>,
-	xcm_builder::Case<RococoForEncointer>,
+  xcm_builder::Case<RococoForStatemine>,
+  xcm_builder::Case<RococoForContracts>,
+  xcm_builder::Case<RococoForEncointer>,
 );
 ```
 
@@ -131,7 +131,7 @@ impl xcm_executor::Config for XcmConfig {
 
 ---
 
-## 📁 LocationToAccountId in Rococo
+## 📁 `LocationToAccountId` in Rococo
 
 - Conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue Transact operations.
 - Parachain origins will be converted to their corresponding sovereign account
@@ -179,7 +179,7 @@ impl xcm_executor::Config for XcmConfig {
 
 ---v
 
-## 🪙 Asset Transactors in Rococo
+## 🪙 `asset-transactors` in Rococo
 
 - Single asset-transactor in Rococo
 - Asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to \*_pallet-balances_
@@ -192,19 +192,19 @@ This aims at maintaining the total issuance even if assets have been teleported 
 
 ---
 
-## 📍Origin Converters in Rococo
+## 📍`origin-converter` in Rococo
 
 ```rust
 type LocalOriginConverter = (
   // Converts to a signed origin with "LocationConverter"
-	SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>,
+  SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>,
   // Converts a child parachain multilocation to a parachain origin
-	ChildParachainAsNative<parachains_origin::Origin, RuntimeOrigin>,
+  ChildParachainAsNative<parachains_origin::Origin, RuntimeOrigin>,
   // Converts a local 32 byte multilocation to a signed
   // origin
-	SignedAccountId32AsNative<WestendNetwork, RuntimeOrigin>,
+  SignedAccountId32AsNative<WestendNetwork, RuntimeOrigin>,
   // Converts system parachain origins into root origin
-	ChildSystemParachainAsSuperuser<ParaId, RuntimeOrigin>,
+  ChildSystemParachainAsSuperuser<ParaId, RuntimeOrigin>,
 );
 ```
 
@@ -218,7 +218,7 @@ impl xcm_executor::Config for XcmConfig {
 
 ---v
 
-## 📍Origin Converters in Rococo
+## 📍`origin-converter` in Rococo
 
 - Defined ways in which we can convert a multilocation to a dispatch origin, typically used by the **Transact** instruction:
 - Child parachain origins are converted to signed origins through **LocationConverter** (`OriginKind == Sovereign`).
@@ -233,7 +233,7 @@ Second, system parachains are able to dispatch as root origins, as they can bee 
 
 ---
 
-## 🔧 Traders in Rococo
+## 🔧 `WeightTrader` in Rococo
 
 - Weight is converted to fee with the **WeightToFee** type.
 - The asset in which we charge for fee is **RocLocation**.
@@ -255,7 +255,7 @@ impl xcm_executor::Config for XcmConfig {
 
 ---
 
-## 🎨 XcmPallet in Rococo
+## 🎨 `XcmPallet` in Rococo
 
 ```rust
 impl pallet_xcm::Config for Runtime {
@@ -288,11 +288,11 @@ impl pallet_xcm::Config for Runtime {
 
 ```rust
 pub type LocalOriginToLocation = (
-	// We allow an origin from the Collective pallet to be used in XCM
-	// as a corresponding Plurality of the `Unit` body.
-	CouncilToPlurality,
-	// And a usual Signed origin to be used in XCM as a corresponding AccountId32
-	SignedToAccountId32<RuntimeOrigin, AccountId, RococoNetwork>,
+  // We allow an origin from the Collective pallet to be used in XCM
+  // as a corresponding Plurality of the `Unit` body.
+  CouncilToPlurality,
+  // And a usual Signed origin to be used in XCM as a corresponding AccountId32
+  SignedToAccountId32<RuntimeOrigin, AccountId, RococoNetwork>,
 );
 ```
 
@@ -310,24 +310,23 @@ You can visit the whole xcm configuration [here](https://github.com/paritytech/c
 
 ```rust
 parameter_types! {
-
   pub const KsmLocation:  MultiLocation = MultiLocation::parent();
 }
 
 /// Means for transacting the native currency on this chain.
 pub type CurrencyTransactor = CurrencyAdapter<
-	// Use this currency:
-	Balances,
-	// Use this currency when it is a fungible asset
-	// matching the given location or name:
-	IsConcrete<KsmLocation>,
-	// Convert an XCM MultiLocation into a local account id:
-	LocationToAccountId,
-	// Our chain's account ID type
-	// (we can't get away without mentioning it explicitly):
-	AccountId,
-	// We don't track any teleports of `Balances`.
-	(),
+  // Use this currency:
+  Balances,
+  // Use this currency when it is a fungible asset
+  // matching the given location or name:
+  IsConcrete<KsmLocation>,
+  // Convert an XCM MultiLocation into a local account id:
+  LocationToAccountId,
+  // Our chain's account ID type
+  // (we can't get away without mentioning it explicitly):
+  AccountId,
+  // We don't track any teleports of `Balances`.
+  (),
 >;
 ```
 
@@ -340,25 +339,25 @@ pub type CurrencyTransactor = CurrencyAdapter<
 ```rust
 /// Means for transacting assets besides the native currency on this chain.
 pub type FungiblesTransactor = FungiblesAdapter<
-	// Use this fungibles implementation:
-	Assets,
-	// Use this currency when it is a fungible asset
-	// matching the given location or name:
-	ConvertedConcreteAssetId<
-		AssetId, Balance,
-		AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
-		JustTry,
-	>,
-	// Convert an XCM MultiLocation into a local account id:
-	LocationToAccountId,
-	// Our chain's account ID type
-	// (we can't get away without mentioning it explicitly):
-	AccountId,
-	// We only want to allow teleports of known assets.
-	// We use non-zero issuance as an indication that this asset is known.
-	parachains_common::impls::NonZeroIssuance<AccountId, Assets>,
-	// The account to use for tracking teleports.
-	CheckingAccount,
+  // Use this fungibles implementation:
+  Assets,
+  // Use this currency when it is a fungible asset
+  // matching the given location or name:
+  ConvertedConcreteAssetId<
+    AssetId, Balance,
+	AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
+	JustTry,
+  >,
+  // Convert an XCM MultiLocation into a local account id:
+  LocationToAccountId,
+  // Our chain's account ID type
+  // (we can't get away without mentioning it explicitly):
+  AccountId,
+  // We only want to allow teleports of known assets.
+  // We use non-zero issuance as an indication that this asset is known.
+  parachains_common::impls::NonZeroIssuance<AccountId, Assets>,
+  // The account to use for tracking teleports.
+  CheckingAccount,
 >;
 ```
 
@@ -400,31 +399,31 @@ impl xcm_executor::Config for XcmConfig {
 
 ```rust
 impl FilterAssetLocation for NativeAsset {
-	fn filter_asset_location(asset: &MultiAsset, origin: &MultiLocation) -> bool {
-		matches!(asset.id, Concrete(ref id) if id == origin)
-	}
+  fn filter_asset_location(asset: &MultiAsset, origin: &MultiLocation) -> bool {
+    matches!(asset.id, Concrete(ref id) if id == origin)
+  }
 }
 ```
 
 ---
 
-## 🚧 Statemine Barriers
+## 🚧 Statemine `Barrier`
 
 Similar to Rococo, but unpaid execution is allowed from the relay chain
 
 ```rust
 pub type Barrier = DenyThenTry<
-	DenyReserveTransferToRelayChain,
-	(
-		TakeWeightCredit,
-		AllowTopLevelPaidExecutionFrom<Everything>,
-		// Parent and its exec plurality get free execution
-		AllowUnpaidExecutionFrom<ParentOrParentsExecutivePlurality>,
-		// Expected responses are OK.
-		AllowKnownQueryResponses<PolkadotXcm>,
-		// Subscriptions for version tracking are OK.
-		AllowSubscriptionsFrom<ParentOrSiblings>,
-	),
+  DenyReserveTransferToRelayChain,
+  (
+    TakeWeightCredit,
+    AllowTopLevelPaidExecutionFrom<Everything>,
+    // Parent and its exec plurality get free execution
+    AllowUnpaidExecutionFrom<ParentOrParentsExecutivePlurality>,
+	// Expected responses are OK.
+	AllowKnownQueryResponses<PolkadotXcm>,
+	// Subscriptions for version tracking are OK.
+	AllowSubscriptionsFrom<ParentOrSiblings>,
+  ),
 >;
 ```
 
