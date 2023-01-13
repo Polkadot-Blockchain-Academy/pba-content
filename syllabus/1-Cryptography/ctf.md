@@ -1,74 +1,69 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2706
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red190\green199\blue208;
-\red189\green198\blue208;\red12\green14\blue18;}
-{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\cssrgb\c100000\c100000\c99985\c0;\cssrgb\c79043\c82190\c85130;
-\cssrgb\c78824\c81961\c85098;\cssrgb\c5098\c6667\c9020;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh18000\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+CAPTURE THE FLAG
 
-\f0\fs24 \cf2 \cb3 CAPTURE THE FLAG\
-\
-Write each challenge on a board so they don\'92t look the next one up beforehand.\
-\
-Final submission: txt file title \'93pba_ctf_ELEMENT-USER\'94 with results separated by line break\
-\
+Write each challenge on a board so they don\'92t look the next one up beforehand.
+
+Submissions: separate txt files with names "flag_X" for each flag result
+
 Grading: adding automation soon\
-\
-Step by step:\
-\
+
+Step by step:
+
+	CANCELLED 
 	Give them a list of libraries to use\
-		https://docs.rs/blake2/latest/blake2/\
-		https://docs.rs/ed25519/latest/ed25519/\
-		https://docs.rs/py-sr25519-bindings/latest/sr25519/\
-\
-	Give them a specific file format for them to write the results and commit each line\
-\
-	Look at the first submission live to track the fastest who will get a beer at the end\
-\
-	Grading: run tests getting inputs from standard file. If file doesn\'92t work don\'92t grade\
-\
-	Extra: ask for non obvious problem to solve with structures. Let them vote for the best one\
-\
-\
-Activities:\
-\
-Mnemonic\
-\pard\pardeftab720\partightenfactor0
-\cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec4 Generate a 24 words mnemonic\cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \cb3 	Submit: 24 words mnemonic\
-	Test: check if there are 24 words\
-\
-Hash\
-\pard\pardeftab720\partightenfactor0
-\cf5 \cb6 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec5 Hash the message "Welcome to PBA 02 Buenos Aires"\
-Hash the message [your mnemonic here]\'a0\
-Hash your mnemonic\cf2 \cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \cb3 	Submit: standard hash\
-		    hash with element handle\
-		    hash of the mnemonic\
-	Test: check standard hash\
-		 check standard hash with students element handle\
-\
-Asym\cf5 \cb6 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec5 metric Encryption\
-\pard\pardeftab720\partightenfactor0
-\cf5 Generate a private and public key pair \
-We will gather the list of public key and randomly assign you a public key for you to send a message to \
-Write a message, encrypt it with the public key assigned to you \
-Send us the hash of your plain text message Brute force the list to find the message addressed to your pubkey  \
-We will publish the list of hashes and the only answers accepted will be commited hashes that are on the list\cf2 \cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \cb3 	Submit: pub key from mnemonic hash\
-		    encrypted message\
-	             hash of the plain text message\
-	Test: check if encrypted message was encrypted with the right pub key \
-		check if the hash submitted is in the list of hashes of plain text messages\
-\
+		https://docs.rs/blake2/latest/blake2/
+		https://docs.rs/ed25519/latest/ed25519/
+		https://docs.rs/py-sr25519-bindings/latest/sr25519/
+	CANCELLED
+
+	Wait for the file commits
+
+	Look at the first submission live to track the fastest who will get a beer at the end
+
+	Grading: run flag test. The individual result for the student should be related to the mnemonic they provide at flag_0
+
+	For sync submissions as for answers only, for async look at their code
+
+FLAGS
+
+
+FLAG_0: Mnemonic
+Generate a 24 words mnemonic
+
+Submit: 24 words mnemonic
+Test: check if there are 24 words
+
+
+FLAG_1: Hash
+Use the fastest cryptographic hash algorithm to hash the following messages:
+"Welcome to PBA 02 Buenos Aires"
+[your mnemonic here]
+
+Submit: standard hash
+		hash of the mnemonic
+Test: blake2("Welcome to PBA 02 Buenos Aires") == first line of FLAG_1 file
+	  blake2(FLAG_0) == second like of FLAG_1 file
+
+
+FLAG_2: Symmetric Encryption
+Generate a Ed25519 Private and Public key pair from your hash
+
+Submit: pub key from mnemonic hash
+
+We will gather the list of public key and randomly assign you a public key for you to send a message to
+Write a message, encrypt it with the public key assigned to you
+
+Submit: encrypted message 
+
+We will publish a list of all encrypted messages
+
+Brute force the list to find the message addressed to your pubkey and decrypt it
+
+Submit: plaint text message sent to you
+
+Test: encrypted(plain_text_message, pub_key) == encrypted_message
+
+
+FLAG_3
 Signatures\cf5 \cb6 \expnd0\expndtw0\kerning0
 \outl0\strokewidth0 \strokec5 \
 \cf2 \cb3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 Write a message \'97 tell them it should be something they don\'92t think everyone would agree\
