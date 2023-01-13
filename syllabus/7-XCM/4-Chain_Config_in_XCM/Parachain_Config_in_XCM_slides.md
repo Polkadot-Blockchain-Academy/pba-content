@@ -30,7 +30,7 @@ duration: 1 hour
 
 ## 🛠️ Configurables in `XcmConfig`
 
-```rust
+```rust [0|1|9|11|17|19|21|23|25|27|29|31]
 pub type LocationToAccountId = ?;
 
 pub struct XcmConfig;
@@ -64,8 +64,6 @@ impl Config for XcmConfig {
   type SubscriptionService = ?;
 }
 ```
-
-TODO use code highlights to progress through this and auto-scroll, as it's overflowing as is. See [0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md](../../0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) for examples.
 
 Notes:
 
@@ -284,7 +282,7 @@ For our example, it suffices to uses `CurrencyAdapter`, as all we are going to d
 
 - `SovereignSignedViaLocation`: Converts the multilocation origin (typically, a parachain origin) into a signed origin.
 
-```rust
+```rust [0|6|18|20|22]
 pub struct SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>(
   PhantomData<(LocationConverter, RuntimeOrigin)>,
 );
@@ -292,7 +290,8 @@ impl<
     // Converts a multilocation into account
     LocationConverter: Convert<MultiLocation, RuntimeOrigin::AccountId>,
     RuntimeOrigin: OriginTrait,
-  > ConvertOrigin<RuntimeOrigin> for SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>
+  > ConvertOrigin<RuntimeOrigin>
+  for SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>
 where
   RuntimeOrigin::AccountId: Clone,
 {
@@ -313,18 +312,20 @@ where
 }
 ```
 
-TODO use code highlights to progress through this and auto-scroll, as it's overflowing as is. See [0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md](../../0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) for examples.
-
 ---v
 
 ### 📍 `origin-converter` via `xcm-builder`
 
 - `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
 
-```rust
-pub struct SignedAccountId32AsNative<Network, RuntimeOrigin>(PhantomData<(Network, RuntimeOrigin)>);
-impl<Network: Get<NetworkId>, RuntimeOrigin: OriginTrait> ConvertOrigin<RuntimeOrigin>
-  for SignedAccountId32AsNative<Network, RuntimeOrigin>
+```rust [0|18|19-22|24]
+pub struct SignedAccountId32AsNative<
+  Network,
+  RuntimeOrigin
+>(PhantomData<(Network, RuntimeOrigin)>);
+impl<Network: Get<NetworkId>, RuntimeOrigin: OriginTrait> 
+  ConvertOrigin<RuntimeOrigin>
+for SignedAccountId32AsNative<Network, RuntimeOrigin>
 where
   RuntimeOrigin::AccountId: From<[u8; 32]>,
 {
@@ -336,7 +337,10 @@ where
     match (kind, origin) {
       (
         OriginKind::Native,
-        MultiLocation { parents: 0, interior: X1(Junction::AccountId32 { id, network }) },
+        MultiLocation { 
+		  parents: 0,
+		  interior: X1(Junction::AccountId32 { id, network })
+		},
       ) if matches!(network, NetworkId::Any) || network == Network::get() =>
         Ok(RuntimeOrigin::signed(id.into())),
       (_, origin) => Err(origin),
@@ -344,8 +348,6 @@ where
   }
 }
 ```
-
-TODO use code highlights to progress through this and auto-scroll, as it's overflowing as is. See [0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md](../../0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) for examples.
 
 ---v
 
@@ -454,25 +456,38 @@ Hence using `AllowUnpaidExecutionFrom` should be enough.
 
 - `FixedRateOfFungible`: Converts weight to fee at a fixed rate and charges in a specific fungible asset
 
-```rust
+```rust [0|7|17|19-21|28-30]|34
 pub struct FixedRateOfFungible<T: Get<(AssetId, u128)>, R: TakeRevenue>(
   Weight,
   u128,
   PhantomData<(T, R)>,
 );
-impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungible<T, R> {
+impl<
+  T: Get<(AssetId, u128)>,
+  R: TakeRevenue
+> WeightTrader for FixedRateOfFungible<T, R> {
   /* snip */
-  fn buy_weight(&mut self, weight: Weight, payment: Assets) -> Result<Assets, XcmError> {
+  fn buy_weight(
+	&mut self,
+	weight: Weight,
+	payment: Assets
+  ) -> Result<Assets, XcmError> {
     // get the assetId and amount per second to charge
     let (id, units_per_second) = T::get();
     // Calculate the amount to charge for the weight bought
-    let amount = units_per_second * (weight as u128) / (WEIGHT_REF_TIME_PER_SECOND as u128);
+    let amount = 
+	  units_per_second * (weight as u128)
+	  / (WEIGHT_REF_TIME_PER_SECOND as u128);
+	
     if amount == 0 {
       return Ok(payment)
     }
+
     // Take amount from payment
     let unused =
-      payment.checked_sub((id, amount).into()).map_err(|_| XcmError::TooExpensive)?;
+      payment.checked_sub((id, amount).into())
+	  .map_err(|_| XcmError::TooExpensive)?;
+	
     self.0 = self.0.saturating_add(weight);
     self.1 = self.1.saturating_add(amount);
     Ok(unused)
@@ -480,10 +495,6 @@ impl<T: Get<(AssetId, u128)>, R: TakeRevenue> WeightTrader for FixedRateOfFungib
   /* snip */
 }
 ```
-
-TODO use code highlights to progress through this and auto-scroll, as it's overflowing as is. See [0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md](../../0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) for examples.
-
-TODO ensure no horizontal overflow too, add line breaks
 
 ---v
 
@@ -547,7 +558,7 @@ Example for parachain 1000 in Kusama:
 
 ### 🎨 `pallet-xcm`
 
-```rust
+```rust [0|5|10|12|16|18]
 impl pallet_xcm::Config for Runtime {
   type RuntimeEvent = RuntimeEvent;
   // Who can send XCM messages?
@@ -575,8 +586,6 @@ impl pallet_xcm::Config for Runtime {
   type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
 }
 ```
-
-TODO use code highlights to progress through this and auto-scroll, as it's overflowing as is. See [0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md](../../0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) for examples.
 
 ---
 
