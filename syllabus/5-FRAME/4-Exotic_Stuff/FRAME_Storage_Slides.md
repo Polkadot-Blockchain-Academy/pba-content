@@ -192,13 +192,13 @@ So verify first, write last should not be needed anymore within the FRAME pallet
 
 ## Patricia Trie
 
-<img style="height: 600px;" src="../../../assets/img/4-Substrate/patricia-trie.svg" />
+TODO use img that does not break `yarn build`
 
 ---
 
 ## Storage Keys
 
-<img src="../../../assets/img/4-Substrate/navigate-storage-2.svg" />
+TODO use img that does not break `yarn build`
 
 ---
 
