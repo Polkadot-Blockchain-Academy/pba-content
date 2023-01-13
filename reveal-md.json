@@ -11,5 +11,5 @@
   "staticDir": "build",
   "staticDirs": ["assets"],
   "preprocessor": null,
-  "glob": "syllabus/[1,2]*/**/*[Ss]lides.md"
+  "glob": "**/*[Ss]lides.md"
 }
