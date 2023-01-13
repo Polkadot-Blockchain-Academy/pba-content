@@ -10,16 +10,16 @@ duration: 1 hour
 
 ## Motivation
 
-So far, we have discussed state machines and consensus.
+So far, we have discussed state machines and consensus... in _isolation.
 
-But what of the _contexts in which they operate within_?
+Does the _contexts in which they operate within_ matter?
 
 Notes:
 
 - So far _mostly_ on simplified, idealized systems.
   - "Black boxes" of cryptography
   - Rational actors and assumed complete models of behavior in economics
-  - Blockchains in theory.
+  - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way... we will talk about the Oracle Problem. 
 - In _practice_ there are far more "unknown unknowns" and "[black swan](#next-steps)" behavior.
 
 ---
@@ -49,16 +49,15 @@ Notes:
 
 - Incorruptible
 - Infallible
-- Censorship-proof
+- Trustless
+- Devoid of Censorship
+- Accessible
 - [Antifragile](#next-steps)
+- ...perhaps more?
 
 </pba-flex>
 
-<pba-flex left style="font-size:0.7em">
-
-_\*oversimplified, extreme ends of the spectrum_
-
-</pba-flex>
+_... an N-lemma_
 
 Notes:
 
@@ -71,6 +70,21 @@ We contrast the following in order above:
 Networking 
 - Authority layer
 - Robustness to extrema/outlier events.
+
+---
+
+## An N-lemma
+
+Hypothesis: a _truly_ Unstoppable App cannot exist.
+
+We must make trade-offs out of all N properties that a _truly_ Unstoppable App would possess.
+
+
+Notes:
+
+Many [trilemmas](#next-steps) of note.
+As with crypto, we can have astronomically good odds... but they are not perfect.
+We want the most robust system possible, given the _environment_ the consensus system lives in.s
 
 ---
 
@@ -143,6 +157,34 @@ We will discuss these and what we're building to realize a better stack.
 Notes:
 
 https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the state of the space, but founder of [Signal messenger](https://signal.org).
+
+---
+
+# System Level
+
+---
+
+## Consensus Systems
+
+Authoritative TODO remind from earlier in this mod
+
+concentric rings of consensus diagram? single ones -> global consensus.
+
+---
+
+## [Oracle](https://en.wikipedia.org/wiki/Category:Computation_oracles) Problem
+
+An oracle provides data to a consensus system from outside it's boundaries. (i.e. a partial state of an external chain)
+
+The oracle problem is data from or push data out to any external system as built-in functionality.
+
+Notes:
+
+- Example: Random Oracle, NOT like VRF we saw in the crypto module that can be in the consensus system.
+- Oracle needed for _input_ from anything that lives outside of the boundary of the consensus system.
+  - Everything in a chain is self-referential. Applications in a consensus system may want to _try_ and reason about something outside itself.
+- Inclusive of bridges 
+
 
 ---
 
@@ -489,7 +531,7 @@ Notes:
 
 - Flashbots & Friends
 
-<!-- TODO Forest game on Ethereum testnet... or other zk game? -->
+<!-- TODO Dark Forest game on Ethereum testnet... or other zk game? -->
 
 ---
 
@@ -636,6 +678,7 @@ Goal is that you now have the primitives and concepts necessary to dive into Sub
 
 ## Next Steps
 
+1. [The Oracle Problem](https://blog.chain.link/what-is-the-blockchain-oracle-problem/)
 1. 📔[Antifragile: Things That Gain From Disorder](https://en.wikipedia.org/wiki/Antifragile_(book))
 1. Black Swan Theory (Events)
   - [Wiki](https://en.wikipedia.org/wiki/Black_swan_theory)
