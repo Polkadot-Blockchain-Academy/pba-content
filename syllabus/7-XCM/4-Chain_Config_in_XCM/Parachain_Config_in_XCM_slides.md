@@ -558,7 +558,7 @@ Example for parachain 1000 in Kusama:
 
 ### 🎨 `pallet-xcm`
 
-```rust [0|5|10|12|16|18]
+```rust [0|5|10-12|15|20|23]
 impl pallet_xcm::Config for Runtime {
   type RuntimeEvent = RuntimeEvent;
   // Who can send XCM messages?
@@ -568,14 +568,19 @@ impl pallet_xcm::Config for Runtime {
   type XcmRouter = XcmRouter;
   // Who can execute XCMs/teleport assets/reserve-transfer assets?
   // How are origins handled?
-  type ExecuteXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+  type ExecuteXcmOrigin = EnsureXcmOrigin<
+    RuntimeOrigin,
+	LocalOriginToLocation
+  >;
   // Who and what messages are allowed to be executed?
   type XcmExecuteFilter = Everything;
   // The XCM executor itself
   type XcmExecutor = XcmExecutor;
-  // Who and what kind of assets are allowed to be teleported via the `teleport_asset` extrinsic?
+  // Who and what kind of assets are allowed to be teleported
+  // via the `teleport_asset` extrinsic?
   type XcmTeleportFilter = Everything;
-  // Who and what kind of assets are allowed to be transferred as a reserve asset via the `reserve_transfer_assets` extrinsic?
+  // Who and what kind of assets are allowed to be transferred
+  // as a reserve asset via the `reserve_transfer_assets` extrinsic?
   type XcmReserveTransferFilter = Everything;
   type Weigher = XcmWeigher;
   type LocationInverter = LocationInverter<Ancestry>;
