@@ -73,22 +73,22 @@ pub type Barrier = (
 
 ## 🤝 Trusted teleporters in Rococo
 
-```rust
+```rust [0|2|6-8|18-22]
 parameter_types! {
-	pub const RocLocation: MultiLocation = Here.into();
-	pub const Rococo: MultiAssetFilter =
-	           Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
+  pub const RocLocation: MultiLocation = Here.into();
+  pub const Rococo: MultiAssetFilter =
+    Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
 
-	pub const Statemine: MultiLocation = Parachain(1000).into();
-	pub const Contracts: MultiLocation = Parachain(1002).into();
-	pub const Encointer: MultiLocation = Parachain(1003).into();
+  pub const Statemine: MultiLocation = Parachain(1000).into();
+  pub const Contracts: MultiLocation = Parachain(1002).into();
+  pub const Encointer: MultiLocation = Parachain(1003).into();
 
-	pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) =
-	           (Rococo::get(), Statemine::get());
-	pub const RococoForContracts: (MultiAssetFilter, MultiLocation) =
-	           (Rococo::get(), Contracts::get());
-	pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) =
-	           (Rococo::get(), Encointer::get());
+  pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) =
+    (Rococo::get(), Statemine::get());
+  pub const RococoForContracts: (MultiAssetFilter, MultiLocation) =
+    (Rococo::get(), Contracts::get());
+  pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) =
+    (Rococo::get(), Encointer::get());
 }
 
 pub type TrustedTeleporters = (
@@ -139,11 +139,11 @@ impl xcm_executor::Config for XcmConfig {
 
 ```rust
 pub type LocationConverter = (
-	// We can convert a child parachain using the standard `AccountId` conversion.
-	ChildParachainConvertsVia<ParaId, AccountId>,
-	// We can directly alias an `AccountId32` into a local account.
-	AccountId32Aliases<RococoNetwork, AccountId>,
-  );
+  // We can convert a child parachain using the standard `AccountId` conversion.
+  ChildParachainConvertsVia<ParaId, AccountId>,
+  // We can directly alias an `AccountId32` into a local account.
+  AccountId32Aliases<RococoNetwork, AccountId>,
+);
 ```
 
 ---
@@ -154,20 +154,20 @@ pub type LocationConverter = (
 
 ```rust
 pub type LocalAssetTransactor = XcmCurrencyAdapter<
-	// Use this currency:
-	Balances,
-	// Use this currency when it is a fungible asset
-	// matching the given location or name:
-	IsConcrete<RocLocation>,
-	// We can convert the MultiLocations
-	// with our converter above:
-	LocationConverter,
-	// Our chain's account ID type
-	// (we can't get away without mentioning it explicitly):
-	AccountId,
-	// It's a native asset so we keep track of the teleports
-	// to maintain total issuance.
-	CheckAccount,
+  // Use this currency:
+  Balances,
+  // Use this currency when it is a fungible asset
+  // matching the given location or name:
+  IsConcrete<RocLocation>,
+  // We can convert the MultiLocations
+  // with our converter above:
+  LocationConverter,
+  // Our chain's account ID type
+  // (we can't get away without mentioning it explicitly):
+  AccountId,
+  // It's a native asset so we keep track of the teleports
+  // to maintain total issuance.
+  CheckAccount,
 >;
 
 impl xcm_executor::Config for XcmConfig {
@@ -244,12 +244,11 @@ Second, system parachains are able to dispatch as root origins, as they can bee 
 impl xcm_executor::Config for XcmConfig {
   /* snip */
   type Trader = UsingComponents<
-						WeightToFee,
-						RocLocation,
-						AccountId,
-						Balances,
-						ToAuthor<Runtime>
-						>;
+    WeightToFee,
+	RocLocation,
+	AccountId,
+	Balances,
+	ToAuthor<Runtime>>;
   /* snip */
 }
 ```
@@ -260,22 +259,22 @@ impl xcm_executor::Config for XcmConfig {
 
 ```rust
 impl pallet_xcm::Config for Runtime {
-	/* snip */
-	type XcmRouter = XcmRouter;
-	type SendXcmOrigin =
-	       xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	// Anyone can execute XCM messages locally.
-	type ExecuteXcmOrigin =
-	       xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	type XcmExecuteFilter = Everything;
-	type XcmExecutor = xcm_executor::XcmExecutor<XcmConfig>;
-	// Anyone is able to use teleportation
-	// regardless of who they are and what they want to teleport.
-	type XcmTeleportFilter = Everything;
-	// Anyone is able to use reserve transfers
-	// regardless of who they are and what they want to transfer.
-	type XcmReserveTransferFilter = Everything;
-	/* snip */
+  /* snip */
+  type XcmRouter = XcmRouter;
+  type SendXcmOrigin =
+    xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+  // Anyone can execute XCM messages locally.
+  type ExecuteXcmOrigin =
+    xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+  type XcmExecuteFilter = Everything;
+  type XcmExecutor = xcm_executor::XcmExecutor<XcmConfig>;
+  // Anyone is able to use teleportation
+  // regardless of who they are and what they want to teleport.
+  type XcmTeleportFilter = Everything;
+  // Anyone is able to use reserve transfers
+  // regardless of who they are and what they want to transfer.
+  type XcmReserveTransferFilter = Everything;
+  /* snip */
 }
 ```
 
@@ -289,8 +288,8 @@ impl pallet_xcm::Config for Runtime {
 
 ```rust
 pub type LocalOriginToLocation = (
-	// We allow an origin from the Collective pallet to be used in XCM as a corresponding Plurality of the
-	// `Unit` body.
+	// We allow an origin from the Collective pallet to be used in XCM
+	// as a corresponding Plurality of the `Unit` body.
 	CouncilToPlurality,
 	// And a usual Signed origin to be used in XCM as a corresponding AccountId32
 	SignedToAccountId32<RuntimeOrigin, AccountId, RococoNetwork>,
