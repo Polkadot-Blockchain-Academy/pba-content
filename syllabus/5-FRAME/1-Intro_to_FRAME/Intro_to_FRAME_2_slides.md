@@ -88,7 +88,6 @@ And some less important ones:
 ### "Shell" Pallet
 
 ```rust
-// Re-export pallet items so that they can be accessed from the crate namespace.
 pub use pallet::*;
 
 #[frame_support::pallet]
@@ -100,11 +99,11 @@ pub mod pallet {
   #[pallet::generate_store(pub(super) trait Store)]
   pub struct Pallet<T>(_);
 
-  #[pallet::config]  // <-- Step 2. code block will replace this.
-  #[pallet::event]   // <-- Step 3. code block will replace this.
-  #[pallet::error]   // <-- Step 4. code block will replace this.
-  #[pallet::storage] // <-- Step 5. code block will replace this.
-  #[pallet::call]    // <-- Step 6. code block will replace this.
+  #[pallet::config]  // snip
+  #[pallet::event]   // snip
+  #[pallet::error]   // snip
+  #[pallet::storage] // snip
+  #[pallet::call]    // snip
 }
 ```
 
@@ -118,9 +117,10 @@ FRAME uses Macros to simplify the development of Pallets, while keeping all of t
 
 ---
 
-## Try Expanding Yourself
+## See For Yourself
 
-`wc -l` will show the number of lines of a file.
+- `wc -l` will show the number of lines of a file.
+- `cargo expand` will expand the macros to "pure" Rust.
 
 ```bash
 ➜  substrate3 git:(master) ✗ wc -l frame/sudo/src/lib.rs
@@ -134,3 +134,7 @@ FRAME uses Macros to simplify the development of Pallets, while keeping all of t
 ```
 
 ---
+
+## FRAME System
+
+The FRAME System is a Pallet which is assumed to always exist when using FRAME.
