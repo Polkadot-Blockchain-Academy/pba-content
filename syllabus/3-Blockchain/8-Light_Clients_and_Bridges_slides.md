@@ -77,6 +77,9 @@ One of the complaints was that the node takes too much resources. This is especi
 - ✅ Checks consensus
 - ❌ Maintains state
 
+Notes:
+This is what a typical light client does. There is not a single definition of light client. There are varying degrees of lightness to suit your needs.
+
 ---v
 
 ## Trustless
