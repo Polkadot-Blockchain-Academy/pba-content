@@ -9,10 +9,6 @@ instructors: ["Michael Müller"]
 
 ---
 
-<widget-speaker name="Michi" position="ink! Team Lead @ Parity " image="/assets/img/0-Shared/people/michi.png" github="cmichi" matrix="michi:matrix.parity.io"></widget-speaker>
-
----
-
 ## How does ink! tie into Substrate?
 
 <img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego0.png" />

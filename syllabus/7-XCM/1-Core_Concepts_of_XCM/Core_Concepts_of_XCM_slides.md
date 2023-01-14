@@ -2,8 +2,6 @@
 title: Cross Consensus Messaging (XCM)
 description: XCM Core Concepts, Terms, and Logic for Web3 Engineers
 duration: 1 hour
-instructors: ["Keith Yeung"]
-teaching-assistants: ["Dan Shields"]
 ---
 
 # Cross Consensus Messaging (XCM)
@@ -22,7 +20,7 @@ Notes:
 
 ## _At the end of this lecture, you will be able to:_
 
-<widget-text center>
+<pba-flex center>
 
 - Define the concepts, syntax, and terms of XCM
 - Navigate exiting resources that relate to XCM
@@ -44,7 +42,7 @@ EXERCISE: ask the class to raise hands and postulate on generally what one might
 
 ## 🎬 Some Concrete Use-cases
 
-<widget-text center>
+<pba-flex center>
 
 1. Cross-consensus asset transfers
 1. Execute platform-specific actions (extrinsics) such as governance voting
@@ -67,7 +65,7 @@ XCM enables a single chain to direct the actions of many other chains, which hid
 
 **Consensus systems**: A chain, contract or other global, encapsulated, state machine singleton.
 
-<widget-text center>
+<pba-flex center>
 
 - Can be any programmatic state-transition system that exists within consensus which can send/receive datagrams.
 - It does not even have to be a _distributed_ system, only that it can form _some_ kind of consensus.
@@ -80,8 +78,6 @@ A consensus system does not necessarily have to be a blockchain or a smart contr
 
 ## 🤟 A Format, not a Protocol
 
-<br>
-
 XCM is a **_messaging format_**.
 
 It is akin to the post card from the post office
@@ -90,7 +86,7 @@ It is akin to the post card from the post office
 
 It is _not_ a messaging protocol!
 
-- A post card doesn't send itself!
+A post card doesn't send itself!
 
 Notes:
 
@@ -104,7 +100,7 @@ A post card relies on the postal service to get itself sent towards its receiver
 
 Drawbacks of relying on native messaging or transaction format:
 
-<widget-text center>
+<pba-flex center>
 
 - Lack of uniformity between consensus systems on message format
 - Common cross-consensus use-cases do not map one-to-one to a single transaction
@@ -121,18 +117,73 @@ Notes:
 
 ---
 
-## XCM Versioning
+## XCM Communication Model
 
-Based on the upcoming XCMv3
+XCM is designed around four 'A's:
 
-Most XCM can be auto-converted to the next version, but some require manual involvement
+<pba-flex center>
 
-Every release only supports 2 versions: previous and current
+- **Agnostic**: No assumptions about Consensus System messaged
+- **Absolute**: Guaranteed delivery, interpretation, and ordering
+- **Asynchronous**: No assumption of blocking for sender/receiver
+- **Asymmetric**: No results or callbacks (separately communicated!)
 
 Notes:
 
-This would mean that when XCMv3 gets released, version 0 and 1 support will be dropped completely.
-Expect a cadence of a release every 6 months.
+- **Agnostic**: XCM makes no assumptions about the nature of the Consensus System between which messages are being passed.
+- **Absolute**: XCM messages are guaranteed to be delivered and interpreted accurately, in order and in a timely fashion.
+- **Asynchronous**: XCM messages in no way assume that the sender will be blocking on its completion.
+- **Asymmetric**: XCM messages do not have results.
+  Any results must be separately communicated to the sender with an additional message.
+
+---
+
+## Async vs Sync
+
+XCM crossing the barrier between a single consensus system<br>cannot generally be synchronous.
+
+<br>
+
+No guarantees on delivery time.
+
+Notes:
+
+Generally, consensus systems are not designed to operate in sync with external systems.
+They intrinsically need to have a uniform state to reason about and do not, by default, have the means to verify states of other consensus systems.
+Thus, each consensus system cannot make any guarantees on the expected time required to deliver results; doing so haphazardly would cause the recipient to be blocked waiting for responses that are either late or would never be delivered, and one of the possible reasons for that would be an impending runtime upgrade that caused a change in how responses are delivered.
+
+---
+
+## XCM is "fire and forget"
+
+XCM has no results:
+
+<pba-flex center>
+
+- No errors reported to sender
+- No callbacks for sender
+
+Similar to UDP
+
+Notes:
+
+The receiver side can and does handle errors, but the sender will not be notified, unless the error handler specifically tries to send back an XCM that makes some sort of XCM that notifies status back to the origin, but such an action should be considered as constructing a separate XCM for the sole purpose of reporting information, rather than an intrinsic functionality built into XCM, akin to how UDP can also create a "response" to an incoming datagram, yet the response is too considered as a separate UDP datagram instance.
+
+---
+
+## Async XCM
+
+We _could_ have XCM describe async behavior but do not because:
+
+<pba-flex center>
+
+- Complexity, custom per sender/receiver pair
+- Expense of operating in fee-based systems
+
+Notes:
+
+Asynchronous systems vary widely by implementation, and as a protocol that attempts to bridge between disparate consensus systems, XCM does not attempt to define the behavior or architecture of its interlocutors.
+Rather, XCM defines and standardizes the interface and semantics that two or more consensus systems can use to interact with each other, but leaves the ultimate implementation details to its participating systems.
 
 ---
 
@@ -141,6 +192,8 @@ Expect a cadence of a release every 6 months.
 `MultiLocation` = a **_relative_** location in the consensus multiverse.
 
 All entities are addressed as paths to them, _relative_ to the current consensus system.
+
+<br>
 
 ```rust
 pub struct MultiLocation {
@@ -159,9 +212,9 @@ It is always represented as a location _relative_ to the current consensus syste
 
 ## Junction
 
-A single item in a path to describe the relative location of a consensus system:
+An item in a path to describe the<br>relative location of a consensus system:
 
-<widget-text center>
+<pba-flex center>
 
 - `Parachain`
 - `AccountId32`
@@ -176,8 +229,6 @@ This is akin to a directory on a file path, e.g. the `foo` in `/foo/bar`.
 
 ## Junction*s*\*
 
-Enum containing multiple `Junction`s
-
 ```rust
 enum Junctions {
     X1(Junction),
@@ -187,6 +238,8 @@ enum Junctions {
     X8(Junction, /*...*/),
 }
 ```
+
+Enum containing multiple `Junction`s
 
 Notes:
 
@@ -216,7 +269,7 @@ This will be very powerful later on (Origins)
 
 ## Construct a `MultiLocation`!
 
-<widget-text center>
+<pba-flex center>
 
 1. What is _your_ location?
 1. Where do you _want to send to_?
@@ -258,17 +311,14 @@ Notes:
 
 ---
 
-<widget-columns>
-<widget-column>
+<pba-cols
+<pba-col>
 
 ### 💰 `MultiAsset` in XCM
 
 There are many _classes_ of assets (fungible, NFTs,...)
 
-The datatype `MultiAsset` describes them all.
-
-</widget-column>
-<widget-column>
+<br>
 
 ```rust
 struct MultiAsset {
@@ -277,12 +327,13 @@ struct MultiAsset {
 }
 ```
 
-</widget-column>
-</widget-columns>
+The datatype `MultiAsset` describes them all.
 
 ---
 
 ## Asset Representation
+
+<div style="font-size: smaller">
 
 ```rust
 struct MultiAsset {
@@ -310,6 +361,8 @@ enum AssetInstance {
 }
 ```
 
+</div>
+
 Notes:
 
 A MultiAsset is composed of an asset ID and an enum representing the fungibility of the asset.
@@ -329,7 +382,8 @@ Non-fungible assets will then also need to further specify which exact token it 
 
 ```rust
 /// Creates 10 billion units of fungible native tokens
-let fungible_asset: MultiAsset = (Here, 10_000_000_000u128).into(); // or MultiAsset::from((Here, 10_000_000_000u128))
+let fungible_asset: MultiAsset = (Here, 10_000_000_000u128).into();
+//          or MultiAsset::from((Here, 10_000_000_000u128)) ^^^^
 
 /// Creates an abstract NFT with an undefined asset instance
 let nft_asset: MultiAsset = ([0; 32], ()).into();
@@ -377,24 +431,24 @@ This is very useful in cases where we want to give an upper limit to the executi
 
 `MultiLocation`s are relative.
 
-Scenario:
-
-Current consensus system is `Para(1337)`.
+**Scenario:**<br>
+Current consensus system is `Para(1337)`.<br>
 Destination consensus system is `Para(6969)`.
 
-<widget-text center>
+<pba-flex center>
 
 - Where is `Here`?
 - What happens when I send a `MultiAsset`<br>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
 
 Notes:
+
 MultiLocations are relative, so they must be updated and rewritten when sent to another chain.
 
 ---
 
 ## 🤹 Many models for <br> transferring assets
 
-<widget-text center>
+<pba-flex center>
 
 1. "Remote control" an account on another system
 1. Reserve transfers
@@ -402,276 +456,38 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 Notes:
 
-We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain.
+We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain. Accounts that are controllable by a remote chain are often referred to as **Sovereign accounts**.
 
 ---
 
 ## 🤹 Many models for <br> transferring assets
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
-<img style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
 <br>
-<img style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
-<img style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer"/>
+<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer"/>
 
-</widget-column>
-</widget-columns>
-
-Notes:
-
-<!-- TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392 to describe the images -->
-
----
-
-## 🫀 The XCVM
-
-At the core of XCM lies the **Cross-Consensus Virtual Machine (XCVM)**.
-
-A “message” in XCM is an XCVM program.
-
-The XCVM is a state machine, state is kept track in **Registers**.
+</pba-col>
+</pba-cols>
 
 Notes:
 
-It’s an ultra-high level non-Turing-complete computer whose instructions are designed to be roughly at the same level as transactions.
-Messages are one or more XCM instructions.
-The program executes until it either runs to the end or hits an error, at which point it finishes up and halts.
-An XCM executor following the XCVM specification is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
-
----
-
-### XCVM Instructions
-
-XCM Instructions might change a register, they might change the state of the consensus system or both.
-
-One example of such an instruction would be `TransferAsset` which is used to transfer an asset to some other address on the remote system.
-It needs to be told which asset(s) to transfer and to whom/where the asset is to be transferred.
-
-```rust
-enum Instruction {
-    TransferAsset {
-        assets: MultiAssets,
-        beneficiary: MultiLocation,
-    }
-    /* snip */
-}
-```
-
-Notes:
-
-<!-- TODO: add detail for speaker -->
-
----
-
-## XCVM Instructions preview
-
-Four kinds of instructions:
-
-- Instruction
-- Trusted Indication
-- Information
-- System Notification
-
-Notes:
-
-`Instruction` is a bad name for the kind of XCVM instructions that we have, but it means instructions that result in a state change in the local consensus system, or instruct the local consensus system to achieve some desired behaviour.
-
-<!-- TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them. Highlight LOCATION and ASSET instructions, that we will go into next -->
-
----
-
-## XCVM Registers
-
-<!-- TODO: split each register into slides to talk to each explicitly -->
-
-```rust
-pub struct XcmExecutor<Config: config::Config> {
-    holding: Assets,
-    holding_limit: usize,
-    context: XcmContext,
-    original_origin: MultiLocation,
-    trader: Config::Trader,
-    error: Option<(u32, XcmError)>,
-    total_surplus: u64,
-    total_refunded: u64,
-    error_handler: Xcm<Config::Call>,
-    error_handler_weight: u64,
-    appendix: Xcm<Config::Call>,
-    appendix_weight: u64,
-    transact_status: MaybeErrorCode,
-    fees_mode: FeesMode,
-    topic: Option<[u8; 32]>,
-    _config: PhantomData<Config>,
-}
-```
-
-- Registers _are_ the state of XCVM
-- Note that XCVM registers are temporary/transient
-
-Notes:
-
-<!-- TODO: add detail for speaker -->
-
----
-
-<widget-columns>
-<widget-column>
-
-### 💁 The Holding Register
-
-`WithdrawAsset` has no location specified for assets.
-
-They are _temporarily_ held in what in the Holding Register.
-
-</widget-column>
-<widget-column>
-
-```rust
-WithdrawAsset(MultiAssets),
-
-// There are a number of instructions
-// which operate on the Holding Register.
-// One very simple one is the
-// `DepositAsset` instruction.
-
-enum Instruction {
-    DepositAsset {
-        assets: MultiAssetFilter,
-        max_assets: u32,
-        beneficiary: MultiLocation,
-    },
-    /* snip */
-}
-```
-
-</widget-column>
-</widget-columns>
-
-Notes:
-
-Let’s take a look at another XCM instruction: `WithdrawAsset`. On the face of it, this is a bit like the first half of `TransferAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
-But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation.
-
----
-
-## Key configurable XCM
-
-<widget-text center>
-
-- Barrier
-- WeightTrader
-- XcmSender
-- OriginConverter
-- AssetTransactor
-
-Notes:
-
-There are more, but these are the key ones that are important enough to be mentioned, others are sort of optional features that can be configured with `()`.
-
----
-
-## Barrier
-
-Specifies whether or not an XCM is allowed to be executed on the local consensus system.
-
-Notes:
-
-This is the configurable "firewall" rules that gets to judge and decide whether or not an XCM can be executed locally.
-It is **highly** important to configure this correctly, otherwise XCMs gets dropped, or the local consensus system becomes vulnerable to DDoS attacks.
-
----
-
-## XcmSender
-
-Specifies the message passing protocol that the XCM executor uses to send XCMs
-
-Notes:
-
-This is what ties XCM and XCMP together, and can take a tuple to allow for various kinds of message passing protocols to attempt to send XCMs to different destinations, e.g. a parachain can include an `ParentAsUmp` router to communicate with the relay chain and an `XcmpQueue` pallet to send/receive XCMs from other sibling parachains.
-
----
-
-## 🤑 Fee payment in XCM
-
-Most systems require these to mitigate “transaction spam” and a denial-of-service (DOS) attacks.
-
-XCM does _not_ include the idea of fees and fee-payment as a first-class citizen
-
-Notes:
-
-Exceptions to this exist when chains have good reason to believe that their interlocutor will be well-behaved—this is the case when the Polkadot Relay Chain corresponds with the Polkadot Statemint common-good chain.
-However for the general case, fees are a good way of ensuring that XCM messages and their transport protocols cannot be over-used.
-Like Rust with its zero-cost abstractions, fee payment comes with no great design overhead in XCM.
-
----
-
-<widget-columns>
-<widget-column>
-
-### XCM with Fees Example
-
-For systems that do require some fee payment though, XCM provides the ability to buy execution resources with assets. Doing so, broadly speaking, consists of three parts:
-
-<widget-text center>
-
-1. Assets provided
-1. Negotiate exchange of assets for compute time (weight)
-1. XCM operations will be performed as instructed
-
-</widget-column>
-<widget-column>
-
-```rust [1|]
-WithdrawAsset((Here, 10_000_000_000).into()),
-BuyExecution {
-    fees: (Here, 10_000_000_000).into(), // MultiAsset
-    weight: 3_000_000, // u64
-},
-DepositAsset {
-    assets: All.into(), // MultiAssets
-    max_assets: 1,
-    beneficiary: Parachain(1000).into(), // MultiLocation
-},
-```
-
-</widget-column>
-</widget-columns>
-
-Notes:
-
-The first part is managed by one of a number of XCM instructions which provide assets.
-We already know one of these (WithdrawAsset), but there are several others which we will see later.
-The resultant assets in the Holding Register will of course be used for paying fees associated with executing the XCM.
-Any assets not used to pay fees we will be depositing in some destination account.
-For our example, we’ll assume that the XCM is happening on the Polkadot Relay Chain and that it’s for 1 DOT (which is 10,000,000,000 indivisible units).
-This brings us to the second part, exchanging (some of) these assets for compute time to pay for our XCM.
-For this we have the XCM instruction BuyExecution.
-Let’s take a look at it:
-The first item fees is the amount which should be taken from the Holding Register and used for fee-payment.
-It’s technically just the maximum since any unused balance is immediately returned.
-The amount that ends up being spent is determined by the interpreting system — fees only limits it and if the interpreting system needs to be paid more for the execution desired, then the BuyExecution instruction will result in error.
-The second item specifies an amount of execution time to be purchased.
-This should generally be no less than the weight of the XCM programme in total.
-In our example we’ll assume that all XCM instructions take a million weight, so that’s two million for our two items so far (WithdrawAsset and BuyExecution) and a further one for what’s coming next.
-We’ll just use all the DOT that we have to pay those fees (which is only a good idea if we trust the destination chain not to have crazy fees — we’ll assume that we do).
-The third part of our XCM comes in depositing the funds remaining in the Holding Register.
-For this we will just use the DepositAsset instruction.
-We don’t actually know how much is remaining in the Holding Register, but that doesn’t matter since we can specify a wildcard for the asset(s) which should be deposited.
-We’ll place them in the sovereign account of Statemint (which is identified as Parachain(1000).
+TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392 to describe the images
 
 ---
 
 ## Next steps
 
-<widget-text center>
+<pba-flex center>
 
-1. Gav's blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
+1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
 1. XCM Format [repository](https://github.com/paritytech/xcm-format)
 <!-- 1. TODO: fill this in - polkadot / cumulus / parachains repos?  -->
 
@@ -702,4 +518,4 @@ We’ll place them in the sovereign account of Statemint (which is identified as
 
 ## Polkadot Network Diagram
 
-<img src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;"/>
+<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;"/>

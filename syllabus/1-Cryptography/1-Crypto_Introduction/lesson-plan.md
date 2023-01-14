@@ -61,14 +61,14 @@
     - Typically only sign 256 B of data. If a message is longer than that, we sign the hash.
     - "PRNG" => In Substrate, we use for things like generating keyless accounts
   - Secure vs. insecure => when an attacker can mine hashes to lopside a data structure
-  - Substrate uses Blake2b (cryptographic) and TwoX64Concat (non-cryptographic)
+  - Substrate uses Blake2 (cryptographic) and TwoX64Concat (non-cryptographic)
     - TwoX is about 20x faster (source: https://github.com/Cyan4973/xxHash#benchmarks)
     - TwoX is safe when a user (read: attacker) cannot control keys, e.g. a system-assigned index.
-    - Blake2b should be used for everything else.
+    - Blake2 should be used for everything else.
   - Serve as keys in a database
   - Many data structures based on hashing (state trie, blockchain itself, some accounts)
 - Erasure Coding
-  - Need to introduce in this lecture? Or too early?
+  - Need to introduce in this lesson? Or too early?
 - Don't roll your own => it can probably be broken
 - Attackers will always go for the weakest link => large key space does not equal security
 

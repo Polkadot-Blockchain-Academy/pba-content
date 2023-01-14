@@ -10,10 +10,6 @@ teaching-assistants: ["Dan Shields"]
 
 ---
 
-<widget-speaker name="Joe Petrowski" position="Common Good Parachains Team Lead at Web3 Foundation" image="../../assets/img/0-Shared/people/joe.png" github=" joepetrowski" twitter="joepetrowski" linkedin="joe-petrowski-73538929" matrix="joe:web3.foundation"></widget-speaker>
-
----
-
 ## Upholding Expectations
 
 What is the core problem we want to solve?
@@ -501,7 +497,7 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 
 ## Ethereum
 
-- Generalisation of Bitcoin: provides a quasi-Turing-complete VM
+- Generalization of Bitcoin: provides a quasi-Turing-complete VM
 - Uses an account-based system
 - Accounts can store balances, but can also store executable code (smart contracts)
 - Each contract can have its own internal state and API
@@ -526,7 +522,7 @@ Historically, upgrading blockchains meant getting everyone to update their node 
 
 ---
 
-<img style="width: 500px;" src="../../assets/img/0-Shared/logo/Polkadot_Pink-White.svg"/>
+<img style="width: 500px;" src="../../assets/img/0-Shared/logo/polkadot_pink-white.svg"/>
 
 Notes:
 
@@ -553,9 +549,9 @@ In Substrate chains (like Polkadot), it's part of the state itself!
 
 ---
 
-## Specialisation
+## Specialization
 
-Different state machines will specialise in different things (assets, privacy, credentials, social media).
+Different state machines will specialize in different things (assets, privacy, credentials, social media).
 
 But applications will want to pull from many of these capabilities.
 

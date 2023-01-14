@@ -11,6 +11,12 @@ This program aims at:
 
 Selected through an admission process, candidates will receive an intensive education taught by a mix of professionals from Parity, Web3 and some visiting professors.
 
+## Curriculum Versions
+
+The curriculum is expected to change per cohort in the first run. You can find the snapshot of the slides at the end of each cohort here:
+
+- [Cambridge 2022](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/cambridge-2022)
+
 ## Venue Suggestions
 
 This curriculum is designed to be taught as an in-person course with ~25-60 students. (Although it may be somewhat useful for online or independant learning). The venue where the course is taught should provide the following. These may be a single space with flexible seating, or two different spaces for lecture- and collaboration-style work.
