@@ -85,10 +85,12 @@ pub mod pallet {
 		TooManyVoters,
 		NotVoter,
 		NotComplete,
+		NoVoters,
 	}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
+		// A simple extrinsic which puts a value in storage.
 		#[pallet::weight(0)]
 		pub fn store_value(origin: OriginFor<T>, something: u32) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
@@ -96,6 +98,7 @@ pub mod pallet {
 			Ok(())
 		}
 
+		// A simple extrinsic which puts a value in a map under a user.
 		#[pallet::weight(0)]
 		pub fn store_map(origin: OriginFor<T>, something: u32) -> DispatchResult {
 			let who = ensure_signed(origin)?;
@@ -103,6 +106,7 @@ pub mod pallet {
 			Ok(())
 		}
 
+		// An extrinsic which includes a call to `transfer`, which is implemented in a different pallet.
 		#[pallet::weight(0)]
 		pub fn transfer(
 			origin: OriginFor<T>,
@@ -113,6 +117,7 @@ pub mod pallet {
 			T::Currency::transfer(&from, &to, amount, AllowDeath)
 		}
 
+		// An extrinsic which has two very different logical paths.
 		#[pallet::weight(0)]
 		pub fn branched_logic(origin: OriginFor<T>, branch: bool) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
@@ -129,6 +134,9 @@ pub mod pallet {
 			Ok(())
 		}
 
+		// The following extrinsics form a simple voting system. Take into account worst case scenarios.
+
+		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
 		#[pallet::weight(0)]
 		pub fn register_voter(origin: OriginFor<T>, who: T::AccountId) -> DispatchResult {
 			ensure_root(origin)?;
@@ -139,6 +147,7 @@ pub mod pallet {
 			Ok(())
 		}
 
+		// Allow a registered voter to make or update their vote.
 		#[pallet::weight(0)]
 		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResult {
 			let who = ensure_signed(origin)?;
@@ -158,12 +167,14 @@ pub mod pallet {
 			Ok(())
 		}
 
+		// Attempt to resolve a vote, which emits the outcome and resets the votes.
 		#[pallet::weight(0)]
 		pub fn close_vote(origin: OriginFor<T>) -> DispatchResult {
 			// Any user can attempt to close the vote.
 			let _who = ensure_signed(origin)?;
 			// Gets just the length of voters.
 			let max_voters = Voters::<T>::decode_len().unwrap_or(0);
+			ensure!(max_voters > 0, Error::<T>::NoVoters);
 			let votes = Votes::<T>::get();
 			let mut ayes = 0;
 			let mut nays = 0;
@@ -189,5 +200,7 @@ pub mod pallet {
 			Votes::<T>::kill();
 			Ok(())
 		}
+
+		// Extra Credit: Make a `remove_voter` function, and benchmark it.
 	}
 }
