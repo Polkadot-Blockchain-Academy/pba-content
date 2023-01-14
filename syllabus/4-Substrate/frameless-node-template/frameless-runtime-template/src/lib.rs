@@ -8,7 +8,7 @@ use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 
 use log::info;
 
-use sp_api::impl_runtime_apis;
+use sp_api::{impl_runtime_apis, HashT};
 use sp_runtime::{
 	create_runtime_str,
 	generic::{self},
@@ -28,7 +28,6 @@ use sp_storage::well_known_keys;
 use sp_runtime::{BuildStorage, Storage};
 
 use sp_core::{hexdisplay::HexDisplay, OpaqueMetadata, H256};
-use sp_runtime::traits::Hash;
 
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
@@ -37,46 +36,13 @@ use sp_version::RuntimeVersion;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
 
-// Lesson ideas:
-//
-// 1 Track the right state root and extrinsics root. The extrinsics root will fail in all blocks.
-//   The state root only if we write something to state.
-//
-//  > In order to get a good extrinsics root check, make sure you are writing with debug-assertions.
-//
-// 2. Submit a bunch of extrinsics, and make sure a second chain can still sync your chain.
-//
-// ```
-// ./node-template --dev -lframeless=trace
-// ./node-template --dev --bob -lframeless=trace --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/12D3KooWL1pLnrDHr8j73Zr2zFfcqMoQC61HEYzZWsTFse4rAsM
-// ```
-//
-// 3. Make your chain upgradable.
-//
-// 4. Now change the format of BasicExtrinsic (e.g. u32 -> u128 + bump spec version), upgrade your
-// runtime.
-//
-// 5. Now try and submit a new transaction... can you? This will fail, until you you make the
-//    extrinsic type opaque. Sources of inspiration:
-// * https://github.com/paritytech/substrate/blob/cd2fdcf85eb96c53ce2a5d418d4338eb92f5d4f5/primitives/runtime/src/generic/unchecked_extrinsic.rs#L283
-// * https://github.com/paritytech/substrate/blob/0798d52690cad7db103f9d0e1eeb77f2351dfb2a/frame/support/src/traits/misc.rs#L918-L919
-//
-// idea: metadata idea: a timestamp inherent set by the block author.
-//
-// Orphan topics that have to be covered in lectures:
-//
-// - SKIP_WASM_BUILD=1
-// - metdata
-// - extrinsic types
-// - block format, the fact that extrinsics are generic. */
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
 /// to even the core datas-tructures.
 pub mod opaque {
 	use super::*;
-
-	type OpaqueExtrinsic = sp_runtime::OpaqueExtrinsic;
+	type OpaqueExtrinsic = BasicExtrinsic;
 
 	/// Opaque block header type.
 	pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
@@ -107,8 +73,8 @@ pub mod opaque {
 
 /// This runtime version.
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("frameless-runtime"),
-	impl_name: create_runtime_str!("frameless-runtime"),
+	spec_name: create_runtime_str!("frameless-runtime-template"),
+	impl_name: create_runtime_str!("frameless-runtime-template"),
 	authoring_version: 1,
 	spec_version: 1,
 	impl_version: 1,
@@ -144,14 +110,13 @@ pub type Block = generic::Block<Header, BasicExtrinsic>;
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, parity_util_mem::MallocSizeOf))]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
 pub enum Call {
-	Set(u32),
-	SetTimestamp(u64),
-	Upgrade(Vec<u8>),
+	Foo,
 }
 
 // this extrinsic type does nothing other than fulfill the compiler.
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, parity_util_mem::MallocSizeOf))]
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, Encode, Decode, PartialEq, Eq, Clone)]
+// #[derive(Encode, Decode)]
 pub struct BasicExtrinsic(Call);
 
 #[cfg(test)]
@@ -178,57 +143,13 @@ impl sp_runtime::traits::GetRuntimeBlockType for Runtime {
 	type RuntimeBlock = Block;
 }
 
-use parity_scale_codec::Compact;
-impl Encode for BasicExtrinsic {
-	fn encode_to<T: parity_scale_codec::Output + ?Sized>(&self, dest: &mut T) {
-		let call = self.0.encode();
-		let size = Compact::<u32>(call.len() as u32).encode();
-		dest.write(&size);
-		dest.write(&call);
-	}
-}
-
-impl Decode for BasicExtrinsic {
-	fn decode<I: parity_scale_codec::Input>(
-		input: &mut I,
-	) -> Result<Self, parity_scale_codec::Error> {
-		// we don't really need th length when we decode this to its concrete type.
-		let _expected_length: Compact<u32> = Decode::decode(input)?;
-		let call: Call = Decode::decode(input)?;
-		Ok(BasicExtrinsic(call))
-	}
-}
-
-#[test]
-fn vec_encoding_works() {
-	let ext = BasicExtrinsic::new_unsigned(Call::Set(42));
-	let encoded = ext.encode();
-	let concrete_decoded: BasicExtrinsic = Decode::decode(&mut encoded.as_slice()).unwrap();
-	assert_eq!(concrete_decoded, ext);
-	let opaque_decoded: Vec<u8> = Decode::decode(&mut encoded.as_slice()).unwrap();
-	let concrete_call_from_opaque: Call = Decode::decode(&mut opaque_decoded.as_slice()).unwrap();
-	assert_eq!(concrete_call_from_opaque, Call::Set(42))
-}
-
 const LOG_TARGET: &'static str = "frameless";
 const BLOCK_TIME: u64 = 3000;
 
-pub const VALUE_KEY: &[u8] = b"value"; // 76616c7565
 pub const HEADER_KEY: &[u8] = b"header"; // 686561646572
-pub const EXTRINSICS_KEY: &[u8] = b"extrinsic"; // 65787472696e736963
-												// :code => 3a636f6465
-pub const TIMESTAMP: &[u8] = b"timestamp";
 
-#[derive(Encode)]
-enum TimestampError {
-	Stale,
-}
-
-impl sp_inherents::IsFatalError for TimestampError {
-	fn is_fatal_error(&self) -> bool {
-		true
-	}
-}
+// just FYI:
+// :code => 3a636f6465
 
 /// The main struct in this module. In frame this comes from `construct_runtime!`
 pub struct Runtime;
@@ -262,36 +183,21 @@ impl Runtime {
 
 	fn dispatch_extrinsic(ext: BasicExtrinsic) -> DispatchResult {
 		log::debug!(target: LOG_TARGET, "dispatching {:?}", ext);
-		// note the extrinsic:
-		Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
-			current.push(ext.encode());
-		});
 
 		// execute it
-		match ext.0 {
-			Call::SetTimestamp(ts) => sp_io::storage::set(TIMESTAMP, &ts.encode()),
-			Call::Set(val) => sp_io::storage::set(VALUE_KEY, &val.encode()),
-			Call::Upgrade(code) =>
-				sp_io::storage::set(sp_core::storage::well_known_keys::CODE, &code),
-		}
+		// TODO..
 
 		Ok(())
 	}
 
-	// TODO: this header is different when you are importing a block, and when you are executing a
-	// block..
 	fn do_initialize_block(header: &<Block as BlockT>::Header) {
 		info!(
 			target: LOG_TARGET,
 			"Entering initialize_block. header: {:?} / version: {:?}", header, VERSION.spec_version
 		);
 		sp_io::storage::set(&HEADER_KEY, &header.encode());
-		sp_io::storage::clear(&EXTRINSICS_KEY);
 	}
 
-	// TODO: this should now write anything to state, because it is discarded. Moreover, this is not
-	// called in the import code path, so it MUST not write anything to state. It should only return
-	// a header that is valid.
 	fn do_finalize_block() -> <Block as BlockT>::Header {
 		let mut header = Self::get_state::<<Block as BlockT>::Header>(HEADER_KEY)
 			.expect("We initialized with header, it never got mutated, qed");
@@ -302,11 +208,7 @@ impl Runtime {
 
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
 
-		let extrinsics = Self::get_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
-		let extrinsics_root =
-			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
-
-		header.extrinsics_root = extrinsics_root;
+		// header.extrinsics_root = ???;
 		header.state_root = sp_core::H256::decode(&mut &raw_state_root[..]).unwrap();
 
 		info!(target: LOG_TARGET, "finalizing block {:?}", header);
@@ -322,20 +224,17 @@ impl Runtime {
 		}
 
 		// check state root
-		// IDEA: if we forget to do this, how can you mess with the blockchain?
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
 		let state_root = H256::decode(&mut &raw_state_root[..]).unwrap();
 		Self::print_state();
 		assert_eq!(block.header.state_root, state_root);
 
-		// check extrinsics root
-		let extrinsics = block.extrinsics.into_iter().map(|x| x.encode()).collect::<Vec<_>>();
+		// check extrinsics root.
+		let extrinsics =
+			block.extrinsics.into_iter().map(|x| x.encode()).collect::<Vec<_>>();
 		let extrinsics_root =
 			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
-
-		// this gets written into, but we don't quite need it.
-		sp_io::storage::clear(&EXTRINSICS_KEY);
 	}
 
 	fn do_apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
@@ -366,39 +265,17 @@ impl Runtime {
 		Ok(ValidTransaction { provides: vec![data.encode()], ..Default::default() })
 	}
 
-	fn do_inherent_extrinsics(
-		data: sp_inherents::InherentData,
-	) -> Vec<<Block as BlockT>::Extrinsic> {
-		log::debug!(target: LOG_TARGET, "Entering inherent_extrinsics");
-		let timestamp = data.get_data::<u64>(&sp_timestamp::INHERENT_IDENTIFIER).unwrap().unwrap();
-		let last_timestamp = Self::get_state::<u64>(&TIMESTAMP).unwrap_or_default();
-		let next = timestamp.max(last_timestamp + BLOCK_TIME);
-		let call = Call::SetTimestamp(next);
-		vec![BasicExtrinsic(call)]
+	fn do_inherent_extrinsics(_: sp_inherents::InherentData) -> Vec<<Block as BlockT>::Extrinsic> {
+		log::debug!(target: LOG_TARGET, "Entering do_inherent_extrinsics");
+		Default::default()
 	}
 
 	fn do_check_inherents(
-		block: Block,
-		data: sp_inherents::InherentData,
+		_: Block,
+		_: sp_inherents::InherentData,
 	) -> sp_inherents::CheckInherentsResult {
-		log::debug!(target: LOG_TARGET, "Entering check_inherent");
-		for ext in block.extrinsics {
-			match ext {
-				BasicExtrinsic(Call::SetTimestamp(ts)) => {
-					let client_timestamp =
-						data.get_data::<u64>(&sp_timestamp::INHERENT_IDENTIFIER).unwrap().unwrap();
-					if client_timestamp >= ts {
-						let mut r = sp_inherents::CheckInherentsResult::new();
-						r.put_error(sp_timestamp::INHERENT_IDENTIFIER, &TimestampError::Stale)
-							.unwrap();
-						return r
-					}
-				},
-				_ => continue,
-			}
-		}
-
-		sp_inherents::CheckInherentsResult::default()
+		log::debug!(target: LOG_TARGET, "Entering do_check_inherents");
+		Default::default()
 	}
 }
 
@@ -544,7 +421,7 @@ mod tests {
 
 	#[test]
 	fn encode_examples() {
-		let extrinsic = BasicExtrinsic::new_unsigned(Call::Set(42));
+		let extrinsic = BasicExtrinsic::new_unsigned(Call::Foo);
 		println!("ext {:?}", HexDisplay::from(&extrinsic.encode()));
 	}
 }

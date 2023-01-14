@@ -2,6 +2,7 @@
 members = [
     "node",
     "frameless-runtime",
+	"frameless-runtime-template",
 ]
 [profile.release]
 panic = "unwind"

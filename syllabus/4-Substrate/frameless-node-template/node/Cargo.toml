@@ -51,7 +51,7 @@ sc-basic-authorship = { version = "0.10.0-dev", git = "https://github.com/parity
 pallet-transaction-payment-rpc = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
 
 # Local Dependencies
-node-template-runtime = { package = "frameless-runtime", path = "../frameless-runtime" }
+node-template-runtime = { package = "frameless-runtime-template", path = "../frameless-runtime-template" }
 
 [build-dependencies]
 substrate-build-script-utils = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
