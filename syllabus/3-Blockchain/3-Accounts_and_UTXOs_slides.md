@@ -39,7 +39,7 @@ Notes:
     TODO: Insert picture here which shows some money being sent from person A to person B and the System box is verifying whether the money I am attempting to spend is mine and the result that I am specifying to happen is valid 
 ---
 ## Example
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.png"/>
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.svg"/>
 ---
 ## Paradigm A How would we do this?
 * 1.) You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In other words we have some data that can be altered only by a specific entity so we want to provide proof we can alter it. 
@@ -53,7 +53,16 @@ Notes:
     TODO: Insert picture showing a table of hash values mapping to these "outputs"(Data + owner)
 ---
 ## Visual What are we talking about here?
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-state-table.png"/>
+| Key       | Value       |
+| --------- | ----------- |
+| Hash(tx0) | 5           |
+| Hash(tx1) | 53          |
+| Hash(tx2) | 68          |
+| **Hash(tx3)** | **42**          |
+| **Hash(tx3)** | **30000000000** |
+| Hash(tx4) | 4           |
+| Hash(tx5) | 1           |
+| Hash(tx6) | 3823        |
 ---
 ## So what is the notion of a User?
 * A public key and all of the uniquely identifiable data which can be manipulated by that public key
@@ -68,7 +77,7 @@ Notes:
 * A list of inputs + a list of outputs
 ---
 ### What were those input output thingies again?
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.png"/>
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.svg"/>
 Notes:
     TODO: Show picture of inputs and outputs in a transaction similar to UTXO frameless explain how new outputs are derived from previously specified outputs from the input 
 ---
@@ -79,7 +88,7 @@ Notes:
 * In the case of money or just a raw value we can assume that you cannot take some piece of moneys worth 10 and create a list of new outputs which have more than 10 moneys
 ---
 ## Transition
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.png"/>
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.svg"/>
 ---
 ## Unspent Transaction Outputs(UTXOS) solved...
 
@@ -108,7 +117,18 @@ Notes:
     TODO: Show picture of a table mapping a pubkey to a value or data item(in its simplest form a value)
 ---
 ## Accounts State Table
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-state-table.png"/>
+
+| Key   | Value       |
+| ----- | ----------- |
+| 0xa32 | 5           |
+| 0x002 | 53          |
+| 0xaf5 | 68          |
+| 0x805 | 42          |
+| 0xbc3 | 30000000000 |
+| 0x429 | 4           |
+| 0x8c7 | 1           |
+| 0x30a | 3823        |
+
 ---
 ## Now that state is much easier to comprehend!!
 * What about transitioning my state or account?
@@ -119,7 +139,7 @@ Notes:
     TODO: Insert some picture here which shows some money being sent from person A to person B but instead person A just signs a message saying to send to person B and the system determines what the updated output result or state will be
 ---
 ## Transaction + Transition
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.png"/>
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.svg"/>
 ---
 ## So what happens in a State transition in this computation model?
 * We still verify but we verify less and determine more!
