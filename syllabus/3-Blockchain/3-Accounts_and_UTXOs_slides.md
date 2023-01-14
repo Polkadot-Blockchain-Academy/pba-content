@@ -13,13 +13,22 @@ title: Accounting Models & User Abstractions in Blockchains
 ## Where do we go from here?
 * We have some base elements ideas and concepts 
 * now lets put them together into something cool..
+
+<br>
 <img style="width: 700px;" src="../../assets/img/3-Blockchain/3.2-assembling-cartoon.png"/>
 Notes:
     TODO: Help format images to look better 
 ---
 ## What do we want to talk about today?
-* Now that we have this structured decentralized tamper proof state machine..
-* Let's think of ways we can formulate a state and a state transition in terms of representing users 
+
+<pba-cols>
+<pba-col style="font-size:smaller">
+
+- Now that we have this structured decentralized tamper proof state machine..
+- Let's think of ways we can formulate a state and a state transition in terms of representing users 
+
+</pba-col>
+
 <img style="width: 400px; height 400px; float:right; margin-right:5px" src="../../assets/img/3-Blockchain/3.2-thinking-cartoon.png"/>
 Notes:
     TODO: Help format image to look better on slide 
@@ -73,7 +82,13 @@ Notes:
 <img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.png"/>
 ---
 ## Unspent Transaction Outputs(UTXOS) solved...
-* Now whenever someone mentions UTXO's and the UTXO model you can now fundamentally know what actually is being referenced..(Hopefully!) 
+
+<pba-cols>
+<pba-col> 
+
+- Now whenever someone mentions UTXO's and the UTXO model you can now fundamentally know what actually is being referenced..(Hopefully!) 
+
+</pba-col>
 <img style="width: 400px; height 300px; float:middle;" src="../../assets/img/3-Blockchain/3.2-cartoon-cheering.png"/>
 Notes:
     TODO: Add some picture of a person cheering and happy
