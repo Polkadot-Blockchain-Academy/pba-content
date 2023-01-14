@@ -22,7 +22,8 @@ a new node, like:
 
 ```
 
-The second node should fail to sync until you fix this.
+The second node should fail to sync until you fix this. Why is that? because the given
+implementation only checks the extrinsic root at the end of `execute_block`.
 
 Recall that the flow of a block-author node is:
 
