@@ -6,11 +6,17 @@ duration: 1 hour
 
 # Unstoppable Applications
 
+Notes:
+
+Much like tokenomic design, that is a large component in unstoppable apps that incorporate cryptocurrency or other motivating factors, this lesson is far far to short to give you all the tools and techniques to make a robust dApp design.
+
+Instead we strive to highlight the problem space we face and some classes of solutions to them.
+
 ---
 
 ## Motivation
 
-So far, we have discussed state machines and consensus... in _isolation.
+So far, we have discussed state machines and consensus... in \_isolation.
 
 Does the _contexts in which they operate within_ matter?
 
@@ -19,7 +25,7 @@ Notes:
 - So far _mostly_ on simplified, idealized systems.
   - "Black boxes" of cryptography
   - Rational actors and assumed complete models of behavior in economics
-  - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way... we will talk about the Oracle Problem. 
+  - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way... we will talk about the Oracle Problem.
 - In _practice_ there are far more "unknown unknowns" and "[black swan](#next-steps)" behavior.
 
 ---
@@ -33,6 +39,7 @@ Notes:
 <br>
 
 > What properties of a system make it "stoppable"?
+
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -43,7 +50,7 @@ Notes:
 
 ---
 
-### Unstoppable Apps Properties*
+### Unstoppable Apps Properties\*
 
 <pba-flex center>
 
@@ -66,8 +73,9 @@ We need to craft the system properties based on what we must achieve.
 In reality we strive for Absolute Unstoppability, but likely cannot grantee it in _every possible scenario_.
 
 We contrast the following in order above:
+
 - corruption of :ctors, data, etc.
-Networking 
+  Networking
 - Authority layer
 - Robustness to extrema/outlier events.
 
@@ -78,7 +86,6 @@ Networking
 Hypothesis: a _truly_ Unstoppable App cannot exist.
 
 We must make trade-offs out of all N properties that a _truly_ Unstoppable App would possess.
-
 
 Notes:
 
@@ -95,8 +102,7 @@ We want the most robust system possible, given the _environment_ the consensus s
 Notes:
 
 Key point: your "perfect" system in is likely weak to things outside of the "rules"!
-
-Source: [XKCD](https://xkcd.com/538/)
+especilly
 
 ---
 
@@ -147,7 +153,7 @@ There are valid criticisms of how many blockchain applications operate today.
 - Centralizing factors
   - Mining & staking pools
   - RPC providers
-  - ... 
+  - ...
 - Bridges
 
 </pba-flex>
@@ -183,8 +189,7 @@ Notes:
 - Example: Random Oracle, NOT like VRF we saw in the crypto module that can be in the consensus system.
 - Oracle needed for _input_ from anything that lives outside of the boundary of the consensus system.
   - Everything in a chain is self-referential. Applications in a consensus system may want to _try_ and reason about something outside itself.
-- Inclusive of bridges 
-
+- Inclusive of bridges
 
 ---
 
@@ -307,9 +312,7 @@ But validators are expensive, both economically and computationally.
   - same runtime on chain, it's impossible to have an alt runtime.
 - all on GCP
 - All run same hardware (CPU, etc.)
--
-
----
+- ***
 
 ## Authority from Accountability
 
@@ -420,7 +423,7 @@ If the chain does split into two, who decides which chain is which?
 
 <pba-flex center>
 
-- Greater hashpower or value at stake
+- Greater hash power or value at stake
 - Whatever is recognized by service providers
 - Whatever is recognized by data aggregators
 
@@ -618,7 +621,7 @@ Notes:
 
 ---
 
-## Governance... unstopable?
+## Governance... unstoppable?
 
 <iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -626,9 +629,32 @@ Notes:
 
 Notes:
 
-Watch if time allows for class discussions.
-More likely to assign informally to everyone to watch in the next few days.
-Also ensure everyone researches the effects of OFAC has had on validator compliance because of Tornado Cash.
+Watch _after class_.
+Perhaps assigned informally to everyone to watch in the next few days.
+
+---v 
+
+## Can't vs. Wont
+
+difference? Silk road founder getting 2 life sentences + 40 years.
+
+ability -> responsibility
+claim you don't have the ability anymore -> negligence
+
+moral relativism -> "who's law?"
+
+"oops clause" -> not too narrow. 
+
+---
+
+## Compliance
+
+TODO
+
+OFAC has had on validator compliance because of Tornado Cash.
+
+- code is unstoppable, but platform _can_ sensor. ability -> responsibility
+
 
 ---
 
@@ -656,12 +682,44 @@ Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech
 
 ## Modeling Behavior
 
-https://tokenengineeringcommunity.github.io/website/
-
+- [Token Engineering](#next-steps)
 Notes:
 
 Mostly free education and tools to dive deeper on tokenomics.
 Remember, these are _models_ of idealized systems in general, real world conditions will differ!
+
+---
+
+## TODO 
+
+example of luna or other system collapse
+
+- known bounds of operation _assumed_ impossible
+- death spirals
+
+---
+
+
+## Unknown unknowns
+
+Notes:
+
+We cannot usually guarantee/prove that every possible condition is accounted for in our models & system design.
+We must expect forces outside our system & it's model may interact in unexpected ways.
+Assumptions about context must be rigorously evaluated (i.e. - what does finality mean in the chain this pallet or contract lives in?)
+
+---
+
+## Final Thoughts
+
+- Complexity generally increases the risks of failures
+  - Hypothesis: this _usually_ makes systems more brittle.
+- "Oops clauses" may be justified, but be careful they don't undermine the system
+
+Notes:
+
+Risks and unknown unknowns increase exponentially so in many cases.
+Governance/"oops clause" can help fix things, but also risk system capture.
 
 ---
 
@@ -679,14 +737,19 @@ Goal is that you now have the primitives and concepts necessary to dive into Sub
 ## Next Steps
 
 1. [The Oracle Problem](https://blog.chain.link/what-is-the-blockchain-oracle-problem/)
-1. 📔[Antifragile: Things That Gain From Disorder](https://en.wikipedia.org/wiki/Antifragile_(book))
+1. 📔[Antifragile: Things That Gain From Disorder](<https://en.wikipedia.org/wiki/Antifragile_(book)>)
 1. Black Swan Theory (Events)
-  - [Wiki](https://en.wikipedia.org/wiki/Black_swan_theory)
-  - 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
-1. Trilemas:
-  - [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
-  - [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
-1. 
+
+- [Wiki](https://en.wikipedia.org/wiki/Black_swan_theory)
+- 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
+
+1. Trilemmas:
+
+- [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
+- [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
+
+1. [Token Engineering](https://tokenengineeringcommunity.github.io/website/) {especially the Academy & cadCAD Edu}
+
 Notes:
 
-Citations from the slides, links to resources and next steps. 
+Citations from the slides, links to resources and next steps.
