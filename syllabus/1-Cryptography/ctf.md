@@ -39,8 +39,7 @@ Use the fastest cryptographic hash algorithm in size 256bits to hash the followi
 
 Submit: standard hash
 		hash of the mnemonic
-Test: blake2("Welcome to PBA 02 Buenos Aires") == first line of FLAG_1 file
-	  blake2(FLAG_0) == second like of FLAG_1 file
+Test: blake2(FLAG_0) == FLAG_1
 
 
 FLAG_2: Symmetric Encyption
