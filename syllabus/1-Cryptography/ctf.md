@@ -34,8 +34,7 @@ Test: check if there are 24 words
 
 
 FLAG_1: Hash
-Use the fastest cryptographic hash algorithm to hash the following messages:
-"Welcome to PBA 02 Buenos Aires"
+Use the fastest cryptographic hash algorithm in size 256bits to hash the following messages:
 [your mnemonic here]
 
 Submit: standard hash
@@ -45,7 +44,7 @@ Test: blake2("Welcome to PBA 02 Buenos Aires") == first line of FLAG_1 file
 
 
 FLAG_2: Symmetric Encyption
-Generate a BIP32 key pair from SHA256(FLAG_1) as Private key from your hash
+Generate a BIP32 key pair from FLAG_1 as Private key from your hash
 
 Submit: pub key from mnemonic hash
 
