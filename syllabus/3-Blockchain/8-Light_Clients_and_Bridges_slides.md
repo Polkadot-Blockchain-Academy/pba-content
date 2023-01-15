@@ -136,40 +136,161 @@ Notes:
 Generally speaking bridges move arbitrary data between unrelated consensus systems. Basically between different blockchains, and those messages can evoke arbitrary side effects on the target chain. To keep it concrete, we'll mostly talk about moving tokens 
 ---v
 
-# Source and Target Chain
+## Source and Target Chain
 
+TODO Diagram
 
+## Two Way Bridges
+
+A two-way bridge is really just two one-way bridge. Think of a two-way 
+street. There is a dedicated lane for each direction.
 
 ---v
 
-Naming - source and destination chains
-Kinds
- - centralized - Send your assets to Bob, Bob will mint you new assets on another chain
-       can be slightly improved with multisig or w/e but doesn't solve the problem
-    WBTC Foundation
- - trust minimized - ???? Heard of this somewhere - maybe seun
- - Trustless - This is the goal of course just like everything else in this ecosystem
- So how to build it? How does anyone interact trustlessly with a blockchain? Run a node.
- A blockchain is extremely resource constrained so it is a perfect candidate for a light client.
- Trustless bridges are built from on-chain light clients
- BTC Relay contract
- one-way vs two-way bridges. A two-way bridge is really jsut two one-way bridge. Think of a two-way street. There is a dedicated lane for each direction.
- What about peers? enter the relayer - a trustless role - need at least one honest relayer - can't find one you trust? Run your own.
+## Bridge Designs
 
-Game Theory
-Don't accept message as finalized immediately
-Validators may be equivocating
+<pba-cols>
+<pba-col>
+<h3>Trust-based</h3>
 
-Fishermen
+Trusted intermediary makes a transfer manually
+Eg. WBTC Foundation
+</pba-col>
 
-Slashing on source vs target chain or both
+<pba-col>
+<h3>Trustless</h3>
 
-Multi-chain apps and Blockspace quality. This kind of trustless bridge with proper incentives gets us information about the source chain on the target chain with security about as high as it was on the source chain. If you are building an app that spans multiple chains consider the security guarantees on both chains. The weaker security of the two is the security your app has. More abstractly, your app consumes two different kinds of blockspace that may be of different qualities. Your app is only as quality as the lower of the blockspaces.
+Trustless is the goal of course just like everything else in this ecosystem.
+</pba-col>
+</pba-cols>
 
-So we have a header, now what?
-Cross chain applications build on top of this primitive.
-If you need some source chain state, your app needs to require a state proof to check against the header's state root.
+@nukemandan Why is this not formatting in columns?
+
+Notes:
+The trust based bridges are not at all ideal. You have to entirely trust an intermediary. You send the intermediary tokens on the source chain. Once the intermediary is satisfied that they really own the source tokens, they send you some target tokens on the target chain. Or they don't whatever, not their problem.
+
+You can make they trust properties slightly better by using a multisig or a group of people so you only have to trust some subset of them. But this does not fundamentally eliminate the trust agreement.
+One classic example is the WBTC foundation. You send them bitcoin, they wait for "enough" block confirmations, and then they mint you an ERC20 token on Ethereum. And they provide the same service in reverse too.
+
+A lot of the trusted bridge design can be improved and we'll talk about that in detail in the next few slides. But it's worth observing here that we will never be able to  eliminate the part about "Once the intermediary is satisfied that they really own the source tokens". The bridge can never be stronger than the consensus on the source chain
+
+---v
+
+## Source Chain Re-Orgs
+
+TODO Figure
+
+Notes:
+On PoW chains this is truly just a judgement call and a prayer. If the source chain has deterministic finality w can do better. We need to wait for finality. But even this isn't foolproof. More on this after we cover the basic design.
+
+---
+
+# Trustless bridge design
+
+- Most trustless way to interact with blockchain is to run a node
+- This is true for individuals _and_ other blockchains
+- A blockchain is extremely resource constrained.
+- Run a source chain light client on the target chain
+
+Notes:
+
+---v
+
+## BTC Relay
+
+TODO details about this historical example
+
+
+---
+
+# Brdige Design Challenges
+
+![bridge collapse](./img/bridge-collapse.webp)
+
+Notes:
+Bridges present their own set of design challenges beyond what we encounter in regular stand-alone light clients.
+
+---v
+## Peers?
+ 
+- How can we peer without networking?
+- Enter the **Relayer** - a permissionless and trustless role
+- Need at least one honest relayer
+
+Notes:
+On-chain logic doesn't have network IO, so how do we peer?
+There is a role known as a relayer. It is an off-chain agent who watches the source chain, and submits headers and finality proofs from the source chain to the target chain through transactions. Anyone can start a relayer. It is typically a little piece of software that you run. But there is nothing magic about it. You could perform the relayer task manually by copying header data from an explorer into metamask for example.
+
+You do need at least one honest relayer for the chain to get the correct header info. For this reason a large decentralized relayer group is nice. But even if you don't trust any relayer out there, you can always run your own.
+
+---v
+
+ ## Finality and Equivocation
+
+ TODO Figure of competing finalized chain
+ TODO Seun's achiles heel meme
+
+Notes:
+It is not safe to accept headers as finalized immediately even if there is a deterministic finality proof. Let that sink in. Even if there is a valid finality proof, it is not safe to accept them as finalized. Why not?
+
+Because the validators may be equivocating. They don't send equivocations to real nodes on the network because those equivocations will be gossiped around and reported on the source chain and the validators will be slashed accordingly. But remember a light client on the target chain has no way to report such equivocations back to the source chain.
+
+---v
+
+## Equivocation Incentives
+
+Add a **Challenge Period** and
+
+- Add Fishermen - reverse of relayers
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+**OR**
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+- Stake Relayers - so they can be slashed
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+There are basically two classes of solutions. Both of them require a waiting period aka challenge period before accepting a header with a finality proof as final.
+
+One is to add a role of fishermen. They are responsible for noticing when the header candidate on the target chain is different from the one in the main source chain protocol and reporting this behavior back to the source chain so the validators can be slashed there. Two problems:
+1. Fishermen have weak incentives. If they do a good job there will be no equivocations and they will not get paid.
+2. Target chain is relying on the foreign source chain to keep the bridge secure instead of owning that security itself.
+
+The other is to have the relayer role require a security deposit. If it turns out that a relayer relays an attack header, that relayer is slashed and the relayer who reports it gets a reward. Relayers will expect to earn some reward for the opportunity cost of their stake which makes the bridge operation more expensive.
+
+---
+
+# Multichain Apps
+
+TODO Figure of stack with two blockchains on the bottom layer
+
+---v
+
+## We have a header, now what?
+
+- App users submit proofs
+- Need a source chain transaction? Submit an spv-style transaction proof
+- Need some source chain state? Submit a state proof
+
+Notes:
+The header sync is just the foundation. Now Applications can build on top of it with the best possible trust guarantees.
+
 If you need some source chain transaction, your app needs to require an spv-style transaction proof to check against the header's extrinsics root.
+
+If you need some source chain state, your app needs to require a state proof to check against the header's state root.
+
+---v
+
+# Multichain Security
+
+![Strong person lifting two weights beside weak person unable to lift one weight](./img/strong-and-weak-.png)
+
+Notes:
+This kind of trustless bridge _with proper incentives_ gets us information about the source chain to the target chain with security about as high as it was on the source chain. If you are building an app that spans multiple chains consider the security guarantees on both chains. The weaker security of the two is the security your app has. More abstractly, your app consumes two different kinds of blockspace that may be of different qualities. Your app is only as quality as the lower of the blockspaces.
+
+---v
+## Example
 
 Depository - Mint model - Full backing
 
