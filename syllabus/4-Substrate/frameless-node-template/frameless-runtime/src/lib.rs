@@ -300,6 +300,7 @@ impl Runtime {
 		// dependency..). Make sure in execute block path we have the same rule.
 		sp_io::storage::clear(&HEADER_KEY);
 
+		Self::print_state();
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
 
 		let extrinsics = Self::get_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
@@ -315,6 +316,7 @@ impl Runtime {
 
 	fn do_execute_block(block: Block) {
 		info!(target: LOG_TARGET, "Entering execute_block. block: {:?}", block);
+		sp_io::storage::clear(&EXTRINSICS_KEY);
 
 		for extrinsic in block.clone().extrinsics {
 			// block import cannot fail.
@@ -333,9 +335,6 @@ impl Runtime {
 		let extrinsics_root =
 			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
-
-		// this gets written into, but we don't quite need it.
-		sp_io::storage::clear(&EXTRINSICS_KEY);
 	}
 
 	fn do_apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
@@ -387,7 +386,13 @@ impl Runtime {
 				BasicExtrinsic(Call::SetTimestamp(ts)) => {
 					let client_timestamp =
 						data.get_data::<u64>(&sp_timestamp::INHERENT_IDENTIFIER).unwrap().unwrap();
-					if client_timestamp >= ts {
+					log::trace!(
+						target: LOG_TARGET,
+						"client ts ={:?}, call ts {:?}",
+						client_timestamp,
+						ts
+					);
+					if client_timestamp < ts {
 						let mut r = sp_inherents::CheckInherentsResult::new();
 						r.put_error(sp_timestamp::INHERENT_IDENTIFIER, &TimestampError::Stale)
 							.unwrap();
