@@ -35,8 +35,12 @@ Notes:
 * Bootnode/bootnodes (More on this later in Substrate) 
 ---
 ## Gossip Protocol
+<img style="width: 700px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-1.svg">
 Notes:
     Some picture showing one node looking for a packet via another node and asking its neighbors for packets
+---v
+## Gossip Protocol
+<img style="width: 900px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-2.svg">
 ---
 ## Discovery
 * 1.) Connect to a peer
@@ -83,20 +87,26 @@ Notes: Concise but revealing here..
 Notes:
 What is libp2p
 ---
-## Addressing
+## Addressing(MultiAddress)
+- Generalization of an IP
+- Multiaddress is to an IP address what a transport is to TCP/IP
+- EX
+    - /ip4/127.0.0.1/tcp/30333
+    - /dns/example.com/udp/5015/quic
+    - /ip6/fe80::0202:b3ff:fe1e:8329/tcp/10350/ws
 Notes:
     Show example here, it is important for looking at chain-spec
 ---
-## Protocols
+## Protocols (Generic Protocol negotiation) 
+* You can change your encryption protocol via the protocol negotiation!
 * Ping
-* Identify
-* Kad-dht
+* Kad-dht 
 Notes: Overview of a few protocols from docs 
 ---
 ## KAD-DHT
 * Simply put a hash table containing a set of data entries these data entries are distributed accross the network
 * There is no central registry where to obtain everything
-* When we want some piece of data offered by the network we search for it distance to specific peers
+* When we want some piece of data offered by the network we search for its distance to specific peers
 ---v
 ## DHT Operations in libp2p
 * `FIND_NODE`: given a key, find the closest nodes to the key 
@@ -116,14 +126,11 @@ Notes: Give some information on each
 ---
 ## Transports
 * TCP
-* UDP
+* UDP(Cannot use UDP alone transports must be reliable and ordered)
 * QUIC and more..
 Notes: Talk here about how you can use not only TCP but various other transports..
 ---
 ## Stream Multiplexing
-Notes: Very Brief overview maybe..
----
-## NAT
 Notes: Very Brief overview maybe..
 ---
 ## Security and Maliciousness
@@ -132,7 +139,9 @@ Notes: Very Brief overview maybe..
 ## Identity and Trust
 * Every node has an public private key pair or PeerId which allows to verify who we are talking too.
 * Authorization is NOT default. (Some systems may not require any authorization from a peer you can think of this as a tuning on permission..) 
-* Reputation systems are one way to identify bad actors(Blacklist IP for instance)
+* Reputation systems are one way to identify bad actors(Blacklist IP for instance, we use reputation in substrate)
+    - i.e. duplicate messages
+    - Try to maintain connections with the nodes that have the highest reputation (With some randomness to allow new nodes to join)
 ---
 ## DOS
 * KAD-DHT are vulnerable to sybils.
