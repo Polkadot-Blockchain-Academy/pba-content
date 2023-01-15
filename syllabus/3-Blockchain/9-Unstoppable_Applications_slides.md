@@ -34,13 +34,7 @@ Notes:
 
 ## Discussion
 
-> What is an unstoppable application?
-
-<br>
-
 > What properties of a system make it "stoppable"?
-
-<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -97,7 +91,7 @@ We want the most robust system possible, given the _environment_ the consensus s
 
 ## Attacking Web3
 
-<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-security.png"/>
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-security.png" alt="https://xkcd.com/538/"/>
 
 Notes:
 
@@ -632,7 +626,7 @@ Notes:
 Watch _after class_.
 Perhaps assigned informally to everyone to watch in the next few days.
 
----v 
+---v
 
 ## Can't vs. Wont
 
@@ -643,7 +637,7 @@ claim you don't have the ability anymore -> negligence
 
 moral relativism -> "who's law?"
 
-"oops clause" -> not too narrow. 
+"oops clause" -> not too narrow.
 
 ---
 
@@ -654,7 +648,6 @@ TODO
 OFAC has had on validator compliance because of Tornado Cash.
 
 - code is unstoppable, but platform _can_ sensor. ability -> responsibility
-
 
 ---
 
@@ -683,14 +676,14 @@ Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech
 ## Modeling Behavior
 
 - [Token Engineering](#next-steps)
-Notes:
+  Notes:
 
 Mostly free education and tools to dive deeper on tokenomics.
 Remember, these are _models_ of idealized systems in general, real world conditions will differ!
 
 ---
 
-## TODO 
+## TODO
 
 example of luna or other system collapse
 
@@ -699,14 +692,33 @@ example of luna or other system collapse
 
 ---
 
+---
+
+## Dependency
+
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/"/>
+
+- [Confusion](https://secureteam.co.uk/news/what-is-a-dependency-confusion-attack/)
+- [Hijacking](https://blog.sonatype.com/bladabindi-njrat-rat-in-jdb.js-npm-malware)
+- [Hardware side-channel attacks](https://hackaday.com/2019/09/13/side-channel-attack-shows-vulnerabilities-of-cryptocurrency-wallets/)
+
+Notes:
+
+- yes in software and hardware, you are at risk of attack from poisoned deps through non-maintenance, up to targeted exploitation.
+  One mitigation is vendoring these, need systems inn place to monitor. Dependabot is not sufficient.
+- Also in dependance on specific operational contexts.
+  For example that it is legal to operate the software for nodes.
+
+---
 
 ## Unknown unknowns
 
 Notes:
 
-We cannot usually guarantee/prove that every possible condition is accounted for in our models & system design.
+Outside of the system itself, we cannot guarantee/prove that every possible condition is accounted for in our models & system design.
 We must expect forces outside our system & it's model may interact in unexpected ways.
 Assumptions about context must be rigorously evaluated (i.e. - what does finality mean in the chain this pallet or contract lives in?)
+(Formal mathematical proofs reason only about the things we can and do account for.)
 
 ---
 
@@ -714,7 +726,7 @@ Assumptions about context must be rigorously evaluated (i.e. - what does finalit
 
 - Complexity generally increases the risks of failures
   - Hypothesis: this _usually_ makes systems more brittle.
-- "Oops clauses" may be justified, but be careful they don't undermine the system
+- "Oops clauses" may be justified, but take heed they do not undermine the system.
 
 Notes:
 
@@ -723,12 +735,7 @@ Governance/"oops clause" can help fix things, but also risk system capture.
 
 ---
 
-## Wrap Up
-
-End of Module 3.
-Goal is that you now have the primitives and concepts necessary to dive into Substrate and Polkadot and start building unstoppable Web3 applications.
-
----
+<!-- .slide: data-background-color="#4A2439" -->
 
 ## Questions
 
