@@ -497,7 +497,7 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 
 ## Ethereum
 
-- Generalisation of Bitcoin: provides a quasi-Turing-complete VM
+- Generalization of Bitcoin: provides a quasi-Turing-complete VM
 - Uses an account-based system
 - Accounts can store balances, but can also store executable code (smart contracts)
 - Each contract can have its own internal state and API
@@ -549,9 +549,9 @@ In Substrate chains (like Polkadot), it's part of the state itself!
 
 ---
 
-## Specialisation
+## Specialization
 
-Different state machines will specialise in different things (assets, privacy, credentials, social media).
+Different state machines will specialize in different things (assets, privacy, credentials, social media).
 
 But applications will want to pull from many of these capabilities.
 
