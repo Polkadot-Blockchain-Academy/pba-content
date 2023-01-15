@@ -130,7 +130,49 @@ In the main gossip protocol, if authorities finalize two conflicting blocks, the
 
 Transport layers between independent consensus systems
 
----
+![Bridge spanning space between blockchains](./img/basic-bridge.svg)
+
+Notes:
+Generally speaking bridges move arbitrary data between unrelated consensus systems. Basically between different blockchains, and those messages can evoke arbitrary side effects on the target chain. To keep it concrete, we'll mostly talk about moving tokens 
+---v
+
+# Source and Target Chain
 
 
----
+
+---v
+
+Naming - source and destination chains
+Kinds
+ - centralized - Send your assets to Bob, Bob will mint you new assets on another chain
+       can be slightly improved with multisig or w/e but doesn't solve the problem
+    WBTC Foundation
+ - trust minimized - ???? Heard of this somewhere - maybe seun
+ - Trustless - This is the goal of course just like everything else in this ecosystem
+ So how to build it? How does anyone interact trustlessly with a blockchain? Run a node.
+ A blockchain is extremely resource constrained so it is a perfect candidate for a light client.
+ Trustless bridges are built from on-chain light clients
+ BTC Relay contract
+ one-way vs two-way bridges. A two-way bridge is really jsut two one-way bridge. Think of a two-way street. There is a dedicated lane for each direction.
+ What about peers? enter the relayer - a trustless role - need at least one honest relayer - can't find one you trust? Run your own.
+
+Game Theory
+Don't accept message as finalized immediately
+Validators may be equivocating
+
+Fishermen
+
+Slashing on source vs target chain or both
+
+Multi-chain apps and Blockspace quality. This kind of trustless bridge with proper incentives gets us information about the source chain on the target chain with security about as high as it was on the source chain. If you are building an app that spans multiple chains consider the security guarantees on both chains. The weaker security of the two is the security your app has. More abstractly, your app consumes two different kinds of blockspace that may be of different qualities. Your app is only as quality as the lower of the blockspaces.
+
+So we have a header, now what?
+Cross chain applications build on top of this primitive.
+If you need some source chain state, your app needs to require a state proof to check against the header's state root.
+If you need some source chain transaction, your app needs to require an spv-style transaction proof to check against the header's extrinsics root.
+
+Depository - Mint model - Full backing
+
+
+
+
