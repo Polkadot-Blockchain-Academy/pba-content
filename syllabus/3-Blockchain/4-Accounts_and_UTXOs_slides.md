@@ -302,7 +302,7 @@ TODO: Insert some picture here which shows some money being sent from person A t
 
 ## Conclusion..
 
-- Both are good depending on the usecase!!
+**Both are good depending on the usecase!!**
 
 ---
 
