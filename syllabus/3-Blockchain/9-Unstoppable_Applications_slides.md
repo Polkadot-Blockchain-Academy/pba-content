@@ -171,8 +171,13 @@ Smart contracts module _may_ include detains on unstoppable dapps design conside
 
 ## A Lot More Than Blockchain
 
+<pba-cols>
+<pba-col>
+
 Blockchains only form one part of the stack.<br>
 Web3 applications must prevent attacks at all layers.
+</pba-col>
+<pba-col>
 
 <pba-flex center>
 
@@ -183,6 +188,8 @@ Web3 applications must prevent attacks at all layers.
 - Inter-consensus system trust
 
 </pba-flex>
+</pba-col>
+</pba-cols>
 
 Notes:
 
@@ -310,7 +317,17 @@ Emergence of obscure/niche "Proof of X" algorithms to shelter from attack only g
 
 ## Proof of Work Battles
 
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
+
+_What might it cost to 51% attack?_
+
+Notes:
+
+- For PoW, hashing power for the same algo can be attacked!
+  Buying hash power is possible:
+- Most GPU miners switch tasks to the mine the highest paying (relative to some base currency) chain using software like https://www.nicehash.com/.
+- ASICs are less flexible, but also can to the highest paying coin.
+- Example: [ETH classic deep re-ogs](https://coingeek.com/ethereum-classic-experiences-51-attack-and-3000-block-reorg/)
 
 ---
 
@@ -785,8 +802,8 @@ Assumptions about context must be rigorously evaluated (i.e. - what does finalit
 
 ## Final Thoughts
 
-- Complexity generally increases the risks of failures
-  - Hypothesis: this _usually_ makes systems more brittle.
+- Complexity generally increases the risks of failures.<br>
+  $~~~$_Hypothesis: this \_usually_ makes systems more brittle.\_
 - "Oops clauses" may be justified, but take heed they do not undermine the system.
 
 Notes:
