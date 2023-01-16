@@ -48,21 +48,21 @@ Notes:
 * Thing 2 we can refer to as an output
 ---
 ## Is this our State? What is our state?
-* A bunch of "outputs" (Some value or data which can be altered via a particular specified owner
+* A bunch of "outputs" (Some value or data which can be altered via a particular specified owner)
 Notes:
     TODO: Insert picture showing a table of hash values mapping to these "outputs"(Data + owner)
 ---
 ## Visual What are we talking about here?
 | Key       | Value       |
 | --------- | ----------- |
-| Hash(tx0) | 5           |
-| Hash(tx1) | 53          |
-| Hash(tx2) | 68          |
-| **Hash(tx3)** | **42**          |
-| **Hash(tx3)** | **30000000000** |
-| Hash(tx4) | 4           |
-| Hash(tx5) | 1           |
-| Hash(tx6) | 3823        |
+| Hash(tx0) | (Pubkey5, Value = 100)           |
+| Hash(tx1) | (Pubkey2, Value = 42)          |
+| Hash(tx2) | (Pubkey1, Value = 33)          |
+| **Hash(tx3)** | **(Pubkey3, Value = 20)**          |
+| **Hash(tx3)** | **(Pubkey1, Value = 74)** |
+| Hash(tx4) | (Pubkey42, Value = 200000)           |
+| Hash(tx5) | (Pubkey39, Value = some big a&* number)           |
+| Hash(tx6) | (Pubkey780, Value = 80)        |
 ---
 ## So what is the notion of a User?
 * A public key and all of the uniquely identifiable data which can be manipulated by that public key
@@ -139,7 +139,7 @@ Notes:
     TODO: Insert some picture here which shows some money being sent from person A to person B but instead person A just signs a message saying to send to person B and the system determines what the updated output result or state will be
 ---
 ## Transaction + Transition
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.svg"/>
+<img style="width: 800px; height 600px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.svg"/>
 ---
 ## So what happens in a State transition in this computation model?
 * We still verify but we verify less and determine more!
