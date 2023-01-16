@@ -125,7 +125,6 @@ Stay in the gossip protocol or you might get got.
 Notes:
 In the main gossip protocol, if authorities finalize two conflicting blocks, then we can prove that they have broken the rules and slash them. If we don't watch the gossip and only peer with a single full node, then our view is entirely defined by that node. They may gossip us an attack chain and we won't know. So it is important to communicate with many different full nodes.
 
-
 ---
 
 # Bridges
@@ -135,7 +134,7 @@ Transport layers between independent consensus systems
 ![Bridge spanning space between blockchains](./img/basic-bridge.svg)
 
 Notes:
-Generally speaking bridges move arbitrary data between unrelated consensus systems. Basically between different blockchains, and those messages can evoke arbitrary side effects on the target chain. To keep it concrete, we'll mostly talk about moving tokens 
+Generally speaking bridges move arbitrary data between unrelated consensus systems. Basically between different blockchains, and those messages can evoke arbitrary side effects on the target chain. To keep it concrete, we'll mostly talk about moving tokens
 ---v
 
 ## Source and Target Chain
@@ -144,7 +143,7 @@ TODO Diagram
 
 ## Two Way Bridges
 
-A two-way bridge is really just two one-way bridge. Think of a two-way 
+A two-way bridge is really just two one-way bridge. Think of a two-way
 street. There is a dedicated lane for each direction.
 
 ---v
@@ -153,28 +152,33 @@ street. There is a dedicated lane for each direction.
 
 <pba-cols>
 <pba-col>
-<h3>Trust-based</h3>
+
+### Trust-based
 
 Trusted intermediary makes a transfer manually
+
 Eg. WBTC Foundation
+
 </pba-col>
-
 <pba-col>
-<h3>Trustless</h3>
 
-Trustless is the goal of course just like everything else in this ecosystem.
+### Trustless
+
+<br>
+
+Trustless is the goal,<br>like almost everything in Web3.
+
 </pba-col>
 </pba-cols>
 
-@nukemandan Why is this not formatting in columns?
-
 Notes:
+
 The trust based bridges are not at all ideal. You have to entirely trust an intermediary. You send the intermediary tokens on the source chain. Once the intermediary is satisfied that they really own the source tokens, they send you some target tokens on the target chain. Or they don't whatever, not their problem.
 
 You can make they trust properties slightly better by using a multisig or a group of people so you only have to trust some subset of them. But this does not fundamentally eliminate the trust agreement.
 One classic example is the WBTC foundation. You send them bitcoin, they wait for "enough" block confirmations, and then they mint you an ERC20 token on Ethereum. And they provide the same service in reverse too.
 
-A lot of the trusted bridge design can be improved and we'll talk about that in detail in the next few slides. But it's worth observing here that we will never be able to  eliminate the part about "Once the intermediary is satisfied that they really own the source tokens". The bridge can never be stronger than the consensus on the source chain
+A lot of the trusted bridge design can be improved and we'll talk about that in detail in the next few slides. But it's worth observing here that we will never be able to eliminate the part about "Once the intermediary is satisfied that they really own the source tokens". The bridge can never be stronger than the consensus on the source chain
 
 ---v
 
@@ -202,7 +206,6 @@ Notes:
 
 TODO details about this historical example
 
-
 ---
 
 # Brdige Design Challenges
@@ -213,8 +216,9 @@ Notes:
 Bridges present their own set of design challenges beyond what we encounter in regular stand-alone light clients.
 
 ---v
+
 ## Peers?
- 
+
 - How can we peer without networking?
 - Enter the **Relayer** - a permissionless and trustless role
 - Need at least one honest relayer
@@ -227,10 +231,10 @@ You do need at least one honest relayer for the chain to get the correct header 
 
 ---v
 
- ## Finality and Equivocation
+## Finality and Equivocation
 
- TODO Figure of competing finalized chain
- TODO Seun's achiles heel meme
+TODO Figure of competing finalized chain
+TODO Seun's achiles heel meme
 
 Notes:
 It is not safe to accept headers as finalized immediately even if there is a deterministic finality proof. Let that sink in. Even if there is a valid finality proof, it is not safe to accept them as finalized. Why not?
@@ -247,6 +251,7 @@ Add a **Challenge Period** and
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 **OR**
+
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 - Stake Relayers - so they can be slashed
@@ -256,6 +261,7 @@ Notes:
 There are basically two classes of solutions. Both of them require a waiting period aka challenge period before accepting a header with a finality proof as final.
 
 One is to add a role of fishermen. They are responsible for noticing when the header candidate on the target chain is different from the one in the main source chain protocol and reporting this behavior back to the source chain so the validators can be slashed there. Two problems:
+
 1. Fishermen have weak incentives. If they do a good job there will be no equivocations and they will not get paid.
 2. Target chain is relying on the foreign source chain to keep the bridge secure instead of owning that security itself.
 
@@ -292,10 +298,7 @@ Notes:
 This kind of trustless bridge _with proper incentives_ gets us information about the source chain to the target chain with security about as high as it was on the source chain. If you are building an app that spans multiple chains consider the security guarantees on both chains. The weaker security of the two is the security your app has. More abstractly, your app consumes two different kinds of blockspace that may be of different qualities. Your app is only as quality as the lower of the blockspaces.
 
 ---v
+
 ## Example
 
 Depository - Mint model - Full backing
-
-
-
-
