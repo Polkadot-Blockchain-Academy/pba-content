@@ -7,7 +7,7 @@ description: Light clients principles and application in bridges
 
 <pba-cols>
     <pba-col>
-        <img width = "80%" alt="Pierre Krieger aka Tomaka" src="./img/tomaka.png" />
+        <img width = "800px" alt="Pierre Krieger aka Tomaka" src="./img/tomaka.png" />
     </pba-col>
     <pba-col>
         <blockquote>What can I say?<!-- .element: class="fragment" data-fragment-index="2" --></blockquote>
@@ -28,6 +28,7 @@ Reality:
 - I don't need it _all the time_
 
 Notes:
+
 The bitcoin whitepaper clearly assumes that users will run their own nodes. This is the most trustless and decentralized way to operate, and you should do it whenever you can. If you think you can't you're probably wrong. Just ask the Monero community.
 
 There are _some_ reasons not to run a full node and the reality is that not everyone will. So even though we should always run our own nodes, let's look at some alternatives and ways we can make node running more accessible.
@@ -50,6 +51,7 @@ AKA, trust somebody else's node.
 </ul>
 
 Notes:
+
 The easiest thing to do is just trust some expert to run a node for you. Very web2. Lot's of things can go wrong.
 
 So this is definitely not the best option. Let's see if we can do better.
@@ -66,6 +68,7 @@ For resource constrained systems and people in a hurry
 - Inside Web Browser
 
 Notes:
+
 One of the complaints was that the node takes too much resources. This is especially true if we want people to be able to run the node in all kinds of exotic environments. And we do want that because we want people to run their own node even when they're just paying the bill at dinner from their phone or liking social posts while scrolling on the bus. Let's make the client lighter so it doesn't require as much resources.
 
 ---v
@@ -80,6 +83,7 @@ One of the complaints was that the node takes too much resources. This is especi
 - ❌ Maintains state
 
 Notes:
+
 This is what a typical light client does. There is not a single definition of light client. There are varying degrees of lightness to suit your needs.
 
 ---v
@@ -93,6 +97,7 @@ This is what a typical light client does. There is not a single definition of li
 - State root helps a lot
 
 Notes:
+
 The figure is from the Bitcoin whitepaper. The concept of light clients has been around since bitcoin. At that time it was known as Simplified Payment Verification. You could confirm that a payment was sent or received. But you couldn't confirm that the tokens in question still existed or anything else about the state.
 
 Chains with state roots can have much more powerful light clients
@@ -106,6 +111,7 @@ Chains with state roots can have much more powerful light clients
 - Warp sync
 
 Notes:
+
 We also need to address the use case of clients that are not always on. For example if you only need your node on your phone, or when using a specific web page, that means it will have some syncing to do.
 
 Doing a full sync is already a lot faster than on a full client because you aren't downloading or executing the blocks. But by the time you have a few million headers, it does still take some time.
@@ -123,6 +129,7 @@ Stay in the gossip protocol or you might get got.
 ![You get nothing! You Lose! Good day sir!](./img/wanka.jpg)
 
 Notes:
+
 In the main gossip protocol, if authorities finalize two conflicting blocks, then we can prove that they have broken the rules and slash them. If we don't watch the gossip and only peer with a single full node, then our view is entirely defined by that node. They may gossip us an attack chain and we won't know. So it is important to communicate with many different full nodes.
 
 ---
@@ -134,7 +141,9 @@ Transport layers between independent consensus systems
 ![Bridge spanning space between blockchains](./img/basic-bridge.svg)
 
 Notes:
+
 Generally speaking bridges move arbitrary data between unrelated consensus systems. Basically between different blockchains, and those messages can evoke arbitrary side effects on the target chain. To keep it concrete, we'll mostly talk about moving tokens
+
 ---v
 
 ## Source and Target Chain
@@ -187,6 +196,7 @@ A lot of the trusted bridge design can be improved and we'll talk about that in 
 TODO Figure
 
 Notes:
+
 On PoW chains this is truly just a judgement call and a prayer. If the source chain has deterministic finality w can do better. We need to wait for finality. But even this isn't foolproof. More on this after we cover the basic design.
 
 ---
@@ -213,6 +223,7 @@ TODO details about this historical example
 ![bridge collapse](./img/bridge-collapse.webp)
 
 Notes:
+
 Bridges present their own set of design challenges beyond what we encounter in regular stand-alone light clients.
 
 ---v
@@ -224,6 +235,7 @@ Bridges present their own set of design challenges beyond what we encounter in r
 - Need at least one honest relayer
 
 Notes:
+
 On-chain logic doesn't have network IO, so how do we peer?
 There is a role known as a relayer. It is an off-chain agent who watches the source chain, and submits headers and finality proofs from the source chain to the target chain through transactions. Anyone can start a relayer. It is typically a little piece of software that you run. But there is nothing magic about it. You could perform the relayer task manually by copying header data from an explorer into metamask for example.
 
@@ -237,6 +249,7 @@ TODO Figure of competing finalized chain
 TODO Seun's achiles heel meme
 
 Notes:
+
 It is not safe to accept headers as finalized immediately even if there is a deterministic finality proof. Let that sink in. Even if there is a valid finality proof, it is not safe to accept them as finalized. Why not?
 
 Because the validators may be equivocating. They don't send equivocations to real nodes on the network because those equivocations will be gossiped around and reported on the source chain and the validators will be slashed accordingly. But remember a light client on the target chain has no way to report such equivocations back to the source chain.
@@ -258,6 +271,7 @@ Add a **Challenge Period** and
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
+
 There are basically two classes of solutions. Both of them require a waiting period aka challenge period before accepting a header with a finality proof as final.
 
 One is to add a role of fishermen. They are responsible for noticing when the header candidate on the target chain is different from the one in the main source chain protocol and reporting this behavior back to the source chain so the validators can be slashed there. Two problems:
@@ -282,6 +296,7 @@ TODO Figure of stack with two blockchains on the bottom layer
 - Need some source chain state? Submit a state proof
 
 Notes:
+
 The header sync is just the foundation. Now Applications can build on top of it with the best possible trust guarantees.
 
 If you need some source chain transaction, your app needs to require an spv-style transaction proof to check against the header's extrinsics root.
@@ -295,6 +310,7 @@ If you need some source chain state, your app needs to require a state proof to 
 ![Strong person lifting two weights beside weak person unable to lift one weight](./img/strong-and-weak-.png)
 
 Notes:
+
 This kind of trustless bridge _with proper incentives_ gets us information about the source chain to the target chain with security about as high as it was on the source chain. If you are building an app that spans multiple chains consider the security guarantees on both chains. The weaker security of the two is the security your app has. More abstractly, your app consumes two different kinds of blockspace that may be of different qualities. Your app is only as quality as the lower of the blockspaces.
 
 ---v

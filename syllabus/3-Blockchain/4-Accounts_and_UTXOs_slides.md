@@ -24,9 +24,13 @@ title: Accounting Models & User Abstractions in Blockchains
 
 <br>
 <img style="width: 700px;" src="../../assets/img/3-Blockchain/3.2-assembling-cartoon.png"/>
+
 Notes:
-    TODO: Help format images to look better 
+
+    TODO: Help format images to look better
+
 ---
+
 ## What do we want to talk about today?
 
 <pba-cols>
@@ -38,66 +42,104 @@ Notes:
 </pba-col>
 
 <img style="width: 400px; height 400px; float:right; margin-right:5px" src="../../assets/img/3-Blockchain/3.2-thinking-cartoon.png"/>
+
 Notes:
-    TODO: Help format image to look better on slide 
+
+    TODO: Help format image to look better on slide
+
 ---
+
 ## Let us think of two different paradigms:
-* A.) We craft a model in which the system acts as a global and trustless verifier
-Notes:
-    TODO: Insert picture here which shows some money being sent from person A to person B and the System box is verifying whether the money I am attempting to spend is mine and the result that I am specifying to happen is valid 
+
+- A.) We craft a model in which the system acts as a global and trustless verifier
+  Notes:
+
+      TODO: Insert picture here which shows some money being sent from person A to person B and the System box is verifying whether the money I am attempting to spend is mine and the result that I am specifying to happen is valid
+
 ---
+
 ## Example
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.svg"/>
----
+
+## <img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.svg"/>
+
 ## Paradigm A How would we do this?
-* 1.) You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In other words we have some data that can be altered only by a specific entity so we want to provide proof we can alter it. 
-* 2.) You have data which can be altered along with a key stating who can alter it.(Value + Pubkey)
-* Thing 1 we can refer to as an input
-* Thing 2 we can refer to as an output
+
+- 1.) You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In other words we have some data that can be altered only by a specific entity so we want to provide proof we can alter it.
+- 2.) You have data which can be altered along with a key stating who can alter it.(Value + Pubkey)
+- Thing 1 we can refer to as an input
+- Thing 2 we can refer to as an output
+
 ---
+
 ## Is this our State? What is our state?
-* A bunch of "outputs" (Some value or data which can be altered via a particular specified owner)
+
+- A bunch of "outputs" (Some value or data which can be altered via a particular specified owner)
+
 Notes:
-    TODO: Insert picture showing a table of hash values mapping to these "outputs"(Data + owner)
+
+TODO: Insert picture showing a table of hash values mapping to these "outputs"(Data + owner)
+
 ---
+
 ## Visual What are we talking about here?
-| Key       | Value       |
-| --------- | ----------- |
-| Hash(tx0) | (Pubkey5, Value = 100)           |
-| Hash(tx1) | (Pubkey2, Value = 42)          |
-| Hash(tx2) | (Pubkey1, Value = 33)          |
-| **Hash(tx3)** | **(Pubkey3, Value = 20)**          |
-| **Hash(tx3)** | **(Pubkey1, Value = 74)** |
-| Hash(tx4) | (Pubkey42, Value = 200000)           |
-| Hash(tx5) | (Pubkey39, Value = some big a&* number)           |
-| Hash(tx6) | (Pubkey780, Value = 80)        |
+
+| Key           | Value                                    |
+| ------------- | ---------------------------------------- |
+| Hash(tx0)     | (Pubkey5, Value = 100)                   |
+| Hash(tx1)     | (Pubkey2, Value = 42)                    |
+| Hash(tx2)     | (Pubkey1, Value = 33)                    |
+| **Hash(tx3)** | **(Pubkey3, Value = 20)**                |
+| **Hash(tx3)** | **(Pubkey1, Value = 74)**                |
+| Hash(tx4)     | (Pubkey42, Value = 200000)               |
+| Hash(tx5)     | (Pubkey39, Value = some big a&\* number) |
+| Hash(tx6)     | (Pubkey780, Value = 80)                  |
+
 ---
+
 ## So what is the notion of a User?
-* A public key and all of the uniquely identifiable data which can be manipulated by that public key
+
+- A public key and all of the uniquely identifiable data which can be manipulated by that public key
+
 ---
+
 ### We described somewhat of the `State` Now lets talk about how to transition the State using this new verification model.
+
 Notes:
-    TODO: Show some image of something transitioning
+
+TODO: Show some image of something transitioning
+
 ---
+
 ### A "Transaction"
-* Dont be confused it is essentially a request to change the state of the system.
-* What does a Transaction look like? How do inputs map to outputs?
-* A list of inputs + a list of outputs
+
+- Dont be confused it is essentially a request to change the state of the system.
+- What does a Transaction look like? How do inputs map to outputs?
+- A list of inputs + a list of outputs
+
 ---
+
 ### What were those input output thingies again?
+
 <img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.svg"/>
 Notes:
-    TODO: Show picture of inputs and outputs in a transaction similar to UTXO frameless explain how new outputs are derived from previously specified outputs from the input 
+
+    TODO: Show picture of inputs and outputs in a transaction similar to UTXO frameless explain how new outputs are derived from previously specified outputs from the input
+
 ---
+
 ## So what happens in a state transition or verification in this model?
-* Inputs signal which outputs from the state will be consumed
-* We must verify the signature given in the input with the corresponding specified outputs pubkey or owner 
-* We must verify that the resulting state which has been provided is a valid one(We define what this is)
-* In the case of money or just a raw value we can assume that you cannot take some piece of moneys worth 10 and create a list of new outputs which have more than 10 moneys
+
+- Inputs signal which outputs from the state will be consumed
+- We must verify the signature given in the input with the corresponding specified outputs pubkey or owner
+- We must verify that the resulting state which has been provided is a valid one(We define what this is)
+- In the case of money or just a raw value we can assume that you cannot take some piece of moneys worth 10 and create a list of new outputs which have more than 10 moneys
+
 ---
+
 ## Transition
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.svg"/>
----
+
+## <img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.svg"/>
+
 ## Unspent Transaction Outputs(UTXOS) solved...
 
 <pba-cols>
@@ -107,23 +149,41 @@ Notes:
 
 </pba-col>
 <img style="width: 400px; height 300px; float:middle;" src="../../assets/img/3-Blockchain/3.2-cartoon-cheering.png"/>
+
 Notes:
-    TODO: Add some picture of a person cheering and happy
+
+TODO: Add some picture of a person cheering and happy
+
 ---
+
 ## Paradigm B..
-* B.) We craft a model in which the system acts as a computer and by submitting some input it will determine the result from my input.
+
+- B.) We craft a model in which the system acts as a computer and by submitting some input it will determine the result from my input.
+
 Notes:
+
+TODO make some notes
+
 ---
+
 ## Well lets make things more intuitive!
-* So instead of doing the computation ourselves and then submitting it to the system to verify...(i.e. understanding the present state and then computing the resulting state) 
-* Why dont we just let the system hold our state information or data in the form of an "Account" and we submit requests and data to the system.
-* This means we can let the system be our computer for us! 
+
+- So instead of doing the computation ourselves and then submitting it to the system to verify...(i.e. understanding the present state and then computing the resulting state)
+- Why dont we just let the system hold our state information or data in the form of an "Account" and we submit requests and data to the system.
+- This means we can let the system be our computer for us!
+
 ---
+
 ## Well well what is state then in this system?
-* Accounts -> Values
+
+- Accounts -> Values
+
 Notes:
-    TODO: Show picture of a table mapping a pubkey to a value or data item(in its simplest form a value)
+
+TODO: Show picture of a table mapping a pubkey to a value or data item(in its simplest form a value)
+
 ---
+
 ## Accounts State Table
 
 | Key   | Value       |
@@ -148,7 +208,6 @@ Notes:
 ## State transitions a "Transaction"
 
 - What does a transaction look like now?
-
 
 Notes:
 
