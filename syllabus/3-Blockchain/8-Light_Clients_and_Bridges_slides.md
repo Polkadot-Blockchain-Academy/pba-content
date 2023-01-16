@@ -38,14 +38,16 @@ There are _some_ reasons not to run a full node and the reality is that not ever
 
 AKA, trust somebody else's node.
 
-- 🕵️ Spy on you ([like infura](https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update)).
+<ul>
+<li><span>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">like infura</a>).</span></li>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- 🔞 Censor you
+<li>🔞 Censor you</li>
 <!-- .element: class="fragment" data-fragment-index="3" -->
-- 🤥 Lie to you
+<li>🤥 Lie to you</li>
 <!-- .element: class="fragment" data-fragment-index="4" -->
-- 💔 Steal your boyfriend
+<li>💔 Steal your boyfriend</li>
 <!-- .element: class="fragment" data-fragment-index="5" -->
+</ul>
 
 Notes:
 The easiest thing to do is just trust some expert to run a node for you. Very web2. Lot's of things can go wrong.
