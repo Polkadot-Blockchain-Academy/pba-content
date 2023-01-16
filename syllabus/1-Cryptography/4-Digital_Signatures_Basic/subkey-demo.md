@@ -89,7 +89,7 @@ Secret Key URI `desert piano add owner tuition tail melt rally height faint thun
 subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/1'
 
 Secret Key URI `desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/1` is account:
-  Network ID:        substrate 
+  Network ID:        substrate
  Secret seed:       n/a
   Public key (hex):  0x2e8b3090b17b12ea63029f03d852af71570e8e526690cc271491318a45785e33
   Account ID:        0x2e8b3090b17b12ea63029f03d852af71570e8e526690cc271491318a45785e33

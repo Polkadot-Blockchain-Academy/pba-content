@@ -277,17 +277,13 @@ Consider if we tried to map all possible states of a social media app or a digit
 
 Simple Switch: 2 States, 1 Transition
 
-<b>Labelled Transition System</b>
-<!-- .element: class="fragment" data-fragment-index="2" -->
+**Labelled Transition System** <!-- .element: class="fragment" data-fragment-index="2" -->
 
-<img src="./img/light-switch-lts.svg"/>
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<img src="./img/light-switch-lts.svg"/> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-<b>History</b>
-<!-- .element: class="fragment" data-fragment-index="3" -->
+**History** <!-- .element: class="fragment" data-fragment-index="3" -->
 
-<img src="./img/light-switch-history.svg" />
-<!-- .element: class="fragment" data-fragment-index="3" -->
+<img src="./img/light-switch-history.svg" /> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---v
 
@@ -365,7 +361,7 @@ Now that we have a formal mathy model of systems that we care about, we can see 
 
 A blockchain can be thought of in three parts
 
-<pba-cols>
+<pba-cols style="margin-top: 0">
 <pba-col>
 <pba-flex center>
 

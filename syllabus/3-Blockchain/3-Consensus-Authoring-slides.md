@@ -47,6 +47,7 @@ Forks represent alternate courses that history could take. They arise every time
 You can think of them at a social level. Court cases, arguments, wars. Ideally we can resolve them peacefully
 
 You can think of them at a very low physics-y level. Every time an electron encounters a potential barrier it either reflects of tunnels. When consensus is high-quality, the result is as objective as the outcome of a physical process.
+
 ---
 
 ## Five Aspects of Consensus
@@ -180,7 +181,6 @@ Although it seems permissionless on its face, in practice, to be a bitcoin miner
 - Your Transitions - Because you want to get your own transitions in
 - Explicit incentives - Eg block reward
 
-
 Notes:
 If it costs energy to author blocks, why would anyone want to author to begin with?
 
@@ -282,11 +282,9 @@ Cons:
 
 Single blind VRF-based leader election
 
-🙈TBH, IDK how it works internally.
-<!-- .element: class="fragment" data-fragment-index="2" -->
+🙈TBH, IDK how it works internally. <!-- .element: class="fragment" data-fragment-index="2" -->
 
-But Jeff does!
-<!-- .element: class="fragment" data-fragment-index="3" -->
+But Jeff does! <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
@@ -359,8 +357,7 @@ The basic idea is that anyone can lock up some tokens on chain (in the state mac
 - Eg Block rewards, slashing, authority election
 - In PoW there is a difficulty adjustment algorithm
 
-In Substrate there is a concept of a **Runtime API** - Consensus can read information from state machine.
-<!-- .element: class="fragment" data-fragment-index="2" -->
+In Substrate there is a concept of a **Runtime API** - Consensus can read information from state machine. <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 So far I've presented consensus as orthogonal to the state machine. This is mostly true. But in practice it is extremely common for there to be some loose coupling. We already saw an example when we talked about block rewards. The consensus authors are rewarded with tokens (in the state machine) for authoring blocks. Now we see that they can have tokens slashed (in state machine) for breaking consensus protocol. And we see that even the very authorities can be elected in the state machine.
@@ -388,19 +385,17 @@ The fork choice allows you, as a network participant, to decide which fork you c
 
 ![](img/reorgs-1.svg)
 
+![](img/reorgs-2.svg) <!-- .element: class="fragment" data-fragment-index="2" -->
 
-![](img/reorgs-2.svg)
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-Dropped transactions re-enter tx pool and re-appear in new blocks shortly
-<!-- .element: class="fragment" data-fragment-index="3" -->
+Dropped transactions re-enter tx pool and re-appear in new blocks shortly <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 Having seen more blocks appear, we now have a different opinion about what chain is best. This is known as a reorg. Re-orgs are nearly inevitable. There area ways to make sure they don't happen at all, but there are significant costs to preventing them entirely. Typically short reorgs are not a big problem, but deep reorgs are.
 
 You can experience this in a social way too.
+
 - Imagine that you are waiting for a colleague to submit a paper. You believe they have submitted it yesterday, but it turns out that they didn't submit it until today or won't submit it until tomorrow. Might be annoying, but not world shattering (usually)
-- Imagine that you believe the colleague submitted the paper months ago and the paper has been published. You have applied on a job having listed the publication 
+- Imagine that you believe the colleague submitted the paper months ago and the paper has been published. You have applied on a job having listed the publication
 
 ---v
 
