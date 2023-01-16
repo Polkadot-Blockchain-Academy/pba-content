@@ -22,6 +22,7 @@ This allows interested parties to have a **shared history**.
 ![Blockchain with payload shown](./img/hash-linked-1.svg)
 
 Notes:
+
 This is a simplified blockchain. Each block has a pointer to the parent block as well as a payload.
 
 ---v
@@ -31,6 +32,7 @@ This is a simplified blockchain. Each block has a pointer to the parent block as
 ![Blockchain with payload shown and parent hash calculated](./img/hash-linked-2.svg)
 
 Notes:
+
 The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
 
 ---v
@@ -40,6 +42,7 @@ The pointer is a cryptographic hash of the parent block. This ensures data integ
 ![Blockchain with payload and parent hash included](./img/hash-linked-3.svg)
 
 Notes:
+
 This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
 
 ---v
@@ -49,6 +52,7 @@ This ensures data integrity throughout the entire history of the chain. This is 
 ![Beginning of blockchain. Genesis block's "parent" is 0x0000](./img/hash-linked-genesis.svg)
 
 Notes:
+
 The first block in the chain is typically called a the "Genesis block" named after the first book in the judaeo-christian mythology - The beginning of our shared story. The parent hash is chosen to be some specific value. Typically we use the all-zero hash, although any fixed widely agreed-upon value would also do.
 
 ---
@@ -73,6 +77,7 @@ A state machine defines:
 ![Blockchain where payload is state machine transition](./img/blockchain-meet-state-machine.svg)
 
 Notes:
+
 The simplest way to join a blockchain to a state machine is to to make the blockchain's payload a state machine transition.
 By doing so, we effectively track the history of a state machine in a cryptographically guaranteed way.
 
@@ -101,6 +106,7 @@ A cryptographic anchor to the state
 ![State roots cryptographically tie the block to its state](./img/blockchain-with-state-roots.svg)
 
 Notes:
+
 Some data redundancy can be good to help avoid corruption etc. It is common for a block to contain a cryptographic fingerprint of
 the state. This is known as a state root. You think of it as a hash of the state. In practice, the state is typically built into a Merkle tree like structure and the tree root is included. Not all blockchains do this. Notably bitcoin doesn't. But most do. We'll go into details about exactly how this state root is calculated for Substrate in the next two modules, but for now we just consider the state root to be some kind of cryptographic fingerprint.
 
@@ -113,6 +119,7 @@ the state. This is known as a state root. You think of it as a hash of the state
 A state machine can have different possible histories. These are called forks.
 
 Notes:
+
 You can think of them like alternate realities. We need to decide which of the many possible forks is ultimately the "real" one. This is the core job of consensus and we will talk about it in two upcoming lessons in this module.
 
 ---v
@@ -122,18 +129,20 @@ You can think of them like alternate realities. We need to decide which of the m
 ![Not all transitions are valid. Forks containing them need not be considered](./img/forks-some-invalid.svg)
 
 Notes:
+
 Before we even get to hardcore consensus, we can rule out _some_ possibilities based on the state machine itself
 
 ---
 
 ## Realistic Blockchain Structure
 
-<img width="60%" src="./img/header-body.svg" />
+<img width="600px" src="./img/header-body.svg" />
 
 - Header: Summary of minimal important information about this block
 - Body: A batched list of state transitions
 
 Notes:
+
 The header is a minimal amount of information. In some ways it is like metadata.
 The body contains the real "payload". It is almost always a batch of state transitions.
 There are many name aliases for what is included in the body:
@@ -169,6 +178,7 @@ Always contains the parent hash.
 Headers are the _actual_ hash-linked list, not entire blocks.
 
 Notes:
+
 The parent hash links blocks together (cryptographically linked list). The other info is handy for other infrastructure and applications (more on that later).
 
 ---v
@@ -223,6 +233,7 @@ The parent hash links blocks together (cryptographically linked list). The other
 - Consensus Digest
 
 Notes:
+
 Extrinsics root is a crypto link to the body of the block. It is very similar to the state root.
 Consensus Digest is information necessary for the consensus algorithm to determine a block's validity. It varies widely with the consensus algorithm used and we will discuss it in two upcoming lectures.
 
@@ -272,6 +283,7 @@ May perform these jobs:
 </pba-col>
 </pba-cols>
 Notes:
+
 Many nodes only perform a subset of these tasks
 
 ---v
@@ -299,5 +311,6 @@ Constantly prioritizing and re-prioritizing transactions.
 Operates as a blockspace market.
 
 Notes:
+
 Sometimes known as mempool (thanks bitcoin 🙄)
 Authoring nodes determine the order of upcoming transactions. In some sense they can see the future.

@@ -328,6 +328,7 @@ blocks can be downloaded and executed much more quickly than the target block ti
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
+
 If you want deterministic finality, it basically means employing BFT agreement protocols that we talked about in the history lesson. This means we need a finite authority set with an honest majority. And that means we need incentives to keep them honest.
 
 ---v
@@ -363,6 +364,7 @@ It is often the case that blockchain systems give rewards in the authorship and 
 _How severe are each of these offences? Do they all warrant a slash? A full slash?_
 
 Notes:
+
 PoW has inherent punishment through wasted energy. BFT based system's don't.
 
 Instead, aspiring participants will typically lock up a security deposit which can be slashed in part or in whole.
