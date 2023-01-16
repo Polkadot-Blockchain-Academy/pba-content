@@ -545,3 +545,113 @@ verify {
 ## Results: Extrinsic Time vs. # of Registrars
 
 <img src="../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.svg" />
+
+---
+
+## Results: Extrinsic Time vs. # of Sub-Accounts
+
+<img src="../../../assets/img/6-FRAME/benchmark/identity-raw-sub.svg" />
+
+---
+
+## Results: Extrinsic Time vs. Additional Fields
+
+<img src="../../../assets/img/6-FRAME/benchmark/identity-raw-fields.svg" />
+
+---
+
+## Result: DB Operations vs. Sub Accounts
+
+<img src="../../../assets/img/6-FRAME/benchmark/identity-db-sub.svg" />
+
+---
+
+## Final Weight
+
+```rust
+// Storage: Identity SubsOf (r:1 w:1)
+// Storage: Identity IdentityOf (r:1 w:1)
+// Storage: System Account (r:1 w:1)
+// Storage: Identity SuperOf (r:0 w:100)
+/// The range of component `r` is `[1, 20]`.
+/// The range of component `s` is `[0, 100]`.
+/// The range of component `x` is `[0, 100]`.
+fn kill_identity(r: u32, s: u32, x: u32, ) -> Weight {
+	// Minimum execution time: 68_794 nanoseconds.
+	Weight::from_ref_time(52_114_486 as u64)
+		// Standard Error: 4_808
+		.saturating_add(Weight::from_ref_time(153_462 as u64).saturating_mul(r as u64))
+		// Standard Error: 939
+		.saturating_add(Weight::from_ref_time(1_084_612 as u64).saturating_mul(s as u64))
+		// Standard Error: 939
+		.saturating_add(Weight::from_ref_time(170_112 as u64).saturating_mul(x as u64))
+		.saturating_add(T::DbWeight::get().reads(3 as u64))
+		.saturating_add(T::DbWeight::get().writes(3 as u64))
+		.saturating_add(T::DbWeight::get().writes((1 as u64).saturating_mul(s as u64)))
+}
+```
+
+---
+
+## WeightInfo Generation
+
+---
+
+## WeightInfo Integration
+
+```rust
+#[pallet::weight(T::WeightInfo::kill_identity(
+	T::MaxRegistrars::get(), // R
+	T::MaxSubAccounts::get(), // S
+	T::MaxAdditionalFields::get(), // X
+))]
+pub fn kill_identity(
+	origin: OriginFor<T>,
+	target: AccountIdLookupOf<T>,
+) -> DispatchResultWithPostInfo {
+
+	// -- snip --
+
+	Ok(Some(T::WeightInfo::kill_identity(
+		id.judgements.len() as u32,      // R
+		sub_ids.len() as u32,            // S
+		id.info.additional.len() as u32, // X
+	))
+	.into())
+}
+```
+
+---
+
+## Initial Weight
+
+```rust
+#[pallet::weight(T::WeightInfo::kill_identity(
+	T::MaxRegistrars::get(), // R
+	T::MaxSubAccounts::get(), // S
+	T::MaxAdditionalFields::get(), // X
+))]
+```
+
+- Use the WeightInfo function as the weight definition for your function.
+- Note that we assume absolute worst case scenario to begin since we cannot know these specific values until we query storage.
+
+---
+
+## Final Weight (Refund)
+
+```rust
+Ok(Some(T::WeightInfo::kill_identity(
+	id.judgements.len() as u32,      // R
+	sub_ids.len() as u32,            // S
+	id.info.additional.len() as u32, // X
+))
+.into())
+```
+
+- Then we return the actual weight used at the end!
+- We use the same WeightInfo formula, but using the values that we queried from storage as part of executing the extrinsic.
+- This only allows you to **decrease** the final weight. Nothing will happen if you return a bigger weight than the initial weight.
+
+
+---
