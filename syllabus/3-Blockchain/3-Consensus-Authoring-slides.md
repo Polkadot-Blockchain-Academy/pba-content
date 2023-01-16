@@ -276,20 +276,65 @@ Cons:
 
 ---v
 
-## Sassafrass
+## Sassafras
 
-New and upcoming
+<img alt="Sassafras tree" width = "60%" src="./img/Sassafras-albidum.jpg" />
 
 Single blind VRF-based leader election
 
 🙈TBH, IDK how it works internally.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+But Jeff does!
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
 - Has most of the Pros of PoW (except for the external resource based valuation hint)
 - Has all the Pros of PoA
 
----
+---v
+
+## Sassafras Analogy
+
+<pba-cols>
+<pba-col>
+<img src="./img/jeff.jpeg" />
+</pba-col>
+<pba-col>
+<blockquote>Sassafras is kinda cards against humanity</blockquote>
+</pba-col>
+</pba-cols>
+---v
+
+## Sassafras Analogy
+
+<img width="33%" style="float: left; padding: 1px;" src="./img/caa_black.png" />
+<img width="33%" style="float: left; padding: 1px;" src="./img/caa_white_1.png" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img width="33%" style="float: left; padding: 1px;" src="./img/caa_white_2.png" />
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+---v
+
+## Sassafras Analogy
+
+<pba-cols>
+<pba-col>
+<img src="./img/jeff.jpeg" />
+</pba-col>
+<pba-col>
+<blockquote style="font-size: 80%">Ring VRF outputs are "cards".  You anonymously "play" the best aka smallest cards in your hand.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<blockquote style="font-size: 80%">Those cards are sorted, not by funniness since they're just numbers, but by the number.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+<blockquote style="font-size: 80%">The order in which they wind up is the block production order.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="4" -->
+<blockquote style="font-size: 80%">You claim the ones that're yours by doing a non-ring VRF with identical outputs.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="5" -->
+</pba-col>
+</pba-cols>
+---v
 
 # Proof of Stake
 
