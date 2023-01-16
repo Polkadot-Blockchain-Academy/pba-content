@@ -27,7 +27,7 @@ title: Accounting Models & User Abstractions in Blockchains
 
 Notes:
 
-    TODO: Help format images to look better
+TODO: Help format images to look better
 
 ---
 
@@ -45,16 +45,17 @@ Notes:
 
 Notes:
 
-    TODO: Help format image to look better on slide
+TODO: Help format image to look better on slide
 
 ---
 
 ## Let us think of two different paradigms:
 
 - A.) We craft a model in which the system acts as a global and trustless verifier
-  Notes:
 
-      TODO: Insert picture here which shows some money being sent from person A to person B and the System box is verifying whether the money I am attempting to spend is mine and the result that I am specifying to happen is valid
+Notes:
+
+TODO: Insert picture here which shows some money being sent from person A to person B and the System box is verifying whether the money I am attempting to spend is mine and the result that I am specifying to happen is valid
 
 ---
 
@@ -121,9 +122,10 @@ TODO: Show some image of something transitioning
 ### What were those input output thingies again?
 
 <img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.svg"/>
+
 Notes:
 
-    TODO: Show picture of inputs and outputs in a transaction similar to UTXO frameless explain how new outputs are derived from previously specified outputs from the input
+TODO: Show picture of inputs and outputs in a transaction similar to UTXO frameless explain how new outputs are derived from previously specified outputs from the input
 
 ---
 
