@@ -282,7 +282,7 @@ We actually don't want authority sets to organize because it creates risk.
 
 ## Mining Pools
 
-<img  src="../../assets/img/3-Blockchain/3.4-mining-pools.png"/>
+<img rounded src="../../assets/img/3-Blockchain/3.4-mining-pools.png"/>
 
 Source: [Buy Bitcoin Worldwide](https://www.buybitcoinworldwide.com/pages/mining/pools/img/pool-graph.png)
 
@@ -748,11 +748,20 @@ example of luna or other system collapse
 
 ## Dependency
 
-<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/"/>
+<pba-cols>
+<pba-col>
+
+<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/"/>
+
+</pba-col>
+<pba-col>
 
 - [Confusion](https://secureteam.co.uk/news/what-is-a-dependency-confusion-attack/)
 - [Hijacking](https://blog.sonatype.com/bladabindi-njrat-rat-in-jdb.js-npm-malware)
 - [Hardware side-channel attacks](https://hackaday.com/2019/09/13/side-channel-attack-shows-vulnerabilities-of-cryptocurrency-wallets/)
+
+</pba-col>
+</pba-cols>
 
 Notes:
 
