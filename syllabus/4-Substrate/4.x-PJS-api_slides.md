@@ -2,8 +2,6 @@
 title: Polkadot JS API Crash Course
 description: Polkadot JS API Crash Course for Web3 engineers
 duration: 1 hour
-instructors: ["Kian Paimani"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Polkadot JS API Crash Course
