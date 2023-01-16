@@ -7,7 +7,7 @@
     "s": "yarn start",
     "help-rmd": "reveal-md --help",
     "build": "rm -rf build && reveal-md ./ --static build",
-    "build-github-pages": "rm -rf build && reveal-md ./ --static build --absolute-url https://polkadot-blockchain-academy.on.fleek.co/ --glob 'syllabus/[1,2]*/**/*[Ss]lides.md'",
+    "build-github-pages": "rm -rf build && reveal-md ./ --static build --absolute-url https://polkadot-blockchain-academy.on.fleek.co/ --glob 'syllabus/[1,3]*/**/*[Ss]lides.md'",
     "serve": "http-server ./build -p 1949 -s & echo server started http://localhost:1949",
     "pdf": "DEBUG=reveal-md reveal-md ./syllabus/0-Meta_For_Instructional_Staff/1-TEMPLATE_lecture_slides.md --print slides.pdf",
     "fmt": "prettier --config .prettierrc.js --write '**/*.md'",

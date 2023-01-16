@@ -1,546 +1,418 @@
 ---
-title: Consensus Systems
-description: Consensus systems for Web3 Engineers.
-instructors: ["Joshy Orndorff"]
-teaching-assistants: ["Sacha Lansky", "Dan Shields", "Emre Surmeli"]
+title: Consensus Authoring
+description: Authoring restrictions related to consensus
+duration: 30min
 ---
 
-# Consensus Systems
-
----
-
-## Consensus is
-
-A decision making process that strives to achieve acceptance of a decision by all participants.
-
-Notes:
-
-If we have external factors like trust relationships or Social hierarchy it can be quite easy.
-
-Trust example: If everyone trusts each other, then any one person can propose an outcome, and all the others will trust that it is in the community's best interest.
-
-Social Hierarchy example: If a community has an executive (President, King, CEO), the executive can propose her preference and everyone will accept it based on the external mechanism that keeps her as the executive.
-
-But these conditions are not interesting, and are often not realistic. It gets interesting when we don't make these simplifying assumption.
-
----
-
-## Adversarial Conditions
-
-- The participants want to agree on _something_
-- They don't trust each other
-- Some could be faulty, or make mistakes
-- Some could be straight up malicious
-
----
-
-## Desired Properties
-
-All honest participants...
-
-- Termination - Eventually reach some decision
-- Agreement - Reach the same decision
-- Integrity - Reach at most one decision, which was proposed by at least one participant.
+# Consensus: Authoring
 
 ---v
 
-## Also Validity
+### Consensus is...
 
-If all participants unanimously propose the same decision , all honest participants reach that decision.
+...a decision making process that strives to achieve acceptance of a decision by all participants.
+
+---v
+
+## Blockchain Consensus is...
+
+...a decentralized consensus system to reach agreement over a shared history of a state machine.
+
+---v
+
+## Blockspace
+
+![Blockspace machine](./img/blockspace-machine.svg)
+
+Blockchain consensus systems produce a resource called blockspace.
+
+Strong incentive alignments and strong guarantees make for high quality blockspace.
 
 Notes:
-
-Another desireable property that is sometimes too obvious to say.
+As we discussed blockspace represents the right to contribute to the shared history. This is a valuable resource that is offered to users as a product. We will discuss the selling of this resource in a later lecture on allocation and fees. The consensus system used plays a large role in determining the quality of the blockspace.
 
 ---
 
-## Example 1: Where to go for dinner
+## Forks Review
 
-<widget-columns>
-<widget-column>
+![](./img/forks-some-invalid.svg)
 
-<img style="width: 20em" src="../../assets/img/3-Blockchain/3.2-south-park-consensus.png"/>
+There are going to be forks. We need to decide which one is the real one.
 
-</widget-column>
-
-<widget-column>
-
-- Termination - Stan, Kyle, and Kenny will each eventually decide where to eat.
-- Agreement - Stan, Kyle, and Kenny will each decide to eat at the same place.
-- Integrity - Stan, Kyle, and Kenny will eat at either Whistlin' Willies or Casa Bonita.
-
-</widget-column>
-</widget-columns>
+We can rule some forks out to reduce the problem space. Then we are left to decide which is canonical.
 
 Notes:
+Forks represent alternate courses that history could take. They arise every time there is a difference of opinion.
 
-Stan, Kyle, Kenny, and Cartman are trying to decide where to have dinner.
-Stan, Kyle, and Kenny want to have something yummy and spend time together.
-Cartman is secretly pursuing his own goals and doesn't care whether dinner is yummy.
-In fact he secretly hopes they won't decide at all so he can go home and eat KFC with his mom.
+You can think of them at a social level. Court cases, arguments, wars. Ideally we can resolve them peacefully
 
-Stan and Kyle both propose Whistlin' Willie's for dinner.
-Kenny and Cartman propose Casa Bonita.
+You can think of them at a very low physics-y level. Every time an electron encounters a potential barrier it either reflects of tunnels. When consensus is high-quality, the result is as objective as the outcome of a physical process.
+---
 
-In the end Kenny may not agree that Whistlin' Willie's is the best option for dinner, but he will agree that it is the legitimate group decision.
+## Five Aspects of Consensus
 
-Image source: https://southparkstudios.mtvnimages.com/images/shows/south-park/clip-thumbnails/season-14/1402/south-park-s14e02c03-ill-show-them-f-obscene-16x9.jpg
+- State machine validity
+- Arbitrary / Political validity
+- Authorship throttling
+- Fork choice heuristic
+- Finality
+
+Notes:
+The first two aspects are relatively simple and I'll discuss them briefly right now. The third and fourth are the main topic of this lecture. The fifth is covered in detail two lectures from now in great detail.
+
+The first three aspects are about ruling possibilities out. The fourth and fifth are about deciding between any remaining possibilities.
 
 ---v
 
-## Example 2: Which side of the road to drive on
+## State Machine Validity
 
-In the last module we discussed the coordination game and its two Nash equilibria. We discussed that if there is no communication allowed among participants, a Shelling point may help.
+Some forks can be ruled out simply because they contain invalid state transitions.
 
-Luckily in real life, communication is possible so we can run a consensus algorithm instead of rely on a Shelling point.
-
-- Termination -
-- Agreement -
-- Integrity -
+![Invalid state transition](./img/invalid-state-transition.svg)
 
 Notes:
+Example spending more money than you have. Noting your present location such that you would have traveled faster than speed of light since last record. Calling a smart contract with invalid parameters.
 
-Imagine all the drivers are allowed to participate in the consensus. Most are honest because they don't want to crash, but
-some may be Byzantine.
-Someone please volunteer to describe what one of these means in this example.
+---v
 
-- Termination - All honest drivers will eventually decide which lane to drive in
-- Agreement - All honest drivers will agree on the same lane to drive in
-- Integrity - The decision will be one of the participants suggestions. Doesn't mean much in this case because there are only two choices. It's basically guaranteed that they will both be suggested by at least _someone_
+## Arbitrary / Political Validity
+
+Similar to state machine validity.
+<br>
+Examples:
+
+<pba-flex center style="margin-top:0">
+
+- Blocks that are too big
+- Blocks that have "hack" transactions
+- Empty blocks
+- Block with Even state roots
+
+</pba-flex>
+
+![Invalid state transition](./img/politically-invalid-state-transition.svg)
+
+Notes:
+This concept is similar to the previous slide. In some sense this is even the same. This allows us to rule out some forks just for not having properties that we like. Or for having properties that we dislike.
+
+Not everyone will agree on these properties ad that leads to long-term network splits.
 
 ---
 
-## Byzantine Generals Problem
+## Authorship Throttling
 
-<widget-columns>
-<widget-column>
+Real-world blockchains impose additional restrictions on who can author blocks. Why?
 
-<img style="width: 26em" src="../../assets/img/3-Blockchain/3.2-Byzantine-Generals.png"/>
-
-</widget-column>
-
-<widget-column>
-
-- Divisions plan to attack
-- Must make coordinated attack to succeed
-- Some generals might be traitors and behave maliciously
-
-</widget-column>
-</widget-columns>
+![Unthrottled authoring leads to fork chaos](./img/fork-chaos.svg)
 
 Notes:
-
-Several divisions of the Byzantine army are camped around an enemy city. They plan to attack the city, but have not yet decided when to attack.
-If the attack is coordinated, they will probably be successful, but if it is uncoordinated, they will probably be defeated.
-What do our three properties mean in this scenario?
-
-- Termination -
-- Agreement -
-- Integrity -
+These blockchains are supposed to be permissionless right? At least many of them are. Some are even very hardcore about that goal. So why would we want to restrict the authoring.
+Answer: So the nodes are not overwhelmed. Unthrottled authoring leads to fork chaos. If anyone authored at any moment there would be blocks raining down left and right. It would be impossible to check them all. It would be DOS central. So we need some organization / order to the process.
 
 ---v
 
-## Mistakes vs Malice
+## Leader Election
 
-**Crash Tolerance** - A system can keep operating normally when some actors crash or go offline.
+We need to elect a small set (or ideally a single) entity who are allowed to author next.
 
-**Byzantine Fault Tolerance** - A system can keep operating normally when some actors are intentionally malicious. Byzantine actors may:
-
-- Crash - Or pretend to have crashed - Byzantine faults are a superset of crash faults
-- Lie - Sending false information to peers
-- Equivocate - Send inconsistent information to different peers
+In pre-blockchain consensus this was called the "leader", and still often is.
 
 Notes:
-
-These examples and many others are _instances_ of the Byzantine Generals Problem
+By electing a few leaders, we are able to throttle the authoring.
 
 ---v
 
-## Mistake or Malice?
+## Liveness
 
-<widget-columns>
-<widget-column>
-
-<img style="width: 600px" src="https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg"/>
-
-</widget-column>
-
-<widget-column>
-
-- Consider an Airplane flight computer.
-- The pilot _must_ know the airspeed at all times.
-- Airspeed sensors can fail.
-- Sensors can be buggy.
-- Are these malicious?
-
-</widget-column>
-</widget-columns>
+The ability of the system to keep authoring new blocks
 
 Notes:
-
-Consider an Airplane flight computer. It is critical that the pilot (human or automated) knows the aircraft's airspeed at all times.
-Airspeed sensors can fail due to extreme temperatures, icing, solar radiation, and other reasons.
-For this reason, there are redundant sensors, and they run a consensus protocol.
-
-Imagine that one of the sensors has an overflow _bug_ such that when the airspeed exceeds a certain threshold, maybe `u8::max_value()`, it actually reports a much lower speed.
-
-Are these crash faults or byzantine?
-
-In a blockchain system, bugs in the code may cause nodes whose operators are intending to be honest, to deviate from the protocol anyway. This is why client diversity is important.
+Before we go on, I want to introduce the concept of liveness. It is a desireable property that consensus systems want to have. Systems that have better liveness properties offer higher quality blockspace. Chains without liveness guarantees become stalled.
 
 ---
 
-## Synchrony
+## Proof of Work
 
-A system is one of:
+Satoshi's Big invention.
 
-- **Synchronous** - When a message is sent, it is received immediately by all recipients.
-- **Asynchronous** - When a message is sent it may be received after some delay, or not at all. The sender doe not know whether it is received. Messages may be received in different orders by different parties.
-- **Partially Synchronous** - When a message is sent, it may be received after some delay up to a maximum delay, $T$. It may not be dropped entirely. Messages may be received in different orders by different parties.
-
-Roughly analogous to real-time (async) vs. turn-based (sync) games.
+Solve a Pre-image search - earn the right to author.
 
 ---v
 
-## Sync or Async?
+## Proof of Work: Pros
 
-<widget-text center>
-
-Classify each of these:
-
-- Telephone call
-- Email
-- Text message
-- Jitsi video call
-- Element chat
+- Permissionless (or so we thought)
+- Requires an external scarce resource: Energy
+- Blind: Nobody knows the next author until the moment they publish their block
+- Expensive to author competing forks - Clear incentive
 
 Notes:
+On the surface one big strength of PoW is that anyone can spin up a node and join at any time without anyone's permission. This is clearly how it was described in the whitepaper. In practice, many systems now have such a high hashrate that your home computer is useless. It is now permissioned by who can afford and acquire the right hardware.
 
-Answers
+The reliance on an external resource is good in some sense because it is an objective measure of the market's valuation of the consensus system. This helps valuate the blockspace.
 
-- Telephone call - sync
-- Email - async
-- Text message - sync
-- Jitsi video call - sync
-- Element chat - IDK actually
+The blindness is a good property because it makes it impossible to perform a targeted attack (DOS or physical) on the next leader to stall the network.
+
+Some attacks rely on the leader authoring two competing forks and gossiping them to different parts of the network. With PoW, it costs energy for every block you author. This makes it expensive to perform such attacks. This provides an economic incentive for authors to only author blocks on the "correct" fork.
+
+---v
+
+## Proof of Work: Cons
+
+- Energy Intensive
+- Irregular block time
+- Not so permissionless
+
+Notes:
+Energy consumption is more often considered a negative property. Sometimes called proof of _waste_. I won't go that far, but in a world where climate change is a reality, it is certainly not ideal to be spending so much energy if we can get away with far less.
+
+Worth noting that some PoW schemes (eg Monero's) strive to minimize the energy impact by choosing algorithms that are "asic resistant". While these are decidedly better than Bitcoin's, they do not fundamentally solve the problem. Just alleviate it somewhat in practice.
+
+Secondly, the block time is only probabilistically known. When waiting for block to be authored, there are sometimes spurts of blocks followed by long stretches without any.
+
+Although it seems permissionless on its face, in practice, to be a bitcoin miner you need to have expensive specialized hardware.
+
+---v
+
+## Why Author at All?
+
+- Altruism - You feel good about making the world a better place
+- Your Transitions - Because you want to get your own transitions in
+- Explicit incentives - Eg block reward
+
+
+Notes:
+If it costs energy to author blocks, why would anyone want to author to begin with?
+
+Mining only when you want to get your transaction in seems like a good idea to me. People who don't want to self author, can pay other a fee to do it for them. This is the purpose of transaction fees. Most chains have transaction fees specified in the transactions themselves which go to the author
+
+Some networks also add an explicit incentives such as a 50BTC reward per block.
 
 ---
 
-## Determinism
+## Proof of Authority
 
-A system is one of:
+Traditional class of solutions.
 
-- **Deterministic** - The same inputs give the same outputs every single time.
-- **Probabilistic** - The same inputs may not give the same outputs. Requires a source of entropy. eg coin flipping.
+Divide time into slots.
 
----
+Certain identities are allowed to author in each slot.
 
-## FLP Impossibility
+Prove your identity with a signature.
 
-<img style="padding: 0 200px 0 0" src="../../assets/img/3-Blockchain/3.2-FLP-impossible.png"/>
+---v
+
+## Proof of Authority: Pros
+
+- Low energy consumption
+- Stable block time
 
 Notes:
 
-Once it was shown that deterministic consensus is impossible in an async network, the field split into two major parts. Either you:
+Stable block time is a property of high-quality block space. It allows applications that consume the blockspace to have expectations about throughput. In PoW you will occasionally have long periods without a block which can negatively affect applications.
 
-- Assume the network is (at least partially) synchronous
-- Introduce non-determinism
+---v
 
-One interesting thing about Nakamoto pow consensus is that it does _both_.
+## Proof of Authority: Cons
 
-- Nondeterminism because you don't know who will solve the pow first
-- Partial synchrony because it only works if the time to download and execute the block is much less than the time to solve the PoW
+- Permissioned
+- No external resource to aid valuation
+- Incentives for honesty are not always clear
+
+Notes:
+Does anything bad happen if they misbehave? Not inherently. We will need an incentive for that.
 
 ---
 
-## Blockchain Consensus
+# Some PoA Schemes
 
-So what are we even trying to decide? A few things:
+Reminder: PoA is a family of leader election schemes
 
-<widget-text center>
+---v
 
-- **Author selection** - Who gets to author the next block
-- **Finality** - Which blocks are final
+## Aura
+
+The simple one.
+
+Everyone takes turns in order.
+
+```rust
+authority(slot) = authorities[slot % authorities.len()];
+```
+
+Notes:
+Pros:
+
+- Simple
+- Single leader elected in each slot
+
+Cons:
+
+- Not blind - welcome targeted attacks
+
+---v
+
+## Babe
+
+**B**lind **A**ssignment for **B**lockchain **E**xtension
+
+- In each slot, compute a VRF output.
+- If it is below a threshold, you are eligible to author.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- If eligible, author a block showing VRF proof
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- If NOT eligible, do nothing
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+Notes:
+Pros:
+
+- No fixed order helps alleviate DOS attacks
+
+Cons:
+
+- Some slots have no authors - There is a workaround for this
+- Other slots have multiple authors which leads to forks. There is no workaround for this
+
+---v
+
+## Sassafras
+
+<img alt="Sassafras tree" width = "60%" src="./img/Sassafras-albidum.jpg" />
+
+Single blind VRF-based leader election
+
+🙈TBH, IDK how it works internally.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+But Jeff does!
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
-Finality is basically like safety. Finality can be proved to entities that are not involved in consensus.
+- Has most of the Pros of PoW (except for the external resource based valuation hint)
+- Has all the Pros of PoA
 
-These two decisions can be entirely orthogonal to one another, or wrapped up together. I'll focus on finality first
+---v
+
+## Sassafras Analogy
+
+<pba-cols>
+<pba-col>
+<img src="./img/jeff.jpeg" />
+</pba-col>
+<pba-col>
+<blockquote>Sassafras is kinda cards against humanity</blockquote>
+</pba-col>
+</pba-cols>
+---v
+
+## Sassafras Analogy
+
+<img width="33%" style="float: left; padding: 1px;" src="./img/caa_black.png" />
+<img width="33%" style="float: left; padding: 1px;" src="./img/caa_white_1.png" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img width="33%" style="float: left; padding: 1px;" src="./img/caa_white_2.png" />
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+---v
+
+## Sassafras Analogy
+
+<pba-cols>
+<pba-col>
+<img src="./img/jeff.jpeg" />
+</pba-col>
+<pba-col>
+<blockquote style="font-size: 80%">Ring VRF outputs are "cards".  You anonymously "play" the best aka smallest cards in your hand.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<blockquote style="font-size: 80%">Those cards are sorted, not by funniness since they're just numbers, but by the number.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+<blockquote style="font-size: 80%">The order in which they wind up is the block production order.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="4" -->
+<blockquote style="font-size: 80%">You claim the ones that're yours by doing a non-ring VRF with identical outputs.</blockquote>
+<!-- .element: class="fragment" data-fragment-index="5" -->
+</pba-col>
+</pba-cols>
+---v
+
+# Proof of Stake
+
+It's just PoA in disguise 🤯
+
+Uses an economic staking game to select the authorities.
+
+Restores the permissionlessness to at least PoW levels.
+
+Restores clear economic incentives
+
+Notes:
+There is an economic game called staking as part of the state machine that allows selecting the authorities who will participate in the PoA scheme. Actually there isn't just _one_ way to do it, there are many. Kian will talk a lot more about this and about the way it is done in Polkadot later. I'll just give the flavor now.
+
+The basic idea is that anyone can lock up some tokens on chain (in the state machine). The participants with the most tokens staked are elected as the authorities. There is a state transition that allows reporting authority misbehavior (eg authoring competing blocks at the same height), and the authority loses their tokens. There are often block rewards too like PoW.
+
+---v
+
+## 💒 Consensus 🪢 State Machine
+
+- Loose coupling between consensus and state machine is common
+- Eg Block rewards, slashing, authority election
+- In PoW there is a difficulty adjustment algorithm
+
+In Substrate there is a concept of a **Runtime API** - Consensus can read information from state machine.
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Notes:
+So far I've presented consensus as orthogonal to the state machine. This is mostly true. But in practice it is extremely common for there to be some loose coupling. We already saw an example when we talked about block rewards. The consensus authors are rewarded with tokens (in the state machine) for authoring blocks. Now we see that they can have tokens slashed (in state machine) for breaking consensus protocol. And we see that even the very authorities can be elected in the state machine.
 
 ---
 
-## Long-running Systems
+# Fork Choice Heuristics
 
-Blockchains are intended to keep processing and finalizing transactions forever. This is more like deciding where to go to dinner every night over and over.
+Each node's preference for which fork is best
 
-<widget-text center>
+- Longest chain rule
+- Most accumulated work
+- Most blocks authored by Alice
+- Most total transactions (or most gas)
 
-We frame the desireable properties differently. At a very high level they are:
-
-- **Liveness** - Something good will eventually happen
-- **Safety** - Nothing bad will happen
-
----v
-
-## Example: Finalizing blocks
-
-<widget-text center>
-
-- Liveness - Another block will eventually be finalized.
-- Safety - No two conflicting blocks will ever be finalized by honest participants.
+![](img/reorgs-1.svg)
 
 Notes:
 
-Liveness here obviously depends on liveness in the authoring. No more blocks will be finalized if no more blocks are authored.
+The fork choice allows you, as a network participant, to decide which fork you consider best for now. It is not binding. Your opinion can change as you see more blocks appear on the network
 
 ---v
 
-## Liveness vs Termination
+## Reorganizations
 
-Earlier I described Termination as desireable, now I'm saying Liveness is desireable.
+![](img/reorgs-1.svg)
 
-Are these at odds with each other?
+
+![](img/reorgs-2.svg)
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Dropped transactions re-enter tx pool and re-appear in new blocks shortly
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
+Having seen more blocks appear, we now have a different opinion about what chain is best. This is known as a reorg. Re-orgs are nearly inevitable. There area ways to make sure they don't happen at all, but there are significant costs to preventing them entirely. Typically short reorgs are not a big problem, but deep reorgs are.
 
-Termination guarantees that, for a given decision, each honest participant will eventually decide something. This concept is relevant when there is a single decision to be made. In the blockchain context, it guarantees that we will eventually know which block is final at height n.
-
-Liveness guarantees that a system that is intended to continue making progress, will indeed eventually make progress. In the context of the blockchain, liveness means that once we've decided what block is final at height n, we will eventually go on to decide what block is final at height n + 1.
-
----
-
-## Choosing Authorities
-
-We saw that some consensus engines have high communication overhead, $O(n^2)$. Other systems have lower overhead, but there is always _some_ practical bound on the size of the authority set when deterministic finality is used.
-
-Therefore we need a fair way to choose who gets to participate. Typically there is an onchain economic game to select the participants.
-
----
-
-## Keeping Authorities Honest
-
-All the blockchain consensus engines we looked at assume some threshold of honest participants. So how do we ensure they are honest? We use an on-chain economic game to do so.
-
-<widget-text center>
-
-- Why would anyone even want to participate?
-- How do we define misbehavior?
+You can experience this in a social way too.
+- Imagine that you are waiting for a colleague to submit a paper. You believe they have submitted it yesterday, but it turns out that they didn't submit it until today or won't submit it until tomorrow. Might be annoying, but not world shattering (usually)
+- Imagine that you believe the colleague submitted the paper months ago and the paper has been published. You have applied on a job having listed the publication 
 
 ---v
 
-## Game Theory!
+## Double Spends
 
-Abstractly: You participate when the utility of doing so exceeds the cost.
-
-<widget-text center>
-
-Incentive designers may potentially:
-
-- Reward honest behavior
-- Punish (aka slash) dishonest behavior
+![](./img/double-spend-1.svg)
 
 Notes:
-
-Many systems use both of these, but doing so is not strictly necessary. Even without slashes, the opportunity cost of staking and the missed rewards from authoring invalid blocks may be sufficient.
-
-Algorand tried to get away without block rewards either, but ran into a problem. Any guess? -- Nobody wanted to participate.
+The name comes from bitcoin, but the attack generalizes. It exploits the existence of forks. Attacker has to get two conflicting transactions into two forks. And convince a counterparty to believe one chain long enough to take an off-chain action before they see the reorg.
 
 ---v
 
-### Potential Rewards
+## Double Spends
 
-<widget-text center>
-
-- Explicit: Block reward paid by inflation
-- Explicit: Transaction fees
-- Implicit: Your dApp stays live and you get utility from the dApp
-- Implicit: Street cred 😎
-
----v
-
-## Potential Punishment
-
-PoW has inherent punishment through wasted energy. Other system's don't.
-
-Instead, aspiring participants will typically lock up a security deposit which can be slashed in part or in whole.
-
----v
-
-## What is potentially punishable?
-
-<widget-text center>
-
-- Authoring when you aren't supposed to
-- Failing to author when you are supposed to
-- Casting finality votes for conflicting candidate blocks
-- Casting a finality vote for a block (or chain) that includes an invalid state transition.
-
-_How severe are each of these offences? Do they all warrant a slash? A full slash?_
-
----v
-
-### Concrete Punishment Example
-
-Let's say a slash is 100 units, and the reporter gets 10%. I plan to attack the network. If my attack is successful, I expect to gain roughly 200 units worth of utility.
-
-I ask another authority to cooperate with me: "I'll pay you 20 units to _not_ rat me out for my attack".
-
-Question: How would you respond?
-
-Notes:
-
-"I don't believe you can carry out the attack because _someone else_ will report you and take the 10 units, leaving me with 0."
-
----
-
-## Case Study: Nakamoto Consensus
-
-- Aka Proof of Work
-- Anyone can participate anonymously
-- Can start and stop participating at will without notice
-- Support is signaled by "mining" (performing a hash preimage search) on blocks
-
-Notes:
-
-In Nakamoto consensus, the mining contributes to finality as well as selects the next author. At this point the author selection is orthogonal. We're focusing on safety and finality here.
-
----v
-
-### Finality in Nakamoto Consensus
-
-- Longest chain rule\* - Longest chain is "best"... for now
-- Someone could always start mining a chain and, with low but non-zero probability, end up with it longer.
-- There could _already_ be a longer chain that you just haven't heard of.
-
-The finality is only probabilistic. Nakamoto consensus in only safe in a synchronous network.
-
-Notes:
-
-This is to say that Nakamoto consensus is NOT safe in on the real asynchronous internet. In practice, as long as
-blocks can be downloaded and executed much more quickly that the target block time, it is usually good enough.
-
-- Longest could also mean most accumulated work
-
----v
-
-## Punishment and Reward in Nakamoto Consensus
-
-- Implicit punishment: Mining a block costs energy. If that block is not in the best chain you wasted the energy.
-- No reward in the consensus layer
-- (Usually) an explicit reward in the economic game: Block authors are paid with inflation and transaction fees.
-
----
-
-## Case Study: Tendermint
-
-- Assume partial synchrony - time is divided into slots
-- One block is up for Byzantine agreement in each slot.
-- If the block has enough votes by the end of the round, it is finalized. Otherwise, it is rejected via timeout.
-
-Notes:
-
-Tendermint assumes partially (aka weakly) synchronous network - That is to say that messages may not arrive immediately, but will arrive within a finite time bound.
-Practically speaking, time is divided into "slots" of equal length, and (at most) one round of Byzantine agreement happens in each slot.
-
----v
-
-## Finality in Tendermint
-
-- Deterministic finality - Once a block is finalized, we know it is finalized\*.
-- Next round doesn't start until the previous one ends.
-- Forkless - Forks are disallowed because blocks can only be authored on finalized parents.
-
-Notes:
-
-Because it is based on Byzantine agreement, we know that a finalized block will never be revierted _as long as our assumptions about honest participant threshold are met_. As we discussed, game theory can help ensure the honesty assumptions are met.
-
-Tendermint is often touted as "instant finality". It is instant in the sense that finality is tied to authorship. In practice this means that authorship, which is inherently O(n), is throttled down to stay in sync with finality which is O(n^2).
-
----v
-
-## Punishment and Reward in Tendermint
-
-Tendermint is based on PBFT - There are no incentives in the consensus layer.
-
-<widget-text center>
-
-In the economic game:
-
-- (Usually) an explicit reward just like in PoW - inflation, fees
-- Requires a security deposit which incurs opportunity cost, and may be slashable
-
----v
-
-### Hybrid Consensus
-
-Separating the block production from finality.
-
-This allows the block production to stay live and regular even if finality is lagging. It also allows lower overhead in the finality layer.
-
-This approach is used in Substrate.
-
----
-
-## Case Study: Grandpa
-
-<widget-text center>
-
-- Deterministic finality _only_
-- Requires an external block authoring scheme with its own liveness proof.
-- Two rounds of voting - the details of the voting will be discussed next week
-
----v
-
-## Vote on Chains, not Blocks
-
-Finalizing a block in a BFT system with $n$ participants is in $O(n^2)$, In Tendermint this communication has to happen at each and every block which puts a bound on the size of the validator set.
-
-<widget-text center>
-
-Now that finality is separated, we treat each vote as a vote not only for one block, but also for each ancestor block. This significantly reduces the number of total messages sent.
-
-- Allows the chain to stay live even when many validators are offline
-- Allows for a challenge period to delay finality if needed
-
----
-
-## Authoring Schemes(Finite Participant)
-
-Regardless of whether finality is separated from block authoring or not, we need a way to decide who can author the next block.
-
-First, a question: Why not just let anyone author a block any time they want?
-
-Notes:
-
-Answer: Because it would overwhelm the network. It takes time to download and execute blocks. Restricting which nodes can author and when they can author, throttles block production to a manageable rate.
-
----
-
-## Case Study: Aura
-
-The simplest possible idea: The participants are given a total ordering, and then they take turns, one-author-per-slot in order forever.
-
----
-
-## Case Study: Babe / Ouroborous
-
-The two are quite similar. Participants reveal a VRF output once per slot. If your output is below a pre-determined threshold, you are eligible to author in this slot.
-
-Question: Why is this better than Aura?
-
-Notes:
-
-Answer: Because in Aura you know who the next leader will be well in advance. This allows an adversary to perform a targeted attack. By using randomness in this way, you don't know who will eligible until the slot is upon us. This is similar to PoW.
-
----
-
-## Summary
-
-<widget-text center>
-
-- Networks can be {Synchronous, Asynchronous}
-- Consensus systems can be {Deterministic, Probabilistic}
-- Consensus systems can be {Open participation, Finite participation}
-- There is always an assumption that at least {1/2, 2/3} participants are honest
-- In decentralized systems, we use Economics and Game Theory to incentivize honest execution of the consensus protocol
+![](./img/double-spend-2.svg)
