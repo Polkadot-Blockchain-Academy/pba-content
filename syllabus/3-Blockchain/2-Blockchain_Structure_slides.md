@@ -64,7 +64,7 @@ A state machine defines:
 
 </pba-flex>
 
-<img style="width: 900px;" src="./img/state-machine-general.png"/>
+<img style="width: 900px;" src="./img/state-machine-general.svg"/>
 
 ---v
 

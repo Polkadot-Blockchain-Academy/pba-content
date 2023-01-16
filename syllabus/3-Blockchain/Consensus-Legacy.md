@@ -1,5 +1,5 @@
 ---
-title: Consensus Systems
+title: Consensus Systems LEGACY (to delete?)
 description: Consensus systems for Web3 Engineers.
 ---
 
