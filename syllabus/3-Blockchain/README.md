@@ -47,4 +47,3 @@ The activity and lecture can bleed together. I imagine launching a chain and get
 
 - 🗣️ Resource Allocation lecture
 - ⌨️ Launch a blockchain activity
-

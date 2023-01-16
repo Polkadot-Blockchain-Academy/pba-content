@@ -403,17 +403,22 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 
 1. Wait for a block (or author one if it is your turn)
 2. Prevote
-  - If the block is valid, Prevote for it.
-  - If the block is invalid, Prevote `Nil`
-  <!-- .element: class="fragment" data-fragment-index="2" -->
+
+- If the block is valid, Prevote for it.
+- If the block is invalid, Prevote `Nil`
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
 4. Precommit
-  - Wait for 2/3 prevotes then Precommit
-  - If you don't get 2/3 prevotes, Precommit `Nil`
-  <!-- .element: class="fragment" data-fragment-index="3" -->
+
+- Wait for 2/3 prevotes then Precommit
+- If you don't get 2/3 prevotes, Precommit `Nil`
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
 5. Complete
-  - Wait for 2/3 Precommits them finalize
-  - If you don't get it, throw the block away
-  <!-- .element: class="fragment" data-fragment-index="4" -->
+
+- Wait for 2/3 Precommits them finalize
+- If you don't get it, throw the block away
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465
 
@@ -461,6 +466,7 @@ Now that finality is separated, we treat each vote as a vote not only for one bl
 TODO crib Andre's grandpa slides
 
 ---
+
 ## Summary
 
 <widget-text center>

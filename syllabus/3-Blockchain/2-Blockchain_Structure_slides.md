@@ -127,6 +127,7 @@ Before we even get to hardcore consensus, we can rule out _some_ possibilities b
 ---
 
 ## Realistic Blockchain Structure
+
 <img width="60%" src="./img/header-body.svg" />
 
 - Header: Summary of minimal important information about this block
