@@ -142,7 +142,7 @@ But it still assumes benevolent participants and some trusted leader.
 
 Notes:
 Even in web2 we start to see the idea of redundancy to prevent accidents from natural disasters, sabotage, hardware failure etc.
-But we do not yet see disintermediation. In web 2, the masses because beholden to the service providers who were free to extract value and manipulate the users.
+But we do not yet see disintermediation. In web 2, the masses become beholden to the service providers who were free to extract value and manipulate the users.
 
 In fact redundant systems were widely studied even before web 2. Consider a flight computer that has sensors for things like air speed and altitude. If one sensor fails we want the plane to keep flying.
 
@@ -253,10 +253,41 @@ Telling effective stories is not easy. The difficulty lies ... in convincing eve
 
 We can formalize this notion of shared story with state machine model.
 
-<img src="./img/state-machine-general.png"/>
+<img width="80%" src="./img/state-machine-general.svg"/>
 
 Notes:
-Most systems that we care about can be modeled as state machines. A state machine is not a real machine that you can touch. It is a model is comprised of a set of states and a set of rules about how to transition between the states.
+Most systems that we care about can be modeled as state machines. A state machine is not a real machine that you can touch. It is a model comprised of a set of states and a set of rules about how to transition between the states.
+
+---v
+
+## Labelled Transition Systems
+
+Sometimes you can map the entire state space as an LTS.
+
+Other times it is too big.
+
+<img src="./img/state-machine-arbitrary-history.png"/>
+
+Notes:
+Consider if we tried to map all possible states of a social media app or a digital currency. Sometimes an LTS drawing like this is useful, other times it would be too large or even infinite. Even still, sometimes drawing part of it can help you think about what the states and transitions might be.
+
+---v
+
+## Example: Light Switch
+
+Simple Switch: 2 States, 1 Transition
+
+<b>Labelled Transition System</b>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+<img src="./img/light-switch-lts.svg"/>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+<b>History</b>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<img src="./img/light-switch-history.svg" />
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---v
 
@@ -265,26 +296,10 @@ Most systems that we care about can be modeled as state machines. A state machin
 Each state is a set of bank notes. Where a bank note has an amount and an owner.
 A transition involves a user consuming (spending) some bank notes and creating new ones.
 
-<img src="./img/state-machine-cash.png"/>
+<img width="80%" src="./img/state-machine-cash.svg"/>
 
 Notes:
-Not all conceivable transitions are valid. Imagine a user consuming a bank note worth 5 coins. and creating two new ones each worth 3 coins.
-
----v
-
-## Tracing State Machine History
-
-Simple Switch - Has two states
-
-<img src="./img/state-machine-switch-history.png"/>
-
----v
-
-## Tracing State Machine History
-
-Arbitrarily Complex Machine - We can track an entire history
-
-<img src="./img/state-machine-arbitrary-history.png"/>
+Not all conceivable transitions are valid. Imagine a user consuming a bank note worth 5 coins, and creating two new ones each worth 3 coins.
 
 ---v
 
@@ -293,7 +308,7 @@ Arbitrarily Complex Machine - We can track an entire history
 Each state is a set of posts and their associated comments and emoji reaction counts.
 A transition involves, making a new post, or reacting to someone elses, or commenting
 
-<img src="./img/state-machine-social.png"/>
+<img src="./img/state-machine-social.svg"/>
 
 Notes:
 There is not a single model here. Some state machines will allow deleting or editing posts, while others will not. Some will allow disliking posts while others only allow liking.
