@@ -236,3 +236,312 @@ TODO
 ## Benchmarks Evaluated Over Components
 
 <img style="height: 600px;" src="../../../assets/img/6-FRAME/benchmark/components.svg" />
+
+---
+
+## Example Benchmark
+
+The Identity Pallet
+
+---
+
+## Identity Pallet
+
+<div class="flex-container">
+<div class="left-small">
+
+<img src="../../../assets/img/6-FRAME/benchmark/identity-icon.svg" />
+
+</div>
+<div class="right">
+
+- Identity can have variable amount of information
+	- Name
+	- Email
+	- Twitter
+	- etc…
+- Identity can be judged by a variable amount of registrars.
+- Identity can have a two-way link to “sub-identities”
+	- Other accounts that inherit the identity status of the “super-identity”
+
+</div>
+</div>
+
+---
+
+## Extrinsic: Kill Identity
+
+```rust
+pub fn kill_identity(
+	origin: OriginFor<T>,
+	target: AccountIdLookupOf<T>,
+) -> DispatchResultWithPostInfo {
+	T::ForceOrigin::ensure_origin(origin)?;
+
+	// Figure out who we're meant to be clearing.
+	let target = T::Lookup::lookup(target)?;
+
+	// Grab their deposit (and check that they have one).
+	let (subs_deposit, sub_ids) = <SubsOf<T>>::take(&target);
+	let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
+	let deposit = id.total_deposit() + subs_deposit;
+	for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
+
+	// Slash their deposit from them.
+	T::Slashed::on_unbalanced(T::Currency::slash_reserved(&target, deposit).0);
+	Self::deposit_event(Event::IdentityKilled { who: target, deposit });
+	Ok(())
+}
+```
+
+---
+
+## Handling Configurations
+
+- `kill_identity` will only execute if the `ForceOrigin` is calling.
+
+```rust
+T::ForceOrigin::ensure_origin(origin)?;
+```
+
+- However, this is configurable by the pallet developer.
+- Our benchmark needs to always work independent of the configuration.
+- We added a special function behind a feature flag:
+
+```rust
+/// Returns an outer origin capable of passing `try_origin` check.
+///
+/// ** Should be used for benchmarking only!!! **
+#[cfg(feature = "runtime-benchmarks")]
+fn successful_origin() -> OuterOrigin;
+```
+
+---
+
+## External Logic / Hooks
+
+```rust
+// Figure out who we're meant to be clearing.
+let target = T::Lookup::lookup(target)?;
+```
+
+- In general, hooks like these are configurable in the runtime.
+- Each blockchain will have their own logic, and thus their own weight.
+- We run benchmarks against the real runtime, so we get the real results.
+- **IMPORTANT!** You need to be careful that the limitations of these hooks are well understood by the pallet developer and users of your pallet, otherwise, your benchmark will not be accurate.
+
+---
+
+## Deterministic Storage Reads / Writes
+
+```rust
+// Grab their deposit (and check that they have one).
+let (subs_deposit, sub_ids) = <SubsOf<T>>::take(&target);
+let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
+```
+
+- 2 storage reads and writes.
+- The size of these storage items will depends on:
+	- Number of Registrars
+	- Number of Additional Fields
+
+---
+
+## Variable Storage Reads / Writes
+
+```rust
+for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
+```
+
+- S storage writes, where S is the number of sub-accounts.
+- S is unknown for the initial weight, so we must assume an upper bound.
+
+---
+
+## More Configurable Logic
+
+```rust
+// Slash their deposit from them.
+T::Slashed::on_unbalanced(T::Currency::slash_reserved(&target, deposit).0);
+```
+
+- A balance operation, generally takes 1 read and 1 write
+- But is also configurable depending on where you store balances!
+- What happens with slashed funds is configurable too!
+
+---
+
+## Whitelisted Storage
+
+```rust
+Self::deposit_event(Event::IdentityKilled { who: target, deposit });
+```
+
+- We whitelist changes to the Events storage item, so generally this is “free” beyond computation and in-memory DB weight.
+
+---
+
+## Preparing to Write Your Benchmark
+
+- 3 Components
+	- `R` - number of registrars
+	- `S` - number of sub-accounts
+	- `X` - number of additional fields
+
+- Need to:
+	- Set up account with funds.
+	- Register an identity with additional fields.
+	- Set up worst case scenario for registrars and sub-accounts.
+	- Take into account `ForceOrigin` to make the call.
+
+---
+
+## Kill Identity Benchmark
+
+```rust
+kill_identity {
+	let r in 1 .. T::MaxRegistrars::get() => add_registrars::<T>(r)?;
+	let s in 0 .. T::MaxSubAccounts::get();
+	let x in 0 .. T::MaxAdditionalFields::get();
+
+	let target: T::AccountId = account("target", 0, SEED);
+	let target_origin: <T as frame_system::Config>::RuntimeOrigin = RawOrigin::Signed(target.clone()).into();
+	let target_lookup = T::Lookup::unlookup(target.clone());
+	let _ = T::Currency::make_free_balance_be(&target, BalanceOf::<T>::max_value());
+
+	let info = create_identity_info::<T>(x);
+	Identity::<T>::set_identity(target_origin.clone(), Box::new(info.clone()))?;
+	let _ = add_sub_accounts::<T>(&target, s)?;
+
+	// User requests judgement from all the registrars, and they approve
+	for i in 0..r {
+		let registrar: T::AccountId = account("registrar", i, SEED);
+		let balance_to_use =  T::Currency::minimum_balance() * 10u32.into();
+		let _ = T::Currency::make_free_balance_be(&registrar, balance_to_use);
+
+		Identity::<T>::request_judgement(target_origin.clone(), i, 10u32.into())?;
+		Identity::<T>::provide_judgement( RawOrigin::Signed(registrar).into(), i, target_lookup.clone(), Judgement::Reasonable, T::Hashing::hash_of(&info),
+		)?;
+	}
+	ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
+	let origin = T::ForceOrigin::successful_origin();
+}: _<T::RuntimeOrigin>(origin, target_lookup)
+verify {
+	ensure!(!IdentityOf::<T>::contains_key(&target), "Identity not removed");
+}
+```
+
+---
+
+## Benchmarking Components
+
+```rust
+let r in 1 .. T::MaxRegistrars::get() => add_registrars::<T>(r)?;
+let s in 0 .. T::MaxSubAccounts::get();
+let x in 0 .. T::MaxAdditionalFields::get();
+```
+
+- Our components.
+	- R = Number of Registrars
+	- S = Number of Sub-Accounts
+	- X = Number of Additional Fields on the Identity.
+- Note all of these have configurable, known at compile time maxima.
+	- Part of the pallet configuration trait.
+	- Runtime logic should enforce these limits.
+
+---
+
+## Set Up Logic
+
+```rust
+let target: T::AccountId = account("target", 0, SEED);
+let target_origin: <T as frame_system::Config>::RuntimeOrigin = RawOrigin::Signed(target.clone()).into();
+let target_lookup = T::Lookup::unlookup(target.clone());
+let _ = T::Currency::make_free_balance_be(&target, BalanceOf::<T>::max_value());
+```
+
+- Set up an account with the appropriate funds.
+- Note this is just like writing runtime tests!
+
+---
+
+## Reusable Setup Functions
+
+```rust
+let info = create_identity_info::<T>(x);
+Identity::<T>::set_identity(target_origin.clone(), Box::new(info.clone()))?;
+let _ = add_sub_accounts::<T>(&target, s)?;
+```
+
+- Using some custom functions defined in the benchmarking file:
+- Give that account an Identity with x additional fields.
+- Give that Identity `s` sub-accounts.
+
+---
+
+## Set Up Worst Case Scenario
+
+```rust
+// User requests judgement from all the registrars, and they approve
+for i in 0..r {
+	let registrar: T::AccountId = account("registrar", i, SEED);
+	let balance_to_use =  T::Currency::minimum_balance() * 10u32.into();
+	let _ = T::Currency::make_free_balance_be(&registrar, balance_to_use);
+
+	Identity::<T>::request_judgement(target_origin.clone(), i, 10u32.into())?;
+	Identity::<T>::provide_judgement( RawOrigin::Signed(registrar).into(), i, target_lookup.clone(), Judgement::Reasonable, T::Hashing::hash_of(&info),
+	)?;
+}
+```
+
+- Add r registrars.
+- Have all of them give a judgement to this identity.
+
+---
+
+## Execute and Verify the Benchmark:
+
+```rust
+kill_identity {
+	// -- snip --
+
+	ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
+	let origin = T::ForceOrigin::successful_origin();
+}: _<T::RuntimeOrigin>(origin, target_lookup)
+verify {
+	ensure!(!IdentityOf::<T>::contains_key(&target), "Identity not removed");
+}
+```
+
+- First ensure statement verifies the “before” state is as we expect.
+- We need to use our custom origin.
+- Verify block ensures our “final” state is as we expect.
+
+---
+
+## Executing the Benchmark
+
+```bash
+./target/production/substrate benchmark pallet \
+	--chain=dev \				# Configurable Chain Spec
+	--steps=50 \				# Number of steps across component ranges
+	--repeat=20 \				# Number of times we repeat a benchmark
+	--pallet=pallet_identity \	# Select the pallet
+	--extrinsic=* \				# Select the extrinsic(s)
+	--execution=wasm \			# Always run with Wasm
+	--wasm-execution=compiled \ # Always used `wasm-time`
+	--heap-pages=4096 \			# Not really needed, adjusts memory
+	--output=./frame/identity/src/weights.rs \	# Output results into a Rust file
+	--header=./HEADER-APACHE2 \	# Custom header file to include with template
+	--template=./.maintain/frame-weight-template.hbs # Handlebar template
+```
+
+---
+
+# Looking at Raw Benchmarking Data
+
+---
+
+## Results: Extrinsic Time vs. # of Registrars
+
+<img src="../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.svg" />
