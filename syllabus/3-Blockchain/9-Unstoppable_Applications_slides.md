@@ -16,7 +16,7 @@ Instead we strive to highlight the problem space we face and some classes of sol
 
 ## Motivation
 
-So far, we have discussed state machines and consensus... in \_isolation.
+So far, we have discussed state machines and consensus... in _isolation_.
 
 Does the _contexts in which they operate within_ matter?
 
@@ -44,24 +44,23 @@ Notes:
 
 ---
 
-### Unstoppable Apps Properties\*
+### Unstoppable Apps Properties
 
 <pba-flex center>
 
 - Incorruptible
 - Infallible
-- Trustless
-- Devoid of Censorship
-- Accessible
-- [Antifragile](#next-steps)
+- Anitfragile
+- Trustless\*
+- Devoid of Censorship\*
+- Accessible\*
 - ...perhaps more?
 
 </pba-flex>
 
-_... an N-lemma_
-
 Notes:
 
+note \* indicates the Web3 context for defining properties, not generally.
 Not all of these can apply, nor is is possible all simultaneously apply.
 We need to craft the system properties based on what we must achieve.
 In reality we strive for Absolute Unstoppability, but likely cannot grantee it in _every possible scenario_.
@@ -75,17 +74,61 @@ We contrast the following in order above:
 
 ---
 
-## An N-lemma
+## Anitfragile
 
-Hypothesis: a _truly_ Unstoppable App cannot exist.
+<pba-cols>
+<pba-col>
 
-We must make trade-offs out of all N properties that a _truly_ Unstoppable App would possess.
+<div style="font-size:smaller">
+
+> Some things benefit from shocks; they thrive and grow when exposed to volatility, randomness, disorder, and stressors and love adventure, risk, and uncertainty.
+> Yet, in spite of the ubiquity of the phenomenon, there is no word for the exact opposite of fragile.
+> Let us call it antifragile.
+> Antifragility is beyond resilience or robustness.
+> The resilient resists shocks and stays the same; the antifragile gets better.
+>
+> -- [Antifragile](<https://en.wikipedia.org/wiki/Antifragile_(book)>) --
+
+</div>
+
+</pba-col>
+<pba-col>
+<img rounded style="width: 500px" src="../../assets/img/3-Blockchain/hydra-Gustave_Moreau.jpg"/>
+</pba-col>
+</pba-cols>
 
 Notes:
 
-Many [trilemmas](#next-steps) of note.
+- Read Antifragile quote, recommend book recommended, see the links throughout slides for more after class.
+- Hydra fable & lore: https://en.wikipedia.org/wiki/Lernaean_Hydra - even though can be almost completely destroyed, it is _resilient_ and recovers.
+  Absolutely Unstoppable doesn't mean it cannot be damaged or even paused temporarily, it means it cannot cease to exist and will eventually recover, and ideally come back stronger in doing so.
+
+---
+
+## An N-lemma
+
+Hypothesis: a _absolutely_ Unstoppable App cannot exist.
+
+We must make trade-offs out of all N properties<br>that a _absolutely_ Unstoppable App would possess.
+
+<pba-cols>
+<pba-col>
+<img rounded style="width: 600px" src="../../assets/img/3-Blockchain/trilemma.svg"/>
+</pba-col>
+<pba-col>
+<img rounded style="width: 600px" src="../../assets/img/3-Blockchain/scalability-trilemma.svg"/>
+</pba-col>
+</pba-cols>
+
+Notes:
+
 As with crypto, we can have astronomically good odds... but they are not perfect.
-We want the most robust system possible, given the _environment_ the consensus system lives in.s
+We want the most robust system possible, given the _environment and context_ the consensus system lives in.
+
+Many relevant [trilemmas](#next-steps) of note, like:
+
+- [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
+- [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
 
 ---
 
@@ -111,9 +154,18 @@ but peer-to-peer guarantees must be upheld<br>without requiring trust in a servi
 
 ## Web3 Tech Stack
 
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
+<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
 
-TODO: update this graphic, rather stale (Joe mentioned in Cambridge)
+Notes:
+
+Note, this is a bit dated with advancements in the field, but a good approx. representation.
+
+Also an observation and clarification: dApps canonically refer to smart contract applications. These exist _within the context_ of consensus systems that themselves inherit properties of unstoppability from.
+The academy (to date) is almost exclusively focused on _consensus system engineering_ - we reason about blockchains themselves, and "dApp"s use these as platforms to operate in.
+Smart contracts module _may_ include detains on unstoppable dapps design considerations.
+
+<!-- TODO: update this graphic, rather stale (Joe mentioned in Cambridge) -->
+<!-- TODO: clarify based on smart contract content - does it inform on system design considerations for unstoppable dapps? -->
 
 ---
 
@@ -744,16 +796,10 @@ Governance/"oops clause" can help fix things, but also risk system capture.
 ## Next Steps
 
 1. [The Oracle Problem](https://blog.chain.link/what-is-the-blockchain-oracle-problem/)
-1. 📔[Antifragile: Things That Gain From Disorder](<https://en.wikipedia.org/wiki/Antifragile_(book)>)
 1. Black Swan Theory (Events)
 
 - [Wiki](https://en.wikipedia.org/wiki/Black_swan_theory)
 - 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
-
-1. Trilemmas:
-
-- [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
-- [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
 
 1. [Token Engineering](https://tokenengineeringcommunity.github.io/website/) {especially the Academy & cadCAD Edu}
 
