@@ -225,11 +225,68 @@ pub trait WeightInfo {
 
 # Deep Dive
 
+So let’s walk through the steps of a benchmark!
+
+Reference: `frame/benchmarking/src/lib.rs`
+
+```rust
+-> fn run_benchmark(...)
+```
+
 ---
 
 ## The Benchmarking Process
 
-TODO
+1. Whitelist known DB keys
+- For each component...
+2. Select component to benchmark
+3. Generate range of values to test (steps)
+- For each repeat...
+4. Setup benchmarking state
+5. Commit state to the DB, clearing cache
+6. Get system time (start)
+7. Execute extrinsic / benchmark function
+8. Get system time (end)
+9. Count DB reads and writes
+10. Record Data
+
+---
+
+## Whitelisted DB Keys
+
+```rust
+/// The current block number being processed. Set by `execute_block`.
+#[pallet::storage]
+#[pallet::whitelist_storage]
+#[pallet::getter(fn block_number)]
+pub(super) type Number<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
+```
+
+- Some keys are accessed every block:
+	- Block Number
+	- Events
+	- Total Issuance
+	- etc…
+- We don’t want to count these reads and writes in our benchmarking results.
+- Applied to all benchmarks being run.
+- This includes a “whitelisted account” provided by FRAME.
+
+---
+
+## Benchmarking Components
+
+- Imagine a function with 3 components
+	- let x in 1..2;
+	- let y in 0..5;
+	- let z in 0..10;
+- We set number of steps to 3.
+- Vary one component at a time, select high value for the others.
+
+|   | Δx | Δy | Δy | Δz | Δz | max |
+|---|----|----|----|----|----|-----|
+| x | 1  | 2  | 2  | 2  | 2  | 2   |
+| y | 5  | 0  | 2  | 5  | 5  | 5   |
+| z | 10 | 10 | 10 | 0  | 5  | 10  |
 
 ---
 
@@ -243,17 +300,11 @@ TODO
 
 The Identity Pallet
 
+<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-icon.svg" />
+
 ---
 
 ## Identity Pallet
-
-<div class="flex-container">
-<div class="left-small">
-
-<img src="../../../assets/img/6-FRAME/benchmark/identity-icon.svg" />
-
-</div>
-<div class="right">
 
 - Identity can have variable amount of information
 	- Name
@@ -263,9 +314,6 @@ The Identity Pallet
 - Identity can be judged by a variable amount of registrars.
 - Identity can have a two-way link to “sub-identities”
 	- Other accounts that inherit the identity status of the “super-identity”
-
-</div>
-</div>
 
 ---
 
@@ -595,6 +643,28 @@ fn kill_identity(r: u32, s: u32, x: u32, ) -> Weight {
 
 ## WeightInfo Generation
 
+```rust
+/// Weight functions needed for pallet_identity.
+pub trait WeightInfo {
+	fn add_registrar(r: u32, ) -> Weight;
+	fn set_identity(r: u32, x: u32, ) -> Weight;
+	fn set_subs_new(s: u32, ) -> Weight;
+	fn set_subs_old(p: u32, ) -> Weight;
+	fn clear_identity(r: u32, s: u32, x: u32, ) -> Weight;
+	fn request_judgement(r: u32, x: u32, ) -> Weight;
+	fn cancel_request(r: u32, x: u32, ) -> Weight;
+	fn set_fee(r: u32, ) -> Weight;
+	fn set_account_id(r: u32, ) -> Weight;
+	fn set_fields(r: u32, ) -> Weight;
+	fn provide_judgement(r: u32, x: u32, ) -> Weight;
+	fn kill_identity(r: u32, s: u32, x: u32, ) -> Weight;
+	fn add_sub(s: u32, ) -> Weight;
+	fn rename_sub(s: u32, ) -> Weight;
+	fn remove_sub(s: u32, ) -> Weight;
+	fn quit_sub(s: u32, ) -> Weight;
+}
+```
+
 ---
 
 ## WeightInfo Integration
@@ -641,6 +711,10 @@ pub fn kill_identity(
 ## Final Weight (Refund)
 
 ```rust
+pub fn kill_identity(...) -> DispatchResultWithPostInfo { ... }
+```
+
+```rust
 Ok(Some(T::WeightInfo::kill_identity(
 	id.judgements.len() as u32,      // R
 	sub_ids.len() as u32,            // S
@@ -653,5 +727,12 @@ Ok(Some(T::WeightInfo::kill_identity(
 - We use the same WeightInfo formula, but using the values that we queried from storage as part of executing the extrinsic.
 - This only allows you to **decrease** the final weight. Nothing will happen if you return a bigger weight than the initial weight.
 
+---
+
+# Questions?
+
+In another presentation we will cover some of the things we learned while benchmarking, and best practices.
 
 ---
+
+# Benchmarking Exercise
