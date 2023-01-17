@@ -467,3 +467,21 @@ The name comes from bitcoin, but the attack generalizes. It exploits the existen
 ## Double Spends
 
 <img style="width: 800px" src="./img/double-spend-2.svg"/>
+
+---
+
+## Five Aspects of Consensus
+
+<pba-flex center>
+
+- State machine validity
+- Arbitrary / Political validity
+- Authorship throttling
+- Fork choice heuristic
+- Finality
+
+</pba-flex>
+
+Notes:
+
+We just discussed the first four aspects. Finality will be discussed in an upcoming lesson
