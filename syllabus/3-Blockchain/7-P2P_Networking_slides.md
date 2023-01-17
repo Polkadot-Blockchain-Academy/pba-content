@@ -94,10 +94,12 @@ Talk about advertising vs just blind sending and how that can be inefficient
 
 <pba-flex center>
 
-- 1.) Connect to a peer
-- 2.) Ask peer for a list of their known nodes(Addresses to fill DHT)
-- 3.) Connect to random subset of peers from the list
-- 4.) Repeat steps 2 and 3
+1. Connect to a peer
+1. Ask peer for a list of their known nodes(Addresses to fill DHT)
+1. Connect to random subset of peers from the list
+1. Repeat steps 2 and 3
+
+</pba-flex>
 
 ---
 
@@ -119,7 +121,7 @@ be able to be distributed across the network
 
 Notes:
 
-1.) This is horrible and means all nodes are totally screwed
+1. This is horrible and means all nodes are totally screwed
 
 ---
 
@@ -137,8 +139,8 @@ Show picture of something scary and devious here
 
 Notes:
 
-1.) Distorts view of the healthy normal honest state of the network
-2.) Transaction confirmations can be fictions
+1. Distorts view of the healthy normal honest state of the network
+1. Transaction confirmations can be fictions
 
 ---v
 
@@ -146,9 +148,11 @@ Notes:
 
 <pba-flex center>
 
-- 1.) Flood a target node with a bunch of malicious peer addresses
-- 2.) The targeted node then stores these malicious peers and utilizes them when re-syncing on next bootup
-- 3.) DOS targeted node to take it offline to force a resync with these new malicious peers
+1. Flood a target node with a bunch of malicious peer addresses
+1. The targeted node then stores these malicious peers and utilizes them when re-syncing on next bootup
+1. DOS targeted node to take it offline to force a resync with these new malicious peers
+
+</pba-flex>
 
 ---v
 
@@ -161,13 +165,15 @@ Notes:
 - Deterministic node selection. (Bootnodes)
 - Restricting new nodes (Probably not what we want...)
 
+</pba-flex>
+
 Notes:
 
-1.) Be wary of new connections with other nodes
-<br>
-2.) Don't just take the most recent request for connections to avoid the flooding
-<br>
-3.) Bootnodes with higher credibility and trust (Can be a bottleneck) - Rotate bootnodes they are subject as well to attacks and should be rotated
+1. Be wary of new connections with other nodes
+   <br>
+1. Don't just take the most recent request for connections to avoid the flooding
+   <br>
+1. Bootnodes with higher credibility and trust (Can be a bottleneck) - Rotate bootnodes they are subject as well to attacks and should be rotated
 
 ---
 
@@ -177,6 +183,8 @@ Notes:
 
 - Toolbox for developing systems built on top of the p2p networking
 - Simply put helpful in establishing encrypted and authenticated channels between two peers
+
+</pba-flex>
 
 Notes:
 
@@ -195,6 +203,8 @@ What is libp2p
 - `/dns/example.com/udp/5015/quic`
 - `/ip6/fe80::0202:b3ff:fe1e:8329/tcp/10350/ws`
 
+</pba-flex>
+
 Notes:
 
 Show example here, it is important for looking at chain-spec
@@ -209,11 +219,11 @@ Show example here, it is important for looking at chain-spec
 
 Notes:
 
-1.) ProtocolIds to differentiate
-<br>
-2.) Health checks to check the liveness of a node is it even online?
-<br>
-3.) Peers exchange information about each other such as public keys and known addresses
+1. ProtocolIds to differentiate
+   <br>
+1. Health checks to check the liveness of a node is it even online?
+   <br>
+1. Peers exchange information about each other such as public keys and known addresses
 
 ---
 
@@ -258,14 +268,13 @@ struct Peerinfo<PeerId, Others> {
 // PeerStore
 ```
 
-
 Notes:
 
-1.) You can encapsulate a p2p address into a new multi address to provide enough info to dial a peer over TCP!
-<br>
-2.) Set of multiaddresses a particular peer is listening on
-<br>
-3.) Table of peer keys and addresses and associated metadata like an address book. Universal multiaddress book.
+1. You can encapsulate a p2p address into a new multi address to provide enough info to dial a peer over TCP!
+   <br>
+1. Set of multiaddresses a particular peer is listening on
+   <br>
+1. Table of peer keys and addresses and associated metadata like an address book. Universal multiaddress book.
 
 ---
 
@@ -277,11 +286,13 @@ Notes:
 - UDP
 - QUIC and more...
 
+</pba-flex>
+
 Notes:
 
-2.) Generally for p2p connections we need ordering though so UDP alone doesn't work for everything
-<br>
-3.) Ordering built on udp
+2. Generally for p2p connections we need ordering though so UDP alone doesn't work for everything
+   <br>
+3. Ordering built on udp
 
 ---
 
@@ -307,11 +318,12 @@ Just because a particular type of attack is theoretically possible/feasible does
 - Every node has an public private key pair or `PeerId`.
 - Authorization is NOT default.
 
+</pba-flex>
+
 Notes:
 
-1.) Allows to verify who we are talking too.
-<br>
-2.) Some systems may not require any authorization from a peer you can think of this as a tuning on permission...
+1. Allows to verify who we are talking too.
+1. Some systems may not require any authorization from a peer you can think of this as a tuning on permission...
 
 ---v
 
@@ -323,13 +335,13 @@ Notes:
 - Duplicate messages
 - Connections with high reputation nodes,<br>_Any issues with this?_
 
+</pba-flex>
+
 Notes:
 
-1.) Identify bad actors we use reputation in Substrate
-<br>
-2.) People may be malicious and spam us with duplicate data
-<br>
-3.) Try to maintain connections with the nodes that have the highest reputation (With some randomness to allow new nodes to join)
+1. Identify bad actors we use reputation in Substrate
+1. People may be malicious and spam us with duplicate data
+1. Try to maintain connections with the nodes that have the highest reputation (With some randomness to allow new nodes to join)
 
 ---
 
@@ -342,11 +354,14 @@ Notes:
 - Targeting of specific keys(Block 42)
 - Do this by generating Ids close to the target key based on the DHT distance metric
 
+</pba-flex>
+
 Notes:
 
 2.) A DHT query may need to be routed through several peers before the query is fulfilled.(Those peers can be malicious and attempt to lie)
-<br>
+
 3.) If a malicious actor wants to target a specific key they can improve their chances of being in the lookup path. By spinning up nodes next to the nodes providing a specific key based on the DHT distance metric
+
 ---v
 
 ## Sybil Attacks
@@ -356,9 +371,12 @@ Notes:
 - Sybil attacks are hard to defend against and<br>precautions can be taken at the application level to mitigate<br>
   (Proof of work perhaps?)
 
+</pba-flex>
+
 Notes:
 
-1.) So even though we might be receiving malicious blocks we can identify that by verifying that block is valid and edit reputation accordingly
+1. So even though we might be receiving malicious blocks we can identify that by verifying that block is valid and edit reputation accordingly
+
 ---v
 
 ## S/Kademlia paper in libp2p
@@ -369,6 +387,8 @@ Notes:
   (Paths which don't share any routing peers)<br>
   _in parallel_
 
+</pba-flex>
+
 ---
 
 ## Additional Resources
@@ -377,6 +397,8 @@ Notes:
 
 - https://curriculum.pl-launchpad.io/curriculum/libp2p/
 - https://docs.libp2p.io/concepts/
+
+</pba-flex>
 
 ---
 
