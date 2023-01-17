@@ -25,7 +25,7 @@ Notes:
 
 ## Session Overview
 
-<widget-text center>
+<pba-flex center>
 
 1. Introductory Game
 1. Logistics (times, dates, location)
@@ -41,7 +41,7 @@ Notes:
 
 ## Typical Day at the Academy
 
-<widget-text center style="font-size: smaller;">
+<pba-flex center style="font-size: smaller;">
 
 - 8:00 - 9:00: Breakfast (Catered)
 - 9:00 - 12:00: Morning Session
@@ -63,7 +63,7 @@ Notes:
 <widget-columns>
 <widget-column>
 
-<widget-text style="font-size: 3px;">
+<pba-flex style="font-size: 3px;">
 
 1. Cryptography - 2 Days
 2. Econ & Game Theory - 2 Days
@@ -124,7 +124,7 @@ Notes:
 
 ## Commitment Time
 
-<widget-text center>
+<pba-flex center>
 
 1. Review exact dates for each module
 1. Make some **Formal Commitments**
@@ -168,7 +168,7 @@ This endeavor will only succeed with everyone doing their part. If you cannot co
 
 ### Module 1 - Cryptography
 
-<widget-text center>
+<pba-flex center>
 
 - Instructor: (Hopefully) Isaac DeFrain
 - TAs: Dan, Giulia, Hector
@@ -186,7 +186,7 @@ We are still struggling to get an offer to Isaac. I've done everything I can to 
 
 ### Module 2 - Economics
 
-<widget-text center>
+<pba-flex center>
 
 - Instructors: Samuel
 - TAs: Jonas, Florian, Alfonso
@@ -204,7 +204,7 @@ Understood that, unfortunately, Jonas cannot be present this time. He has done g
 
 ### Module 3 - Blockchain
 
-<widget-text center>
+<pba-flex center>
 
 - Instructor: Joshy Orndorff
 - TAs: Dan, Andrew, Isaac (Hopefully)
@@ -222,7 +222,7 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 
 ### Module 4 - Substrate
 
-<widget-text center>
+<pba-flex center>
 
 - Instructor: Kian
 - TAs: Andrew, Shawn, Dan, Joshy
@@ -236,7 +236,7 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 
 ### Module 5 - FRAME
 
-<widget-text center>
+<pba-flex center>
 
 - Instructor: Shawn
 - TAs: Kian, Dan, Hector, Alex T
@@ -250,7 +250,7 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 
 ### Module 6 - Polkadot
 
-<widget-text center>
+<pba-flex center>
 
 - Instructors: Rob, Andronik
 - TAs: Kian, Shawn
@@ -268,7 +268,7 @@ Understood that Rob cannot be present for February 1st.
 
 ### Module 7 - Smart Contracts
 
-<widget-text center>
+<pba-flex center>
 
 - Instructors: Michi, Alex T
 - TAs: Ricardo, Hector
@@ -282,7 +282,7 @@ Understood that Rob cannot be present for February 1st.
 
 ### Module 8 - XCM
 
-<widget-text center>
+<pba-flex center>
 
 - Instructors: Kieth, Gorka
 - TAs: Hector, Andrew
@@ -310,7 +310,7 @@ Gorka is from the Moonbeam team and has already committed.
 
 ## Pedagogy
 
-<widget-text center>
+<pba-flex center>
 
 _The approach to teaching, is the theory and practice of learning,_
 
@@ -432,7 +432,7 @@ Errors -> Concepts that students commonly misunderstand are well suited for this
 
 ### When you must lecture for > 30min
 
-<widget-text center>
+<pba-flex center>
 
 ### Break it up
 
@@ -457,7 +457,7 @@ Exercise: Students will do it if you tell them to. I've gotten theaters of 50+ a
 
 **Coding exercises, module by module**
 
-<widget-text center>
+<pba-flex center>
 
 ...in-class activities<br>
 ...after-class assignments<br>
@@ -504,7 +504,7 @@ Flip through the repository instead of showing this slide
 
 ---
 
-<widget-text center style="font-size: 43px">
+<pba-flex center style="font-size: 43px">
 
 https://github.com/Polkadot-Blockchain-Academy/pba-content <!-- TODO Remove this link check disable once repo is public --> <!-- markdown-link-check-disable-line -->
 
@@ -559,7 +559,7 @@ We don't explicitly require working with those interested, but it's an option we
 
 Maybe...?
 
-<widget-text center>
+<pba-flex center>
 
 - Review content
 - Try exercises & activities
