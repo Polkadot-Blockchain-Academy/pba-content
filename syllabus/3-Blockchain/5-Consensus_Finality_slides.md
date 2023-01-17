@@ -1,6 +1,6 @@
 ---
-title: Consensus Systems LEGACY (to delete?)
-description: Consensus systems for Web3 Engineers.
+title: Consensus Finality
+description: Finality providing methods and mechanisms for blockchains
 duration: 45min
 ---
 
