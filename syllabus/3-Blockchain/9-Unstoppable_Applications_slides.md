@@ -340,7 +340,18 @@ Notes:
 
 ## 🦸 Dependency in Polkadot
 
+<pba-cols>
+<pba-col>
+
 <img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/dependency-polkadot-js.png"/>
+
+</pba-col>
+<pba-col>
+
+> _Foundational_ to Polkadot ecosystem!
+
+</pba-col>
+</pba-cols>
 
 Notes:
 
