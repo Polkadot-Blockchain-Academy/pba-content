@@ -466,15 +466,12 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 
 ### Hybrid Consensus
 
-![Abstract to grandpa paper](/img/grandpa-abstract.png)
+![Abstract to grandpa paper](./img/grandpa-abstract.png)
 
-Separating the block production from finality.
-
-Allows the block production to stay live even if finality is lagging.
-
-Allows lower overhead in the finality layer.
-
-This approach is used in Substrate.
+- Separates block production from finality.
+- Block productionstays live even if finality lags.
+- Allows lower overhead in the finality layer.
+- Used in Substrate.
 
 ---
 
@@ -484,19 +481,20 @@ This approach is used in Substrate.
 
 - Deterministic finality _only_
 - Requires an external block authoring scheme with its own liveness proof.
-- Kind of like Tendermint but better. Finalizes chains, not blocks.
+- Kind of like Tendermint but better.
+- Finalizes chains, not blocks.
 
 ---v
 
 ## Vote on Chains, not Blocks
 
-TODO Revise this
-
-Finalizing a block in a BFT system with $n$ participants is in $O(n^2)$, In Tendermint this communication has to happen at each and every block which puts a bound on the size of the validator set.
+BFT finality with $n$ authorities is in $O(n^2)$.
+Tendermint does this at **every block**.
+This bounds the size of the authority set.
 
 <widget-text center>
 
-Now that finality is separated, we treat each vote as a vote not only for one block, but also for each ancestor block. This significantly reduces the number of total messages sent.
+With separated, we treat each vote as a vote not only for one block, but also for each ancestor block. This significantly reduces the number of total messages sent.
 
 - Allows the chain to stay live even when many validators are offline
 - Allows for a challenge period to delay finality if needed
@@ -518,5 +516,7 @@ TODO crib Andre's grandpa slides
 - In decentralized systems, we use Economics and Game Theory to incentivize honest execution of the consensus protocol
 
 ---
+
+# Game Time
 
 Now let's play the board game
