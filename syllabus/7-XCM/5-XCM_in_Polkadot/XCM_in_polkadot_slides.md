@@ -69,6 +69,13 @@ pub type Barrier = (
 - `AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
 - `AllowKnownQueryResponses` and `AllowSubscriptionsFrom`, as we know already, are mostly used for versioning.
 
+Notes:
+
+Child system parachains are parachains that contain core polkadot features, and usually they get a paraId of less than 1000.
+They are allocated by Polkadot governance.
+
+`AllowKnownQueryResponses` will check pallet-xcm storage to know whether the response is expected.
+
 ---
 
 ## 🤝 Trusted teleporters in Rococo
@@ -114,6 +121,10 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
+Notes:
+
+Any other chain sending a `ReceiveTeleportedAsset` or any other token being teleported will be rejected with `UntrustedTeleportLocation`.
+
 ---
 
 ## 💱Trusted reserves in Rococo
@@ -128,6 +139,10 @@ impl xcm_executor::Config for XcmConfig {
   /* snip */
 }
 ```
+
+Notes:
+
+The relay chain only handles a single asset (the relay token), and therefore, it does not have the necessity to trust any other tokens being sent from other reserves.
 
 ---
 
@@ -146,6 +161,10 @@ pub type LocationConverter = (
 );
 ```
 
+Notes:
+
+Any other origin that is not a parachain origin or a local 32 byte account origin will not be convertible to an accountId.
+Question what happens if a message coming from a parachain  starts with `DescendOrigin`.
 ---
 
 ## 🪙 Asset Transactors in Rococo
@@ -253,6 +272,10 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
+Notes:
+
+Trying to buyExecution with any other token that is not the native token **will fail**.
+
 ---
 
 ## 🎨 `XcmPallet` in Rococo
@@ -295,6 +318,14 @@ pub type LocalOriginToLocation = (
   SignedToAccountId32<RuntimeOrigin, AccountId, RococoNetwork>,
 );
 ```
+
+Notes:
+
+LocalOrigin allows to go from a frame dispatch origin to a multilocation. This is necessary because **we enter the xcm-executor with xcm origins, not with frame dispatch origins**.
+
+Council decisions are converted to plurality junction multilocations.
+
+Signed origins are converted to AccountId32 junction multilocations.
 
 ---
 
@@ -373,6 +404,10 @@ pub type FungiblesTransactor = FungiblesAdapter<
 - Every time we receive a token with the parent multilocation, we mint in Balances.
 
 ```rust
+/// Prepended junction to Id
+pub AssetsPalletLocation: MultiLocation =
+		PalletInstance(<Assets as PalletInfoAccess>::index() as u8).into();
+
 /// Means for transacting assets on this chain.
 pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor);
 ```
@@ -381,6 +416,7 @@ Notes:
 
 - Notice how KsmLocation is equal to **Parent**.
 - Teleports are not being tracked in any account in Statemine, only in the relay chain.
+- An asset with id `Id` are represented by `X2(PalletInstance(pallet_assets_index), GeneralIndex(Id)`
 
 ---
 
@@ -426,6 +462,12 @@ pub type Barrier = DenyThenTry<
   ),
 >;
 ```
+
+Notes:
+
+- The relay chain has free execution
+- `DenyThenTry<A, B>` denies the execution if A is true, else evaluates B for allowance
+- `DenyReserveTransferToRelayChain` prevents sending a reserve transfer asset to the relay.
 
 ---
 
