@@ -24,6 +24,20 @@ But these conditions are not interesting, and are often not realistic. It gets i
 
 ---v
 
+## Five Aspects of Blockchain Consensus
+
+<pba-flex center>
+
+- State machine validity
+- Arbitrary / Political validity
+- Authorship throttling
+- Fork choice heuristic
+- Finality
+
+</pba-flex>
+
+---v
+
 ## Adversarial Conditions
 
 - The participants want to agree on _something_
@@ -199,7 +213,7 @@ In a blockchain system, bugs in the code may cause nodes whose operators are int
 
 ## Byzantine Generals: Solved
 
-![Cover page: Practical Byzantine Fault Tolerance](./img/pbft-cover.png)
+<img height="600px" alt="Cover page: Practical Byzantine Fault Tolerance" src="./img/pbft-cover.png" />
 
 Miguel Castro and Barbara Liskov, 1999
 
@@ -253,7 +267,7 @@ A system is one of:
 
 ## FLP Impossibility
 
-<img style="padding: 0 200px 0 0" src="../../assets/img/3-Blockchain/3.2-FLP-impossible.png"/>
+<img style="padding: 0 200px 0 0" src="./img/FLP-impossible.png"/>
 
 Notes:
 
@@ -312,7 +326,8 @@ Liveness guarantees that a system that is intended to continue making progress, 
 
 ## Finality in Nakamoto Consensus
 
-- Longest chain rule\* - Longest chain is "best"... for now
+- Longest chain rule
+- Longest chain is "best"... for now
 - Someone could always start mining a chain and, with low but non-zero probability, end up with it longer.
 - There could _already_ be a longer chain that you just haven't heard of.
 
@@ -332,7 +347,10 @@ blocks can be downloaded and executed much more quickly than the target block ti
 - Based on traditional methods (BFT)
 - Requires an honest-majority finite authority set
 
+&nbsp;<!-- This is needed so the next bullet points don't show too early -->
+
 - Consensus protocol that assumes honest majority
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - Economic game that keeps them honest
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
