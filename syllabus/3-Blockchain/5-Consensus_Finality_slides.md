@@ -59,9 +59,9 @@ Once it is made, we are done.
 
 All honest participants...
 
-- Termination - Eventually reach some decision
-- Agreement - Reach the same decision
-- Integrity - Reach at most one decision, which was proposed by at least one participant.
+- **Termination** - Eventually reach some decision
+- **Agreement** - Reach the same decision
+- **Integrity** - Reach at most one decision, which was proposed by at least one participant.
 
 ---v
 
