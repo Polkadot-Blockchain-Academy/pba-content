@@ -78,7 +78,7 @@ pub struct Foo(i32)
 pub struct Foo(u16, u16)
 ```
 
-The data still *fits*, but the *interpretations* is almost certainly different!
+The data still _fits_, but the _interpretations_ is almost certainly different!
 
 <!-- .element: class="fragment" -->
 
@@ -190,11 +190,11 @@ pub type FooValue = StorageValue<_, u32>;
 pub type BarValue = StorageValue<_, u32>;
 ```
 
-* So far everything is changing the _value_ format.<br>
+- So far everything is changing the _value_ format.<br>
 
 <div>
 
-* The _key_ changing is also a migration!
+- The _key_ changing is also a migration!
 
 </div>
 
@@ -225,22 +225,21 @@ This does _not_ require a migration.
 
 ## Writing Runtime Migrations
 
-
-* Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
-
----v
-
-### Writing Runtime Migrations
-
-* Once you upgrade a runtime, the code is expecting the data to be in a new format.
-* Any `on_initialize` or transaction might fail decoding data, and potentially `panic!`
+- Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
 
 ---v
 
 ### Writing Runtime Migrations
 
-* We need a **_hook_** that is executed **ONCE** as a part of the new runtime...
-* But before **ANY** other code (on_initialize, any transaction) with the new runtime is migrated.
+- Once you upgrade a runtime, the code is expecting the data to be in a new format.
+- Any `on_initialize` or transaction might fail decoding data, and potentially `panic!`
+
+---v
+
+### Writing Runtime Migrations
+
+- We need a **_hook_** that is executed **ONCE** as a part of the new runtime...
+- But before **ANY** other code (on_initialize, any transaction) with the new runtime is migrated.
 
 > This is `OnRuntimeUpgrade`.
 
@@ -250,8 +249,8 @@ This does _not_ require a migration.
 
 ### Writing Runtime Migrations
 
-* Optional activity: Go into `executive` and `system`, and find out how `OnRuntimeUpgrade` is called
-only when the code changes!
+- Optional activity: Go into `executive` and `system`, and find out how `OnRuntimeUpgrade` is called
+  only when the code changes!
 
 ---
 

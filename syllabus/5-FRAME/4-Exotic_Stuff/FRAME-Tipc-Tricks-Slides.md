@@ -12,13 +12,11 @@ Notes:
 A random collection of things that you should probably know about.
 These are relevant for coding in FRAME and Substrate.
 
-
 ---
 
 # Part 1 Substrate Stuff
 
 ---
-
 
 ## Recap: Blocks, Headers, Extrinsics
 
@@ -52,8 +50,8 @@ type BalanceOf<T, I> = <
 
 ## Speaking of Traits..
 
-* Anything that can be expressed with associated types can also be expressed with generics.
-* Associated types usually lead to less boilerplate.
+- Anything that can be expressed with associated types can also be expressed with generics.
+- Associated types usually lead to less boilerplate.
 
 ```rust
 trait Engine {}
@@ -126,11 +124,9 @@ fn main() {
 
 ---
 
-
 ## The `std` Paradigm
 
-- [source](https://docs.rust-embedded.org/embedonomicon/smallest-no-std.html
-)
+- [source](https://docs.rust-embedded.org/embedonomicon/smallest-no-std.html)
 
 > #![no_std] is a crate level attribute that indicates that the crate will link to the `core` crate
 > instead of the `std` crate.. std crate is Rust's standard library. It contains functionality
@@ -151,8 +147,8 @@ All crates in substrate that eventually compile to WASM are compiled in a dual m
 #![cfg_attr(not(feature = "std"), no_std)]
 ```
 
-* The name "`std`" is just an idiom in the rust ecosystem.
-* `no_std` DOES NOT MEAN WASM.
+- The name "`std`" is just an idiom in the rust ecosystem.
+- `no_std` DOES NOT MEAN WASM.
 
 ---v
 
@@ -272,14 +268,14 @@ fn foo() {
 
 ## Logging And Prints In The Runtime.
 
-* First, why the fuss?
+- First, why the fuss?
 
-* Size of the wasm blob matters..
+- Size of the wasm blob matters..
 
 <!-- .element: class="fragment" -->
 
-* Any logging increases the size of the WASM blob. **String literals** are stored somewhere in your
-program!
+- Any logging increases the size of the WASM blob. **String literals** are stored somewhere in your
+  program!
 
 <!-- .element: class="fragment" -->
 
@@ -287,12 +283,12 @@ program!
 
 ### Logging And Prints In The Runtime.
 
-* `wasm2wat polkadot_runtime.wasm > dump | rg stripped`
+- `wasm2wat polkadot_runtime.wasm > dump | rg stripped`
 
-* Should get you the `.rodata` (read-only data) line of the wasm blob, which contains all the logging
-noise.
+- Should get you the `.rodata` (read-only data) line of the wasm blob, which contains all the logging
+  noise.
 
-* This contains string literals form errors, logs, metadata, etc.
+- This contains string literals form errors, logs, metadata, etc.
 
 ---v
 
@@ -328,7 +324,7 @@ impl ::core::fmt::Debug for WithDebug {
 
 Once types implement `Debug` or `RuntimeDebug`, they can be printed. Various ways:
 
-* If you only want something in tests, native builds etc
+- If you only want something in tests, native builds etc
 
 ```rust
 sp_std::if_std! {
@@ -337,7 +333,7 @@ sp_std::if_std! {
 }
 ```
 
-* Or you can use the common frame-support logging (which is just the `log` crate re-exported):
+- Or you can use the common frame-support logging (which is just the `log` crate re-exported):
 
 ```rust
 frame_support::log::info!(target: "target", "hello world!");
@@ -356,7 +352,7 @@ frame_support::log::trace!(target: "KIAN", "({:?})", (0..100000).into_iter().col
 ```
 
 - `disable-logging` compilation flag blocks all sp-io calls to do any logging. This is used in
-   official polkadot releases.
+  official polkadot releases.
 
 Notes:
 
@@ -371,10 +367,10 @@ If the interface is built with `disable-logging`, it omits all log messages.
 
 ## Arithmetic Helpers, and the `f32`, `f64` Story.
 
-* Floating point numbers have different standards, and (**_slightly_**) different implementations on
-different architectures and vendors.
+- Floating point numbers have different standards, and (**_slightly_**) different implementations on
+  different architectures and vendors.
 
-* If my balance is `10.000000000000001` DOT on one validator and `10.000000000000000` DOT on another validator, game over for your consensus 😮‍💨.
+- If my balance is `10.000000000000001` DOT on one validator and `10.000000000000000` DOT on another validator, game over for your consensus 😮‍💨.
 
 ---v
 
@@ -393,7 +389,7 @@ different architectures and vendors.
 > false
 ```
 
-* Google "weird float behavior" fro more entertainment around this.
+- Google "weird float behavior" fro more entertainment around this.
 
 ---v
 
@@ -431,7 +427,7 @@ let p = Perbill::from_rational(1, 4);
 > 25u32;
 ```
 
--  Some precision concerns exist, but that's a story for another day.
+- Some precision concerns exist, but that's a story for another day.
 
 ---v
 
@@ -484,15 +480,14 @@ pub struct BigUint {
 - Everything said here can be found in `sp-arithmetic` and `sp-core`, and a lot of it is re-exported from `sp-runtime`
 - Because they are used a LOT.
 
-
 ---
-
 
 ### Fallibility: Math Operations
 
 Things like **addition**, **multiplication**, **division** could all easily fail.
 
 - Panic
+
   - `u32::MAX * u32::MAX / 2` (in debug builds)
   - `100 / 0`
 
@@ -504,11 +499,13 @@ Things like **addition**, **multiplication**, **division** could all easily fail
 ### Fallibility
 
 - `Checked` -- prevention ✋🏻
+
   ```
   if let Some(outcome) = a.checked_mul(b) { ... } else { ... }
   ```
 
 - `Saturating` -- silent recovery 🤫
+
 ```
 let certain_output = a.saturating_mul(b);
 ```
@@ -519,7 +516,7 @@ Why would you ever want to saturate? only in cases where you know if the number 
 other aspects of the system is so fundamentally screwed that there is no point in doing any kind of
 recovery.
 
- There's also `wrapping_op` and `carrying_op` etc on all rust primitives, but not quite
+There's also `wrapping_op` and `carrying_op` etc on all rust primitives, but not quite
 relevant.
 
 ---v
@@ -555,7 +552,6 @@ assert_eq!(u128::MAX.saturating_into::<u32>(), u32::MAX);
 ```
 
 ---
-
 
 # Part 2: FRAME Stuff
 
@@ -596,7 +592,7 @@ impl Get<u32> for Foo {
 }
 ```
 
-* Helps convey **values** using **types**.
+- Helps convey **values** using **types**.
 
 ---
 
@@ -612,15 +608,13 @@ pub struct BoundedVec<T, S: Get<u32>>(
 );
 ```
 
-* `PhantomData`?
+- `PhantomData`?
 
 ---v
 
 ### `bounded`
 
-* Food for your thought.
-
-
+- Food for your thought.
 
 ```rust
 #[cfg_attr(feature = "std", derive(Serialize))]
@@ -674,8 +668,8 @@ impl Config for Runtime {
 ```
 
 ---v
-### Example of `Get` and `Convert`
 
+### Example of `Get` and `Convert`
 
 ```rust
 // in your pallet
@@ -797,13 +791,14 @@ impl OnRuntimeUpgrade for Tuple {
 
 ### Implementing Traits for Tuples: Further Reading
 
-* useful links:
-- https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array
-- https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch
-- https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name
-- https://turbo.fish/
-- https://techblog.tonsser.com/posts/what-is-rusts-turbofish
-- https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/
+- useful links:
+
+* https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array
+* https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch
+* https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name
+* https://turbo.fish/
+* https://techblog.tonsser.com/posts/what-is-rusts-turbofish
+* https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/
 
 ---
 
@@ -814,7 +809,6 @@ impl OnRuntimeUpgrade for Tuple {
 > used where **high availability**, **safety**, or **security** is needed.
 
 - As you know, you should (almost) never panic in your runtime code.
-
 
 ---v
 
@@ -889,7 +883,7 @@ pub fn try_insert(&mut self, index: usize, element: T) -> Result<(), ()> {
 
 - Speaking of documentation, [here's a very good guideline](https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html)!
 
-```
+````
 /// Multiplies the given input by two.
 ///
 /// Some further information about what this does, and where it could be used.
@@ -905,7 +899,7 @@ pub fn try_insert(&mut self, index: usize, element: T) -> Result<(), ()> {
 ///
 /// Panics under such and such condition.
 fn multiply_by_2(x: u32) -> u32 { .. }
-```
+````
 
 ---v
 
@@ -923,7 +917,7 @@ fn multiply_by_2(x: u32) -> u32 { .. }
 
 ### Defensive Programming
 
-* The overall ethos of defensive programming is along the lines of:
+- The overall ethos of defensive programming is along the lines of:
 
 ```rust
 // we have good reasons to believe this is `Some`.
@@ -939,13 +933,13 @@ let x = y.unwrap_or(reasonable_default);
 let x = y.ok_or(Error::DefensiveError)?;
 ```
 
-* But, for example, you are absolutely sure that `Error::DefensiveError` will never happen, can we enforce it better?
+- But, for example, you are absolutely sure that `Error::DefensiveError` will never happen, can we enforce it better?
 
 ---v
 
 ### Defensive Programming
 
-* Yes: [Defensive traits](https://paritytech.github.io/substrate/master/frame_support/traits/trait.Defensive.html):
+- Yes: [Defensive traits](https://paritytech.github.io/substrate/master/frame_support/traits/trait.Defensive.html):
 
 ```
 // either return a reasonable default..
@@ -955,7 +949,7 @@ let x = y.defensive_unwrap_or(reasonable_default);
 let x = y.defensive_ok_or(Error::DefensiveError)?;
 ```
 
- It adds some boilerplate to:
+It adds some boilerplate to:
 
 1. Panic when `debug_assertions` are enabled (tests).
 2. append a `log::error!`.

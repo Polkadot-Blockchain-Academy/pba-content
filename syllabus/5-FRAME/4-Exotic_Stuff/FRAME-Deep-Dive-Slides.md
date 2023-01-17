@@ -29,7 +29,6 @@ By the end of this lecture, you will fully understand this figure.
 
 ---
 
-
 ## Expanding A Pallet
 
 - Grab a simple pallet code, and expand it.
@@ -150,9 +149,9 @@ information.
 
 ## 4. Executive
 
-* This part is somewhat optional to know in advance, but I want you to re-visit it in a week and then understand it all.
+- This part is somewhat optional to know in advance, but I want you to re-visit it in a week and then understand it all.
 
-* I present to you, Executive struct:
+- I present to you, Executive struct:
 
 ```rust
 pub struct Executive<
@@ -210,7 +209,7 @@ type Executive = frame_executive::Executive<_, Block, ...>;
 
 #### What Does `Checkable<_>` Do?
 
-* Signature verification!
+- Signature verification!
 
 ```rust
 impl Checkable<_> for UncheckedExtrinsic<_, _, _, _> {
@@ -286,5 +285,4 @@ let _ = checked.apply();
 
 ### Workshop
 
-* Walk over execute, namely `execute_block`, and see how much of it makes sense.
-
+- Walk over execute, namely `execute_block`, and see how much of it makes sense.
