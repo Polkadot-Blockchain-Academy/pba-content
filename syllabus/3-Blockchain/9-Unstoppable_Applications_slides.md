@@ -345,7 +345,7 @@ Notes:
 Notes:
 
 - [Jaco](https://github.com/jacogr) is effectively the only maintainer of how _just about everything_ communicates with Substrate nodes!
-- [Capi](https://github.com/paritytech/capi) is on the way, but just getting started. 
+- [Capi](https://github.com/paritytech/capi) is on the way, but just getting started.
 
 ---v
 
@@ -813,6 +813,23 @@ https://cryptoslate.com/op-ed-is-ethereum-now-under-u-s-control-99-of-latest-rel
 
 ---v
 
+## Social Context
+
+Social systems and norms can help _cover up_ weaknesses in protocols.
+
+> Public monitor to shame OFAC censors:<br> > https://www.mevwatch.info/
+
+Notes:
+
+- Pressure from peers through breaking norms, perhaps even lossing of authority in consensus due to this.
+  Peer reputation in computer networks, and here also in human ones.
+- Sometimes social pressures are healthy for the system, sometimes toxic depending on point of view and who benefits!
+- In monero "run your own node" culture helps keep it decentralized.<br>
+  Bitcoin big block wars show social pressures help decide the canonical forks.
+- Normalizing MEV for the profit of middlemen, providing extraction services in the worst case.
+
+---v
+
 ## Unbundling
 
 <img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
@@ -844,14 +861,24 @@ Notes:
 
 ## Final Thoughts
 
-- Complexity generally increases the risks of failures.<br>
+- Complexity generally increases the risks of failures, but we should not fear it.<br>
   $~~~$_Hypothesis: this \_usually_ makes systems more brittle.\_
-- "Oops clauses" may be justified, but take heed they do not undermine the system.
+- Observable behavior trumps models and theory.<br>
+  $~~~$_Complex systems are not intuitive and may show your assumptions and models are wrong!_
+- This lesson was a _start_ down holes...
+  $~~~$_We encourage you to keep diving deeper!_
 
 Notes:
 
-Risks and unknown unknowns increase exponentially so in many cases.
-Governance/"oops clause" can help fix things, but also risk system capture.
+- Risks and unknown unknowns increase exponentially so in many cases.
+- Examples of observables in things like MEV OFAC dominance and Babe fallback dominance etc.
+- Looking forward to explore the great unknown horizons in Web3 together!
+
+---
+
+## 🤝 Together, into the Deep
+
+<img rounded style="width: 800px" src="../../assets/img/3-Blockchain/DiveEdge.gif"/>
 
 ---
 
