@@ -387,6 +387,76 @@ Boot nodes can decide what peers to advertize, or can be inaccessible.
 Common data centers (AWS, GCP, ...) could fail or censor, potentially large number of peers go dark.
 Hard to hide! Most p2p traffic is easy to identify vs. web2 traffic.
 
+---v
+
+## Node Queries
+
+Running a node is hard, most people outsource.
+
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-node-queries.png"/>
+
+These service have power to deceive, censor, and surveil.
+
+---v
+
+## Multi-Chain Applications
+
+If running _one_ node is burdensome, try multiple.
+
+<img style="width: 700px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
+
+---v
+
+## Light Clients, Bridges, Relays
+
+<img style="width: 1200px; margin-left: -150px" src="../../assets/img/3-Blockchain/3.4-light-clients.png"/>
+
+_Note the single peer reliance <br> for **embedded light clients in bridges**_
+
+Notes:
+
+Relayer is RPC on bridge (something like or exactly an embedded light client inside a consensus system)
+
+- Can only be a _single node_ of the set of relayers, so this oracle has a much broader scope of attack vectors to trick the consensus system getting info from them.
+  - **DO NOT assume finalization is "real" as could be byzantine!**
+  - Ex: sending a valid block that is not published on the main network, but the consensus system getting the data from this one RPC has no way to verify this with other parties (typically) as it does not have peers with the other consensus system.
+- no consensus logic and way to hold accountable bad actors directly.
+  - must be out of band, "fisherman" style protocols created.
+
+---v
+
+## Trustless Messaging
+
+In order to handle messages _without trust_,<br>systems must share common finality guarantees.
+
+`A` should never process a message from `B`,<br>where `B` is reverted and `A` is not.
+
+---v
+
+## A Note on Synchronicity
+
+Smart contracts on a single chain (e.g. Ethereum)<br>can interact trustlessly because of their shared view of finality.
+
+Asynchronous systems can also share finality.<br>
+i.e., be members of the same consensus system.
+
+---v
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Discussion
+
+**Minimum viable decentralization.**
+
+<br>
+
+> What key aspects should be considered?
+
+Notes:
+
+- Quantitative: nodes needed (for what), incentives, ... TODO
+- Qualitative: social norms, ... TODO
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -441,9 +511,23 @@ Emergence of obscure/niche "Proof of X" algorithms<br>to shelter from attack onl
 
 ---v
 
-## Proof of Work Battles
+## ⚔ Blockchain Wars
 
-<img rounded style="width: 1300px" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
+Systems with high security have the<br>incentive to attack systems with low security<br>whom they perceive as competitors.
+
+<br>
+
+> For fun and profit.
+
+Notes:
+
+"In ~~a galaxy~~ the universal consensus ~~far far away~~ not so far away..."
+
+---v
+
+## ⚔ Proof of Work Battles
+
+<img rounded style="width: 1300px; margin-top: -0.8em" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
 
 <br>
 
@@ -507,7 +591,7 @@ Notes:
 
 Yet another N-lemma to consider.
 
----
+---v
 
 ## PoS Economic Security
 
@@ -523,9 +607,9 @@ Notes:
 
 ---v
 
-## PoS Economic Security Wars
+## ⚔ PoS Economic Security Battles
 
-<img rounded style="width: 1200px" src="../../assets/img/3-Blockchain/market-cap-pos.png"/>
+<img rounded style="width: 1150px; margin-top: -0.8em" src="../../assets/img/3-Blockchain/market-cap-pos.png"/>
 
 Notes:
 
@@ -537,7 +621,7 @@ What about an system of value _within_ consensus?
 
 ## DApp PoS Economic Security
 
-<img rounded style="width: 1200px" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png"/>
+<img rounded style="width: 1200px; margin-top: -0.8em" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png"/>
 
 Notes:
 
@@ -762,88 +846,6 @@ Notes:
 - ...
 
 - Image source, and good reference on this: https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Network Access
-
----v
-
-## Node Queries
-
-Running a node is hard, most people outsource.
-
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-node-queries.png"/>
-
-These service have power to deceive, censor, and surveil.
-
----v
-
-## Multi-Chain Applications
-
-If running _one_ node is burdensome, try multiple.
-
-<img style="width: 700px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
-
----v
-
-## Light Clients, Bridges, Relays
-
-<img style="width: 1200px; margin-left: -150px" src="../../assets/img/3-Blockchain/3.4-light-clients.png"/>
-
-_Note the single peer reliance <br> for **embedded light clients in bridges**_
-
-Notes:
-
-Relayer is RPC on bridge (something like or exactly an embedded light client inside a consensus system)
-
-- Can only be a _single node_ of the set of relayers, so this oracle has a much broader scope of attack vectors to trick the consensus system getting info from them.
-  - **DO NOT assume finalization is "real" as could be byzantine!**
-  - Ex: sending a valid block that is not published on the main network, but the consensus system getting the data from this one RPC has no way to verify this with other parties (typically) as it does not have peers with the other consensus system.
-- no consensus logic and way to hold accountable bad actors directly.
-  - must be out of band, "fisherman" style protocols created.
-
----v
-
-## Blockchain Wars
-
-Systems with high security have the incentive to<br>attack systems with low security whom they perceive as competitors.
-
----v
-
-## Trustless Messaging
-
-In order to handle messages _without trust_,<br>systems must share common finality guarantees.
-
-`A` should never process a message from `B`,<br>where `B` is reverted and `A` is not.
-
----v
-
-## A Note on Synchronicity
-
-Smart contracts on a single chain (e.g. Ethereum)<br>can interact trustlessly because of their shared view of finality.
-
-Asynchronous systems can also share finality.<br>
-i.e., be members of the same consensus system.
-
----v
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Discussion
-
-**Minimum viable decentralization.**
-
-<br>
-
-> What key aspects should be considered?
-
-Notes:
-
-- Quantitative: nodes needed (for what), incentives, ... TODO
-- Qualitative: social norms, ... TODO
 
 ---
 
