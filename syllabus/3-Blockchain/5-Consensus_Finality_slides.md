@@ -462,9 +462,9 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 [Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465)
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
----v
+---
 
-### Hybrid Consensus
+## Hybrid Consensus
 
 ![Abstract to grandpa paper](./img/grandpa-abstract.png)
 
@@ -472,6 +472,30 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 - Block productionstays live even if finality lags.
 - Allows lower overhead in the finality layer.
 - Used in Substrate.
+
+---v
+
+## What About Re-Orgs
+
+<img style="width: 500px; margin-right: 150px;" src="./img/reorgs-1.svg"/>
+<br />
+<img style="width: 650px;" src="./img/reorgs-2.svg"/>
+
+Notes:
+Previously we talked about how a node's view of the best block can change, and that is called a re-org.
+
+---v
+
+## Modified Fork Choice Rule
+
+Only extend best finalized chain
+
+<img style="width: 500px; margin-right: 150px;" src="./img/reorgs-finality-1.svg"/>
+<br />
+<img style="width: 650px" src="./img/reorgs-finality-2.svg"/>
+
+Notes:
+Once you have a finality gadget installed, you have to make sure you only ever author on top of finalized blocks. Even if another chain is longer.
 
 ---
 
