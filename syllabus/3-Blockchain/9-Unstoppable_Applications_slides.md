@@ -338,6 +338,17 @@ Notes:
 
 ---v
 
+## 🦸 Dependency in Polkadot
+
+<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/dependency-polkadot-js.png"/>
+
+Notes:
+
+- [Jaco](https://github.com/jacogr) is effectively the only maintainer of how _just about everything_ communicates with Substrate nodes!
+- [Capi](https://github.com/paritytech/capi) is on the way, but just getting started. 
+
+---v
+
 ## 🙈 Unknown unknowns
 
 <img rounded style="width: 800px" src="../../assets/img/3-Blockchain/DiveEdge.gif"/>
@@ -404,24 +415,6 @@ These service have power to deceive, censor, and surveil.
 If running _one_ node is burdensome, try multiple.
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
-
----v
-
-## Light Clients, Bridges, Relays
-
-<img style="width: 1200px; margin-left: -150px" src="../../assets/img/3-Blockchain/3.4-light-clients.png"/>
-
-_Note the single peer reliance <br> for **embedded light clients in bridges**_
-
-Notes:
-
-Relayer is RPC on bridge (something like or exactly an embedded light client inside a consensus system)
-
-- Can only be a _single node_ of the set of relayers, so this oracle has a much broader scope of attack vectors to trick the consensus system getting info from them.
-  - **DO NOT assume finalization is "real" as could be byzantine!**
-  - Ex: sending a valid block that is not published on the main network, but the consensus system getting the data from this one RPC has no way to verify this with other parties (typically) as it does not have peers with the other consensus system.
-- no consensus logic and way to hold accountable bad actors directly.
-  - must be out of band, "fisherman" style protocols created.
 
 ---v
 
