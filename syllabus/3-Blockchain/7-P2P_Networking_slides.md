@@ -203,9 +203,9 @@ Show example here, it is important for looking at chain-spec
 
 ## Protocols<br>(Generic Protocol Negotiation)
 
-- `You can change your encryption protocol via the protocol negotiation!`
-- `Ping`
-- `Identify`
+- You can change your encryption protocol via the protocol negotiation!
+- Ping
+- Identify
 
 Notes:
 
@@ -251,12 +251,13 @@ Notes:
 ```rust
 // PeerInfo
 struct Peerinfo<PeerId, Others> {
-peer_id: PeerId,
-other_multiaddresses: Others // Others is a type which is a Set
+    peer_id: PeerId,
+    other_multiaddresses: Others // Others is a type which is a Set
 }
+
+// PeerStore
 ```
 
-- PeerStore TODO
 
 Notes:
 
