@@ -13,34 +13,48 @@ Andrew Burger, Parity, Integritee, Blockchains Yay
 ---
 ## Centralized vs Decentralized networks
 Notes:
-    1.) Picture here showing the two different node overlays
     2.) Not all p2p clients must run the same software they can develop their own (BTC, Ethereum etc..) Further decentralization.
 ---
 ## Advantages to Decentralized networks
-* No single node or nodes(CDN) have access to all of the content or files or is critical for operating the network. Each node has a copy of the data.
-* No bottlenecks with bandwidth
-* Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection
-* Difficult to overload the network or DOS (Not single node is privledged)
+* No privledged nodes
+* Less bottlenecks with bandwidth
+* DOS resistent
 * No centralized infrastructure necessary(Except internet for now..)
 Notes: 
-    Block production and Block peering/importing can be mentioned here
+    1.) No single node or nodes(CDN) have access to all of the content or files or is critical for operating the network. Each node has a copy of the data.
+    <br>
+    2.) No central node carrying all of the load of traffic. Block production and Block peering/importing can be mentioned here
+    <br>
+    3.) Difficult to overload the network or DOS (Not single node is privledged)
+    <br>
+    4.) Although many nodes are run on Centralized cloud compute platforms they dont have to be(Typically)
 ---
 ## Difficulties or disadvantages
 * Since it is permisionless a node can share malicious resources
+* Latency
 * Difficult to regulate illicit activity
-* The network is limited by nodes with the weakest hardware(Why we have hardware requirements for blockchain networks)
+* The network is limited by nodes with the weakest hardware
+Notes:
+    2.) Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection
+    <br>
+    3.) No central point to go and snoop all users data(for better or for worse)
+    <br>
+    4.) Why we have hardware requirements for blockchain networks
 ---
 ## Initial discovery
-* Must know someone who is participating in the network initially
 * Bootnode/bootnodes (More on this later in Substrate) 
+Notes:
+    1.) Must know someone who is participating in the network initially(Bootnode)
 ---
 ## Gossip Protocol
 <img style="width: 700px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-1.svg">
 Notes:
-    Some picture showing one node looking for a packet via another node and asking its neighbors for packets
+   1.) Talk about how we have and want block 45 being peered to others 
 ---v
 ## Gossip Protocol
 <img style="width: 900px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-2.svg">
+Notes:
+    Talk about advertising vs just blind sending and how that can be inneficient 
 ---
 ## Discovery
 * 1.) Connect to a peer
@@ -49,21 +63,22 @@ Notes:
 * 4.) Repeat steps 2 and 3 
 ---
 ## Paritions
-<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-partition.png">
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-partition.svg">
 Notes: 
     Talk about how when a partition happens in P2P vs Centralized
     In p2p only one node needs to have a full copy in order for the file to
     beable to be distributed accross the network
-    Show picture of centralized network and p2p network with part of the network with a green check mark and the other with a red X
 ---v
 ## Partitions cont..
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-partition2.png">
+<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-partition2.svg">
+Notes:
+    1.) This is horrible and means all nodes are totally screwed
 ---
 ## Attacks
 Notes: Show picture of something scary and devious here 
 ---
 ## Eclipse Attack
-<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-eclipse-topology.png">
+<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-eclipse-topology.svg">
 Notes:
     1.) Distorts view of the healthy normal honest state of the network 
     2.) Transaction confirmations can be fictious
@@ -116,7 +131,7 @@ Notes: Overview of a few protocols from docs
 * `GET_PROVIDERS`: finding out what peers can provide the value for a specified key
 ---v
 ## Example Findkey(k=Block45)
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-find-node-libp2p.png">
+<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-find-node-libp2p.svg">
 ---
 ## Peers
 * PeerId
