@@ -326,10 +326,14 @@ Liveness guarantees that a system that is intended to continue making progress, 
 
 ## Finality in Nakamoto Consensus
 
+<pba-flex center>
+
 - Longest chain rule
 - Longest chain is "best"... for now
-- Someone could always start mining a chain and, with low but non-zero probability, end up with it longer.
+- Someone could always start mining a chain and,<br>with low but non-zero probability, end up with it longer.
 - There could _already_ be a longer chain that you just haven't heard of.
+
+<pba-flex>
 
 The finality is only probabilistic. Nakamoto consensus in only safe in a synchronous network.
 
