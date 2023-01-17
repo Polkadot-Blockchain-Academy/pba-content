@@ -51,6 +51,22 @@ It's an electron app that lets to select an assignment and select some or all re
 
 > Note it's _old and not maintained_ but the [2.0.3 .deb release](https://github.com/education/classroom-assistant/releases/tag/v2.0.3) was working on 20.04 ubuntu (22.04 [likely broken](https://github.com/education/classroom-assistant/issues/235))
 
+A superior solution is to [installing GitHub's command line client](https://github.com/cli/cli#installation), authenticating with it, and then using a simple bash script to clone all the relevant repos using `gh`:
+
+```bash
+owner="Polkadot-Blockchain-Academy"
+prefix="pba-assignment-1"
+
+mkdir -p $prefix
+cd $prefix
+
+for repo in $(gh repo list $owner --limit 9000 --json name --jq '.[] | .name'); do 
+    if [[ $repo = $prefix* ]]; then
+        git clone git@github.com:$owner/$repo ${repo#$prefix-}
+    fi
+done
+```
+
 ## Need more help?
 
 The PBA team is here for you!
