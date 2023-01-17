@@ -415,7 +415,7 @@ Notes:
 ## Case Study: Tendermint
 
 - Authorship is like Aura - simple round robin
-- Naive but simple BFT implementation
+- Naive but **simple** BFT implementation
 - If the block has enough votes by the end of the slot, it is finalized. Otherwise, it is rejected via timeout.
 - "Instant finality"
 - Forkless - Forks are disallowed because blocks can only be authored on finalized parents.
@@ -430,26 +430,37 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 
 ## Tendermint Deep Dive
 
-1. Wait for a block (or author one if it is your turn)
-2. Prevote
+- 1: Wait for a block (or author one if it is your turn)
 
-- If the block is valid, Prevote for it.
-- If the block is invalid, Prevote `Nil`
+<div>
+
+- 2: Prevote
+    - If the block is valid, Prevote for it.
+    - If the block is invalid, Prevote `Nil`
+
+</div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-4. Precommit
+<div>
 
-- Wait for 2/3 prevotes then Precommit
-- If you don't get 2/3 prevotes, Precommit `Nil`
+- 3: Precommit
+    - Wait for 2/3 prevotes then Precommit
+    - If you don't get 2/3 prevotes, Precommit `Nil`
+
+</div>
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-5. Complete
+<div>
 
-- Wait for 2/3 Precommits them finalize
-- If you don't get it, throw the block away
+- 4: Complete
+    - Wait for 2/3 Precommits them finalize
+    - If you don't get it, throw the block away
+
+</div>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
-https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465
+[Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465)
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---v
 
