@@ -26,7 +26,7 @@ Notes:
   - "Black boxes" of cryptography
   - Rational actors and assumed complete models of behavior in economics
   - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way...
-  We will talk about the Oracle Problem.
+    We will talk about the Oracle Problem.
 - In _practice_ there are far more ["unknown unknowns"](#unknown-unknowns) and "black swan" behavior.
   More to come on that in this lesson.
 
@@ -50,11 +50,9 @@ Notes:
 
 <pba-flex center>
 
-- Incorruptible
-- Infallible
 - Anitfragile
 - Trustless\*
-- Devoid of Censorship\*
+- Censorship-less\*
 - Accessible\*
 - ...perhaps more?
 
@@ -205,10 +203,11 @@ There are [valid criticisms](https://moxie.org/2022/01/07/web3-first-impressions
 
 <pba-flex center>
 
-- Humans are cheap & lazy -> no individuals run servers.
+- Humans are cheap & lazy...<br>
+  No individuals run servers.
 - RPC node providers
 - A _protocol_ improves<br>slowly vs. a platform.
-- False marketing up to frauds & scams
+- False marketing,<br>frauds, & scams!
 
 </pba-flex>
 </pba-col>
@@ -251,7 +250,7 @@ Nuke proposes that when considering factors outside the consensus system, there 
 
 ---v
 
-## Oracle Problem
+## 🔮 Oracle Problem
 
 An [oracle](https://en.wikipedia.org/wiki/Category:Computation_oracles) provides eternal data to a consensus system.<br>(i.e. a partial state of an external chain)
 
@@ -266,6 +265,90 @@ Notes:
 - Inclusive of bridges
 - https://blog.chain.link/what-is-the-blockchain-oracle-problem/
 
+---v
+
+## 🦢 Black Swans
+
+<pba-flex center>
+
+- known bounds of operation _assumed_ impossible
+- death spirals
+
+</pba-flex>
+
+Notes:
+
+Explain example of luna or other system collapse.
+
+- 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
+- [Wiki Black Swan Theory](https://en.wikipedia.org/wiki/Black_swan_theory)
+
+---v
+
+## 🤯 Complexity
+
+<pba-cols>
+<pba-col>
+
+<img rounded style="height: 700px; margin-top:-10px" src="../../assets/img/3-Blockchain/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" alt="https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg"/>
+
+</pba-col>
+<pba-col>
+
+- Illustrating how to map the intricacies of _coupled, complicated, interactions of systems_.
+- \* You are not expected to understand this plot 😅
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+- Great talk by the author: https://www.youtube.com/watch?v=S3REdLZ8Xis reference talk by book author.
+
+Example: irrational actors can be represented in a very simple model as a completely random act, or opposite act of what a rational actor would do. If you "fuzz" you system you may discover fragility to irrational actions that could undermine your system. Perhaps it's far easier and more likely than it at first appears to experience a black swan event.
+
+- Image [source](https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg) - Describes the various categories of uncertainty, epistemology limits and statistical subjects touching on Taleb's Black swan / antifragility etc. ideas
+
+---v
+
+## 👪 Dependency
+
+<pba-cols>
+<pba-col>
+
+<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/"/>
+
+</pba-col>
+<pba-col>
+
+- [Confusion](https://secureteam.co.uk/news/what-is-a-dependency-confusion-attack/)
+- [Hijacking](https://blog.sonatype.com/bladabindi-njrat-rat-in-jdb.js-npm-malware)
+- [Hardware side-channel attacks](https://hackaday.com/2019/09/13/side-channel-attack-shows-vulnerabilities-of-cryptocurrency-wallets/)
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+- yes in software and hardware, you are at risk of attack from poisoned deps through non-maintenance, up to targeted exploitation.
+  One mitigation is vendoring these, need systems inn place to monitor.
+  Dependabot is not sufficient.
+- Also in dependance on specific operational contexts.
+  For example that it is legal to operate the software for nodes.
+
+---v
+
+## 🙈 Unknown unknowns
+
+<img rounded style="width: 800px" src="../../assets/img/3-Blockchain/DiveEdge.gif"/>
+
+Notes:
+
+Outside of the system itself, we cannot guarantee/prove that every possible condition is accounted for in our models & system design.
+We must expect forces outside our system & it's model may interact in unexpected ways.
+Assumptions about context must be rigorously evaluated (i.e. - what does finality mean in the chain this pallet or contract lives in?)
+(Formal mathematical proofs reason only about the things we can and do account for.)
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -274,7 +357,7 @@ Notes:
 
 ---v
 
-## Peer-to-Peer Networks
+## 🕸️ Peer-to-Peer Networks
 
 <img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-network-topologies.png"/>
 
@@ -381,7 +464,7 @@ Notes:
 Forks are "free" to vote in favor of...<br>
 vote on them all!
 
-(if you are not eventually slashed!)
+(If you are not eventually slashed!)
 
 <br>
 
@@ -389,8 +472,10 @@ vote on them all!
 
 Notes:
 
-- good explainer, source of img: https://golden.com/wiki/Nothing-at-stake_problem-639PVZA
-- unlike PoW where voting on a chain costs something _extrinsic_ to the system, PoS has only _intrinsic_ measures to do accounting of consensus rules.
+- Unlike PoW where voting on a chain costs something _extrinsic_ to the system, PoS has only _intrinsic_ measures to do accounting of consensus rules.
+- **Critical:** This was a problem with early naive implementations of PoS.
+  Modern PoS schemes avoid this specific problem by having the security deposit and slashing for equivocation (in a few slides)
+- Good explainer, source of image: https://golden.com/wiki/Nothing-at-stake_problem-639PVZA
 
 ---v
 
@@ -406,10 +491,23 @@ Rational actors take into account<br>_extrinsic motivators_ in calculating the h
 
 Notes:
 
-- again PoS ha only _intrinsic_ measures to do accounting of consensus rules, but the system doesn't exist in a vacuum: the relative valuation of what is at stake needs to be accounted for.
-- PoW
+- Again PoS ha only _intrinsic_ measures to do accounting of consensus rules, but the system doesn't exist in a vacuum: the relative valuation of what is at stake needs to be accounted for.
 
 ---v
+
+## Validator Consolidation
+
+How many validators does a system need?
+
+Higher numbers should lead to a decrease in the ability for entities to collude.
+
+But validators are expensive, both economically and computationally.
+
+Notes:
+
+Yet another N-lemma to consider.
+
+---
 
 ## PoS Economic Security
 
@@ -449,7 +547,7 @@ The details of a formal analysis are out of scope for this Academy.
 Proposition: Total applications valuation of their assets (tokens on smart contracts, or parachains) is limited and that limit is correlated with the total economic security of the consensus system they reside in.
 
 In Polkadot's relay chain model, Nuke would argue it's feasible that an attack to extract value from a very highly valued asset could outweighs the cost of obtaining a _byzantine level of stake_ to execute.
-So the sum of all parachains market cap is also limited as that same level of stake control would enable take over of all chains on it.
+Therefore the sum of all parachains market cap is also limited as that same level of stake control would enable take over of all chains on it.
 
 Nuke argue this is the same for the sum of all contracts valuations on something like Ethereum.
 
@@ -478,6 +576,44 @@ Selfish mining where it's impossible to _prove_ an author is withholding valid b
 
 ---v
 
+## Accountability of Authority
+
+Authority should imply accountability.
+
+No matter how you design an authority selection mechanism, some people will have a privileged position within it.
+
+Those who _choose_ to become authorities should be liable for their actions.
+
+---v
+
+## Provability and Equivocation
+
+Some types of misbehavior are harder to prove than others.
+
+**Equivocation** is simple:<br>Someone can just produce two signed messages as cryptographic proof.
+
+Others rely on challenge-response games and dispute resolution.
+
+Notes:
+
+Nothing at stake solution, with the possible caveot of long range attacks. [Weak subjectivity](https://blog.ethereum.org/2014/11/25/proof-stake-learned-love-weak-subjectivity) can still potentially cause the same behavior in a much harder to orchestra way, with bad actors having already have their stake released to produce a valid, finalized fork.
+
+---v
+
+## Design Considerations<br>in Polkadot
+
+- More validators increases the state transition throughput of the network: parachains.
+- Individual shards have full economic freedom by being members of a larger consensus system.
+- _Superlinear_ slashing puts colluding validators at existential risk,<br>while well-meaning ones should have little to worry about).
+
+Notes:
+
+A few interesting design decisions in Polkadot's architecture.
+
+We will cover polkadot much more in depth latter!
+
+---v
+
 ## Transaction Censorship and Ordering
 
 Block authors choose the transactions they include and in what order.
@@ -485,7 +621,7 @@ Block authors choose the transactions they include and in what order.
 <pba-flex center>
 
 - Censorship attacks
-- "Maximal extractable value"
+- "Maximal extractable value" (MEV)
 
 </pba-flex>
 
@@ -613,14 +749,6 @@ From before, but here point out how this is getting more fine grained as well, a
 
 ---v
 
-## Complexity
-
-TODO
-
-Notes:
-
----v
-
 ## Diversity
 
 <img style="width: 1200px" src="../../assets/img/3-Blockchain/eth-client-diversity.png" alt="https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA"/>
@@ -716,58 +844,6 @@ Notes:
 
 - Quantitative: nodes needed (for what), incentives, ... TODO
 - Qualitative: social norms, ... TODO
-
----v
-
-## Black Swans
-
-- known bounds of operation _assumed_ impossible
-- death spirals
-
-Notes:
-
-Explain example of luna or other system collapse.
-
-- 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
-- [Wiki Black Swan Theory](https://en.wikipedia.org/wiki/Black_swan_theory)
-
----v
-
-## Dependency
-
-<pba-cols>
-<pba-col>
-
-<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/"/>
-
-</pba-col>
-<pba-col>
-
-- [Confusion](https://secureteam.co.uk/news/what-is-a-dependency-confusion-attack/)
-- [Hijacking](https://blog.sonatype.com/bladabindi-njrat-rat-in-jdb.js-npm-malware)
-- [Hardware side-channel attacks](https://hackaday.com/2019/09/13/side-channel-attack-shows-vulnerabilities-of-cryptocurrency-wallets/)
-
-</pba-col>
-</pba-cols>
-
-Notes:
-
-- yes in software and hardware, you are at risk of attack from poisoned deps through non-maintenance, up to targeted exploitation.
-  One mitigation is vendoring these, need systems inn place to monitor.
-  Dependabot is not sufficient.
-- Also in dependance on specific operational contexts.
-  For example that it is legal to operate the software for nodes.
-
----v
-
-## Unknown unknowns
-
-Notes:
-
-Outside of the system itself, we cannot guarantee/prove that every possible condition is accounted for in our models & system design.
-We must expect forces outside our system & it's model may interact in unexpected ways.
-Assumptions about context must be rigorously evaluated (i.e. - what does finality mean in the chain this pallet or contract lives in?)
-(Formal mathematical proofs reason only about the things we can and do account for.)
 
 ---
 
