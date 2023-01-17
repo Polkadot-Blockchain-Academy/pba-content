@@ -16,7 +16,7 @@ Notes:
     2.) Not all p2p clients must run the same software they can develop their own (BTC, Ethereum etc..) Further decentralization.
 ---
 ## Advantages to Decentralized networks
-* No privledged nodes
+* No privileged nodes
 * Less bottlenecks with bandwidth
 * DOS resistent
 * No centralized infrastructure necessary(Except internet for now..)
@@ -25,12 +25,12 @@ Notes:
     <br>
     2.) No central node carrying all of the load of traffic. Block production and Block peering/importing can be mentioned here
     <br>
-    3.) Difficult to overload the network or DOS (Not single node is privledged)
+    3.) Difficult to overload the network or DOS (Not single node is privileged)
     <br>
-    4.) Although many nodes are run on Centralized cloud compute platforms they dont have to be(Typically)
+    4.) Although many nodes are run on Centralized cloud compute platforms they don't have to be(Typically)
 ---
 ## Difficulties or disadvantages
-* Since it is permisionless a node can share malicious resources
+* Since it is permissionless a node can share malicious resources
 * Latency
 * Difficult to regulate illicit activity
 * The network is limited by nodes with the weakest hardware
@@ -54,7 +54,7 @@ Notes:
 ## Gossip Protocol
 <img style="width: 900px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-2.svg">
 Notes:
-    Talk about advertising vs just blind sending and how that can be inneficient 
+    Talk about advertising vs just blind sending and how that can be inefficient 
 ---
 ## Discovery
 * 1.) Connect to a peer
@@ -62,12 +62,12 @@ Notes:
 * 3.) Connect to random subset of peers from the list 
 * 4.) Repeat steps 2 and 3 
 ---
-## Paritions
+## Partitions
 <img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-partition.svg">
 Notes: 
     Talk about how when a partition happens in P2P vs Centralized
     In p2p only one node needs to have a full copy in order for the file to
-    beable to be distributed accross the network
+    be able to be distributed across the network
 ---v
 ## Partitions cont..
 <img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-partition2.svg">
@@ -81,11 +81,11 @@ Notes: Show picture of something scary and devious here
 <img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-eclipse-topology.svg">
 Notes:
     1.) Distorts view of the healthy normal honest state of the network 
-    2.) Transaction confirmations can be fictious
+    2.) Transaction confirmations can be fictions
 ---v
 ## Executing the Attack
 - 1.) Flood a target node with a bunch of malicious peer addresses
-- 2.) The targeted node then stores these maliciious peers and utilizes them when resyncing on next bootup
+- 2.) The targeted node then stores these malicious peers and utilizes them when re-syncing on next bootup
 - 3.) DOS targeted node to take it offline to force a resync with these new malicious peers 
 ---v
 ## Preventing Attacks
@@ -96,13 +96,13 @@ Notes:
 Notes:
     1.) Be wary of new connections with other nodes
     <br>
-    2.) Dont just take the most recent request for connections to avoid the flooding 
+    2.) Don't just take the most recent request for connections to avoid the flooding 
     <br>
     3.) Bootnodes with higher credibility and trust (Can be a bottleneck)
         - Rotate bootnodes they are subject as well to attacks and should be rotated
 ---
 ## libp2p
-* Toolbox for developing systems built ontop of the p2p networking 
+* Toolbox for developing systems built on top of the p2p networking 
 * Simply put helpful in establishing encrypted and authenticated channels between two peers
 Notes:
 What is libp2p
@@ -129,7 +129,7 @@ Notes:
     3.) Peers exchange information about each other such as public keys and known addresses 
 ---
 ## KAD-DHT
-* Simply put a hash table containing a set of data entries these data entries are distributed accross the network
+* Simply put a hash table containing a set of data entries these data entries are distributed across the network
 * There is no central registry where to obtain everything
 * When we want some piece of data offered by the network we search for its distance to specific peers
 ---v
@@ -161,14 +161,14 @@ Notes:
     <br>
     2.) Set of multiaddresses a particular peer is listening on 
     <br>
-    3.) Table of peer keys and addresses and assosciated metadata like an addressbook. Universal multiaddress book. 
+    3.) Table of peer keys and addresses and associated metadata like an address book. Universal multiaddress book. 
 ---
 ## Transports
 * TCP
 * UDP
 * QUIC and more..
 Notes:
-    2.) Generally for p2p connections we need ordering though so UDP alone doesnt work for everything 
+    2.) Generally for p2p connections we need ordering though so UDP alone doesn't work for everything 
     <br>
     3.) Ordering built on udp
 ---
@@ -202,7 +202,7 @@ Notes:
     3.) Try to maintain connections with the nodes that have the highest reputation (With some randomness to allow new nodes to join)
 ---
 ## DOS
-* KAD-DHT are vulnerable to sybils.
+* KAD-DHT are vulnerable to sybil attacks.
 * Querying 
 * Targeting of specific keys(Block 42)
 * Do this by generating Ids close to the target key based on the DHT distance metric
@@ -211,13 +211,13 @@ Notes:
     <br>
     3.) If a malicious actor wants to target a specific key they can improve their chances of being in the lookup path. By spinning up nodes next to the nodes providing a specific key based on the DHT distance metric
 ---v
-## Sybils
-- Sybils are hard to defend against and precautions can be taken at the application level to mitigate(Proof of work perhaps?)
+## Sybil Attacks
+- Sybil attacks are hard to defend against and precautions can be taken at the application level to mitigate(Proof of work perhaps?)
 Notes:
     1.) So even though we might be receiving malicious blocks we can identify that by verifying that block is valid and edit reputation accordingly
 ---v
 ## S/Kademlia paper in libp2p
-* Query multiple disjoint lookup paths(Paths which dont share any routing peers) in parallel
+* Query multiple disjoint lookup paths(Paths which don't share any routing peers) in parallel
 ---
 ## Additional Resources
 * https://curriculum.pl-launchpad.io/curriculum/libp2p/
