@@ -541,7 +541,7 @@ TODO crib Andre's grandpa slides
 - Consensus systems can be {Deterministic, Probabilistic}
 - Consensus systems can be {Open participation, Finite participation}
 - There is always an assumption that at least {1/2, 2/3} participants are honest
-- In decentralized systems, we use Economics and Game Theory to incentivize honest execution of the consensus protocol
+- In decentralized systems, we use Economics and Game Theory<br>to incentivize honest execution of the consensus protocol
 
 ---
 
