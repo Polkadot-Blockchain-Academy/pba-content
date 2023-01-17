@@ -136,7 +136,7 @@ Someone please volunteer to describe what one of these means in this example.
 <pba-cols>
 <pba-col>
 
-<img style="width: 26em" src="./img/byzantine-generals.png"/>
+<img style="width: 700px" src="./img/byzantine-generals.png"/>
 
 </pba-col>
 
