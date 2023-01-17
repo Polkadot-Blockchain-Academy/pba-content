@@ -18,7 +18,7 @@ teaching-assistants: ["Dan Shields"]
 
 ## Path of a Parachain Block
 
-<widget-text center>
+<pba-flex center>
 
 - Backing <!-- .element: class="fragment" -->
 - Availability <!-- .element: class="fragment" -->
@@ -49,7 +49,7 @@ Part of the `InherentData.enter`
 
 ## Availability Revisited
 
-<widget-text center>
+<pba-flex center>
 
 - What does availability mean?
 - Why do we need availability?
@@ -99,7 +99,7 @@ Notes:
 
 ## Availability Core
 
-<widget-text center>
+<pba-flex center>
 
 - Concept of parachain/thread processing units
 - speculative scheduling
@@ -108,7 +108,7 @@ Notes:
 
 ## Block Availability
 
-<widget-text center>
+<pba-flex center>
 
 - `CandidatePendingAvailability.availability_votes`
 - Each bit determines if a validator voted for a particular candidate's availability record to be present
@@ -144,7 +144,7 @@ Goals:
 
 ## Proceedings
 
-<widget-text center>
+<pba-flex center>
 
 - Galois (Extension) Field (static, shared) $\mathbb{F}/p$
 - Generator Polynomial (static, shared)
@@ -207,7 +207,7 @@ Matrix inversion / multiplication too slow $O(n^3)$
 
 ## Erasure Coding - Reality
 
-<widget-text center>
+<pba-flex center>
 
 - $\mathbb{F}_2^{16}$ (an extension field without primitive roots)
 - `u16` as extension field element representation
