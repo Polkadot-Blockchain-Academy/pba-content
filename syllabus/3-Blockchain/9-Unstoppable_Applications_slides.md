@@ -8,7 +8,7 @@ duration: 1 hour
 
 Notes:
 
-Much like tokenomic design, that is a large component in unstoppable apps that incorporate cryptocurrency or other motivating factors, this lesson is far far to short to give you all the tools and techniques to make a robust dApp design.
+Much like tokenomic design, that is a large component in unstoppable apps that incorporate cryptocurrency or other motivating factors, this lesson is far far too short to give you all the tools and techniques to make a robust DApp design.
 
 Instead we strive to highlight the problem space we face and some classes of solutions to them.
 
@@ -25,7 +25,8 @@ Notes:
 - So far _mostly_ on simplified, idealized systems.
   - "Black boxes" of cryptography
   - Rational actors and assumed complete models of behavior in economics
-  - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way... we will talk about the Oracle Problem.
+  - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way...
+  We will talk about the Oracle Problem.
 - In _practice_ there are far more ["unknown unknowns"](#unknown-unknowns) and "black swan" behavior.
   More to come on that in this lesson.
 
@@ -61,17 +62,10 @@ Notes:
 
 Notes:
 
-note \* indicates the Web3 context for defining properties, not generally.
+The "\*" indicates the Web3 context for defining properties, not generally.
 Not all of these can apply, nor is is possible all simultaneously apply.
 We need to craft the system properties based on what we must achieve.
 In reality we strive for Absolute Unstoppability, but likely cannot grantee it in _every possible scenario_.
-
-We contrast the following in order above:
-
-- corruption of :ctors, data, etc.
-  Networking
-- Authority layer
-- Robustness to extrema/outlier events.
 
 ---
 
@@ -125,13 +119,15 @@ We must make trade-offs out of all N properties<br>that a _absolutely_ Unstoppab
 
 Notes:
 
-As with crypto, we can have astronomically good odds... but they are not perfect.
+As with crypto, we can have astronomically good odds...
+But they are not perfect.
 We want the most robust system possible, given the _environment and context_ the consensus system lives in.
 
-Many relevant trilemmas of note, like:
+More relevant trilemma:
 
 - [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
 - [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
+- More likely!
 
 ---
 
@@ -152,10 +148,12 @@ especilly
 
 Notes:
 
-Note, this is a bit dated with advancements in the field, but a good approx. representation.
+This diagram is a bit dated with advancements in the field, but a good approx.
+representation.
 
-Also an observation and clarification: dApps canonically refer to smart contract applications. These exist _within the context_ of consensus systems that themselves inherit properties of unstoppability from.
-The academy (to date) is almost exclusively focused on _consensus system engineering_ - we reason about blockchains themselves, and "dApp"s use these as platforms to operate in.
+Observation and clarification: DApps canonically refer to smart contract applications.
+These exist _within the context_ of consensus systems that themselves inherit properties of unstoppability from.
+The academy (to date) is almost exclusively focused on _consensus system engineering_ - we reason about blockchains themselves, and "DApp"s use these as platforms to operate in.
 Smart contracts module _may_ include detains on unstoppable dapps design considerations.
 
 <!-- TODO: update this graphic, rather stale (Joe mentioned in Cambridge) -->
@@ -168,7 +166,10 @@ Smart contracts module _may_ include detains on unstoppable dapps design conside
 <pba-cols>
 <pba-col>
 
-Blockchains only form one part of the stack.<br>
+Blockchains only form one part of the stack.
+
+<br>
+
 Web3 applications must prevent attacks at all layers.
 
 </pba-col>
@@ -180,7 +181,7 @@ Web3 applications must prevent attacks at all layers.
 - Consensus
 - Node access
 - Validator power
-- Inter-consensus system trust
+- Inter-consensus trust
 
 </pba-flex>
 </pba-col>
@@ -377,7 +378,8 @@ Notes:
 
 ## Proof of...<br>Nothing at Stake
 
-Forks are "free" to vote in favor of.... vote on them all!
+Forks are "free" to vote in favor of...<br>
+vote on them all!
 
 (if you are not eventually slashed!)
 
@@ -431,17 +433,18 @@ Notes:
 
 Here like in PoW we have relative safety in networks, but there is no way to "hop" from one chain to another, so the war is still in the relative security, but one stake cannot _directly_ attach another stake in a separate consensus system...
 
-What about an embedded system though?
+What about an system of value _within_ consensus?
 
 ---v
 
-## _Embedded_ PoS Economic Security
+## DApp PoS Economic Security
 
 <img rounded style="width: 1200px" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png"/>
 
 Notes:
 
-Consideration: these notes are an oversimplification! We may talk more about this kind of problem in NPoS lesson (Nuke think at least). The details of a formal analysis are out of scope for this Academy.
+Consideration: these notes are an oversimplification! We may talk more about this kind of problem in NPoS lesson (Nuke thinks at least).
+The details of a formal analysis are out of scope for this Academy.
 
 Proposition: Total applications valuation of their assets (tokens on smart contracts, or parachains) is limited and that limit is correlated with the total economic security of the consensus system they reside in.
 
@@ -750,7 +753,8 @@ Explain example of luna or other system collapse.
 Notes:
 
 - yes in software and hardware, you are at risk of attack from poisoned deps through non-maintenance, up to targeted exploitation.
-  One mitigation is vendoring these, need systems inn place to monitor. Dependabot is not sufficient.
+  One mitigation is vendoring these, need systems inn place to monitor.
+  Dependabot is not sufficient.
 - Also in dependance on specific operational contexts.
   For example that it is legal to operate the software for nodes.
 
@@ -796,7 +800,7 @@ For reference mostly, outside of formal class time 😀
 
 ---
 
-## Governance... unstoppable?
+## Governance... Unstoppable?
 
 <iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -822,7 +826,7 @@ Perhaps assigned informally to everyone to watch in the next few days.
 ## Can't vs. Won't
 
 > The moment you go over the the line from "can't to won't, what started as an ability becomes a responsibility.
-> And then if you claim that you don't have the ability anymore, that responsibility just became negligence, criminal negligence. <br><br>
+> And then if you claim that you don't have the ability anymore, that responsibility just became negligence, criminal negligence.<br><br>
 > -- Andreas Antonopoulos --
 
 Notes:
