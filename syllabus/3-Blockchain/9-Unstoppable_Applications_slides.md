@@ -44,7 +44,7 @@ Platforms are OK as service providers, but peer-to-peer guarantees must be uphel
 
 Blockchains only form one part of the stack. Web3 applications must prevent attacks at all layers. For discussion today:
 
-<widget-text center>
+<pba-flex center>
 
 - Networking
 - Consensus
@@ -60,7 +60,7 @@ Blockchains only form one part of the stack. Web3 applications must prevent atta
 
 There are valid criticisms of how many blockchain applications operate today.
 
-<widget-text center>
+<pba-flex center>
 
 - Mining pools (and other centralising factors)
 - RPC providers
@@ -88,7 +88,7 @@ We will discuss these and what we're building to realise a better stack.
 
 ## Network Attacks
 
-<widget-text center>
+<pba-flex center>
 
 - Entry nodes and peer discovery
 - Data center faults
@@ -120,7 +120,7 @@ Source: [Buy Bitcoin Worldwide](https://www.buybitcoinworldwide.com/pages/mining
 
 Security is always a finite resource:
 
-<widget-text center>
+<pba-flex center>
 
 - Centralised: Cost of corruption/influence
 - Proof of Work: Number of CPUs in the world
@@ -144,7 +144,7 @@ Emergence of obscure/niche "Proof of X" algorithms to shelter from attack only g
 
 ## Authority Misbehavior
 
-<widget-text center>
+<pba-flex center>
 
 - Lack of availability
 - Equivocation
@@ -280,7 +280,7 @@ This gives node providers huge power: Even if every other group wants to make a 
 
 If the chain does split into two, who decides which chain is which?
 
-<widget-text center>
+<pba-flex center>
 
 - Greater hashpower or value at stake
 - Whatever is recognised by service providers
@@ -306,7 +306,7 @@ The executor is WebAssembly. The STF is part of the state and can be upgraded.
 
 Block authors choose the transactions they include and in what order.
 
-<widget-text center>
+<pba-flex center>
 
 - Censorship attacks
 - "Miner extractable value"
@@ -337,7 +337,7 @@ Deterministic finality helps.
 
 A measure of the value that block authors can extract based on their knowledge of pending transactions and ability to order them.
 
-<widget-text center>
+<pba-flex center>
 
 - Frontrunning
 - Backrunning
@@ -351,7 +351,7 @@ Transactional execution means that logic must be "woken up" by transactions.
 
 Free execution provides more power to application developers to deliver behavior guarantees. Function calls can be scheduled and automatically dispatched. Uses include:
 
-<widget-text center>
+<pba-flex center>
 
 - Automated decision enactment
 - Logic to execute at the start or end of each block

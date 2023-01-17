@@ -80,7 +80,7 @@ Another desireable property that is sometimes too obvious to say.
 <pba-cols>
 <pba-col>
 
-<img style="width: 20em" src="../../assets/img/3-Blockchain/3.2-south-park-consensus.png"/>
+<img style="width: 20em" src="../../assets/img/3-Blockchain/south-park-consensus.png"/>
 
 </pba-col>
 
@@ -215,7 +215,9 @@ In a blockchain system, bugs in the code may cause nodes whose operators are int
 
 <img height="600px" alt="Cover page: Practical Byzantine Fault Tolerance" src="./img/pbft-cover.png" />
 
-Miguel Castro and Barbara Liskov, 1999
+<div style="font-size:0.8em">
+
+_Miguel Castro and Barbara Liskov, 1999_
 
 ---
 
@@ -227,7 +229,7 @@ Miguel Castro and Barbara Liskov, 1999
 
 A network is one of:
 
-- **Synchronous** - When a message is sent, it is received immediately by all recipients.
+- **Synchronous** - When sent, a message is received immediately by all.
 - **Asynchronous** - When a message is sent it may be received after some delay, or not at all. The sender doe not know whether it is received. Messages may be received in different orders by different parties.
 - **Partially Synchronous** - When a message is sent, it may be received after some delay up to a maximum delay, $T$. It may not be dropped entirely. Messages may be received in different orders by different parties.
 
@@ -237,15 +239,17 @@ Roughly analogous to real-time (async) vs. turn-based (sync) games.
 
 ## Sync or Async?
 
-<widget-text center>
-
 Classify each of these:
+
+<pba-flex center>
 
 - Telephone call
 - Mail communication
 - Text message
 - Jitsi video call
 - Element chat
+
+</pba-flex>
 
 Notes:
 
@@ -260,8 +264,9 @@ Notes:
 
 A system is one of:
 
-- **Deterministic** - The same inputs give the same outputs every single time.
-- **Probabilistic** - The same inputs may not give the same outputs. Requires a source of entropy. eg coin flipping.
+- **Deterministic** - The same inputs give the same outputs every time.
+- **Probabilistic** - The same inputs may not give the same outputs.<br>
+  $~~~~~~~~~~~~~~~~~~~~~~~~~$ Requires a source of entropy. eg coin flipping. <!-- $~~~$ is a hack to put in white space chars -->
 
 ---
 
@@ -285,7 +290,7 @@ One interesting thing about Nakamoto pow consensus is that it does _both_.
 
 ## Ongoing Consensus
 
-We want to continue agreeing on an every-growing history of events
+We want to continue agreeing on<br>an every-growing history of events
 
 Notes:
 
@@ -295,8 +300,12 @@ Blockchains are intended to keep processing and finalizing transactions forever.
 
 ## Desireable Properties
 
+<pba-flex center>
+
 - **Safety** aka **Finality** - Nothing bad will happen
 - **Liveness** - Something good will eventually happen
+
+</pba-flex>
 
 Notes:
 
@@ -312,7 +321,7 @@ These two decisions can be entirely orthogonal to one another, or wrapped up tog
 
 ## Liveness vs Termination
 
-Earlier I described Termination as desireable, now I'm saying Liveness is desireable.
+Earlier I described Termination as desireable,<br>now I'm saying Liveness is desireable.
 
 Are these at odds with each other?
 
@@ -330,12 +339,13 @@ Liveness guarantees that a system that is intended to continue making progress, 
 
 - Longest chain rule
 - Longest chain is "best"... for now
-- Someone could always start mining a chain and,<br>with low but non-zero probability, end up with it longer.
-- There could _already_ be a longer chain that you just haven't heard of.
+- Someone could always start mining a chain<br>and,with low but non-zero probability,<br> end up with it longer.
+- There could _already_ be a longer chain<br>that you just haven't heard of.
 
 <pba-flex>
 
-The finality is only probabilistic. Nakamoto consensus in only safe in a synchronous network.
+The finality is only probabilistic.<br>
+Nakamoto consensus in only safe in a synchronous network.
 
 Notes:
 
@@ -348,15 +358,22 @@ blocks can be downloaded and executed much more quickly than the target block ti
 
 ## Deterministic Finality
 
+<pba-flex center>
+
 - Based on traditional methods (BFT)
 - Requires an honest-majority finite authority set
 
-&nbsp;<!-- This is needed so the next bullet points don't show too early -->
+</pba-flex>
+
+<!-- two flexes needed so the next bullet points don't show too early, margin hack... TODO -->
+
+<pba-flex center style="margin-left: 48px">
 
 - Consensus protocol that assumes honest majority
-<!-- .element: class="fragment" data-fragment-index="2" -->
 - Economic game that keeps them honest
-<!-- .element: class="fragment" data-fragment-index="2" -->
+
+</pba-flex>
+<!-- .element: class="fragment"-->
 
 Notes:
 
@@ -366,14 +383,16 @@ If you want deterministic finality, it basically means employing BFT agreement p
 
 ## Incentives: Game Theory!
 
-Abstractly: You behave honestly when the utility of doing so exceeds the cost.
-
-<widget-text center>
+Abstractly: You behave honestly<br>when the utility of doing so exceeds the cost.
 
 Incentive designers may potentially:
 
+<pba-flex center>
+
 - Reward honest behavior
 - Punish (aka slash) dishonest behavior
+
+</pba-flex>
 
 Notes:
 
@@ -385,14 +404,18 @@ It is often the case that blockchain systems give rewards in the authorship and 
 
 ## What is potentially punishable?
 
-<widget-text center>
+<pba-flex center>
 
 - Authoring when you aren't supposed to
 - Failing to author when you are supposed to
-- Casting finality votes for conflicting candidate blocks
-- Casting a finality vote for a block (or chain) that includes an invalid state transition.
+- Casting finality votes for conflicting blocks
+- Casting a finality vote for a block (or chain)<br> that includes an invalid state transition.
 
-_How severe are each of these offences? Do they all warrant a slash? A full slash?_
+<br>
+
+> How severe are each of these offenses?<br>
+> Do they all warrant a slash?<br>
+> A full slash?
 
 Notes:
 
@@ -404,11 +427,15 @@ Instead, aspiring participants will typically lock up a security deposit which c
 
 ### Concrete Punishment Example
 
-Let's say a slash is 100 units, and the reporter gets 10%. I plan to attack the network. If my attack is successful, I expect to gain roughly 200 units worth of utility.
+Let's say a slash is 100 units, and the reporter gets 10%.<br>I plan to attack.
 
-I ask another authority to cooperate with me: "I'll pay you 20 units to _not_ rat me out for my attack".
+If my attack is successful,<br>I expect to gain roughly 200 units worth of utility.
 
-Question: How would you respond?
+I ask another authority to cooperate with me:<br>"I'll pay you 20 units to _not_ rat me out for my attack".
+
+<br>
+ 
+> How would you respond?
 
 Notes:
 
@@ -418,11 +445,16 @@ Notes:
 
 ## Case Study: Tendermint
 
+<pba-flex center>
+
 - Authorship is like Aura - simple round robin
 - Naive but **simple** BFT implementation
-- If the block has enough votes by the end of the slot, it is finalized. Otherwise, it is rejected via timeout.
+- If the block has enough votes<br>by the end of the slot, it is finalized.<br>
+  Otherwise, it is rejected via timeout.
 - "Instant finality"
-- Forkless - Forks are disallowed because blocks can only be authored on finalized parents.
+- Forkless - Forks are disallowed<br>because blocks can only be authored<br>on finalized parents.
+
+</pba-flex>
 
 Notes:
 
@@ -439,8 +471,8 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <div>
 
 - 2: Prevote
-    - If the block is valid, Prevote for it.
-    - If the block is invalid, Prevote `Nil`
+  - If the block is valid, Prevote for it.
+  - If the block is invalid, Prevote `Nil`
 
 </div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -448,8 +480,8 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <div>
 
 - 3: Precommit
-    - Wait for 2/3 prevotes then Precommit
-    - If you don't get 2/3 prevotes, Precommit `Nil`
+  - Wait for 2/3 prevotes then Precommit
+  - If you don't get 2/3 prevotes, Precommit `Nil`
 
 </div>
 <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -457,25 +489,37 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <div>
 
 - 4: Complete
-    - Wait for 2/3 Precommits them finalize
-    - If you don't get it, throw the block away
+  - Wait for 2/3 Precommits them finalize
+  - If you don't get it, throw the block away
 
 </div>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 [Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465)
+
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---
 
 ## Hybrid Consensus
 
-![Abstract to grandpa paper](./img/grandpa-abstract.png)
+<pba-cols>
+<pba-col>
+
+<img rounded style="width: 1000px;" src="./img/grandpa-abstract.png"/>
+
+</pba-col>
+<pba-col>
+<pba-flex center style="font-size: 0.7em; margin-left:-120px">
 
 - Separates block production from finality.
-- Block productionstays live even if finality lags.
+- Block production stays live even if finality lags.
 - Allows lower overhead in the finality layer.
 - Used in Substrate.
+
+</pba-flex>
+</pba-col>
+</pba-cols>
 
 ---v
 
@@ -492,12 +536,11 @@ Previously we talked about how a node's view of the best block can change, and t
 
 ## Modified Fork Choice Rule
 
-Only extend best finalized chain
-
 <img style="width: 500px; margin-right: 150px;" src="./img/reorgs-finality-1.svg"/>
 <br />
 <img style="width: 650px" src="./img/reorgs-finality-2.svg"/>
 
+Only extend best finalized chain
 Notes:
 Once you have a finality gadget installed, you have to make sure you only ever author on top of finalized blocks. Even if another chain is longer.
 
@@ -505,27 +548,34 @@ Once you have a finality gadget installed, you have to make sure you only ever a
 
 ## Case Study: Grandpa
 
-<widget-text center>
+<pba-flex center>
 
 - Deterministic finality _only_
-- Requires an external block authoring scheme with its own liveness proof.
+- Requires an external block authoring scheme<br> with its own liveness proof.
 - Kind of like Tendermint but better.
 - Finalizes chains, not blocks.
+
+</pba-flex>
 
 ---v
 
 ## Vote on Chains, not Blocks
 
-BFT finality with $n$ authorities is in $O(n^2)$.
-Tendermint does this at **every block**.
+BFT finality with $n$ authorities is in $O(n^2)$.<br>
+Tendermint does this at **every block**.<br>
 This bounds the size of the authority set.
 
-<widget-text center>
+<pba-flex center>
 
-With separated, we treat each vote as a vote not only for one block, but also for each ancestor block. This significantly reduces the number of total messages sent.
+With separated, we treat each vote as a vote not only for one block,<br>but also for each ancestor block.<br>
+This significantly reduces the number of total messages sent.
+
+<br>
 
 - Allows the chain to stay live even when many validators are offline
 - Allows for a challenge period to delay finality if needed
+
+</pba-flex>
 
 ---
 
@@ -535,7 +585,7 @@ TODO crib Andre's grandpa slides
 
 ## Summary
 
-<widget-text center>
+<pba-flex center>
 
 - Networks can be {Synchronous, Asynchronous}
 - Consensus systems can be {Deterministic, Probabilistic}
@@ -545,6 +595,8 @@ TODO crib Andre's grandpa slides
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 # Game Time
 
-Now let's play the board game
+> I want to play a game...<br>a board game!
