@@ -439,8 +439,8 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <div>
 
 - 2: Prevote
-    - If the block is valid, Prevote for it.
-    - If the block is invalid, Prevote `Nil`
+  - If the block is valid, Prevote for it.
+  - If the block is invalid, Prevote `Nil`
 
 </div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -448,8 +448,8 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <div>
 
 - 3: Precommit
-    - Wait for 2/3 prevotes then Precommit
-    - If you don't get 2/3 prevotes, Precommit `Nil`
+  - Wait for 2/3 prevotes then Precommit
+  - If you don't get 2/3 prevotes, Precommit `Nil`
 
 </div>
 <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -457,13 +457,14 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <div>
 
 - 4: Complete
-    - Wait for 2/3 Precommits them finalize
-    - If you don't get it, throw the block away
+  - Wait for 2/3 Precommits them finalize
+  - If you don't get it, throw the block away
 
 </div>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 [Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465)
+
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---

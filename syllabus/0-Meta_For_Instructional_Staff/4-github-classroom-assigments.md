@@ -60,7 +60,7 @@ prefix="pba-assignment-1"
 mkdir -p $prefix
 cd $prefix
 
-for repo in $(gh repo list $owner --limit 9000 --json name --jq '.[] | .name'); do 
+for repo in $(gh repo list $owner --limit 9000 --json name --jq '.[] | .name'); do
     if [[ $repo = $prefix* ]]; then
         git clone git@github.com:$owner/$repo ${repo#$prefix-}
     fi
