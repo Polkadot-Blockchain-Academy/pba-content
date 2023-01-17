@@ -80,7 +80,7 @@ Another desireable property that is sometimes too obvious to say.
 <pba-cols>
 <pba-col>
 
-<img style="width: 20em" src="../../assets/img/3-Blockchain/south-park-consensus.png"/>
+<img style="width: 20em" src="./img/south-park-consensus.png"/>
 
 </pba-col>
 
