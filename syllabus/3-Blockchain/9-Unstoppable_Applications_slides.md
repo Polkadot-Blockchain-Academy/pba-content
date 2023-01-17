@@ -26,7 +26,8 @@ Notes:
   - "Black boxes" of cryptography
   - Rational actors and assumed complete models of behavior in economics
   - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way... we will talk about the Oracle Problem.
-- In _practice_ there are far more "unknown unknowns" and "[black swan](#next-steps)" behavior.
+- In _practice_ there are far more ["unknown unknowns"](#unknown-unknowns) and "black swan" behavior.
+  More to come on that in this lesson.
 
 ---
 
@@ -79,6 +80,8 @@ We contrast the following in order above:
 <pba-cols>
 <pba-col>
 
+<br>
+
 <div style="font-size:smaller">
 
 > Some things benefit from shocks; they thrive and grow when exposed to volatility, randomness, disorder, and stressors and love adventure, risk, and uncertainty.
@@ -93,7 +96,7 @@ We contrast the following in order above:
 
 </pba-col>
 <pba-col>
-<img rounded style="width: 500px" src="../../assets/img/3-Blockchain/hydra-Gustave_Moreau.jpg"/>
+<img rounded style="width: 550px" src="../../assets/img/3-Blockchain/hydra-Gustave_Moreau.jpg"/>
 </pba-col>
 </pba-cols>
 
@@ -125,7 +128,7 @@ Notes:
 As with crypto, we can have astronomically good odds... but they are not perfect.
 We want the most robust system possible, given the _environment and context_ the consensus system lives in.
 
-Many relevant [trilemmas](#next-steps) of note, like:
+Many relevant trilemmas of note, like:
 
 - [Scalability](https://vitalik.ca/general/2021/04/07/sharding.html#the-scalability-trilemma)
 - [Zooko's Triangle](https://en.wikipedia.org/wiki/Zooko's_triangle) (Network IDs)
@@ -140,15 +143,6 @@ Notes:
 
 Key point: your "perfect" system in is likely weak to things outside of the "rules"!
 especilly
-
----
-
-## People over Platforms
-
-Web3 should prioritize _people_ over _platforms_.
-
-Platforms are OK as service providers,<br>
-but peer-to-peer guarantees must be upheld<br>without requiring trust in a service provider.
 
 ---
 
@@ -176,6 +170,7 @@ Smart contracts module _may_ include detains on unstoppable dapps design conside
 
 Blockchains only form one part of the stack.<br>
 Web3 applications must prevent attacks at all layers.
+
 </pba-col>
 <pba-col>
 
@@ -197,64 +192,92 @@ These are for discussion today, but there are _many more_ thank those listed her
 
 ---
 
-## Criticisms
+## Web3 Criticisms
 
-There are valid criticisms of how many blockchain applications operate today.
+<pba-cols>
+<pba-col>
+
+There are [valid criticisms](https://moxie.org/2022/01/07/web3-first-impressions.html) of how many Web3 apps operate today.
+
+</pba-col>
+<pba-col>
 
 <pba-flex center>
 
-- Centralizing factors
-  - Mining & staking pools
-  - RPC providers
-  - ...
-- Bridges
+- Humans are cheap & lazy -> no individuals run servers.
+- RPC node providers
+- A _protocol_ improves<br>slowly vs. a platform.
+- False marketing up to frauds & scams
 
 </pba-flex>
-
-We will discuss these and what we're building to realize a better stack.
+</pba-col>
+</pba-cols>
 
 Notes:
 
 https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the state of the space, but founder of [Signal messenger](https://signal.org).
 
----
-
-# System Level
-
----
-
-## Consensus Systems
-
-Authoritative TODO remind from earlier in this mod
-
-concentric rings of consensus diagram? single ones -> global consensus.
+Not all hope is lost!
+This is valid mostly in the present, we will discuss these and what we're building to realize a better stack.
 
 ---
 
-## [Oracle](https://en.wikipedia.org/wiki/Category:Computation_oracles) Problem
+<!-- .slide: data-background-color="#4A2439" -->
 
-An oracle provides data to a consensus system from outside it's boundaries. (i.e. a partial state of an external chain)
+# Systems Level
 
-The oracle problem is data from or push data out to any external system as built-in functionality.
+---v
+
+## Prove it!
+
+We use the word "proof" a lot...<br>it means many things in [different contexts](https://en.wikipedia.org/wiki/Provable):
+
+<pba-flex center>
+
+- Math → **Provable Correct** (algo)
+- Consensus → Proof of X (security)
+- Crypto → \[ZK | VRF | Validity | ... \] Proofs
+
+</pba-flex>
+
+Notes:
+
+The one so far not covered is Provable Correctness - where we can use maths to _prove_ that our logic cannot do unexpected behavior.
+An interesting example is [Cardano's design value proposition](https://docs.cardano.org/explore-cardano/cardano-design-rationale) using haskell and provably correct most parts of their platform.
+
+BUT this property assumes a complete system model!
+Nuke proposes that when considering factors outside the consensus system, there cannot be a rigorous proof of correctness as we cannot model the universe.
+
+---v
+
+## Oracle Problem
+
+An [oracle](https://en.wikipedia.org/wiki/Category:Computation_oracles) provides eternal data to a consensus system.<br>(i.e. a partial state of an external chain)
+
+The [oracle problem](https://blog.chain.link/what-is-the-blockchain-oracle-problem/) relates to the _trust_ in the oracle.
 
 Notes:
 
 - Example: Random Oracle, NOT like VRF we saw in the crypto module that can be in the consensus system.
 - Oracle needed for _input_ from anything that lives outside of the boundary of the consensus system.
-  - Everything in a chain is self-referential. Applications in a consensus system may want to _try_ and reason about something outside itself.
+  - Everything in a chain is self-referential.
+    Applications in a consensus system may want to _try_ and reason about something outside itself.
 - Inclusive of bridges
+- https://blog.chain.link/what-is-the-blockchain-oracle-problem/
 
 ---
+
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Network Level
 
----
+---v
 
 ## Peer-to-Peer Networks
 
-<img style="width: 900px" src="../../assets/img/3-Blockchain/3.4-network-topologies.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-network-topologies.png"/>
 
----
+---v
 
 ## Network Attacks
 
@@ -265,7 +288,15 @@ Notes:
 - Traffic analysis and targeted takedowns
 - Eclipse attacks
 
+</pba-flex>
+
 Notes:
+
+The network lesson covers these, just a reminder that the network is not in the direct command of the consensus system, so it's a threat!
+
+- security & stability
+- privacy!
+  On chain might be ZK, but how about the gossip and RPCs?
 
 Boot nodes typically _hard coded_ to "bootstrap" and start peer discovery.
 Boot nodes can decide what peers to advertize, or can be inaccessible.
@@ -274,26 +305,35 @@ Hard to hide! Most p2p traffic is easy to identify vs. web2 traffic.
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 # Consensus
 
----
+---v
 
 ## Mining Pools
 
-Proof of Work authority sets have no finite bound.
+Proof of Work authority sets have no finite bound.<br>
 But people like to organize.
 
-We actually don't want authority sets to organize because it creates risk.
+\[Collaborating | Colluding\] authority sets creates risk.
 
----
+Notes:
+
+Call out that Nomination pools exist and are discussed in the NPoS lesson latter.
+Similar issues, but in a more bounded set.
+
+---v
 
 ## Mining Pools
 
-<img rounded src="../../assets/img/3-Blockchain/3.4-mining-pools.png"/>
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/mining-pools.png"/>
+
+Notes:
 
 Source: [Buy Bitcoin Worldwide](https://www.buybitcoinworldwide.com/pages/mining/pools/img/pool-graph.png)
 
----
+---v
 
 ## Security Dilution
 
@@ -305,21 +345,25 @@ Security is always a finite resource:
 - Proof of Work: Number of CPUs in the world
 - Proof of Stake: Value (by definition, finite)
 
----
+</pba-flex>
+
+---v
 
 ## Security Dilution
 
-Consensus systems compete for security, and they have reason to attack each other.
+Consensus systems compete for security,<br>and they have reason to attack each other.
 
-Emergence of obscure/niche "Proof of X" algorithms to shelter from attack only goes so far.
+Emergence of obscure/niche "Proof of X" algorithms<br>to shelter from attack only goes so far.
 
----
+---v
 
 ## Proof of Work Battles
 
-<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
+<img rounded style="width: 1300px" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
 
-_What might it cost to 51% attack?_
+<br>
+
+> What might it cost to successfully attack?
 
 Notes:
 
@@ -329,183 +373,107 @@ Notes:
 - ASICs are less flexible, but also can to the highest paying coin.
 - Example: [ETH classic deep re-ogs](https://coingeek.com/ethereum-classic-experiences-51-attack-and-3000-block-reorg/)
 
----
+---v
+
+## Proof of...<br>Nothing at Stake
+
+Forks are "free" to vote in favor of.... vote on them all!
+
+(if you are not eventually slashed!)
+
+<br>
+
+> What might it cost to successfully attack?
+
+Notes:
+
+- good explainer, source of img: https://golden.com/wiki/Nothing-at-stake_problem-639PVZA
+- unlike PoW where voting on a chain costs something _extrinsic_ to the system, PoS has only _intrinsic_ measures to do accounting of consensus rules.
+
+---v
+
+## Proof of...<br>_Relatively_ Nothing at Stake
+
+Risk-to-reward ratio of attacks is<br>_relative to the valuation of the staked assets_.
+
+Rational actors take into account<br>_extrinsic motivators_ in calculating the highest reward.
+
+<br>
+
+> What might it cost to successfully attack?
+
+Notes:
+
+- again PoS ha only _intrinsic_ measures to do accounting of consensus rules, but the system doesn't exist in a vacuum: the relative valuation of what is at stake needs to be accounted for.
+- PoW
+
+---v
+
+## PoS Economic Security
+
+Proposition: The upper bound of economic security in PoS is relative valuation can secure, that is correlated with the market capitalization of the network.
+
+<br>
+
+> Market capitalization refers to the total market value of all assets inherent to a single company/chain/token.
+
+Notes:
+
+- This market capitalization could be company shares, or total ETH in existence, or total X token associated with a specific smart contract or parachain.
+
+---v
+
+## PoS Economic Security Wars
+
+<img rounded style="width: 1200px" src="../../assets/img/3-Blockchain/market-cap-pos.png"/>
+
+Notes:
+
+Here like in PoW we have relative safety in networks, but there is no way to "hop" from one chain to another, so the war is still in the relative security, but one stake cannot _directly_ attach another stake in a separate consensus system...
+
+What about an embedded system though?
+
+---v
+
+## _Embedded_ PoS Economic Security
+
+<img rounded style="width: 1200px" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png"/>
+
+Notes:
+
+Consideration: these notes are an oversimplification! We may talk more about this kind of problem in NPoS lesson (Nuke think at least). The details of a formal analysis are out of scope for this Academy.
+
+Proposition: Total applications valuation of their assets (tokens on smart contracts, or parachains) is limited and that limit is correlated with the total economic security of the consensus system they reside in.
+
+In Polkadot's relay chain model, Nuke would argue it's feasible that an attack to extract value from a very highly valued asset could outweighs the cost of obtaining a _byzantine level of stake_ to execute.
+So the sum of all parachains market cap is also limited as that same level of stake control would enable take over of all chains on it.
+
+Nuke argue this is the same for the sum of all contracts valuations on something like Ethereum.
+
+---v
 
 ## Authority Misbehavior
 
 <pba-flex center>
 
-- Lack of availability
 - Equivocation
-  - Authorship: Proposing mutually exclusive chains
-  - Finality: Voting for mutually exclusive chains to be final
+  - Authorship: Proposing mutually<br>exclusive chains
+  - Finality: Voting for mutually<br>exclusive chains to be final
 - Invalidity
-
----
-
-## Equivocation
-
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-equivocation.png"/>
-
----
-
-## Provability
-
-Some types of misbehavior are harder to prove than others.
-
-Equivocation is simple: Someone can just produce two signed messages as cryptographic proof.
-
-Others rely on challenge-response games and dispute resolution.
-
----
-
-## Validator Consolidation
-
-How many validators does a system need?
-
-Higher numbers should lead to a decrease in the ability for entities to collude.
-
-But validators are expensive, both economically and computationally.
-
----
-
-## TODO Validators
-
-- Parity saved ETH (alt clients, and diversity)
-  - same runtime on chain, it's impossible to have an alt runtime.
-- all on GCP
-- All run same hardware (CPU, etc.)
-- ***
-
-## Authority from Accountability
-
-Authority should imply accountability.
-
-No matter how you design an authority selection mechanism, some people will have a privileged position within it.
-TODO example or justification to back up.
-
-Those who _choose_ to become authorities should be liable for their actions.
-
----
-
-## Polkadot Pause
-
-A few interesting design decisions in Polkadot w/r/t its architecture:
-
-- More validators increases the state transition throughput of the network.
-- Individual shards have full economic freedom by being members of a larger consensus system.
-- Superliner slashing puts colluding validators at existential risk (while well-meaning ones should have little to worry about).
-
----
-
-# Network Access
-
----
-
-## Web2 Access
-
-Heavily based on trust.
-
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-web2stack.png"/>
-
-Any cryptographic guarantees are between central authority and users.
-
----
-
-## Blockchain Node Queries
-
-In an ideal case, application users would run nodes themselves, so as to not trust a provider.
-
-But nodes can consume large amounts of storage, network, and CPU resources.
-
-TODO: social & culture of network users can influence - monero as example "run your own node"
-
----
-
-## Node Queries
-
-So, most people outsource.
-
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-node-queries.png"/>
-
-These service providers wield large amounts of power to deceive, censor, and surveil.
-
----
-
-## Multi-Chain Applications
-
-If running _one_ node is burdensome, try multiple.
-
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
-
----
-
-## Light Clients
-
-Light clients only store block headers and consensus-critical information.
-
-- Allow users to query full nodes from RPC providers,
-- but take advantage of hash-based data structure to _verify_ the information coming from the provider.
-- Low storage and bandwidth requirements (use in a browser extension or mobile device).
-
----
-
-## Light Clients
-
-<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-light-clients.png"/>
-
-TODO notes on attacks of BRIDGES with this, if not covered.
-Relayer is RPC on bridge, could be any _single_ one, but no consensus.
-DO NOT assume finalization is "real" as could be byzantine.
-
----
-
-# Validator Power
-
----
-
-## STF Upgrades
-
-Validators all execute the state transition function.
-
-What happens when people (<--intentionally vague, for now) want to upgrade the STF?
-
----
-
-## Hard Forks
-
-Traditionally, all nodes need to upgrade their software to apply any upgrades.
-
-This gives node providers huge power: Even if every other group wants to make a change, "authority nodes" can refuse to upgrade.
-
----
-
-## Hard Forks
-
-If the chain does split into two, who decides which chain is which?
-
-<pba-flex center>
-
-- Greater hash power or value at stake
-- Whatever is recognized by service providers
-- Whatever is recognized by data aggregators
-
-**But not the stakeholders of the system**
+- Lack of availability
+- **Intentional protocol abuse** ([selfish mining](https://golden.com/wiki/Selfish_mining_attack-39PMNNA))
 
 </pba-flex>
 
----
+Notes:
 
-## Hard Forks and Substrate
+We already talked consensus faults, but abuse is newer.
+Nuke argues "abuse" as a term here isn't the intended mechanism design, and is adverse to the health of the system.
+Selfish mining where it's impossible to _prove_ an author is withholding valid blocks to "cheat" by mining ahead of the rest of th network is a good example in the class of attacks that consensus authorities and others may have.
 
-Substrate separates the state transition _logic_ from the _executor_.
+...Could other actors abuse the protocols?
 
-The executor is WebAssembly
-The STF is part of the state and can be upgraded.
-
-**Authority nodes should _execute_ the STF, not be trusted to _choose_ it.**
-
----
+---v
 
 ## Transaction Censorship and Ordering
 
@@ -514,43 +482,41 @@ Block authors choose the transactions they include and in what order.
 <pba-flex center>
 
 - Censorship attacks
-- "Miner extractable value"
+- "Maximal extractable value"
 
----
+</pba-flex>
 
-## Censorship
+---v
+
+## Web3 Goal: Non-Censorship
 
 There are a lot more system users than system authorities.
 
 However, every transaction must be included by an authority.
 
-If no authority will include a user's transaction, they do not have permissionless access.
+If no authority will include a user's transaction, they do not have _permissionless_ access.
 
-TODO add diagram
+_If any authority (author) decides not to censor, it **may** be included._
 
-- If any authority (author) decides not to censor, it can be included.
+Notes:
 
----
+Most present systems have no mechanism to penalize censorship, and a much harder problem can be the ability to discover this is happening on the network at all, depending on the actors involved.
 
-## Censorship
-
-But all nodes _can_ censor but still uphold the expectation that the system is available to everyone.
-
-As long as no transaction is in the intersection of the censored sets.
-
-Deterministic finality helps.
-
----
+---v
 
 ## Maximal Extractable Value (MEV)
 
 A measure of the value that block authors can extract based on their knowledge of pending transactions and ability to order them.
 
-<pba-flex center>
+<pba-flex center style="margin-left: -90px">
 
 - Frontrunning
 - Backrunning
 - Sandwiching
+
+</pba-flex>
+
+<br>
 
 > https://www.mev.wiki/
 
@@ -559,31 +525,51 @@ Notes:
 Emergent behavior.
 Not realized as possible by many until it quietly became the norm.
 
----
+---v
 
 ## Maximal Extractable Value
 
-#### "[Ethereum is a Dark Forest](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest)"
+> An environment in which detection means certain death...<br>
+> ...identifying someone’s location is as good as directly destroying them.<br><br>
+> -- [Ethereum is a Dark Forest](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest) --
 
-> An environment in which detection means certain death...
-> ...publicly identifying someone else’s location is as good as directly destroying them.
+Notes:
 
-TODO describe more about MEV in depth
+Tell the story of this article, basically a white hat engineered obfuscation to try and remove funds in a bugged contract -> someone decoded, realized extractable valued, and front-ran them.
 
-- flashbots
-- MEV boost
--
+This is now the norm on Ethereum at least, and further _it's becoming institutionalized_.
 
-Diagram:
-old way of all in one node
-now unbuilding into separate.
+<!-- TODO Dark Forest game on Ethereum testnet... or other zk game? -->
 
-Describe instability of more and more complex systems
+---v
 
-- unknown unknowns.
-- PoW -> stake -> unbounded systems.
+## 👼 Flashbots
 
----
+> Flashbots is a research and development organization formed to mitigate the negative externalities posed by Maximal Extractable Value (MEV) to stateful blockchains, starting with Ethereum.<br><br>
+> -- [Flashbots](https://www.flashbots.net/) --
+
+Notes:
+
+This might be misleading, in that they are profiting in making MeV more effective and institutionalized!
+
+---v
+
+## Flashbots 😈
+
+- **Flashbots Auction**: a marketplace for transaction ordering including the Flashbots Relay and MEV-Geth.
+- **MEV-Boost**: an out-of-protocol implementation of proposer-builder separation (PBS) for proof-of-stake Ethereum.
+- **Flashbots Protect**: an rpc endpoint that anyone can use for protection from frontrunning and failed transactions.
+- **Flashbots Data**: tools and dashboards to improve the transparency of MEV activity on Ethereum and the Flashbots Auction.
+
+Notes:
+
+Centralizing force, as information asymmetry generally drives towards a monopoly on MeV.
+Competitive landscape for this exists, and to Flashbots' credit, they seem genuine in trying to help the health of Ethereum by decentralizing...
+
+(BUT FIRST a discussion!)
+Especially in light of recent OFAC pressures revealing fragility in the system...
+
+---v
 
 <!-- .slide: data-background-color="#4A2439" -->
 
@@ -597,171 +583,152 @@ Notes:
 
 - Flashbots & Friends
 
-<!-- TODO Dark Forest game on Ethereum testnet... or other zk game? -->
+---v
 
----
+## Compliance
 
-## Revisiting Transactional and Free Execution
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/tornado-ofac.png"/>
 
-Transactional execution means that logic must be "woken up" by transactions.
+Notes:
 
-Free execution provides more power to application developers to deliver behavior guarantees.
-Function calls can be scheduled and automatically dispatched.
-Uses include:
+https://cryptoslate.com/op-ed-is-ethereum-now-under-u-s-control-99-of-latest-relay-blocks-are-censoring-the-network/
 
-<pba-flex center>
+- code is unstoppable, but platform _can_ sensor. ability -> responsibility (we may talk more on that latter)
 
-- Automated decision enactment
-- Logic to execute at the start or end of each block
-- "Cleanup" tasks when blocks are not full
+---v
 
----
+## Unbundling
 
-# Dependencies
+<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
 
----
+Notes:
 
-## Separate Consensus Systems
+From before, but here point out how this is getting more fine grained as well, and where a single actor would do it all (early bitcoin for example) we are moving more and more to appear.
 
-Two consensus systems may have differing levels of security and definitions of finality.
+- Especially if more things like MeV can be enhanced by doing so.
+- This introduces more complexity and interfaces that can provide weakness (especially when a network is required!)
 
-When these systems interact, they must trust messages from the other system.
+---v
 
----
+## Complexity
 
-## Reversions
+TODO
 
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-reversions-1.png"/>
+Notes:
 
----
+---v
 
-## Reversions
+## Diversity
 
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-reversions-2.png"/>
+<img style="width: 1200px" src="../../assets/img/3-Blockchain/eth-client-diversity.png" alt="https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA"/>
 
----
+Notes:
 
-## Blockchain Wars
+- Parity saved ETH (alt clients, and diversity)
+  - same runtime on chain, it's impossible to have an alt runtime.
+- all on GCP
+- All run same hardware (CPU, etc.)
+- ...
 
-Systems with high security have the incentive to attack systems with low security whom they perceive as competitors.
-
----
-
-## Trustless Messaging
-
-In order to handle messages _without trust_, systems must share common finality guarantees.
-
-`A` should never process a message from `B`, where `B` is reverted and `A` is not.
-
----
-
-## A Note on Synchronicity
-
-Smart contracts on a single chain (e.g. Ethereum) can interact trustlessly because of their shared view of finality.
-
-Asynchronous systems can also share finality (i.e., be members of the same consensus system).
-
----
-
-## Human Nature
-
-People are **_LAZY_**, expect them to trend towards the easiest option.
+- Image source, and good reference on this: https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
+# Network Access
+
+---v
+
+## Node Queries
+
+Running a node is hard, most people outsource.
+
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-node-queries.png"/>
+
+These service have power to deceive, censor, and surveil.
+
+---v
+
+## Multi-Chain Applications
+
+If running _one_ node is burdensome, try multiple.
+
+<img style="width: 700px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
+
+---v
+
+## Light Clients, Bridges, Relays
+
+<img style="width: 1200px; margin-left: -150px" src="../../assets/img/3-Blockchain/3.4-light-clients.png"/>
+
+_Note the single peer reliance <br> for **embedded light clients in bridges**_
+
+Notes:
+
+Relayer is RPC on bridge (something like or exactly an embedded light client inside a consensus system)
+
+- Can only be a _single node_ of the set of relayers, so this oracle has a much broader scope of attack vectors to trick the consensus system getting info from them.
+  - **DO NOT assume finalization is "real" as could be byzantine!**
+  - Ex: sending a valid block that is not published on the main network, but the consensus system getting the data from this one RPC has no way to verify this with other parties (typically) as it does not have peers with the other consensus system.
+- no consensus logic and way to hold accountable bad actors directly.
+  - must be out of band, "fisherman" style protocols created.
+
+---v
+
+## Blockchain Wars
+
+Systems with high security have the incentive to<br>attack systems with low security whom they perceive as competitors.
+
+---v
+
+## Trustless Messaging
+
+In order to handle messages _without trust_,<br>systems must share common finality guarantees.
+
+`A` should never process a message from `B`,<br>where `B` is reverted and `A` is not.
+
+---v
+
+## A Note on Synchronicity
+
+Smart contracts on a single chain (e.g. Ethereum)<br>can interact trustlessly because of their shared view of finality.
+
+Asynchronous systems can also share finality.<br>
+i.e., be members of the same consensus system.
+
+---v
+
+<!-- .slide: data-background-color="#4A2439" -->
+
 # Discussion
 
-Minimum viable decentralization.
+**Minimum viable decentralization.**
 
-_What key aspects should be considered?_
+<br>
+
+> What key aspects should be considered?
 
 Notes:
 
 - Quantitative: nodes needed (for what), incentives, ... TODO
 - Qualitative: social norms, ... TODO
 
----
-
-## Governance... unstoppable?
-
-<iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-[Unstoppable Code: The Difference Between Can't and Won't](https://www.youtube-nocookie.com/embed/Q6euy5W1js4)
-
-Notes:
-
-Watch _after class_.
-Perhaps assigned informally to everyone to watch in the next few days.
-
 ---v
 
-## Can't vs. Wont
-
-difference? Silk road founder getting 2 life sentences + 40 years.
-
-ability -> responsibility
-claim you don't have the ability anymore -> negligence
-
-moral relativism -> "who's law?"
-
-"oops clause" -> not too narrow.
-
----
-
-## Compliance
-
-TODO
-
-OFAC has had on validator compliance because of Tornado Cash.
-
-- code is unstoppable, but platform _can_ sensor. ability -> responsibility
-
----
-
-## Democratic Systems
-
-Democratic Mediums is a directory of patterns for decision, deliberation, and noise.
-
-> https://medlabboulder.gitlab.io/democraticmediums/ > https://metagov.org/ -- weekly seminar
-> https://daocollective.xyz/ > https://www.smartcontractresearch.org/
-
-Notes:
-
-Many novel and niece definitions in this wiki.
-Very much encouraged to explore after class!
-
----
-
-## DAOs
-
-Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech/what-dao/)).
-
-> A **coordination** mechanism.
-
----
-
-## Modeling Behavior
-
-- [Token Engineering](#next-steps)
-  Notes:
-
-Mostly free education and tools to dive deeper on tokenomics.
-Remember, these are _models_ of idealized systems in general, real world conditions will differ!
-
----
-
-## TODO
-
-example of luna or other system collapse
+## Black Swans
 
 - known bounds of operation _assumed_ impossible
 - death spirals
 
----
+Notes:
 
----
+Explain example of luna or other system collapse.
+
+- 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
+- [Wiki Black Swan Theory](https://en.wikipedia.org/wiki/Black_swan_theory)
+
+---v
 
 ## Dependency
 
@@ -787,7 +754,7 @@ Notes:
 - Also in dependance on specific operational contexts.
   For example that it is legal to operate the software for nodes.
 
----
+---v
 
 ## Unknown unknowns
 
@@ -819,16 +786,92 @@ Governance/"oops clause" can help fix things, but also risk system capture.
 
 ---
 
-## Next Steps
+<!-- .slide: data-background-color="#000000" -->
 
-1. [The Oracle Problem](https://blog.chain.link/what-is-the-blockchain-oracle-problem/)
-1. Black Swan Theory (Events)
-
-- [Wiki](https://en.wikipedia.org/wiki/Black_swan_theory)
-- 📔[The Black Swan: The Impact of the Highly Improbable](https://en.wikipedia.org/wiki/The_Black_Swan:_The_Impact_of_the_Highly_Improbable)
-
-1. [Token Engineering](https://tokenengineeringcommunity.github.io/website/) {especially the Academy & cadCAD Edu}
+# Additional Slides
 
 Notes:
 
-Citations from the slides, links to resources and next steps.
+For reference mostly, outside of formal class time 😀
+
+---
+
+## Governance... unstoppable?
+
+<iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/Q6euy5W1js4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[Unstoppable Code: The Difference Between Can't and Won't](https://www.youtube-nocookie.com/embed/Q6euy5W1js4)
+
+Notes:
+
+Watch _after class_!
+Perhaps assigned informally to everyone to watch in the next few days.
+
+---v
+
+## Unstoppable Code
+
+> It seizes power from dominate forms of power: governments, corporations, states, associations, cultures, religions.
+> It seizes power, from these big things and gives it to little people.
+> And sooner or later, the people who are losing their undeserved, abusively applied power will start to fight back.
+> And at that point, we will start to find out how unstoppable our code is.<br><br>
+> -- Andreas Antonopoulos --
+
+---v
+
+## Can't vs. Won't
+
+> The moment you go over the the line from "can't to won't, what started as an ability becomes a responsibility.
+> And then if you claim that you don't have the ability anymore, that responsibility just became negligence, criminal negligence. <br><br>
+> -- Andreas Antonopoulos --
+
+Notes:
+
+- The difference?
+- Silk road founder getting 2 life sentences + 40 years.
+- moral relativism -> "who's law?"
+- Don't make your "oops clause" -> not too narrow.
+
+---
+
+## DAOs
+
+Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech/what-dao/)).
+
+<br>
+
+> A **coordination** mechanism.
+
+---v
+
+## Democratic Systems
+
+Democratic Mediums is a directory of patterns<br> for decision, deliberation, and noise.
+
+<br>
+
+<pba-flex center>
+
+- https://medlabboulder.gitlab.io/democraticmediums/
+- https://metagov.org/ -- weekly seminar
+- https://daocollective.xyz/
+- https://www.smartcontractresearch.org/
+
+</pba-flex>
+
+Notes:
+
+Very much encouraged to explore after class!
+Many novel and niece definitions in this wiki.
+
+---
+
+## Modeling Behavior
+
+> [Token Engineering](https://tokenengineeringcommunity.github.io/website/)<br>
+> {especially the Academy & cadCAD Edu}
+
+Notes:
+
+Mostly free education and tools to dive deeper on tokenomics.
+Remember, these are _models_ of idealized systems in general, real world conditions will differ!
