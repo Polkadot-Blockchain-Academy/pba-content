@@ -2504,7 +2504,7 @@ __metadata:
       optional: true
   bin:
     reveal-md: bin/reveal-md.js
-  checksum: 23a402b2081ea7c3d1bd1d48c2e47f929d94b511ed181c265f393bb70c5ad2840b8ce264a1517ad656748cbd0fc38de14475301a2fddfd98730b0fd74ce11dc4
+  checksum: bbad2b76227d15abfe8bd3668ff3e50723fded7bdbaf8f6eb390db95ba9a7eb93d689e8c201537e836f52b262ea4ba7d7b490a172059e083ba6a331c44d204b2
   languageName: node
   linkType: hard
 
