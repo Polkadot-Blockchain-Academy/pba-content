@@ -193,7 +193,7 @@ A lot of the trusted bridge design can be improved and we'll talk about that in 
 
 ## Source Chain Re-Orgs
 
-TODO Figure
+<img width="900px" alt="What should target chain do when source chain re-orgs" src="./img/bridge-reorg.png" />
 
 Notes:
 
