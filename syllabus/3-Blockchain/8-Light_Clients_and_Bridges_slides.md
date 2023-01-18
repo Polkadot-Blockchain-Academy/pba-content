@@ -219,11 +219,11 @@ Notes:
 
 ## BTC Relay
 
-TODO details about this historical example
+<img width="1000px" src="./img/btc-relay.svg" />
 
 ---
 
-# Brdige Design Challenges
+# Bridge Design Challenges
 
 ![bridge collapse](./img/bridge-collapse.webp)
 
