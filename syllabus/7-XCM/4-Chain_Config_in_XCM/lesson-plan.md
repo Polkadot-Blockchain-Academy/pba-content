@@ -25,7 +25,7 @@
 
 ### Activities and Exercises
 
-- Versioning excercise to understand how versioning works
+- Versioning exercise to understand how versioning works
 - Modify different parts of the configuration to understand their implications (in groups). Each group picks one topic
   - Remove free execution from relay and add a trader to charge for fee
   - Add pallet-assets to the parachain and add an asset transactor for it.
