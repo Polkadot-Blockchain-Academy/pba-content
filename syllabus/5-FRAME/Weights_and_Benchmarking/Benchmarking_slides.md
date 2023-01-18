@@ -13,8 +13,6 @@ instructors: ["Shawn Tabrizi"]
 
 - Quick Recap of Weights
 - Deep Dive Into Benchmarking
-- Our Learnings Throughout Development
-- Best Practices and Common Patterns
 
 ---
 
