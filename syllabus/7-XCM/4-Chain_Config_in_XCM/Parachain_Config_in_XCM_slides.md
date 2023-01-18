@@ -100,11 +100,11 @@ Questions that you should have answers for:
   _In one asset?_
   _In several?_
 
----
-
 Notes:
 
 Some of the answers to these questions might imply you need to use your own custom primitives.
+
+---
 
 ### Our starting example setup requirements
 
@@ -122,7 +122,9 @@ Some of the answers to these questions might imply you need to use your own cust
 - Useful when we want to withdraw/deposit tokens from a multilocation defined origin
 - Useful when we want to dispatch as signed origins from a multilocation defined origin.
 
-Notes:
+<img src="../../../assets/img/7-XCM/location_to_account_id_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+
+Notes:style="width: 900px
 
 This will define how we convert a multilocation into a local accountId.
 This is useful when we want to withdraw/deposit tokens from a multilocation defined origin or when we want to dispatch as signed origins from a multilocation defined origin.
@@ -168,7 +170,7 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 
 Notes:
 
-This is converter is tipically used in parachains to make sure the parent origin has an associated account.
+This converter is tipically used in parachains to make sure the parent origin has an associated account.
 
 ---v
 
@@ -180,7 +182,7 @@ Notes:
 
 Here child means a parachain from the relay's perspective
 
-This is converter is **tipically used in the relay chain** to make sure the child parachain origins have an associated account.
+This converter is **tipically used in the relay chain** to make sure the child parachain origins have an associated account.
 
 ---v
 
@@ -201,7 +203,7 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 Notes:
 
 Here sibling means a parachain from another parachain's perspective
-This is converter is **tipically used in parachains** to make sure the sibling parachain origins have an associated account.
+This converter is **tipically used in parachains** to make sure the sibling parachain origins have an associated account.
 
 ---v
 
@@ -248,10 +250,12 @@ We have a requirement of users being able to execute local XCM, and as such we n
 - Define how we are going to withdraw and deposit assets
 - Heavily dependant on the assets we want our chain to transfer
 
+<img src="../../../assets/img/7-XCM/asset_transactor_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+
 Notes:
 
 The relay chain is a clear example of a chain that handles a **single token**.
-Statemine on the contrary acts as an asset-reserve chain, and there needs to handle **several assets**
+Statemine on the contrary acts as an asset-reserve chain, and it needs to handle **several assets**
 
 ---v
 
@@ -311,7 +315,8 @@ For our example, it suffices to uses `CurrencyAdapter`, as all we are going to d
 
 
 Notes: 
-Transact needs to dispatch from a frame dispatch origin. However the xcm-executor works with xcm-origins which are defined by MultiLocations.
+`Transact` needs to dispatch from a frame dispatch origin. However the xcm-executor works with xcm-origins which are defined by MultiLocations.
+`origin-converter` is the component that converts one into the other
 
 ---v
 
@@ -364,7 +369,7 @@ pub struct SignedAccountId32AsNative<
   Network,
   RuntimeOrigin
 >(PhantomData<(Network, RuntimeOrigin)>);
-impl<Network: Get<NetworkId>, RuntimeOrigin: OriginTrait> 
+impl<Network: Get<NetworkId>, RuntimeOrigin: OriginTrait>
   ConvertOrigin<RuntimeOrigin>
 for SignedAccountId32AsNative<Network, RuntimeOrigin>
 where
@@ -378,7 +383,7 @@ where
     match (kind, origin) {
       (
         OriginKind::Native,
-        MultiLocation { 
+        MultiLocation {
 		  parents: 0,
 		  interior: X1(Junction::AccountId32 { id, network })
 		},
@@ -424,6 +429,8 @@ Physical vs Computed origin
 
 - Physical origin: the consensus system that built this particular XCM and sent it to the recipient
 - Computed origin: the entity that ultimately instructed the consensus system to build the XCM
+
+<img src="../../../assets/img/7-XCM/physical_vs_computed_origin.svg" alt="Physical vs Computed origin">
 
 **Must make sure which origin a barrier should apply to!**
 
@@ -691,6 +698,7 @@ Notes:
 Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `multiAsset`.
 Everytime such `multiAsset` gets claimed back, the counter decrements by one.
 
+---
 ## 🗣️ version negotiation with `pallet-xcm`
 
 XCM is an **extensible message format**.
