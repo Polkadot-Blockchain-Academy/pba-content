@@ -153,6 +153,10 @@ benchmarks! {
 }
 ```
 
+This is getting updated to the attribute macro format soon!
+
+https://github.com/paritytech/substrate/pull/12924
+
 ---
 
 ## Multiple Linear Regression Analysis
@@ -237,11 +241,10 @@ Reference: `frame/benchmarking/src/lib.rs`
 
 ## The Benchmarking Process
 
-1. Whitelist known DB keys
-- For each component...
-2. Select component to benchmark
-3. Generate range of values to test (steps)
-- For each repeat...
+For each component and repeat:
+1. Select component to benchmark
+2. Generate range of values to test (steps)
+3. Whitelist known DB keys
 4. Setup benchmarking state
 5. Commit state to the DB, clearing cache
 6. Get system time (start)
@@ -249,27 +252,6 @@ Reference: `frame/benchmarking/src/lib.rs`
 8. Get system time (end)
 9. Count DB reads and writes
 10. Record Data
-
----
-
-## Whitelisted DB Keys
-
-```rust
-/// The current block number being processed. Set by `execute_block`.
-#[pallet::storage]
-#[pallet::whitelist_storage]
-#[pallet::getter(fn block_number)]
-pub(super) type Number<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
-```
-
-- Some keys are accessed every block:
-	- Block Number
-	- Events
-	- Total Issuance
-	- etc…
-- We don’t want to count these reads and writes in our benchmarking results.
-- Applied to all benchmarks being run.
-- This includes a “whitelisted account” provided by FRAME.
 
 ---
 
@@ -293,6 +275,27 @@ pub(super) type Number<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
 ## Benchmarks Evaluated Over Components
 
 <img style="height: 600px;" src="../../../assets/img/6-FRAME/benchmark/components.svg" />
+
+---
+
+## Whitelisted DB Keys
+
+```rust [3]
+/// The current block number being processed. Set by `execute_block`.
+#[pallet::storage]
+#[pallet::whitelist_storage]
+#[pallet::getter(fn block_number)]
+pub(super) type Number<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
+```
+
+- Some keys are accessed every block:
+	- Block Number
+	- Events
+	- Total Issuance
+	- etc…
+- We don’t want to count these reads and writes in our benchmarking results.
+- Applied to all benchmarks being run.
+- This includes a “whitelisted account” provided by FRAME.
 
 ---
 
@@ -592,25 +595,25 @@ verify {
 
 ## Results: Extrinsic Time vs. # of Registrars
 
-<img src="../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.svg" />
+<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.png" />
 
 ---
 
 ## Results: Extrinsic Time vs. # of Sub-Accounts
 
-<img src="../../../assets/img/6-FRAME/benchmark/identity-raw-sub.svg" />
+<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-sub.png" />
 
 ---
 
 ## Results: Extrinsic Time vs. Additional Fields
 
-<img src="../../../assets/img/6-FRAME/benchmark/identity-raw-fields.svg" />
+<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-fields.png" />
 
 ---
 
 ## Result: DB Operations vs. Sub Accounts
 
-<img src="../../../assets/img/6-FRAME/benchmark/identity-db-sub.svg" />
+<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-db-sub.png" />
 
 ---
 
