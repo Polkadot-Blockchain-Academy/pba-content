@@ -92,7 +92,7 @@ With FRAME: 2210 lines of code.
 
 ## Goals of FRAME
 
-- Make it easy and concise for developers to develop.
+- Make it easy and concise for developers to do development.
 - Provide maximum flexibility and compatibility for pallet developers.
 - Provide maximum modularity for runtime developers.
 - Be as similar to vanilla Rust as possible.
