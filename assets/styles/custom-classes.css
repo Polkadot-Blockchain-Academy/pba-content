@@ -145,6 +145,10 @@ th {
 	font-size: 24px !important;
 }
 
+.text-smaller * {
+	font-size: 18px !important;
+}
+
 .overlay-table {
 	width: 800px;
 }

@@ -140,6 +140,8 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 }
 ```
 
+<div>
+
 Notes:
 
 This is the most generic form of converting a multilocation to an accountId.

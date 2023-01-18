@@ -35,11 +35,10 @@ https://www.crowdcast.io/e/substrate-seminar/41
 
 ### When is a Migration Required?
 
-In a typical runtime upgrade, you typically only replace `:code:`. This is _Runtime Upgrade_.
+- In a typical runtime upgrade, you typically only replace `:code:`. This is _**Runtime Upgrade**_.
+- If you change the _storage layout_, then this is also a _**Runtime Migration**_.
 
-If you change the _storage layout_, then this is also a _Runtime Migration_.
-
-> What is a change here? Anything that changes **encoding**!
+> Anything that changes **encoding** is a migration!
 
 ---v
 
@@ -51,10 +50,10 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-  // old
-  pub struct Foo(u32)
-  // new
-  pub struct Foo(u64)
+// old
+pub struct Foo(u32)
+// new
+pub struct Foo(u64)
 ```
 
 A clear migration.
@@ -71,15 +70,15 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-  // old
-  pub struct Foo(u32)
-  // new
-  pub struct Foo(i32)
-  // or
-  pub struct Foo(u16, u16)
+// old
+pub struct Foo(u32)
+// new
+pub struct Foo(i32)
+// or
+pub struct Foo(u16, u16)
 ```
 
-Not so clear: The data still fits, but the interpretations is almost certainly different!
+The data still _fits_, but the _interpretations_ is almost certainly different!
 
 <!-- .element: class="fragment" -->
 
@@ -93,13 +92,11 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-  // old
-  pub struct Foo { a: u32, b: u32 }
-  // new
-  pub struct Foo { a: u32, b: u32, c: u32 }
+// old
+pub struct Foo { a: u32, b: u32 }
+// new
+pub struct Foo { a: u32, b: u32, c: u32 }
 ```
-
-Extending a struct is an interesting edge case...
 
 This is still a migration, because `Foo`'s decoding changed.
 
@@ -115,10 +112,10 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-  // old
-  pub struct Foo { a: u32, b: u32 }
-  // new
-  pub struct Foo { a: u32, b: u32, c: PhantomData<_> }
+// old
+pub struct Foo { a: u32, b: u32 }
+// new
+pub struct Foo { a: u32, b: u32, c: PhantomData<_> }
 ```
 
 If for whatever reason `c` has a type that its encoding is like `()`, then this would work.
@@ -143,6 +140,8 @@ pub type FooValue = StorageValue<_, Foo>;
 
 Extending an enum is even more interesting, because if you add the variant to the end, no migration is needed.
 
+<!-- .element: class="fragment" -->
+
 Assuming that no value is initialized with `C`, this is _not_ a migration.
 
 <!-- .element: class="fragment" -->
@@ -157,10 +156,10 @@ pub type FooValue = StorageValue<_, Foo>;
 ```
 
 ```rust
-  // old
-  pub enum Foo { A(u32), B(u32) }
-  // new
-  pub enum Foo { A(u32), C(u128), B(u32) }
+// old
+pub enum Foo { A(u32), B(u32) }
+// new
+pub enum Foo { A(u32), C(u128), B(u32) }
 ```
 
 You probably _never_ want to do this, but it is a migration.
@@ -175,8 +174,6 @@ Enums are encoded as the variant enum, followed by the inner data:
 
 - The order matters!
 - Enums that implement `Encode` cannot have more than 255 variants.
-
-> Remember: It is all about how a type `encode` and `decodes`.
 
 ---v
 
@@ -193,8 +190,13 @@ pub type FooValue = StorageValue<_, u32>;
 pub type BarValue = StorageValue<_, u32>;
 ```
 
-So far everything is changing the _value_ format.<br>
-The _key_ changing is also a migration!
+- So far everything is changing the _value_ format.<br>
+
+<div>
+
+- The _key_ changing is also a migration!
+
+</div>
 
 <!-- .element: class="fragment" -->
 
@@ -204,14 +206,14 @@ The _key_ changing is also a migration!
 
 ```rust
 #[pallet::storage]
-pub type FooValue = StorageValue<_, Foo>;
+pub type FooValue = StorageValue<_, u32>;
 ```
 
 ```rust
 // new
 #[pallet::storage_prefix = "FooValue"]
 #[pallet::storage]
-pub type I_can_NOW_BE_renamEd = StorageValue<_, u32>;
+pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 ```
 
 Handy macro if you must rename a storage type.<br>
@@ -223,25 +225,21 @@ This does _not_ require a migration.
 
 ## Writing Runtime Migrations
 
-Notes:
-
-Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
+- Now that we know how to detect if a storage change is a **migration**, let's see how we write one.
 
 ---v
 
 ### Writing Runtime Migrations
 
-Once you upgrade a runtime, the code is expecting the data to be in a new format.
-
-Any `on_initialize` or transaction might fail decoding data, and potentially `panic!`
+- Once you upgrade a runtime, the code is expecting the data to be in a new format.
+- Any `on_initialize` or transaction might fail decoding data, and potentially `panic!`
 
 ---v
 
 ### Writing Runtime Migrations
 
-We need a **_hook_** that is executed **ONCE** as a part of the new runtime...
-
-But before **ANY** other code (on_initialize, any transaction) with the new runtime is migrated.
+- We need a **_hook_** that is executed **ONCE** as a part of the new runtime...
+- But before **ANY** other code (on_initialize, any transaction) with the new runtime is migrated.
 
 > This is `OnRuntimeUpgrade`.
 
@@ -251,11 +249,8 @@ But before **ANY** other code (on_initialize, any transaction) with the new runt
 
 ### Writing Runtime Migrations
 
-`OnRuntimeUpgrade` is called before any block being `initialize`ed, every time the spec version changes.
-
-> Q: why don't we need to keep the old storage definitions in the code (similar to host functions)?
->
-> A: Every block is executed with the wasm code of **that block**.
+- Optional activity: Go into `executive` and `system`, and find out how `OnRuntimeUpgrade` is called
+  only when the code changes!
 
 ---
 
