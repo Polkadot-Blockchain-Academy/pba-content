@@ -152,9 +152,10 @@ Generally speaking bridges move arbitrary data between unrelated consensus syste
 
 ## Source and Target Chain
 
-TODO Diagram
+<img src="./img/bridge-source-target.svg" />
 
-## Two Way Bridges
+Notes:
+By convention we speak of bridges as being one-directional. When we talk about trustless bridge design this is a core concept in the design. It is less critical but still useful for trusted bridges.
 
 A two-way bridge is really just two one-way bridge. Think of a two-way
 street. There is a dedicated lane for each direction.
