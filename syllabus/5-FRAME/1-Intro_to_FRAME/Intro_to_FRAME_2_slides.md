@@ -5,6 +5,64 @@ duration: 1 hour
 instructors: ["Shawn Tabrizi"]
 ---
 
+## Lesson Plan
+
+<table>
+<tr>
+  <td>Monday</td>
+  <td>Tuesday</td>
+  <td>Wednesday</td>
+  <td>Thursday</td>
+  <td>Friday</td>
+  <td>Weekend</td>
+</tr>
+<tr class="text-small">
+<td>
+
+- Introduction To FRAME
+- Exercise: Proof of Existence Runtime
+- FRAME Tips and Tricks
+- FRAME Assignment (whole week!)
+
+</td>
+<td>
+
+- FRAME Storage
+- Exercise: Mental Migration TODO ??
+- Events & Errors
+
+</td>
+<td>
+
+- Dispatchables
+- Hooks & Inherents
+- Signed Extensions
+
+</td>
+<td>
+
+- FRAME Benchmarking
+- Exercise: Benchmarking Example
+- (Optional) Benchmarking Extras
+
+</td>
+<td>
+
+- Outer Enum
+- Migration & Try Runtime
+
+</td>
+<td>
+
+- Live Coding + Q/A Sessions (12pm-ish)
+- Complete FRAME Assignment
+
+</td>
+</tr>
+</table>
+
+---
+
 # Introduction to FRAME
 
 ---
@@ -123,13 +181,10 @@ FRAME uses Macros to simplify the development of Pallets, while keeping all of t
 - `cargo expand` will expand the macros to "pure" Rust.
 
 ```bash
-➜  substrate3 git:(master) ✗ wc -l frame/sudo/src/lib.rs
-     310 frame/sudo/src/lib.rs
+➜  substrate git:(master) ✗ wc -l frame/sudo/src/lib.rs
+    310 frame/sudo/src/lib.rs
 
-➜  substrate3 git:(master) ✗ cargo expand -p pallet-sudo | wc -l
-    Checking pallet-sudo v4.0.0-dev (/Users/shawntabrizi/Documents/GitHub/substrate3/frame/sudo)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.45s
-
+➜  substrate git:(master) ✗ cargo expand -p pallet-sudo | wc -l
     2210
 ```
 
@@ -138,3 +193,39 @@ FRAME uses Macros to simplify the development of Pallets, while keeping all of t
 ## FRAME System
 
 The FRAME System is a Pallet which is assumed to always exist when using FRAME.
+
+It contains all the most basic functions and types needed for a blockchain system.
+
+- Block Number
+- Accounts
+-
+
+---
+
+## FRAME Executive
+
+The FRAME Executive is a "coordinator", defining the order that your FRAME based runtime executes.
+
+```rust
+/// Actually execute all transitions for `block`.
+pub fn execute_block(block: Block) { ... }
+```
+
+- Initialize Block
+  - `on_runtime_upgrade` and `on_initialize` hooks
+- Initial Checks
+- Signature Verification
+- Execute Extrinsics
+  - `on_idle` and `on_finalize` hooks
+- Final Checks
+
+---
+
+## Construct Runtime
+
+
+---
+
+## Proof of Existence Exercise
+
+https://docs.substrate.io/tutorials/work-with-pallets/use-macros-in-a-custom-pallet/
