@@ -7,7 +7,7 @@ description: Light clients principles and application in bridges
 
 <pba-cols>
     <pba-col>
-        <img width = "800px" alt="Pierre Krieger aka Tomaka" src="./img/tomaka.png" />
+        <img style="width:400px" alt="Pierre Krieger aka Tomaka" src="./img/tomaka.png" />
     </pba-col>
     <pba-col>
         <blockquote>What can I say?<!-- .element: class="fragment" data-fragment-index="2" --></blockquote>
@@ -21,11 +21,14 @@ description: Light clients principles and application in bridges
 
 Ideal:<br />Everyone runs their own node.
 
+<div>
 Reality:
 
 - It takes a lot of disk, memory, etc
 - It takes some know-how
 - I don't need it _all the time_
+</div>
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -126,7 +129,8 @@ Warp sync is possible when you have deterministic finality. In dead simple PoA y
 
 Stay in the gossip protocol or you might get got.
 
-![You get nothing! You Lose! Good day sir!](./img/wanka.jpg)
+<img width="500px" alt="You get nothing! You Lose! Good day sir!" src="./img/wanka.jpg" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -157,7 +161,17 @@ street. There is a dedicated lane for each direction.
 
 ---v
 
-## Bridge Designs
+## Source Chain Re-Orgs
+
+<img width="900px" alt="What should target chain do when source chain re-orgs" src="./img/bridge-reorg.png" />
+
+Notes:
+
+On PoW chains this is truly just a judgement call and a prayer. If the source chain has deterministic finality w can do better. We need to wait for finality. But even this isn't foolproof. More on this after we cover the basic design.
+
+---v
+
+## Bridge Models
 
 <pba-cols>
 <pba-col>
@@ -188,16 +202,6 @@ You can make they trust properties slightly better by using a multisig or a grou
 One classic example is the WBTC foundation. You send them bitcoin, they wait for "enough" block confirmations, and then they mint you an ERC20 token on Ethereum. And they provide the same service in reverse too.
 
 A lot of the trusted bridge design can be improved and we'll talk about that in detail in the next few slides. But it's worth observing here that we will never be able to eliminate the part about "Once the intermediary is satisfied that they really own the source tokens". The bridge can never be stronger than the consensus on the source chain
-
----v
-
-## Source Chain Re-Orgs
-
-<img width="900px" alt="What should target chain do when source chain re-orgs" src="./img/bridge-reorg.png" />
-
-Notes:
-
-On PoW chains this is truly just a judgement call and a prayer. If the source chain has deterministic finality w can do better. We need to wait for finality. But even this isn't foolproof. More on this after we cover the basic design.
 
 ---
 
