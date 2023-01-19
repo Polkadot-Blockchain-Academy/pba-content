@@ -8,7 +8,7 @@ As an alternative, here are subkey examples to compliment/replace using the REPL
 ```sh
 subkey generate
 
-Secret phrase:       desert piano add owner tuition tail melt rally height faint thunder immune
+Secret phrase: s      desert piano add owner tuition tail melt rally height faint thunder immune
   Network ID:        substrate
   Secret seed:       0x6a0ea68072cfd0ffbabb40801570fa5e9f3a88966eaed9dedaeb0cf140b9cd8d
   Public key (hex):  0x7acdc47530002fbc50f413859093b7df90c27874aee732dca940ea4842751d58
@@ -88,13 +88,13 @@ Secret Key URI `desert piano add owner tuition tail melt rally height faint thun
 ```sh
 subkey inspect 'desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/1'
 
-Secret Key URI `desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/0` is account:
+Secret Key URI `desert piano add owner tuition tail melt rally height faint thunder immune//polkadot/1` is account:
   Network ID:        substrate
  Secret seed:       n/a
-  Public key (hex):  0x4e8dfdd8a386ae37b8731dba5480d5cc65739023ea24f1a09d88be1bd9dff86b
-  Account ID:        0x4e8dfdd8a386ae37b8731dba5480d5cc65739023ea24f1a09d88be1bd9dff86b
-  Public key (SS58): 5DqhmkscaMJRbBE7vRGtcjDySwSgGwtc611SjPZMFV2WBw51
-  SS58 Address:      5DqhmkscaMJRbBE7vRGtcjDySwSgGwtc611SjPZMFV2WBw51
+  Public key (hex):  0x2e8b3090b17b12ea63029f03d852af71570e8e526690cc271491318a45785e33
+  Account ID:        0x2e8b3090b17b12ea63029f03d852af71570e8e526690cc271491318a45785e33
+  Public key (SS58): 5D7jQcDVQQ8ed4skUdaSNv3noPiwy9248vHPgifNe4Hspqa4
+  SS58 Address:      5D7jQcDVQQ8ed4skUdaSNv3noPiwy9248vHPgifNe4Hspqa4
 ```
 
 ## Soft Derivation from Public

@@ -192,7 +192,7 @@ pub struct ElectionScore {
 
 ## NPoS Drawbacks
 
-<widget-text center>
+<pba-flex center>
 
 - scalability. <!-- .element: class="fragment" -->
 - scalability. <!-- .element: class="fragment" -->

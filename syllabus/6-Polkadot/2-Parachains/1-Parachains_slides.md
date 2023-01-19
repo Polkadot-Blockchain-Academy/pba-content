@@ -12,7 +12,7 @@ teaching-assistants: ["Dan Shields"]
 
 ## Lecture Goals
 
-<widget-text center>
+<pba-flex center>
 
 - General blockchain challenges <!-- .element: class="fragment" -->
 - Parachain consensus <!-- .element: class="fragment" -->
@@ -123,7 +123,7 @@ In ETH 2 version 1 nomenclature: Collators/Parachain provide shards for data ava
 
 ## Recap PoV
 
-<widget-text center>
+<pba-flex center>
 
 - Collators - external/untrusted <!-- .element: class="fragment" -->
 - PoV ... Proof of Validity <!-- .element: class="fragment" -->
@@ -132,7 +132,7 @@ In ETH 2 version 1 nomenclature: Collators/Parachain provide shards for data ava
 
 ### PoV (usually)
 
-<widget-text center>
+<pba-flex center>
 
 - Parachain Block Data <!-- .element: class="fragment" -->
 - Patricia Merkle Trie <!-- .element: class="fragment" -->
@@ -141,7 +141,7 @@ In ETH 2 version 1 nomenclature: Collators/Parachain provide shards for data ava
 
 ## All good?
 
-<widget-text center>
+<pba-flex center>
 
 - Bad group - security? <!-- .element: class="fragment" -->
 - Large groups - scalability? <!-- .element: class="fragment" -->
@@ -166,7 +166,7 @@ Works, but:
 
 What can malicious nodes actually do?
 
-<widget-text center>
+<pba-flex center>
 
 - No (faithful) PVF execution <!-- .element: class="fragment" -->
 - Manipulate messages <!-- .element: class="fragment" -->
@@ -183,7 +183,7 @@ Such a block would likely be not accepted by other parachain nodes, but light cl
 
 ## Catch Bad Guys
 
-<widget-text center>
+<pba-flex center>
 
 - and punish them <!-- when caught --> <!-- .element: class="fragment" -->
 - gamblers ruin <!-- .element: class="fragment" -->
@@ -197,7 +197,7 @@ Notes:
 
 ## How do we do that?
 
-<widget-text center>
+<pba-flex center>
 
 - 2 (3) phase process <!-- .element: class="fragment" -->
 - Validators get skin in the game (backing) <!-- .element: class="fragment" -->
@@ -213,7 +213,7 @@ We need to be able to check the checkers.
 
 ## Two Phase Process
 
-<widget-text center>
+<pba-flex center>
 
 - Backing <!-- .element: class="fragment" -->
 - Approval <!-- .element: class="fragment" -->
@@ -235,7 +235,7 @@ Notes:
 
 ## Three Phase Process
 
-<widget-text center>
+<pba-flex center>
 
 - Backing <!-- .element: class="fragment" -->
 - Inclusion/Availability <!-- .element: class="fragment" -->
@@ -249,7 +249,7 @@ Yes! <!-- .element: class="fragment" -->
 
 ## But how?
 
-<widget-text center>
+<pba-flex center>
 
 - Backing group is untrusted <!-- .element: class="fragment" -->
 - Collators are untrusted <!-- .element: class="fragment" -->
@@ -371,7 +371,7 @@ and <span> relatively easy to DoS </span>
 
 ## Recap
 
-<widget-text center>
+<pba-flex center>
 
 - Known backing group - get skin in the game <!-- .element: class="fragment" -->
 - Make available <!-- .element: class="fragment" -->
@@ -383,7 +383,7 @@ and <span> relatively easy to DoS </span>
 
 ## Disputes
 
-<widget-text center>
+<pba-flex center>
 
 - Raised during approval checking <!-- .element: class="fragment" -->
 - Escalation to all nodes: Performance!? <!-- .element: class="fragment" -->
@@ -395,7 +395,7 @@ and <span> relatively easy to DoS </span>
 
 ## Summary
 
-<widget-text center>
+<pba-flex center>
 
 - Secure heterogeneous sharding <!-- .element: class="fragment" -->
 - Shared Security <!-- .element: class="fragment" -->

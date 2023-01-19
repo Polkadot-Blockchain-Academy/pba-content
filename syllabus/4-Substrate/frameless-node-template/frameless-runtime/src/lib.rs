@@ -37,10 +37,6 @@ use sp_version::RuntimeVersion;
 #[cfg(feature = "std")]
 use serde::{Deserialize, Serialize};
 
-mod impls;
-mod misc;
-mod types;
-
 // Lesson ideas:
 //
 // 1 Track the right state root and extrinsics root. The extrinsics root will fail in all blocks.
@@ -73,7 +69,6 @@ mod types;
 // - metdata
 // - extrinsic types
 // - block format, the fact that extrinsics are generic. */
-
 /// Opaque types. These are used by the CLI to instantiate machinery that don't need to know
 /// the specifics of the runtime. They can then be made to be agnostic over specific formats
 /// of data like extrinsics, allowing for them to continue syncing the network through upgrades
@@ -82,7 +77,6 @@ pub mod opaque {
 	use super::*;
 
 	type OpaqueExtrinsic = sp_runtime::OpaqueExtrinsic;
-	// type OpaqueExtrinsic = BasicExtrinsic;
 
 	/// Opaque block header type.
 	pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
@@ -116,7 +110,7 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("frameless-runtime"),
 	impl_name: create_runtime_str!("frameless-runtime"),
 	authoring_version: 1,
-	spec_version: 2,
+	spec_version: 1,
 	impl_version: 1,
 	apis: RUNTIME_API_VERSIONS,
 	transaction_version: 1,
@@ -150,7 +144,7 @@ pub type Block = generic::Block<Header, BasicExtrinsic>;
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, parity_util_mem::MallocSizeOf))]
 #[derive(Encode, Decode, Debug, PartialEq, Eq, Clone)]
 pub enum Call {
-	Set(u128),
+	Set(u32),
 	SetTimestamp(u64),
 	Upgrade(Vec<u8>),
 }
@@ -158,7 +152,6 @@ pub enum Call {
 // this extrinsic type does nothing other than fulfill the compiler.
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, parity_util_mem::MallocSizeOf))]
 #[derive(Debug, PartialEq, Eq, Clone)]
-// #[derive(Encode, Decode)]
 pub struct BasicExtrinsic(Call);
 
 #[cfg(test)]
@@ -237,29 +230,12 @@ impl sp_inherents::IsFatalError for TimestampError {
 	}
 }
 
-fn storage_get<T: Decode>(key: &[u8]) -> Option<T> {
-	sp_io::storage::get(key).and_then(|d| T::decode(&mut &*d).ok())
-}
-
 /// The main struct in this module. In frame this comes from `construct_runtime!`
 pub struct Runtime;
 
 type DispatchResult = Result<(), ()>;
 
 impl Runtime {
-	#[allow(unused)]
-	fn metadata() -> sp_core::OpaqueMetadata {
-		use frame_metadata::*;
-		let v14 = RuntimeMetadataV14 {
-			extrinsic: ExtrinsicMetadata { signed_extensions: vec![], version: 0, ty: todo!() },
-			types: todo!(),
-			pallets: vec![],
-			ty: todo!(),
-		};
-		let frame_metadata = frame_metadata::RuntimeMetadata::V14(v14);
-		sp_core::OpaqueMetadata::new(vec![])
-	}
-
 	fn print_state() {
 		let mut key = vec![];
 		while let Some(next) = sp_io::storage::next_key(&key) {
@@ -274,12 +250,22 @@ impl Runtime {
 		}
 	}
 
+	fn get_state<T: Decode>(key: &[u8]) -> Option<T> {
+		sp_io::storage::get(key).and_then(|d| T::decode(&mut &*d).ok())
+	}
+
+	fn mutate_state<T: Decode + Encode + Default>(key: &[u8], update: impl FnOnce(&mut T)) {
+		let mut value = Self::get_state(key).unwrap_or_default();
+		update(&mut value);
+		sp_io::storage::set(key, &value.encode());
+	}
+
 	fn dispatch_extrinsic(ext: BasicExtrinsic) -> DispatchResult {
 		log::debug!(target: LOG_TARGET, "dispatching {:?}", ext);
 		// note the extrinsic:
-		let mut current = storage_get::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
-		current.push(ext.encode());
-		sp_io::storage::set(&EXTRINSICS_KEY, &current.encode());
+		Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
+			current.push(ext.encode());
+		});
 
 		// execute it
 		match ext.0 {
@@ -307,16 +293,17 @@ impl Runtime {
 	// called in the import code path, so it MUST not write anything to state. It should only return
 	// a header that is valid.
 	fn do_finalize_block() -> <Block as BlockT>::Header {
-		let mut header = storage_get::<<Block as BlockT>::Header>(HEADER_KEY)
+		let mut header = Self::get_state::<<Block as BlockT>::Header>(HEADER_KEY)
 			.expect("We initialized with header, it never got mutated, qed");
 
 		// the header itself contains the state root, so it cannot be inside the state (circular
 		// dependency..). Make sure in execute block path we have the same rule.
 		sp_io::storage::clear(&HEADER_KEY);
 
+		Self::print_state();
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
 
-		let extrinsics = storage_get::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
+		let extrinsics = Self::get_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
 		let extrinsics_root =
 			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
 
@@ -329,22 +316,22 @@ impl Runtime {
 
 	fn do_execute_block(block: Block) {
 		info!(target: LOG_TARGET, "Entering execute_block. block: {:?}", block);
-		// just a subset of `do_initialize_block` that we want.
 		sp_io::storage::clear(&EXTRINSICS_KEY);
 
-		for extrinsic in block.extrinsics {
+		for extrinsic in block.clone().extrinsics {
 			// block import cannot fail.
 			Runtime::dispatch_extrinsic(extrinsic).unwrap();
 		}
 
 		// check state root
+		// IDEA: if we forget to do this, how can you mess with the blockchain?
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
 		let state_root = H256::decode(&mut &raw_state_root[..]).unwrap();
 		Self::print_state();
 		assert_eq!(block.header.state_root, state_root);
 
 		// check extrinsics root
-		let extrinsics = storage_get::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
+		let extrinsics = block.extrinsics.into_iter().map(|x| x.encode()).collect::<Vec<_>>();
 		let extrinsics_root =
 			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
@@ -353,7 +340,6 @@ impl Runtime {
 	fn do_apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
 		info!(target: LOG_TARGET, "Entering apply_extrinsic: {:?}", extrinsic);
 
-		// we don't do anything here, but we probably should...
 		Self::dispatch_extrinsic(extrinsic)
 			.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::Custom(0)))?;
 
@@ -382,8 +368,9 @@ impl Runtime {
 	fn do_inherent_extrinsics(
 		data: sp_inherents::InherentData,
 	) -> Vec<<Block as BlockT>::Extrinsic> {
+		log::debug!(target: LOG_TARGET, "Entering inherent_extrinsics");
 		let timestamp = data.get_data::<u64>(&sp_timestamp::INHERENT_IDENTIFIER).unwrap().unwrap();
-		let last_timestamp = storage_get::<u64>(&TIMESTAMP).unwrap_or_default();
+		let last_timestamp = Self::get_state::<u64>(&TIMESTAMP).unwrap_or_default();
 		let next = timestamp.max(last_timestamp + BLOCK_TIME);
 		let call = Call::SetTimestamp(next);
 		vec![BasicExtrinsic(call)]
@@ -393,12 +380,19 @@ impl Runtime {
 		block: Block,
 		data: sp_inherents::InherentData,
 	) -> sp_inherents::CheckInherentsResult {
+		log::debug!(target: LOG_TARGET, "Entering check_inherent");
 		for ext in block.extrinsics {
 			match ext {
 				BasicExtrinsic(Call::SetTimestamp(ts)) => {
-					let checker_timestamp =
+					let client_timestamp =
 						data.get_data::<u64>(&sp_timestamp::INHERENT_IDENTIFIER).unwrap().unwrap();
-					if checker_timestamp >= ts {
+					log::trace!(
+						target: LOG_TARGET,
+						"client ts ={:?}, call ts {:?}",
+						client_timestamp,
+						ts
+					);
+					if client_timestamp < ts {
 						let mut r = sp_inherents::CheckInherentsResult::new();
 						r.put_error(sp_timestamp::INHERENT_IDENTIFIER, &TimestampError::Stale)
 							.unwrap();
@@ -464,7 +458,7 @@ impl_runtime_apis! {
 	// Ignore everything after this.
 	impl sp_api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
-			Runtime::metadata()
+			OpaqueMetadata::new(Default::default())
 		}
 	}
 
@@ -548,7 +542,6 @@ mod tests {
 
 	#[test]
 	fn host_function_call_works() {
-		sp_io::storage::get(&HEADER_KEY);
 		sp_io::TestExternalities::new_empty().execute_with(|| {
 			sp_io::storage::get(&HEADER_KEY);
 		})
