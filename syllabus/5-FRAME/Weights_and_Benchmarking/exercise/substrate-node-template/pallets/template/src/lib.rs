@@ -48,10 +48,10 @@ pub mod pallet {
 	}
 
 	#[pallet::storage]
-	pub type MyValue<T> = StorageValue<_, u32>;
+	pub type MyValue<T> = StorageValue<_, u8, ValueQuery>;
 
 	#[pallet::storage]
-	pub type MyMap<T: Config> = StorageMap<_, Blake2_128Concat, T::AccountId, u32>;
+	pub type MyMap<T: Config> = StorageMap<_, Blake2_128Concat, u8, T::AccountId>;
 
 	// A simple set of choices for a user vote.
 	#[derive(Encode, Decode, TypeInfo, MaxEncodedLen, Debug, Clone, Copy, Eq, PartialEq)]
@@ -97,19 +97,24 @@ pub mod pallet {
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
-		// A simple extrinsic which puts a value in storage.
+		// An extrinsic which (inefficiently) counts to `amount` and stores it.
 		#[pallet::weight(0)]
-		pub fn store_value(origin: OriginFor<T>, something: u32) -> DispatchResult {
+		pub fn counter(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
-			MyValue::<T>::put(something);
+			for i in 0 ..= amount {
+				// Writing to storage each loop is not super smart... but illustrative.
+				MyValue::<T>::put(i);
+			}
 			Ok(())
 		}
 
-		// A simple extrinsic which puts a value in a map under a user.
+		// An extrinsic which puts claims the indexes up to `amount` for a user.
 		#[pallet::weight(0)]
-		pub fn store_map(origin: OriginFor<T>, something: u32) -> DispatchResult {
+		pub fn claimer(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let who = ensure_signed(origin)?;
-			MyMap::<T>::insert(who, something);
+			for i in 0 ..= amount {
+				MyMap::<T>::insert(i, &who);
+			}
 			Ok(())
 		}
 
@@ -134,7 +139,7 @@ pub mod pallet {
 				Ok(Some(T::WeightInfo::branch_true()).into())
 			} else {
 				// This branch uses storage.
-				MyValue::<T>::put(1337);
+				MyValue::<T>::put(69);
 				Ok(Some(T::WeightInfo::branch_false()).into())
 			}
 		}
@@ -216,5 +221,6 @@ pub mod pallet {
 		}
 
 		// Extra Credit: Make a `remove_voter` function, and benchmark it.
+		// You will need to think about how this function may affect other extrinsics above.
 	}
 }

@@ -9,7 +9,6 @@ use frame_support::{
 	sp_runtime::traits::{Bounded, Get},
 };
 use frame_system::RawOrigin;
-use sp_std::vec::Vec;
 
 const SEED: u32 = 0;
 
@@ -60,31 +59,31 @@ fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResultWit
 }
 
 benchmarks! {
-	// Write a benchmark for how long it takes to add all values between 0 and 1_000_000.
-	add { let mut total = 0u64; } : { (0..1_000_000).for_each(|x| { total += core::hint::black_box(x); }) } verify { assert!(total > 0); }
+	// Write a benchmark for `i` hashes.
+	hashing {
+		let i in 0 .. 1_000;
+	}: {
+		(0..i).for_each(|x| {
+			T::Hashing::hash(&x.to_le_bytes());
+		})
+	}
 
-	// Write the same benchmark, but use `checked_add` instead.
-	checked_add { let mut total = 0u64; }: { (0..1_000_000).for_each(|x| { total = total.checked_add(core::hint::black_box(x)).unwrap(); }) } verify { assert!(total > 0); }
-
-	// Write a benchmark which writes multiple times to the same storage.
-	multi_write {
-		let i in 1 .. 100u32;
-		let user: T::AccountId = account("user", 0, 0);
-	}: { (0..=i).for_each(|j| { MyMap::<T>::insert(&user, j) }) }
+	// Write a benchmark for the `counter` extrinsic.
+	counter {
+		let i in 0 .. 255;
+		let user: T::AccountId = whitelisted_caller();
+	}: _(RawOrigin::Signed(user), i.try_into().unwrap())
 	verify {
-		assert!(MyMap::<T>::get(user) == Some(i))
+		assert!(MyValue::<T>::get() == i as u8)
 	}
 
 	// Write a benchmark which writes values to multiples keys in the same map.
-	multi_map {
-		let i in 1 .. 100u32;
-		let mut users: Vec<T::AccountId> = Vec::new();
-		for j in 0 .. i {
-			users.push(account("user", j, 0))
-		}
-	}: { users.iter().for_each(|who| { MyMap::<T>::insert(who, i) }) }
+	claimer {
+		let i in 1 .. 255;
+		let user: T::AccountId = whitelisted_caller();
+	}: _(RawOrigin::Signed(user.clone()), i.try_into().unwrap())
 	verify {
-		//assert!(MyMap::<T>::iter() == Some(i))
+		assert!(MyMap::<T>::get(i as u8) == Some(user))
 	}
 
 	// Write a benchmark for the transfer function.
@@ -104,7 +103,7 @@ benchmarks! {
 		let caller: T::AccountId = whitelisted_caller();
 	}: branched_logic(RawOrigin::Signed(caller.clone()), true)
 	verify {
-		assert_eq!(MyValue::<T>::get(), None)
+		assert_eq!(MyValue::<T>::get(), 0)
 	}
 
 	// Write both benchmarks needed for the branching function.
@@ -112,7 +111,7 @@ benchmarks! {
 		let caller: T::AccountId = whitelisted_caller();
 	}: branched_logic(RawOrigin::Signed(caller.clone()), false)
 	verify {
-		assert_eq!(MyValue::<T>::get(), Some(1337))
+		assert_eq!(MyValue::<T>::get(), 69)
 	}
 
 	// Write benchmark for register_vote function.
