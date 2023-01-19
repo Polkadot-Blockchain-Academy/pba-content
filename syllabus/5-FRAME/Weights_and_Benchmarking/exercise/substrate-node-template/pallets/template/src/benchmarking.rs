@@ -79,7 +79,7 @@ benchmarks! {
 
 	// Write a benchmark which writes values to multiples keys in the same map.
 	claimer {
-		let i in 1 .. 255;
+		let i in 0 .. 255;
 		let user: T::AccountId = whitelisted_caller();
 	}: _(RawOrigin::Signed(user.clone()), i.try_into().unwrap())
 	verify {

@@ -47,39 +47,39 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 	/// The range of component `i` is `[0, 1000]`.
 	fn hashing(i: u32, ) -> Weight {
 		// Minimum execution time: 0 nanoseconds.
-		Weight::from_ref_time(916_611)
-			// Standard Error: 196
-			.saturating_add(Weight::from_ref_time(247_536).saturating_mul(i.into()))
+		Weight::from_ref_time(444_594)
+			// Standard Error: 88
+			.saturating_add(Weight::from_ref_time(247_124).saturating_mul(i.into()))
 	}
 	// Storage: TemplateModule MyValue (r:0 w:1)
 	/// The range of component `i` is `[0, 255]`.
 	fn counter(i: u32, ) -> Weight {
-		// Minimum execution time: 4_000 nanoseconds.
-		Weight::from_ref_time(4_321_762)
-			// Standard Error: 1_401
-			.saturating_add(Weight::from_ref_time(622_140).saturating_mul(i.into()))
+		// Minimum execution time: 5_000 nanoseconds.
+		Weight::from_ref_time(5_650_433)
+			// Standard Error: 830
+			.saturating_add(Weight::from_ref_time(596_941).saturating_mul(i.into()))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
-	// Storage: TemplateModule MyMap (r:0 w:2)
-	/// The range of component `i` is `[1, 255]`.
+	// Storage: TemplateModule MyMap (r:0 w:1)
+	/// The range of component `i` is `[0, 255]`.
 	fn claimer(i: u32, ) -> Weight {
-		// Minimum execution time: 7_000 nanoseconds.
-		Weight::from_ref_time(3_385_717)
-			// Standard Error: 2_101
-			.saturating_add(Weight::from_ref_time(1_358_095).saturating_mul(i.into()))
+		// Minimum execution time: 5_000 nanoseconds.
+		Weight::from_ref_time(4_235_968)
+			// Standard Error: 1_033
+			.saturating_add(Weight::from_ref_time(1_338_372).saturating_mul(i.into()))
 			.saturating_add(T::DbWeight::get().writes(1))
 			.saturating_add(T::DbWeight::get().writes((1_u64).saturating_mul(i.into())))
 	}
 	// Storage: System Account (r:1 w:1)
 	fn transfer_all() -> Weight {
-		// Minimum execution time: 42_000 nanoseconds.
+		// Minimum execution time: 41_000 nanoseconds.
 		Weight::from_ref_time(42_000_000)
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
 	fn branch_true() -> Weight {
-		// Minimum execution time: 434_000 nanoseconds.
-		Weight::from_ref_time(443_000_000)
+		// Minimum execution time: 437_000 nanoseconds.
+		Weight::from_ref_time(442_000_000)
 	}
 	// Storage: TemplateModule MyValue (r:0 w:1)
 	fn branch_false() -> Weight {
@@ -90,10 +90,10 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 	// Storage: TemplateModule Voters (r:1 w:1)
 	/// The range of component `v` is `[0, 249]`.
 	fn register_voter(v: u32, ) -> Weight {
-		// Minimum execution time: 6_000 nanoseconds.
-		Weight::from_ref_time(8_884_983)
-			// Standard Error: 358
-			.saturating_add(Weight::from_ref_time(23_520).saturating_mul(v.into()))
+		// Minimum execution time: 7_000 nanoseconds.
+		Weight::from_ref_time(8_928_455)
+			// Standard Error: 301
+			.saturating_add(Weight::from_ref_time(21_621).saturating_mul(v.into()))
 			.saturating_add(T::DbWeight::get().reads(1))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -102,9 +102,9 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 	/// The range of component `s` is `[0, 249]`.
 	fn make_vote(s: u32, ) -> Weight {
 		// Minimum execution time: 18_000 nanoseconds.
-		Weight::from_ref_time(19_450_349)
-			// Standard Error: 1_218
-			.saturating_add(Weight::from_ref_time(46_376).saturating_mul(s.into()))
+		Weight::from_ref_time(19_972_377)
+			// Standard Error: 287
+			.saturating_add(Weight::from_ref_time(31_508).saturating_mul(s.into()))
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -112,10 +112,10 @@ impl<T: frame_system::Config> WeightInfo for SubstrateWeight<T> {
 	// Storage: TemplateModule Votes (r:1 w:1)
 	/// The range of component `s` is `[1, 250]`.
 	fn close_vote(s: u32, ) -> Weight {
-		// Minimum execution time: 18_000 nanoseconds.
-		Weight::from_ref_time(20_098_015)
-			// Standard Error: 638
-			.saturating_add(Weight::from_ref_time(19_292).saturating_mul(s.into()))
+		// Minimum execution time: 17_000 nanoseconds.
+		Weight::from_ref_time(18_528_240)
+			// Standard Error: 262
+			.saturating_add(Weight::from_ref_time(24_394).saturating_mul(s.into()))
 			.saturating_add(T::DbWeight::get().reads(2))
 			.saturating_add(T::DbWeight::get().writes(1))
 	}
@@ -126,39 +126,39 @@ impl WeightInfo for () {
 	/// The range of component `i` is `[0, 1000]`.
 	fn hashing(i: u32, ) -> Weight {
 		// Minimum execution time: 0 nanoseconds.
-		Weight::from_ref_time(916_611)
-			// Standard Error: 196
-			.saturating_add(Weight::from_ref_time(247_536).saturating_mul(i.into()))
+		Weight::from_ref_time(444_594)
+			// Standard Error: 88
+			.saturating_add(Weight::from_ref_time(247_124).saturating_mul(i.into()))
 	}
 	// Storage: TemplateModule MyValue (r:0 w:1)
 	/// The range of component `i` is `[0, 255]`.
 	fn counter(i: u32, ) -> Weight {
-		// Minimum execution time: 4_000 nanoseconds.
-		Weight::from_ref_time(4_321_762)
-			// Standard Error: 1_401
-			.saturating_add(Weight::from_ref_time(622_140).saturating_mul(i.into()))
+		// Minimum execution time: 5_000 nanoseconds.
+		Weight::from_ref_time(5_650_433)
+			// Standard Error: 830
+			.saturating_add(Weight::from_ref_time(596_941).saturating_mul(i.into()))
 			.saturating_add(RocksDbWeight::get().writes(1))
 	}
-	// Storage: TemplateModule MyMap (r:0 w:2)
-	/// The range of component `i` is `[1, 255]`.
+	// Storage: TemplateModule MyMap (r:0 w:1)
+	/// The range of component `i` is `[0, 255]`.
 	fn claimer(i: u32, ) -> Weight {
-		// Minimum execution time: 7_000 nanoseconds.
-		Weight::from_ref_time(3_385_717)
-			// Standard Error: 2_101
-			.saturating_add(Weight::from_ref_time(1_358_095).saturating_mul(i.into()))
+		// Minimum execution time: 5_000 nanoseconds.
+		Weight::from_ref_time(4_235_968)
+			// Standard Error: 1_033
+			.saturating_add(Weight::from_ref_time(1_338_372).saturating_mul(i.into()))
 			.saturating_add(RocksDbWeight::get().writes(1))
 			.saturating_add(RocksDbWeight::get().writes((1_u64).saturating_mul(i.into())))
 	}
 	// Storage: System Account (r:1 w:1)
 	fn transfer_all() -> Weight {
-		// Minimum execution time: 42_000 nanoseconds.
+		// Minimum execution time: 41_000 nanoseconds.
 		Weight::from_ref_time(42_000_000)
 			.saturating_add(RocksDbWeight::get().reads(1))
 			.saturating_add(RocksDbWeight::get().writes(1))
 	}
 	fn branch_true() -> Weight {
-		// Minimum execution time: 434_000 nanoseconds.
-		Weight::from_ref_time(443_000_000)
+		// Minimum execution time: 437_000 nanoseconds.
+		Weight::from_ref_time(442_000_000)
 	}
 	// Storage: TemplateModule MyValue (r:0 w:1)
 	fn branch_false() -> Weight {
@@ -169,10 +169,10 @@ impl WeightInfo for () {
 	// Storage: TemplateModule Voters (r:1 w:1)
 	/// The range of component `v` is `[0, 249]`.
 	fn register_voter(v: u32, ) -> Weight {
-		// Minimum execution time: 6_000 nanoseconds.
-		Weight::from_ref_time(8_884_983)
-			// Standard Error: 358
-			.saturating_add(Weight::from_ref_time(23_520).saturating_mul(v.into()))
+		// Minimum execution time: 7_000 nanoseconds.
+		Weight::from_ref_time(8_928_455)
+			// Standard Error: 301
+			.saturating_add(Weight::from_ref_time(21_621).saturating_mul(v.into()))
 			.saturating_add(RocksDbWeight::get().reads(1))
 			.saturating_add(RocksDbWeight::get().writes(1))
 	}
@@ -181,9 +181,9 @@ impl WeightInfo for () {
 	/// The range of component `s` is `[0, 249]`.
 	fn make_vote(s: u32, ) -> Weight {
 		// Minimum execution time: 18_000 nanoseconds.
-		Weight::from_ref_time(19_450_349)
-			// Standard Error: 1_218
-			.saturating_add(Weight::from_ref_time(46_376).saturating_mul(s.into()))
+		Weight::from_ref_time(19_972_377)
+			// Standard Error: 287
+			.saturating_add(Weight::from_ref_time(31_508).saturating_mul(s.into()))
 			.saturating_add(RocksDbWeight::get().reads(2))
 			.saturating_add(RocksDbWeight::get().writes(1))
 	}
@@ -191,10 +191,10 @@ impl WeightInfo for () {
 	// Storage: TemplateModule Votes (r:1 w:1)
 	/// The range of component `s` is `[1, 250]`.
 	fn close_vote(s: u32, ) -> Weight {
-		// Minimum execution time: 18_000 nanoseconds.
-		Weight::from_ref_time(20_098_015)
-			// Standard Error: 638
-			.saturating_add(Weight::from_ref_time(19_292).saturating_mul(s.into()))
+		// Minimum execution time: 17_000 nanoseconds.
+		Weight::from_ref_time(18_528_240)
+			// Standard Error: 262
+			.saturating_add(Weight::from_ref_time(24_394).saturating_mul(s.into()))
 			.saturating_add(RocksDbWeight::get().reads(2))
 			.saturating_add(RocksDbWeight::get().writes(1))
 	}
