@@ -5,6 +5,8 @@ use frame_support::{
 	traits::{Currency, ExistenceRequirement::AllowDeath},
 };
 pub use pallet::*;
+pub mod weights;
+pub use weights::WeightInfo;
 
 #[cfg(test)]
 mod mock;
@@ -56,10 +58,10 @@ pub mod pallet {
 	}
 
 	// A struct which connects a user to their vote.
-	#[derive(Encode, Decode, TypeInfo, MaxEncodedLen)]
+	#[derive(Encode, Decode, TypeInfo, MaxEncodedLen, Debug)]
 	pub struct UserVote<AccountId, Vote> {
-		who: AccountId,
-		vote: Vote,
+		pub who: AccountId,
+		pub vote: Vote,
 	}
 
 	// The set of users allowed to make a vote, not sorted.
@@ -75,7 +77,8 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		Outcome { aye: bool }
+		Outcome { aye: bool },
+		NewVote,
 	}
 
 	// Errors inform users that something went wrong.
@@ -137,7 +140,7 @@ pub mod pallet {
 		// The following extrinsics form a simple voting system. Take into account worst case scenarios.
 
 		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
-		#[pallet::weight(0)]
+		#[pallet::weight(T::WeightInfo::register_voter())]
 		pub fn register_voter(origin: OriginFor<T>, who: T::AccountId) -> DispatchResult {
 			ensure_root(origin)?;
 			let mut voters = Voters::<T>::get();
@@ -148,14 +151,14 @@ pub mod pallet {
 		}
 
 		// Allow a registered voter to make or update their vote.
-		#[pallet::weight(0)]
+		#[pallet::weight(T::WeightInfo::make_vote())]
 		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			let voters = Voters::<T>::get();
 			ensure!(voters.contains(&who), Error::<T>::NotVoter);
 			let mut votes = Votes::<T>::get();
 
-			let maybe_index = votes.iter().position(|v| { v.who == who });
+			let maybe_index = votes.iter().position(|v| v.who == who);
 
 			let user_vote = UserVote { who, vote };
 
@@ -164,11 +167,13 @@ pub mod pallet {
 			} else {
 				votes.try_push(user_vote).map_err(|_| Error::<T>::TooManyVoters)?;
 			}
+			Votes::<T>::set(votes);
+			Self::deposit_event(Event::<T>::NewVote);
 			Ok(())
 		}
 
 		// Attempt to resolve a vote, which emits the outcome and resets the votes.
-		#[pallet::weight(0)]
+		#[pallet::weight(T::WeightInfo::close_vote())]
 		pub fn close_vote(origin: OriginFor<T>) -> DispatchResult {
 			// Any user can attempt to close the vote.
 			let _who = ensure_signed(origin)?;

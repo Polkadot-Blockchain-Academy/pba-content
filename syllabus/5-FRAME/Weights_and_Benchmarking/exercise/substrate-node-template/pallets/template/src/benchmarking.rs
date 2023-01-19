@@ -1,12 +1,55 @@
 //! Benchmarking setup for pallet-template
 
-use super::*;
-
 #[allow(unused)]
-use crate::Pallet as Template;
-use frame_benchmarking::{account, benchmarks, whitelisted_caller, Vec, Zero};
-use frame_support::sp_runtime::traits::Bounded;
+use super::{Pallet as Template, *};
+use frame_benchmarking::{account, benchmarks, vec, whitelisted_caller, Vec, Zero};
+use frame_support::sp_runtime::traits::{Bounded, Get};
+use frame_support::BoundedVec;
 use frame_system::RawOrigin;
+
+const SEED: u32 = 0;
+
+fn assert_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
+	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
+}
+
+fn set_voters<T: Config>(caller: Option<T::AccountId>) -> usize {
+	let l = 1..T::MaxVoters::get() - 1;
+
+	let mut voters = vec![];
+	for i in l.into_iter() {
+		let voter = account::<T::AccountId>("voter", i + 1, SEED);
+		voters.push(voter);
+	}
+
+	if let Some(caller) = caller {
+		voters.push(caller);
+	}
+	let bounded_voters: BoundedVec<T::AccountId, T::MaxVoters> =
+		BoundedVec::try_from(voters).unwrap();
+	Voters::<T>::set(bounded_voters.clone());
+	bounded_voters.len()
+}
+
+fn set_votes<T: Config>() {
+	let l = 1..T::MaxVoters::get() - 1;
+
+	let mut votes: Vec<UserVote<T::AccountId, Vote>> = vec![];
+	for i in l.clone().into_iter() {
+		let who = account::<T::AccountId>("voter", i, SEED);
+		let vote = match i % 3 {
+			0 => Vote::Abstain,
+			1 | 2 => Vote::Aye,
+			_ => Vote::Nay,
+		};
+		let user_vote = UserVote { who, vote };
+		votes.push(user_vote);
+	}
+
+	let bounded_votes: BoundedVec<UserVote<T::AccountId, Vote>, T::MaxVoters> =
+		BoundedVec::try_from(votes).unwrap();
+	Votes::<T>::set(bounded_votes);
+}
 
 benchmarks! {
 
@@ -67,8 +110,42 @@ benchmarks! {
 		assert_eq!(MyValue::<T>::get(), Some(1337))
 	}
 
+	// Write benchmark for register_vote function
+	register_voter {
+		let new_voter = account::<T::AccountId>("voter", 0, SEED);
+		let l = set_voters::<T>(None);
+	}: register_voter(RawOrigin::Root, new_voter)
+	verify {
+		assert_eq!(Voters::<T>::get().len(), l + 1)
+	}
 
-	// TODO: Benchmarks for the voting functions.
+	// Write benchmark for make_vote function
+	make_vote {
+		let caller = account::<T::AccountId>("voter", 0, SEED);
+		let origin = RawOrigin::Signed(caller.clone());
+		let vote = Vote::Aye;
+		set_voters::<T>(Some(caller));
+		set_votes::<T>();
+
+	}: make_vote(origin, vote)
+	verify
+	{
+		assert_event::<T>(Event::NewVote.into());
+	}
+
+	close_vote {
+		let caller = account::<T::AccountId>("voter", 0, SEED);
+		let origin = RawOrigin::Signed(caller.clone());
+		let vote = Vote::Aye;
+		set_voters::<T>(Some(caller));
+		set_votes::<T>();
+
+	}: close_vote(origin)
+	verify
+	{
+		assert_eq!(Votes::<T>::get().len(),0);
+		assert_event::<T>(Event::Outcome { aye: true }.into());
+	}
 
 
 
