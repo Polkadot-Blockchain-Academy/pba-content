@@ -5,8 +5,6 @@ use frame_support::{
 	traits::{Currency, ExistenceRequirement::AllowDeath},
 };
 pub use pallet::*;
-pub mod weights;
-pub use weights::WeightInfo;
 
 #[cfg(test)]
 mod mock;
@@ -140,7 +138,7 @@ pub mod pallet {
 		// The following extrinsics form a simple voting system. Take into account worst case scenarios.
 
 		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
-		#[pallet::weight(T::WeightInfo::register_voter())]
+		#[pallet::weight(0)]
 		pub fn register_voter(origin: OriginFor<T>, who: T::AccountId) -> DispatchResult {
 			ensure_root(origin)?;
 			let mut voters = Voters::<T>::get();
@@ -151,7 +149,7 @@ pub mod pallet {
 		}
 
 		// Allow a registered voter to make or update their vote.
-		#[pallet::weight(T::WeightInfo::make_vote())]
+		#[pallet::weight(0)]
 		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			let voters = Voters::<T>::get();
@@ -173,7 +171,7 @@ pub mod pallet {
 		}
 
 		// Attempt to resolve a vote, which emits the outcome and resets the votes.
-		#[pallet::weight(T::WeightInfo::close_vote())]
+		#[pallet::weight(0)]
 		pub fn close_vote(origin: OriginFor<T>) -> DispatchResult {
 			// Any user can attempt to close the vote.
 			let _who = ensure_signed(origin)?;

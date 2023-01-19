@@ -2,10 +2,11 @@
 
 #[allow(unused)]
 use super::{Pallet as Template, *};
-use frame_benchmarking::{account, benchmarks, vec, whitelisted_caller, Vec, Zero};
+use frame_benchmarking::{account, benchmarks, whitelisted_caller, Zero};
 use frame_support::sp_runtime::traits::{Bounded, Get};
-use frame_support::BoundedVec;
+use frame_support::{ensure};
 use frame_system::RawOrigin;
+use frame_support::pallet_prelude::DispatchResult;
 
 const SEED: u32 = 0;
 
@@ -13,42 +14,47 @@ fn assert_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 	frame_system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
-fn set_voters<T: Config>(caller: Option<T::AccountId>) -> usize {
-	let l = 1..T::MaxVoters::get() - 1;
+// Call `register_voter` n times.
+// The `whitelisted_caller` is always used as the final voter.
+fn set_voters<T: Config>(n: u32) -> DispatchResult {
+	if n > 0 {
+		// Starting at 1 to leave room for the whitelisted caller.
+		for i in 1 .. n {
+			// Add random voters.
+			let voter = account::<T::AccountId>("voter", i, SEED);
+			Pallet::<T>::register_voter(RawOrigin::Root.into(), voter)?;
+		}
 
-	let mut voters = vec![];
-	for i in l.into_iter() {
-		let voter = account::<T::AccountId>("voter", i + 1, SEED);
-		voters.push(voter);
+		// Add the whitelisted caller at the end.
+		let caller = whitelisted_caller();
+		Pallet::<T>::register_voter(RawOrigin::Root.into(), caller)?;
 	}
 
-	if let Some(caller) = caller {
-		voters.push(caller);
-	}
-	let bounded_voters: BoundedVec<T::AccountId, T::MaxVoters> =
-		BoundedVec::try_from(voters).unwrap();
-	Voters::<T>::set(bounded_voters.clone());
-	bounded_voters.len()
+	Ok(())
 }
 
-fn set_votes<T: Config>() {
-	let l = 1..T::MaxVoters::get() - 1;
+// Set the votes of the voters in the pallet by number of ayes, nays, and abstains.
+// If the total number of votes exceeds the number of voters, we will return an error.
+fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResult {
 
-	let mut votes: Vec<UserVote<T::AccountId, Vote>> = vec![];
-	for i in l.clone().into_iter() {
-		let who = account::<T::AccountId>("voter", i, SEED);
-		let vote = match i % 3 {
-			0 => Vote::Abstain,
-			1 | 2 => Vote::Aye,
-			_ => Vote::Nay,
-		};
-		let user_vote = UserVote { who, vote };
-		votes.push(user_vote);
+	let voters = Voters::<T>::get();
+	let total_votes = ayes + nays + abstain;
+
+	ensure!(voters.len() as u32 <= total_votes, "Too many votes for voters.");
+
+	for (i, voter) in voters.into_iter().enumerate() {
+		if (i as u32) < ayes {
+			Pallet::<T>::make_vote(RawOrigin::Signed(voter).into(), Vote::Aye)?;
+		} else if (i as u32) < ayes + nays {
+			Pallet::<T>::make_vote(RawOrigin::Signed(voter).into(), Vote::Nay)?;
+		} else if (i as u32) < ayes + nays + abstain {
+			Pallet::<T>::make_vote(RawOrigin::Signed(voter).into(), Vote::Abstain)?;
+		} else {
+			break;
+		}
 	}
 
-	let bounded_votes: BoundedVec<UserVote<T::AccountId, Vote>, T::MaxVoters> =
-		BoundedVec::try_from(votes).unwrap();
-	Votes::<T>::set(bounded_votes);
+	Ok(())
 }
 
 benchmarks! {
@@ -112,28 +118,38 @@ benchmarks! {
 
 	// Write benchmark for register_vote function
 	register_voter {
-		let new_voter = account::<T::AccountId>("voter", 0, SEED);
-		let l = set_voters::<T>(None);
+		// Need to leave room for at least one more voter to join.
+		let v in 0 .. T::MaxVoters::get() - 1;
+		// Some random account. Doesn't matter.
+		let new_voter = account::<T::AccountId>("new_voter", 0, SEED);
+		set_voters::<T>(v)?;
 	}: register_voter(RawOrigin::Root, new_voter)
 	verify {
-		assert_eq!(Voters::<T>::get().len(), l + 1)
+		assert_eq!(Voters::<T>::get().len() as u32, v + 1)
 	}
 
 	// Write benchmark for make_vote function
 	make_vote {
-		let caller = account::<T::AccountId>("voter", 0, SEED);
-		let origin = RawOrigin::Signed(caller.clone());
-		let vote = Vote::Aye;
-		set_voters::<T>(Some(caller));
-		set_votes::<T>();
+		// Need to leave room for at least one more vote.
+		let s in 0 .. T::MaxVoters::get() - 1;
 
-	}: make_vote(origin, vote)
-	verify
-	{
+		// At least 1 voter needed.
+		set_voters::<T>(s + 1);
+		set_votes::<T>(0, 0, s);
+
+		let caller = whitelisted_caller();
+		let vote = Vote::Aye;
+	}: make_vote(RawOrigin::Signed(caller), vote)
+	verify {
 		assert_event::<T>(Event::NewVote.into());
 	}
 
 	close_vote {
+		// At least 1 voter needed.
+		let s in 1 .. T::MaxVoters::get();
+
+		set_voters::<T>(s);
+		set_votes::<T>(0, 0, s);
 		let caller = account::<T::AccountId>("voter", 0, SEED);
 		let origin = RawOrigin::Signed(caller.clone());
 		let vote = Vote::Aye;
