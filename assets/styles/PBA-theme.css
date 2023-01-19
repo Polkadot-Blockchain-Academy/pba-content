@@ -239,9 +239,12 @@ pba-flex[right] {
 .reveal iframe {
   max-width: 1300px;
 	max-height: 800px;
+	margin-top: 1em;
 }
 
-.reveal img[rounded] {
+.reveal img[rounded],
+.reveal video[rounded],
+.reveal iframe[rounded]  {
 	border-radius: 0.6em;
 }
 
@@ -308,6 +311,7 @@ pba-flex[right] {
 	padding: 1em;
 	font-style: italic;
 	background: rgba(255, 255, 255, 0.1);
+	border-radius: 0.6em;
 }
 
 .reveal blockquote * {
