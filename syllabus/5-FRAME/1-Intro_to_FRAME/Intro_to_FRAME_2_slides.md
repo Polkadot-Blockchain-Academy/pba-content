@@ -42,7 +42,6 @@ instructors: ["Shawn Tabrizi"]
 - Loosely + Tightly Coupled Pallets (TODO)
 - Origins (TODO)
 
-
 </td>
 <td>
 
@@ -96,7 +95,6 @@ With FRAME: 2210 lines of code.
 
 </pba-flex>
 
-
 ---
 
 ## Goals of FRAME
@@ -111,12 +109,12 @@ With FRAME: 2210 lines of code.
 ## Building Blocks of FRAME
 
 - FRAME Development
-	- Pallets
-	- Macros
+  - Pallets
+  - Macros
 - FRAME Coordination
-	- FRAME System
-	- FRAME Executive
-	- Construct Runtime
+  - FRAME System
+  - FRAME Executive
+  - Construct Runtime
 
 ---
 
@@ -207,7 +205,6 @@ It contains all the most basic functions and types needed for a blockchain syste
 
 - Block Number
 - Accounts
--
 
 ---
 
@@ -231,7 +228,6 @@ pub fn execute_block(block: Block) { ... }
 ---
 
 ## Construct Runtime
-
 
 ---
 
