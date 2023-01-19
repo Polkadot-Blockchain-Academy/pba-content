@@ -290,7 +290,7 @@ Explain example of luna or other system collapse.
 <pba-cols>
 <pba-col>
 
-<img rounded style="height: 700px; margin-top:-10px" src="../../assets/img/3-Blockchain/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" alt="https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg"/>
+<img rounded style="height: 700px;" src="../../assets/img/3-Blockchain/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" alt="https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg"/>
 
 </pba-col>
 <pba-col>
@@ -531,7 +531,7 @@ Notes:
 
 ## ⚔ Proof of Work Battles
 
-<img rounded style="width: 1300px; margin-top: -0.8em" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
+<img rounded style="width: 1300px;" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
 
 <br>
 
@@ -613,7 +613,7 @@ Notes:
 
 ## ⚔ PoS Economic Security Battles
 
-<img rounded style="width: 1150px; margin-top: -0.8em" src="../../assets/img/3-Blockchain/market-cap-pos.png"/>
+<img rounded style="width: 1150px;" src="../../assets/img/3-Blockchain/market-cap-pos.png"/>
 
 Notes:
 
@@ -625,7 +625,7 @@ What about an system of value _within_ consensus?
 
 ## DApp PoS Economic Security
 
-<img rounded style="width: 1200px; margin-top: -0.8em" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png"/>
+<img rounded style="width: 1200px;" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png"/>
 
 Notes:
 

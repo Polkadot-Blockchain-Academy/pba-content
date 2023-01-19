@@ -175,8 +175,7 @@ enum Instruction {
 <pba-cols>
 <pba-col>
 
-Takes assets from the holding register and deposits them in a beneficiary.
-
+Takes assets from the holding register and deposits them in a beneficiary.<br>
 Typically an instruction that places assets into the holding register would have been executed.
 
 </pba-col>
