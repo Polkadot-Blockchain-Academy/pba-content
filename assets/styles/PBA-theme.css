@@ -33,6 +33,7 @@
 	--r-code-font-size: 0.75em;
 	--r-link-color: #ccc;
 	--r-link-color-decoration: #d92f78;
+	--r-color-controls: #d92f78;
 	--r-link-color-dark: #;
 	--r-link-color-hover: #8d3aed;
 	--r-selection-background-color: #8d3aed;
@@ -233,6 +234,7 @@ pba-flex[right] {
   max-width: 1300px;
 	max-height: 800px;
 	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .reveal img[rounded],
@@ -477,7 +479,7 @@ a {
 	 * NAVIGATION CONTROLS
 	 *********************************************/
 .reveal .controls {
-	color: var(--r-link-color);
+	color: var(--r-color-controls);
 }
 
 /*********************************************
@@ -485,7 +487,8 @@ a {
 	 *********************************************/
 .reveal .progress {
 	background: rgba(0, 0, 0, 0.2);
-	color: var(--r-link-color);
+	color: var(--r-color-controls);
+	height: 0.15em;
 }
 
 /*********************************************
