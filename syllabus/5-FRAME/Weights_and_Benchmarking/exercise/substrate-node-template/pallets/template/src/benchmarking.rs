@@ -3,10 +3,12 @@
 #[allow(unused)]
 use super::{Pallet as Template, *};
 use frame_benchmarking::{account, benchmarks, whitelisted_caller, Zero};
-use frame_support::sp_runtime::traits::{Bounded, Get};
-use frame_support::{ensure};
+use frame_support::{
+	ensure,
+	pallet_prelude::DispatchResult,
+	sp_runtime::traits::{Bounded, Get},
+};
 use frame_system::RawOrigin;
-use frame_support::pallet_prelude::DispatchResult;
 
 const SEED: u32 = 0;
 
@@ -19,7 +21,7 @@ fn assert_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 fn set_voters<T: Config>(n: u32) -> DispatchResult {
 	if n > 0 {
 		// Starting at 1 to leave room for the whitelisted caller.
-		for i in 1 .. n {
+		for i in 1..n {
 			// Add random voters.
 			let voter = account::<T::AccountId>("voter", i, SEED);
 			Pallet::<T>::register_voter(RawOrigin::Root.into(), voter)?;
@@ -36,12 +38,11 @@ fn set_voters<T: Config>(n: u32) -> DispatchResult {
 // Set the votes of the voters in the pallet by number of ayes, nays, and abstains.
 // If the total number of votes exceeds the number of voters, we will return an error.
 fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResult {
-
 	let voters = Voters::<T>::get();
 	let total_votes = ayes + nays + abstain;
+	ensure!(voters.len() as u32 >= total_votes, "Too many votes for voters.");
 
-	ensure!(voters.len() as u32 <= total_votes, "Too many votes for voters.");
-
+	// Distribute votes to voters. Order of votes should not matter.
 	for (i, voter) in voters.into_iter().enumerate() {
 		if (i as u32) < ayes {
 			Pallet::<T>::make_vote(RawOrigin::Signed(voter).into(), Vote::Aye)?;
@@ -50,7 +51,7 @@ fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResult {
 		} else if (i as u32) < ayes + nays + abstain {
 			Pallet::<T>::make_vote(RawOrigin::Signed(voter).into(), Vote::Abstain)?;
 		} else {
-			break;
+			break
 		}
 	}
 
@@ -58,7 +59,6 @@ fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResult {
 }
 
 benchmarks! {
-
 	// Write a benchmark for how long it takes to add all values between 0 and 1_000_000.
 	add { let mut total = 0u64; } : { (0..1_000_000).for_each(|x| { total += x; }) } verify { assert!(total > 0); }
 
@@ -116,7 +116,8 @@ benchmarks! {
 		assert_eq!(MyValue::<T>::get(), Some(1337))
 	}
 
-	// Write benchmark for register_vote function
+	// Write benchmark for register_vote function.
+	// Extra: Consider what would be needed to support Weight refunds.
 	register_voter {
 		// Need to leave room for at least one more voter to join.
 		let v in 0 .. T::MaxVoters::get() - 1;
@@ -128,42 +129,39 @@ benchmarks! {
 		assert_eq!(Voters::<T>::get().len() as u32, v + 1)
 	}
 
-	// Write benchmark for make_vote function
+	// Write benchmark for make_vote function.
+	// Extra: Consider what would be needed to support Weight refunds.
 	make_vote {
 		// Need to leave room for at least one more vote.
 		let s in 0 .. T::MaxVoters::get() - 1;
 
 		// At least 1 voter needed.
-		set_voters::<T>(s + 1);
-		set_votes::<T>(0, 0, s);
+		set_voters::<T>(s + 1)?;
+		set_votes::<T>(0, 0, s)?;
 
-		let caller = whitelisted_caller();
+		let caller: T::AccountId = whitelisted_caller();
 		let vote = Vote::Aye;
-	}: make_vote(RawOrigin::Signed(caller), vote)
+	}: make_vote(RawOrigin::Signed(caller.clone()), vote)
 	verify {
-		assert_event::<T>(Event::NewVote.into());
+		assert_event::<T>(Event::NewVote { who: caller }.into());
 	}
 
+	// Write a benchmark for the close_vote function.
+	// Extra: Consider what would be needed to support Weight refunds.
 	close_vote {
-		// At least 1 voter needed.
+		// At least 1 voter/vote needed.
 		let s in 1 .. T::MaxVoters::get();
 
-		set_voters::<T>(s);
-		set_votes::<T>(0, 0, s);
-		let caller = account::<T::AccountId>("voter", 0, SEED);
-		let origin = RawOrigin::Signed(caller.clone());
-		let vote = Vote::Aye;
-		set_voters::<T>(Some(caller));
-		set_votes::<T>();
+		set_voters::<T>(s)?;
+		set_votes::<T>(s, 0, 0)?;
 
-	}: close_vote(origin)
+		let caller = account::<T::AccountId>("closer", 0, SEED);
+	}: close_vote(RawOrigin::Signed(caller))
 	verify
 	{
 		assert_eq!(Votes::<T>::get().len(),0);
 		assert_event::<T>(Event::Outcome { aye: true }.into());
 	}
-
-
 
 	impl_benchmark_test_suite!(Template, crate::mock::new_test_ext(), crate::mock::Test);
 }

@@ -76,7 +76,7 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		Outcome { aye: bool },
-		NewVote,
+		NewVote { who: T::AccountId },
 	}
 
 	// Errors inform users that something went wrong.
@@ -107,7 +107,8 @@ pub mod pallet {
 			Ok(())
 		}
 
-		// An extrinsic which includes a call to `transfer`, which is implemented in a different pallet.
+		// An extrinsic which includes a call to `transfer`, which is implemented in a different
+		// pallet.
 		#[pallet::weight(0)]
 		pub fn transfer(
 			origin: OriginFor<T>,
@@ -135,7 +136,8 @@ pub mod pallet {
 			Ok(())
 		}
 
-		// The following extrinsics form a simple voting system. Take into account worst case scenarios.
+		// The following extrinsics form a simple voting system. Take into account worst case
+		// scenarios.
 
 		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
 		#[pallet::weight(0)]
@@ -158,7 +160,7 @@ pub mod pallet {
 
 			let maybe_index = votes.iter().position(|v| v.who == who);
 
-			let user_vote = UserVote { who, vote };
+			let user_vote = UserVote { who: who.clone(), vote };
 
 			if let Some(index) = maybe_index {
 				votes[index] = user_vote;
@@ -166,7 +168,7 @@ pub mod pallet {
 				votes.try_push(user_vote).map_err(|_| Error::<T>::TooManyVoters)?;
 			}
 			Votes::<T>::set(votes);
-			Self::deposit_event(Event::<T>::NewVote);
+			Self::deposit_event(Event::<T>::NewVote { who });
 			Ok(())
 		}
 
@@ -197,7 +199,7 @@ pub mod pallet {
 			} else if nays >= ayes + not_voted {
 				Self::deposit_event(Event::<T>::Outcome { aye: false });
 			} else {
-				return Err(Error::<T>::NotComplete.into());
+				return Err(Error::<T>::NotComplete.into())
 			}
 
 			Votes::<T>::kill();
