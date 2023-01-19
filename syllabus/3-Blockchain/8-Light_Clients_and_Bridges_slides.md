@@ -6,30 +6,55 @@ description: Light clients principles and application in bridges
 # Light Clients
 
 <pba-cols>
-    <pba-col>
-        <img style="width:400px" alt="Pierre Krieger aka Tomaka" src="./img/tomaka.png" />
-    </pba-col>
-    <pba-col>
-        <blockquote>What can I say?<!-- .element: class="fragment" data-fragment-index="2" --></blockquote>
-        <blockquote>It's a client but light.<!-- .element: class="fragment" data-fragment-index="3" --></blockquote>
-    </pba-col>
+<pba-col>
+
+<img rounded style="width:400px" alt="Pierre Krieger aka Tomaka" src="./img/tomaka.png" />
+
+</pba-col>
+<pba-col>
+
+> What can I say?
+>
+> It's a client but light.
+
+<!-- .element: class="fragment" -->
+
+</pba-col>
 </pba-cols>
 
 ---
 
-# 😢 Running a Node is Hard 😭
+## 😢 Running a Node is Hard 😭
 
-Ideal:<br />Everyone runs their own node.
+<pba-cols>
+<pba-col>
+<pba-flex center>
+
+Ideally:
+
+<br>
+
+- Everyone runs their own node.
+
+<br>
+
+</pba-col>
+<pba-col>
 
 <div>
+
 Reality:
 
 - It takes a lot of disk, memory, etc
 - It takes some know-how
 - I don't need it _all the time_
-</div>
-<!-- .element: class="fragment" data-fragment-index="2" -->
 
+</div>
+<!-- .element: class="fragment" -->
+
+</pba-flex>
+</pba-col>
+</pba-cols>
 Notes:
 
 The bitcoin whitepaper clearly assumes that users will run their own nodes. This is the most trustless and decentralized way to operate, and you should do it whenever you can. If you think you can't you're probably wrong. Just ask the Monero community.
@@ -42,16 +67,12 @@ There are _some_ reasons not to run a full node and the reality is that not ever
 
 AKA, trust somebody else's node.
 
-<ul>
-<li><span>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">like infura</a>).</span></li>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<li>🔞 Censor you</li>
-<!-- .element: class="fragment" data-fragment-index="3" -->
-<li>🤥 Lie to you</li>
-<!-- .element: class="fragment" data-fragment-index="4" -->
-<li>💔 Steal your boyfriend</li>
-<!-- .element: class="fragment" data-fragment-index="5" -->
-</ul>
+<pba-flex center>
+
+- <div>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">like infura</a>).<div> <!-- .element: class="fragment" -->
+- 🔞 Censor you <!-- .element: class="fragment" -->
+- 🤥 Lie to you <!-- .element: class="fragment" -->
+- 💔 Steal your boyfriend <!-- .element: class="fragment" -->
 
 Notes:
 
@@ -65,6 +86,8 @@ So this is definitely not the best option. Let's see if we can do better.
 
 For resource constrained systems and people in a hurry
 
+<pba-flex center>
+
 - Phone
 - Raspberry pi
 - Microcontroller
@@ -77,6 +100,8 @@ One of the complaints was that the node takes too much resources. This is especi
 ---v
 
 ## Light Client Duties
+
+<pba-flex center>
 
 - ❌ Sync blocks
 - ❌ Execute blocks
@@ -93,7 +118,9 @@ This is what a typical light client does. There is not a single definition of li
 
 ## Trustless
 
-![Bitcoin SPV diagram checking Merkle root](./img/bitcoin-spv.png)
+<pba-flex center style="margin-top:-50px">
+
+<img rounded style="with 800px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png">
 
 - Relies on full node for data
 - Does not have to trust data
@@ -108,6 +135,8 @@ Chains with state roots can have much more powerful light clients
 ---v
 
 ## Syncing Strategies
+
+<pba-flex center>
 
 - Full header sync
 - Checkpoints in code
@@ -129,8 +158,8 @@ Warp sync is possible when you have deterministic finality. In dead simple PoA y
 
 Stay in the gossip protocol or you might get got.
 
-<img width="500px" alt="You get nothing! You Lose! Good day sir!" src="./img/wanka.jpg" />
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<img rounded width="500px" alt="You get nothing! You Lose! Good day sir!" src="./img/wanka.jpg" />
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -142,7 +171,7 @@ In the main gossip protocol, if authorities finalize two conflicting blocks, the
 
 Transport layers between independent consensus systems
 
-![Bridge spanning space between blockchains](./img/basic-bridge.svg)
+<img rounded width="700px" alt="Bridge spanning space between blockchains" src="./img/basic-bridge.svg">
 
 Notes:
 
@@ -152,9 +181,10 @@ Generally speaking bridges move arbitrary data between unrelated consensus syste
 
 ## Source and Target Chain
 
-<img src="./img/bridge-source-target.svg" />
+<img rounded width="700px" src="./img/bridge-source-target.svg" /> 
 
 Notes:
+
 By convention we speak of bridges as being one-directional. When we talk about trustless bridge design this is a core concept in the design. It is less critical but still useful for trusted bridges.
 
 A two-way bridge is really just two one-way bridge. Think of a two-way
@@ -188,9 +218,9 @@ Eg. WBTC Foundation
 
 ### Trustless
 
-<br>
+Trustless is the goal,<br>like almost everything in web3.
 
-Trustless is the goal,<br>like almost everything in Web3.
+<br>
 
 </pba-col>
 </pba-cols>
@@ -208,7 +238,9 @@ A lot of the trusted bridge design can be improved and we'll talk about that in 
 
 # Trustless bridge design
 
-- Most trustless way to interact with blockchain is to run a node
+<pba-flex center>
+
+- Most trustless way to interact with blockchain<br>is to run a node
 - This is true for individuals _and_ other blockchains
 - A blockchain is extremely resource constrained.
 - Run a source chain light client on the target chain
@@ -225,7 +257,7 @@ Notes:
 
 # Bridge Design Challenges
 
-![bridge collapse](./img/bridge-collapse.webp)
+<img rounded width="1100px" src="./img/bridge-collapse.webp">
 
 Notes:
 
@@ -234,6 +266,8 @@ Bridges present their own set of design challenges beyond what we encounter in r
 ---v
 
 ## Peers?
+
+<pba-flex center>
 
 - How can we peer without networking?
 - Enter the **Relayer** - a permissionless and trustless role
@@ -265,15 +299,17 @@ Because the validators may be equivocating. They don't send equivocations to rea
 
 Add a **Challenge Period** and
 
+<pba-flex center>
+
 - Add Fishermen - reverse of relayers
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
 
 **OR**
 
-<!-- .element: class="fragment" data-fragment-index="3" -->
+<!-- .element: class="fragment"-->
 
 - Stake Relayers - so they can be slashed
-<!-- .element: class="fragment" data-fragment-index="3" -->
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -296,6 +332,8 @@ TODO Figure of stack with two blockchains on the bottom layer
 
 ## We have a header, now what?
 
+<pba-flex center>
+
 - App users submit proofs
 - Need a source chain transaction? Submit an spv-style transaction proof
 - Need some source chain state? Submit a state proof
@@ -312,7 +350,7 @@ If you need some source chain state, your app needs to require a state proof to 
 
 # Multichain Security
 
-![Strong person lifting two weights beside weak person unable to lift one weight](./img/strong-and-weak-.png)
+<img rounded width="1100px" src="./img/strong-and-weak-.png">
 
 Notes:
 
@@ -323,3 +361,11 @@ This kind of trustless bridge _with proper incentives_ gets us information about
 ## Example
 
 Depository - Mint model - Full backing
+
+TODO - complete slide
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
