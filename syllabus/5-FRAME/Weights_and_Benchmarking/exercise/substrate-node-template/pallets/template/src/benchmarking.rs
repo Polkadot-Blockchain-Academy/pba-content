@@ -2,13 +2,14 @@
 
 #[allow(unused)]
 use super::{Pallet as Template, *};
-use frame_benchmarking::{account, benchmarks, whitelisted_caller, Zero};
+use frame_benchmarking::{account, benchmarks, whitelisted_caller};
 use frame_support::{
 	ensure,
-	pallet_prelude::DispatchResult,
+	pallet_prelude::DispatchResultWithPostInfo,
 	sp_runtime::traits::{Bounded, Get},
 };
 use frame_system::RawOrigin;
+use sp_std::vec::Vec;
 
 const SEED: u32 = 0;
 
@@ -18,7 +19,7 @@ fn assert_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 
 // Call `register_voter` n times.
 // The `whitelisted_caller` is always used as the final voter.
-fn set_voters<T: Config>(n: u32) -> DispatchResult {
+fn set_voters<T: Config>(n: u32) -> DispatchResultWithPostInfo {
 	if n > 0 {
 		// Starting at 1 to leave room for the whitelisted caller.
 		for i in 1..n {
@@ -32,12 +33,12 @@ fn set_voters<T: Config>(n: u32) -> DispatchResult {
 		Pallet::<T>::register_voter(RawOrigin::Root.into(), caller)?;
 	}
 
-	Ok(())
+	Ok(().into())
 }
 
 // Set the votes of the voters in the pallet by number of ayes, nays, and abstains.
 // If the total number of votes exceeds the number of voters, we will return an error.
-fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResult {
+fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResultWithPostInfo {
 	let voters = Voters::<T>::get();
 	let total_votes = ayes + nays + abstain;
 	ensure!(voters.len() as u32 >= total_votes, "Too many votes for voters.");
@@ -55,15 +56,15 @@ fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResult {
 		}
 	}
 
-	Ok(())
+	Ok(().into())
 }
 
 benchmarks! {
 	// Write a benchmark for how long it takes to add all values between 0 and 1_000_000.
-	add { let mut total = 0u64; } : { (0..1_000_000).for_each(|x| { total += x; }) } verify { assert!(total > 0); }
+	add { let mut total = 0u64; } : { (0..1_000_000).for_each(|x| { total += core::hint::black_box(x); }) } verify { assert!(total > 0); }
 
 	// Write the same benchmark, but use `checked_add` instead.
-	checked_add { let mut total = 0u64; }: { (0..1_000_000).for_each(|x| { total = total.checked_add(x).unwrap(); }) } verify { assert!(total > 0); }
+	checked_add { let mut total = 0u64; }: { (0..1_000_000).for_each(|x| { total = total.checked_add(core::hint::black_box(x)).unwrap(); }) } verify { assert!(total > 0); }
 
 	// Write a benchmark which writes multiple times to the same storage.
 	multi_write {
@@ -87,17 +88,15 @@ benchmarks! {
 	}
 
 	// Write a benchmark for the transfer function.
-	transfer {
+	transfer_all {
 		let caller = whitelisted_caller();
 		let recipient: T::AccountId = account("recipient", 0, 0);
 		let balance = BalanceOf::<T>::max_value();
 		T::Currency::make_free_balance_be(&caller, balance);
-		let transfer_amount = balance / 2u32.into();
-	}: _(RawOrigin::Signed(caller.clone()), recipient.clone(), transfer_amount)
+	}: _(RawOrigin::Signed(caller.clone()), recipient.clone())
 	verify {
-		assert!(!transfer_amount.is_zero());
-		assert_eq!(T::Currency::free_balance(&caller), balance - transfer_amount);
-		assert_eq!(T::Currency::free_balance(&recipient), transfer_amount);
+		assert_eq!(T::Currency::free_balance(&caller), 0u32.into());
+		assert_eq!(T::Currency::free_balance(&recipient), balance);
 	}
 
 	// Write both benchmarks needed for the branching function.

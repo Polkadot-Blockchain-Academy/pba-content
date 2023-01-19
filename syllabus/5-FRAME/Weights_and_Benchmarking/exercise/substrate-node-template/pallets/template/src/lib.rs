@@ -5,6 +5,9 @@ use frame_support::{
 	traits::{Currency, ExistenceRequirement::AllowDeath},
 };
 pub use pallet::*;
+mod weights;
+
+use crate::weights::WeightInfo;
 
 #[cfg(test)]
 mod mock;
@@ -39,6 +42,9 @@ pub mod pallet {
 
 		/// Because this pallet emits events, it depends on the runtime's definition of an event.
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+
+		// Added WeightInfo
+		type WeightInfo: weights::WeightInfo;
 	}
 
 	#[pallet::storage]
@@ -107,52 +113,53 @@ pub mod pallet {
 			Ok(())
 		}
 
-		// An extrinsic which includes a call to `transfer`, which is implemented in a different
-		// pallet.
-		#[pallet::weight(0)]
-		pub fn transfer(
-			origin: OriginFor<T>,
-			to: T::AccountId,
-			amount: BalanceOf<T>,
-		) -> DispatchResult {
+		// An extrinsic which transfers the entire free balance of a user to another user.
+		// Includes a call to `transfer`, which is implemented in a different pallet.
+		#[pallet::weight(T::WeightInfo::transfer_all())]
+		pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
 			let from = ensure_signed(origin)?;
+			let amount = T::Currency::free_balance(&from);
 			T::Currency::transfer(&from, &to, amount, AllowDeath)
 		}
 
 		// An extrinsic which has two very different logical paths.
-		#[pallet::weight(0)]
-		pub fn branched_logic(origin: OriginFor<T>, branch: bool) -> DispatchResult {
+		#[pallet::weight(T::WeightInfo::branch_true().max(T::WeightInfo::branch_false()))]
+		pub fn branched_logic(origin: OriginFor<T>, branch: bool) -> DispatchResultWithPostInfo {
 			let _who = ensure_signed(origin)?;
 			if branch {
 				// This branch uses a lot of computation.
 				(0..1337).for_each(|x| {
 					T::Hashing::hash(&x.encode());
 				});
+				Ok(Some(T::WeightInfo::branch_true()).into())
 			} else {
 				// This branch uses storage.
 				MyValue::<T>::put(1337);
+				Ok(Some(T::WeightInfo::branch_false()).into())
 			}
-
-			Ok(())
 		}
 
 		// The following extrinsics form a simple voting system. Take into account worst case
 		// scenarios.
 
 		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
-		#[pallet::weight(0)]
-		pub fn register_voter(origin: OriginFor<T>, who: T::AccountId) -> DispatchResult {
+		#[pallet::weight(T::WeightInfo::register_voter(T::MaxVoters::get()))]
+		pub fn register_voter(
+			origin: OriginFor<T>,
+			who: T::AccountId,
+		) -> DispatchResultWithPostInfo {
 			ensure_root(origin)?;
 			let mut voters = Voters::<T>::get();
 			ensure!(!voters.contains(&who), Error::<T>::AlreadyVoter);
 			voters.try_push(who).map_err(|_| Error::<T>::TooManyVoters)?;
+			let voter_len = voters.len();
 			Voters::<T>::set(voters);
-			Ok(())
+			Ok(Some(T::WeightInfo::register_voter(voter_len as u32)).into())
 		}
 
 		// Allow a registered voter to make or update their vote.
-		#[pallet::weight(0)]
-		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResult {
+		#[pallet::weight(T::WeightInfo::make_vote(T::MaxVoters::get()))]
+		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResultWithPostInfo {
 			let who = ensure_signed(origin)?;
 			let voters = Voters::<T>::get();
 			ensure!(voters.contains(&who), Error::<T>::NotVoter);
@@ -167,20 +174,22 @@ pub mod pallet {
 			} else {
 				votes.try_push(user_vote).map_err(|_| Error::<T>::TooManyVoters)?;
 			}
+			let votes_len = votes.len();
 			Votes::<T>::set(votes);
 			Self::deposit_event(Event::<T>::NewVote { who });
-			Ok(())
+			Ok(Some(T::WeightInfo::make_vote(votes_len as u32)).into())
 		}
 
 		// Attempt to resolve a vote, which emits the outcome and resets the votes.
-		#[pallet::weight(0)]
-		pub fn close_vote(origin: OriginFor<T>) -> DispatchResult {
+		#[pallet::weight(T::WeightInfo::close_vote(T::MaxVoters::get()))]
+		pub fn close_vote(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 			// Any user can attempt to close the vote.
 			let _who = ensure_signed(origin)?;
 			// Gets just the length of voters.
 			let max_voters = Voters::<T>::decode_len().unwrap_or(0);
 			ensure!(max_voters > 0, Error::<T>::NoVoters);
 			let votes = Votes::<T>::get();
+			let votes_len = votes.len();
 			let mut ayes = 0;
 			let mut nays = 0;
 			let not_voted = max_voters - votes.len();
@@ -203,7 +212,7 @@ pub mod pallet {
 			}
 
 			Votes::<T>::kill();
-			Ok(())
+			Ok(Some(T::WeightInfo::close_vote(votes_len as u32)).into())
 		}
 
 		// Extra Credit: Make a `remove_voter` function, and benchmark it.
