@@ -1,0 +1,68 @@
+# Unstoppable Applications
+
+---
+
+## Architect an unstoppable application
+
+In this activity the students will work together or in groups to talk about existing structures in society (Google, Twitter, US Treasury, IMF, ICC) that require too much trust.
+Together as a class we will identify these structures and make a list of those structures, and their functions (Google Maps for directions, using PayPal for subscriptions, using Twitter for news).
+Then either as a class, or in groups, using tools learned in the lecture
+the students will start modeling an unstoppable application to create a trust-less version of one of those structures' functions.
+If time allows groups will present their ideas at the end.
+
+Type: Group activity, brainstorming, architecting unstoppable applications, decentralization philosophy
+
+---
+
+### Learning Objectives
+
+1. Students should have proficiency in talking about unstoppable applications
+2. Each student should be able to dissect a societal structure (banking, governance, organizations) and talk about:
+   a. Attack surface of existing structures
+   b. An improved version using blockchain technology
+   c. Design trade-offs
+3. Students will be able to architect game-theoretic aspects of unstoppable applications
+
+---
+
+### Tools
+
+- State machines
+- Consensus mechanisms
+- Cryptography
+- Tokenomics and incentive schemes
+- Light Clients
+
+---
+
+### Sessions
+
+The activity will be delivered in 3 sessions
+
+1. Brainstorming - all ideas welcome
+   a. Brainstorm ideas as a class and create a list of ideas
+   b. Class will vote on ideas, each student gets 1 or 2 votes
+2. Group activity - whitepaper and architecture
+   a. Class will get divided into groups
+   b. Create a draft whitepaper (shared document) for the idea using the tools above
+3. Presentations - each group will present their ideas
+
+---
+
+### Outcomes
+
+1. Architecture diagram
+2. Document that includes
+   a. Problem statement
+   b. Solution and reasoning for decisions about - Application stack (technology) - Tokenomics and incentives (game theory) - Consensus mechanism (feel free to get creative here, can be a made up one)
+
+---
+
+### Notes
+
+1. Students should be able to choose from multiple application styles
+   a. Sovereign chains
+   b. Parachains
+   c. Smart Contract Dapps
+   d. Multi-chain Dapps
+   e. Chain agnostic tools

@@ -7,20 +7,13 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
 
 - [Content organization](#content-organization)
 - [Lesson slides with Reveal.js](#lesson-slides-with-revealjs)
+  - [Developing slides](#developing-slides)
+  - [Check embedded links](#check-embedded-links)
 - [Exercises, workshops and activities](#exercises-workshops-and-activities)
-  - [Rust Jupyter notebooks with EvCxR](#rust-jupyter-notebooks-with-evcxr)
   - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
   - [Conceptual workshops and exercises](#conceptual-workshops-and-activities)
 
 ## Content organization
-
-The content is organized by module, where each module has a folder for a specific lesson, and every lesson has:
-
-- A markdown file of the `reveal-md` formatted **_lecture_** slides including **_exercises_** described within
-- A markdown file outlining **_workshops_** and/or **_activities_** for that lesson.
-- A folder containing the markdown files of the original lesson plan notes (from the Academy retreat)
-
-The `syllabus` directory houses these, where `*` is the name of the lesson:
 
 ```
 syllabus/
@@ -65,7 +58,6 @@ yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
-Please start with the ["How to use Reveal slides"](./content-templates/slides/0-how-to-use-reveal-slides.md) guide to see what is possible with the slides features and some template slides.
 
 <details>
 <summary>If you are missing node or yarn, please install them as described below. (click to toggle)</summary>
@@ -99,7 +91,19 @@ The only dependencies we need for this project can now all be installed with:
 yarn
 ```
 
-### Run to view slides
+</details>
+
+---
+
+**To see what reveal can do, please view the slides and their source for details:**
+
+- [How-to use reveal slides](./syllabus/0-Meta_For_Instructional_Staff/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
+- [Lecture template slides](./syllabus/0-Meta_For_Instructional_Staff/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
+- [Copy & paste slide templates](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
+
+---
+
+### Developing slides
 
 Running this command will open a new browser tab and _watch for file changes_ (update on every time you save a file in this repo):
 
@@ -107,21 +111,7 @@ Running this command will open a new browser tab and _watch for file changes_ (u
 yarn start
 ```
 
-</details>
-
----
-
-**To see what reveal can do, please view the slides and their source for details:**
-
-- The [how-to use reveal slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/0-how-to-use-reveal-slides.html) and the [source](./content-templates/slides/0-how-to-use-reveal-slides.md)
-- The [copy & paste slide templates](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/1-copy-paste-reveal-template-slides.html) that are styled to use in your content and their [source](./content-templates/slides/1-copy-paste-reveal-template-slides.md)
-- The [lecture template slides](https://paritytech.github.io/polkadot-blockchain-academy/content-templates/slides/lecture-template-slides.html) and their [source](/content-templates/slides/lecture-template-slides.md) that give the structure most lessons should use to start with.
-
----
-
-### Editing `reveal-md` slides
-
-**There is a [base slide template example](./content-templates/slides/lecture-template-slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -203,9 +193,9 @@ fn largest_char(list: &[char]) -> char {
 ```
 ````
 
-### Custom theme and CSS
+#### Custom theme and CSS
 
-The [template](#editing-reveal-md-slides) can be used just copy and change slide by slide the content, and not worry with styling.
+The templates can be used just copy and change slide by slide the content, and not worry with styling.
 
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -223,7 +213,29 @@ Once you've followed the set-up instructions and have the repository running loc
 - Use `left/right` arrow keys to navigate horizontal slides.
 - Press `Esc` or `o` to see an `overview` view that your arrow keys can navigate. This allows you to click a slide to open it).
 - Press `s` to open up speaker view.
+
 </details>
+
+### Check embedded links
+
+To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:
+
+```sh
+# This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
+yarn links <Module Number>
+
+# This will check a single file
+
+yarn links <relative-link-to/the-top-working-dir/file.md>
+```
+
+The same tool is also run by our CI on all files for all pushes to all branches.
+See [.github/workflows/link-check.yml](.github/workflows/link-check.yml) for details.
+Both use the same [config file](.github/workflows/mlc_config.json).
+
+> You can ignore the link check for a single line by post-fixing it with:
+>
+> `Some private or intentionally broken link. <!-- TODO Remove this check disable once ... --> <!-- markdown-link-check-disable-line -->`
 
 ## Exercises, workshops and activities
 
@@ -238,55 +250,16 @@ Here is how we define these:
 - **Activities**: these are self-directed assignments for individuals and/or small groups that do not "hand-hold" like workshops.
   Student's completed work is expected to have some variety and a canonical solutions should be produced to review when students submit to compare to.
 
-We _highly suggest_ that most activities involving simple Rust examples use the [EvCxR](#rust-jupyter-notebooks-with-evcxr) tooling for it's quite powerful features.
-All materials needed for these that cannot exist in the code (like notebooks or custom source crates students need to download & use) should be included in the [assets/<the type>/<the module>](./assets/) directory.
-
 Solutions should (when possible) be provided in _a separate branch of this repository_ such that material published on the `main` branch does not include these.
 For example, skeleton code with code-comments providing instructions in a crate on `main` should have a `solution-modX-lessonY-*` branch where a completed reference that fulfills the requirements is available.
 
 The following outline some suggested tools to use for these.
 
-### Rust Jupyter notebooks with EvCxR
-
-REPLs are a fantastic way to experiment with a language interactively.
-[`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter) uses the fantastic [Jupyter Notebook](https://jupyter.org/) tooling for interactive documents with a built-in REPL.
-
-**Please watch this [Jupyter 101 demo video](https://youtu.be/HW29067qVWk?t=248) to get to know the basics before proceeding**
-
-#### _Quick start_
-
-1. Install [`evcxr_jupyter`](https://github.com/google/evcxr/tree/HEAD/evcxr_jupyter#installation)
-2. Open the [evcxr_jupyter_pba_example.ipynb](/content-templates/evcxr_jupyter_pba_example.ipynb) with the tool of your choice:
-
-- Easiest and likely to be suggested to students to _edit and use_ your notebooks (but you can edit too!) is the [VSCode plugin](https://github.com/Microsoft/vscode-jupyter).
-  Install by searching for this plugin (`@id:ms-toolsai.jupyter`) in the VSCode extensions menu.
-  Once installed, as with `evcxr_jupyter` installed, you can select the Rust kernel and start interacting with Rust-based notebooks like the example.
-- Best-in-class support is [Jupyter Lab](https://jupyterlab.readthedocs.io/en/stable/) over the vanilla notebooks tooling and VSCode.
-  Although most instructors and students will not need this.
-  Installation [described here](https://jupyter.org/install).
-
-> Note that sadly `rust-analyzer` [does not work with notebooks](https://github.com/rust-lang/rust-analyzer/issues/5141) at this time.
-> Thus student's will have a harder time using unfamiliar crate's features (they are all new to rust).
-> Please make any expected work in notebooks relatively simple with respect to crate's features and reference in code comments what API docs specifically are critical to use.
-
-#### EvCxR Templates
-
-1. Please start with the [tour notebook](./content-templates/jupyter-notebooks/evcxr_jupyter_tour.ipynb) to see what EvCxR can do!
-2. Then see the [activity notebook template](./content-templates/jupyter-notebooks/activity-template.ipynb) that you are encouraged to use as a base for all activities.
-3. Finally see the [substrate example notebook](./content-templates/jupyter-notebooks/substrate_example.ipynb) that demonstrates using substrate crates.
-
 ### Stand-alone Rust workshops and activities
 
-For non-trivial Rust work, it's best to use a full IDE and cargo properly, over the REPL examples discussed above.
-For these, please create well documented crates that stand alone for each workshop or activity.
-
-**[Rustlings](https://github.com/rust-lang/rustlings) is a fantastic place to draw inspiration from.**
-While the full CLI tool to make things interactive isn't required, all the [example modules](https://github.com/rust-lang/rustlings/tree/main/exercises) are!
-
-**Please place stand-alone crates into the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.**
-These can be referenced and then linked to from any slides for them to download or use in an online IDE.
-
-Please make **a new branch in this repo** to store the solutions for your workshops and activities so that we can reference them, but will not be generally available on the deployed resources that students can access.
+For non-trivial Rust work, it's best to use a full IDE and cargo properly.
+For these, please create well documented crates in their own repository that stand alone for each workshop or activity.
+We will use github classrooms to give each student their own fork of such repositories.
 
 #### Local IDE
 
@@ -327,5 +300,3 @@ There are some great (but limited) options for anyone lacking the ability to do 
 ### Conceptual workshops and activities
 
 While _most_ work students are doing should highlight _practical applications_ of the concepts, sometimes code isn't the best way to engage.
-For non-code based work, please see the [workshop template](content-templates/slides/workshop-template-slides.md) that structures what we should include in workshops or activities.
-This should be included in the [./assets/Materials-Downloads/<the correct module>/<source>](./assets/Materials-Downloads/) directory for distribution to students.

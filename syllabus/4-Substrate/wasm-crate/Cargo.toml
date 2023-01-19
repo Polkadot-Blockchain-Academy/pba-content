@@ -1,0 +1,11 @@
+# Cargo.toml
+[package]
+name = "wasm-crate"
+version = "0.1.0"
+authors = ["kianenigma"]
+edition = "2021"
+
+[dependencies]
+
+[lib]
+crate-type = ["cdylib"]

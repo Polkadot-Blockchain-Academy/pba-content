@@ -1,0 +1,28 @@
+{
+  "name": "debug-failed-xcm-messages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "xcm-decode-relay": "ts-node 'scripts/decode-xcm-relay.ts'",
+    "xcm-decode-para": "ts-node 'scripts/decode-xcm-para.ts'"
+  },
+  "dependencies": {
+    "@moonbeam-network/api-augment": "^0.1801.0",
+    "@polkadot/api": "^9.8.1",
+    "@polkadot/types": "^9.8.1",
+    "@polkadot/types-known": "^9.8.1",
+
+    "@types/yargs": "^17.0.0",
+    "divide-bigint": "1.0.4",
+    "exceljs": "4.2.1",
+    "load-json-file": "^6.2.0",
+    "npm-watch": "^0.9.0",
+    "rimraf": "^3.0.2",
+    "ts-node": "9.1",
+    "typescript": "^3.9.6",
+    "yargs": "^17.0.1"
+  }
+}

@@ -1,5 +1,0 @@
-# Activity: Illustrate block finality and set-up a private network with block authoring
-
-1. Given a chain of blocks and votes, draw a diagram to illustrate what the final canonical chain will be.
-
-2. Setup basic block authoring for your chain by completing the ["Set up an Alice and Bob Network"](https://docs.substrate.io/tutorials/v3/private-network/) tutorial.

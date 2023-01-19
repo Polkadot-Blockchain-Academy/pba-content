@@ -1,35 +1,49 @@
-## Day 1
+# Blockchain Fundamentals Module
 
-**3.1 - Overview of Blockchain**
+This module introduces students to the problem space that blockchain is trying to solve (resilient, equitable, trustless infrastructure) as well as the technical aspects of how it solves those problems and to what extent it falls short.
 
-- Lecture: Joe
-- Activity: Emre
+The primary coding activity, which will run throughout the module is [Blockchain From Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/).
 
-**3.2 - Consensus Systems**
+The module is taught over 2.5 days - roughly
 
-- Lecture: Joe
-- Activity: Joshy
+## Lessons Overview
 
-## Day 2
+### Day 1 - Morning Session
 
-**3.3 - Fees, Bridges, and Ordering**
+- 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class.
+- 🗣️ Overview of Blockchain Lecture
+- ⌨️ Begin BFS coding activity - specifically state machine part
+- ☕ Break
+- 🗣️ Blockchain Structure Lecture
+- ⌨️ Continue BFS coding activity. Students should start the blockchain portion and finish the first lesson in that part even if they are not done with the state machine stuff yet (which is very likely). Then they can continue whichever part moves them
 
-- Lecture: Joe
-- Activity: Emre
+### Day 1 - Afternoon Session
 
-**3.4 - Unstoppable Applications**
+- 🗣️ Consensus Part 1 Lecture - Authoring - Agreeing on Possibilities
+- 🎲 Manual Consensus Activity (aka BitStory)
+- ☕ Break
+- 🗣️ Accounts vs UTXOs Lecture
+- ⌨️ Continue coding on BFS
 
-- Lecture: Joe
-- Activity: Joshy
+### Day 2 - Morning Session
 
-## Day 3
+- 🗣️ P2P Networking Lecture
+- ⌨️ BFS
+- ☕ Break
+- 🗣️ Consensus Part 2 Lecture - Finality - Agreeing on Ordering
+- 🎲 Grandpa Board Game Activity
 
-**3.5 - Substrate Network Launch**
+### Day 2 - Afternoon Session
 
-- Leader: Joshy
+- 🗣️ Light Clients Bridges
+- ⌨️ Continue Coding on BFS
+- ☕ Break
+- 🗣️ Unstoppable Applications Lecture
+- ⌨️ BFS
 
-**3.6 - AMA / Panel Discussion**
+### Day 3 (Half Day)
 
-- Leader: Emre
-- Participants: Joshy, Kian, Shawn, other core devs around. Really a chance to see where people are
-  at before the real FRAME sessions begin.
+The activity and lecture can bleed together. I imagine launching a chain and getting some basic tokens
+
+- 🗣️ Resource Allocation lecture
+- ⌨️ Launch a blockchain activity

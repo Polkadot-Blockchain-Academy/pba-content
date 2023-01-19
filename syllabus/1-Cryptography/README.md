@@ -4,24 +4,21 @@ Personal Cryptography and How It's Used
 
 > “Cryptography rearranges power: it configures who can do what, from what”\* - Phillip Rogaway, The Moral Character of Cryptographic Work
 
-## Owners
-
-- Leads: @gavofyork, Alistair
-- Contributors: @arkpar, @cheme, @andresilva, @burdges
-
-## Lessons
+## Lessons Overview
 
 ### Day 1
 
-1. [Introduction to Cryptography](./1-introduction.md)
-2. [Digital Signatures (Part 1)](./2-signatures-part-1.md)
+1. [Introduction to Cryptography](./1-Crypto_Introduction/lesson-plan.md)
+   1. [Activity: Many Time Pad](./1-Crypto_Introduction/Activity-Many-Time-Pad/)
+2. [Digital Signatures (Part 1)](./2-Digital_Signatures_Basic/lesson-plan.md)
 
 ### Day 2
 
-3. [Digital Signatures (Part 2)](./3-signatures-part-2.md)
-4. [Other Exotic Primitives](./4-exotic-primitives.md)
+1. [Digital Signatures (Part 2)](./3-Digital_Signatures_Advanced/lesson-plan.md)
+   1. [Activity: AES](./3-Digital_Signatures_Advanced/Activity-aes-modes/)
+1. [Other Exotic Primitives](./4-Exotic_Primitives/lesson-plan.md)
 
 ### Day 3
 
-5. [Hashes](./5-hashes.md)
-6. [Hash-Based Data Structures](./6-data-structures.md)
+1. [Hashes](./5-Hashes/lesson-plan.md)
+1. [Hash-Based Data Structures](./6-Hash_Based_Data_Structures/lesson-plan.md)
