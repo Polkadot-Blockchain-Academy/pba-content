@@ -79,7 +79,6 @@ AKA, trust somebody else's node.
 
 </pba-flex>
 
-
 Notes:
 
 The easiest thing to do is just trust some expert to run a node for you.
@@ -104,7 +103,6 @@ For resource constrained systems and people in a hurry
 
 </pba-flex>
 
-
 Notes:
 
 One of the complaints was that the node takes too much resources.
@@ -126,7 +124,6 @@ Let's make the client lighter so it doesn't require as much resources.
 - ❌ Maintains state
 
 </pba-flex>
-
 
 Notes:
 
@@ -168,9 +165,7 @@ Chains with state roots can have much more powerful light clients
 - Checkpoints in code
 - Warp sync
 
-
 </pba-flex>
-
 
 Notes:
 
@@ -261,7 +256,7 @@ More on this after we cover the basic design.
 ### Trust-based
 
 Trusted intermediary makes a transfer manually.<br>
-Eg. Wrapped bitcoin on ethereum (WBTC) 
+Eg. Wrapped bitcoin on ethereum (WBTC)
 
 </pba-col>
 <pba-col>
@@ -304,7 +299,6 @@ The bridge can never be stronger than the consensus on the source chain
 
 </pba-flex>
 
-
 Notes:
 
 ---v
@@ -334,7 +328,6 @@ Bridges present their own set of design challenges beyond what we encounter in r
 - Need at least one honest relayer
 
 </pba-flex>
-
 
 Notes:
 
@@ -387,9 +380,7 @@ But remember a light client on the target chain has no way to report such equivo
 </div>
 <!-- .element: class="fragment" -->
 
-
 </pba-flex>
-
 
 Notes:
 
@@ -427,7 +418,6 @@ TODO Figure of stack with two blockchains on the bottom layer
   Submit a state proof
 
 </pba-flex>
-
 
 Notes:
 

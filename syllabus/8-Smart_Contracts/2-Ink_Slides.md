@@ -249,6 +249,7 @@ mod tests {
 ---
 
 ## Metadata?
+
 <img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/matrix-transparent.png" />
 
 ---
@@ -300,6 +301,7 @@ Build Artifacts
 ---
 
 ## Development Chains
+
 <div class="flex-container">
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
@@ -320,6 +322,7 @@ Build Artifacts
 ---
 
 ## Developer UIs
+
 <div class="flex-container">
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
@@ -340,11 +343,13 @@ Build Artifacts
 ---
 
 ## Developer UIs
+
 <img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/developer-uis-2.svg" />
 
 ---
 
 ## Documentation
+
 <img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/documentation.svg" />
 
 ---
@@ -354,12 +359,14 @@ Build Artifacts
 ---
 
 ## Reading Contract Values: RPC
+
 <img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rpc.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
 ## Reading Contract Values: Events
+
 <img style="width: 65%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/events.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 

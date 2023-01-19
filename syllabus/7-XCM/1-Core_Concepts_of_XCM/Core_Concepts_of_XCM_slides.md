@@ -189,10 +189,11 @@ Rather, XCM defines and standardizes the interface and semantics that two or mor
 
 All entities are addressed as paths to them, _relative_ to the current consensus system.
 pub struct MultiLocation {
-    pub parents: u8,
-    pub interior: Junctions,
+pub parents: u8,
+pub interior: Junctions,
 }
-```
+
+````
 
 Notes:
 
@@ -229,7 +230,7 @@ enum Junctions {
     // ...
     X8(Junction, /*...*/),
 }
-```
+````
 
 Enum containing multiple `Junction`s
 
