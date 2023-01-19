@@ -34,7 +34,6 @@ These slides serve as a feature demo of reveal for you! 🎉
 _Press the `down/up` keys to navigate \_vertical_ slides\_
 
 <br>
-<br>
 
 Try doing down a slide.
 

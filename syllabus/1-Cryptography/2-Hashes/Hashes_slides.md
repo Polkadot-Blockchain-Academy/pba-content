@@ -12,8 +12,6 @@ duration: 1 hour
 
 We often want a succinct representation of some data<br>with the expectation that we are referring to the same data.
 
-<br>
-
 ##### A "fingerprint".
 
 ---
@@ -109,7 +107,7 @@ xxHash64 is about 20x faster than Blake2.
 
 ---
 
-## Examples of Hash Functions used in Blockchains
+## Hash Functions in Blockchains
 
 <pba-flex center>
 

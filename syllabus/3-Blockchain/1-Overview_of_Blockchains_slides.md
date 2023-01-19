@@ -388,7 +388,7 @@ What are the _rules_ to change it?
 **Data Structure**
 
 How can we cryptographically represent a history so it is tamper-proof?
-<br><br>
+
 
 </pba-flex>
 </pba-col>
