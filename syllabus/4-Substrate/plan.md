@@ -8,7 +8,7 @@ Ideas:
 
 ## Day 1 (6 hours)
 
-- lecture: WASM-meta protocol lecture (120m)
+- lecture: Wasm-meta protocol lecture (120m)
 - lecture: SCALE (45m)
 
 - lecture: JSON-RPC protocol (30m)
