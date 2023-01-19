@@ -69,10 +69,13 @@ AKA, trust somebody else's node.
 
 <pba-flex center>
 
-- <div>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">like infura</a>).<div> <!-- .element: class="fragment" -->
-- 🔞 Censor you <!-- .element: class="fragment" -->
-- 🤥 Lie to you <!-- .element: class="fragment" -->
-- 💔 Steal your boyfriend <!-- .element: class="fragment" -->
+<ul>
+<li>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">like infura</a>).</li> <!-- .element: class="fragment" -->
+ 
+<li>🔞 Censor you <!-- .element: class="fragment" -->
+<li>🤥 Lie to you <!-- .element: class="fragment" -->
+<li>💔 Steal your boyfriend <!-- .element: class="fragment" -->
+</ul>
 
 Notes:
 
@@ -118,13 +121,14 @@ This is what a typical light client does. There is not a single definition of li
 
 ## Trustless
 
-<pba-flex center style="margin-top:-50px">
+<img rounded style="width:1200px; margin-top:-30px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png">
 
-<img rounded style="with 800px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png">
+<div style="margin-top:-170px">
 
 - Relies on full node for data
 - Does not have to trust data
 - State root helps a lot
+</div>
 
 Notes:
 
@@ -167,7 +171,7 @@ In the main gossip protocol, if authorities finalize two conflicting blocks, the
 
 ---
 
-# Bridges
+## Bridges
 
 Transport layers between independent consensus systems
 
@@ -181,7 +185,7 @@ Generally speaking bridges move arbitrary data between unrelated consensus syste
 
 ## Source and Target Chain
 
-<img rounded width="700px" src="./img/bridge-source-target.svg" /> 
+<img rounded width="700px" src="./img/bridge-source-target.svg" />
 
 Notes:
 
@@ -236,7 +240,7 @@ A lot of the trusted bridge design can be improved and we'll talk about that in 
 
 ---
 
-# Trustless bridge design
+## Trustless bridge design
 
 <pba-flex center>
 
@@ -255,7 +259,7 @@ Notes:
 
 ---
 
-# Bridge Design Challenges
+## Bridge Design Challenges
 
 <img rounded width="1100px" src="./img/bridge-collapse.webp">
 
@@ -297,18 +301,19 @@ Because the validators may be equivocating. They don't send equivocations to rea
 
 ## Equivocation Incentives
 
-Add a **Challenge Period** and
-
 <pba-flex center>
 
+- Add a **Challenge Period** and
 - Add Fishermen - reverse of relayers
-<!-- .element: class="fragment" -->
+
+<div>
 
 **OR**
 
-<!-- .element: class="fragment"-->
+- Stake Relayers
+  so they can be slashed
 
-- Stake Relayers - so they can be slashed
+</div>
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -324,7 +329,7 @@ The other is to have the relayer role require a security deposit. If it turns ou
 
 ---
 
-# Multichain Apps
+## Multichain Apps
 
 TODO Figure of stack with two blockchains on the bottom layer
 
@@ -335,8 +340,10 @@ TODO Figure of stack with two blockchains on the bottom layer
 <pba-flex center>
 
 - App users submit proofs
-- Need a source chain transaction? Submit an spv-style transaction proof
-- Need some source chain state? Submit a state proof
+- Need a source chain transaction?<br>
+  Submit an spv-style transaction proof
+- Need some source chain state?<br>
+  Submit a state proof
 
 Notes:
 
@@ -348,9 +355,9 @@ If you need some source chain state, your app needs to require a state proof to 
 
 ---v
 
-# Multichain Security
+## Multichain Security
 
-<img rounded width="1100px" src="./img/strong-and-weak-.png">
+<img rounded style="width: 500px; margin-top:-60px" src="./img/strong-and-weak-.png">
 
 Notes:
 
