@@ -98,10 +98,10 @@ pub mod pallet {
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		// An extrinsic which (inefficiently) counts to `amount` and stores it.
-		#[pallet::weight(0)]
+		#[pallet::weight(T::WeightInfo::counter((*amount).into()))]
 		pub fn counter(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
-			for i in 0 ..= amount {
+			for i in 0..=amount {
 				// Writing to storage each loop is not super smart... but illustrative.
 				MyValue::<T>::put(i);
 			}
@@ -109,10 +109,10 @@ pub mod pallet {
 		}
 
 		// An extrinsic which puts claims the indexes up to `amount` for a user.
-		#[pallet::weight(0)]
+		#[pallet::weight(T::WeightInfo::counter((*amount).into()))]
 		pub fn claimer(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let who = ensure_signed(origin)?;
-			for i in 0 ..= amount {
+			for i in 0..=amount {
 				MyMap::<T>::insert(i, &who);
 			}
 			Ok(())
