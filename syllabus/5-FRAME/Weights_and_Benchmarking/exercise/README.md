@@ -30,5 +30,6 @@ pallet \
 --execution=wasm \
 --wasm-execution=compiled \
 --heap-pages=4096 \
---output=weights.rs
+--output=./pallets/template/src/weights.rs \
+--template=frame-weight-template.hbs
 ```

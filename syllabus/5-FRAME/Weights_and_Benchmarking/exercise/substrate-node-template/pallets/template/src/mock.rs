@@ -66,6 +66,7 @@ impl pallet_template::Config for Test {
 	type Currency = Balances;
 	type MaxVoters = ConstU32<100>;
 	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = ();
 }
 
 // Build genesis storage according to the mock runtime.

@@ -279,6 +279,8 @@ impl pallet_sudo::Config for Runtime {
 impl pallet_template::Config for Runtime {
 	type Currency = Balances;
 	type RuntimeEvent = RuntimeEvent;
+	type MaxVoters = ConstU32<250>;
+	type WeightInfo = ();
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
