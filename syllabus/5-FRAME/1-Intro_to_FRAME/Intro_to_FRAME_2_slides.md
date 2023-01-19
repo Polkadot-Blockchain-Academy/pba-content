@@ -22,21 +22,26 @@ instructors: ["Shawn Tabrizi"]
 - Introduction To FRAME
 - Exercise: Proof of Existence Runtime
 - FRAME Tips and Tricks
+- Important Pallets to Know
+- Useful Pallet Traits
 - FRAME Assignment (whole week!)
 
 </td>
 <td>
 
-- FRAME Storage
-- Exercise: Mental Migration TODO ??
+- Storage
 - Events & Errors
+- Calls
+- Hooks
 
 </td>
 <td>
 
-- Dispatchables
-- Hooks & Inherents
-- Signed Extensions
+- Construct Runtime (TODO)
+- Tests + Mock (TODO)
+- Loosely + Tightly Coupled Pallets (TODO)
+- Origins (TODO)
+
 
 </td>
 <td>
@@ -48,8 +53,12 @@ instructors: ["Shawn Tabrizi"]
 </td>
 <td>
 
-- Outer Enum
+- FRAME Under the Hood
+  - Deep Dive
+  - Outer Enum
+  - Executive
 - Migration & Try Runtime
+- Signed Extensions
 
 </td>
 <td>
