@@ -12,8 +12,6 @@ These slides are built with [reveal.js](https://revealjs.com/).
 
 Please first view the [CONTRIBUTING.md](../../CONTRIBUTING.md) guide on how to use these slides.
 
-<br>
-
 These slides serve as a feature demo of reveal for you! 🎉
 
 ---
@@ -32,8 +30,6 @@ These slides serve as a feature demo of reveal for you! 🎉
 ## How to use Reveal.js Features
 
 _Press the `down/up` keys to navigate \_vertical_ slides\_
-
-<br>
 
 Try doing down a slide.
 

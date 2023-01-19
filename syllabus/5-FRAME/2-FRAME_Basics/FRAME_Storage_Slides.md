@@ -43,7 +43,7 @@ Today we will focus on the top two layers: Runtime Storage APIs and Storage Over
 ## Overlay Change Set
 
 <div class="flex-container">
-<div class="left-small">
+<div class="left-small" style="font-size:0.9em">
 
 - As you have learned, any changes which make its way to the overlay change set will be committed to the database at the end of the block.
 - This means, once you have written to storage, you cannot really undo it.
@@ -119,9 +119,8 @@ fn verify_first_write_last() {
 
 ## Transactional Storage
 
-<br>
 <div class="flex-container">
-<div class="left-small">
+<div class="left-small" style="font-size:0.9em">
 
 - We mentioned previously that we are able to spawn new transactional layers.
 - This can help us isolate changes caused by certain logic from reaching storage if we don't want it.

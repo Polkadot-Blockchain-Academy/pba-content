@@ -80,7 +80,7 @@ Another desireable property that is sometimes too obvious to say.
 <pba-cols>
 <pba-col>
 
-<img style="width: 20em" src="./img/south-park-consensus.png"/>
+<img rounded style="width: 20em" src="./img/south-park-consensus.png"/>
 
 </pba-col>
 
@@ -136,7 +136,7 @@ Someone please volunteer to describe what one of these means in this example.
 <pba-cols>
 <pba-col>
 
-<img style="width: 700px" src="./img/byzantine-generals.png"/>
+<img rounded style="width: 700px" src="./img/byzantine-generals.png"/>
 
 </pba-col>
 
@@ -182,7 +182,7 @@ These examples and many others are _instances_ of the Byzantine Generals Problem
 <pba-cols>
 <pba-col>
 
-<img style="width: 600px" src="https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg"/>
+<img rounded style="width: 600px" src="https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg"/>
 
 </pba-col>
 
@@ -411,8 +411,6 @@ It is often the case that blockchain systems give rewards in the authorship and 
 - Casting finality votes for conflicting blocks
 - Casting a finality vote for a block (or chain)<br> that includes an invalid state transition.
 
-<br>
-
 > How severe are each of these offenses?<br>
 > Do they all warrant a slash?<br>
 > A full slash?
@@ -433,8 +431,6 @@ If my attack is successful,<br>I expect to gain roughly 200 units worth of utili
 
 I ask another authority to cooperate with me:<br>"I'll pay you 20 units to _not_ rat me out for my attack".
 
-<br>
- 
 > How would you respond?
 
 Notes:
@@ -466,38 +462,32 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 
 ## Tendermint Deep Dive
 
-- 1: Wait for a block (or author one if it is your turn)
+<pba-flex center>
+<ol>
+<li class="fragment">Wait for a block (or author one if it is your turn)</li>
+<li class="fragment">Prevote
+  <ol>
+  <li>If the block is valid, Prevote for it.</li>
+  <li>If the block is invalid, Prevote `Nil`</li>
+  </ol>
+</li>
+<li class="fragment">Precommit
+  <ol>
+  <li>Wait for 2/3 prevotes then Precommit
+  <li>If you don't get 2/3 prevotes, Precommit `Nil`</div>
+  </ol>
+</li>
+<li class="fragment">Complete
+  <ol>
+  <li>Wait for 2/3 Precommits them finalize
+  <li>If you don't get it, throw the block away
+  </ol>
+</li>
+</ol>
 
-<div>
+[Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465) <!-- .element: class="fragment" -->
 
-- 2: Prevote
-  - If the block is valid, Prevote for it.
-  - If the block is invalid, Prevote `Nil`
-
-</div>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-<div>
-
-- 3: Precommit
-  - Wait for 2/3 prevotes then Precommit
-  - If you don't get 2/3 prevotes, Precommit `Nil`
-
-</div>
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-<div>
-
-- 4: Complete
-  - Wait for 2/3 Precommits them finalize
-  - If you don't get it, throw the block away
-
-</div>
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
-[Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465)
-
-<!-- .element: class="fragment" data-fragment-index="5" -->
+</pba-flex>
 
 ---
 
@@ -506,11 +496,11 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 1000px;" src="./img/grandpa-abstract.png"/>
+<img rounded style="width: 900px;" src="./img/grandpa-abstract.png"/>
 
 </pba-col>
 <pba-col>
-<pba-flex center style="font-size: 0.7em; margin-left:-120px">
+<pba-flex center style="font-size: 0.7em; margin-left:-50px">
 
 - Separates block production from finality.
 - Block production stays live even if finality lags.
@@ -561,22 +551,27 @@ Once you have a finality gadget installed, you have to make sure you only ever a
 
 ## Vote on Chains, not Blocks
 
-BFT finality with $n$ authorities is in $O(n^2)$.<br>
-Tendermint does this at **every block**.<br>
+<pba-cols style="gap:0">
+<pba-col>
+
+BFT finality with $n$ authorities is in $O(n^2)$.
+Tendermint does this at **every block**.
 This bounds the size of the authority set.
 
-<pba-flex center>
-
-With separated, we treat each vote as a vote not only for one block,<br>but also for each ancestor block.<br>
+With separated, we treat each vote as a vote not only for one block,but also for each ancestor block.
 This significantly reduces the number of total messages sent.
 
-<br>
+</pba-col>
+<pba-col>
+
+<pba-flex center>
 
 - Allows the chain to stay live even when many validators are offline
 - Allows for a challenge period to delay finality if needed
 
 </pba-flex>
-
+</pba-col>
+</pba-cols>
 ---
 
 TODO crib Andre's grandpa slides

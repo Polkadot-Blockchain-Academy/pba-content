@@ -137,8 +137,6 @@ Split into a few categories. Instructions that:
 
 handle assets:
 
-<br>
-
 - handle an Asset local assets only
 - transfer an Asset assets to another consensus system
 - deal an Asset with asset locking

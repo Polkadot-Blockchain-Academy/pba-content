@@ -29,11 +29,7 @@ description: Light clients principles and application in bridges
 
 Ideally:
 
-<br>
-
 - Everyone runs their own node.
-
-<br>
 
 </pba-flex>
 </pba-col>
@@ -273,8 +269,6 @@ Eg. Wrapped bitcoin on ethereum (WBTC)
 ### Trustless
 
 Trustless is the goal,<br>like almost everything in web3.
-
-<br>
 
 </pba-col>
 </pba-cols>

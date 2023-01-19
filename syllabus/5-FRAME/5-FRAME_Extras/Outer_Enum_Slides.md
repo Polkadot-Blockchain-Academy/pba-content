@@ -26,8 +26,6 @@ There are 4 main Enums which you will encounter throughout your FRAME developmen
 - The Error Enum
 - The Origin Enum
 
-<br>
-
 All of these enums have some representation within individual pallets, but also the final FRAME runtime you develop.
 
 ---

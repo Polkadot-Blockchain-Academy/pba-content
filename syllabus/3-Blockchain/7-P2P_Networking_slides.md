@@ -33,13 +33,10 @@ Notes:
 
 Notes:
 
-1.) No single node or nodes(CDN) have access to all of the content or files or is critical for operating the network. Each node has a copy of the data.
-<br>
-2.) No central node carrying all of the load of traffic. Block production and Block peering/importing can be mentioned here
-<br>
-3.) Difficult to overload the network or DOS (Not single node is privileged)
-<br>
-4.) Although many nodes are run on Centralized cloud compute platforms they don't have to be(Typically)
+1. No single node or nodes(CDN) have access to all of the content or files or is critical for operating the network. Each node has a copy of the data.
+1. No central node carrying all of the load of traffic. Block production and Block peering/importing can be mentioned here
+1. Difficult to overload the network or DOS (Not single node is privileged)
+1. Although many nodes are run on Centralized cloud compute platforms they don't have to be(Typically)
 
 ---
 
@@ -52,11 +49,9 @@ Notes:
 
 Notes:
 
-2.) Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection mention finality time!
-<br>
-3.) No central point to go and snoop all users data(for better or for worse)
-<br>
-4.) Why we have hardware requirements for blockchain networks
+2. Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection mention finality time!
+3. No central point to go and snoop all users data(for better or for worse)
+4. Why we have hardware requirements for blockchain networks
 
 ---
 

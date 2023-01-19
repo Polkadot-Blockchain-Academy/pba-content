@@ -453,8 +453,6 @@ Common steps to debug:
 
 Look at the `ump.ExecutedUpward` event:
 
-<br>
-
 <img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure"/>
 
 ---v
