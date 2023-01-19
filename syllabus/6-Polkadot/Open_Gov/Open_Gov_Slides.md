@@ -1,7 +1,7 @@
 ---
 title: Open Gov
 description: The Polkadot ecosystem on-chain governance solution
-duration: 2 hours
+duration: 1 hour
 instructors: ["Bradley Olson"]
 ---
 
@@ -14,7 +14,7 @@ instructors: ["Bradley Olson"]
 - Why on-chain?
 - Goals of on-chain governance
 - Initial Solution, Governance V1
-- Improvement, Open Gov 
+- Improvement, OpenGov 
 - How is it going? By the numbers.
 
 ---
@@ -76,16 +76,12 @@ The bad:
 
 ## OpenGov Overview
 
-- Lifecycle of a Referendum
 - Origins and Tracks
+- Lifecycle of a Referendum
 - Support and approval threshold curves
 - The Polkadot Fellowship
-- Vote Delegation and conviction voting
+- Vote Delegation by Track
 - OpenGov and governance goals 
-
----
-
-# Origins and Tracks
 
 ---
 
@@ -107,7 +103,7 @@ The bad:
 - A track can serve more than one origin
 - These tracks are totally independent from one another
 - Track examples: Root, ParachainAdmin, BigSpender, Tipper
-- Emergency tracks: EmergencyCanceler, EmergencyKiller
+- Emergency tracks: ReferendumCanceler, ReferendumKiller
 
 ---
 
@@ -121,6 +117,12 @@ Parameters give us the ability to find an optimal balance between security and t
 - Minimum enactment period
 - Concurrency, how many referenda can run in this track at a time
 - Support and Approval threshold curves
+
+---
+
+## Handy Table
+
+(Image of tracks table from polkaworld article)
 
 ---
 
@@ -153,23 +155,82 @@ We want the agility to quickly pass uncontrovercial proposals while deliberating
 
 This need is addressed through the use of curves defining thresholds that must be met to pass a proposal. 
 
-These curves are monotonically decreasing, meaning that the level of support and approval necessary to pass a proposal decrease as the proposal spends longer in the decision period.
+These curves are monotonically decreasing, meaning that the level of support and approval necessary to pass a proposal decrease as a proposal spends longer in its decision period.
 
 ---
 
-## Example Support Curve
+## Example Support and Approval Curves
 
-Moonbeam article image
-
----
-
-## Example Approval Curve
-
-Moonbeam article 2 images, approval curve and going in and out of confirmation
+(Image from)
+https://polkaworld.medium.com/a-hands-on-guide-for-kusamas-open-gov-governance-system-98277629b0c5
 
 ---
 
-## The Polkadot Fellowship
+## Polkadot Fellowship: Motivation
+
+Typical path to safety: Lower throughput and restricted origins
+
+But in emergencies we may need to pass proposals that both require root origin and are time critical!
+
+Solution: Some sort of oracle capable of providing expert information
+
+---
+
+## Oraclizing Expert Information
+
+1. Track everyone's level of expertise
+2. Allow experts to register sentiment
+3. Aggregate opinions by level of expertise
+
+How are these accomplished?
+
+---
+
+## Enter The Polkadot Fellowship
+
+(Some Polkadot Fellowship Image)
+
+---
+
+Purely on-chain membership body to recognize and compensate all individuals who hold and use expert knowledge of Polkadot in line with its broad interest and philosophy
+
+Members hold rank denoting proven level of expertise and commitment as recognized by their peers and, for higher ranks, through general referendum.
+
+---
+
+## Who Make up the Fellowship?
+
+- Experts in the Polkadot core protocol who maintain a consistant level of active contribution
+- Notably this does not include core developers of independent parachain protocols, which should develop their own protocol specific fellowships as needed.
+- Currently: < 100 core developers, mostly from Parity or the Web3 Foundation
+- Next year or two: Hundreds
+- Ideal far future: Tens of thousands, independent of any centralized entity
+- Only one fellowship for Polkadot and Kusama
+
+---
+
+## Function of the Fellowship
+
+- WhiteListedCaller track
+    - Root priveleges
+    - More agile
+    - Maintains reasonable safety via Fellowship
+- White list proposals must pass two votes
+    - Expertise weighted Fellowship vote via second referendum pallet instantiation
+    - Same general referendum as other tracks
+
+Just an oracle!
+
+My suspician: Secondarily intended to cultivate a long term base of Polkadot core developers outside of Parity
+
+---
+
+## Vote Delegation
+
+- Traditional delegation: You entrust one third party with your vote on all matters
+- Delegation by track: You may choose to delegate your vote to one or more third parties on a per track basis
+- EX: Tipper vote delegated to local ambassador, WhiteListedCaller vote delegated to Parity Technologies, vote retained for all other tracks
+- This is new and exciting!
 
 ---
 
@@ -181,7 +242,7 @@ Moonbeam article 2 images, approval curve and going in and out of confirmation
 - Limited origins + emergency tracks + white list -> Security
 - Multiple tracks + low risk tracks -> Concurrency
 - Low risk tracks + early confirmation -> Speed 
-- Support and approval threshold curves -> Agility
+- Support and approval threshold curves + white list -> Agility
 
 ---
 
@@ -207,12 +268,20 @@ Moonbeam article 2 images, approval curve and going in and out of confirmation
 
 ---
 
-# Questions?
+## OpenGov and You
+
+- Participate in OpenGov and Polkadot Fellowship on Polkadot and Kusama
+- Customized OpenGov instances per-parachain
+- Custom fellowships per parachain
+- Potentially non-technical fellowships, such as a fellowship for brand ambassadors
 
 ---
 
 ## Farther Learning Resources 
+PolkaWorld Hands on OpenGov Article - https://polkaworld.medium.com/a-hands-on-guide-for-kusamas-open-gov-governance-system-98277629b0c5
 OpenGov Article from Moonbeam Team - https://moonbeam.network/blog/opengov/
 Gavin’s Polkadot Decoded 2022 talk - https://www.youtube.com/watch?v=EF93ZM_P_Oc
 
 ---
+
+# Questions?
