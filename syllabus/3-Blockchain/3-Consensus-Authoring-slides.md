@@ -90,7 +90,7 @@ Similar to state machine validity.
 <br>
 Examples:
 
-<pba-flex center style="margin-top:0">
+<pba-flex>
 
 - Blocks that are too big
 - Blocks that have "hack" transactions
