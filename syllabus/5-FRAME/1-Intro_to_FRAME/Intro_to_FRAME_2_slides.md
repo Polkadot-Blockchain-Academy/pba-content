@@ -230,7 +230,6 @@ It contains all the most basic functions and types needed for a blockchain syste
 </div>
 </div>
 
-
 ---
 
 ## FRAME Executive
@@ -285,21 +284,49 @@ construct_runtime!(
 
 Before you can add a Pallet to the final runtime, it needs to be configured as defined in the `Config`.
 
-```rust
-impl pallet_transaction_payment::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type OnChargeTransaction = CurrencyAdapter<Balances, ()>;
-	type OperationalFeeMultiplier = ConstU8<5>;
-	type WeightToFee = IdentityFee<Balance>;
-	type LengthToFee = IdentityFee<Balance>;
-	type FeeMultiplierUpdate = ConstFeeMultiplier<FeeMultiplier>;
-}
+<div class="flex-container text-small">
+<div class="left" style="max-width: 50%;">
 
-/// Configure the pallet-template in pallets/template.
-impl pallet_template::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
+In the Pallet:
+
+```rust
+/// The timestamp pallet configuration trait.
+#[pallet::config]
+pub trait Config: frame_system::Config {
+  type Moment: Parameter + Default + AtLeast32Bit + Scale<Self::BlockNumber, Output = Self::Moment> + Copy + MaxEncodedLen + scale_info::StaticTypeInfo;
+
+  type OnTimestampSet: OnTimestampSet<Self::Moment>;
+
+  #[pallet::constant]
+  type MinimumPeriod: Get<Self::Moment>;
+
+  type WeightInfo: WeightInfo;
 }
 ```
+
+</div>
+
+<div class="right" style="max-width: 50%; padding-left: 10px;">
+
+In the Runtime:
+
+```rust
+/// The timestamp pallet configuration.
+
+impl pallet_timestamp::Config for Runtime {
+  type Moment = u64;
+
+  type OnTimestampSet = Aura;
+
+
+  type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
+
+  type WeightInfo = ();
+}
+```
+
+</div>
+</div>
 
 ---
 
