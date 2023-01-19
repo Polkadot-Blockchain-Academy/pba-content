@@ -180,6 +180,8 @@ Rust allows you to write Macros, which is code that generates code.
 
 FRAME uses Macros to simplify the development of Pallets, while keeping all of the benefits of using Rust.
 
+We will look more closely at each attribute throughout this module.
+
 ---
 
 ## See For Yourself
@@ -199,12 +201,35 @@ FRAME uses Macros to simplify the development of Pallets, while keeping all of t
 
 ## FRAME System
 
-The FRAME System is a Pallet which is assumed to always exist when using FRAME.
+The FRAME System is a Pallet which is assumed to always exist when using FRAME. You can see that in the `Config` of every Pallet:
 
-It contains all the most basic functions and types needed for a blockchain system.
+```rust
+#[pallet::config]
+pub trait Config: frame_system::Config { ... }
+```
+
+It contains all the most basic functions and types needed for a blockchain system. Also contains many low level extrinsics to manage your chain directly.
+
+<div class="flex-container">
+<div class="left-small">
 
 - Block Number
 - Accounts
+- Hash
+- etc...
+
+</div>
+<div class="right text-small">
+
+- `T::BlockNumber`
+- `frame_system::Pallet::<T>::block_number()`
+- `T::AcccountId`
+- `T::Hash`
+- `T::Hashing::hash(&bytes)`
+
+</div>
+</div>
+
 
 ---
 
@@ -229,8 +254,57 @@ pub fn execute_block(block: Block) { ... }
 
 ## Construct Runtime
 
+Your final runtime is composed of Pallets, which are brought together with the `construct_runtime!` macro.
+
+```rust
+// Create the runtime by composing the FRAME pallets that were previously configured.
+construct_runtime!(
+	pub struct Runtime
+	where
+		Block = Block,
+		NodeBlock = opaque::Block,
+		UncheckedExtrinsic = UncheckedExtrinsic,
+	{
+		System: frame_system,
+		RandomnessCollectiveFlip: pallet_randomness_collective_flip,
+		Timestamp: pallet_timestamp,
+		Aura: pallet_aura,
+		Grandpa: pallet_grandpa,
+		Balances: pallet_balances,
+		TransactionPayment: pallet_transaction_payment,
+		Sudo: pallet_sudo,
+		// Include the custom logic from the pallet-template in the runtime.
+		TemplateModule: pallet_template,
+	}
+);
+```
+
 ---
 
-## Proof of Existence Exercise
+## Pallet Configuration
+
+Before you can add a Pallet to the final runtime, it needs to be configured as defined in the `Config`.
+
+```rust
+impl pallet_transaction_payment::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type OnChargeTransaction = CurrencyAdapter<Balances, ()>;
+	type OperationalFeeMultiplier = ConstU8<5>;
+	type WeightToFee = IdentityFee<Balance>;
+	type LengthToFee = IdentityFee<Balance>;
+	type FeeMultiplierUpdate = ConstFeeMultiplier<FeeMultiplier>;
+}
+
+/// Configure the pallet-template in pallets/template.
+impl pallet_template::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+}
+```
+
+---
+
+## Exercise: Proof of Existence Blockchain
+
+Let's get our hands dirty and use all of these pieces together!
 
 https://docs.substrate.io/tutorials/work-with-pallets/use-macros-in-a-custom-pallet/
