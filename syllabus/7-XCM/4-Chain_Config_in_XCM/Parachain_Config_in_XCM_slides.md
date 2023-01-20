@@ -170,7 +170,7 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 
 Notes:
 
-This converter is tipically used in parachains to make sure the parent origin has an associated account.
+This converter is typically used in parachains to make sure the parent origin has an associated account.
 
 ---v
 
@@ -182,7 +182,7 @@ Notes:
 
 Here child means a parachain from the relay's perspective
 
-This converter is **tipically used in the relay chain** to make sure the child parachain origins have an associated account.
+This converter is **typically used in the relay chain** to make sure the child parachain origins have an associated account.
 
 ---v
 
@@ -203,7 +203,7 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 Notes:
 
 Here sibling means a parachain from another parachain's perspective
-This converter is **tipically used in parachains** to make sure the sibling parachain origins have an associated account.
+This converter is **typically used in parachains** to make sure the sibling parachain origins have an associated account.
 
 ---v
 
