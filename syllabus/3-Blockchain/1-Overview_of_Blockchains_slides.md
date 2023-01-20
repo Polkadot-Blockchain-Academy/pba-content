@@ -242,16 +242,11 @@ So now we understand the goals of web3. How do we achieve them? The key is allow
 
 ## A Shared History
 
-<blockquote>
-Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
-</blockquote>
+> Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations. <!-- .element: class="fragment" data-fragment-index="1"-->
 
-<blockquote>
-Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
-</blockquote>
-<!-- .element: class="fragment" data-fragment-index="2" -->
+> Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs? <!-- .element: class="fragment" data-fragment-index="2" -->
 
--- Yuval Noah Harari, Sapiens
+_-- Yuval Noah Harari, Sapiens --_<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -373,7 +368,7 @@ Now that we have a formal mathy model of systems that we care about, we can see 
 
 A blockchain can be thought of in three parts
 
-<pba-cols style="margin-top: 0">
+<pba-cols>
 <pba-col>
 <pba-flex center>
 
@@ -425,7 +420,7 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 
 ## Bitcoin
 
-<img style="width: 500px;" src="./img/bitcoin-transaction.png"/>
+<img rounded style="width: 500px;" src="./img/bitcoin-transaction.png"/>
 
 <!-- TODO update above image to styled diagram -->
 
