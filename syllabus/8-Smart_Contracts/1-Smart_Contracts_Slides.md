@@ -43,7 +43,7 @@ All of this control provided by Substrate pallets creates a double-edged sword. 
 
 Substrate provides different Smart Contracts' options.
 
-- Pallet Contracts - WASM execution environment
+- Pallet Contracts - Wasm execution environment
 - Frontier - EVM execution environment
 
 <img style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime">
