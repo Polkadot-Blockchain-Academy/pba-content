@@ -1,80 +1,128 @@
 ---
-title: Open Gov
+title: OpenGov
 description: The Polkadot ecosystem on-chain governance solution
 duration: 1 hour
 instructors: ["Bradley Olson"]
 ---
 
-# Open Gov
+# OpenGov
+
+## The Gold Standard of On-Chain Governance
+
+Presented by Bradley Olson
 
 ---
 
 ## Overview
+
+<pba-flex center>
 
 - Why on-chain?
 - Goals of on-chain governance
 - Initial Solution, Governance V1
 - Improvement, OpenGov 
 - How is it going? By the numbers.
+- OpenGov and you
+
+</pba-flex>
 
 ---
 
 ## Why On-chain?
 
-Off-chain governance: 
-- Formal proposal drafted by core dev team
-- Discussions, debates, and media campaigns
-- Hard fork
+<pba-cols>
+<pba-col center>
 
-Issues:
-- Centralization
-- Low throughput
-- Long decision period
-- Little accessibility
+- Off-chain governance
+   - Formal proposal drafted by core dev team
+   - Discussions, debates, and media campaigns
+   - Hard fork
+
+- Issues
+   - Centralization
+   - Low throughput
+   - Long decision period
+   - Little accessibility
+
+</pba-col>
+<pba-col center>
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 300px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Bitcoin.png" alt="btc pic">
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 200px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Ethereum.png" alt="eth pic">
+
+</pba-col>
+</pba-cols>
 
 ---
 
 ## Goals of On-chain Governance
-
-- Transparency: Decisions by who and by what rules?
-- Decentralization: Distributed power, weighted only by commitment/conviction
-- Security: Harmful proposals don't pass or have limited scope
-- Accessibility: Easy to draft, to receive vote, and to vote yourself
-- Concurrency: Maximize simultaneus referenda as security allows
-- Speed: Each referendum completed as fast as security allows
-- Agility: Speed responsive to support/controversy
+- **Transparency**: Decisions by who and by what rules?
+- **Decentralization**: Distributed power, weighted only by commitment and conviction
+- **Security**: Harmful proposals don't pass or have limited scope
+- **Accessibility**: Easy to draft proposal, to receive vote, to vote yourself, and to vote by proxy
+- **Concurrency**: Maximize simultaneus referenda as security allows
+- **Speed**: Each referendum completed as fast as security allows
+- **Agility**: Speed is responsive to support/controversy
 
 ---
 
 ## Governance V1 
 
+<pba-cols>
+<pba-col center>
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 300px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Polkadot.png" alt="btc pic">
+
+</pba-col>
+<pba-col center>
+
 - Single track
-- Sudo origin
-- Conservative security
+- Root origin
+- Conservative 2 month lifecycle
 - No concurrency
-- 28 day referenda
-- 1 month execution delay
 - Emergency referenda by technical committee
-- Most proposals by council
+- Most proposals initiated by council
 - Fully council controlled roles such as tipping
+
+</pba-col>
+</pba-cols>
 
 ---
 
 ## Gov V1, Room for Improvement
 
-The good:
-- Security
-- Transparency
+<pba-cols>
+<pba-col center>
 
-The bad:
-- Decentralization
-- Concurrency
-- Speed
-- Agility
+- The good
+   - Security
+   - Transparency
+
+- The bad
+   - Decentralization
+   - Concurrency
+   - Speed
+   - Agility
+
+</pba-col>
+<pba-col center>
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Snail.jpeg" alt="btc pic">
+
+</pba-col>
+</pba-cols>
 
 ---
 
 ## OpenGov Overview
+
+<pba-cols>
+<pba-col center>
 
 - Origins and Tracks
 - Lifecycle of a Referendum
@@ -83,9 +131,20 @@ The bad:
 - Vote Delegation by Track
 - OpenGov and governance goals 
 
+</pba-col>
+<pba-col center>
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/overview.png" alt="proposals per day pic">
+
+</pba-col>
+</pba-cols>
+
 ---
 
-## Origins
+## Origin
+
+<pba-flex center>
 
 - Level of privelege that code executes with
 - Similar to user on Unix
@@ -94,8 +153,12 @@ The bad:
     - Origin: Who authorizes it
 - Many operations require a specific origin
 
+</pba-flex>
 
 ---
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 300px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/rail_road_tracks.jpeg" alt="tracks pic">
 
 ## Origins and Tracks
 
@@ -120,23 +183,25 @@ Parameters give us the ability to find an optimal balance between security and t
 
 ---
 
-## Handy Table
-
-(Image of tracks table from polkaworld article)
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 600px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/TracksTable.webp" alt="btc pic">
 
 ---
 
 ## Lifecycle of A Referendum
 
-Image from moonbeam article
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/lifecycle_of_a_referendum.png" alt="lifecycle pic">
+
+Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
 
 ---
 
 ## Criteria for Passing a Proposal
 
-Conviction: Locking tokens for longer periods scales their voting impact up to a maximum of 6x with a lockup duration of 896 days
-Approval: Approving votes/total votes cast, weighted by conviction
-Support: Approving votes/total possible vote pool, disregarding conviction
+- Approval: Approving votes/total votes cast, weighted by conviction
+    - Conviction: Locking tokens for longer periods scales their voting impact up to a maximum of 6x with a lockup duration of 896 days
+- Support: Approving votes/total possible vote pool, disregarding conviction
 
 ---
 
@@ -151,22 +216,54 @@ Support: Approving votes/total possible vote pool, disregarding conviction
 
 ## Support and Approval Threshold Curves
 
-We want the agility to quickly pass uncontrovercial proposals while deliberating for longer on proposals which draw lower turnout or approval.
+<pba-flex center>
 
-This need is addressed through the use of curves defining thresholds that must be met to pass a proposal. 
+- We want agility
+   - Well supported proposals pass quickly
+   - Controvercial proposals get more deliberation
+- Addressed with time varying curves
+   - Support threshold
+   - Approval threshold
+- Monotonically decreasing
 
-These curves are monotonically decreasing, meaning that the level of support and approval necessary to pass a proposal decrease as a proposal spends longer in its decision period.
+</pab-flex>
 
 ---
 
 ## Example Support and Approval Curves
 
-(Image from)
-https://polkaworld.medium.com/a-hands-on-guide-for-kusamas-open-gov-governance-system-98277629b0c5
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 1400px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/support_and_approval_curves.png" alt="proposals per day pic">
+
+#### _From PolkaWorld Article in Resources_
 
 ---
 
-## Polkadot Fellowship: Motivation
+## Vote Delegation
+
+<pba-cols>
+<pba-col center>
+
+- Traditional delegation: You entrust one third party with your vote on all matters
+- Delegation by track: You may delegate your vote to one or more third parties on a per track basis
+- EX: Tipper vote delegated to local ambassador, WhiteListedCaller vote delegated to Parity Technologies, vote retained for all other tracks
+- This is likely a first!
+
+</pba-col>
+<pba-col center>
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/vote.jpeg" alt="proposals per day pic">
+
+</pba-col>
+</pba-cols>
+
+---
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 400px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="proposals per day pic">
+
+## OpenGov Acting Under Pressure
 
 Typical path to safety: Lower throughput and restricted origins
 
@@ -178,17 +275,30 @@ Solution: Some sort of oracle capable of providing expert information
 
 ## Oraclizing Expert Information
 
+<pba-flex center>
+
 1. Track everyone's level of expertise
 2. Allow experts to register sentiment
 3. Aggregate opinions by level of expertise
+</pba-flex>
+<br>
 
-How are these accomplished?
+But how are these steps accomplished?
 
 ---
 
+<!-- .slide: data-background="../../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
+
+<pba-cols>
+<pba-col center>
+
 ## Enter The Polkadot Fellowship
 
-(Some Polkadot Fellowship Image)
+</pba-col>
+<pba-col center>
+
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -202,9 +312,10 @@ Members hold rank denoting proven level of expertise and commitment as recognize
 
 - Experts in the Polkadot core protocol who maintain a consistant level of active contribution
 - Notably this does not include core developers of independent parachain protocols, which should develop their own protocol specific fellowships as needed.
-- Currently: < 100 core developers, mostly from Parity or the Web3 Foundation
-- Next year or two: Hundreds
-- Ideal far future: Tens of thousands, independent of any centralized entity
+- Trajectory
+    - Currently: < 100 core developers, mostly from Parity or the Web3 Foundation
+    - Next year or two: Hundreds
+    - Ideal far future: Tens of thousands, independent of any centralized entity
 - Only one fellowship for Polkadot and Kusama
 
 ---
@@ -218,69 +329,76 @@ Members hold rank denoting proven level of expertise and commitment as recognize
 - White list proposals must pass two votes
     - Expertise weighted Fellowship vote via second referendum pallet instantiation
     - Same general referendum as other tracks
-
-Just an oracle!
-
-My suspician: Secondarily intended to cultivate a long term base of Polkadot core developers outside of Parity
-
----
-
-## Vote Delegation
-
-- Traditional delegation: You entrust one third party with your vote on all matters
-- Delegation by track: You may choose to delegate your vote to one or more third parties on a per track basis
-- EX: Tipper vote delegated to local ambassador, WhiteListedCaller vote delegated to Parity Technologies, vote retained for all other tracks
-- This is new and exciting!
+- Just an oracle! (can't act on its own)
+- Secondarily intended to cultivate a long term base of Polkadot core developers outside of Parity
 
 ---
 
 ## OpenGov and Governance Goals
 
 - Open source + single process + track abstraction -> Transparency
-- Cowboy proposal creation + greater throughput + per-track delegation -> Accessibility
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Liberal proposal creation + greater throughput + per-track delegation -> Accessibility
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - Accessibility + No special bodies -> Decentralization
+<!-- .element: class="fragment" data-fragment-index="3" -->
 - Limited origins + emergency tracks + white list -> Security
+<!-- .element: class="fragment" data-fragment-index="4" -->
 - Multiple tracks + low risk tracks -> Concurrency
+<!-- .element: class="fragment" data-fragment-index="5" -->
 - Low risk tracks + early confirmation -> Speed 
+<!-- .element: class="fragment" data-fragment-index="6" -->
 - Support and approval threshold curves + white list -> Agility
+<!-- .element: class="fragment" data-fragment-index="7" -->
 
 ---
 
-# OpenGov, by The Numbers
+# OpenGov, By The Numbers
 
 ---
 
 ## Governance Activity
 
-(bar chart 1) Referenda concluded/day (1.222), 5.5x more than DOT in same time period (0.222). 3.44x more than KSM in final month before OpenGov launch (0.355)
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/proposals_per_day.png" alt="proposals per day pic">
+
+#### _5.5x more daily governance activity_
 
 ---
 
 ## Proposal Origins
 
-(bar chart 2) Origins of proposals, Dot since OpenGov release (2/12) 16% Democracy. OpenGov (66/66) 100% democracy 
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/proposals_from_democracy.png" alt="Proposal origins pic">
+
+#### _Proposals now primarily authored via democracy_
 
 ---
 
 ## Treasury Usage
 
-(bar chart 3) Based on data from the latest spend periods on Polkadot and Kusama respectively, Polkadot is burning 2.2x more treasury funds as % of market cap per adjusted spending period (0.0378% vs 0.017%)
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/treasury_waste_since_opengov.png" alt="treasury usage pic">
+
+#### _Treasury funds used more efficiently_
 
 ---
 
 ## OpenGov and You
 
 - Participate in OpenGov and Polkadot Fellowship on Polkadot and Kusama
-- Customized OpenGov instances per-parachain
+- Can customize OpenGov instances per parachain
 - Custom fellowships per parachain
-- Potentially non-technical fellowships, such as a fellowship for brand ambassadors
+- Potentially create non-technical fellowships, such as a fellowship for brand ambassadors
 
 ---
 
-## Farther Learning Resources 
-PolkaWorld Hands on OpenGov Article - https://polkaworld.medium.com/a-hands-on-guide-for-kusamas-open-gov-governance-system-98277629b0c5
-OpenGov Article from Moonbeam Team - https://moonbeam.network/blog/opengov/
-Gavin’s Polkadot Decoded 2022 talk - https://www.youtube.com/watch?v=EF93ZM_P_Oc
+## Resources 
+1. PolkaWorld Hands-On OpenGov: https://polkaworld.medium.com/a-hands-on-guide-for-kusamas-open-gov-governance-system-98277629b0c5
+2. OpenGov Article from Moonbeam Team: https://moonbeam.network/blog/opengov/
+3. Gavin’s Polkadot Decoded 2022 talk: https://www.youtube.com/watch?v=EF93ZM_P_Oc
+4. Gov V1 tracking: https://polkadot.polkassembly.io/
+5. OpenGov tracking: https://kusama.subsquare.io/
 
 ---
 
