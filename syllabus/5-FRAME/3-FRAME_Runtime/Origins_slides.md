@@ -5,11 +5,9 @@ duration: 1 hour
 instructors: ["Shawn Tabrizi"]
 ---
 
-
 # Origin
 
 ---
-
 
 ## Origin
 
@@ -171,7 +169,6 @@ impl<T: Config> ProvideInherent for Pallet<T> {
 `None` can also be used to represent "unsigned extrinsics", which are intended to be submitted by anyone without a key.
 
 In those cases, it includes unsigned validation logic with `ValidateUnsigned`.
-
 
 ```rust
 #[pallet::validate_unsigned]
