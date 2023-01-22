@@ -138,7 +138,7 @@ fn main() {
 
 ### The `std` Paradigm
 
-All crates in substrate that eventually compile to WASM are compiled in a dual mode:
+All crates in substrate that eventually compile to Wasm are compiled in a dual mode:
 
 1. with `std`
 1. otherwise `no_std`
@@ -148,7 +148,7 @@ All crates in substrate that eventually compile to WASM are compiled in a dual m
 ```
 
 - The name "`std`" is just an idiom in the rust ecosystem.
-- `no_std` DOES NOT MEAN WASM.
+- `no_std` does NOT mean Wasm!
 
 ---v
 
@@ -274,7 +274,7 @@ fn foo() {
 
 <!-- .element: class="fragment" -->
 
-- Any logging increases the size of the WASM blob. **String literals** are stored somewhere in your
+- Any logging increases the size of the Wasm blob. **String literals** are stored somewhere in your
   program!
 
 <!-- .element: class="fragment" -->
