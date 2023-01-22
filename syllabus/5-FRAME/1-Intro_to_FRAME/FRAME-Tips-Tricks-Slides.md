@@ -510,7 +510,7 @@ Things like **addition**, **multiplication**, **division** could all easily fail
 let certain_output = a.saturating_mul(b);
 ```
 
-NOTE:
+Notes:
 
 Why would you ever want to saturate? only in cases where you know if the number is overflowing,
 other aspects of the system is so fundamentally screwed that there is no point in doing any kind of
