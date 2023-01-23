@@ -37,8 +37,8 @@ instructors: ["Shawn Tabrizi"]
 </td>
 <td>
 
-- Construct Runtime (TODO)
-- Tests + Mock (TODO)
+- Construct Runtime
+- Tests + Mock
 - Origins
 
 </td>
@@ -46,7 +46,6 @@ instructors: ["Shawn Tabrizi"]
 
 - FRAME Benchmarking
 - Exercise: Benchmarking Example
-- (Optional) Benchmarking Extras
 
 </td>
 <td>
