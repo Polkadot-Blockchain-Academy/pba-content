@@ -28,6 +28,20 @@ Presented by Bradley Olson
 
 ---
 
+## Reasons for Blockchain Governance
+
+- Think of software as the executive branch of government
+    - Applies existing laws (code) in pre-defined ways
+    - Protocol security ensures the letter of those laws is followed
+- But any evolving protocol needs an equivalent to the legeslative branch
+    - To update the laws (code) 
+    - To rectify cases where the letter of the law didn't match the spirit of the law (bugs)
+    - To trigger parts of the system that aren't on a set schedule, EX: Polkadot Parachain auctions
+    - To spend treasury funds on worthy causes 
+- On-chain governance mechanisms fill that legeslative role
+
+---
+
 ## Why On-chain?
 
 <pba-cols>
@@ -82,8 +96,10 @@ Presented by Bradley Olson
 
 - Single track
 - Root origin
-- Conservative 2 month lifecycle
-- No concurrency
+- 28 day referendum
+- 1 month minimum enactment period
+- 1 referendum at a time
+- Supplemental centralized bodies: council and technical committee
 - Emergency referenda by technical committee
 - Most proposals initiated by council
 - Fully council controlled roles such as tipping
@@ -124,11 +140,11 @@ Presented by Bradley Olson
 <pba-cols>
 <pba-col center>
 
-- Origins and Tracks
-- Lifecycle of a Referendum
+- Origins and tracks
+- Lifecycle of a referendum
 - Support and approval threshold curves
 - The Polkadot Fellowship
-- Vote Delegation by Track
+- Vote delegation by track
 - OpenGov and governance goals 
 
 </pba-col>
@@ -142,7 +158,7 @@ Presented by Bradley Olson
 
 ---
 
-## Origin
+## Origins
 
 <pba-flex center>
 
@@ -174,9 +190,9 @@ Presented by Bradley Olson
 
 Parameters give us the ability to find an optimal balance between security and throughput. The security needs of the Tipper track are very different than those of the Root track.
 
-- Lead-in period
-- Decision period
-- Confirmation period
+- Lead-in period duration
+- Decision period duration
+- Confirmation period duration
 - Minimum enactment period
 - Concurrency, how many referenda can run in this track at a time
 - Support and Approval threshold curves
@@ -185,15 +201,6 @@ Parameters give us the ability to find an optimal balance between security and t
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
 <img style="width: 600px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/TracksTable.webp" alt="btc pic">
-
----
-
-## Lifecycle of A Referendum
-
-<!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 1000px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/lifecycle_of_a_referendum.png" alt="lifecycle pic">
-
-Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
 
 ---
 
@@ -211,6 +218,15 @@ Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
 - Approval and Support must remain above respective thresholds for entire period
 - Confirmation period concludes -> proposal approved early
 - Decision period expires -> proposal rejected
+
+---
+
+## Lifecycle of A Referendum
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/lifecycle_of_a_referendum.png" alt="lifecycle pic">
+
+Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
 
 ---
 
