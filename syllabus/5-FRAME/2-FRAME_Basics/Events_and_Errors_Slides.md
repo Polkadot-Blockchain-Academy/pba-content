@@ -20,7 +20,11 @@ In this presentation, we will go over two of the tools you have access to when d
 Not all extrinsics are valid. It could be for a number of reasons:
 
 - The extrinsic itself is badly formatted. (wrong parameters, encoding, etc...)
-- The call does
+- The state transition function does not allow it.
+	- Maybe a timing problem.
+	- User might be lacking resources.
+	- State transition might be waiting for other data or processes.
+	- etc...
 
 ---
 
