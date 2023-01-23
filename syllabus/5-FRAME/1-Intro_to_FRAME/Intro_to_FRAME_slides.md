@@ -21,9 +21,9 @@ instructors: ["Shawn Tabrizi"]
 
 - Introduction To FRAME
 - Exercise: Proof of Existence Runtime
+- Pallet Coupling
 - FRAME Tips and Tricks
-- Important Pallets to Know
-- Useful Pallet Traits
+- FRAME Common Knowledge (Pallets & Traits)
 - FRAME Assignment (whole week!)
 
 </td>
@@ -39,8 +39,7 @@ instructors: ["Shawn Tabrizi"]
 
 - Construct Runtime (TODO)
 - Tests + Mock (TODO)
-- Loosely + Tightly Coupled Pallets (TODO)
-- Origins (TODO)
+- Origins
 
 </td>
 <td>
