@@ -85,9 +85,9 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 
 Writing the Sudo Pallet:
 
-Without FRAME: 310 lines of code.
+Without FRAME: 2210 lines of code.
 
-With FRAME: 2210 lines of code.
+With FRAME: 310 lines of code.
 
 7x Smaller.
 
