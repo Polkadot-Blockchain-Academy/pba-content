@@ -23,13 +23,13 @@ Pallet coupling will teach you how to configure multiple pallets to interact wit
 
 - Tightly Coupled Pallets
 
-	- Pallets which are directly connected to one another.
-	- You must construct a runtime using exactly the pallets which are tightly coupled.
+  - Pallets which are directly connected to one another.
+  - You must construct a runtime using exactly the pallets which are tightly coupled.
 
 - Loosely Coupled Pallets
 
-	- Pallets which are connected "loosely" with a trait / interface.
-	- You can construct a runtime using any pallets which satisfy the required interfaces.
+  - Pallets which are connected "loosely" with a trait / interface.
+  - You can construct a runtime using any pallets which satisfy the required interfaces.
 
 ---
 

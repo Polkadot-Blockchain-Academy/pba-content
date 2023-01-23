@@ -41,11 +41,11 @@ pallet \
 - Test your benchmarks execute successfully.
 - Run your benchmarks on your substrate node.
 - Integrate the generated `weights.rs` file into your pallet:
-	- Import the module.
-	- "use" the `WeightInfo` trait.
-	- Add a new Config type for the `WeightInfo`
-	- Update all extrinsics so weight uses `WeightInfo`
-	- Extrinsics with a `DispatchResultWithPostInfo` could also refund weight.
-	- Update your `mock.rs` file for the new `WeightInfo` type.
-	- Check that your pallet tests complete again, and there are no errors.
+  - Import the module.
+  - "use" the `WeightInfo` trait.
+  - Add a new Config type for the `WeightInfo`
+  - Update all extrinsics so weight uses `WeightInfo`
+  - Extrinsics with a `DispatchResultWithPostInfo` could also refund weight.
+  - Update your `mock.rs` file for the new `WeightInfo` type.
+  - Check that your pallet tests complete again, and there are no errors.
 - Integrate the `weights.rs` file in your final runtime.
