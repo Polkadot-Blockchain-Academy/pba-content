@@ -1,6 +1,6 @@
 # FRAME Benchmarking Exercise
 
-This is a copy of the `substrate-node-template` that includes a `Template` pallet with some arbitrary logic, specifically designed to help you understand how to define the benchmarking for the pallet calls. In addition to these calls, the pallet contains specific ones for a voting mechanism, which is closer to a more daily use case. The goal of this exercise is to define the benchmarking functions for these calls and configure each call to use the weights that result from the benchmarking process.
+This is a clone of the `substrate-node-template` that includes a `Template` pallet with some arbitrary logic, specifically designed to help you understand how to define the benchmarking for the pallet calls. In addition to these calls, the pallet contains specific ones for a voting mechanism, which is closer to a more daily use case. The goal of this exercise is to define the benchmarking functions for these calls and configure each call to use the weights that result from the benchmarking process.
 
 ## Step-by-step Guide for Benchmarking.
 
