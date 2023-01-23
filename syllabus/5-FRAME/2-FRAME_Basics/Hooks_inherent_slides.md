@@ -134,11 +134,11 @@ Threads can **overlap**, each is reading the state of its corresponding block, a
 
 Offchain workers have their own **special host functions**: http, dedicated storage, time, etc.
 
-Offchain workers have the same **execution limits** as WASM (limited memory, custom allocator).
+Offchain workers have the same **execution limits** as Wasm (limited memory, custom allocator).
 
 Notes:
 
-Word on allocator limit in Substrate WASM execution (subject to change).
+Word on allocator limit in Substrate Wasm execution (subject to change).
 
 - Max single allocation limited
 - Max total allocation limited.
