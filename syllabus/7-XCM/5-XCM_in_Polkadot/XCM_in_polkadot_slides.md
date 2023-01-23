@@ -71,7 +71,7 @@ pub type Barrier = (
 
 Notes:
 
-- Child system parachains are parachains that contain core polkadot features, and usually they get a paraId of less than 1000. They are allocated by Polkadot governance and get free execution.
+- Child system parachains are parachains that contain core polkadot features, and they will get a paraId of less than 1000. They are allocated by Polkadot governance and get free execution.
 - `AllowKnownQueryResponses` will check pallet-xcm storage to know whether the response is expected.
 -`AllowSubscriptionsFrom` determines that any origin is able to subscribe for version changes.
 
@@ -142,7 +142,7 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- The relay chain only handles a single asset (the relay token), and therefore, it does not have the necessity to trust any other tokens being sent from other reserves.
+- Trusting other parachains (e.g., common good parachains) to be reserves of the relay native token would cause rare situations with the total issuance. For instance, users could drain reserves of the sovereign account with teleported funds.
 
 ---
 
@@ -164,7 +164,7 @@ pub type LocationConverter = (
 Notes:
 
 - Any other origin that is not a parachain origin or a local 32 byte account origin will not be convertible to an accountId.
-- Question what happens if a message coming from a parachain  starts with `DescendOrigin`?.
+- Question class what happens if a message coming from a parachain  starts with `DescendOrigin`?. XcmV2 will reject it at the barrier level (Since **_AllowTopLevelPaidExecutionFrom_**  expects the first instruction to be one of **_ReceiveTeleportedAsset_** , **_WithdrawAsset_** , **_ReserveAssetDeposited_**  or **_ClaimAsset_** ). XcmV3 will pass the barrier as **_AllowTopLevelPaidExecutionFrom_** is inside **_WithComputedOrigin_**.
 ---
 
 ## 🪙 Asset Transactors in Rococo
@@ -272,8 +272,9 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- Trying to buyExecution with any other token that is not the native token **will fail**.
-- **_WeightToFee_** will determine whether the assets in the holding register are sufficient to buy the necessary amount of weight. 
+- Trying to buyExecution with any other token that does not match the specified AssetId (in this case, `RocLocation`, which represents the native token) **will fail**.
+
+- **_WeightToFee_** contains an associated function that will be used to convert the required amount of weight into an amount of tokens used for execution payment.
 
 ---
 
@@ -363,7 +364,7 @@ pub type CurrencyTransactor = CurrencyAdapter<
 Notes:
 
 - From Statemine's point of view, the relay token is represented as **_MultiLocation { parents:1, interior: Here }_**.
-- Teleports are minted into the **_Balances_** pallet.
+- The **_Balances_** pallet is being used to mint teleported assets.
 - Teleports are not tracked in any checking account.
 
 ---v
@@ -471,7 +472,7 @@ Notes:
 
 - The relay chain has free execution
 - `DenyThenTry<A, B>` denies the execution if A is true, else evaluates B for allowance
-- `DenyReserveTransferToRelayChain` prevents sending a reserve transfer asset to the relay.
+- `DenyReserveTransferToRelayChain` prevents sending a `InitiateReserveWithdraw`, `DepositReserveAsset` or `TransferReserveAsset` instruction to the relay.
 
 ---
 
