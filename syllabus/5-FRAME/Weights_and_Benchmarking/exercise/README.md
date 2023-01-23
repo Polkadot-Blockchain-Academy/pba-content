@@ -33,13 +33,13 @@ benchmarks! {
 6) As we added the new WeightInfo type to the pallet Config, update your mock.rs file as well.
 
 7) Up to this point, we have a "correct" benchmark implementation for each call, but it may not be very optimized in terms of fees. Remember that benchmarks should calculate the most expensive scenario. What happens if our call only uses 10% of the calculated max capacity? We would be overcharging the user for the unused 90% (which is something we don't want to do of course). To optimize the fees and avoid overcharging, the next step is to refund the unused weight:
-	- Make use of the return type `DispatchResultWithPostInfo` for eacg extrinsic and within the returned `Ok()` result, provide the distinct value that shows how much reads/writes were actually used as part of the execution of this extrinsic. Note that the arguments for the benchmarking function should also change slightly. 
+	- Make use of the return type `DispatchResultWithPostInfo` for eacg extrinsic and within the returned `Ok()` result, provide the distinct value that shows how much reads/writes were actually used as part of the execution of this extrinsic. Note that the arguments for the benchmarking function should also change slightly.
 
 8) Check that your pallet tests complete again with no errors and run the benchmarks again. At this point it would be interesting to compare the weight values calculated from the two processes.
 
 9) Finally, compile your node again.
 
-> In case you have any question about the benchmarking process (or actually any substrate question), checking the codebase of any FRAME pallet is always a good practice. For example, you can use the assets pallet as an example.  
+> In case you have any question about the benchmarking process (or actually any substrate question), checking the codebase of any FRAME pallet is always a good practice. For example, you can use the assets pallet as an example.
 
 ## <a name="testing">Testing your benchmarks</a>
 
@@ -55,7 +55,6 @@ cargo build --release --features runtime-benchmarks
 
 > Note: In production, you would want to use `--profile=production` rather than `--release`, but it is way slower to compile, and `--release` already takes a while. Good enough for our exercises.
 
-## 
 ## <a name="running">Running Your Benchmarks.</a>
 
 ```bash
@@ -73,6 +72,3 @@ pallet \
 --output=./pallets/template/src/weights.rs \
 --template=frame-weight-template.hbs
 ```
-
-
-
