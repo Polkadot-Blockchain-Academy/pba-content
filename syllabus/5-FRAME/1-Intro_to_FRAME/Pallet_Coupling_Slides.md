@@ -177,8 +177,9 @@ pub trait Currency<AccountId> {
 	/// The balance of an account.
 	type Balance: Balance + MaybeSerializeDeserialize + Debug + MaxEncodedLen + FixedPointOperand;
 
-	/// The combined balance of `who`.
-	fn total_balance(who: &AccountId) -> Self::Balance;
+	/// The 'free' balance of a given account.
+	/// This is the only balance that matters in terms of most operations on tokens.
+	fn free_balance(who: &AccountId) -> Self::Balance;
 
 	/// Transfer some liquid free balance to another user.
 	fn transfer(
@@ -205,8 +206,8 @@ where
 {
 	type Balance = T::Balance;
 
-	fn total_balance(who: &T::AccountId) -> Self::Balance {
-		Self::account(who).total()
+	fn free_balance(who: &T::AccountId) -> Self::Balance {
+		Self::account(who).free
 	}
 
 	// -- snip --
@@ -228,18 +229,55 @@ pub trait Config: frame_system::Config {
 }
 ```
 
-Amd
+And can use this trait throughout their pallet:
+
+```rust [4-5]
+#[pallet::weight(0)]
+pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
+	let from = ensure_signed(origin)?;
+	let amount = T::Currency::free_balance(&from);
+	T::Currency::transfer(&from, &to, amount, AllowDeath)
+}
+```
 
 ---
 
-## Cyclic Dependencies
+## Runtime Implementation
 
-Rust does not allow crates to have cyclic dependencies.
+Finally, in the runtime configuration, we concretely define which pallet implements the trait.
 
-Also, you do not want to define traits in one pallet which are used in another pallet. Otherwise, you might as well tightly couple them.
+```rust
+/// Configuration of a pallet using the `Currency` trait.
+impl pallet_voting::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type Currency = pallet_balances::Pallet<Runtime>;
+}
+```
 
-However, trait interfaces must be shared across the pallets which implement or depend on them.
-
-The Solution: Move traits to a shared `primitives` crate.
+This is the place where things are no longer "loosely" defined.
 
 ---
+
+## Challenges of Loose Coupling
+
+Loose coupling is more difficult because you need to think ahead of time about developing a flexible API that makes sense for potentially multiple implementations.
+
+You need to try to not let implementation details affect the API, providing maximum flexibility to users and providers of those traits.
+
+When done right, it can be very powerful; like the ERC20 token format.
+
+---
+
+## Challenges of Generic Types
+
+Many new pallet developers also find loose coupling challenging because associated types are not concretely defined... on purpose.
+
+For example, note that the `Currency` trait has a generic `Balances` type.
+
+This allows pallet developers can configure most unsigned integers types (`u32`, `u64`, `u128`) as the `Balance` type for their chain, however, this also means that you need to be more clever when doing math or other operations with those generic types.
+
+---
+
+# Questions?
+
+Next we will look over common pallets and traits, and will see many of the pallet coupling patterns first hand.
