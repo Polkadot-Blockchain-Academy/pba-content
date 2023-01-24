@@ -1,5 +1,6 @@
-# Build the tool
+## Inspecting the message with debug-failed-xcm-message
 
+###
 cargo build
 
 # Test examples:
@@ -19,4 +20,4 @@ Block failure: 10557896
 ## Example 2: Overweight enqueued:
 
 Block failure: 11884750
-./target/release/debug-failed-ump -p 1000 -b 10557895
+./target/release/debug-failed-ump -p 2006 -b 11884749
