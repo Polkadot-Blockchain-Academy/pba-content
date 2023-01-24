@@ -1,11 +1,11 @@
 ---
-title: Hooks, Inherents
-description: FRAME Hooks, Inherents for Web3 Engineers.
+title: Pallet Hooks
+description: Pallet Hooks
 duration: 1 hour
 instructors: ["Shawn Tabrizi, Kian Paimani"]
 ---
 
-# Hooks, Inherents
+# Pallet Hooks
 
 ---
 
