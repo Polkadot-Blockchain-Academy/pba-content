@@ -37,17 +37,346 @@ Today we will focus on the top two layers: Runtime Storage APIs and Storage Over
 
 </div>
 </div>
+
 ---
 
-## Transactional Storage
+### Overlay Deep Dive
 
 <br>
 <div class="flex-container">
 <div class="left-small">
 
-- We mentioned previously that we are able to spawn new transactional layers.
-- This can help us isolate changes caused by certain logic from reaching storage if we don't want it.
-- We also learned, that the impact of these transactional layers are not zero, but very small (.15% per layer, per storage item).
+The overlay stages changes to the underlying database.
+
+</div>
+
+<div class="right">
+
+<table class="overlay-table">
+<tr><td style="background-color: red;">Runtime Logic</td></tr>
+<tr><td style="background-color: darkred;">Runtime Memory</td></tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: green;">
+<tr><td>Runtime Storage API</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Overlay Change Set</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: blue;">
+<tr><td>Memory / Database Interface</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Database</td></tr>
+<tr>
+	<td>Alice: 10</td>
+	<td>Bob: 20</td>
+	<td>Cindy: 30</td>
+	<td>Dave: 40</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+### Overlay: Balance Transfer
+
+<br>
+<div class="flex-container">
+<div class="left-small">
+
+1. Runtime Logic Initiates.
+1. Calls the Runtime Storage API.
+1. First we query the Overlay Change Set.
+   - Unfortunately it's not there.
+1. Then we query the underlying Database.
+   - Very slow as you have learned so far.
+
+</div>
+
+<div class="right">
+
+<table class="overlay-table">
+<tr><td style="background-color: red;">Runtime Logic</td></tr>
+<tr><td style="background-color: darkred;">Runtime Memory</td></tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: green;">
+<tr><td>Runtime Storage API</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Overlay Change Set</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: blue;">
+<tr><td>Memory / Database Interface</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Database</td></tr>
+<tr>
+	<td>Alice: 10</td>
+	<td>Bob: 20</td>
+	<td>Cindy: 30</td>
+	<td>Dave: 40</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+### Overlay: Balance Transfer
+
+<br>
+<div class="flex-container">
+<div class="left-small">
+
+- As we return the data back to the runtime, we cache the values in the overlay.
+- Subsequent reads and writes happen in the overlay, since the data is there.
+
+</div>
+<div class="right">
+
+<table class="overlay-table">
+<tr><td style="background-color: red;">Runtime Logic</td></tr>
+<tr><td style="background-color: darkred;">Runtime Memory</td></tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: green;">
+<tr><td>Runtime Storage API</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Overlay Change Set</td></tr>
+<tr>
+	<td>Alice: 10</td>
+	<td>Bob: 20</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: blue;">
+<tr><td>Memory / Database Interface</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Database</td></tr>
+<tr>
+	<td>Alice: 10</td>
+	<td>Bob: 20</td>
+	<td>Cindy: 30</td>
+	<td>Dave: 40</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+### Overlay: Balance Transfer
+
+<br>
+<div class="flex-container">
+<div class="left-small">
+
+- The actual transfer logic happens in the runtime memory.
+- At some point, the runtime logic writes the new balances to storage, this updates the overlay cache.
+- The underlying database is not updated yet.
+
+</div>
+<div class="right">
+
+<table class="overlay-table">
+<tr><td style="background-color: red;">Runtime Logic</td></tr>
+<tr><td style="background-color: darkred;">Runtime Memory</td></tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: green;">
+<tr><td>Runtime Storage API</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Overlay Change Set</td></tr>
+<tr>
+	<td style="color: yellow;">Alice: 15</td>
+	<td style="color: yellow;">Bob: 15</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: blue;">
+<tr><td>Memory / Database Interface</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Database</td></tr>
+<tr>
+	<td>Alice: 10</td>
+	<td>Bob: 20</td>
+	<td>Cindy: 30</td>
+	<td>Dave: 40</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+### Overlay: Balance Transfer
+
+<br>
+<div class="flex-container">
+<div class="left-small">
+
+- At the end of the block, staged changes are committed to the database all at once.
+- Then storage root is recomputed a single time for the final block state.
+
+</div>
+<div class="right">
+
+<table class="overlay-table">
+<tr><td style="background-color: red;">Runtime Logic</td></tr>
+<tr><td style="background-color: darkred;">Runtime Memory</td></tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: green;">
+<tr><td>Runtime Storage API</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Overlay Change Set</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: blue;">
+<tr><td>Memory / Database Interface</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Database</td></tr>
+<tr>
+	<td style="color: lightgreen;">Alice: 15</td>
+	<td style="color: lightgreen;">Bob: 15</td>
+	<td>Cindy: 30</td>
+	<td>Dave: 40</td>
+</tr>
+</table>
+
+</div>
+
+---
+
+### Overlay: Implications
+
+<br>
+<div class="flex-container">
+<div class="left-small">
+
+- Reading the same storage a second or more time is faster (not free) than the initial read.
+- Writing the same value multiple times is fast (not free), and only results in a single final Database write.
+
+</div>
+<div class="right">
+
+<table class="overlay-table">
+<tr><td style="background-color: red;">Runtime Logic</td></tr>
+<tr><td style="background-color: darkred;">Runtime Memory</td></tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: green;">
+<tr><td>Runtime Storage API</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Overlay Change Set</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+</tr>
+</table>
+
+<br>
+<table class="overlay-table" style="background-color: blue;">
+<tr><td>Memory / Database Interface</td></tr>
+</table>
+
+<br>
+<table class="overlay-table">
+<tr><td colspan=4>Database</td></tr>
+<tr>
+	<td>Alice: 15</td>
+	<td>Bob: 15</td>
+	<td>Cindy: 30</td>
+	<td>Dave: 40</td>
+</tr>
+</table>
+
+</div>
+
+Notes:
+
+also this means that cross implementation of substrate/polkadot can be tricky to ensure determinism (also true for next slide).
+
+---
+
+### Additional Storage Overlays (Transactional)
+
+<br>
+<div class="flex-container">
+<div class="left-small text-small">
+
+- The runtime has the ability to spawn additional storage layers, called "transactional layers".
+- This can allow you to commit changes through the Runtime Storage API, but then drop the changes if you want before they get to the overlay change set.
+- The runtime can spawn multiple transactional layers, each at different times, allowing the runtime developer to logically separate when they want to commit or rollback changes.
 
 </div>
 <div class="right text-small">
@@ -104,23 +433,68 @@ Today we will focus on the top two layers: Runtime Storage APIs and Storage Over
 
 ---
 
+### Transactional Implementation Details
+
+- Non-Zero Overhead (but quite small)
+  - 0.15% overhead per key written, per storage layer.
+- Values are not copied between layers.
+  - Values are stored in heap, and we just move pointers around.
+  - So overhead has nothing to do with storage size, just the number of storage items in a layer.
+- Storage layers use client memory, so practically no upper limit.
+
+Notes:
+
+For more details see:
+
+https://github.com/paritytech/substrate/issues/10806
+
+https://github.com/paritytech/substrate/pull/10809
+
+In module 6, we can take a closer look at how this functionality is exposed in FRAME.
+
+See: https://github.com/paritytech/substrate/pull/11431
+
+---
+
 ## Storage Layer by Default
 
-As of very recently, we have introduced an additional transactional storage layer by default for all FRAME extrinsics.
+All extrinsics execute within a transactional storage layer.
 
-So verify first, write last should not be needed anymore within the FRAME pallets... but be careful in general.
+This means that if you return an `Error` from your extrinsic, all changes to storage caused by that extrinsic are reverted.
+
+This is the same behavior as you would expect from smart contract environments like Ethereum.
+
+---
+
+### Transactional Layer Attack
+
+Transactional layers can be used to attack your chain:
+
+<br>
+
+- Allow a user to spawn a lot of transactional layers.
+- On the top layer, make a bunch of changes.
+- All of those changes will need to propagate down each time.
+
+**Solution:**
+
+- Do not allow the user to create an unbounded number of layers within your runtime logic.
+
+---
+
+# Runtime Storage APIs
 
 ---
 
 ## Patricia Trie
 
-TODO use img that does not break `yarn build`
+<img style="height: 500px;" src="../../../assets/img/6-FRAME/patricia-trie.svg" />
 
 ---
 
 ## Storage Keys
 
-TODO use img that does not break `yarn build`
+<img style="height: 500px;" src="../../../assets/img/6-FRAME/navigate-storage-2.svg" />
 
 ---
 
