@@ -37,9 +37,9 @@ instructors: ["Shawn Tabrizi"]
 </td>
 <td>
 
-- Construct Runtime
-- Tests + Mock
+- Construct Runtime + Tests
 - Origins
+- Outer Enum
 
 </td>
 <td>
@@ -52,7 +52,6 @@ instructors: ["Shawn Tabrizi"]
 
 - FRAME Under the Hood
   - Deep Dive
-  - Outer Enum
   - Executive
 - Migration & Try Runtime
 - Signed Extensions
