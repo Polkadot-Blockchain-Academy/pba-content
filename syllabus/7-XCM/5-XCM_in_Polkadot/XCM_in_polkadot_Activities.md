@@ -31,9 +31,10 @@
 
 Messages to debug in Polkadot:
 
-- Block failure: 13341503 | Parachain: 2000
-- Block failure: 10946380 | Parachain: 2012
-- Block failure: 10557896 | Parachain: 1000
-- Block failure: 11884750 | Parachain: 2006
+- Block failure: 13341503 | Message sent from parachain 2000
+- Block failure: 10946380 | Message sent from parachain 2012
+- Block failure: 10557896 | Message sent from parachain 1000
+- Block failure: 11884750 | Message sent from parachain 2006
+- Block failure: 13955421 | Message sent from parachain 2011
 
 You can debug with either subxt or with Subscan.
