@@ -293,21 +293,14 @@ You can see these "aggregate" types are associated types in FRAME System.
 #[pallet::config]
 #[pallet::disable_frame_system_supertrait_check]
 pub trait Config: 'static + Eq + Clone {
-	/// The `Origin` type used by dispatchable calls.
-	type Origin: Into<Result<RawOrigin<Self::AccountId>, Self::Origin>>
-		+ From<RawOrigin<Self::AccountId>>
-		+ Clone
-		+ OriginTrait<Call = Self::Call>;
+	/// The `RuntimeOrigin` type used by dispatchable calls.
+	type RuntimeOrigin: Into<Result<RawOrigin<Self::AccountId>, Self::RuntimeOrigin>> + From<RawOrigin<Self::AccountId>> + Clone + OriginTrait<Call = Self::RuntimeCall>;
 
-	/// The aggregated `Call` type.
-	type Call: Dispatchable + Debug;
+	/// The aggregated `RuntimeCall` type.
+	type RuntimeCall: Parameter + Dispatchable<RuntimeOrigin = Self::RuntimeOrigin> + Debug + From<Call<Self>>;
 
 	/// The aggregated event type of the runtime.
-	type Event: Parameter
-		+ Member
-		+ From<Event<Self>>
-		+ Debug
-		+ IsType<<Self as frame_system::Config>::Event>;
+	type RuntimeEvent: Parameter + Member + From<Event<Self>> + Debug + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
 	// -- snip --
 }
@@ -324,7 +317,7 @@ You can now see why we need to add an `Event` associated type to each pallet whi
 #[pallet::config]
 pub trait Config: frame_system::Config {
 	/// Because this pallet emits events, it depends on the runtime's definition of an event.
-	type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+	type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 }
 ```
 
