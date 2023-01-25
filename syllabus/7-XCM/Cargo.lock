@@ -5106,17 +5106,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "xcm-simulator-versioning-exercise"
-version = "0.9.31"
-dependencies = [
- "frame-support",
- "pallet-xcm",
- "xcm",
- "xcm-simulator",
- "xcm-simulator-for-exercises",
-]
-
-[[package]]
 name = "yap"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
