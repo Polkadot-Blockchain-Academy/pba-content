@@ -22,11 +22,8 @@ duration: 1+ hour
 Notes:
 
 In the Bitcoin section we'll cover attempts to add scalability to Bitcoin, including payment channels used by the Lighting Network.
-
 Then we'll move onto Ethereum scalability history and cover topics such as side chains, state channels, Plasma, rollups and sharding.
-
 Finally we'll cover Polkadot's approach to scalability and how it compares to the rollup-centric design and some ideas for future.
-
 At the end of the lecture, for the curious readers, there's be links for further reading.
 
 ---
@@ -65,11 +62,8 @@ sign each transaction which also invalidates previous state.
 Notes:
 
 Bitcoin doesn't really have smart contract, so it uses 2-out-of-2 multisignature transactions instead.
-
 Each new update invalidates previous updates.
-
 To make this part of the state channel work, the locking and unlocking mechanisms have to be properly designed so that old state updates submitted to the blockchain have a chance to be corrected by the newer state updates which replaced them. The simplest way is to have any unlocking attempt start a timer, during which any newer update can replace the old update (restarting the timer as well). When the timer completes, the channel is closed and the state adjusted to reflect the last update received.
-
 In case of Bitcoin, a Timelock could be used.
 
 
@@ -86,7 +80,6 @@ In case of Bitcoin, a Timelock could be used.
 Notes:
 
 If a malicious party creates numerous channels and forces them to expire at the same time, which would broadcast to the blockchain, the congestion caused could overwhelm the capacity of the block. A malicious attacker might use the congestion to steal funds from parties who are unable to withdraw their funds due to the congestion.
-
 We'll come to other limitations of channels in the state channels later.
 
 ### Payment channels: Lighting Network
@@ -113,7 +106,7 @@ To move assets between different chains, a bridge is implemented as a smart cont
 
 This is partially what Polygon is to Ethereum.
 
-<pba-flex center>
+<pba-flex left>
 - Bridges have the "weakest link" problem.
 - What if a sidechain stops producing blocks? The funds are "stuck".
 - If a sidechain is cheaper than Ethereum then it’s going to be proportionally less secure than Ethereum.
@@ -125,7 +118,7 @@ This is partially what Polygon is to Ethereum.
 
 This is a generalization of payment channels:
 
-<pba-flex center>
+<pba-flex left>
 1. Part of the blockchain state is locked in a smart contract.
 1. Participants update the state amongst themselves (off-chain).
 1. Participants submit the state back to the blockchain.
@@ -139,7 +132,7 @@ There's also a concept of virtual channels that do not require to open and close
 
 ### State channels: limitations
 
-<pba-flex center>
+<pba-flex left>
 - Cannot be used to send funds off-chain to people who are not yet participants
 - Cannot be used to represent objects that do not have a clear logical owner (e.g. Uniswap)
 - Require a large amount of capital to be locked up
@@ -155,7 +148,7 @@ Are like sidechains, but the the Merkle root of each chain in published on Ether
 
 Limitations:
 
-<pba-flex center>
+<pba-flex left>
 - Not possible to do generic computation: Polygon only supports ERC20 and ERC721 token transfers on its Plasma chain.
 - Withdrawal period of 7 days on Polygon (challenge period)
 </pba-flex>
@@ -211,6 +204,8 @@ This bond can be slashed if the validator posts an invalid block or builds on an
 
 The main idea of multi-round fraud proofs (aka interactive fraud proofs) is to
 reduce the number of computational steps by using interactive bisection protocol.
+
+### Multi-round fraud proofs: steps
 
 It requires the block producer and the challenger to merkelize the entire state of VM (including memory cells, registers, etc).
 
@@ -328,7 +323,6 @@ How is splitting validators into groups is different from splitting into separat
 Notes:
 
 In a 100-chain multichain ecosystem, the attacker only needs ~0.5% of the total stake to wreak havoc: they can focus on 51% attacking a single chain. In a sharded blockchain, the attacker must have close to ~30-40% of the entire stake to do the same (in other words, the chain has shared security).
-
 The second point ensures that processing messages is also secure.
 
 ### Parachain Validation Function (PVF)
@@ -336,7 +330,7 @@ The second point ensures that processing messages is also secure.
 Validators can verify the state transition of any Parachain given 2 simple pieces of data:
 
 - The Parachain's Wasm Runtime
-- The Parachain's State Proof (Proof of Validity)
+- The Parachain's State Proof + Block (Proof of Validity)
 
 ### Proof of Validity (PoV)
 
@@ -344,9 +338,21 @@ A proof of validity constructed by Cumulus:
 
 <!-- A diagram from https://pep.wtf/posts/parachains-consensus/ -->
 
-### TODO: more slides on Polkadot?
+### Comparing Parachains with Rollups
 
-What do we want to cover?
+In some sense, parachains act like optimistic rollups with non-interactive fraud proofs. There are a few crucial differences:
+
+- The set of rollup sequencers is managed and limited by a smart contract
+- Optimistic rollup finality is limited by the challenge period
+- All parachains get the same security no matter how many collators they have
+
+---
+
+### Data availability problem
+
+Optimistic rollups require all of the data in blocks to be available to generate fraud proofs. Rollups on Ethereum deal with this by simply posting all of the rollup blocks on to the Ethereum chain and relying on it for data availability, therefore using Ethereum as a data availability layer to dump data on.
+
+With Polkadot sharding, how do we ensure that PoVs can be downloaded to start a dispute process if they are not stored by everyone?
 
 ---
 
