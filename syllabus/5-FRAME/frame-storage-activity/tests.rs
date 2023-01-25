@@ -1,8 +1,7 @@
-use frame_support::{assert_noop, assert_ok, assert_err};
 use codec::Encode;
+use frame_support::{assert_err, assert_noop, assert_ok};
 
-use crate::mock::Test as T;
-use crate::*;
+use crate::{mock::Test as T, *};
 
 fn give_balance_to_bob(who: &[u8]) -> Result<(), ()> {
 	sp_io::storage::set(who, &100u32.encode());
@@ -106,7 +105,6 @@ fn kill() {
 	});
 }
 
-
 #[test]
 fn mutate() {
 	sp_io::TestExternalities::new_empty().execute_with(|| {
@@ -124,14 +122,17 @@ fn mutate() {
 fn try_mutate() {
 	sp_io::TestExternalities::new_empty().execute_with(|| {
 		Item2::<T>::put(42u32);
-		assert_noop!(Item2::<T>::try_mutate(|x| -> Result<(), ()> {
-			*x = *x / 2;
-			if *x % 2 == 0 {
-				Ok(())
-			} else {
-				Err(())
-			}
-		}), ());
+		assert_noop!(
+			Item2::<T>::try_mutate(|x| -> Result<(), ()> {
+				*x = *x / 2;
+				if *x % 2 == 0 {
+					Ok(())
+				} else {
+					Err(())
+				}
+			}),
+			()
+		);
 		assert_eq!(Item2::<T>::get(), 42);
 	});
 }

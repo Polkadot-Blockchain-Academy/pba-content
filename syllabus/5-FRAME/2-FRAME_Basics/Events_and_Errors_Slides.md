@@ -21,10 +21,10 @@ Not all extrinsics are valid. It could be for a number of reasons:
 
 - The extrinsic itself is badly formatted. (wrong parameters, encoding, etc...)
 - The state transition function does not allow it.
-	- Maybe a timing problem.
-	- User might be lacking resources.
-	- State transition might be waiting for other data or processes.
-	- etc...
+  - Maybe a timing problem.
+  - User might be lacking resources.
+  - State transition might be waiting for other data or processes.
+  - etc...
 
 ---
 
@@ -137,7 +137,7 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
 		/// Because this pallet emits events, it depends on the runtime's definition of an event.
-		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -354,7 +354,7 @@ pub mod pallet {
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
 		/// Because this pallet emits events, it depends on the runtime's definition of an event.
-		type Event: From<Event<Self>> + IsType<<Self as frame_system::Config>::Event>;
+		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]

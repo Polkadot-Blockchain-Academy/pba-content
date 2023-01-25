@@ -26,6 +26,10 @@ duration: 1 hour
 
 - Configurable parts are defined in the `xcm-executor` config!
 
+Notes:
+
+EXERCISE: ask the class to raise hands and postulate on what they think should be configurable.
+
 ---
 
 ## 🛠️ Configurables in `XcmConfig`
@@ -63,18 +67,19 @@ impl Config for XcmConfig {
   // How we handle version subscriptions
   type SubscriptionService = ?;
 }
+
 ```
 
 Notes:
 
-Means of converting a multilocation into an accountId
+- Means of converting a multilocation into an accountId
 Used later for: OriginConverter , `AssetTransactor`
 
-`xcm-builder` and `xcm-pallet` are your friends!
+- `xcm-builder` and `xcm-pallet` are your friends!
 
-`xcm-builder` is a polkadot module that contains a set of pre-defined structures to be set in some of the configurable sides of XCM.
+- `xcm-builder` is a polkadot module that contains a set of pre-defined structures to be set in some of the configurable sides of XCM.
 
-`xcm-pallet` is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.
+- `xcm-pallet` is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.
 
 ---
 
@@ -95,6 +100,10 @@ Questions that you should have answers for:
   _In one asset?_
   _In several?_
 
+Notes:
+
+- Some of the answers to these questions might imply you need to use your own custom primitives.
+
 ---
 
 ### Our starting example setup requirements
@@ -113,10 +122,12 @@ Questions that you should have answers for:
 - Useful when we want to withdraw/deposit tokens from a multilocation defined origin
 - Useful when we want to dispatch as signed origins from a multilocation defined origin.
 
+<img src="../../../assets/img/7-XCM/location_to_account_id_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+
 Notes:
 
-This will define how we convert a multilocation into a local accountId.
-This is useful when we want to withdraw/deposit tokens from a multilocation defined origin or when we want to dispatch as signed origins from a multilocation defined origin.
+- This will define how we convert a multilocation into a local accountId.
+- This is useful when we want to withdraw/deposit tokens from a multilocation defined origin or when we want to dispatch as signed origins from a multilocation defined origin.
 
 ---v
 
@@ -130,6 +141,14 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
   Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
 }
 ```
+
+<div>
+
+Notes:
+
+- This is the most generic form of converting a multilocation to an accountId.
+- There are no restrictions in the multilocation input.
+If you use this with other converters, make sure this will be the last option, as otherwise the more restrictive ones will not apply. 
 
 ---v
 
@@ -149,6 +168,10 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 }
 ```
 
+Notes:
+
+- This converter is typically used in parachains to make sure the parent origin has an associated account.
+
 ---v
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
@@ -157,7 +180,9 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 
 Notes:
 
-Here child means a parachain from the relay's perspective
+- Here child means a parachain from the relay's perspective
+
+- This converter is **typically used in the relay chain** to make sure the child parachain origins have an associated account.
 
 ---v
 
@@ -177,7 +202,8 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 
 Notes:
 
-Here sibling means a parachain from another parachain's perspective
+- Here sibling means a parachain from another parachain's perspective
+- This converter is **typically used in parachains** to make sure the sibling parachain origins have an associated account.
 
 ---v
 
@@ -213,9 +239,9 @@ impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone
 <div>
 
 Notes:
-
-For our example, we only need the 4th.
-We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
+- Typically used for chains that want to enable local xcm execution, and which have 32 byte accounts.
+- We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
+**This structure fulfills one of our requirements**
 
 ---
 
@@ -223,6 +249,13 @@ We have a requirement of users being able to execute local XCM, and as such we n
 
 - Define how we are going to withdraw and deposit assets
 - Heavily dependant on the assets we want our chain to transfer
+
+<img src="../../../assets/img/7-XCM/asset_transactor_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+
+Notes:
+
+- The relay chain is a clear example of a chain that handles a **single token**.
+- Statemine on the contrary acts as an asset-reserve chain, and it needs to handle **several assets**
 
 ---v
 
@@ -258,6 +291,10 @@ impl
 
 </div>
 
+Notes: 
+- **Matcher**: Matches the multiAsset against some filters and returns the amount to be deposited/withdrawn
+- **AccountIdConverter**: Means of converting a multilocation into an account
+
 ---v
 
 ### 🪙 `asset-transactors` via `xcm-builder`
@@ -267,7 +304,7 @@ impl
 
 Notes:
 
-For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
+- For our example, it suffices to uses `CurrencyAdapter`, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.
 
 ---
 
@@ -275,6 +312,11 @@ For our example, it suffices to uses `CurrencyAdapter`, as all we are going to d
 
 - Defines how to convert an XCM origin, defined by a MultiLocation, into a frame dispatch origin.
 - Used mainly in the `Transact` instruction.
+
+
+Notes: 
+- `Transact` needs to dispatch from a frame dispatch origin. However the xcm-executor works with xcm-origins which are defined by MultiLocations.
+- `origin-converter` is the component that converts one into the other
 
 ---v
 
@@ -311,6 +353,10 @@ where
   }
 }
 ```
+
+Notes: 
+- `LocationConverter ` once again defines how to convert a multilocation into an accountId.
+- It basically grants access to dispatch as Signed origin after the conversion.
 
 ---v
 
@@ -349,6 +395,11 @@ where
 }
 ```
 
+Notes: 
+- Matches a local accountId32 multilocation to a signed origin.
+- Note the difference `OriginKind` filter: this is not an account controlled by another consensus system, but rather a Native dispatch.
+- **This structure fulfills one of our requirements**
+
 ---v
 
 ### 📍 `origin-converter` via `xcm-builder`
@@ -358,9 +409,7 @@ where
 - `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
 
 Notes:
-
-To meet our requirements, we only require number 3.
-This will allow us to execute (locally) Transact dispatchables.
+- `ParentAsSuperuser` can be used in common-good chains as they do not have a local root origin and instead allow the relay chain root origin to act as the root origin.
 
 ---
 
@@ -368,6 +417,9 @@ This will allow us to execute (locally) Transact dispatchables.
 
 - Barriers specify whether or not an XCM is allowed to be executed on the local consensus system.
 - They are checked before the actual xcm instruction execution
+
+Notes:
+- Barriers should not involve any heavy computation. **At the point at which barriers are checked nothing has yet been paid for its execution**.
 
 ---v
 
@@ -377,6 +429,8 @@ Physical vs Computed origin
 
 - Physical origin: the consensus system that built this particular XCM and sent it to the recipient
 - Computed origin: the entity that ultimately instructed the consensus system to build the XCM
+
+<img src="../../../assets/img/7-XCM/physical_vs_computed_origin.svg" alt="Physical vs Computed origin">
 
 **Must make sure which origin a barrier should apply to!**
 
@@ -404,6 +458,12 @@ pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>(
 - `AllowTopLevelPaidExecutionFrom<T>`: For origins contained in `T`, it makes sure the first instruction puts asset into the holding register (`TeleportAsset`, `WithdrawAsset`, `ClaimAsset`, `ReserveAssetDeposit`), followed by a `BuyExecution` instruction capable of buying sufficient weight.
   **Critical to avoid free DOS**.
 
+Notes:
+- A chain without `AllowTopLevelPaidExecutionFrom` could potentially receive several heavy-computation instructions without paying for it.
+Checking that the first instructions are indeed paying for execution helps to quick-discard them.
+
+- While `BuyExecution` is crucial for messages coming from other consensus systems, local XCM execution fees are paid as any other substrate extrinsic.
+
 ---v
 
 ### 🚧 `Barrier` via `xcm-builder`
@@ -429,18 +489,19 @@ impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
 }
 ```
 
+Notes:
+- **This fulfills our requirements**
+- To meet our example use case, we only need the relay to have free execution.
+
+- XCMv3 adds a new `AllowExplicitUnpaidExecutionFrom`, which not only checks the origin but also that the **first instruction is the new `UnpaidExecution` instruction**.
+
 ---v
 
 ### 🚧 `Barrier` via `xcm-builder`
 
-- `AllowKnownQueryResponses<ResponseHandler>`: Allows the execution of the message if it is a `QueryResponse` message and the `ResponseHandler` is expecting such response
+- `AllowKnownQueryResponses`: Allows the execution of the message if it is a `QueryResponse` message and the `ResponseHandler` is expecting such response
 
 - `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it contains only a `SubscribeVersion` or `UnsubscribeVersion` instruction.
-
-Notes:
-
-To meet our example use case, we only need the relay to have free execution.
-Hence using `AllowUnpaidExecutionFrom` should be enough.
 
 ---
 
@@ -475,10 +536,10 @@ impl<
     // get the assetId and amount per second to charge
     let (id, units_per_second) = T::get();
     // Calculate the amount to charge for the weight bought
-    let amount =
+    let amount = 
 	  units_per_second * (weight as u128)
 	  / (WEIGHT_REF_TIME_PER_SECOND as u128);
-
+	
     if amount == 0 {
       return Ok(payment)
     }
@@ -487,7 +548,7 @@ impl<
     let unused =
       payment.checked_sub((id, amount).into())
 	  .map_err(|_| XcmError::TooExpensive)?;
-
+	
     self.0 = self.0.saturating_add(weight);
     self.1 = self.1.saturating_add(amount);
     Ok(unused)
@@ -496,11 +557,18 @@ impl<
 }
 ```
 
+Notes:
+- It is crucial that we return the unused portion of the tokens, as these need to be refunded back in to the holding register.
+- We keep how much it has been bought to be able to refund later on.
+
 ---v
 
 ### 🔧 `WeightTrader` via `xcm-builder`
 
 - `UsingComponents`: uses `TransactionPayment` pallet to set the right price for weight.
+
+Notes:
+- `TransactionPayment` pallet already defines how to convert weight to fee. We do not need to define a rate in this case.
 
 ---
 
@@ -553,6 +621,9 @@ Example for parachain 1000 in Kusama:
 1. Handles asset-trap/claim duties.
 1. Allows sending arbitrary messages to other chains for certain origins.
    The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
+
+Notes:
+- Even when `palletXcm` allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls. In the case of the latter, it appends the `DescendOrigin` instruction to make sure non-root origins cannot act on behalf of the parachain.
 
 ---v
 
@@ -608,6 +679,10 @@ impl Config for XcmConfig {
 }
 ```
 
+Notes:
+- Any situation in which the holding register contains assets after the execution of the XCM message would lead to asset trapping.
+- This is handled in the `post_execute` function of the xcm-executor.
+
 ---v
 
 ### 🛄 Asset Trap/Claims with `PalletXcm`
@@ -620,8 +695,10 @@ impl Config for XcmConfig {
 
 Notes:
 
-Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `multiAsset`.
+- Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `multiAsset`.
+- Every time such `multiAsset` gets reclaimed, the counter decrements by one.
 
+---
 ## 🗣️ version negotiation with `pallet-xcm`
 
 XCM is an **extensible message format**.
@@ -635,6 +712,9 @@ pub enum VersionedXcm {
     V2(v2::Xcm),
 }
 ```
+
+Notes:
+- V0 and V1 were removed with the addition of XCM v3.
 
 ---v
 
@@ -659,11 +739,15 @@ enum Instruction {
 }
 ```
 
+Notes:
+- `query_id` would be identical in the `SubscribeVersion` and `QueryResponse` instructions.
+- Likewise, `max_response_weight` should also match `max_weight` in the response
+
 ---v
 
 ## 🗣️ version negotiation with `pallet-xcm`
 
-- `ResponseHandler`: The component in charge of handling response messages from other chains
+- `ResponseHandler`: The component in charge of handling response messages from other chains.
 - `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
 
 ```rust
@@ -673,3 +757,7 @@ enum Instruction {
   type SubscriptionService = PalletXcm;
  }
 ```
+
+Notes:
+- `PalletXcm` keeps track of the versions of each chain when it receives a response.
+- It also keeps track of which chains it needs to notify whenever we change our version
