@@ -582,7 +582,7 @@ Notes:
 ##### Example:
 
 - **Ancestry**: `para_1000`
-- **Source to target**: `../../../para_2/account32_default`
+- **Source to target**: `../para_2/account32_default`
 - **Target to source**: `../../para_1000`
 
 ---v
