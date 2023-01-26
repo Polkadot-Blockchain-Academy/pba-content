@@ -11,38 +11,65 @@ Draw content from:
 
 ### Day 1
 
-In the first day, we'll cover history of scalability, Data Availability problem, Polkadot's protocols, the concept of Blockspace and optionally Governance.
+- Lecture 1: 1.5 hours
+instructors: ["Rob", "Andronik"]
+Introduction to Blockspace and Polkadot.
+Blockchain scaling history. Rollups and Sharding.
 
-- Blockchain scaling history. Rollups and Sharding.
+Break: 30 mins
 
-- Data sharding: Data availability + exercise (impl simple erasure-coding)
+- Lecture 2: 1.5 hours
+instructors: ["Rob", "Andronik"]
+Data sharding: Data availability
+Execution sharding and security: Approval-voting and Disputes
 
-- Execution sharding and security: Approval-voting and disputes
+Lunch break: 1 hour
 
-- Exercise for Polkadot protocol @BradleyOlson64
+- Lecture 3: 1.5 hours
+instructors: ["Rob"]
+Blockspace + XCMP
 
-- A lecture on Blockspace @shawntabrizi + @rphmeier
+Break: 30 mins
 
-- OpenGov + workshop @BradleyOlson64 (could also be moved to day 2 or 3)
-
-- Zombienet by Javier
+- Lecture 4: 1.5 hours
+instuctors: ["Bradley"] 
+OpenGov (+ workshop if there's time)
 
 ### Day 2
 
-Second day is mostly about some of parachains SDK internals and how to build a parachain using it.
+- Exercise 1: 1.5 hours
+instructors: ["Andronik"]
+Building a simple parachain
 
-- Building a simple collator: adder-collator
+Break: 30 mins
 
-- Introduction to Cumulus
+- Lecture 1: 1.5 hour
+instructors: ["Andronik"]
+Introduction to Cumulus
 
-- workshop: Solo->Parachain
+Lunch break: 1 hour
 
-- Async Backing @rphmeier?
+- Workshop 1: 30 minutes
+instructors: ["Andronik"]
+How to connect a parachain to a relay chain
 
-- workshop: Hacking on Cumulus: ** change cumulus to produce > 1 parablock per relay block
+- Exercise 2: 1.5+ hours
+instructors: ["Andronik"]
+Hacking on Cumulus?
 
 ### Day 3 (Half Day)
 
-- NPoS by Kian
+- Lecture 1: 1.5 hours
+instructors: ["Kian"]
+NPoS
 
-- Introduction to XCMP
+Break: 30 mins
+
+- Lecture 2: 45 mins
+instructors: ["Nikos"]
+Polkadot light client
+
+- Workshop 1: 45 mins
+instructors: [TODO]
+XCMP. Opening channels. Sending messages
+

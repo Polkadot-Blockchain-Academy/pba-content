@@ -33,7 +33,9 @@ pub mod pallet {
 	pub type Item2<T> = StorageValue<_, u32, ValueQuery>;
 
 	#[pallet::type_value]
-	pub fn MyDefault<T: Config>() -> u32 { 42u32 }
+	pub fn MyDefault<T: Config>() -> u32 {
+		42u32
+	}
 
 	#[pallet::storage]
 	pub type Item3<T> = StorageValue<_, u32, ValueQuery, MyDefault<T>>;
@@ -77,5 +79,6 @@ pub mod pallet {
 	>;
 
 	#[pallet::storage]
-	pub type Item13<T: Config> = CountedStorageMap<_, Blake2_128Concat, T::AccountId, Balance, ValueQuery>;
+	pub type Item13<T: Config> =
+		CountedStorageMap<_, Blake2_128Concat, T::AccountId, Balance, ValueQuery>;
 }
