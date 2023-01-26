@@ -95,6 +95,7 @@ mod tests {
         // Create a call which we can dispatch locally
         // 1.) What kinds of calls do we have to choose from?
         //      (Hint system pallet might be useful here but any call can do(Which we can verify))
+        // Hint for encoding: https://github.com/paritytech/substrate/blob/master/frame/democracy/src/tests.rs#L223
         // 2.) How can we verify the call was dispatched correctly?(Hint events could be a way :)
 
         ParaA::execute_with(|| {
