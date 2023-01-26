@@ -30,8 +30,11 @@ duration: 1 hour
 
 - Barriers
 - Teleport filtering
+- Trusted reserves
+- Asset transactors
 - Fee payment
 - Proper XCM Instruction Weighting
+- Location to Account/FRAME Origin conversions
 
 Notes:
 
@@ -250,6 +253,24 @@ Notes:
 
 ---
 
+### 🏋️ `Weigher` in Rococo
+
+- Uses `WeightInfoBounds` with benchmarked values with `pallet-xcm-benchmarks`
+- Full list of weights can be seen [here](https://github.com/paritytech/polkadot/tree/master/runtime/rococo/src/weights/xcm)
+
+```rust
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+type Weigher = WeightInfoBounds<
+		crate::weights::xcm::RococoXcmWeight<RuntimeCall>,
+		RuntimeCall,
+		MaxInstructions,
+	>;
+ /* snip */
+}
+```
+
+---
 ## 🔧 `WeightTrader` in Rococo
 
 - Weight is converted to fee with the **_WeightToFee_** type.
