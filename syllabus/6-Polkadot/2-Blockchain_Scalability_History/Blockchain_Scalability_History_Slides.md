@@ -28,7 +28,7 @@ At the end of the lecture, for the curious readers, there's be links for further
 
 ---
 
-<img style="width: 250px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Bitcoin.png" alt="Bitcoin Logo">
+<img style="width: 250px" src="../../../assets/img/5-Polkadot/Scalability_History/Bitcoin.png" alt="Bitcoin Logo">
 
 ## Bitcoin
 
@@ -106,7 +106,7 @@ If Alice wants to send 0.3 BTC to Frank, she pushes 0.3 BTC to Carol’s side of
 
 ---
 
-<img style="width: 150px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Ethereum.png" alt="Ethereum Logo">
+<img style="width: 150px" src="../../../assets/img/5-Polkadot/Scalability_History/Ethereum.png" alt="Ethereum Logo">
 
 ## Ethereum
 
