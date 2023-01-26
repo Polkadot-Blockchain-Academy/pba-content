@@ -1,7 +1,7 @@
 ---
 title: Blockchain Scalability History. 
 description: Blockchain Scalability History. Rollups and Sharding.
-duration: 1+ hour
+duration: 45+ mins
 ---
 
 # Blockchain Scalability History.
@@ -46,7 +46,7 @@ What if try to increase that limit?
 
 ---
 
-### Payment channels: Layer-2 solution
+### Payment channels
 
 <!-- TODO: table with Alice and Bob balanced locked  -->
 
@@ -62,19 +62,28 @@ sign each transaction which also invalidates previous state.
 Notes:
 
 Bitcoin doesn't really have smart contracts, so it uses 2-out-of-2 multisignature transactions instead.
+
+---v
+
+### Payment channels: HTLC
+
+A hashlock is a condition placed on a transaction dictating that you can only spend funds by proving that you know a secret.
+
+A timelock is a condition that prevents you from spending funds before a certain time. It’s specified either as an actual time, or a specified block height.
+
+HTLCs are combining hashlocks and timelocks to create conditional payments – the receiver has to provide a secret before a certain time, or the sender can reclaim the funds.
+
+Notes:
+
 Each new update invalidates previous updates.
 To make this part of the state channel work, the locking and unlocking mechanisms have to be properly designed so that old state updates submitted to the blockchain have a chance to be corrected by the newer state updates which replaced them. The simplest way is to have any unlocking attempt start a timer, during which any newer update can replace the old update (restarting the timer as well). When the timer completes, the channel is closed and the state adjusted to reflect the last update received.
-In case of Bitcoin, a Timelock could be used.
 
 ---v
 
 ### Payment channels: Security
 
-<!-- TODO: revamp -->
-
 <pba-flex center>
 
-- Fraudulent Channel Close
 - Someone has to stay online to protect each individual party's interests until the channel is closed.
 - In the Lighting Network the concept of "watchtower" has been developed, where trust can be outsourced to watchtower nodes to monitor for fraud.
 
@@ -89,19 +98,7 @@ We'll come to other limitations of channels in the state channels later.
 
 ### Payment channels: Lighting Network
 
-<!-- TODO: Diagram of onion routing -->
-
-Hash Time Locked Contracts can be used to route a payment from Alice to Charlie if there's a channel open for Alice and Bob as well as Bob and Charlie without trusting Bob.
-
-<pba-flex center>
-
-1.  Alice opens a payment channel to Bob, and Bob opens a payment channel to Charlie.
-1. Alice uses her payment channel to Bob to pay him, but she adds the hash Charlie gave her to the payment along with an extra condition: in order for Bob to claim the payment, he has to provide the data which was used to produce that hash.
-1. Bob uses his payment channel to Charlie to pay Charlie and Bob adds a copy of the same condition that Alice put on the payment she gave Bob.
-1. Charlie has the original data that was used to produce the hash (called a pre-image), so Charlie can use it to finalize his payment and fully receive the payment from Bob. By doing so, Charlie necessarily makes the pre-image available to Bob.
-1. Bob uses the pre-image to finalize his payment from Alice.
-
-</pba-flex>
+<!-- TODO: Diagram a b c routing -->
 
 ---
 
@@ -330,6 +327,12 @@ Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-an
 <!-- TODO: Need trilemma in brighter color or with background to show up on slides -->
 <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma">
 
+Notes:
+
+Scalable: it can process far more transactions than a single node
+Decentralized: it can survive entirely on consumer laptops, with no dependency on "supernodes" whatsoever
+Secure: an attacker can't target a small part of the system with a small amount of resources; they can only try to dominate and attack the whole thing
+
 ---
 
 ### Sharding
@@ -475,7 +478,7 @@ The last point means that if there's a lot of activity on one parachain, it does
 
 ---
 
-### Data availability problem
+### Data Availability Problem
 
 Optimistic rollups require all of the data in blocks to be available to generate fraud proofs. Rollups on Ethereum deal with this by simply posting all of the rollup blocks on to the Ethereum chain and relying on it for data availability, therefore using Ethereum as a data availability layer to dump data on.
 
@@ -501,8 +504,7 @@ With Polkadot sharding, how do we ensure that PoVs can be downloaded to start a 
 
 ## References
 
-1. https://ethereum.org/en/developers/docs/scaling/state-channels/
-1. https://ethereum.org/en/developers/docs/scaling/plasma/
+1. https://academy.binance.com/en/articles/what-is-lightning-network
 1. https://vitalik.ca/general/2021/01/05/rollup.html
 1. https://vitalik.ca/general/2021/04/07/sharding.html
 1. https://zkhack.dev/whiteboard/
