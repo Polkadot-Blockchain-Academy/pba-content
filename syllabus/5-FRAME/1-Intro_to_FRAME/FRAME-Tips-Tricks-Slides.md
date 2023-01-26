@@ -533,7 +533,7 @@ Things like **addition**, **multiplication**, **division** could all easily fail
   let certain_output = a.saturating_mul(b);
   ```
 
-NOTE:
+Notes:
 
 Why would you ever want to saturate? only in cases where you know if the number is overflowing,
 other aspects of the system is so fundamentally screwed that there is no point in doing any kind of
@@ -1004,7 +1004,7 @@ It adds some boilerplate to:
 <img width="300px" rounded src="../../../assets/img/4-Substrate/thats_all_folks.png">
 
 - Check speaker notes (click "s" 😉).
-- Good lock with FRAME!
+- Good luck with FRAME!
 
 NOTE:
 
@@ -1029,3 +1029,6 @@ NOTE:
   - https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature
 
 ### Feedback After Lecture:
+
+- Lecture is still kinda dense and long, try and trim
+- Update on defensive ops: https://github.com/paritytech/substrate/pull/12967

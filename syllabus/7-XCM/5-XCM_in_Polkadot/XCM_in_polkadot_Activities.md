@@ -31,10 +31,10 @@
 
 Messages to debug in Polkadot:
 
-- Block failure: 13341503 ./target/release/debug-failed-dmp -p 2000 -b 13341502
+- Block failure: 13341503 | Message sent from parachain 2000
+- Block failure: 10946380 | Message sent from parachain 2012
+- Block failure: 10557896 | Message sent from parachain 1000
+- Block failure: 11884750 | Message sent from parachain 2006
+- Block failure: 13955421 | Message sent from parachain 2011
 
-- Block failure: 10946380 ./target/release/debug-failed-ump -p 2012 -b 10946379
-
-- Block failure: 10557896 ./target/release/debug-failed-ump -p 1000 -b 10557895
-
-- Block failure: 11884750 ./target/release/debug-failed-ump -p 1000 -b 10557895
+You can debug with either subxt or with Subscan.
