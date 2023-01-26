@@ -190,10 +190,10 @@ At 32 KB, performance decreases for each additional 4 KB.
 
 When doing benchmarking, we saw some really bizarre, but reproducible problems with RocksDB.
 
-
 ---
 
 ## Things we tried
+
 ## Things we learned
 
 ---
@@ -206,10 +206,10 @@ When doing benchmarking, we saw some really bizarre, but reproducible problems w
 ### We tried…
 
 To benchmark the entire extrinsic, including the weight of DB operations directly in the benchmark. We wanted to:
+
 - Populate the DB to be “full”
 - Flush the DB cache
 - Run the benchmark
-
 
 </pba-col>
 <pba-col>
@@ -220,7 +220,6 @@ RocksDB was too inconsistent to give reproducible results, and really slow to po
 So we use an in-memory DB for benchmarking.
 
 <img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/rocksdb-hiccups.png" />
-
 
 </pba-col>
 </pba-cols>
@@ -238,7 +237,6 @@ Executing a whole block, increasing the number of txs in each block. We expected
 
 <img style="height: 250px;" src="../../../assets/img/6-FRAME/benchmark/nonlinear-events.png" />
 
-
 </pba-col>
 <pba-col>
 
@@ -248,9 +246,7 @@ Each time we appended a new event, we were passing the growing event object over
 
 We updated the append api so only new data is pushed.
 
-
 <img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/event-fix.png" />
-
 
 </pba-col>
 </pba-cols>
@@ -267,7 +263,6 @@ We updated the append api so only new data is pushed.
 To assign weights to all extrinsics for the absolute worst case scenario in order to be safe.
 
 In many cases, we cannot know accurately what the weight of the extrinsic will be without reading storage… and this is not allowed!
-
 
 </pba-col>
 <pba-col>
@@ -318,8 +313,6 @@ turned into...
 
 ## Custom Benchmark Returns / Errors (PR #9517)
 
-
-
 ---
 
 ## Negative Y Intercept Handling (PR #11806)
@@ -339,7 +332,9 @@ turned into...
 - In the TX queue, we need to know the weight to see if it would fit in the block.
 - This weight calculation must be lightweight!
 - No storage reads!
+
 Example:
+
 - Transfer Base: ~50 µs
 - Storage Read: ~25 µs
 
@@ -382,7 +377,9 @@ Example:
 ## Use Multiple Simple Extrinsics
 
 - Take advantage of UI/UX, batch calls, and similar downstream tools to simplify extrinsic logic.
+
 Example:
+
 - Vote and Close Vote (“last vote”) are separate extrinsics.
 
 ---
@@ -393,7 +390,6 @@ Example:
 - Variable weight needs at can lead to overweight blocks.
 
 <img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/on-finalize.svg" />
-
 
 ---
 
