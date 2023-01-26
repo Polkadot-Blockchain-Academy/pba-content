@@ -507,7 +507,7 @@ Notes:
 
 ### 🏋️ `Weigher` via `xcm-builder`
 
-- Specifies how instructions are weighted
+- Specifies how instructions are weighed
 - `FixedWeightInfoBounds`: Apply a constant weight value to all instructions except for  `Transact`, `SetErrorHandler` and `SetAppendix`.
 - `WeightInfoBounds`: Apply instruction-specific weight (ideally, benchmarked values) except for  `Transact`, `SetErrorHandler` and `SetAppendix`.
 
