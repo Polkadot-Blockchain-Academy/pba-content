@@ -28,9 +28,9 @@ At the end of the lecture, for the curious readers, there's be links for further
 
 ---
 
-## Bitcoin
+<img style="width: 250px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Bitcoin.png" alt="Bitcoin Logo">
 
-<!-- TODO: Bitcoin Logo  -->
+## Bitcoin
 
 Bitcoin has a block time of 10 minutes and a block size of 1MB.
 
@@ -200,9 +200,22 @@ Rollups bundle (or ’roll up’) many transactions into a single transaction on
 
 ### Optimistic Rollups
 
-<!-- TODO: logos of Arbitrum, Optimism, Boba -->
+<pba-cols>
+<pba-col center>
 
 Optimistic rollups are 'optimistic' in the sense that transactions are assumed to be valid, but can be challenged if necessary. If an invalid transaction is suspected, a fraud proof is submitted and resolved onchain.
+
+</pba-col>
+<pba-col center>
+
+<img style="width: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Arbitrum.png" alt="Arbitrum Logo">
+
+<img style="width: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Optimism.png" alt="Optimism Logo">
+
+<img style="width: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Boba.png" alt="Boba Logo">
+
+</pba-col>
+</pba-cols>
 
 ---v
 
@@ -238,7 +251,7 @@ This bond can be slashed if the validator posts an invalid block or builds on an
 
 ### Optimistic Rollups: Fraud proofs
 
-<!-- TODO merkle proofs from PoV -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/1-round-fraud-proof.png" alt="Fraud Proof">
 
 ---v
 
@@ -249,7 +262,7 @@ This bond can be slashed if the validator posts an invalid block or builds on an
 The main idea of multi-round fraud proofs (aka interactive fraud proofs) is to
 reduce the number of computational steps by using interactive bisection protocol.
 
----v
+---v 
 
 ### Multi-round fraud proofs: steps
 
@@ -274,7 +287,8 @@ Security model relies on at least one honest node executing rollup transactions 
 
 ### zkRollups
 
-<!-- TODO logos of zkSync and Starkware -->
+<img style="height: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/ZkSync.png" alt="ZkSync Logo">
+<img style="height: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Starkware.jpeg" alt="Starkware Logo">
 
 zkRollups come in 2 flavors:
 
@@ -297,9 +311,7 @@ As a scalability technology, the zk part of the zkRollups is optional and not us
 
 ### SNARK scalability
 
-<!-- TODO style as quote -->
-
-The total prover overhead relative to direct witness checking can be 1 million to 10 million or more.
+> "The total prover overhead relative to direct witness checking can be 1 million to 10 million or more."
 
 Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-and-the-future/
 
@@ -315,8 +327,8 @@ Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-an
 ---
 
 ### Scalability trilemma
-
-<!-- TODO include diagram of the trilemma -->
+<!-- TODO: Need trilemma in brighter color or with background to show up on slides -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma">
 
 ---
 
@@ -385,7 +397,7 @@ Protocols like dXdY are moving from a smart-contract/rollup to a separate L1 blo
 
 ### Galaxy brain idea
 
-<!-- TODO: insert galaxy brain meme -->
+<img style="width: 600px" src="../../../assets/img/5-Polkadot/Scalability_History/galaxy-brain-sharding.jpg" alt="Meme">
 
 ---
 
@@ -417,11 +429,16 @@ Validators can verify the state transition of any Parachain given 2 simple piece
 - The Parachain's Wasm Runtime
 - The Parachain's State Proof + Block (Proof of Validity)
 
+---
+
 ### Proof of Validity (PoV)
 
+<!-- TODO: Check that image used was the correct one from https://pep.wtf/posts/parachains-consensus/ -->
 A proof of validity constructed by Cumulus:
 
-<!-- A diagram from https://pep.wtf/posts/parachains-consensus/ -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/POV_PVF_Diagram.png" alt="POV_PVF_Diagram">
+
+---
 
 ### Execution sharding: Approval-voting
 
@@ -434,6 +451,8 @@ If someone does not show up, we require even more checkers like a Hydra would re
 Notes:
 
 These properties allow us to finalize a block without waiting for the challenger period in the happy path. We will cover the protocol in more detail in the next lecture.
+
+---
 
 ### Comparing Parachains with Rollups
 
