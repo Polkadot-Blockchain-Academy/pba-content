@@ -1,11 +1,27 @@
-# Week 4 Assignment - Polkadot and Smart Contracts
+# Week 4 Assignment - Polkadot and XCM
 
-Major TODO here. This is currently just a braindump. Open to major revision.
+# Option 1 - Relay Chain Asset Claimer
 
-This week's assignment is a problem set where you must do each of these activities.
+- Create a simple pallet that is able to claim assets that have been Trapped in the relay. 
+- Modify the template node to make it XCM-compatible.
+- Use Rococo 0.9.37 as your relay chain
+- Build both your chain and rococo and setup a zombienet file (local) that launches.
+- Write a Readme file explaining how to test the pallet you built
 
-# Exercise 1 - Launch a Parachain
+# Option 2 - HRMP manager
 
-Could be one big project where they take their runtime from last week's assignment, port it to a parachain, and register it on a local rococo-like network.
+- Create a simple pallet that is able to send HRMP management operations (openChannel, closeChannel, acceptChannel) to the relay chain
+- Modify the template node to make it XCM-compatible.
+- Use Rococo 0.9.37 as your relay chain
+- Build both your chain and rococo and setup a zombienet file (local) that launches.
+- Write a Readme file explaining how to test the pallet you built
 
-Upgrade the code to support XCM. Do the on-chain runtime upgrades, open the XCM channels, and execute the XCM messages.
+# Option 3 - Custom pallet using XCM
+- Needs approval from the XCM team
+- Needs to satisfy the following criteria:
+
+- Modify the template node to make it XCM-compatible.
+- Use Rococo 0.9.37 as your relay chain
+- Build both your chain and rococo and setup a zombienet file (local) that launches.
+- Write a Readme file explaining how to test the pallet you built
+
