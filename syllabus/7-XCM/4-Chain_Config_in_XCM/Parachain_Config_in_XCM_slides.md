@@ -505,6 +505,39 @@ Notes:
 
 ---
 
+### 🏋️ `Weigher` via `xcm-builder`
+
+- Specifies how instructions are weighted
+- `FixedWeightInfoBounds`: Apply a constant weight value to all instructions except for  `Transact`, `SetErrorHandler` and `SetAppendix`.
+- `WeightInfoBounds`: Apply instruction-specific weight (ideally, benchmarked values) except for  `Transact`, `SetErrorHandler` and `SetAppendix`.
+
+Notes: Benchmarking can easily be done with the `pallet-xcm-benchmarks` module. Note that the benchmarks need to reflect what your runtime is doing, so fetching the weights done for another runtime can potentially turn into users abusing your system.
+
+---v
+
+### 🏋️ `Weigher` via `xcm-builder`
+- `Transact` weight is defined by `require_weight_at_most` value.
+- `SetErrorHandler` and `SetAppendix`, besides their own weight, need to account for the XCM instructions they will execute.
+
+<div style="font-size:smaller">
+
+```rust [0|6|7
+  fn instr_weight_with_limit(
+		instruction: &Instruction<C>,
+		instrs_limit: &mut u32,
+	) -> Result<Weight, ()> {
+		use xcm::GetWeight;
+		let instr_weight = match instruction {
+			Transact { require_weight_at_most, .. } => *require_weight_at_most,
+			SetErrorHandler(xcm) | SetAppendix(xcm) => Self::weight_with_limit(xcm, instrs_limit)?,
+			_ => Weight::zero(),
+		};
+		instruction.weight().checked_add(&instr_weight).ok_or(())
+	}
+```
+<div>
+
+---
 ### 🔧 `WeightTrader` via `xcm-builder`
 
 - Specifies how to charge for weight inside the xcm execution.
