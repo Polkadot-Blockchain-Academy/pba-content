@@ -48,8 +48,8 @@ Blockchains will be a key part of the Web3 infrastructure.
 ## The Blockchain Scalability Trilemma
 
 1. Security: how much does it _cost_ to attack the network?
-2. Throughput: how much work can the network do?
-3. Latency: how long does it take for work to be finalized?
+2. Scalability: how much work can the network do?
+3. Decentralization: how decentralized is the network?
 
 <img width="500px" src="../assets/scalability-trilemma.svg"/>
 
