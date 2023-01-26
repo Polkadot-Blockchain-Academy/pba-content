@@ -94,9 +94,10 @@ When resources are being reused to provide security for multiple chains, we also
 ## The Scaling Problem
 
 When scaling a consensus system, there are three core options:
-  - Make execution of blocks more efficient
-  - Reduce the number of total nodes
-  - Reduce the number of nodes checking each block
+
+- Make execution of blocks more efficient
+- Reduce the number of total nodes
+- Reduce the number of nodes checking each block
 
 ---
 
@@ -151,9 +152,10 @@ A high level look into the architecture of Polkadot and the actors which maintai
 ## Actors in Polkadot: Validators
 
 Validators are elected within the Nominated-Proof-of-Stake (NPoS) system. All validators have all of these 3 key responsibilities:
-  - Authoring and Consensus of Relay-Chain blocks
-  - Validation and Security of Parachain blocks
-  - Transport of messages between Parachain nodes.
+
+- Authoring and Consensus of Relay-Chain blocks
+- Validation and Security of Parachain blocks
+- Transport of messages between Parachain nodes.
 
 Good validators are rewarded. Bad validators will either miss out on rewards or be slashed if they do not perform their work or perform it wrongly.
 
@@ -176,11 +178,12 @@ Collators are nodes which create parachain blocks. While validators only need to
 ## The Relay Chain
 
 The Relay Chain is the "hub" of Polkadot: it provides the following functionality:
-  - Governance
-  - Staking
-  - Registration, scheduling, and Advancement of parachains
-  - Communication between parachains
-  - Balance Transfers
+
+- Governance
+- Staking
+- Registration, scheduling, and Advancement of parachains
+- Communication between parachains
+- Balance Transfers
 
 Notably, the functionality of the Relay Chain is minimized, with the expectation that more complex functionalities will be provided by parachains themselves.
 
@@ -195,9 +198,10 @@ Notably, the functionality of the Relay Chain is minimized, with the expectation
 ## Message Passing
 
 3 Main Protocols:
-  - Upward Messages (Parachain -> Relay Chain)
-  - Downward Messages (Relay Chain -> Parachain)
-  - Horizontal Message Passing (HRMP, Parachain -> Parachain)
+
+- Upward Messages (Parachain -> Relay Chain)
+- Downward Messages (Relay Chain -> Parachain)
+- Horizontal Message Passing (HRMP, Parachain -> Parachain)
 
 ---
 
@@ -208,6 +212,7 @@ Notably, the functionality of the Relay Chain is minimized, with the expectation
 ## The DOT Token
 
 The DOT Token has 3 core utilities:
+
 1. Governance
 2. Staking
 3. Registering and Activating Parachains
@@ -219,12 +224,13 @@ The DOT Token underpins the security and evolution of the network.
 ## Polkadot Governance
 
 Polkadot has on-chain governance by referendum of DOT holders, which empowers DOT holders to coordinate the platform:
-  - Forkless upgrades of the network
-  - Administration of the Treasury funds
-  - Configuration of the Parachains protocol
-  - Configuration of fees
-  - Rescue & recovery operations
-  - All other mechanisms of control over the platform
+
+- Forkless upgrades of the network
+- Administration of the Treasury funds
+- Configuration of the Parachains protocol
+- Configuration of fees
+- Rescue & recovery operations
+- All other mechanisms of control over the platform
 
 We will have a lecture on the mechanics of OpenGov & will not cover in detail here.
 
@@ -243,6 +249,7 @@ The intention of the treasury is to pay people to help grow Polkadot itself. As 
 Transactions executed in the Relay Chain incur fees for inclusion in a block.
 
 Fees automatically adjust based on traffic and demand for transaction inclusion.
+
 - 80% of fees are sent to the Treasury.
 - 20% of fees are given to the block producer (authoring validator).
 - An optional "tip" can be given directly to the block producer to increase priority.
@@ -346,9 +353,10 @@ Polkadot exposes "Execution Cores" which parachains are scheduled onto on a per-
 ## Scheduling Parachains onto Cores
 
 There are many possible mechanisms for scheduling parachains onto cores, but here are a few live & planned mechanisms:
-  - System Parachains (live: Parachain scheduled directly by Governance)
-  - Slot Auctions (live: Parachains bid for guaranteed access to a core for long-term duration)
-  - Parathreads (in development: on-demand, pay-as-you-go access to cores)
+
+- System Parachains (live: Parachain scheduled directly by Governance)
+- Slot Auctions (live: Parachains bid for guaranteed access to a core for long-term duration)
+- Parathreads (in development: on-demand, pay-as-you-go access to cores)
 
 ---
 
@@ -377,9 +385,10 @@ Collators will pay a fixed price in DOT for core-time, which goes up and down de
 > Blockspace is the capacity of a blockchain to finalize and commit operations
 
 Polkadot's primary product is _blockspace_. With the mechanisms described above, as well as future mechanisms, Polkadot aims to provide the most secure blockspace, and be the most efficient allocator of blockspace. The framework of blockspace is useful for evaluating the offerings of different blockchain platforms on 3 properties:
-  * Quality
-  * Availability
-  * Flexibility
+
+- Quality
+- Availability
+- Flexibility
 
 ---
 
