@@ -21,7 +21,7 @@ duration: 45+ mins
 
 Notes:
 
-In the Bitcoin section we'll cover attempts to add scalability to Bitcoin, including payment channels used by the Lighting Network.
+In the Bitcoin section we'll cover attempts to add scalability to Bitcoin, including payment channels used by the Lightning Network.
 Then we'll move onto Ethereum scalability history and cover topics such as side chains, state channels, Plasma, rollups and sharding.
 Finally we'll cover Polkadot's approach to scalability and how it compares to the rollup-centric design and some ideas for future.
 At the end of the lecture, for the curious readers, there's be links for further reading.
@@ -48,7 +48,7 @@ What if try to increase that limit?
 
 ### Payment channels
 
-<!-- TODO: table with Alice and Bob balanced locked  -->
+<img style="width: 400px" src="../../../assets/img/5-Polkadot/Scalability_History/channel-lock.png" alt="channel-lock">
 
 <pba-flex center>
 
@@ -65,7 +65,7 @@ Bitcoin doesn't really have smart contracts, so it uses 2-out-of-2 multisignatur
 
 ---v
 
-### Payment channels: HTLC
+### Payment channels: Hashed Timelock Contracts
 
 A hashlock is a condition placed on a transaction dictating that you can only spend funds by proving that you know a secret.
 
@@ -85,7 +85,7 @@ To make this part of the state channel work, the locking and unlocking mechanism
 <pba-flex center>
 
 - Someone has to stay online to protect each individual party's interests until the channel is closed.
-- In the Lighting Network the concept of "watchtower" has been developed, where trust can be outsourced to watchtower nodes to monitor for fraud.
+- In the Lightning Network the concept of "watchtower" has been developed, where trust can be outsourced to watchtower nodes to monitor for fraud.
 
 </pba-flex>
 
@@ -96,9 +96,13 @@ We'll come to other limitations of channels in the state channels later.
 
 ---v
 
-### Payment channels: Lighting Network
+### Payment channels: Lightning Network
 
-<!-- TODO: Diagram a b c routing -->
+<img style="width: 800px" src="../../../assets/img/5-Polkadot/Scalability_History/channel-3-nodes.png" alt="channel-3-nodes">
+
+Notes:
+On the base chain, your fee is based solely on the space your transaction takes up in a block – the value being transmitted doesn’t matter – $1 and $10,000,000 payments cost the same. In contrast, there’s no such thing as block space within the Lightning Network.
+If Alice wants to send 0.3 BTC to Frank, she pushes 0.3 BTC to Carol’s side of the channel. Then Carol pushes 0.3 BTC from her local balance in the channel with Frank. In this scenario, Alice is effectively eating into Carol’s liquidity. Without any kind of incentive, Carol may not want to weaken her own position. 
 
 ---
 
@@ -171,8 +175,6 @@ There's also a concept of virtual channels that do not require to open and close
 
 ### Plasma
 
-<!-- TODO: logo -->
-
 Are like sidechains, but the the Merkle root of each chain in published on Ethereum. The roots act sort of like “save points” in the blockchain.
 
 Limitations:
@@ -218,7 +220,7 @@ Optimistic rollups are 'optimistic' in the sense that transactions are assumed t
 
 ---v
 
-### Optimisitc Rollups: Transaction bundle
+### Optimistic Rollups: Transaction bundle
 
 <!-- TODO a picture of what a transaction bundle includes -->
 
@@ -230,7 +232,7 @@ We will cover some aspects of Danksharding soon.
 
 ---v
 
-### Optimisitc Rollups: How it works
+### Optimistic Rollups: How it works
 
 <!-- TODO diagram -->
 
@@ -250,7 +252,9 @@ This bond can be slashed if the validator posts an invalid block or builds on an
 
 ### Optimistic Rollups: Fraud proofs
 
-<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/1-round-fraud-proof.png" alt="Fraud Proof">
+<!-- TODO a proper image of state proof -->
+
+<!-- <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/1-round-fraud-proof.png" alt="Fraud Proof"> -->
 
 ---v
 
@@ -261,7 +265,7 @@ This bond can be slashed if the validator posts an invalid block or builds on an
 The main idea of multi-round fraud proofs (aka interactive fraud proofs) is to
 reduce the number of computational steps by using interactive bisection protocol.
 
----v 
+---v
 
 ### Multi-round fraud proofs: steps
 
@@ -325,18 +329,6 @@ Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-an
 
 ---
 
-### Scalability trilemma
-<!-- TODO: Need trilemma in brighter color or with background to show up on slides -->
-<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma">
-
-Notes:
-
-Scalable: it can process far more transactions than a single node
-Decentralized: it can survive entirely on consumer laptops, with no dependency on "supernodes" whatsoever
-Secure: an attacker can't target a small part of the system with a small amount of resources; they can only try to dominate and attack the whole thing
-
----
-
 ### Sharding
 
 Sharding is the process of splitting a database horizontally to spread the load - the term comes from the database world.
@@ -377,6 +369,18 @@ Notes:
 
 In a 100-chain multichain ecosystem, the attacker only needs ~0.5% of the total stake to wreak havoc: they can focus on 51% attacking a single chain. In a sharded blockchain, the attacker must have close to ~30-40% of the entire stake to do the same (in other words, the chain has shared security).
 The second point ensures that processing messages is also secure.
+
+---
+
+### Sharding on the Scalability Trilemma
+<!-- TODO: Need trilemma in brighter color or with background to show up on slides -->
+<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma">
+
+Notes:
+
+Scalable: it can process far more transactions than a single node
+Decentralized: it can survive entirely on consumer laptops, with no dependency on "supernodes" whatsoever
+Secure: an attacker can't target a small part of the system with a small amount of resources; they can only try to dominate and attack the whole thing
 
 ---
 
@@ -438,7 +442,6 @@ Validators can verify the state transition of any Parachain given 2 simple piece
 
 ### Proof of Validity (PoV)
 
-<!-- TODO: Check that image used was the correct one from https://pep.wtf/posts/parachains-consensus/ -->
 A proof of validity constructed by Cumulus:
 
 <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/POV_PVF_Diagram.png" alt="POV_PVF_Diagram">
@@ -509,4 +512,5 @@ With Polkadot sharding, how do we ensure that PoVs can be downloaded to start a 
 1. https://academy.binance.com/en/articles/what-is-lightning-network
 1. https://vitalik.ca/general/2021/01/05/rollup.html
 1. https://vitalik.ca/general/2021/04/07/sharding.html
+1. https://pep.wtf/posts/parachains-consensus/
 1. https://zkhack.dev/whiteboard/
