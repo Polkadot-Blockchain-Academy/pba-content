@@ -33,9 +33,13 @@ Polkadot is a scalable heterogeneous sharded multi-chain network.
 
 ## What is Polkadot Trying to Solve?
 
+<pba-flex center>
+
 1. Scalability
-2. Interoperability
-3. Shared Security
+1. Interoperability
+1. Shared Security
+
+</pba-flex>
 
 ---
 
@@ -49,11 +53,15 @@ Blockchains will be a key part of the Web3 infrastructure.
 
 ## The Blockchain Scalability Trilemma
 
+<pba-flex center>
+
 1. Security: how much does it _cost_ to attack the network?
 2. Scalability: how much work can the network do?
 3. Decentralization: how decentralized is the network?
 
-<img width="500px" src="../assets/scalability-trilemma.svg"/>
+<img rounded width="500px" src="../assets/scalability-trilemma.svg"/>
+
+</pba-flex>
 
 ---
 
@@ -90,9 +98,13 @@ When resources are being reused to provide security for multiple chains, we also
 
 ## The Problem with Multi-Chain Security Today
 
+<pba-flex center>
+
 - Bootstrapping problem.
 - Tokens often provide no utility or value.
 - Inherent competition of resources.
+
+</pba-flex>
 
 ---
 
@@ -100,9 +112,13 @@ When resources are being reused to provide security for multiple chains, we also
 
 When scaling a consensus system, there are three core options:
 
+<pba-flex center>
+
 - Make execution of blocks more efficient
 - Reduce the number of total nodes
 - Reduce the number of nodes checking each block
+
+</pba-flex>
 
 ---
 
@@ -142,23 +158,27 @@ A high level look into the architecture of Polkadot and the actors which maintai
 
 ## Polkadot's Architecture: Major Systems
 
-<img background-color="white" width="800px" src="../assets/polkadot-components.svg"/>
+<img rounded background-color="white" width="800px" src="../assets/polkadot-components.svg"/>
 
 ---
 
-## Polkadot Architecture (Parachains):
+<img rounded width="700px" src="../assets/polkadot-architecture.svg">
 
-<img src="../assets/polkadot-architecture.svg">
+### Polkadot Architecture (Parachains)
 
 ---
 
-## Simplified Polkadot Architecture (Parachains)
+<img rounded width="900px" src="../assets/polkadot-architecture-simple.png">
 
-<img width="600px" src="../assets/polkadot-architecture-simple.png">
+Notes:
+
+Simplified Polkadot Architecture (Parachains)
 
 ---
 
 ## Actors in Polkadot: Validators
+
+<pba-flex center>
 
 Validators are elected within the Nominated-Proof-of-Stake (NPoS) system.
 All validators have all of these 3 key responsibilities:
@@ -166,6 +186,8 @@ All validators have all of these 3 key responsibilities:
 - Authoring and Consensus of Relay-Chain blocks
 - Validation and Security of Parachain blocks
 - Transport of messages between Parachain nodes.
+
+</pba-flex>
 
 Good validators are rewarded.
 Bad validators will either miss out on rewards or be slashed if they do not perform their work or perform it wrongly.
@@ -191,6 +213,8 @@ While validators only need to execute parachain blocks, collators are the ones w
 
 ## The Relay Chain
 
+<pba-flex center>
+
 The Relay Chain is the "hub" of Polkadot: it provides the following functionality:
 
 - Governance
@@ -201,11 +225,15 @@ The Relay Chain is the "hub" of Polkadot: it provides the following functionalit
 
 Notably, the functionality of the Relay Chain is minimized, with the expectation that more complex functionalities will be provided by parachains themselves.
 
+</pba-flex>
+
 ---
 
-## Polkadot Architecture (Parachains):
+<img rounded width="900px" src="../assets/polkadot-architecture-simple.png">
 
-<img width="600px" src="../assets/polkadot-architecture-simple.png">
+Notes:
+
+Simplified Polkadot Architecture (Parachains)
 
 ---
 
@@ -213,13 +241,19 @@ Notably, the functionality of the Relay Chain is minimized, with the expectation
 
 3 Main Protocols:
 
+<pba-flex center>
+
 - Upward Messages (Parachain -> Relay Chain)
 - Downward Messages (Relay Chain -> Parachain)
 - Horizontal Message Passing (HRMP, Parachain -> Parachain)
 
+</pba-flex>
+
 ---
 
-## Economics of Polkadot
+<!-- .slide: data-background-color="#000" -->
+
+# Economics of Polkadot
 
 ---
 
@@ -227,17 +261,23 @@ Notably, the functionality of the Relay Chain is minimized, with the expectation
 
 The DOT Token has 3 core utilities:
 
+<pba-flex center>
+
 1. Governance
-2. Staking
-3. Registering and Activating Parachains
+1. Staking
+1. Registering and Activating Parachains
 
 The DOT Token underpins the security and evolution of the network.
+
+</pba-flex>
 
 ---
 
 ## Polkadot Governance
 
 Polkadot has on-chain governance by referendum of DOT holders, which empowers DOT holders to coordinate the platform:
+
+<pba-flex center>
 
 - Forkless upgrades of the network
 - Administration of the Treasury funds
@@ -247,6 +287,8 @@ Polkadot has on-chain governance by referendum of DOT holders, which empowers DO
 - All other mechanisms of control over the platform
 
 We will have a lecture on the mechanics of OpenGov & will not cover in detail here.
+
+</pba-flex>
 
 ---
 
@@ -266,9 +308,13 @@ Transactions executed in the Relay Chain incur fees for inclusion in a block.
 
 Fees automatically adjust based on traffic and demand for transaction inclusion.
 
+<pba-flex center>
+
 - 80% of fees are sent to the Treasury.
 - 20% of fees are given to the block producer (authoring validator).
 - An optional "tip" can be given directly to the block producer to increase priority.
+
+</pba-flex>
 
 ---
 
@@ -281,7 +327,9 @@ Scheduling the parachain for execution is done with separate mechanisms after re
 
 ---
 
-## Parachain Mechanics and Scheduling
+<!-- .slide: data-background-color="#000" -->
+
+# Parachain Mechanics and Scheduling
 
 ---
 
@@ -290,7 +338,7 @@ Scheduling the parachain for execution is done with separate mechanisms after re
 Parachains are state-transition functions.
 The core of a Parachain is the **Parachain Validation Function**, a piece of Wasm code which takes inputs and attempts to validate them to produce outputs.
 
-<img width="600px" src="../assets/PVF.svg">
+<img rounded width="600px" src="../assets/PVF.svg">
 
 ---
 
@@ -376,9 +424,13 @@ Like a decentralized CPU, Polkadot schedules and executes code in parallel on it
 
 There are many possible mechanisms for scheduling parachains onto cores, but here are a few live & planned mechanisms:
 
+<pba-flex center>
+
 - System Parachains (live: Parachain scheduled directly by Governance)
 - Slot Auctions (live: Parachains bid for guaranteed access to a core for long-term duration)
 - Parathreads (in development: on-demand, pay-as-you-go access to cores)
+
+</pba-flex>
 
 ---
 
@@ -411,16 +463,31 @@ Collators will then be reimbursed for their cost in transaction fees, the parach
 
 ## Blockspace
 
+<pba-cols>
+<pba-col>
+
 > Blockspace is the capacity of a blockchain to finalize and commit operations
 
 Polkadot's primary product is _blockspace_.
-With the mechanisms described above, as well as future mechanisms, Polkadot aims to provide the most secure blockspace, and be the most efficient allocator of blockspace.
-The framework of blockspace is useful for evaluating the offerings of different blockchain platforms on 3 properties:
+
+</pba-col>
+<pba-col style="font-size: smaller">
+
+Polkadot aims to provide the most secure blockspace, and be the most efficient allocator of blockspace.<br>
+Blockspace is useful for evaluating the offerings of different blockchain platforms on 3 properties:
+
+<pba-flex center>
 
 - Quality
 - Availability
 - Flexibility
 
+</pba-flex>
+</pba-col>
+</pba-cols>
+
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
