@@ -42,8 +42,6 @@ Increasing the system requirements can potentially lead to centralization in who
 
 Benchmarking ensures that when users interact with our Blockchain, they are not using resources beyond what is available and expected for our network.
 
-TODO: improve wording.
-
 ---
 
 ## What is Weight?
@@ -77,6 +75,7 @@ This was already expanded once, and could be expanded in the future.
 - 1 second of compute on different computers allows for different amounts of computation.
 - Weights of your blockchain will evolve over time.
 - Higher hardware requirements will result in a more performant blockchain (i.e. TXs per second), but will limit the kinds of validators that can safely participate in your network.
+- Proof size limitations can be relevant for parachains, but ignored for solo-chains.
 
 ---
 
@@ -92,15 +91,16 @@ This was already expanded once, and could be expanded in the future.
   - HDD vs. SSD vs. NVME
 - Operating System
 - Drivers
+- Rust Compiler
 
 </pba-col>
 <pba-col>
 
-- Rust Compiler
 - Runtime Execution Engine
   - compiled vs. interpreted
 - Database
   - RocksDB vs. ParityDB vs. ?
+- Merkle trie / storage format
 - and more!
 
 </pba-col>
@@ -123,7 +123,7 @@ This was already expanded once, and could be expanded in the future.
 <div class="flex-container">
 <div class="left-large">
 
-- Use empirical measurements of the runtime to determine the time it takes to execute extrinsics and other runtime logic.
+- Use empirical measurements of the runtime to determine the time and space it takes to execute extrinsics and other runtime logic.
 - Run benchmarks using worst case scenario conditions.
   - Primary goal is to keep the runtime safe.
   - Secondary goal is to be as accurate as possible to maximize throughput.
