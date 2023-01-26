@@ -2,7 +2,6 @@
 title: Introduction to Polkadot, Parachains, and Blockspace
 description: An introduction to the key concepts of Polkadot.
 duration: 1 hour
-instructors: ["Robert Habermeier"]
 ---
 
 # Introduction to Polkadot
@@ -11,9 +10,12 @@ instructors: ["Robert Habermeier"]
 
 ## What to expect from this Module?
 
-We will cover the Polkadot platform and its mechanisms in detail. Many lectures will be theoretical, and will enhance students' understanding of Polkadot's inner workings. We will cover the rationale for Polkadot's architectural choices and mechanisms for parachains to interact with Polkadot.
+We will cover the Polkadot platform and its mechanisms in detail.
+Many lectures will be theoretical, and will enhance students' understanding of Polkadot's inner workings.
+We will cover the rationale for Polkadot's architectural choices and mechanisms for parachains to interact with Polkadot.
 
-Day 1 will be more theoretical and will focus on Parachains, Sharding, and Governance, while Day 2 will be more practical, with exercises and workshops. Day 3 will cover the staking system, light clients, and conclude with a workshop leading into the XCM module.
+Day 1 will be more theoretical and will focus on Parachains, Sharding, and Governance, while Day 2 will be more practical, with exercises and workshops.
+Day 3 will cover the staking system, light clients, and conclude with a workshop leading into the XCM module.
 
 ---
 
@@ -59,7 +61,8 @@ Blockchains will be a key part of the Web3 infrastructure.
 
 In any engineering task or technical endeavor, specialized solutions for problems are more performant than generalized solutions, as they can incorporate more details about the problem domain.
 
-However, specialized solutions must work in concert with each other in order to provide coherent services. This is the rationale for Polkadot's architecture.
+However, specialized solutions must work in concert with each other in order to provide coherent services.
+This is the rationale for Polkadot's architecture.
 
 ---
 
@@ -67,13 +70,15 @@ However, specialized solutions must work in concert with each other in order to 
 
 Interoperability enables blockchains to work together to complete complex end-to-end scenarios.
 
-However, any application reliant on multiple blockchains is vulnerable to security issues on any of those blockchains. The foundations of Web3 infrastructure must be strong.
+However, any application reliant on multiple blockchains is vulnerable to security issues on any of those blockchains.
+The foundations of Web3 infrastructure must be strong.
 
 ---
 
 ## The Value of Shared Security
 
-Shared security means that multiple chains are secured by the same underlying resource, whether that is PoW (merge-mining) or tokens at stake (PoS). This allows chains to exist under the same security umbrella.
+Shared security means that multiple chains are secured by the same underlying resource, whether that is PoW (merge-mining) or tokens at stake (PoS).
+This allows chains to exist under the same security umbrella.
 
 ---
 
@@ -103,19 +108,23 @@ When scaling a consensus system, there are three core options:
 
 ## The Scaling Problem
 
-**(1) Make execution of blocks more efficient**: This is where specialization becomes important, as well as optimized code execution, disk accesses, etc. However, this path is limited by capabilities of modern hardware and needs to be coupled with other approaches. Relying on highly specialized hardware also introduces centralization risks.
+**(1) Make execution of blocks more efficient**: This is where specialization becomes important, as well as optimized code execution, disk accesses, etc.
+However, this path is limited by capabilities of modern hardware and needs to be coupled with other approaches.
+Relying on highly specialized hardware also introduces centralization risks.
 
 ---
 
 ## The Scaling Problem
 
-**(2) Reduce the number of total nodes**: Essentially, scale by making the system more centralized altogether. This reduces coordination costs while trading off for security.
+**(2) Reduce the number of total nodes**: Essentially, scale by making the system more centralized altogether.
+This reduces coordination costs while trading off for security.
 
 ---
 
 ## The Scaling Problem
 
-**(3) Reduce the number of nodes checking each block**: While keeping the same number of total nodes, split work among the nodes to be done in parallel. The challenge with this approach is maintaining the same level of security and accountability while reducing the work that each node has to do.
+**(3) Reduce the number of nodes checking each block**: While keeping the same number of total nodes, split work among the nodes to be done in parallel.
+The challenge with this approach is maintaining the same level of security and accountability while reducing the work that each node has to do.
 
 ---
 
@@ -151,27 +160,32 @@ A high level look into the architecture of Polkadot and the actors which maintai
 
 ## Actors in Polkadot: Validators
 
-Validators are elected within the Nominated-Proof-of-Stake (NPoS) system. All validators have all of these 3 key responsibilities:
+Validators are elected within the Nominated-Proof-of-Stake (NPoS) system.
+All validators have all of these 3 key responsibilities:
 
 - Authoring and Consensus of Relay-Chain blocks
 - Validation and Security of Parachain blocks
 - Transport of messages between Parachain nodes.
 
-Good validators are rewarded. Bad validators will either miss out on rewards or be slashed if they do not perform their work or perform it wrongly.
+Good validators are rewarded.
+Bad validators will either miss out on rewards or be slashed if they do not perform their work or perform it wrongly.
 
 ---
 
 ## Actors in Polkadot: Nominators
 
-Nominators have one responsibility: to nominate validators which they believe to be trustworthy and reliable. Nominators do not actively secure the network.
+Nominators have one responsibility: to nominate validators which they believe to be trustworthy and reliable.
+Nominators do not actively secure the network.
 
-Nominators share in the rewards of the validators they nominate, as well as the risk that their nominees may misbehave. When a validator is slashed, its nominators are slashed proportionally.
+Nominators share in the rewards of the validators they nominate, as well as the risk that their nominees may misbehave.
+When a validator is slashed, its nominators are slashed proportionally.
 
 ---
 
 ## Actors in Polkadot: Collators
 
-Collators are nodes which create parachain blocks. While validators only need to execute parachain blocks, collators are the ones who create
+Collators are nodes which create parachain blocks.
+While validators only need to execute parachain blocks, collators are the ones who create
 
 ---
 
@@ -238,9 +252,11 @@ We will have a lecture on the mechanics of OpenGov & will not cover in detail he
 
 ## Treasury
 
-Polkadot ensures that a portion of all network fees is collected to the treasury. The treasury is managed by governance, and tokens are burned if they are not spent.
+Polkadot ensures that a portion of all network fees is collected to the treasury.
+The treasury is managed by governance, and tokens are burned if they are not spent.
 
-The intention of the treasury is to pay people to help grow Polkadot itself. As tokens are burned, this creates pressure to fund public projects.
+The intention of the treasury is to pay people to help grow Polkadot itself.
+As tokens are burned, this creates pressure to fund public projects.
 
 ---
 
@@ -258,7 +274,8 @@ Fees automatically adjust based on traffic and demand for transaction inclusion.
 
 ## Parachain Bonding & Registration
 
-Registering a parachain is done by posting the code of the parachain (The "PVF"), the parachain's initial header, and a DOT deposit to the relay chain (The "Bond"). When the parachain is deregistered, the bond is returned.
+Registering a parachain is done by posting the code of the parachain (The "PVF"), the parachain's initial header, and a DOT deposit to the relay chain (The "Bond").
+When the parachain is deregistered, the bond is returned.
 
 Scheduling the parachain for execution is done with separate mechanisms after registration.
 
@@ -270,7 +287,8 @@ Scheduling the parachain for execution is done with separate mechanisms after re
 
 ## Anatomy of a Parachain
 
-Parachains are state-transition functions. The core of a Parachain is the **Parachain Validation Function**, a piece of Wasm code which takes inputs and attempts to validate them to produce outputs.
+Parachains are state-transition functions.
+The core of a Parachain is the **Parachain Validation Function**, a piece of Wasm code which takes inputs and attempts to validate them to produce outputs.
 
 <img width="600px" src="../assets/PVF.svg">
 
@@ -336,7 +354,9 @@ pub struct ValidationResult {
 
 PVFs are simply Wasm blobs that take in the parameters and provide the outputs if valid.
 
-Substrate Runtimes use **host functions** like storage-reads/writes and signature verifications to perform an `execute_block`. With a simple wrapper around `execute_block`, a runtime can be transformed into a PVF. Our framework for doing this is known as **Cumulus**.
+Substrate Runtimes use **host functions** like storage-reads/writes and signature verifications to perform an `execute_block`.
+With a simple wrapper around `execute_block`, a runtime can be transformed into a PVF.
+Our framework for doing this is known as **Cumulus**.
 
 It is also possible to create a PVF without using Substrate.
 
@@ -346,7 +366,9 @@ It is also possible to create a PVF without using Substrate.
 
 While the amount of parachains which can be registered is bounded only by the DOT deposits bonded, the amount of parachains which can be scheduled and executed at a time is bounded by the work done in the runtime and the coordination cost of validators.
 
-Polkadot exposes "Execution Cores" which parachains are scheduled onto on a per-block basis. The amount of execution cores is determined by Governance. Like a decentralized CPU, Polkadot schedules and executes code in parallel on its cores.
+Polkadot exposes "Execution Cores" which parachains are scheduled onto on a per-block basis.
+The amount of execution cores is determined by Governance.
+Like a decentralized CPU, Polkadot schedules and executes code in parallel on its cores.
 
 ---
 
@@ -362,21 +384,28 @@ There are many possible mechanisms for scheduling parachains onto cores, but her
 
 ## Parachain Slot Auctions
 
-Auctions are scheduled by Governance. The winner of an auction earns guaranteed access to a core for a medium-to-long duration: 6, 12, 18, or 24 months. Bidders bid on behalf of parachains, and bid to _lock up_ DOT tokens, which are returned after the lease is completed. Bidders can be either individual bidders, smart contracts, crowdloans, or anything else that can use a `Signed` origin on the Relay Chain.
+Auctions are scheduled by Governance.
+The winner of an auction earns guaranteed access to a core for a medium-to-long duration: 6, 12, 18, or 24 months.
+Bidders bid on behalf of parachains, and bid to _lock up_ DOT tokens, which are returned after the lease is completed.
+Bidders can be either individual bidders, smart contracts, crowdloans, or anything else that can use a `Signed` origin on the Relay Chain.
 
 ---
 
 ## System Parachains
 
-System Parachains are scheduled indefinitely and for free by the Governance System. The expectation is that this mechanism will be used to provide parachains that extend the capabilities of Polkadot itself. For instance, Staking and Governance could themselves be moved onto system parachains.
+System Parachains are scheduled indefinitely and for free by the Governance System.
+The expectation is that this mechanism will be used to provide parachains that extend the capabilities of Polkadot itself.
+For instance, Staking and Governance could themselves be moved onto system parachains.
 
 ---
 
 ## Parathreads
 
-With a cloud computing analogy, if Slot Auctions are "reserved instances" then Parathreads are "spot instances". For chains which don't need to author blocks every 6 or 12 seconds, it is more efficient to buy scheduling on-demand.
+With a cloud computing analogy, if Slot Auctions are "reserved instances" then Parathreads are "spot instances".
+For chains which don't need to author blocks every 6 or 12 seconds, it is more efficient to buy scheduling on-demand.
 
-Collators will pay a fixed price in DOT for core-time, which goes up and down depending on supply & demand. Collators will then be reimbursed for their cost in transaction fees, the parachain's token, or other mechanisms at higher layers.
+Collators will pay a fixed price in DOT for core-time, which goes up and down depending on supply & demand.
+Collators will then be reimbursed for their cost in transaction fees, the parachain's token, or other mechanisms at higher layers.
 
 ---
 
@@ -384,7 +413,9 @@ Collators will pay a fixed price in DOT for core-time, which goes up and down de
 
 > Blockspace is the capacity of a blockchain to finalize and commit operations
 
-Polkadot's primary product is _blockspace_. With the mechanisms described above, as well as future mechanisms, Polkadot aims to provide the most secure blockspace, and be the most efficient allocator of blockspace. The framework of blockspace is useful for evaluating the offerings of different blockchain platforms on 3 properties:
+Polkadot's primary product is _blockspace_.
+With the mechanisms described above, as well as future mechanisms, Polkadot aims to provide the most secure blockspace, and be the most efficient allocator of blockspace.
+The framework of blockspace is useful for evaluating the offerings of different blockchain platforms on 3 properties:
 
 - Quality
 - Availability
