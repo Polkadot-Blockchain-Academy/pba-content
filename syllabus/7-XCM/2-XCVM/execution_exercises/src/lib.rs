@@ -63,7 +63,8 @@ mod tests {
         MockNet::reset();
 
         // Task
-        // Create a BuyExecution Instruction
+        // Create a BuyExecution Instruction that buys 1e12 amount of weight
+        // Hint: Our chain charges 1 token per 1e12 amount of weight
         // 1.) Who is buying the execution?
         // 2.) How to verify we executed this instruction correctly?
 
@@ -99,6 +100,21 @@ mod tests {
         ParaA::execute_with(|| {
             // Insert Here the appropriate code to execute the XCM message asked for.
         });
+    }
+
+    #[test]
+    fn execute_origin_mutating_instruction() {
+        MockNet::reset();
+    
+        // Task
+        // 1.) Modify the origin register with the DescendOrigin instruction
+        // 2.) Clear the origin of the register
+        // 3.) To evaluate: Does it work if you append a withdrawAsset after origin mutations?
+    
+        ParaA::execute_with(|| {
+            // Insert Here the appropriate code to execute the XCM message asked for.
+        });}
+
     }
 
     #[test]
