@@ -374,7 +374,7 @@ The second point ensures that processing messages is also secure.
 
 ### Sharding on the Scalability Trilemma
 <!-- TODO: Need trilemma in brighter color or with background to show up on slides -->
-<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma">
+<!-- <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma"> -->
 
 Notes:
 
