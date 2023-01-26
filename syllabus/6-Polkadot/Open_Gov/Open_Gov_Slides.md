@@ -36,7 +36,7 @@ Presented by Bradley Olson
 - But any evolving protocol needs an equivalent to the legeslative branch
     - To update the laws (code) 
     - To rectify cases where the letter of the law didn't match the spirit of the law (bugs)
-    - To trigger parts of the system that aren't on a set schedule, EX: Polkadot Parachain auctions
+    - To trigger parts of the system that aren't on a set schedule
     - To spend treasury funds on worthy causes 
 - On-chain governance mechanisms fill that legeslative role
 
@@ -94,12 +94,12 @@ Presented by Bradley Olson
 </pba-col>
 <pba-col center>
 
+- Tri-cameral system: Referenda, council, and technical committee
 - Single track
 - Root origin
 - 28 day referendum
 - 1 month minimum enactment period
 - 1 referendum at a time
-- Supplemental centralized bodies: council and technical committee
 - Emergency referenda by technical committee
 - Most proposals initiated by council
 - Fully council controlled roles such as tipping
