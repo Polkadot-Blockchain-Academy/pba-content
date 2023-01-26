@@ -88,6 +88,8 @@ ParityDB is implemented as a probing hash table.
 
 - Each column stores data in a set of 256 value tables, with 255 tables containing entries of certain size range up to 32 KB limit.
 
+<div class="text-smaller">
+
 ```rust
 const SIZES: [u16; SIZE_TIERS - 1] = [
 	32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 50, 51, 52, 54, 55, 57, 58, 60,
@@ -107,6 +109,8 @@ const SIZES: [u16; SIZE_TIERS - 1] = [
 	24265, 24936, 25626, 26335, 27064, 27812, 28582, 29372, 30185, 31020, 31878, 32760,
 ];
 ```
+
+</div>
 
 - The last 256th value table size stores entries that are over 32 KB split into multiple parts.
 
@@ -152,11 +156,11 @@ Let's now step away from concepts and talk about cold hard data.
 - Of course, this would depend on your chain's logic.
 
 </div>
-<div class="right">
+<div class="right" style="padding-left: 10px;">
 
 <div class="r-stack">
-	<img src="../../assets/img/5-FRAME/polkadot-size-histogram.png" style="width: 1000px"/>
-	<img class="fragment" src="../../../assets/img/4-Substrate/polkadot-size-histogram-alpha.png" style="width: 1000px"/>
+	<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram.png" />
+	<img style="height: 500px;" class="fragment" src="../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram-alpha.png"/>
 </div>
 </div>
 
@@ -176,13 +180,13 @@ https://substrate.stackexchange.com/questions/525/how-expensive-is-it-to-access-
 
 At 32 KB, performance decreases for each additional 4 KB.
 
-<img src="../../../assets/img/4-Substrate/paritydb-vs-rocksdb-read.png" style="width: 1000px" />
+<img style="height: 500px" src="../../../assets/img/6-FRAME/benchmark/paritydb-vs-rocksdb-read.png"/>
 
 ---
 
 ### RocksDB Inconsistency
 
-<img style="width: 1200px;" src="../../../assets/img/4-Substrate/rocksdb-hiccups.png" />
+<img style="width: 1200px;" src="../../../assets/img/6-FRAME/benchmark/rocksdb-hiccups.png" />
 
 When doing benchmarking, we saw some really bizarre, but reproducible problems with RocksDB.
 
@@ -215,7 +219,7 @@ To benchmark the entire extrinsic, including the weight of DB operations directl
 RocksDB was too inconsistent to give reproducible results, and really slow to populate.
 So we use an in-memory DB for benchmarking.
 
-<img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/db-inconsistent.png" />
+<img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/rocksdb-hiccups.png" />
 
 
 </pba-col>
@@ -232,7 +236,7 @@ So we use an in-memory DB for benchmarking.
 
 Executing a whole block, increasing the number of txs in each block. We expected to get linear growth of execution time, but in fact it was superlinear!
 
-<img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/nonlinear-events.png" />
+<img style="height: 250px;" src="../../../assets/img/6-FRAME/benchmark/nonlinear-events.png" />
 
 
 </pba-col>
@@ -325,3 +329,106 @@ turned into...
 ## Multi-Dimensional Weight (Issue #12176)
 
 ---
+
+# Best Practices & Common Patterns
+
+---
+
+## Initial Weight Calculation Must Be Lightweight
+
+- In the TX queue, we need to know the weight to see if it would fit in the block.
+- This weight calculation must be lightweight!
+- No storage reads!
+Example:
+- Transfer Base: ~50 µs
+- Storage Read: ~25 µs
+
+---
+
+## Set Bounds and Assume the Worst!
+
+- Add a configuration trait that sets an upper bound to some item, and in weights, initially assume this worst case scenario.
+- During the extrinsic, find the actual length/size of the item, and refund the weight to be the actual amount used.
+
+---
+
+## Separate Benchmarks Per Logical Path
+
+- It may not be clear which logical path in a function is the “worst case scenario”.
+- Create a benchmark for each logical path your function could take.
+- Ensure each benchmark is testing the worst case scenario of that path.
+
+---
+
+## Comparison Operators in the Weight Definition
+
+```rust
+#[pallet::weight(
+   T::WeightInfo::path_a()
+   .max(T::WeightInfo::path_b())
+   .max(T::WeightInfo::path_c())
+)]
+```
+
+---
+
+## Keep Extrinsics Simple
+
+- The more complex your extrinsic logic, the harder it will be to accurately weigh.
+- This leads to larger up-front weights, potentially higher tx fees, and less efficient block packing.
+
+---
+
+## Use Multiple Simple Extrinsics
+
+- Take advantage of UI/UX, batch calls, and similar downstream tools to simplify extrinsic logic.
+Example:
+- Vote and Close Vote (“last vote”) are separate extrinsics.
+
+---
+
+## Minimize Usage of On Finalize
+
+- `on_finalize` is the last thing to happen in a block, and must execute for the block to be successful.
+- Variable weight needs at can lead to overweight blocks.
+
+<img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/on-finalize.svg" />
+
+
+---
+
+## Transition Logic and Weights to On Initialize
+
+- `on_initialize` happens at the beginning of the block, before extrinsics.
+- The number of extrinsics can be adjusted to support what is available.
+- Weight for `on_finalize` should be wrapped into on_initialize weight or extrinsic weight.
+
+---
+
+## Understand Limitations of Pallet Hooks
+
+- A powerful feature of Substrate is to allow the runtime configuration to implement pallet configuration traits.
+- However, it is easy for this feature to be abused and make benchmarking inaccurate.
+
+---
+
+## Keep Hooks Constant Time
+
+- Example: Balances hook for account creation and account killed.
+- Benchmarking has no idea how to properly set up your state to test for any arbitrary hook.
+- So you must keep hooks constant time, unless specified by the pallet otherwise.
+
+---
+
+# What’s next?
+
+How you might be able to contribute!
+
+- Gas / Fuel Metering
+- Full Weight V2 Integration / Migration
+- More Insight into DB / Memory Operations
+- Smart suggestions to developers based on benchmarks
+
+---
+
+# Questions?
