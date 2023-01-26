@@ -102,6 +102,8 @@ We'll come to other limitations of channels in the state channels later.
 
 ---
 
+<img style="width: 150px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/Ethereum.png" alt="Ethereum Logo">
+
 ## Ethereum
 
 We'll look into:
