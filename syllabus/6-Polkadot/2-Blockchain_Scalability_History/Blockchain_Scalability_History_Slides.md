@@ -61,20 +61,23 @@ sign each transaction which also invalidates previous state.
 
 Notes:
 
-Bitcoin doesn't really have smart contract, so it uses 2-out-of-2 multisignature transactions instead.
+Bitcoin doesn't really have smart contracts, so it uses 2-out-of-2 multisignature transactions instead.
 Each new update invalidates previous updates.
 To make this part of the state channel work, the locking and unlocking mechanisms have to be properly designed so that old state updates submitted to the blockchain have a chance to be corrected by the newer state updates which replaced them. The simplest way is to have any unlocking attempt start a timer, during which any newer update can replace the old update (restarting the timer as well). When the timer completes, the channel is closed and the state adjusted to reflect the last update received.
 In case of Bitcoin, a Timelock could be used.
 
+---v
 
 ### Payment channels: Security
 
 <!-- TODO: revamp -->
 
 <pba-flex center>
+
 - Fraudulent Channel Close
 - Someone has to stay online to protect each individual party's interests until the channel is closed.
 - In the Lighting Network the concept of "watchtower" has been developed, where trust can be outsourced to watchtower nodes to monitor for fraud.
+
 </pba-flex>
 
 Notes:
@@ -82,11 +85,15 @@ Notes:
 If a malicious party creates numerous channels and forces them to expire at the same time, which would broadcast to the blockchain, the congestion caused could overwhelm the capacity of the block. A malicious attacker might use the congestion to steal funds from parties who are unable to withdraw their funds due to the congestion.
 We'll come to other limitations of channels in the state channels later.
 
+---v
+
 ### Payment channels: Lighting Network
 
 <!-- TODO: Diagram of onion routing -->
 
 Hash Time Locked Contracts can be used to route a payment from Alice to Charlie if there's a channel open for Alice and Bob as well as Bob and Charlie without trusting Bob.
+
+<pba-flex center>
 
 1.  Alice opens a payment channel to Bob, and Bob opens a payment channel to Charlie.
 1. Alice uses her payment channel to Bob to pay him, but she adds the hash Charlie gave her to the payment along with an extra condition: in order for Bob to claim the payment, he has to provide the data which was used to produce that hash.
@@ -94,9 +101,24 @@ Hash Time Locked Contracts can be used to route a payment from Alice to Charlie 
 1. Charlie has the original data that was used to produce the hash (called a pre-image), so Charlie can use it to finalize his payment and fully receive the payment from Bob. By doing so, Charlie necessarily makes the pre-image available to Bob.
 1. Bob uses the pre-image to finalize his payment from Alice.
 
+</pba-flex>
+
 ---
 
 ## Ethereum
+
+We'll look into:
+
+<pba-flex center>
+
+- Sidechains
+- State channels
+- Rollups
+- Sharding
+
+</pba-flex>
+
+---
 
 ### Sidechains
 
@@ -106,10 +128,12 @@ To move assets between different chains, a bridge is implemented as a smart cont
 
 This is partially what Polygon is to Ethereum.
 
-<pba-flex left>
+<pba-flex center>
+
 - Bridges have the "weakest link" problem.
 - What if a sidechain stops producing blocks? The funds are "stuck".
 - If a sidechain is cheaper than Ethereum then it’s going to be proportionally less secure than Ethereum.
+
 </pba-flex>
 
 ---
@@ -118,24 +142,30 @@ This is partially what Polygon is to Ethereum.
 
 This is a generalization of payment channels:
 
-<pba-flex left>
+<pba-flex center>
+
 1. Part of the blockchain state is locked in a smart contract.
 1. Participants update the state amongst themselves (off-chain).
 1. Participants submit the state back to the blockchain.
+
 </pba-flex>
 
-State channels might be good for gameds, e.g. card-based ones.
+State channels might be good for games, e.g. card-based ones.
 
 Notes:
 
 There's also a concept of virtual channels that do not require to open and close them with on-chain transactions.
 
+---v
+
 ### State channels: limitations
 
-<pba-flex left>
+<pba-flex center>
+
 - Cannot be used to send funds off-chain to people who are not yet participants
 - Cannot be used to represent objects that do not have a clear logical owner (e.g. Uniswap)
 - Require a large amount of capital to be locked up
+
 </pba-flex>
 
 ---
@@ -148,9 +178,11 @@ Are like sidechains, but the the Merkle root of each chain in published on Ether
 
 Limitations:
 
-<pba-flex left>
+<pba-flex center>
+
 - Not possible to do generic computation: Polygon only supports ERC20 and ERC721 token transfers on its Plasma chain.
 - Withdrawal period of 7 days on Polygon (challenge period)
+
 </pba-flex>
 
 Notes:
@@ -172,6 +204,8 @@ Rollups bundle (or ’roll up’) many transactions into a single transaction on
 
 Optimistic rollups are 'optimistic' in the sense that transactions are assumed to be valid, but can be challenged if necessary. If an invalid transaction is suspected, a fraud proof is submitted and resolved onchain.
 
+---v
+
 ### Optimisitc Rollups: Transaction bundle
 
 <!-- TODO a picture of what a transaction bundle includes -->
@@ -182,21 +216,31 @@ Notes:
 
 We will cover some aspects of Danksharding soon.
 
+---v
+
 ### Optimisitc Rollups: How it works
 
 <!-- TODO diagram -->
+
+<pba-flex center>
 
 - Optimistic rollup validators must provide a **bond** before producing blocks.
 - Other rollup validators validate the blocks using their copy of the rollup state.
 - In case someone finds the state transition invalid, they can submit a fraud proof.
 
+</pba-flex>
+
 Notes:
 
 This bond can be slashed if the validator posts an invalid block or builds on an old-but-invalid block (even if their block is valid). This way optimistic rollups utilize cryptoeconomic incentives to ensure validators act honestly.
 
+---v
+
 ### Optimistic Rollups: Fraud proofs
 
 <!-- TODO merkle proofs from PoV -->
+
+---v
 
 ### Optimistic Rollups: Multi-round fraud proofs
 
@@ -204,6 +248,8 @@ This bond can be slashed if the validator posts an invalid block or builds on an
 
 The main idea of multi-round fraud proofs (aka interactive fraud proofs) is to
 reduce the number of computational steps by using interactive bisection protocol.
+
+---v
 
 ### Multi-round fraud proofs: steps
 
@@ -213,6 +259,8 @@ The process is divided into steps.
 The computation state at each step can be described as a short commitment (merkle root) to the output of the VM. 
 
 If the block producer fails to provide the one-step proof, or the L1 verifier deems the proof invalid, they lose the challenge.
+
+---v
 
 ### Optimistic Rollups: Security
 
@@ -230,8 +278,12 @@ Security model relies on at least one honest node executing rollup transactions 
 
 zkRollups come in 2 flavors:
 
+<pba-flex center>
+
 - zkSNARKs
 - zkSTARKs
+
+</pba-flex>
 
 Just like Optimistic Rollups, zkRollups bundle transactions and submit them along with a succint (short) validity proof.
 
@@ -241,6 +293,8 @@ Notes:
 
 As a scalability technology, the zk part of the zkRollups is optional and not used by privacy-oriented applications.
 
+---v
+
 ### SNARK scalability
 
 <!-- TODO style as quote -->
@@ -248,6 +302,8 @@ As a scalability technology, the zk part of the zkRollups is optional and not us
 The total prover overhead relative to direct witness checking can be 1 million to 10 million or more.
 
 Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-and-the-future/
+
+---v
 
 ### zkRollups challenges
 
@@ -268,9 +324,14 @@ Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-an
 
 Sharding is the process of splitting a database horizontally to spread the load - the term comes from the database world.
 
-There are flavors of blockchain sharding:
+There are two types of blockchain sharding:
+
+<pba-flex center>
+
 - Data sharding
 - Execution sharding
+
+</pba-flex>
 
 Notes:
 
@@ -279,9 +340,34 @@ Execution sharding means that not every validator checks every state transition.
 Bitcoin and Ethereum don't have execution sharding, they are replicated state machines.
 We will cover both data and execution sharding in depth in the next lecture.
 
+---v
+
+### Execution sharding via random sampling
+
+<!-- TODO: diagram of commitees -->
+
+---v
+
+### Execution sharding and security
+
+How is splitting validators into groups is different from splitting into separate chains?
+
+1. The random sampling prevents the attacker from concentrating their power on one shard.
+
+2. If even one shard gets a bad block, the entire chain reorgs to avoid it.
+
+Notes:
+
+In a 100-chain multichain ecosystem, the attacker only needs ~0.5% of the total stake to wreak havoc: they can focus on 51% attacking a single chain. In a sharded blockchain, the attacker must have close to ~30-40% of the entire stake to do the same (in other words, the chain has shared security).
+The second point ensures that processing messages is also secure.
+
+---
+
 ## Polkadot
 
 Polkadot is a scalable heterogenous sharded multi-chain network.
+
+---
 
 ### Specialization Leads to Scalability
 
@@ -295,11 +381,21 @@ Notes:
 
 Protocols like dXdY are moving from a smart-contract/rollup to a separate L1 blockchain.
 
+---v
+
+### Galaxy brain idea
+
+<!-- TODO: insert galaxy brain meme -->
+
+---
+
 ### Parachains
 
 Each parachain is a separate L1 blockchain except for it delegates it's finality to Polkadot. 
 
-To distinguish the fact that block producers of parachains are not responsible for finality, they are called Collators.
+To account for the fact that block producers of parachains are not responsible for finality, they are called Collators.
+
+---
 
 ### Mechanics of Parachain Validation
 
@@ -312,18 +408,7 @@ Imagine:
 
 We are able to derive strong security guarantees while splitting up our validators across different parachains.
 
-### Sharding and security
-
-How is splitting validators into groups is different from splitting into separate chains?
-
-1. The random sampling prevents the attacker from concentrating their power on one shard.
-
-2. If even one shard gets a bad block, the entire chain reorgs to avoid it.
-
-Notes:
-
-In a 100-chain multichain ecosystem, the attacker only needs ~0.5% of the total stake to wreak havoc: they can focus on 51% attacking a single chain. In a sharded blockchain, the attacker must have close to ~30-40% of the entire stake to do the same (in other words, the chain has shared security).
-The second point ensures that processing messages is also secure.
+---
 
 ### Parachain Validation Function (PVF)
 
@@ -338,13 +423,36 @@ A proof of validity constructed by Cumulus:
 
 <!-- A diagram from https://pep.wtf/posts/parachains-consensus/ -->
 
+### Execution sharding: Approval-voting
+
+For each parachain block we have an ordered list of validator to check it.
+
+The ordering is not known ahead of the time.
+
+If someone does not show up, we require even more checkers like a Hydra would regrow two heads.
+
+Notes:
+
+These properties allow us to finalize a block without waiting for the challenger period in the happy path. We will cover the protocol in more detail in the next lecture.
+
 ### Comparing Parachains with Rollups
 
 In some sense, parachains act like optimistic rollups with non-interactive fraud proofs. There are a few crucial differences:
 
-- The set of rollup sequencers is managed and limited by a smart contract
-- Optimistic rollup finality is limited by the challenge period
+<pba-flex center>
+
 - All parachains get the same security no matter how many collators they have
+- The set of optimistic rollup sequencers is managed and limited by a smart contract
+- Optimistic rollup finality is limited by the challenge period
+- Parachains do not compete with each other for blockspace
+- Rollups use multisigs for upgrading their code
+
+</pba-flex>
+
+Notes:
+
+In optimistic rollups sequencer selection logic lives in a smart contract of the host because the smart contract needs to accept blocks that may be bad and may not be executed and needs to filter out spam. Parachains, like ZK rollups, can encapsulate the sequencer-selection logic within their validation code.
+The last point means that if there's a lot of activity on one parachain, it doesn't affect fees on the other parachains.
 
 ---
 
