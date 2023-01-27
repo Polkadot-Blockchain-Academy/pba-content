@@ -242,12 +242,13 @@ The security needs of the Tipper track are very different than those of the Root
 
 ---
 
-## Deciding and Confirming Periods
+## Decision and Confirmation Periods
 
 - If Approval and Support thresholds met, confirmation period begins
-- Approval and Support must remain above respective thresholds for entire period
+- Approval and Support must remain above respective thresholds for entire confirmation period
 - Confirmation period concludes -> proposal approved early
 - Decision period expires -> proposal rejected
+- There is only one decision period, during which a proposal can potentially enter and leave many confirmation periods if thresholds aren't consistently met
 
 ---
 
@@ -271,8 +272,12 @@ Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
   - Controversial proposals get more deliberation
 - Addressed with time varying curves
   - Support threshold
+    - Starts at ~50%
+    - Ends at minimum secure turnout for track <br>(EX: Big Spender ends at 0 + epsilon %)
   - Approval threshold
-- Monotonically decreasing
+    - Starts at 100%
+    - Ends at 50 + epsilon %
+- Monotonically decreasing at rates determined by track specific security needs
 
 </pab-flex>
 
@@ -280,7 +285,6 @@ Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
 
 ## Example Support and Approval Curves
 
-<!-- set height*width in px, where full screen is 1920*1080 -->
 <img rounded style="width: 1400px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/support_and_approval_curves.png" alt="proposals per day pic">
 
 Notes:
@@ -373,11 +377,15 @@ Members hold rank denoting proven level of expertise and commitment as recognize
   - Maintains reasonable safety via Fellowship
 - White list proposals must pass two votes
   - Expertise weighted Fellowship vote via second referendum pallet instantiation
-  - Same general referendum as other tracks
-- Just an oracle! (can't act on its own)
+  - Same general referendum as other tracks, still requiring majority vote from DOT holders
+- Just an oracle! 
 - Secondarily intended to cultivate a long term base of Polkadot core developers outside of Parity
 
 </pba-col>
+
+Notes:
+
+Stress that as an oracle, the Fellowship can't take any action on its own. Any white listed call will still require substantial DOT-holder backing.
 
 ---
 
