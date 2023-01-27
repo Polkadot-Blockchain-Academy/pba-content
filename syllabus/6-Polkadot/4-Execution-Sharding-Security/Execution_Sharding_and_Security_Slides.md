@@ -2,7 +2,9 @@
 title: Execution Sharding in Polkadot
 description: Details the Collation, Backing, Approval-Voting, and Disputes systems and how they work together to provide secure execution sharding in Polkadot.
 duration: 45 minutes
-instructors: ["Robert Habermeier"]
+---
+
+# Execution Sharding in Polkadot
 
 ---
 
@@ -14,7 +16,8 @@ instructors: ["Robert Habermeier"]
 
 ## Execution Sharding in Polkadot
 
-In Polkadot, all validators execute every Relay Chain block, but only a subset execute each parachain block. This enables Polkadot to scale.
+In Polkadot, all validators execute every Relay Chain block, but only a subset execute each parachain block.
+This enables Polkadot to scale.
 
 ---
 
@@ -24,7 +27,8 @@ In Polkadot, all validators execute every Relay Chain block, but only a subset e
 2. Provide background on how complex on & offchain logic is implemented with Substrate
 
 Notes:
-https://polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/ is a comprehensive writeup of the content here in much more detail. Please read it after the lecture if you would like to understand how Polkadot works from top to bottom.
+https://polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/ is a comprehensive writeup of the content here in much more detail.
+Please read it after the lecture if you would like to understand how Polkadot works from top to bottom.
 
 ---
 
@@ -48,7 +52,8 @@ Clients learn about the state by invoking **Runtime APIs** at recent blocks, and
 <img width=900, src="../assets/runtime-node-interaction.png">
 
 Notes:
-Because the runtime is updated by new blocks, malicious or poorly connected validators have some choice in which information to provide the runtime with. This must be accounted for in the protocol: we cannot assume that the runtime is always perfectly informed.
+Because the runtime is updated by new blocks, malicious or poorly connected validators have some choice in which information to provide the runtime with.
+This must be accounted for in the protocol: we cannot assume that the runtime is always perfectly informed.
 
 ---
 
@@ -76,7 +81,8 @@ Rather than having every validator check every block, we just ensure that _detec
 
 ## Validator Group Assignments and Execution Cores
 
-Every Session (4 hours), validators are _partitioned_ into small **groups** which work together. Groups are assigned to specific **Execution Core**s, and these assignments change every few blocks.
+Every Session (4 hours), validators are _partitioned_ into small **groups** which work together.
+Groups are assigned to specific **Execution Core**s, and these assignments change every few blocks.
 
 <img width=700, src="../assets/validator-groups.png">
 
@@ -171,20 +177,23 @@ Remember our goal from earlier?
 ## Parablock Inclusion and Finality
 
 To fulfill this goal we need 2 things.
-  1. A protocol for proving validity of included candidates
-  2. Consensus rules for the Relay Chain to avoid building on or finalizing Relay Chain forks containing bad candidates.
+
+1. A protocol for proving validity of included candidates
+2. Consensus rules for the Relay Chain to avoid building on or finalizing Relay Chain forks containing bad candidates.
 
 ---
 
 ## What is "Checking" a Parablock?
 
 Checking involves three operations:
-  1. Recovering the data from the network
-  2. Executing the parablock, checking success
-  3. Check that outputs match the ones posted to the relay chain by backers
+
+1. Recovering the data from the network
+2. Executing the parablock, checking success
+3. Check that outputs match the ones posted to the relay chain by backers
 
 Notes:
-  Step 3 is of crucial importance. Without it, backers could create things like messages and runtime upgrades out of thin air, by backing a valid candidate but lying about the outputs of the candidate.
+Step 3 is of crucial importance.
+Without it, backers could create things like messages and runtime upgrades out of thin air, by backing a valid candidate but lying about the outputs of the candidate.
 
 ---
 
@@ -200,15 +209,17 @@ But because of slashing, every failed attempt means enormous amounts of DOT slas
 
 ## Approval Checking
 
-Every validator node is running an approval checking process for every parachain block in every relay-chain block. This process has a few properties:
+Every validator node is running an approval checking process for every parachain block in every relay-chain block.
+This process has a few properties:
 
-  1. The process on any particular node either outputs "good" or stalls.
-  2. If the parachain block is valid (i.e. passes checks) then it will eventually output "good" on honest nodes.
-  3. If the parachain block is invalid then it will only output "good" on honest nodes with low probability
+1. The process on any particular node either outputs "good" or stalls.
+2. If the parachain block is valid (i.e. passes checks) then it will eventually output "good" on honest nodes.
+3. If the parachain block is invalid then it will only output "good" on honest nodes with low probability
 
 Notes:
 
-Low probability here means 1 in 1 billion or so. Not cryptographic low probability, but good enough for crypto-economics.
+Low probability here means 1 in 1 billion or so.
+Not cryptographic low probability, but good enough for crypto-economics.
 
 ---
 
@@ -242,7 +253,8 @@ If validators began downloading data before revealing their assignment, an attac
 
 Notes:
 
-Approval Checking is like the hydra. Every time an attacker chops off one head, two more heads appear.
+Approval Checking is like the hydra.
+Every time an attacker chops off one head, two more heads appear.
 
 ---
 
@@ -285,7 +297,8 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 
 ## BABE Chain Selection Rule
 
-Validators refuse to author relay chain blocks on top of forks containing parablocks which are invalid or have lost disputes. This causes a "reorganization" whenever a dispute resolves against a candidate.
+Validators refuse to author relay chain blocks on top of forks containing parablocks which are invalid or have lost disputes.
+This causes a "reorganization" whenever a dispute resolves against a candidate.
 
 <img width=650, src="../assets/babe-chain-selection.png">
 
@@ -299,13 +312,15 @@ Validators refuse to author relay chain blocks on top of forks containing parabl
 
 https://github.com/paritytech/orchestra
 
-Orchestra allows us to declare "Subsystems" which run asynchronously. These subsystems communicate with message passing and all receive signals which coordinate their activities.
+Orchestra allows us to declare "Subsystems" which run asynchronously.
+These subsystems communicate with message passing and all receive signals which coordinate their activities.
 
 ---
 
 ## Orchestra: Signals
 
-Signals are sent to all subsystems and act as a "heartbeat". Messages sent after a signal arrives on one subsystem cannot arrive at another subsytem until it has received the same signal.
+Signals are sent to all subsystems and act as a "heartbeat".
+Messages sent after a signal arrives on one subsystem cannot arrive at another subsytem until it has received the same signal.
 
 ---
 
