@@ -1,7 +1,7 @@
 ---
 title: Data Availability and Sharding
-description: Data Availability Problem, Erasure coding, and Data sharding.
-duration: 30 mins
+description: Data Availability Problem, Erasure coding, Data sharding.
+duration: 30-45 mins
 ---
 
 # Data Availability and Sharding.
@@ -67,6 +67,10 @@ It means we could finalize an invalid parachain block.
 
 <img rounded style="width: 800px" src="../../../assets/img/5-Polkadot/Data_Availability/comic.png" alt="comic">
 
+Notes:
+
+I really like this comic from the paradigm article about Data Availability Sampling. But it works for our case as well with data sharding.
+
 ---
 
 ## Erasure coding
@@ -82,7 +86,7 @@ The goal:
 
 <img rounded style="width: 1000px" src="../../../assets/img/5-Polkadot/Data_Availability/erasure-coding-1.png" alt="line">
 
----
+---v
 
 ### In code
 
@@ -161,6 +165,20 @@ Notes:
 The simplest example of a finite field is arithmetic mod prime number.
 Computers are quite bad at division by prime numbers.
 Reed-Solomon codes are used in CDs, DVDs, QR codes and RAID 6.
+
+---v
+
+### Reed-Solomon with Lagrange interpolation
+
+1. Divide the data into elements of size P bits.
+2. Interpret the bytes as (big) numbers mod P.
+3. Index of each element is \\( x_i \\) and the element itself is \\( y_i \\).
+4. Construct the interpolating polynomial p and evaluate it at additional \\( n - k \\) points.
+5. The encoding is \\( (y_0, ..., y_{k-1}, p(k), ... p(n - 1)) \\) along with indices.
+
+Notes:
+
+How do we do reconstruction?
 
 ---
 
