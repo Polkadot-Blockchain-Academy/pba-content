@@ -72,7 +72,7 @@ A hashlock is a condition placed on a transaction dictating that you can only sp
 A timelock is a condition that prevents you from spending funds before a certain time.
 It’s specified either as an actual time, or a specified block height.
 
-HTLCs are combining hashlocks and timelocks to create conditional payments – the receiver has to provide a secret before a certain time, or the sender can reclaim the funds.
+Hashed Timelock Contracts (HTLCs) are combining hashlocks and timelocks to create conditional payments – the receiver has to provide a secret before a certain time, or the sender can reclaim the funds.
 
 Notes:
 
@@ -313,7 +313,7 @@ zkRollups come in 2 flavors:
 
 </pba-flex>
 
-Just like Optimistic Rollups, zkRollups bundle transactions and submit them along with a succint (short) validity proof.
+Just like Optimistic Rollups, zkRollups bundle transactions and submit them along with a succinct (short) validity proof.
 
 Checkout https://zkhack.dev/whiteboard/ to learn more about SNARKs.
 
@@ -364,7 +364,7 @@ We will cover both data and execution sharding in depth in the next lecture.
 
 ### Execution sharding via random sampling
 
-<!-- TODO: diagram of commitees -->
+<!-- TODO: diagram of committees -->
 
 ---v
 
@@ -416,7 +416,7 @@ Protocols like dXdY are moving from a smart-contract/rollup to a separate L1 blo
 
 ---v
 
-### Galaxy brain idea
+### Galaxy Brain Idea
 
 <img style="width: 600px" src="../../../assets/img/5-Polkadot/Scalability_History/galaxy-brain-sharding.jpg" alt="Meme">
 
