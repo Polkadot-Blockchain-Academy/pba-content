@@ -23,7 +23,7 @@ Notes:
 <pba-flex center>
 
 - Define the concepts, syntax, and terms of XCM
-- Navigate exiting resources that relate to XCM
+- Navigate exciting resources that relate to XCM
 - Differentiate between XCM and message-passing protocols like XCMP
 
 ---
@@ -311,7 +311,6 @@ Notes:
 
 ---
 
-<pba-cols
 <pba-col>
 
 ### 💰 `MultiAsset` in XCM
