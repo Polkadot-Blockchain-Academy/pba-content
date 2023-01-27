@@ -1,3 +1,5 @@
+[workspace]
+
 [package]
 name = "xcm-debug-excercise"
 version = "0.1.1"
