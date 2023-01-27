@@ -26,7 +26,7 @@ The overall goal for this assignment is to be able to send some ROC (native asse
     Extra points: Configuring the Fungibles transactor as well as the previous two.
 - IsReserve: Configure the parachain to recognize the relay chain as the valid reserve of assets.
 
-- Filters: by default, all the filters are set to Nothing, meaning nothing will work as it is. You will have to go through them and enable them.
+- Filters: As the calls from pallet_xcm are not supposed to be used in the parachain, all the corresponding filters are set to `Nothing`. Please do not change anything from it. 
 
 ## Pallet
 
