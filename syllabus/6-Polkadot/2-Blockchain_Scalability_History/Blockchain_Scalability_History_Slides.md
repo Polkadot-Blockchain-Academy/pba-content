@@ -313,7 +313,7 @@ Checkout https://zkhack.dev/whiteboard/ to learn more about SNARKs.
 
 Notes:
 
-As a scalability technology, the zk part of the zkRollups is optional and not used by privacy-oriented applications.
+As a scalability technology, the zk part of the zkRollups is optional and only used by privacy-oriented applications.
 
 ---v
 
@@ -324,6 +324,13 @@ As a scalability technology, the zk part of the zkRollups is optional and not us
 Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-and-the-future/
 
 ---v
+
+### zkRollups advantages
+
+- Minimize trust assumptions about block validatity
+- Proofs can be verified by light clients
+- Batch construction is parallelizable
+- Can provide privacy if they actually zk
 
 ### zkRollups challenges
 
@@ -448,6 +455,28 @@ Validators can verify the state transition of any Parachain given 2 simple piece
 ### Proof of Validity (PoV)
 
 A proof of validity constructed by Cumulus:
+
+```rust
+/// The parachain block that is created by a collator.
+///
+/// This is send as PoV (proof of validity block) to the relay-chain
+/// validators. There it will be passed to the parachain validation
+/// Wasm blob to be validated.
+#[derive(codec::Encode, codec::Decode, Clone)]
+pub struct ParachainBlockData<B: BlockT> {
+	/// The header of the parachain block.
+	header: B::Header,
+	/// The extrinsics of the parachain block.
+	extrinsics: sp_std::vec::Vec<B::Extrinsic>,
+	/// The data that is required to emulate the storage
+    /// accesses executed by all extrinsics.
+	storage_proof: sp_trie::CompactProof,
+}
+```
+
+---
+
+### Validation process
 
 <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/POV_PVF_Diagram.png" alt="POV_PVF_Diagram">
 
