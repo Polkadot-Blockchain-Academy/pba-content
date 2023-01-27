@@ -25,6 +25,7 @@ mod tests {
         ParachainPalletXcm,
         ParachainPalletBalances,
         ALICE, BOB, INITIAL_BALANCE, parachain,
+        parachain_xcm_executed_successfully
 	};
     use codec::Encode;
     use frame_support::assert_ok;
@@ -33,15 +34,15 @@ mod tests {
     fn execute_withdraw_asset() {
         MockNet::reset();
 
-        let withdraw_amount = 100;
-        let location = MultiLocation {
+        let withdraw_amount = 100u128;
+        let asset_location = MultiLocation {
             parents: 1,
             interior: Here
         };
 
         ParaA::execute_with(|| {
             let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
-                WithdrawAsset((location, withdraw_amount).into()),
+                WithdrawAsset((asset_location, withdraw_amount).into())
             ]);
             assert_ok!(
                 ParachainPalletXcm::execute(
@@ -51,25 +52,51 @@ mod tests {
                 )
             );
 
+            assert!(parachain_xcm_executed_successfully());
+
             assert_eq!(
                 ParachainPalletBalances::free_balance(ALICE),
                 INITIAL_BALANCE - withdraw_amount
             );
+
+            
         });
     }
 
     #[test]
     fn execute_buy_execution() {
-        MockNet::reset();
-
         // Task
         // Create a BuyExecution Instruction that buys 1e12 amount of weight
         // Hint: Our chain charges 1 token per 1e12 amount of weight
         // 1.) Who is buying the execution?
         // 2.) How to verify we executed this instruction correctly?
 
+        MockNet::reset();
+
+        let weight = 1_000_000_000_000u64;
+        let asset_location = MultiLocation {
+            parents: 1,
+            interior: Here
+        };
+        let withdraw_amount = 1u128;
+
         ParaA::execute_with(|| {
-           // Insert here the appropriate code to execute the XCM message asked for.
+            let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
+                WithdrawAsset((asset_location.clone(), withdraw_amount).into()),
+                BuyExecution {
+                    fees: (asset_location, withdraw_amount).into(),
+                    weight_limit: Limited(weight)
+                }
+            ]);
+            assert_ok!(
+                ParachainPalletXcm::execute(
+                    parachain::RuntimeOrigin::signed(ALICE),
+                    Box::new(VersionedXcm::V2(message.into())),
+                    100_000_000_000
+                )
+            );
+
+            assert!(parachain_xcm_executed_successfully());
         });
     }
 
@@ -77,13 +104,47 @@ mod tests {
     fn execute_send_funds_to_bob() {
         MockNet::reset();
 
-        // Task
-        // Send 100 from Alice to Bob from a parachain locally and verify it.
-        // 1.) Where to send it from?
-        // 2.) how to verify Bob received the funds?
+        let withdraw_amount = 100u128;
+        let asset_location = MultiLocation {
+            parents: 1,
+            interior: Here
+        };
 
         ParaA::execute_with(|| {
-            // Insert here the appropriate code to execute the XCM message asked for.
+            let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
+                WithdrawAsset((asset_location.clone(), withdraw_amount).into()),
+                DepositAsset {
+                    assets: Wild(All),
+                    max_assets: 1,
+                    beneficiary: MultiLocation {
+                        parents: 0,
+                        interior: X1(AccountId32 {
+                            id: BOB.into(),
+                            network: NetworkId::Any
+                        })
+                    },
+                }
+            ]);
+
+            assert_ok!(
+                ParachainPalletXcm::execute(
+                    parachain::RuntimeOrigin::signed(ALICE),
+                    Box::new(VersionedXcm::V2(message.into())),
+                    100_000_000_000
+                )
+            );
+
+            assert!(parachain_xcm_executed_successfully());
+
+            assert_eq!(
+                ParachainPalletBalances::free_balance(ALICE),
+                INITIAL_BALANCE - withdraw_amount
+            );
+            assert_eq!(
+                ParachainPalletBalances::free_balance(BOB),
+                withdraw_amount
+            );
+
          });
     }
 
@@ -114,8 +175,7 @@ mod tests {
     
         ParaA::execute_with(|| {
             // Insert Here the appropriate code to execute the XCM message asked for.
-        });}
-
+        });
     }
 
     #[test]

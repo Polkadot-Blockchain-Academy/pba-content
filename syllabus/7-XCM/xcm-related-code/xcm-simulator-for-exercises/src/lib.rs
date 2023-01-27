@@ -99,6 +99,16 @@ pub fn relay_ext() -> sp_io::TestExternalities {
 	ext
 }
 
+pub fn parachain_xcm_executed_successfully() -> bool {
+	let parachain_events = parachain::para_events();
+	parachain_events.iter().find_map(|event| {
+		match event {
+			parachain::RuntimeEvent::PolkadotXcm(pallet_xcm::Event::Attempted(outcome)) => outcome.clone().ensure_complete().ok(),
+			_ => None
+		}
+	}).is_some()
+}
+
 pub type RelayChainPalletXcm = pallet_xcm::Pallet<relay_chain::Runtime>;
 pub type RelayChainPalletBalances = pallet_balances::Pallet<relay_chain::Runtime>;
 pub type ParachainPalletXcm = pallet_xcm::Pallet<parachain::Runtime>;
