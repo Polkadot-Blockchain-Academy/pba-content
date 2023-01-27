@@ -75,8 +75,7 @@ pub type Barrier = (
 Notes:
 
 - Child system parachains are parachains that contain core polkadot features, and they will get a paraId of less than 1000. They are allocated by Polkadot governance and get free execution.
-- `AllowKnownQueryResponses` will check pallet-xcm storage to know whether the response is expected.
--`AllowSubscriptionsFrom` determines that any origin is able to subscribe for version changes.
+- `AllowKnownQueryResponses` will check pallet-xcm storage to know whether the response is expected. -`AllowSubscriptionsFrom` determines that any origin is able to subscribe for version changes.
 
 ---
 
@@ -167,7 +166,8 @@ pub type LocationConverter = (
 Notes:
 
 - Any other origin that is not a parachain origin or a local 32 byte account origin will not be convertible to an accountId.
-- Question class what happens if a message coming from a parachain  starts with `DescendOrigin`?. XcmV2 will reject it at the barrier level (Since **_AllowTopLevelPaidExecutionFrom_**  expects the first instruction to be one of **_ReceiveTeleportedAsset_** , **_WithdrawAsset_** , **_ReserveAssetDeposited_**  or **_ClaimAsset_** ). XcmV3 will pass the barrier as **_AllowTopLevelPaidExecutionFrom_** is inside **_WithComputedOrigin_**.
+- Question class what happens if a message coming from a parachain starts with `DescendOrigin`?. XcmV2 will reject it at the barrier level (Since **_AllowTopLevelPaidExecutionFrom_** expects the first instruction to be one of **_ReceiveTeleportedAsset_** , **_WithdrawAsset_** , **_ReserveAssetDeposited_** or **_ClaimAsset_** ). XcmV3 will pass the barrier as **_AllowTopLevelPaidExecutionFrom_** is inside **_WithComputedOrigin_**.
+
 ---
 
 ## 🪙 Asset Transactors in Rococo
@@ -580,3 +580,9 @@ To solve this:
 ## 🔨 Subscan XCM retrieval
 
 <img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab"/>
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+## Questions
