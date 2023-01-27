@@ -1,6 +1,6 @@
 ---
-title: Blockchain Scalability History. 
-description: Blockchain Scalability History. Rollups and Sharding.
+title: Blockchain Scalability History
+description: Blockchain Scalability History, Rollups, and Sharding.
 duration: 45+ mins
 ---
 
@@ -54,7 +54,7 @@ What if try to increase that limit?
 
 1. Alice and Bob lock some funds in a "smart contract".
 1. All transfers between them happen off-chain where both parties
-sign each transaction which also invalidates previous state.
+   sign each transaction which also invalidates previous state.
 1. To close the channel, participants submit the last agreed-upon state of the channel on-chain.
 
 </pba-flex>
@@ -69,14 +69,17 @@ Bitcoin doesn't really have smart contracts, so it uses 2-out-of-2 multisignatur
 
 A hashlock is a condition placed on a transaction dictating that you can only spend funds by proving that you know a secret.
 
-A timelock is a condition that prevents you from spending funds before a certain time. It’s specified either as an actual time, or a specified block height.
+A timelock is a condition that prevents you from spending funds before a certain time.
+It’s specified either as an actual time, or a specified block height.
 
 HTLCs are combining hashlocks and timelocks to create conditional payments – the receiver has to provide a secret before a certain time, or the sender can reclaim the funds.
 
 Notes:
 
 Each new update invalidates previous updates.
-To make this part of the state channel work, the locking and unlocking mechanisms have to be properly designed so that old state updates submitted to the blockchain have a chance to be corrected by the newer state updates which replaced them. The simplest way is to have any unlocking attempt start a timer, during which any newer update can replace the old update (restarting the timer as well). When the timer completes, the channel is closed and the state adjusted to reflect the last update received.
+To make this part of the state channel work, the locking and unlocking mechanisms have to be properly designed so that old state updates submitted to the blockchain have a chance to be corrected by the newer state updates which replaced them.
+The simplest way is to have any unlocking attempt start a timer, during which any newer update can replace the old update (restarting the timer as well).
+When the timer completes, the channel is closed and the state adjusted to reflect the last update received.
 
 ---v
 
@@ -91,7 +94,8 @@ To make this part of the state channel work, the locking and unlocking mechanism
 
 Notes:
 
-If a malicious party creates numerous channels and forces them to expire at the same time, which would broadcast to the blockchain, the congestion caused could overwhelm the capacity of the block. A malicious attacker might use the congestion to steal funds from parties who are unable to withdraw their funds due to the congestion.
+If a malicious party creates numerous channels and forces them to expire at the same time, which would broadcast to the blockchain, the congestion caused could overwhelm the capacity of the block.
+A malicious attacker might use the congestion to steal funds from parties who are unable to withdraw their funds due to the congestion.
 We'll come to other limitations of channels in the state channels later.
 
 ---v
@@ -101,8 +105,12 @@ We'll come to other limitations of channels in the state channels later.
 <img style="width: 800px" src="../../../assets/img/5-Polkadot/Scalability_History/channel-3-nodes.png" alt="channel-3-nodes">
 
 Notes:
-On the base chain, your fee is based solely on the space your transaction takes up in a block – the value being transmitted doesn’t matter – $1 and $10,000,000 payments cost the same. In contrast, there’s no such thing as block space within the Lightning Network.
-If Alice wants to send 0.3 BTC to Frank, she pushes 0.3 BTC to Carol’s side of the channel. Then Carol pushes 0.3 BTC from her local balance in the channel with Frank. In this scenario, Alice is effectively eating into Carol’s liquidity. Without any kind of incentive, Carol may not want to weaken her own position. 
+On the base chain, your fee is based solely on the space your transaction takes up in a block – the value being transmitted doesn’t matter – $1 and $10,000,000 payments cost the same.
+In contrast, there’s no such thing as block space within the Lightning Network.
+If Alice wants to send 0.3 BTC to Frank, she pushes 0.3 BTC to Carol’s side of the channel.
+Then Carol pushes 0.3 BTC from her local balance in the channel with Frank.
+In this scenario, Alice is effectively eating into Carol’s liquidity.
+Without any kind of incentive, Carol may not want to weaken her own position.
 
 ---
 
@@ -175,7 +183,8 @@ There's also a concept of virtual channels that do not require to open and close
 
 ### Plasma
 
-Are like sidechains, but the the Merkle root of each chain in published on Ethereum. The roots act sort of like “save points” in the blockchain.
+Are like sidechains, but the the Merkle root of each chain in published on Ethereum.
+The roots act sort of like “save points” in the blockchain.
 
 Limitations:
 
@@ -204,7 +213,8 @@ Rollups bundle (or ’roll up’) many transactions into a single transaction on
 <pba-cols>
 <pba-col center>
 
-Optimistic rollups are 'optimistic' in the sense that transactions are assumed to be valid, but can be challenged if necessary. If an invalid transaction is suspected, a fraud proof is submitted and resolved onchain.
+Optimistic rollups are 'optimistic' in the sense that transactions are assumed to be valid, but can be challenged if necessary.
+If an invalid transaction is suspected, a fraud proof is submitted and resolved onchain.
 
 </pba-col>
 <pba-col center>
@@ -246,7 +256,8 @@ We will cover some aspects of Danksharding soon.
 
 Notes:
 
-This bond can be slashed if the validator posts an invalid block or builds on an old-but-invalid block (even if their block is valid). This way optimistic rollups utilize cryptoeconomic incentives to ensure validators act honestly.
+This bond can be slashed if the validator posts an invalid block or builds on an old-but-invalid block (even if their block is valid).
+This way optimistic rollups utilize cryptoeconomic incentives to ensure validators act honestly.
 
 ---v
 
@@ -272,7 +283,7 @@ reduce the number of computational steps by using interactive bisection protocol
 It requires the block producer and the challenger to merkelize the entire state of VM (including memory cells, registers, etc).
 
 The process is divided into steps.
-The computation state at each step can be described as a short commitment (merkle root) to the output of the VM. 
+The computation state at each step can be described as a short commitment (merkle root) to the output of the VM.
 
 If the block producer fails to provide the one-step proof, or the L1 verifier deems the proof invalid, they lose the challenge.
 
@@ -362,17 +373,18 @@ We will cover both data and execution sharding in depth in the next lecture.
 How is splitting validators into groups is different from splitting into separate chains?
 
 1. The random sampling prevents the attacker from concentrating their power on one shard.
-
-2. If even one shard gets a bad block, the entire chain reorgs to avoid it.
+1. If even one shard gets a bad block, the entire chain reorgs to avoid it.
 
 Notes:
 
-In a 100-chain multichain ecosystem, the attacker only needs ~0.5% of the total stake to wreak havoc: they can focus on 51% attacking a single chain. In a sharded blockchain, the attacker must have close to ~30-40% of the entire stake to do the same (in other words, the chain has shared security).
+In a 100-chain multichain ecosystem, the attacker only needs ~0.5% of the total stake to wreak havoc: they can focus on 51% attacking a single chain.
+In a sharded blockchain, the attacker must have close to ~30-40% of the entire stake to do the same (in other words, the chain has shared security).
 The second point ensures that processing messages is also secure.
 
 ---
 
 ### Sharding on the Scalability Trilemma
+
 <!-- TODO: Need trilemma in brighter color or with background to show up on slides -->
 <!-- <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma"> -->
 
@@ -412,7 +424,7 @@ Protocols like dXdY are moving from a smart-contract/rollup to a separate L1 blo
 
 ### Parachains
 
-Each parachain is a separate L1 blockchain except for it delegates it's finality to Polkadot. 
+Each parachain is a separate L1 blockchain except for it delegates it's finality to Polkadot.
 
 To account for the fact that block producers of parachains are not responsible for finality, they are called Collators.
 
@@ -458,13 +470,15 @@ If someone does not show up, we require even more checkers like a Hydra would re
 
 Notes:
 
-These properties allow us to finalize a block without waiting for the challenger period in the happy path. We will cover the protocol in more detail in the next lecture.
+These properties allow us to finalize a block without waiting for the challenger period in the happy path.
+We will cover the protocol in more detail in the next lecture.
 
 ---
 
 ### Comparing Parachains with Rollups
 
-In some sense, parachains act like optimistic rollups with non-interactive fraud proofs. There are a few crucial differences:
+In some sense, parachains act like optimistic rollups with non-interactive fraud proofs.
+There are a few crucial differences:
 
 <pba-flex center>
 
@@ -478,14 +492,16 @@ In some sense, parachains act like optimistic rollups with non-interactive fraud
 
 Notes:
 
-In optimistic rollups sequencer selection logic lives in a smart contract of the host because the smart contract needs to accept blocks that may be bad and may not be executed and needs to filter out spam. Parachains, like ZK rollups, can encapsulate the sequencer-selection logic within their validation code.
+In optimistic rollups sequencer selection logic lives in a smart contract of the host because the smart contract needs to accept blocks that may be bad and may not be executed and needs to filter out spam.
+Parachains, like ZK rollups, can encapsulate the sequencer-selection logic within their validation code.
 The last point means that if there's a lot of activity on one parachain, it doesn't affect fees on the other parachains.
 
 ---
 
 ### Data Availability Problem
 
-Optimistic rollups require all of the data in blocks to be available to generate fraud proofs. Rollups on Ethereum deal with this by simply posting all of the rollup blocks on to the Ethereum chain and relying on it for data availability, therefore using Ethereum as a data availability layer to dump data on.
+Optimistic rollups require all of the data in blocks to be available to generate fraud proofs.
+Rollups on Ethereum deal with this by simply posting all of the rollup blocks on to the Ethereum chain and relying on it for data availability, therefore using Ethereum as a data availability layer to dump data on.
 
 With Polkadot sharding, how do we ensure that PoVs can be downloaded to start a dispute process if they are not stored by everyone?
 
