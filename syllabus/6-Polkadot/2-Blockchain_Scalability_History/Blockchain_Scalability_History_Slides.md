@@ -232,7 +232,7 @@ If an invalid transaction is suspected, a fraud proof is submitted and resolved 
 
 ### Optimistic Rollups: Transaction bundle
 
-<!-- TODO a picture of what a transaction bundle includes -->
+<img style="width: 800px" src="../../../assets/img/5-Polkadot/Scalability_History/rollup-batch.svg" alt="rollup-batch">
 
 On Ethereum, these are posted to a so called "calldata" and in the future to the blob storage provided by Danksharding.
 
@@ -243,8 +243,6 @@ We will cover some aspects of Danksharding soon.
 ---v
 
 ### Optimistic Rollups: How it works
-
-<!-- TODO diagram -->
 
 <pba-flex center>
 
@@ -263,15 +261,11 @@ This way optimistic rollups utilize cryptoeconomic incentives to ensure validato
 
 ### Optimistic Rollups: Fraud proofs
 
-<!-- TODO a proper image of state proof -->
-
-<!-- <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/1-round-fraud-proof.png" alt="Fraud Proof"> -->
+<img style="width: 1200px" src="../../../assets/img/5-Polkadot/Scalability_History/fraud-proof.svg" alt="Fraud Proof">
 
 ---v
 
 ### Optimistic Rollups: Multi-round fraud proofs
-
-<!-- TODO a picture of interactive protocol, maybe convert text into pictures?  -->
 
 The main idea of multi-round fraud proofs (aka interactive fraud proofs) is to
 reduce the number of computational steps by using interactive bisection protocol.
@@ -280,7 +274,7 @@ reduce the number of computational steps by using interactive bisection protocol
 
 ### Multi-round fraud proofs: steps
 
-It requires the block producer and the challenger to merkelize the entire state of VM (including memory cells, registers, etc).
+It requires the block producer and the challenger to merkleize the entire state of VM (including memory cells, registers, etc).
 
 The process is divided into steps.
 The computation state at each step can be described as a short commitment (merkle root) to the output of the VM.
@@ -364,7 +358,7 @@ We will cover both data and execution sharding in depth in the next lecture.
 
 ### Execution sharding via random sampling
 
-<!-- TODO: diagram of committees -->
+<img style="width: 1200px" src="../../../assets/img/5-Polkadot/Scalability_History/shards.svg" alt="shards">
 
 ---v
 
@@ -385,8 +379,7 @@ The second point ensures that processing messages is also secure.
 
 ### Sharding on the Scalability Trilemma
 
-<!-- TODO: Need trilemma in brighter color or with background to show up on slides -->
-<!-- <img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/trilemma.png" alt="trilemma"> -->
+<img style="width: 800px" src="../../../assets/img/5-Polkadot/Scalability_History/sharding-trilemma.svg" alt="sharding-trilemma">
 
 Notes:
 
@@ -412,13 +405,13 @@ Heterogeneity is the way.
 
 Notes:
 
-Protocols like dXdY are moving from a smart-contract/rollup to a separate L1 blockchain.
+Protocols like dYdX are moving from a smart-contract/rollup to a separate L1 blockchain.
 
 ---v
 
 ### Galaxy Brain Idea
 
-<img style="width: 600px" src="../../../assets/img/5-Polkadot/Scalability_History/galaxy-brain-sharding.jpg" alt="Meme">
+<img style="width: 500px" src="../../../assets/img/5-Polkadot/Scalability_History/galaxy-brain-sharding.jpg" alt="Meme">
 
 ---
 
@@ -518,6 +511,8 @@ With Polkadot sharding, how do we ensure that PoVs can be downloaded to start a 
 </pba-flex>
 
 ---
+
+<!-- .slide: data-background-color="#4A2439" -->
 
 ## Questions?
 
