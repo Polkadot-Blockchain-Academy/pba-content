@@ -14,4 +14,4 @@ Assume a setup where we have the relay chain, and two parachains with paraIds 10
 
 Make sure you answer with the multilocation as seen from all three relative locations (relay, para100, para1001)
 
-Hint: Use https://github.com/paritytech/polkadot/blob/master/xcm/src/v1/junction.rs to inspect for existing Junctions
+Hint: Use https://github.com/paritytech/polkadot/blob/master/xcm/src/v2/junction.rs to inspect for existing Junctions
