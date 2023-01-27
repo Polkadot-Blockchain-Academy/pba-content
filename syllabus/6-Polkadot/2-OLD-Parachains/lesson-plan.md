@@ -1,6 +1,6 @@
 # Parachains
 
-Lecture 5, Module 4
+Lesson 5, Module 4
 
 Instructor: Bernhard Schuster, Robert Klotzner
 
