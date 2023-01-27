@@ -23,10 +23,13 @@ The overall goal for this assignment is to be able to send some ROC (native asse
 - AssetTransactor:
   - The easiest way to configure this is by using the transactor related to the pallet_balance. This is the minimum accepted solution for this configuration.
   - Local transactor.
-    Extra points: Configuring the Fungibles transactor as well as the previous two.
+    Extra points: 
+      - Configuring the Fungible transactor as well as the previous two.
+      - If the ROCs arriving to the parachain are minted into the parachain as a derived (a.k.a wrapped) assets using something as the `pallet_assets`, you would add extra points since the Fungible transactor will be used for minting the assets.
+
 - IsReserve: Configure the parachain to recognize the relay chain as the valid reserve of assets.
 
-- Filters: As the calls from pallet_xcm are not supposed to be used in the parachain, all the corresponding filters are set to `Nothing`. Please do not change anything from it. 
+- Filters: As the calls from pallet_xcm are not supposed to be used in the parachain, all the corresponding filters are set to `Nothing`. Please do not change anything from it.
 
 ## Pallet
 
