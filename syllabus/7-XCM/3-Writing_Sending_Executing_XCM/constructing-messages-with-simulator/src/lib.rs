@@ -22,6 +22,7 @@ mod tests {
 		Relay,
 		ParaA,
         parachain,
+        ParachainPalletXcm,
         RelayChainPalletXcm,
         
 		// ParaB, // Might be useful for one of the exercises :)
@@ -30,10 +31,11 @@ mod tests {
 	};
     use frame_support::assert_ok;
     use xcm::latest::prelude::*;
+    use xcm::{VersionedXcm, VersionedMultiLocation};
 
     #[test]
     fn execute_initiate_teleport_to_para_a() {
-        /* ------------------------------------------------------------------------- */
+      /* ------------------------------------------------------------------------- */
         // In this section we do some initialization for our XCM exercise
         // 1.) Create a new Test net scenario
         MockNet::reset();
@@ -41,47 +43,10 @@ mod tests {
         // 2.) Declare an amount to withdraw and teleport
         let withdraw_amount = 100;
 
-        // 3.) Create 2-tuple with item 1 being the junction/s to send from and item 2 the withdraw_amount
-        // let withdraw_assets_from = $CREATE_TUPLE_HERE;
-
-        /*  ------------------------------------------------------------------------ */
-        // In this next section we focus on constructing the instructions necessary create our XCM message
-        // 1.) Takes some assets and place in the holding register.
-        // First we need to use an Instruction which can withdraw assets and place them in the holding register
-        // let instruction_1: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
-
-        // 2.) Inform a destination chain that we are teleporting the previously withdrawn assets
-        // Second we need to use an Instruction which informs the other chain about the assets being teleported
-        // let instruction_2: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
-
-        // 4.) XCM Message for parachain
-        // Create the XCM message for the given instructions above
-        // let message = $INSERT_CONSTRUCTED_XCM_MESSAGE_HERE
-
-        Relay::execute_with(|| {
-        // 5.) Execute send_xcm from the XCM pallet
-        //     assert_ok!(
-        //         // RelayChainPalletXcm::execute(
-                        /* $INSERT_CORRECT_PARAMS_TO_EXECUTE_XCM */
-        //         // )
-        //     );
-        });
-
-        ParaA::execute_with(|| {
-            // let expected_message_received = $INSERT_EXPECTED_MESSAGE_RECEIVED_BY_PARA_A
-            // assert_eq!(parachain::MsgQueue::received_dmp(), expected_message_received);
-        })
-    }
-
-    #[test]
-    fn execute_initiate_reserve_withdraw_to_para_a() {
-        /* ------------------------------------------------------------------------- */
-        // In this section we do some initialization for our XCM exercise
-        // 1.) Create a new Test net scenario
-        MockNet::reset();
-
-        // 2.) Declare an amount to withdraw and teleport
-        let withdraw_amount = 100;
+        let asset_location = MultiLocation {
+            parents: 0,
+            interior: Here
+        };
 
         // 3.) Create 2-tuple with item 1 being the junction/s to send from and item 2 the withdraw_amount
         // let withdraw_assets_from = $CREATE_TUPLE_HERE;
@@ -100,31 +65,49 @@ mod tests {
         // Create the XCM message for the given instructions above
         // let message = $INSERT_CONSTRUCTED_XCM_MESSAGE_HERE
 
+        let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
+            WithdrawAsset((asset_location.clone(), withdraw_amount).into()),
+            InitiateTeleport {
+                assets: Wild(All),
+                dest: MultiLocation::new(0, X1(Parachain(1))),
+                xcm: Xcm(vec![])
+            }
+        ]);
+
         Relay::execute_with(|| {
-        // 5.) Execute send_xcm from the XCM pallet
-        //     assert_ok!(
-        //         // RelayChainPalletXcm::execute(
-                        /* $INSERT_CORRECT_PARAMS_TO_EXECUTE_XCM */
-        //         // )
-        //     );
+              assert_ok!(
+                RelayChainPalletXcm::execute(
+                    relay_chain::RuntimeOrigin::signed(ALICE),
+                    Box::new(VersionedXcm::V2(message.into())),
+                    100_000_000_000
+                )
+              );
         });
 
         ParaA::execute_with(|| {
-            // let expected_message_received = $INSERT_EXPECTED_MESSAGE_RECEIVED_BY_PARA_A
-            // assert_eq!(parachain::MsgQueue::received_dmp(), expected_message_received);
+            let expected_message_received: Xcm<parachain::RuntimeCall> = Xcm(vec![
+                ReceiveTeleportedAsset(vec![MultiAsset { id: Concrete(MultiLocation { parents: 1, interior: Here }), fun: Fungible(100) }].into()),
+                ClearOrigin
+            ]);
+    
+            assert_eq!(parachain::MsgQueue::received_dmp(), vec![expected_message_received]);
         })
     }
 
-
     #[test]
-    fn send_ump_withdraw_deposit_alice() {
-        /* ------------------------------------------------------------------------- */
+    fn execute_initiate_reserve_withdraw_to_para_a() {
+            /* ------------------------------------------------------------------------- */
         // In this section we do some initialization for our XCM exercise
         // 1.) Create a new Test net scenario
         MockNet::reset();
 
         // 2.) Declare an amount to send to ALICE's account on the relaychain
         let withdraw_amount = 100;
+
+        let asset_location = MultiLocation {
+            parents: 0,
+            interior: Here
+        };
 
         // 3.) Create 2-tuple with item 1 being the junction/s to send from and item 2 the withdraw_amount
         // let withdraw_assets_from = $CREATE_TUPLE_HERE;
@@ -150,18 +133,98 @@ mod tests {
         // Create the XCM message for the given instructions above
         // let message = $INSERT_CONSTRUCTED_XCM_MESSAGE_HERE
 
+        let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
+            WithdrawAsset((asset_location.clone(), withdraw_amount).into()),
+            DepositReserveAsset {
+                assets: Wild(All),
+                max_assets: 1,
+                dest: MultiLocation::new(0, X1(Parachain(1))),
+                xcm: Xcm(vec![])
+            }
+        ]);
+
+        Relay::execute_with(|| {
+            assert_ok!(RelayChainPalletXcm::execute(
+                relay_chain::RuntimeOrigin::signed(ALICE),
+                Box::new(VersionedXcm::V2(message.into())),
+                100_000_000_000
+            ));
+        });
+
         ParaA::execute_with(|| {
-        // 5.) Execute send_xcm from the XCM pallet
-        //     assert_ok!(
-        //         // ParachainPalletXcm::send_xcm(
-                        /* $INSERT_CORRECT_PARAMS_TO_SEND_XCM */
-        //         // )
-        //     );
+            let expected_message_received: Xcm<parachain::RuntimeCall> = Xcm(vec![
+                ReserveAssetDeposited(vec![MultiAsset { id: Concrete(MultiLocation { parents: 1, interior: Here }), fun: Fungible(100) }].into()),
+                ClearOrigin
+            ]);
+    
+            assert_eq!(parachain::MsgQueue::received_dmp(), vec![expected_message_received]);
         });
 
         Relay::execute_with(|| {
-            assert_eq!(relay_chain::Balances::free_balance(ALICE), INITIAL_BALANCE + withdraw_amount);
+            assert_eq!(relay_chain::Balances::free_balance(ALICE), INITIAL_BALANCE - withdraw_amount);
+            assert_eq!(relay_chain::Balances::free_balance(para_account_id(1)), INITIAL_BALANCE + withdraw_amount);
+        })
+    }     
+
+    #[test]
+    fn send_ump_withdraw_deposit_alice() {
+        /* ------------------------------------------------------------------------- */
+        // In this section we do some initialization for our XCM exercise
+        // 1.) Create a new Test net scenario
+        MockNet::reset();
+
+        // 2.) Declare an amount to send to ALICE's account on the relaychain
+        let withdraw_amount = 100;
+
+        let asset_location = MultiLocation {
+            parents: 0,
+            interior: Here
+        };
+
+        // 3.) Create 2-tuple with item 1 being the junction/s to send from and item 2 the withdraw_amount
+        // let withdraw_assets_from = $CREATE_TUPLE_HERE;
+
+        /*  ------------------------------------------------------------------------ */
+        // In this next section we focus on constructing the instructions necessary create our XCM message
+        // 1.) Takes some assets and place in the holding register.
+        // First we need to use an Instruction which can withdraw assets and place them in the holding register
+        // let instruction_1: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+        // HINT: when a message is sent from Para A to the relay, the para A multilocation origin is converted
+        // to:
+        // let para_a_account = xcm_simulator_for_exercises::para_account_id(Para_A_para_id)
+
+        // 2.) Purchase execution for this message to be executed appropriately on the destination chain
+        // Second we need to use an Instruction which can obtain execution some execution
+        // let instruction_2: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+
+        // 3.) Drain assets from the holding register and specify to whome receives this asset
+        // Lastly we need an instruction which can take assets from the holding register and give them to ALICE
+        // let instruction_3: Instruction<parachain::RuntimeCall> = $PLACE_CORRECT_INSTRUCTION_HERE
+
+        // 4.) XCM Message for parachain
+        // Create the XCM message for the given instructions above
+        // let message = $INSERT_CONSTRUCTED_XCM_MESSAGE_HERE
+
+        let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
+            WithdrawAsset((asset_location.clone(), withdraw_amount).into()),
+            DepositAsset {
+                assets: Wild(All),
+                max_assets: 1,
+                beneficiary: MultiLocation::new(0, X1(AccountId32{ network: NetworkId::Any, id: ALICE.into()})),
+            }
+        ]);
+
+        ParaA::execute_with(|| {
+            assert_ok!(ParachainPalletXcm::send(
+                parachain::RuntimeOrigin::root(),
+                Box::new(VersionedMultiLocation::V1(MultiLocation::parent())),
+                Box::new(VersionedXcm::V2(message.into())),
+            ));
+        });
+
+        Relay::execute_with(|| {
             assert_eq!(relay_chain::Balances::free_balance(para_account_id(1)), INITIAL_BALANCE - withdraw_amount);
+            assert_eq!(relay_chain::Balances::free_balance(ALICE), INITIAL_BALANCE + withdraw_amount);
         })
     }
 
@@ -178,6 +241,40 @@ mod tests {
 
         let withdraw_amount = 100;
 
+        let asset_location = MultiLocation {
+            parents: 0,
+            interior: Here
+        };
+
+        let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
+            WithdrawAsset((asset_location.clone(), withdraw_amount).into()),
+            QueryHolding {
+                query_id: 1,
+                dest: MultiLocation::new(0, X1(Parachain(1))),
+                assets: Wild(All),
+                max_response_weight: 1000000000
+            }
+        ]);
+
+        ParaA::execute_with(|| {
+            assert_ok!(ParachainPalletXcm::send(
+                parachain::RuntimeOrigin::root(),
+                Box::new(VersionedMultiLocation::V1(MultiLocation::parent())),
+                Box::new(VersionedXcm::V2(message.into())),
+            ));
+        });
+
+        ParaA::execute_with(|| {
+          let expected_received_message = Xcm(vec![
+            QueryResponse {
+                query_id: 1,
+                response: Response::Assets(
+                    vec![MultiAsset { id: Concrete(MultiLocation { parents: 1, interior: Here }), fun: Fungible(100) }].into()),
+                max_weight: 1000000000
+            }]);
+            assert_eq!(parachain::MsgQueue::received_dmp(), vec![expected_received_message]);
+
+        });  
         /* Fill in here */
     }
 
