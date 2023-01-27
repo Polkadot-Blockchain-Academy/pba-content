@@ -123,7 +123,7 @@ mod tests {
         // 1.) Create a new Test net scenario
         MockNet::reset();
 
-        // 2.) Declare an amount to send to ALICE's account on the relaychain
+        // 2.) Declare an amount to send to ALICE's account on the relay chain
         let withdraw_amount = 100;
 
         // 3.) Create 2-tuple with item 1 being the junction/s to send from and item 2 the withdraw_amount
