@@ -17,14 +17,13 @@ The overall goal for this assignment is to be able to send some ROC (native asse
 
 - Barrier:
 
-    - You can configure the Barrier in the way you consider best. Please note that copying and pasting from other parachains might not work as expected for this assignment. So please be mindful of your Barrier setup.
-    - Extra points: Explain in your own words what each element of the Barrier config is doing (point out where and how all these are used in the xcm_builder).
+  - You can configure the Barrier in the way you consider best. Please note that copying and pasting from other parachains might not work as expected for this assignment. So please be mindful of your Barrier setup.
+  - Extra points: Explain in your own words what each element of the Barrier config is doing (point out where and how all these are used in the xcm_builder).
 
 - AssetTransactor:
-    - The easiest way to configure this is by using the transactor related to the pallet_balance. This is the minimum accepted solution for this configuration.
-    - Local transactor.
-    Extra points: Configuring the Fungibles transactor as well as the previous two. 
-  
+  - The easiest way to configure this is by using the transactor related to the pallet_balance. This is the minimum accepted solution for this configuration.
+  - Local transactor.
+    Extra points: Configuring the Fungibles transactor as well as the previous two.
 - IsReserve: Configure the parachain to recognize the relay chain as the valid reserve of assets.
 
 - Filters: by default, all the filters are set to Nothing, meaning nothing will work as it is. You will have to go through them and enable them.
@@ -44,4 +43,3 @@ Extra points: Provide the corresponding tests using the XCM Simulator.
 - Build both your chain and Rococo and set up a zombienet file (local) that launches.
 
 - Write a Readme file guiding all your development and configuration criteria + a usage and testing description.
-
