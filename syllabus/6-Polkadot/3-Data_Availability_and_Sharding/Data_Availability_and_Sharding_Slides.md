@@ -183,6 +183,17 @@ With this protocol, we've killed two birds with one stone!
 
 ---
 
+### Availability Bitfields
+
+<img style="width: 600px" src="../../../assets/img/5-Polkadot/Data_Availability/availability-bitfields.png" alt="availability-bitfields">
+
+Notes:
+
+Each validator actually signs a statement per relay chain block, not per PoV to reduce the number of signatures.
+These statements are gossiped off-chain and included in a block in a ParachainsInherent.
+
+---
+
 ### Challenge 1
 
 How does a validator know if a chunk corresponds to the committed data?
