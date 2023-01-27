@@ -1,27 +1,47 @@
 # Week 4 Assignment - Polkadot and XCM
 
-# Option 1 - Relay Chain Asset Claimer
+This is the final graded assignment where we will apply everything we have learned about Polkadot & XCM.
 
-- Create a simple pallet that is able to claim assets that have been Trapped in the relay.
-- Modify the template node to make it XCM-compatible.
-- Use Rococo 0.9.37 as your relay chain
-- Build both your chain and rococo and setup a zombienet file (local) that launches.
-- Write a Readme file explaining how to test the pallet you built
+# Description and overall goal.
 
-# Option 2 - HRMP manager
+For this assignment, you will be provided with:
 
-- Create a simple pallet that is able to send HRMP management operations (openChannel, closeChannel, acceptChannel) to the relay chain
-- Modify the template node to make it XCM-compatible.
-- Use Rococo 0.9.37 as your relay chain
-- Build both your chain and rococo and setup a zombienet file (local) that launches.
-- Write a Readme file explaining how to test the pallet you built
+- Rococo Relay Chain.
+- Parachain template.
 
-# Option 3 - Custom pallet using XCM
+The overall goal for this assignment is to be able to send some ROC (native asset of the Rococo relay chain) to a parachain built by you and then send them back to the relay chain.
 
-- Needs approval from the XCM team
-- Needs to satisfy the following criteria:
+## XCM Configuration (xcm_config.rs)
 
-- Modify the template node to make it XCM-compatible.
-- Use Rococo 0.9.37 as your relay chain
-- Build both your chain and rococo and setup a zombienet file (local) that launches.
-- Write a Readme file explaining how to test the pallet you built
+- We will provide you with a parachain template with some missing XCM configurations. Part of the assignment is to complete these configurations and make the process work (the configuration quality will be graded). These configurations will be:
+
+- Barrier:
+
+    - You can configure the Barrier in the way you consider best. Please note that copying and pasting from other parachains might not work as expected for this assignment. So please be mindful of your Barrier setup.
+    - Extra points: Explain in your own words what each element of the Barrier config is doing (point out where and how all these are used in the xcm_builder).
+
+- AssetTransactor:
+    - The easiest way to configure this is by using the transactor related to the pallet_balance. This is the minimum accepted solution for this configuration.
+    - Local transactor.
+    Extra points: Configuring the Fungibles transactor as well as the previous two. 
+  
+- IsReserve: Configure the parachain to recognize the relay chain as the valid reserve of assets.
+
+- Filters: by default, all the filters are set to Nothing, meaning nothing will work as it is. You will have to go through them and enable them.
+
+## Pallet
+
+For sending the ROC back from the parachain to the relay chain, you will have to create a new pallet with a specific call that commits this purpose. The logic for the pallet shouldn't be super complex as its only purpose is to send the XCM message only.
+
+Extra points: Provide the corresponding tests using the XCM Simulator.
+
+## Considerations & Requirements
+
+- For sending the ROC tokens from Rococo to the parachain, you can use the existing extrinsic `limitedReservedTransferAssets` from the `xcmPallet`.
+
+- Use Rococo 0.9.37 release for your relay chain.
+
+- Build both your chain and Rococo and set up a zombienet file (local) that launches.
+
+- Write a Readme file guiding all your development and configuration criteria + a usage and testing description.
+
