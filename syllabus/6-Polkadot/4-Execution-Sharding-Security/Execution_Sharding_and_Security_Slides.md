@@ -16,29 +16,40 @@ duration: 45 minutes
 
 ## Execution Sharding in Polkadot
 
-In Polkadot, all validators execute every Relay Chain block, but only a subset execute each parachain block.
+> In Polkadot, all validators execute every relay chain block, but only a subset execute each parachain block.
+
 This enables Polkadot to scale.
 
 ---
 
-## Lecture Agenda
+## Lesson Agenda
+
+<pba-flex center>
 
 1. Discuss the high-level protocols and principles of Execution Sharding in Polkadot
 2. Provide background on how complex on & offchain logic is implemented with Substrate
 
+</pba-flex>
+
 Notes:
-https://polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/ is a comprehensive writeup of the content here in much more detail.
-Please read it after the lecture if you would like to understand how Polkadot works from top to bottom.
+
+[Polkadot v1.0: Sharding and Economic Security](https://polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/) is a comprehensive writeup of the content here in much more detail.
+Please read it after the lesson if you would like to understand how Polkadot works from top to bottom.
 
 ---
 
 ## Goals of Execution Sharding
 
+<pba-flex center>
+
 1. A minimal amount of validator nodes should check every parachain block while still maintaining security
-2. The Relay Chain will provide ordering and finality for parachain blocks
+2. The relay chain will provide ordering and finality for parachain blocks
 3. Only valid parachain blocks will become finalized
 
+</pba-flex>
+
 Notes:
+
 Because GRANDPA finality faults require 33% or more stake to be slashed, Goal (3) implies Shared Security
 
 ---
@@ -49,9 +60,10 @@ Since Polkadot involves not only on-chain logic but off-chain logic, the runtime
 
 Clients learn about the state by invoking **Runtime APIs** at recent blocks, and the runtime is updated with **new blocks**.
 
-<img width=900, src="../assets/runtime-node-interaction.png">
+<img rounded width=900, src="../assets/runtime-node-interaction.png">
 
 Notes:
+
 Because the runtime is updated by new blocks, malicious or poorly connected validators have some choice in which information to provide the runtime with.
 This must be accounted for in the protocol: we cannot assume that the runtime is always perfectly informed.
 
@@ -59,11 +71,15 @@ This must be accounted for in the protocol: we cannot assume that the runtime is
 
 ## Parachains Protocols
 
+<pba-flex center>
+
 1. Collation
 2. Backing
 3. Availability
 4. Approval Checking
 5. Disputes
+
+</pba-flex>
 
 ---
 
@@ -79,31 +95,34 @@ Rather than having every validator check every block, we just ensure that _detec
 
 ---
 
-## Validator Group Assignments and Execution Cores
+#### Validator Group Assignments and Execution Cores
 
-Every Session (4 hours), validators are _partitioned_ into small **groups** which work together.
+<img rounded width=1100, src="../assets/validator-groups.png">
+
+Notes:
+
+Every Session (4 hours), validators are _partitioned_ into small **groups** which work together.<br>
 Groups are assigned to specific **Execution Core**s, and these assignments change every few blocks.
-
-<img width=700, src="../assets/validator-groups.png">
 
 ---
 
-## The Relay Chain is Forkful
+## The relay chain is Forkful
 
 Validators and collators run these protocols on every block of the relay chain.
 
 Often they run an instance of the protocol for every parachain block in every block of the relay chain.
 
-<img width=700, src="../assets/babe-is-forkful.png">
+<img rounded width=700, src="../assets/BABE-is-forkful.png">
 
 Notes:
+
 In the slides, we will look at single instances of the protocols, but it should be known that the validators are actually doing these steps in parallel with each other and often many times at a time.
 
 ---
 
 ## Definition: Candidate
 
-> A **Candidate** is a parachain block which has not yet been finalized in the relay chain.
+> A **Candidate** is a parachain block<br>which has not yet been finalized in the relay chain.
 
 ---
 
@@ -125,7 +144,7 @@ They distribute their candidates and statements via the P2P layer, and then the 
 
 ## Backing: Networking
 
-<img width=1000, src="../assets/backing-networking.png">
+<img rounded width=1000, src="../assets/backing-networking.png">
 
 ---
 
@@ -138,6 +157,7 @@ Backers are agreeing that if the parablock turns out to be bad, they will lose 1
 Backing on its own does not provide security, only accountability.
 
 Notes:
+
 The current minimum validator bond as of Jan 27, 2022 is ~1.5 Million DOT.
 
 ---
@@ -146,13 +166,11 @@ The current minimum validator bond as of Jan 27, 2022 is ~1.5 Million DOT.
 
 At this point, the backers are responsible for making the data needed to check the parablock available to the entire network.
 
-Validators sign statements about which data they have and post them to the Relay Chain.
+Validators sign statements about which data they have and post them to the relay chain.
 
 ---
 
-## Availability
-
-<img width=900, src="../assets/availability-inclusion.png">
+<img rounded width=1300px src="../assets/availability-inclusion.png">
 
 Notes:
 
@@ -162,13 +180,15 @@ In practice, we allow more than a single block for availability to be timed out.
 
 ## Parablock Inclusion and Finality
 
-<img width=600, src="../assets/parachain-finality.png">
+<img rounded width=600, src="../assets/parachain-finality.png">
 
 ---
 
 ## Parablock Inclusion and Finality
 
 > (3) Only valid parachain blocks will become finalized
+
+Notes:
 
 Remember our goal from earlier?
 
@@ -178,8 +198,12 @@ Remember our goal from earlier?
 
 To fulfill this goal we need 2 things.
 
+<pba-flex center>
+
 1. A protocol for proving validity of included candidates
-2. Consensus rules for the Relay Chain to avoid building on or finalizing Relay Chain forks containing bad candidates.
+2. Consensus rules for the relay chain<br>to avoid building on or finalizing<br>relay chain forks containing bad candidates.
+
+</pba-flex>
 
 ---
 
@@ -187,11 +211,16 @@ To fulfill this goal we need 2 things.
 
 Checking involves three operations:
 
+<pba-flex center>
+
 1. Recovering the data from the network
 2. Executing the parablock, checking success
-3. Check that outputs match the ones posted to the relay chain by backers
+3. Check that outputs match the ones posted<br>to the relay chain by backers
+
+</pba-flex>
 
 Notes:
+
 Step 3 is of crucial importance.
 Without it, backers could create things like messages and runtime upgrades out of thin air, by backing a valid candidate but lying about the outputs of the candidate.
 
@@ -209,12 +238,16 @@ But because of slashing, every failed attempt means enormous amounts of DOT slas
 
 ## Approval Checking
 
-Every validator node is running an approval checking process for every parachain block in every relay-chain block.
+Every validator node is running an approval checking process for every parachain block in every relay chain block.
 This process has a few properties:
+
+<pba-flex center>
 
 1. The process on any particular node either outputs "good" or stalls.
 2. If the parachain block is valid (i.e. passes checks) then it will eventually output "good" on honest nodes.
 3. If the parachain block is invalid then it will only output "good" on honest nodes with low probability
+
+</pba-flex>
 
 Notes:
 
@@ -249,7 +282,7 @@ If validators began downloading data before revealing their assignment, an attac
 
 ## Approval Checking: The Hydra
 
-<img width=700, src="../assets/lernaean-hydra.jpg">
+<img rounded width=700, src="../assets/lernaean-hydra.jpg">
 
 Notes:
 
@@ -272,9 +305,10 @@ Votes are transmitted by p2p and also collected on-chain.
 
 ## Dispute Resolution
 
-<img width=700, src="../assets/validator-dispute-participation.png">
+<img rounded width=700, src="../assets/validator-dispute-participation.png">
 
 Notes:
+
 resolution requires a supermajority in either direction.
 
 ---
@@ -291,7 +325,7 @@ The penalty is large when the candidate "loses" and small when it "wins".
 
 Instead of voting for the longest chain, validators vote for the longest chain where all unfinalized candidates are a) approved and b) undisputed
 
-<img width=650, src="../assets/grandpa-voting-rule.png">
+<img rounded width=650, src="../assets/grandpa-voting-rule.png">
 
 ---
 
@@ -300,19 +334,20 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 Validators refuse to author relay chain blocks on top of forks containing parablocks which are invalid or have lost disputes.
 This causes a "reorganization" whenever a dispute resolves against a candidate.
 
-<img width=650, src="../assets/babe-chain-selection.png">
+<img rounded width=650, src="../assets/babe-chain-selection.png">
 
 ---
 
-## How are complex off-chain systems implemented using Substrate?
+<!-- .slide: data-background-color="#4A2439" -->
+
+> How are complex off-chain systems<br>implemented using Substrate?
 
 ---
 
 ## Orchestra
 
-https://github.com/paritytech/orchestra
+[Orchestra](https://github.com/paritytech/orchestra) allows us to declare "Subsystems" which run asynchronously.
 
-Orchestra allows us to declare "Subsystems" which run asynchronously.
 These subsystems communicate with message passing and all receive signals which coordinate their activities.
 
 ---
@@ -320,7 +355,8 @@ These subsystems communicate with message passing and all receive signals which 
 ## Orchestra: Signals
 
 Signals are sent to all subsystems and act as a "heartbeat".
-Messages sent after a signal arrives on one subsystem cannot arrive at another subsytem until it has received the same signal.
+
+Messages sent after a signal arrives on one subsystem cannot arrive at another subsystem until it has received the same signal.
 
 ---
 
@@ -359,6 +395,8 @@ The other subsystem may receive `work_result` before learning about the new bloc
 
 ## Examples of Subsystems in Polkadot
 
+<pba-flex center>
+
 - Dispute Participation
 - Candidate Backing
 - Availability Distribution
@@ -366,14 +404,16 @@ The other subsystem may receive `work_result` before learning about the new bloc
 - Collator Protocol
 - everything!
 
+</pba-flex>
+
 ---
 
 ## Implementers' Guide
 
-https://paritytech.github.io/polkadot/book
-
-The Implementers' Guide contains information about all subsystems, architectural motivations, and protocols used within Polkadot's runtime and node implementation.
+[The Implementers' Guide](https://paritytech.github.io/polkadot/book) contains information about all subsystems, architectural motivations, and protocols used within Polkadot's runtime and node implementation.
 
 ---
 
-## Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+## Questions
