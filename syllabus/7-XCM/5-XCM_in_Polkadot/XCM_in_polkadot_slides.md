@@ -557,7 +557,7 @@ Look at the `ump.ExecutedUpward` event:
 
 ## 🔨 Decoding SCALE-encoded messages
 
-- **RelayChain**:
+- **Relay Chain**:
   - XCM can be retrieved in the `paraInherent.enter` inherent
   - The candidate for a specific parachain contains the ump messages sent to the relay.
   - **UMP messages are usually executed one block after they are received**
