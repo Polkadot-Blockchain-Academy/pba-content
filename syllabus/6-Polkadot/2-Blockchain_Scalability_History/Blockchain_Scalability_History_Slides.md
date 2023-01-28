@@ -330,7 +330,9 @@ Source: https://a16zcrypto.com/measuring-snark-performance-frontends-backends-an
 - Minimize trust assumptions about block validatity
 - Proofs can be verified by light clients
 - Batch construction is parallelizable
-- Can provide privacy if they actually zk
+- Can provide privacy if they are actually zk
+
+---v
 
 ### zkRollups challenges
 
