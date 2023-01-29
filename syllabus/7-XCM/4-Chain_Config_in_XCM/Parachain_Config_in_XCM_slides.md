@@ -70,16 +70,27 @@ impl Config for XcmConfig {
 
 ```
 
+---v
+
+## 🛠️ XcmRouter in `XcmConfig`
+
+- XcmRouter defines the means of routing a XCM to a destination.
+- `ParentAsUmp` routes XCM to relay chain through UMP.
+- `XcmpQueue` routes XCM to other parachains through XCMP.
+
+```rust
+pub type XcmRouter = (
+	// Two routers - use UMP to communicate with the relay chain:
+	cumulus_primitives_utility::ParentAsUmp<ParachainSystem, PolkadotXcm>,
+	// ..and XCMP to communicate with the sibling chains.
+	XcmpQueue,
+);
+```
+
 Notes:
 
-- Means of converting a multilocation into an accountId
-Used later for: OriginConverter , `AssetTransactor`
-
-- `xcm-builder` and `xcm-pallet` are your friends!
-
-- `xcm-builder` is a polkadot module that contains a set of pre-defined structures to be set in some of the configurable sides of XCM.
-
-- `xcm-pallet` is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.
+- If the destination is `Multilocation { parents: 1, interior: Here }`, the message will be routed through UMP. The UMP channel is available by default.
+- If the destination is `Multilocation { parents: 1, interior: X1(Parachain(para_id)) }` the message will be routed through XCMP. As of today, A HRMP channel should be established before the message can be routed.
 
 ---
 
