@@ -20,9 +20,9 @@ duration: 45 minutes
 
 ## Superadditive Value
 
-This is a fancy way of saying "The whole is greater than the sum of the parts".
+The interoperation of people and systems<br>creates superadditive economic value.
 
-The interoperation of people and systems creates superadditive economic value.
+> The whole is greater than the sum of the parts.
 
 ---
 
@@ -30,7 +30,7 @@ The interoperation of people and systems creates superadditive economic value.
 
 Efficient economic systems create niches for specialization.
 
-Different systems can exercise _comparative advantage_ with others and focus on a single service or problem.
+Different systems can exercise _comparative advantage_<br>with others and focus on a single service or problem.
 
 ---
 
@@ -42,13 +42,15 @@ Different systems can exercise _comparative advantage_ with others and focus on 
 
 XCMP is the data layer, while XCM is the language.
 
-XCMP only focuses on the transmission of raw bytes between chains. In this lecture we will focus only on XCMP.
+XCMP only focuses on the transmission of raw bytes between chains.<br>
+In this lesson we will focus only on XCMP.
 
 <img rounded width="400px" src="../assets/people-talking.jpg"/>
 
 Notes:
 
-Communication requires a medium and a language to convey semantic meaning. XCMP is the medium, like sound or writing, rather than the language.
+Communication requires a medium and a language to convey semantic meaning.
+XCMP is the medium, like sound or writing, rather than the language.
 
 ---
 
@@ -106,9 +108,10 @@ pub struct ValidationResult {
 
 These fields of the result contain outgoing messages as well as records of incoming messages processed.
 
-Notes: All validation results are posted on-chain during the Backing phase and are procesed upon Availability/Inclusion.
+Notes: All validation results are posted on-chain during the Backing phase and are processed upon Availability/Inclusion.
 
-There are some requirements on the outputs for the candidate to be accepted on-chain. One constraint is that the candidate does not send too many messages, and the other constraint is that the candidate processes a few of the pending messages awaiting it.
+There are some requirements on the outputs for the candidate to be accepted on-chain.
+One constraint is that the candidate does not send too many messages, and the other constraint is that the candidate processes a few of the pending messages awaiting it.
 
 ---
 
@@ -120,7 +123,8 @@ pub struct HostConfiguration {
 }
 ```
 
-The `Configuration` pallet of the Relay Chain State stores a configuration object which can be altered by governance. It only officially changes at session boundaries.
+The `Configuration` pallet of the Relay Chain State stores a configuration object which can be altered by governance.
+It only officially changes at session boundaries.
 
 Challenge: Read the `activeConfig()` of the `configuration` pallet in Polkadot-JS.
 
@@ -174,7 +178,8 @@ pub trait UmpSink {
 }
 ```
 
-In practice, this is configured to be an XCM Executor. For now, the main takeaway is that it allows parachains to execute `Call`s on the Relay Chain.
+In practice, this is configured to be an XCM Executor.
+For now, the main takeaway is that it allows parachains to execute `Call`s on the Relay Chain.
 
 ---
 
@@ -254,9 +259,13 @@ Solution: Message Queue Chains (MQC)
 
 ## Benefits of MQCs
 
+<pba-flex center>
+
 1. Parachains only need to learn the most recent MQC Head to implicitly learn about all queued messages
-2. MQC entries are small (~70 bytes)
-3. MQCs can be backfilled and then processed forward with no further relay chain interaction
+1. MQC entries are small (~70 bytes)
+1. MQCs can be backfilled and then processed forward with no further relay chain interaction
+
+</pba-flex>
 
 ---
 
@@ -315,15 +324,18 @@ pub struct ValidationResult {
 }
 ```
 
-Each parachain informs the relay chain of the number of processed downwards messages every parablock. There is a required minimum when the queue is large.
+Each parachain informs the relay chain of the number of processed downwards messages every parablock.
+There is a required minimum when the queue is large.
 
 Notes:
 
-Parachains can "process" messages simply by ignoring them. The Relay Chain doesn't care what parachains do with the messages. They can just be thrown out.
+Parachains can "process" messages simply by ignoring them.
+The Relay Chain doesn't care what parachains do with the messages.
+They can just be thrown out.
 
 ---
 
-## XCMP-Lite / HRMP: Horizonal Message Passing
+## XCMP-Lite / HRMP: Horizontal Message Passing
 
 XCMP is the family of protocols by which parachains can transmit messages to each other.
 
@@ -367,10 +379,15 @@ Channels are one-way, and for two-way communication two channels must be opened.
 ## XCMP Channels
 
 The protocol for opening a channel is as follows:
+
+<pba-flex center>
+
 1. Chain A sends an upward message requesting a channel to Chain B
-2. Chain B receives a downward message notifying of the channel request
-3. Chain B sends an upward message accepting or rejecting the channel
-4. The channel is either opened or rejected in the Relay Chain as a result
+1. Chain B receives a downward message notifying of the channel request
+1. Chain B sends an upward message accepting or rejecting the channel
+1. The channel is either opened or rejected in the Relay Chain as a result
+
+</pba-flex>
 
 ---
 
@@ -394,10 +411,12 @@ TODO
 
 ## Using Messaging in Practice
 
-This lecture is meant to communicate the underlying protocols and mechanics by which messages are sent and received.
+This lesson is meant to communicate the underlying protocols and mechanics by which messages are sent and received.
 
 In practice, using these mechanisms in a parachain with Cumulus is simple and is abstracted by XCM utilities, covered in the next module.
 
 ---
 
-## Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+## Questions
