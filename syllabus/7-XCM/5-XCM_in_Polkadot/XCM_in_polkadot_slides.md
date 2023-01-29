@@ -74,9 +74,9 @@ pub type Barrier = (
 
 Notes:
 
-- Child system parachains are parachains that contain core polkadot features, and they will get a paraId of less than 1000. They are allocated by Polkadot governance and get free execution.
-- `AllowKnownQueryResponses` will check pallet-xcm storage to know whether the response is expected.
--`AllowSubscriptionsFrom` determines that any origin is able to subscribe for version changes.
+- Child system parachains are parachains that contain core polkadot features, and they will get a paraId of less than 1000.
+  They are allocated by Polkadot governance and get free execution.
+- `AllowKnownQueryResponses` will check pallet-xcm storage to know whether the response is expected. -`AllowSubscriptionsFrom` determines that any origin is able to subscribe for version changes.
 
 ---
 
@@ -145,7 +145,8 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- Trusting other parachains (e.g., common good parachains) to be reserves of the relay native token would cause rare situations with the total issuance. For instance, users could drain reserves of the sovereign account with teleported funds.
+- Trusting other parachains (e.g., common good parachains) to be reserves of the relay native token would cause rare situations with the total issuance.
+  For instance, users could drain reserves of the sovereign account with teleported funds.
 
 ---
 
@@ -167,7 +168,9 @@ pub type LocationConverter = (
 Notes:
 
 - Any other origin that is not a parachain origin or a local 32 byte account origin will not be convertible to an accountId.
-- Question class what happens if a message coming from a parachain  starts with `DescendOrigin`?. XcmV2 will reject it at the barrier level (Since **_AllowTopLevelPaidExecutionFrom_**  expects the first instruction to be one of **_ReceiveTeleportedAsset_** , **_WithdrawAsset_** , **_ReserveAssetDeposited_**  or **_ClaimAsset_** ). XcmV3 will pass the barrier as **_AllowTopLevelPaidExecutionFrom_** is inside **_WithComputedOrigin_**.
+- Question class what happens if a message coming from a parachain starts with `DescendOrigin`?
+  XcmV2 will reject it at the barrier level (Since **_AllowTopLevelPaidExecutionFrom_** expects the first instruction to be one of **_ReceiveTeleportedAsset_** , **_WithdrawAsset_** , **_ReserveAssetDeposited_** or **_ClaimAsset_** - XcmV3 will pass the barrier as **_AllowTopLevelPaidExecutionFrom_** is inside **_WithComputedOrigin_**.
+
 ---
 
 ## 🪙 Asset Transactors in Rococo
@@ -209,7 +212,8 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- Rococo is tracking teleports in the **CheckAccount**, which is defined in **palletXcm**. This aims at maintaining the total issuance even if assets have been teleported to another chain.
+- Rococo is tracking teleports in the **CheckAccount**, which is defined in **palletXcm**.
+  This aims at maintaining the total issuance even if assets have been teleported to another chain.
 
 ---
 
@@ -248,7 +252,8 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- There exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain). This gets checked with the _ensure_parachain!_ macro.
+- There exists the concept of a "parachain dispatch origin" which is used for very specific functions (like, e.g., opening a channel with another chain).
+  This gets checked with the _ensure_parachain!_ macro.
 - System parachains are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.
 
 ---
@@ -271,6 +276,7 @@ type Weigher = WeightInfoBounds<
 ```
 
 ---
+
 ## 🔧 `WeightTrader` in Rococo
 
 - Weight is converted to fee with the **_WeightToFee_** type.
@@ -342,7 +348,9 @@ pub type LocalOriginToLocation = (
 
 Notes:
 
-- **_LocalOrigin_** allows to go from a frame dispatch origin to a multilocation. This is necessary because **we enter the xcm-executor with xcm origins, not with frame dispatch origins**. Note that this is an extrinsic in a frame pallet, and thus, **we call it with frame origins**.
+- **_LocalOrigin_** allows to go from a frame dispatch origin to a multilocation.
+  This is necessary because **we enter the xcm-executor with xcm origins, not with frame dispatch origins**.
+  Note that this is an extrinsic in a frame pallet, and thus, **we call it with frame origins**.
 
 - Council decisions are converted to `Plurality` junction multilocations.
 
@@ -424,7 +432,8 @@ pub type FungiblesTransactor = FungiblesAdapter<
 Notes:
 
 - An asset with id `Id` are represented by `X2(PalletInstance(pallet_assets_index), GeneralIndex(Id)` thanks to **_AsPrefixedGeneralIndex_**.
-- Asset teleports **are** being tracked in **_CheckingAccount_**. The reason is that Statemine is the reserve chain for those assets.
+- Asset teleports **are** being tracked in **_CheckingAccount_**.
+  The reason is that Statemine is the reserve chain for those assets.
 
 ---v
 
@@ -511,7 +520,8 @@ Common steps to debug:
 
 1. Identify what the error means which will help you identify the context in which the error happened.
 1. Look in the xcm codebase to check where this error might have been thrown.
-   Was it thrown in the barrier? Or in any specific instruction?
+   Was it thrown in the barrier?
+   Or in any specific instruction?
 1. Retrieve the failed received XCM.
 1. Check the chain XCM configuration to verify what could have failed.
 

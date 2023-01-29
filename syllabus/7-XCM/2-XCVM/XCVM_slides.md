@@ -135,7 +135,8 @@ It is always the relative view from the consensus system in which the XCM is exe
 
 Notes:
 
-TODO: should there be 2 columns for this slide and the other registers? (from Nuke)
+TODO: should there be 2 columns for this slide and the other registers?
+(from Nuke)
 
 ---
 
@@ -146,7 +147,8 @@ Expresses a number of assets in control of the xcm-execution but that have no re
 It can be seen as the register holding "unspent assets".
 
 Example: Let’s take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
-But what does it do with them? — if they don’t get deposited anywhere then it’s surely a pretty useless operation.
+But what does it do with them?
+— if they don’t get deposited anywhere then it’s surely a pretty useless operation.
 These assets are held in the holding register until they are deposited anywhere else.
 
 ---

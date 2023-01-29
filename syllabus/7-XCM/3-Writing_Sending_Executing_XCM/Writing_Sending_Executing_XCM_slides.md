@@ -117,7 +117,8 @@ These instructions usually originate from the relay chain.
 
 ## Instruction
 
-Split into a few categories. Instructions that:
+Split into a few categories.
+Instructions that:
 
 <pba-flex center>
 

@@ -22,7 +22,9 @@
 
 - Cover all of https://github.com/paritytech/xcm-format
 
-  - Walk though of document.... maybe too verbose? Needs to be parsed into slides. Likely V3 as we will deliver in July 2022.
+  - Walk though of document... maybe too verbose?
+    Needs to be parsed into slides.
+    Likely V3 as we will deliver in July 2022.
 
 - Instancing
 - Aggregation
@@ -37,13 +39,16 @@
 - [Moonbuilders Workshop: A Technical Introduction to XCM on Moonbeam](https://www.youtube.com/watch?v=5HD5rFBqvQ4)
 
   - [their docs on xcm](https://docs.moonbeam.network/builders/xcm/overview/)
-  - Great overall intro, [slides are great](https://docs.google.com/presentation/d/1dKZiP1LUltfjJ4cHiB1XtJAGla3sngXSc7sFj84zRKk/)... might want to ask to use? Copy content perhaps
-  - 39:20 demo code w/ xTokens (XC-20)
-    - It's possible to have different versions for specific fields/xcm programs{?} (destination, beneficiary) in a single XCM? Why?
+  - Great overall intro, [slides are great](https://docs.google.com/presentation/d/1dKZiP1LUltfjJ4cHiB1XtJAGla3sngXSc7sFj84zRKk/)...
+    might want to ask to use?
+    Copy content perhaps
+  - 39:20 demo code w/ xTokens (XC-20) - It's possible to have different versions for specific fields/xcm programs{?} (destination, beneficiary) in a single XCM?
+    Why?
 
 - Activities
   - Make XCM that does some logic, given the account balance you have on a single parachain to execute a few increasingly more complex routes to things.
-  - XCM message that is overly complex. Have student identify and rewrite with less program steps & routes
+  - XCM message that is overly complex.
+    Have student identify and rewrite with less program steps & routes
   - XCM that is HERE only, and thus should be a local extrinsic instead, have them discover this and outline the right calls.
   - Open channels manually on a testnet, configure correctly.
   - Issue XCM on a testnet
@@ -56,7 +61,8 @@
   - Concretely the one transp protocol for parachains on the same relay chain.
 - HRMP
   - Uses relay to store XCM between parachains, not optimal
-- How can a sovereign account be verified exactly? TODO
+- How can a sovereign account be verified exactly?
+  TODO
 - NOTE paraID CAN change over time!
   - Don't hard code these into a dapp!!
   - **SOVEREIGN ACCOUNT FOR PARACHAINS SWITCHING ID MIGHT BE TAKEN OVER!**
@@ -76,13 +82,13 @@
 
 - Wiki updates, VMP could replace XCMP, this is false
 - meeting with Rob and other impl people to about XCMP and actual things in the works now and planned
-  - [ ] Start with a forum post on this instead of a call to start.
-    - Clarify XCMP details about UMP/DMP use etc.
-    - What interaction does XCMP have with relay chian now and in the future? In detail, stepwise.
+  - [ ] Start with a forum post on this instead of a call to start. - Clarify XCMP details about UMP/DMP use etc. - What interaction does XCMP have with relay chian now and in the future?
+        In detail, stepwise.
 - https://github.com/paritytech/xcm-format
 
   - updates to american english
-  - ensure that terms used are uniform for ALL of us, internally and get this as the source of truth. (also update glossary for academy)
+  - ensure that terms used are uniform for ALL of us, internally and get this as the source of truth.
+    (also update glossary for academy)
 
 - we need support team to get up to date on XCM to answer basic questions!! AND alumni of academy!
 
