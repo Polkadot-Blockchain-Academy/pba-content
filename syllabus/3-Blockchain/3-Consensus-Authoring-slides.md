@@ -86,8 +86,7 @@ Example spending more money than you have. Noting your present location such tha
 
 ## Arbitrary / Political Validity
 
-Similar to state machine validity.
-<br>
+Similar to state machine validity.<br>
 Examples:
 
 <pba-flex>

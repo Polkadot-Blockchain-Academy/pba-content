@@ -1,6 +1,6 @@
 ## Lesson 1: Core Concepts, Terms, and Logic of XCM
 
-> {Likely} Instructors: Keith & Gav
+> {Likely}
 
 ### Why is this topic Important?
 

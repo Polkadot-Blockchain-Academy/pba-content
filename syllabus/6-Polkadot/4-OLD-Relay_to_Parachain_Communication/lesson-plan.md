@@ -1,6 +1,6 @@
 ## Lesson 5: Communication Between Relay and Parachains
 
-> {Likely} Instructors:
+> {Likely}
 
 ### Why is this topic Important?
 

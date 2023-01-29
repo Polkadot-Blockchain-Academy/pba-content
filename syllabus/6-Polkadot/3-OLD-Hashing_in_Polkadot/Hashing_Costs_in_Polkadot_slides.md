@@ -2,8 +2,6 @@
 title: Costs of Hashing
 description: The Computational Costs of Hashing and how these drives Polkadot design.
 duration: 1 hour
-instructors: ["Émeric Chevalier"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Costs of Hashing

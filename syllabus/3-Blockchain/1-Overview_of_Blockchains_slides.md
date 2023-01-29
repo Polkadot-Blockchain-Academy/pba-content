@@ -242,11 +242,11 @@ So now we understand the goals of web3. How do we achieve them? The key is allow
 
 ## A Shared History
 
-> Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations. <!-- .element: class="fragment" data-fragment-index="1"-->
+> Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
 
-> Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs? <!-- .element: class="fragment" data-fragment-index="2" -->
+> Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
 
-_-- Yuval Noah Harari, Sapiens --_<!-- .element: class="fragment" data-fragment-index="2" -->
+_-- Yuval Noah Harari, Sapiens --_
 
 ---
 
@@ -386,7 +386,6 @@ What are the _rules_ to change it?
 **Data Structure**
 
 How can we cryptographically represent a history so it is tamper-proof?
-<br><br>
 
 </pba-flex>
 </pba-col>

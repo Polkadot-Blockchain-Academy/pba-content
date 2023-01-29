@@ -12,7 +12,7 @@
 
 ### Teleport ROC to Rockmine
 
-- Use **PalletXCM** to teleport ROC from Rococo to Rockmine. Can you do this? Why? 
+- Use **PalletXCM** to teleport ROC from Rococo to Rockmine. Can you do this? Why?
 - Use both xcmPallet.limitedTeleportAssets and xcmPallet.execute to teleport
 
 ### Try teleporting back the ROC from Rockmine to Rococo.

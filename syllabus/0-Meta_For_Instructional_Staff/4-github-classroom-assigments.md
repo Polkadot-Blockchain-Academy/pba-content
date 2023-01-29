@@ -53,7 +53,7 @@ It's an electron app that lets to select an assignment and select some or all re
 
 A superior solution is to [installing GitHub's command line client](https://github.com/cli/cli#installation), authenticating with it, and then using a simple bash script to clone all the relevant repos using `gh`:
 
-```bash
+```sh
 owner="Polkadot-Blockchain-Academy"
 prefix="pba-assignment-1"
 
