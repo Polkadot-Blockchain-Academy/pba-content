@@ -4,9 +4,31 @@ description: We're going to build a simple parachain without Cumulus
 duration: 1.5 hours
 ---
 
-# Build Simple Parachain
+# Agenda for Today
 
-We're going to build a simple parachain without Cumulus!
+- Build a simple collator without Cumulus
+- Introduction to Cumulus and how to build a Parachain
+- Workshop: Manually registering a parachain
+- Workshop: How to acquire a parachain slot
+
+## Before we begin:
+
+```sh
+git clone https://github.com/paritytech/polkadot/
+cd polkadot
+cargo build --release
+cargo build -p test-parachain-adder-collator --release
+```
+
+# Build Simple Blobchain
+
+We're going to build a simple blobchain without Cumulus!
+
+Notes:
+
+This will not a be a blockchain, but a blobchain.
+Meaning it will have some state and the rules for validating
+state transitions, but it will not have any transactions.
 
 ---
 
@@ -75,13 +97,64 @@ a parablock will never be backed/included by the relay chain validators.
 
 ---
 
-## Building a collator that adds number
+## Parachain node side
+
+- Our node will sync relay chain blocks
+- When importing the new best block, we'll connect to the backing group
+- Then we'll advertise our block ("collation") to a validator in the group
+- The validator will request the collation from us using `collator-protocol`
+- Now it's in the hands of validators to include our block
+
+Notes:
+
+Validators are shuffled into small backing groups, which rotate 
+regularly with `group_rotation_frequency`.
+Currently, collators can only produce the next block after their previous
+block has been included by the relay chain (remember `CandidateIncluded`).
+Since inclusion happens in the next block after candidate being backed,
+this means collators can only produce blocks every 12s. Async backing
+will change that.
+
+---
+
+## Collator-protocol
+
+Polkadot contains the implementation of the both collator and validator
+side of the collator protocol.
+
+```rust
+/// What side of the collator protocol is being engaged
+pub enum ProtocolSide {
+	/// Validators operate on the relay chain.
+	Validator {
+		/// The keystore holding validator keys.
+		keystore: SyncCryptoStorePtr,
+		/// An eviction policy for inactive peers or validators.
+		eviction_policy: CollatorEvictionPolicy,
+	},
+	/// Collators operate on a parachain.
+	Collator(
+		PeerId,
+		CollatorPair,
+		IncomingRequestReceiver<request_v1::CollationFetchingRequest>,
+	),
+}
+```
+
+Notes:
+
+We're going to use Polkadot as a library configured for the collator side.
 
 ---
 
 ## Exercise
 
-TODO
+Make the state of the Parachain a fixed sized field that evolves at each block according to
+Game of Life and print the state of each collation.
+
+> https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+
+> https://rosettacode.org/wiki/Conway%27s_Game_of_Life#Rust
 
 ---
 
