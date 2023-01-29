@@ -28,7 +28,7 @@ Instead of rebuilding see the `Reset, keeping build artifacts` section to clear 
 
 // Loading & building dependencies crates here takes *a while*!
 // Run this while you move on to the readings below.
-// NOTE: A kernel restart removes all target artifacts except those in sccache!
+// Notice: A kernel restart removes all target artifacts except those in sccache!
 // ONLY restart only if explicitly needed.
 ```
 

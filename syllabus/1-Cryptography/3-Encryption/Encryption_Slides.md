@@ -73,8 +73,6 @@ We caution however that constructing these protocols remains delicate, even give
 
 ### ECB penguin
 
-<br>
-
 <pba-cols>
 <pba-col>
 

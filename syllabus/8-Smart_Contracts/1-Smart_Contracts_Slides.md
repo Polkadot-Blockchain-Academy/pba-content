@@ -2,7 +2,6 @@
 title: Smart Contracts
 description: Substrate based smart contracts for Web3 Engineers
 duration: 1 hour
-instructors: ["Ricardo Rius"]
 ---
 
 # Smart Contracts

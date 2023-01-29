@@ -44,14 +44,12 @@
         bottom: 0;
         background-color: var(--r-selection-background-color);
       }
-      a {
-        text-decoration: none;
-        color: var(--r-main-color);
-        transition: color 100ms ease-in-out;
-      }
       a:hover {
-        color: var(--r-link-color);
+        color: var(--r-link-color-dark) !important;
       }
+      a span:first-of-type{
+        color: var(--r-heading-color);
+      }      
       h1 {
         margin: 0;
         text-transform: uppercase;
@@ -76,9 +74,8 @@
         font-size: calc(var(--font-size) * 2);
         content: "";
         display: list-item;
-        list-style-type: circle;
         line-height: 0;
-        color: var(--r-link-color-hover);
+        color: var(--r-link-color-dark);
         transition: color 200ms ease-in-out, font-size 200ms ease-in-out;
       }
       .slide-card-name{
@@ -87,7 +84,7 @@
       }
       .slide-card-path{
         font-style: italic;
-        font-size: smaller;
+        font-size: 0.7em;
       }
       .slide-list li a {
         padding-top: calc(var(--size) / 3);
@@ -130,7 +127,7 @@
     <header class="site-header site-header--small">
       <menu class="menu menu--header">
         <li class="menu-item">
-          <h1>Slides Master List</h1>
+          <h1>PBA Slides</h1>
         </li>
         <li class="menu-item">
             <img class="site-logo" src="./assets/img/0-Shared/logo/pba-logo-white.svg"/>
@@ -145,7 +142,7 @@
           <a href="{{filePath}}" title="{{title}}" class="slide-card">
             {{#title}}
             <span class="slide-card-name">{{.}}</span>
-            <span class="slide-card-path"> -- [{{filePath}}]</span>
+            <span class="slide-card-path"><br>&nbsp;&nbsp; -- {{filePath}}</span>
             {{/title}}
             {{^title}}
             {{filePath}}

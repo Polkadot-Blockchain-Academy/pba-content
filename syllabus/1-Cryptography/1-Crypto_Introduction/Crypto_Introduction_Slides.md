@@ -365,8 +365,6 @@ Cryptography is much more than encryption.
 
 <img style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg"/>
 
-<br>
-
 ##### _What insights did you gain?_
 
 Notes:

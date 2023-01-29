@@ -19,8 +19,6 @@ title: Accounting Models & User Abstractions in Blockchains
 - We have some base elements ideas and concepts
 - now lets put them together into something cool..
 
-<br>
-
 <img rounded style="width: 700px;" src="../../assets/img/3-Blockchain/3.2-assembling-cartoon.png"/>
 
 Notes:

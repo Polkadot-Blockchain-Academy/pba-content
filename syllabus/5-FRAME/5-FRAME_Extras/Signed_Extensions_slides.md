@@ -1,8 +1,6 @@
 ---
 title: Signed Extensions
 description: Signed Extensions, Transaction Priority.
-instructors: ["Shawn Tabrizi, Kian Paimani"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Signed Extensions
