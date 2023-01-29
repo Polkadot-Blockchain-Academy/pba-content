@@ -101,7 +101,7 @@ pub type XcmRouter = (
 Notes:
 
 - If the destination is `Multilocation { parents: 1, interior: Here }`, the message will be routed through UMP. The UMP channel is available by default.
-- If the destination is `Multilocation { parents: 1, interior: X1(Parachain(para_id)) }` the message will be routed through XCMP. As of today, A HRMP channel should be established before the message can be routed.
+- If the destination is `Multilocation { parents: 1, interior: X1(Parachain(para_id)) }` the message will be routed through XCMP. As of today, an HRMP channel should be established before the message can be routed.
 
 ---
 
