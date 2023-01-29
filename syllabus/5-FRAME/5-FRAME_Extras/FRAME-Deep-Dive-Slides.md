@@ -43,7 +43,7 @@ By the end of this lecture, you will fully understand this figure.
 
 ### Expanding A Pallet
 
-Make sure you understand why these 3 are the same!
+* Make sure you understand why these 3 are the same!
 
 ```rust
 let origin = ..;
@@ -63,73 +63,6 @@ Call::<T>::set_value(10).dispatch_bypass_filter(origin);
 ## `construct_runtime!` and Runtime Amalgamator.
 
 - Now, let's look at a minimal runtime amalgamator.
-- This is where you glue the runtime together, and expose the things you care about as runtime apis.
-
----v
-
-### `construct_runtime!` and Runtime Amalgamator.
-
-```rust
-#![cfg_attr(not(feature = "std"), no_std)]
-
-#[sp_version::runtime_version]
-pub const VERSION: RuntimeVersion = RuntimeVersion { .. };
-
-pub mod opaque { .. }
-
-parameter_types! { .. }
-impl frame_system::Config for Runtime { .. }
-
-parameter_types! { .. }
-impl pallet_xyz::Config for Runtime { .. }
-
-parameter_types! { .. }
-impl pallet_pqr::Config for Runtime { .. }
-
-construct_runtime!(
-  pub enum Runtime where
-  Block = Block,
-  NodeBlock = opaque::Block,
-  UncheckedExtrinsic = UncheckedExtrinsic
-  {
-    System: frame_system,
-    PalletXyz: pallet_xyx,
-    PalletPqr: pallet_pqr,
-  }
-);
-
-// This is what in your frameless-runtime was `BasicExtrinsic`.
-type UncheckedExtrinsic = generic::UncheckedExtrinsic<_, _, _, _>;
-type Header = ..
-type Block = generic::Block<Header, UncheckedExtrinsic>;
-type Executive = frame_executive::Executive<System, Block, _, ...>;
-
-// this is the juicy part! all implementations seem to come from Executive!
-impl_runtime_apis! {
-  impl sp_api::Core<Block> for Runtime {
-    fn version() -> RuntimeVersion {
-      VERSION
-    }
-
-    fn execute_block(block: Block) {
-      Executive::execute_block(block);
-    }
-
-    fn initialize_block(header: &<Block as BlockT>::Header) {
-      Executive::initialize_block(header)
-    }
-  }
-
-  ...
-}
-```
-
----v
-
-### `construct_runtime!` and Runtime Amalgamator.
-
-Let's expand a runtime, or alternatively, look at the rust-docs which also contain a lot of the
-information.
 
 ---v
 
@@ -140,14 +73,13 @@ information.
 - implements all of the runtime APIs as functions.
 - `type System`, `type SimplePallet`.
 - `AllPalletsWithSystem` etc.
-  - and recall that all pallets implement things like `Hooks`, `OnInitialize`, and all of these
-    traits are tuple-able.
-- enum Call
-- enum `Event`, `GenesisConfig`, etc. but we don't have them here.
+  - and recall that all pallets implement things like `Hooks`, `OnInitialize`, and all of these traits are tuple-able.
+- enum `RuntimeCall`
+- enum `RuntimeEvent`, `GenesisConfig`, etc. but we don't have them here.
 
 ---
 
-## 4. Executive
+## Executive
 
 - This part is somewhat optional to know in advance, but I want you to re-visit it in a week and then understand it all.
 
@@ -280,9 +212,3 @@ let unchecked = UncheckedExtrinsic::new();
 let checked = unchecked.check();
 let _ = checked.apply();
 ```
-
----v
-
-### Workshop
-
-- Walk over execute, namely `execute_block`, and see how much of it makes sense.
