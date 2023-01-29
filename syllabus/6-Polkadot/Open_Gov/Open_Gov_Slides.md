@@ -6,12 +6,23 @@ duration: 1 hour
 
 # OpenGov
 
+Notes:
+
+Making Polkadot truly decentralized requires a robust, agile, and democratic system of governance.
+
+Gavin has put a lot of effort over the last year or so into crafting a system which does those words justice, OpenGov.
+
+I'm here to give you an overview of what OpenGov is and to surface some new information about how it is performing on Kusama.
+
+So lets get to it
+
 ---
 
 ## Overview
 
 <pba-flex center>
 
+- Why blockchain governance?
 - Why on-chain?
 - Goals of on-chain governance
 - Initial Solution, Governance V1
@@ -474,3 +485,15 @@ Stress that as an oracle, the Fellowship can't take any action on its own. Any w
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
+
+---
+
+## OpenGov in Action
+
+<pba-flex center>
+
+- Vote - https://kusama.subsquare.io/referenda
+- Delegate vote - https://kusama.subsquare.io/referenda
+- Submit proposal - https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama-rpc.dwellir.com#/referenda
+
+</pba-flex>
