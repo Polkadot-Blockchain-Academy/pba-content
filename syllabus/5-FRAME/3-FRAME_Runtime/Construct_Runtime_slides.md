@@ -2,6 +2,7 @@
 title: Construct Runtime
 description: Deep dive into the Construct Runtime macro
 duration: 1 hour
+instructors: ["Kian Paimani"]
 ---
 
 # Runtime Construction
@@ -710,6 +711,7 @@ Notes:
 - https://github.com/paritytech/substrate/pull/11818
 - https://github.com/paritytech/substrate/pull/10043
 - On usage of macros un Substrate: https://github.com/paritytech/substrate/issues/12331
+- Disscussion on advance testing: https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356
 - Reserve topic: Reading events.
 - Reserve-topic: try-state.
 

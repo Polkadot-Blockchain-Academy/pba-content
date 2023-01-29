@@ -389,7 +389,7 @@ Members hold rank denoting proven level of expertise and commitment as recognize
 - White list proposals must pass two votes
   - Expertise weighted Fellowship vote via second referendum pallet instantiation
   - Same general referendum as other tracks, still requiring majority vote from DOT holders
-- Just an oracle! 
+- Just an oracle!
 - Secondarily intended to cultivate a long term base of Polkadot core developers outside of Parity
 
 </pba-col>
