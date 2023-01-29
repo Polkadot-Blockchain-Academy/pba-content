@@ -26,13 +26,13 @@ instructors: ["Javier Viola"]
 ## what is Zombienet?
 
 
-Zombienet is an **integration testing tool** that allows users to **spawn** and **test** ephemeral substrate based networks.
+Zombienet is an <span class="colored">integration testing tool</span> that allows users to *<span class="colored">spawn</span>* and *<span class="colored">test</span>* ephemeral substrate based networks.
 
 ---
 
 ## Why Zombienet?
 
-Integration tests are always **complex**:
+Integration tests are always <span class="colored">complex</span>:
 
 <br/>
 
@@ -71,9 +71,9 @@ Integration tests are always **complex**:
 
 ##### Hassle free setup
 
-- __Toml__ / __Json__
+- Toml / json
 - Nice defaults
-- Templating language
+- Templating lang.
 
 </pba-col>
 <pba-col>
@@ -90,8 +90,8 @@ Integration tests are always **complex**:
 ##### Extensible
 
 - Custom assertions
-- Intuitive **D.S.L**
-- Templating Lang.
+- Intuitive <span class="colored">D.S.L</span>
+- Templating lang.
 </pba-col>
 </pba-cols>
 
@@ -119,7 +119,7 @@ Integration tests are always **complex**:
 <pba-col>
 
 - Test
-    - Custom **D.S.L**
+    - Custom <span class="colored">D.S.L</span>
     - Multiple assertions
     - Extensible
     - Custom reporting
@@ -303,6 +303,7 @@ why do we need to use different ports for Alice and Bob?
 
     parachain-template-node export-genesis-state --chain /tmp/para-raw.json para-2000-genesis-state
     ```
+    <!-- .element: class="fragment" -->
 
 ---
 
@@ -311,6 +312,9 @@ why do we need to use different ports for Alice and Bob?
 # Activity
 
 Follow the [connect a local parachain](https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/) to launch your own network.
+<br/><br/>
+
+https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/
 
 ---
 
@@ -633,17 +637,32 @@ contribute.
 
 ## Activity
 
+- Launch a network with two validators and one parachain.
+
+- Add a test to ensure:
+    - block producing
+    - peers number
+    - node's role
+
 ---
 
+# Additional Resources!
 
+Check speaker notes (click "s").
 
+NOTES:
 
+- Zombienet repo: https://github.com/paritytech/zombienet
 
+- Zombienet docs: https://paritytech.github.io/zombienet/
 
+- Zombienet v2 Roadmap: https://github.com/orgs/paritytech/projects/55
 
+- [Zombiente sub0 slides](https://docs.google.com/presentation/d/1wPjbrqLg9MCfygvBYV5gDra39cSr5TXg)
 
+- [Zombienet sub0 presentation](https://www.youtube.com/watch?v=QKTZZCpdGH4)
 
-
+- [Setting up a local testnet](https://hackmd.io/kSFS2ButRESeJ7hu_iKKoA)
 
 
 
