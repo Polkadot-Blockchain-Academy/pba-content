@@ -25,6 +25,7 @@ mod tests {
         ParachainPalletXcm,
         ParachainPalletBalances,
         ALICE, BOB, INITIAL_BALANCE, parachain,
+        parachain_xcm_executed_successfully
 	};
     use codec::Encode;
     use frame_support::assert_ok;
@@ -33,15 +34,15 @@ mod tests {
     fn execute_withdraw_asset() {
         MockNet::reset();
 
-        let withdraw_amount = 100;
-        let location = MultiLocation {
+        let withdraw_amount = 100u128;
+        let asset_location = MultiLocation {
             parents: 1,
             interior: Here
         };
 
         ParaA::execute_with(|| {
             let message: Xcm<parachain::RuntimeCall> = Xcm(vec![
-                WithdrawAsset((location, withdraw_amount).into()),
+                WithdrawAsset((asset_location, withdraw_amount).into()),
             ]);
             assert_ok!(
                 ParachainPalletXcm::execute(
@@ -50,6 +51,8 @@ mod tests {
                     100_000_000_000
                 )
             );
+
+            assert!(parachain_xcm_executed_successfully());
 
             assert_eq!(
                 ParachainPalletBalances::free_balance(ALICE),
@@ -67,6 +70,7 @@ mod tests {
         // Hint: Our chain charges 1 token per 1e12 amount of weight
         // 1.) Who is buying the execution?
         // 2.) How to verify we executed this instruction correctly?
+        let weight = 1_000_000_000_000u64;
 
         ParaA::execute_with(|| {
            // Insert here the appropriate code to execute the XCM message asked for.
@@ -114,7 +118,7 @@ mod tests {
     
         ParaA::execute_with(|| {
             // Insert Here the appropriate code to execute the XCM message asked for.
-        });}
+        });
 
     }
 
