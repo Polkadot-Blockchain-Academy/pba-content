@@ -126,7 +126,7 @@ pub struct HostConfiguration {
 The `Configuration` pallet of the Relay Chain State stores a configuration object which can be altered by governance.
 It only officially changes at session boundaries.
 
-Challenge: Read the `activeConfig()` of the `configuration` pallet in Polkadot-JS.
+Challenge: Read the `activeConfig()` of the `configuration` pallet in Polkadot-JS Apps.
 
 ---
 
@@ -351,7 +351,8 @@ In XCMP-Lite, the full messages are posted to the Relay Chain.
 pub struct ValidationResult {
 	/// Outbound horizontal messages sent by the parachain.
 	pub horizontal_messages: Vec<OutboundHrmpMessage>,
-	/// The mark which specifies the block number up to which all inbound HRMP messages are processed.
+	/// The mark which specifies the block number up
+	/// to which all inbound HRMP messages are processed.
 	pub hrmp_watermark: RelayChainBlockNumber,
 
 	// ... more fields
@@ -399,13 +400,66 @@ Each channel comes with a corresponding _deposit_ of DOT tokens to pay for the r
 
 ---
 
-XCMP Channel Opening Diagram: TODO
+## XCMP-Lite / HRMP Channel Open Protocol
+
+<img rounded width="1000px" src="../assets/hrmp-channel.svg"/>
 
 ---
 
-## XCMP Pallet: MQCs
+## HRMP Pallet: MQCs
 
-TODO
+Every open channel causes the HRMP pallet in the Relay Chain Runtime to manage an MQC for messages from the sender to the receiver.
+
+Note that channels are one-way. Each channel comes with storage requirements, so a deposit is required from each side to collateralize the storage.
+
+---
+
+## XCMP Configuration by Governance
+
+```rust
+pub struct HostConfiguration {
+	/// Maximum outbound channels
+	pub hrmp_max_parachain_outbound_channels: u32,
+	pub hrmp_max_parathread_outbound_channels: u32,
+	/// Required deposits from each side of the channel
+	pub hrmp_sender_deposit: Balance,
+	pub hrmp_recipient_deposit: Balance,
+	/// Maximum capacity per channel, measured in messages.
+	pub hrmp_channel_max_capacity: u32,
+	/// Maximum capacity per channel, measured in bytes.
+	pub hrmp_channel_max_total_size: u32,
+	/// Maximum inbound channels allowed
+	pub hrmp_max_parachain_inbound_channels: u32,
+	pub hrmp_max_parathread_inbound_channels: u32,
+	/// Maximum size per message in the channel, in bytes.
+	pub hrmp_channel_max_message_size: u32,
+
+  // more fields...
+}
+```
+
+---
+
+## The `hrmp_watermark` field
+
+Parachains include an `hrmp_watermark` in their `ValidationResult` indicating a relay-chain block number.
+
+This block number tells the relay chain state that the parachain has processed all messages from all inbound channels with `sent_at <= hrmp_watermark`
+
+Legal values for `hrmp_watermark` are either the relay-parent number from the `ValidatiomParams` _or_ a block number where a message was enqueued into an inbound MQC.
+
+---
+
+## Learning about downward and inbound HRMP messages
+
+<pba-flex center>
+
+1. The `ValidationParams` includes a `relay_parent_storage_root`.
+1. The Relay Chain state contains UMP and HRMP pallets with MQCs in the storage.
+1. Collators put state proofs into the parachain block, allowing the runtime to verifiably read parts of the Relay Chain state.
+1. By doing so, the parachain runtime reads information about inbound messages from the relay chain.
+
+</pba-flex>
 
 ---
 
@@ -413,7 +467,7 @@ TODO
 
 This lesson is meant to communicate the underlying protocols and mechanics by which messages are sent and received.
 
-In practice, using these mechanisms in a parachain with Cumulus is simple and is abstracted by XCM utilities, covered in the next module.
+In practice, using these mechanisms in a parachain with Cumulus is simple and is abstracted by Cumulus pallets & XCM utilities, covered in the next lessons.
 
 ---
 
