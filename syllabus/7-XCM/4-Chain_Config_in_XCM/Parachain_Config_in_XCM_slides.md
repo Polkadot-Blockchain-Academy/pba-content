@@ -70,6 +70,17 @@ impl Config for XcmConfig {
 
 ```
 
+Notes:
+
+- Means of converting a multilocation into an accountId
+Used later for: OriginConverter , `AssetTransactor`
+
+- `xcm-builder` and `xcm-pallet` are your friends!
+
+- `xcm-builder` is a polkadot module that contains a set of pre-defined structures to be set in some of the configurable sides of XCM.
+
+- `xcm-pallet` is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.
+
 ---v
 
 ## 🛠️ XcmRouter in `XcmConfig`
