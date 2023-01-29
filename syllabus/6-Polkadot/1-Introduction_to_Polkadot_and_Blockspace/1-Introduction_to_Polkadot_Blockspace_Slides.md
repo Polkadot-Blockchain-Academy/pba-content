@@ -383,7 +383,7 @@ pub struct ValidationResult {
 	pub head_data: HeadData,
 	/// An update to the validation code that should be scheduled in the relay chain.
 	pub new_validation_code: Option<ValidationCode>,
-	/// Upward messages send by the Parachain.
+	/// Upward messages sent by the Parachain.
 	pub upward_messages: Vec<UpwardMessage>,
 	/// Outbound horizontal messages sent by the parachain.
 	pub horizontal_messages: Vec<OutboundHrmpMessage<Id>>,
