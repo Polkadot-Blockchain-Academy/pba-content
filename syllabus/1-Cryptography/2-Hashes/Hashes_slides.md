@@ -12,8 +12,6 @@ duration: 1 hour
 
 We often want a succinct representation of some data<br>with the expectation that we are referring to the same data.
 
-<br>
-
 ##### A "fingerprint".
 
 ---
@@ -109,7 +107,7 @@ xxHash64 is about 20x faster than Blake2.
 
 ---
 
-## Examples of Hash Functions used in Blockchains
+## Hash Functions in Blockchains
 
 <pba-flex center>
 
@@ -233,7 +231,7 @@ Attacker has intention to impersonate the signer with the other.
 
 ## Birthday Attack
 
-Thus, with a birthday attack, it is possible to find a collision of a hash function in $\sqrt {2^{n}}=2^{\frac{n}{2}}$, with $\cdot 2^{\frac{n}{2}}$ being the classical preimage resistance security.
+Thus, with a birthday attack, it is possible to find a collision of a hash function in $\sqrt {2^{n}}=2^{^{\frac{n}{2}}}$, with $\cdot 2^{^{\frac{n}{2}}}$ being the classical preimage resistance security.
 
 So, hash function security is only half of the bit space.
 

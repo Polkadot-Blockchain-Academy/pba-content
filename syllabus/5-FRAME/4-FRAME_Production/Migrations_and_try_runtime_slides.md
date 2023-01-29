@@ -50,7 +50,7 @@ pub struct Foo(u32)
 pub struct Foo(u64)
 ```
 
-* A clear migration.
+- A clear migration.
 
 <!-- .element: class="fragment" -->
 
@@ -72,7 +72,7 @@ pub struct Foo(i32)
 pub struct Foo(u16, u16)
 ```
 
-* The data still _fits_, but the _interpretations_ is almost certainly different!
+- The data still _fits_, but the _interpretations_ is almost certainly different!
 
 <!-- .element: class="fragment" -->
 
@@ -92,7 +92,7 @@ pub struct Foo { a: u32, b: u32 }
 pub struct Foo { a: u32, b: u32, c: u32 }
 ```
 
-* This is still a migration, because `Foo`'s decoding changed.
+- This is still a migration, because `Foo`'s decoding changed.
 
 <!-- .element: class="fragment" -->
 
@@ -112,7 +112,7 @@ pub struct Foo { a: u32, b: u32 }
 pub struct Foo { a: u32, b: u32, c: PhantomData<_> }
 ```
 
-* If for whatever reason `c` has a type that its encoding is like `()`, then this would work.
+- If for whatever reason `c` has a type that its encoding is like `()`, then this would work.
 
 <!-- .element: class="fragment" -->
 
@@ -132,11 +132,11 @@ pub type FooValue = StorageValue<_, Foo>;
   pub enum Foo { A(u32), B(u32), C(u128) }
 ```
 
-* Extending an enum is even more interesting, because if you add the variant to the end, no migration is needed.
+- Extending an enum is even more interesting, because if you add the variant to the end, no migration is needed.
 
 <!-- .element: class="fragment" -->
 
-* Assuming that no value is initialized with `C`, this is _not_ a migration.
+- Assuming that no value is initialized with `C`, this is _not_ a migration.
 
 <!-- .element: class="fragment" -->
 
@@ -156,7 +156,7 @@ pub enum Foo { A(u32), B(u32) }
 pub enum Foo { A(u32), C(u128), B(u32) }
 ```
 
-* You probably _never_ want to do this, but it is a migration.
+- You probably _never_ want to do this, but it is a migration.
 
 <!-- .element: class="fragment" -->
 
@@ -210,8 +210,8 @@ pub type FooValue = StorageValue<_, u32>;
 pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 ```
 
-* Handy macro if you must rename a storage type.<br>
-* This does _not_ require a migration.
+- Handy macro if you must rename a storage type.<br>
+- This does _not_ require a migration.
 
 <!-- .element: class="fragment" -->
 
@@ -285,7 +285,7 @@ impl<T: Config> Hooks<T::BlockNumber> for Pallet<T> {
 }
 ```
 
-* If you execute `migrate_stuff_and_things_here_and_there` twice as well, then you are doomed 😫.
+- If you execute `migrate_stuff_and_things_here_and_there` twice as well, then you are doomed 😫.
 
 ---v
 
@@ -319,7 +319,7 @@ impl<T: Config> Hooks<T::BlockNumber> for Pallet<T> {
 
 ### Pallet Internal Migrations
 
-* FRAME introduced macros to manage migrations: `#[pallet::storage_version]`.
+- FRAME introduced macros to manage migrations: `#[pallet::storage_version]`.
 
 ```rust
 // your current storage version.
@@ -330,7 +330,7 @@ const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);
 pub struct Pallet<T>(_);
 ```
 
-* This adds two function to the `Pallet<_>` struct:
+- This adds two function to the `Pallet<_>` struct:
 
 ```rust
 // read the current version, encoded in the code.
@@ -380,7 +380,6 @@ Alternative:
 - Every runtime can explicitly pass anything that implements `OnRuntimeUpgrade` to `Executive`.
 - End of the day, Executive does:
   - `<(COnRuntimeUpgrade, AllPalletsWithSystem) as OnRuntimeUpgrade>::on_runtime_upgrade()`.
-
 
 <!-- .element: class="fragment" -->
 
@@ -460,7 +459,6 @@ NOTE:
 
 Short answer is, yes, but it is a LOT of work. See here: https://github.com/paritytech/substrate/issues/10308
 
-
 ---
 
 ### Utilities in `frame-support`.
@@ -491,9 +489,9 @@ Imagine you want to remove a storage map and in a migration you want to iterate 
 
 ### Testing Upgrades
 
-* `try-runtime` + `RemoteExternalities` allow you to examine and test a runtime in detail with a high degree of control over the environment.
+- `try-runtime` + `RemoteExternalities` allow you to examine and test a runtime in detail with a high degree of control over the environment.
 
-* It is meant to try things out, and inspired by traits like `TryFrom`, the name `TryRuntime` was chosen.
+- It is meant to try things out, and inspired by traits like `TryFrom`, the name `TryRuntime` was chosen.
 
 ---v
 
@@ -501,10 +499,10 @@ Imagine you want to remove a storage map and in a migration you want to iterate 
 
 Recall:
 
-* The runtime communicates with the client via host functions.
-* Moreover, the client communicates with the runtime via runtime APIs.
-* An environment that provides these host functions is called `Externalities`.
-* One example of which is `TestExternalities`, which you have already seen.
+- The runtime communicates with the client via host functions.
+- Moreover, the client communicates with the runtime via runtime APIs.
+- An environment that provides these host functions is called `Externalities`.
+- One example of which is `TestExternalities`, which you have already seen.
 
 ---v
 
@@ -551,31 +549,30 @@ Reading all this data over RPC can be slow!
 
 ## Testing Upgrades: `try-runtime`
 
-* `try-runtime` is a CLI and a set of custom runtime APIs integrated in substrate that allows you to do detailed testing..
+- `try-runtime` is a CLI and a set of custom runtime APIs integrated in substrate that allows you to do detailed testing..
 
-* .. including running `OnRuntimeUpgrade` code of a new runtime, on top of a real chain's data.
-
----v
-
-### Testing Upgrades: `try-runtime`
-
-* A lot can be said about it, the best resource is the [rust-docs](https://paritytech.github.io/substrate/master/try_runtime_cli/index.html).
-
+- .. including running `OnRuntimeUpgrade` code of a new runtime, on top of a real chain's data.
 
 ---v
 
 ### Testing Upgrades: `try-runtime`
 
-* You might find some code in your runtime that is featured gated with `#[cfg(feature = "try-runtime")]`. These are always for testing.
-* `pre_upgrade` and `post_upgrade`: Hooks executed before and after `on_runtime_upgrade`.
-* `try_state`: called in various other places, used to check the invariants the pallet.
+- A lot can be said about it, the best resource is the [rust-docs](https://paritytech.github.io/substrate/master/try_runtime_cli/index.html).
+
+---v
+
+### Testing Upgrades: `try-runtime`
+
+- You might find some code in your runtime that is featured gated with `#[cfg(feature = "try-runtime")]`. These are always for testing.
+- `pre_upgrade` and `post_upgrade`: Hooks executed before and after `on_runtime_upgrade`.
+- `try_state`: called in various other places, used to check the invariants the pallet.
 
 ---v
 
 ### Testing Upgrades: `try-runtime`: Live Demo.
 
-* Let's craft a migration on top of poor node-template 😈..
-* and migrate the balance type from u128 to u64.
+- Let's craft a migration on top of poor node-template 😈..
+- and migrate the balance type from u128 to u64.
 
 ---
 
@@ -587,6 +584,7 @@ Note:
 - a Great talk about try-runtime and further testing of your runtime: https://www.youtube.com/watch?v=a_u3KMG-n-I
 
 #### Reference material:
+
 https://docs.google.com/presentation/d/1hr3fiqOI0JlXw0ISs8uV9BXiDQ5mGOQLc3b_yWK6cxU/edit#slide=id.g43d9ae013f_0_82
 https://www.crowdcast.io/e/substrate-seminar/41
 

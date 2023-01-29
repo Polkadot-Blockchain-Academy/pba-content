@@ -2,7 +2,6 @@
 title: Events and Errors
 description: FRAME Events and Errors for Web3 Engineers.
 duration: 1 hour
-instructors: ["Shawn Tabrizi, Kian Paimani"]
 ---
 
 # Events and Errors
@@ -213,7 +212,7 @@ println!("{:?}", dispatch_error1.encode());
 println!("{:?}", dispatch_error2.encode());
 ```
 
-```bash
+```sh
 [0]
 [1]
 [3, 1, 0, 0, 0, 0]

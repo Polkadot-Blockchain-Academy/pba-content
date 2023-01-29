@@ -75,9 +75,9 @@ For example, when a user authorizes a transfer,<br>they almost always mean just 
 
 ---
 
-## Asym. Encrypt. & Signatures
+## Signing and Verifying
 
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow-and-sig.svg"/>
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/sig-verify-flow.svg"/>
 
 ---
 
@@ -144,8 +144,6 @@ Always do hard paths first, then conclude in soft paths.
 
 Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
 
-<br>
-
 <img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
 
 ---
@@ -153,8 +151,6 @@ Wallets can derive keys for use in different consensus systems while only needin
 ## Hard Derivation in Wallets
 
 Let's imagine we want to use this key on multiple networks, but we don't want the public keys to be connected to each other.
-
-<br>
 
 <img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
 

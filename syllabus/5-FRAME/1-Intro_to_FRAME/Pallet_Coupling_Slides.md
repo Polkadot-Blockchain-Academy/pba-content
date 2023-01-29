@@ -2,7 +2,6 @@
 title: FRAME Pallet Coupling
 description: A look into how multiple pallets interact.
 duration: 1 hour
-instructors: ["Shawn Tabrizi"]
 ---
 
 # Pallet Coupling

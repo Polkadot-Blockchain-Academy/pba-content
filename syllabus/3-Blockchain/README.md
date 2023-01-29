@@ -31,7 +31,9 @@ The module is taught over 2.5 days - roughly
 - ⌨️ BFS
 - ☕ Break
 - 🗣️ Consensus Part 2 Lecture - Finality - Agreeing on Ordering
-- 🎲 Grandpa Board Game Activity
+- 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) <!-- markdown-link-check-disable-line -->
+  - _Note that this repo is private, intended to be shared with the student cohort's gihub team for read access._
+    _This also allows for people to pull up on mobile if logged in to view easier_
 
 ### Day 2 - Afternoon Session
 

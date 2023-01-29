@@ -2,7 +2,6 @@
 title: FRAME Deep Dive
 description: FRAME, Pallets, System Pallet, Executive, Runtime Amalgamator.
 duration: 1 hour
-instructors: ["Kian Paimani"]
 ---
 
 # FRAME Deep Dive
@@ -43,7 +42,7 @@ By the end of this lecture, you will fully understand this figure.
 
 ### Expanding A Pallet
 
-* Make sure you understand why these 3 are the same!
+- Make sure you understand why these 3 are the same!
 
 ```rust
 let origin = ..;

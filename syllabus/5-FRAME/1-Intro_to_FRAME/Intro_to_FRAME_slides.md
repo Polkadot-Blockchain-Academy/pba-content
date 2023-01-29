@@ -2,7 +2,6 @@
 title: Introduction to FRAME
 description: An introduction into FRAME, a framework for building Substrate runtimes.
 duration: 1 hour
-instructors: ["Shawn Tabrizi"]
 ---
 
 ## Lesson Plan
@@ -186,7 +185,7 @@ We will look more closely at each attribute throughout this module.
 - `wc -l` will show the number of lines of a file.
 - `cargo expand` will expand the macros to "pure" Rust.
 
-```bash
+```sh
 ➜  substrate git:(master) ✗ wc -l frame/sudo/src/lib.rs
     310 frame/sudo/src/lib.rs
 

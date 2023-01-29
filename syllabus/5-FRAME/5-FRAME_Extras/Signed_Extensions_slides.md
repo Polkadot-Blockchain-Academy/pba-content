@@ -1,8 +1,6 @@
 ---
 title: Signed Extensions
 description: Signed Extensions, Transaction Priority.
-instructors: ["Shawn Tabrizi, Kian Paimani"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Signed Extensions
@@ -36,13 +34,13 @@ teaching-assistants: ["Sacha Lansky"]
 A signed extension can be either combination of the following things:
 
 - Some additional data that is attached to the transaction.
-   - The tip!
+  - The tip!
 
 <!-- .element: class="fragment" -->
 
 - Some hooks that are executed before and after the transaction is executed.
-   - Before each transaction is executed, it must pay its fee upfront.
-   - Perhaps refund the fee partially 🤑.
+  - Before each transaction is executed, it must pay its fee upfront.
+  - Perhaps refund the fee partially 🤑.
 
 <!-- .element: class="fragment" -->
 
@@ -51,7 +49,7 @@ A signed extension can be either combination of the following things:
 ### Anatomy
 
 - Some additional validation logic that is used to validate the transaction, and give feedback to the pool.
-   - Set priority of transaction priority based on some metric!
+  - Set priority of transaction priority based on some metric!
 
 <!-- .element: class="fragment" -->
 
@@ -63,8 +61,7 @@ A signed extension can be either combination of the following things:
 
 ---v
 
-### Anatomy:  Let's Peek at the Trait
-
+### Anatomy: Let's Peek at the Trait
 
 ```rust [1-100|4|6-7|9-10|12]
 pub trait SignedExtension:
@@ -117,7 +114,7 @@ pub type SignedExtra = (
 type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, SignedExtra>;
 ```
 
-* Signed extensions might originate from a pallet, but are applied to ALL EXTRINSICS 😮‍💨!
+- Signed extensions might originate from a pallet, but are applied to ALL EXTRINSICS 😮‍💨!
 
 NOTE:
 
@@ -145,7 +142,7 @@ pub struct UncheckedExtrinsic<Address, Call, Signature, (Foo)>
 }
 ```
 
-* 2 u32 are decoded as, `42u32` is expected to be in the signature payload.
+- 2 u32 are decoded as, `42u32` is expected to be in the signature payload.
 
 NOTE:
 
@@ -190,8 +187,8 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 
 ## Transaction Pool Validation
 
-* Each pallet also has `#[pallet::validate_unsigned]`.
-* This kind of overlaps with creating a signed extension and implementing `validate_unsigned`.
+- Each pallet also has `#[pallet::validate_unsigned]`.
+- This kind of overlaps with creating a signed extension and implementing `validate_unsigned`.
 
 NOTE:
 
@@ -209,12 +206,10 @@ https://github.com/paritytech/substrate/issues/4419
   - call `ValidateUnsigned::validate`, if unsigned.
   - NOTE dispatching ✅!
 
-
 NOTE:
 
 > Transaction queue is not part of the consensus system. Validation of transaction are _free_. Doing
 > too much work in validation of transactions is essentially opening a door to be DOS-ed.
-
 
 ---v
 
@@ -235,10 +230,8 @@ fn pre_dispatch() -> Result<Self::Pre, TransactionValidityError>;
 
 ## Post Dispatch
 
-* The dispatch result, plus  generic type (`type Pre`) returned from `pre_dispatch` is passed to `post_dispatch`.
-* See [`impl Applyable for CheckedExtrinsic`](https://github.com/paritytech/substrate/blob/a47f200eebeb88a5bde6f1ed2be9728b82536dde/primitives/runtime/src/generic/checked_extrinsic.rs#L69) for more info.
-
-
+- The dispatch result, plus generic type (`type Pre`) returned from `pre_dispatch` is passed to `post_dispatch`.
+- See [`impl Applyable for CheckedExtrinsic`](https://github.com/paritytech/substrate/blob/a47f200eebeb88a5bde6f1ed2be9728b82536dde/primitives/runtime/src/generic/checked_extrinsic.rs#L69) for more info.
 
 ---
 
@@ -288,7 +281,6 @@ Put the genesis hash in `additional_signed`.
 - discovered by [@xlc](https://github.com/xlc).
 - uses `pre_dispatch` and `validate` to ensure the signing account is not `0x00`.
 
-
 NOTE:
 
 https://github.com/paritytech/substrate/issues/10413
@@ -297,10 +289,8 @@ https://github.com/paritytech/substrate/issues/10413
 
 ### `check_nonce`
 
-
-
-* `pre_dispatch`: check nonce and actually update it.
-* `validate`: check the nonce, DO NOT WRITE ANYTHING, set `provides` and `requires`.
+- `pre_dispatch`: check nonce and actually update it.
+- `validate`: check the nonce, DO NOT WRITE ANYTHING, set `provides` and `requires`.
 
 <!-- .element: class="fragment" -->
 
@@ -331,13 +321,11 @@ https://github.com/paritytech/substrate/issues/10413
 - Signed extensions (or at least the `pre_dispatch` and `validate` part) remind me of the extension
   system of `express.js`, if any of you know what that is
 
-
 ---v
 
 ## Big Picture: Pipeline of Extension
 
 <img rounded src="../../../assets/img/4-Substrate/dev-5-x-signed-extensions.svg" ></img>
-
 
 ---
 

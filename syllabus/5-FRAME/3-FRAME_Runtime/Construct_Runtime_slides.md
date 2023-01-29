@@ -208,7 +208,7 @@ type AllPallets = (System, Balances, ..., Dpos);
 
 Question: What will be the order of `fn on_initialize()`?
 
-NOTE:
+Notes:
 
 There's also `type AllPalletsWithoutSystem` and some other variants that are no longer
 
@@ -306,7 +306,7 @@ Final thoughts:
 - Order in the `construct_runtime` matters!
 - Recall `integrity_test()` is called upon `construct_runtime`.
 
-```bash
+```sh
 test mock::__construct_runtime_integrity_test::runtime_integrity_tests ... ok
 ```
 
@@ -705,7 +705,7 @@ pub fn next_block() {
 
 # Additional Resources 😋
 
-NOTE:
+Notes:
 
 - This PR was actually an outcome Cambridge PBA: https://github.com/paritytech/substrate/pull/11932
 - https://github.com/paritytech/substrate/pull/11818
