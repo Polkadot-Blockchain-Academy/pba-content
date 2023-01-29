@@ -2,7 +2,6 @@
 title: Pallet Hooks
 description: Pallet Hooks
 duration: 1 hour
-instructors: ["Shawn Tabrizi, Kian Paimani"]
 ---
 
 # Pallet Hooks

@@ -27,7 +27,7 @@ Notes:
   - Rational actors and assumed complete models of behavior in economics
   - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way...
     We will talk about the Oracle Problem.
-- In _practice_ there are far more ["unknown unknowns"](#unknown-unknowns) and "black swan" behavior.
+- In _practice_ there are far more ["unknown unknowns"](#🙈-unknown-unknowns) and "black swan" behavior.
   More to come on that in this lesson.
 
 ---
@@ -71,9 +71,6 @@ In reality we strive for Absolute Unstoppability, but likely cannot grantee it i
 
 <pba-cols>
 <pba-col>
-
-<br>
-
 <div style="font-size:smaller">
 
 > Some things benefit from shocks; they thrive and grow when exposed to volatility, randomness, disorder, and stressors and love adventure, risk, and uncertainty.
@@ -165,8 +162,6 @@ Smart contracts module _may_ include detains on unstoppable dapps design conside
 <pba-col>
 
 Blockchains only form one part of the stack.
-
-<br>
 
 Web3 applications must prevent attacks at all layers.
 
@@ -452,8 +447,6 @@ i.e., be members of the same consensus system.
 
 **Minimum viable decentralization.**
 
-<br>
-
 > What key aspects should be considered?
 
 Notes:
@@ -519,8 +512,6 @@ Emergence of obscure/niche "Proof of X" algorithms<br>to shelter from attack onl
 
 Systems with high security have the<br>incentive to attack systems with low security<br>whom they perceive as competitors.
 
-<br>
-
 > For fun and profit.
 
 Notes:
@@ -532,8 +523,6 @@ Notes:
 ## ⚔ Proof of Work Battles
 
 <img rounded style="width: 1300px;" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
-
-<br>
 
 > What might it cost to successfully attack?
 
@@ -554,8 +543,6 @@ vote on them all!
 
 (If you are not eventually slashed!)
 
-<br>
-
 > What might it cost to successfully attack?
 
 Notes:
@@ -572,8 +559,6 @@ Notes:
 Risk-to-reward ratio of attacks is<br>_relative to the valuation of the staked assets_.
 
 Rational actors take into account<br>_extrinsic motivators_ in calculating the highest reward.
-
-<br>
 
 > What might it cost to successfully attack?
 
@@ -600,8 +585,6 @@ Yet another N-lemma to consider.
 ## PoS Economic Security
 
 Proposition: The upper bound of economic security in PoS is relative valuation can secure, that is correlated with the market capitalization of the network.
-
-<br>
 
 > Market capitalization refers to the total market value of all assets inherent to a single company/chain/token.
 
@@ -742,8 +725,6 @@ A measure of the value that block authors can extract based on their knowledge o
 - Sandwiching
 
 </pba-flex>
-
-<br>
 
 > https://www.mev.wiki/
 
@@ -951,8 +932,6 @@ Notes:
 
 Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech/what-dao/)).
 
-<br>
-
 > A **coordination** mechanism.
 
 ---v
@@ -960,8 +939,6 @@ Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech
 ## Democratic Systems
 
 Democratic Mediums is a directory of patterns<br> for decision, deliberation, and noise.
-
-<br>
 
 <pba-flex center>
 

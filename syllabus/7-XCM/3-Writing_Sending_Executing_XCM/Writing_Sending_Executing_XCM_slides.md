@@ -41,7 +41,6 @@ The specification document for the XCM format
 
 <pba-flex center>
 
-1. [XCM Communication Model](#xcm-communication-model)
 1. [Basic Top-Level Format](#basic-top-level-format)
 1. XCVM Registers\*
 1. [Basic XCVM Operation](#basic-top-level-format)
@@ -136,8 +135,6 @@ Split into a few categories. Instructions that:
 <pba-flex center>
 
 handle assets:
-
-<br>
 
 - handle an Asset local assets only
 - transfer an Asset assets to another consensus system

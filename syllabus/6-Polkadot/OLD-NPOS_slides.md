@@ -2,7 +2,6 @@
 title: Nominated Proof of Stake
 description: An introduction to Nominated Proof of Stake in Polkadot
 duration: 1 hour
-instructors: ["Kain Paimani"]
 ---
 
 # Nominated Proof of Stake

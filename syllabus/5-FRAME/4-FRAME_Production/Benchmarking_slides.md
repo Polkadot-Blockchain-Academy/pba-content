@@ -2,7 +2,6 @@
 title: FRAME Benchmarking
 description: How to benchmark Pallets in FRAME.
 duration: 2 hours
-instructors: ["Shawn Tabrizi"]
 ---
 
 # FRAME Benchmarking
@@ -183,7 +182,7 @@ https://github.com/paritytech/substrate/pull/12924
 
 Compile your node with `--features runtime-benchmarks`.
 
-```bash
+```sh
 ➜  ~ substrate benchmark --help
 Sub-commands concerned with benchmarking.
 The pallet benchmarking moved to the `pallet` sub-command
@@ -571,7 +570,7 @@ verify {
 
 ## Executing the Benchmark
 
-```bash
+```sh
 ./target/production/substrate benchmark pallet \
 	--chain=dev \				# Configurable Chain Spec
 	--steps=50 \				# Number of steps across component ranges

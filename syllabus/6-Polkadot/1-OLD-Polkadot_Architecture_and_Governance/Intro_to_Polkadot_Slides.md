@@ -2,7 +2,6 @@
 title: Introduction to Polkadot
 description: An introduction to the key concepts of Polkadot.
 duration: 1 hour
-instructors: ["Gavin Wood"]
 ---
 
 # Introduction to Polkadot

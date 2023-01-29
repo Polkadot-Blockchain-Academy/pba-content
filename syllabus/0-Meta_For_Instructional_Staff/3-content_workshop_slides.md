@@ -6,8 +6,6 @@ duration: 1 hour
 
 # Content Workshop
 
-<br>
-
 ### _Instructional Staff Briefing_
 
 ---
@@ -140,11 +138,7 @@ This endeavor will only succeed with everyone doing their part. If you cannot co
 
 ## What am I signing up for?
 
-<br>
-
 ### Instructors are the _Owner_ of content creation and delivery.
-
-<br>
 
 <widget-columns>
 <widget-column>
@@ -174,8 +168,6 @@ This endeavor will only succeed with everyone doing their part. If you cannot co
 - TAs: Dan, Giulia, Hector
 - Dates: January 10 - 11
 
-<br>
-
 **_Do you commit?_**
 
 Notes:
@@ -191,8 +183,6 @@ We are still struggling to get an offer to Isaac. I've done everything I can to 
 - Instructors: Samuel
 - TAs: Jonas, Florian, Alfonso
 - Dates: January 12 - 13
-
-<br>
 
 **_Do you commit?_**
 
@@ -210,8 +200,6 @@ Understood that, unfortunately, Jonas cannot be present this time. He has done g
 - TAs: Dan, Andrew, Isaac (Hopefully)
 - Dates: January 16 - 18
 
-<br>
-
 ✅ Already committed
 
 Notes:
@@ -228,8 +216,6 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 - TAs: Andrew, Shawn, Dan, Joshy
 - Dates: January 18 - 20
 
-<br>
-
 **_Do you commit?_**
 
 ---v
@@ -242,8 +228,6 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 - TAs: Kian, Dan, Hector, Alex T
 - Dates: January 23 - 27
 
-<br>
-
 **_Do you commit?_**
 
 ---v
@@ -255,8 +239,6 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 - Instructors: Rob, Andronik
 - TAs: Kian, Shawn
 - Dates: January 30 - February 1
-
-<br>
 
 **_Do you commit?_**
 
@@ -274,8 +256,6 @@ Understood that Rob cannot be present for February 1st.
 - TAs: Ricardo, Hector
 - Dates: February 1 - 3
 
-<br>
-
 **_Do you commit?_**
 
 ---v
@@ -287,8 +267,6 @@ Understood that Rob cannot be present for February 1st.
 - Instructors: Kieth, Gorka
 - TAs: Hector, Andrew
 - Dates: February 6 - 8
-
-<br>
 
 **_Do you commit?_**
 
@@ -302,8 +280,6 @@ Gorka is from the Moonbeam team and has already committed.
 
 ## Alright! We have a TEAM!
 
-<br>
-
 <img src="../../assets/img/0-Shared/meta-slides/salute-team.jpg" style="width: 900px;">
 
 ---
@@ -313,8 +289,6 @@ Gorka is from the Moonbeam team and has already committed.
 <pba-flex center>
 
 _The approach to teaching, is the theory and practice of learning,_
-
-<br>
 
 Biggest feedback from wave 1:
 **_Too much boring lecture_**
@@ -375,8 +349,6 @@ Teachers imagine eery student is like this one guy. But look at most of them.
 
 - Consider assigning pre-reading or _short_ pre-recorded lectures: explore the [flipped classroom](https://en.wikipedia.org/wiki/Flipped_classroom) and [active learning](https://bokcenter.harvard.edu/active-learning)
 - Treat them as **apprentices**
-
-<br>
 
 <img src="../../assets/img/0-Shared/meta-slides/chefs.jpg" style="width: 600px;">
 
@@ -453,8 +425,6 @@ Exercise: Students will do it if you tell them to. I've gotten theaters of 50+ a
 
 # Content Brainstorming
 
-<br>
-
 **Coding exercises, module by module**
 
 <pba-flex center>
@@ -464,8 +434,6 @@ Exercise: Students will do it if you tell them to. I've gotten theaters of 50+ a
 ...active learning ideas
 
 </widget-text>
-
-<br>
 
 There are no stupid ideas!<br>
 Keep 'em coming...<br>
@@ -510,11 +478,7 @@ https://github.com/Polkadot-Blockchain-Academy/pba-content <!-- TODO Remove this
 
 </widget-text>
 
-<br>
-
 Everyone should have access to this repo, let Dan know if not.
-
-<br>
 
 **_📝 New issue by instructors on inventory to kick things off ⏰_**
 
@@ -541,11 +505,7 @@ Please reach out anytime and don't wait for us to get started or ask you how thi
 
 ## Beta Testing 🧪
 
-<br>
-
 Eager internal contributors and wannabe students...
-
-<br>
 
 **_What do \*you\* need they could assist with?_**
 
@@ -574,8 +534,6 @@ Maybe...?
 
 They need fresh content to help us...
 
-<br>
-
 ### ⏰ The sooner you create this, the more we can help! ⭐
 
 ---
@@ -596,8 +554,6 @@ Similar in flavor to the final project last time, but here it can be a bigger, m
 ---v
 
 ## Kudos Idea
-
-<br>
 
 ### _A fully functional parachain, incorporating custom pallets, contracts, and XCM integrations_
 
