@@ -2,7 +2,6 @@
 title: Contracts Pallet
 description: pallet-contracts for Web3 Engineers.
 duration: 1 hour
-instructors: ["Alexander Theißen"]
 revealOptions:
   transition: "slide"
 ---

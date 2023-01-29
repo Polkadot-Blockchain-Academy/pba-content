@@ -2,7 +2,6 @@
 title: Outer Enum
 description: FRAME Outer Enum Web3 Engineers.
 duration: 1 hour
-instructors: ["Shawn Tabrizi, Kian Paimani"]
 ---
 
 # Outer Enum
@@ -216,7 +215,7 @@ fn main() {
 }
 ```
 
-```bash
+```sh
 Pallet Call:   [0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7]
 Runtime Call:  [1, 0, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7]
 Pallet Error:  [2]
@@ -257,7 +256,7 @@ fn outer_enum_tests() {
 
 ## Real Runtime Output
 
-```bash
+```sh
 Pallet Call:   [0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 229, 192]
 Runtime Call:  [5, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 229, 192]
 Pallet Error:  [2]

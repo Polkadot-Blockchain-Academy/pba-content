@@ -2,8 +2,6 @@
 title: How-to use Reveal.js
 description: How to use reveal.js
 duration: 5 minuets
-instructors: ["no one"]
-teaching-assistants: ["Dan Shields"]
 ---
 
 # How-to use Reveal.js

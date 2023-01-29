@@ -27,7 +27,7 @@ Notes:
   - Rational actors and assumed complete models of behavior in economics
   - Blockchains as an "[isolated system](https://en.wikipedia.org/wiki/Isolated_system)" of sorts - external systems _cannot_ be reasoned about in the same way...
     We will talk about the Oracle Problem.
-- In _practice_ there are far more ["unknown unknowns"](#unknown-unknowns) and "black swan" behavior.
+- In _practice_ there are far more ["unknown unknowns"](#🙈-unknown-unknowns) and "black swan" behavior.
   More to come on that in this lesson.
 
 ---

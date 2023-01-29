@@ -2,7 +2,6 @@
 title: ink!
 description: An introduction on what ink! is and how it ties into Substrate.
 duration: 1 hour
-instructors: ["Michael Müller"]
 ---
 
 # <img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />

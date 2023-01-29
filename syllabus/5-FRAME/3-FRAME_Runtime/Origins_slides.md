@@ -2,7 +2,6 @@
 title: FRAME Origin
 description: Deep dive into FRAME Origins
 duration: 1 hour
-instructors: ["Shawn Tabrizi"]
 ---
 
 # Origin

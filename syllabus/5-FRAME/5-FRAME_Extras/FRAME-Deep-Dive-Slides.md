@@ -2,7 +2,6 @@
 title: FRAME Deep Dive
 description: FRAME, Pallets, System Pallet, Executive, Runtime Amalgamator.
 duration: 1 hour
-instructors: ["Kian Paimani"]
 ---
 
 # FRAME Deep Dive

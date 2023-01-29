@@ -2,7 +2,6 @@
 title: FRAME Calls
 description: FRAME Calls for Web3 engineers.
 duration: 1 hour
-instructors: ["Shawn Tabrizi, Kian Paimani"]
 ---
 
 # FRAME Calls

@@ -2,7 +2,6 @@
 title: FRAME Storage
 description: Deep dive into FRAME Storage
 duration: 1 hour
-instructors: ["Shawn Tabrizi"]
 ---
 
 # FRAME Storage
@@ -618,15 +617,15 @@ println!("{}", HexDisplay::from(&Item1::<T>::hashed_key()));
 
 This will depend on your pallet's name of course...
 
-```bash
+```sh
 e375d60f814d02157aaaa18f3639a254c64445c290236a18189385ed9853fb1e
 ```
 
-```bash
+```sh
 e375d60f814d02157aaaa18f3639a254 + c64445c290236a18189385ed9853fb1e
 ```
 
-```bash
+```sh
 twox128("Example") = e375d60f814d02157aaaa18f3639a254
 twox128("Item1") = c64445c290236a18189385ed9853fb1e
 ```
@@ -1128,7 +1127,7 @@ println!("{}", HexDisplay::from(&Item10::<T>::hashed_key_for(0)));
 println!("{}", HexDisplay::from(&Item10::<T>::hashed_key_for(1)));
 ```
 
-```bash
+```sh
 e375d60f814d02157aaaa18f3639a2546fe5a43b77d7334acfb711a021a514b8
 e375d60f814d02157aaaa18f3639a254ca79d14bc48854f664528f3a696b6c27c804ce198ec337e3dc762bdd1a09aece
 e375d60f814d02157aaaa18f3639a254ca79d14bc48854f664528f3a696b6c279ea2d098b5f70192f96c06f38d3fbc97
@@ -1225,19 +1224,19 @@ For this, we need **transparent storage keys**.
 
 Basically:
 
-```bash
+```sh
 final_hash = hash(preimage) + preimage
 ```
 
 From this kind of hash, we can always extract the preimage:
 
-```bash
+```sh
 "hello" = 0x68656c6c6f
 blake2_128("hello") = 0x46fb7408d4f285228f4af516ea25851b
 blake2_128concat("hello") = 0x46fb7408d4f285228f4af516ea25851b68656c6c6f
 ```
 
-```bash
+```sh
 "world" = 0x776f726c64
 twox64("world") = 0xef51ee66fefb78e7
 twox64concat("world") = 0xef51ee66fefb78e7776f726c64
@@ -1274,7 +1273,7 @@ fn better_balance_map() {
 }
 ```
 
-```bash
+```sh
 [600, 500, 300, 100, 800, 400, 700, 900, 0, 200]
 [(6, 600), (5, 500), (3, 300), (1, 100), (8, 800), (4, 400), (7, 700), (9, 900), (0, 0), (2, 200)]
 ```
@@ -1338,7 +1337,7 @@ Basically the same idea as `StorageMap`, but with more keys:
 pub struct StorageDoubleMap<Prefix, Hasher1, Key1, Hasher2, Key2, Value, QueryKind = OptionQuery, OnEmpty = GetDefault, MaxValues = GetDefault>(_);
 ```
 
-```bash
+```sh
 Twox128(Prefix::pallet_prefix()) ++ Twox128(Prefix::STORAGE_PREFIX) ++ Hasher1(encode(key1)) ++ Hasher2(encode(key2))
 ```
 
@@ -1346,7 +1345,7 @@ Twox128(Prefix::pallet_prefix()) ++ Twox128(Prefix::STORAGE_PREFIX) ++ Hasher1(e
 pub struct StorageNMap<Prefix, Key, Value, QueryKind = OptionQuery, OnEmpty = GetDefault, MaxValues = GetDefault>(_);
 ```
 
-```bash
+```sh
 Twox128(Prefix::pallet_prefix())
 		++ Twox128(Prefix::STORAGE_PREFIX)
 		++ Hasher1(encode(key1))

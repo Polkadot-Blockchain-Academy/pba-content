@@ -45,25 +45,25 @@ subcommands:
 
 This command will start the single-node development chain with non-persistent state:
 
-```bash
+```sh
 ./target/release/node-template --dev
 ```
 
 Purge the development chain's state:
 
-```bash
+```sh
 ./target/release/node-template purge-chain --dev
 ```
 
 Start the development chain with detailed logging:
 
-```bash
+```sh
 RUST_BACKTRACE=1 ./target/release/node-template -ldebug --dev
 ```
 
 In case of being interested in maintaining the chain's state between runs a base path must be added:
 
-```bash
+```sh
 // Create a folder to use as the db base path
 $ mkdir my-chain-state
 
