@@ -1,8 +1,6 @@
 ---
 title: Runtime Migrations Try Runtime
 description: A design system to use within slides of a presentation
-instructors: ["Kian Paimani"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # Runtime Migrations and Try Runtime

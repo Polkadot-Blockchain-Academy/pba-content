@@ -2,8 +2,6 @@
 title: Parachains Architecture
 description: Polkadot Parachains for Web3 engineers
 duration: 1 hour
-instructors: ["Bernhard Schuster, Robert Klotzner"]
-teaching-assistants: ["Dan Shields"]
 ---
 
 # Parachains Architecture

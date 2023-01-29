@@ -1,6 +1,6 @@
 ## Lesson 6: Para Logic and Authority Selection
 
-> {Likely} Instructors:
+> {Likely}
 
 ### Why is this topic Important?
 

@@ -6,8 +6,8 @@ description = "XCM Message Construction and Sending Exercise"
 edition = "2021"
 
 [dependencies]
-frame-support = { git = "https://github.com/paritytech/substrate", branch = "master" }
+frame-support = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.37" }
 xcm-simulator-for-exercises = { path = "../../xcm-related-code/xcm-simulator-for-exercises" }
-xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-xcm-simulator = { git = "https://github.com/paritytech/polkadot", branch = "master" }
-pallet-xcm = { git = "https://github.com/paritytech/polkadot", branch = "master" }
+xcm = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }
+xcm-simulator = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }
+pallet-xcm = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.37" }

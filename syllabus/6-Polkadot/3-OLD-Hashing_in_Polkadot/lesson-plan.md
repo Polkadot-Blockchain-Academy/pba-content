@@ -1,6 +1,6 @@
 ## Lesson 3: The computational cost of hashing and how it drives the storage thinking in Polkadot
 
-> {Likely} Instructors: Basti
+> {Likely}
 
 ### Why is this topic Important?
 

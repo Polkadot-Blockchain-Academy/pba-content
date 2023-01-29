@@ -257,8 +257,7 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 ## Nodes
 
-Software agents that participate in blockchain network.
-<br>
+Software agents that participate in blockchain network.<br>
 May perform these jobs:
 
 <pba-cols>

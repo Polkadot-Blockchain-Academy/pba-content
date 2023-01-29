@@ -2,8 +2,6 @@
 title: Cumulus
 description: Cumulus Overview for Web3 engineers
 duration: 2 hours
-instructors: ["Bastian Köcher"]
-teaching-assistants: ["Dan Shields"]
 ---
 
 # Cumulus
