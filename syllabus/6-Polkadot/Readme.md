@@ -50,12 +50,12 @@ Break: 30 mins
 Lunch break: 1 hour
 
 - Workshop 1: 30 minutes
-  instructors: ["Andronik"]
+  instructors: ["Bradley"]
   How to connect a parachain to a relay chain
 
-- Exercise 2: 1.5+ hours
-  instructors: ["Andronik"]
-  Hacking on Cumulus?
+- Workshop 2: 1+ hours
+  instructors: ["Bradley"]
+  Parachain auctions
 
 ### Day 3 (Half Day)
 
