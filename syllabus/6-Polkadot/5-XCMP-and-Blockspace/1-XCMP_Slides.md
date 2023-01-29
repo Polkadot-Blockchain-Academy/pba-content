@@ -253,7 +253,7 @@ Solution: Message Queue Chains (MQC)
 
 ## MQC Architecture
 
-<img rounded width="1000px" src="../assets/mqc.svg"/>
+<img rounded width="700px" src="../assets/mqc.svg"/>
 
 ---
 
