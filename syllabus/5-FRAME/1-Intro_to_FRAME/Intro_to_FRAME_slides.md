@@ -21,9 +21,9 @@ instructors: ["Shawn Tabrizi"]
 
 - Introduction To FRAME
 - Exercise: Proof of Existence Runtime
+- Pallet Coupling
 - FRAME Tips and Tricks
-- Important Pallets to Know
-- Useful Pallet Traits
+- FRAME Common Knowledge (Pallets & Traits)
 - FRAME Assignment (whole week!)
 
 </td>
@@ -37,24 +37,21 @@ instructors: ["Shawn Tabrizi"]
 </td>
 <td>
 
-- Construct Runtime (TODO)
-- Tests + Mock (TODO)
-- Loosely + Tightly Coupled Pallets (TODO)
-- Origins (TODO)
+- Construct Runtime + Tests
+- Origins
+- Outer Enum
 
 </td>
 <td>
 
 - FRAME Benchmarking
 - Exercise: Benchmarking Example
-- (Optional) Benchmarking Extras
 
 </td>
 <td>
 
 - FRAME Under the Hood
   - Deep Dive
-  - Outer Enum
   - Executive
 - Migration & Try Runtime
 - Signed Extensions
@@ -87,9 +84,9 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 
 Writing the Sudo Pallet:
 
-Without FRAME: 310 lines of code.
+Without FRAME: 2210 lines of code.
 
-With FRAME: 2210 lines of code.
+With FRAME: 310 lines of code.
 
 7x Smaller.
 

@@ -75,9 +75,9 @@ For example, when a user authorizes a transfer,<br>they almost always mean just 
 
 ---
 
-## Asym. Encrypt. & Signatures
+## Signing and Verifying
 
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow-and-sig.svg"/>
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/sig-verify-flow.svg"/>
 
 ---
 

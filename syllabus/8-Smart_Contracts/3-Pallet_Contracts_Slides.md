@@ -689,7 +689,7 @@ Notes:
 
 ---
 
-## pallet-contracts uses wasmi for now
+## pallet-contracts uses `wasmi` for now
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasmi.png" style="width: 1200px" />
 
@@ -858,13 +858,13 @@ Notes:
 
 Notes:
 
-- Wasmi used to be part of the client and offered to the runtime via a host interface
+- `wasmi` used to be part of the client and offered to the runtime via a host interface
 - Improving this interface would require validators to install new binary
 - We were not ready to settle on this interface
 - What to do?
-- Moved wasmi into the runtime
+- Moved `wasmi` into the runtime
 - Roughly 50% performance hit
-- Able to iterate on wasmi with a forkless upgrade
+- Able to iterate on `wasmi` with a forkless upgrade
 - We can still move the execution engine to the client later
 
 ---
@@ -997,7 +997,7 @@ Notes:
 
 - Inspect the [pallet-contracts code](https://github.com/paritytech/substrate/tree/master/frame/contracts)
 - Have a look at the [pallet-contracts issue board](https://github.com/paritytech/substrate/projects/6) and pick something up if you feel up for it
-- Check out the supporting crates for `pallet-contracts`: [wasm-instrument](https://github.com/paritytech/wasm-instrument) [wasmi](https://github.com/paritytech/wasmi)
+- Check out the supporting crates for `pallet-contracts`: [`wasm-instrument`](https://github.com/paritytech/wasm-instrument), [`wasmi`](https://github.com/paritytech/wasmi)
 - [The spec](https://webassembly.github.io/spec/core/) is a good place to learn about wasm and to look up specifics
 
 ---
