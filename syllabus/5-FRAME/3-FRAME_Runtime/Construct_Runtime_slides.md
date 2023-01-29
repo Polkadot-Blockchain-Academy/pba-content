@@ -129,7 +129,7 @@ frame_support::construct_runtime!(
 - Specify some types that are useful further down the road.
 - `Block` vs `NodeBlock`?
 
-NOTE:
+Notes:
 
 `UncheckedExtrinsic` is the final extrinsic type. What we called `BasicExtrinsic` in the week 2 assignment.
 
