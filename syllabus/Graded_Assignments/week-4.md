@@ -9,7 +9,7 @@ For this assignment, you will be provided with:
 - Rococo Relay Chain.
 - Parachain template.
 
-The overall goal for this assignment is to be able to send some ROC (native asset of the Rococo relay chain) to a parachain built by you and then send them back to the relay chain.
+The overall goal for this assignment is to be able to reserve-based transfer some ROC (native asset of the Rococo relay chain) to a parachain built by you and then send them back to the relay chain.
 
 ## XCM Configuration (xcm_config.rs)
 
