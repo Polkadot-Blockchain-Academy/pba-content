@@ -169,6 +169,8 @@ chmod +x zombienet
 
 ---v
 
+<!-- .slide: data-visibility="hidden" -->
+
 ### Examples
 
 <img rounded style="" src="../../assets/img/5-Polkadot/zombienet/examples-qr.png">
@@ -315,7 +317,7 @@ para-2000-genesis-state
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#4A2439" data-visibility="hidden" -->
 
 # Activity
 
@@ -344,7 +346,7 @@ https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local
 </pba-col>
 </pba-cols>
 
----
+---v
 
 ## Zombienet network definition
 
@@ -391,6 +393,18 @@ https://github.com/pepoviola/zombienet-presentation-examples/blob/main/examples/
 ```sh
 ./zombienet spawn examples/0001-small-network.toml
 ```
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Activity
+
+Try to launch a network with `2` parachains.
+
+<br/>
+
+https://paritytech.github.io/zombienet/
 
 ---
 
@@ -667,3 +681,5 @@ Notes:
 - [Zombienet sub0 presentation](https://www.youtube.com/watch?v=QKTZZCpdGH4)
 
 - [Setting up a local testnet](https://hackmd.io/kSFS2ButRESeJ7hu_iKKoA)
+
+- [zombienet presentation examples](https://github.com/pepoviola/zombienet-presentation-examples)
