@@ -215,7 +215,7 @@ While validators only need to execute parachain blocks, collators are the ones w
 
 <pba-flex center>
 
-The Relay Chain is the "hub" of Polkadot: it provides the following functionality:
+The relay chain is the "hub" of Polkadot: it provides the following functionality:
 
 - Governance
 - Staking
@@ -223,7 +223,7 @@ The Relay Chain is the "hub" of Polkadot: it provides the following functionalit
 - Communication between parachains
 - Balance Transfers
 
-Notably, the functionality of the Relay Chain is minimized, with the expectation that more complex functionalities will be provided by parachains themselves.
+Notably, the functionality of the relay chain is minimized, with the expectation that more complex functionalities will be provided by parachains themselves.
 
 </pba-flex>
 
@@ -243,8 +243,8 @@ Simplified Polkadot Architecture (Parachains)
 
 <pba-flex center>
 
-- Upward Messages (Parachain -> Relay Chain)
-- Downward Messages (Relay Chain -> Parachain)
+- Upward Messages (Parachain -> relay chain)
+- Downward Messages (relay chain -> Parachain)
 - Horizontal Message Passing (HRMP, Parachain -> Parachain)
 
 </pba-flex>
@@ -304,7 +304,7 @@ As tokens are burned, this creates pressure to fund public projects.
 
 ## Transaction Fees
 
-Transactions executed in the Relay Chain incur fees for inclusion in a block.
+Transactions executed in the relay chain incur fees for inclusion in a block.
 
 Fees automatically adjust based on traffic and demand for transaction inclusion.
 
@@ -439,7 +439,7 @@ There are many possible mechanisms for scheduling parachains onto cores, but her
 Auctions are scheduled by Governance.
 The winner of an auction earns guaranteed access to a core for a medium-to-long duration: 6, 12, 18, or 24 months.
 Bidders bid on behalf of parachains, and bid to _lock up_ DOT tokens, which are returned after the lease is completed.
-Bidders can be either individual bidders, smart contracts, crowdloans, or anything else that can use a `Signed` origin on the Relay Chain.
+Bidders can be either individual bidders, smart contracts, crowdloans, or anything else that can use a `Signed` origin on the relay chain.
 
 ---
 

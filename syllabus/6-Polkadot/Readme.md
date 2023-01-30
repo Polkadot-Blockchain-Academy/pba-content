@@ -11,27 +11,27 @@ Draw content from:
 
 ### Day 1
 
-- Lecture 1: 1.5 hours
+- Lesson 1: 1.5 hours
   instructors: ["Rob", "Andronik"]
   Introduction to Blockspace and Polkadot.
   Blockchain scaling history. Rollups and Sharding.
 
 Break: 30 mins
 
-- Lecture 2: 1.5 hours
+- Lesson 2: 1.5 hours
   instructors: ["Rob", "Andronik"]
   Data sharding: Data availability
   Execution sharding and security: Approval-voting and Disputes
 
 Lunch break: 1 hour
 
-- Lecture 3: 1.5 hours
+- Lesson 3: 1.5 hours
   instructors: ["Rob"]
   Blockspace + XCMP
 
 Break: 30 mins
 
-- Lecture 4: 1.5 hours
+- Lesson 4: 1.5 hours
   instuctors: ["Bradley"]
   OpenGov (+ workshop if there's time)
 
@@ -43,7 +43,7 @@ Break: 30 mins
 
 Break: 30 mins
 
-- Lecture 1: 1.5 hour
+- Lesson 1: 1.5 hour
   instructors: ["Andronik"]
   Introduction to Cumulus
 
@@ -59,13 +59,13 @@ Lunch break: 1 hour
 
 ### Day 3 (Half Day)
 
-- Lecture 1: 1.5 hours
+- Lesson 1: 1.5 hours
   instructors: ["Kian"]
   NPoS
 
 Break: 30 mins
 
-- Lecture 2: 45 mins
+- Lesson 2: 45 mins
   instructors: ["Nikos"]
   Polkadot light client
 

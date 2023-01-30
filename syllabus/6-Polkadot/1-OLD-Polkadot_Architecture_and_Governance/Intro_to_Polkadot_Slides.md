@@ -197,7 +197,7 @@ Those who are selected will use their DOT token as collateral for doing their jo
 
 <img style="width: 500px;" src="../../../assets/img/5-Polkadot/icon-glossary-nominator.svg">
 
-Secure the Relay Chain by selecting trustworthy validators and staking dots.
+Secure the relay chain by selecting trustworthy validators and staking dots.
 
 ---
 
@@ -343,7 +343,7 @@ The DOT token has 3 core utilities:
 
 Polkadot token holders have complete control over the protocol.
 
-All privileges, which on other platforms are exclusive to miners, will be given to the Relay Chain participants (DOT holders), including managing exceptional events such as protocol upgrades and fixes.
+All privileges, which on other platforms are exclusive to miners, will be given to the relay chain participants (DOT holders), including managing exceptional events such as protocol upgrades and fixes.
 
 Notes:
 
@@ -381,7 +381,7 @@ The third function of DOT will be the ability to add new parachains by tying up 
 
 ## Relay Chain Fees
 
-- Automatically adjusts based on traffic and demand of the Relay Chain.
+- Automatically adjusts based on traffic and demand of the relay chain.
 - 80% of fees sent to the treasury.
 - 20% of fees given to the block producer.
 - "tip" can be given directly to block producer to increase the transaction priority.

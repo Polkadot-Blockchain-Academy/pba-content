@@ -8,7 +8,7 @@ duration: 1 hour
 
 ---
 
-## Lecture Goals
+## Lesson Goals
 
 <pba-flex center>
 
