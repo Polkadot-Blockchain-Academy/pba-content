@@ -13,7 +13,8 @@ duration: 1 hour
 - Polkadot platform and its mechanisms
 - Polkadot operating theory and inner workings
 - Rationale for Polkadot's architectural choices
-- Mechanisms for parachains to interaction
+- Mechanisms for parachains to interact with the relay chain and each other
+- Practical: building, deploying, and testing parachains
 
 Notes:
 
