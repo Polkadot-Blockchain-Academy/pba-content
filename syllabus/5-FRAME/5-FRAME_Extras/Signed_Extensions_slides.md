@@ -116,7 +116,7 @@ type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, 
 
 - Signed extensions might originate from a pallet, but are applied to ALL EXTRINSICS 😮‍💨!
 
-NOTE:
+Notes:
 
 We will get to this later as well, but recall that SignedExtensions are not a _FRAME/Pallet_
 concept per se. FRAME just implements them. This also implies that everything regarding signed
@@ -144,7 +144,7 @@ pub struct UncheckedExtrinsic<Address, Call, Signature, (Foo)>
 
 - 2 u32 are decoded as, `42u32` is expected to be in the signature payload.
 
-NOTE:
+Notes:
 
 Here's the `check` function of `CheckedExtrinsic` extensively documented to demonstrate this:
 
@@ -190,7 +190,7 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 - Each pallet also has `#[pallet::validate_unsigned]`.
 - This kind of overlaps with creating a signed extension and implementing `validate_unsigned`.
 
-NOTE:
+Notes:
 
 https://github.com/paritytech/substrate/issues/6102
 https://github.com/paritytech/substrate/issues/4419
@@ -206,7 +206,7 @@ https://github.com/paritytech/substrate/issues/4419
   - call `ValidateUnsigned::validate`, if unsigned.
   - NOTE dispatching ✅!
 
-NOTE:
+Notes:
 
 > Transaction queue is not part of the consensus system. Validation of transaction are _free_. Doing
 > too much work in validation of transactions is essentially opening a door to be DOS-ed.
@@ -281,7 +281,7 @@ Put the genesis hash in `additional_signed`.
 - discovered by [@xlc](https://github.com/xlc).
 - uses `pre_dispatch` and `validate` to ensure the signing account is not `0x00`.
 
-NOTE:
+Notes:
 
 https://github.com/paritytech/substrate/issues/10413
 

@@ -2,7 +2,6 @@
 title: Zombienet
 description: Zombienet workshop
 duration: 1 hour
-instructors: ["Javier Viola"]
 ---
 
 <style>
@@ -19,14 +18,13 @@ instructors: ["Javier Viola"]
     }
 </style>
 
-# Zombienet workshop
+# Zombienet
 
 ---
 
-## what is Zombienet?
+## What is Zombienet?
 
-
-Zombienet is an <span class="colored">integration testing tool</span> that allows users to *<span class="colored">spawn</span>* and *<span class="colored">test</span>* ephemeral substrate based networks.
+Zombienet is an <span class="colored">integration testing tool</span> that allows users to _<span class="colored">spawn</span>_ and _<span class="colored">test</span>_ ephemeral substrate based networks.
 
 ---
 
@@ -58,7 +56,7 @@ Integration tests are always <span class="colored">complex</span>:
 - Maintenance
 - CI friendly
 - Scaling
-- Test-runnner
+- Test-runner
 
 ---v
 
@@ -92,8 +90,9 @@ Integration tests are always <span class="colored">complex</span>:
 - Custom assertions
 - Intuitive <span class="colored">D.S.L</span>
 - Templating lang.
-</pba-col>
-</pba-cols>
+
+  </pba-col>
+  </pba-cols>
 
 ---
 
@@ -108,51 +107,54 @@ Integration tests are always <span class="colored">complex</span>:
 <pba-cols style="align-items:normal">
 <pba-col>
 
-- Spawn
-    - Custom chain-specs
-    - Custom comand
-    - Port-mapping
-    - Parachains registration
+Spawn
+
+- Custom chain-specs
+- Custom command
+- Port-mapping
+- Parachains registration
 
 </pba-col>
 <!-- .element: class="fragment" -->
 <pba-col>
 
-- Test
-    - Custom <span class="colored">D.S.L</span>
-    - Multiple assertions
-    - Extensible
-    - Custom reporting
+Test
+
+- Custom <span class="colored">D.S.L</span>
+- Multiple assertions
+- Extensible
+- Custom reporting
 
 </pba-col>
 <!-- .element: class="fragment" -->
 </pba-cols>
 
-NOTES:
-
 ---
 
 ## Zombienet Options
 
-<pba-col center>
+<pba-flex center>
 
 - As binary ([releases](https://github.com/paritytech/zombienet/releases))
 - As library (@zombienet)
 - As container (published in docker hub)
 - From source ([zombienet](https://github.com/paritytech/zombienet) repo)
-</pba-col>
 
-NOTES:
- - As binary: Binaries for Linux and MacOS are available in each release in Github.
- - npm packages: cli, orchestrator, utils
- - image: docker.io/paritytech/zombienet
- code is available in GitHub with the instructions on how to build and run Zombienet. (https://github.com/paritytech/zombienet)
+</pba-flex>
+
+Notes:
+
+- As binary: Binaries for Linux and MacOS are available in each release in Github.
+- npm packages: cli, orchestrator, utils
+- image: docker.io/paritytech/zombienet
+  code is available in GitHub with the instructions on how to build and run Zombienet.
+  (https://github.com/paritytech/zombienet)
 
 ---v
 
 ### Download Zombienet
 
-```sh[1-11|1-3|5-7|11]
+```sh
 # macOS
 curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.29/zombienet-macos
 -o ./zombienet
@@ -169,7 +171,7 @@ chmod +x zombienet
 
 ### Examples
 
-<img style="" src="../../assets/img/5-Polkadot/zombienet/examples-qr.png">
+<img rounded style="" src="../../assets/img/5-Polkadot/zombienet/examples-qr.png">
 
 [zombienet presentation examples](https://github.com/pepoviola/zombienet-presentation-examples)
 
@@ -188,21 +190,25 @@ chmod +x zombienet
 - Create chain-spec (parachain)
 
 ```sh
-parachain-template-node build-spec --chain local --disable-default-bootnode > /tmp/para.json
+parachain-template-node build-spec --chain local \
+--disable-default-bootnode > /tmp/para.json
 ```
 
 <br/>
 
-- Create chain-spec (relaychain)
+- Create chain-spec (relay chain)
 
 ```sh
-polkadot build-spec --chain rococo-local --disable-default-bootnode > /tmp/relay.json
+polkadot build-spec --chain rococo-local \
+ --disable-default-bootnode > /tmp/relay.json
 ```
 
-NOTE: Tutorial https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/
+Notes:
+Tutorial https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/
 
 ---v
-### Add keys*
+
+### Add keys\*
 
 <br/>
 
@@ -230,7 +236,9 @@ When not using --alice or --bob, you need to provide additional `aura` and `gran
     --key-type gran
 ```
 
-NOTE: this step is optional if you use the devs accounts (e.g. alice, bob, charlie, dave, etc)
+Notes:
+
+This step is optional if you use the dev accounts (e.g. alice, bob, charlie, dave, etc)
 
 ---v
 
@@ -257,8 +265,9 @@ NOTE: this step is optional if you use the devs accounts (e.g. alice, bob, charl
   --ws-port 9945
 ```
 
-NOTES:
-why do we need to use different ports for Alice and Bob?
+Notes:
+
+Why do we need to use different ports for Alice and Bob?
 
 ---v
 
@@ -266,9 +275,9 @@ why do we need to use different ports for Alice and Bob?
 
 ```sh
 # create nodes dirs
-  mkdir -p /tmp/para/alice
+mkdir -p /tmp/para/alice
 
- parachain-template-node \
+parachain-template-node \
 --alice \
 --collator \
 --force-authoring \
@@ -283,27 +292,26 @@ why do we need to use different ports for Alice and Bob?
 --ws-port 9977
 ```
 
-
 ---v
 
-- Register parachain
+- Register ParaId on relay chain
 
-    - Register ParaId <!-- .element: class="fragment" -->
-    - Modify parachain chain-spec and create raw format. <!-- .element: class="fragment" -->
-    - Generate genesis wasm and state
-    <!-- .element: class="fragment" -->
-    - Register parachain using sudo call <!-- .element: class="fragment" -->
+1. Modify parachain chain-spec and create raw format
+1. Generate genesis wasm and state
+1. Register parachain using sudo call
 
-    <br/>
+<br/>
 
-    ```sh[|1|3|5]
-    parachain-template-node build-spec --chain /tmp/para-raw.json --disable-default-bootnode --raw > /tmp/para-raw.json
+```sh[1,2|4,5|7,8]
+parachain-template-node build-spec --chain /tmp/para-raw.json \
+--disable-default-bootnode --raw > /tmp/para-raw.json
 
-    parachain-template-node export-genesis-wasm --chain /tmp/para-raw.json para-2000-wasm
+parachain-template-node export-genesis-wasm --chain /tmp/para-raw.json \
+para-2000-wasm
 
-    parachain-template-node export-genesis-state --chain /tmp/para-raw.json para-2000-genesis-state
-    ```
-    <!-- .element: class="fragment" -->
+parachain-template-node export-genesis-state --chain /tmp/para-raw.json \
+para-2000-genesis-state
+```
 
 ---
 
@@ -324,18 +332,14 @@ https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local
 <pba-col>
 
 - Error prone.
-
 - Multiple commands.
-
 - Port management.
-
 - Multiple process.
 
 </pba-col>
-
 <pba-col>
 
-<div class="fragment center" style="font-size:150%;padding-top:100px">Zombienet allow you to set everything in <span style="color: var(--r-link-color);font-weight:bold;">just</span> 1 file.</div>
+<div class="fragment center" style="font-size:150%;">Zombienet allow you to set everything in <span style="color: var(--r-link-color);font-weight:bold;">just</span> 1 file.</div>
 
 </pba-col>
 </pba-cols>
@@ -346,7 +350,8 @@ https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local
 
 Zombienet allow to [define your network](https://paritytech.github.io/zombienet/network-definition-spec.html) with a simple configuration file.
 
-NOTES:
+Notes:
+
 https://paritytech.github.io/zombienet/network-definition-spec.html
 
 ---v
@@ -375,24 +380,24 @@ cumulus_based = true
   command = "polkadot-parachain"
 ```
 
-NOTES: https://github.com/pepoviola/zombienet-presentation-examples/blob/main/examples/0001-small-network.toml
+Notes:
+
+https://github.com/pepoviola/zombienet-presentation-examples/blob/main/examples/0001-small-network.toml
 
 ---v
-
 
 ### Spawn the network
 
 ```sh
-
 ./zombienet spawn examples/0001-small-network.toml
-
 ```
 
 ---
 
 ## Make the network config dynamic
 
-The network definition supports using [nunjucks](https://mozilla.github.io/nunjucks/) templating language (similar to [tera](https://github.com/Keats/tera)). Where <span class="colored-green">{{variables}}</span> are replaced with <span class="colored-green">env vars</span> and you can use all the built-in features.
+The network definition supports using [nunjucks](https://mozilla.github.io/nunjucks/) templating language (similar to [tera](https://github.com/Keats/tera)).
+Where <span class="colored-green">{{variables}}</span> are replaced with <span class="colored-green">env vars</span> and you can use all the built-in features.
 
 <br/>
 
@@ -406,7 +411,7 @@ default_command = "polkadot"
 
 ## Make the network config dynamic
 
-<img style="" src="../../assets/img/5-Polkadot/zombienet/zombienet-env-vars.png">
+<img rounded style="" src="../../assets/img/5-Polkadot/zombienet/zombienet-env-vars.png">
 
 ---
 
@@ -415,6 +420,7 @@ default_command = "polkadot"
 Zombienet <span class="colored">providers</span> allow to <span class="colored-green">spawn and test</span> networks with in different environments.
 
 ---v
+
 <pba-cols style="align-items:normal">
 
 <pba-col>
@@ -423,7 +429,6 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 <br/>
 
 - Used internally, integrated with the [Grafana](https://grafana.com/oss/grafana/) stack.
-
 - You need to provide your infra stack.
 
 </pba-col>
@@ -434,7 +439,6 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 <br/>
 
 - Automatically spawn and wire an instance of [Grafana](https://grafana.com/oss/grafana/) stack.
-
 - Attach a jaeger instance if enabled in the network definition.
 
 </pba-col>
@@ -444,7 +448,8 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 <span class="colored">Native</span>
 <br/>
 
-- Allow to attach to a running [Grafana](https://grafana.com/oss/grafana/) stack. **(wip)**
+- Allow to attach to a running [Grafana](https://grafana.com/oss/grafana/) stack.
+  **(wip)**
 
 </pba-col>
 
@@ -460,14 +465,13 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 
 ## Meet the Test-runner
 
-Zombienet’s built-in <span class="colored">test-runner</span> allows users to use a simple <span class="colored-green">D.S.L.</span> to easily and intuitively write tests. with a set of natural language expressions to make assertions.
+Zombienet’s built-in <span class="colored">test-runner</span> allows users to use a simple <span class="colored-green">D.S.L.</span> to easily and intuitively write tests with a set of natural language expressions to make assertions.
 
 ---v
 
 ### Built-in assertions
 
 <br/>
-
 
 - <span class="colored">Prometheus</span>: Query the exposed metrics/histograms and assert on their values.
 
@@ -512,7 +516,8 @@ validator-0: js-script ./custom.js with "alice" within 200 seconds
 validator-0: run ./custom.sh within 200 seconds
 ```
 
-NOTES:
+Notes:
+
 First three lines are the header
 
 Each line represents an assertion
@@ -527,10 +532,10 @@ within keyword allows to keep-trying until time expires
 
 ## DSL extension
 
-Learning a new D.S.L. can be tedious, but if you are using vscode we develop an [extension](https://github.com/paritytech/zombienet-vscode-extension) that can help you to write test easily.
+Learning a new DSL can be tedious, but if you are using vscode we develop an [extension](https://github.com/paritytech/zombienet-vscode-extension) that can help you to write test easily.
 
+Notes:
 
-NOTES:
 Show the extension link
 https://github.com/paritytech/zombienet-vscode-extension
 
@@ -552,48 +557,49 @@ https://github.com/paritytech/zombienet-vscode-extension
 
 ## Custom-js
 
-```[2]
+```sh
 # custom scripts
 validator-0: js-script ./custom.js with "alice" within 200 seconds
 ```
 
 ```js
 async function run(nodeName, networkInfo, args) {
-    const {wsUri, userDefinedTypes} = networkInfo.nodesByName[nodeName];
-    const api = await zombie.connect(wsUri, userDefinedTypes);
-    const validator = await api.query.session.validators();
-    return validator.length;
+  const { wsUri, userDefinedTypes } = networkInfo.nodesByName[nodeName];
+  const api = await zombie.connect(wsUri, userDefinedTypes);
+  const validator = await api.query.session.validators();
+  return validator.length;
 }
 
-module.exports = { run }
+module.exports = { run };
 ```
 
-NOTES:
+Notes:
+
 Zombienet will load your script and call the run function.
 
 Passing the node name, network info and an array of arguments from the assertion
 
-Your function have access to the zombie object exposing utilities like connect, ApiPromise, Keyring, etc *
+Your function have access to the zombie object exposing utilities like connect, ApiPromise, Keyring, etc \*
 
 The assertions can validate the return value or the completions of your script.
 
-*similar to the way that scripts are written in PolkadotJS apps - developer page (https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frpc.polkadot.io#/js)
+\*similar to the way that scripts are written in PolkadotJS apps - developer page (https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Frpc.polkadot.io#/js)
 
 ---
 
-## More extensebility
+## More extensibility
 
 <span class="colored">Zombienet</span> also allow users to use as a library to create their own interactions with the running network.
 
 ---v
 
-### As a library
+### As a Library
 
 - <span class="colored">@zombienet/orchestrator</span> module expose the start function as entrypoint.
 
 - Returning a [network](https://github.com/paritytech/zombienet/blob/main/javascript/packages/orchestrator/src/network.ts#L77) instance, with all the information about the running topology.
 
-- You can also use the [test](https://github.com/paritytech/zombienet/blob/main/javascript/packages/orchestrator/src/orchestrator.ts#L853) function  passing a callback to run your test.
+- You can also use the [test](https://github.com/paritytech/zombienet/blob/main/javascript/packages/orchestrator/src/orchestrator.ts#L853) function passing a callback to run your test.
 
 - <span class="colored">@zombienet/utils</span> module expose misc utils functions like _readNetworkConfig_.
 
@@ -619,13 +625,11 @@ const launchConfig = readNetworkConfig("../examples/0001-small-network.toml");
 
 ---
 
-## acknowledgement & contributions
-
+## Acknowledgement & Contributions
 
 <span class="colored"><b>Zombienet</b></span> take inspiration and some patterns from <span class="colored-light-green">polkadot-launch</span> and <span class="colored-light-green">SimNet</span>.
 
-We encourage everyone to test it, provide feedback, ask question and
-contribute.
+We encourage everyone to test it, provide feedback, ask question and contribute.
 
 ---
 
@@ -640,9 +644,9 @@ contribute.
 - Launch a network with two validators and one parachain.
 
 - Add a test to ensure:
-    - block producing
-    - peers number
-    - node's role
+  - block producing
+  - peers number
+  - node's role
 
 ---
 
@@ -650,7 +654,7 @@ contribute.
 
 Check speaker notes (click "s").
 
-NOTES:
+Notes:
 
 - Zombienet repo: https://github.com/paritytech/zombienet
 
@@ -658,11 +662,8 @@ NOTES:
 
 - Zombienet v2 Roadmap: https://github.com/orgs/paritytech/projects/55
 
-- [Zombiente sub0 slides](https://docs.google.com/presentation/d/1wPjbrqLg9MCfygvBYV5gDra39cSr5TXg)
+- [Zombienet sub0 slides](https://docs.google.com/presentation/d/1wPjbrqLg9MCfygvBYV5gDra39cSr5TXg)
 
 - [Zombienet sub0 presentation](https://www.youtube.com/watch?v=QKTZZCpdGH4)
 
 - [Setting up a local testnet](https://hackmd.io/kSFS2ButRESeJ7hu_iKKoA)
-
-
-
