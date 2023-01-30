@@ -8,6 +8,14 @@ duration: 1 hour
 
 Notes:
 
+Hello!
+
+I'm Bradley Olson
+
+Was student at first Academy in Cambridge
+
+Currently on Parachains Core Team at Parity
+
 Making Polkadot truly decentralized requires a robust, agile, and democratic system of governance.
 
 Gavin has put a lot of effort over the last year or so into crafting a system which does those words justice, OpenGov.
@@ -38,15 +46,15 @@ So lets get to it
 
 <pba-flex center>
 
-- Think of software as the executive branch of government
+- Software as executive branch
   - Applies existing laws (code) in pre-defined ways
   - Protocol security ensures the letter of those laws is followed
-- But any evolving protocol needs an equivalent to the legislative branch
+- But evolving protocols need a legislative branch
   - To update the laws (code)
-  - To rectify cases where the letter of the law didn't match the spirit of the law (bugs)
+  - To rectify cases where letter != spirit (bugs)
   - To trigger parts of the system that aren't on a set schedule
-  - To spend treasury funds on worthy causes
-- On-chain governance mechanisms fill that legeslative role
+  - To spend treasury funds
+- Legeslative can be on or off chain
 
 </pba-flex>
 
@@ -59,7 +67,7 @@ So lets get to it
 
 - Off-chain governance
 
-  - Formal proposal drafted by core dev team
+  - Formal proposal by dev team
   - Discussions, debates, and media campaigns
   - Hard fork
 
@@ -112,11 +120,12 @@ So lets get to it
 
 - Tri-cameral system: Referenda, council, and technical committee
 - Single track
-- Root origin
+- 1 referendum at a time
+- Root origin (Unlimited Power!)
 - 28 day referendum
 - 1 month minimum enactment period
-- 1 referendum at a time
-- Emergency referenda by technical committee
+- Emergency handled technical committee
+- Cancellations by council and technical committee
 - Most proposals initiated by council
 - Fully council controlled roles such as tipping
 
@@ -243,6 +252,10 @@ The security needs of the Tipper track are very different than those of the Root
 </pba-col>
 </pba-cols>
 
+Notes:
+
+Highlight difference between parameters of WhiteListedCaller and Root tracks
+
 ---
 
 ## Criteria for Passing a Proposal
@@ -341,8 +354,8 @@ Solution: Some sort of oracle capable of providing expert information
 <pba-flex center>
 
 1. Track everyone's level of expertise
-1. Allow experts to register sentiment
-1. Aggregate opinions by level of expertise
+2. Allow experts to register sentiment
+3. Aggregate opinions by level of expertise
 
 </pba-flex>
 
@@ -389,7 +402,7 @@ Members hold rank denoting proven level of expertise and commitment as recognize
 - White list proposals must pass two votes
   - Expertise weighted Fellowship vote via second referendum pallet instantiation
   - Same general referendum as other tracks, still requiring majority vote from DOT holders
-- Just an oracle!
+- Just an oracle! 
 - Secondarily intended to cultivate a long term base of Polkadot core developers outside of Parity
 
 </pba-col>
