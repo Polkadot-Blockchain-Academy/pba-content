@@ -538,7 +538,6 @@ Collators will then be reimbursed for their cost in transaction fees, the parach
 
 ## Blockspace
 
-
 > Blockspace is the capacity of a blockchain to finalize and commit operations
 
 Polkadot's primary product is _blockspace_.
@@ -546,7 +545,6 @@ Polkadot's primary product is _blockspace_.
 ---
 
 ## Blockspace
-
 
 Polkadot aims to provide the most secure blockspace,<br> and be the most efficient allocator of blockspace.
 
