@@ -128,8 +128,6 @@ Use `o` to open the overview mode and explore slides here.
 You can see the source of these slides to copy&paste<br>
 as slide templates in your slides!
 
-<br>
-
 <pba-flex center>
 
 1. Columns

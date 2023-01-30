@@ -32,8 +32,6 @@ XCM Instructions might change a register, they might change the state of the con
 One example of such an instruction would be `TransferAsset` which is used to transfer an asset to some other address on the remote system.
 It needs to be told which asset(s) to transfer and to whom/where the asset is to be transferred.
 
-<br>
-
 ```rust
 enum Instruction {
     TransferAsset {

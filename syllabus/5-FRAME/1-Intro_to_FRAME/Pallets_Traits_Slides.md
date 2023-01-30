@@ -2,7 +2,6 @@
 title: FRAME Pallets & Traits
 description: A review of common Pallets & Traits.
 duration: 1 hour
-instructors: ["Shawn Tabrizi"]
 ---
 
 # FRAME Pallets & Traits
@@ -73,4 +72,6 @@ https://www.youtube.com/watch?v=_FwqB4FwWXk&list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6Z
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

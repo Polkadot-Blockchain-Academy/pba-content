@@ -82,8 +82,6 @@ XCM is a **_messaging format_**.
 
 It is akin to the post card from the post office
 
-<br>
-
 It is _not_ a messaging protocol!
 
 A post card doesn't send itself!
@@ -142,8 +140,6 @@ Notes:
 
 XCM crossing the barrier between a single consensus system<br>cannot generally be synchronous.
 
-<br>
-
 No guarantees on delivery time.
 
 Notes:
@@ -192,15 +188,12 @@ Rather, XCM defines and standardizes the interface and semantics that two or mor
 `MultiLocation` = a **_relative_** location in the consensus multiverse.
 
 All entities are addressed as paths to them, _relative_ to the current consensus system.
-
-<br>
-
-```rust
 pub struct MultiLocation {
-    pub parents: u8,
-    pub interior: Junctions,
+pub parents: u8,
+pub interior: Junctions,
 }
-```
+
+````
 
 Notes:
 
@@ -237,7 +230,7 @@ enum Junctions {
     // ...
     X8(Junction, /*...*/),
 }
-```
+````
 
 Enum containing multiple `Junction`s
 
@@ -290,11 +283,7 @@ A `MultiLocation` denoting where an XCM originated from
 
 _Relative_ to the current location
 
-<br>
-
 Can be converted into a pallet origin in a FRAME runtime
-
-Used for access control
 
 Notes:
 
@@ -320,13 +309,9 @@ Notes:
 
 There are many _classes_ of assets (fungible, NFTs,...)
 
-<br>
-
 ```rust
 struct MultiAsset {
    id: AssetId,
-   fun: Fungibility,
-}
 ```
 
 The datatype `MultiAsset` describes them all.
@@ -469,7 +454,6 @@ Accounts that are controllable by a remote chain are often referred to as **Sove
 <pba-col>
 
 <img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
-<br>
 <img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
 
 </pba-col>

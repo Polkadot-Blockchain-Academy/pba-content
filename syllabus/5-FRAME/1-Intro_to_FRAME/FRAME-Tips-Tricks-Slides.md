@@ -1,8 +1,6 @@
 ---
 title: FRAME Tips and Tricks
 description: Substrate and FRAME Tips and Tricks for Web3 Engineers
-instructors: ["Kian Paimani"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # FRAME Tips and Tricks
@@ -178,7 +176,7 @@ fn main() {
 - `no_std` does NOT mean Wasm!
 - `std` does not mean native!
 
-NOTE:
+Notes:
 
 But in substrate, it kinda means like that:
 
@@ -225,7 +223,7 @@ async-shenanigans = ["tokio"]
 
 ### The `std` Paradigm: Adding dependencies
 
-```bash
+```sh
 error: duplicate lang item in crate sp_io (which frame_support depends on): panic_impl.
   |
   = Notes:
@@ -777,7 +775,7 @@ x.for_each(OnInitialize::on_initialize)
 
 1. `on_initialize`, in its ideal form, does not have `&self`, it is defined on the **type**, not a **value**.
 
-2. **Tuples** are the natural way to group **types** together (analogous to have a **vector** is the natural way to group **values** together..)
+1. **Tuples** are the natural way to group **types** together (analogous to have a **vector** is the natural way to group **values** together..)
 
 ```rust
 // fully-qualified syntax - turbo-fish.
@@ -995,7 +993,7 @@ let x = y.defensive_ok_or(Error::DefensiveError)?;
 It adds some boilerplate to:
 
 1. Panic when `debug_assertions` are enabled (tests).
-2. append a `log::error!`.
+1. append a `log::error!`.
 
 ---
 
@@ -1006,7 +1004,7 @@ It adds some boilerplate to:
 - Check speaker notes (click "s" 😉).
 - Good luck with FRAME!
 
-NOTE:
+Notes:
 
 - Rust didn't have u128 until not too long ago! https://github.com/paritytech/substrate/pull/163/files
 - `TryFrom`/`TryInto` are also not too old! https://github.com/paritytech/substrate/pull/163/files#r188938077
@@ -1032,3 +1030,5 @@ NOTE:
 
 - Lecture is still kinda dense and long, try and trim
 - Update on defensive ops: https://github.com/paritytech/substrate/pull/12967
+- Next time, talk about making a storage struct be `<T: Config>`.
+- Cargo format

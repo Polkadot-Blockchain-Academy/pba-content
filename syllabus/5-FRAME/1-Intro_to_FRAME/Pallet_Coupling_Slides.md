@@ -2,7 +2,6 @@
 title: FRAME Pallet Coupling
 description: A look into how multiple pallets interact.
 duration: 1 hour
-instructors: ["Shawn Tabrizi"]
 ---
 
 # Pallet Coupling
@@ -278,6 +277,8 @@ This allows pallet developers can configure most unsigned integers types (`u32`,
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
 
 Next we will look over common pallets and traits, and will see many of the pallet coupling patterns first hand.

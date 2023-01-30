@@ -2,7 +2,6 @@
 title: Contracts Pallet
 description: pallet-contracts for Web3 Engineers.
 duration: 1 hour
-instructors: ["Alexander Theißen"]
 revealOptions:
   transition: "slide"
 ---
@@ -24,8 +23,6 @@ Notes:
 ---
 
 ## WebAssembly
-
-<br>
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_logo.svg" style="width: 400px" />
 
@@ -164,8 +161,6 @@ Notes:
 ---
 
 ## Embedding Wasm
-
-<br>
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_embed.png" style="width: 1400px"/>
 
@@ -711,8 +706,6 @@ Notes:
 
 ## Making gas metering<br>independent of the executor
 
-<br>
-
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/gas.png" style="width: 200px;"/>
 
 Notes:
@@ -772,8 +765,6 @@ Notes:
 
 ## Storage Bloat
 
-<br>
-
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/bloat.jpg" alt="Source: https://www.coindesk.com/markets/2018/01/18/blockchain-bloat-how-ethereum-is-tackling-storage-issues/" style="width: 1000px;"/>
 
 Notes:
@@ -787,8 +778,6 @@ Notes:
 
 ## Storage on Ethereum
 
-<br>
-
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/eth_state.png" alt="Source: https://ycharts.com/indicators/ethereum_chain_full_sync_data_size" style="width: 1000px;"/>
 
 Notes:
@@ -801,8 +790,6 @@ Notes:
 ---
 
 ## First try: Storage rent
-
-<br>
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/rent.jpg" alt="Source: https://www.investopedia.com/articles/personal-finance/041515/buying-second-home-rent-dos-and-donts.asp" style="width: 800px;"/>
 
@@ -822,8 +809,6 @@ Notes:
 ---
 
 ## What we have now:<br>Automatic storage deposits
-
-<br>
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/deposit.jpg" alt="Source: https://m.bankingexchange.com/news-feed/item/7869-bank-deposits-the-most-important-number-on-the-balance-sheet" style="width: 700px;"/>
 
@@ -851,8 +836,6 @@ Notes:
 ---
 
 ## Contracts on parachains
-
-<br>
 
 <img src="../../assets/img/0-Shared/parachains/relay-network-diagram.png" style="width: 700px;"/>
 
@@ -887,8 +870,6 @@ Notes:
 
 ## Code sizes matter!
 
-<br>
-
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/val.png" style="width: 1200px;"/>
 
 Notes:
@@ -921,8 +902,6 @@ Notes:
 
 ## Shrink contract sizes
 
-<br>
-
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/mapping.png" style="width: 1200px;"/>
 
 Notes:
@@ -947,8 +926,6 @@ Notes:
 ---
 
 ## Prevent size regressions
-
-<br>
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/sizes.png" style="width: 900px;"/>
 

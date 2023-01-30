@@ -129,7 +129,7 @@ frame_support::construct_runtime!(
 - Specify some types that are useful further down the road.
 - `Block` vs `NodeBlock`?
 
-NOTE:
+Notes:
 
 `UncheckedExtrinsic` is the final extrinsic type. What we called `BasicExtrinsic` in the week 2 assignment.
 
@@ -208,7 +208,7 @@ type AllPallets = (System, Balances, ..., Dpos);
 
 Question: What will be the order of `fn on_initialize()`?
 
-NOTE:
+Notes:
 
 There's also `type AllPalletsWithoutSystem` and some other variants that are no longer
 
@@ -306,7 +306,7 @@ Final thoughts:
 - Order in the `construct_runtime` matters!
 - Recall `integrity_test()` is called upon `construct_runtime`.
 
-```bash
+```sh
 test mock::__construct_runtime_integrity_test::runtime_integrity_tests ... ok
 ```
 
@@ -705,12 +705,13 @@ pub fn next_block() {
 
 # Additional Resources 😋
 
-NOTE:
+Notes:
 
 - This PR was actually an outcome Cambridge PBA: https://github.com/paritytech/substrate/pull/11932
 - https://github.com/paritytech/substrate/pull/11818
 - https://github.com/paritytech/substrate/pull/10043
 - On usage of macros un Substrate: https://github.com/paritytech/substrate/issues/12331
+- Disscussion on advance testing: https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356
 - Reserve topic: Reading events.
 - Reserve-topic: try-state.
 
@@ -721,22 +722,22 @@ this is your bridge from a pallet into a runtime.
 a runtime amalgamator is composed of the following:
 
 1. all pallet's `Config` implemented by a `struct Runtime`;
-2. construct `Executive` and use it to implement all the runtime APIs
-3. Optionally, some boilerplate to setup benchmarking.
-4. invoke `construct_runtime!`.
-5. Alias for each pallet.
+1. construct `Executive` and use it to implement all the runtime APIs
+1. Optionally, some boilerplate to setup benchmarking.
+1. invoke `construct_runtime!`.
+1. Alias for each pallet.
 
 The `construct_runtime!` itself does a few things under the hood:
 
 1. crate `struct Runtime`.
-2. amalgamate `enum RuntimeCall`; // passed inwards to some pallets that want to store calls.
-3. amalgamate `enum RuntimeEvent`; // passed inwards to all pallets.
-4. amalgamate `enum RuntimeOrigin` (this is a fixed struct, not an amalgamation);
-5. Create a very important type alias:
+1. amalgamate `enum RuntimeCall`; // passed inwards to some pallets that want to store calls.
+1. amalgamate `enum RuntimeEvent`; // passed inwards to all pallets.
+1. amalgamate `enum RuntimeOrigin` (this is a fixed struct, not an amalgamation);
+1. Create a very important type alias:
 
 - `type AllPallets` / `type AllPalletsWithoutSystem`
 
-6. run `integrity_test()`.
+1. run `integrity_test()`.
 
 > Note that there is no such thing as `RuntimeError`. Errors are not amalgamated, they just are. This should be in the error lecture.
 

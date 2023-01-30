@@ -2,7 +2,6 @@
 title: FRAME Benchmarking
 description: How to benchmark Pallets in FRAME.
 duration: 2 hours
-instructors: ["Shawn Tabrizi"]
 ---
 
 # FRAME Benchmarking
@@ -183,7 +182,7 @@ https://github.com/paritytech/substrate/pull/12924
 
 Compile your node with `--features runtime-benchmarks`.
 
-```bash
+```sh
 ➜  ~ substrate benchmark --help
 Sub-commands concerned with benchmarking.
 The pallet benchmarking moved to the `pallet` sub-command
@@ -241,15 +240,15 @@ Reference: `frame/benchmarking/src/lib.rs`
 For each component and repeat:
 
 1. Select component to benchmark
-2. Generate range of values to test (steps)
-3. Whitelist known DB keys
-4. Setup benchmarking state
-5. Commit state to the DB, clearing cache
-6. Get system time (start)
-7. Execute extrinsic / benchmark function
-8. Get system time (end)
-9. Count DB reads and writes
-10. Record Data
+1. Generate range of values to test (steps)
+1. Whitelist known DB keys
+1. Setup benchmarking state
+1. Commit state to the DB, clearing cache
+1. Get system time (start)
+1. Execute extrinsic / benchmark function
+1. Get system time (end)
+1. Count DB reads and writes
+1. Record Data
 
 ---
 
@@ -571,7 +570,7 @@ verify {
 
 ## Executing the Benchmark
 
-```bash
+```sh
 ./target/production/substrate benchmark pallet \
 	--chain=dev \				# Configurable Chain Spec
 	--steps=50 \				# Number of steps across component ranges
@@ -731,7 +730,9 @@ Ok(Some(T::WeightInfo::kill_identity(
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
 
 In another presentation we will cover some of the things we learned while benchmarking, and best practices.
 

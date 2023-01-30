@@ -73,8 +73,6 @@ We caution however that constructing these protocols remains delicate, even give
 
 ### ECB penguin
 
-<br>
-
 <pba-cols>
 <pba-col>
 
@@ -156,4 +154,6 @@ Elliptic curve cryptography is based on _commutative_ algebraic structures.
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

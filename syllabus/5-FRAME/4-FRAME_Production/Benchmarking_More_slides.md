@@ -2,7 +2,6 @@
 title: More FRAME Benchmarking
 description: Some extra information you might want to know about Benchmarking
 duration: 2 hours
-instructors: ["Shawn Tabrizi"]
 ---
 
 # More FRAME Benchmarking
@@ -124,7 +123,7 @@ const SIZES: [u16; SIZE_TIERS - 1] = [
 - Helps minimize unused disk space.
 - For example, if you store a 670 byte value, it won't fit into 662 bucket, but will into 680 bucket, wasting only 10 bytes of space.
 
-Note:
+Notes:
 
 That fact that most values are small allows us to address each value by its index and have a simple mechanism for reusing the space of deleted values without fragmentation and periodic garbage collection.
 
@@ -427,4 +426,6 @@ How you might be able to contribute!
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

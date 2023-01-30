@@ -2,7 +2,6 @@
 title: FRAME Origin
 description: Deep dive into FRAME Origins
 duration: 1 hour
-instructors: ["Shawn Tabrizi"]
 ---
 
 # Origin
@@ -369,4 +368,6 @@ You should assume any transaction which is not from the `Signed` origin is feele
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
