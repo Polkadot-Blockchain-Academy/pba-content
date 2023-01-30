@@ -244,14 +244,18 @@ This process has a few properties:
 <pba-flex center>
 
 1. The process on any particular node either outputs "good" or stalls.
-2. If the parachain block is valid (i.e. passes checks) then it will eventually output "good" on honest nodes.
-3. If the parachain block is invalid then it will only output "good" on honest nodes with low probability
+1. The output of the process on a node is based on the statements it has seen from other validators or produced itself.
+1. If the parachain block is valid (i.e. passes checks) then it will eventually output "good" on honest nodes.
+1. If the parachain block is invalid then it will only output "good" on honest nodes with low probability
 
 </pba-flex>
 
 Notes:
 
-Low probability here means 1 in 1 billion or so.
+Honest nodes output "good" only if there is a very large amount of malicious checkers and they mainly see votes
+from those checkers as opposed to honest checkers.
+
+Low probability here means 1 in 1 billion or so (assuming 3f < n)
 Not cryptographic low probability, but good enough for crypto-economics.
 
 ---
@@ -317,7 +321,7 @@ resolution requires a supermajority in either direction.
 
 The validators on the losing side of the dispute are slashed.
 
-The penalty is large when the candidate "loses" and small when it "wins".
+The penalty is large when the candidate is deemed invalid by the supermajority and small when it is deemed valid.
 
 ---
 
@@ -375,6 +379,10 @@ pub enum OverseerSignal {
 	Conclude,
 }
 ```
+
+Notes:
+
+The instantiation of Orchestra in Polkadot is called "Overseer".
 
 ---
 
