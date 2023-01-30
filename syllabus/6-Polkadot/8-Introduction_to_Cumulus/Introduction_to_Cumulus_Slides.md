@@ -13,7 +13,7 @@ duration: 1.5 hours
 <pba-flex center>
 
 1. [What is Cumulus?](#what-is-cumulus)
-1. [Cumulus Runtime Validation](#cumulus-runtime)
+1. [Cumulus Runtime Validation](#cumulus-runtime-validation)
 1. [Cumulus on the Node Side](#cumulus-on-the-node-side)
 1. [Transform Solo to Parachain](#transform-solo-to-parachain)
 1. [References](#references)
@@ -166,8 +166,10 @@ fn validate_block(input: InputParams) -> Output {
 Notes:
 
 We replace all the storage related host functions with functions inside the wasm blob.
-This means instead of calling into the host, we will stay inside the wasm execution. This is
-very important as the relay chain validator hasn't the state required to verify the block. But
+This means instead of calling into the host, we will stay inside the wasm execution.
+This is
+very important as the relay chain validator hasn't the state required to verify the block.
+But
 we have the in-memory database that contains all the values from the state of the parachain
 that we require to verify the block.
 
@@ -385,13 +387,13 @@ Notes:
 
 Notes:
 
-A Parachain will follow the same paradigm, but the relay chain needs to be informed before the update. 
-Cumulus will provide functionality to notify the relay chain about the runtime update. 
-The update will not be enacted directly; instead it takes X relay blocks (a value that is configured by the relay chain) 
-before the relay chain allows the update to be applied. 
-The first Parachain block that will be included after X relay chain blocks needs to apply the upgrade. 
-If the update is applied before the waiting period is finished, the relay chain will reject the Parachain block for inclusion. 
-The Cumulus runtime pallet will provide the functionality to register the runtime upgrade and will also make sure that the 
+A Parachain will follow the same paradigm, but the relay chain needs to be informed before the update.
+Cumulus will provide functionality to notify the relay chain about the runtime update.
+The update will not be enacted directly; instead it takes X relay blocks (a value that is configured by the relay chain)
+before the relay chain allows the update to be applied.
+The first Parachain block that will be included after X relay chain blocks needs to apply the upgrade.
+If the update is applied before the waiting period is finished, the relay chain will reject the Parachain block for inclusion.
+The Cumulus runtime pallet will provide the functionality to register the runtime upgrade and will also make sure that the
 update is applied at the correct block.
 https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade
 
@@ -408,7 +410,7 @@ cumulus_pallet_parachain_system::register_validate_block!(Block, Executive);
 Notes:
 
 When compiling a runtime that uses Cumulus, a WASM binary is generated that contains the full code
-of the Parachain runtime plus the validate_block functionality. 
+of the Parachain runtime plus the validate_block functionality.
 This binary is required to register a Parachain on the relay chain.
 
 ---
@@ -423,7 +425,7 @@ Time for an exercise!
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions?
+# Questions
 
 ---
 

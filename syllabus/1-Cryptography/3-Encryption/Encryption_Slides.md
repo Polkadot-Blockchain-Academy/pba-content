@@ -154,4 +154,6 @@ Elliptic curve cryptography is based on _commutative_ algebraic structures.
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

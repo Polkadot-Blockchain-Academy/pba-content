@@ -37,3 +37,7 @@ _static/
 !.yarn/versions
 # Yarn Integrity file
 .yarn-integrity
+
+## Draw,io
+*.bkp
+*.dtmp

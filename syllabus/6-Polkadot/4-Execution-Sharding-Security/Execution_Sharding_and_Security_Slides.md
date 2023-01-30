@@ -424,4 +424,4 @@ The other subsystem may receive `work_result` before learning about the new bloc
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions
+# Questions
