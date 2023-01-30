@@ -81,7 +81,7 @@ Notes:
 
 - `xcm-pallet` is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.
 
----v
+---
 
 ## 🛠️ XcmRouter in `XcmConfig`
 
@@ -97,6 +97,47 @@ pub type XcmRouter = (
 	XcmpQueue,
 );
 ```
+
+Notes:
+
+- If the destination location matches the form of `Multilocation { parents: 1, interior: Here }`, the message will be routed through UMP.
+  The UMP channel is available by default.
+- If the destination matches the form of `Multilocation { parents: 1, interior: X1(Parachain(para_id)) }`, the message will be routed through XCMP.
+  As of today, an HRMP channel should be established before the message can be routed.
+
+---v
+
+## 🛠️ XcmRouter in `XcmConfig`
+
+- `XcmRouter` will ask for implementations of the `SendXcm` trait.
+- `wrap_version`, in this case, adds versioning to the message.
+
+<div style="font-size:smaller">
+
+```rust [6|9|12]
+pub struct ParentAsUmp<T, W>(PhantomData<(T, W)>);
+impl<T: UpwardMessageSender, W: WrapVersion> SendXcm for ParentAsUmp<T, W> {
+	fn send_xcm(dest: impl Into<MultiLocation>, msg: Xcm<()>) -> Result<(), SendError> {
+		let dest = dest.into();
+
+		if dest.contains_parents_only(1) {
+			// An upward message for the relay chain.
+			let versioned_xcm =
+				W::wrap_version(&dest, msg).map_err(|()| SendError::DestinationUnsupported)?;
+			let data = versioned_xcm.encode();
+
+			T::send_upward_message(data).map_err(|e| SendError::Transport(e.into()))?;
+
+			Ok(())
+		} else {
+			// Anything else is unhandled. This includes a message this is meant for us.
+			Err(SendError::CannotReachDestination(dest, msg))
+		}
+	}
+}
+```
+
+<div>
 
 Notes:
 
