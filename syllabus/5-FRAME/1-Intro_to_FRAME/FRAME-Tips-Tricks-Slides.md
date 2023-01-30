@@ -775,7 +775,7 @@ x.for_each(OnInitialize::on_initialize)
 
 1. `on_initialize`, in its ideal form, does not have `&self`, it is defined on the **type**, not a **value**.
 
-2. **Tuples** are the natural way to group **types** together (analogous to have a **vector** is the natural way to group **values** together..)
+1. **Tuples** are the natural way to group **types** together (analogous to have a **vector** is the natural way to group **values** together..)
 
 ```rust
 // fully-qualified syntax - turbo-fish.
@@ -993,7 +993,7 @@ let x = y.defensive_ok_or(Error::DefensiveError)?;
 It adds some boilerplate to:
 
 1. Panic when `debug_assertions` are enabled (tests).
-2. append a `log::error!`.
+1. append a `log::error!`.
 
 ---
 
@@ -1030,3 +1030,5 @@ Notes:
 
 - Lecture is still kinda dense and long, try and trim
 - Update on defensive ops: https://github.com/paritytech/substrate/pull/12967
+- Next time, talk about making a storage struct be `<T: Config>`.
+- Cargo format

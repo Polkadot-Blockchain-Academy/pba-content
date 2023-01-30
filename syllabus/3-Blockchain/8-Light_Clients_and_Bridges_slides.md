@@ -393,7 +393,7 @@ Two problems:
 
 1.  Fishermen have weak incentives.
     If they do a good job there will be no equivocations and they will not get paid.
-2.  Target chain is relying on the foreign source chain to keep the bridge secure instead of owning that security itself.
+1.  Target chain is relying on the foreign source chain to keep the bridge secure instead of owning that security itself.
 
 The other is to have the relayer role require a security deposit.
 If it turns out that a relayer relays an attack header, that relayer is slashed and the relayer who reports it gets a reward.
