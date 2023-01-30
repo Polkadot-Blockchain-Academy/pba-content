@@ -85,7 +85,7 @@ Notes:
 
 ## 🛠️ XcmRouter in `XcmConfig`
 
-- XcmRouter defines the means of routing a XCM to a destination.
+- `XcmRouter` defines the means of routing a XCM to a destination.
 - `ParentAsUmp` routes XCM to relay chain through UMP.
 - `XcmpQueue` routes XCM to other parachains through XCMP.
 
