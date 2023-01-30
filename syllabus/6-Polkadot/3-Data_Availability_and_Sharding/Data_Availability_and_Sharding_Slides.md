@@ -271,7 +271,7 @@ If $2f + 1$ are malicious, every PoS is doomed anyway.
 
 Notes:
 
-We'll see in the next lecture, how approval-voting can prevent unavailable blocks from being finalized even with $>f$ malicious nodes.
+We'll see in the next lesson, how approval-voting can prevent unavailable blocks from being finalized even with $>f$ malicious nodes.
 
 ---
 

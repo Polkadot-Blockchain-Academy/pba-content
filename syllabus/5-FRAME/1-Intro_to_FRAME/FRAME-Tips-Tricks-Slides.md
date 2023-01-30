@@ -1030,3 +1030,5 @@ Notes:
 
 - Lecture is still kinda dense and long, try and trim
 - Update on defensive ops: https://github.com/paritytech/substrate/pull/12967
+- Next time, talk about making a storage struct be `<T: Config>`.
+- Cargo format
