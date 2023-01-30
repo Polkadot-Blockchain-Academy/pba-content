@@ -147,6 +147,12 @@ We're going to use Polkadot as a library configured for the collator side.
 
 ---
 
+## Time to look into the code
+
+> https://github.com/paritytech/polkadot/tree/master/parachain/test-parachains/adder
+
+---
+
 ## Exercise
 
 Make the state of the Parachain a fixed sized field that evolves at each block according to
