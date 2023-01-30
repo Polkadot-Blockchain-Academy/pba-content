@@ -27,7 +27,7 @@ This enables Polkadot to scale.
 <pba-flex center>
 
 1. Discuss the high-level protocols and principles of Execution Sharding in Polkadot
-2. Provide background on how complex on & offchain logic is implemented with Substrate
+1. Provide background on how complex on & offchain logic is implemented with Substrate
 
 </pba-flex>
 
@@ -43,8 +43,8 @@ Please read it after the lesson if you would like to understand how Polkadot wor
 <pba-flex center>
 
 1. A minimal amount of validator nodes should check every parachain block while still maintaining security
-2. The relay chain will provide ordering and finality for parachain blocks
-3. Only valid parachain blocks will become finalized
+1. The relay chain will provide ordering and finality for parachain blocks
+1. Only valid parachain blocks will become finalized
 
 </pba-flex>
 
@@ -74,10 +74,10 @@ This must be accounted for in the protocol: we cannot assume that the runtime is
 <pba-flex center>
 
 1. Collation
-2. Backing
-3. Availability
-4. Approval Checking
-5. Disputes
+1. Backing
+1. Availability
+1. Approval Checking
+1. Disputes
 
 </pba-flex>
 
@@ -201,7 +201,7 @@ To fulfill this goal we need 2 things.
 <pba-flex center>
 
 1. A protocol for proving validity of included candidates
-2. Consensus rules for the relay chain<br>to avoid building on or finalizing<br>relay chain forks containing bad candidates.
+1. Consensus rules for the relay chain<br>to avoid building on or finalizing<br>relay chain forks containing bad candidates.
 
 </pba-flex>
 
@@ -214,8 +214,8 @@ Checking involves three operations:
 <pba-flex center>
 
 1. Recovering the data from the network
-2. Executing the parablock, checking success
-3. Check that outputs match the ones posted<br>to the relay chain by backers
+1. Executing the parablock, checking success
+1. Check that outputs match the ones posted<br>to the relay chain by backers
 
 </pba-flex>
 

@@ -478,8 +478,8 @@ Imagine you want to remove a storage map and in a migration you want to iterate 
 ## Case Studies
 
 1. The day we destroyed all balances in Polkadot.
-2. First ever migration ([`pallet-elections-phragmen`](https://github.com/paritytech/substrate/pull/3948)).
-3. Fairly independent migrations in `pallet-elections-phragmen`.
+1. First ever migration ([`pallet-elections-phragmen`](https://github.com/paritytech/substrate/pull/3948)).
+1. Fairly independent migrations in `pallet-elections-phragmen`.
 
 ---
 

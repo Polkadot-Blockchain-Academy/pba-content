@@ -341,8 +341,8 @@ Solution: Some sort of oracle capable of providing expert information
 <pba-flex center>
 
 1. Track everyone's level of expertise
-2. Allow experts to register sentiment
-3. Aggregate opinions by level of expertise
+1. Allow experts to register sentiment
+1. Aggregate opinions by level of expertise
 
 </pba-flex>
 

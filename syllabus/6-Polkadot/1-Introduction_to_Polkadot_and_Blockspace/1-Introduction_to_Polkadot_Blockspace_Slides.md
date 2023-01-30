@@ -57,8 +57,8 @@ Blockchains are a key part of the Web3 infrastructure.
 <pba-flex center>
 
 1. Security: how much does it _cost_ to attack the network?
-2. Scalability: how much work can the network do?
-3. Decentralization: how decentralized is the network?
+1. Scalability: how much work can the network do?
+1. Decentralization: how decentralized is the network?
 
 </pba-flex>
 </pba-col>

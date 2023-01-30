@@ -4,7 +4,7 @@ description: Blockchain Scalability History, Rollups, and Sharding.
 duration: 45+ mins
 ---
 
-# Blockchain Scalability History.
+# Blockchain Scalability History
 
 ---
 
