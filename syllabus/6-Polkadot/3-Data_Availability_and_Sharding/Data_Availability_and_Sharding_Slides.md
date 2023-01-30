@@ -315,7 +315,7 @@ Danksharding is aiming at 1.3 MB/s and Celestia < 1 MB/s.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions
+# Questions
 
 ---
 

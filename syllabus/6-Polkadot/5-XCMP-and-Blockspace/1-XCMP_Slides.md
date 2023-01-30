@@ -62,7 +62,7 @@ XCMP is the medium, like sound or writing, rather than the language.
 
 ## Revisiting PVFs and Outputs
 
-<img rounded width="800px" src="../assets/pvf.svg"/>
+<img rounded width="800px" src="../assets/PVF.svg"/>
 
 ---
 
@@ -473,4 +473,4 @@ In practice, using these mechanisms in a parachain with Cumulus is simple and is
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions
+# Questions

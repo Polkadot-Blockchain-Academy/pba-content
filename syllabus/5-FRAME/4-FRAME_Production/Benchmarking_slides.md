@@ -730,7 +730,9 @@ Ok(Some(T::WeightInfo::kill_identity(
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
 
 In another presentation we will cover some of the things we learned while benchmarking, and best practices.
 

@@ -545,7 +545,7 @@ With Polkadot sharding, how do we ensure that PoVs can be downloaded to start a 
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions?
+# Questions
 
 ---
 

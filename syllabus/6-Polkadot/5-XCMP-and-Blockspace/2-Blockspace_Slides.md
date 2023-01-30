@@ -10,10 +10,10 @@ In this lesson, we will cover:
 
 <pba-flex center>
 
-  1. Blockspace as a concept and historical interpretations
-  1. Blockspace as a product of blockchains
-  1. The importance of efficient allocation of blockspace
-  1. The design space of blockspace allocation mechanisms within Polkadot
+1. Blockspace as a concept and historical interpretations
+1. Blockspace as a product of blockchains
+1. The importance of efficient allocation of blockspace
+1. The design space of blockspace allocation mechanisms within Polkadot
 
 </pba-flex>
 
@@ -35,10 +35,10 @@ Blockspace can be measured in a few different ways:
 
 <pba-flex center>
 
-  1. Size: Bytes used by transactions (e.g. Bitcoin)
-  1. Computation: Gas used by transactions (e.g. Ethereum)
-  1. Data: Size of data required to validate transactions (PoV size in Polkadot)
-  1. Or some combination of the above
+1. Size: Bytes used by transactions (e.g. Bitcoin)
+1. Computation: Gas used by transactions (e.g. Ethereum)
+1. Data: Size of data required to validate transactions (PoV size in Polkadot)
+1. Or some combination of the above
 
 </pba-flex>
 
@@ -82,9 +82,9 @@ By "pre-buying" storage when gas is cheap and getting the refund when gas is exp
 
 <pba-flex center>
 
-  1. Quality: How secure is the blockspace? What are the economic guarantees of finality?
-  2. Availability: How much blockspace is _available_ on the market?
-  3. Flexibility: How many applications can the blockspace be used for?
+1. Quality: How secure is the blockspace? What are the economic guarantees of finality?
+1. Availability: How much blockspace is _available_ on the market?
+1. Flexibility: How many applications can the blockspace be used for?
 
 </pba-flex>
 
@@ -108,9 +108,9 @@ Polkadot provides blockspace in a highly flexible format due to key design choic
 
 <pba-flex center>
 
-  1. WebAssembly: This turing-complete language allows all kinds of computation to be done.
-  2. PoV Blobs: Unopinionated about storage formats or access patterns.
-  3. Head-Data blobs: Parachains can use any header format they like and don't even have to be blockchains, strictly speaking.
+1. WebAssembly: This turing-complete language allows all kinds of computation to be done.
+1. PoV Blobs: Unopinionated about storage formats or access patterns.
+1. Head-Data blobs: Parachains can use any header format they like and don't even have to be blockchains, strictly speaking.
 
 </pba-flex>
 
@@ -128,14 +128,14 @@ Since Polkadot provides highly flexible blockspace, it can be transformed into a
 
 <pba-flex center>
 
-  1. Acquire generalized blockspace (from Polkadot, from validators directly)
-  2. Specialize blockspace for a particular use-case or requirement
-  3. Downstream demand drives upstream demand.
+1. Acquire generalized blockspace (from Polkadot, from validators directly)
+1. Specialize blockspace for a particular use-case or requirement
+1. Downstream demand drives upstream demand.
 
 </pba-flex>
 
 Notes:
-  By (3) I mean that the amount of demand for (2) should inform the amount to which the application does (1).
+By (3) I mean that the amount of demand for (2) should inform the amount to which the application does (1).
 
 ---
 
@@ -217,11 +217,11 @@ User could be a collator itself, or perhaps just someone fulfilling a market nee
 
 <pba-flex center>
 
-  1. Pay Collators _somewhere other_ than the chain they build upon
-  2. Pay Collators in stablecoins or other tokens
-  3. Tokenless parachain
-  4. Parachain Launch Pad (e.g. pay out of "credits" on some other system)
-  5. Generalized Collator Pool (plug and play, no need to run nodes specific to parachain)
+1. Pay Collators _somewhere other_ than the chain they build upon
+1. Pay Collators in stablecoins or other tokens
+1. Tokenless parachain
+1. Parachain Launch Pad (e.g. pay out of "credits" on some other system)
+1. Generalized Collator Pool (plug and play, no need to run nodes specific to parachain)
 
 </pba-flex>
 
@@ -285,10 +285,10 @@ This would allow parachains to purchase _sparse_ blockspace ahead of time and au
 
 <pba-flex center>
 
-  1. Blockspace is an economic formulation of blockchain resources
-  2. Blockspace provides new lenses on the scheduling and lifecycle of blockchains
-  3. Efficient allocation of blockspace will be critical as Web3 systems scale to serve 8 billion people.
-  4. Polkadot's architecture is blockspace-centric, not blockchain-centric, and provides many options for builders to use its product.
+1. Blockspace is an economic formulation of blockchain resources
+1. Blockspace provides new lenses on the scheduling and lifecycle of blockchains
+1. Efficient allocation of blockspace will be critical as Web3 systems scale to serve 8 billion people.
+1. Polkadot's architecture is blockspace-centric, not blockchain-centric, and provides many options for builders to use its product.
 
 </pba-flex>
 
@@ -296,4 +296,4 @@ This would allow parachains to purchase _sparse_ blockspace ahead of time and au
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions
+# Questions

@@ -229,4 +229,6 @@ We have another lecture on Weights and Benchmarking, but the high level idea is 
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

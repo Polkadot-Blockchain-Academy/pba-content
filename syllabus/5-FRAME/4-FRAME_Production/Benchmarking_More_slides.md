@@ -426,4 +426,6 @@ How you might be able to contribute!
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
