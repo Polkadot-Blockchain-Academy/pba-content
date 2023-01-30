@@ -1,8 +1,6 @@
 ---
 title: FRAME Tips and Tricks
 description: Substrate and FRAME Tips and Tricks for Web3 Engineers
-instructors: ["Kian Paimani"]
-teaching-assistants: ["Sacha Lansky"]
 ---
 
 # FRAME Tips and Tricks
@@ -178,7 +176,7 @@ fn main() {
 - `no_std` does NOT mean Wasm!
 - `std` does not mean native!
 
-NOTE:
+Notes:
 
 But in substrate, it kinda means like that:
 
@@ -225,7 +223,7 @@ async-shenanigans = ["tokio"]
 
 ### The `std` Paradigm: Adding dependencies
 
-```bash
+```sh
 error: duplicate lang item in crate sp_io (which frame_support depends on): panic_impl.
   |
   = Notes:
@@ -533,7 +531,7 @@ Things like **addition**, **multiplication**, **division** could all easily fail
   let certain_output = a.saturating_mul(b);
   ```
 
-NOTE:
+Notes:
 
 Why would you ever want to saturate? only in cases where you know if the number is overflowing,
 other aspects of the system is so fundamentally screwed that there is no point in doing any kind of
@@ -1004,9 +1002,9 @@ It adds some boilerplate to:
 <img width="300px" rounded src="../../../assets/img/4-Substrate/thats_all_folks.png">
 
 - Check speaker notes (click "s" 😉).
-- Good lock with FRAME!
+- Good luck with FRAME!
 
-NOTE:
+Notes:
 
 - Rust didn't have u128 until not too long ago! https://github.com/paritytech/substrate/pull/163/files
 - `TryFrom`/`TryInto` are also not too old! https://github.com/paritytech/substrate/pull/163/files#r188938077
@@ -1029,3 +1027,8 @@ NOTE:
   - https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature
 
 ### Feedback After Lecture:
+
+- Lecture is still kinda dense and long, try and trim
+- Update on defensive ops: https://github.com/paritytech/substrate/pull/12967
+- Next time, talk about making a storage struct be `<T: Config>`.
+- Cargo format

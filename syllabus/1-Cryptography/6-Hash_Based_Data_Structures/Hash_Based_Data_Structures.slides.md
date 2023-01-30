@@ -105,11 +105,7 @@ Just a selection we'll cover in this course.
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<br>
-
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/Trie.png"/>
-
-<br>
 
 Each node splits on the next digit in base $r$
 
@@ -119,11 +115,7 @@ Each node splits on the next digit in base $r$
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<br>
-
 <img style="width: 700px" src="../../../assets/img/1-Cryptography/Patricia-Trie.png"/>
-
-<br>
 
 If only one option for a sequence we merge them.
 
@@ -146,8 +138,6 @@ What radix $r$ is best?
 
 - Proof size of a leaf is $r \log_r n$
   - $r=2$ gives the smallest proof for one leaf
-
-<br>
 
 ...but:
 
