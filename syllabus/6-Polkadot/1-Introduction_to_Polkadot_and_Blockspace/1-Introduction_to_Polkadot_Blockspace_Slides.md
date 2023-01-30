@@ -11,7 +11,7 @@ duration: 1 hour
 ## What to expect from this Module?
 
 We will cover the Polkadot platform and its mechanisms in detail.
-Many lectures will be theoretical, and will enhance students' understanding of Polkadot's inner workings.
+Many lessons will be theoretical, and will enhance students' understanding of Polkadot's inner workings.
 We will cover the rationale for Polkadot's architectural choices and mechanisms for parachains to interact with Polkadot.
 
 Day 1 will be more theoretical and will focus on Parachains, Sharding, and Governance, while Day 2 will be more practical, with exercises and workshops.
@@ -286,7 +286,7 @@ Polkadot has on-chain governance by referendum of DOT holders, which empowers DO
 - Rescue & recovery operations
 - All other mechanisms of control over the platform
 
-We will have a lecture on the mechanics of OpenGov & will not cover in detail here.
+We will have a lesson on the mechanics of OpenGov & will not cover in detail here.
 
 </pba-flex>
 
@@ -383,7 +383,7 @@ pub struct ValidationResult {
 	pub head_data: HeadData,
 	/// An update to the validation code that should be scheduled in the relay chain.
 	pub new_validation_code: Option<ValidationCode>,
-	/// Upward messages send by the Parachain.
+	/// Upward messages sent by the Parachain.
 	pub upward_messages: Vec<UpwardMessage>,
 	/// Outbound horizontal messages sent by the parachain.
 	pub horizontal_messages: Vec<OutboundHrmpMessage<Id>>,
