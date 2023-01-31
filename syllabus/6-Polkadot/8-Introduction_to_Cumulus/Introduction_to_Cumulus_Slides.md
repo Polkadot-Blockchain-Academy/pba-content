@@ -423,6 +423,15 @@ Time for an exercise!
 
 ---
 
+### Migrating a parachain
+
+Take a look at 
+
+> https://github.com/paritytech/cumulus/blob/master/pallets/solo-to-para/src/lib.rs
+> https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/starters/seedling/src/lib.rs
+
+---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
