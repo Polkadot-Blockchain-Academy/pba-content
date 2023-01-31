@@ -192,7 +192,7 @@ Notes:
 - For our test excercise, it is sufficient to set this `IsReserve` to `Everything`.
 - In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
 
----v
+---
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
