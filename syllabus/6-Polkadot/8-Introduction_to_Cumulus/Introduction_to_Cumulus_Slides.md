@@ -4,7 +4,7 @@ description: Cumulus Overview, Transforming Solo to Parachain
 duration: 1.5 hours
 ---
 
-# Introduction to Cumulus.
+# Introduction to Cumulus
 
 ---
 
@@ -24,7 +24,13 @@ duration: 1.5 hours
 
 ## What is Cumulus?
 
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-1.svg" style="width: 1000px"/>
+> Cumulus clouds are shaped sort of like dots; together they form a system that is intricate, beautiful and functional
+
+SDK for building substrate/FRAME-based Parachains
+
+---v
+
+<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-1.svg" style="width: 1500px"/>
 
 Notes:
 
@@ -35,9 +41,7 @@ Notes:
 
 ---v
 
-## What is Cumulus?
-
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-2.svg" style="width: 1000px"/>
+<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-2.svg" style="width: 1500px"/>
 
 Notes:
 
@@ -48,23 +52,13 @@ Notes:
 
 ---v
 
-## What is Cumulus?
-
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-3.svg" style="width: 1000px"/>
+<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-3.svg" style="width: 1500px"/>
 
 Notes:
 
 - Cumulus uses the generic types of Substrate
 - These generic types/interfaces are extended to make them work with/for Parachains
 - Polkadot itself is providing APIs that are used by Cumulus to implement the Substrate interfaces/types
-
----v
-
-## What is Cumulus?
-
-> Cumulus clouds are shaped sort of like dots; together they form a system that is intricate, beautiful and functional
-
-SDK for building substrate/FRAME-based Parachains
 
 ---
 
@@ -257,13 +251,16 @@ Notes:
 ### Parachain System Pallet
 
 ```rust
-//! `cumulus-pallet-parachain-system` handles low-level details of being a parachain.
+//! `cumulus-pallet-parachain-system` handles low-level details
+//! of being a parachain.
 /// It's responsibilities include:
 //!
 //! - ingestion of the parachain validation data
-//! - ingestion of incoming downward and horizontal messages and dispatching them
+//! - ingestion of incoming downward and horizontal
+//!   messages and dispatching them
 //! - coordinating upgrades with the relay-chain
-//! - communication of parachain outputs, such as sent messages, signalling an upgrade, etc.
+//! - communication of parachain outputs, such as
+//!   sent messages, signalling an upgrade, etc.
 ```
 
 ---
@@ -279,7 +276,7 @@ Notes:
 
 ## Relay chain interface
 
-<img src="../../../assets/img/5-Polkadot/cumulus/relay-chain-interface.png" style="width: 600px"/>
+<img rounded src="../../../assets/img/5-Polkadot/cumulus/relay-chain-interface.png" style="width: 600px"/>
 
 Notes:
 
@@ -419,16 +416,16 @@ This binary is required to register a Parachain on the relay chain.
 
 Time for an exercise!
 
-> https://docs.substrate.io/reference/how-to-guides/parachains/convert-a-solo-chain/
+- [Convert a solo chain How-to guide](https://docs.substrate.io/reference/how-to-guides/parachains/convert-a-solo-chain/)
 
 ---
 
 ### Migrating a parachain
 
-Take a look at 
+In Cumulus, take a look at:
 
-> https://github.com/paritytech/cumulus/blob/master/pallets/solo-to-para/src/lib.rs
-> https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/starters/seedling/src/lib.rs
+- [./pallets/solo-to-para/src/lib.rs](https://github.com/paritytech/cumulus/blob/master/pallets/solo-to-para/src/lib.rs)
+- [./parachains/runtimes/starters/seedling/src/lib.rs](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/starters/seedling/src/lib.rs)
 
 ---
 

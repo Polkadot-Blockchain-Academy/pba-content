@@ -20,9 +20,12 @@ duration: 1.5 hours
 git clone https://github.com/paritytech/polkadot/
 cd polkadot
 cargo build --release
+
 # Compile this in advance to save time:
 git clone https://github.com/Polkadot-Blockchain-Academy/cumuless-parachain-PBA-BA-2023
 cd cumuless-parachain-PBA-BA-2023
+# Ma a branch *for yourself*
+git checkout -b <YOUR GITHUB USERNAME HERE>
 cargo build --release
 ```
 
