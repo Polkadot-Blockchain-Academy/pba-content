@@ -14,21 +14,31 @@ duration: 1.5 hours
 ## Before we begin:
 
 ```sh
+# We will need a polkadot binary, e.g.
 git clone https://github.com/paritytech/polkadot/
 cd polkadot
 cargo build --release
-cargo build -p test-parachain-adder-collator --release
+# Compile this in advance to save time:
+git clone https://github.com/Polkadot-Blockchain-Academy/cumuless-parachain--master
+cd cumuless-parachain
+cargo build --release
 ```
 
-# Build Simple Blobchain
+# Build Simple Parachain
 
-We're going to build a simple blobchain without Cumulus!
+We're going to build a simple parachain without Cumulus!
+
+- PVF
+- Collator
 
 Notes:
 
-This will not a be a blockchain, but a blobchain.
-Meaning it will have some state and the rules for validating
-state transitions, but it will not have any transactions.
+This will be a parachain built without using FRAME.
+There will be only one collator and no collator selection logic.
+No message processing.
+No transactions.
+No runtime upgrades.
+No parachain full nodes.
 
 ---
 
@@ -46,7 +56,7 @@ Polkadot to distribute the PoV.
 
 ---
 
-## Minimal Parachain runtime
+## Minimal parachain runtime (PVF)
 
 ```rust
 #![no_std]
@@ -149,14 +159,16 @@ We're going to use Polkadot as a library configured for the collator side.
 
 ## Time to look into the code
 
+Our PBA parachain is a trimmed down version of
+
 > https://github.com/paritytech/polkadot/tree/master/parachain/test-parachains/adder
 
 ---
 
 ## Exercise
 
-Make the state of the Parachain a fixed sized field that evolves at each block according to
-Game of Life and print the state of each collation.
+Make the state of the Parachain a fixed sized 2d field (e.g. 25x25) that 
+evolves at each block according to Game of Life and print the state at each block.
 
 > https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
@@ -167,8 +179,4 @@ Game of Life and print the state of each collation.
 <!-- .slide: data-background-color="#4A2439" -->
 
 ## Questions?
-
----
-
-## References
 
