@@ -261,22 +261,6 @@ This will be very powerful later on (Origins)
 
 ---
 
-## Construct a `MultiLocation`!
-
-<pba-flex center>
-
-1. What is _your_ location?
-1. Where do you _want to send to_?
-1. Write your `MultiLocation`!
-
-Notes:
-
-EXERCISE: Prompt students to decide whe a MultiLocation correctly.
-Encourage non-trivial (but direct!) paths like a specific contract on a parachain from Bitcoin.
-Call on students to state their path and where they want to go.
-
----
-
 ## Cross-Consensus Origins
 
 A `MultiLocation` denoting where an XCM originated from
