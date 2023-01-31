@@ -1,6 +1,6 @@
 ---
 title: Build Simple Parachain
-description: We're going to build a simple parachain without Cumulus
+description: Build a simple parachain without Cumulus
 duration: 1.5 hours
 ---
 
@@ -10,6 +10,8 @@ duration: 1.5 hours
 - Introduction to Cumulus and how to build a Parachain
 - Workshop: Manually registering a parachain
 - Workshop: How to acquire a parachain slot
+
+---
 
 ## Before we begin:
 
@@ -24,12 +26,18 @@ cd cumuless-parachain-PBA-BA-2023
 cargo build --release
 ```
 
-# Build Simple Parachain
+---
+
+## Build Simple Parachain
 
 We're going to build a simple parachain without Cumulus!
 
+<pba-flex center>
+
 - PVF
 - Collator
+
+<pba-flex>
 
 Notes:
 
@@ -46,13 +54,16 @@ No parachain full nodes.
 
 A parachain needs two things:
 
-- A WASM runtime with `validate_block` function exposed
-- Node side that can sync relay chain blocks and talk to the relay chain
+<pba-flex center>
+
+1. A WASM runtime with `validate_block` function exposed
+1. Node side that can sync relay chain blocks and talk to the relay chain
+
+<pba-flex>
 
 Notes:
 
-Talking to the relay chain means speaking the networking protocol of
-Polkadot to distribute the PoV.
+Talking to the relay chain means speaking the networking protocol of Polkadot to distribute the PoV.
 
 ---
 
@@ -102,22 +113,25 @@ pub extern "C" fn validate_block(_params: *const u8, _len: usize) -> u64 {
 Notes:
 
 The panic and oom handlers are Rust-specific things you don't need to worry about.
-If we actually include an infinite loop into the `validate_block` function,
-a parablock will never be backed/included by the relay chain validators.
+If we actually include an infinite loop into the `validate_block` function, a parablock will never be backed/included by the relay chain validators.
 
 ---
 
 ## Parachain node side
 
+<pba-flex center>
+
 - Our node will sync relay chain blocks
-- When importing the new best block, we'll connect to the backing group
-- Then we'll advertise our block ("collation") to a validator in the group
-- The validator will request the collation from us using `collator-protocol`
-- Now it's in the hands of validators to include our block
+- When importing the new best block,<br>we'll connect to the backing group
+- Then we'll advertise our block ("collation")<br>to a validator in the group
+- The validator will request the collation<br>from us using `collator-protocol`
+- Now it's in the hands of validators<br>to include our block
+
+<pba-flex>
 
 Notes:
 
-Validators are shuffled into small backing groups, which rotate 
+Validators are shuffled into small backing groups, which rotate
 regularly with `group_rotation_frequency`.
 Currently, collators can only produce the next block after their previous
 block has been included by the relay chain (remember `CandidateIncluded`).
@@ -159,24 +173,21 @@ We're going to use Polkadot as a library configured for the collator side.
 
 ## Time to look into the code
 
-Our PBA parachain is a trimmed down version of
+Our PBA parachain is a trimmed down version of:
 
-> https://github.com/paritytech/polkadot/tree/master/parachain/test-parachains/adder
+- https://github.com/paritytech/polkadot/tree/master/parachain/test-parachains/adder
 
 ---
 
 ## Exercise
 
-Make the state of the Parachain a fixed sized 2d field (e.g. 25x25) that 
-evolves at each block according to Game of Life and print the state at each block.
+Make the state of the Parachain a fixed sized 2d field (e.g. 25x25) that evolves at each block according to Game of Life and print the state at each block.
 
-> https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
-
-> https://rosettacode.org/wiki/Conway%27s_Game_of_Life#Rust
+- https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+- https://rosettacode.org/wiki/Conway%27s_Game_of_Life#Rust
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions?
-
+## Questions
