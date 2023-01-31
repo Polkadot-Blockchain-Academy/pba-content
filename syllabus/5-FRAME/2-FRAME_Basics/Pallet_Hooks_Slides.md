@@ -14,13 +14,13 @@ All defined in `trait Hooks`
 ([source](https://github.com/paritytech/substrate/blob/33c518ebbe43d38228ac47e793e4d1c76738a56d/frame/support/src/traits/hooks.rs#L214)).
 
 1. `on_initialize`
-2. `on_finalize`
-3. `on_idle`
-4. `on_runtime_upgrade`
-5. `offchain_worker`
-6. `integrity_test`
+1. `on_finalize`
+1. `on_idle`
+1. `on_runtime_upgrade`
+1. `offchain_worker`
+1. `integrity_test`
 
-7. Plus, `GenesisConfig`.
+1. Plus, `GenesisConfig`.
 
 ---
 

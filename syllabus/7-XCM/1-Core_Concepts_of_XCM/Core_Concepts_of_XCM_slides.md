@@ -236,7 +236,8 @@ Enum containing multiple `Junction`s
 
 Notes:
 
-An array like `[Junction; 8]` or a `Vec` is explicitly not used in place of the `Junctions` enum. This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size at compilation time, and thus unused `Junction` "element slots" will always be required to be filled in, bloating the _encoded_ size of a `Junctions` data structure.
+An array like `[Junction; 8]` or a `Vec` is explicitly not used in place of the `Junctions` enum.
+This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size at compilation time, and thus unused `Junction` "element slots" will always be required to be filled in, bloating the _encoded_ size of a `Junctions` data structure.
 
 ---
 
@@ -286,7 +287,8 @@ Can be converted into a pallet origin in a FRAME runtime
 
 Notes:
 
-Since `MultiLocation`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it. This is calling re-anchoring.
+Since `MultiLocation`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it.
+This is calling re-anchoring.
 
 ---
 
@@ -441,7 +443,8 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 Notes:
 
-We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain. Accounts that are controllable by a remote chain are often referred to as **Sovereign accounts**.
+We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain.
+Accounts that are controllable by a remote chain are often referred to as **Sovereign accounts**.
 
 ---
 

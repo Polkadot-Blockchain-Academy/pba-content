@@ -24,8 +24,9 @@
 ### Core Ideas to Convey
 
 - MultiLocations
-  - Re-anchoring
-    - Multilocation → relative path. The destination needs to be able to re-express from it’s perspective where the message originated from. Example : Parent/Parent need to be expressed from the context/perspective of this location that could be a contract on a parachain for example
+  - Re-anchoring - Multilocation → relative path.
+    The destination needs to be able to re-express from it’s perspective where the message originated from.
+    Example : Parent/Parent need to be expressed from the context/perspective of this location that could be a contract on a parachain for example
 - MultiAssets
 - XCM instructions/programs detailed
 - Default executor logic in detail
