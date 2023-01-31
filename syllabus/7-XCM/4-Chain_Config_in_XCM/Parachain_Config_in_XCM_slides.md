@@ -47,9 +47,9 @@ impl Config for XcmConfig {
   // How we convert a ML to a FRAME dispatch origin
   type OriginConverter = ?;
   // Who we trust as reserve chains
-  type IsReserve = Everything;
+  type IsReserve = ?;
   // Who do we trust as teleporters
-  type IsTeleporter = Nothing;
+  type IsTeleporter = ?;
   // How we invert locations
   type LocationInverter = ?;
   // Pre-execution filters
@@ -173,6 +173,26 @@ Notes:
 1. Users can execute XCMs locally.
 
 ---
+
+### 🤝 `IsReserve` and `IsTeleporter`
+
+- They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
+- Filters are applied for specific `MultiAsset-MultiLocation` pairs.
+
+```rust
+/// Combinations of (Asset, Location) pairs which we trust as reserves.
+type IsReserve: ContainsPair<MultiAsset, MultiLocation>;
+
+/// Combinations of (Asset, Location) pairs which we trust as teleporters.
+type IsTeleporter: ContainsPair<MultiAsset, MultiLocation>;
+```
+
+Notes:
+
+- For our test excercise, it is sufficient to set this `IsReserve` to `Everything`.
+- In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
+
+---v
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
