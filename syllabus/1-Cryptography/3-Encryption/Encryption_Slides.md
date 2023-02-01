@@ -44,7 +44,7 @@ Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
 The encryption and decryption functions are identical: applying a bitwise XOR operation with a key.
 
 </pba-col>
-<widget-column style="padding-right: 100px">
+<pba-col style="padding-right: 100px">
 
 ```text
 Plain: 1010  -->Cipher: 0110
