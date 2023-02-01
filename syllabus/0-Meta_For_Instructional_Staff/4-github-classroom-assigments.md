@@ -15,6 +15,7 @@ The basic workflow for this for an instructor is to:
 1. Create a **private** stand-alone repository in the [PBA org](https://github.com/orgs/Polkadot-Blockchain-Academy/ for an assignment or activity.
 
    1. Ensure a README exists with clear instructions.
+   1. **Do NOT setup CI on the template, as we cannot afford it running for all students all month (pending [education benefits](https://github.com/orgs/community/discussions/40846))**
    1. Create a _dedicated branch_ to write up a solution.
    1. Integrate unit and/or integration tests that students can run to check their work.<br>
       > Note: these can be run as [GitHub Actions](https://docs.github.com/en/actions) on student's pushing commit's to their work, like a `cargo test ...` or script for example. <!-- markdown-link-check-disable-line -->
