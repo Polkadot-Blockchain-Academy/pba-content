@@ -16,15 +16,14 @@ Why do we use PoS?
 
 <div>
 
-Economic Security 💸🤑
-
-Tokens locked + prone to being slashed.
+- Tokens locked + prone to being slashed.
+- Economic Security 💸🤑.
 
 </div>
 
 <!-- .element: class="fragment" -->
 
-Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
+- Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
 
 <!-- .element: class="fragment" -->
 
@@ -32,10 +31,10 @@ Everything else (finality, parachains, etc.) is built on top of this base layer 
 
 ### Why Proof of Stake Ser?
 
-- Remember that Polkadot provides validator-set-as-a-service.
-- Secure Blockspace is provided by these validators.
+- Remember that Polkadot is at the end of the day a validator-set-as-a-service.
+- Secure Blockspace, the main product of Polkadot is provided by these validators.
 
-<img src="../../assets/img/4-Substrate/dev-6-x-npos-vsas.svg" style="width: 1000px"/>
+<image src="../../../assets/img/4-substrate/dev-6-x-npos-vsas.svg" style="width: 1000px">
 
 ---
 
@@ -43,19 +42,22 @@ Everything else (finality, parachains, etc.) is built on top of this base layer 
 
 Assumptions:
 
-<pba-flex center>
+- **Validators**: those who intend to author blocks. i.e. _Validator candidate_.
 
-<ul>
-<li class="fragment"><b>Validators</b>: those who wish to author blocks.</li>
+<!-- .element: class="fragment" -->
 
-<li class="fragment"><b>Nominators/Delegators</b>:<br> Those who wish to support wanna-be authors.</li>
+- **Nominators/Delegators**: Those who intend to support wanna-be authors.
 
-<li class="fragment">Validation and nomination intentions can change,<br>therefore we need <b>periodic elections</b> to<br> always choose the best validators + hold them slashable.</li>
+<!-- .element: class="fragment" -->
 
-<li class="fragment">Every election period is called an <b><em>Era_**,</b></em><br>e.g. 24hrs in Polkadot.</li>
-</ul>
+- Validation and nomination intentions can change, therefore we need **periodic elections** to
+  always choose the **active/winner validators/delegators** + hold them slashable.
 
-</pba-flex>
+<!-- .element: class="fragment" -->
+
+- Every election period is called an **_Era_**, e.g. 24hrs in Polkadot.
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -65,21 +67,15 @@ Assumptions:
 
 **Solo-POS**
 
-<img src="../../assets/img/4-Substrate/dev-6-x-npos-0.svg" style="width: 1000px"/>
+<image src="../../../assets/img/4-substrate/dev-6-x-npos-0.svg" style="width: 1000px">
 
 ---v
 
 ### What is NPoS: Re-inventing the Wheel
 
-<pba-flex center>
+- Authority-wanna-bees aka. validators bring their own stake. No further participation. Top validators are elected.
 
-Authority-wanna-bees<br>aka.validators bring their own stake.<br>
-No further participation.<br>
-Top validators are elected.
-
-</pba-flex>
-
-> Problems?
+- Problems?
 
 Notes:
 
@@ -89,22 +85,17 @@ Low amount of stake that we can capture, impossible for those who don't want to 
 
 **Single-Delegation-POS**
 
-<img src="../../assets/img/4-Substrate/dev-6-x-npos-1.svg" style="width: 1000px"/>
+<image src="../../../assets/img/4-substrate/dev-6-x-npos-1.svg" style="width: 1000px">
 
 ---v
 
 ### What is NPoS: Re-inventing the Wheel
 
-<pba-flex center>
+- Anyone can dilute themselves in any given validators. Top validator based on total stake are
+  elected.
+- Voters are called **delegators**.
 
-Anyone can dilute themselves in any given validators.<br>
-Top validator based on total stake are elected.
-
-Voters are called **delegators**.
-
-</pba-flex>
-
-> Problems?
+- Problems?
 
 Notes:
 
@@ -115,15 +106,15 @@ Notes:
 
 **Multi-Delegation-POS**
 
-<img src="../../assets/img/4-Substrate/dev-6-x-npos-2.svg" style="width: 1000px"/>
+<image src="../../../assets/img/4-substrate/dev-6-x-npos-2.svg" style="width: 1000px">
 
 ---v
 
 ### What is NPoS: Re-inventing the Wheel
 
-Your stake is divided $\frac{1}{N}$ among $N$ validators.
+Your stake is divided $\frac{1}{N}$ (or arbitrarily) among $N$ validators.
 
-> Problems?
+Problems?
 
 Notes:
 
@@ -133,79 +124,62 @@ Same issue as before.
 
 **Nominated Proof of Stake**
 
-<img src="../../assets/img/4-Substrate/dev-6-x-npos-3.svg" style="width: 1000px"/>
+<image src="../../../assets/img/4-substrate/dev-6-x-npos-3.svg" style="width: 1000px">
 
 ---v
 
 **Nominated Proof of Stake**
 
-<img src="../../assets/img/4-Substrate/dev-6-x-npos-4.svg" style="width: 1000px"/>
+<image src="../../../assets/img/4-substrate/dev-6-x-npos-4.svg" style="width: 1000px">
 
 ---v
 
 ### What is NPoS: Re-inventing the Wheel
 
-- You name up to `N` nominees, an _algorithm_,<br>computed either onchain or offchain, decides
-  the **winners**<br> and **how to distribute the stake among them**.
+- You name up to `N` nominees, an _algorithm_, computed either onchain or offchain, decides
+  the **winners** and **how to distribute the stake among them**.
 - Voters are called **Nominators**.
 
 ---v
 
 ### What is NPoS: Re-inventing the Wheel
 
-<pba-flex center style="font-size: smaller;">
-
-- ✅ Can optimize other criteria other than<br>"who had more approval votes".
-- ✅ Has a much higher chance to make sure<br>staked tokens won't get wasted.
-- ✅ As a nominator, you are free to express<br>your desire to back non-winners as well.<br>
-  Once enough people have expressed the same desire,<br>the non-winner will become a winner.
-
-</pba-flex>
+- ✅ As a nominator, you are free to express your desire to back non-winners as well. Once enough people have expressed the same desire, the non-winner will become a winner.
+<!-- .element: class="fragment" -->
+- ✅ Has a much higher chance to make sure staked tokens won't get wasted.
+<!-- .element: class="fragment" -->
+- ✅ Can optimize other criteria other than "who had more approval votes".
+<!-- .element: class="fragment" -->
 
 ---
 
 ## NPoS Drawbacks
 
+- We decided to solve an np-hard, multi-winner, approval based, election problem onchain 🤠.
+
 <pba-flex center>
 
-We decided to solve an np-hard,<br>graph processing problem onchain 🤠.
-
-<pba-cols>
-<pba-col>
-
 - scalability. <!-- .element: class="fragment" -->
 - scalability. <!-- .element: class="fragment" -->
-- Oh, and<br>scalability. <!-- .element: class="fragment" -->
-
-</pba-col>
-<pba-col>
-
 - scalability. <!-- .element: class="fragment" -->
 - scalability. <!-- .element: class="fragment" -->
-- Lastly,<br>scalability. <!-- .element: class="fragment" -->
+- and scalability. <!-- .element: class="fragment" -->
 
-</pba-col>
-</pba-cols>
+</widget-text>
 
-<br>
+- But we (strive to) get much better economic security measures in return 🌈.
 
-...But we (strive to) get much better<br>economic security measures in return 🌈. <!-- .element: class="fragment" -->
+<!-- .element: class="fragment" -->
 
-Long term, this can in itself be solved<br>by what Polkadot provides best, more Blockspace 🎉! <!-- .element: class="fragment" -->
+- Long term, this can in itself be solved by what Polkadot provides best, more Blockspace 🎉!
 
-</pba-flex>
-
----
+## <!-- .element: class="fragment" -->
 
 ### NPoS Protocol Overview
 
-<pba-flex center>
-
-- The current NPoS protocol revolves around an **election round**,<br> which is itself made up of 4
+- The current NPoS protocol revolves around an **election round**, which is itself made up of 4
   episodes.
-- This gives you an idea about how we solved<br>the scalability issue for now.
-
-</pba-flex>
+- This gives you an idea about how we solved the scalability issue for the time being.
 
 ---v
 
@@ -213,12 +187,9 @@ Long term, this can in itself be solved<br>by what Polkadot provides best, more 
 
 **Snapshot**
 
-<pba-flex center>
-
-- Allows us to index stakers, not `AccountId`s.
+- Enables multi-block election.
 - Allows us to not need to "freeze" the staking system.
-
-</pba-flex>
+- Allows us to index stakers, not `AccountIds`.
 
 ---v
 
@@ -226,12 +197,8 @@ Long term, this can in itself be solved<br>by what Polkadot provides best, more 
 
 **Signed Submissions**
 
-<pba-flex center>
-
-- Any signed account can come up with a **NPoS solution**<br>based on that snapshot.
-- Deposits, rewards, slash, other game-theoretic tools<br>incorporated to make to secure.
-
-</pba-flex>
+- Any signed account can come up with a **NPoS solution** based on that snapshot.
+- Deposits, rewards, slash, other game-theoretic tools incorporated to make to secure.
 
 ---v
 
@@ -239,11 +206,7 @@ Long term, this can in itself be solved<br>by what Polkadot provides best, more 
 
 **Validator Submissions as Fallback**
 
-<pba-flex center>
-
-- As the first backup, any validator can also<br>submit a solution while authoring blocks.
-
-</pba-flex>
+- As the first backup, any validator can also submit a solution as a part of their block authoring.
 
 ---v
 
@@ -251,33 +214,23 @@ Long term, this can in itself be solved<br>by what Polkadot provides best, more 
 
 **Fallbacks**
 
-<pba-flex center>
-
-- If all of the above fails, the chain won't rotate<br>validators and the governance can either:
+- If all of the above fails, the chain won't rotate validators and the governance can either:
   - dictate the next validator set.
   - trigger an onchain election (limited in what it can do).
 
-</pba-flex>
-
----
+## This was recently [used in Kusama](https://forum.polkadot.network/t/kusama-era-4543-slashing/1410) 🦜.
 
 ## NPoS Objective
 
-<pba-flex center>
+- Given the powerful tool of NPoS, what should we aim for?
+- Let's first recap:
 
-Given the powerful tool of NPoS, what should we aim for?
-
-Let's first recap:
-
-</pba-flex>
-
-<pba-flex center class="fragment">
-
-1. Polkadot validators are the source of truth<br>for the state transition of both the relay chain<br>and all of the parachains + bridges.
-1. Polkadot validator are assigned to parachains<br>as backing group, and swapped over time.
-1. Polkadot validators all author the same<br>number of blocks, i.e. **they are of same importance**.
-
-</pba-flex>
+1. Polkadot validators are the source of truth for the state transition of both the relay chain and all of the parachains + bridges.
+<!-- .element: class="fragment" -->
+2. Polkadot validator are assigned to parachains as backing group, and swapped over time.
+<!-- .element: class="fragment" -->
+3. Polkadot validators all author the same number of blocks, i.e. they are of same importance.
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -310,50 +263,50 @@ pub struct ElectionScore {
 
 ### NPoS Objective: Election Score
 
-<pba-flex center>
-
 - NPoS allows us to incentivize the formation of a validator set that optimized the aforementioned `ElectionScore`.
 
-- This score is ALWAYS calculate and checked onchain.
-  This is why we can accept solutions from the outer world.
-
-</pba-flex>
+- This score is ALWAYS calculate and checked onchain. This is why we can accept solutions from the outer world.
 
 Notes:
 
-A common example: we allow signed submissions.
-What if they send solutions that are censoring a particular validator?
-If it can achieve a better score, so be it!
-We don't care.
+A common example: we allow signed submissions. What if they send solutions that are censoring a particular validator? if it can achieve a better score, so be it! we don't care.
+
+---v
+
+### NPoS Objective: Election Score
+
+- The default algorithm used in both the onchain/offchain solvers is the [Phragmen
+  algorithm](https://en.wikipedia.org/wiki/Phragmen%27s_voting_rules).
+- Proved to provide high fairness and justified representation properties whilst being verifiable in
+  linear time.
 
 ---
 
 ## NPoS Future
 
-👨‍🍳 Fresh from the oven (Jan 2023):
+- Fresh from the oven (Jan 2023): [Future of Polkadot Staking in the Polkadot forum](https://forum.polkadot.network/t/the-future-of-polkadot-staking/1848/2).
+- [Github issue-tracker/project](https://github.com/orgs/paritytech/projects/33)
 
-[Future of Polkadot Staking in the Polkadot forum](https://forum.polkadot.network/t/the-future-of-polkadot-staking/1848/2).
+<hr>
+
+- Nomination Pools
+- Multi-page election submission
+- Operators as first class citizens.
+- fast-unstake.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+# Additional Resources! 😋
 
-# Questions
+<img width="300px" rounded src="../../../assets/img/4-Substrate/thats_all_folks.png">
 
----
-
-## Additional Resources! 😋
-
-<img width="400px" rounded src="../../assets/img/4-Substrate/thats_all_folks.png"/>
-
-<br>
-
-> Check speaker notes (click "s" 😉).
+- Check speaker notes (click "s" 😉).
 
 Notes:
 
 ### Further Reading
 
+- Recent Kusama slashing: https://forum.polkadot.network/t/kusama-era-4543-slashing/1410
 - [A verifiably secure and proportional committee election rule](https://arxiv.org/abs/2004.12990)
 - 4.1 in [Overview of Polkadot and its Design Considerations](https://arxiv.org/abs/2005.13456)
 - [Proportional Justified Representation](https://arxiv.org/abs/1611.09928)
