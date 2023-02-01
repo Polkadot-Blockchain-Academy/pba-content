@@ -23,7 +23,7 @@ Notes:
 <pba-flex center>
 
 - Define the concepts, syntax, and terms of XCM
-- Navigate exiting resources that relate to XCM
+- Navigate exciting resources that relate to XCM
 - Differentiate between XCM and message-passing protocols like XCMP
 
 ---
@@ -242,18 +242,23 @@ This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size a
 ---
 
 ## MultiLocation Examples
+- `../Parachain(1000)`: Evaluated within a parachain, this would identify our sibling parachain of index 1000. (In Rust we would write `MultiLocation { parents: 1, junctions: X1(Parachain(1000)) }` or alternatively `ParentThen(Parachain(1000)).into()`.)
+
+- `../AccountId32(0x1234...cdef)`: Evaluated within a parachain, this would identify the 32-byte account 0x1234…cdef on the relay chain.
+
+- `Parachain(42)/AccountKey20(0x1234...abcd)`: Evaluated on a relay chain, this would identify the 20-byte account 0x1234…abcd on parachain number 42 (presumably something like Moonbeam which hosts Ethereum-compatible accounts).
+
+---
+
+## MultiLocation Examples
 
 <!-- TODO DESIGN: use multilocation graphic from above and add labels in fragment / new slide here -->
 <!-- Base on this set of slides: https://docs.google.com/presentation/d/18qRqqw73L9NTWOX1cfGe5sh484UgvlpMHGekQHu9_8M/edit#slide=id.g8063ab3d6f_0_1418 . If hard, just make these into images via screenshot & use full screen -->
 
-- `../Parachain(1000)`: Evaluated within a parachain, this would identify our sibling parachain of index 1000. (In Rust we would write `MultiLocation { parents: 1, junctions: X1(Parachain(1000)) }` or alternatively `ParentThen(Parachain(1000)).into()`.)
-- `../AccountId32(0x1234...cdef)`: Evaluated within a parachain, this would identify the 32-byte account 0x1234…cdef on the relay chain.
-- `Parachain(42)/AccountKey20(0x1234...abcd)`: Evaluated on a relay chain, this would identify the 20-byte account 0x1234…abcd on parachain number 42 (presumably something like Moonbeam which hosts Ethereum-compatible accounts).
-
-<!-- TODO: speak to an example of non-parachain multi-location that would use a bridge -->
+<img rounded style="width: 650px;" src="../../../assets/img/7-XCM/mod1-multilocation-picture.png" alt="MultiLocation Example"/>
 
 Notes:
-
+speak to an example of non-parachain multi-location that would use a bridge
 XCM reasons about addressing (as in a postal address) that must include understanding where you are, not just where you are going!
 This will be very powerful later on (Origins)
 
@@ -286,7 +291,6 @@ Notes:
 
 ---
 
-<pba-cols
 <pba-col>
 
 ### 💰 `MultiAsset` in XCM
