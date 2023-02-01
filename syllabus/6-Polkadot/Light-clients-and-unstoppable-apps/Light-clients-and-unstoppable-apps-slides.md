@@ -3,9 +3,9 @@ title: Light Clients and Unstoppable Apps
 description: Light Clients and Unstoppable Apps.
 duration: 45+ mins
 ---
-## Light clients,
-## substrate_connect
-## and unstoppable apps
+## Light clients
+## and
+## unstoppable apps
 
 ---
 ## Publicly accessible node
@@ -147,7 +147,7 @@ const chainName = await api.rpc.system.chain();
 The uApp (UI) connects to a light client that is directly integrated inside of it
 
 <p class="green bordered-box"><span class="font-weight-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
-<p class="green bordered-box"><span class="font-weight-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</p>
+<p class="green bordered-box"><span class="font-weight-bold">Convenient:</span> Works transparently</p>
 ---
 ## So what one needs to do
 
