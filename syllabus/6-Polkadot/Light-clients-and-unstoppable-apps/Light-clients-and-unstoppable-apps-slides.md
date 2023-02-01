@@ -163,7 +163,7 @@ mainChain.sendJsonRpc(
 
 ### Or with a Custom Chainspec
 
-```javascript[0|2, 4, 8-13, 15-18|4|5-10|12-15]
+```javascript[0|2, 4| 6-13| 9 | 15-18]
 import { createScClient, WellKnownChain } from "@substrate/connect";
 import myLovelyChainspec from './myLovelyChainspecFromSubstrateChain.json';
 
