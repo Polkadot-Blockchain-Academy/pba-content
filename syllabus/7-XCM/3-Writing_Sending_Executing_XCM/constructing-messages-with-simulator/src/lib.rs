@@ -207,7 +207,8 @@ mod tests {
 				Xcm::<()>(vec![])
 			));
 
-			// Let's advance the relay. This should trigger the subscription message
+			// Let's advance the relay.
+            // This should trigger the subscription message
 			relay_chain::relay_roll_to(2);
 
 			// queries should have been updated

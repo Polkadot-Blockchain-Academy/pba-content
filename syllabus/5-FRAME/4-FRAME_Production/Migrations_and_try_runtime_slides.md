@@ -455,7 +455,7 @@ pub type Executive = Executive<
 
 - Discussion: Can the runtime upgrade scripts live forever? Or should they be removed after a few releases?
 
-NOTE:
+Notes:
 
 Short answer is, yes, but it is a LOT of work. See here: https://github.com/paritytech/substrate/issues/10308
 
@@ -469,7 +469,7 @@ Short answer is, yes, but it is a LOT of work. See here: https://github.com/pari
 
 * `#[storage_alias]` macro to create storage types for removed for those that are being removed.
 
-NOTE:
+Notes:
 
 Imagine you want to remove a storage map and in a migration you want to iterate it and delete all items. You want to remove this storage item, but it would be handy to be able to access it one last time in the migration code. This is where `#[storage_alias]` comes into play.
 
@@ -478,8 +478,8 @@ Imagine you want to remove a storage map and in a migration you want to iterate 
 ## Case Studies
 
 1. The day we destroyed all balances in Polkadot.
-2. First ever migration ([`pallet-elections-phragmen`](https://github.com/paritytech/substrate/pull/3948)).
-3. Fairly independent migrations in `pallet-elections-phragmen`.
+1. First ever migration ([`pallet-elections-phragmen`](https://github.com/paritytech/substrate/pull/3948)).
+1. Fairly independent migrations in `pallet-elections-phragmen`.
 
 ---
 

@@ -4,7 +4,7 @@ description: Data Availability Problem, Erasure coding, Data sharding.
 duration: 30-45 mins
 ---
 
-# Data Availability and Sharding.
+# Data Availability and Sharding
 
 ---
 
@@ -171,10 +171,10 @@ Reed-Solomon codes are used in CDs, DVDs, QR codes and RAID 6.
 ### Reed-Solomon with Lagrange interpolation
 
 1. Divide the data into elements of size $P$ bits.
-2. Interpret the bytes as (big) numbers $\mod P$.
-3. Index of each element is $x_i$ and the element itself is $y_i$.
-4. Construct the interpolating polynomial $p(x)$ and evaluate it at additional $n - k$ points.
-5. The encoding is $(y_0, ..., y_{k-1}, p(k), ... p(n - 1))$ along with indices.
+1. Interpret the bytes as (big) numbers $\mod P$.
+1. Index of each element is $x_i$ and the element itself is $y_i$.
+1. Construct the interpolating polynomial $p(x)$ and evaluate it at additional $n - k$ points.
+1. The encoding is $(y_0, ..., y_{k-1}, p(k), ... p(n - 1))$ along with indices.
 
 Notes:
 
@@ -271,7 +271,7 @@ If $2f + 1$ are malicious, every PoS is doomed anyway.
 
 Notes:
 
-We'll see in the next lecture, how approval-voting can prevent unavailable blocks from being finalized even with $>f$ malicious nodes.
+We'll see in the next lesson, how approval-voting can prevent unavailable blocks from being finalized even with $>f$ malicious nodes.
 
 ---
 
@@ -315,7 +315,7 @@ Danksharding is aiming at 1.3 MB/s and Celestia < 1 MB/s.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions
+# Questions
 
 ---
 

@@ -47,9 +47,9 @@ impl Config for XcmConfig {
   // How we convert a ML to a FRAME dispatch origin
   type OriginConverter = ?;
   // Who we trust as reserve chains
-  type IsReserve = Everything;
+  type IsReserve = ?;
   // Who do we trust as teleporters
-  type IsTeleporter = Nothing;
+  type IsTeleporter = ?;
   // How we invert locations
   type LocationInverter = ?;
   // Pre-execution filters
@@ -83,6 +83,64 @@ Notes:
 
 ---
 
+## 🛠️ XcmRouter in `XcmConfig`
+
+- `XcmRouter` defines the means of routing a XCM to a destination.
+- `ParentAsUmp` routes XCM to relay chain through UMP.
+- `XcmpQueue` routes XCM to other parachains through XCMP.
+
+```rust
+pub type XcmRouter = (
+	// Two routers - use UMP to communicate with the relay chain:
+	cumulus_primitives_utility::ParentAsUmp<ParachainSystem, PolkadotXcm>,
+	// ..and XCMP to communicate with the sibling chains.
+	XcmpQueue,
+);
+```
+
+Notes:
+
+- If the destination location matches the form of `Multilocation { parents: 1, interior: Here }`, the message will be routed through UMP.
+  The UMP channel is available by default.
+- If the destination matches the form of `Multilocation { parents: 1, interior: X1(Parachain(para_id)) }`, the message will be routed through XCMP.
+  As of today, an HRMP channel should be established before the message can be routed.
+
+---v
+
+## 🛠️ XcmRouter in `XcmConfig`
+
+- `XcmRouter` will ask for implementations of the `SendXcm` trait.
+- `wrap_version`, in this case, adds versioning to the message.
+
+<div style="font-size:smaller">
+
+```rust [6|9|12]
+pub struct ParentAsUmp<T, W>(PhantomData<(T, W)>);
+impl<T: UpwardMessageSender, W: WrapVersion> SendXcm for ParentAsUmp<T, W> {
+	fn send_xcm(dest: impl Into<MultiLocation>, msg: Xcm<()>) -> Result<(), SendError> {
+		let dest = dest.into();
+
+		if dest.contains_parents_only(1) {
+			// An upward message for the relay chain.
+			let versioned_xcm =
+				W::wrap_version(&dest, msg).map_err(|()| SendError::DestinationUnsupported)?;
+			let data = versioned_xcm.encode();
+
+			T::send_upward_message(data).map_err(|e| SendError::Transport(e.into()))?;
+
+			Ok(())
+		} else {
+			// Anything else is unhandled. This includes a message this is meant for us.
+			Err(SendError::CannotReachDestination(dest, msg))
+		}
+	}
+}
+```
+
+<div>
+
+---
+
 ### 🤔 Grab your chain's requirements before starting
 
 Questions that you should have answers for:
@@ -113,6 +171,26 @@ Notes:
 1. Parachain that mints in `pallet-balances` when it receives relay chain tokens.
 1. Parachain that uses 32 byte accounts.
 1. Users can execute XCMs locally.
+
+---
+
+### 🤝 `IsReserve` and `IsTeleporter`
+
+- They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
+- Filters are applied for specific `MultiAsset-MultiLocation` pairs.
+
+```rust
+/// Combinations of (Asset, Location) pairs which we trust as reserves.
+type IsReserve: ContainsPair<MultiAsset, MultiLocation>;
+
+/// Combinations of (Asset, Location) pairs which we trust as teleporters.
+type IsTeleporter: ContainsPair<MultiAsset, MultiLocation>;
+```
+
+Notes:
+
+- For our test excercise, it is sufficient to set this `IsReserve` to `Everything`.
+- In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
 
 ---
 
@@ -317,7 +395,8 @@ Notes:
 
 Notes:
 
-- `Transact` needs to dispatch from a frame dispatch origin. However the xcm-executor works with xcm-origins which are defined by MultiLocations.
+- `Transact` needs to dispatch from a frame dispatch origin.
+  However the xcm-executor works with xcm-origins which are defined by MultiLocations.
 - `origin-converter` is the component that converts one into the other
 
 ---v
@@ -425,7 +504,8 @@ Notes:
 
 Notes:
 
-- Barriers should not involve any heavy computation. **At the point at which barriers are checked nothing has yet been paid for its execution**.
+- Barriers should not involve any heavy computation.
+  **At the point at which barriers are checked nothing has yet been paid for its execution**.
 
 ---v
 
@@ -519,7 +599,10 @@ Notes:
 - `FixedWeightInfoBounds`: Apply a constant weight value to all instructions except for `Transact`, `SetErrorHandler` and `SetAppendix`.
 - `WeightInfoBounds`: Apply instruction-specific weight (ideally, benchmarked values) except for `Transact`, `SetErrorHandler` and `SetAppendix`.
 
-Notes: Benchmarking can easily be done with the `pallet-xcm-benchmarks` module. Note that the benchmarks need to reflect what your runtime is doing, so fetching the weights done for another runtime can potentially turn into users abusing your system.
+Notes:
+
+Benchmarking can easily be done with the `pallet-xcm-benchmarks` module.
+Note that the benchmarks need to reflect what your runtime is doing, so fetching the weights done for another runtime can potentially turn into users abusing your system.
 
 ---v
 
@@ -614,7 +697,8 @@ Notes:
 
 Notes:
 
-- `TransactionPayment` pallet already defines how to convert weight to fee. We do not need to define a rate in this case.
+- `TransactionPayment` pallet already defines how to convert weight to fee.
+  We do not need to define a rate in this case.
 
 ---
 
@@ -659,6 +743,8 @@ Example for parachain 1000 in Kusama:
 
 ### 🎨 Key roles of `pallet-xcm`
 
+<pba-flex center>
+
 1. Allows to interact with the `xcm-executor` by executing xcm messages.
    These can be filtered through the `XcmExecuteFilter`.
 1. Provides an easier interface to do `reserveTransferAssets` and `TeleportAssets`.
@@ -668,9 +754,12 @@ Example for parachain 1000 in Kusama:
 1. Allows sending arbitrary messages to other chains for certain origins.
    The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
 
+</pba-flex>
+
 Notes:
 
-- Even when `palletXcm` allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls. In the case of the latter, it appends the `DescendOrigin` instruction to make sure non-root origins cannot act on behalf of the parachain.
+- Even when `palletXcm` allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls.
+  In the case of the latter, it appends the `DescendOrigin` instruction to make sure non-root origins cannot act on behalf of the parachain.
 
 ---v
 

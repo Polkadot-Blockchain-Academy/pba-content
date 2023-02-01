@@ -76,7 +76,6 @@
         display: list-item;
         line-height: 0;
         color: var(--r-link-color-dark);
-        transition: color 200ms ease-in-out, font-size 200ms ease-in-out;
       }
       .slide-card-name{
         font-family: var(--r-heading-font);
@@ -84,7 +83,12 @@
       }
       .slide-card-path{
         font-style: italic;
+        color: var(--r-link-color);
         font-size: 0.7em;
+      }
+      a:hover .slide-card-path{
+        color: var(--r-link-color-hover);
+        transition: color 200ms ease-in-out;
       }
       .slide-list li a {
         padding-top: calc(var(--size) / 3);
@@ -142,7 +146,7 @@
           <a href="{{filePath}}" title="{{title}}" class="slide-card">
             {{#title}}
             <span class="slide-card-name">{{.}}</span>
-            <span class="slide-card-path"><br>&nbsp;&nbsp; -- {{filePath}}</span>
+            <span class="slide-card-path"><br>&nbsp;&nbsp;&nbsp;&nbsp;{{filePath}}</span>
             {{/title}}
             {{^title}}
             {{filePath}}
