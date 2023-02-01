@@ -16,14 +16,14 @@ Why do we use PoS?
 
 <div>
 
-* Tokens locked + prone to being slashed.
-* Economic Security 💸🤑.
+- Tokens locked + prone to being slashed.
+- Economic Security 💸🤑.
 
 </div>
 
 <!-- .element: class="fragment" -->
 
-* Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
+- Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
 
 <!-- .element: class="fragment" -->
 
@@ -31,11 +31,10 @@ Why do we use PoS?
 
 ### Why Proof of Stake Ser?
 
-* Remember that Polkadot is at the end of the day a validator-set-as-a-service.
-* Secure Blockspace, the main product of Polkadot is provided by these validators.
+- Remember that Polkadot is at the end of the day a validator-set-as-a-service.
+- Secure Blockspace, the main product of Polkadot is provided by these validators.
 
 <image src="../../../assets/img/4-substrate/dev-6-x-npos-vsas.svg" style="width: 1000px">
-
 
 ---
 
@@ -43,7 +42,7 @@ Why do we use PoS?
 
 Assumptions:
 
-- **Validators**: those who intend to author blocks. i.e. *Validator candidate*.
+- **Validators**: those who intend to author blocks. i.e. _Validator candidate_.
 
 <!-- .element: class="fragment" -->
 
@@ -55,7 +54,6 @@ Assumptions:
   always choose the **active/winner validators/delegators** + hold them slashable.
 
 <!-- .element: class="fragment" -->
-
 
 - Every election period is called an **_Era_**, e.g. 24hrs in Polkadot.
 
@@ -70,7 +68,6 @@ Assumptions:
 **Solo-POS**
 
 <image src="../../../assets/img/4-substrate/dev-6-x-npos-0.svg" style="width: 1000px">
-
 
 ---v
 
@@ -90,22 +87,20 @@ Low amount of stake that we can capture, impossible for those who don't want to 
 
 <image src="../../../assets/img/4-substrate/dev-6-x-npos-1.svg" style="width: 1000px">
 
-
 ---v
 
 ### What is NPoS: Re-inventing the Wheel
 
 - Anyone can dilute themselves in any given validators. Top validator based on total stake are
-elected.
+  elected.
 - Voters are called **delegators**.
 
 - Problems?
 
 Notes:
 
-* Better, but funds might be delegated to non-winners, which get wasted.
-* In other words, there is no incentive to delegate to those that are non-winners.
-
+- Better, but funds might be delegated to non-winners, which get wasted.
+- In other words, there is no incentive to delegate to those that are non-winners.
 
 ---v
 
@@ -127,13 +122,11 @@ Same issue as before.
 
 ---v
 
-
 **Nominated Proof of Stake**
 
 <image src="../../../assets/img/4-substrate/dev-6-x-npos-3.svg" style="width: 1000px">
 
 ---v
-
 
 **Nominated Proof of Stake**
 
@@ -144,7 +137,7 @@ Same issue as before.
 ### What is NPoS: Re-inventing the Wheel
 
 - You name up to `N` nominees, an _algorithm_, computed either onchain or offchain, decides
-the **winners** and **how to distribute the stake among them**.
+  the **winners** and **how to distribute the stake among them**.
 - Voters are called **Nominators**.
 
 ---v
@@ -158,14 +151,11 @@ the **winners** and **how to distribute the stake among them**.
 - ✅ Can optimize other criteria other than "who had more approval votes".
 <!-- .element: class="fragment" -->
 
-
-
 ---
 
 ## NPoS Drawbacks
 
-
-* We decided to solve an np-hard, multi-winner, approval based, election problem onchain 🤠.
+- We decided to solve an np-hard, multi-winner, approval based, election problem onchain 🤠.
 
 <pba-flex center>
 
@@ -177,20 +167,19 @@ the **winners** and **how to distribute the stake among them**.
 
 </widget-text>
 
-* But we (strive to) get much better economic security measures in return 🌈.
+- But we (strive to) get much better economic security measures in return 🌈.
 
 <!-- .element: class="fragment" -->
 
-* Long term, this can in itself be solved by what Polkadot provides best, more Blockspace 🎉!
+- Long term, this can in itself be solved by what Polkadot provides best, more Blockspace 🎉!
 
-<!-- .element: class="fragment" -->
----
+## <!-- .element: class="fragment" -->
 
 ### NPoS Protocol Overview
 
-* The current NPoS protocol revolves around an **election round**, which is itself made up of 4
-episodes.
-* This gives you an idea about how we solved the scalability issue for the time being.
+- The current NPoS protocol revolves around an **election round**, which is itself made up of 4
+  episodes.
+- This gives you an idea about how we solved the scalability issue for the time being.
 
 ---v
 
@@ -208,8 +197,8 @@ episodes.
 
 **Signed Submissions**
 
-* Any signed account can come up with a **NPoS solution** based on that snapshot.
-* Deposits, rewards, slash, other game-theoretic tools incorporated to make to secure.
+- Any signed account can come up with a **NPoS solution** based on that snapshot.
+- Deposits, rewards, slash, other game-theoretic tools incorporated to make to secure.
 
 ---v
 
@@ -217,7 +206,7 @@ episodes.
 
 **Validator Submissions as Fallback**
 
-* As the first backup, any validator can also submit a solution as a part of their block authoring.
+- As the first backup, any validator can also submit a solution as a part of their block authoring.
 
 ---v
 
@@ -225,18 +214,16 @@ episodes.
 
 **Fallbacks**
 
-* If all of the above fails, the chain won't rotate validators and the governance can either:
+- If all of the above fails, the chain won't rotate validators and the governance can either:
   - dictate the next validator set.
   - trigger an onchain election (limited in what it can do).
 
-This was recently [used in Kusama](https://forum.polkadot.network/t/kusama-era-4543-slashing/1410) 🦜.
----
+## This was recently [used in Kusama](https://forum.polkadot.network/t/kusama-era-4543-slashing/1410) 🦜.
 
 ## NPoS Objective
 
-* Given the powerful tool of NPoS, what should we aim for?
-* Let's first recap:
-
+- Given the powerful tool of NPoS, what should we aim for?
+- Let's first recap:
 
 1. Polkadot validators are the source of truth for the state transition of both the relay chain and all of the parachains + bridges.
 <!-- .element: class="fragment" -->
@@ -244,7 +231,6 @@ This was recently [used in Kusama](https://forum.polkadot.network/t/kusama-era-4
 <!-- .element: class="fragment" -->
 3. Polkadot validators all author the same number of blocks, i.e. they are of same importance.
 <!-- .element: class="fragment" -->
-
 
 Notes:
 
@@ -277,25 +263,22 @@ pub struct ElectionScore {
 
 ### NPoS Objective: Election Score
 
-* NPoS allows us to incentivize the formation of a validator set that optimized the aforementioned `ElectionScore`.
+- NPoS allows us to incentivize the formation of a validator set that optimized the aforementioned `ElectionScore`.
 
-* This score is ALWAYS calculate and checked onchain. This is why we can accept solutions from the outer world.
+- This score is ALWAYS calculate and checked onchain. This is why we can accept solutions from the outer world.
 
 Notes:
 
 A common example: we allow signed submissions. What if they send solutions that are censoring a particular validator? if it can achieve a better score, so be it! we don't care.
 
-
 ---v
 
 ### NPoS Objective: Election Score
 
-* The default algorithm used in both the onchain/offchain solvers is the [Phragmen
+- The default algorithm used in both the onchain/offchain solvers is the [Phragmen
   algorithm](https://en.wikipedia.org/wiki/Phragmen%27s_voting_rules).
-* Proved to provide high fairness and justified representation properties whilst being verifiable in
+- Proved to provide high fairness and justified representation properties whilst being verifiable in
   linear time.
-
-
 
 ---
 
@@ -306,10 +289,10 @@ A common example: we allow signed submissions. What if they send solutions that 
 
 <hr>
 
-* Nomination Pools
-* Multi-page election submission
-* Operators as first class citizens.
-* fast-unstake.
+- Nomination Pools
+- Multi-page election submission
+- Operators as first class citizens.
+- fast-unstake.
 
 ---
 
@@ -337,7 +320,4 @@ Notes:
 - PJR checking: why we don't do it.
 - `reduce` optimization.
 
-
-
 ### Feedback After Lecture:
-
