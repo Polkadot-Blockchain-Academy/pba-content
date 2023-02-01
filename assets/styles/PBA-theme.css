@@ -458,26 +458,6 @@ a {
 	background: var(--r-link-color-dark);
 }
 
-/* LIGHT CLIENTS CUSTOM */
-.bordered-box {
-  background-color: green;
-  border-radius: 35px;
-  padding: 40px;
-  margin-top: 50px !important;
-}
-
-.font-weight-bold {
-  font-weight: bold;
-}
-
-.red {
-  background-color: red;
-}
-
-.green {
-  background-color: green;
-}
-
 /*********************************************
 	 * Frame helper
 	 *********************************************/

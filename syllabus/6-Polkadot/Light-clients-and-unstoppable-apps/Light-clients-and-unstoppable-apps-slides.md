@@ -4,6 +4,27 @@ description: Light Clients and Unstoppable Apps, for Web3 engineers.
 duration: 45+ mins
 ---
 
+<style type="text/css">
+.bordered-box {
+  background-color: green;
+  border-radius: 35px;
+  padding: 40px;
+  margin-top: 50px !important;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+</style>
+
 # Light clients<br>and<br>Unstoppable Apps
 
 ---
