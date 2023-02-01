@@ -33,7 +33,7 @@ Notes:
 1. Content Brainstorming
 1. Guest Lessons
 
-</widget-text>
+</pba-flex>
 
 ---
 
@@ -52,14 +52,14 @@ Notes:
 - Dinner is NOT Catered
 - Some nights will have a Guest Lesson
 
-</widget-text>
+</pba-flex>
 
 ---
 
 ## Modules and Assignments
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 <pba-flex style="font-size: 3px;">
 
@@ -71,8 +71,8 @@ Notes:
 6. Assignment 2
 7. FRAME - _5 Days_
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 8. Assignment 3
 9. Polkadot - 2.5 Days
@@ -81,10 +81,10 @@ Notes:
 12. XCM - 2.5 Days
 13. Maybe Optional Ungraded Assignment
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
-</widget-text>
+</pba-flex>
 
 ---
 
@@ -127,7 +127,7 @@ Notes:
 1. Review exact dates for each module
 1. Make some **Formal Commitments**
 
-</widget-text>
+</pba-flex>
 
 Notes:
 
@@ -140,21 +140,21 @@ This endeavor will only succeed with everyone doing their part. If you cannot co
 
 ### Instructors are the _Owner_ of content creation and delivery.
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 <center>
 <img src="../../assets/img/0-Shared/meta-slides/pledge.png" style="width: 300px;">
 </center>
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 - Ultimately responsible for the success of the module.
 - Coordinate with edu. team and TAs to do this.
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 <!-- .element: class="fragment"-->
 
@@ -295,7 +295,7 @@ Biggest feedback from wave 1:
 
 <!-- .element: class="fragment"-->
 
-</widget-text >
+</pba-flex >
 
 Notes:
 
@@ -408,7 +408,7 @@ Errors -> Concepts that students commonly misunderstand are well suited for this
 
 ### Break it up
 
-</widget-text>
+</pba-flex>
 
 - Coffee Break
 - Kahoot Game
@@ -433,7 +433,7 @@ Exercise: Students will do it if you tell them to. I've gotten theaters of 50+ a
 ...after-class assignments<br>
 ...active learning ideas
 
-</widget-text>
+</pba-flex>
 
 There are no stupid ideas!<br>
 Keep 'em coming...<br>
@@ -476,7 +476,7 @@ Flip through the repository instead of showing this slide
 
 https://github.com/Polkadot-Blockchain-Academy/pba-content <!-- TODO Remove this link check disable once repo is public --> <!-- markdown-link-check-disable-line -->
 
-</widget-text>
+</pba-flex>
 
 Everyone should have access to this repo, let Dan know if not.
 
@@ -526,7 +526,7 @@ Maybe...?
 - Add fresh ideas
 - Inform on what is confusing or missing
 
-</widget-text>
+</pba-flex>
 
 ---v
 
