@@ -16,15 +16,14 @@ Why do we use PoS?
 
 <div>
 
-Economic Security 💸🤑
-
-Tokens locked + prone to being slashed.
+* Tokens locked + prone to being slashed.
+* Economic Security 💸🤑.
 
 </div>
 
 <!-- .element: class="fragment" -->
 
-Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
+* Everything else (finality, parachains, etc.) is built on top of this base layer of economic security.
 
 <!-- .element: class="fragment" -->
 
@@ -44,16 +43,16 @@ Everything else (finality, parachains, etc.) is built on top of this base layer 
 
 Assumptions:
 
-- **Validators**: those who wish to author blocks.
+- **Validators**: those who intend to author blocks. i.e. *Validator candidate*.
 
 <!-- .element: class="fragment" -->
 
-- **Nominators/Delegators**: Those who wish to support wanna-be authors.
+- **Nominators/Delegators**: Those who intend to support wanna-be authors.
 
 <!-- .element: class="fragment" -->
 
 - Validation and nomination intentions can change, therefore we need **periodic elections** to
-  always choose the best validators + hold them slashable.
+  always choose the **active/winner validators/delegators** + hold them slashable.
 
 <!-- .element: class="fragment" -->
 
@@ -118,7 +117,7 @@ Notes:
 
 ### What is NPoS: Re-inventing the Wheel
 
-Your stake is divided $\frac{1}{N}$ among $N$ validators.
+Your stake is divided $\frac{1}{N}$ (or arbitrarily) among $N$ validators.
 
 Problems?
 
@@ -152,16 +151,21 @@ the **winners** and **how to distribute the stake among them**.
 
 ### What is NPoS: Re-inventing the Wheel
 
-- ✅ Can optimize other criteria other than "who had more approval votes".
-- ✅ Has a much higher chance to make sure staked tokens won't get wasted.
 - ✅ As a nominator, you are free to express your desire to back non-winners as well. Once enough people have expressed the same desire, the non-winner will become a winner.
+<!-- .element: class="fragment" -->
+- ✅ Has a much higher chance to make sure staked tokens won't get wasted.
+<!-- .element: class="fragment" -->
+- ✅ Can optimize other criteria other than "who had more approval votes".
+<!-- .element: class="fragment" -->
+
+
 
 ---
 
 ## NPoS Drawbacks
 
 
-* We decided to solve an np-hard, graph processing problem onchain 🤠.
+* We decided to solve an np-hard, multi-winner, approval based, election problem onchain 🤠.
 
 <pba-flex center>
 
@@ -194,8 +198,9 @@ episodes.
 
 **Snapshot**
 
-- Allows us to index stakers, not AccountIds.
+- Enables multi-block election.
 - Allows us to not need to "freeze" the staking system.
+- Allows us to index stakers, not `AccountIds`.
 
 ---v
 
@@ -224,6 +229,7 @@ episodes.
   - dictate the next validator set.
   - trigger an onchain election (limited in what it can do).
 
+This was recently [used in Kusama](https://forum.polkadot.network/t/kusama-era-4543-slashing/1410) 🦜.
 ---
 
 ## NPoS Objective
@@ -231,12 +237,13 @@ episodes.
 * Given the powerful tool of NPoS, what should we aim for?
 * Let's first recap:
 
-<div class="fragment">
 
 1. Polkadot validators are the source of truth for the state transition of both the relay chain and all of the parachains + bridges.
+<!-- .element: class="fragment" -->
 2. Polkadot validator are assigned to parachains as backing group, and swapped over time.
-3. Polkadot validators all author the same number of blocks, i.e. **they are of same importance**.
-</div>
+<!-- .element: class="fragment" -->
+3. Polkadot validators all author the same number of blocks, i.e. they are of same importance.
+<!-- .element: class="fragment" -->
 
 
 Notes:
@@ -278,11 +285,31 @@ Notes:
 
 A common example: we allow signed submissions. What if they send solutions that are censoring a particular validator? if it can achieve a better score, so be it! we don't care.
 
+
+---v
+
+### NPoS Objective: Election Score
+
+* The default algorithm used in both the onchain/offchain solvers is the [Phragmen
+  algorithm](https://en.wikipedia.org/wiki/Phragmen%27s_voting_rules).
+* Proved to provide high fairness and justified representation properties whilst being verifiable in
+  linear time.
+
+
+
 ---
 
 ## NPoS Future
 
 - Fresh from the oven (Jan 2023): [Future of Polkadot Staking in the Polkadot forum](https://forum.polkadot.network/t/the-future-of-polkadot-staking/1848/2).
+- [Github issue-tracker/project](https://github.com/orgs/paritytech/projects/33)
+
+<hr>
+
+* Nomination Pools
+* Multi-page election submission
+* Operators as first class citizens.
+* fast-unstake.
 
 ---
 
@@ -296,6 +323,7 @@ Notes:
 
 ### Further Reading
 
+- Recent Kusama slashing: https://forum.polkadot.network/t/kusama-era-4543-slashing/1410
 - [A verifiably secure and proportional committee election rule](https://arxiv.org/abs/2004.12990)
 - 4.1 in [Overview of Polkadot and its Design Considerations](https://arxiv.org/abs/2005.13456)
 - [Proportional Justified Representation](https://arxiv.org/abs/1611.09928)
