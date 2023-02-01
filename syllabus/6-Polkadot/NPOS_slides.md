@@ -329,7 +329,6 @@ Notes:
 - [Proportional Justified Representation](https://arxiv.org/abs/1611.09928)
 - [Justified representation - Wikipedia](https://en.wikipedia.org/wiki/Justified_representation)
 
-
 ### NPoS Protocol: More Details, Backup Slides
 
 - `bags-list`: how to store an unbounded semi-sorted linked-list onchain.
