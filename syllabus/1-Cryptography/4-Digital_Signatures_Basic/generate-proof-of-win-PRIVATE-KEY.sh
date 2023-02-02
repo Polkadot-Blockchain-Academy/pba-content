@@ -13,28 +13,49 @@
 # #####################################################################
 
 
-echo "     🎉🔐🔏 Polkadot Blockchain Academy Proof-of-Win (PWN) 🔏🔐🎉\n"
-echo "============================================================================\n"
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-echo "   Make sure to read and understand what this script does before you use it!"
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
-echo "                            This script will read your:"
-echo "                               - ⚠PRIZE SECRET⚠"
-echo "                               - ⚠PRIVATE  KEY⚠"
-echo "                 *without* writing to disk or terminal history.\n"
-echo "                It outputs a \"PWN-<your address>.json\" to send"
-echo "                       to the Academy team to verify 🕵️\n"
-echo "              You could use any Substrate compatible wallet to sign,"
-echo "             and instead use the \"generate-proof-of-win-SIGNATURE.sh\"\n"
+echo "//////////////////////////////////////////////////////////////////////////////////////////////////////////"
+echo "////////////////           ///////////////////////////////////////////////////////////////////////////////"
+echo "//////////////               /////////////////////////////////////////////////////////////////////////////"
+echo "////////    ////           ////    ////////////////////////////////*  *///////////////////////////////////"
+echo "/////        /////////////////        ////////////////////////////.   ,///////////////////////***/////////"
+echo "////         /////////////////          /////////////////////////*    ///////////////////////.   ,////////"
+echo "///         ////////////////////        /////////////////////////.   ,//////////////////////*.   /////////"
+echo "///      /////////////////////////      //////////////*,.      .,   .//////*..      .,..,.            *///"
+echo "////////////////////////////////////////////////////,.   ..,**,.    ,///*,    .,,,.    ***,.    ,,,,,*////"
+echo "/////  ///////////////////////////////////////////*.   ,*//////,   ,*//*    *//////,   ,*/*.   ,//////////"
+echo "///       ///////////////////////       /////////*.   *///////,    *//*    *///////,   ,//*   .///////////"
+echo "///         ///////////////////         ////////*     ///////,    .*//,   .///////,    */*.   ,/////**////"
+echo "////         /////////////////         /////////*     ,///*,.     ,**,     *////*.   .///*.   ,//*.   ,///"
+echo "//////       /////////////////        ///////////,.         ,,       .,.          ,*/////,         .*////"
+echo "///////////////             ////////////////////////**,.,,,*///*,,,,*/////*,,,,**///////////*,,,,**///////"
+echo "///////////////             //////////////////////////////////////////////////////////////////////////////"
+echo "//////////////////       /////////////////////////////////////////////////////////////////////////////////"
+echo "//////////////////////////////////////////////////////////////////////////////////////////////////////////"
+echo ""
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+echo "                  Make sure to read and understand what this script does before you use it!"
+echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+echo "==========================================================================================================\n"
+
+echo "                           🎉🔐🔏 Blockchain Academy Proof-of-Win (PWN) 🔏🔐🎉\n"
+echo "==========================================================================================================\n"
+echo "                                         This script processes a:"
+echo "                                            - ⚠PRIZE SECRET⚠"
+echo "                                            - ⚠PRIVATE  KEY⚠"
+echo "                              *without* writing them to disk or terminal history.\n"
+echo "                               It outputs a \"PWN-<your address>.json\" to submit"
+echo "                                      to the Academy team to verify 🕵️\n"
+echo "                             You could use any Substrate compatible wallet to sign,"
+echo "                            and instead use the \"generate-proof-of-win-SIGNATURE.sh\"\n"
 
 
-echo -n "  🗪 Your https://matrix.org contact (@some-dude:matrix.io): " 
+echo -n "  📝 A pubic, psudononomous, message for the Academy class (any text, without \"quotes\"): " 
 # debug:
-MATRIX="@some-dude:matrix.io"
-# read MATRIX
+MESSAGE="I LIKE WINNING! BOOOOO YAAAAAA!"
+# read MESSAGE
 
 echo "  🙈 Your  provided secret is hashed for you by the script,"
-echo "     not exposed in the json message."
+echo "     not exposed in the output."
 echo -n "  🏆 Your prize secret: "
 echo -n "  (three words, space separated) used in the Econ games: "
 # debug:
@@ -45,35 +66,51 @@ SECRET_HASH="0x""$(printf "$SECRET" | sha512sum | awk '{print $1}')"
 # DELETE SECRET
 unset SECRET
 
-echo "  🔑 Your PRIVATE KEY (hex encoding *or* mnemonic & derived path)"
-echo -n "    to send winnings to (0x..... *or* words here//HD-Wallet///Path): "
+echo    "  🔑 Your PRIVATE KEY (hex encoding *or* mnemonic & derived path)"
+echo -n "  💸 THE PRIZE WILL BE SENT HERE (0x..... *or* [12|24 words here]//HD-Wallet///Path): "
 # debug:
-PRIV_KEY="middle harsh axis absurd message meadow kick soccer empty left adult giraffe//some///path"
-# read PRIV_KEY
+PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe//some///path"
+# read PRIVATE
   
-echo -n "The network for the SS58 address (polkadot, kusama, some parachain...): "
+echo -n "  🕸️ The network for the SS58 address (polkadot, kusama, some parachain...): "
 # debug:
 NETWORK="polkadot"
 # read NETWORK
 
 # subkey needs an sURI = address SS58 or pubkey-hex or privkey-hex
-ADDRESS="$(subkey inspect "$PRIV_KEY" --network "$NETWORK" --output-type json | jq '.ss58Address' -rj)"
+ADDRESS="$(subkey inspect "$PRIVATE" --network "$NETWORK" --output-type json | jq '.ss58Address' -rj)"
 
-# DELETE PRIV_KEY
-unset PRIV_KEY
+# DELETE PRIVATE
+unset PRIVATE
 
-echo -n "  🙋 Your Pub Key (SS58) for ""$NETWORK"" =""$ADDRESS"
+echo -n "  🙋 Your Pub Key (SS58) for $NETWORK = $ADDRESS"
 
-# Sign your provided Matrix username (only)
-SIGNATURE="$(subkey sign --suri "$PRIV_KEY" --message "$MATRIX")"
+# Sign your provided message username (only)
+SIGNATURE="$(subkey sign --suri "$PRIVATE" --message "$MESSAGE")"
 
-echo "\n\n            👇 🔐 Generated \"PWN-""$ADDRESS"".json\" 🔐 👇"
+FILE="PWN-""$ADDRESS"".json"
+
+echo "\n\n                    👇 🔐 $FILE 🔐 👇"
+
 # Write PWN-$ADDRESS.json
-jq -n --arg matrix "$MATRIX" --arg ss58Address "$ADDRESS" --arg secretHash "$SECRET_HASH" --arg signature "$SIGNATURE" '.matrix = $matrix | .ss58Address = $ss58Address | .secretHash = $secretHash | .signature = $signature' > PWN-$ADDRESS.json 
+jq -n --arg message "$MESSAGE" --arg ss58Address "$ADDRESS" --arg secretHash "$SECRET_HASH" --arg signature "$SIGNATURE" '.message = $message | .ss58Address = $ss58Address | .secretHash = $secretHash | .signature = $signature' > $FILE
 
-jq < PWN-$ADDRESS.json
+jq < $FILE
 
-echo "           📬📬📬 Send \"PWN-""$ADDRESS"".json\" to your TA! 📬📬📬"
-echo "                You must use the "$MATRIX" account to qualify.\n"
-echo "                                Less Trust."
-echo "                                More Truth.\n"
+echo "                   📬 Send us $FILE 📬"
+echo "                   The Academy team will provide a link to upload or paste this json into.\n"
+echo -n "                            🗑 Press [ENNTER] key to clear the screen..."
+read LESS
+clear
+echo -n "\n\n\n\n                                        Less Trust."
+read MORE
+echo            "                                        More Truth.\n\n\n\n"
+read MIC_DROP
+
+# debug:
+# {
+#   "message": "I LIKE WINNING! BOOOOO YAAAAAA!",
+#   "ss58Address": "14VJA6QWfE7iEXsvrcE8vmF5wnEqEfimG8s35VfWU1TJYPVR",
+#   "secretHash": "0x58cf16bcdceec9bce18246eeaa2f3358a2cdfdb7dc98a3d5f61da18f841b057369c58e64a456e236e853d853ef088a0eb57551a2a2b124c3060d5f402a2bf0a3",
+#   "signature": "0x5261afc255c4b5863dee0ff9199dbc321c2c79460cac0e46ac81a21171744a183d517c51822bcd3adc0e249412a27594ab26665ff85d95ed503d56781ef22683"
+# }
