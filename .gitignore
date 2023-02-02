@@ -1,15 +1,11 @@
-# Rust artifacts
-**/target
-
-# Build artifacts
+# Reveal.js build artifacts
 build/
 
-# Jupyter artifacts
-
-**/.ipynb_checkpoints/**
-
 # Rust artifacts
 **/target
+
+# Jupyter artifacts
+**/.ipynb_checkpoints/**
 
 # Some common ones
 .vscode
@@ -26,7 +22,7 @@ node_modules/
 .sass-cache
 _static/
 
-# Yarn, not using zero-installs
+# Yarn without zero-installs
 # ref: https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
 .pnp.*
 .yarn/*
@@ -38,6 +34,9 @@ _static/
 # Yarn Integrity file
 .yarn-integrity
 
-## Draw,io
+# Draw.io
 *.bkp
 *.dtmp
+
+# Prize script outputs
+*PWN*.json
