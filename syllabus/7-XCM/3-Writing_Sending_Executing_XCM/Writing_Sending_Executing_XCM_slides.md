@@ -18,7 +18,7 @@ duration: 1 hour
 
 ## XCM is an evolving format!
 
-We are presently in V2 with V3 on the way!
+We have just merged V3!
 
 Notes:
 
@@ -53,7 +53,7 @@ The specification document for the XCM format
 
 </pba-flex>
 
-_\*covered in lesson 1_
+_\*covered in lesson 1 and 2_
 
 Notes:
 
