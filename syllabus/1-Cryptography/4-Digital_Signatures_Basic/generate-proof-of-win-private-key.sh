@@ -3,7 +3,7 @@
 # Polkadot Blockchain Academy Proof-of-Winning tooling
 # Generate `proof-of-winning.json` payload
 #
-# For Polkadot.js API and <Bytes /> wrapped messages
+# For subkey and raw messages
 # 
 # Polkadot Blockchain Academy - UNLICENSE - 2023-02-01
 # #####################################################################
@@ -47,65 +47,61 @@ echo "                           🎉🔐🔏 Blockchain Academy Proof-of-Win (P
 echo "==========================================================================================================\n"
 echo "                                         This script processes a:"
 echo "                                            - ⚠PRIZE SECRET⚠"
-echo "                                            - SIGNED MESSAGE"
+echo "                                            - ⚠PRIVATE  KEY⚠"
 echo "                              *without* writing them to disk or terminal history.\n"
 echo "                               It outputs a \"PWN-<your address>.json\" to submit"
 echo "                                      to the Academy team to verify 🕵️\n"
-echo "                           Alternatively, you could subkey to sign, providing a secret"
-echo "                            Use \"generate-proof-of-win-PRIVATE-KEY.sh\" instead\n"
+echo "                             You could use any Substrate compatible wallet to sign,"
+echo "                            and instead use the \"generate-proof-of-win-SIGNATURE.sh\"\n"
 
 echo "  🕸️ The network for the SS58 address (polkadot, kusama, some parachain...): "
 read NETWORK
+
 # debug, uncomment to override:
-NETWORK="polkadot"
+# NETWORK="polkadot"
 
-echo -n "  🔏 Your need to sign a message out of band from this script.\Provide a"
-echo   "  📝 A pubic, pseudononymous, message for the Academy class (any text, without \"quotes\"):\n"
+echo "  📝 A pubic, pseudononymous, message for the Academy class (any text, without \"quotes\"):\n" 
+read MESSAGE
 
-read UNWRAPPED_MESSAGE
-UNWRAPED_MESSAGE="I LIKE WINNING! BOOOOO YAAAAAA!"
-
-echo "  🪄 Copy&Paste -> sign this with a PJ.js tool (no padding or spaces):\n"
-echo "$UNWRAPED_MESSAGE\n"
-echo "               🔏 Open up a wallet using Polkadot.js API to sign, maybe via https://polkadot.js.org/apps/#/signing/ ..."
-echo "                                     ⏳ Press [ENTER] after you have a signature..."
-read CRAP
-
-MESSAGE="<Bytes>$UNWRAPED_MESSAGE</Bytes>"
-echo "  🤦 You message is opaquely wrapped by Polkadot.j s (https://github.com/polkadot-js/apps/issues/8930) so the message you *actually* signed is:\n"
-echo "$MESSAGE\n" 
 # debug, uncomment to override:
 # using Polkadot JS API/Apps, wrapped
+# for now, use generate-proof-of-win-SIGNATURE.sh instead. see TODO above
+# MESSAGE=<Bytes>I LIKE WINNING! BOOOOO YAAAAAA!</Bytes>
+# Using subkey, raw message
+# MESSAGE="I LIKE WINNING! BOOOOO YAAAAAA!"
 
-echo    "  😅 But we can deal with that 👍 let's continue...\n"
-echo -n "  🔏 Your SIGNATURE for the message (raw hex): "
-read SIGNATURE
-# debug, uncomment to override:
-# USING SEED: subkey inspect "middle harsh axis absurd message meadow kick soccer empty left adult giraffe"
-SIGNATURE="0x78bea5e6ae9973c9842e33c1f37109fd5a8dc4f954cd22a133756a7590fffd0363f956afd24a16a6bcb00a3ce7bfdcc8045dad80b421bd01a8948ff9d2853e8a"
+echo "  🔑 Your PRIVATE KEY (hex encoding *or* mnemonic & derived path)"
+echo "  💸 THE PRIZE WILL BE SENT HERE (0x..... *or* [12|24 words here]//HD-Wallet///Path):"
+read PRIVATE
 
-echo    "  🙋 Your PUBLIC KEY (ss58 address or raw hex) used to sign the above"
-echo -n "  💸 THE PRIZE WILL BE SENT HERE (0x..... *or* 14VJA6...): "
-read PUB
+# subkey needs an sURI = address SS58 or pubkey-hex or privkey-hex
+ADDRESS="$(subkey inspect "$PRIVATE" --network "$NETWORK" --output-type json | jq '.ss58Address' -rj)"
+
+echo -n "  🙋 Your Pub Key (SS58) for $NETWORK = $ADDRESS"
+
 # debug, uncomment to override:
-PUB="14XeJg226wvHG6PWmhKUsrv5PmeccjbXwFe9pVrBbryEWeZc"
+# PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe"
+# HD path works, but not used in most wallets 😭 :
+# PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe//some///path"
 
 echo "  🙈 Your  provided secret is hashed for you by the script,"
 echo "     not exposed in the output.\n"
 echo "  🏆 Your prize secret (three words, space separated):"
 read SECRET
+
 # debug, uncomment to override:
-SECRET="some thee words"
+# SECRET="some thee words"
 
 SECRET_HASH="0x$(printf "$SECRET" | sha512sum | awk '{print $1}')"
 
 # DELETE SECRET
 unset SECRET
 
-# convert network
-ADDRESS="$(subkey inspect "$PUB" --network "$NETWORK" --output-type json | jq '.ss58Address' -rj)"
+# Sign your provided message username (only)
+SIGNATURE="$(subkey sign --suri "$PRIVATE" --message "$MESSAGE")"
 
-echo -n "  🙋 Your Pub Key (SS58) for ""$NETWORK"" =""$ADDRESS"
+# DELETE PRIVATE
+unset PRIVATE
 
 FILE="PWN-""$ADDRESS"".json"
 
@@ -128,9 +124,19 @@ read MIC_DROP
 
 # debug, no HD path, most wallets:
 # {
-#   "message": "<Bytes>I LIKE WINNING! BOOOOO YAAAAAA!</Bytes>",
+#   "message": "I LIKE WINNING! BOOOOO YAAAAAA!",
 #   "ss58Address": "14XeJg226wvHG6PWmhKUsrv5PmeccjbXwFe9pVrBbryEWeZc",
 #   "secretHash": "0x58cf16bcdceec9bce18246eeaa2f3358a2cdfdb7dc98a3d5f61da18f841b057369c58e64a456e236e853d853ef088a0eb57551a2a2b124c3060d5f402a2bf0a3",
-#   "signature": "0x78bea5e6ae9973c9842e33c1f37109fd5a8dc4f954cd22a133756a7590fffd0363f956afd24a16a6bcb00a3ce7bfdcc8045dad80b421bd01a8948ff9d2853e8a"
+#   "signature": "0x683dc112821364f6201f5e6c231a156ae8a4bc10a931972825543c6e8f273e47b271756d70366ba154fb29ea15360d3210f8e05951d64dd27518c8fd3476a587"
+# } 
+# Tested to verify correctly on https://polkadot.js.org/apps/#/signing/verify
+# Also another good signature:
+# "0x3ef12aa93dc7eca7d60616f9b2535f967c202ba77ca80451847d528025bde836280744bf9ca643413c93ce3702841414ef5b9ff4d0bb9c63f1b48dc0a2e6ff8e"
+
+# debug, HD "//some///path":
+# {
+#   "message": "I LIKE WINNING! BOOOOO YAAAAAA!",
+#   "ss58Address": "14VJA6QWfE7iEXsvrcE8vmF5wnEqEfimG8s35VfWU1TJYPVR",
+#   "secretHash": "0x58cf16bcdceec9bce18246eeaa2f3358a2cdfdb7dc98a3d5f61da18f841b057369c58e64a456e236e853d853ef088a0eb57551a2a2b124c3060d5f402a2bf0a3",
+#   "signature": "0xde6b453a72d65de1661305af10595c9126e72bc75a475d299635229bc69ac20e3aff52e0cb5c8059224f16d2231ede92e8ff37d3739099d9fe20df0c0863bb84"
 # }
-# Tested to verify correctly using the UNWRAPPED message "I LIKE WINNING! BOOOOO YAAAAAA!" on https://polkadot.js.org/apps/#/signing/verify
