@@ -2,9 +2,14 @@
 ######################################################################
 # Polkadot Blockchain Academy Proof-of-Winning tooling
 # Generate `proof-of-winning.json` payload
+#
+# For subkey and raw messages
 # 
 # Polkadot Blockchain Academy - UNLICENSE - 2023-02-01
 # #####################################################################
+
+## TODO ONCE RESOLVED UPDATE TO MATCH UNIFORM BEHAVIOR:
+## https://github.com/polkadot-js/apps/issues/8930
 
 echo    "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 echo    "                  Make sure to read and understand what this script does before you use it!"
@@ -49,17 +54,20 @@ echo "                                      to the Academy team to verify 🕵�
 echo "                             You could use any Substrate compatible wallet to sign,"
 echo "                            and instead use the \"generate-proof-of-win-SIGNATURE.sh\"\n"
 
-
 echo "  📝 A pubic, pseudononymous, message for the Academy class (any text, without \"quotes\"):\n" 
 read MESSAGE
-# debug, uncommnet to override:
+# debug, uncomment to override:
+# using Polkadot JS API/Apps, wrapped
+# for now, use generate-proof-of-win-SIGNATURE.sh instead. see TODO above
+# MESSAGE=<Bytes>I LIKE WINNING! BOOOOO YAAAAAA!</Bytes>
+# Using subkey, raw message
 MESSAGE="I LIKE WINNING! BOOOOO YAAAAAA!"
 
 echo "  🙈 Your  provided secret is hashed for you by the script,"
 echo "     not exposed in the output.\n"
 echo "  🏆 Your prize secret (three words, space separated):"
 read SECRET
-# debug, uncommnet to override:
+# debug, uncomment to override:
 SECRET="some thee words"
 
 SECRET_HASH="0x$(printf "$SECRET" | sha512sum | awk '{print $1}')"
@@ -70,14 +78,14 @@ unset SECRET
 echo "  🔑 Your PRIVATE KEY (hex encoding *or* mnemonic & derived path)"
 echo "  💸 THE PRIZE WILL BE SENT HERE (0x..... *or* [12|24 words here]//HD-Wallet///Path):"
 read PRIVATE
-# debug, uncommnet to override:
+# debug, uncomment to override:
 PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe"
 # HD path works, but not used in most wallets 😭 :
 # PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe//some///path"
   
 echo "  🕸️ The network for the SS58 address (polkadot, kusama, some parachain...): "
 read NETWORK
-# debug, uncommnet to override:
+# debug, uncomment to override:
 NETWORK="polkadot"
 
 # subkey needs an sURI = address SS58 or pubkey-hex or privkey-hex
@@ -100,7 +108,7 @@ jq -n --arg message "$MESSAGE" --arg ss58Address "$ADDRESS" --arg secretHash "$S
 
 jq < $FILE
 
-echo "                   📬 Send us $FILE 📬"
+echo "                   📬 Deliver $FILE 📬"
 echo "                   The Academy team will provide a link to upload or paste this json into.\n"
 echo -n "                                 🗑 Press [ENTER] to clear the screen..."
 read LESS
@@ -109,8 +117,6 @@ echo -n "\n\n\n\n                                        Less Trust."
 read MORE
 echo            "                                        More Truth.\n\n\n\n"
 read MIC_DROP
-
-
 
 # debug, no HD path, most wallets:
 # {

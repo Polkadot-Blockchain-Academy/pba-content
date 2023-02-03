@@ -6,6 +6,9 @@
 # Polkadot Blockchain Academy - UNLICENSE - 2023-02-01
 # #####################################################################
 
+## ONCE RESOLVED UPDATE TO MATCH UNIFORM BEHAVIOR
+## https://github.com/polkadot-js/apps/issues/8930
+
 # echo    " Dependencies:\n"
 # echo    " - sha512sum (OS package manager): https://unix.stackexchange.com/questions/426837/no-sha256sum-in-macos"
 # echo    " - subkey (cargo): https://github.com/paritytech/substrate/tree/master/bin/utils/subkey#install-with-cargo"
