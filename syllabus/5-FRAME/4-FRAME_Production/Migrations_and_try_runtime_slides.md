@@ -576,9 +576,11 @@ Reading all this data over RPC can be slow!
 
 ---
 
-# Additional Resources 😋
+## Additional Resources 😋
 
-Note:
+> Check speaker notes (click "s" 😉)
+
+Notes:
 
 - additional work on automatic version upgrades: https://github.com/paritytech/substrate/issues/13107
 - a Great talk about try-runtime and further testing of your runtime: https://www.youtube.com/watch?v=a_u3KMG-n-I

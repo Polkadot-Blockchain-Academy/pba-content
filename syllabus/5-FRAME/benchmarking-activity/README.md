@@ -66,7 +66,7 @@ cargo test -p pallet-template --features runtime-benchmarks
 cargo build --release --features runtime-benchmarks
 ```
 
-> Note: In production, you would want to use `--profile=production` rather than `--release`, but it is way slower to compile, and `--release` already takes a while.
+> In production, you would want to use `--profile=production` rather than `--release`, but it is way slower to compile, and `--release` already takes a while.
 > Good enough for our exercises.
 
 ## Running Benchmarks

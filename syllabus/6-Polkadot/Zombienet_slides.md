@@ -664,9 +664,9 @@ We encourage everyone to test it, provide feedback, ask question and contribute.
 
 ---
 
-# Additional Resources!
+## Additional Resources!
 
-Check speaker notes (click "s").
+> Check speaker notes (click "s" 😉)
 
 Notes:
 

@@ -1,6 +1,6 @@
 ## Lesson 4a: Price discovery methods (Auctions) (60min)
 
-_Note: Can we have learners play Modern Art (the auction card game) as part of this section?_
+_Can we have learners play Modern Art (the auction card game) as part of this section?_
 
 The broad aim of Sessions 4a and 4b is to discuss price setting mechanisms, both traditional and on blockchains.
 
@@ -52,7 +52,7 @@ In this non-lesson part, we want to focus on classroom experiments.
 
 ## Lesson 4b: Price discovery methods (DeFi) (60min)
 
-_Note: Perhaps we reframe this section to be about 'exploits in game theory' or 'Price discovery/prediction markets'. We should not teach Defi in this module at all. Automated Market Makers could be used in this module._
+_Perhaps we reframe this section to be about 'exploits in game theory' or 'Price discovery/prediction markets'. We should not teach Defi in this module at all. Automated Market Makers could be used in this module._
 
 ### Why it is important
 

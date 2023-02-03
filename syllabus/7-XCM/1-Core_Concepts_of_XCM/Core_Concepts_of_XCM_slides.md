@@ -242,6 +242,7 @@ This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size a
 ---
 
 ## MultiLocation Examples
+
 - `../Parachain(1000)`: Evaluated within a parachain, this would identify our sibling parachain of index 1000. (In Rust we would write `MultiLocation { parents: 1, junctions: X1(Parachain(1000)) }` or alternatively `ParentThen(Parachain(1000)).into()`.)
 
 - `../AccountId32(0x1234...cdef)`: Evaluated within a parachain, this would identify the 32-byte account 0x1234…cdef on the relay chain.

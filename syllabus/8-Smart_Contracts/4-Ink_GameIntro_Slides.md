@@ -65,8 +65,9 @@ duration: 20 min
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-2.png" />
 
-Note:
-* Your player gets a random color assigned
+Notes:
+
+- Your player gets a random color assigned
 
 ---
 
@@ -84,11 +85,11 @@ Note:
 
 ## How to score?
 
->Use as little gas as possible to paint as many fields as possible.
+> Use as little gas as possible to paint as many fields as possible.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
->The later you manage to still paint a field the better you score.
+> The later you manage to still paint a field the better you score.
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -117,6 +118,7 @@ mod player {
     }
 }
 ```
+
 ---
 
 ## How to play
@@ -149,15 +151,14 @@ mod player {
 
 <img width="30%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code.png" />
 
-
 Notes:
 <br/>
+
 1. Install Rust stable
 1. Install `cargo-contract`
 1. Install `polkadot-js` Browser Extension
 1. Create account in Browser Extension
 1. Get `ROC` Tokens via Faucet
-
 
 ---
 
@@ -169,6 +170,7 @@ Notes:
 
 Notes:
 <br/>
+
 1. Clone `squink-splash-beginner`
 1. `player.rs`: change line XX to your favorite numbers [0-50]
 1. `cargo contract build`
@@ -188,9 +190,9 @@ https://splash.use.ink
 
 ## Now
 
-* 15 Minutes: Find a strategy for your player
-* Use as little gas as possible to paint as many fields as possible.
-* The later you manage to still paint a field the better you score.<br/><br/>
-* Inspiration:
-  * Random numbers?
-  * Query which fields unused?
+- 15 Minutes: Find a strategy for your player
+- Use as little gas as possible to paint as many fields as possible.
+- The later you manage to still paint a field the better you score.<br/><br/>
+- Inspiration:
+  - Random numbers?
+  - Query which fields unused?

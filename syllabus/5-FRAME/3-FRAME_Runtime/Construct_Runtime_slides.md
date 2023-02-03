@@ -703,7 +703,9 @@ pub fn next_block() {
 
 ---
 
-# Additional Resources 😋
+## Additional Resources 😋
+
+> Check speaker notes (click "s" 😉)
 
 Notes:
 

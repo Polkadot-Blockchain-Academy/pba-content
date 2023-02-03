@@ -291,7 +291,6 @@ with the Substrate node.
 
 ---
 
-
 # `$ cargo contract`
 
 [https://crates.io/crates/cargo-contract](https://crates.io/crates/cargo-contract)

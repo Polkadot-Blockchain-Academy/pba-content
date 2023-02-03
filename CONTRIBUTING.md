@@ -139,9 +139,10 @@ To include notes for a slide, use the "Note" keyword inside that slide.
 For example:
 
 ```md
-Note: This is a note just for you.
-Set under a line in your slide starting with "`Note`:" all
-subsequent lines are just seen in speaker view.
+Notes:
+
+This is a note just for you.
+All these lines are just seen in speaker view only.
 ```
 
 #### Transitions

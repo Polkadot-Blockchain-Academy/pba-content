@@ -997,12 +997,13 @@ It adds some boilerplate to:
 
 ---
 
-# Additional Resources! 😋
+## Additional Resources! 😋
 
 <img width="300px" rounded src="../../../assets/img/4-Substrate/thats_all_folks.png" />
 
-- Check speaker notes (click "s" 😉).
-- Good luck with FRAME!
+> Check speaker notes (click "s" 😉)
+
+> Good luck with FRAME!
 
 Notes:
 
