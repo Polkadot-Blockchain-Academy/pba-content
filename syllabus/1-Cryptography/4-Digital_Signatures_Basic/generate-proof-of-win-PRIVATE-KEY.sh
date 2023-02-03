@@ -71,7 +71,9 @@ echo "  🔑 Your PRIVATE KEY (hex encoding *or* mnemonic & derived path)"
 echo "  💸 THE PRIZE WILL BE SENT HERE (0x..... *or* [12|24 words here]//HD-Wallet///Path):"
 read PRIVATE
 # debug, uncommnet to override:
-PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe//some///path"
+PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe"
+# HD path works, but not used in most wallets 😭 :
+# PRIVATE="middle harsh axis absurd message meadow kick soccer empty left adult giraffe//some///path"
   
 echo "  🕸️ The network for the SS58 address (polkadot, kusama, some parachain...): "
 read NETWORK
@@ -108,7 +110,20 @@ read MORE
 echo            "                                        More Truth.\n\n\n\n"
 read MIC_DROP
 
-# debug:
+
+
+# debug, no HD path, most wallets:
+# {
+#   "message": "I LIKE WINNING! BOOOOO YAAAAAA!",
+#   "ss58Address": "14XeJg226wvHG6PWmhKUsrv5PmeccjbXwFe9pVrBbryEWeZc",
+#   "secretHash": "0x58cf16bcdceec9bce18246eeaa2f3358a2cdfdb7dc98a3d5f61da18f841b057369c58e64a456e236e853d853ef088a0eb57551a2a2b124c3060d5f402a2bf0a3",
+#   "signature": "0x683dc112821364f6201f5e6c231a156ae8a4bc10a931972825543c6e8f273e47b271756d70366ba154fb29ea15360d3210f8e05951d64dd27518c8fd3476a587"
+# } 
+# Tested to verify correctly on https://polkadot.js.org/apps/#/signing/verify
+# Also another good signature:
+# "0x3ef12aa93dc7eca7d60616f9b2535f967c202ba77ca80451847d528025bde836280744bf9ca643413c93ce3702841414ef5b9ff4d0bb9c63f1b48dc0a2e6ff8e"
+
+# debug, HD "//some///path":
 # {
 #   "message": "I LIKE WINNING! BOOOOO YAAAAAA!",
 #   "ss58Address": "14VJA6QWfE7iEXsvrcE8vmF5wnEqEfimG8s35VfWU1TJYPVR",
