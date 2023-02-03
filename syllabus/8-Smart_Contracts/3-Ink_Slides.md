@@ -104,6 +104,21 @@ Debugging, Testing, Tooling, clippy, cargo fmt, fuzzing
 
 ---
 
+## `Cargo.toml`
+
+```toml [1-9|2|4-5|7-8]
+[dependencies]
+ink = { version = "4.0.0", default-features = false }
+
+# Encoding/Decoding
+scale = { package = "parity-scale-codec", ... }
+
+# Metadata
+scale-info = { version = "2", ... }
+```
+
+---
+
 ```rust [1-48]
 mod my_contract {
 
@@ -196,6 +211,10 @@ Can be implemented by multiple contracts.
 
 ---
 
+<img style="width: 80%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/testing.png" />
+
+---
+
 ## Unit Tests
 
 ```rust
@@ -239,6 +258,40 @@ mod tests {
 
 ---
 
+## E2E Tests
+
+```rust [1-30|1-2|3-4|6-9|11-17]
+#[ink_e2e::test]
+async fn default_works(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+    // given
+    let constructor = FlipperRef::new_default();
+
+    // when
+    let contract_acc_id = client
+        .instantiate("flipper", &ink_e2e::bob(), constructor, 0, None)
+        .await.expect("instantiate failed").account_id;
+
+    // then
+    let get = build_message::<FlipperRef>(contract_acc_id.clone())
+        .call(|flipper| flipper.get());
+    let get_res = client
+        .call(&ink_e2e::bob(), get, 0, None)
+        .await.expect("get failed");
+    assert!(matches!(get_res.return_value(), false));
+
+    Ok(())
+}
+```
+
+Notes:
+When the function is entered, the contract was already
+built in the background via `cargo contract build`.
+The `client` object exposes an interface to interact
+with the Substrate node.
+
+---
+
+
 # `$ cargo contract`
 
 [https://crates.io/crates/cargo-contract](https://crates.io/crates/cargo-contract)
@@ -249,7 +302,7 @@ mod tests {
 
 ## Metadata?
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/matrix-transparent.png" />
+<img style="width: 95%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/metadata.png" />
 
 ---
 
@@ -299,24 +352,36 @@ Build Artifacts
 
 ---
 
-## Development Chains
+## Environment
 
-<div class="flex-container">
-<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+```rust
+pub enum DefaultEnvironment {}
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/substrate-contracts-node.png" />
+impl Environment for DefaultEnvironment {
+    const MAX_EVENT_TOPICS: usize = 4;
+
+    type Balance = u128;
+    type Timestamp = u64;
+    type BlockNumber = u32;
+    // --snip--
+}
+```
+
+---
+
+## Local Development
+
+<img style="width: 90%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-node.png" />
 
 [`substrate-contracts-node`](https://github.com/paritytech/substrate-contracts-node)
 
-</div>
-<div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+---
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rococo.png" />
+## Testnet
+
+<img style="width: 90%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-on-polkadot-js.png" />
 
 [Rococo Testnet](https://ink.substrate.io/testnet)
-
-</div>
-</div>
 
 ---
 
@@ -349,7 +414,15 @@ Build Artifacts
 
 ## Documentation
 
-<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/documentation.svg" />
+<img style="width: 90%; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-ink.png" />
+
+[www.use.ink](https://use.ink)
+
+---
+
+## Documentation
+
+<img style="width: 90%; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink_env.png" />
 
 ---
 
@@ -376,44 +449,6 @@ Build Artifacts
 ---
 
 # Security Comparison Solidity
-
----
-
-<div class="flex-container">
-<div class="left fragment" data-fragment-index="1">
-<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
-
-```solidity
-pragma solidity 0.7.0;
-
-contract ChangeBalance {
-  uint8 public balance;
-
-  function decrease() public {
-    balance--;
-  }
-
-  function increase() public {
-    balance++;
-  }
-}
-```
-
-</div>
-<div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
-<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
-
-- Build-in underflow/overflow protection
-- `checked_add()`
-- `saturating_add()`
-
-</div>
-</div>
-
-Notes:
-
-- Build-in overflow/underflow protection
-- Unless explicitly disabled by setting `overflow-checks = false` in `Cargo.toml`
 
 ---
 
@@ -491,19 +526,4 @@ Notes:
 
 ---
 
-<img style="width: 20%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
-
----
-
-<img style="width: 100%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qrs.png" />
-
----
-
-## References
-
-- [ink! Repository](https://github.com/paritytech/ink)
-- [ink! Documentation Portal](https://ink.substrate.io)
-- [Beginners Tutorial to ink!](https://docs.substrate.io/tutorials/smart-contracts/)
-- [Chain Extensions in ink!](https://ink.substrate.io/macros-attributes/chain-extension)<br/><br/>
-- [SWC Registry](https://swcregistry.io) ‒ Smart Contract Weakness Classification and Test Cases.
-- [Ethereum Smart Contract Best Practices](https://consensys.github.io/smart-contract-best-practices/attacks/reentrancy/)
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
