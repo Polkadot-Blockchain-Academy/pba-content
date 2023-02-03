@@ -62,7 +62,7 @@ Instead of selling blockspace on-demand, blockspace is sold in bulk up-front wit
 
 ## Blockspace: Supply and Demand
 
-<img rounded width="900px" src="../assets/blockspace-supply-demand.svg"/>
+<img rounded width="900px" src="../assets/blockspace-supply-demand.svg" />
 
 ---
 
@@ -120,7 +120,7 @@ Polkadot provides blockspace in a highly flexible format due to key design choic
 
 Since Polkadot provides highly flexible blockspace, it can be transformed into a variety of different, more specialized blockspace products.
 
-<img rounded width="900px" src="../assets/blockspace-transformation.svg"/>
+<img rounded width="900px" src="../assets/blockspace-transformation.svg" />
 
 ---
 
@@ -161,7 +161,7 @@ The main reason this is not done is because there are no good primitives for it.
 
 ## Polkadot's Architecture: Execution Cores
 
-<img rounded width="900px" src="../assets/execution-cores-with-blockchains.svg"/>
+<img rounded width="900px" src="../assets/execution-cores-with-blockchains.svg" />
 
 Notes:
 
@@ -171,7 +171,7 @@ Cores, by metaphor, are like CPU cores. Code and data are scheduled onto them by
 
 ## Polkadot's Architecture: Execution Cores
 
-<img rounded width="900px" src="../assets/execution-cores.svg"/>
+<img rounded width="900px" src="../assets/execution-cores.svg" />
 
 ---
 
@@ -199,13 +199,13 @@ However, the parablocks still must be _authored_ sequentially by collators, and 
 
 ## Reimbursement Layer: Status Quo
 
-<img rounded width="900px" src="../assets/reimbursement-status-quo.svg"/>
+<img rounded width="900px" src="../assets/reimbursement-status-quo.svg" />
 
 ---
 
 ## Reimbursement Layer: Generalizing
 
-<img rounded width="1000px" src="../assets/reimbursement-layer.svg"/>
+<img rounded width="1000px" src="../assets/reimbursement-layer.svg" />
 
 Notes:
 

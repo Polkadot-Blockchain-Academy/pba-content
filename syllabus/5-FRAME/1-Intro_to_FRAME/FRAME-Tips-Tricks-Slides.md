@@ -839,7 +839,7 @@ pub trait OnTimestampSet<Moment> {
 - First reminder: don't panic, unless if you want to punish someone!
 - `.unwrap()`? no no
 
-<br>
+<br/>
 
 - be careful with implicit unwraps in standard operations!
   - slice/vector indexing can panic if out of bound
@@ -999,7 +999,7 @@ It adds some boilerplate to:
 
 # Additional Resources! 😋
 
-<img width="300px" rounded src="../../../assets/img/4-Substrate/thats_all_folks.png">
+<img width="300px" rounded src="../../../assets/img/4-Substrate/thats_all_folks.png" />
 
 - Check speaker notes (click "s" 😉).
 - Good luck with FRAME!

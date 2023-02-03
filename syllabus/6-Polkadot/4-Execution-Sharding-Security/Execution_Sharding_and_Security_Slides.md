@@ -60,7 +60,7 @@ Since Polkadot involves not only on-chain logic but off-chain logic, the runtime
 
 Clients learn about the state by invoking **Runtime APIs** at recent blocks, and the runtime is updated with **new blocks**.
 
-<img rounded width=900, src="../assets/runtime-node-interaction.png">
+<img rounded width=900, src="../assets/runtime-node-interaction.png" />
 
 Notes:
 
@@ -97,11 +97,11 @@ Rather than having every validator check every block, we just ensure that _detec
 
 #### Validator Group Assignments and Execution Cores
 
-<img rounded width=1100, src="../assets/validator-groups.png">
+<img rounded width=1100, src="../assets/validator-groups.png" />
 
 Notes:
 
-Every Session (4 hours), validators are _partitioned_ into small **groups** which work together.<br>
+Every Session (4 hours), validators are _partitioned_ into small **groups** which work together.<br/>
 Groups are assigned to specific **Execution Core**s, and these assignments change every few blocks.
 
 ---
@@ -112,7 +112,7 @@ Validators and collators run these protocols on every block of the relay chain.
 
 Often they run an instance of the protocol for every parachain block in every block of the relay chain.
 
-<img rounded width=700, src="../assets/BABE-is-forkful.png">
+<img rounded width=700, src="../assets/BABE-is-forkful.png" />
 
 Notes:
 
@@ -122,7 +122,7 @@ In the slides, we will look at single instances of the protocols, but it should 
 
 ## Definition: Candidate
 
-> A **Candidate** is a parachain block<br>which has not yet been finalized in the relay chain.
+> A **Candidate** is a parachain block<br/>which has not yet been finalized in the relay chain.
 
 ---
 
@@ -144,7 +144,7 @@ They distribute their candidates and statements via the P2P layer, and then the 
 
 ## Backing: Networking
 
-<img rounded width=1000, src="../assets/backing-networking.png">
+<img rounded width=1000, src="../assets/backing-networking.png" />
 
 ---
 
@@ -170,7 +170,7 @@ Validators sign statements about which data they have and post them to the relay
 
 ---
 
-<img rounded width=1300px src="../assets/availability-inclusion.png">
+<img rounded width=1300px src="../assets/availability-inclusion.png" />
 
 Notes:
 
@@ -180,7 +180,7 @@ In practice, we allow more than a single block for availability to be timed out.
 
 ## Parablock Inclusion and Finality
 
-<img rounded width=600, src="../assets/parachain-finality.png">
+<img rounded width=600, src="../assets/parachain-finality.png" />
 
 ---
 
@@ -201,7 +201,7 @@ To fulfill this goal we need 2 things.
 <pba-flex center>
 
 1. A protocol for proving validity of included candidates
-1. Consensus rules for the relay chain<br>to avoid building on or finalizing<br>relay chain forks containing bad candidates.
+1. Consensus rules for the relay chain<br/>to avoid building on or finalizing<br/>relay chain forks containing bad candidates.
 
 </pba-flex>
 
@@ -215,7 +215,7 @@ Checking involves three operations:
 
 1. Recovering the data from the network
 1. Executing the parablock, checking success
-1. Check that outputs match the ones posted<br>to the relay chain by backers
+1. Check that outputs match the ones posted<br/>to the relay chain by backers
 
 </pba-flex>
 
@@ -309,7 +309,7 @@ Votes are transmitted by p2p and also collected on-chain.
 
 ## Dispute Resolution
 
-<img rounded width=700, src="../assets/validator-dispute-participation.png">
+<img rounded width=700, src="../assets/validator-dispute-participation.png" />
 
 Notes:
 
@@ -329,7 +329,7 @@ The penalty is large when the candidate is deemed invalid by the supermajority a
 
 Instead of voting for the longest chain, validators vote for the longest chain where all unfinalized candidates are a) approved and b) undisputed
 
-<img rounded width=650, src="../assets/grandpa-voting-rule.png">
+<img rounded width=650, src="../assets/grandpa-voting-rule.png" />
 
 ---
 
@@ -338,13 +338,13 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 Validators refuse to author relay chain blocks on top of forks containing parablocks which are invalid or have lost disputes.
 This causes a "reorganization" whenever a dispute resolves against a candidate.
 
-<img rounded width=650, src="../assets/babe-chain-selection.png">
+<img rounded width=650, src="../assets/babe-chain-selection.png" />
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-> How are complex off-chain systems<br>implemented using Substrate?
+> How are complex off-chain systems<br/>implemented using Substrate?
 
 ---
 

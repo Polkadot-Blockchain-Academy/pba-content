@@ -45,9 +45,9 @@ The specification document for the XCM format
 1. XCVM Registers\*
 1. [Basic XCVM Operation](#basic-top-level-format)
 1. [XCVM Instruction Set](#instruction)
-1. Universal Asset Identifiers<br>
+1. Universal Asset Identifiers<br/>
    (`MultiAsset`)\*
-1. Universal Consensus Location Identifiers<br>
+1. Universal Consensus Location Identifiers<br/>
    (`MultiLocation`)\*
 1. [XCM Error Types](#xcm-errors)
 
@@ -280,7 +280,7 @@ XCM version negotiation:
 
 ## 🗣️ XCM Version Negotiation
 
-<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
+<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning" />
 
 ---
 

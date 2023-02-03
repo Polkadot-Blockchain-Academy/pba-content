@@ -138,7 +138,7 @@ Notes:
 
 ## Async vs Sync
 
-XCM crossing the barrier between a single consensus system<br>cannot generally be synchronous.
+XCM crossing the barrier between a single consensus system<br/>cannot generally be synchronous.
 
 No guarantees on delivery time.
 
@@ -205,7 +205,7 @@ It is always represented as a location _relative_ to the current consensus syste
 
 ## Junction
 
-An item in a path to describe the<br>relative location of a consensus system:
+An item in a path to describe the<br/>relative location of a consensus system:
 
 <pba-flex center>
 
@@ -255,7 +255,7 @@ This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size a
 <!-- TODO DESIGN: use multilocation graphic from above and add labels in fragment / new slide here -->
 <!-- Base on this set of slides: https://docs.google.com/presentation/d/18qRqqw73L9NTWOX1cfGe5sh484UgvlpMHGekQHu9_8M/edit#slide=id.g8063ab3d6f_0_1418 . If hard, just make these into images via screenshot & use full screen -->
 
-<img rounded style="width: 650px;" src="../../../assets/img/7-XCM/mod1-multilocation-picture.png" alt="MultiLocation Example"/>
+<img rounded style="width: 650px;" src="../../../assets/img/7-XCM/mod1-multilocation-picture.png" alt="MultiLocation Example" />
 
 Notes:
 speak to an example of non-parachain multi-location that would use a bridge
@@ -406,14 +406,14 @@ This is very useful in cases where we want to give an upper limit to the executi
 
 `MultiLocation`s are relative.
 
-**Scenario:**<br>
-Current consensus system is `Para(1337)`.<br>
+**Scenario:**<br/>
+Current consensus system is `Para(1337)`.<br/>
 Destination consensus system is `Para(6969)`.
 
 <pba-flex center>
 
 - Where is `Here`?
-- What happens when I send a `MultiAsset`<br>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
+- What happens when I send a `MultiAsset`<br/>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
 
 Notes:
 
@@ -421,7 +421,7 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 ---
 
-## 🤹 Many models for <br> transferring assets
+## 🤹 Many models for <br/> transferring assets
 
 <pba-flex center>
 
@@ -436,18 +436,18 @@ Accounts that are controllable by a remote chain are often referred to as **Sove
 
 ---
 
-## 🤹 Many models for <br> transferring assets
+## 🤹 Many models for <br/> transferring assets
 
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
-<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer" />
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport" />
 
 </pba-col>
 <pba-col>
 
-<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer"/>
+<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer" />
 
 </pba-col>
 </pba-cols>
@@ -493,4 +493,4 @@ TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-c
 
 ## Polkadot Network Diagram
 
-<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;"/>
+<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;" />

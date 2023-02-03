@@ -20,7 +20,7 @@ duration: 45 minutes
 
 ## Superadditive Value
 
-The interoperation of people and systems<br>creates superadditive economic value.
+The interoperation of people and systems<br/>creates superadditive economic value.
 
 > The whole is greater than the sum of the parts.
 
@@ -30,7 +30,7 @@ The interoperation of people and systems<br>creates superadditive economic value
 
 Efficient economic systems create niches for specialization.
 
-Different systems can exercise _comparative advantage_<br>with others and focus on a single service or problem.
+Different systems can exercise _comparative advantage_<br/>with others and focus on a single service or problem.
 
 ---
 
@@ -42,10 +42,10 @@ Different systems can exercise _comparative advantage_<br>with others and focus 
 
 XCMP is the data layer, while XCM is the language.
 
-XCMP only focuses on the transmission of raw bytes between chains.<br>
+XCMP only focuses on the transmission of raw bytes between chains.<br/>
 In this lesson we will focus only on XCMP.
 
-<img rounded width="400px" src="../assets/people-talking.jpg"/>
+<img rounded width="400px" src="../assets/people-talking.jpg" />
 
 Notes:
 
@@ -56,13 +56,13 @@ XCMP is the medium, like sound or writing, rather than the language.
 
 ## Messaging Kinds
 
-<img rounded width="950px" src="../assets/messaging-kinds.svg"/>
+<img rounded width="950px" src="../assets/messaging-kinds.svg" />
 
 ---
 
 ## Revisiting PVFs and Outputs
 
-<img rounded width="800px" src="../assets/PVF.svg"/>
+<img rounded width="800px" src="../assets/PVF.svg" />
 
 ---
 
@@ -253,7 +253,7 @@ Solution: Message Queue Chains (MQC)
 
 ## MQC Architecture
 
-<img rounded width="700px" src="../assets/mqc.svg"/>
+<img rounded width="700px" src="../assets/mqc.svg" />
 
 ---
 
@@ -402,7 +402,7 @@ Each channel comes with a corresponding _deposit_ of DOT tokens to pay for the r
 
 ## XCMP-Lite / HRMP Channel Open Protocol
 
-<img rounded width="1000px" src="../assets/hrmp-channel.svg"/>
+<img rounded width="1000px" src="../assets/hrmp-channel.svg" />
 
 ---
 

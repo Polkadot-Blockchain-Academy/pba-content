@@ -184,7 +184,7 @@ pub type FooValue = StorageValue<_, u32>;
 pub type BarValue = StorageValue<_, u32>;
 ```
 
-- So far everything is changing the _value_ format.<br>
+- So far everything is changing the _value_ format.<br/>
 
 <div>
 
@@ -210,7 +210,7 @@ pub type FooValue = StorageValue<_, u32>;
 pub type I_can_NOW_BE_renamEd_hahAA = StorageValue<_, u32>;
 ```
 
-- Handy macro if you must rename a storage type.<br>
+- Handy macro if you must rename a storage type.<br/>
 - This does _not_ require a migration.
 
 <!-- .element: class="fragment" -->

@@ -7,9 +7,9 @@ Students will collaborate in telling a shared story. The shared story is represe
 <pba-flex center>
 
 <!-- To use downstream -->
-<!-- <img src="../../slides/assets/img/3-Blockchain/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:600px;"/> -->
+<!-- <img src="../../slides/assets/img/3-Blockchain/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:600px;" /> -->
 
-<img src="../../assets/img/3-Blockchain/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:700px;"/>
+<img src="../../assets/img/3-Blockchain/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:700px;" />
 
 </pba-flex>
 

@@ -179,7 +179,7 @@ Opens the door to new application stacks:
 
 Removing trust allows us to unpackage applications.
 
-<img style="width: 800px; padding-right: 2em" src="./img/application-disentanglement.png"/>
+<img style="width: 800px; padding-right: 2em" src="./img/application-disentanglement.png" />
 
 Notes:
 
@@ -232,7 +232,7 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ## A Shared History
 
-<img style="height: 500px;" src="img/sapiens.jpg">
+<img style="height: 500px;" src="img/sapiens.jpg" />
 
 Notes:
 
@@ -254,7 +254,7 @@ _-- Yuval Noah Harari, Sapiens --_
 
 We can formalize this notion of shared story with state machine model.
 
-<img width="800px" src="./img/state-machine-general.svg"/>
+<img width="800px" src="./img/state-machine-general.svg" />
 
 Notes:
 
@@ -268,7 +268,7 @@ Sometimes you can map the entire state space as an LTS.
 
 Other times it is too big.
 
-<img src="./img/state-machine-arbitrary-history.png"/>
+<img src="./img/state-machine-arbitrary-history.png" />
 
 Notes:
 
@@ -282,7 +282,7 @@ Simple Switch: 2 States, 1 Transition
 
 **Labelled Transition System** <!-- .element: class="fragment" data-fragment-index="2" -->
 
-<img src="./img/light-switch-lts.svg"/> <!-- .element: class="fragment" data-fragment-index="2" -->
+<img src="./img/light-switch-lts.svg" /> <!-- .element: class="fragment" data-fragment-index="2" -->
 
 **History** <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -295,7 +295,7 @@ Simple Switch: 2 States, 1 Transition
 Each state is a set of bank notes. Where a bank note has an amount and an owner.
 A transition involves a user consuming (spending) some bank notes and creating new ones.
 
-<img width="800px" src="./img/state-machine-cash.svg"/>
+<img width="800px" src="./img/state-machine-cash.svg" />
 
 Notes:
 
@@ -308,7 +308,7 @@ Not all conceivable transitions are valid. Imagine a user consuming a bank note 
 Each state is a set of posts and their associated comments and emoji reaction counts.
 A transition involves, making a new post, or reacting to someone elses, or commenting
 
-<img src="./img/state-machine-social.svg"/>
+<img src="./img/state-machine-social.svg" />
 
 Notes:
 
@@ -340,7 +340,7 @@ Let's brainstorm what the state and the transitions might be for each of these.
 
 If we agree on:
 
-- The starting state<br>(aka genesis state)
+- The starting state<br/>(aka genesis state)
 - The history of transitions
 
 </pba-col>
@@ -419,7 +419,7 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 
 ## Bitcoin
 
-<img rounded style="width: 500px;" src="./img/bitcoin-transaction.png"/>
+<img rounded style="width: 500px;" src="./img/bitcoin-transaction.png" />
 
 <!-- TODO update above image to styled diagram -->
 

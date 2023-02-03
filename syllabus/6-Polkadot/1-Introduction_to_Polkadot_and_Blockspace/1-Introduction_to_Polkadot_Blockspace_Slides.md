@@ -64,7 +64,7 @@ Blockchains are a key part of the Web3 infrastructure.
 </pba-col>
 <pba-col>
 
-<img rounded width="800px" src="../assets/scalability-trilemma.svg"/>
+<img rounded width="800px" src="../assets/scalability-trilemma.svg" />
 
 </pba-col>
 </pba-cols>
@@ -102,9 +102,9 @@ This allows chains to exist under the same security umbrella.
 
 ## Shared Security and Economic Efficiency
 
-Reused resources provide security for multiple chains<br>provides economic efficiency.
+Reused resources provide security for multiple chains<br/>provides economic efficiency.
 
-Fewer resources needed to provide the same amount<br>of security to all chains.
+Fewer resources needed to provide the same amount<br/>of security to all chains.
 
 ---
 
@@ -122,7 +122,7 @@ Fewer resources needed to provide the same amount<br>of security to all chains.
 
 ## The Scaling Problem
 
-When scaling a consensus system,<br>there are three core options:
+When scaling a consensus system,<br/>there are three core options:
 
 <pba-flex center>
 
@@ -138,11 +138,11 @@ When scaling a consensus system,<br>there are three core options:
 
 **(1) Make execution of blocks more efficient**
 
-Specialization becomes important,<br>as well as optimized code execution, disk accesses, etc.
+Specialization becomes important,<br/>as well as optimized code execution, disk accesses, etc.
 
-_Limited by capabilities of modern hardware<br>and needs to be coupled with other approaches._
+_Limited by capabilities of modern hardware<br/>and needs to be coupled with other approaches._
 
-_Relying on highly specialized hardware<br>also introduces centralization risks._
+_Relying on highly specialized hardware<br/>also introduces centralization risks._
 
 ---
 
@@ -166,7 +166,7 @@ _Challenge of maintaining the same level of security and accountability while re
 
 ---
 
-## Polkadot's Solution:<br>Parallelized Execution
+## Polkadot's Solution:<br/>Parallelized Execution
 
 Polkadot combines approaches (1) and (3) by splitting work across multiple parallelized chains (or **parachains** for short), having those chains specialize for particular use-cases.
 
@@ -186,17 +186,17 @@ A high level look into the architecture of Polkadot and the actors which maintai
 
 ## Polkadot: Major Systems
 
-<img rounded background-color="white" width="800px" src="../assets/polkadot-components.svg"/>
+<img rounded width="800px" src="../assets/polkadot-components.svg" />
 
 ---
 
-<img rounded width="700px" src="../assets/polkadot-architecture.svg">
+<img rounded width="700px" src="../assets/polkadot-architecture.svg" />
 
 ### Polkadot Architecture (Parachains)
 
 ---
 
-<img rounded width="900px" src="../assets/polkadot-architecture-simple.png">
+<img rounded width="900px" src="../assets/polkadot-architecture-simple.png" />
 
 Notes:
 
@@ -220,7 +220,7 @@ All validators have three key responsibilities:
 
 Good validators are rewarded.
 
-Bad validators will either miss out on rewards<br>or are slashed if their work is neglected or wrong.
+Bad validators will either miss out on rewards<br/>or are slashed if their work is neglected or wrong.
 
 ---
 
@@ -247,7 +247,7 @@ Validators only need to execute parachain blocks.
 </pba-col>
 <pba-col>
 
-<img width="500px" src="../assets/polkadot-architecture-simple-zoom.png">
+<img width="500px" src="../assets/polkadot-architecture-simple-zoom.png" />
 
 </pba-col>
 </pba-cols>
@@ -265,7 +265,7 @@ The relay chain is the "hub" of Polkadot, providing:
 
 - Governance
 - Staking
-- Registration, scheduling,<br>and advancement of parachains
+- Registration, scheduling,<br/>and advancement of parachains
 - Communication between parachains
 - Balance Transfers
 
@@ -273,14 +273,14 @@ The relay chain is the "hub" of Polkadot, providing:
 </pba-col>
 <pba-col>
 
-Notably, the functionality of the relay chain is minimized,<br>with the expectation that more complex functionalities will be provided by parachains themselves.
+Notably, the functionality of the relay chain is minimized,<br/>with the expectation that more complex functionalities will be provided by parachains themselves.
 
 </pba-col>
 </pba-cols>
 
 ---
 
-<img rounded width="900px" src="../assets/polkadot-architecture-simple.png">
+<img rounded width="900px" src="../assets/polkadot-architecture-simple.png" />
 
 Notes:
 
@@ -294,9 +294,9 @@ Simplified Polkadot Architecture (Parachains)
 
 <pba-flex center>
 
-1. Upward Messages<br>&nbsp;&nbsp;_(parachain ➡ relay chain)_
-1. Downward Messages<br>&nbsp;&nbsp;_(relay chain ➡ parachain)_
-1. Horizontal Message Passing (HRMP)<br>&nbsp;&nbsp;_(parachain ➡ parachain)_
+1. Upward Messages<br/>&nbsp;&nbsp;_(parachain ➡ relay chain)_
+1. Downward Messages<br/>&nbsp;&nbsp;_(relay chain ➡ parachain)_
+1. Horizontal Message Passing (HRMP)<br/>&nbsp;&nbsp;_(parachain ➡ parachain)_
 
 </pba-flex>
 
@@ -324,7 +324,7 @@ DOT Token core utilities:
 
 1. Governance
 1. Staking
-1. Registering,<br>Activating Parachains
+1. Registering,<br/>Activating Parachains
 
 </pba-flex>
 </pba-col>
@@ -406,9 +406,9 @@ Parachains are state-transition functions.
 
 The core of a Parachain is the **Parachain Validation Function**, a piece of Wasm code which takes inputs and attempts to validate them to produce outputs.
 
-<br>
+<br/>
 
-<img rounded width="900px" src="../assets/PVF.svg">
+<img rounded width="900px" src="../assets/PVF.svg" />
 
 ---
 
@@ -546,9 +546,9 @@ Polkadot's primary product is _blockspace_.
 
 ## Blockspace
 
-Polkadot aims to provide the most secure blockspace,<br> and be the most efficient allocator of blockspace.
+Polkadot aims to provide the most secure blockspace,<br/> and be the most efficient allocator of blockspace.
 
-Blockspace is useful for evaluating the offerings<br> of different blockchain platforms on 3 properties:
+Blockspace is useful for evaluating the offerings<br/> of different blockchain platforms on 3 properties:
 
 <pba-flex center>
 

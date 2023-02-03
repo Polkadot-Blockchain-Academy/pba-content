@@ -297,7 +297,7 @@ Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
 - Addressed with time varying curves
   - Support threshold
     - Starts at ~50%
-    - Ends at minimum secure turnout for track <br>(EX: Big Spender ends at 0 + epsilon %)
+    - Ends at minimum secure turnout for track <br/>(EX: Big Spender ends at 0 + epsilon %)
   - Approval threshold
     - Starts at 100%
     - Ends at 50 + epsilon %
@@ -365,7 +365,7 @@ Solution: Some sort of oracle capable of providing expert information
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Enter...<br><br>The Polkadot Fellowship
+## Enter...<br/><br/>The Polkadot Fellowship
 
 ---
 
@@ -438,7 +438,7 @@ Stress that as an oracle, the Fellowship can't take any action on its own. Any w
 
 <!-- .slide: data-background-color="#000" -->
 
-# OpenGov<br><br>By The Numbers
+# OpenGov<br/><br/>By The Numbers
 
 ---
 

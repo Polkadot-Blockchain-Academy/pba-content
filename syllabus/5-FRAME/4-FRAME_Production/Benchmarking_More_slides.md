@@ -146,7 +146,7 @@ Let's now step away from concepts and talk about cold hard data.
 
 ### Common Runtime Data Size and Performance
 
-<br>
+<br/>
 
 <div class="flex-container">
 <div class="left">
@@ -159,7 +159,7 @@ Let's now step away from concepts and talk about cold hard data.
 
 <div class="r-stack">
 	<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram.png" />
-	<img style="height: 500px;" class="fragment" src="../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram-alpha.png"/>
+	<img style="height: 500px;" class="fragment" src="../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram-alpha.png" />
 </div>
 </div>
 
@@ -179,7 +179,7 @@ https://substrate.stackexchange.com/questions/525/how-expensive-is-it-to-access-
 
 At 32 KB, performance decreases for each additional 4 KB.
 
-<img style="height: 500px" src="../../../assets/img/6-FRAME/benchmark/paritydb-vs-rocksdb-read.png"/>
+<img style="height: 500px" src="../../../assets/img/6-FRAME/benchmark/paritydb-vs-rocksdb-read.png" />
 
 ---
 

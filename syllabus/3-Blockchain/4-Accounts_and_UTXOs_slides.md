@@ -19,7 +19,7 @@ title: Accounting Models & User Abstractions in Blockchains
 - We have some base elements ideas and concepts
 - now lets put them together into something cool..
 
-<img rounded style="width: 700px;" src="../../assets/img/3-Blockchain/3.2-assembling-cartoon.png"/>
+<img rounded style="width: 700px;" src="../../assets/img/3-Blockchain/3.2-assembling-cartoon.png" />
 
 Notes:
 
@@ -37,7 +37,7 @@ TODO: Help format images to look better
 
 </pba-col>
 
-<img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="../../assets/img/3-Blockchain/3.2-thinking-cartoon.png"/>
+<img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="../../assets/img/3-Blockchain/3.2-thinking-cartoon.png" />
 
 Notes:
 
@@ -57,20 +57,20 @@ TODO: Insert picture here which shows some money being sent from person A to per
 
 ## Example
 
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.svg"/>
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.svg" />
 
 ---
 
 ## Paradigm A How would we do this?
 
 1.  You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In other words we have some data that can be altered only by a specific entity so we want to provide proof we can alter it.
-1.  You have data which can be altered along with a key stating who can alter it.(Value + Pubkey)<br>
-    $~~~~$Thing 1 we can refer to as an input<br>
+1.  You have data which can be altered along with a key stating who can alter it.(Value + Pubkey)<br/>
+    $~~~~$Thing 1 we can refer to as an input<br/>
     $~~~~$Thing 2 we can refer to as an output
 
 ---
 
-## Is this our State?<br>What is our state?
+## Is this our State?<br/>What is our state?
 
 - A bunch of "outputs" (Some value or data which can be altered via a particular specified owner)
 
@@ -117,9 +117,9 @@ TODO: Show some image of something transitioning
 
 ---
 
-### What were those<br>input-output thingies again?
+### What were those<br/>input-output thingies again?
 
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.svg"/>
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.svg" />
 
 Notes:
 
@@ -127,7 +127,7 @@ TODO: Show picture of inputs and outputs in a transaction similar to UTXO framel
 
 ---
 
-### So what happens in a state transition<br>or verification in this model?
+### So what happens in a state transition<br/>or verification in this model?
 
 - Inputs signal which outputs from the state will be consumed
 - We must verify the signature given in the input with the corresponding specified outputs pubkey or owner
@@ -138,7 +138,7 @@ TODO: Show picture of inputs and outputs in a transaction similar to UTXO framel
 
 ## Transition
 
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.svg"/>
+<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.svg" />
 
 ---
 
@@ -150,7 +150,7 @@ TODO: Show picture of inputs and outputs in a transaction similar to UTXO framel
 - Now whenever someone mentions UTXO's and the UTXO model you can now fundamentally know what actually is being referenced..(Hopefully!)
 
 </pba-col>
-<img rounded style="width: 400px; height 300px; float:middle;" src="../../assets/img/3-Blockchain/3.2-cartoon-cheering.png"/>
+<img rounded style="width: 400px; height 300px; float:middle;" src="../../assets/img/3-Blockchain/3.2-cartoon-cheering.png" />
 
 Notes:
 
@@ -176,7 +176,7 @@ TODO make some notes
 
 ---
 
-## Well well what is state<br>then in this system?
+## Well well what is state<br/>then in this system?
 
 - Accounts -> Values
 
@@ -201,7 +201,7 @@ TODO: Show picture of a table mapping a pubkey to a value or data item(in its si
 
 ---
 
-## Now that state is<br>much easier to comprehend!!
+## Now that state is<br/>much easier to comprehend!!
 
 > What about transitioning my state or account?
 
@@ -219,11 +219,11 @@ TODO: Insert some picture here which shows some money being sent from person A t
 
 ## Transaction + Transition
 
-<img style="width: 800px; height 600px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.svg"/>
+<img style="width: 800px; height 600px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.svg" />
 
 ---
 
-## So what happens in a State transition<br>in this computation model?
+## So what happens in a State transition<br/>in this computation model?
 
 - We still verify but we verify less and determine more!
 - Check the signature of the message or computational instruction given
@@ -242,7 +242,7 @@ TODO: Insert some picture here which shows some money being sent from person A t
 
 ### Accounts wins this one...
 
-> Question:<br>UTXOS are much heavier in terms of raw data stored + transaction size can anyone think of why...?
+> Question:<br/>UTXOS are much heavier in terms of raw data stored + transaction size can anyone think of why...?
 
 ---
 
@@ -270,7 +270,7 @@ TODO: Insert some picture here which shows some money being sent from person A t
 
 ---
 
-## Smart contracts of<br>general compute platforms
+## Smart contracts of<br/>general compute platforms
 
 - Based on all previous information can we think of which model is more intuitive and seems to make more sense..?
 
@@ -304,9 +304,9 @@ TODO: Insert some picture here which shows some money being sent from person A t
 
 ---
 
-## At the end of the day<br>it is just a state machine
+## At the end of the day<br/>it is just a state machine
 
-<img rounded style="width: 500px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-homer-cartoon.png"/>
+<img rounded style="width: 500px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-homer-cartoon.png" />
 
 Notes:
 

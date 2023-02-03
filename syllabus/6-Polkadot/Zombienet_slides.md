@@ -173,7 +173,7 @@ chmod +x zombienet
 
 ### Examples
 
-<img rounded style="" src="../../assets/img/5-Polkadot/zombienet/examples-qr.png">
+<img rounded style="" src="../../assets/img/5-Polkadot/zombienet/examples-qr.png" />
 
 [zombienet presentation examples](https://github.com/pepoviola/zombienet-presentation-examples)
 
@@ -425,7 +425,7 @@ default_command = "polkadot"
 
 ## Make the network config dynamic
 
-<img rounded style="" src="../../assets/img/5-Polkadot/zombienet/zombienet-env-vars.png">
+<img rounded style="" src="../../assets/img/5-Polkadot/zombienet/zombienet-env-vars.png" />
 
 ---
 

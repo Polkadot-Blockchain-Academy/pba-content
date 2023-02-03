@@ -531,7 +531,7 @@ Common steps to debug:
 
 Look at the `ump.ExecutedUpward` event:
 
-<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure"/>
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure" />
 
 ---v
 
@@ -587,4 +587,4 @@ To solve this:
 
 ## 🔨 Subscan XCM retrieval
 
-<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab"/>
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab" />

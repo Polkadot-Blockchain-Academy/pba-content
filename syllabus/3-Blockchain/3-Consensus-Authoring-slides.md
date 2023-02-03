@@ -36,7 +36,7 @@ As we discussed blockspace represents the right to contribute to the shared hist
 
 ## Forks Review
 
-<img style="width: 500px" src="./img/forks-some-invalid.svg"/>
+<img style="width: 500px" src="./img/forks-some-invalid.svg" />
 
 There are going to be forks. We need to decide which one is the real one.
 
@@ -86,7 +86,7 @@ Example spending more money than you have. Noting your present location such tha
 
 ## Arbitrary / Political Validity
 
-Similar to state machine validity.<br>
+Similar to state machine validity.<br/>
 Examples:
 
 <pba-flex>
@@ -313,7 +313,7 @@ Cons:
 
 <pba-cols>
 <pba-col>
-<img style="width: 500px" src="./img/Sassafras-albidum.jpg"/>
+<img style="width: 500px" src="./img/Sassafras-albidum.jpg" />
 </pba-col>
 <pba-col>
 
@@ -424,7 +424,7 @@ Each node's preference for which fork is best
 - Most blocks authored by Alice
 - Most total transactions (or most gas)
 
-<img style="width: 500px" src="./img/reorgs-1.svg"/>
+<img style="width: 500px" src="./img/reorgs-1.svg" />
 
 </pba-flex>
 
@@ -436,9 +436,9 @@ The fork choice allows you, as a network participant, to decide which fork you c
 
 ## Reorganizations
 
-<img style="width: 500px" src="./img/reorgs-1.svg"/>
+<img style="width: 500px" src="./img/reorgs-1.svg" />
 
-<img style="width: 500px" src="./img/reorgs-2.svg"/> <!-- .element: class="fragment" data-fragment-index="2" -->
+<img style="width: 500px" src="./img/reorgs-2.svg" /> <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Dropped transactions re-enter tx pool and re-appear in new blocks shortly <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -455,7 +455,7 @@ You can experience this in a social way too.
 
 ## Double Spends
 
-<img style="width: 800px" src="./img/double-spend-1.svg"/>
+<img style="width: 800px" src="./img/double-spend-1.svg" />
 
 Notes:
 
@@ -465,7 +465,7 @@ The name comes from bitcoin, but the attack generalizes. It exploits the existen
 
 ## Double Spends
 
-<img style="width: 800px" src="./img/double-spend-2.svg"/>
+<img style="width: 800px" src="./img/double-spend-2.svg" />
 
 ---
 

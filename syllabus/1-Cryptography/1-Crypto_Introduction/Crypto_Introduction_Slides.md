@@ -23,7 +23,7 @@ duration: 1 hour
 
 ## Cryptography Landscape
 
-<img style="height: 700px; padding-left:100px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg"/>
+<img style="height: 700px; padding-left:100px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg" />
 
 Notes:
 
@@ -74,7 +74,7 @@ not just person-to-person messages.
 
 _Cryptography based on public systems is more sound._
 
-**Kerckhoff's Principle:** Security should not rely on secret _methods_,<br>but rather on secret _information_.
+**Kerckhoff's Principle:** Security should not rely on secret _methods_,<br/>but rather on secret _information_.
 
 Notes:
 
@@ -112,7 +112,7 @@ Do note the assumptions and monitor their validity over time (like quantum tech)
 
 ## Data Accessibility
 
-A party may gain access to information<br>if and only if they know some secret (a key).
+A party may gain access to information<br/>if and only if they know some secret (a key).
 
 Notes:
 
@@ -138,13 +138,13 @@ Notes:
 
 ## Data Integrity
 
-Physical signatures provide weak authenticity guarantees<br>(i.e. they are quite easy to forge), and no integrity guarantees.
+Physical signatures provide weak authenticity guarantees<br/>(i.e. they are quite easy to forge), and no integrity guarantees.
 
 ---
 
 ## Data Integrity
 
-<img style="width: 900px;" src="../../../assets/img/1-Cryptography/Data-Integrity.png"/>
+<img style="width: 900px;" src="../../../assets/img/1-Cryptography/Data-Integrity.png" />
 
 Notes:
 
@@ -155,7 +155,7 @@ Digital signatures provide a guarantee that the signed information has not been 
 
 ## One-Way Functions
 
-One-way functions form the basis of both<br>**(cryptographic) hashing** and **asymmetric cryptography**.
+One-way functions form the basis of both<br/>**(cryptographic) hashing** and **asymmetric cryptography**.
 
 - Functions for which we know fast algorithms to compute
 - But for which we believe to be hard to invert
@@ -187,7 +187,7 @@ Hashes can be useful for many applications:
 
 <pba-flex center>
 
-- Representation of larger data object<br>(history, commitment, file)
+- Representation of larger data object<br/>(history, commitment, file)
 - Keys in a database
 - Digital signatures
 - Key derivation
@@ -199,7 +199,7 @@ Hashes can be useful for many applications:
 
 ## Cryptographic vs. Non-Cryptographic
 
-Cryptographic hash functions provide stronger guarantees<br>on the last three properties.
+Cryptographic hash functions provide stronger guarantees<br/>on the last three properties.
 
 But non-cryptographic hash functions are much faster.
 
@@ -211,7 +211,7 @@ Substrate uses both (more on that later).
 
 ## Symmetric Cryptography
 
-Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br>The shared secret can then be used to protect further communications from others who do not know this secret.
+Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br/>The shared secret can then be used to protect further communications from others who do not know this secret.
 
 In essence, it gives a way of _extending_ a shared secret over time.
 
@@ -247,15 +247,15 @@ However, since the key contained only limited _entropy_ ("information"), enough 
 
 - Digital signatures provide message authenticity and integrity guarantees.
 
-- _The next two lessons are dedicated to digital signatures,<br>this is strictly an intro._
+- _The next two lessons are dedicated to digital signatures,<br/>this is strictly an intro._
 
 ---
 
 ## Digital Signatures
 
-**signing function**: a pure function which operates on some<br>_message data_ and some _secret_ to yield a _signature_.
+**signing function**: a pure function which operates on some<br/>_message data_ and some _secret_ to yield a _signature_.
 
-A **signature** _proves_ that the signer had knowledge of the secret,<br>without revealing the secret itself.
+A **signature** _proves_ that the signer had knowledge of the secret,<br/>without revealing the secret itself.
 
 The signature cannot be used to create other signatures.
 
@@ -270,9 +270,9 @@ It has a special property: it proves (beyond reasonable doubt) that the signer (
 
 ## Non-repudiation
 
-Only those with knowledge of some secret information<br>could have produced a valid signature.
+Only those with knowledge of some secret information<br/>could have produced a valid signature.
 
-The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br>
+The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br/>
 Symmetric cryptography does not provide this guarantee: someone else knows the secret.
 
 ---
@@ -363,7 +363,7 @@ Cryptography is much more than encryption.
 
 # Questions
 
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg"/>
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg" />
 
 ##### _What insights did you gain?_
 

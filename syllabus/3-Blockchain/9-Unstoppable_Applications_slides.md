@@ -85,7 +85,7 @@ In reality we strive for Absolute Unstoppability, but likely cannot grantee it i
 
 </pba-col>
 <pba-col>
-<img rounded style="width: 550px" src="../../assets/img/3-Blockchain/hydra-Gustave_Moreau.jpg"/>
+<img rounded style="width: 550px" src="../../assets/img/3-Blockchain/hydra-Gustave_Moreau.jpg" />
 </pba-col>
 </pba-cols>
 
@@ -101,14 +101,14 @@ Notes:
 
 Hypothesis: a _absolutely_ Unstoppable App cannot exist.
 
-We must make trade-offs out of all N properties<br>that a _absolutely_ Unstoppable App would possess.
+We must make trade-offs out of all N properties<br/>that a _absolutely_ Unstoppable App would possess.
 
 <pba-cols>
 <pba-col>
-<img rounded style="width: 600px" src="../../assets/img/3-Blockchain/trilemma.svg"/>
+<img rounded style="width: 600px" src="../../assets/img/3-Blockchain/trilemma.svg" />
 </pba-col>
 <pba-col>
-<img rounded style="width: 600px" src="../../assets/img/3-Blockchain/scalability-trilemma.svg"/>
+<img rounded style="width: 600px" src="../../assets/img/3-Blockchain/scalability-trilemma.svg" />
 </pba-col>
 </pba-cols>
 
@@ -128,7 +128,7 @@ More relevant trilemma:
 
 ## Attacking Web3
 
-<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-security.png" alt="https://xkcd.com/538/"/>
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-xkcd-security.png" alt="https://xkcd.com/538/" />
 
 Notes:
 
@@ -139,7 +139,7 @@ especilly
 
 ## Web3 Tech Stack
 
-<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
+<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png" />
 
 Notes:
 
@@ -198,11 +198,11 @@ There are [valid criticisms](https://moxie.org/2022/01/07/web3-first-impressions
 
 <pba-flex center>
 
-- Humans are cheap & lazy...<br>
+- Humans are cheap & lazy...<br/>
   No individuals run servers.
 - RPC node providers
-- A _protocol_ improves<br>slowly vs. a platform.
-- False marketing,<br>frauds, & scams!
+- A _protocol_ improves<br/>slowly vs. a platform.
+- False marketing,<br/>frauds, & scams!
 
 </pba-flex>
 </pba-col>
@@ -225,7 +225,7 @@ This is valid mostly in the present, we will discuss these and what we're buildi
 
 ## Prove it!
 
-We use the word "proof" a lot...<br>it means many things in [different contexts](https://en.wikipedia.org/wiki/Provable):
+We use the word "proof" a lot...<br/>it means many things in [different contexts](https://en.wikipedia.org/wiki/Provable):
 
 <pba-flex center>
 
@@ -247,7 +247,7 @@ Nuke proposes that when considering factors outside the consensus system, there 
 
 ## 🔮 Oracle Problem
 
-An [oracle](https://en.wikipedia.org/wiki/Category:Computation_oracles) provides eternal data to a consensus system.<br>(i.e. a partial state of an external chain)
+An [oracle](https://en.wikipedia.org/wiki/Category:Computation_oracles) provides eternal data to a consensus system.<br/>(i.e. a partial state of an external chain)
 
 The [oracle problem](https://blog.chain.link/what-is-the-blockchain-oracle-problem/) relates to the _trust_ in the oracle.
 
@@ -285,7 +285,7 @@ Explain example of luna or other system collapse.
 <pba-cols>
 <pba-col>
 
-<img rounded style="height: 700px;" src="../../assets/img/3-Blockchain/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" alt="https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg"/>
+<img rounded style="height: 700px;" src="../../assets/img/3-Blockchain/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" alt="https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" />
 
 </pba-col>
 <pba-col>
@@ -311,7 +311,7 @@ Example: irrational actors can be represented in a very simple model as a comple
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/"/>
+<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/" />
 
 </pba-col>
 <pba-col>
@@ -338,7 +338,7 @@ Notes:
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/dependency-polkadot-js.png"/>
+<img rounded style="width: 500px; margin-right: -5em" src="../../assets/img/3-Blockchain/dependency-polkadot-js.png" />
 
 </pba-col>
 <pba-col>
@@ -357,7 +357,7 @@ Notes:
 
 ## 🙈 Unknown unknowns
 
-<img rounded style="width: 800px" src="../../assets/img/3-Blockchain/DiveEdge.gif"/>
+<img rounded style="width: 800px" src="../../assets/img/3-Blockchain/DiveEdge.gif" />
 
 Notes:
 
@@ -376,7 +376,7 @@ Assumptions about context must be rigorously evaluated (i.e. - what does finalit
 
 ## 🕸️ Peer-to-Peer Networks
 
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-network-topologies.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-network-topologies.png" />
 
 ---v
 
@@ -410,7 +410,7 @@ Hard to hide! Most p2p traffic is easy to identify vs. web2 traffic.
 
 Running a node is hard, most people outsource.
 
-<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-node-queries.png"/>
+<img style="width: 1000px" src="../../assets/img/3-Blockchain/3.4-node-queries.png" />
 
 These service have power to deceive, censor, and surveil.
 
@@ -420,23 +420,23 @@ These service have power to deceive, censor, and surveil.
 
 If running _one_ node is burdensome, try multiple.
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png"/>
+<img style="width: 700px" src="../../assets/img/3-Blockchain/3.4-multi-chain-apps.png" />
 
 ---v
 
 ## Trustless Messaging
 
-In order to handle messages _without trust_,<br>systems must share common finality guarantees.
+In order to handle messages _without trust_,<br/>systems must share common finality guarantees.
 
-`A` should never process a message from `B`,<br>where `B` is reverted and `A` is not.
+`A` should never process a message from `B`,<br/>where `B` is reverted and `A` is not.
 
 ---v
 
 ## A Note on Synchronicity
 
-Smart contracts on a single chain (e.g. Ethereum)<br>can interact trustlessly because of their shared view of finality.
+Smart contracts on a single chain (e.g. Ethereum)<br/>can interact trustlessly because of their shared view of finality.
 
-Asynchronous systems can also share finality.<br>
+Asynchronous systems can also share finality.<br/>
 i.e., be members of the same consensus system.
 
 ---v
@@ -464,7 +464,7 @@ Notes:
 
 ## Mining Pools
 
-Proof of Work authority sets have no finite bound.<br>
+Proof of Work authority sets have no finite bound.<br/>
 But people like to organize.
 
 \[Collaborating | Colluding\] authority sets creates risk.
@@ -478,7 +478,7 @@ Similar issues, but in a more bounded set.
 
 ## Mining Pools
 
-<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/mining-pools.png"/>
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/mining-pools.png" />
 
 Notes:
 
@@ -502,15 +502,15 @@ Security is always a finite resource:
 
 ## Security Dilution
 
-Consensus systems compete for security,<br>and they have reason to attack each other.
+Consensus systems compete for security,<br/>and they have reason to attack each other.
 
-Emergence of obscure/niche "Proof of X" algorithms<br>to shelter from attack only goes so far.
+Emergence of obscure/niche "Proof of X" algorithms<br/>to shelter from attack only goes so far.
 
 ---v
 
 ## ⚔ Blockchain Wars
 
-Systems with high security have the<br>incentive to attack systems with low security<br>whom they perceive as competitors.
+Systems with high security have the<br/>incentive to attack systems with low security<br/>whom they perceive as competitors.
 
 > For fun and profit.
 
@@ -522,7 +522,7 @@ Notes:
 
 ## ⚔ Proof of Work Battles
 
-<img rounded style="width: 1300px;" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png"/>
+<img rounded style="width: 1300px;" src="../../assets/img/3-Blockchain/3.4-51-percent-cost.png" />
 
 > What might it cost to successfully attack?
 
@@ -536,9 +536,9 @@ Notes:
 
 ---v
 
-## Proof of...<br>Nothing at Stake
+## Proof of...<br/>Nothing at Stake
 
-Forks are "free" to vote in favor of...<br>
+Forks are "free" to vote in favor of...<br/>
 vote on them all!
 
 (If you are not eventually slashed!)
@@ -554,11 +554,11 @@ Notes:
 
 ---v
 
-## Proof of...<br>_Relatively_ Nothing at Stake
+## Proof of...<br/>_Relatively_ Nothing at Stake
 
-Risk-to-reward ratio of attacks is<br>_relative to the valuation of the staked assets_.
+Risk-to-reward ratio of attacks is<br/>_relative to the valuation of the staked assets_.
 
-Rational actors take into account<br>_extrinsic motivators_ in calculating the highest reward.
+Rational actors take into account<br/>_extrinsic motivators_ in calculating the highest reward.
 
 > What might it cost to successfully attack?
 
@@ -596,7 +596,7 @@ Notes:
 
 ## ⚔ PoS Economic Security Battles
 
-<img rounded style="width: 1150px;" src="../../assets/img/3-Blockchain/market-cap-pos.png"/>
+<img rounded style="width: 1150px;" src="../../assets/img/3-Blockchain/market-cap-pos.png" />
 
 Notes:
 
@@ -608,7 +608,7 @@ What about an system of value _within_ consensus?
 
 ## DApp PoS Economic Security
 
-<img rounded style="width: 1200px;" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png"/>
+<img rounded style="width: 1200px;" src="../../assets/img/3-Blockchain/market-cap-polkadot-chains.png" />
 
 Notes:
 
@@ -629,8 +629,8 @@ Nuke argue this is the same for the sum of all contracts valuations on something
 <pba-flex center>
 
 - Equivocation
-  - Authorship: Proposing mutually<br>exclusive chains
-  - Finality: Voting for mutually<br>exclusive chains to be final
+  - Authorship: Proposing mutually<br/>exclusive chains
+  - Finality: Voting for mutually<br/>exclusive chains to be final
 - Invalidity
 - Lack of availability
 - **Intentional protocol abuse** ([selfish mining](https://golden.com/wiki/Selfish_mining_attack-39PMNNA))
@@ -661,7 +661,7 @@ Those who _choose_ to become authorities should be liable for their actions.
 
 Some types of misbehavior are harder to prove than others.
 
-**Equivocation** is simple:<br>Someone can just produce two signed messages as cryptographic proof.
+**Equivocation** is simple:<br/>Someone can just produce two signed messages as cryptographic proof.
 
 Others rely on challenge-response games and dispute resolution.
 
@@ -671,11 +671,11 @@ Nothing at stake solution, with the possible caveot of long range attacks. [Weak
 
 ---v
 
-## Design Considerations<br>in Polkadot
+## Design Considerations<br/>in Polkadot
 
 - More validators increases the state transition throughput of the network: parachains.
 - Individual shards have full economic freedom by being members of a larger consensus system.
-- _Superlinear_ slashing puts colluding validators at existential risk,<br>while well-meaning ones should have little to worry about).
+- _Superlinear_ slashing puts colluding validators at existential risk,<br/>while well-meaning ones should have little to worry about).
 
 Notes:
 
@@ -737,8 +737,8 @@ Not realized as possible by many until it quietly became the norm.
 
 ## Maximal Extractable Value
 
-> An environment in which detection means certain death...<br>
-> ...identifying someone’s location is as good as directly destroying them.<br><br>
+> An environment in which detection means certain death...<br/>
+> ...identifying someone’s location is as good as directly destroying them.<br/><br/>
 > -- [Ethereum is a Dark Forest](https://www.paradigm.xyz/2020/08/ethereum-is-a-dark-forest) --
 
 Notes:
@@ -753,7 +753,7 @@ This is now the norm on Ethereum at least, and further _it's becoming institutio
 
 ## 👼 Flashbots
 
-> Flashbots is a research and development organization formed to mitigate the negative externalities posed by Maximal Extractable Value (MEV) to stateful blockchains, starting with Ethereum.<br><br>
+> Flashbots is a research and development organization formed to mitigate the negative externalities posed by Maximal Extractable Value (MEV) to stateful blockchains, starting with Ethereum.<br/><br/>
 > -- [Flashbots](https://www.flashbots.net/) --
 
 Notes:
@@ -795,7 +795,7 @@ Notes:
 
 ## Compliance
 
-<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/tornado-ofac.png"/>
+<img rounded style="width: 1000px" src="../../assets/img/3-Blockchain/tornado-ofac.png" />
 
 Notes:
 
@@ -809,14 +809,14 @@ https://cryptoslate.com/op-ed-is-ethereum-now-under-u-s-control-99-of-latest-rel
 
 Social systems and norms can help _cover up_ weaknesses in protocols.
 
-> Public monitor to shame OFAC censors:<br> > https://www.mevwatch.info/
+> Public monitor to shame OFAC censors:<br/> > https://www.mevwatch.info/
 
 Notes:
 
 - Pressure from peers through breaking norms, perhaps even lossing of authority in consensus due to this.
   Peer reputation in computer networks, and here also in human ones.
 - Sometimes social pressures are healthy for the system, sometimes toxic depending on point of view and who benefits!
-- In monero "run your own node" culture helps keep it decentralized.<br>
+- In monero "run your own node" culture helps keep it decentralized.<br/>
   Bitcoin big block wars show social pressures help decide the canonical forks.
 - Normalizing MEV for the profit of middlemen, providing extraction services in the worst case.
 
@@ -824,7 +824,7 @@ Notes:
 
 ## Unbundling
 
-<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png"/>
+<img style="width: 1200px" src="../../assets/img/3-Blockchain/3.4-web3-stack.png" />
 
 Notes:
 
@@ -837,7 +837,7 @@ From before, but here point out how this is getting more fine grained as well, a
 
 ## Diversity
 
-<img style="width: 1200px" src="../../assets/img/3-Blockchain/eth-client-diversity.png" alt="https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA"/>
+<img style="width: 1200px" src="../../assets/img/3-Blockchain/eth-client-diversity.png" alt="https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA" />
 
 Notes:
 
@@ -853,9 +853,9 @@ Notes:
 
 ## Final Thoughts
 
-- Complexity generally increases the risks of failures, but we should not fear it.<br>
+- Complexity generally increases the risks of failures, but we should not fear it.<br/>
   $~~~$_Hypothesis: this \_usually_ makes systems more brittle.\_
-- Observable behavior trumps models and theory.<br>
+- Observable behavior trumps models and theory.<br/>
   $~~~$_Complex systems are not intuitive and may show your assumptions and models are wrong!_
 - This lesson was a _start_ down holes...
   $~~~$_We encourage you to keep diving deeper!_
@@ -870,7 +870,7 @@ Notes:
 
 ## 🤝 Together, into the Deep
 
-<img rounded style="width: 800px" src="../../assets/img/3-Blockchain/DiveEdge.gif"/>
+<img rounded style="width: 800px" src="../../assets/img/3-Blockchain/DiveEdge.gif" />
 
 ---
 
@@ -908,7 +908,7 @@ Perhaps assigned informally to everyone to watch in the next few days.
 > It seizes power from dominate forms of power: governments, corporations, states, associations, cultures, religions.
 > It seizes power, from these big things and gives it to little people.
 > And sooner or later, the people who are losing their undeserved, abusively applied power will start to fight back.
-> And at that point, we will start to find out how unstoppable our code is.<br><br>
+> And at that point, we will start to find out how unstoppable our code is.<br/><br/>
 > -- Andreas Antonopoulos --
 
 ---v
@@ -916,7 +916,7 @@ Perhaps assigned informally to everyone to watch in the next few days.
 ## Can't vs. Won't
 
 > The moment you go over the the line from "can't to won't, what started as an ability becomes a responsibility.
-> And then if you claim that you don't have the ability anymore, that responsibility just became negligence, criminal negligence.<br><br>
+> And then if you claim that you don't have the ability anymore, that responsibility just became negligence, criminal negligence.<br/><br/>
 > -- Andreas Antonopoulos --
 
 Notes:
@@ -938,7 +938,7 @@ Decentralized Autonomous Organizations ([DAOs](https://www.investopedia.com/tech
 
 ## Democratic Systems
 
-Democratic Mediums is a directory of patterns<br> for decision, deliberation, and noise.
+Democratic Mediums is a directory of patterns<br/> for decision, deliberation, and noise.
 
 <pba-flex center>
 
@@ -958,7 +958,7 @@ Many novel and niece definitions in this wiki.
 
 ## Modeling Behavior
 
-> [Token Engineering](https://tokenengineeringcommunity.github.io/website/)<br>
+> [Token Engineering](https://tokenengineeringcommunity.github.io/website/)<br/>
 > {especially the Academy & cadCAD Edu}
 
 Notes:

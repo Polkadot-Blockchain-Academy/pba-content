@@ -20,7 +20,7 @@ duration: 1 hour
 
 ---
 
-## Verifiable Random Functions<br>(VRFs)
+## Verifiable Random Functions<br/>(VRFs)
 
 <widget-center>
 
@@ -47,7 +47,7 @@ duration: 1 hour
 - Output is a deterministic function of _key_ and _input_
   - i.e. eval should be deterministic
 - It should be pseudo-random
-- But until the VRF is revealed, only the holder<br>of the secret key knows the output
+- But until the VRF is revealed, only the holder<br/>of the secret key knows the output
 
 ---
 
@@ -103,14 +103,14 @@ _Magical data expansion_
 
 ## Erasure Coding
 
-<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/erasure-code.svg"/>
+<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/erasure-code.svg" />
 
 ---
 
 ## Erasure Coding Classical use
 
 - Used for noisy channels
-- If a few bits of the coded data are randomly flipped,<br> we can still recover the original data
+- If a few bits of the coded data are randomly flipped,<br/> we can still recover the original data
 - Typically $n$ is not much bigger than $k$
 
 ---
@@ -128,7 +128,7 @@ _Magical data expansion_
 
 ## ZK Proofs
 
-How do we do private operations on a public blockchain<br>and have everyone know that they were done correctly?
+How do we do private operations on a public blockchain<br/>and have everyone know that they were done correctly?
 
 Notes:
 
@@ -229,11 +229,11 @@ Polkadot already scales better!
 
 <pba-flex center>
 
-A user has private data, but we can show<br>publicly that this private data is correctly used.<br>
+A user has private data, but we can show<br/>publicly that this private data is correctly used.<br/>
 An example would a private cryptocurrency:
 
 - Keep who pays who secret
-- Keep amounts secret, <br> _But show they are positive!_
+- Keep amounts secret, <br/> _But show they are positive!_
 
 </pba-flex>
 
@@ -258,26 +258,26 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 - Slow prover time for general computation
 - To be fast, need to hand optimize
-- Very weird computation model:<br>
+- Very weird computation model:<br/>
   Non-deterministic arithmetic circuits
 
 ---
 
 ## Downsides Conclusion?
 
-- So if you want to use this for a component,<br>expect a team of skilled people to work for at least a year on it...
-- But if you are watching this 5 years later,<br>people have built tools to make it less painful.
+- So if you want to use this for a component,<br/>expect a team of skilled people to work for at least a year on it...
+- But if you are watching this 5 years later,<br/>people have built tools to make it less painful.
 
 ---
 
-## Succinct Proving<br>with Cryptography?
+## Succinct Proving<br/>with Cryptography?
 
 <pba-flex center>
 
 - ZK friendly hashes
 - Non-hashed based data structures
   - RSA accumulators
-  - Polynomial commitment based<br>
+  - Polynomial commitment based<br/>
     (Verkle trees)
 
 </pba-flex>

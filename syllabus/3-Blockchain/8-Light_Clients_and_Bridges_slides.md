@@ -135,7 +135,7 @@ There are varying degrees of lightness to suit your needs.
 
 ## Trustless
 
-<img style="width:900px; margin-top:-30px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png">
+<img style="width:900px; margin-top:-30px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png" />
 
 <pba-flex center>
 
@@ -207,7 +207,7 @@ So it is important to communicate with many different full nodes.
 
 Transport layers between independent consensus systems
 
-<img rounded width="700px" alt="Bridge spanning space between blockchains" src="./img/basic-bridge.svg">
+<img rounded width="700px" alt="Bridge spanning space between blockchains" src="./img/basic-bridge.svg" />
 
 Notes:
 
@@ -255,7 +255,7 @@ More on this after we cover the basic design.
 
 ### Trust-based
 
-Trusted intermediary makes a transfer manually.<br>
+Trusted intermediary makes a transfer manually.<br/>
 Eg. Wrapped bitcoin on ethereum (WBTC)
 
 </pba-col>
@@ -263,7 +263,7 @@ Eg. Wrapped bitcoin on ethereum (WBTC)
 
 ### Trustless
 
-Trustless is the goal,<br>like almost everything in web3.
+Trustless is the goal,<br/>like almost everything in web3.
 
 </pba-col>
 </pba-cols>
@@ -292,7 +292,7 @@ The bridge can never be stronger than the consensus on the source chain
 
 <pba-flex center>
 
-- Most trustless way to interact with blockchain<br>is to run a node
+- Most trustless way to interact with blockchain<br/>is to run a node
 - This is true for individuals _and_ other blockchains
 - A blockchain is extremely resource constrained.
 - Run a source chain light client on the target chain
@@ -412,9 +412,9 @@ TODO Figure of stack with two blockchains on the bottom layer
 <pba-flex center>
 
 - App users submit proofs
-- Need a source chain transaction?<br>
+- Need a source chain transaction?<br/>
   Submit an spv-style transaction proof
-- Need some source chain state?<br>
+- Need some source chain state?<br/>
   Submit a state proof
 
 </pba-flex>
@@ -432,7 +432,7 @@ If you need some source chain state, your app needs to require a state proof to 
 
 ## Multichain Security
 
-<img rounded style="width: 500px; margin-top:-30px" src="./img/strong-and-weak-.png">
+<img rounded style="width: 500px; margin-top:-30px" src="./img/strong-and-weak-.png" />
 
 Notes:
 

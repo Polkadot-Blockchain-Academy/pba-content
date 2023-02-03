@@ -25,7 +25,7 @@ duration: 45+ mins
 }
 </style>
 
-# Light clients<br>and<br>Unstoppable Apps
+# Light clients<br/>and<br/>Unstoppable Apps
 
 ---
 
@@ -73,7 +73,7 @@ The dApp (UI) connects to a node client that the user has installed on their mac
 
 <pba-flex center>
 
-1. Install dependencies<br>
+1. Install dependencies<br/>
    (e.g. rust, openssl, cmake, llvm etc);
 1. Clone from github the `polkadot` repo;
 1. Build the node locally;
@@ -113,7 +113,7 @@ The uApp (UI) connects to an _integrated_ light client
 
 <pba-flex center>
 
-1. Install and use [Substrate Connect](https://github.com/paritytech/substrate-connect)<br>
+1. Install and use [Substrate Connect](https://github.com/paritytech/substrate-connect)<br/>
    dependencies in the uApp
 1. Write/Replace 2-3 lines of code
 
@@ -186,4 +186,4 @@ mainChain.sendJsonRpc(
 
 ---
 
-<img rounded style="width: 800px" src="../assets/BATMAN3.jpg" alt="Back to the other slides, Batman!"/>
+<img rounded style="width: 800px" src="../assets/BATMAN3.jpg" alt="Back to the other slides, Batman!" />

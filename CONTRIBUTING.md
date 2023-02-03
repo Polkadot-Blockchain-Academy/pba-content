@@ -116,7 +116,7 @@ This template can be used just copy and change slide by slide the content, and n
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
 ```md
-<img src="./assets/img/<module or shared>/some-tilted-thing.png" alt="tilted!">
+<img src="./assets/img/<module or shared>/some-tilted-thing.png" alt="tilted!" />
 
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
@@ -200,7 +200,7 @@ The templates can be used just copy and change slide by slide the content, and n
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
 ```md
-<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!" />
 
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
