@@ -4,7 +4,7 @@ description: An continuation of the ink! workshop.
 duration: 20 min
 ---
 
-# <img style="width: 100%; padding-top:15px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/advanced-workshop.jpg" alt="ink!" />
+<img rounded style="width: 1400px; padding-top:15px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/advanced-workshop.jpg" alt="ink!" />
 
 ---
 
@@ -19,12 +19,14 @@ We help you debug!
 <pba-col center>
 
 ### Then
+
 🕹️🎮🕹️🎮
 
 </pba-col>
 <pba-col center>
 
 ### Thereafter
+
 Strategy Explainer
 
 </pba-col>
@@ -33,9 +35,9 @@ Strategy Explainer
 <br/>
 <br/>
 
-* Use as little gas as possible to paint as many fields as possible.
-* Stay within your gas budget.
-* The later you manage to still paint a field, the better you score.
+- Use as little gas as possible to paint as many fields as possible.
+- Stay within your gas budget.
+- The later you manage to still paint a field, the better you score.
 
 <br/>
 <br/>
@@ -48,71 +50,75 @@ Strategy Explainer
 
 https://splash.use.ink
 
-<img width="30%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code3.png" />
+<img rounded style="width=400px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code3.png" />
 
 ---
 
 ## Questions
 
-* What strategy did the winner choose?
-<!-- .element: class="fragment" data-fragment-index="1" -->
+- What strategy did the winner choose?
 
-* What strategies did the others choose?
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
 
-* What do you think would be the perfect strategy?
-<!-- .element: class="fragment" data-fragment-index="3" -->
+- What strategies did the others choose?
+
+<!-- .element: class="fragment" -->
+
+- What do you think would be the perfect strategy?
+
+<!-- .element: class="fragment" -->
 
 ---
 
 ## Board Dimensions
 
-* Best:
-  * `const width: u32` or `new(width: u32, height: u32)`
-
+- Best:
+  - `const width: u32` or `new(width: u32, height: u32)`
 
 ---
 
 ## Strategy 1: Return Random Number
 
-* Wasm-compatible RNG
-* Use Storage to hold seed for random number
-* Uses little Gas
-* Quickly runs into collisions
-* Score function rewards players that late in game still paint fields
+- Wasm-compatible RNG
+- Use Storage to hold seed for random number
+- Uses little Gas
+- Quickly runs into collisions
+- Score function rewards players that late in game still paint fields
 
 ---
 
 ## Strategy 2: Query board for free fields, paint only free ones
 
-* Cross-contract call
-* Need to iterate over `Mapping`: `O(n)`
-* Expensive
+- Cross-contract call
+- Need to iterate over `Mapping`: `O(n)`
+- Expensive
 
 ---
 
 ## Strategy 3: Shift computation off-chain
 
-* Off-chain Script
-  * Query board, search free field
-  * Call player: `fn set_next_turn(Option<(u32, u32)>)`
+- Off-chain Script
+  - Query board, search free field
+  - Call player: `fn set_next_turn(Option<(u32, u32)>)`
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
-* ```rust
-#[ink(message, selector = 0)]
-pub fn your_turn(&mut self) -> Option<(u32, u32)> {
-  self.next_turn
-}
-```
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
+
+- ```rust
+  #[ink(message, selector = 0)]
+  pub fn your_turn(&mut self) -> Option<(u32, u32)> {
+    self.next_turn
+  }
+  ```
+
+<!-- .element: class="fragment"  -->
 
 ---
 
 ## Strategy 4: 🤯
 
-* Off-chain computation from prior slide
-* Exploit that game loop uses same sorting for invoking `submit_turn` on players
+- Off-chain computation from prior slide
+- Exploit that game loop uses same sorting for invoking `submit_turn` on players
 
 ---
 
-<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />

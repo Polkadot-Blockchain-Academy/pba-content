@@ -6,7 +6,7 @@ duration: 1 hour
 
 ---
 
-# <img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />
+<img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />
 
 ---
 
@@ -18,21 +18,21 @@ duration: 1 hour
 </pba-col>
 <pba-col>
 
-|              |        |                    |
-|--------------|--------|:-------------------|
-| Today        | 1pm    | ink! Intro         |
-|              | 2pm    | Activity           |
-|              | 3:30pm | Hints for tomorrow |
-| | | &nbsp;             |
+|          |        |                    |
+| -------- | ------ | :----------------- |
+| Today    | 1pm    | ink! Intro         |
+|          | 2pm    | Activity           |
+|          | 3:30pm | Hints for tomorrow |
+|          |        | &nbsp;             |
 | Tomorrow | 1pm    | We help you        |
-| | 2pm    | Game               |
-| | 3:30pm  | Perfect Solutions  |
+|          | 2pm    | Game               |
+|          | 3:30pm | Perfect Solutions  |
 
 ---
 
 ## How does ink! tie into Substrate?
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego0.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego0.png" />
 
 Notes:
 How does ink! tie into Substrate?
@@ -41,35 +41,35 @@ How does ink! tie into Substrate?
 
 ## How does ink! tie into Substrate?
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego1.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/lego1.png" />
 
 ---
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema0.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema0.png" />
 
 ---
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema1.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema1.png" />
 
 ---
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema2.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema2.png" />
 
 ---
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema3.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/schema3.png" />
 
 ---
 
-<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain1.png" />
+<img rounded style="width: 700px; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain1.png" />
 
 ---
 
-<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain2.png" />
+<img rounded style="width: 700px; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain2.png" />
 
 ---
 
-<img style="width: 70%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain3.png" />
+<img rounded style="width: 700px; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-vs-parachain3.png" />
 
 Notes:
 
@@ -87,7 +87,7 @@ Smart Contracts:
 
 ---
 
-<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case0.jpg" />
+<img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case0.jpg" />
 
 Notes:
 
@@ -98,7 +98,7 @@ Notes:
 
 ---
 
-<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case1.jpg" />
+<img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case1.jpg" />
 
 Notes:
 
@@ -108,7 +108,7 @@ Notes:
 
 ---
 
-<img style="width: 80%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case2.jpg" />
+<img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case2.jpg" />
 
 Notes:
 
@@ -233,7 +233,7 @@ Can be implemented by multiple contracts.
 
 ---
 
-<img style="width: 80%; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/testing.png" />
+<img rounded style="width: 800px; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/testing.png" />
 
 ---
 
@@ -317,17 +317,17 @@ with the Substrate node.
 
 [https://crates.io/crates/cargo-contract](https://crates.io/crates/cargo-contract)
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" -->
 
 ---
 
 ## Metadata?
 
-<img style="width: 95%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/metadata.png" />
+<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/metadata.png" />
 
 ---
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts1.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts1.png" />
 
 Notes:
 
@@ -335,41 +335,41 @@ Build Artifacts
 
 ---
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts2.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts2.png" />
 
 ---
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts3.png" />
-
----
-
-# ink!-ternals
-
-<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals1.png" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts3.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals2.png" />
+<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals1.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals3.png" />
+<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals2.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals4.png" />
+<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals3.png" />
 
 ---
 
 # ink!-ternals
 
-<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals5.png" />
+<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals4.png" />
+
+---
+
+# ink!-ternals
+
+<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals5.png" />
 
 ---
 
@@ -392,7 +392,7 @@ impl Environment for DefaultEnvironment {
 
 ## Local Development
 
-<img style="width: 90%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-node.png" />
+<img rounded style="width: 900px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-node.png" />
 
 [`substrate-contracts-node`](https://github.com/paritytech/substrate-contracts-node)
 
@@ -400,7 +400,7 @@ impl Environment for DefaultEnvironment {
 
 ## Testnet
 
-<img style="width: 90%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-on-polkadot-js.png" />
+<img rounded style="width: 900px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-on-polkadot-js.png" />
 
 [Rococo Testnet](https://ink.substrate.io/testnet)
 
@@ -411,16 +411,16 @@ impl Environment for DefaultEnvironment {
 <div class="flex-container">
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-ui.png" />
+<img rounded style="width: 700px; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/contracts-ui.png" />
 
 [https://contracts-ui.substrate.io](https://contracts-ui.substrate.io)
 
 </div>
 <div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 
-<img style="width: 70%; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/polkadot-js-contracts.png" />
+<img rounded style="width: 700px; border: 1px solid #e6007a;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/polkadot-js-contracts.png" />
 
-[https://polkadot.js.org/apps](https://polkadot.js.org/apps)
+> [https://polkadot.js.org/apps](https://polkadot.js.org/apps)
 
 </div>
 </div>
@@ -429,25 +429,25 @@ impl Environment for DefaultEnvironment {
 
 ## Developer UIs
 
-<img style="width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/developer-uis-2.svg" />
+<img rounded style="width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/developer-uis-2.svg" />
 
 ---
 
 ## Documentation
 
-<img style="width: 90%; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-ink.png" />
+<img rounded style="width: 900px; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-ink.png" />
 
 [www.use.ink](https://use.ink)
 
 ---
 
-<img style="width: 90%; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/spanish.jpg" />
+<img rounded style="width: 900px; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/spanish.jpg" />
 
 ---
 
 ## Documentation
 
-<img style="width: 90%; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink_env.png" />
+<img rounded style="width: 900px; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink_env.png" />
 
 ---
 
@@ -457,19 +457,15 @@ impl Environment for DefaultEnvironment {
 
 ## Reading Contract Values: RPC
 
-<img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rpc.png" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
----
+## <img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/rpc.png" />
 
 ## Reading Contract Values: Events
 
-<img style="width: 65%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/events.png" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<img rounded style="width: 650px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/events.png" />
 
 ---
 
-<img style="width: 50%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/venn.png" />
+<img rounded style="width: 500px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/venn.png" />
 
 ---
 
@@ -479,14 +475,14 @@ impl Environment for DefaultEnvironment {
 
 <div class="flex-container">
 <div class="left fragment" data-fragment-index="1">
-<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+<img rounded style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
 <br/>
-<img style="width: 100%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity-reentrancy-attack.jpg" />
+<img rounded style="width: 1200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity-re-entrancy-attack.jpg" />
 </div>
-<div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
-<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+<div class="right fragment" data-fragment-index="2" style="margin-left: 50px;">
+<img rounded style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
 
-- Built-in reentrancy protection
+- Built-in re-entrancy protection
 - Fine-grained control
 
 </div>
@@ -500,7 +496,7 @@ Re-entrancy Protection
 
 <div class="flex-container">
 <div class="left fragment" data-fragment-index="1">
-<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
+<img rounded style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
 
 ```solidity
 pragma solidity 0.7.0;
@@ -520,8 +516,8 @@ contract Lottery {
 ```
 
 </div>
-<div class="right fragment" data-fragment-index="2" style="margin-left: 5%;">
-<img style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
+<div class="right fragment" data-fragment-index="2" style="margin-left: 50px;">
+<img rounded style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/squid-round.png" />
 
 - Functions private by default
 - Needs to be annotated explicitly
@@ -532,17 +528,17 @@ contract Lottery {
 
 ---
 
-<img style="width: 80%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc.png" />
+<img rounded style="width: 800px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc.png" />
 
 ---
 
-<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc0.png" />
+<img rounded style="width: 900px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc0.png" />
 
-<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc1.png" />
+<img rounded style="width: 900px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc1.png" />
 
-<img style="width: 100%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc2.png" />
+<img rounded style="width: 900px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc2.png" />
 
-<img style="width: 7%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/dots-white.svg" />
+<img rounded style="width: 20px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/dots-white.svg" />
 
 Notes:
 
@@ -551,4 +547,4 @@ Notes:
 
 ---
 
-<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+<img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
