@@ -517,6 +517,10 @@ pub fn call(
 ) -> DispatchResultWithPostInfo
 ```
 
+<p class="fragment">
+  Why is it important to set DispatchResultWithPostInfo as return type?
+</p>
+
 Notes:
 
 - Just as on ethereum we make use of gas metering in order to make sure a contract execution
@@ -546,6 +550,10 @@ Notes:
 ## Execution Engine
 
 <img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/exec.png" style="width: 800px" />
+
+<p class="fragment">
+  What could be problematic about putting the execution engine into the client?
+</p>
 
 Notes:
 
@@ -594,7 +602,7 @@ Notes:
 
 ---
 
-## Making gas metering<br/>independent of the executor
+## Making gas metering<br/>independent of the executor (1)
 
 <img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/gas.png" style="width: 200px;" />
 
@@ -610,7 +618,7 @@ Notes:
 
 ---
 
-## Making gas metering<br/>independent of the executor
+## Making gas metering<br/>independent of the executor (2)
 
 ```WebAssembly
 (module
@@ -641,13 +649,17 @@ Notes:
 )
 ```
 
+<p class="fragment">
+  What is a drawback of this approach?
+</p>
+
 Notes:
 
 - It works by injecting a call to the `gas` imported function for stream of uninterruptible
   instructions (basic block).
   This functionality is implemented by the `wasm-instrument`
   crate.
-- The `$as` function is implemented within `pallet-contracts`
+- The `$gas` function is implemented within `pallet-contracts`
 - Calling imported functions is slow
 - We work on a [more performant solution](https://github.com/paritytech/wasm-instrument/issues/11) that doesn't call any imported functions as those carry significant overhead.
 
