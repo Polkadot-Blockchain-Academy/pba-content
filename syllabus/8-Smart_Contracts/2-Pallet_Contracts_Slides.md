@@ -851,8 +851,8 @@ Notes:
 ## Execution Engine
 
 <div class="r-stack">
-  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains0.png" style="width: 900px;" />
-  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains1.png" style="width: 900px;" />
+  <img rounded class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains0.png" style="width: 900px;" />
+  <img rounded class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains1.png" style="width: 900px;" />
 </div>
 
 Notes:
