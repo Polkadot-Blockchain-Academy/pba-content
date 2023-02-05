@@ -1,10 +1,10 @@
 ---
-title: ink! Workshop (Intro)
+title: ink! Workshop (First Day)
 description: An introduction to the ink! workshop.
 duration: 20 min
 ---
 
-# <img style="width: 100%; padding-top:15px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beginners-workshop.jpg" alt="ink!" />
+<img rounded style="width: 1200px; padding-top:15px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beginners-workshop.jpg" alt="ink!" />
 
 ---
 
@@ -17,7 +17,30 @@ duration: 20 min
 
 ---
 
-<img style="margin-top: 25px; width: 70%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beamer.png" />
+<pba-cols>
+<pba-col>
+
+### Agenda
+
+</pba-col>
+<pba-col>
+
+|          |        |                    |
+| -------- | ------ | :----------------- |
+| Today    | 1pm    | ink! Intro         |
+|          | 2pm    | Activity           |
+|          | 3:30pm | Hints for tomorrow |
+|          |        | &nbsp;             |
+| Tomorrow | 1pm    | We help you        |
+|          | 2pm    | Game               |
+|          | 3:30pm | Perfect Solutions  |
+
+</pba-col>
+</pba-cols>
+
+---
+
+<img rounded style="margin-top: 25px; width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beamer.png" />
 
 ---
 
@@ -63,7 +86,7 @@ duration: 20 min
 
 ## How the Game looks
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-2.png" />
+<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-2.png" />
 
 Notes:
 
@@ -73,25 +96,23 @@ Notes:
 
 ## How the Game looks
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-9.png" />
+<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-9.png" />
 
 ---
 
 ## How the Game looks
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-10.png" />
+<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-10.png" />
 
 ---
 
 ## How to score?
 
-> Use as little gas as possible to paint as many fields as possible.
+# Use as little gas as possible to paint as many fields as possible.
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+Use as little gas as possible to paint as many fields as possible while staying within your gas budget. <!-- .element: class="fragment" -->
 
-> The later you manage to still paint a field the better you score.
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
+The later you manage to still paint a field the better you score. <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -123,25 +144,25 @@ mod player {
 
 ## How to play
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github.png" />
+<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github.png" />
 
 ---
 
 ## How to play
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github1.png" />
+<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github1.png" />
 
 ---
 
 ## How to play
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github2.png" />
+<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github2.png" />
 
 ---
 
 ## How to play
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github3.png" />
+<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github3.png" />
 
 ---
 
@@ -149,10 +170,9 @@ mod player {
 
 [github.com/paritytech/squink-splash-beginner ➜ todo-1.md](https://github.com/paritytech/squink-splash-beginner/blob/main/todo-1.md)
 
-<img width="30%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code.png" />
+<img rounded style="width=300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code.png" />
 
 Notes:
-<br/>
 
 1. Install Rust stable
 1. Install `cargo-contract`
@@ -166,10 +186,9 @@ Notes:
 
 [github.com/paritytech/squink-splash-beginner ➜ todo-2.md](https://github.com/paritytech/squink-splash-beginner/blob/main/todo-2.md)
 
-<img width="30%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code2.png" />
+<img rounded style="width=300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code2.png" />
 
 Notes:
-<br/>
 
 1. Clone `squink-splash-beginner`
 1. `player.rs`: change line XX to your favorite numbers [0-50]
@@ -184,15 +203,63 @@ Notes:
 
 https://splash.use.ink
 
-<img width="30%" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code3.png" />
+<img rounded style="width=300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code3.png" />
 
 ---
 
-## Now
+## The Game Contract
 
 - 15 Minutes: Find a strategy for your player
 - Use as little gas as possible to paint as many fields as possible.
 - The later you manage to still paint a field the better you score.<br/><br/>
 - Inspiration:
   - Random numbers?
-  - Query which fields unused?
+  - # Query which fields unused?
+    [`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
+
+---
+
+## The Game Contract
+
+- `pub fn submit_turn(&mut self)`
+- `pub fn board(&self) -> Vec<Option<FieldEntry>>`
+- `pub fn gas_budget(&self) -> u64`
+
+---
+
+## Until Tomorrow 🧠
+
+- Find a strategy for your player.
+- Use as little gas as possible to paint as many fields as possible while staying within your gas budget.
+- The later you manage to still paint a field the better you score.<br/><br/>
+- Helpful Resources:
+  - [paritytech/ink-workshop ➜ `game` folder](https://github.com/paritytech/ink-workshop)
+  - [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
+  - [ink! repository ➜ `examples` folder](https://github.com/paritytech/ink/tree/master/examples)
+  - [use.ink](https://use.ink)
+
+---
+
+## How to test locally
+
+---
+
+## Hint: Playfield Dimensions
+
+- Paint within the bounds of the playfield!
+- Otherwise you wasted a turn.
+
+---
+
+## Ideas
+
+- Use a random number
+- Query which fields are unused
+  - Query game state via cross-contract
+  - Off-chain computation
+
+> You can call your own contract as often as you want!
+
+---
+
+<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
