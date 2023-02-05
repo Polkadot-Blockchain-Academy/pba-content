@@ -2,8 +2,6 @@
 title: Contracts Pallet
 description: pallet-contracts for Web3 Engineers.
 duration: 1 hour
-revealOptions:
-  transition: "slide"
 ---
 
 # Contracts Pallet
@@ -277,21 +275,29 @@ Notes:
 
 ---
 
-## API Definition
+## API Definition (1)
 
 ```Rust
-define_env!(Env, <E: Ext>,
-  [seal0] gas(ctx, amount: u32) => { ... },
+#[define_env(doc)]
+pub mod Env {
+  #[version(0)]
+  fn gas(ctx, amount: u32) { ... },
 
-  [seal0] seal_set_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) => { ... },
+  #[version(0)]
+  fn get_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) { ... },
 
-  [seal1] seal_set_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) -> u32 => { ... },
+  #[version(1)]
+  fn set_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) -> u32 { ... },
 
-  [seal0] seal_clear_storage(ctx, key_ptr: u32) => { ... },
+  #[version(0)]
+  fn clear_storage(ctx, key_ptr: u32) { ... },
 
-  [__unstable__] seal_clear_storage(ctx, key_ptr: u32, key_len: u32) -> u32 => { ... },
+  #[version(0)]
+  #[unstable]
+  fn clear_storage(ctx, key_ptr: u32, key_len: u32) -> u32 { ... },
 
-  [seal1] seal_call(
+  #[version(1)]
+  fn call(
     ctx,
     flags: u32,
     callee_ptr: u32,
@@ -301,22 +307,22 @@ define_env!(Env, <E: Ext>,
     input_data_len: u32,
     output_ptr: u32,
     output_len_ptr: u32
-  ) -> ReturnCode => { ... },
+  ) -> ReturnCode { ... },
 }
 ```
 
 Notes:
 
 - The set of functions a contract can call (imported functions in Wasm lingo) are defined in
-  `wasm/runtime.rs` within the `define_env!` macro invocation.
+  `wasm/runtime.rs` within the `mod env` module.
 - The macro generates a list of imports from its arguments: The identifier in square brackets
   becomes the `module` and the name of the functions becomes the `name`.
 - We use the `module` for versioning: To stay backwards compatible we add new versions of a function
   instead of changing the existing one.
-  We increment the number behind `seal` for every new version.
-- The `__unstable__` module is for new functions whose API is not yet finalized.
+  We increment the number for every new version.
+- An API flagged `#[unstable]` module is for new functions whose API is not yet finalized.
   Functions start out
-  in this module when they are added and can be changed because production deployments won't make this functions available.
+  in this state when they are added and can be changed because production deployments won't make this functions available.
 - The body of the functions is what is executed within the embedder (`pallet-contracts` in this case).
 - Only primitives (`i32`, `i64`) can be used as arguments or return type.
   Larger types are passed by
@@ -324,6 +330,15 @@ Notes:
 - This list of function can be extended by the runtime by a mechanism called chain extension.
   - This is a type implementing `trait ChainExtension` passed in via the `Config` trait.
 - `gas` is a special import that is only called injected code in order to meter executed instructions.
+
+---
+
+## API Definition (2)
+
+[`API docs`](https://docs.rs/pallet-contracts/latest/pallet_contracts/api_doc/index.html)
+
+<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/api.png" style="width: 1100px" />
+
 
 ---
 
