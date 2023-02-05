@@ -168,7 +168,7 @@ mod player {
 
 ---
 
-## Frontend
+## 🕹️🎮 Let's play! 🕹️🎮
 
 [https://splash.use.ink](https://splash.use.ink)
 
@@ -176,23 +176,12 @@ mod player {
 
 ## The Game Contract
 
-- Use as little gas as possible to paint as many fields as possible.
-- The later you manage to still paint a field the better you score.<br/><br/>
-- Inspiration:
-  - Random numbers?
-  - Query which fields unused?
-
-
----
-
-## The Game Contract
-
 - [`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
 <br/><br/>
-- `pub fn submit_turn(&mut self)`
-- `pub fn board(&self) -> Vec<Option<FieldEntry>>`
-- `pub fn gas_budget(&self) -> u64`
-- `pub fn dimensions(&self) -> (u32, u32)`
+- `pub fn submit_turn(&mut self)`<!-- .element: class="fragment" -->
+- `pub fn board(&self) -> Vec<Option<FieldEntry>>`<!-- .element: class="fragment" -->
+- `pub fn gas_budget(&self) -> u64`<!-- .element: class="fragment" -->
+- `pub fn dimensions(&self) -> (u32, u32)`<!-- .element: class="fragment" -->
 
 ---
 
@@ -210,14 +199,9 @@ mod player {
 
 ---
 
-## How to test locally
+## How to test locally?
 
-1. `cargo contract build` your `player` and `game` contract
-2. Upload `player` and `game`
-3. Call `game.register_player` via Contracts UI
-4. Call `game.start_game` via Contracts UI
-5. Open [https://splash.use.ink](https://splash.use.ink)
-6. Call `game.submit_turn`
+[paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
 
 ---
 
@@ -237,7 +221,6 @@ mod player {
   - Query game state via cross-contract
   - Off-chain computation
 
-
 ---
 
-<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+<img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />

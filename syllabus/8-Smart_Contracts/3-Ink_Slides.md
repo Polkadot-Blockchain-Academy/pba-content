@@ -269,7 +269,7 @@ mod tests {
 
 ## Integration Tests
 
-```rust [1-5,17,19|6-9|11-13|15-16]
+```rust [1-5,17,19|6-9|11-12|14-15]
 #[cfg(test)]
 mod tests {
 
@@ -281,7 +281,6 @@ mod tests {
             ink_env::test::default_accounts::<ink_env::DefaultEnvironment>();
 
         // when
-        ink_env::test::set_caller::<ink_env::DefaultEnvironment>(accounts.alice);
         ink_env::test::set_value_transferred::<ink_env::DefaultEnvironment>(10);
 
         // then
@@ -324,7 +323,7 @@ with the Substrate node.
 
 # `$ cargo contract`
 
-[https://crates.io/crates/cargo-contract](https://crates.io/crates/cargo-contract)
+[https://github.com/paritytech/cargo-contract](https://github.com/paritytech/cargo-contract)
 
 <!-- .element: class="fragment" -->
 

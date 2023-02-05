@@ -77,6 +77,12 @@ Solutions Explainer
 
 ---
 
+## More Pitfalls
+
+* Forgetting `--release`
+
+---
+
 ## Strategy 1<br/>Return Random Numbers
 
 <img rounded style="margin-top: 25px; width: 500px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/0.png" />
@@ -170,4 +176,4 @@ for (idx, player) in players.iter_mut().enumerate() {
 
 ---
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+<img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
