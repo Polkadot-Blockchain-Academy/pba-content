@@ -327,6 +327,16 @@ Notes:
 
 ---
 
+## Activity: ink!less-flipper
+
+Implement the infamous ink! flipper example in pure Rust
+
+https://github.com/Polkadot-Blockchain-Academy/inkless-flipper
+
+Notes:
+
+---
+
 ## Configuration
 
 ```Rust
