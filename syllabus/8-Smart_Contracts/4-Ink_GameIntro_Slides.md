@@ -1,5 +1,5 @@
 ---
-title: ink! Workshop (Intro)
+title: ink! Workshop (First Day)
 description: An introduction to the ink! workshop.
 duration: 20 min
 ---
@@ -14,6 +14,30 @@ duration: 20 min
 1. Trial Run
 1. Real Run
 1. Tomorrow: Advanced Workshop
+
+---
+
+<pba-cols>
+<pba-col>
+
+### Agenda
+
+</pba-col>
+<pba-col>
+
+|              |        |                    |
+|--------------|--------|:-------------------|
+| Today        | 1pm    | ink! Intro         |
+|              | 2pm    | Activity           |
+|              | 3:30pm | Hints for tomorrow |
+| | | &nbsp;             |
+| Tomorrow | 1pm    | We help you        |
+| | 2pm    | Game               |
+| | 3:30pm  | Perfect Solutions  |
+
+
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -85,7 +109,11 @@ Notes:
 
 ## How to score?
 
+<<<<<<< Updated upstream
 > Use as little gas as possible to paint as many fields as possible.
+=======
+>Use as little gas as possible to paint as many fields as possible while staying within your gas budget.
+>>>>>>> Stashed changes
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -188,11 +216,62 @@ https://splash.use.ink
 
 ---
 
-## Now
+## The Game Contract
 
+<<<<<<< Updated upstream
 - 15 Minutes: Find a strategy for your player
 - Use as little gas as possible to paint as many fields as possible.
 - The later you manage to still paint a field the better you score.<br/><br/>
 - Inspiration:
   - Random numbers?
   - Query which fields unused?
+=======
+[`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
+
+---
+
+## The Game Contract
+
+* `pub fn submit_turn(&mut self)`
+* `pub fn board(&self) -> Vec<Option<FieldEntry>>`
+* `pub fn gas_budget(&self) -> u64`
+
+---
+
+## Until Tomorrow 🧠
+
+* Find a strategy for your player.
+* Use as little gas as possible to paint as many fields as possible while staying within your gas budget.
+* The later you manage to still paint a field the better you score.<br/><br/>
+* Helpful Resources:
+  * [paritytech/ink-workshop ➜ `game` folder](https://github.com/paritytech/ink-workshop)
+  * [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
+  * [ink! repository ➜ `examples` folder](https://github.com/paritytech/ink/tree/master/examples)
+  * [use.ink](https://use.ink)
+
+---
+
+## How to test locally
+
+---
+
+## Hint: Playfield Dimensions
+
+* Paint within the bounds of the playfield!
+* Otherwise you wasted a turn.
+
+---
+
+## Ideas
+
+* Use a random number
+* Query which fields are unused
+  * Query game state via cross-contract
+  * Off-chain computation
+
+>You can call your own contract as often as you want!
+
+---
+
+<img style="width: 90%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+>>>>>>> Stashed changes

@@ -4,7 +4,29 @@ description: An introduction on what ink! is and how it ties into Substrate.
 duration: 1 hour
 ---
 
+---
+
 # <img style="width: 60%;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />
+
+---
+
+<pba-cols>
+<pba-col>
+
+### Agenda
+
+</pba-col>
+<pba-col>
+
+|              |        |                    |
+|--------------|--------|:-------------------|
+| Today        | 1pm    | ink! Intro         |
+|              | 2pm    | Activity           |
+|              | 3:30pm | Hints for tomorrow |
+| | | &nbsp;             |
+| Tomorrow | 1pm    | We help you        |
+| | 2pm    | Game               |
+| | 3:30pm  | Perfect Solutions  |
 
 ---
 
@@ -416,6 +438,10 @@ impl Environment for DefaultEnvironment {
 <img style="width: 90%; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-ink.png" />
 
 [www.use.ink](https://use.ink)
+
+---
+
+<img style="width: 90%; border: 1px solid #e6007a" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/spanish.jpg" />
 
 ---
 
