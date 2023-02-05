@@ -88,23 +88,6 @@ Notes:
 ## Wat Syntax Sugar
 
 ```WebAssembly
-(func (param i64) (result i64)
-  local.get 0
-  i64.eqz
-  if (result i64)
-    i64.const 1
-  else
-    local.get 0
-    local.get 0
-    i64.const 1
-    i64.sub
-    call 0
-    i64.mul
-  end
-)
-```
-
-```WebAssembly
 (func $factorial (param $n i64) (result i64)
   (if (result i64) (i64.eqz (local.get 0))
     (then
