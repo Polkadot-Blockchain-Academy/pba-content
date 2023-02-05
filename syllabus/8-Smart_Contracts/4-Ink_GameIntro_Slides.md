@@ -8,15 +8,6 @@ duration: 20 min
 
 ---
 
-## Outline
-
-1. Explainer
-1. Trial Run
-1. Real Run
-1. Tomorrow: Advanced Workshop
-
----
-
 <pba-cols>
 <pba-col>
 
@@ -40,7 +31,7 @@ duration: 20 min
 
 ---
 
-<img rounded style="margin-top: 25px; width: 700px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beamer.png" />
+<img rounded style="margin-top: 25px; width: 1200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beamer.png" />
 
 ---
 
@@ -76,7 +67,7 @@ duration: 20 min
 
 ---
 
-1. Code contract that plays on your behalf<!-- .element: class="fragment" data-fragment-index="1" -->
+1. Create contract that plays on your behalf<!-- .element: class="fragment" data-fragment-index="1" -->
 1. Deploy contract to Rococo testnet <!-- .element: class="fragment" data-fragment-index="2" -->
 1. Register contract as player with game contract<!-- .element: class="fragment" data-fragment-index="3" -->
 1. We start the game<!-- .element: class="fragment" data-fragment-index="4" -->
@@ -108,17 +99,16 @@ Notes:
 
 ## How to score?
 
-# Use as little gas as possible to paint as many fields as possible.
 
-Use as little gas as possible to paint as many fields as possible while staying within your gas budget. <!-- .element: class="fragment" -->
-
-The later you manage to still paint a field the better you score. <!-- .element: class="fragment" data-fragment-index="2" -->
+* Use as little gas as possible to paint as many fields as possible.<!-- .element: class="fragment" -->
+* Stay within your gas budget.<!-- .element: class="fragment" -->
+* The later you manage to still paint a field the better you score. <!-- .element: class="fragment" -->
 
 ---
 
 ## Basic Player Contract
 
-```rust [1-21|3-4|7-10|12-17]
+```rust [1-2,19|3-4|7-10|12-17|1-19]
 #[ink::contract]
 mod player {
     #[ink(storage)]
@@ -170,68 +160,48 @@ mod player {
 
 [github.com/paritytech/squink-splash-beginner ➜ todo-1.md](https://github.com/paritytech/squink-splash-beginner/blob/main/todo-1.md)
 
-<img rounded style="width=300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code.png" />
-
-Notes:
-
-1. Install Rust stable
-1. Install `cargo-contract`
-1. Install `polkadot-js` Browser Extension
-1. Create account in Browser Extension
-1. Get `ROC` Tokens via Faucet
-
 ---
 
 ## Now (2)
 
 [github.com/paritytech/squink-splash-beginner ➜ todo-2.md](https://github.com/paritytech/squink-splash-beginner/blob/main/todo-2.md)
 
-<img rounded style="width=300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code2.png" />
-
-Notes:
-
-1. Clone `squink-splash-beginner`
-1. `player.rs`: change line XX to your favorite numbers [0-50]
-1. `cargo contract build`
-1. Upload & Instantiate via Contracts UI
-1. Upload & Instantiate `game-metadata.json` via Contracts UI
-1. Register your player
-
 ---
 
 ## Frontend
 
-https://splash.use.ink
-
-<img rounded style="width=300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code3.png" />
+[https://splash.use.ink](https://splash.use.ink)
 
 ---
 
 ## The Game Contract
 
-- 15 Minutes: Find a strategy for your player
 - Use as little gas as possible to paint as many fields as possible.
 - The later you manage to still paint a field the better you score.<br/><br/>
 - Inspiration:
   - Random numbers?
-  - # Query which fields unused?
-    [`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
+  - Query which fields unused?
+
 
 ---
 
 ## The Game Contract
 
+- [`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
+<br/><br/>
 - `pub fn submit_turn(&mut self)`
 - `pub fn board(&self) -> Vec<Option<FieldEntry>>`
 - `pub fn gas_budget(&self) -> u64`
+- `pub fn dimensions(&self) -> (u32, u32)`
 
 ---
 
 ## Until Tomorrow 🧠
 
 - Find a strategy for your player.
-- Use as little gas as possible to paint as many fields as possible while staying within your gas budget.
-- The later you manage to still paint a field the better you score.<br/><br/>
+- Use as little gas as possible to paint as many fields as possible.
+- Stay within your gas budget.
+- The later you manage to still paint a field, the better you score.<br/><br/>
 - Helpful Resources:
   - [paritytech/ink-workshop ➜ `game` folder](https://github.com/paritytech/ink-workshop)
   - [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
@@ -242,23 +212,31 @@ https://splash.use.ink
 
 ## How to test locally
 
+1. `cargo contract build` your `player` and `game` contract
+2. Upload `player` and `game`
+3. Call `game.register_player` via Contracts UI
+4. Call `game.start_game` via Contracts UI
+5. Open [https://splash.use.ink](https://splash.use.ink)
+6. Call `game.submit_turn`
+
 ---
 
 ## Hint: Playfield Dimensions
 
 - Paint within the bounds of the playfield!
 - Otherwise you wasted a turn.
+- Constructor argument, cross-contract call to `game.dimensions()`
 
 ---
 
 ## Ideas
 
-- Use a random number
-- Query which fields are unused
+- You can call your own contract as often as you want! <!-- .element: class="fragment" -->
+- Random number <!-- .element: class="fragment" -->
+- Query which fields are free <!-- .element: class="fragment" -->
   - Query game state via cross-contract
   - Off-chain computation
 
-> You can call your own contract as often as you want!
 
 ---
 

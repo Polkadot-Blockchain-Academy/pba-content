@@ -27,7 +27,7 @@ We help you debug!
 
 ### Thereafter
 
-Strategy Explainer
+Solutions Explainer
 
 </pba-col>
 </pba-cols>
@@ -48,9 +48,7 @@ Strategy Explainer
 
 ## Frontend
 
-https://splash.use.ink
-
-<img rounded style="width=400px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/qr-code3.png" />
+[https://splash.use.ink](https://splash.use.ink)
 
 ---
 
@@ -73,33 +71,60 @@ https://splash.use.ink
 ## Board Dimensions
 
 - Best:
-  - `const width: u32` or `new(width: u32, height: u32)`
+  - `const width: u32` or
+  - `new(width: u32, height: u32)`
+- Worst: Cross-contract call
 
 ---
 
-## Strategy 1: Return Random Number
+## Strategy 1<br/>Return Random Numbers
+
+<img rounded style="margin-top: 25px; width: 500px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/0.png" />
+
+---
+
+## Strategy 1<br/>Return Random Number
 
 - Wasm-compatible RNG
+<!-- .element: class="fragment" -->
 - Use Storage to hold seed for random number
-- Uses little Gas
-- Quickly runs into collisions
-- Score function rewards players that late in game still paint fields
+<!-- .element: class="fragment" -->
+- \+ Uses little Gas
+<!-- .element: class="fragment" -->
+- \- Quickly runs into collisions
+<!-- .element: class="fragment" -->
+- \- Score function rewards players that late in game still paint fields
+<!-- .element: class="fragment" -->
 
 ---
 
-## Strategy 2: Query board for free fields, paint only free ones
+## Strategy 2<br/>Paint only free fields
 
+<img rounded style="margin-top: 25px; width: 500px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/1.png" />
+
+---
+
+## Strategy 2<br/>Paint only free fields
+
+- Query board for free fields,
 - Cross-contract call
 - Need to iterate over `Mapping`: `O(n)`
 - Expensive
 
 ---
 
-## Strategy 3: Shift computation off-chain
+## Strategy 3<br/>Shift computation off-chain
+
+<img rounded style="margin-top: 25px; width: 500px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/2.png" />
+
+---
+
+## Strategy 3<br/>Shift computation off-chain
 
 - Off-chain Script
-  - Query board, search free field
-  - Call player: `fn set_next_turn(Option<(u32, u32)>)`
+  - Query board
+  - Search free field
+  - `fn set_next_turn(Option<(u32, u32)>)`
 
 <!-- .element: class="fragment" -->
 
@@ -114,10 +139,34 @@ https://splash.use.ink
 
 ---
 
-## Strategy 4: 🤯
+## Strategy 4<br/>Exploit player sorting in game loop
 
-- Off-chain computation from prior slide
-- Exploit that game loop uses same sorting for invoking `submit_turn` on players
+<img rounded style="margin-top: 25px; width: 500px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/3.png" />
+
+---
+
+## Strategy 4<br/>Exploit player sorting in game loop
+
+- On top of Strategy 3 (off-chain computation).
+<!-- .element: class="fragment"  -->
+
+- Game loop calls players in same order each time.
+<!-- .element: class="fragment"  -->
+
+```rust
+// fn submit_turn()
+
+for (idx, player) in players.iter_mut().enumerate() {
+    …
+}
+```
+<!-- .element: class="fragment"  -->
+
+---
+
+## Strategy 5<br/>Checking these slides already yesterday
+
+<img rounded style="margin-top: 25px; width: 500px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/4.png" />
 
 ---
 
