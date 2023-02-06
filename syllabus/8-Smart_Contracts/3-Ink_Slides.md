@@ -131,7 +131,7 @@ Debugging, Testing, Tooling, clippy, cargo fmt, fuzzing
 
 ```toml [1-9|2|4-5|7-8]
 [dependencies]
-ink = { version = "4.0.0", default-features = false }
+ink = { version = "4.0.0-rc", default-features = false }
 
 # Encoding/Decoding
 scale = { package = "parity-scale-codec", ... }
@@ -142,7 +142,7 @@ scale-info = { version = "2", ... }
 
 ---
 
-<div style="font-size: 0.77em;">
+<div style="font-size: 0.82em;">
 
 ```rust [1-48]
 
@@ -151,7 +151,6 @@ mod my_contract {
     struct MyContract {
         value: bool,
     }
-
 
     impl MyContract {
 
@@ -180,9 +179,9 @@ Hello ink!
 
 ---
 
-<div style="font-size: 0.77em;">
+<div style="font-size: 0.82em;">
 
-```rust [1,3,9,14,19|1-2|3-6|9-12|14-17|19-22]
+```rust [1,3,9,14,19|1-30|1-2|3-6|9-12|14-17|19-22]
 #[ink::contract]
 mod my_contract {
     #[ink(storage)]
@@ -359,12 +358,6 @@ with the Substrate node.
 
 ---
 
-## Metadata?
-
-<img rounded style="width: 1250px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/metadata.png" />
-
----
-
 <img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts1.png" />
 
 ---
@@ -374,6 +367,12 @@ with the Substrate node.
 ---
 
 <img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/build-artifacts3.png" />
+
+---
+
+## Metadata?
+
+<img rounded style="width: 1250px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/metadata.png" />
 
 ---
 
