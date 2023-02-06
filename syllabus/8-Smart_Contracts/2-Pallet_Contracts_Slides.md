@@ -341,13 +341,15 @@ Notes:
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 ## Activity: ink!less-flipper
 
-Implement the infamous ink! flipper example in pure Rust
-
-https://github.com/Polkadot-Blockchain-Academy/inkless-flipper
+> Implement the infamous ink! flipper example in pure Rust
 
 Notes:
+
+Move to the per-cohort generated link (on notion of whatever is used to share repo invitations for this cohort.
 
 ---
 

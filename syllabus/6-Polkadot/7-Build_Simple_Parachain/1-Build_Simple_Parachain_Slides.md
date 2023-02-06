@@ -59,7 +59,7 @@ A parachain needs two things:
 
 <pba-flex center>
 
-1. A WASM runtime with `validate_block` function exposed
+1. A Wasm runtime with `validate_block` function exposed
 1. Node side that can sync relay chain blocks and talk to the relay chain
 
 <pba-flex>
@@ -79,7 +79,7 @@ Talking to the relay chain means speaking the networking protocol of Polkadot to
 	feature(core_intrinsics, lang_items, core_panic_info, alloc_error_handler)
 )]
 
-// Make the WASM binary available.
+// Make the Wasm binary available.
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 

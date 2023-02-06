@@ -406,8 +406,7 @@ cumulus_pallet_parachain_system::register_validate_block!(Block, Executive);
 
 Notes:
 
-When compiling a runtime that uses Cumulus, a WASM binary is generated that contains the full code
-of the Parachain runtime plus the validate_block functionality.
+When compiling a runtime that uses Cumulus, a Wasm binary is generated that contains the full code of the Parachain runtime plus the validate_block functionality.
 This binary is required to register a Parachain on the relay chain.
 
 ---
