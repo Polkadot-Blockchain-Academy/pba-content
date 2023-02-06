@@ -187,15 +187,11 @@ mod player {
 
 ## Until Tomorrow 🧠
 
-- Find a strategy for your player.
+- Find a strategy for your player.<br/><br/>
 - Use as little gas as possible to paint as many fields as possible.
 - Stay within your gas budget.
 - The later you manage to still paint a field, the better you score.<br/><br/>
-- Helpful Resources:
-  - [paritytech/ink-workshop ➜ `game` folder](https://github.com/paritytech/ink-workshop)
-  - [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
-  - [ink! repository ➜ `examples` folder](https://github.com/paritytech/ink/tree/master/examples)
-  - [use.ink](https://use.ink)
+- [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
 
 ---
 
@@ -209,7 +205,6 @@ mod player {
 
 - Paint within the bounds of the playfield!
 - Otherwise you wasted a turn.
-- Constructor argument, cross-contract call to `game.dimensions()`
 
 ---
 
@@ -218,7 +213,7 @@ mod player {
 - You can call your own contract as often as you want! <!-- .element: class="fragment" -->
 - Random number <!-- .element: class="fragment" -->
 - Query which fields are free <!-- .element: class="fragment" -->
-  - Query game state via cross-contract
+  - Query game state via cross-contract call
   - Off-chain computation
 
 ---
