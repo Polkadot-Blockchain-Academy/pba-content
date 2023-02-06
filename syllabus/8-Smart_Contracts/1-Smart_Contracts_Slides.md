@@ -45,7 +45,7 @@ Substrate provides different Smart Contracts' options.
 - Pallet Contracts - Wasm execution environment
 - Frontier - EVM execution environment
 
-<img rounded style="width: 1000px; margin-top:-7f0px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime" />
+<img rounded style="width: 600px; margin-top:-7f0px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime" />
 
 Notes:
 
@@ -560,8 +560,9 @@ interface IERC20 {
 }
 
 ```
-
 ## </div>
+
+---
 
 ## Assets Precompiles
 
