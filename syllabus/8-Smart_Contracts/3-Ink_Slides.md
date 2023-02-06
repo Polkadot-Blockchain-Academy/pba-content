@@ -180,13 +180,9 @@ Hello ink!
 
 ---
 
-<<<<<<< Updated upstream
 <div style="font-size: 0.77em;">
 
-```rust [1-24|1-2|3-6|9-12|14-17|19-22]
-=======
 ```rust [1,3,9,14,19|1-2|3-6|9-12|14-17|19-22]
->>>>>>> Stashed changes
 #[ink::contract]
 mod my_contract {
     #[ink(storage)]
@@ -278,7 +274,7 @@ impl Environment for DefaultEnvironment {
 
 ---
 
-<img rounded style="width: 1000px; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/testing.png" />
+<img rounded style="width: 1000px;margin-top: 25px; " src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/testing.png" />
 
 ---
 
