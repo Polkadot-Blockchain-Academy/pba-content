@@ -67,17 +67,6 @@ duration: 20 min
 
 ---
 
-<<<<<<< Updated upstream
-## Outline
-
-<pba-flex center>
-
-1. Create contract that plays on your behalf
-1. Deploy contract to Rococo testnet <!-- .element: class="fragment" data-fragment-index="2" -->
-1. Register contract as player with game contract<!-- .element: class="fragment" data-fragment-index="3" -->
-1. We start the game<!-- .element: class="fragment" data-fragment-index="4" -->
-1. It runs for some minutes, we watch it on screen<!-- .element: class="fragment" data-fragment-index="5" -->
-=======
 ## The Process
 
 1. 🧠 Create contract that plays on your behalf<!-- .element: class="fragment" data-fragment-index="1" -->
@@ -85,9 +74,6 @@ duration: 20 min
 1. 🤝 Register contract as player with game contract<!-- .element: class="fragment" data-fragment-index="3" -->
 1. ️🎮 We start the game<!-- .element: class="fragment" data-fragment-index="4" -->
 1. 📺️️ It runs for some minutes, we watch it on screen<!-- .element: class="fragment" data-fragment-index="5" -->
->>>>>>> Stashed changes
-
-</pba-flex>
 
 ---
 
