@@ -213,7 +213,7 @@ pub fn do_it(&self) -> Result<(), Error> {
 
 ## Trait Definitions
 
-```rust [1-2,8|3-7]
+```rust
 #[ink::trait_definition]
 pub trait BaseErc20 {
   #[ink(message)]
