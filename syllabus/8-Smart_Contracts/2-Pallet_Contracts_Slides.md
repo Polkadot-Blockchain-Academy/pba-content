@@ -2,8 +2,6 @@
 title: Contracts Pallet
 description: pallet-contracts for Web3 Engineers.
 duration: 1 hour
-revealOptions:
-  transition: "slide"
 ---
 
 # Contracts Pallet
@@ -24,7 +22,7 @@ Notes:
 
 ## WebAssembly
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_logo.svg" style="width: 400px" />
+<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_logo.svg" style="width: 400px" />
 
 Notes:
 
@@ -86,23 +84,6 @@ Notes:
 ---
 
 ## Wat Syntax Sugar
-
-```WebAssembly
-(func (param i64) (result i64)
-  local.get 0
-  i64.eqz
-  if (result i64)
-    i64.const 1
-  else
-    local.get 0
-    local.get 0
-    i64.const 1
-    i64.sub
-    call 0
-    i64.mul
-  end
-)
-```
 
 ```WebAssembly
 (func $factorial (param $n i64) (result i64)
@@ -236,124 +217,6 @@ Notes:
 
 ---
 
-## Exercise: Your first contract
-
-- You will compile a provided contract manually written in WebAssembly (wat)
-- You will deploy this basic contract to a locally running node
-- You will inspect the source code of this contract and try to make changes to it
-
----
-
-## Exercise instructions
-
-```WebAssembly
-(module
-  (import "seal0" "seal_set_storage" (func $set_storage (param i32 i32 i32)))
-  (import "seal0" "seal_get_storage" (func $get_storage (param i32 i32 i32) (result i32)))
-  (import "seal0" "seal_input" (func $input (param i32 i32)))
-  (import "seal0" "seal_return" (func $return (param i32 i32 i32)))
-  (import "env" "memory" (memory 1 1)) ;; this gives us one page of memory (16KiB)
-
-  ;; [0, 256)
-  ;; we reserve this memory as buffer to receive data
-
-  ;; [256, 260)
-  ;; initialize memory with length of our buffer (256 in hex)
-  (data (i32.const 256) "\00\00\01\00")
-
-  (func (export "deploy")
-    ;; we initialize our storage value on contract deployment to '99'
-    (i32.store (i32.const 0) (i32.const 99))
-    (call $set_storage
-      (i32.const 512)   ;; key_ptr
-      (i32.const 0)     ;; data_ptr
-      (i32.const 4)     ;; data_len
-    )
-  )
-
-  (func (export "call")
-    ;; copy data passed to contract to mem[0]-mem[256]
-    ;; it overwrites the data_len_ptr with the actual size of the buffer
-    (call $input
-      (i32.const 0)   ;; data_ptr
-      (i32.const 256) ;; data_len_ptr
-    )
-
-    ;; The first four bytes are a 'selector' which is passed by a conforming client
-    ;; according to the metadata.json.
-When writing contracts with ink! this metadata
-    ;; file is generated automatically from the source code.
-The number is inversed because
-    ;; wasm uses little endian.
-    ;; The rest are the arguments passed.
-    (if (i32.eq (i32.const 0xf2017f13) (i32.load (i32.const 0)))
-      (then
-        ;; this is our 'double' function
-
-        ;; The arguments start after the selector (mem[4])
-        (i32.store
-          (i32.const 4) ;; overwrite value at mem[4]
-          (i32.mul
-            (i32.load (i32.const 4))
-            (i32.const 2)
-          )
-        )
-        ;; we just pass '512' as key ptr which is zero initialized.
-        ;; hence we store our value at a key with all zeros (key is 32byte)
-        (call $set_storage
-          (i32.const 512)   ;; key_ptr
-          (i32.const 4)     ;; data_ptr
-          (i32.const 4)     ;; data_len
-        )
-      )
-      (else
-        ;; this is our 'get' function
-
-        ;; $get_storage returns a status code which we ignore (drop)
-        (drop
-          (call $get_storage
-            (i32.const 512) ;; key_ptr
-            (i32.const 0)   ;; data_ptr
-            (i32.const 256) ;; data_len_ptr
-          )
-        )
-        ;; return the value pulled from storage to the caller
-        (call $return
-          (i32.const 0)   ;; flags (none needed)
-          (i32.const 0)   ;; data_ptr
-          (i32.const 4)   ;; data_len
-        )
-      )
-    )
-  )
-)
-```
-
-_Instructions in speaker notes, press `s`_
-
-Notes:
-
-- Make sure you have wat2wasm installed:
-  - macOS: `brew install wabt`
-  - ubuntu: `apt install wabt`
-- Download latest substrate-contracts-node from [here](https://github.com/paritytech/substrate-contracts-node/releases)
-- Fetch `doubler.wat` and `doubler.json` from the lecture material.
-- Compile the wat file using `wat2wasm doubler.wat` (check speaker notes on how to install).
-- Inspect `doubler.wat` (also on this slide) and try to understand what it does.
-- Run `substrate-contracts-node --dev`
-- [Connect](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944#/contracts) to your local
-  node using our contracts frontend (does not work in Safari).
-- Deploy and interact with the contract.
-  You will need two files for that:
-  - `doubler.wasm`: You get that from compiling the wat file.
-    This is the wasm code.
-  - `doubler.json`: This file is provided and tells the UI how to interact with the contract.
-    Auto generated when not handwriting the contract.
-    It is like Solidity's ABI file.
-  - Drop the json file first and then you will be asked for the wasm file.
-
----
-
 ## Architecture of pallet-contracts
 
 <img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/arch.png" style="width: 800px" />
@@ -412,21 +275,29 @@ Notes:
 
 ---
 
-## API Definition
+## API Definition (1)
 
 ```Rust
-define_env!(Env, <E: Ext>,
-  [seal0] gas(ctx, amount: u32) => { ... },
+#[define_env(doc)]
+pub mod Env {
+  #[version(0)]
+  fn gas(ctx, amount: u32) { ... },
 
-  [seal0] seal_set_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) => { ... },
+  #[version(0)]
+  fn get_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) { ... },
 
-  [seal1] seal_set_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) -> u32 => { ... },
+  #[version(1)]
+  fn set_storage(ctx, key_ptr: u32, value_ptr: u32, value_len: u32) -> u32 { ... },
 
-  [seal0] seal_clear_storage(ctx, key_ptr: u32) => { ... },
+  #[version(0)]
+  fn clear_storage(ctx, key_ptr: u32) { ... },
 
-  [__unstable__] seal_clear_storage(ctx, key_ptr: u32, key_len: u32) -> u32 => { ... },
+  #[version(0)]
+  #[unstable]
+  fn clear_storage(ctx, key_ptr: u32, key_len: u32) -> u32 { ... },
 
-  [seal1] seal_call(
+  #[version(1)]
+  fn call(
     ctx,
     flags: u32,
     callee_ptr: u32,
@@ -436,22 +307,22 @@ define_env!(Env, <E: Ext>,
     input_data_len: u32,
     output_ptr: u32,
     output_len_ptr: u32
-  ) -> ReturnCode => { ... },
+  ) -> ReturnCode { ... },
 }
 ```
 
 Notes:
 
 - The set of functions a contract can call (imported functions in Wasm lingo) are defined in
-  `wasm/runtime.rs` within the `define_env!` macro invocation.
+  `wasm/runtime.rs` within the `mod env` module.
 - The macro generates a list of imports from its arguments: The identifier in square brackets
   becomes the `module` and the name of the functions becomes the `name`.
 - We use the `module` for versioning: To stay backwards compatible we add new versions of a function
   instead of changing the existing one.
-  We increment the number behind `seal` for every new version.
-- The `__unstable__` module is for new functions whose API is not yet finalized.
+  We increment the number for every new version.
+- An API flagged `#[unstable]` module is for new functions whose API is not yet finalized.
   Functions start out
-  in this module when they are added and can be changed because production deployments won't make this functions available.
+  in this state when they are added and can be changed because production deployments won't make this functions available.
 - The body of the functions is what is executed within the embedder (`pallet-contracts` in this case).
 - Only primitives (`i32`, `i64`) can be used as arguments or return type.
   Larger types are passed by
@@ -459,6 +330,24 @@ Notes:
 - This list of function can be extended by the runtime by a mechanism called chain extension.
   - This is a type implementing `trait ChainExtension` passed in via the `Config` trait.
 - `gas` is a special import that is only called injected code in order to meter executed instructions.
+
+---
+
+## API Definition (2)
+
+[`API docs`](https://docs.rs/pallet-contracts/latest/pallet_contracts/api_doc/index.html)
+
+<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/api.png" style="width: 1100px" />
+
+---
+
+## Activity: ink!less-flipper
+
+Implement the infamous ink! flipper example in pure Rust
+
+https://github.com/Polkadot-Blockchain-Academy/inkless-flipper
+
+Notes:
 
 ---
 
@@ -627,6 +516,10 @@ pub fn call(
 ) -> DispatchResultWithPostInfo
 ```
 
+> Why is it important to set DispatchResultWithPostInfo as return type?
+
+<!-- .element: class="fragment" -->
+
 Notes:
 
 - Just as on ethereum we make use of gas metering in order to make sure a contract execution
@@ -655,7 +548,11 @@ Notes:
 
 ## Execution Engine
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/exec.png" style="width: 800px" />
+<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/exec.png" style="width: 800px" />
+
+> What could be problematic about putting the execution engine into the client?
+
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -704,7 +601,7 @@ Notes:
 
 ---
 
-## Making gas metering<br/>independent of the executor
+## Making gas metering<br/>independent of the executor (1)
 
 <img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/gas.png" style="width: 200px;" />
 
@@ -720,7 +617,9 @@ Notes:
 
 ---
 
-## Making gas metering<br/>independent of the executor
+## Making gas metering<br/>independent of the executor (2)
+
+<div style="font-size: 0.77em;">
 
 ```WebAssembly
 (module
@@ -744,12 +643,14 @@ Notes:
         (i64.mul
           (local.get 0)
           (call $factorial (i64.sub (local.get $n) (i64.const 1)))
-        )
-      )
-    )
-  )
-)
+)))))
 ```
+
+> What is a drawback of this approach?
+
+<!-- .element: class="fragment" -->
+
+</div>
 
 Notes:
 
@@ -757,7 +658,7 @@ Notes:
   instructions (basic block).
   This functionality is implemented by the `wasm-instrument`
   crate.
-- The `$as` function is implemented within `pallet-contracts`
+- The `$gas` function is implemented within `pallet-contracts`
 - Calling imported functions is slow
 - We work on a [more performant solution](https://github.com/paritytech/wasm-instrument/issues/11) that doesn't call any imported functions as those carry significant overhead.
 
@@ -851,8 +752,8 @@ Notes:
 ## Execution Engine
 
 <div class="r-stack">
-  <img rounded class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains0.png" style="width: 900px;" />
-  <img rounded class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains1.png" style="width: 900px;" />
+  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains0.png" style="width: 900px;" />
+  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains1.png" style="width: 900px;" />
 </div>
 
 Notes:
