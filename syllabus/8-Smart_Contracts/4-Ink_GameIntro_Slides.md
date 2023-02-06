@@ -43,7 +43,7 @@ duration: 20 min
 <div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
 <div style="text-align: center"> <center><h2><pre> game.contract </pre></h2></center> </div>
 <ul>
-<li>We deploy + run it.</li>
+<li>We deploy + run.</li>
 <li>Runs game loop.</li>
 <li>Invokes each player.</li>
 <li>Determines the score.</li>
@@ -54,7 +54,7 @@ duration: 20 min
 <div style="text-align: center"> <center><h2><pre> player.contract </pre></h2></center> </div>
 
 <ul>
-<li>You take care of it.</li>
+<li>Your job.</li>
 </ul>
 </div>
 <div class="right fragment"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
@@ -67,6 +67,7 @@ duration: 20 min
 
 ---
 
+<<<<<<< Updated upstream
 ## Outline
 
 <pba-flex center>
@@ -76,6 +77,15 @@ duration: 20 min
 1. Register contract as player with game contract<!-- .element: class="fragment" data-fragment-index="3" -->
 1. We start the game<!-- .element: class="fragment" data-fragment-index="4" -->
 1. It runs for some minutes, we watch it on screen<!-- .element: class="fragment" data-fragment-index="5" -->
+=======
+## The Process
+
+1. 🧠 Create contract that plays on your behalf<!-- .element: class="fragment" data-fragment-index="1" -->
+1. 🚀 Deploy contract to Rococo testnet <!-- .element: class="fragment" data-fragment-index="2" -->
+1. 🤝 Register contract as player with game contract<!-- .element: class="fragment" data-fragment-index="3" -->
+1. ️🎮 We start the game<!-- .element: class="fragment" data-fragment-index="4" -->
+1. 📺️️ It runs for some minutes, we watch it on screen<!-- .element: class="fragment" data-fragment-index="5" -->
+>>>>>>> Stashed changes
 
 </pba-flex>
 
