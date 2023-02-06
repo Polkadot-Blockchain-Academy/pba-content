@@ -4,8 +4,6 @@ description: An introduction on what ink! is and how it ties into Substrate.
 duration: 1 hour
 ---
 
----
-
 <img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/ink-logo-with-squid-white.svg" alt="ink!" />
 
 ---
@@ -138,6 +136,8 @@ scale-info = { version = "2", ... }
 
 ---
 
+<div style="font-size: 0.77em;">
+
 ```rust [1-48]
 mod my_contract {
 
@@ -165,11 +165,15 @@ mod my_contract {
 }
 ```
 
+</div>
+
 Notes:
 
 Hello ink!
 
 ---
+
+<div style="font-size: 0.77em;">
 
 ```rust [1-24|1-2|3-6|9-12|14-17|19-22]
 #[ink::contract]
@@ -198,6 +202,8 @@ mod my_contract {
 }
 ```
 
+</div>
+
 ---
 
 ## Idiomatic Rust
@@ -213,7 +219,7 @@ pub fn do_it(&self) -> Result<(), Error> {
 
 ## Trait Definitions
 
-```rust [1-2,8|3-7]
+```rust
 #[ink::trait_definition]
 pub trait BaseErc20 {
   #[ink(message)]
@@ -269,6 +275,8 @@ mod tests {
 
 ## Integration Tests
 
+<div style="font-size: 0.95em;">
+
 ```rust [1-5,17,19|6-9|11-12|14-15]
 #[cfg(test)]
 mod tests {
@@ -289,6 +297,8 @@ mod tests {
 
 }
 ```
+
+</div>
 
 ---
 
@@ -324,8 +334,6 @@ with the Substrate node.
 # `$ cargo contract`
 
 [https://github.com/paritytech/cargo-contract](https://github.com/paritytech/cargo-contract)
-
-<!-- .element: class="fragment" -->
 
 ---
 
@@ -376,7 +384,6 @@ with the Substrate node.
 <img rounded style="width: 1300px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/inkternals5.png" />
 
 ---
-
 
 ## Local Development
 
@@ -464,7 +471,7 @@ with the Substrate node.
 ---
 
 <div class="flex-container">
-<div class="left fragment" data-fragment-index="1">
+<div class="left">
 <img rounded style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
 <br/>
 <img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity-re-entrancy-attack.jpg" />
@@ -485,7 +492,7 @@ Re-entrancy Protection
 ---
 
 <div class="flex-container">
-<div class="left fragment" data-fragment-index="1">
+<div class="left">
 <img rounded style="width: 150px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/solidity.png" />
 
 ```solidity
@@ -538,4 +545,4 @@ Notes:
 
 ---
 
-<img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+<!-- .slide: data-background="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg"" -->

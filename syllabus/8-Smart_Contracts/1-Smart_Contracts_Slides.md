@@ -11,7 +11,7 @@ duration: 1 hour
 ## Smart Contracts VS Pallets
 
 <div class="flex-container">
-<div class="left">
+<div class="left" style="font-size: smaller">
 
 Additional layer of logic on top of a blockchain’s existing core logic.
 
@@ -45,7 +45,7 @@ Substrate provides different Smart Contracts' options.
 - Pallet Contracts - Wasm execution environment
 - Frontier - EVM execution environment
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime" />
+<img rounded style="width: 1000px; margin-top:-7f0px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime" />
 
 Notes:
 
@@ -58,16 +58,18 @@ Substrate chains need to have either the Smart Contracts pallet or Frontier.
 
 Smart contracts on [Frontier](https://github.com/paritytech/frontier) can be implemented using any language which can compile smart contracts to EVM-compatible bytecode.
 
-<div class="flex-container">
-
-- Solidity
-- Vyper
-
-</div>
+<br/>
 
 <div class="right">
-<img rounded style="width: 200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/solidity.png" alt="Solidity Logo" />
+<img rounded style="width: 200px; margin-right: 70px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/solidity.png" alt="Solidity Logo" />
 <img rounded style="width: 200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/vyper.png" alt="Solidity Logo" />
+</div>
+
+<pba-flex center>
+
+> Solidity $~~~~$ & $~~~~~~$ Vyper
+
+</pba-flex>
 </div>
 
 Notes:
@@ -81,10 +83,10 @@ Frontier aims to provide a low-friction and secure environment for the developme
 
 ## Frontier
 
-Frontier is the software suite that provides an Ethereum compatibility layer for Substrate.
+Frontier provides an Ethereum compatibility layer for Substrate.<br/>
 It has two components that can be activated separately.
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Frontier.png" alt="Frontier Logo" />
+<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Frontier.png" alt="Frontier Logo" />
 
 Notes:
 
@@ -167,6 +169,8 @@ impl GasWeightMapping for FrontierGasWeightMapping {
 }
 ```
 
+---
+
 ## Pallet EVM [Internals]
 
 ```rust
@@ -176,6 +180,8 @@ impl GasWeightMapping for FrontierGasWeightMapping {
 ---
 
 ## Pallet EVM - BlockHashMapping
+
+<div style="font-size: 0.7em;">
 
 ```rust [1,4]
 impl pallet_evm::Config for Runtime {
@@ -207,6 +213,8 @@ impl<T: Config> BlockHashMapping for EthereumBlockHashMapping<T> {
 	}
 }
 ```
+
+</div>
 
 Notes:
 
@@ -274,11 +282,20 @@ impl pallet_evm::Config for Runtime {
 
 ## Pallet EVM - AddressMapping
 
+<pba-cols>
+<pba-col style="font-size: 0.8em;">
+
 - Ethereum uses a 160-bit hex string as its public address.
 - On Substrate, we call this format H160, for 160-bit hash.
 - The EVM environment has its own balance called the EVM deposit, which can be withdrawn by Substrate native accounts.
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/EVM-accounts.png" alt="JS-Events" />
+</pba-col>
+<pba-col>
+
+<img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/EVM-accounts.png" alt="JS-Events" />
+
+</pba-col>
+</pba-cols>
 
 Notes:
 
@@ -290,7 +307,7 @@ The EVM environment has its own balance called the EVM deposit, which can be wit
 
 ## Pallet EVM - AddressMapping
 
-<img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Polkadot-JS-EVM-Events.png" alt="JS-Events" />
+<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Polkadot-JS-EVM-Events.png" alt="JS-Events" />
 
 Notes:
 
@@ -298,11 +315,13 @@ If we look at the Ethereum transaction event in detail, we can see the token min
 
 ---
 
-### So how does Substrate convert the address format, and how does it handle the balances?
+> So how does Substrate convert the address format,<br/>and how does it handle the balances?
 
 ---
 
 ## Ethereum address to SS58 ???
+
+<div style="font-size: 0.85em;">
 
 ```[1|3-6|7-9|11-12|14-15]
 0xe31b11a052afc923259949352b2f573a21301ba4 -> 5HAc4UzLYQuyjHbpEPicC7bAjnofHqRWYStRKqA5WfreMKWk
@@ -322,6 +341,8 @@ ss58Encode(0xe1ad20aae239ccbb609aa537d515dc9d53c5936ea67d8acc9fe0618925279f7d, 4
 5HAc4UzLYQuyjHbpEPicC7bAjnofHqRWYStRKqA5WfreMKWk
 ```
 
+</div>
+
 Notes:
 
 there's this concept of account mappings and the idea is that inside of the evm you have standard ethereum style
@@ -332,15 +353,11 @@ the first 32 bytes and map that to a substrate style account 32 account id 32
 
 ---
 
-##
-
-```rust
-type AddressMapping = HashedAddressMapping<BlakeTwo256>;
-```
-
 ## Pallet EVM [Internals]
 
 ```rust
+type AddressMapping = HashedAddressMapping<BlakeTwo256>;
+
 /// Hashed address mapping.
 pub struct HashedAddressMapping<H>(sp_std::marker::PhantomData<H>);
 
@@ -365,9 +382,7 @@ impl<H: Hasher<Out = H256>> AddressMapping<AccountId32> for HashedAddressMapping
 
 ```rust
 type AddressMapping = IntoAddressMapping;
-```
 
-```rust
 pub struct IntoAddressMapping;
 
 impl<T: From<H160>> pallet_evm::AddressMapping<T> for IntoAddressMapping {
@@ -428,7 +443,9 @@ The EVM environment works on top of Substrate. This means that the block height 
 
 ## Assets Precompiles
 
-#### Solidity Interface
+_Solidity Interface_
+
+<div style="font-size: 0.87em;">
 
 ```solidity
 pragma solidity ^0.8.0;
@@ -544,11 +561,13 @@ interface IERC20 {
 
 ```
 
----
+## </div>
 
 ## Assets Precompiles
 
-#### Substrate Implementation
+_Substrate Implementation_
+
+<div style="font-size: 0.87em;">
 
 ```rust
 ...
@@ -622,8 +641,6 @@ interface IERC20 {
 			)?;
 		}
   ...
-
-
 ```
 ---
 <img rounded style="width: 200px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" alt="WASM" />
@@ -751,9 +768,19 @@ Notes:
 
 WebAssembly has only four primitive types: i32, i64, f32 and f64. The first two represent integers with 32 and 64 bits respectively, whereas the last two denote 32 and 64-bit floating-point data. Global variables, local variables, and return addresses are managed in the stack. All non-scalar types, such as strings, arrays, and other buffers, must be stored in linear memory, which is a contiguous, untyped, byte-addressable array, multiple of 64Kib. A program can load/store values from/to linear memory at any byte address. A trap occurs if an access is not within the bounds of the current memory size.
 
+</div>
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+<img rounded style="width: 300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
+
 ---
 
 ## References
+
+<pba-flex center>
 
 - [Frontier Repository](https://github.com/paritytech/frontier)
 - [Sub0 Workshop](https://www.youtube.com/watch?v=V9KfvhoqLJ4)
