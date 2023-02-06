@@ -79,7 +79,7 @@ Solutions Explainer
 
 ## More Pitfalls
 
-* Forgetting `--release`
+- Forgetting `--release`
 
 ---
 
@@ -166,6 +166,7 @@ for (idx, player) in players.iter_mut().enumerate() {
     …
 }
 ```
+
 <!-- .element: class="fragment"  -->
 
 ---
@@ -176,4 +177,4 @@ for (idx, player) in players.iter_mut().enumerate() {
 
 ---
 
-<img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+<!-- .slide: data-background="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg"" -->

@@ -22,7 +22,7 @@ Notes:
 
 ## WebAssembly
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_logo.svg" style="width: 400px" />
+<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_logo.svg" style="width: 400px" />
 
 Notes:
 
@@ -339,7 +339,6 @@ Notes:
 
 <img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/api.png" style="width: 1100px" />
 
-
 ---
 
 ## Activity: ink!less-flipper
@@ -517,9 +516,9 @@ pub fn call(
 ) -> DispatchResultWithPostInfo
 ```
 
-<p class="fragment">
-  Why is it important to set DispatchResultWithPostInfo as return type?
-</p>
+> Why is it important to set DispatchResultWithPostInfo as return type?
+
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -549,11 +548,11 @@ Notes:
 
 ## Execution Engine
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/exec.png" style="width: 800px" />
+<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/exec.png" style="width: 800px" />
 
-<p class="fragment">
-  What could be problematic about putting the execution engine into the client?
-</p>
+> What could be problematic about putting the execution engine into the client?
+
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -620,6 +619,8 @@ Notes:
 
 ## Making gas metering<br/>independent of the executor (2)
 
+<div style="font-size: 0.77em;">
+
 ```WebAssembly
 (module
   (import "env" "gas" (func $gas (param i32)))
@@ -642,16 +643,14 @@ Notes:
         (i64.mul
           (local.get 0)
           (call $factorial (i64.sub (local.get $n) (i64.const 1)))
-        )
-      )
-    )
-  )
-)
+)))))
 ```
 
-<p class="fragment">
-  What is a drawback of this approach?
-</p>
+> What is a drawback of this approach?
+
+<!-- .element: class="fragment" -->
+
+</div>
 
 Notes:
 
@@ -753,8 +752,8 @@ Notes:
 ## Execution Engine
 
 <div class="r-stack">
-  <img rounded class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains0.png" style="width: 900px;" />
-  <img rounded class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains1.png" style="width: 900px;" />
+  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains0.png" style="width: 900px;" />
+  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains1.png" style="width: 900px;" />
 </div>
 
 Notes:

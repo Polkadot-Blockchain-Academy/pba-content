@@ -67,11 +67,17 @@ duration: 20 min
 
 ---
 
-1. Create contract that plays on your behalf<!-- .element: class="fragment" data-fragment-index="1" -->
+## Outline
+
+<pba-flex center>
+
+1. Create contract that plays on your behalf
 1. Deploy contract to Rococo testnet <!-- .element: class="fragment" data-fragment-index="2" -->
 1. Register contract as player with game contract<!-- .element: class="fragment" data-fragment-index="3" -->
 1. We start the game<!-- .element: class="fragment" data-fragment-index="4" -->
 1. It runs for some minutes, we watch it on screen<!-- .element: class="fragment" data-fragment-index="5" -->
+
+</pba-flex>
 
 ---
 
@@ -99,10 +105,17 @@ Notes:
 
 ## How to score?
 
+- Use as little gas as possible to paint as many fields as possible.
 
-* Use as little gas as possible to paint as many fields as possible.<!-- .element: class="fragment" -->
-* Stay within your gas budget.<!-- .element: class="fragment" -->
-* The later you manage to still paint a field the better you score. <!-- .element: class="fragment" -->
+<!-- .element: class="fragment" -->
+
+- Stay within your gas budget.
+
+<!-- .element: class="fragment" -->
+
+- The later you manage to still paint a field the better you score.
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -176,12 +189,23 @@ mod player {
 
 ## The Game Contract
 
-- [`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
-<br/><br/>
-- `pub fn submit_turn(&mut self)`<!-- .element: class="fragment" -->
-- `pub fn board(&self) -> Vec<Option<FieldEntry>>`<!-- .element: class="fragment" -->
-- `pub fn gas_budget(&self) -> u64`<!-- .element: class="fragment" -->
-- `pub fn dimensions(&self) -> (u32, u32)`<!-- .element: class="fragment" -->
+> [`ink-workshop/game/lib.rs`](https://github.com/paritytech/ink-workshop/blob/main/game/lib.rs)
+
+- `pub fn submit_turn(&mut self)`
+
+<!-- .element: class="fragment" -->
+
+- `pub fn board(&self) -> Vec<Option<FieldEntry>>`
+
+<!-- .element: class="fragment" -->
+
+- `pub fn gas_budget(&self) -> u64`
+
+<!-- .element: class="fragment" -->
+
+- `pub fn dimensions(&self) -> (u32, u32)`
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -210,12 +234,20 @@ mod player {
 
 ## Ideas
 
-- You can call your own contract as often as you want! <!-- .element: class="fragment" -->
-- Random number <!-- .element: class="fragment" -->
-- Query which fields are free <!-- .element: class="fragment" -->
+- You can call your own contract as often as you want!
+
+<!-- .element: class="fragment" -->
+
+- Random number
+
+<!-- .element: class="fragment" -->
+
+- Query which fields are free
   - Query game state via cross-contract call
   - Off-chain computation
 
+<!-- .element: class="fragment" -->
+
 ---
 
-<img rounded style="width: 1100px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg" />
+<!-- .slide: data-background="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg"" -->
