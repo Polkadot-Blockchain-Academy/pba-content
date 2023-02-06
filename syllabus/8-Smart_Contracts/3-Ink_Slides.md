@@ -82,7 +82,9 @@ Smart Contracts:
 
 ---
 
-<img rounded style="width: 1200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case0.jpg" />
+## Use Case 1
+
+<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case0.jpg" />
 
 Notes:
 
@@ -93,7 +95,9 @@ Notes:
 
 ---
 
-<img rounded style="width: 1200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case1.jpg" />
+## Use Case 2
+
+<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case1.jpg" />
 
 Notes:
 
@@ -103,7 +107,9 @@ Notes:
 
 ---
 
-<img rounded style="width: 1200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case2.jpg" />
+## Use Case 3
+
+<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/use-case2.jpg" />
 
 Notes:
 
@@ -139,6 +145,7 @@ scale-info = { version = "2", ... }
 <div style="font-size: 0.77em;">
 
 ```rust [1-48]
+
 mod my_contract {
 
     struct MyContract {
@@ -173,9 +180,13 @@ Hello ink!
 
 ---
 
+<<<<<<< Updated upstream
 <div style="font-size: 0.77em;">
 
 ```rust [1-24|1-2|3-6|9-12|14-17|19-22]
+=======
+```rust [1,3,9,14,19|1-2|3-6|9-12|14-17|19-22]
+>>>>>>> Stashed changes
 #[ink::contract]
 mod my_contract {
     #[ink(storage)]
@@ -206,11 +217,25 @@ mod my_contract {
 
 ---
 
+```rust
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[ink::contract]
+mod my_contract {
+
+  // -- snip --
+
+}
+```
+
+---
+
 ## Idiomatic Rust
 
 ```rust
 #[ink(message)]
 pub fn do_it(&self) -> Result<(), Error> {
+  // Transaction will be reverted
   Err(Error:OhNo)
 }
 ```
@@ -222,6 +247,7 @@ pub fn do_it(&self) -> Result<(), Error> {
 ```rust
 #[ink::trait_definition]
 pub trait BaseErc20 {
+
   #[ink(message)]
   fn total_supply(&self) -> Balance;
 
@@ -525,7 +551,7 @@ contract Lottery {
 
 ---
 
-<img rounded style="width: 1000px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc.png" />
+<img rounded style="width: 1100px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/swc.png" />
 
 ---
 
