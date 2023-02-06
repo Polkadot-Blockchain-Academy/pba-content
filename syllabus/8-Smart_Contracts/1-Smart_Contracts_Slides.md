@@ -100,11 +100,12 @@ A Web3 JS RPC call from a DApp or existing Ethereum developer tool, such as Truf
 
 Wraps the SputnikVM
 
-```rust [1-2|1-3|1-4|1-5|1-6|1-7|1-8|1-9|1-10|1-11|1-12|1-13|1-14|1-15]
+```rust [1-2|1-3|1-4|1-5|1-6|1-7|1-8|1-9|1-10|1-11|1-12|1-13|1-14|1-15|1-16]
 impl pallet_evm::Config for Runtime {
 	type FeeCalculator = FixedGasPrice;
 	type GasWeightMapping = FrontierGasWeightMapping;
 	type BlockHashMapping = EthereumBlockHashMapping<Self>;
+	type WeightPerGas = WeightPerGas;
 	type CallOrigin = EnsureAddressTruncated;
 	type WithdrawOrigin = EnsureAddressTruncated;
 	type AddressMapping = HashedAddressMapping<BlakeTwo256>;
@@ -128,11 +129,12 @@ It uses the SputnikVM written by Wei Tang from Parity and it wraps it in a subst
 
 ## Pallet EVM - GasWeightMapping
 
-```rust [3,14]
+```rust [3, 5, 15]
 impl pallet_evm::Config for Runtime {
 	type FeeCalculator = FixedGasPrice;
 	type GasWeightMapping = FrontierGasWeightMapping;
 	type BlockHashMapping = EthereumBlockHashMapping<Self>;
+	type WeightPerGas = WeightPerGas;
 	type CallOrigin = EnsureAddressTruncated;
 	type WithdrawOrigin = EnsureAddressTruncated;
 	type AddressMapping = HashedAddressMapping<BlakeTwo256>;
@@ -180,6 +182,7 @@ impl pallet_evm::Config for Runtime {
 	type FeeCalculator = FixedGasPrice;
 	type GasWeightMapping = FrontierGasWeightMapping;
 	type BlockHashMapping = EthereumBlockHashMapping<Self>;
+	type WeightPerGas = WeightPerGas;
 	type CallOrigin = EnsureAddressTruncated;
 	type WithdrawOrigin = EnsureAddressTruncated;
 	type AddressMapping = HashedAddressMapping<BlakeTwo256>;
@@ -194,7 +197,7 @@ impl pallet_evm::Config for Runtime {
 	type FindAuthor = FindAuthorTruncated<Aura>;
 }
 ```
-
+---
 ```rust
 /// Returns the Ethereum block hash by number.
 pub struct EthereumBlockHashMapping<T>(PhantomData<T>);
@@ -213,16 +216,17 @@ The hash mapping allows an EVM contract to ask for the parent block hash or gran
 parent block hash or the grandparent block hash. It is common to return the previous substrate blocks because
 then you at least get some pseudoentropy that you could use. In order to use this specific Block Hash Mapping,
 we need to have the Ethereum Pallet which handles this type of data format.
-
+---
 ---
 
 ## Pallet EVM - Currency
 
-```rust [8]
+```rust [9]
 impl pallet_evm::Config for Runtime {
 	type FeeCalculator = FixedGasPrice;
 	type GasWeightMapping = FrontierGasWeightMapping;
 	type BlockHashMapping = EthereumBlockHashMapping<Self>;
+	type WeightPerGas = WeightPerGas;
 	type CallOrigin = EnsureAddressTruncated;
 	type WithdrawOrigin = EnsureAddressTruncated;
 	type AddressMapping = HashedAddressMapping<BlakeTwo256>;
@@ -239,17 +243,18 @@ impl pallet_evm::Config for Runtime {
 ```
 
 Currency type will be treated as the main currency inside your EVM. It becomes the
-native token of the ethereum environment. In this case we wired it up to pallet balances.
+native token of the ethereum environment.
 
 ---
 
 ## Pallet EVM - AddressMapping
 
-```rust [7]
+```rust [8]
 impl pallet_evm::Config for Runtime {
 	type FeeCalculator = FixedGasPrice;
 	type GasWeightMapping = FrontierGasWeightMapping;
 	type BlockHashMapping = EthereumBlockHashMapping<Self>;
+	type WeightPerGas = WeightPerGas;
 	type CallOrigin = EnsureAddressTruncated;
 	type WithdrawOrigin = EnsureAddressTruncated;
 	type AddressMapping = HashedAddressMapping<BlakeTwo256>;
@@ -620,6 +625,131 @@ interface IERC20 {
 
 
 ```
+---
+<img rounded style="width: 200px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" alt="WASM" />
+
+* Stack-based virtual machine.
+* Compilation of high-level languages like C/C++ and Rust.
+* Fast, efficient, and safe, with near-native performance.
+* WebAssembly has only four primitive types: i32, i64, f32 and f64.
+
+
+Notes:
+The WebAssembly (WASM) architecture is a binary instruction format for a stack-based virtual machine. It is designed as a portable target for compilation of high-level languages like C/C++ and Rust. WASM is designed to be fast, efficient, and safe, with near-native performance and no need for plugins or additional downloads. WASM code is written in a low-level assembly-like language, and is then compiled into a binary format that can be executed on the web. The architecture is designed to be flexible and extensible, allowing developers to create custom tools and libraries to make web applications more powerful and interactive.
+
+The WebAssembly binary is a sequence of instructions that are executed on a stack-based machine. Simple instructions perform operations on data; they consume their operands from the stack and produce a result that is placed on the stack. Control instructions alter the control flow of the code. A program can call functions directly or indirectly through a function table.
+
+
+---
+## Stack-based Virtual Machine
+
+<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_1.png" alt="WASM" />
+
+* We want to add 2 numbers.
+
+Notes:
+Let’s start with a trivial example: suppose your program needs to add two numbers. To do that in a stack VM, the program will push the first number to the stack, push the second and then execute some form of the special instruction add, that will pop the first two elements of the stack and replace them with their sum. Let’s see it step by step:
+
+---
+## Stack-based Virtual Machine
+
+<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_2.png" alt="WASM" />
+
+I) We start by pushing the first element to the stack.
+
+Notes:
+The SP is the stack pointer, which refers to the head of the stack. The IP is the instruction pointer, which points to the address of the current instruction to execute. Let’s now execute the first instruction:
+
+---
+## Stack-based Virtual Machine
+
+<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_3.png" alt="WASM" />
+
+II) We push the second element to the stack.
+
+Notes:
+You can see that the stack now contains 1 and that the instruction pointer has been moved to the next instruction. Let’s now simulate the second instruction:
+
+---
+## Stack-based Virtual Machine
+
+<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_4.png" alt="WASM" />
+
+III) Finally we can execute the add instruction.
+
+Notes:
+Finally we can execute the add instruction.
+The head of the stack and the previous element have been popped and replaced with their sum.
+
+---
+
+# How can we print 
+# "hello world!"?
+"hello world!" ->  0x68 0x65 0x6C 0x6C 0x6F 0x20 0x77 0x6F 0x72 0x6C 0x64 0x21
+
+---
+
+``` WebAssembly [1-50|16-18|19-20|21-24|25-29|30-37|38-45|49-50]
+(module
+;; Creates the "print" function and takes a single parameter of type i32.
+ (func (export "print") (param $0 i32)
+ ;; Calls the "puts" function with the parameter 4.
+  (call $puts
+   (i32.const (i32.const 4))
+  )
+ )
+ 
+ ;; Creates a table with 0 entries and sets the type of each entry to anyfunc.
+ (table 0 anyfunc)
+ ;; Creates a memory page.
+ (memory 1)
+ ;; Exports the memory created in the previous line, allowing it to be used by other functions.
+ (export "memory" (memory 0))
+ ;; Creates the puts function, which takes a single parameter of type i32.
+ ;; The 'puts' function is called from the 'print' function, printing out 'hello world'.
+ (func (export "puts") (param $0 i32)
+ ;;Creates a local variable called $1 of type i32.
+  (local $1 i32)
+  ;; Sets the value of the local variable $1 to 4.
+  (set_local $1
+    (i32.const (i32.const 4))
+  )
+  ;; Stores the 8-bit value of 0x68 "h" at the address specified by the parameter $0.
+  (i32.store8
+    (get_local $0)
+    (i32.const (i32.const 0x68))
+  )
+  ;; Stores the 8-bit value of 0x65 "e" at the address calculated by adding the parameter $0 and the value 1.
+  (i32.store8
+    (i32.add
+      (get_local $0)
+      (i32.const (i32.const 1))
+    )
+    (i32.const (i32.const 0x65))
+  )
+  ;; Stores the 8-bit value of 0x6c "l" at the address calculated by adding the parameter $0 and the value 1.
+    (i32.store8
+    (i32.add
+      (get_local $0)
+      (i32.const (i32.const 1))
+    )
+    (i32.const (i32.const 0x6c))
+  )
+  ...
+  ...
+ )
+ ;; Sets the start function to be the "puts" function defined earlier.
+ (start $puts)
+)
+```
+---
+
+## WebAssembly High Level Architecture.
+<img rounded style="width: 900px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/WebAssembly-high-level-architecture.png" alt="WASM" />
+
+Notes:
+
+WebAssembly has only four primitive types: i32, i64, f32 and f64. The first two represent integers with 32 and 64 bits respectively, whereas the last two denote 32 and 64-bit floating-point data. Global variables, local variables, and return addresses are managed in the stack. All non-scalar types, such as strings, arrays, and other buffers, must be stored in linear memory, which is a contiguous, untyped, byte-addressable array, multiple of 64Kib. A program can load/store values from/to linear memory at any byte address. A trap occurs if an access is not within the bounds of the current memory size.
 
 ---
 
@@ -628,3 +758,4 @@ interface IERC20 {
 - [Frontier Repository](https://github.com/paritytech/frontier)
 - [Sub0 Workshop](https://www.youtube.com/watch?v=V9KfvhoqLJ4)
 - [SputnikVM](https://github.com/rust-blockchain/evm)
+- [WASM Docs](https://developer.mozilla.org/en-US/docs/WebAssembly)
