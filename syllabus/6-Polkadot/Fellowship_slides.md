@@ -9,25 +9,24 @@ duration: 30 mins
 
 ## Prelude: Decentralization
 
-* Decentralization can come in many fashions.
-* Some of my (somewhat) personal opinions.. 💭
+- Decentralization can come in many fashions.
+- Some of my (somewhat) personal opinions.. 💭
 
 ---v
 
 ### Prelude: Decentralization
 
-
 #### 1. Technical 🔐
 
-* Can the software be executed in a decentralized manner?
+- Can the software be executed in a decentralized manner?
 <!-- .element: class="fragment" -->
-* Can multiple nodes actually run the software and come to consensus?
+- Can multiple nodes actually run the software and come to consensus?
 <!-- .element: class="fragment" -->
 
 NOTE:
 
-* Nakatomo coefficient
-* Most blockchain systems actually already have this.
+- Nakatomo coefficient
+- Most blockchain systems actually already have this.
 
 ---v
 
@@ -35,22 +34,20 @@ NOTE:
 
 #### 2. Operational ⚙️
 
-
-* The software is capable of running in a decentralized manner. But is it actually?
-<!-- .element: class="fragment" -->
-  * Intermediaries, gateways, pools.
-<!-- .element: class="fragment" -->
-* Is the right "software" being executed by node operators?
+- The software is capable of running in a decentralized manner. But is it actually?
+  <!-- .element: class="fragment" -->
+  - Intermediaries, gateways, pools.
+  <!-- .element: class="fragment" -->
+- Is the right "software" being executed by node operators?
 <!-- .element: class="fragment" -->
 
 NOTE:
 
-* Metamask
-* Mining/Staking Pool getting to large.
+- Metamask
+- Mining/Staking Pool getting to large.
 
-* **Node operators** are a concept here. They have the duty to run the "correct software". But how
+- **Node operators** are a concept here. They have the duty to run the "correct software". But how
   they come to this decision is something that needs knowledge, which brings us to the next point.
-
 
 https://moxie.org/2022/01/07/web3-first-impressions.html
 
@@ -60,11 +57,11 @@ https://moxie.org/2022/01/07/web3-first-impressions.html
 
 #### 3. Intellectual 🧠
 
-* How many people know the existing protocol well enough to understand it.
+- How many people know the existing protocol well enough to understand it.
 <!-- .element: class="fragment" -->
-* Which subset of these people make decisions about the future?
+- Which subset of these people make decisions about the future?
 <!-- .element: class="fragment" -->
-* Important to remember that node operators are usually in neither.
+- Important to remember that node operators are usually in neither.
 <!-- .element: class="fragment" -->
 
 NOTE:
@@ -73,7 +70,6 @@ NOTE:
 2. the papal model
 
 https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar
-
 
 ---v
 
@@ -84,7 +80,7 @@ https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar
 > My trust in Polkadot’s credible future should not rely on knowing that Parity, Gav or Shawn will
 > continue to act benevolently.
 
-* This is where a meta-protocol, and rule-based upgrade systems becomes important.
+- This is where a meta-protocol, and rule-based upgrade systems becomes important.
 
 NOTE:
 
@@ -100,30 +96,30 @@ node-operators.
 
 #### Geopolitical 🌎
 
-* How many of protocol experts/node operators are under the same juristiction?
+- How many of protocol experts/node operators are under the same juristiction?
 
 ---
 
 ## The Fellowship
 
-The fellowship is a ***technical decision making body*** onchain, aimed at alleviating the above
+The fellowship is a **_technical decision making body_** onchain, aimed at alleviating the above
 facades of centralization, but more so than anything else, the intellectual aspect.
 
 NOTE:
 
-* Technical, high focus on core protocol aspects for now.
-* decision-making: not saying it has absolute power yet.
+- Technical, high focus on core protocol aspects for now.
+- decision-making: not saying it has absolute power yet.
 
 ---v
 
 ## The Fellowship
 
-* Imperfect, not for everyone, opinionated 🥲!
-* Strictly better than not taking an action.
+- Imperfect, not for everyone, opinionated 🥲!
+- Strictly better than not taking an action.
 
 NOTE:
 
-It is an *attempt* at solving the issue. We believe it is strictly better than defining no rule
+It is an _attempt_ at solving the issue. We believe it is strictly better than defining no rule
 around it and letting it be as-is, but it might be sub-optimal.
 
 > The Polkadot Fellowship aims to be one example of such an explicit action. The Fellowship is a
@@ -157,14 +153,13 @@ The manifesto provides one such example
 2. Code contribution.
 3. Social interactions.
 4. Voting.
-  * Activity
-  * Agreement.
 
+- Activity
+- Agreement.
 
 ---
 
 ## The Fellowship Structure
-
 
 <table>
 <tr>
@@ -250,35 +245,35 @@ The manifesto provides one such example
 
 ## Dan 0: The Candidate
 
-* No requirement, no implication
-* Deposit held for storage usage etc.
+- No requirement, no implication
+- Deposit held for storage usage etc.
 
 ---
 
 ## Dan I: The Humble
 
-* The (potentially) softest of the materials
-* Wide range of hardness (1-3 Moh)
-* Shares the exact same chemical composition as the material of the highest rank Grand Master—the hardest material—symbolising the individual’s potential to go all the
-way.
+- The (potentially) softest of the materials
+- Wide range of hardness (1-3 Moh)
+- Shares the exact same chemical composition as the material of the highest rank Grand Master—the hardest material—symbolising the individual’s potential to go all the
+  way.
 
 ---v
 
 ## Dan I: The Humble
 
-* Clear aspiration to learn and evangelize the protocol.
-* Deep knowledge at least one key component.
-* Independent, vision-driven contribution.
-* Being available and playing a crucial operational role for a network fix.
+- Clear aspiration to learn and evangelize the protocol.
+- Deep knowledge at least one key component.
+- Independent, vision-driven contribution.
+- Being available and playing a crucial operational role for a network fix.
 
 ---
 
 ## Dan II: The Proficient
 
-* ~1 Year of experience passed since acquiring Dan I.
-* Responsible for research, analysis and implementation of a key component of the system.
-* Potentially "on-call" for the same component.
-* At least one published long-form semi-technical article concerning Polkadot.
+- ~1 Year of experience passed since acquiring Dan I.
+- Responsible for research, analysis and implementation of a key component of the system.
+- Potentially "on-call" for the same component.
+- At least one published long-form semi-technical article concerning Polkadot.
 
 ---
 
@@ -306,5 +301,5 @@ way.
 
 Learn more:
 
-* https://github.com/polkadot-fellows
-* https://kusama.subscan.io/fellowship
+- https://github.com/polkadot-fellows
+- https://kusama.subscan.io/fellowship
