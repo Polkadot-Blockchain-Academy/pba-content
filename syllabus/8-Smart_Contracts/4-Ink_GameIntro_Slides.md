@@ -113,6 +113,10 @@ Notes:
 
 <!-- .element: class="fragment" -->
 
+- No overpainting! First player to paint a field owns it.
+
+<!-- .element: class="fragment" -->
+
 ---
 
 ## Basic Player Contract
@@ -211,6 +215,7 @@ mod player {
 - Use as little gas as possible to paint as many fields as possible.
 - Stay within your gas budget.
 - The later you manage to still paint a field, the better you score.<br/><br/>
+- No overpainting! First player to paint a field owns it.
 - [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
 
 ---

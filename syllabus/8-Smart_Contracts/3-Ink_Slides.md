@@ -307,10 +307,10 @@ mod tests {
         // given
         let my_contract = MyContract::default();
         let accounts =
-            ink_env::test::default_accounts::<ink_env::DefaultEnvironment>();
+            ink::env::test::default_accounts::<ink::env::DefaultEnvironment>();
 
         // when
-        ink_env::test::set_value_transferred::<ink_env::DefaultEnvironment>(10);
+        ink::env::test::set_value_transferred::<ink::env::DefaultEnvironment>(10);
 
         // then
         assert!(my_contract.received_ten());

@@ -33,11 +33,13 @@ Solutions Explainer
 </pba-cols>
 
 <br/>
-<br/>
 
-- Use as little gas as possible to paint as many fields as possible.
-- Stay within your gas budget.
-- The later you manage to still paint a field, the better you score.
+<blockquote style="text-align: left; font-size: 0.9em;">
+Use as little gas as possible to paint as many fields as possible.<br/><br/>
+Stay within your gas budget.<br/><br/>
+The later you manage to still paint a field, the better you score.<br/><br/>
+No overpainting! First player to paint a field owns it.<br/>
+</blockquote>
 
 <br/>
 <br/>
@@ -70,17 +72,69 @@ Solutions Explainer
 
 ## Board Dimensions
 
-- Best:
-  - `const width: u32` or
+- Worst 😱
+  - Cross-contract call to `game`<br/><br/>
+```rust
+#[ink(message)]
+pub fn dimensions(&self) -> (u32, u32)
+```
+<br/><br/>
+
+<!-- .element: class="fragment" -->
+
+- Best 👍️
+  - `const width: u32`
   - `new(width: u32, height: u32)`
-- Worst: Cross-contract call
+
+<!-- .element: class="fragment" -->
 
 ---
 
 ## More Pitfalls
 
+<img rounded style="margin-top: 25px; width: 400px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/oopsie.gif" />
+
 - Forgetting `--release`
 
+<!-- .element: class="fragment" -->
+
+- Iterating over a datastructure in your contract
+
+<!-- .element: class="fragment" -->
+
+---
+
+## Avoid iteration
+
+<pba-cols>
+<pba-col center>
+
+```
+#[ink(message)]
+fn pay_winner()
+  let winner = self.players.find(…);
+
+  self.transfer(winner, …);
+}
+```
+</pba-col>
+<!-- .element: class="fragment" -->
+<pba-col center>
+
+```rust
+#[ink(message)]
+fn pay_winner(
+    winner: AccountId
+) {
+  assert!(is_winner(winner));
+
+  self.transfer(winner, …);
+}
+```
+
+</pba-col>
+<!-- .element: class="fragment" -->
+</pba-cols>
 ---
 
 ## Strategy 1<br/>Return Random Numbers
@@ -95,11 +149,11 @@ Solutions Explainer
 <!-- .element: class="fragment" -->
 - Use Storage to hold seed for random number
 <!-- .element: class="fragment" -->
-- \+ Uses little Gas
+- 📈 Uses little Gas
 <!-- .element: class="fragment" -->
-- \- Quickly runs into collisions
+- 📉 Quickly runs into collisions
 <!-- .element: class="fragment" -->
-- \- Score function rewards players that late in game still paint fields
+- 📉 Score function rewards players that late in game still paint fields
 <!-- .element: class="fragment" -->
 
 ---
@@ -112,10 +166,15 @@ Solutions Explainer
 
 ## Strategy 2<br/>Paint only free fields
 
-- Query board for free fields,
-- Cross-contract call
-- Need to iterate over `Mapping`: `O(n)`
-- Expensive
+- Query board for free fields
+- 📈 Succeeds late in game
+
+<!-- .element: class="fragment" -->
+
+- 📉 Cross-contract call 💰️
+- 📉 Need to iterate over `Mapping`: `O(n)`
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -128,15 +187,16 @@ Solutions Explainer
 ## Strategy 3<br/>Shift computation off-chain
 
 - Off-chain Script
-  - Query board
-  - Search free field
-  - `fn set_next_turn(Option<(u32, u32)>)`
+  - Query board ➜ Search free field<br/><br/>
 
 <!-- .element: class="fragment" -->
 
-- ```rust
+- ```rust[1-2|1-7]
+  #[ink(message)]
+  fn set_next_turn(turn: …) {}
+
   #[ink(message, selector = 0)]
-  pub fn your_turn(&mut self) -> Option<(u32, u32)> {
+  pub fn your_turn(&mut self) -> {
     self.next_turn
   }
   ```
@@ -160,13 +220,43 @@ Solutions Explainer
 <!-- .element: class="fragment"  -->
 
 ```rust
-// fn submit_turn()
+#[ink(message)]
+fn submit_turn(&mut self) {
+    // -- snip --
 
-for (idx, player) in players.iter_mut().enumerate() {
-    …
+    for (idx, player) in players.iter_mut().enumerate() {
+        …
+    }
+
+  // -- snip --
 }
 ```
 
+<!-- .element: class="fragment"  -->
+
+---
+
+## Strategy 4<br/>Exploit player sorting in game loop
+
+```rust
+impl<T: Config> AddressGenerator<T> for DefaultAddressGenerator {
+	fn generate_address(
+		deploying_address: &T::AccountId,
+		code_hash: &CodeHash<T>,
+		input_data: &[u8],
+		salt: &[u8],
+	) -> T::AccountId {
+
+    // -- snip --
+
+	}
+}
+```
+
+➜ All inputs are known
+<!-- .element: class="fragment"  -->
+
+➜ Generate low `T::AccountId` with known inputs
 <!-- .element: class="fragment"  -->
 
 ---
