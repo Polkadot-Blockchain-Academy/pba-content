@@ -22,8 +22,9 @@ When engineering a new blockchain protocol or ecosystem, it is important to cons
 
 ### Blake2
 
-Blake2 is significantly faster than other comparable cryptographic algorithms such as AES, and is generally recommended unless there is a legacy or compatibility concern.
-[expand on this with benefit / cost weighing]
+Blake2 is a relatively recent hashing method that provides equal or greater security than SHA2, while also being significantly faster than other comparable algorithms. While determining the exact benchmark of it's speed improvements over other hashing methods is highly dependent on hardware specifications, the biggest positive implication for Substrate is how it heavily reduces the amount of time and resources a new node will need in order to sync with the chain, and to a lesser extent, lower required time for validating.
+
+For a comprehensive view of Blake2, see their [official document](https://www.blake2.net/blake2.pdf).
 
 ## Types of cryptography
 
