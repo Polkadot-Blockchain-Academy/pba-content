@@ -176,7 +176,7 @@ Notes:
 
   (func (export "call")
     ;; execute some code on contract execution
-    (i32.store (i32.store 4) (i32.const 256)) ;; store the length of our buffer at mem[4]
+    (i32.store (i32.const 4) (i32.const 256)) ;; store the length of our buffer at mem[4]
     (call $seal_input (i32.const 0) (i32.const 4)) ;; copy input buffer to mem[0]
   )
 )
