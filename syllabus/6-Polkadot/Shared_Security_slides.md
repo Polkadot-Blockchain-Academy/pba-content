@@ -176,3 +176,226 @@ Wasm Runtimes
 ---
 
 # Parachain Validation
+
+---
+
+## Execution Sharding
+
+Execution Sharding is the process of distributing blockchain execution responsibilities across a validator set.
+
+In Polkadot, all validators execute every relay chain block, but only a subset execute each parachain block.
+
+This enables Polkadot to scale.
+
+---
+
+## How to validate a block?
+
+<image src="../../../assets/img/5-Polkadot/parachain-validation.svg" style="width: 1000px">
+
+---
+
+## Parachains submit new blocks with a proof-of-validity to the network.
+
+<image src="../../../assets/img/5-Polkadot/parachain-validation-multiple.svg" style="width: 1000px">
+
+Wasm Runtime and latest state root for Parachains already stored on the relay chain.
+
+---
+
+## Polkadot Validators
+
+<image src="../../../assets/img/5-Polkadot/parachain-validators.svg" style="width: 800px">
+
+Parachains Protocol has new blocks that it needs to validate and include.
+
+---
+
+A random subset of validators are assigned to execute the parachain blocks.
+
+<image src="../../../assets/img/5-Polkadot/parachain-validators-colored.svg" style="width: 800px">
+
+The new state root is then committed to the relay chain so the process can repeat.
+
+---
+
+## How do we stop things from going wrong?
+
+- Data Availability: Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
+- Approval Checking: Every validator node is running an approval checking process for every parachain block in every relay chain block.
+- Disputes Handling: When someone disputes the validity of a parablock, all validators must then check the block and cast a vote. The validators on the losing side of the dispute are slashed.
+
+---
+
+<pba-cols>
+
+<pba-col>
+
+<image src="../../../assets/img/5-Polkadot/parachain-finalization.svg" style="width: 500px">
+
+</pba-col>
+
+<pba-col>
+
+## Parachain Blocks Get Finalized
+
+Relay chain block producers commit the new state root to the relay chain once the Parachains Protocol has been completed.
+
+Thus, when a relay chain block is finalized all included parachain blocks will also be finalized!
+
+The Parachain state committed on Polkadot is the **canonical chain**.
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+<pba-cols>
+
+<pba-col>
+
+<image src="../../../assets/img/5-Polkadot/parachain-finalization.svg" style="width: 500px">
+
+</pba-col>
+
+<pba-col>
+
+## Trust-Free Interactions
+
+This also means that finalization on Polkadot implies finalization of all interactions between all parachains at the same height.
+
+So, shared security not only secures the individual chains, but the interactions between chains too.
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+# Comparing Options
+
+---
+
+## Re-Staking Solution
+
+<pba-cols>
+
+<pba-col>
+
+### Pros
+
+- Seems to be protocol agnostic, and can be “backported” to new and existing chains.
+- Smaller / newer chains can rely on more valuable and stable economies.
+
+</pba-col>
+
+<pba-col>
+
+
+### Cons
+
+- As tokens are continually re-staked, the economic “costs” needed to attack secured chains decreases.
+- No real computational verification or protection provided by these systems.
+- Seems to ultimately fall back on centralized sources of trust.
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+
+## Optimistic Rollups
+
+<pba-cols>
+
+<pba-col>
+
+### Pros
+
+- Not limited by the complexity of the on-chain VM.
+- Can be parallelized.
+- They can stuff a lot of data in their STF.
+- They can use compiled code native to modern processors.
+
+</pba-col>
+
+<pba-col>
+
+### Cons
+
+- Concerns around centralization and censorship of sequencers.
+- Long time to finality due to challenge periods. (could be days)
+- Settlement layers could be attacked, interfering with the optimistic rollup protocols.
+- Suffers from the same problems allocating blockspace as on-chain transactions.
+	- On-chain costs to perform the interactive protocol.
+	- Congestion of the network.
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+## Zero Knowledge Rollups
+
+<pba-cols>
+
+<pba-col>
+
+### Pros
+
+- Honestly, they are pretty great.
+- Proven trustlessly.
+- Minimal data availability requirements.
+- Instant Finality (at high costs).
+- Exciting future if recursive proofs work out.
+
+</pba-col>
+
+<pba-col>
+
+### Cons
+
+- Concerns around centralization of sequencers and provers.
+- Challenging to write ZK Circuits.
+	- Turing complete, but usually computationally complex.
+	- Hard to bound complexity of circuits when building apps.
+- Suffers from the same problems allocating blockspace as on-chain transactions.
+	- On-chain costs to submit and execute proofs on settlement layer.
+	- Congestion of the network.
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+## Polkadot Native Shared Security
+
+<pba-cols>
+
+<pba-col>
+
+### Pros
+
+- Protocol level handling of sharding, shared security, and interoperability.
+- Easy to develop STF: Anything that compiles to Wasm.
+- Probably the best time to finality, usually under a minute.
+- Data availability provided by the existing validators.
+- Much less concern of centralization from collators vs sequencers and provers.
+
+</pba-col>
+
+<pba-col>
+
+### Cons
+
+- Wasm is unfortunately still 2x slower than native compilation.
+- Requires lot of data being provided and available in PoV.
+- Certain limitations enforced to keep parachains compatible with the parachains procol.
+
+</pba-col>
+
+</pba-cols>
