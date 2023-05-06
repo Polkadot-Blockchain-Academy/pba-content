@@ -86,13 +86,93 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 <pba-cols>
 <pba-col>
 
+## New Chains Have Small Market Cap
+
 <image src="../../../assets/img/5-Polkadot/small-market-cap.svg" style="width: 500px">
 
 
 </pba-col>
 <pba-col>
 
+## New Chains Are More Speculative
+
 <image src="../../../assets/img/5-Polkadot/speculative-graph.svg" style="width: 500px">
 
 </pba-col>
 </pba-cols>
+
+---
+
+# How do we solve this problem?
+
+---
+
+# Shared Security
+
+---
+
+## Different Forms of "Shared Security" Today
+
+- Native: Native shared security is implemented at the protocol level, and is represented as  a Layer 0 blockchain, working underneath Layer 1 chains.
+- Rollups: Optimistic and zero knowledge rollups use a settlement layer to provide security and finality to their transactions.
+- Re-Staking: Some protocols allow the use of already staked tokens to secure another network, usually through the creation of a derivative token.
+
+## but these different forms are not equal…
+
+---
+
+# Deep Dive Into Polkadot Shared Security
+
+---
+
+## Polkadot’s Shared Security
+
+Polkadot is unique in that it provides all connected parachains with the same security guarantees as the Relay Chain itself.
+
+This is native to the protocol, and one of its core functionalities.
+
+---
+
+## Wasm
+
+In the Polkadot ecosystem, each chain has their state transition function represented by a Wasm blob which is stored on the blockchain itself.
+
+This has many implications, but the key point here is that it is very easy to share and safe to execute.
+
+---
+
+## Game Console Analogy
+
+<pba-cols>
+
+<pba-col>
+
+<image src="../../../assets/img/4-Substrate/nintendo-console-2.png" style="width: 500px">
+
+Basic Substrate Client
+
+</pba-col>
+
+<pba-col>
+
+<image src="../../../assets/img/5-Polkadot/nintendo-game-acala.png" style="width: 250px">
+<image src="../../../assets/img/5-Polkadot/nintendo-game-astar.png" style="width: 250px">
+<image src="../../../assets/img/5-Polkadot/nintendo-game-moonbeam.png" style="width: 250px">
+<image src="../../../assets/img/5-Polkadot/nintendo-game-polkadot.png" style="width: 250px">
+
+
+Wasm Runtimes
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+## A Polkadot Validator Node
+
+<image src="../../../assets/img/5-Polkadot/nintendo-console-extreme.png" style="width: 1000px">
+
+---
+
+# Parachain Validation
