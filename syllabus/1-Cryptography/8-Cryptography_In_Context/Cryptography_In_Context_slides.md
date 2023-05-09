@@ -12,8 +12,7 @@ duration: 1 hour
 
 <pba-flex center>
 
-1. Secrets
-1. Cryptographic Libraries
+1. Keeping Secrets Secret
 1. Security vs Usability
 
 </pba-flex>
@@ -240,6 +239,16 @@ Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even 
 
 ---
 
+## Using Cryptographic Libraries Safely
+
+- Stay _above_ the abstraction barrier
+- Validate each primitive's assumptions when combining primitives
+- Use the most reputable library you can
+- Realize when things need serious consideration
+	- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamal
+
+---
+
 ## Physical Security
 
 Physical access to a running computer can usually let an attacker have full access to your secrets with enough effort.
@@ -257,12 +266,6 @@ An HSM is a **h**ardware **s**ecurity **m**odule. HSMs can make it much harder t
 Notes:
 
 We don't go into this much, as there are many available resources around physical security and HSMs. This is just bringing up the ideas, in the context of what makes a cryptographic secret actually _secret_.
-
----
-
-## Cryptographic Implementations
-
-TODO: talk about interoperability, how specific algorithms are, emphasize DON'T ROLL YOUR OWN
 
 ---
 
