@@ -225,7 +225,7 @@ Notes:
 
 # Bridge Design Challenges
 
-![bridge collapse](./img/bridge-collapse.webp)
+<img width="800px" alt="bridge collapse" src="./img/bridge-collapse.webp" />
 
 Notes:
 
@@ -250,8 +250,8 @@ You do need at least one honest relayer for the chain to get the correct header 
 
 ## Finality and Equivocation
 
-TODO Figure of competing finalized chain
-TODO Seun's achiles heel meme
+<img width="500px" src="./img/bridge-incentives-achiles.jpg" />
+<img width="700px" src="./img/bridge-double-finalized.svg" />
 
 Notes:
 
@@ -290,7 +290,7 @@ The other is to have the relayer role require a security deposit. If it turns ou
 
 # Multichain Apps
 
-TODO Figure of stack with two blockchains on the bottom layer
+<img width="800px" src="./img/bridge-multichain-stack.svg" />
 
 ---v
 
