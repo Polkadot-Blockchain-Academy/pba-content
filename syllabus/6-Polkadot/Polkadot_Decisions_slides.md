@@ -59,11 +59,11 @@ Decisions that can be easily changed in the future.
 - What is (the decision)?
 - What do we need to consider when making (the decision)?
 	- Is it a Type 1 or Type 2 decision?
-- What decisions has (chain) decided to take and why?
+- What decisions has (chain) decided to make and why?
 	- What tradeoffs have they chosen?
-- What decisions have others decided to take?
+- What decisions have others decided to make?
 	- How might those decisions be better or worse?
-- Where does the blockchain community still have to improve on (the decision)?
+- Where can the blockchain community still improve on (the decision)?
 
 ---
 
