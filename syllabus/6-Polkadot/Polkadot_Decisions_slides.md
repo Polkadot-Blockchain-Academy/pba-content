@@ -107,10 +107,13 @@ Decisions that can be easily changed in the future.
 
 Polkadot tries to accomplish that mission by solving three problems:
 
+<pba-flex center>
+
 1. Computational Scalability
 2. Shared Security
 3. Interoperability
 
+</pba-flex
 ---
 
 ## The Decisions
@@ -121,15 +124,15 @@ Polkadot tries to accomplish that mission by solving three problems:
 
 WebAssembly is the backbone of Polkadot. It is a fast, safe, and open meta-protocol which powers all of the state transitions of our ecosystem.
 
-It standardizes how chains execute, and allows for any programming language that can be compiled into Wasm to be used to build in Polkadot.
+It standardizes how chains execute, sandboxes that execution for improved security, and allows teams to build on Polkadot using any language that can be compiled into Wasm.
 
 ---
 
 ## Sharding
 
-Polkadot’s primary scaling solution comes from parallelization of execution allowed by creating separate data shards.
+Polkadot scales primarily by parallelizing execution on separate data shards.
 
-These parallel chains are called Parachains.
+These parallel chains (shards) are called Parachains.
 
 ---
 
