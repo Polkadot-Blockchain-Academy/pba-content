@@ -41,7 +41,7 @@ Chains with higher security are more resilient to malicious activity, like a dou
 
 It is perfectly allowed in all blockchain protocols to sign and submit two messages which conflict with one another.
 
-It is up to the blockchain to come to consensus as to which of these two transactions are canonical.
+It is up to the blockchain to come to consensus as to which of these two transactions is canonical.
 
 </pba-col>
 <pba-col>
