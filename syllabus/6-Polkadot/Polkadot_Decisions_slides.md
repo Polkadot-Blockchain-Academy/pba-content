@@ -247,7 +247,7 @@ Polkadot has a strong belief that light clients are a necessary component for a 
 
 The Polkadot protocol specification defines a clear separation between the blockchain client and runtime (state transition function).
 
-This is primarily useful to implement the Parachains protocol, but also allows for chains to “forklessly” upgrade their chain.
+This is primarily useful to implement the Parachains protocol, but also allows for chains to “forklessly” upgrade their code.
 
 This gives the Polkadot Relay Chain and all connected parachains an evolutionary advantage over others in the blockchain space.
 
@@ -275,7 +275,7 @@ It is entirely controlled on-chain by the governance system of Polkadot, which m
 
 - Type 2 Decision
 
-One of Polkadot’s primary functions is to provide security not only to itself, but also to the connected Parachains. The staking system is a critical focus of the network, and we have one of the most advance staking systems to date.
+One of Polkadot’s primary functions is to provide security not only to itself, but also to the connected Parachains. The staking system is a critical focus of the network, and we have one of the most advanced staking systems to date.
 
 
 - NPoS over DPoS to better allocate stake.
@@ -290,12 +290,12 @@ One of Polkadot’s primary functions is to provide security not only to itself,
 
 Polkadot has made many Type 2 decisions, many of which have already, and will continue to change over time:
 
-- The specifics of the governance process (most recently Gov2)
+- The specifics of the governance process (most recently OpenGov)
 - Extensions to staking (like nomination pools, fast unstake, etc…)
 - Integrated multi-sig, proxies, batching, account abstractions, etc…
 - Treasury spending outlets (tips, bounties, fellowship, etc…)
 - On-chain storage management, data structures, and deposits.
-- Allocation of Parachain execution cores (pay-as-you-go vs permanent).
+- Allocation of Parachain execution cores (pay-as-you-go vs long term).
 - XCM format, available instructions, and message queue behavior.
 - and so on…
 
