@@ -108,6 +108,67 @@ _Magical data expansion_
 
 ---
 
+## Erasure Coding Intuition
+
+Erasure coding relies on both parties sharing an understanding of what possible messages are valid. This lets mistakes be noticed and corrected.
+
+Imagine you are receiving a message, and you know ahead of time that the only two possible messages you would receive are `file` and `ruin`.
+
+Notes:
+
+This concept of a subset of messages being valid is super common in real life, and occurs all over the place.
+At a restaurant, when they ask you if you want soup or salad, even if you mumble they will probably understand you.
+
+---v
+
+## Erasure Coding Intuition
+How would you classify each of the following words?
+
+<span style="color: red;">file</span> pile pale tale tall rule tail rail rain <span style="color: blue;">ruin</span>
+
+---v
+
+## Erasure Coding Intuition
+How would you classify each of the following words?
+
+<span style="color: red;">file pile pale tale tall</span> <span style="color: purple;">rule</span> <span style="color: blue;"> tail rail rain ruin</span>
+
+You can classify them based on how close they are to a valid input. This also means we can find the errors in these messages.
+
+Notes:
+
+There is no perfect way to separate these, but one very reasonable one is to do it based on the edit distance of the received word with any valid messsage you could receive.
+
+---v
+
+## Erasure Coding Intuition
+
+Now, you are receiving messages that could be `msg1` or `msg2`. Can you apply the same technique? Is it as easy to separate received messages?
+
+What if you receive `msg3`?
+
+Notes:
+
+If the messages are not far apart, it is impossible to distinguish in many cases. There is not enough "distance" between the two possibilities. 
+
+---v
+
+## Erasure Coding Intuition
+
+With erasure coding, we extend each message magically so they are different enough. The sender and receiver know the same encoding procedure. These extensions will be very different, even if the messages are similar.
+
+`msg1`<span style="color: red;">`jdf`</span> and `msg2`<span style="color: red;">`ajk`</span>
+
+Notes:
+
+It is actually always possible to make the extra magic only appended to the message. This is called a _systematic encoding_.
+
+For those curious about how the "magic" works:
+
+The magic here is polynomials, and the fact that a polynomial of degree $n$ is completely determined by $n+1$ points. There are many good explanations online.
+
+---
+
 ## Erasure Coding
 
 <img style="width: 1000px;" src="../../../assets/img/1-Cryptography/erasure-code.svg" />
