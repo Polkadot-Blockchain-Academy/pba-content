@@ -1,15 +1,11 @@
-# UNGRADED Week 5 Assignment - Cross Consensus Messaging (XCM)
+# Week 5 Assignment - Polkadot and XCM
 
-Due to the proximity to the end of the course, this assignment will be ungraded or graded only based on effort.
+Major TODO here. This is currently just a braindump. Open to major revision.
 
-# Exercise 1 - Ink! Smart contract
+This week's assignment is a problem set where you must do each of these activities.
 
-Write an ink! smart contract. Deploy it somewhere we provide?
+# Exercise 1 - Launch a Parachain
 
-# Exercise 2 - Write an EVM precompile
+Could be one big project where they take their runtime from last week's assignment, port it to a parachain, and register it on a local rococo-like network.
 
-Write a precompile that makes the features of a FRAME pallet accessible to the EVM
-
-# Exercise 3 - Write a pallet-contracts Chain Extension
-
-Write a chain extension that makes the features of a FRAME pallet accessible to the EVM
+Upgrade the code to support XCM. Do the on-chain runtime upgrades, open the XCM channels, and execute the XCM messages.
