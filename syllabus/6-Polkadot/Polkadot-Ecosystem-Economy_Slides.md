@@ -128,7 +128,7 @@ TODO Pie Chart
 
 - 50% Staking / Governance
 - 30% Parachains
-- 20% Tradable
+- 20% Tradable / Useable
 
 ---
 
@@ -145,3 +145,39 @@ Token holders are financially incentivized to maximize inflation (to maximize th
 TODO create a graph which shows the inflation rate from 0% to 100% of DOT tokens being staked.
 
 ---
+
+## DOT Utility: Parachains
+
+Polkadot provides many utilities, but arguably its most important utility is providing secure and scalable blockspace.
+
+Developers can purchase this blockspace as fixed-term or on-demand Parachains, only with the DOT token.
+
+If you believe that secure blockspace has value, then you agree that DOT also has value.
+
+---
+
+## DOT Utility: Staking
+
+Given the existence of a value bearing token, it can be used to provide security to Polkadot.
+
+If users want to provide security to the network, they can stake their tokens.
+
+Stakers are rewarded for good behavior, and punished for bad behavior.
+
+It is assumed that punishments are aggressive enough that rational actors would never act maliciously.
+
+---
+
+
+
+---
+
+## Expected Parachain Costs
+
+Back of the napkin math:
+
+- ~1 Billion DOT
+- 30% Locked Up for Parachains = 300 Million
+- ~100 Parachain = 3 Million DOT per Parachain Slot
+
+At equilibrium...
