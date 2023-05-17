@@ -22,7 +22,7 @@ Notes:
 
 ## WebAssembly
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_logo.svg" style="width: 400px" />
+<img src="img/pallet/wasm_logo.svg" style="width: 400px" />
 
 Notes:
 
@@ -143,7 +143,7 @@ Notes:
 
 ## Embedding Wasm
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasm_embed.png" style="width: 1400px" />
+<img rounded src="img/pallet/wasm_embed.png" style="width: 1400px" />
 
 Notes:
 
@@ -219,13 +219,13 @@ Notes:
 
 ## Architecture of pallet-contracts
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/arch.png" style="width: 800px" />
+<img rounded src="img/pallet/arch.png" style="width: 800px" />
 
 ---
 
 ## Dispatchables
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/arch_dispatchable.png" style="width: 1200px" />
+<img rounded src="img/pallet/arch_dispatchable.png" style="width: 1200px" />
 
 Notes:
 
@@ -258,7 +258,7 @@ Notes:
 
 ## RPCs
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/arch_rpc.png" style="width: 1000px" />
+<img rounded src="img/pallet/arch_rpc.png" style="width: 1000px" />
 
 Notes:
 
@@ -337,7 +337,7 @@ Notes:
 
 [`API docs`](https://docs.rs/pallet-contracts/latest/pallet_contracts/api_doc/index.html)
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/api.png" style="width: 1100px" />
+<img src="img/pallet/api.png" style="width: 1100px" />
 
 ---
 
@@ -550,7 +550,7 @@ Notes:
 
 ## Execution Engine
 
-<img src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/exec.png" style="width: 800px" />
+<img src="img/pallet/exec.png" style="width: 800px" />
 
 > What could be problematic about putting the execution engine into the client?
 
@@ -589,7 +589,7 @@ Notes:
 
 ## pallet-contracts uses `wasmi` for now
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/wasmi.png" style="width: 1200px" />
+<img rounded src="img/pallet/wasmi.png" style="width: 1200px" />
 
 Notes:
 
@@ -605,7 +605,7 @@ Notes:
 
 ## Making gas metering<br/>independent of the executor (1)
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/gas.png" style="width: 200px;" />
+<img rounded src="img/pallet/gas.png" style="width: 200px;" />
 
 Notes:
 
@@ -668,7 +668,7 @@ Notes:
 
 ## Storage Bloat
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/bloat.jpg" alt="Source: https://www.coindesk.com/markets/2018/01/18/blockchain-bloat-how-ethereum-is-tackling-storage-issues/" style="width: 1000px;" />
+<img rounded src="img/pallet/bloat.jpg" alt="Source: https://www.coindesk.com/markets/2018/01/18/blockchain-bloat-how-ethereum-is-tackling-storage-issues/" style="width: 1000px;" />
 
 Notes:
 
@@ -681,7 +681,7 @@ Notes:
 
 ## Storage on Ethereum
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/eth_state.png" alt="Source: https://ycharts.com/indicators/ethereum_chain_full_sync_data_size" style="width: 1000px;" />
+<img rounded src="img/pallet/eth_state.png" alt="Source: https://ycharts.com/indicators/ethereum_chain_full_sync_data_size" style="width: 1000px;" />
 
 Notes:
 
@@ -694,7 +694,7 @@ Notes:
 
 ## First try: Storage rent
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/rent.jpg" alt="Source: https://www.investopedia.com/articles/personal-finance/041515/buying-second-home-rent-dos-and-donts.asp" style="width: 800px;" />
+<img rounded src="img/pallet/rent.jpg" alt="Source: https://www.investopedia.com/articles/personal-finance/041515/buying-second-home-rent-dos-and-donts.asp" style="width: 800px;" />
 
 Notes:
 
@@ -713,7 +713,7 @@ Notes:
 
 ## What we have now:<br/>Automatic storage deposits
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/deposit.jpg" alt="Source: https://m.bankingexchange.com/news-feed/item/7869-bank-deposits-the-most-important-number-on-the-balance-sheet" style="width: 700px;" />
+<img rounded src="img/pallet/deposit.jpg" alt="Source: https://m.bankingexchange.com/news-feed/item/7869-bank-deposits-the-most-important-number-on-the-balance-sheet" style="width: 700px;" />
 
 Notes:
 
@@ -754,8 +754,8 @@ Notes:
 ## Execution Engine
 
 <div class="r-stack">
-  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains0.png" style="width: 900px;" />
-  <img class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/parachains1.png" style="width: 900px;" />
+  <img class="fragment current-visible" src="img/pallet/parachains0.png" style="width: 900px;" />
+  <img class="fragment current-visible" src="img/pallet/parachains1.png" style="width: 900px;" />
 </div>
 
 Notes:
@@ -773,7 +773,7 @@ Notes:
 
 ## Code sizes matter!
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/val.png" style="width: 1200px;" />
+<img rounded src="img/pallet/val.png" style="width: 1200px;" />
 
 Notes:
 
@@ -805,7 +805,7 @@ Notes:
 
 ## Shrink contract sizes
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/mapping.png" style="width: 1200px;" />
+<img rounded src="img/pallet/mapping.png" style="width: 1200px;" />
 
 Notes:
 
@@ -830,7 +830,7 @@ Notes:
 
 ## Prevent size regressions
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/sizes.png" style="width: 900px;" />
+<img rounded src="img/pallet/sizes.png" style="width: 900px;" />
 
 Notes:
 
@@ -842,13 +842,13 @@ Notes:
 <h2 style="margin-bottom:0"> Code merkelization </h2>
 
 <div class="r-stack" style="margin-top:0">
-  <img data-fragment-index="1" class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/merkle0.png" style="width:500px; margin-top:1em" />
-  <img data-fragment-index="2" class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/merkle0.png" style="width:500px; margin-top:1em" />
-  <img data-fragment-index="3" class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/merkle1.png" style="width:1100px" />
-  <img data-fragment-index="4" class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/merkle2.png" style="width:1100px" />
-  <img data-fragment-index="5" class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/merkle3.png" style="width:1100px" />
-  <img data-fragment-index="6" class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/merkle4.png" style="width:1100px" />
-  <img data-fragment-index="7" class="fragment current-visible" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/pallet/merkle5.png" style="width:1100px" />
+  <img data-fragment-index="1" class="fragment current-visible" src="img/pallet/merkle0.png" style="width:500px; margin-top:1em" />
+  <img data-fragment-index="2" class="fragment current-visible" src="img/pallet/merkle0.png" style="width:500px; margin-top:1em" />
+  <img data-fragment-index="3" class="fragment current-visible" src="img/pallet/merkle1.png" style="width:1100px" />
+  <img data-fragment-index="4" class="fragment current-visible" src="img/pallet/merkle2.png" style="width:1100px" />
+  <img data-fragment-index="5" class="fragment current-visible" src="img/pallet/merkle3.png" style="width:1100px" />
+  <img data-fragment-index="6" class="fragment current-visible" src="img/pallet/merkle4.png" style="width:1100px" />
+  <img data-fragment-index="7" class="fragment current-visible" src="img/pallet/merkle5.png" style="width:1100px" />
 </div>
 
 <div class="r-stack">
@@ -906,4 +906,4 @@ Notes:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-<img rounded style="width: 300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
+<img rounded style="width: 300px" src="img/ink/question-mark.svg" />
