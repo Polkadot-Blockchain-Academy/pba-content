@@ -20,38 +20,42 @@ If there is a notion of "homework" in the class, this should be given as homewor
 If not, we could get the compile going before the lecture begins.
 We should also have a docker image ready to go.
 
-### Alice and Bob Network
+### Generate User Keys
 
-For the first network, we will just have two authorities `Alice` and `Bob`.
+With Polkadot JS
 
-- Choose two volunteers to run with the `--alice` and `--bob` flags.
-  Everyone else is a full node
-- Start nodes and wait for peer connections.
-- Discuss the log messages
-- Look at telemetry
-- Kill your node for ~30 sec and then bring it back up to see it catch up syncing
+### Get Tokens
 
-### Different Authorities
+Students request tokens from the teacher by sharing their address with the teachers in a public channel.
+After the first five students have tokens, they pass them on to their peers.
 
-- Here we instill the core ideas of a genesis configuration.
-- We start the network over and give more students a chance to be authorities.
-- We choose a new alice and bob.
-- But we want to do more than two at a time, so we add Charlie, DAve, et al to the genesis config.
+### Optional Treasure Hunt
 
-### Key Leak
+You could have tokens stored at eg the Alice key or other leaked keys and challenge students to find and recover the tokens.
+Make up a story/myth about some mysterious figure who lost their key and left clues, etc.
 
-- Now we simulate what happens when a session key is leaked.
-- We choose a few more people to restart their nodes with --alice and --bob.
-- This drives home that these keys are only for learning, and also motivates trying it again with our own keys.
+### Run Nodes
 
-### Own keys
+Students start their own nodes and join the network
 
-Optional, as this probably will not fit at this stage in the course.
-But if there is free time, it's good to have more activities to fill it.
-Also this could be done at _any time_ later in the course if we need to fill time.
+### Start Mining
 
-Here we generate our own keys with the node template's `key` subcommand, and instert tham into the genesis config.
+Node runners can contribute PoW hashrate to the network in exchange for tokens.
 
-## Discussion Topic
 
-### How can we have authorities change over time?
+### Fork the Network
+
+In BA we forked the difficulty, but maybe there is something more compelling.
+
+### Light Clients
+
+TODO
+
+### Other Infrastructure
+
+Like block explorer or indexer?
+
+### Smart Contracts
+
+The Smart Contracts module has an activity about launching smart contracts on a running chain.
+When these modules are run back-to-back, it makes an excellent learning experience to use this same chain we just launched to also launch the smart contracts.
