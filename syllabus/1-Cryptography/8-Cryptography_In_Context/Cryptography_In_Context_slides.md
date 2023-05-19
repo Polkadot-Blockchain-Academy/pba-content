@@ -57,9 +57,9 @@ A side channel attack is when a cryptographic system is attacked, and the attack
 ## Types of Side Channel Attacks
 
 - Timing
-	- Different instructions
-	- CPU Branch prediction
-	- Memory access
+  - Different instructions
+  - CPU Branch prediction
+  - Memory access
 - RF emissions
 - Power consumption
 - Sound of a computer running
@@ -69,6 +69,7 @@ Notes:
 There are many crazy forms of side channel attack, but the primary one is timing. Timing is also the only one that gets reliably sent back over a long distance.
 
 Sources for exotic attacks:
+
 - [general survey of EM side channel attacks](https://arxiv.org/abs/1903.07703)
 - [sound-based attack](https://www.iacr.org/archive/crypto2014/86160149/86160149.pdf)
 - [EM side channel attack from 15m with 500 traces only](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1648290&dswid=6646)
@@ -81,12 +82,12 @@ Imagine this is the source code for a password checker:
 
 ```rust
 fn verify_password(actual: &[u8], entered: &[u8]) -> bool {
-	for i in 0..actual.len() {
-		if entered.get(i) != actual.get(i) {
-			return false;
-		}
-	}
-	true
+ for i in 0..actual.len() {
+  if entered.get(i) != actual.get(i) {
+   return false;
+  }
+ }
+ true
 }
 ```
 
@@ -96,7 +97,7 @@ Notes:
 
 Imagine you compile this into a little binary, and you are able to hit it repeatedly. When sending a guess into this, what information do you get back?
 
-A boolean, and the amount of time from sending the password to getting back a response. 
+A boolean, and the amount of time from sending the password to getting back a response.
 
 The problem is that the amount of time for a response reveals information about the password. An attacker can send in guesses repeatedly, and if it takes a longer amount of time to respond, that means more of the guess is correct.
 
@@ -108,7 +109,7 @@ What if we changed the code to look like this?
 
 ```rust
 fn verify_password(actual: &[u8], entered: &[u8]) -> bool {
-	actual == entered
+ actual == entered
 }
 ```
 
@@ -220,12 +221,14 @@ Now we've seen how hard it can be just to stop a very simple leak of timing info
 ## Ed25519's Guarantees
 
 This is an excerpt from the [ed25519](https://ed25519.cr.yp.to/) description.
+
 - **Foolproof session keys**. Signatures are generated deterministically; key generation consumes new randomness but new signatures do not. This is not only a speed feature but also a security feature.
 - **Collision resilience**. Hash-function collisions do not break this system. This adds a layer of defense against the possibility of weakness in the selected hash function.
 
 ---
 
 ## Ed25519's Guarantees (Cont.)
+
 - **No secret array indices**. The software never reads or writes data from secret addresses in RAM; the pattern of addresses is completely predictable. The software is therefore immune to cache-timing attacks, hyperthreading attacks, and other side-channel attacks that rely on leakage of addresses through the CPU cache.
 - **No secret branch conditions**. The software never performs conditional branches based on secret data; the pattern of jumps is completely predictable. The software is therefore immune to side-channel attacks that rely on leakage of information through the branch-prediction unit.
 
@@ -235,7 +238,7 @@ This is an excerpt from the [ed25519](https://ed25519.cr.yp.to/) description.
 
 Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even harder!
 
-### DO NOT ROLL YOUR OWN CRYPTO!
+### DO NOT ROLL YOUR OWN CRYPTO
 
 ---
 
@@ -245,7 +248,13 @@ Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even 
 - Validate each primitive's assumptions when combining primitives
 - Use the most reputable library you can
 - Realize when things need serious consideration
-	- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamal
+  - Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamal
+
+<!-- Maybe add something about this as an example:
+https://github.com/MystenLabs/ed25519-unsafe-libs. To put it in few words, the interface for signing
+data on some ed25519 libs was secret.sign(message, my_pubkey) instead of just secret.sign(message),
+and because of that if you let an attacker control the my_pubkey input, you could result in unsafe
+cryptography. -->
 
 ---
 
@@ -254,6 +263,7 @@ Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even 
 Physical access to a running computer can usually let an attacker have full access to your secrets with enough effort.
 
 Some possible means:
+
 - Scanning all disk storage
 - Take out the RAM and swap it into a different computer to read (cold boot attack)
 
@@ -293,7 +303,7 @@ At the end of a year, if nobody else knows the secret, I'll give you a million d
 
 What do you do?
 
-### Destroy it!
+### Destroy it
 
 ---
 
@@ -315,7 +325,7 @@ At the end of a year, if nobody else knows the secret **and you present me the s
 
 What do you do?
 
-### Hide it somewhere secure!
+### Hide it somewhere secure
 
 Notes: Like a bank vault, box buried in the woods, etc
 
