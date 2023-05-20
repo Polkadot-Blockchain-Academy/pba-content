@@ -75,9 +75,10 @@ Sends an XCM message with the `UnsubscribeVersion` instruction to some destinati
 
 }
 ```
+
 ---
 
-<!-- Getting into the subscrption service and version negotiation -->
+<!-- Subscrption service and version negotiation -->
 
 ## Subscription Service
 
