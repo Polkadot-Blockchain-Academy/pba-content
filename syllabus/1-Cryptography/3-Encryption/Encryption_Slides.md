@@ -92,7 +92,7 @@ _Encrypted image_
 
 Notes:
 
-Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png and https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png
+Image sources: <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png> and <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png>
 
 ---
 
@@ -137,10 +137,13 @@ Mixing Paint Visualization
 Notes:
 
 Mixing paint example.
-Image Source: https://upload.wikimedia.org/wikipedia/commons/4/46/Diffie-Hellman_Key_Exchange.svg
+Image Source: <https://upload.wikimedia.org/wikipedia/commons/4/46/Diffie-Hellman_Key_Exchange.svg>
 
 ---
 
+<!-- TODO(Nate): Use DH to explain the most common form of hybrid crypto (super high level), where use DH to get shared secret, then use that for symmetric crypto -->
+
+<!-- Does the commutative en-decryption slide actually come up here? Should it be moved up to exotic primitives? -->
 ## Commutative En-/Decryption
 
 Encrypting a message with key $A$, and then encrypting the ciphertext with key $B$, would result in the same ciphertext had one encrypted with $B$ and then $A$.
@@ -151,6 +154,8 @@ C &=> D_A(D_B(C)) == D_B(D_A(C)) \ => M
 \end{align}
 
 Elliptic curve cryptography is based on _commutative_ algebraic structures.
+
+<!-- This comment on ECC being commutative is a little sketchy/misleading, albeit technically true. There are still some operations, afaik, that are non-commutative when using it in practice. For instance, any reasonable form of encryption on using ECC is, afaik, HPKE (probably ECIES) which is not necessarily commutative. -->
 
 ---
 
