@@ -1,6 +1,6 @@
 ---
-title: Writing, Sending, and Execution of XCM
-description: Writing, Sending, and Execution of XCM for Web3 Engineers
+title: pallet-xcm
+description: Introducing pallet-xcm, its interface and features implemented here.
 duration: 1 hour
 ---
 
@@ -76,7 +76,9 @@ Sends an XCM message with the `UnsubscribeVersion` instruction to some destinati
 }
 ```
 ---
+
 <!-- Getting into the subscrption service and version negotiation -->
+
 ## Subscription Service
 
 Any system can query another for the latest XCM version it supports, and be notified when this changes. This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
@@ -190,4 +192,6 @@ What happens when there are still funds in the `HoldingRegister` after the execu
 `pallet-xcm` implements the `DropAssets` trait which defines what to do with the funds. The current implementation traps these assets by adding an asset trap. Then these funds will need to be eventually claimed back by the same origin via `AssetClaims` instruction, which requires the implementation of `ClaimAssets` trait.
 
 These traps are stored in `AssetTraps`, a map where the key is the blake2 (256bits) of the `(origin, assets)` tuple. The storage value is the number of times this tuple has been trapped. The user have to perform as many claims as traps occured.
+
 ---
+
