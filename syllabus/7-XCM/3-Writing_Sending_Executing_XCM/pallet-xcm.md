@@ -19,6 +19,8 @@ duration: 1 hour
 
 ---
 
+## The XCM pallet
+
 We have now learnt about the XCVM and FRAME.
 
 The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
