@@ -18,30 +18,36 @@ duration: 1 hour
 - Asset Trapping
 
 ---
+
+We have now learnt about the XCVM and FRAME.
+
+The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
+
+---
 <!-- Following slides are a quick overview of the pallet interface, focusing on the calls it exposes -->
 ## pallet-xcm
 
 `pallet-xcm` provides default implementations for many traits required by XcmConfig.
 
-`pallet-xcm` also provides an interface where users can create XCM messages via 10 different extrinsics, which can be split into three categories:
+`pallet-xcm` also provides an interface containing 10 different extrinsics, which can be split into three categories:
 
-- Primitive functions to locally `execute` or `send` an XCM message.
-- High-lvel functions for asset tranfers.
+- Primitive functions to locally `execute` or `send` an XCM.
+- High-level functions for asset tranfers.
 - Extrinsics aimed exclusively at version negotiation.
 
 ---
 
-## pallet-xcm::Primitive extrinsics
+## `pallet-xcm` Primitive extrinsics
 
 `execute`
-Direct access to the XCM executor. It checks the origin, the message, and ensures no filter is blocking the execution. Then it executes fthe message **locally** and returns the outcome as an event. It is necessarily executed on behalf of the account that signed the extrinsic (origin).
+Direct access to the XCM executor. It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution. Then it executes the message **locally** and returns the outcome as an event. It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
 
 `send`
-This extrinsic is an interface to send a message to a destination. It checks the origin, the destination and the message. Then it forwards the message to the `XcmRouter`.
+This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
 
 ---
 
-## pallet-xcm::Asset Transfer extrinsics
+## `pallet-xcm` Asset Transfer extrinsics
 
 `teleport_assets` & `limited_teleport_assets`
 
@@ -55,26 +61,23 @@ Allow the user to perform a reserve-backed transfer. Its limited version takes a
 
 ## pallet-xcm::Version Negotiation extrinsics
 
-Every extrinsic in this category require root as origin.
+Every extrinsic in this category requires root as the FRAME origin.
 
 `force_xcm_version`
 
-Modifies `SupportedVersion` value. This storage item is a double map containing information about the version supported by destinations.
+Modifies the `SupportedVersion` storage item. This storage item is a double map containing information about the XCM version supported by known destinations.
 
 `force_default_xcm_version`
 
-Modifies the `SafeXcmVersion` storage. Its value is used as fallback version when destination version is unknown.
+Modifies the `SafeXcmVersion` storage value. Its value is used as fallback version when the destination's supported XCM version is unknown.
 
 `force_subscribe_version_notify`
 
-Sends an XCM message with the `SubscribeVersion` instruction to some destination.
+Sends an XCM with the `SubscribeVersion` instruction to some destination.
 
 `force_unsubscribe_version_notify`
 
-Sends an XCM message with the `UnsubscribeVersion` instruction to some destination.
-
-}
-```
+Sends an XCM with the `UnsubscribeVersion` instruction to some destination.
 
 ---
 
@@ -82,20 +85,20 @@ Sends an XCM message with the `UnsubscribeVersion` instruction to some destinati
 
 ## Subscription Service
 
-Any system can query another for the latest XCM version it supports, and be notified when this changes. This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
+Any system can be notified of when another system changes its latest supported XCM version. This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
 
-The `SubscriptionService` type defines which action to take when processing  a `SubscribeVersion` instruction.
-This type expects an implementation of `VersionChangeNotifier` trait, which has a `strat` and a `stop` function along with `is_subscribed`.
+The `SubscriptionService` type defines what action to take when processing a `SubscribeVersion` instruction.
+This type expects an implementation of the `VersionChangeNotifier` trait, which has a `start` and a `stop` function, along with `is_subscribed`.
 
-`pallet-xcm` provides a default implementaiton of this trait. When receiving a `SubscribeVersion`, the chain sends back an XCM message with the `QueryResponse` instruction containing its current version.
+`pallet-xcm` provides a default implementaiton of this trait. When receiving a `SubscribeVersion`, the chain sends back an XCM with the `QueryResponse` instruction containing its current version.
 
 ---
 
 ## Version Negotiation
 
-The subscription service is laveraged at the version negotiation that occurs whenever two systems start exchanging messages.
+The subscription service leverages any kind of exchange of XCMs between two systems to begin the process of version negotiation.
 
-Each time a system needs to encode a message for a destination which its supported version is unknown, its location will be stored in the `VersionDiscoveryQueue`. This queue will be checked at every block and `SubscribeVersion` instructions will be sent out to those locations populating the queue. While taking note of the queries that has been sent.
+Each time a system needs to send a message to a destination with an unknown supported XCM version, its location will be stored in the `VersionDiscoveryQueue`. This queue will then be checked in the next block and `SubscribeVersion` instructions will be sent out to those locations present in the queue.
 
 ---v
 
@@ -136,11 +139,11 @@ XCM version negotiation:
 
 ## Response Handler
 
-Version negotiation is just one example among many kinds of queries one chain can make to another. Regardless of which kiind of query was made, the response usually takes the form of a `QueryResponse` instruction.
+Version negotiation is just one example among many kinds of queries one chain can make to another. Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
 
 The `ResponseHandler` type requires an implementation of the `OnResponse`trait, which defines actions to be performed when receiving `QueryResponse` instructions back from a query.
 
-A default implementation is provided by the `pallet-xcm`. It checks that the response id is expected, and processes it when receiving it. It rejects any response that it did not query beforehand.
+A default implementation is provided by the `pallet-xcm`. It checks that the response ID is expected, and processes the response accordingly when receiving it. It rejects any response that it did not query beforehand.
 
 ---v
 
