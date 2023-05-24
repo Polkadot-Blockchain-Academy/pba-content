@@ -12,7 +12,7 @@ duration: 1 hour
 
 We often want a succinct representation of some data<br/>with the expectation that we are referring to the same data.
 
-##### A "fingerprint".
+##### A "fingerprint"
 
 ---
 
@@ -50,14 +50,14 @@ fn hash(s: &[u8]) -> [u8; 32];
 
 ```text
 hash('hello') =
-	0x324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf
+ 0x324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf
 ```
 
 **Large input (1.2 MB):**
 
 ```text
 hash(polkadot_runtime-v9190.compact.compressed.wasm) =
-	0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
+ 0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
 ```
 
 ---
@@ -132,7 +132,7 @@ Exercise: Write your own benchmarking script that compares the performance of th
 Notes:
 
 Benchmarks for the _cryptographic_ hashing algorithms.
-Source: https://www.blake2.net/
+Source: <https://www.blake2.net/>
 
 ---
 
@@ -143,7 +143,7 @@ Source: https://www.blake2.net/
 Notes:
 
 Benchmarks for the XX-hash algorithms.
-Source: https://github.com/Cyan4973/xxHash#benchmarks
+Source: <https://github.com/Cyan4973/xxHash#benchmarks>
 
 ---
 
@@ -216,7 +216,7 @@ Attacker has intention to impersonate the signer with the other.
 
 > With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday.
 
-- Must to compare each output with every other, not with a single one.<br/>
+- Must compare each output with every other, not with a single one.<br/>
 - Number of possible "hits" increases exponentially for more attempts, reducing the expected success to the square-root of what a specific target would be.
 
 </pba-col>
@@ -239,9 +239,9 @@ Notes:
 
 e.g., a 256 bit hash output yields 2^128 security
 
-- https://en.wikipedia.org/wiki/Birthday_attack
+- <https://en.wikipedia.org/wiki/Birthday_attack>
 
-- https://en.wikipedia.org/wiki/Birthday_problem
+- <https://en.wikipedia.org/wiki/Birthday_problem>
 
 ---
 
@@ -274,6 +274,69 @@ Keccak is available for Ethereum compatibility.
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Applications
+
+---
+
+## Cryptographic Guarantees
+
+Let's see which cryptographic properties apply to hashes.
+
+<pba-flex center>
+
+- Confidentiality
+- Authenticity
+- Integrity
+- Non-repudiation
+- Availability
+
+</pba-flex>
+
+<!-- TODO: Figure out a way to make this pretty, maybe in table form? Or maybe with highlighting on the text? -->
+
+---v
+
+## Confidentiality
+
+Sending or publically posting a hash of some data $D$ keeps $D$ confidential, as only those who already knew $D$ recognize $H(D)$ as representing $D$.
+
+Both cryptographic and non-cryptographic hashes work for this.
+
+Notes:
+
+An important caveat here is that the data space has to be _sufficiently large_.
+If you tried to implement voting by sending a hash of your vote, and your vote was either "yes" or "no", it is simple to brute-force check which it was. Adding some randomness to the hash fixes this.
+
+---v
+
+## Authenticity
+
+Anyone can make a hash, so hashes provide no authenticity guarantees.
+
+---v
+
+## Integrity
+
+A hash changes if the data changes, so it does provide integrity.
+
+However, if an attacker can control the hash, they can always construct a fake hash, as there are no authenticity guarantees!
+
+---v
+
+## Non-Repudiation
+
+Hashes on their own cannot provide authenticity, and as such cannot provide non-repudiation.
+
+However, if used in another cryptographic primitive that _does_ provide non-repudiation, $H(D)$ provides the same non-repudation as $D$ itself.
+
+Notes:
+
+This is key in digital signatures. However, it's important to realize that if $D$ is kept secret, $H(D)$ is basically meaningless.
+
+---v
+
+## Availability
+
+A hash does not provide any data availability. Nobody is able to learn $D$ after receiving $H(D)$.
 
 ---
 
@@ -323,15 +386,11 @@ Hash of pub key:
                                                                     ^^
 ```
 
----
+<!--
 
-## Multi-Signatures
+I'm replacing multisigs with this comment so it is in the PR without having to remember it. I feel that the discussion of multisigs here is not great, as it is a "fake" multisig anyways. It is a trusted-authority-enforced multisig, which could be implemented by just storing the public keys and threshold number, and then just having the authority tell others "I got the threshold here" or not. I think this should just be mentioned in advanced digital signatures, when there is more context.
 
-<img style="width: 1200px; border-radius: 0" src="../../../assets/img/1-Cryptography/Multi-Signatures.png" />
-
-Notes:
-
-By hashing a concatenation of several public keys, a system can create new IDs that require signature thresholds to authorize activity.
+-->
 
 ---
 
@@ -399,7 +458,7 @@ The hash of the information can succinctly represent the information and commit 
 
 ## Data Structures (in Brief)
 
-This is the focus of the next lesson.
+This is the focus of a later lesson.
 
 Notes:
 For now, just a brief introduction.
@@ -413,6 +472,8 @@ Pointer-based linked lists are a foundation of programming.
 But pointers are independent from the data they reference,<br/>so the data can be modified while maintaining the list.
 
 That is, pointer-based linked lists are not tamper evident.
+
+<img src="../../../assets/img/1-Cryptography/Hash-Chains.png" alt="Linked List"> </img>
 
 ---
 

@@ -19,6 +19,10 @@ duration: 1 hour
 
 </pba-flex>
 
+Notes:
+
+In this first lesson,
+
 ---
 
 ## Cryptography Landscape
@@ -411,6 +415,10 @@ fn roll_die() -> u32 {
 - Pseudo-random sequences
 - Physical data collection (e.g. cursor movement, LSB of microphone)
 - Specialised hardware (e.g. low-level noise on silicon gates, quantum-amplifiers)
+
+Notes:
+
+LSB := Least Significant Bit
 
 ---
 
