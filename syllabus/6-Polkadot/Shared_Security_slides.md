@@ -394,7 +394,7 @@ So, shared security not only secures the individual chains, but the interactions
 
 - Wasm is unfortunately still 2x slower than native compilation.
 - Requires lot of data being provided and available in PoV.
-- Certain limitations enforced to keep parachains compatible with the parachains procol.
+- Certain limitations enforced to keep parachains compatible with the parachains protocol.
 
 </pba-col>
 
