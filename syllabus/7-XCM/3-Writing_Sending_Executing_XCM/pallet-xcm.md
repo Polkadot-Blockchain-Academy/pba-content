@@ -26,6 +26,18 @@ We have now learnt about the XCVM and FRAME.
 The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
 
 ---
+
+## How XCM is expected to be used
+
+XCM is not intended to be written by end-users.
+
+Instead, _parachain developers_ write XCM programs, and package them up into FRAME extrinsics.
+
+Notes:
+
+We will see an example of this in the XCM pallet, with the teleport_assets and reserve_transfer_assets extrinsics.
+
+---
 <!-- Following slides are a quick overview of the pallet interface, focusing on the calls it exposes -->
 ## pallet-xcm
 
