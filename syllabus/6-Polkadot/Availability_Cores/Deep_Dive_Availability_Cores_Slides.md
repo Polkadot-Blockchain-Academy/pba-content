@@ -132,6 +132,80 @@ _analogy-freight-train_: A unit of blockspace is a reserved car in a train leavi
 
 ## Assigning Cores to Parachains
 
+Diagram for core assignments. Two cores paired to a single lease each. Two on-demand cores linked to the same on-demand claims queue. Show that every other claim in the queue goes to core 1. Show at least one free core. 
+
+---
+
+## Occupying Assigned Cores
+
+Diagram showing how backed candidates are supplied to occupy assigned cores. Show that a leasing chain with no backed candidates won't occupy a core. Show that an occupied core can't accept a second candidate. Show that each on-demand claim comes with a number of tries to submit a candidate that validators will back. Each relay block that passes with without a backed candidate produced to fill the availability core counts as a failed try.
+
+---
+
+## Mapping Backers to Cores
+
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/validator-groups.png" alt="Train">
+
+Notes:
+
+Validator groups rotate across availability cores in a round-robin fashion, with rotation occurring at fixed intervals. This is to prevent a byzantine backing group from interrupting the liveness of any one parachain for too long.
+
+---
+
+## Core States in the Runtime
+
+```rust
+
+    #[pallet::storage]
+    #[pallet::getter(fn availability_cores)]
+    pub(crate) type AvailabilityCores<T> = StorageValue<_, Vec<Option<CoreOccupied>>, ValueQuery>;
+
+    #[pallet::storage]
+    pub(crate) type ParathreadQueue<T> = StorageValue<_, ParathreadClaimQueue, ValueQuery>;
+
+    #[pallet::storage]
+    #[pallet::getter(fn scheduled)]
+    pub(crate) type Scheduled<T> = StorageValue<_, Vec<CoreAssignment>, ValueQuery>;
+
+    pub struct ParathreadClaimQueue {
+        queue: Vec<QueuedParathread>,
+        // this value is between 0 and config.parathread_cores
+        next_core_offset: u32,
+    }
+
+    pub struct CoreAssignment {
+        /// The core that is assigned.
+        pub core: CoreIndex,
+        /// The unique ID of the para that is assigned to the core.
+        pub para_id: ParaId,
+        /// The kind of the assignment.
+        pub kind: AssignmentKind,
+    }
+
+    pub enum CoreOccupied {
+        /// A parathread (on-demand parachain).
+        Parathread(ParathreadEntry),
+        /// A parachain.
+        Parachain,
+    }
+```
+
+---
+
+# How Cores Gate Each Step of the Parachains Protocol
+
+---
+
+## Cores and Backing
+
+- Backing groups are assigned to parachains by core
+- Backing groups will only back candidates from the chain assigned to their core
+- Backing groups for on-demand cores are made aware of on-demand claims ahead of time, so that they know to start the backing process early enough that availability retries aren't required.
+
+---
+
+## Cores and Backing Code
+
 
 
 ---
@@ -141,7 +215,6 @@ _analogy-freight-train_: A unit of blockspace is a reserved car in a train leavi
 <pba-col center>
 
 1. [Implementers Guide: Scheduler Pallet](https://paritytech.github.io/polkadot/book/runtime/scheduler.html)
-1. 
 
 </pba-col>
 
