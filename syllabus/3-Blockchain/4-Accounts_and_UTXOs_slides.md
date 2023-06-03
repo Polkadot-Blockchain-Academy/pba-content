@@ -19,7 +19,7 @@ title: Accounting Models & User Abstractions in Blockchains
 - We have some base elements ideas and concepts
 - now lets put them together into something cool..
 
-<img rounded style="width: 700px;" src="../../assets/img/3-Blockchain/3.2-assembling-cartoon.png" />
+<img rounded style="width: 700px;" src="img/3.2-assembling-cartoon.png" />
 
 Notes:
 
@@ -37,7 +37,7 @@ TODO: Help format images to look better
 
 </pba-col>
 
-<img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="../../assets/img/3-Blockchain/3.2-thinking-cartoon.png" />
+<img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="img/3.2-thinking-cartoon.png" />
 
 Notes:
 
@@ -57,7 +57,7 @@ TODO: Insert picture here which shows some money being sent from person A to per
 
 ## Example
 
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-money-example.svg" />
+<img style="width: 700px; height 500px; float:middle;" src="img/3.2-utxo-money-example.svg" />
 
 ---
 
@@ -119,7 +119,7 @@ TODO: Show some image of something transitioning
 
 ### What were those<br/>input-output thingies again?
 
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transaction-format.svg" />
+<img style="width: 700px; height 500px; float:middle;" src="img/3.2-utxo-transaction-format.svg" />
 
 Notes:
 
@@ -138,7 +138,7 @@ TODO: Show picture of inputs and outputs in a transaction similar to UTXO framel
 
 ## Transition
 
-<img style="width: 700px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-utxo-transition.svg" />
+<img style="width: 700px; height 500px; float:middle;" src="img/3.2-utxo-transition.svg" />
 
 ---
 
@@ -150,7 +150,7 @@ TODO: Show picture of inputs and outputs in a transaction similar to UTXO framel
 - Now whenever someone mentions UTXO's and the UTXO model you can now fundamentally know what actually is being referenced..(Hopefully!)
 
 </pba-col>
-<img rounded style="width: 400px; height 300px; float:middle;" src="../../assets/img/3-Blockchain/3.2-cartoon-cheering.png" />
+<img rounded style="width: 400px; height 300px; float:middle;" src="img/3.2-cartoon-cheering.png" />
 
 Notes:
 
@@ -219,7 +219,7 @@ TODO: Insert some picture here which shows some money being sent from person A t
 
 ## Transaction + Transition
 
-<img style="width: 800px; height 600px; float:middle;" src="../../assets/img/3-Blockchain/3.2-accounts-transition.svg" />
+<img style="width: 800px; height 600px; float:middle;" src="img/3.2-accounts-transition.svg" />
 
 ---
 
@@ -306,7 +306,7 @@ TODO: Insert some picture here which shows some money being sent from person A t
 
 ## At the end of the day<br/>it is just a state machine
 
-<img rounded style="width: 500px; height 500px; float:middle;" src="../../assets/img/3-Blockchain/3.2-homer-cartoon.png" />
+<img rounded style="width: 500px; height 500px; float:middle;" src="img/3.2-homer-cartoon.png" />
 
 Notes:
 

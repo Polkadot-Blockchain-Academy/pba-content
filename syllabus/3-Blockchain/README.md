@@ -48,4 +48,4 @@ The module is taught over 2.5 days - roughly
 The activity and lecture can bleed together. I imagine launching a chain and getting some basic tokens
 
 - 🗣️ Resource Allocation lecture
-- ⌨️ Launch a blockchain activity
+- ⌨️ Start a Blockchain Activity
