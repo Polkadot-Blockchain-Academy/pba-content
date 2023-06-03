@@ -1,7 +1,7 @@
 # Start your own blockchain
 
 In this activity, students will get hands on experience operating a blockchain node and seeing it interact with other blockchain nodes.
-In particular, they will use the Substrate node template software.
+In particular, they will use the [Academy PoW Node](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW).
 
 ## Learning objectives:
 
