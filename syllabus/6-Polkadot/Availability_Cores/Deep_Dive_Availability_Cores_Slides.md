@@ -147,7 +147,7 @@ Validators randomly assigned to groups at start of session.
 
 ## Assigning Backing Groups to Cores
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Execution_Cores_Visuals.svg" alt="Train">
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_backing_groups_with_cores.svg" alt="Train">
 
 Notes:
 
@@ -157,17 +157,29 @@ Validator groups rotate across availability cores in a round-robin fashion, with
 
 ## Assigning Approvers to Cores
 
+- Randomness via schnorrkel::vrf
+- Results in 30-40 assigned approvers per core
+- Different assignments each block to prevent DOS
+
 ---
 
-## Assigning Cores to Parachains
+## Assigning Leases and Claims to Cores
 
-Diagram for core assignments. Two cores paired to a single lease each. Two on-demand cores linked to the same on-demand claims queue. Show that every other claim in the queue goes to core 1. Show at least one free core. 
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" alt="Train">
 
 ---
 
 ## Occupying Assigned Cores
 
-Diagram showing how backed candidates are supplied to occupy assigned cores. Show that a leasing chain with no backed candidates won't occupy a core. Show that an occupied core can't accept a second candidate. Show that each on-demand claim comes with a number of tries to submit a candidate that validators will back. Each relay block that passes with without a backed candidate produced to fill the availability core counts as a failed try.
+Notes:
+
+If a parachain has lease or on-demand claim to space in a relay block and that parachain's collators fail to supply a parablock candidate, what does that equate to in our freight train metaphor?
+
+---
+
+## Putting the Pieces Together
+
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
 
 ---
 
