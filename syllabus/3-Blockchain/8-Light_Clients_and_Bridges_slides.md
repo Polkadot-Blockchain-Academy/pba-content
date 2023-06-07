@@ -452,9 +452,3 @@ Your app is only as quality as the lower of the blockspaces.
 Depository - Mint model - Full backing
 
 TODO - complete slide
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
