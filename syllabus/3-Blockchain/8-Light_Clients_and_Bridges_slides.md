@@ -244,7 +244,7 @@ There is a dedicated lane for each direction.
 Notes:
 
 On PoW chains this is truly just a judgement call and a prayer.
-If the source chain has deterministic finality w can do better.
+If the source chain has deterministic finality we can do better.
 We need to wait for finality.
 But even this isn't foolproof.
 More on this after we cover the basic design.
