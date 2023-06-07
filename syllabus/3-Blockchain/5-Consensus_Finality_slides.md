@@ -80,7 +80,7 @@ Another desireable property that is sometimes too obvious to say.
 <pba-cols>
 <pba-col>
 
-<img style="width: 20em" src="./img/south-park-consensus.png"/>
+<img rounded style="width: 20em" src="./img/south-park-consensus.png" />
 
 </pba-col>
 
@@ -136,7 +136,7 @@ Someone please volunteer to describe what one of these means in this example.
 <pba-cols>
 <pba-col>
 
-<img style="width: 700px" src="./img/byzantine-generals.png"/>
+<img rounded style="width: 700px" src="./img/byzantine-generals.png" />
 
 </pba-col>
 
@@ -182,7 +182,7 @@ These examples and many others are _instances_ of the Byzantine Generals Problem
 <pba-cols>
 <pba-col>
 
-<img style="width: 600px" src="https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg"/>
+<img rounded style="width: 600px" src="https://thepointsguy.global.ssl.fastly.net/uk/originals/2020/12/pitot-ice-scaled.jpg" />
 
 </pba-col>
 
@@ -265,14 +265,14 @@ Notes:
 A system is one of:
 
 - **Deterministic** - The same inputs give the same outputs every time.
-- **Probabilistic** - The same inputs may not give the same outputs.<br>
+- **Probabilistic** - The same inputs may not give the same outputs.<br/>
   $~~~~~~~~~~~~~~~~~~~~~~~~~$ Requires a source of entropy. eg coin flipping. <!-- $~~~$ is a hack to put in white space chars -->
 
 ---
 
 ## FLP Impossibility
 
-<img style="padding: 0 200px 0 0" src="./img/FLP-impossible.png"/>
+<img style="padding: 0 200px 0 0" src="./img/FLP-impossible.png" />
 
 Notes:
 
@@ -290,7 +290,7 @@ One interesting thing about Nakamoto pow consensus is that it does _both_.
 
 ## Ongoing Consensus
 
-We want to continue agreeing on<br>an every-growing history of events
+We want to continue agreeing on<br/>an every-growing history of events
 
 Notes:
 
@@ -321,7 +321,7 @@ These two decisions can be entirely orthogonal to one another, or wrapped up tog
 
 ## Liveness vs Termination
 
-Earlier I described Termination as desireable,<br>now I'm saying Liveness is desireable.
+Earlier I described Termination as desireable,<br/>now I'm saying Liveness is desireable.
 
 Are these at odds with each other?
 
@@ -339,12 +339,12 @@ Liveness guarantees that a system that is intended to continue making progress, 
 
 - Longest chain rule
 - Longest chain is "best"... for now
-- Someone could always start mining a chain<br>and,with low but non-zero probability,<br> end up with it longer.
-- There could _already_ be a longer chain<br>that you just haven't heard of.
+- Someone could always start mining a chain<br/>and,with low but non-zero probability,<br/> end up with it longer.
+- There could _already_ be a longer chain<br/>that you just haven't heard of.
 
 <pba-flex>
 
-The finality is only probabilistic.<br>
+The finality is only probabilistic.<br/>
 Nakamoto consensus in only safe in a synchronous network.
 
 Notes:
@@ -383,7 +383,7 @@ If you want deterministic finality, it basically means employing BFT agreement p
 
 ## Incentives: Game Theory!
 
-Abstractly: You behave honestly<br>when the utility of doing so exceeds the cost.
+Abstractly: You behave honestly<br/>when the utility of doing so exceeds the cost.
 
 Incentive designers may potentially:
 
@@ -409,12 +409,10 @@ It is often the case that blockchain systems give rewards in the authorship and 
 - Authoring when you aren't supposed to
 - Failing to author when you are supposed to
 - Casting finality votes for conflicting blocks
-- Casting a finality vote for a block (or chain)<br> that includes an invalid state transition.
+- Casting a finality vote for a block (or chain)<br/> that includes an invalid state transition.
 
-<br>
-
-> How severe are each of these offenses?<br>
-> Do they all warrant a slash?<br>
+> How severe are each of these offenses?<br/>
+> Do they all warrant a slash?<br/>
 > A full slash?
 
 Notes:
@@ -427,14 +425,12 @@ Instead, aspiring participants will typically lock up a security deposit which c
 
 ### Concrete Punishment Example
 
-Let's say a slash is 100 units, and the reporter gets 10%.<br>I plan to attack.
+Let's say a slash is 100 units, and the reporter gets 10%.<br/>I plan to attack.
 
-If my attack is successful,<br>I expect to gain roughly 200 units worth of utility.
+If my attack is successful,<br/>I expect to gain roughly 200 units worth of utility.
 
-I ask another authority to cooperate with me:<br>"I'll pay you 20 units to _not_ rat me out for my attack".
+I ask another authority to cooperate with me:<br/>"I'll pay you 20 units to _not_ rat me out for my attack".
 
-<br>
- 
 > How would you respond?
 
 Notes:
@@ -449,10 +445,10 @@ Notes:
 
 - Authorship is like Aura - simple round robin
 - Naive but **simple** BFT implementation
-- If the block has enough votes<br>by the end of the slot, it is finalized.<br>
+- If the block has enough votes<br/>by the end of the slot, it is finalized.<br/>
   Otherwise, it is rejected via timeout.
 - "Instant finality"
-- Forkless - Forks are disallowed<br>because blocks can only be authored<br>on finalized parents.
+- Forkless - Forks are disallowed<br/>because blocks can only be authored<br/>on finalized parents.
 
 </pba-flex>
 
@@ -466,38 +462,32 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 
 ## Tendermint Deep Dive
 
-- 1: Wait for a block (or author one if it is your turn)
+<pba-flex center>
+<ol>
+<li class="fragment">Wait for a block (or author one if it is your turn)</li>
+<li class="fragment">Prevote
+  <ul>
+  <li>If the block is valid, Prevote for it.</li>
+  <li>If the block is invalid, Prevote `Nil`</li>
+  </ul>
+</li>
+<li class="fragment">Precommit
+  <ul>
+  <li>Wait for 2/3 prevotes then Precommit
+  <li>If you don't get 2/3 prevotes, Precommit `Nil`</div>
+  </ul>
+</li>
+<li class="fragment">Complete
+  <ul>
+  <li>Wait for 2/3 Precommits them finalize
+  <li>If you don't get it, throw the block away
+  </ul>
+</li>
+</ol>
 
-<div>
+[Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465) <!-- .element: class="fragment" -->
 
-- 2: Prevote
-  - If the block is valid, Prevote for it.
-  - If the block is invalid, Prevote `Nil`
-
-</div>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-<div>
-
-- 3: Precommit
-  - Wait for 2/3 prevotes then Precommit
-  - If you don't get 2/3 prevotes, Precommit `Nil`
-
-</div>
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-<div>
-
-- 4: Complete
-  - Wait for 2/3 Precommits them finalize
-  - If you don't get it, throw the block away
-
-</div>
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
-[Very useful blog post](https://medium.com/softblocks/explaining-how-tendermint-consensus-works-433066cbc465)
-
-<!-- .element: class="fragment" data-fragment-index="5" -->
+</pba-flex>
 
 ---
 
@@ -506,11 +496,11 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 1000px;" src="./img/grandpa-abstract.png"/>
+<img rounded style="width: 900px;" src="./img/grandpa-abstract.png" />
 
 </pba-col>
 <pba-col>
-<pba-flex center style="font-size: 0.7em; margin-left:-120px">
+<pba-flex center style="font-size: 0.7em; margin-left:-50px">
 
 - Separates block production from finality.
 - Block production stays live even if finality lags.
@@ -525,9 +515,9 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 
 ## What About Re-Orgs
 
-<img style="width: 500px; margin-right: 150px;" src="./img/reorgs-1.svg"/>
-<br />
-<img style="width: 650px;" src="./img/reorgs-2.svg"/>
+<img style="width: 500px; margin-right: 150px;" src="./img/reorgs-1.svg" />
+<br/>
+<img style="width: 650px;" src="./img/reorgs-2.svg" />
 
 Notes:
 Previously we talked about how a node's view of the best block can change, and that is called a re-org.
@@ -536,9 +526,9 @@ Previously we talked about how a node's view of the best block can change, and t
 
 ## Modified Fork Choice Rule
 
-<img style="width: 500px; margin-right: 150px;" src="./img/reorgs-finality-1.svg"/>
-<br />
-<img style="width: 650px" src="./img/reorgs-finality-2.svg"/>
+<img style="width: 500px; margin-right: 150px;" src="./img/reorgs-finality-1.svg" />
+<br/>
+<img style="width: 650px" src="./img/reorgs-finality-2.svg" />
 
 Only extend best finalized chain
 Notes:
@@ -551,7 +541,7 @@ Once you have a finality gadget installed, you have to make sure you only ever a
 <pba-flex center>
 
 - Deterministic finality _only_
-- Requires an external block authoring scheme<br> with its own liveness proof.
+- Requires an external block authoring scheme<br/> with its own liveness proof.
 - Kind of like Tendermint but better.
 - Finalizes chains, not blocks.
 
@@ -561,22 +551,27 @@ Once you have a finality gadget installed, you have to make sure you only ever a
 
 ## Vote on Chains, not Blocks
 
-BFT finality with $n$ authorities is in $O(n^2)$.<br>
-Tendermint does this at **every block**.<br>
+<pba-cols style="gap:0">
+<pba-col>
+
+BFT finality with $n$ authorities is in $O(n^2)$.
+Tendermint does this at **every block**.
 This bounds the size of the authority set.
 
-<pba-flex center>
-
-With separated, we treat each vote as a vote not only for one block,<br>but also for each ancestor block.<br>
+With separated, we treat each vote as a vote not only for one block,but also for each ancestor block.
 This significantly reduces the number of total messages sent.
 
-<br>
+</pba-col>
+<pba-col>
+
+<pba-flex center>
 
 - Allows the chain to stay live even when many validators are offline
 - Allows for a challenge period to delay finality if needed
 
 </pba-flex>
-
+</pba-col>
+</pba-cols>
 ---
 
 TODO crib Andre's grandpa slides
@@ -591,7 +586,7 @@ TODO crib Andre's grandpa slides
 - Consensus systems can be {Deterministic, Probabilistic}
 - Consensus systems can be {Open participation, Finite participation}
 - There is always an assumption that at least {1/2, 2/3} participants are honest
-- In decentralized systems, we use Economics and Game Theory<br>to incentivize honest execution of the consensus protocol
+- In decentralized systems, we use Economics and Game Theory<br/>to incentivize honest execution of the consensus protocol
 
 ---
 
@@ -599,4 +594,4 @@ TODO crib Andre's grandpa slides
 
 # Game Time
 
-> I want to play a game...<br>a board game!
+> I want to play a game...<br/>a board game!

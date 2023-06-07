@@ -8,7 +8,7 @@ duration: 1 hour
 
 ---
 
-## Comparison to<br>Pointer Based Data Structures
+## Comparison to<br/>Pointer Based Data Structures
 
 - A hash references the _content_ of some data;
 - A pointer tells you where to find it;
@@ -18,7 +18,7 @@ duration: 1 hour
 
 ## Hash Chains
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Hash-Chains.png"/>
+<img style="width: 800px" src="../../../assets/img/1-Cryptography/Hash-Chains.png" />
 
 A hash chain is a linked list using hashes to connect nodes.
 
@@ -26,7 +26,7 @@ A hash chain is a linked list using hashes to connect nodes.
 
 ## Merkle Trees
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-tree-all-purple.png"/>
+<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-tree-all-purple.png" />
 
 A binary Merkle tree is a binary tree using hashes to connect nodes.
 
@@ -43,7 +43,7 @@ _Crucial for the trustless nature of decentralised cryptographic data systems!_
 
 ## Proofs: Merkle Copaths
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-Copaths.png"/>
+<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-Copaths.png" />
 
 Notes:
 
@@ -55,7 +55,7 @@ If we compute the correct root, this proves that the leaf was in the tree
 
 ## Security
 
-Collision resistance: we reasonably assume only one preimage for each hash,<br>therefore making the data structure's linkage persistent and enduring (until the cryptography becomes compromised 😥).
+Collision resistance: we reasonably assume only one preimage for each hash,<br/>therefore making the data structure's linkage persistent and enduring (until the cryptography becomes compromised 😥).
 
 Notes:
 
@@ -65,7 +65,7 @@ Explain what could happen when this fails.
 
 ## Security
 
-Proof of a leaf has size $O(\log n)$<br>and so do proofs of updates of a leaf
+Proof of a leaf has size $O(\log n)$<br/>and so do proofs of updates of a leaf
 
 ---
 
@@ -75,7 +75,7 @@ Proof of a leaf has size $O(\log n)$<br>and so do proofs of updates of a leaf
 
 ## Key-value database
 
-The data structure stores a map `key -> value`.<br>
+The data structure stores a map `key -> value`.<br/>
 We should be able to:
 
 1. Add new `<key,value>` pairs.
@@ -105,11 +105,7 @@ Just a selection we'll cover in this course.
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<br>
-
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Trie.png"/>
-
-<br>
+<img style="width: 800px" src="../../../assets/img/1-Cryptography/Trie.png" />
 
 Each node splits on the next digit in base $r$
 
@@ -119,11 +115,7 @@ Each node splits on the next digit in base $r$
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<br>
-
-<img style="width: 700px" src="../../../assets/img/1-Cryptography/Patricia-Trie.png"/>
-
-<br>
+<img style="width: 700px" src="../../../assets/img/1-Cryptography/Patricia-Trie.png" />
 
 If only one option for a sequence we merge them.
 
@@ -140,14 +132,12 @@ If only one option for a sequence we merge them.
 
 ---
 
-## Computational and Storage <br>Trade-offs
+## Computational and Storage <br/>Trade-offs
 
 What radix $r$ is best?
 
 - Proof size of a leaf is $r \log_r n$
   - $r=2$ gives the smallest proof for one leaf
-
-<br>
 
 ...but:
 
@@ -165,7 +155,7 @@ What radix $r$ is best?
 
 ## Merkle Mountain Ranges
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-13.png"/>
+<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-13.png" />
 
 Notes:
 
@@ -176,13 +166,13 @@ The trees that are here correspond to the binary digits of 13 that are 1.
 
 ## Merkle Mountain Ranges
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-14.png"/>
+<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-14.png" />
 
 ---
 
 ## Merkle Mountain Ranges
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/MMR-13.png"/>
+<img style="width: 800px" src="../../../assets/img/1-Cryptography/MMR-13.png" />
 
 Notes:
 

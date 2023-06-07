@@ -13,7 +13,7 @@ These instructions are meant to serve as guidelines to help you complete the act
 
 - Team up with 2-4 students to complete this activity.
 
-- Write a program, preferably in Rust, that finds the key to generate the plaintext from the provided cipher texts (consider the hints).<br>
+- Write a program, preferably in Rust, that finds the key to generate the plaintext from the provided cipher texts (consider the hints).<br/>
   The general steps are:
 
   1. Find the length of the longest input cipher text.

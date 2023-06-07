@@ -16,8 +16,8 @@ The basic workflow for this for an instructor is to:
 
    1. Ensure a README exists with clear instructions.
    1. Create a _dedicated branch_ to write up a solution.
-   1. Integrate unit and/or integration tests that students can run to check their work.<br>
-      > Note: these can be run as [GitHub Actions](https://docs.github.com/en/actions) on student's pushing commit's to their work, like a `cargo test ...` or script for example. <!-- markdown-link-check-disable-line -->
+   1. Integrate unit and/or integration tests that students can run to check their work.<br/>
+      > These can be run as [GitHub Actions](https://docs.github.com/en/actions) on student's pushing commit's to their work, like a `cargo test ...` or script for example. <!-- markdown-link-check-disable-line -->
       > See [docs on autograding](https://docs.github.com/en/education/manage-coursework-with-github-classroom/teach-with-github-classroom/use-autograding) <!-- markdown-link-check-disable-line -->
    1. Ensure `main` of the repository is the assignment as it should be delivered to students.
    1. In the github repo's general settings, switch the repository to a [template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository). <!-- markdown-link-check-disable-line -->
@@ -53,7 +53,7 @@ It's an electron app that lets to select an assignment and select some or all re
 
 A superior solution is to [installing GitHub's command line client](https://github.com/cli/cli#installation), authenticating with it, and then using a simple bash script to clone all the relevant repos using `gh`:
 
-```bash
+```sh
 owner="Polkadot-Blockchain-Academy"
 prefix="pba-assignment-1"
 

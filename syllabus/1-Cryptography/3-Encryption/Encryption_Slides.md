@@ -20,7 +20,7 @@ duration: 1 hour
 
 ## Symmetric Cryptography
 
-Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br>The shared secret can then be used to protect further communications from others who do not know this secret.
+Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br/>The shared secret can then be used to protect further communications from others who do not know this secret.
 
 In essence, it gives a way of _extending_ a shared secret over time.
 
@@ -28,7 +28,7 @@ In essence, it gives a way of _extending_ a shared secret over time.
 
 ## Symmetric Encryption
 
-<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Symmetric-Cryptography.png"/>
+<img style="width: 1100px" src="../../../assets/img/1-Cryptography/Symmetric-Cryptography.png" />
 
 Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
 
@@ -44,7 +44,7 @@ Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
 The encryption and decryption functions are identical: applying a bitwise XOR operation with a key.
 
 </pba-col>
-<widget-column style="padding-right: 100px">
+<pba-col style="padding-right: 100px">
 
 ```text
 Plain: 1010  -->Cipher: 0110
@@ -73,19 +73,17 @@ We caution however that constructing these protocols remains delicate, even give
 
 ### ECB penguin
 
-<br>
-
 <pba-cols>
 <pba-col>
 
-<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin.png"/>
+<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin.png" />
 
 _Original image_
 
 </pba-col>
 <pba-col>
 
-<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin-Encrypted.png"/>
+<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin-Encrypted.png" />
 
 _Encrypted image_
 
@@ -110,7 +108,7 @@ Image sources: https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.
 
 ## Asymmetric Encryption
 
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow.svg"/>
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow.svg" />
 
 ---
 
@@ -124,7 +122,7 @@ i.e. Public key is used to encrypt but a different, _secret_, key must be used t
 
 ## Commutative En-/Decryption
 
-In a commutative structure, a message may be encrypted/decrypted<br>multiple times with potentially multiple keys.
+In a commutative structure, a message may be encrypted/decrypted<br/>multiple times with potentially multiple keys.
 
 The output does not depend on the order of operations.
 
@@ -132,7 +130,7 @@ The output does not depend on the order of operations.
 
 ## Diffie-Hellman Key Exchange
 
-<img style="height: 500px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange_horizontal.svg"/>
+<img style="height: 500px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange_horizontal.svg" />
 
 Mixing Paint Visualization
 
@@ -156,4 +154,6 @@ Elliptic curve cryptography is based on _commutative_ algebraic structures.
 
 ---
 
-# Questions?
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions

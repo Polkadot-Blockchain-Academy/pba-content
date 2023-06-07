@@ -18,7 +18,7 @@ duration: 1 hour
 
 ## XCM is an evolving format!
 
-We are presently in V2 with V3 on the way!
+We have just merged V3!
 
 Notes:
 
@@ -41,20 +41,19 @@ The specification document for the XCM format
 
 <pba-flex center>
 
-1. [XCM Communication Model](#xcm-communication-model)
 1. [Basic Top-Level Format](#basic-top-level-format)
 1. XCVM Registers\*
 1. [Basic XCVM Operation](#basic-top-level-format)
 1. [XCVM Instruction Set](#instruction)
-1. Universal Asset Identifiers<br>
+1. Universal Asset Identifiers<br/>
    (`MultiAsset`)\*
-1. Universal Consensus Location Identifiers<br>
+1. Universal Consensus Location Identifiers<br/>
    (`MultiLocation`)\*
 1. [XCM Error Types](#xcm-errors)
 
 </pba-flex>
 
-_\*covered in lesson 1_
+_\*covered in lesson 1 and 2_
 
 Notes:
 
@@ -117,7 +116,8 @@ These instructions usually originate from the relay chain.
 
 ## Instruction
 
-Split into a few categories. Instructions that:
+Split into a few categories.
+Instructions that:
 
 <pba-flex center>
 
@@ -136,8 +136,6 @@ Split into a few categories. Instructions that:
 <pba-flex center>
 
 handle assets:
-
-<br>
 
 - handle an Asset local assets only
 - transfer an Asset assets to another consensus system
@@ -282,7 +280,7 @@ XCM version negotiation:
 
 ## 🗣️ XCM Version Negotiation
 
-<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning"/>
+<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning" />
 
 ---
 

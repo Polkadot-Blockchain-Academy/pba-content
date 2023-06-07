@@ -116,7 +116,7 @@ This template can be used just copy and change slide by slide the content, and n
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
 ```md
-<img src="./assets/img/<module or shared>/some-tilted-thing.png" alt="tilted!">
+<img src="./assets/img/<module or shared>/some-tilted-thing.png" alt="tilted!" />
 
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
@@ -139,9 +139,10 @@ To include notes for a slide, use the "Note" keyword inside that slide.
 For example:
 
 ```md
-Note: This is a note just for you.
-Set under a line in your slide starting with "`Note`:" all
-subsequent lines are just seen in speaker view.
+Notes:
+
+This is a note just for you.
+All these lines are just seen in speaker view only.
 ```
 
 #### Transitions
@@ -200,7 +201,7 @@ The templates can be used just copy and change slide by slide the content, and n
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
 ```md
-<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!">
+<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!" />
 
 <!-- TODO: I need this image to be rotated 45deg left -->
 ```
@@ -266,7 +267,7 @@ We will use github classrooms to give each student their own fork of such reposi
 It is very likely that all students will want to run your code locally.
 We suggest that most users will use VSCode as it's most all-around featureful for academy work more than just Rust itself.
 
-**NOTE: The build times for you project need to be taken into account!**
+**Notice: The build times for you project need to be taken into account!**
 Please time on your build machine as a reference and report this to the TAs so we can all plan around the rough timeline to have students start to build things.
 
 - We **highly suggest [`sccache`](https://github.com/mozilla/sccache)** that will enable faster builds for almost all academy students! If you want to use it globally, you need to add this with the right path to your `~/.cargo/config.toml` file:

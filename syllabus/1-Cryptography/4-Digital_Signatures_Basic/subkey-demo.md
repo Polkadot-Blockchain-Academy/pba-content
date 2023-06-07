@@ -99,7 +99,7 @@ Secret Key URI `desert piano add owner tuition tail melt rally height faint thun
 
 ## Soft Derivation from Public
 
-Note: We use addresses here because Subkey does not derive paths from a raw public key (AFAIK).
+We use addresses here because Subkey does not derive paths from a raw public key (AFAIK).
 
 ```sh
 subkey inspect 5Eqipnpt5asTm7sCFWQeJjsNJX5cYVJMid3zjKHjDUGKBJTo/0

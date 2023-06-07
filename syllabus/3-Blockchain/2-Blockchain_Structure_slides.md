@@ -61,14 +61,14 @@ The first block in the chain is typically called a the "Genesis block" named aft
 
 A state machine defines:
 
-<pba-flex center style="margin-top:0">
+<pba-flex center>
 
 - Set of valid states
 - Rules for transitioning between states
 
 </pba-flex>
 
-<img style="width: 900px;" src="./img/state-machine-general.svg"/>
+<img style="width: 900px;" src="./img/state-machine-general.svg" />
 
 ---v
 
@@ -243,6 +243,8 @@ Consensus Digest is information necessary for the consensus algorithm to determi
 
 ![Header is cryptographically linked to parent, body, and state](./img/headers-link-state-body.svg)
 
+---
+
 ## Extrinsics
 
 Packets from the outside world with _zero_ or more signatures attached.
@@ -255,11 +257,10 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 ## Nodes
 
-Software agents that participate in blockchain network.
-<br>
+Software agents that participate in blockchain network.<br/>
 May perform these jobs:
 
-<pba-cols style="margin-top:0">
+<pba-cols>
 <pba-col>
 <pba-flex center>
 

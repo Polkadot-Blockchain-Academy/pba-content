@@ -6,8 +6,6 @@ duration: 1 hour
 
 # Content Workshop
 
-<br>
-
 ### _Instructional Staff Briefing_
 
 ---
@@ -35,7 +33,7 @@ Notes:
 1. Content Brainstorming
 1. Guest Lessons
 
-</widget-text>
+</pba-flex>
 
 ---
 
@@ -54,14 +52,14 @@ Notes:
 - Dinner is NOT Catered
 - Some nights will have a Guest Lesson
 
-</widget-text>
+</pba-flex>
 
 ---
 
 ## Modules and Assignments
 
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 <pba-flex style="font-size: 3px;">
 
@@ -73,8 +71,8 @@ Notes:
 6. Assignment 2
 7. FRAME - _5 Days_
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 8. Assignment 3
 9. Polkadot - 2.5 Days
@@ -83,40 +81,40 @@ Notes:
 12. XCM - 2.5 Days
 13. Maybe Optional Ungraded Assignment
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
-</widget-text>
+</pba-flex>
 
 ---
 
 ## Universidad De Buenos Aires
 
-<img src="../../assets/img/0-Shared/meta-slides/uba1.png" style="width: 800px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba1.png" style="width: 800px;" />
 
 ---v
 
-<img src="../../assets/img/0-Shared/meta-slides/uba2.png" style="width: 800px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba2.png" style="width: 800px;" />
 
 ---v
 
-<img src="../../assets/img/0-Shared/meta-slides/uba3.png" style="width: 800px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba3.png" style="width: 800px;" />
 
 ---v
 
-<img src="../../assets/img/0-Shared/meta-slides/uba4.png" style="width: 800px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba4.png" style="width: 800px;" />
 
 ---v
 
-<img src="../../assets/img/0-Shared/meta-slides/uba5.png" style="width: 800px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba5.png" style="width: 800px;" />
 
 ---v
 
-<img src="../../assets/img/0-Shared/meta-slides/uba6.png" style="width: 800px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba6.png" style="width: 800px;" />
 
 ---v
 
-<img src="../../assets/img/0-Shared/meta-slides/uba7.png" style="width: 800px;">
+<img src="../../assets/img/0-Shared/meta-slides/uba7.png" style="width: 800px;" />
 
 ---
 
@@ -129,7 +127,7 @@ Notes:
 1. Review exact dates for each module
 1. Make some **Formal Commitments**
 
-</widget-text>
+</pba-flex>
 
 Notes:
 
@@ -140,27 +138,23 @@ This endeavor will only succeed with everyone doing their part. If you cannot co
 
 ## What am I signing up for?
 
-<br>
-
 ### Instructors are the _Owner_ of content creation and delivery.
 
-<br>
-
-<widget-columns>
-<widget-column>
+<pba-cols>
+<pba-col>
 
 <center>
-<img src="../../assets/img/0-Shared/meta-slides/pledge.png" style="width: 300px;">
+<img src="../../assets/img/0-Shared/meta-slides/pledge.png" style="width: 300px;" />
 </center>
 
-</widget-column>
-<widget-column>
+</pba-col>
+<pba-col>
 
 - Ultimately responsible for the success of the module.
 - Coordinate with edu. team and TAs to do this.
 
-</widget-column>
-</widget-columns>
+</pba-col>
+</pba-cols>
 
 <!-- .element: class="fragment"-->
 
@@ -173,8 +167,6 @@ This endeavor will only succeed with everyone doing their part. If you cannot co
 - Instructor: (Hopefully) Isaac DeFrain
 - TAs: Dan, Giulia, Hector
 - Dates: January 10 - 11
-
-<br>
 
 **_Do you commit?_**
 
@@ -192,8 +184,6 @@ We are still struggling to get an offer to Isaac. I've done everything I can to 
 - TAs: Jonas, Florian, Alfonso
 - Dates: January 12 - 13
 
-<br>
-
 **_Do you commit?_**
 
 Notes:
@@ -209,8 +199,6 @@ Understood that, unfortunately, Jonas cannot be present this time. He has done g
 - Instructor: Joshy Orndorff
 - TAs: Dan, Andrew, Isaac (Hopefully)
 - Dates: January 16 - 18
-
-<br>
 
 ✅ Already committed
 
@@ -228,8 +216,6 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 - TAs: Andrew, Shawn, Dan, Joshy
 - Dates: January 18 - 20
 
-<br>
-
 **_Do you commit?_**
 
 ---v
@@ -242,8 +228,6 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 - TAs: Kian, Dan, Hector, Alex T
 - Dates: January 23 - 27
 
-<br>
-
 **_Do you commit?_**
 
 ---v
@@ -255,8 +239,6 @@ Except Isaac doesn't have an offer yet. He is willing to commit but we're waitin
 - Instructors: Rob, Andronik
 - TAs: Kian, Shawn
 - Dates: January 30 - February 1
-
-<br>
 
 **_Do you commit?_**
 
@@ -274,8 +256,6 @@ Understood that Rob cannot be present for February 1st.
 - TAs: Ricardo, Hector
 - Dates: February 1 - 3
 
-<br>
-
 **_Do you commit?_**
 
 ---v
@@ -287,8 +267,6 @@ Understood that Rob cannot be present for February 1st.
 - Instructors: Kieth, Gorka
 - TAs: Hector, Andrew
 - Dates: February 6 - 8
-
-<br>
 
 **_Do you commit?_**
 
@@ -302,9 +280,7 @@ Gorka is from the Moonbeam team and has already committed.
 
 ## Alright! We have a TEAM!
 
-<br>
-
-<img src="../../assets/img/0-Shared/meta-slides/salute-team.jpg" style="width: 900px;">
+<img src="../../assets/img/0-Shared/meta-slides/salute-team.jpg" style="width: 900px;"\>
 
 ---
 
@@ -314,14 +290,12 @@ Gorka is from the Moonbeam team and has already committed.
 
 _The approach to teaching, is the theory and practice of learning,_
 
-<br>
-
 Biggest feedback from wave 1:
 **_Too much boring lecture_**
 
 <!-- .element: class="fragment"-->
 
-</widget-text >
+</pba-flex >
 
 Notes:
 
@@ -351,7 +325,7 @@ Even if you decide that you absolutely must do a long lecture, you aren't going 
 
 ### Teachers Imagine
 
-<img src="../../assets/img/0-Shared/meta-slides/hand.png" style="width: 900px;">
+<img src="../../assets/img/0-Shared/meta-slides/hand.png" style="width: 900px;" />
 
 Notes:
 
@@ -361,13 +335,13 @@ Teachers imagine eery student is like this one guy. But look at most of them.
 
 ### But Really
 
-<img src="../../assets/img/0-Shared/meta-slides/sleep.png" style="width: 900px;">
+<img src="../../assets/img/0-Shared/meta-slides/sleep.png" style="width: 900px;" />
 
 ---v
 
 ### But Really
 
-<img src="../../assets/img/0-Shared/meta-slides/phone.png" style="width: 900px;">
+<img src="../../assets/img/0-Shared/meta-slides/phone.png" style="width: 900px;" />
 
 ---v
 
@@ -376,9 +350,7 @@ Teachers imagine eery student is like this one guy. But look at most of them.
 - Consider assigning pre-reading or _short_ pre-recorded lectures: explore the [flipped classroom](https://en.wikipedia.org/wiki/Flipped_classroom) and [active learning](https://bokcenter.harvard.edu/active-learning)
 - Treat them as **apprentices**
 
-<br>
-
-<img src="../../assets/img/0-Shared/meta-slides/chefs.jpg" style="width: 600px;">
+<img src="../../assets/img/0-Shared/meta-slides/chefs.jpg" style="width: 600px;" />
 
 Notes:
 
@@ -436,7 +408,7 @@ Errors -> Concepts that students commonly misunderstand are well suited for this
 
 ### Break it up
 
-</widget-text>
+</pba-flex>
 
 - Coffee Break
 - Kahoot Game
@@ -453,22 +425,18 @@ Exercise: Students will do it if you tell them to. I've gotten theaters of 50+ a
 
 # Content Brainstorming
 
-<br>
-
 **Coding exercises, module by module**
 
 <pba-flex center>
 
-...in-class activities<br>
-...after-class assignments<br>
+...in-class activities<br/>
+...after-class assignments<br/>
 ...active learning ideas
 
-</widget-text>
+</pba-flex>
 
-<br>
-
-There are no stupid ideas!<br>
-Keep 'em coming...<br>
+There are no stupid ideas!<br/>
+Keep 'em coming...<br/>
 **📝 write them down! 📝**
 
 Notes:
@@ -508,13 +476,9 @@ Flip through the repository instead of showing this slide
 
 https://github.com/Polkadot-Blockchain-Academy/pba-content <!-- TODO Remove this link check disable once repo is public --> <!-- markdown-link-check-disable-line -->
 
-</widget-text>
-
-<br>
+</pba-flex>
 
 Everyone should have access to this repo, let Dan know if not.
-
-<br>
 
 **_📝 New issue by instructors on inventory to kick things off ⏰_**
 
@@ -526,7 +490,7 @@ Dan will push you before sub0 to do this!
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-<img src="../../assets/img/0-Shared/meta-slides/do-it.webp" style="width: 900px;">
+<img src="../../assets/img/0-Shared/meta-slides/do-it.webp" style="width: 900px;" />
 
 Notes:
 
@@ -541,11 +505,7 @@ Please reach out anytime and don't wait for us to get started or ask you how thi
 
 ## Beta Testing 🧪
 
-<br>
-
 Eager internal contributors and wannabe students...
-
-<br>
 
 **_What do \*you\* need they could assist with?_**
 
@@ -566,15 +526,13 @@ Maybe...?
 - Add fresh ideas
 - Inform on what is confusing or missing
 
-</widget-text>
+</pba-flex>
 
 ---v
 
 ## Beta Testing 🧪
 
 They need fresh content to help us...
-
-<br>
 
 ### ⏰ The sooner you create this, the more we can help! ⭐
 
@@ -596,8 +554,6 @@ Similar in flavor to the final project last time, but here it can be a bigger, m
 ---v
 
 ## Kudos Idea
-
-<br>
 
 ### _A fully functional parachain, incorporating custom pallets, contracts, and XCM integrations_
 

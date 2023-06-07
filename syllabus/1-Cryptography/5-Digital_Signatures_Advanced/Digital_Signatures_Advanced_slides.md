@@ -30,7 +30,7 @@ For example, the certificate transparency protocol for TLS certificates helps pr
 
 ### Certificates in Web3
 
-We are building systems that don't have a "Certificate Authority".<br>
+We are building systems that don't have a "Certificate Authority".<br/>
 But we can still use certificates in some niche instances.
 
 Notes:
@@ -45,11 +45,11 @@ Potential example to give verbally:
 
 ### Multi-Signatures
 
-We often want signatures that must be signed<br>by multiple parties to become valid.
+We often want signatures that must be signed<br/>by multiple parties to become valid.
 
 <pba-flex center>
 
-- Require some threshold of members to<br>agree to a message
+- Require some threshold of members to<br/>agree to a message
 - Protect against key loss
 
 </pba-flex>
@@ -62,7 +62,7 @@ We often want signatures that must be signed<br>by multiple parties to become va
 
 - Verifier enforced
 - Cryptographic threshold
-- Cryptographic non-threshold<br>(a.k.a. signature aggregation)
+- Cryptographic non-threshold<br/>(a.k.a. signature aggregation)
 
 ---
 
@@ -97,7 +97,7 @@ _Example: "The five key holders have signed this message."_
 
 ### Key Generation for Multi-Sigs
 
-In regular multi-signatures,<br>signatures from individual public keys are aggregated.
+In regular multi-signatures,<br/>signatures from individual public keys are aggregated.
 
 Each participant can choose their own key to use for the multi-signature.
 
@@ -185,7 +185,7 @@ However...
 
 ### Schnorr and BLS Summary
 
-Schnorr & BLS multi-signatures avoid complicating verifier logic,<br>but introduce user experience costs such as:
+Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introduce user experience costs such as:
 
 - DKG protocols
 - Reduced key derivation ability

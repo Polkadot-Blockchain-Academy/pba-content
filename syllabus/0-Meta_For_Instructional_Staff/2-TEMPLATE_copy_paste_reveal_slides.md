@@ -49,7 +49,7 @@ Stuff you should remember to say
 ## Pictures
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic">
+<img style="width: 800px" src="../../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic" />
 
 #### _Leave a note on why this one matters_
 
@@ -81,7 +81,7 @@ See the source for syntax
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit = "256"]
 
-// Make the WASM binary available.
+// Make the Wasm binary available.
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
@@ -125,10 +125,8 @@ pub type Executive = frame_executive::Executive<
 
 Use `o` to open the overview mode and explore slides here.
 
-You can see the source of these slides to copy&paste<br>
+You can see the source of these slides to copy&paste<br/>
 as slide templates in your slides!
-
-<br>
 
 <pba-flex center>
 
@@ -147,14 +145,14 @@ as slide templates in your slides!
 
 ### Center 1
 
-Using<br>`<pba-col center>`
+Using<br/>`<pba-col center>`
 
 </pba-col>
 <pba-col center>
 
 ### Center 2
 
-Using<br>`<pba-col center>`
+Using<br/>`<pba-col center>`
 
 </pba-col>
 </pba-cols>
@@ -170,14 +168,14 @@ Using<br>`<pba-col center>`
 
 ### Center 1
 
-Using<br>`<pba-col center>`
+Using<br/>`<pba-col center>`
 
 </pba-col>
 <pba-col center>
 
 ### Center 2
 
-Using<br>`<pba-col center>`
+Using<br/>`<pba-col center>`
 
 </pba-col>
 </pba-cols>
@@ -192,21 +190,21 @@ Using<br>`<pba-col center>`
 
 ### Left
 
-Using<br>`<pba-col left>`
+Using<br/>`<pba-col left>`
 
 </pba-col>
 <pba-col center>
 
 ### Center
 
-Using<br>`<pba-col center>`
+Using<br/>`<pba-col center>`
 
 </pba-col>
 <pba-col right>
 
 ### Right
 
-Using<br>`<pba-col right>`
+Using<br/>`<pba-col right>`
 
 </pba-col>
 </pba-cols>
@@ -222,21 +220,21 @@ Using<br>`<pba-col right>`
 
 ### Left
 
-Using<br>`<pba-col left>`
+Using<br/>`<pba-col left>`
 
 </pba-col>
 <pba-col center>
 
 ### Center
 
-Using<br>`<pba-col center>`
+Using<br/>`<pba-col center>`
 
 </pba-col>
 <pba-col right>
 
 ### Right
 
-Using<br>`<pba-col right>`
+Using<br/>`<pba-col right>`
 
 </pba-col>
 </pba-cols>
@@ -285,13 +283,13 @@ Using<br>`<pba-col right>`
 
 ## Images
 
-<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png"/>
+<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png" />
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png"/>
+<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png" />
 ```
 
 ---
@@ -381,7 +379,7 @@ Testing **bold** and *italic* markdown texts!
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit = "256"]
 
-// Make the WASM binary available.
+// Make the Wasm binary available.
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
@@ -431,7 +429,7 @@ pub type Executive = frame_executive::Executive<
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
 #![recursion_limit = "256"]
 
-// Make the WASM binary available.
+// Make the Wasm binary available.
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 

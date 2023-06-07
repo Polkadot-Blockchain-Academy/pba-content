@@ -23,7 +23,7 @@ Notes:
 <pba-flex center>
 
 - Define the concepts, syntax, and terms of XCM
-- Navigate exiting resources that relate to XCM
+- Navigate exciting resources that relate to XCM
 - Differentiate between XCM and message-passing protocols like XCMP
 
 ---
@@ -82,8 +82,6 @@ XCM is a **_messaging format_**.
 
 It is akin to the post card from the post office
 
-<br>
-
 It is _not_ a messaging protocol!
 
 A post card doesn't send itself!
@@ -140,9 +138,7 @@ Notes:
 
 ## Async vs Sync
 
-XCM crossing the barrier between a single consensus system<br>cannot generally be synchronous.
-
-<br>
+XCM crossing the barrier between a single consensus system<br/>cannot generally be synchronous.
 
 No guarantees on delivery time.
 
@@ -192,15 +188,12 @@ Rather, XCM defines and standardizes the interface and semantics that two or mor
 `MultiLocation` = a **_relative_** location in the consensus multiverse.
 
 All entities are addressed as paths to them, _relative_ to the current consensus system.
-
-<br>
-
-```rust
 pub struct MultiLocation {
-    pub parents: u8,
-    pub interior: Junctions,
+pub parents: u8,
+pub interior: Junctions,
 }
-```
+
+````
 
 Notes:
 
@@ -212,7 +205,7 @@ It is always represented as a location _relative_ to the current consensus syste
 
 ## Junction
 
-An item in a path to describe the<br>relative location of a consensus system:
+An item in a path to describe the<br/>relative location of a consensus system:
 
 <pba-flex center>
 
@@ -237,13 +230,24 @@ enum Junctions {
     // ...
     X8(Junction, /*...*/),
 }
-```
+````
 
 Enum containing multiple `Junction`s
 
 Notes:
 
-An array like `[Junction; 8]` or a `Vec` is explicitly not used in place of the `Junctions` enum. This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size at compilation time, and thus unused `Junction` "element slots" will always be required to be filled in, bloating the _encoded_ size of a `Junctions` data structure.
+An array like `[Junction; 8]` or a `Vec` is explicitly not used in place of the `Junctions` enum.
+This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size at compilation time, and thus unused `Junction` "element slots" will always be required to be filled in, bloating the _encoded_ size of a `Junctions` data structure.
+
+---
+
+## MultiLocation Examples
+
+- `../Parachain(1000)`: Evaluated within a parachain, this would identify our sibling parachain of index 1000. (In Rust we would write `MultiLocation { parents: 1, junctions: X1(Parachain(1000)) }` or alternatively `ParentThen(Parachain(1000)).into()`.)
+
+- `../AccountId32(0x1234...cdef)`: Evaluated within a parachain, this would identify the 32-byte account 0x1234…cdef on the relay chain.
+
+- `Parachain(42)/AccountKey20(0x1234...abcd)`: Evaluated on a relay chain, this would identify the 20-byte account 0x1234…abcd on parachain number 42 (presumably something like Moonbeam which hosts Ethereum-compatible accounts).
 
 ---
 
@@ -252,34 +256,14 @@ An array like `[Junction; 8]` or a `Vec` is explicitly not used in place of the 
 <!-- TODO DESIGN: use multilocation graphic from above and add labels in fragment / new slide here -->
 <!-- Base on this set of slides: https://docs.google.com/presentation/d/18qRqqw73L9NTWOX1cfGe5sh484UgvlpMHGekQHu9_8M/edit#slide=id.g8063ab3d6f_0_1418 . If hard, just make these into images via screenshot & use full screen -->
 
-- `../Parachain(1000)`: Evaluated within a parachain, this would identify our sibling parachain of index 1000. (In Rust we would write `MultiLocation { parents: 1, junctions: X1(Parachain(1000)) }` or alternatively `ParentThen(Parachain(1000)).into()`.)
-- `../AccountId32(0x1234...cdef)`: Evaluated within a parachain, this would identify the 32-byte account 0x1234…cdef on the relay chain.
-- `Parachain(42)/AccountKey20(0x1234...abcd)`: Evaluated on a relay chain, this would identify the 20-byte account 0x1234…abcd on parachain number 42 (presumably something like Moonbeam which hosts Ethereum-compatible accounts).
-
-<!-- TODO: speak to an example of non-parachain multi-location that would use a bridge -->
+<img rounded style="width: 650px;" src="../../../assets/img/7-XCM/mod1-multilocation-picture.png" alt="MultiLocation Example" />
 
 Notes:
-
+speak to an example of non-parachain multi-location that would use a bridge
 XCM reasons about addressing (as in a postal address) that must include understanding where you are, not just where you are going!
 This will be very powerful later on (Origins)
 
 <!-- TODO: does XCM explicitly need to know the Origin of the message? Could there be anonymous XCM? (no "return to sender" field on mail) -->
-
----
-
-## Construct a `MultiLocation`!
-
-<pba-flex center>
-
-1. What is _your_ location?
-1. Where do you _want to send to_?
-1. Write your `MultiLocation`!
-
-Notes:
-
-EXERCISE: Prompt students to decide whe a MultiLocation correctly.
-Encourage non-trivial (but direct!) paths like a specific contract on a parachain from Bitcoin.
-Call on students to state their path and where they want to go.
 
 ---
 
@@ -289,15 +273,12 @@ A `MultiLocation` denoting where an XCM originated from
 
 _Relative_ to the current location
 
-<br>
-
 Can be converted into a pallet origin in a FRAME runtime
-
-Used for access control
 
 Notes:
 
-Since `MultiLocation`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it. This is calling re-anchoring.
+Since `MultiLocation`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it.
+This is calling re-anchoring.
 
 ---
 
@@ -311,20 +292,15 @@ Notes:
 
 ---
 
-<pba-cols
 <pba-col>
 
 ### 💰 `MultiAsset` in XCM
 
 There are many _classes_ of assets (fungible, NFTs,...)
 
-<br>
-
 ```rust
 struct MultiAsset {
    id: AssetId,
-   fun: Fungibility,
-}
 ```
 
 The datatype `MultiAsset` describes them all.
@@ -431,14 +407,14 @@ This is very useful in cases where we want to give an upper limit to the executi
 
 `MultiLocation`s are relative.
 
-**Scenario:**<br>
-Current consensus system is `Para(1337)`.<br>
+**Scenario:**<br/>
+Current consensus system is `Para(1337)`.<br/>
 Destination consensus system is `Para(6969)`.
 
 <pba-flex center>
 
 - Where is `Here`?
-- What happens when I send a `MultiAsset`<br>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
+- What happens when I send a `MultiAsset`<br/>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
 
 Notes:
 
@@ -446,7 +422,7 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 ---
 
-## 🤹 Many models for <br> transferring assets
+## 🤹 Many models for <br/> transferring assets
 
 <pba-flex center>
 
@@ -456,23 +432,23 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 Notes:
 
-We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain. Accounts that are controllable by a remote chain are often referred to as **Sovereign accounts**.
+We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain.
+Accounts that are controllable by a remote chain are often referred to as **Sovereign accounts**.
 
 ---
 
-## 🤹 Many models for <br> transferring assets
+## 🤹 Many models for <br/> transferring assets
 
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer"/>
-<br>
-<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport"/>
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer" />
+<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport" />
 
 </pba-col>
 <pba-col>
 
-<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer"/>
+<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer" />
 
 </pba-col>
 </pba-cols>
@@ -518,4 +494,4 @@ TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-c
 
 ## Polkadot Network Diagram
 
-<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;"/>
+<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;" />

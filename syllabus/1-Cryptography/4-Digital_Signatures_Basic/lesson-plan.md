@@ -11,7 +11,7 @@ This lesson will be hands on and actually use some of the primitives.
 - HDKD
 - Key generation and backup
 
-_Note: The instructor should have a Rust console open and should be showing how a signature is made during this section._
+_The instructor should have a Rust console open and should be showing how a signature is made during this section._
 
 ## Outline
 
