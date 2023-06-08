@@ -86,7 +86,7 @@ Students spend the day getting hands on experience writing smart contracts for P
 
 ### Afternoon
 
-- ⌨️ Contract Writing Workshop
+- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop)
 
 ## Friday
 

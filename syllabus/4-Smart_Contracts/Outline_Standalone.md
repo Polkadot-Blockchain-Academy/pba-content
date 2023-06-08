@@ -34,7 +34,7 @@ For details, see the [Hybrid Lesson Outline](../3-Blockchain/Outline_Hybrid.md) 
 
 ## Day 3 - Morning Session
 
-- ⌨️ Contract Writing Workshop
+- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop)
 
 ## Day 3 - Afternoon Session
 
