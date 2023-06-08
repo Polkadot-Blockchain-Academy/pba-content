@@ -28,6 +28,7 @@ We need to build enough structure that students will have something concrete to 
 * Have some buried treasure contracts or ethernaut like challenges for students to be able to extract.
 * Send them challenges like partially leaked keys and see who can brute force that key to get some new coins.
 * Maybe release a new puzzle every few minutes.
+* Ink game described in the adjascent slides
 
 ## Disclosures
 
