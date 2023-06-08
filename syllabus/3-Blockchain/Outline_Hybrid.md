@@ -50,7 +50,8 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ## Wednesday
 
-
+We introduce the concept of deterministic finality, explore its history, and deep dive on a few PBFT mechanisms.
+We also explore light clients and bridges, both of which benefit from deterministic finality.
 ### Morning
 
 - 🗣️ Consensus Part 2 - Finality - Agreeing on Ordering
