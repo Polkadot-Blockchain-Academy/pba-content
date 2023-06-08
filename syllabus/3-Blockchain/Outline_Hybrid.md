@@ -60,10 +60,11 @@ Big Contract Writing Extravaganza
 - 🗣️ Wasm Concepts
 - ⌨️ ink! Code Along
 - ⌨️ ask! Code Along (optional)
+- 🗣️ Introduce Contract Writing Workshop
 
 ### Afternoon
 
-
+- ⌨️ Contract Writing Workshop
 
 ## Day 5
 This day combines the two culminating activities from the two modules into a day-long hands-on learning and comradery activity.
