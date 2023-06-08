@@ -1,8 +1,10 @@
 # Hybrid Module Outline
 
-This is an example of how the content might be arranged when the module is being offered as a collaboration with the Smart Contracts module.
+Content might be arranged this way when the Blockchain module is being offered as a full-week collaboration with the Smart Contracts module.
 
-## Day 1 - Morning Session
+## Monday
+
+### Morning
 
 - 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class.
 - 🗣️ Overview of Smart Contracts Lecture
@@ -11,19 +13,23 @@ This is an example of how the content might be arranged when the module is being
 - 🗣️ State Machine Lecture
 - ⌨️ Begin BFS coding activity - specifically state machine part
 
-## Day 1 - Afternoon Session
+### Afternoon
 - 🗣️ Accounts vs UTXOs Lecture
 - ⌨️ More BFS. try to get through chapter 1 before tomorrow
-- 🗣️ Infrastructure Problems- Where do we actually run these contracts
+- ☕ Break
+- 🗣️ Infrastructure Problems- Where do we actually run these contracts - actix example
 
 
 
-## Day 2 - Morning Session
+## Tuesday
+
+### Morning
+
 - 🗣️ Blockchain Structure Lecture
 - ☕ Break
 - ⌨️ More BFS. Start the blockchain portion even if they are not done with the state machine stuff yet.
 
-## Day 2 - Afternoon Session
+### Afternoon
 
 - 🗣️ Consensus Part 1 Lecture - Authoring - Agreeing on Possibilities
 - 🎲 Manual Consensus Activity (aka BitStory)
@@ -31,7 +37,10 @@ This is an example of how the content might be arranged when the module is being
 - 🗣️ P2P Networking Lecture
 - ⌨️ Continue coding on BFS
 
-## Day 3 - Morning Session
+## Wednesday
+
+### Morning
+
 - 🗣️ Consensus Part 2 Lecture - Finality - Agreeing on Ordering
 - ☕ Break
 - 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) <!-- markdown-link-check-disable-line -->
@@ -39,7 +48,7 @@ This is an example of how the content might be arranged when the module is being
     _This also allows for people to pull up on mobile if logged in to view easier_
 - ⌨️ BFS
 
-## Day 3 Afternoon Session
+### Afternoon
 
 - 🗣️ Light Clients Bridges
 - ⌨️ Continue Coding on BFS
@@ -47,7 +56,7 @@ This is an example of how the content might be arranged when the module is being
 - 🗣️ Resource Allocation lecture
 - ⌨️ BFS
 
-## Day 4
+## Thursday
 
 Big Contract Writing Extravaganza
 
@@ -66,10 +75,12 @@ Big Contract Writing Extravaganza
 
 - ⌨️ Contract Writing Workshop
 
-## Day 5
+## Friday
+
 This day combines the two culminating activities from the two modules into a day-long hands-on learning and comradery activity.
 
 ### Morning
+
 Students will launch a blockchain a la the blockchain module.
 Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
@@ -83,6 +94,3 @@ Then they will use that chain to launch their smart contracts a la the contracts
 ### Afternoon
 
 🎲⌨️☕ In the afternoon we will use the chain that we launched in the morning to execute the smart contracts competition.
-
-
-
