@@ -49,16 +49,39 @@ This is an example of how the content might be arranged when the module is being
 
 ## Day 4
 
-Big Contract Writing Extravaganza. Details coming soon.
+Big Contract Writing Extravaganza
+
+### Morning
+
+- 🗣️ EVM Concepts
+- ⌨️ Solidity Code Along
+- ⌨️ Vyper Code Along
+- ☕ Break
+- 🗣️ Wasm Concepts
+- ⌨️ ink! Code Along
+- ⌨️ ask! Code Along (optional)
+
+### Afternoon
+
+
 
 ## Day 5
-This day combines the two culminating activities from the respective modules.
+This day combines the two culminating activities from the two modules into a day-long hands-on learning and comradery activity.
+
+### Morning
 Students will launch a blockchain a la the blockchain module.
+Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
 
 - ⌨️ Start a Blockchain Activity
 - 🗣️ Unstoppable Applications Lecture
-- ⌨️ Launch a Contract Activity
+- ☕ Break
+- 🗣️ Types of Forks
+- ⌨️ Forking Exercises
+
+### Afternoon
+
+🎲⌨️☕ In the afternoon we will use the chain that we launched in the morning to execute the smart contracts competition.
 
 
 
