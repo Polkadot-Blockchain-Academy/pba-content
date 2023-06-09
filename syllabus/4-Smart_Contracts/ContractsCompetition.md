@@ -24,11 +24,13 @@ We need to build enough structure that students will have something concrete to 
 * Fork the chain around blocks that you don't like
 * Speculate on shitcoins
 * Launch a shitcoin (and rug your friends)
-* Ethernaut
+* Ethernaut - https://ethernaut.openzeppelin.com/
 * Have some buried treasure contracts or ethernaut like challenges for students to be able to extract.
 * Send them challenges like partially leaked keys and see who can brute force that key to get some new coins.
 * Maybe release a new puzzle every few minutes.
 * Ink game described in the adjacent slides
+* Flashloans a la https://eips.ethereum.org/EIPS/eip-3156
+* Re-entrancy challenge or task
 
 ## Disclosures
 
