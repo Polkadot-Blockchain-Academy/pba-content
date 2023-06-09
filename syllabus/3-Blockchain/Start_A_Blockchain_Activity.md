@@ -1,7 +1,7 @@
 # Start your own blockchain
 
 In this activity, students will get hands on experience operating a blockchain node and seeing it interact with other blockchain nodes.
-In particular, they will use the Substrate node template software.
+In particular, they will use the [Academy PoW Node](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW).
 
 ## Learning objectives:
 
@@ -20,38 +20,48 @@ If there is a notion of "homework" in the class, this should be given as homewor
 If not, we could get the compile going before the lecture begins.
 We should also have a docker image ready to go.
 
-### Alice and Bob Network
+### Generate User Keys
 
-For the first network, we will just have two authorities `Alice` and `Bob`.
+With Polkadot JS
 
-- Choose two volunteers to run with the `--alice` and `--bob` flags.
-  Everyone else is a full node
-- Start nodes and wait for peer connections.
-- Discuss the log messages
-- Look at telemetry
-- Kill your node for ~30 sec and then bring it back up to see it catch up syncing
+### Get Tokens
 
-### Different Authorities
+Students request tokens from the teacher by sharing their address with the teachers in a public channel.
+After the first five students have tokens, they pass them on to their peers.
+This manual approach allows students to get familiar with sending and receiving tokens in their wallet.
 
-- Here we instill the core ideas of a genesis configuration.
-- We start the network over and give more students a chance to be authorities.
-- We choose a new alice and bob.
-- But we want to do more than two at a time, so we add Charlie, DAve, et al to the genesis config.
+Optionally, you may install a faucet or UBI pallet in the chain to allow students to self service _after_ the initial manual distribution.
 
-### Key Leak
+### Optional Treasure Hunt
 
-- Now we simulate what happens when a session key is leaked.
-- We choose a few more people to restart their nodes with --alice and --bob.
-- This drives home that these keys are only for learning, and also motivates trying it again with our own keys.
+You could have tokens stored at eg the Alice key or other leaked keys and challenge students to find and recover the tokens.
+Make up a story/myth about some mysterious figure who lost their key and left clues, etc.
 
-### Own keys
+### Run Nodes
 
-Optional, as this probably will not fit at this stage in the course.
-But if there is free time, it's good to have more activities to fill it.
-Also this could be done at _any time_ later in the course if we need to fill time.
+Students start their own nodes and join the network
 
-Here we generate our own keys with the node template's `key` subcommand, and instert tham into the genesis config.
+### Start Mining
 
-## Discussion Topic
+Node runners can contribute PoW hashrate to the network in exchange for tokens.
 
-### How can we have authorities change over time?
+
+### Fork the Network
+
+In BA we forked the difficulty, but maybe there is something more compelling. Maybe fork to adjust max block size. Nice because it happened for real in bitcoin. Maybe hard because I believe max block size is controlled in the runtime.
+
+Another idea:
+When we launch the chain, we allow PoW block to have either of two valid kinds of seals. For example, one based on sha3 and another based on keccak. Then we pretend there is a cultural war and some people like one function or the other wnad some people don't care. When the time comes to fork, we have three different versions of the node available: 1 only accepts sha3, 2 only accepts keccak, 3 is the original that accepts either. In this way we can see that there will be at least two viable chains (the sha 3 chain and the keccak chain). If there are a lot of nodes that still run the old version and accept either hash, they will form a third chain. But if there are only a few such nodes, they will re-org into one of the other two chains, and potentially reorg back and forth between them.
+
+### Light Clients
+
+TODO
+
+### Other Infrastructure
+
+Like block explorer or indexer?
+
+### Smart Contracts
+
+The Smart Contracts module has an activity about launching smart contracts on a running chain.
+When these modules are run back-to-back, it makes an excellent learning experience to use this same chain we just launched to also launch the smart contracts.
