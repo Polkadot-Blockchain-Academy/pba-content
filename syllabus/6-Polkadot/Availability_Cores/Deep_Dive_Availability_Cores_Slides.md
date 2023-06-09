@@ -53,27 +53,29 @@ In a parachain block you get:
 <pba-flex center>
 
 - Proof of Validity
-    - max size: 5 * 1024 * 1024
+    - max size: 5 megabytes
 - Code upgrade 
-    - max size: 4 * 1024 * 1024
+    - max size: 4 megabytes
     - cooldown: 14400 blocks
 - HRMP messages 
-    - Max message size: 102400
+    - Max message size: 102400 bytes
     - Messages per block per channel: 10
     - Max channels: 30
 - UMP messages
-    - Max message size: 65531
+    - Max message size: 65531 bytes
     - Messages per block: 16
 
 </pba-flex>
 
 Notes:
 
-Max POV size implicitly limits the number of operations per block, since each on-chain operation and its impact on state are accounted for in the POV.
+- POV size limits operations by weight or benchmark
 
 Why not put everything in the POV?
 
-Short answer: Code upgrades and cross consensus messages have different data availability requirements than ordinary parachain operations.
+Short answer: Different data availability requirements
+
+Longer answer: Code upgrades and cross consensus messages have different data availability requirements than ordinary parachain operations.
 
 The relay chain needs to keep a copy of the current code for each parachain for PVF execution. 
 
@@ -88,10 +90,6 @@ Polkadot blockspace is consumed in two ways:
 2. When the capacity to validate a parachain block is left unused and expires
 
 <img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="Stopwatch">
-
-Notes:
-
-In this sense units of blockspace have very short lifespans, less than the relay block time of 6 seconds. To mitigate waste it is therefore critical to provide flexible markets for blockspace which maximize the proportion that is purchased and fully used.
 
 ---
 
@@ -115,7 +113,7 @@ In this sense units of blockspace have very short lifespans, less than the relay
 
 Notes:
 
-- "Availability", because a core is considered occupied by a parachain block candidate during the period when that candidate is being made available via erasure coding.
+- "Availability", because a core is considered occupied by a parachain block candidate during the period when that candidate is being made available via erasure coding. But cores mediate access to the entire parablock validation pipeline, not just availability.
 - "Core", because many candidates can be made available in parallel, mimicking the parallel computation per core in a computer processor.
 
 ---
@@ -126,7 +124,12 @@ Notes:
 
 Notes:
 
-_analogy-freight-train_: A unit of blockspace is a reserved car in a train leaving the station at a specific time. Trains are scheduled to leave the station every six seconds. An availability core is a particular car index within all trains. If you have a lease on core 4, then you have the right to fill train car 4 on each train with whatever you want to ship.
+- Most apt metaphor: train
+- Relay block: Train leaving station every 6 seconds
+- Potential Parablock: Car space in scheduled train
+- Availability core: Car index within all trains
+
+If you have a lease on core 4, then you have the right to fill train car 4 on each train with whatever you want to ship.
 
 ---
 
@@ -141,7 +144,8 @@ _analogy-freight-train_: A unit of blockspace is a reserved car in a train leavi
 Notes:
 
 To understand how cores divide up parachains protocol work among validators, we first need to understand how those validators are grouped.
-Validators randomly assigned to groups at start of session.
+- Validators randomly assigned to groups at start of session.
+- Group count is active validator count / max group size rounded up
 
 ---
 
@@ -151,15 +155,28 @@ Validators randomly assigned to groups at start of session.
 
 Notes:
 
-Validator groups rotate across availability cores in a round-robin fashion, with rotation occurring at fixed intervals. This is to prevent a byzantine backing group from interrupting the liveness of any one parachain for too long.
+- Round robin, fixed intervals
+
+This prevents a byzantine backing group from interrupting the liveness of any one parachain for too long.
 
 ---
 
+<img rounded style="width: 300px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/dice.jpeg" alt="Train">
+
 ## Assigning Approvers to Cores
 
+<pba-flex center>
+
 - Randomness via schnorrkel::vrf
+- Delay tranches add approvers until threshold met
 - Results in 30-40 assigned approvers per core
-- Different assignments each block to prevent DOS
+- Different assignments each block prevent DOS
+
+</pba-flex>
+
+Notes:
+
+Q: Why don't we just have all active validators approve each candidate?
 
 ---
 
@@ -167,19 +184,33 @@ Validator groups rotate across availability cores in a round-robin fashion, with
 
 <img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" alt="Train">
 
----
-
-## Occupying Assigned Cores
-
 Notes:
 
-If a parachain has lease or on-demand claim to space in a relay block and that parachain's collators fail to supply a parablock candidate, what does that equate to in our freight train metaphor?
+- Leases have indices and pair to cores with the same index
+- Cores for lease without a paired lease are left free, their blockspace wasted
+- When on-demand claims are queued, they are each assigned a designated core in ascending order bounded by the on-demand core count
 
 ---
 
 ## Putting the Pieces Together
 
 <img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
+
+Notes:
+
+- Depicts how leases are mapped to validator subsets
+
+---
+
+## Occupying Assigned Cores
+
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores.svg" alt="Train">
+
+Notes:
+
+If a parachain has a lease for space in a relay block and that parachain's collators fail to supply a parablock candidate, what does that equate to in our freight train metaphor?
+
+How about when the same happens for a parachain with an on-demand claim?
 
 ---
 
@@ -191,18 +222,39 @@ If a parachain has lease or on-demand claim to space in a relay block and that p
 #[pallet::getter(fn availability_cores)]
 pub(crate) type AvailabilityCores<T> = StorageValue<_, Vec<Option<CoreOccupied>>, ValueQuery>;
 
-#[pallet::storage]
-pub(crate) type ParathreadQueue<T> = StorageValue<_, ParathreadClaimQueue, ValueQuery>;
+
+pub enum CoreOccupied {
+    /// A parathread (on-demand parachain).
+    Parathread(ParathreadEntry),
+    /// A lease holding parachain.
+    Parachain,
+}
+
+/// Parathread = on-demand parachain
+pub struct ParathreadEntry {
+	/// The claim.
+	pub claim: ParathreadClaim,
+	/// Number of retries.
+	pub retries: u32,
+}
+
+```
+
+Notes:
+
+- Vector of possible core occupant types
+- None -> unoccupied
+- retries tracked for on-demand
+
+---
+
+## Core Assignments in The Runtime
+
+```rust
 
 #[pallet::storage]
 #[pallet::getter(fn scheduled)]
 pub(crate) type Scheduled<T> = StorageValue<_, Vec<CoreAssignment>, ValueQuery>;
-
-pub struct ParathreadClaimQueue {
-    queue: Vec<QueuedParathread>,
-    // this value is between 0 and config.parathread_cores
-    next_core_offset: u32,
-}
 
 pub struct CoreAssignment {
     /// The core that is assigned.
@@ -213,13 +265,48 @@ pub struct CoreAssignment {
     pub kind: AssignmentKind,
 }
 
-pub enum CoreOccupied {
-    /// A parathread (on-demand parachain).
-    Parathread(ParathreadEntry),
-    /// A parachain.
-    Parachain,
+pub enum AssignmentKind {
+	/// A parachain.
+	Parachain,
+	/// A parathread (on-demand parachain).
+	Parathread(CollatorId, u32),
 }
+
 ```
+
+Notes:
+
+- Vec of all core assignments
+- Pairs ParaId with CoreIndex
+- AssignmentKind carries retry info for on-demand
+
+---
+
+## On-Demand Queue in The Runtime
+
+```rust
+
+#[pallet::storage]
+pub(crate) type ParathreadQueue<T> = StorageValue<_, ParathreadClaimQueue, ValueQuery>;
+
+pub struct ParathreadClaimQueue {
+    queue: Vec<QueuedParathread>,
+    // this value is between 0 and config.parathread_cores
+    next_core_offset: u32,
+}
+
+/// A queued parathread (on-demand parachain) entry, pre-assigned to a core.
+pub struct QueuedParathread {
+	claim: ParathreadEntry,
+	core_offset: u32,
+}
+
+```
+
+Notes:
+
+- Vec of queued parathreads
+- `next_core_offset` determines the parathread core which will be pre-assigned the next claim to enter the queue
 
 ---
 
@@ -227,23 +314,17 @@ pub enum CoreOccupied {
 
 ---
 
-## Cores and Backing Groups
+## How Core Assignments Mediate Backing
 
-- Groups assigned by core
-- Groups only back candidates with appropriate assignment
-- Groups notified early of on-demand core assignments
+Each collation contains a `relay_parent` field corresponding to the included relay block on which that collation is based
 
-Notes:
-
-- Backing groups are assigned to parachains by core
-- Backing groups will only back candidates for the chain assigned to their assigned core as of the candidate's relay parent
-- Backing groups for on-demand cores are made aware of on-demand claims ahead of time, so that they know to start the backing process early enough that inclusion retries aren't required.
+Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group
 
 ---
 
-## Cores and Backing Groups, Code
+## How Core Assignments Mediate Backing (Cont.)
 
-We limit seconding of candidates based on availability core assignments in the function `handle_second_message()` of the Backing Subsystem.
+`handle_second_message()` in the Backing Subsystem.
 
 ```rust
 
@@ -261,22 +342,20 @@ if Some(candidate.descriptor().para_id) != rp_state.assignment {
 
 ```
 
-Notes:
-
-- rp_state is the state of the backing subsystem tracked per relay parent. 
-- The backing subsystem doesn't need to track assignments very far back. Without Asynchronous backing only the assignments at the heads of each active fork are needed. With Async backing we track up to AsyncBackingParams::allowed_ancestry_len
-- A single validator may end up simultaniously performing backing tasks relating to multiple cores even within the same fork of the chain. This happens if that validator's core assignment changed from one relay block to the next and allowed_ancestry_len > 0.
-
 ---
 
 ## Cores and Backing On-Chain
 
-- Prior candidate must vacate core before next is backed on-chain
-- When backed on-chain the candidate immediately occupies the availability core
-- Candidates provided from backing subsystem (or prospective parachains) according to core assignment
+<pba-flex center>
+
+- Candidates provided to BABE according to core assignment
+- Backed on-chain -> immediately occupies core
+- Prior occupant must vacate first
+
+</pba-flex>
 
 Notes:
-- Prior candidate leaves core by time out (1 block) or being made available
+- Mention time-out vs made available
 
 ---
 
@@ -313,10 +392,6 @@ async fn request_backable_candidates(
 					if let Some(ref scheduled_core) = occupied_core.next_up_on_available {
 						// The candidate occupying the core is available, choose its
 						// child in the fragment tree.
-						//
-						// TODO: doesn't work for on-demand parachains. We lean hard on the assumption
-						// that cores are fixed to specific parachains within a session.
-						// https://github.com/paritytech/polkadot/issues/5492
 						(scheduled_core.para_id, vec![occupied_core.candidate_hash])
 					} else {
 						continue
@@ -360,63 +435,83 @@ async fn request_backable_candidates(
 Notes:
 
 - Per core
-    - Discuss scheduled, free
-    - Discuss occupied
+    - Discuss core states free, scheduled, occupied
+    - Discuss core freeing criteria
         - `bitfields_indicate_availability`
             - next_up_on_available
         - availability time out
             - next_up_on_timeout
-    - We get a backable candidate for the assigned para id of each core, if one exists. This backs the candidate on chain and fills the vacated core.
 
 ---
 
-## Cores and Availability
+## Cores and Erasure Coding (Availability)
+
+<pba-flex center>
 
 - Core freed when bitfields indicate availability
 - 1/3 needed to reconstruct POV
 - Availability threshold 2/3 
 - But what do bits represent?
 
----
+</pba-flex>
 
-## Cores and Availability, Code
+Notes:
 
-Either graphic of taking the transverse of bitfields, or `bitfields_indicate_availability` code
+- Available candidate considered included on the relay chain
 
 ---
 
 ## Cores and Approvals, Disputes, Finality
 
-- An included candidate already occupied an availability core
-- Approvals, Disputes, and Finality only provided to included candidates
+Each included candidate has already occupied an availability core
+
+Approvals, Disputes, and Finality are only provided to included candidates
 
 ---
 
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/advantage.png" alt="Processor cores image">
+
 ## Advantages Cores Give us Now
 
-- Improved liveness through rotating backing groups
-- Flexible partitioning of resources (lease vs on-demand)
-- Intuitive unit of capacity over time
+<pba-flex center>
+
+1. Improved liveness 
+1. Flexibility of market structure 
+1. Flexibility of allocation
+1. Intuitive unit of capacity over time
+
+</pba-flex>
+
+Notes:
+
+1. Regularly rotating pairings between cores and backing groups
+1. Market structures: common good, lease, on-demand
+1. Cores accomodate huge changes in validation recipients from one block to the next
+1. Train metaphor 
 
 ---
 
 ## Cores and Roadmap Items
 
+<pba-cols>
+<pba-col center>
+
 - Exotic core scheduling
 	- Multiple cores per parachain
-	- Lease
-
----
-
-## Cores and Roadmap Items, Cont.
-
+	- Overlapping leases of many lengths
+	- Lease + On-demand
 - Strided blockspace regions
 	- EX: 2 chains each with 12 sec blocks
 - Cross timeframe cost comparisons
-- Custom bidding/purchasing logic
-	- Bid below given price
-	- Transaction pool larger than threshold
-	- Raise bid at peak usage
+- Secondary markets for blockspace regions
+
+</pba-col>
+<pba-col center>
+
+<img rounded style="width: 600px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/road.jpeg" alt="Processor cores image">
+
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -426,6 +521,7 @@ Either graphic of taking the transverse of bitfields, or `bitfields_indicate_ava
 
 1. [Implementers Guide: Scheduler Pallet](https://paritytech.github.io/polkadot/book/runtime/scheduler.html)
 1. [Forum Post: Strided Blockspace Regions](https://forum.polkadot.network/t/unifying-bulk-and-mid-term-blockspace-with-strided-regions/2228)
+1. [Rob Habermeier's Blog: Polkadot Blockspace Over Blockchains](https://www.rob.tech/polkadot-blockspace-over-blockchains/)
 
 </pba-col>
 
