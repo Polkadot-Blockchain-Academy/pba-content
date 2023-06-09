@@ -31,49 +31,43 @@ A PAB is a bytecode that follows two main principles:
 
 ###### High Level Languages
 
-<img style="height: 15vh" src="img/pab/rust_logo.png" alt="Rust logo" />
+<img style="height: 10vh" src="img/pab/rust_logo.png" alt="Rust logo" />
 
-<img style="height: 15vh" src="img/pab/c_logo.png" alt="C logo" />
+<img style="height: 10vh" src="img/pab/c_logo.png" alt="C logo" />
 
-<img style="height: 15vh" src="img/pab/c++_logo.png" alt="C++ logo" />
-
-...
+<img style="height: 10vh" src="img/pab/c++_logo.png" alt="C++ logo" />
 
 </pba-flex>
-
 </pba-col>
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<pba-col center>
 
+<pba-col center>
 <pba-flex center>
 
 ###### PABs
 
-<img style="height: 15vh" src="img/pab/jvm_logo.png" alt="jvm logo" />
-<img style="height: 15vh" src="img/pab/wasm_logo.png" alt="wasm logo" />
-<img style="height: 15vh" src="img/pab/eth_logo.png" alt="evm logo" />
+<img style="height: 10vh" src="img/pab/jvm_logo.png" alt="jvm logo" />
+<img style="height: 10vh" src="img/pab/wasm_logo.png" alt="wasm logo" />
+<img style="height: 10vh" src="img/pab/eth_logo.png" alt="evm logo" />
+<img style="height: 10vh" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
 
-...
 </pba-flex>
-
 </pba-col>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<pba-col right>
 
+<pba-col right>
 <pba-flex center>
 
 ###### Architecture's bytecode
 
 <img style="height: 10vh" src="img/pab/intel_logo.png" alt="intel logo" />
-
-<img style="width: 15vh" src="img/pab/arm_logo.png" alt="arm logo" />
-
-<img style="width: 20vh" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />?!
+<img style="width: 10vh" src="img/pab/arm_logo.png" alt="arm logo" />
+<img style="height: 10vh" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
 
 </pba-flex>
-
 </pba-col>
 <!-- .element: class="fragment" data-fragment-index="3" -->
+
 </pba-cols>
 
 ---
