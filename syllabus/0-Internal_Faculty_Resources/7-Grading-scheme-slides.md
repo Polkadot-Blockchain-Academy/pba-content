@@ -10,21 +10,63 @@ duration: 30 minuets
 
 ---
 
-## 🎯 Goals (1)
+## 🤷 Motivations from Faculty
 
-**Objective, easy to concretely define achievement, and concrete measures on assessment - qualitative and quantitative.**
+- Variability in educational standards/best practices for assignments & grading, leading to large subjectivity in scores awarded.
+- Workload is very high for manual grading of 50 to 100 students with very tight deadlines.
+
+---
+
+## 🤷 Motivations from Students
+
+- Rightly critical of totally opaque grading resulting only in a score with minimal written feedback
+- Certification cutoffs leading to _anger and toxicity_ around the program and our ecosystem
+- Over-focused on obtaining certification via assignments vs. excellence in their work
+
+---
+
+## 🎯 Goals
+
+**Objective, easy to concretely define achievement, and concrete measures on assessment - qualitative and quantitative**
 
 - Grading to be uniform and transparent for _everyone_
-- Maps _exactly_ with learning goals & outcomes (more on this latter)
-- Rubrics and complete solutions (A "Perfect" one, and ideally various levels of score categories as example for each) for all graded material
-- Test suites for code to check functionality
-- "fuzzy" topics like code quality & "beauty" need to be confined outside of hard skills & competencies in any assessments/scores/pass or fail
+  - Test suites for code to _test_ functionality
+- Maps _exactly_ with learning outcomes
+- _Confine_ and make explicit where subjectivity of graders impacts scores
+- Rubrics and complete _solutions_ for all graded material
+
+Notes:
+
+SME graders' subjectivity is still very important, topics like code quality, great use of patters/syntax, and "code beauty".
+BTU we need to be confine that outside of hard skills & competencies in any assessments/scores/pass or fail
+A "Perfect" example for the solution, and ideally various levels of score categories as example for each
 
 ---v
 
-## 🎯 Goals (2)
+## 🎯 Goals
 
-**Focus on growth & learning, not a number for grades**
+**Minimize faculty's time spent on grading _on-site_**
+
+- Time on site is quite limited, interacting face-to-face is far more valuable than async reviewing and grading
+- Minimize grading turn-around time to enable actionable feedback, iterations, and seeking support from SMEs
+- (For now) the end of the in-person cohort defines absolute deadline for all grades
+
+Notes:
+We must balance between:
+
+<pba-flex center>
+
+1. Providing detailed feedback from SME to all students on all graded assignments
+   - (At least option to request this, this can be TA's primary role)
+1. Minimizing time and effort needed to assess work during a cohort
+
+</pba-flex>
+
+---v
+
+## 🎯 Goals
+
+**Student focus on growth & learning, not _only_ certification**
 
 - [Learning, not earning! 📺](https://www.youtube.com/watch?v=CnSkOXe90WI)
 - Foster intrinsic motivation & drive
@@ -34,34 +76,12 @@ duration: 30 minuets
 
 ---v
 
-## 🎯 Goals (3)
+## 🎯 Goals
 
-Minimize time and effort needed to assess work during a cohort.
+**Enable a pathway to thesis based model for multi-track future**
 
-- Time on site is VERY limited in the PBA, and we would rather have students and faculty interacting face-to-face instead of async reviewing and grading
-- Certifications (for now) are awarded at the end of the cohort, and thus the absolute deadline is before the end of the program for _all grades_
-- Minimal turn-around time to get actionable feedback will enable students seek support within the cohort from SMEs, rather than async after the cohort
-
----v
-
-## 🎯 Goals (4)
-
-We must balance between:
-
-1. Providing detailed feedback from SME to all students on all graded assignments
-   - (At least option to request this, this can be TA's primary role)
-1. Minimizing time and effort needed to assess work during a cohort
-
----v
-
-## 🎯 Goals (5)
-
-- Dry runs and/or beta testing to be complete before students are tasked with any materials
 - Flexibility to break "out of the mold" to follow passions & dig deep
-- Enable a pathway to thesis based model for multi-track future with tools and techniques used
-  - "Certifications" granted at the closing ceremony are for participation only
-  - _The exception may be the Application Engineers (parachain and solochain engineering) for completion of some level in all assignments_
-  - Only post-cohort will specific distinctions (engineering, founder, etc.) be granted a proper degree/certification
+- More [latter in this deck](#pba-thesis-driven-certifications)
 
 ---v
 
@@ -154,16 +174,49 @@ Great explainer in [three](https://www.nciea.org/blog/what-do-i-need-to-know-abo
 
 ## PBA's (proposed) Grading Scheme
 
+- Competency Checklist
 - Scoring System
-- Certification Criteria
 - Automated Grading Framework
 - PR Reviews for Feedback
+- Rubric and Solutions
+- Certification Criteria
+
+---v
+
+## 🛂 Competency Checklist
+
+Each assignment must define a set of **learning outcomes** in:
+
+<pba-flex center>
+
+1. Comprehension or Understanding
+1. Skills or Abilities
+
+</pba-flex>
+
+Notes:
+
+This is evaluated in a pass/fail manner, with grader feedback per item noted.
+
+Some are explicitly defined to be optional-to-do items that if completed qualify for a higher level of grade.
+
+---v
+
+## 🛂 Competency Checklist
+
+<img rounded src="img/competency-checklist.png" alt="competency-checklist" />
+
+A "report card" of an assignment, <br>concatenated into one for the _entire academy_.
+
+Notes:
+
+Competencies are for the course overall, not just the assignment - there will be overlap between assignments.
 
 ---v
 
 ## 📊 Scoring System
 
-Ala specification grading we use a **0 to 4 integer system** per assignment
+**0 to 4 integer system, awarded per assignment**
 
 - 0 = Nothing submitted or grossly poor performance
 - 1 = Incomplete submission, under minimal requirements
@@ -175,25 +228,13 @@ Ala specification grading we use a **0 to 4 integer system** per assignment
 
 ---v
 
-## ✅ Certification Criteria
-
-Options for criteria for certification:
-
-1. Average of integer scores for all assignments
-1. Bundling of assignments that must be above a 2 to get cert
-   - pre-defined
-   - contract negotiated
-1. Thesis Defense (only)
-
----v
-
 ## 🤖 Automated Grading Framework
 
-Based on Joshy's awesome work on the [📑 qualifying exam](https://github.com/Polkadot-Blockchain-Academy/Rust-Entrance-Exam) and [📑 assignment 0](https://github.com/Polkadot-Blockchain-Academy/pba-pre-course-assignment) we will strongly suggest all (Rust based) assignments follow this standard:
+Based on Joshy's awesome work on the [📑 qualifying exam](https://github.com/Polkadot-Blockchain-Academy/Rust-Entrance-Exam) and [📑 assignment 0](https://github.com/Polkadot-Blockchain-Academy/pba-pre-course-assignment) we strongly suggest all (Rust based) assignments follow this standard:
 
 <pba-flex center>
 
-- Templated starting point with faculty to craft cencrete assigments with `todo!("some things here...")` skeleton code defined
+- Templated starting point with faculty to craft concrete assignments with `todo!("some things here...")` skeleton code defined
 - Include "sanity check" and minimal unit tests that students _must_ complete
 - Automated test suite (closed/private) to score granular pass/fail (based on learning objectives)
 
@@ -201,21 +242,60 @@ Based on Joshy's awesome work on the [📑 qualifying exam](https://github.com/P
 
 ---v
 
-## 🕵️ PR Reviews for Feedback (1)
+## 🤖 Automated Grading Framework
 
-- A student README that discusses the work that SME will review
-  - calls out things the student wants the SME to review in work directly
-  - reflection on the work: key learning, things still to do, unresolved questions/issues the student had
-- Unit tests / CI to run and flag pass/fail (like qualifier)
-- Classrooms feedback PR can be used to comment directly on the work of each student easily
-  - Issue template is the grading rubric with tasks complete or incomplete to define if competency is met....? (next slide)
+Fully realized test suites will:
+
+- Push creators to craft very well defined assessments
+- Externalize _most_ effort to CI job for grading
+- Enable resubmission by students anytime, iterating to passing
+
+Notes:
+
+Goal is to have "black box" that returns only pass/fail on tests, and a score of 1, 2, or 3.
 
 ---v
 
-## 🕵️ PR Reviews for Feedback (2)
+## 🧐 PR Reviews as Feedback
 
-- Competency checklist
-  - Competencies are for the course, not the assignment - there will be overlap over course, not locked per assignment
+**Submissions include a README and/or PR comment**
+
+- Points explicitly to what the SME should review
+- Reflection on the work: key learning, things still to do, unresolved questions/issues the student had
+
+---v
+
+## 🧐 PR Reviews as Feedback
+
+- Github Classrooms feedback PR can be used to comment directly on the work of each student easily
+- An issue (template) opened on all classroom submission repos for manual grading
+  - This is then the grading rubric and/or checklist for the grader to evaluate if the PR closes the issue.
+
+---v
+
+## 🧙 Rubric and Solutions
+
+All assignments _must_ provide examples of end-to-end completed work to be included in grading, **for each possible score**
+
+Notes:
+
+For reference for faculty only for now, perhaps in a fully open course this should be open sourced.a
+
+---v
+
+## ✅ Certification Criteria
+
+Options for criteria for certification:
+
+<pba-flex center>
+
+1. Average of integer scores for all assignments
+1. Bundling of assignments that must be above a 2 to get cert
+   - pre-defined
+   - contract negotiated
+1. Thesis Defense (only)
+
+</pba-flex>
 
 ---
 
@@ -244,17 +324,33 @@ Based on Joshy's awesome work on the [📑 qualifying exam](https://github.com/P
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Thesis Driven Certification Model
+# PBA Thesis-driven Certifications
 
 ---v
 
-## Thesis Driven Certification Model
+## Thesis Driven Certification Integration
+
+- Certifications granted at the closing ceremony are for _participation only_
+- Post-cohort successful thesis defense lead to specific "proper" certifications/degrees (engineering, founder, etc.)
+
+Notes:
+
+The cert. exception may be the Application Engineers (parachain and solochain engineering) for completion of some level in all assignments.
+
+---v
+
+## Thesis Driven Certification Flow
 
 PBA is already a "mini-masters" program, this would expand that analogy formally:
 
-1. Select Thesis Advisor, student & advisor mutually agree on relationship
+<pba-flex center>
+
+1. Select Thesis Advisor
+   - Student & advisor mutually agree on relationship
 1. Thesis Proposal: defines work to be done, approved by Advisor (and retries if needed)
-1. Thesis work: async support from Advisor along the way
-1. Thesis Committee: define a cohort of peers and SMEs to evaluate thesis
-1. Thesis Defense: Thesis Committee to critically review work, and deem if worthy of a degree
+1. Thesis work: async support from Advisor
+1. Thesis Committee: SMEs to evaluate thesis
+1. Thesis Defense
 1. Certification Awarded
+
+</pba-flex>
