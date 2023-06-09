@@ -28,6 +28,9 @@ With Polkadot JS
 
 Students request tokens from the teacher by sharing their address with the teachers in a public channel.
 After the first five students have tokens, they pass them on to their peers.
+This manual approach allows students to get familiar with sending and receiving tokens in their wallet.
+
+Optionally, you may install a faucet or UBI pallet in the chain to allow students to self service _after_ the initial manual distribution.
 
 ### Optional Treasure Hunt
 
