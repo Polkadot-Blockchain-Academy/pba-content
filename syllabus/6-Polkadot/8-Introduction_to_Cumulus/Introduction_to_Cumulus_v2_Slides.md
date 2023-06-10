@@ -9,7 +9,6 @@ duration: 1 hours
 ---
 
 <!--
-
 ### Outline
 
 <pba-flex center>
@@ -21,7 +20,6 @@ duration: 1 hours
 1. [References](#references)
 
 </pba-flex> 
-
 -->
 
 ## What is Cumulus?
@@ -34,13 +32,13 @@ SDK for building substrate/FRAME-based Parachains
 ---v
 
 <div class="r-stack">
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-1.svg" style="width: 1500px" />
+<img src="../assets/spc_1.svg" style="width: 1500px" />
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-2.svg" style="width: 1500px" />
+<img src="../assets/spc_2.svg" style="width: 1500px" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-3.svg" style="width: 1500px" />
+<img src="../assets/spc_3.svg" style="width: 1500px" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -51,7 +49,6 @@ Notes:
 - But only "solo" chains
 - Split into runtime/node side
 - FRAME allows you to build modular components reused by runtimes
-
 
 2.
 - Polkadot makes uses of Substrate
@@ -93,7 +90,8 @@ Notes:
 - Makes the parachain  to communicate with the relay chain
 
 Notes: 
-Let's focus on those parts deeply
+
+In the next sections those parts will be deeply covered
 
 ---
 
@@ -139,15 +137,15 @@ pub struct Pvf {
   - Header of the new Block
   - Transactions of the Parachain as opaque blobs 
   - Witness data
-  - Outgoing message
+  - Outgoing messages
 
 ---v
   
 ##### Witness Data
 
-- Those are extremelly important because validator needs to validate a given PoVBlock, but without requiring the full state of the Parachain
+- Validator needs those to validate the new block (without requiring the full state of the Parachain)
+- Composed by the data used in the state transition with the relative inclusion proof in the previous state
 - The witness data make possible the in-memory reconstruction of the merkle trie needed for the Runtime Validation
-  - Only information relevant to the transactions included in the block are insered
 
 </br>
 
@@ -156,13 +154,23 @@ pub struct Pvf {
   
 ---v
 
+###### Example of Witness Data
+
+<div class="r-stack">
+<img src="../assets/pov_inclusion_proof_1.svg" style="width: 1500px" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/pov_inclusion_proof_2.svg" style="width: 1500px" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
+---v
+
 #### Little caveat - validate_block
 
 <pba-cols>
 <pba-col center>
 
 <img src="../assets/cumulus_sketch_4.svg" width = "800vw"/>
-<!-- .element: class="fragment" data-fragment-index="0" -->
 
 </pba-col>
 <pba-col center>
@@ -203,11 +211,6 @@ In the PVF in the image the Runtime is not the only thing present, there is also
 
 #### What the validate_block function actually does?
 
-<img src="../assets/validate_block.svg" style="width: 1500px" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
----v
-
 ```rust [1|2-3|5|7-10|12-13]
 fn validate_block(input: InputParams) -> Output {
     // First let's initialize the state
@@ -228,104 +231,8 @@ fn validate_block(input: InputParams) -> Output {
 
 Notes:
 
-polkadot runtime and then execute the STF of the parachain
-
----
-
-### Polkadot requirements
-
-- Polkadot requires a validation blob for verifying Parachain state transitions
-- This blob is required to be a valid Wasm binary that exposes the `validate_block` function
-- Wasm runtimes are deeply baked into the Substrate core protocol
-- The Substrate runtime is the state transition function
-
----
-
-## Verify a State Transition
-
-- A Substrate chain verifies a Block state transition on import
-- Importing a block is done using `execute_block`
-- Executing a block means to execute the entire block with all transactions
-- The input header must match the header that is the result of executing the block
-- This ensures that the storage root, the extrinsic root, etc., are correct
-
----
-
-#### Parachain Validation Function = Parachain Runtime
-
-- Reuse the substrate-based runtime
-- Augment the runtime with the `validate_block` function
-- The validation blob stored on the relay chain & the runtime code blob stored in the Parachain state are the same
-
----
-
-## Cumulus Validation Blob
-
-```rust
-fn validate_block(input: InputParams) -> Output {
-
-
-
-
-
-
-
-
-
-
-
-
-}
-```
-
----
-
-## Cumulus Validation Blob
-
-```rust
-fn validate_block(input: InputParams) -> Output {
-    // First let's initialize the state
-    let state = input.storage_proof.into_state().expect("Storage proof invalid");
-
-
-
-
-
-
-
-
-
-
-}
-```
-
-Notes:
-
 We construct the sparse in-memory database from the storage proof inside the block data and
 then ensure that the storage root matches the storage root in the `parent_head`.
-
----
-
-## Cumulus Validation Blob
-
-```rust
-fn validate_block(input: InputParams) -> Output {
-    // First let's initialize the state
-    let state = input.storage_proof.into_state().expect("Storage proof invalid");
-
-	replace_host_functions();
-
-
-
-
-
-
-
-
-}
-```
-
-Notes:
 
 We replace all the storage related host functions with functions inside the wasm blob.
 This means instead of calling into the host, we will stay inside the wasm execution.
@@ -334,55 +241,68 @@ But
 we have the in-memory database that contains all the values from the state of the parachain
 that we require to verify the block.
 
----
-
-## Cumulus Validation Blob
-
-```rust
-fn validate_block(input: InputParams) -> Output {
-    // First let's initialize the state
-    let state = input.storage_proof.into_state().expect("Storage proof invalid");
-
-	replace_host_functions();
-
-    // Run `execute_block` on top of the state
-    with_state(state, || {
-        execute_block(input.block).expect("Block is invalid")
-    })
-
-
-
-}
-```
-
-Notes:
-
 - On solo chains we also run the block import on some state
 - This state belongs to the parent of the block that should be imported
 
+- `create_output` includes for example:
+  - the number of processed messages
+  - The upward messages sent
+  - Is there a runtime upgrade to schedule?
+
+
+---v
+
+<img src="../assets/validate_block.svg" style="width: 1500px" />
+
+
 ---
 
-## Cumulus Validation Blob
+### Data Availability Protocol
+
+- The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
+
+- The PoV is too big to be included on-chain, validators will then produce a constant size **Candidate Block Recepeit** to represent the just validate block
+
+- PoVBlock, though, can't be lost because other checks on the parachain block needs to be done
+
+---v
+
+#### Pending Availability Phases
+
+- Erasure coding is applied to the PoV
+- At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available 
+
+- NOT SURE HOW MUCH OF THIS IS IN CONFLICT WITH Async Backing
+
+---
+
+### What cumulus does for you
+
+- Starting from a Substrate-based chain Cumulus:
+  - from runtime creates the PVF, with an automatic implementation of the `validate_block` function
+  - changes the block production behaviour to produce also the PoVBlock 
+
+Notes:
+Cumulus changes the compilation behavior to produce beside the normal state transition function used by the collator, also the PFV to a wasm bloc, stored in the target folder
+
+---v
+
+### Parachain System Pallet
 
 ```rust
-fn validate_block(input: InputParams) -> Output {
-    // First let's initialize the state
-    let state = input.storage_proof.into_state().expect("Storage proof invalid");
-
-	replace_host_functions();
-
-    // Run `execute_block` on top of the state
-    with_state(state, || {
-        execute_block(input.block).expect("Block is invalid")
-    })
-
-    // Create the output of the result
-    create_output()
-}
+//! `cumulus-pallet-parachain-system` handles low-level details
+//! of being a parachain.
+/// It's responsibilities include:
+//!
+//! - ingestion of the parachain validation data
+//! - ingestion of incoming downward and horizontal
+//!   messages and dispatching them
+//! - coordinating upgrades with the relay-chain
+//! - communication of parachain outputs, such as
+//!   sent messages, signalling an upgrade, etc.
 ```
 
----
-
+<!--
 ### Cumulus Validation Blob
 
 ```rust
@@ -412,23 +332,7 @@ Notes:
   - the number of processed messages
   - The upward messages sent
   - Is there a runtime upgrade to schedule?
-
----
-
-### Parachain System Pallet
-
-```rust
-//! `cumulus-pallet-parachain-system` handles low-level details
-//! of being a parachain.
-/// It's responsibilities include:
-//!
-//! - ingestion of the parachain validation data
-//! - ingestion of incoming downward and horizontal
-//!   messages and dispatching them
-//! - coordinating upgrades with the relay-chain
-//! - communication of parachain outputs, such as
-//!   sent messages, signalling an upgrade, etc.
-```
+-->
 
 ---
 
