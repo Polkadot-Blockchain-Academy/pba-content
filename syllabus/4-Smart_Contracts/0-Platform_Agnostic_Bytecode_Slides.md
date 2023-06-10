@@ -196,14 +196,20 @@ Adding two number in wasm text representation (.wat)
 </pba-col>
 <pba-col center>
 
-<img src="img/pab/stack_5.png" height="200vh">
+<div class="r-stack">
+<img src="img/pab/stack_1.svg" height="200vh">
 <!-- .element: class="fragment" data-fragment-index="1" -->
-
-<img src="img/pab/stack_5_10.png" height="200vh">
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-<img src="img/pab/stack_15.png" height="200vh">
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="img/pab/stack_2.svg" height="200vh">
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img src="img/pab/stack_3.svg" height="200vh">
+<!-- .element: class="fragment" data-fragment-index="3" -->
+<img src="img/pab/stack_4.svg" height="200vh">
+<!-- .element: class="fragment" data-fragment-index="4" -->
+<img src="img/pab/stack_5.svg" height="200vh">
+<!-- .element: class="fragment" data-fragment-index="5" -->
+<img src="img/pab/stack_6.svg" height="200vh">
+<!-- .element: class="fragment" data-fragment-index="6" -->
+</div>
 
 </pba-col>
 </pba-cols>
