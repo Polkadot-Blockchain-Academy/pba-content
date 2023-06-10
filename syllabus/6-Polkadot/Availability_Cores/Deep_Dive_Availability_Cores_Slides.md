@@ -69,7 +69,7 @@ In a parachain block you get:
 
 Notes:
 
-- POV size limits operations by weight or benchmark
+- POV size implicitly limits operations per block
 
 Why not put everything in the POV?
 
