@@ -13,7 +13,7 @@ duration: 1 hour
 - Understand what the interface of the pallet is and its implementation.
 - What the Subscription Service role is.
 - How Response Handler is being laveraged.
-- How Asset Trapping fits into the XCM picture
+- Understand how to craft XCM in FRAME pallets.
 
 ---
 
@@ -337,3 +337,12 @@ Self::deposit_event(Event::Attempted { outcome });
 [Source](https://github.com/paritytech/polkadot/blob/b1cc6fa14330261a305d56be36c04e9c99518993/xcm/pallet-xcm/src/lib.rs#L1190).
 
 ---
+
+## Proposed Exercise
+
+1. Code an extrinsic that creates an XCM which traps some funds.
+1. Code an extrinsic that creates an XCM to claim back trapped funds. 
+
+----
+
+Usually trapping funds is not a desired outcome. In the first XCM, what modification is needed to avoid such scenario ?
