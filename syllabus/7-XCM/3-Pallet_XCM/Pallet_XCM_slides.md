@@ -79,13 +79,25 @@ Every extrinsic in this category requires root as the FRAME origin.
 
 Modifies the `SupportedVersion` storage item. This storage item is a double map containing information about the XCM version supported by known destinations.
 
+---v
+
+## pallet-xcm Version Negotiation extrinsics
+
 `force_default_xcm_version`
 
 Modifies the `SafeXcmVersion` storage value. Its value is used as fallback version when the destination's supported XCM version is unknown.
 
+---v
+
+## pallet-xcm Version Negotiation extrinsics
+
 `force_subscribe_version_notify`
 
 Sends an XCM with the `SubscribeVersion` instruction to some destination.
+
+---v
+
+## pallet-xcm Version Negotiation extrinsics
 
 `force_unsubscribe_version_notify`
 
@@ -188,7 +200,7 @@ Therefore, the `querier` parameter should be checked to ensure that the system t
 
 What happens when there are still funds in the `HoldingRegister` after the execution of every instruction is done ?
 
-`pallet-xcm` implements the `DropAssets` trait which defines what to do with the funds. The current implementation traps these assets by adding an asset trap. Then these funds will need to be eventually claimed back by the same origin via `AssetClaims` instruction, which requires the implementation of `ClaimAssets` trait.
+`pallet-xcm` implements the `DropAssets` trait which defines what to do with the funds. The current implementation traps these assets by adding an asset trap. Then, these funds will need to be eventually claimed back by the same origin via `AssetClaims` instruction, which requires the implementation of `ClaimAssets` trait.
 
 These traps are stored in `AssetTraps`, a map where the key is the blake2 (256bits) of the `(origin, assets)` tuple. The storage value is the number of times this tuple has been trapped. The user have to perform as many claims as traps occured.
 
