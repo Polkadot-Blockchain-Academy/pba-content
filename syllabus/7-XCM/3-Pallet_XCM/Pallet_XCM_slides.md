@@ -71,7 +71,7 @@ Allow the user to perform a reserve-backed transfer. Its limited version takes a
 
 ---
 
-## pallet-xcm::Version Negotiation extrinsics
+## pallet-xcm Version Negotiation extrinsics
 
 Every extrinsic in this category requires root as the FRAME origin.
 
@@ -112,17 +112,6 @@ The subscription service leverages any kind of exchange of XCMs between two syst
 
 Each time a system needs to send a message to a destination with an unknown supported XCM version, its location will be stored in the `VersionDiscoveryQueue`. This queue will then be checked in the next block and `SubscribeVersion` instructions will be sent out to those locations present in the queue.
 
----v
-
-## Version Negotiation Instructions
-
-```rust
-enum Instruction {
-    SubscribeVersion { query_id: QueryId, max_response_weight: Weight },
-    UnsubscribeVersion,
-}
-```
-
 Notes:
 
 SubscribeVersion - instructs the local system to notify the sender whenever the former has its XCM version upgraded or downgraded.
@@ -159,16 +148,9 @@ A default implementation is provided by the `pallet-xcm`. It checks that the res
 
 ---v
 
-## Information Reporting Instructions
+## Information Reporting
 
-```rust
-enum Instruction {
-    ReportError(QueryResponseInfo),
-    ReportHolding { response_info: QueryResponseInfo, assets: MultiAssetFilter },
-    ReportTransactStatus(QueryResponseInfo),
-    QueryPallet { module_name: Vec<u8>, response_info: QueryResponseInfo },
-}
-```
+Every instruction used for information reporting contains `QueryResponseInfo`.
 
 ```rust
 pub struct QueryResponseInfo {
@@ -180,7 +162,7 @@ pub struct QueryResponseInfo {
 
 Notes:
 
-All of these instructions contain a `QueryResponseInfo` struct, which contains information about the intended destination of the response, the ID of the query, and the maximum weight that the dispatchable call function can use.
+All Information Reporting instructions contain a `QueryResponseInfo` struct, which contains information about the intended destination of the response, the ID of the query, and the maximum weight that the dispatchable call function can use.
 The dispatchable call function is an optional operation that XCM author can specify, and is executed upon receiving the response, effectively acting as a lifecycle hook on response.
 
 ---v
