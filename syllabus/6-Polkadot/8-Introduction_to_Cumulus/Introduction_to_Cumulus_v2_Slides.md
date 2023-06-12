@@ -101,11 +101,20 @@ In the next sections those parts will be deeply covered
 
 ### What's Runtime Validation?
 
-- What the relay chain does is: validate state transition between blocks, through the process of **Runtime Validation**
-- An important contraint: the relay chain must be able to execute the Runtime Validation without knowing the all previous state of the parachain
-- What is needed by the relay chain?
-  - The STF of the parachain (= Proof Validation Function)
-  - The minimum amount of data to make possible the validation (= Proof of Validity)
+- Relay chain validates states transitions described by the Runtime of every parachain
+
+<!-- .element: class="fragment" data-fragment-index="0" -->
+
+- Constraint: the relay chain must be able to execute the Runtime Validation without knowing the all previous state of the parachain
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- Building Blocks:
+  - Proof Validation Function
+  - Proof of Validity
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
 
 ---v
 
@@ -132,20 +141,20 @@ pub struct Pvf {
 
 #### Proof Of Validity - POV
 
-- Polkadot requires that a Parachain block is transmitted in a fixed format: **PoVBlock**
-- PoVBlock contains:
-  - Header of the new Block
-  - Transactions of the Parachain as opaque blobs 
-  - Witness data
-  - Outgoing messages
+- Polkadot requires that a Parachain blocks are transmitted to the relay chain in a fixed format: **PoVBlock**
+
+<!-- .element: class="fragment" data-fragment-index="0" -->
+
+<img src="../assets/pov_block.svg" width="600vw"/>
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
   
 ##### Witness Data
 
-- Validator needs those to validate the new block (without requiring the full state of the Parachain)
+- Needed by the validator to validate the new block (without requiring the full state of the Parachain)
+  - It allows the reconstruction of a partial in-memory merkle trie (not sure those are the correct words)
 - Composed by the data used in the state transition with the relative inclusion proof in the previous state
-- The witness data make possible the in-memory reconstruction of the merkle trie needed for the Runtime Validation
 
 </br>
 
@@ -211,12 +220,12 @@ In the PVF in the image the Runtime is not the only thing present, there is also
 
 #### What the validate_block function actually does?
 
-```rust [1|2-3|5|7-10|12-13]
+```rust [1|2-3|5]
 fn validate_block(input: InputParams) -> Output {
     // First let's initialize the state
     let state = input.storage_proof.into_state().expect("Storage proof invalid");
 
-	replace_host_functions();
+    replace_host_functions();
 
     // Run `execute_block` on top of the state
     with_state(state, || {
@@ -237,23 +246,45 @@ then ensure that the storage root matches the storage root in the `parent_head`.
 We replace all the storage related host functions with functions inside the wasm blob.
 This means instead of calling into the host, we will stay inside the wasm execution.
 This is very important as the relay chain validator hasn't the state required to verify the block.
-But
-we have the in-memory database that contains all the values from the state of the parachain
-that we require to verify the block.
+But we have the in-memory database that contains all the values from the state of the parachain that we require to verify the block.
 
 - On solo chains we also run the block import on some state
 - This state belongs to the parent of the block that should be imported
+
+---v
+
+##### Why replacing host functions?
+
+<img src="../assets/validate_block.svg" style="width: 1500px" />
+
+
+---v
+
+
+```rust [7-10|12-13]
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+    replace_host_functions();
+
+    // Run `execute_block` on top of the state
+    with_state(state, || {
+        execute_block(input.block).expect("Block is invalid")
+    })
+
+    // Create the output of the result
+    create_output()
+}
+```
+
+
+Notes:
 
 - `create_output` includes for example:
   - the number of processed messages
   - The upward messages sent
   - Is there a runtime upgrade to schedule?
-
-
----v
-
-<img src="../assets/validate_block.svg" style="width: 1500px" />
-
 
 ---
 
@@ -278,16 +309,37 @@ that we require to verify the block.
 
 ### What cumulus does for you
 
-- Starting from a Substrate-based chain Cumulus:
-  - from runtime creates the PVF, with an automatic implementation of the `validate_block` function
-  - changes the block production behaviour to produce also the PoVBlock 
+Starting from a Substrate-based chain Cumulus changes both client and runtime to make them work with the polkadot protocol abstracting all the complexity we just explained
 
+---v
+
+#### From a Substrate-Runtime to a Parachain-Runtime
+
+- When compiling a runtime that uses Cumulus, a WASM binary is generated:
+
+<img src="../assets/parachain_runtime.svg" width="500vw" />
+
+- This binary is required to register a Parachain on the relay chain
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+  
 Notes:
 Cumulus changes the compilation behavior to produce beside the normal state transition function used by the collator, also the PFV to a wasm bloc, stored in the target folder
 
 ---v
 
-### Parachain System Pallet
+#### Generate collations
+
+- The block production phase is modified to create the PoVBlock, the main changes to substrate are: 
+  - access to the storage are followed to create the witness data
+  - outgoing messages are stored in the PoV to let be processed by the relay chain
+  - ... NOT SURE
+
+---
+
+### Parachain System Pallet 
+
+- is this needed?
 
 ```rust
 //! `cumulus-pallet-parachain-system` handles low-level details
@@ -336,28 +388,54 @@ Notes:
 
 ---
 
-## Cumulus on the Node Side
+## How Cumulus make your client to communicate with Polkadot
 
-- [Relay chain interface](#relay-chain-interface)
-- [Finality](#finality)
-- [Triggering Block Authoring](#triggering-block-authoring)
-- [Ensuring Block Availability](#ensuring-block-availability)
+---v
 
----
+- Every collator run also a polkadot full node
 
-## Relay chain interface
+</br>
 
-<img rounded src="../../../assets/img/5-Polkadot/cumulus/relay-chain-interface.png" style="width: 600px" />
+- Being part of the relay chain network the collator:
+  - is able to pass collations to validators
+  - is informed of new relay chain blocks <!--keeping active the block production and consensus logic-->
 
 Notes:
 
-The relay chain interface is responsible for following the relay chain and providing block and finality notification stream along with some runtime api calls into the relay chain state for message processing.
-It can be run as an in-process full-node or a separate RPC node.
-
+the collator could also run a separeted RPC node
 
 ---
 
-## Finality
+### Relay chain interface
+
+```rust [1-2]
+/// Trait that provides all necessary methods for interaction 
+/// between collator and relay chain.
+#[async_trait]
+pub trait RelayChainInterface: Send + Sync {
+  ...
+}
+```
+
+</br>
+
+It is responsible for:
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- following the relay chain and providing block and finality notification stream
+- runtime api calls into the relay chain state for message processing
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+
+code: https://github.com/paritytech/cumulus/blob/master/client/relay-chain-interface/src/lib.rs
+
+It can be run as an in-process full-node or a separate RPC node.
+
+---
+
+### Finality
 
 ```rust
 loop {
@@ -374,7 +452,7 @@ loop {
 
 ---
 
-## Triggering Block Authoring
+### Triggering Block Authoring
 
 ```rust
 loop {
@@ -398,7 +476,7 @@ Notes:
 
 ---
 
-## Ensuring Block Availability
+### Ensuring Block Availability
 
 - On a solo chain a block gets part of the canonical chain by:
   - Being distributed to other nodes in the network
@@ -414,7 +492,7 @@ Notes:
 
 ---
 
-## Ensuring Block Availability
+### Ensuring Block Availability
 
 ```rust
 loop {
@@ -449,26 +527,75 @@ Notes:
 ## Runtime Upgrades
 
 - Every Substrate blockchain supports runtime upgrades
+<!-- .element: class="fragment" data-fragment-index="0" -->
+
+
+##### Problem
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- What happen if the PVF compilation takes too long?
+<!-- .element: class="fragment" data-fragment-index="1" -->
+  - In approval checking, there may be many no-shows, leading to slow finality
+  - In disputes, neither side may reach supermajority. Nobody will get slashed and the chain will not be reverted or finalized.
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+  
+</br>
+  
 - Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
-- Runtime upgrade is delay by a parameter configured by the relay chain
-- The first Parachain block that will be included after X relay chain blocks needs to apply the upgrade.
-- Cumulus will make sure that the runtime update is applied at the correct block
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
-A Parachain will follow the same paradigm, but the relay chain needs to be informed before the update.
+Now almost every change to the client and the runtime of the substrate based-chain is explained, is missing only the runtime upgrade managment that is not so easy as in a normal substrate-based solo chain.
+
+---v
+
+##### Solution
+
+Relay chain needs a fairly hard guarantee that the PVFs can be compiled within a reasonable amount of time
+<!-- .element: class="fragment" data-fragment-index="0" -->
+
+</br>
+
+1. Collators execute a runtime upgrade but it is not applied
+2. The relay chain executes the **PVF Pre-Chekcing Process**
+3. The first parachain block that will be included after the end of the process needs to apply the new runtime
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+</br>
+
+Cumulus autonomously follows the relay chain to apply the runtime when it's needed
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Notes:
+
+A Parachain will follow the same paradigm as a standard solo chain, but the relay chain needs to be informed before the update.
 Cumulus will provide functionality to notify the relay chain about the runtime update.
 The update will not be enacted directly; instead it takes X relay blocks (a value that is configured by the relay chain)
 before the relay chain allows the update to be applied.
 The first Parachain block that will be included after X relay chain blocks needs to apply the upgrade.
 If the update is applied before the waiting period is finished, the relay chain will reject the Parachain block for inclusion.
-The Cumulus runtime pallet will provide the functionality to register the runtime upgrade and will also make sure that the
-update is applied at the correct block.
+The Cumulus runtime pallet will provide the functionality to register the runtime upgrade and will also make sure that the update is applied at the correct block.
 https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade
+
+---v
+
+##### PVF Pre-Chekcing Process
+
+- The relay chain keeps track of all the new PVFs that need to be checked
+- Each validator checks if the compilation of a PVF is valid and does not require to much time, then it votes
+  - binary vote: accept or reject
+- As soon as the super majority is reached the voting is concluded
+- The state of the new PVF is update in the relay chain
+
+Notes:
+
+Only validators from the active set can participate in the vote. The set of active validators can change each session. That's why we reset the votes each session. A voting that observed a certain number of sessions will be rejected.
 
 ---
 
-### Transform Solo to Parachain
+## Transform Solo to Parachain
 
 To convert a Substrate runtime into a Parachain runtime, the following code needs to be added to the runtime:
 
@@ -481,17 +608,17 @@ Notes:
 When compiling a runtime that uses Cumulus, a Wasm binary is generated that contains the full code of the Parachain runtime plus the validate_block functionality.
 This binary is required to register a Parachain on the relay chain.
 
----
+---v
 
-### Transform Solo to Parachain
+## Transform Solo to Parachain
 
 Time for an exercise!
 
 - [Convert a solo chain How-to guide](https://docs.substrate.io/reference/how-to-guides/parachains/convert-a-solo-chain/)
 
----
+---v
 
-### Migrating a parachain
+## Migrating a parachain
 
 In Cumulus, take a look at:
 
