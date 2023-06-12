@@ -72,6 +72,19 @@ A PAB is a bytecode that follows two main principles:
 
 ---
 
+<div class="r-stack">
+<img style="width: 500vh" src="img/pab/pab_path_1.svg" />
+<!-- .element: class="fragment" data-fragment-index="0" -->
+<img style="width: 500vh" src="img/pab/pab_path_2.svg"/>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img style="width: 500vh" src="img/pab/pab_path_3.svg"/>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img style="width: 500vh" src="img/pab/pab_path_4.svg"/>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+</div>
+
+---
+
 #### What a PAB allows is:
 
 <pba-flex center>
