@@ -1,21 +1,25 @@
 ---
-title: New Academy Grading Scheme
-description: Research and proposal from Nuke
+title: Assessment and Grading Scheme
+description: How and why the PBA creates and grades assessments
 duration: 30 minuets
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# New Academy Grading Scheme
+# Assessment and Grading Scheme
 
----
+---v
 
 ## 🤷 Motivations from Faculty
 
 - Variability in educational standards/best practices for assignments & grading, leading to large subjectivity in scores awarded.
 - Workload is very high for manual grading of 50 to 100 students with very tight deadlines.
 
----
+Notes:
+
+Based on lessons learned in the first two cohorts about assessment.
+
+---v
 
 ## 🤷 Motivations from Students
 
@@ -23,7 +27,7 @@ duration: 30 minuets
 - Certification cutoffs leading to _anger and toxicity_ around the program and our ecosystem
 - Over-focused on obtaining certification via assignments vs. excellence in their work
 
----
+---v
 
 ## 🎯 Goals
 
@@ -98,81 +102,15 @@ We must balance between:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Alternative Grading Frameworks
-
----v
-
-## Alternative Grading Frameworks
-
-- Overview: [📰 UC Berkeley Alternative Grading Frameworks](https://teaching.berkeley.edu/resources/course-design-guide/design-effective-assessments/alternative-grading-frameworks)
-- Also [📰 University of Miami Alternative Grading Frameworks](https://academictechnologies.it.miami.edu/explore-technologies/technology-summaries/alternative-grading/index.html)
-- There are many other interesting but even less common frameworks, not discussed in this presentation.
-
----v
-
-## [📰 Grading for Equity](https://www.insidehighered.com/views/2020/01/27/advice-how-make-grading-more-equitable-opinion)
-
-- Subjective criteria to minimum or zero
-- Transparent scoring -> Are mathematically accurate to validly describe a student’s level of mastery
-- No normalization
-- Support hope and a growth mind-set
-- “Lift the veil” on how to succeed
+# Assessment Framework
 
 Notes:
 
-- Transparent scoring -> Are mathematically accurate to validly describe a student’s level of mastery
-  - They apply a more proportionately structured 0-4 scale instead of the 0-100 scale, which is mathematically oriented toward failure
-  - They also use sound mathematical principles that reflect recent performance and growth instead of averaging performance over time
-- Support hope and a growth mind-set
-  - They allow test/project retakes to emphasize and reward learning rather than penalize it, and they override previous scores with current scores that build learning persistence
-- “Lift the veil” on how to succeed
-  - They create explicit descriptions of what constitutes demonstration of content mastery through rubrics or proficiency scales.
-  - In addition, they simplify grade books and expand the methods of assessments to generate more accurate feedback and reporting about each student’s learning relative to the expected outcomes
+Research for the curious in the [Alternative Grading Frameworks](#alternative-grading-frameworks) section latter.
 
 ---v
 
-## [📰 Specs Grading](https://www.insidehighered.com/views/2016/01/19/new-ways-grade-more-effectively-essay)
-
-- Pass fail only (like PRs!)
-- Bundles to achieve levels
-
----v
-
-## [📰 Ungrading](https://www.insidehighered.com/advice/2017/11/14/significant-learning-benefits-getting-rid-grades-essay)
-
-- Reflection and Dialogue: Ungrading builds upon similar aspects of specifications and contract grading
-  - Assignments provide clear instructions, although not necessarily criteria or contracts, for students to follow
-  - Instructors should also offer students flexibility with assignment deadlines and provide opportunities for revision
-  - Ungrading does encourage instructors to have more open conversations with students about their performance, whether it is through bi-weekly conferences, feedback surveys, or asking students outright what grade to put in the system at the end of the term (Blum & Kohn, 2020)
-  - These conversations in addition to other self-reflective exercises (i.e. minute tickets, process letters, peer feedback, etc.) require students to think critically about what they’ve learned and articulate how they have developed their knowledge and skills throughout the semester
-
----v
-
-## [📰 Contract Grading](https://en.wikipedia.org/wiki/Contract_grading)
-
-- Collaboratively define grade qualifications with students (not completely pre-defined)
-- Completion of a _contracted_ number of assignments of specified quality that correspond to specific letter grades
-  - Instructors and students know exactly what is expected from them to receive a certain letter grade (no normalization)
-  - Any student who completes the work that corresponds to a "B" grade will receive a "B" (everyone can pass)
-- The grade the student receives is a reflection of how well they completed the pre-determined syllabus.
-
-- _Variant: Labor-based contract grading = writing assessment be based on effort rather than on a subjective evaluation_
-
----v
-
-## [Competency Grading 📺](https://www.youtube.com/watch?v=YQInjf8UjOo)
-
-Great explainer in [three](https://www.nciea.org/blog/what-do-i-need-to-know-about-competency-based-grading) - [part](https://www.nciea.org/blog/what-do-i-need-to-know-about-competency-based-grading-2) - [serries](https://www.nciea.org/blog/what-do-i-need-to-know-about-competency-based-grading-3)
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# PBA's (proposed) Grading Scheme
-
----v
-
-## PBA's (proposed) Grading Scheme
+## Assessment Framework
 
 - Competency Checklist
 - Scoring System
@@ -301,7 +239,7 @@ Options for criteria for certification:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Assignment and Grading<br>Resources for Faculty
+# Further Resources for Faculty
 
 ---v
 
@@ -354,3 +292,92 @@ PBA is already a "mini-masters" program, this would expand that analogy formally
 1. Certification Awarded
 
 </pba-flex>
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Alternative Grading Frameworks
+
+_Research for reference_
+
+---v
+
+## Alternative Grading Frameworks
+
+- Overview: [📰 UC Berkeley Alternative Grading Frameworks](https://teaching.berkeley.edu/resources/course-design-guide/design-effective-assessments/alternative-grading-frameworks)
+- Also [📰 University of Miami Alternative Grading Frameworks](https://academictechnologies.it.miami.edu/explore-technologies/technology-summaries/alternative-grading/index.html)
+- There are many other interesting but even less common frameworks, not discussed in this presentation.
+
+---v
+
+## [📰 Grading for Equity](https://www.insidehighered.com/views/2020/01/27/advice-how-make-grading-more-equitable-opinion)
+
+- Subjective criteria to minimum or zero
+- Transparent scoring -> Are mathematically accurate to validly describe a student’s level of mastery
+- No normalization
+- Support hope and a growth mind-set
+- “Lift the veil” on how to succeed
+
+Notes:
+
+- Transparent scoring -> Are mathematically accurate to validly describe a student’s level of mastery
+  - They apply a more proportionately structured 0-4 scale instead of the 0-100 scale, which is mathematically oriented toward failure
+  - They also use sound mathematical principles that reflect recent performance and growth instead of averaging performance over time
+- Support hope and a growth mind-set
+  - They allow test/project retakes to emphasize and reward learning rather than penalize it, and they override previous scores with current scores that build learning persistence
+- “Lift the veil” on how to succeed
+  - They create explicit descriptions of what constitutes demonstration of content mastery through rubrics or proficiency scales.
+  - In addition, they simplify grade books and expand the methods of assessments to generate more accurate feedback and reporting about each student’s learning relative to the expected outcomes
+
+---v
+
+## [📰 Specification Grading](https://www.insidehighered.com/views/2016/01/19/new-ways-grade-more-effectively-essay)
+
+- Pass fail only, based on a concrete specification givin to start
+- Style is very similar to issues -> PRs, **great fit for our faculty's skill set**
+- Bundles of specs fulfilled to achieve various levels
+
+Notes:
+
+Here we craft what students must do to be considered passing.
+This is almost a one-to-one mapping with github based workflows, and thus is not only well suited to the style of assigning and completing work that our faculty does daily, but also a bit of on-the-job-training for students.
+
+---v
+
+## [📰 Contract Grading](https://en.wikipedia.org/wiki/Contract_grading)
+
+- Collaboratively define grade qualifications with students (not completely pre-defined)
+- Completion of a _contracted_ number of assignments of specified quality that correspond to specific letter grades
+  - Instructors and students know exactly what is expected from them to receive a certain letter grade (no normalization)
+  - Any student who completes the work that corresponds to a "B" grade will receive a "B" (everyone can pass)
+- The grade the student receives is a reflection of how well they completed the pre-determined syllabus.
+
+- _Variant: Labor-based contract grading = writing assessment be based on effort rather than on a subjective evaluation_
+
+---v
+
+## [📰 Ungrading](https://www.insidehighered.com/advice/2017/11/14/significant-learning-benefits-getting-rid-grades-essay)
+
+- Clear instructions, although not necessarily criteria or contracts, for students to follow
+- Flexibility with assignment deadlines and provide opportunities for revision
+- Open conversations about performance (bi-weekly conferences, feedback surveys, or asking outright what grade they deserve)
+  - Self-assessment drives the grade, not nearly as much a grader.
+    s
+    Notes:
+
+Reflection and Dialogue are key: Ungrading builds upon similar aspects of specifications and contract grading
+Ungrading does encourage instructors to have more open conversations with students about their performance, whether it is through bi-weekly conferences, feedback surveys, or asking students outright what grade to put in the system at the end of the term (Blum & Kohn, 2020)
+These conversations in addition to other self-reflective exercises (i.e. minute tickets, process letters, peer feedback, etc.) require students to think critically about what they’ve learned and articulate how they have developed their knowledge and skills throughout the semester
+
+---v
+
+## [Competency Grading 📺](https://www.youtube.com/watch?v=YQInjf8UjOo)
+
+Great explainer in [three](https://www.nciea.org/blog/what-do-i-need-to-know-about-competency-based-grading) - [part](https://www.nciea.org/blog/what-do-i-need-to-know-about-competency-based-grading-2) - [series](https://www.nciea.org/blog/what-do-i-need-to-know-about-competency-based-grading-3)
+
+**This is the basis for assessments we will mostly embrace**
+
+Notes:
+
+More concrete implementation in the [PBA Grading Scheme](#pba-grading-scheme) section.
