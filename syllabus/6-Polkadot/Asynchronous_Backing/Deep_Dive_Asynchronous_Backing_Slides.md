@@ -40,12 +40,12 @@ Lets get to it
 
 <pba-flex center>
 
-- A backable candidate:
-	- Is seconded
-	- Distributed across validator set via statement distribution
-	- Has quorum of backing group signatures
-- A backed candidate is just a backable one that has been placed on-chain
-- Backed candidates also called "pending availability"
+- Backable candidate:
+	- Output of the offchain backing process
+	- Received a quorum of "valid" votes from its backing group
+- Backed candidate: 
+	- A backable candidate that has been placed on-chain
+	- Also termed "pending availability"
 
 </pba-flex>
 
@@ -59,28 +59,48 @@ When a candidate is backed on-chain it immediately occupies an availability core
 
 ## Synchronous Backing
 
-Image here
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Synchronous_Backing.svg" alt="Synchronous Backing">
 
----
+Note:
 
-## Disadvantage of Synchronous Backing
+Can anyone spot a problem with synchronous model?
 
-Disadvantage of 
+- Problem 1
+	- Can only start work on new parablock when prior is included
+	- One relay block for backing, one for inclusion
+	- Minimum block time of 12 seconds
+
+- Problem 2
+	- Minimal time to submit collation for 12 second total block time
+	- < 3 seconds
+	- Not enough to fill block fully
 
 ---
 
 ## Asynchronous Backing
 
-Image here. Indicate which work is done for a candidate prior to its ending up in Prospective Parachains. Indicate what parachains use to build blocks, rather than freshly included relay parent. (Older relay parent + required parent)
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Asynchronous_Backing.svg" alt="Asynchronous Backing">
+
+Notes:
+
+Indicate which work is done for a candidate prior to its ending up in Prospective Parachains. Indicate what parachains use to build blocks, rather than freshly included relay parent. (Older relay parent + required parent)
 
 ---
 
 ## The Async Backing Reasonable Collator Assumptions
 
+<pba-flex center>
+
 1. "The best existing parablock I'm aware of will eventually be included in the relay chain."
 2. "There won't be a chain reversion impacting that best parablock."
 
-_Low Stakes_: If assumptions fail, then the work spent producing a collation based on top of this "best existing parablock" is wasted
+</pba-flex>
+
+<br />
+<br />
+
+> The Stakes Are Low
+
 
 Notes:
 
@@ -95,14 +115,34 @@ Brief BABE fork choice rule review
 
 ---
 
-## Execution Context
+## Async Backing Execution Context
 
-- Required parent
-- Relay parent
-- Constraints
-	- Max POV size
-	- UMP messages
-	- ...
+<pba-cols>
+<pba-col center>
+
+- From relay chain
+	- Base constraints
+	- Relay parent
+- From unincluded segment
+	- Constraint modifications
+	- Required parent
+	
+
+</pba-col>
+<pba-col>
+
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/context.jpeg" alt="Processor cores image">
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+- How it was before:
+	- Required parent included in relay parent
+	- No need for constraint modifications
+- Relay parent vs required parent
+- Base constraints vs modifications
 
 ---
 
