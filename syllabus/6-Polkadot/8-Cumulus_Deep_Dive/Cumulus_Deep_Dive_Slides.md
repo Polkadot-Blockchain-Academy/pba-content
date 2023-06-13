@@ -33,11 +33,8 @@ SDK for building substrate/FRAME-based Parachains
 
 <div class="r-stack">
 <img src="../assets/spc_1.svg" style="width: 1500px" />
-<!-- .element: class="fragment" data-fragment-index="0" -->
-
 <img src="../assets/spc_2.svg" style="width: 1500px" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-
 <img src="../assets/spc_3.svg" style="width: 1500px" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
@@ -67,15 +64,22 @@ Notes:
 
 ---v
 <div class="r-stack">
-<img src="../assets/cumulus_sketch_1.svg" style="width: 1500px" />
+<img src="../assets/cumulus_sketch_1.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="0" -->
-<img src="../assets/cumulus_sketch_2.svg" style="width: 1500px" />
+<img src="../assets/cumulus_sketch_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="../assets/cumulus_sketch_3.svg" style="width: 1500px" />
+<img src="../assets/cumulus_sketch_3.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img src="../assets/cumulus_sketch_4.svg" style="width: 1500px" />
+<img src="../assets/cumulus_sketch_4.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="3" -->
 </div>
+
+</br>
+
+- Enables runtime validation
+<!-- .element: class="fragment" data-fragment-index="4" -->
+- Makes the parachain  to communicate with the relay chain
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes: 
 - A substrate Based Chain is composed by:
@@ -83,19 +87,11 @@ Notes:
   - Runtime (= STF)
 
 - Cumulus act as a wrapper around a those two parts to make them adapt to the polkadot protocol.
-
----v
-
-- Enables runtime validation
-- Makes the parachain  to communicate with the relay chain
-
-Notes: 
-
-In the next sections those parts will be deeply covered
+- It not only abstract the complexity around the creation of the PVF and the PoV but also continuously interact with the relay chain to continue producing block with the pooled security
 
 ---
 
-## How Cumulus Enables Runtime Validation
+## Cumulus Enables Runtime Validation
 
 ---
 
@@ -103,17 +99,27 @@ In the next sections those parts will be deeply covered
 
 - Relay chain validates states transitions described by the Runtime of every parachain
 
-<!-- .element: class="fragment" data-fragment-index="0" -->
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 - Constraint: the relay chain must be able to execute the Runtime Validation without knowing the all previous state of the parachain
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- Building Blocks:
-  - Proof Validation Function
-  - Proof of Validity
-
 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+
+
+<div class="r-stack">
+<img src="../assets/runtime_validation_1.svg" style="width: 60%" />
+<img src="../assets/runtime_validation_2.svg" style="width: 60%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="../assets/runtime_validation_3.svg" style="width: 60%" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
+
+</br>
+
+- Building Blocks to make this possible are PVF and PoV
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 
 ---v
@@ -141,36 +147,35 @@ pub struct Pvf {
 
 #### Proof Of Validity - POV
 
-- Polkadot requires that a Parachain blocks are transmitted to the relay chain in a fixed format: **PoVBlock**
+- Polkadot requires that a Parachain block is transmitted to the relay chain in a fixed format: **PoVBlock**
 
-<!-- .element: class="fragment" data-fragment-index="0" -->
-
-<img src="../assets/pov_block.svg" width="600vw"/>
+<img src="../assets/pov_block.svg" width="40%"/>
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
   
 ##### Witness Data
 
-- Needed by the validator to validate the new block (without requiring the full state of the Parachain)
+- Needed by the validator as a solution to not having the entire previous state
   - It allows the reconstruction of a partial in-memory merkle trie (not sure those are the correct words)
-- Composed by the data used in the state transition with the relative inclusion proof in the previous state
-
-</br>
-
-- This makes the biggest limitation of the PoV (max 5MiB)
-
   
 ---v
 
-###### Example of Witness Data
+###### Example of Witness Data Construction
 
 <div class="r-stack">
-<img src="../assets/pov_inclusion_proof_1.svg" style="width: 1500px" />
+<img src="../assets/pov_inclusion_proof_1.svg" style="width: 70%" />
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="../assets/pov_inclusion_proof_2.svg" style="width: 1500px" />
+<img src="../assets/pov_inclusion_proof_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
+
+</br>
+
+- Composed by only the data used in the state transition with the relative inclusion proof
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- This makes the biggest limitation of the PoV (max 5MiB)
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---v
 
@@ -179,7 +184,7 @@ pub struct Pvf {
 <pba-cols>
 <pba-col center>
 
-<img src="../assets/cumulus_sketch_4.svg" width = "800vw"/>
+<img src="../assets/cumulus_sketch_4.svg" width = "100%"/>
 
 </pba-col>
 <pba-col center>
@@ -202,16 +207,15 @@ pub struct Pvf {
 
 Notes: 
 
-In the PVF in the image the Runtime is not the only thing present, there is also a function needed to interpret all the information that are coming from the Parachain but opaque to the relay chain.
+In the first image the PVF was not only composed by the Runtime but also by function needed to interpret all the information that are coming from the Parachain but opaque to the relay chain.
 
 ---v
 
-#### Before let's do step back
+#### Let's do step back
 
 <div class="r-stack">
-<img src="../assets/pov_path_1.svg" style="width: 1500px" />
-<!-- .element: class="fragment" data-fragment-index="0" -->
-<img src="../assets/pov_path_2.svg" style="width: 1500px" />
+<img src="../assets/pov_path_1.svg" style="width: 70%" />
+<img src="../assets/pov_path_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
@@ -257,9 +261,7 @@ But we have the in-memory database that contains all the values from the state o
 
 <img src="../assets/validate_block.svg" style="width: 1500px" />
 
-
 ---v
-
 
 ```rust [7-10|12-13]
 fn validate_block(input: InputParams) -> Output {
@@ -292,7 +294,7 @@ Notes:
 
 - The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
 
-- The PoV is too big to be included on-chain, validators will then produce a constant size **Candidate Block Recepeit** to represent the just validate block
+- The PoV is too big to be included on-chain, validators will then produce a constant size **Candidate Block Recepeit** to represent the just validated block
 
 - PoVBlock, though, can't be lost because other checks on the parachain block needs to be done
 
@@ -315,7 +317,7 @@ Starting from a Substrate-based chain Cumulus changes both client and runtime to
 
 #### From a Substrate-Runtime to a Parachain-Runtime
 
-- When compiling a runtime that uses Cumulus, a WASM binary is generated:
+- When compiling a runtime that uses Cumulus, a WASM binary is generated, the PVF:
 
 <img src="../assets/parachain_runtime.svg" width="500vw" />
 
@@ -324,35 +326,21 @@ Starting from a Substrate-based chain Cumulus changes both client and runtime to
 
   
 Notes:
-Cumulus changes the compilation behavior to produce beside the normal state transition function used by the collator, also the PFV to a wasm bloc, stored in the target folder
+Cumulus changes the compilation behavior to produce beside the normal state transition function used by the collator, also the PFV to a wasm blob
 
 ---v
 
 #### Generate collations
 
 - The block production phase is modified to create the PoVBlock, the main changes to substrate are: 
-  - access to the storage are followed to create the witness data
+  - access to the storage are used to create the witness data
   - outgoing messages are stored in the PoV to let be processed by the relay chain
-  - ... NOT SURE
 
 ---
 
-### Parachain System Pallet 
+<!-- .slide: data-background-color="#4A2439" -->
 
-- is this needed?
-
-```rust
-//! `cumulus-pallet-parachain-system` handles low-level details
-//! of being a parachain.
-/// It's responsibilities include:
-//!
-//! - ingestion of the parachain validation data
-//! - ingestion of incoming downward and horizontal
-//!   messages and dispatching them
-//! - coordinating upgrades with the relay-chain
-//! - communication of parachain outputs, such as
-//!   sent messages, signalling an upgrade, etc.
-```
+# Questions
 
 <!--
 ### Cumulus Validation Blob
@@ -388,7 +376,7 @@ Notes:
 
 ---
 
-## How Cumulus make your client to communicate with Polkadot
+## Cumulus makes the parachain to communicate with the relay chain
 
 ---v
 
@@ -432,6 +420,25 @@ Notes:
 code: https://github.com/paritytech/cumulus/blob/master/client/relay-chain-interface/src/lib.rs
 
 It can be run as an in-process full-node or a separate RPC node.
+
+---
+
+### Parachain System Pallet 
+
+
+```rust
+//! `cumulus-pallet-parachain-system` handles low-level details
+//! of being a parachain.
+/// It's responsibilities include:
+//!
+//! - ingestion of the parachain validation data
+//! - ingestion of incoming downward and horizontal
+//!   messages and dispatching them
+//! - coordinating upgrades with the relay-chain
+//! - communication of parachain outputs, such as
+//!   sent messages, signalling an upgrade, etc.
+```
+
 
 ---
 
@@ -557,15 +564,15 @@ Relay chain needs a fairly hard guarantee that the PVFs can be compiled within a
 
 </br>
 
-1. Collators execute a runtime upgrade but it is not applied
-2. The relay chain executes the **PVF Pre-Chekcing Process**
-3. The first parachain block that will be included after the end of the process needs to apply the new runtime
++ Collators execute a runtime upgrade but it is not applied
++ The relay chain executes the **PVF Pre-Chekcing Process**
++ The first parachain block that will be included after the end of the process needs to apply the new runtime
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </br>
 
-Cumulus autonomously follows the relay chain to apply the runtime when it's needed
+Cumulus autonomously follows the relay chain to apply the runtime when it's time
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
