@@ -9,66 +9,45 @@ Draw content from:
 
 ## Lessons Overview
 
-### Day 1
-
-- Lesson 1: 1.5 hours,
-  Instructor: Rob? / Shawn,
-  **Introduction to Blockspace and Polkadot.**
-  **Blockchain scaling history. Rollups and Sharding.**
-
-Break: 30 mins
-
-- Lesson 2: 1.5 hours,
-  Instructor: Shawn,
-  **Data sharding: Data availability**,
-  **Execution sharding and security: Approval-voting and Disputes**
-
-Lunch break: 1 hour
-
-- Lesson 3: 1.5 hours,
-  Instructor: Rob? / Shawn,
-  Blockspace + XCMP,
-
-Break: 30 mins
-
-- Lesson 4: 1.5 hours,
-  Instuctor: Bradley,
-  **OpenGov (+ workshop if there's time)**
+### Day 1 (Half Day)
+**Afternoon**
+Lecture - Introduction to Polkadot (1 hr) @shawntabrizi or @rphmeier if on site
+Exercise - Explore a shared chain (30 m) @JoshOrndorff
+Coffee Break (15 m)
+Lecture - Shared Security and Blockspace (1 hr) @shawntabrizi or perhaps @rphmeier if on site
+Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff
 
 ### Day 2
+**Morning**
+Lecture - Ecosystem / Economy 1, Staking + treasury + other (1 hr) @shawntabrizi
+Exercise - Nominating, Validating (45 m) @JoshOrndorff
+Coffee Break (15 m)
+Lecture - Deep dive: Execution cores (1hr) @BradleyOlson64
 
-- Exercise 1: 1.5 hours,
-  instructors: Shawn,
-  **Building a simple parachain**
+**Afternoon**
+Lecture - Ecosystem / Economy 2, Governance + Fellowship + other (1 hr) @shawntabrizi
+Exercise - Referenda, delegation, and voting on class chain (45 m) @JoshOrndorff
+Coffee Break (15 m)
+Lecture - Deep dive: Cumulus (1 hr) @JoshOrndorff Could reuse Andronik’s “Introduction to Cumulus” slides
+Lecture - Deep dive: Asynchronous Backing (1 hr) @BradleyOlson64
 
-Break: 30 mins
+### Day 3
+**Morning**
+Lecture - Deep dive: Perspectives on the Chain (1 hr) @BradleyOlson64
+Exercise - Adder parachain + register parachains (45 m) @JoshOrndorff
+Coffee Break (15 m)
+Lecture - Cross-Chain Message Passing (1 hr) @shawntabrizi or perhaps @rphmeier if on site
 
-- Lesson 1: 1.5 hour,
-  instructors: Shawn / Gabrile?,
-  **Introduction to Cumulus**
+**Afternoon**
+Lecture - Polkadot vs Other Security/Scaling Part 1 (45 m) @Sophia-Gold
+Exercise - Upgrade chains to parachains, register through auctions (45 m) @JoshOrndorff
+Coffee Break (15 m)
+Lecture - Polkadot vs Other Security/Scaling Part 2 (45 m) @Sophia-Gold 
+Lectures - Guest content. (1-1.5 hr) Perhaps zombienet. Perhaps Gabriele’s Platform Agnostic Bytecode lecture.
 
-Lunch break: 1 hour
+Assumptions: 
 
-- Workshop 1: 30 minutes,
-  instructors: Shawn,
-  **How to connect a parachain to a relay chain**
-
-- Workshop 2: 1+ hours,
-  instructors: Shawn,
-  **Parachain auctions**
-
-### Day 3 (Half Day)
-
-- Lesson 1: 1.5 hours,
-  instructors: Shawn,
-  **NPoS**
-
-Break: 30 mins
-
-- Lesson 2: 45 mins,
-  instructors: Nikos,
-  **Polkadot light client**
-
-- Workshop 1: 45 mins,
-  instructors: Shawn,
-  **XCMP. Opening channels. Sending messages**
+- Content time per day: 3 hr mornings, 3.5-4 hr afternoons
+- Default 1 hr estimate for talks, including questions
+- Assumes we find the right break points to split exercises into 30-45 minute blocks. The later exercises may in practice be much longer than forecasted.
+- Assumes that Joshy is handling the presentation of exercises, though these will likely be split up more evenly. I’m certainly willing to help.
