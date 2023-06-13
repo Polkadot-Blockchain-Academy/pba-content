@@ -22,8 +22,6 @@ A PAB is a bytecode that follows two main principles:
 
 ---
 
-## Bytecodes
-
 <pba-cols>
 <pba-col left>
 
@@ -31,11 +29,11 @@ A PAB is a bytecode that follows two main principles:
 
 ###### High Level Languages
 
-<img style="height: 10vh" src="img/pab/rust_logo.png" alt="Rust logo" />
+<img style="width: 30%" src="img/pab/rust_logo.png" alt="Rust logo" />
 
-<img style="height: 10vh" src="img/pab/c_logo.png" alt="C logo" />
+<img style="width: 30%" src="img/pab/c_logo.png" alt="C logo" />
 
-<img style="height: 10vh" src="img/pab/c++_logo.png" alt="C++ logo" />
+<img style="width: 30%" src="img/pab/c++_logo.png" alt="C++ logo" />
 
 </pba-flex>
 </pba-col>
@@ -46,10 +44,10 @@ A PAB is a bytecode that follows two main principles:
 
 ###### PABs
 
-<img style="height: 10vh" src="img/pab/jvm_logo.png" alt="jvm logo" />
-<img style="height: 10vh" src="img/pab/wasm_logo.png" alt="wasm logo" />
-<img style="height: 10vh" src="img/pab/eth_logo.png" alt="evm logo" />
-<img style="height: 10vh" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
+<img style="width: 30%" src="img/pab/jvm_logo.png" alt="jvm logo" />
+<img style="width: 30%" src="img/pab/wasm_logo.png" alt="wasm logo" />
+<img style="width: 20%" src="img/pab/eth_logo.png" alt="evm logo" />
+<img style="width: 30%" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
 
 </pba-flex>
 </pba-col>
@@ -60,9 +58,9 @@ A PAB is a bytecode that follows two main principles:
 
 ###### Architecture's bytecode
 
-<img style="height: 10vh" src="img/pab/intel_logo.png" alt="intel logo" />
-<img style="width: 10vh" src="img/pab/arm_logo.png" alt="arm logo" />
-<img style="height: 10vh" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
+<img style="width: 30%" src="img/pab/intel_logo.png" alt="intel logo" />
+<img style="width: 30%" src="img/pab/arm_logo.png" alt="arm logo" />
+<img style="width: 30%" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
 
 </pba-flex>
 </pba-col>
@@ -72,20 +70,8 @@ A PAB is a bytecode that follows two main principles:
 
 ---
 
-<div class="r-stack">
-<img style="width: 500vh" src="img/pab/pab_path_1.svg" />
-<!-- .element: class="fragment" data-fragment-index="0" -->
-<img style="width: 500vh" src="img/pab/pab_path_2.svg"/>
-<!-- .element: class="fragment" data-fragment-index="1" -->
-<img style="width: 500vh" src="img/pab/pab_path_3.svg"/>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<img style="width: 500vh" src="img/pab/pab_path_4.svg"/>
-<!-- .element: class="fragment" data-fragment-index="3" -->
-</div>
-
----
-
 #### What a PAB allows is:
+
 
 <pba-flex center>
 
@@ -138,6 +124,20 @@ A SmartContract is *Arbitrary Code* that should be executed by multiple nodes, w
 
 ---
 
+## PAB's lifecycle example
+
+<div class="r-stack">
+<img style="width: 70%" src="img/pab/pab_path_1.svg" />
+<img style="width: 70%" src="img/pab/pab_path_2.svg"/>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img style="width: 70%" src="img/pab/pab_path_3.svg"/>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img style="width: 70%" src="img/pab/pab_path_4.svg"/>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+</div>
+
+---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 <img rounded style="width: 300px" src="img/ink/question-mark.svg" />
@@ -153,7 +153,8 @@ A SmartContract is *Arbitrary Code* that should be executed by multiple nodes, w
 </pba-col>
 <pba-col center>
 
-<img style="height: 30vh" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/WebAssembly_Logo.svg/1200px-WebAssembly_Logo.svg.png" alt="wasm logo" />
+<img style="width: 70%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/WebAssembly_Logo.svg/1200px-WebAssembly_Logo.svg.png" alt="wasm logo" />
+
 </pba-col>
 </pba-cols>
 
@@ -210,17 +211,17 @@ Adding two number in wasm text representation (.wat)
 <pba-col center>
 
 <div class="r-stack">
-<img src="img/pab/stack_1.svg" height="200vh">
+<img src="img/pab/stack_1.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="img/pab/stack_2.svg" height="200vh">
+<img src="img/pab/stack_2.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img src="img/pab/stack_3.svg" height="200vh">
+<img src="img/pab/stack_3.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="3" -->
-<img src="img/pab/stack_4.svg" height="200vh">
+<img src="img/pab/stack_4.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="4" -->
-<img src="img/pab/stack_5.svg" height="200vh">
+<img src="img/pab/stack_5.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="5" -->
-<img src="img/pab/stack_6.svg" height="200vh">
+<img src="img/pab/stack_6.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="6" -->
 </div>
 
@@ -244,16 +245,10 @@ Register machines use registers for passing values to instructions as a primary 
 
 - How works the communication with the environemt?
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- How is it sandboxed?
+- How the memory is managed?
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- How can we compile to WASM? (maybe not needed)
-<!-- .element: class="fragment" data-fragment-index="3" -->
-- How is it executed on-chain?
+- How is it executed?
 <!-- .element: class="fragment" data-fragment-index="4" -->
-
-Notes:
-
-To demonstrate why Wasm is (almost) a perfect PAB and why Polkadot decide to use will be explained how:
 
 ---
 
@@ -263,12 +258,12 @@ Let's call **Embedder** the program that will take the wasm blob as input and ex
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 - the embedder may want to be able to pass arguments as input to functions defined in the wasm blob
-  - (embedder -> wasm)
+  - embedder -> wasm
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 - the execution could depend on external factor 
-  - (wasm -> embedder)
+  - wasm -> embedder
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -278,34 +273,31 @@ Let's call **Embedder** the program that will take the wasm blob as input and ex
 ### Problem
 
 **Wasm has no ambient access to the computing environment in which code is executed**
-<!-- .element: class="fragment" data-fragment-index="0" -->
+
+</br>
 
 ### Solution
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Every interaction can be done by only a set of functions provided by the embedder and imported in wasm
-<!-- .element: class="fragment" data-fragment-index="2" -->
-  - Called: **Host Functions**
-<!-- .element: class="fragment" data-fragment-index="2" -->
-- The embedder is able to call only the functions provided by the wasm blob
-<!-- .element: class="fragment" data-fragment-index="3" -->
-  - Called: **Runtime API**, later in the course you will understand why they are called by that 
-<!-- .element: class="fragment" data-fragment-index="3" -->
+<img src="img/pab/env_communication.svg" sytyle="width: 70%">
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
-How data are passed between two worlds is managed by something called FFI  ????
-<!-- .element: class="fragment" data-fragment-index="5" -->
+Notes:
+
+- Every interaction with the environment can be done only by a set of functions, called **Host Functions**, provided by the embedder and imported in wasm 
+- The embedder is able to call the functions defined in wasm blob, called **Runtime API**, and pass arguments through a shared memory
 
 ---
 
-## Sanboxing
+## Memory
 
-In addition to the stack Wasm has also access to memory provided by the embedder, this memory is called **Liner Memory**.
+In addition to the stack Wasm has also access to memory provided by the embedder, the **Liner Memory**.
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 </br>
 
 - This area will be used also used as a frontier for data sharing
-- To make everything secure the Embedder is doing incredibly convoluted things (resources linked)
+- To make everything secure the Embedder is doing incredibly convoluted things 
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -318,24 +310,41 @@ The Rust compiler uses for dynamic/heap memory and to pass non primitives to fun
 - This emulated stack is what we would understand as stack in other architectures.
 - The Wasm stack on the other would be implemented using registers in other architectures.
 
+---v
+
+### Example
+
+<div class="r-stack">
+<img src="img/pab/linear_memory_1.svg" style ="width: 70%">
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="img/pab/linear_memory_2.svg" style ="width: 70%">
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
 ---
 
-## How WASM is executed on-chain
+## How WASM is executed
+
+<pba-flex left>
 
 There are multiple ways to execute wasm, the ones used in polkadot are:
 
 - Ahead Of Time Compilation (not sure if substrate-based chain uses JIT or AOT)
 - Interpretation
 
-<!-- .element: class="fragment" data-fragment-index="0" -->
+
+</br>
 
 But also other type of execution exists, for example:
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
 - Just in Time Compilation
 - Single Pass Compilation
 - Stream Compilation
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
+</pba-flex >
 
 ---v
 
@@ -415,7 +424,7 @@ https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
   
 </br>
 
-Being so simple and "Hardware-Indendent" there are wip projects to test if it is suitable to become the new polkadot smart contract language
+Being so simple and "Hardware-Indendent" there are work in progress projects to test if it is suitable to become the new polkadot smart contract language
   
 Notes: 
 resources: polkadot blogpost - polkavm + risc-v specs
@@ -429,5 +438,3 @@ All refereces can be found in the speaker notes
 <!-- .slide: data-background-color="#4A2439" -->
 
 <img rounded style="width: 300px" src="img/ink/question-mark.svg" />
-
----
