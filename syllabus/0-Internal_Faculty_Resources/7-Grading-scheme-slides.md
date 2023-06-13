@@ -96,7 +96,6 @@ We must balance between:
   - _We want to Maximize continued high-impact involvement post academy for all students and alumni_
 - Normalization for the sake of specific percent not certifying
 - "Gossip" and personal gripes/bias about students leading to bias & keep (by default, without good cause) _any_ subjective details on students out of the picture _between graders_.
-  - _Thesis committee would break this rule, running after in-person cohort is complete_
 - Unclear and subjective points systems with no clear definition that leads to grader interpretation of what a score means
 
 ---
@@ -210,7 +209,7 @@ For reference for faculty only for now, perhaps in a fully open course this shou
 
 ## 📊 Scoring System
 
-**0 to 4 integer system, awarded per assignment**
+**0 to 4 integer system, awarded _per assignment_**
 
 - 0 = Nothing submitted or grossly poor performance
 - 1 = Incomplete submission, under minimal requirements
@@ -229,12 +228,13 @@ A 4 is only manually awarded by graders based on their review of an individual's
 
 ## ✅ Certification Criteria
 
-Options for criteria for certification:
+**Average of integer scores for all assignments (effectively GPA)**
 
+Future may include:
 <pba-flex center>
 
-1. Average of integer scores for all assignments (effectively GPA)
-1. Bundling of assignments that must be above a 2 to get cert
+1. Bundling of checklist items overall (above a 2)
+1. Bundling of assignments total score (above a 2)
    - pre-defined
    - contract negotiated
 1. Thesis Defense (only)
@@ -244,63 +244,7 @@ Options for criteria for certification:
 Notes:
 
 All students can come away with a "report card" of all their competencies to (at their discretion) accompany their overall certification and overall score(s).
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# PBA Thesis Driven Certifications
-
-_For now, just and idea to discuss_
-
----v
-
-## Thesis Model Motivation
-
-- Students can dig deep into passions, with structure and support to arrive at some tangible result from it
-- Ability _subjectively_ assess students' novel work could be PBA's SMEs _unique_ value proposition
-- Removes time constraint of cohort closing ceremonies
-- _Con: new, extra time, different work scope required from faculty_
-
-Notes:
-
-Especially if course content is much more open, we need things that make the PBA long term value adding over maintaining and running content.
-
----v
-
-## Thesis Driven Certification Integration
-
-- Certifications based on scoring system remain, with option for _participation only_ if student opts-out of graded work to focus on thesis during the academy
-  - Similar in concept to Founders Track (ungraded)
-- Post-cohort successful thesis defense lead to specific "proper" certifications/degrees (engineering, founder, etc.)
-
-Notes:
-
-The cert. exception may be the Application Engineers (parachain and solochain engineering) for completion of some level in all assignments.
-
----v
-
-## Thesis Driven Certification Flow
-
-Successful completion of a PBA cohort is akin to a "mini-masters" program, the thesis track kickoff during, and continue _post cohort_:
-
-<pba-flex center>
-
-1. Commit to Thesis Advisor (During or shortly after PBA)
-   - Student & advisor mutually agree on relationship
-1. Thesis Proposal: defines work to be done,<br>approved by Advisor (and retries as needed)
-   - Modeled like W3F grant (if not actually one)
-1. Thesis work: async support from Advisor and PBA
-1. Thesis Committee: SMEs to evaluate thesis
-1. Thesis Defense
-1. Certification Awarded
-
-</pba-flex>
-
-Notes:
-
-This is somewhat akin to a on-the-job training program or internship before a student is hired within our ecosystem.
-It is a fantastic chance to help build a relationship with the committee and showcase your ability in a formalized way that is not possible presently (AFAIK).
+If we have many assignments we may move to bundles (4 is not enough)
 
 ---
 
@@ -423,3 +367,60 @@ Great explainer in [three](https://www.nciea.org/blog/what-do-i-need-to-know-abo
 Notes:
 
 More concrete implementation in the [Assessment Framework](#assessment-framework) section.
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# PBA Thesis Driven Certifications
+
+_For now, just and idea to discuss_
+
+---v
+
+## Thesis Model Motivation
+
+- Students can dig deep into passions, with structure and support to arrive at some tangible result from it
+- Ability _subjectively_ assess students' novel work could be PBA's SMEs _unique_ value proposition
+- Removes time constraint of cohort closing ceremonies
+- _Con: new, extra time, different work scope required from faculty_
+
+Notes:
+
+Especially if course content is much more open, we need things that make the PBA long term value adding over maintaining and running content.
+
+---v
+
+## Thesis Driven Certification Integration
+
+- Certifications based on scoring system remain, with option for _participation only_ if student opts-out of graded work to focus on thesis during the academy
+  - Similar in concept to Founders Track (ungraded)
+- Post-cohort successful thesis defense lead to specific "proper" certifications/degrees (engineering, founder, etc.)
+
+Notes:
+
+The cert. exception may be the Application Engineers (parachain and solochain engineering) for completion of some level in all assignments.
+
+---v
+
+## Thesis Driven Certification Flow
+
+Successful completion of a PBA cohort is akin to a "mini-masters" program, the thesis track kickoff during, and continue _post cohort_:
+
+<pba-flex center>
+
+1. Commit to Thesis Advisor (During or shortly after PBA)
+   - Student & advisor mutually agree on relationship
+1. Thesis Proposal: defines work to be done,<br>approved by Advisor (and retries as needed)
+   - Modeled like W3F grant (if not actually one)
+1. Thesis work: async support from Advisor and PBA
+1. Thesis Committee: SMEs to evaluate thesis
+1. Thesis Defense
+1. Certification Awarded
+
+</pba-flex>
+
+Notes:
+
+This is somewhat akin to a on-the-job training program or internship before a student is hired within our ecosystem.
+It is a fantastic chance to help build a relationship with the committee and showcase your ability in a formalized way that is not possible presently (AFAIK).
