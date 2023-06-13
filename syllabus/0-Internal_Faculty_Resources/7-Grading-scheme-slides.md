@@ -1,19 +1,19 @@
 ---
-title: Assessment and Grading Scheme
+title: Graded Assignments Scheme
 description: How and why the PBA creates and grades assessments
 duration: 30 minuets
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Assessment and Grading Scheme
+# Graded Assignments Scheme
 
 ---v
 
 ## 🤷 Motivations from Faculty
 
 - Variability in educational standards/best practices for assignments & grading, leading to large subjectivity in scores awarded.
-- Workload is very high for manual grading of 50 to 100 students with very tight deadlines.
+- Workload is high for manual grading of 50 to 100 students with _very_ tight deadlines.
 
 Notes:
 
@@ -56,6 +56,7 @@ A "Perfect" example for the solution, and ideally various levels of score catego
 - (For now) the end of the in-person cohort defines absolute deadline for all grades
 
 Notes:
+
 We must balance between:
 
 <pba-flex center>
@@ -113,10 +114,10 @@ Research for the curious in the [Alternative Grading Frameworks](#alternative-gr
 ## Assessment Framework
 
 - Competency Checklist
-- Scoring System
-- Automated Grading Framework
+- Automated Grading Suite
 - PR Reviews for Feedback
 - Rubric and Solutions
+- Scoring System
 - Certification Criteria
 
 ---v
@@ -149,20 +150,6 @@ A "report card" of an assignment, <br>concatenated into one for the _entire acad
 Notes:
 
 Competencies are for the course overall, not just the assignment - there will be overlap between assignments.
-
----v
-
-## 📊 Scoring System
-
-**0 to 4 integer system, awarded per assignment**
-
-- 0 = Nothing submitted or grossly poor performance
-- 1 = Incomplete submission, under minimal requirements
-- 2 = Passing all minimal requirements, pre-defined percent of test suite passing
-- 3 = Passing all test suite items, including explicitly marked optional ones
-- 4 = Grader discretion of going above the call of the assignment
-  - Taking into account the level expected of students in context
-  - Examples of what should qualify defined by creator(s)
 
 ---v
 
@@ -221,13 +208,32 @@ For reference for faculty only for now, perhaps in a fully open course this shou
 
 ---v
 
+## 📊 Scoring System
+
+**0 to 4 integer system, awarded per assignment**
+
+- 0 = Nothing submitted or grossly poor performance
+- 1 = Incomplete submission, under minimal requirements
+- 2 = Passing all minimal requirements, pre-defined percent of test suite passing
+- 3 = Passing all test suite items, including explicitly marked optional ones
+- 4 = Grader discretion of going above the call of the assignment
+  - Taking into account the level expected of students in context
+  - Examples of what should qualify defined by creator(s)
+
+Notes:
+
+Here we use the automated grading (where possible) to arrive at a score of 0,1,2, or 3.
+A 4 is only manually awarded by graders based on their review of an individual's work.
+
+---v
+
 ## ✅ Certification Criteria
 
 Options for criteria for certification:
 
 <pba-flex center>
 
-1. Average of integer scores for all assignments
+1. Average of integer scores for all assignments (effectively GPA)
 1. Bundling of assignments that must be above a 2 to get cert
    - pre-defined
    - contract negotiated
@@ -235,40 +241,37 @@ Options for criteria for certification:
 
 </pba-flex>
 
+Notes:
+
+All students can come away with a "report card" of all their competencies to (at their discretion) accompany their overall certification and overall score(s).
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Further Resources for Faculty
+# PBA Thesis Driven Certifications
+
+_For now, just and idea to discuss_
 
 ---v
 
-## [📺 Developing Quality Assessments](https://www.youtube.com/watch?v=CnSkOXe90WI)
+## Thesis Model Motivation
 
-- Blooms taxonomy as basis with _explicit_ terms to use when defining learning objectives and outcomes
-- WHY give this assignment? in context with content
-- We assess on:
-  - Process (thinking through) and/or product (shipped solution {code})
-  - Express ideas concisely and coherently
-  - Convergent (coming to conclusion based on given) or divergent (hypothesis from predictions & unstated things)
+- Students can dig deep into passions, with structure and support to arrive at some tangible result from it
+- Ability _subjectively_ assess students' novel work could be PBA's SMEs _unique_ value proposition
+- Removes time constraint of cohort closing ceremonies
+- _Con: new, extra time, different work scope required from faculty_
 
----
+Notes:
 
-## [📺 Best Practices for Grading<br>Objectively and Efficiently](https://www.youtube.com/watch?v=hiUXBr4sgnM)
-
-> Note that this is for typical grading systems (out of 100, A->F) that we will _not_ employ
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# PBA Thesis-driven Certifications
+Especially if course content is much more open, we need things that make the PBA long term value adding over maintaining and running content.
 
 ---v
 
 ## Thesis Driven Certification Integration
 
-- Certifications granted at the closing ceremony are for _participation only_
+- Certifications based on scoring system remain, with option for _participation only_ if student opts-out of graded work to focus on thesis during the academy
+  - Similar in concept to Founders Track (ungraded)
 - Post-cohort successful thesis defense lead to specific "proper" certifications/degrees (engineering, founder, etc.)
 
 Notes:
@@ -279,19 +282,58 @@ The cert. exception may be the Application Engineers (parachain and solochain en
 
 ## Thesis Driven Certification Flow
 
-PBA is already a "mini-masters" program, this would expand that analogy formally:
+Successful completion of a PBA cohort is akin to a "mini-masters" program, the thesis track kickoff during, and continue _post cohort_:
 
 <pba-flex center>
 
-1. Select Thesis Advisor
+1. Commit to Thesis Advisor (During or shortly after PBA)
    - Student & advisor mutually agree on relationship
-1. Thesis Proposal: defines work to be done, approved by Advisor (and retries if needed)
-1. Thesis work: async support from Advisor
+1. Thesis Proposal: defines work to be done,<br>approved by Advisor (and retries as needed)
+   - Modeled like W3F grant (if not actually one)
+1. Thesis work: async support from Advisor and PBA
 1. Thesis Committee: SMEs to evaluate thesis
 1. Thesis Defense
 1. Certification Awarded
 
 </pba-flex>
+
+Notes:
+
+This is somewhat akin to a on-the-job training program or internship before a student is hired within our ecosystem.
+It is a fantastic chance to help build a relationship with the committee and showcase your ability in a formalized way that is not possible presently (AFAIK).
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Learning Resources for Faculty
+
+_We encourage all content creators to review these!_
+
+---v
+
+## [📺 Developing Quality Assessments](https://www.youtube.com/watch?v=hDjWjbng40U)
+
+A _wonderful_ overview and workshop around various exercise and activity models that we **highly encourage everyone watch**!
+
+- Blooms taxonomy as basis with _explicit_ terms to use when defining learning objectives and outcomes
+- WHY give this assignment? in context with content
+- We assess on:
+  - Process (thinking through) and/or product (shipped solution {code})
+  - Express ideas concisely and coherently
+  - Convergent (coming to conclusion based on given) or divergent (hypothesis from predictions & unstated things)
+
+---v
+
+## [📺 Best Practices for Grading<br>Objectively and Efficiently](https://www.youtube.com/watch?v=hiUXBr4sgnM)
+
+> Note that this is for typical grading systems (out of 100, A->F) that we will _not_ employ.
+
+---v
+
+## [📺 Make Grading Point-less: Eliminating Points to Foster Student Motivation](https://www.youtube.com/watch?v=CnSkOXe90WI)
+
+Motivation around alternative grading schemes that are rigorous _and_ do not assign points.
 
 ---
 
@@ -363,8 +405,8 @@ This is almost a one-to-one mapping with github based workflows, and thus is not
 - Flexibility with assignment deadlines and provide opportunities for revision
 - Open conversations about performance (bi-weekly conferences, feedback surveys, or asking outright what grade they deserve)
   - Self-assessment drives the grade, not nearly as much a grader.
-    s
-    Notes:
+
+Notes:
 
 Reflection and Dialogue are key: Ungrading builds upon similar aspects of specifications and contract grading
 Ungrading does encourage instructors to have more open conversations with students about their performance, whether it is through bi-weekly conferences, feedback surveys, or asking students outright what grade to put in the system at the end of the term (Blum & Kohn, 2020)
@@ -380,4 +422,4 @@ Great explainer in [three](https://www.nciea.org/blog/what-do-i-need-to-know-abo
 
 Notes:
 
-More concrete implementation in the [PBA Grading Scheme](#pba-grading-scheme) section.
+More concrete implementation in the [Assessment Framework](#assessment-framework) section.
