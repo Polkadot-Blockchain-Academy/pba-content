@@ -20,6 +20,10 @@ A PAB is a bytecode that follows two main principles:
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
+Notes:
+
+Ideally a bytecode like this is designed to be executed on a virtual machine that follows general known patterns. 
+
 ---
 
 <pba-cols>
@@ -68,10 +72,21 @@ A PAB is a bytecode that follows two main principles:
 
 </pba-cols>
 
+Notes:
+
+From left to right you can see different level of abstraction over the machine the code should be executed, generally the from an high level language you need two compilation step if you want to pass through a PAB.
+
+Other examples of PABs used right now:
++ Inside the Linux Kernel -> eBPF
++ Inside browsers -> WASM
++ Inside Blockchains -> WASM
+  + Full nodes
+  + Light nodes (WASM inside WASM)
++ LLVM Toolchain -> LLVM IR
+
 ---
 
 #### What a PAB allows is:
-
 
 <pba-flex center>
 
@@ -86,8 +101,11 @@ A PAB is a bytecode that follows two main principles:
 
 </pba-flex>
 
----v
+Notes:
 
+The main goal of a PAB is to make the code **portable**, you should be able to compile it once and then share it around without caring about the architecture on which will be executed. Of course in a decentralized network we want that different nodes, with different architectures came up to the same result if the input are the same, that's called **determinism**, if a PAB would not have determinism then reaching consensus is impossible.
+
+---v
 
 ##### That's why PABs are so important
 
@@ -107,6 +125,13 @@ Features that a PAB should follow:
 - Sandboxing
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
+Notes:
+
++ Hardware Independence: It should not be tightly related to a specific architecture, otherwise the execution on different machine could be convoluted
++ Efficency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
++ Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
++ Support as Compilation Target: The PAB should be possible to be compiled by as many as possible High Level languages 
+
 ---v
 
 ### Sanboxing?
@@ -121,6 +146,16 @@ A sandboxed environment must be created by the executor of the PAB.
 
 A SmartContract is *Arbitrary Code* that should be executed by multiple nodes, we don't want SmartContracts capable of destroying the nodes on which they are executed 
 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes: 
+
+Security is one of the main issue of a blockchain, this is one of the most important features for a PAB in a decentralized network, an users can't be able to create malicius code that is capable od destroy a node or simply slow down the network.
+
+Of course the security can be seen by various point of view and some examples are:
++ Compilation takes too much time -> compiling bomb
++ Access to the environment -> "buffer overflow" techniques
+
+Those things can't be addressed by the PAB itself but they can give good guidelines and code design to make an 100% secure implementation of the executor possible.
 
 ---
 
@@ -164,22 +199,26 @@ A SmartContract is *Arbitrary Code* that should be executed by multiple nodes, w
 
 <pba-flex center>
 
-- Binary instruction format for a stack-based virtual machine
+- Hardware-independent
+<!-- .element: class="fragment" data-fragment-index="1" -->
+  - Binary instruction format for a stack-based virtual machine
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Supported as compilation target by many languages
 <!-- .element: class="fragment" data-fragment-index="2" -->
   - Rust, C, C++ and many others
-<!-- .element: class="fragment" data-fragment-index="3" -->
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - Fast (with near-native performance)
-<!-- .element: class="fragment" data-fragment-index="4" -->
+<!-- .element: class="fragment" data-fragment-index="3" -->
 - Safe (executed in a sandoxed environment)
+<!-- .element: class="fragment" data-fragment-index="4" -->
+- Open (programs can interoperate with their environment)
 <!-- .element: class="fragment" data-fragment-index="5" -->
-- Hardware-independent
-<!-- .element: class="fragment" data-fragment-index="6" -->
-- Open
-<!-- .element: class="fragment" data-fragment-index="7" -->
 
 </pba-flex>
+
+Notes:
+
+WASM seems to respect every rating points we defined before
 
 
 ---
@@ -236,8 +275,9 @@ Wat has some features that allow for better readability:
 - Labels can be applied to elements.
 - Blocks can enclosed with parenthesis instead of explicit start/end instructions.
 
-Instructions push results to the stack and use values on the stack as arguments.
-Register machines use registers for passing values to instructions as a primary mechanism
+Instructions push results to the stack and use values on the stack as arguments, the compilation process generally translate this stack-based bytecode to register based, where registers are used to pass values to instructions as a primary mechanism. The compilation will try to elide the wasm stack and work with only the architecture registers.
+
+There is another type of stack used in wasm and that's called: shadow stack, resource to learn more: https://hackmd.io/RNp7oBzKQmmaGvssJDHxrw
 
 ---
 
@@ -249,6 +289,10 @@ Register machines use registers for passing values to instructions as a primary 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - How is it executed?
 <!-- .element: class="fragment" data-fragment-index="4" -->
+
+Notes:
+
+Assuming all the things we said before wasm seems to be perfect but how those things really works?
 
 ---
 
@@ -306,9 +350,7 @@ Notes:
 From Wasm the Linear Memory is byte addressable
 Linear Memory can be manipulated using functions called 'store' and 'load'
 
-The Rust compiler uses for dynamic/heap memory and to pass non primitives to functions by emulating an additional stack within the linear memory it allocates at some offset.
-- This emulated stack is what we would understand as stack in other architectures.
-- The Wasm stack on the other would be implemented using registers in other architectures.
+The Rust compiler uses for dynamic/heap memory and to pass non primitives values to functions by emulating an additional stack within the linear memory, this emulated stack (the shadow stack) is what we would understand as stack in other architectures
 
 ---v
 
@@ -321,55 +363,71 @@ The Rust compiler uses for dynamic/heap memory and to pass non primitives to fun
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
+Notes: 
+
+Here's an example, wasm sees linear memory like a byte array and if it tries to acces the second byte, it would use an index 1. When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base\_linear\_memory + 1.
+
+Buffer overlow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information. Even if the offset is only positive there are embedders that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
+
 ---
 
 ## How WASM is executed
 
 <pba-flex left>
 
-There are multiple ways to execute wasm, the ones used in polkadot are:
+There are multiple ways to execute wasm:
 
-- Ahead Of Time Compilation (not sure if substrate-based chain uses JIT or AOT)
-- Interpretation
-
-
-</br>
-
-But also other type of execution exists, for example:
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
+- Ahead Of Time Compilation
 - Just in Time Compilation
 - Single Pass Compilation
-- Stream Compilation
+- Interpretation
+- ...
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-flex >
+
+Notes: 
+
+AOT: Compile all the code at the beginning, this allows to makes a lot of improvement to the final code efficency
+JIT: The code is compiled only when needed, examples are functions that are compiled only when called, this leave space only to partials improvements
+SPC: This is a specific technique of compilation that is made in linear time, the compilation is done only passing once on the code
+Interpretation: The wasm blob is treated as any other interpreted language and executed in a Virtual Machine
 
 ---v
 
 ### Wasmtime
 
 - It is a stand alone wasm environment
-- Used in substrate as embedder for the blockchain logic
-- It compiles once the wasm blob 
+- The techniques of execution are AOT or JIT 
 - It executes the compiled wasm blob in sanboxed environment while keeping everything extremely secure
+
+Notes: 
+
++ wasmtime book: https://docs.wasmtime.dev/
++ Used in substrate as embedder for the blockchain logic
 
 ---v
 
 ### Wasmi
 
-- It also is a wasm environment
-- Used as embedder for SmartContracts (wich in turn is embedded in Wasmtime)
-- It interpret the wasm blob and execute it securly 
-- The Interpreter itself can be built in wasm itself
+- It is a wasm environment with support for embedded environment such as WebAssembly itself 
+- Focus on simple, correct and deterministic WebAssembly execution
+- The technique of execution is interpretation but:
+  - The wasm code is transpiled to WASMI IR, another stack-based bytecode
+  - The WASMIM IR is then interpreted by a Virtual Machine
+
+Notes:
+
+proposal to switch from a stack based ir to registy based ir https://github.com/paritytech/wasmi/issues/361
+
+paper explaining the efficency of translating wasm to registry based code https://www.intel.com/content/www/us/en/developer/articles/technical/webassembly-interpreter-design-wasm-micro-runtime.html
 
 Due to it's characteristics it is mainly used to execute SmartContracts on chain
 
----v
+<!-- Really nice slide but there's not enough knowledge about substrate
 
 There are also light clients, where both Runtime and Client are implemented in wasm, so we have:
-<!-- .element: class="fragment" data-fragment-index="0" -->
 
 - A browser as embedder of the node's client
   - the node's client as embedder for the node's runtime
@@ -382,6 +440,8 @@ There are also light clients, where both Runtime and Client are implemented in w
 
 We have a double recursion of a PAB that embed itself
 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+-->
 
 ---
 
