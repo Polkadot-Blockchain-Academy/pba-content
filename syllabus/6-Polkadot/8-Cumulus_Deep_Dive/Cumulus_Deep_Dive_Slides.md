@@ -105,8 +105,6 @@ Notes:
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-
-
 <div class="r-stack">
 <img src="../assets/runtime_validation_1.svg" style="width: 60%" />
 <img src="../assets/runtime_validation_2.svg" style="width: 60%" />
@@ -120,7 +118,6 @@ Notes:
 - Building Blocks to make this possible are PVF and PoV
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
-
 
 ---v
 
@@ -143,6 +140,10 @@ pub struct Pvf {
 
 - New state transitions that occur on a parachain must be validated against the registered PVF 
 
+Notes:
+
+The code is hashed and saved in the storage of the relay chain. There is another map in the storage where the paraId is the key and the ValidationCodeHash (the hasho of the PVF) is the value.
+
 ---v
 
 #### Proof Of Validity - POV
@@ -151,6 +152,9 @@ pub struct Pvf {
 
 <img src="../assets/pov_block.svg" width="40%"/>
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+
 
 ---v
   
@@ -176,6 +180,14 @@ pub struct Pvf {
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - This makes the biggest limitation of the PoV (max 5MiB)
 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+
+orage: values present in the POV
+green: hash of the sibilings node required for the pov
+white: hash of the nodes that are constructed with orange and green nodes
+red: not reuired hash
+blue: head of the trie, hash present in the previous block header
 
 ---v
 
@@ -219,6 +231,9 @@ In the first image the PVF was not only composed by the Runtime but also by func
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
+Notes: 
+
+The input of the runtime validation process is the PoV and the function called in the PVF is 'validate_block', this will use the PoV to be able to call the effective runtime and then create an output representing the state transition, that's called candidate receipt, later you will understand why is needed.
 
 ---v
 
@@ -247,19 +262,18 @@ Notes:
 We construct the sparse in-memory database from the storage proof inside the block data and
 then ensure that the storage root matches the storage root in the `parent_head`.
 
-We replace all the storage related host functions with functions inside the wasm blob.
-This means instead of calling into the host, we will stay inside the wasm execution.
-This is very important as the relay chain validator hasn't the state required to verify the block.
-But we have the in-memory database that contains all the values from the state of the parachain that we require to verify the block.
-
-- On solo chains we also run the block import on some state
-- This state belongs to the parent of the block that should be imported
-
 ---v
 
 ##### Why replacing host functions?
 
 <img src="../assets/validate_block.svg" style="width: 1500px" />
+
+Notes: 
+
+We replace all the storage related host functions with functions inside the wasm blob.
+This means instead of calling into the host, we will stay inside the wasm execution.
+This is very important as the relay chain validator hasn't the state required to verify the block.
+But we have the in-memory database that contains all the values from the state of the parachain that we require to verify the block.
 
 ---v
 
@@ -599,6 +613,8 @@ https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgra
 Notes:
 
 Only validators from the active set can participate in the vote. The set of active validators can change each session. That's why we reset the votes each session. A voting that observed a certain number of sessions will be rejected.
+
+reference: https://paritytech.github.io/polkadot/book/pvf-prechecking.html
 
 ---
 
