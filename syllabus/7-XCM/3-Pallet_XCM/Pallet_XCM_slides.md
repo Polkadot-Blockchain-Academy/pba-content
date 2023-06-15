@@ -187,12 +187,8 @@ enum Instruction {
 }
 ```
 
-Offering some requested information that the local system is expecting
-
-Notes:
-
-This instruction is generally safe to execute, the only tidbit here is that the local system may not be expecting the response from the sender.
-Therefore, the `querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
+The above instruction is the one used for offering some requested information that the local system is expecting.
+`querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
 
 ---
 

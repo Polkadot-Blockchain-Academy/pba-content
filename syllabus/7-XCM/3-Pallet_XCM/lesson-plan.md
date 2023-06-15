@@ -1,4 +1,4 @@
-## Lesson 2: Writing, Sending, and Executing XCM
+## Lesson 2: Pallet-XCM
 
 > {Likely} Instructor: Keith, plus another RT Eng.?
 
@@ -6,14 +6,13 @@
 
 ### Prerequisite Knowledge or Skills
 
-- Relative file/directory path understanding ( .. , ../.. , etc.)
-- SCALE codec
+- FRAME
+- XCVM
 
 ### Learning Outcome
 
-- XCM construction concretely (examples) are understood.
-- Understand the XCM instruction actually gets executed.
-  - Cover https://github.com/paritytech/xcm-format#4-basic-xcvm-operation in depth
+- Difference between XCM instructions and extrinsics composing XCM is understood
+- Concepts as version discovery, subscription service and asset trapping are clear
 - Practically write XCM business logic
 
 ### Learning Objectives
@@ -23,12 +22,11 @@
 
 ### Core Ideas to Convey
 
-- MultiLocations
-  - Re-anchoring - Multilocation → relative path.
-    The destination needs to be able to re-express from it’s perspective where the message originated from.
-    Example : Parent/Parent need to be expressed from the context/perspective of this location that could be a contract on a parachain for example
-- MultiAssets
-- XCM instructions/programs detailed
-- Default executor logic in detail
+- How XCM is expected to be used
+- Pallet-XCM interface
+- Version negotiation
+- Asset trapping
 
 ### Activities and Exercises
+
+- Coding extrinsics that build and execute XCMs.
