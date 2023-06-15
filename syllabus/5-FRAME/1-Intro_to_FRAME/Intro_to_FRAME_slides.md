@@ -330,4 +330,4 @@ impl pallet_timestamp::Config for Runtime {
 
 Let's get our hands dirty and use all of these pieces together!
 
-https://docs.substrate.io/tutorials/work-with-pallets/use-macros-in-a-custom-pallet/
+https://docs.substrate.io/tutorials/build-application-logic/use-macros-in-a-custom-pallet/

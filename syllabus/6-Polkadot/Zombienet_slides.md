@@ -206,7 +206,8 @@ polkadot build-spec --chain rococo-local \
 ```
 
 Notes:
-Tutorial https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/
+
+Tutorials https://docs.substrate.io/tutorials/build-a-parachain/
 
 ---v
 
