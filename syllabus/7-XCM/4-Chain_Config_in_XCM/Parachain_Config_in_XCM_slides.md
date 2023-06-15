@@ -51,7 +51,7 @@ impl Config for XcmConfig {
   // Who do we trust as teleporters
   type IsTeleporter = ?;
   // How we invert locations
-  type LocationInverter = ?;
+  type UniversalLocation = ?;
   // Pre-execution filters
   type Barrier = ?;
   // How we weigh a message
@@ -834,71 +834,3 @@ Notes:
 
 - Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `multiAsset`.
 - Every time such `multiAsset` gets reclaimed, the counter decrements by one.
-
----
-
-## 🗣️ version negotiation with `pallet-xcm`
-
-XCM is an **extensible message format**.
-
-Versioning allows chains to communicate as XCM evolves.
-
-```rust
-pub enum VersionedXcm {
-    V0(v0::Xcm),
-    V1(v1::Xcm),
-    V2(v2::Xcm),
-}
-```
-
-Notes:
-
-- V0 and V1 were removed with the addition of XCM v3.
-
----v
-
-## 🗣️ version negotiation with `pallet-xcm`
-
-But chains need to be aware of the version supported by each other.
-`SubscribeVersion` and `QueryResponse` play a key role here:
-
-```rust
-enum Instruction {
-  /* snip */
-  SubscribeVersion {
-        query_id: QueryId,
-        max_response_weight: u64,
-  },
-  QueryResponse {
-        query_id: QueryId,
-        response: Response,
-        max_weight: u64,
-  },
-  /* snip */
-}
-```
-
-Notes:
-
-- `query_id` would be identical in the `SubscribeVersion` and `QueryResponse` instructions.
-- Likewise, `max_response_weight` should also match `max_weight` in the response
-
----v
-
-## 🗣️ version negotiation with `pallet-xcm`
-
-- `ResponseHandler`: The component in charge of handling response messages from other chains.
-- `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
-
-```rust
- impl Config for XcmConfig {
-  /* snip */
-  type ResponseHandler = PalletXcm;
-  type SubscriptionService = PalletXcm;
- }
-```
-
-Notes:
-
-- `PalletXcm` keeps track of the versions of each chain when it receives a response.
-- It also keeps track of which chains it needs to notify whenever we change our version

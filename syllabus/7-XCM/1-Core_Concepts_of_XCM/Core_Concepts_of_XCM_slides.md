@@ -23,7 +23,7 @@ Notes:
 <pba-flex center>
 
 - Define the concepts, syntax, and terms of XCM
-- Navigate exciting resources that relate to XCM
+- Navigate existing resources that relate to XCM
 - Differentiate between XCM and message-passing protocols like XCMP
 
 ---
@@ -31,6 +31,14 @@ Notes:
 ## What cross-chain use cases exist?
 
 Performing operations on different blockchains?
+
+<!--
+- Transfers
+- One contract calling another contract
+- Credential checking
+- Voting
+Engage the audience and expect them to say transfers as the use case, then show them the other problems worth solving
+-->
 
 How might you go about designing a _system_ to facilitate them?
 
@@ -45,8 +53,8 @@ EXERCISE: ask the class to raise hands and postulate on generally what one might
 <pba-flex center>
 
 1. Cross-consensus asset transfers
-1. Execute platform-specific actions (extrinsics) such as governance voting
-1. Enables single use-case chains e.g. [Statemint/e](https://github.com/paritytech/cumulus/tree/master/parachains/runtimes/assets) as asset parachains
+2. Execute platform-specific actions (extrinsics) such as governance voting
+3. Enables single use-case chains e.g. [Collectives](https://github.com/paritytech/cumulus/tree/master/parachains/runtimes/assets) as asset parachains, Identity
 
 Notes:
 
@@ -57,7 +65,7 @@ XCM enables a single chain to direct the actions of many other chains, which hid
 
 ---
 
-### XCM aims to be a _language communicating ideas between consensus systems._
+### XCM aims to be a _language communicating intentions between consensus systems._
 
 ---
 
@@ -67,7 +75,7 @@ XCM enables a single chain to direct the actions of many other chains, which hid
 
 <pba-flex center>
 
-- Can be any programmatic state-transition system that exists within consensus which can send/receive datagrams.
+<!-- - Can be any programmatic state-transition system that exists within consensus which can send/receive datagrams. -->
 - It does not even have to be a _distributed_ system, only that it can form _some_ kind of consensus.
 
 Notes:
@@ -103,6 +111,7 @@ Drawbacks of relying on native messaging or transaction format:
 - Lack of uniformity between consensus systems on message format
 - Common cross-consensus use-cases do not map one-to-one to a single transaction
 - Operations on consensus systems have different assumptions e.g. fee payment
+- Consensus systems may evolve over time
 
 Notes:
 
@@ -111,7 +120,13 @@ Notes:
   Smart contracts might get upgrades, blockchains might introduce new features or alter existing ones and in doing so change their transaction format.
 - Special tricks may be required to withdraw funds, exchange them and then deposit the result all inside a single transaction.
   Onward notifications of transfers, needed for a coherent reserve-asset framework, do not exist in chains unaware of others.
+  Some use-cases don't require accounts.
 - Some systems assume that fee payment had already been negotiated, while some do not.
+- If a consensus system changes a pallet from one place to another, it breaks the native message but not XCM
+
+TODO: Why not just send EVM programs. Why XCVM instead of EVM?
+Add Shawn's picture.
+It's up to the interpreter to interpret the intention how it makes sense.
 
 ---
 
@@ -128,13 +143,25 @@ XCM is designed around four 'A's:
 
 Notes:
 
+The 4 'A's are assumptions XCM makes over the transport protocol.
+These are things it assumes.
+Context: consensus systems are deterministic.
+
+TODO: "Relies on" is better to use.
+
+TODO: If you compare it with IBC, they don't make these assumptions. You factor in fallibility of the transport protocol.
+
+TODO: Further down the line, reference XCMP.
+
+TODO: Break into 4 slides to explain all of them .
+
 - **Agnostic**: XCM makes no assumptions about the nature of the Consensus System between which messages are being passed.
-- **Absolute**: XCM messages are guaranteed to be delivered and interpreted accurately, in order and in a timely fashion.
-- **Asynchronous**: XCM messages in no way assume that the sender will be blocking on its completion.
+- **Absolute**: XCM messages are guaranteed to be delivered and interpreted accurately, in order and in a timely fashion. The message format does not do much about the message possibly not being delivered.
+- **Asynchronous**: XCM messages in no way assume that the sender will be blocking on its completion. You can't just block execution in the middle of a block, it has to be asynchronous. Different systems have different ways of tracking time.
 - **Asymmetric**: XCM messages do not have results.
   Any results must be separately communicated to the sender with an additional message.
 
----
+---v
 
 ## Async vs Sync
 
@@ -148,7 +175,7 @@ Generally, consensus systems are not designed to operate in sync with external s
 They intrinsically need to have a uniform state to reason about and do not, by default, have the means to verify states of other consensus systems.
 Thus, each consensus system cannot make any guarantees on the expected time required to deliver results; doing so haphazardly would cause the recipient to be blocked waiting for responses that are either late or would never be delivered, and one of the possible reasons for that would be an impending runtime upgrade that caused a change in how responses are delivered.
 
----
+---v
 
 ## XCM is "fire and forget"
 
@@ -159,47 +186,75 @@ XCM has no results:
 - No errors reported to sender
 - No callbacks for sender
 
-Similar to UDP
-
 Notes:
 
 The receiver side can and does handle errors, but the sender will not be notified, unless the error handler specifically tries to send back an XCM that makes some sort of XCM that notifies status back to the origin, but such an action should be considered as constructing a separate XCM for the sole purpose of reporting information, rather than an intrinsic functionality built into XCM, akin to how UDP can also create a "response" to an incoming datagram, yet the response is too considered as a separate UDP datagram instance.
 
----
-
-## Async XCM
-
-We _could_ have XCM describe async behavior but do not because:
-
-<pba-flex center>
-
-- Complexity, custom per sender/receiver pair
-- Expense of operating in fee-based systems
-
-Notes:
-
-Asynchronous systems vary widely by implementation, and as a protocol that attempts to bridge between disparate consensus systems, XCM does not attempt to define the behavior or architecture of its interlocutors.
-Rather, XCM defines and standardizes the interface and semantics that two or more consensus systems can use to interact with each other, but leaves the ultimate implementation details to its participating systems.
+TODO: XCM is a bit like REST. XCMP is a bit like TCP/IP. Not quite. Analogies can often hurt more than they help.
 
 ---
 
 ## 📍 Locations in XCM
 
-`MultiLocation` = a **_relative_** location in the consensus multiverse.
+How does one consensus system address another?
 
-All entities are addressed as paths to them, _relative_ to the current consensus system.
-pub struct MultiLocation {
-pub parents: u8,
-pub interior: Junctions,
-}
+Location in consensus might be the whole system or an isolatable part in the system.
 
-````
+Examples:
+- Accounts
+- Smart contracts
+- Pallets
+- Blockchains
 
 Notes:
 
 The `MultiLocation` type identifies any single _location_ that exists within the world of consensus.
 Representing a scalable multi-shard blockchain such as Polkadot, a lowly ERC-20 asset account on a parachain, a smart contract on some chain, etc.
 It is always represented as a location _relative_ to the current consensus system, and never as an absolute path, due to the fact that the network structure can always change, and so absolute paths can quickly go out of date.
+
+---v
+
+## Location hierarchy
+
+There's a hierarchy of locations within consensus.
+
+TODO: Add diagrams
+
+---v
+
+## Universal location
+
+We can imagine a hypothetical location that contains all top-level consensus systems.
+
+---v
+
+## Relative vs absolute
+
+We express locations in two ways, `MultiLocation` is relative and `InteriorMultiLocation` is absolute.
+We need relative locations because some consensus systems might change their location.
+If a system moves, relative is better.
+In general, you want to work with relative locations since you don't care which particular relay chain you are on.
+In the case of bridges, you go between consensus systems, so you use absolute locations.
+
+```rust
+pub type MultiLocation = RelativeMultiLocation;
+pub type InteriorMultiLocation = AbsoluteMultiLocation;
+// TODO: Rename them to just Location
+
+pub struct RelativeMultiLocation {
+    pub parents: u8,
+    pub interior: Junctions,
+}
+
+pub struct AbsoluteMultiLocation; // TODO
+```
+
+---v
+
+## MultiAsset
+
+We identify assets with locations.
+We identify the native token of a chain to its location.
 
 ---
 
@@ -220,28 +275,9 @@ This is akin to a directory on a file path, e.g. the `foo` in `/foo/bar`.
 
 ---
 
-## Junction*s*\*
-
-```rust
-enum Junctions {
-    X1(Junction),
-    X2(Junction, Junction),
-    X3(Junction, Junction, Junction),
-    // ...
-    X8(Junction, /*...*/),
-}
-````
-
-Enum containing multiple `Junction`s
-
-Notes:
-
-An array like `[Junction; 8]` or a `Vec` is explicitly not used in place of the `Junctions` enum.
-This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size at compilation time, and thus unused `Junction` "element slots" will always be required to be filled in, bloating the _encoded_ size of a `Junctions` data structure.
-
----
-
 ## MultiLocation Examples
+
+TODO: I would use diagrams and split it into more slides.
 
 - `../Parachain(1000)`: Evaluated within a parachain, this would identify our sibling parachain of index 1000. (In Rust we would write `MultiLocation { parents: 1, junctions: X1(Parachain(1000)) }` or alternatively `ParentThen(Parachain(1000)).into()`.)
 
@@ -255,6 +291,10 @@ This is because `Vec`s cannot be pattern-matched, and arrays have a fixed size a
 
 <!-- TODO DESIGN: use multilocation graphic from above and add labels in fragment / new slide here -->
 <!-- Base on this set of slides: https://docs.google.com/presentation/d/18qRqqw73L9NTWOX1cfGe5sh484UgvlpMHGekQHu9_8M/edit#slide=id.g8063ab3d6f_0_1418 . If hard, just make these into images via screenshot & use full screen -->
+
+TODO: Too many things going on. Circle the different examples.
+Add a "You are here" marker instead of "Origin: Polkadot".
+Add a bridge example with Polkadot<>Kusama.
 
 <img rounded style="width: 650px;" src="../../../assets/img/7-XCM/mod1-multilocation-picture.png" alt="MultiLocation Example" />
 
@@ -275,10 +315,16 @@ _Relative_ to the current location
 
 Can be converted into a pallet origin in a FRAME runtime
 
+TODO: Used for privileges.
+
 Notes:
 
 Since `MultiLocation`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it.
 This is calling re-anchoring.
+
+TODO (remove): Native is direct mapping, when you happen to have the exact equivalent of a runtime origin.
+Happens in parachains in the polkadot parachain pallet.
+You usually want the sovereign account.
 
 ---
 
@@ -298,9 +344,13 @@ Notes:
 
 There are many _classes_ of assets (fungible, NFTs,...)
 
+TODO: Rename to `Asset` and rename `VersionedMultiAsset` to `MultiAsset`.
+
 ```rust
 struct MultiAsset {
-   id: AssetId,
+   pub id: AssetId,
+   pub fun: Fungibility,
+}
 ```
 
 The datatype `MultiAsset` describes them all.
@@ -312,29 +362,26 @@ The datatype `MultiAsset` describes them all.
 <div style="font-size: smaller">
 
 ```rust
-struct MultiAsset {
+struct Asset {
     pub id: AssetId,
     pub fun: Fungibility,
 }
 
-enum AssetId {
-    Concrete(MultiLocation),
-    Abstract([u8; 32]),
-}
+struct AssetId(Location);
 
 enum Fungibility {
     Fungible(u128),
     NonFungible(AssetInstance),
 }
 
-enum AssetInstance {
-    Undefined,
-    Index(u128),
-    Array4([u8; 4]),
-    Array8([u8; 8]),
-    Array16([u8; 16]),
-    Array32([u8; 32]),
-}
+// enum AssetInstance {
+//     Undefined,
+//     Index(u128),
+//     Array4([u8; 4]),
+//     Array8([u8; 8]),
+//     Array16([u8; 16]),
+//     Array32([u8; 32]),
+// }
 ```
 
 </div>
@@ -359,10 +406,9 @@ Non-fungible assets will then also need to further specify which exact token it 
 ```rust
 /// Creates 10 billion units of fungible native tokens
 let fungible_asset: MultiAsset = (Here, 10_000_000_000u128).into();
-//          or MultiAsset::from((Here, 10_000_000_000u128)) ^^^^
 
-/// Creates an abstract NFT with an undefined asset instance
-let nft_asset: MultiAsset = ([0; 32], ()).into();
+/// Creates an NFT with an Undefined asset instance
+let nft: MultiAsset = ([0; 32], [TODO...]).into();
 ```
 
 Notes:
@@ -372,6 +418,9 @@ In Polkadot, a unit of native token = 1 planck, and 10 billion plancks = 1 DOT
 ---
 
 ## Asset Wildcards and Filters
+
+TODO: More pictures.
+Use the filters to select assets from an image with a grid of lots of assets.
 
 ```rust
 enum WildMultiAsset {
@@ -405,16 +454,24 @@ This is very useful in cases where we want to give an upper limit to the executi
 
 ## Reanchoring
 
-`MultiLocation`s are relative.
+TODO: Add a table of the location interpretations by the different parachains.
+Also add UniversalLocation.
+
+`Location`s are relative.
 
 **Scenario:**<br/>
-Current consensus system is `Para(1337)`.<br/>
-Destination consensus system is `Para(6969)`.
+Current consensus system is `AssetHub` on Polkadot.
+
+Destination consensus system is `Collectives` on Polkadot.
+
+We want to send USDT to collectives.
 
 <pba-flex center>
 
-- Where is `Here`?
-- What happens when I send a `MultiAsset`<br/>with an `AssetId` of `Concrete(Here)` to `Para(6969)`?
+- Where is the universal location of `Here`? (Poladot or Kusama or what)
+- What happens when I send an `Asset`<br/>with an `AssetId` of `Here` to `../Collectives`?
+
+Misinterpretation ensues.
 
 Notes:
 
@@ -422,13 +479,13 @@ MultiLocations are relative, so they must be updated and rewritten when sent to 
 
 ---
 
-## 🤹 Many models for <br/> transferring assets
+## 🤹 Multiple models for transferring assets
 
 <pba-flex center>
 
 1. "Remote control" an account on another system
-1. Reserve transfers
-1. Teleport transfers
+2. Reserve transfers
+3. Teleport transfers
 
 Notes:
 
@@ -437,16 +494,21 @@ Accounts that are controllable by a remote chain are often referred to as **Sove
 
 ---
 
-## 🤹 Many models for <br/> transferring assets
+## 🤹 Multiple models for transferring assets
 
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer" />
+TODO: Divide into two slides.
+TODO: Talk about sovereign accounts before? I don't think we have.
+
+<!-- <img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer" /> -->
 <img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport" />
 
 </pba-col>
 <pba-col>
+
+TODO: Add case where A = R.
 
 <img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer" />
 
@@ -457,6 +519,8 @@ Notes:
 
 TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392 to describe the images
 
+TODO: You can use XCM with UTXO-based models.
+
 ---
 
 ## Next steps
@@ -464,12 +528,15 @@ TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-c
 <pba-flex center>
 
 1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
-1. XCM Format [repository](https://github.com/paritytech/xcm-format)
+2. XCM Format [repository](https://github.com/paritytech/xcm-format)
+3. XCM [Docs](https://paritytech.github.io/xcm-docs/)
 <!-- 1. TODO: fill this in - polkadot / cumulus / parachains repos?  -->
 
 ---
 
 ## Glossary
+
+TODO: Move this to the docs and link there.
 
 <!-- TODO: ensure these are in the class glossary! Remove this slide and simply reference in the slides -->
 

@@ -27,16 +27,16 @@ An XCM executor following the XCVM specification is provided by Parity, and it c
 
 ### XCVM Instructions
 
-XCM Instructions might change a register, they might change the state of the consensus system or both.
+XCVM Instructions might change a register, they might change the state of the consensus system or both.
 
-One example of such an instruction would be `TransferAsset` which is used to transfer an asset to some other address on the remote system.
+One example of such an instruction is `TransferAsset` which is used to transfer an asset to some other address on the remote system.
 It needs to be told which asset(s) to transfer and to whom/where the asset is to be transferred.
 
 ```rust
 enum Instruction {
     TransferAsset {
-        assets: MultiAssets,
-        beneficiary: MultiLocation,
+        assets: Assets,
+        beneficiary: Location,
     }
     /* snip */
 }
@@ -50,7 +50,7 @@ Four kinds of instructions:
 
 <pba-flex center>
 
-- Instruction
+- Command
 - Trusted Indication
 - Information
 - System Notification
@@ -68,26 +68,7 @@ Highlight LOCATION and ASSET instructions, that we will go into next
 
 ## XCVM Registers
 
-```rust
-pub struct XcmExecutor<Config: config::Config> {
-    holding: Assets,
-    holding_limit: usize,
-    context: XcmContext,
-    original_origin: MultiLocation,
-    trader: Config::Trader,
-    error: Option<(u32, XcmError)>,
-    total_surplus: u64,
-    total_refunded: u64,
-    error_handler: Xcm<Config::Call>,
-    error_handler_weight: u64,
-    appendix: Xcm<Config::Call>,
-    appendix_weight: u64,
-    transact_status: MaybeErrorCode,
-    fees_mode: FeesMode,
-    topic: Option<[u8; 32]>,
-    _config: PhantomData<Config>,
-}
-```
+TODO: Diagram
 
 - Registers _are_ the state of XCVM
 - Note that XCVM registers are temporary/transient
@@ -95,6 +76,8 @@ pub struct XcmExecutor<Config: config::Config> {
 ---
 
 ## Basic XCVM Operation
+
+TODO: Diagram
 
 XCVM operates as a fetch-dispatch loop
 
@@ -106,28 +89,28 @@ TODO: Graphics about a state machine similar to how the XCVM operates
 
 ---
 
-## XCM vs. Standard State Machine
+## XCVM vs. Standard State Machine
 
 <pba-flex center>
 
 1. Error register
-1. Error _handler_ register
-1. Appendix register
+2. Error _handler_ register
+3. Appendix register
 
 Notes:
 
 1. The error register is _not_ cleared when an XCM program completes successfully.
    This allows the code in the Appendix register to use its value.
-1. Code that is run in the case where the XCM program fails or errors.
+2. Code that is run in the case where the XCM program fails or errors.
    Regardless of the result, when the program completes, the error handler register is cleared.
    This ensures that error handling logic from a previous program does not affect any appended code (i.e. the code in the error handler register does not loop infinitely, the code in the Appendix register cannot access the result of the code execution in the error handler).
-1. Code that is run regardless of the execution result of the XCM program.
+3. Code that is run regardless of the execution result of the XCM program.
 
 ---
 
 ### 📍 The Origin Register
 
-Contains the `Multilocation` of the cross-consensus origin where the XCM originated from.
+Contains the `Location` of the cross-consensus origin where the XCM originated from.
 
 It is always the relative view from the consensus system in which the XCM is executed.
 
@@ -144,9 +127,9 @@ Expresses a number of assets in control of the xcm-execution but that have no re
 
 It can be seen as the register holding "unspent assets".
 
-Example: Let’s take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
+Example: Let's take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
 But what does it do with them?
-— if they don’t get deposited anywhere then it’s surely a pretty useless operation.
+ if they don’t get deposited anywhere then it’s surely a pretty useless operation.
 These assets are held in the holding register until they are deposited anywhere else.
 
 ---
@@ -164,7 +147,8 @@ They are _temporarily_ held in what in the Holding Register.
 // `WithdrawAsset` instruction.
 
 enum Instruction {
-   WithdrawAsset(MultiAssets),
+    WithdrawAsset(Assets),
+    /* snip */
 }
 ```
 
@@ -189,9 +173,8 @@ Typically an instruction that places assets into the holding register would have
 
 enum Instruction {
     DepositAsset {
-        assets: MultiAssetFilter,
-        max_assets: u32,
-        beneficiary: MultiLocation,
+        assets: AssetFilter,
+        beneficiary: Location,
     },
     /* snip */
 }
@@ -226,10 +209,11 @@ OriginKind defines the type of FRAME origin that should be derived: _root_, _sig
 // instruction, as it allows the interaction
 // with any runtime pallet
 enum Instruction {
+    /* snip */
     Transact {
 		origin_type: OriginKind,
 		require_weight_at_most: u64,
-		call: DoubleEncoded<RuntimeCall>,
+		call: Vec<u8>, // Blob
 	},
     /* snip */
 }
@@ -237,6 +221,25 @@ enum Instruction {
 
 </pba-col>
 </pba-cols>
+
+---
+
+### Creating messages
+
+```rust
+Withdraw,
+Deposit
+```
+
+---
+
+## Fees
+
+```rust
+Withdraw,
+BuyExecution,
+Deposit,
+```
 
 ---
 
@@ -260,6 +263,7 @@ Example: we withdraw assets from a parachain controlled account, but then we don
 // with a particular origin and instructions
 // that are not.
 enum Instruction {
+    /* snip */
     ClearOrigin
     /* snip */
 }
