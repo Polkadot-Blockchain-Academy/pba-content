@@ -235,6 +235,7 @@ Notes:
 
 - Symmetric-Authentication and Authenticated-Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
 - Symmetric-Integrity and Asymmetric-Integrity: There is no proper integrity check, however the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
+- Note that encryption also, most importantly, makes the data _available_ to everyone who should have access.
 
 ---
 
