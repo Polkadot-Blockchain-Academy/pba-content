@@ -1,18 +1,8 @@
 ---
-title: Formal Methods for Rust # Also update the h1 header on the first slide to the same name
+title: Formal Methods for Rust 
 description: Introduction to the Guest LEcture on formal methods for Rust verification.
-duration: 30 minutes
-# PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
-# Add custom css files for your slides here, comma separated:
-separator: "\r?\n---\r?\n"
-verticalSeparator: "\r?\n---v\r?\n"
-# Below can be any of these: https://revealjs.com/config/
-revealOptions:
-    transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
-	backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
-	slideNumber: true
-	controls: true
-	progress: true
+duration: 60 minutes
+
 ---
 
 # Formal Methods for Rust
@@ -22,15 +12,8 @@ revealOptions:
 ## Outline
 
 <!--
-You can reference slides within this presentation like [this other slide](#at-the-end-of-this-lecture-you-will-be-able-to) by use of the header title.
-
-Please make your lecture precise.
-
-- Limit the main points in a lecture to five or fewer.
-- Create effective visuals, analogies, demonstrations, and examples to reinforce the main points.
-  {TAs and the Parity design team can assist! Please let us know marking an item here as `TODO`}
-- Emphasize your objectives and key points in the beginning, as you get to them, and as a summary at the end.
-
+Outline
+TODO: add links 
 -->
 
 <pba-flex center>
@@ -420,9 +403,23 @@ fn check_initialize_prefix() {
 Show demo for the following type:
 
 ```rust
+use arbitrary::{Arbitrary, Result, Unstructured};
 
+#[derive(Copy, Clone, Debug)]
+pub struct Rgb {
+    pub r: u8,
+    pub g: u8,
+    pub b: u8,
+}
 
-
+impl<'a> Arbitrary<'a> for Rgb {
+    fn arbitrary(u: &mut Unstructured<'a>) -> Result<Self> {
+        let r = u8::arbitrary(u)?;
+        let g = u8::arbitrary(u)?;
+        let b = u8::arbitrary(u)?;
+        Ok(Rgb { r, g, b })
+    }
+}
 ```
 
 
