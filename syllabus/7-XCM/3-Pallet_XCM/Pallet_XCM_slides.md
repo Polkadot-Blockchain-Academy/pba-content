@@ -11,8 +11,8 @@ duration: 1 hour
 ## _At the end of this lecture, you will be able to:_
 
 - Understand what the interface of the pallet is and its implementation.
-- What the Subscription Service role is.
-- How Response Handler is being laveraged.
+- How versioning discovery works.
+- How receiving responses work.
 - Understand how to craft XCM in FRAME pallets.
 
 ---
@@ -29,37 +29,43 @@ The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
 
 XCM is not intended to be written by end-users.
 
-Instead, _parachain developers_ write XCM programs, and package them up into FRAME extrinsics.
+Instead, _parachain developers_ write XCVM programs, and package them up into FRAME extrinsics.
 
 Notes:
 
 We will see an example of this in the XCM pallet, with the teleport_assets and reserve_transfer_assets extrinsics.
 
 ---
+
 <!-- Following slides are a quick overview of the pallet interface, focusing on the calls it exposes -->
+
 ## pallet-xcm
 
-`pallet-xcm` provides default implementations for many traits required by XcmConfig.
+`pallet-xcm` provides default implementations for many traits required by `XcmConfig`.
 
 `pallet-xcm` also provides an interface containing 10 different extrinsics, which can be split into three categories:
 
 - Primitive functions to locally `execute` or `send` an XCM.
-- High-level functions for asset tranfers.
+- High-level functions for asset transfers between systems, e.g. teleportation and reserve asset transfers.
 - Extrinsics aimed exclusively at version negotiation.
 
 ---
 
 ## `pallet-xcm` Primitive extrinsics
 
-`execute`
+TODO: Split and diagrams
+
+- `execute`
 Direct access to the XCM executor. It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution. Then it executes the message **locally** and returns the outcome as an event. It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
 
-`send`
+- `send`
 This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
 
 ---
 
 ## `pallet-xcm` Asset Transfer extrinsics
+
+TODO: Split and diagrams.
 
 `teleport_assets` & `limited_teleport_assets`
 
@@ -71,43 +77,81 @@ Allow the user to perform a reserve-backed transfer. Its limited version takes a
 
 ---
 
-## pallet-xcm Version Negotiation extrinsics
 
-Every extrinsic in this category requires root as the FRAME origin.
+## 🗣️ version negotiation with `pallet-xcm`
 
-`force_xcm_version`
+TODO: Tell the versioning story.
 
-Modifies the `SupportedVersion` storage item. This storage item is a double map containing information about the XCM version supported by known destinations.
+XCM is an **extensible message format**.
 
----v
+Versioning allows chains to communicate as XCM evolves.
 
-## pallet-xcm Version Negotiation extrinsics
+```rust
+pub enum VersionedXcm {
+    V2(v2::Xcm),
+	V3(v3::Xcm),
+}
+```
 
-`force_default_xcm_version`
+Notes:
 
-Modifies the `SafeXcmVersion` storage value. Its value is used as fallback version when the destination's supported XCM version is unknown.
-
----v
-
-## pallet-xcm Version Negotiation extrinsics
-
-`force_subscribe_version_notify`
-
-Sends an XCM with the `SubscribeVersion` instruction to some destination.
+- V0 and V1 were removed with the addition of XCM v3.
 
 ---v
 
-## pallet-xcm Version Negotiation extrinsics
+## 🗣️ version negotiation with `pallet-xcm`
 
-`force_unsubscribe_version_notify`
+But chains need to be aware of the version supported by each other.
+`SubscribeVersion` and `QueryResponse` play a key role here:
 
-Sends an XCM with the `UnsubscribeVersion` instruction to some destination.
+```rust
+enum Instruction {
+  /* snip */
+  SubscribeVersion {
+        query_id: QueryId,
+        max_response_weight: u64,
+  },
+  QueryResponse {
+        query_id: QueryId,
+        response: Response,
+        max_weight: u64,
+  },
+  /* snip */
+}
+```
+
+Notes:
+
+- `query_id` would be identical in the `SubscribeVersion` and `QueryResponse` instructions.
+- Likewise, `max_response_weight` should also match `max_weight` in the response
+
+---v
+
+## 🗣️ version negotiation with `pallet-xcm`
+
+- `ResponseHandler`: The component in charge of handling response messages from other chains.
+- `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
+
+```rust
+ impl Config for XcmConfig {
+  /* snip */
+  type ResponseHandler = PalletXcm;
+  type SubscriptionService = PalletXcm;
+ }
+```
+
+Notes:
+
+- `PalletXcm` keeps track of the versions of each chain when it receives a response.
+- It also keeps track of which chains it needs to notify whenever we change our version
 
 ---
 
 <!-- Subscrption service and version negotiation -->
 
 ## Subscription Service
+
+TODO: Remove implementation details.
 
 Any system can be notified of when another system changes its latest supported XCM version. This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
 
@@ -152,6 +196,9 @@ XCM version negotiation:
 
 ## Response Handler
 
+TODO: XCM doesn't care about responses, FRAME does.
+We could trap them with a question.
+
 Version negotiation is just one example among many kinds of queries one chain can make to another. Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
 
 The `ResponseHandler` type requires an implementation of the `OnResponse`trait, which defines actions to be performed when receiving `QueryResponse` instructions back from a query.
@@ -192,6 +239,9 @@ The above instruction is the one used for offering some requested information th
 
 ---
 
+TODO: Less implementation details. Describe the scenario and why it's important.
+Why are these traits implemented here? Because they need storage, FRAME gives us that.
+
 ## Asset Trapping
 
 What happens when there are still funds in the `HoldingRegister` after the execution of every instruction is done ?
@@ -203,6 +253,8 @@ These traps are stored in `AssetTraps`, a map where the key is the blake2 (256bi
 ---
 
 ## Extrinsic breakdown
+
+TODO: Open VS Code. That's better.
 
 ```rust [1-4|4-11|1-100]
 /// Transfer some assets from the local chain to the sovereign account of a destination
@@ -349,7 +401,7 @@ Self::deposit_event(Event::Attempted { outcome });
 ## Proposed Exercise
 
 1. Code an extrinsic that creates an XCM which traps some funds.
-1. Code an extrinsic that creates an XCM to claim back trapped funds. 
+1. Code an extrinsic that creates an XCM to claim back trapped funds.
 
 ----
 
