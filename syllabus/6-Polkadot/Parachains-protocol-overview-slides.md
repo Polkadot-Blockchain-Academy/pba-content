@@ -15,13 +15,26 @@ Please read it after the lesson if you would like to understand how Polkadot wor
 
 ---
 
+# Meta
+
+Questions for Shawn, Bradly, et al
+
+How "dumb" should I start? Do I need to introduce the terms parachian, collator, etc?
+Or will that be in the intro?
+
+---
+
 ## Execution Sharding
 
 > Execution Sharding is the process of distributing blockchain execution responsibilities across a validator set.
 
-> In Polkadot, all validators execute every relay chain block, but only a subset execute each parachain block. <!-- .element: class="fragment" -->
+> In Polkadot, all validators execute every relay chain block, but only a subset execute each parachain block. <!-- .element: class="../assets/ent" -->
 
-This enables Polkadot to scale. <!-- .element: class="fragment" -->
+This enables Polkadot to scale. <!-- .element: class="../assets/ent" -->
+
+Notes:
+
+The big picture concept that we're trying to achieve is execution sharding. In this talk we cover Polkadot's implementation at a high level.
 
 ---
 
@@ -29,8 +42,8 @@ This enables Polkadot to scale. <!-- .element: class="fragment" -->
 
 <pba-flex center>
 
-1. Data Availability
-2. Validity
+1. Validity
+2. Data Availability
 3. Finality
 
 </pba-flex>
@@ -38,21 +51,6 @@ This enables Polkadot to scale. <!-- .element: class="fragment" -->
 Notes:
 
 Because GRANDPA finality faults require 33% or more stake to be slashed, Goal (3) implies Shared Security
-
----
-
-## Interaction Between Client & Runtime
-
-Since Polkadot involves not only on-chain logic but off-chain logic, the runtime is the central source of truth about validators, assignments, parachain states, etc.
-
-Clients learn about the state by invoking **Runtime APIs** at recent blocks, and the runtime is updated with **new blocks**.
-
-<img rounded width=900, src="../assets/runtime-node-interaction.png" />
-
-Notes:
-
-Because the runtime is updated by new blocks, malicious or poorly connected validators have some choice in which information to provide the runtime with.
-This must be accounted for in the protocol: we cannot assume that the runtime is always perfectly informed.
 
 ---
 
@@ -68,7 +66,17 @@ This must be accounted for in the protocol: we cannot assume that the runtime is
 
 </pba-flex>
 
----
+TODO Make this a block diagram figure
+
+Notes:
+
+If there is one slide to remember from this talk, this is the one.
+These are the stages of the parachains protocol.
+We'll look at what happens in each stage, and how they come together to make the parachains protocol work.
+We won't get too deep in the inner workings of each stage or the subsystems that implement them.
+Details about (some of) this will come in subsequent deep dives, others are covered in docs.
+
+---v
 
 ## Motivation & Game Theory
 
@@ -78,22 +86,34 @@ First, **backers** introduce new blocks and provide "skin in the game".
 
 Then, randomly assigned **approval checkers** check their work, with an option to raise a dispute that involves all validators.
 
-Rather than having every validator check every block, we just ensure that _detection_ of bad blocks is overwhelmingly likely and punishments are severe.
+Notes:
 
----
+Questions:
+1. Is this weaker than if every validator checked every block?
+2. Does this allow more throughput than every validator checking every block?
 
-#### Validator Group Assignments and Execution Cores
+Answers:
+1. Yes, it is weaker... But how much?
+2. Yes, it allows more throughput, but how much?
+
+Qualitatively: It is very very slightly weaker. (10^-30 probability of invalid parablock getting finalized.) But we get a LOT more throughput.
+
+So this is a good engineering tradeoff. (And it is tuneable.)
+
+---v
+
+## Validator Groups
 
 <img rounded width=1100, src="../assets/validator-groups.png" />
 
 Notes:
 
-Every Session (4 hours), validators are _partitioned_ into small **groups** which work together.<br/>
+Every Session (4 hours), validators are _partitioned_ into small **groups** which work together to validate a particular parachin.<br/>
+
+There is a detail called execution cores, that Bradley will deep dive on later.
 Groups are assigned to specific **Execution Core**s, and these assignments change every few blocks.
 
----
-
-## The relay chain is Forkful
+## Relay Chain is Forkful
 
 Validators and collators run these protocols on every block of the relay chain.
 
@@ -105,13 +125,26 @@ Notes:
 
 In the slides, we will look at single instances of the protocols, but it should be known that the validators are actually doing these steps in parallel with each other and often many times at a time.
 
----
+---v
+
+## Parachains Potocol Again
+
+TODO dupe content
+
+Notes:
+This is important.
+Here it is again.
+And here it is with a dancing banana beside it.
+
+# Collation
+
+---v
 
 ## Definition: Candidate
 
 > A **Candidate** is a parachain block<br/>which has not yet been finalized in the relay chain.
 
----
+---v
 
 ## Collation
 
@@ -119,45 +152,115 @@ In the Collation phase, a collator for a scheduled parachain builds a parachain 
 
 The collator sends this to validator group assigned to the parachain over the p2p network.
 
+---v
+
+## Proof of Validity
+
+TODO these snippets are from memory. Find the real code, and either put it here, or acknowledge that this is pseudocode.
+
+```rust
+struct Block {
+	header: Header,
+	body: Vec<Extrinsic>,
+}
+```
+
+```rust
+struct PoV {
+	header: Header,
+	body: Vec<Extrinsics>,
+	state_proof: MerkleProof,
+}
+```
+
+---v
+
+## Synonyms Galore
+
+parablock, PoV block, PoV, Collation, Candidate, oh my!
+
+Notes:
+
+Many of these terms have subtly different meanings.
+They can be synonymous in many contexts.
+They can also have subtle differences.
+For example, Techincally a parablock is just the block, not the state proof.
+But if we are talking about "validators downloading and re-executing a parablock", context implies that we are actually talking about a PoV block.
+
 ---
+# Backing
 
-## Backing
-
-In the backing phase, the validators of the assigned group share the candidates they've received, validate them, and sign statements attesting to their validity.
-
-They distribute their candidates and statements via the P2P layer, and then the next relay chain block author bundles candidates and statements into the relay chain block.
-
----
-
-## Backing: Networking
-
-<img rounded width=1000, src="../assets/backing-networking.png" />
-
----
+---v
 
 ## Backing: Skin in the Game
-
-The main goal of backing is to provide "skin in the game".
 
 Backers are agreeing that if the parablock turns out to be bad, they will lose 100% of their stake.
 
 Backing on its own does not provide security, only accountability.
 
+TODO catchy image
+
 Notes:
 
 The current minimum validator bond as of Jan 27, 2022 is ~1.5 Million DOT.
+
+---v
+
+Definition: Statement
+
+<blockquote>
+TODO peer review, is this a good definition?
+A statement is a signed message from a backer to the greater validator set that they are willing to back a particular candidate.
+</blockquote>
+
+---v
+
+## Backing: Logistics
+
+Backers distribute their candidates and statements via the P2P layer.
+
+This is Off-Chain!
+
+The next relay chain block author bundles candidates and statements into the relay chain block.
+
+TODO: But why? Why have a whole separate system to aggregate statements and put them in an inherent when we already have a transaction pool and block builder. Is this just an optimization?
+
+Notes:
+
+
+
+---v
+
+## Backing: Networking
+
+TODO This was Rob's image. Bradley, wtf is this showing?
+
+<img rounded width=1000, src="./assets/backing-networking.png" />
 
 ---
 
 ## Availability
 
-At this point, the backers are responsible for making the data needed to check the parablock available to the entire network.
+---v
+
+## Lots of Parties Need the PoV
+
+* Other parachain nodes need to sync
+* Other validators need to check it (more on that soon)
+
+---v
+
+## Making the PoV
+
+Backers are responsible for making the data needed to check the parablock available to the entire network.
 
 Validators sign statements about which data they have and post them to the relay chain.
 
+TODO: "Data needed to check the parablock" - is this just the PoV?
+
 ---
 
-<img rounded width=1300px src="../assets/availability-inclusion.png" />
+<img rounded width=1300px src="./assets/availability-inclusion.png" />
 
 Notes:
 
