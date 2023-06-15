@@ -34,6 +34,20 @@ Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
 
 ---
 
+## Symmetric Encryption API
+
+Symmetric encryption libraries should generally all expose some basic functions:
+
+- `fn generate_key(r) -> k;` <br/> Generate a `k` (secret key) from some input `r`.
+- `fn encrypt(k, msg) -> ciphertext;` <br/> Takes `k` and a message; returns the ciphertext.
+- `fn decrypt(k, ciphertext) -> msg;` <br/> Takes `k` and a ciphertext; returns the original message.
+
+Notes:
+
+The input `r` is typically a source of randomness, for example the movement pattern of a mouse.
+
+---
+
 ## Symmetric Encryption
 
 #### _Example: XOR Cipher_
@@ -76,23 +90,36 @@ We caution however that constructing these protocols remains delicate, even give
 <pba-cols>
 <pba-col>
 
-<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin.png" />
+<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECB-Penguin.png" />
 
 _Original image_
 
 </pba-col>
 <pba-col>
 
-<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECG-Penguin-Encrypted.png" />
+<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECB-Penguin-Encrypted.png" />
 
 _Encrypted image_
+
+(by blocks)
+
+</pba-col>
+<pba-col>
+
+<img style="width: 300px" src="../../../assets/img/1-Cryptography/ECB-Penguin-Secure.png" />
+
+_Encrypted image_
+
+(all at once)
 
 </pba-col>
 </pba-cols>
 
 Notes:
 
-Image sources: <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png> and <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png>
+The ECB penguin shows what can go wrong when you encrypt a small piece of data, and do this many times with the same key, instead of encrypting data all at once.
+
+Image sources: <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png> and <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png> and <https://upload.wikimedia.org/wikipedia/commons/5/58/Tux_secure.png>
 
 ---
 
@@ -120,11 +147,18 @@ i.e. Public key is used to encrypt but a different, _secret_, key must be used t
 
 ---
 
-## Commutative En-/Decryption
+## Asymmetric Encryption API
 
-In a commutative structure, a message may be encrypted/decrypted<br/>multiple times with potentially multiple keys.
+Asymmetric encryption libraries should generally all expose some basic functions:
 
-The output does not depend on the order of operations.
+- `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
+- `fn public_key(sk) -> pk;` <br/> Generate a `pk` (public key) from the private key `sk`.
+- `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes the public key and a message; returns the ciphertext.
+- `fn decrypt(sk, ciphertext) -> msg;` <br/> For the inputs `sk` and a ciphertext; returns the original message.
+
+Notes:
+
+The input `r` is typically a source of randomness, for example the movement pattern of a mouse.
 
 ---
 
@@ -141,21 +175,66 @@ Image Source: <https://upload.wikimedia.org/wikipedia/commons/4/46/Diffie-Hellma
 
 ---
 
-<!-- TODO(Nate): Use DH to explain the most common form of hybrid crypto (super high level), where use DH to get shared secret, then use that for symmetric crypto -->
+## Authenticated Encryption
 
-<!-- Does the commutative en-decryption slide actually come up here? Should it be moved up to exotic primitives? -->
-## Commutative En-/Decryption
+Authenticated encryption adds a **M**essage **A**uthentication **C**ode to additionally provide an _authenticity_ and _integrity_ guarantee to encrypted data.
 
-Encrypting a message with key $A$, and then encrypting the ciphertext with key $B$, would result in the same ciphertext had one encrypted with $B$ and then $A$.
+A reader can check the MAC to ensure the message was constructed by someone knowing the secret.
 
-\begin{align}
-M &=> E_A(E_B(M)) == E_B(E_A(M)) => C \\\\
-C &=> D_A(D_B(C)) == D_B(D_A(C)) \ => M
-\end{align}
+Notes:
 
-Elliptic curve cryptography is based on _commutative_ algebraic structures.
+Specifically, this authenticity says that _anyone who does not know the sender's secret_ could not construct the message.
 
-<!-- This comment on ECC being commutative is a little sketchy/misleading, albeit technically true. There are still some operations, afaik, that are non-commutative when using it in practice. For instance, any reasonable form of encryption on using ECC is, afaik, HPKE (probably ECIES) which is not necessarily commutative. -->
+Generally, this adds ~16-32 bytes of overhead per encrypted message.
+
+---
+
+## AEAD (**A**uthenticated **E**ncryption **A**dditional **D**ata)
+
+AEAD is authenticated with some extra data which is unencrypted, but does have integrity and authenticity guarantees.
+
+Notes:
+
+Authenticated encryption and AEAD can work with both symmetric and asymmetric cryptography.
+
+---
+
+## AEAD Example
+
+Imagine a table with encrypted medical records stored in a table, where the data is stored using AEAD. What are the advantages of such a scheme?
+
+```text
+UserID -> Data (encrypted), UserID (additional data)
+```
+
+Notes:
+By using this scheme, the data is always associated with the userID. An attacker could not put that entry into another user's entry.
+
+---
+
+## Hybrid Encryption
+
+Hybrid encryption combines the best of all worlds in encryption. Asymmetric encryption establishes a shared secret between the sender and a specific public key, and then uses symmetric encryption to encrypt the actual message. It can also be authenticated.
+
+Notes:
+
+In practice, asymmetric encryption is _almost always_ hybrid encryption.
+
+---
+
+## Cryptographic Properties
+
+| Property        | Symmetric | Asymmetric | Authenticated | Hybrid + Authenticated |
+| --------------- | --------- | ---------- | ------------- | ---------------------- |
+| Confidentiality | Yes       | Yes        | Yes           | Yes                    |
+| Authenticity    | Yes*      | No         | Yes*          | Yes                    |
+| Integrity       | No*       | No*         | Yes          | Yes                    |
+| Non-repudiation | No        | No         | No            | No                    |
+
+Notes:
+
+- Symmetric-Authentication and Authenticated-Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
+- Symmetric-Integrity and Asymmetric-Integrity: There is no proper integrity check, however the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
 
 ---
 
