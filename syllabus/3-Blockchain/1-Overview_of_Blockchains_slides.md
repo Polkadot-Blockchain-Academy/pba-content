@@ -83,6 +83,7 @@ Cryptographic guarantees are about interactions with the service provider, not p
 People rely on digital services every day.
 They are inescapable and valuable.
 
+- Game Servers (AOE or Minecraft)
 - Twitter, Instagram, Facebook, etc.
 - Journalism and sources
 - Banks

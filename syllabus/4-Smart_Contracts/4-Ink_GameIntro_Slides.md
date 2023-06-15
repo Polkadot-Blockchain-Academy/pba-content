@@ -4,7 +4,7 @@ description: An introduction to the ink! workshop.
 duration: 20 min
 ---
 
-<img rounded style="width: 1200px; padding-top:15px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beginners-workshop.jpg" alt="ink!" />
+<img rounded style="width: 1200px; padding-top:15px;" src="img/ink/beginners-workshop.jpg" alt="ink!" />
 
 ---
 
@@ -31,7 +31,7 @@ duration: 20 min
 
 ---
 
-<img rounded style="margin-top: 25px; width: 1200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/beamer.png" />
+<img rounded style="margin-top: 25px; width: 1200px;" src="img/ink/beamer.png" />
 
 ---
 
@@ -79,7 +79,7 @@ duration: 20 min
 
 ## How the Game looks
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-2.png" />
+<img rounded src="img/ink/splash-2.png" />
 
 Notes:
 
@@ -89,13 +89,13 @@ Notes:
 
 ## How the Game looks
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-9.png" />
+<img rounded src="img/ink/splash-9.png" />
 
 ---
 
 ## How the Game looks
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/splash-10.png" />
+<img rounded src="img/ink/splash-10.png" />
 
 ---
 
@@ -147,25 +147,25 @@ mod player {
 
 ## How to play
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github.png" />
+<img rounded src="img/ink/github.png" />
 
 ---
 
 ## How to play
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github1.png" />
+<img rounded src="img/ink/github1.png" />
 
 ---
 
 ## How to play
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github2.png" />
+<img rounded src="img/ink/github2.png" />
 
 ---
 
 ## How to play
 
-<img rounded src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/github3.png" />
+<img rounded src="img/ink/github3.png" />
 
 ---
 
@@ -251,4 +251,4 @@ mod player {
 
 ---
 
-<!-- .slide: data-background="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/Questions_2.svg"" -->
+<!-- .slide: data-background="img/ink/Questions_2.svg"" -->

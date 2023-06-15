@@ -67,7 +67,7 @@ Notes:
 
 ## Gossip Protocol
 
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-1.svg" />
+<img style="width: 500px" src="img/3.7-p2p-gossip-1.svg" />
 
 Notes:
 
@@ -77,7 +77,7 @@ Notes:
 
 ## Gossip Protocol
 
-<img style="width: 85s0px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-2.svg" />
+<img style="width: 85s0px" src="img/3.7-p2p-gossip-2.svg" />
 
 Notes:
 
@@ -100,7 +100,7 @@ Talk about advertising vs just blind sending and how that can be inefficient
 
 ## Partitions
 
-<img style="width: 600px" src="../../assets/img/3-Blockchain/3.7-p2p-partition.svg" />
+<img style="width: 600px" src="img/3.7-p2p-partition.svg" />
 
 Notes:
 
@@ -112,7 +112,7 @@ be able to be distributed across the network
 
 ## Partitions
 
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-partition2.svg" />
+<img style="width: 500px" src="img/3.7-p2p-partition2.svg" />
 
 Notes:
 
@@ -130,7 +130,7 @@ Show picture of something scary and devious here
 
 ## Eclipse Attack
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-eclipse-topology.svg" />
+<img style="width: 800px" src="img/3.7-p2p-eclipse-topology.svg" />
 
 Notes:
 
@@ -242,7 +242,7 @@ Notes:
 
 ## Example Findkey(k=Block45)
 
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-find-node-libp2p.svg" />
+<img style="width: 500px" src="img/3.7-p2p-find-node-libp2p.svg" />
 
 ---
 

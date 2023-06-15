@@ -55,7 +55,7 @@ Substrate provides different Smart Contracts' options.
 - Pallet Contracts - Wasm execution environment
 - Frontier - EVM execution environment
 
-<img rounded style="width: 600px; margin-top:-7f0px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/contracts-runtime.png" alt="Contracts runtime" />
+<img rounded style="width: 600px; margin-top:-7f0px;" src="img/frontier/contracts-runtime.png" alt="Contracts runtime" />
 
 Notes:
 
@@ -72,8 +72,8 @@ Smart contracts on [Frontier](https://github.com/paritytech/frontier) can be imp
 <br/>
 
 <div class="right">
-<img rounded style="width: 200px; margin-right: 70px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/solidity.png" alt="Solidity Logo" />
-<img rounded style="width: 200px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/vyper.png" alt="Solidity Logo" />
+<img rounded style="width: 200px; margin-right: 70px" src="img/frontier/solidity.png" alt="Solidity Logo" />
+<img rounded style="width: 200px;" src="img/frontier/vyper.png" alt="Solidity Logo" />
 </div>
 
 <pba-flex center>
@@ -97,7 +97,7 @@ Frontier aims to provide a low-friction and secure environment for the developme
 Frontier provides an Ethereum compatibility layer for Substrate.<br/>
 It has two components that can be activated separately.
 
-<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Frontier.png" alt="Frontier Logo" />
+<img rounded style="width: 600px;" src="img/frontier/Frontier.png" alt="Frontier Logo" />
 
 Notes:
 
@@ -315,7 +315,7 @@ impl pallet_evm::Config for Runtime {
 </pba-col>
 <pba-col>
 
-<img rounded style="width: 800px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/EVM-accounts.png" alt="JS-Events" />
+<img rounded style="width: 800px;" src="img/frontier/EVM-accounts.png" alt="JS-Events" />
 
 </pba-col>
 </pba-cols>
@@ -338,7 +338,7 @@ So for example, through normal ways, you cannot sign an EVM transaction with a n
 
 ## Pallet EVM - AddressMapping
 
-<img rounded style="width: 600px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/frontier/Polkadot-JS-EVM-Events.png" alt="JS-Events" />
+<img rounded style="width: 600px;" src="img/frontier/Polkadot-JS-EVM-Events.png" alt="JS-Events" />
 
 Notes:
 
@@ -713,7 +713,7 @@ A program can call functions directly or indirectly through a function table.
 
 ## Stack-based Virtual Machine
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_1.png" />
+<img rounded style="width: 1000px;" src="img/wasm/Stack_1.png" />
 
 We want to add 2 numbers.
 
@@ -727,7 +727,7 @@ Let’s see it step by step:
 
 ## Stack-based Virtual Machine
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_2.png" />
+<img rounded style="width: 1000px;" src="img/wasm/Stack_2.png" />
 
 I) We start by pushing the first element to the stack.
 
@@ -741,7 +741,7 @@ Let’s now execute the first instruction:
 
 ## Stack-based Virtual Machine
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_3.png" />
+<img rounded style="width: 1000px;" src="img/wasm/Stack_3.png" />
 
 II) We push the second element to the stack.
 
@@ -754,7 +754,7 @@ Let’s now simulate the second instruction:
 
 ## Stack-based Virtual Machine
 
-<img rounded style="width: 1000px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/Stack_4.png" />
+<img rounded style="width: 1000px;" src="img/wasm/Stack_4.png" />
 
 III) Finally we can execute the add instruction.
 
@@ -841,7 +841,7 @@ Unicode, specifically U8 = 2 byte characters.
 
 #### Wasm Architecture
 
-<img rounded style="width: 1400px;" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/wasm/WebAssembly-high-level-architecture.png" />
+<img rounded style="width: 1400px;" src="img/wasm/WebAssembly-high-level-architecture.png" />
 
 Notes:
 
@@ -858,7 +858,7 @@ A trap occurs if an access is not within the bounds of the current memory size.
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-<img rounded style="width: 300px" src="../../assets/img/6-FRAME/6.5-Smart_Contracts/ink/question-mark.svg" />
+<img rounded style="width: 300px" src="img/ink/question-mark.svg" />
 
 ---
 
