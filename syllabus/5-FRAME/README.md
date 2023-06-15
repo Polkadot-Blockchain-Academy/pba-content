@@ -2,7 +2,7 @@
 
 ## Day 1 - Wed
 
-### Morning - (Founders Should Participate)
+### Morning
 - Introduction To FRAME
 - Exercise: Proof of Existence Runtime
 - Pallet Coupling
