@@ -45,7 +45,6 @@ Students start their own nodes and join the network
 
 Node runners can contribute PoW hashrate to the network in exchange for tokens.
 
-
 ### Fork the Network
 
 In BA we forked the difficulty, but maybe there is something more compelling. Maybe fork to adjust max block size. Nice because it happened for real in bitcoin. Maybe hard because I believe max block size is controlled in the runtime.

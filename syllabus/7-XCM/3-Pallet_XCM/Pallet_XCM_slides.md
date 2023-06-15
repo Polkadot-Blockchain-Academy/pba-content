@@ -56,10 +56,10 @@ We will see an example of this in the XCM pallet, with the teleport_assets and r
 TODO: Split and diagrams
 
 - `execute`
-Direct access to the XCM executor. It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution. Then it executes the message **locally** and returns the outcome as an event. It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
+  Direct access to the XCM executor. It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution. Then it executes the message **locally** and returns the outcome as an event. It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
 
 - `send`
-This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
+  This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
 
 ---
 
@@ -76,7 +76,6 @@ Allow the user to perform an asset teleport. The limited version takes an extra 
 Allow the user to perform a reserve-backed transfer. Its limited version takes an extra argument as well (`Option<WeightLimit>`).
 
 ---
-
 
 ## 🗣️ version negotiation with `pallet-xcm`
 
@@ -284,6 +283,7 @@ pub fn limited_reserve_transfer_assets(
 ### Extrinsic breakdown
 
 `do_reserve_transfer_assets` beguins with:
+
 - Checking wether runtime origin has execution permissions
 - Decoding destination and assets
 
@@ -403,6 +403,6 @@ Self::deposit_event(Event::Attempted { outcome });
 1. Code an extrinsic that creates an XCM which traps some funds.
 1. Code an extrinsic that creates an XCM to claim back trapped funds.
 
-----
+---
 
 Usually trapping funds is not a desired outcome. In the first XCM, what modification is needed to avoid such scenario ?
