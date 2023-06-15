@@ -83,7 +83,8 @@ Can anyone spot a problem with synchronous model?
 
 Notes:
 
-Indicate which work is done for a candidate prior to its ending up in Prospective Parachains. Indicate what parachains use to build blocks, rather than freshly included relay parent. (Older relay parent + required parent)
+- Point out the two independent processes and the "stopping points between them"
+- Walk through, starting with unincluded segment
 
 ---
 
@@ -111,7 +112,7 @@ Brief BABE fork choice rule review
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Laying The Groundwork: Contextual Execution of Parablocks
+# Contextual Execution of Parablocks
 
 ---
 
@@ -131,7 +132,7 @@ Brief BABE fork choice rule review
 </pba-col>
 <pba-col>
 
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/context.jpeg" alt="Processor cores image">
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/context.jpeg" alt="context image">
 
 </pba-col>
 </pba-cols>
@@ -146,23 +147,7 @@ Notes:
 
 ---
 
-## Required Parent Rule
-
-Graphic here
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="Stopwatch">
-
----
-
-## Relay Parent Rule
-
-Graphic here
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="Stopwatch">
-
----
-
-## Constraints
-
-PersistedValidationData
+## Constraints and Modifications
 
 ```rust
 
@@ -219,23 +204,13 @@ pub struct ConstraintModifications {
 
 ```
 
----
+Notes:
 
-## Finding Our Execution Context: Collators
-
-Image
-
----
-
-## Finding Our Execution Context: Backers
-
-Image
-
----
-
-## Finding Our Execution Context: Approvers
-
-Image
+Constraints to Highlight:
+- required_parent: Fragment would place its corresponding candidate here for children
+- min_relay_parent_number: Monotonically increasing rule, max_ancestry_len
+- ump_messages_sent mods ump_remaining 
+- code_upgrade_applied: Only one in the unincluded segment at a time!
 
 ---
 
@@ -249,7 +224,7 @@ Storing Products of the Backing Process
 
 ## Prospective Parachains Snapshot
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Prospective_Parachains_Overview.svg" alt="Stopwatch">
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Prospective_Parachains_Overview.svg" alt="Prospective Parachains">
 
 Notes:
 
@@ -262,90 +237,118 @@ Notes:
 
 ## Anatomy of A Fragment Tree
 
-Image here
-- Candidate storage
-- Fragments
-- Scope (relay parent, ancestors, pending availability)
-
----
-
-## Fragment Tree Scope
-
-```rust
-
-/// The scope of a [`FragmentTree`].
-#[derive(Debug)]
-pub(crate) struct Scope {
-	para: ParaId,
-	relay_parent: RelayChainBlockInfo,
-	ancestors: BTreeMap<BlockNumber, RelayChainBlockInfo>,
-	ancestors_by_hash: HashMap<Hash, RelayChainBlockInfo>,
-	pending_availability: Vec<PendingAvailability>,
-	base_constraints: Constraints,
-	max_depth: usize,
-}
-
-/// Information about a relay-chain block.
-#[derive(Debug, Clone, PartialEq)]
-pub struct RelayChainBlockInfo {
-	/// The hash of the relay-chain block.
-	pub hash: Hash,
-	/// The number of the relay-chain block.
-	pub number: BlockNumber,
-	/// The storage-root of the relay-chain block.
-	pub storage_root: Hash,
-}
-
-```
-
----
-
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="Stopwatch">
-
-## Revisiting Relay Parent Limitations
-
-What does it mean for a relay parent to be in scope?
-When can a relay parent be out of scope?
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Fragment_Tree_Disected.svg" alt="Fragment Tree">
 
 Notes:
 
-Scope:
-- On same fork of the relay chain
-- Within `allowed_ancestry_len`
-
-Out of scope:
-- Candidates pending availability have been seen on-chain and need to be accounted for even if they go out of scope. The most likely outcome for candidates pending availability is that they will become available, so we need those blocks to be in the `FragmentTree` to accept their children.
-- Relay parent can't move backwards relative to that of the required parent
+In this order
+- Scope
+- Root node: corresponds to most recently included candidate
+- Child nodes: Mention required parent rule
+- `FragmentNode` contents
+- `CandidateStorage`
+- `GetBackableCandidate`
 
 ---
+
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/checklist.jpeg" alt="checklist">
 
 ## Fragment Tree Inclusion Checklist
 
 When and where can a candidate be included in a fragment tree?
+
+<pba-flex center>
 
 - Required parent is in tree
 	- Included as child of required parent, if at all
 - `Fragment::validate_against_constraints()` passes
 - Valid relay parent
 
+</pba-flex>
+
 ---
 
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="Stopwatch">
-
-## Revisiting Relay Parent Limitations
+## Relay Parent Limitations for Fragments
 
 What does it mean for a relay parent to be in scope?
-When can a relay parent be out of scope?
+
+When is a relay parent allowed to be out of scope?
 
 Notes:
 
-Scope:
+In Scope:
 - On same fork of the relay chain
 - Within `allowed_ancestry_len`
 
 Out of scope:
 - Candidates pending availability have been seen on-chain and need to be accounted for even if they go out of scope. The most likely outcome for candidates pending availability is that they will become available, so we need those blocks to be in the `FragmentTree` to accept their children.
 - Relay parent can't move backwards relative to that of the required parent
+
+---
+
+## Assembling Base Constraints
+
+Excerpt from `backing_state()` in runtime/parachains/src/runtime_api_impl/vstaging.rs
+
+```rust
+
+let (ump_msg_count, ump_total_bytes) = <ump::Pallet<T>>::relay_dispatch_queue_size(para_id);
+let ump_remaining = config.max_upward_queue_count - ump_msg_count;
+
+let constraints = Constraints {
+		min_relay_parent_number,
+		max_pov_size: config.max_pov_size,
+		max_code_size: config.max_code_size,
+		ump_remaining,
+		ump_remaining_bytes,
+		max_ump_num_per_candidate: config.max_upward_message_num_per_candidate,
+		dmp_remaining_messages,
+		hrmp_inbound,
+		hrmp_channels_out,
+		max_hrmp_num_per_candidate: config.hrmp_max_message_num_per_candidate,
+		required_parent,
+		validation_code_hash,
+		upgrade_restriction,
+		future_validation_code,
+	};
+
+```
+
+---
+
+##  Applying Constraint Modifications
+
+Excerpt from `Constraints::apply_modifications()`
+
+```rust
+
+if modifications.dmp_messages_processed > new.dmp_remaining_messages.len() {
+	return Err(ModificationError::DmpMessagesUnderflow {
+		messages_remaining: new.dmp_remaining_messages.len(),
+		messages_processed: modifications.dmp_messages_processed,
+	})
+} else {
+	new.dmp_remaining_messages =
+		new.dmp_remaining_messages[modifications.dmp_messages_processed..].to_vec();
+}
+
+```
+---
+
+## Validating Against Constraints
+
+`Excerpt from Fragment::validate_against_constraints()`
+
+```rust
+
+if relay_parent.number < constraints.min_relay_parent_number {
+	return Err(FragmentValidityError::RelayParentTooOld(
+		constraints.min_relay_parent_number,
+		relay_parent.number,
+	))
+}
+
+```
 
 ---
 
@@ -368,10 +371,14 @@ pub struct AsyncBackingParams {
 }
 
 ```
+</br>
+<pba-flex center>
 
 Numbers in use for testing Prospective Parachains:
 - `max_candidate_depth` = 4
 - `allowed_ancestry_len` = 3
+
+</pba-flex>
 
 ---
 
@@ -381,30 +388,23 @@ Numbers in use for testing Prospective Parachains:
 
 ---
 
-## Backing Changes
+## Statement Distribution Changes
 
-<pba-cols>
-<pba-col center>
-
-  - 
-
-</pba-col>
-<pba-col center>
-
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Processor_Cores.jpeg" alt="Processor cores image">
-
-</pba-col>
-</pba-cols>
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Statement_Distribution.svg" alt="Processor cores image">
 
 Notes:
 
+Why do we need the refactor?
+
+Answer: Cap on simultanious candidates per backing group ~3x higher
+
+Mention 
+- Announcement - Acknowledgement
+- Request - Response
+
 ---
 
-## Statement Distribution Changes
-
----
-
-## How Prospective Parachains Candidates are Used
+## Provisioner Changes
 
 Function `request_backable_candidates` from the Provisioner subsystem
 
@@ -491,7 +491,20 @@ Notes:
 
 ---
 
-## Cumulus Block Authoring Hooks
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/cumulus.png" alt="Processor cores image">
+
+## Cumulus Changes
+
+<pba-flex center>
+
+- Block authoring hooks
+- Parachain consensus refactor
+	- Aura rewrite
+	- Custom sequencing consensus:
+		- Tendermint
+		- Hotshot consensus
+
+</pba-flex>
 
 ---
 
@@ -523,15 +536,39 @@ Notes:
 
 ## Async Backing and Exotic Core Scheduling
 
+<pba-flex center>
+
 - What is exotic core scheduling?
 	- Multiple cores per parachain
 	- Overlapping leases of many lengths
 	- Lease + On-demand
-- How asynchronous backing helps
-	- Rich execution contexts for parablocks
-		- Variable relay parents
-		- Required parents
-		- Constraints and constraint modifications
+- How does asynchronous backing help?
+
+<pba-flex>
+
+Notes:
+
+- Async backing -> unincluded block queuing
+
+---
+
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="stopwatch">
+
+## Shorter Block Times?
+
+<pba-flex center>
+
+- Async backing gives us unincluded block queuing
+- What else we need for useful shorter times:
+	- Soft finality 
+	- Inclusion dependencies (comes with elastic scaling)
+
+<pba-flex>
+
+Notes:
+
+- Soft finality means that the collators will submit as many new blocks with the same extrinsics as needed to retain the same ordering if a parablock candidate is dropped.
+- Inclusion dependencies: Take two parablocks a and b, where a is built on top of b. Then if a and b are being made available on two different cores during the same block we need to ensure that b waits for inclusion until a is also included.
 
 ---
 
