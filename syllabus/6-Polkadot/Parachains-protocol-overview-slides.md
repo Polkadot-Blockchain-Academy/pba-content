@@ -250,7 +250,7 @@ TODO This was Rob's image. Bradley, wtf is this showing?
 
 ---v
 
-## Making the PoV
+## Making the PoV Available
 
 Backers are responsible for making the data needed to check the parablock available to the entire network.
 
@@ -270,7 +270,7 @@ In practice, we allow more than a single block for availability to be timed out.
 
 ## Parablock Inclusion and Finality
 
-<img rounded width=600, src="../assets/parachain-finality.png" />
+<img rounded width=600, src="./assets/parachain-finality.png" />
 
 ---
 
@@ -328,6 +328,10 @@ But because of slashing, every failed attempt means enormous amounts of DOT slas
 
 ## Approval Checking
 
+---v
+
+## Approval Checking
+
 Every validator node is running an approval checking process for every parachain block in every relay chain block.
 This process has a few properties:
 
@@ -348,7 +352,7 @@ from those checkers as opposed to honest checkers.
 Low probability here means 1 in 1 billion or so (assuming 3f < n)
 Not cryptographic low probability, but good enough for crypto-economics.
 
----
+---v
 
 ## Approval Checking
 
@@ -358,7 +362,7 @@ Every validator is assigned to check every parablock, but at different times.
 
 For later-assigned validators, if it's approved by the time it's their turn, they simply do not check.
 
----
+---v
 
 ## Approval Checking: Assignments and Approvals
 
@@ -372,7 +376,7 @@ Notes:
 
 If validators began downloading data before revealing their assignment, an attacker might notice this and attack them without anybody noticing.
 
----
+---v
 
 ## Approval Checking: The Hydra
 
@@ -387,6 +391,10 @@ Every time an attacker chops off one head, two more heads appear.
 
 ## Disputes
 
+---v
+
+## Disputes
+
 When validators disagree about the validity of a parablock, a dispute is automatically raised.
 
 Disputes involve all validators, which must then check the block and cast a vote.
@@ -395,7 +403,7 @@ Backing and Approval statements already submitted are counted as dispute votes.
 
 Votes are transmitted by p2p and also collected on-chain.
 
----
+---v
 
 ## Dispute Resolution
 
@@ -405,7 +413,7 @@ Notes:
 
 resolution requires a supermajority in either direction.
 
----
+---v
 
 ## Dispute Slashing
 
@@ -415,13 +423,34 @@ The penalty is large when the candidate is deemed invalid by the supermajority a
 
 ---
 
+## Orphaning Invalid Candidates
+
+---v
+
+## It's Not Too Late
+
+If we are having a dispute, the parablock is already on-chain.
+Doesn't that mean it is too late to do anything?
+
+---v
+
+## The Relay Chain is Forkful
+
+Relay blocks are not finalized until disputes finish
+
+If a dispute finds an invalid parablock, honest relay chains simply won't finalize that relay chain fork, and they will re-org to one that does not contain an invalid parachain block.
+
+TODO: multi-step figure. This can be very clear with a diagram, but is pretty confusing in words only.
+
+---v
+
 ## GRANDPA Voting Rules
 
 Instead of voting for the longest chain, validators vote for the longest chain where all unfinalized candidates are a) approved and b) undisputed
 
 <img rounded width=650, src="../assets/grandpa-voting-rule.png" />
 
----
+---v
 
 ## BABE Chain Selection Rule
 
