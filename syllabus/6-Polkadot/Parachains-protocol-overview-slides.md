@@ -104,7 +104,7 @@ So this is a good engineering tradeoff. (And it is tuneable.)
 
 ## Validator Groups
 
-<img rounded width=1100, src="../assets/validator-groups.png" />
+<img rounded width=1100, src="./assets/validator-groups.png" />
 
 Notes:
 
