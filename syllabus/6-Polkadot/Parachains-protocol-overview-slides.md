@@ -1,35 +1,12 @@
 ---
-title: Execution Sharding in Polkadot
+title: Parachains Protocol Overview
 description: Details the Collation, Backing, Approval-Voting, and Disputes systems and how they work together to provide secure execution sharding in Polkadot.
 duration: 45 minutes
 ---
 
-# Execution Sharding in Polkadot
+# Parachains Protocol
 
----
-
-## Execution Sharding
-
-> Execution Sharding is the process of distributing blockchain execution responsibilities across a validator set.
-
----
-
-## Execution Sharding in Polkadot
-
-> In Polkadot, all validators execute every relay chain block, but only a subset execute each parachain block.
-
-This enables Polkadot to scale.
-
----
-
-## Lesson Agenda
-
-<pba-flex center>
-
-1. Discuss the high-level protocols and principles of Execution Sharding in Polkadot
-1. Provide background on how complex on & offchain logic is implemented with Substrate
-
-</pba-flex>
+## An Overview
 
 Notes:
 
@@ -38,13 +15,23 @@ Please read it after the lesson if you would like to understand how Polkadot wor
 
 ---
 
-## Goals of Execution Sharding
+## Execution Sharding
+
+> Execution Sharding is the process of distributing blockchain execution responsibilities across a validator set.
+
+> In Polkadot, all validators execute every relay chain block, but only a subset execute each parachain block. <!-- .element: class="fragment" -->
+
+This enables Polkadot to scale. <!-- .element: class="fragment" -->
+
+---
+
+## Services Polkadot Provides to Parachains
 
 <pba-flex center>
 
-1. A minimal amount of validator nodes should check every parachain block while still maintaining security
-1. The relay chain will provide ordering and finality for parachain blocks
-1. Only valid parachain blocks will become finalized
+1. Data Availability
+2. Validity
+3. Finality
 
 </pba-flex>
 
