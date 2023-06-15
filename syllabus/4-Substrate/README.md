@@ -1,6 +1,6 @@
-## Day 0 
+## Day 0
 
-### Afternoon 
+### Afternoon
 
 - lecture: Intro to substrate (60 mins)
 - lecture: Wasm-meta protocol Part 1 (45 mins)
@@ -8,7 +8,7 @@
 
 ## Day 1 (6 hours)
 
-### Morning 
+### Morning
 
 - lecture: Wasm-meta protocol Part 2 (60 mins)
 - lecture: Transaction Pool (90 mins)
@@ -22,12 +22,12 @@
 
 ## Day 2 (6 hours)
 
-### Morning 
+### Morning
 
 - lecture: Substrate Storage (60m)
-- workshop: Substrate CLI + Client code Overview 
+- workshop: Substrate CLI + Client code Overview
 
-### Afternoon  
+### Afternoon
 
 - activity: FRAME-less node-template (rest of the day)
 

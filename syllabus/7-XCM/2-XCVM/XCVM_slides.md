@@ -129,7 +129,7 @@ It can be seen as the register holding "unspent assets".
 
 Example: Let's take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
 But what does it do with them?
- if they don’t get deposited anywhere then it’s surely a pretty useless operation.
+if they don’t get deposited anywhere then it’s surely a pretty useless operation.
 These assets are held in the holding register until they are deposited anywhere else.
 
 ---

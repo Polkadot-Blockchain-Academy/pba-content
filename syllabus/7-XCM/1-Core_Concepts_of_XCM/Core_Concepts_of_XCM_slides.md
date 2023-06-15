@@ -76,6 +76,7 @@ XCM enables a single chain to direct the actions of many other chains, which hid
 <pba-flex center>
 
 <!-- - Can be any programmatic state-transition system that exists within consensus which can send/receive datagrams. -->
+
 - It does not even have to be a _distributed_ system, only that it can form _some_ kind of consensus.
 
 Notes:
@@ -201,6 +202,7 @@ How does one consensus system address another?
 Location in consensus might be the whole system or an isolatable part in the system.
 
 Examples:
+
 - Accounts
 - Smart contracts
 - Pallets

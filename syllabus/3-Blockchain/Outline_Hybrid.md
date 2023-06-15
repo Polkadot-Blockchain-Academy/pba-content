@@ -25,8 +25,6 @@ Students learn about expressing agreemnts as code and are left wondering where w
 - ⌨️ Web Assembly exercise
 - 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux.
 
-
-
 ## Tuesday
 
 We put together the pieces presented individually yesterday to form a P2P network where nodes reach consensus on a blockchain-tracked history of a state machine.
@@ -52,6 +50,7 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 We introduce the concept of deterministic finality, explore its history, and deep dive on a few PBFT mechanisms.
 We also explore light clients and bridges, both of which benefit from deterministic finality.
+
 ### Morning
 
 - 🗣️ Consensus Part 2 - Finality - Agreeing on Ordering
