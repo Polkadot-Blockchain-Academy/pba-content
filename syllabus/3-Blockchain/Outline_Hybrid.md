@@ -9,21 +9,21 @@ Students learn about expressing agreemnts as code and are left wondering where w
 
 ### Morning
 
-- 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class.
-- 🗣️ Overview of Smart Contracts Lecture
-- 🚧 TODO Some activity. Maybe something like Emre's unstoppable applications from Cambridge, maybe implement a smart contract as an actix_web server.
+- 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class. - Lauren, Joshy
+- 🗣️ Overview of Smart Contracts Lecture - Lauren
+- 🚧 TODO Some activity. Maybe something like Emre's unstoppable applications from Cambridge, maybe implement a smart contract as an actix_web server. - Joshy / Aaron
 - ☕ Break
-- 🗣️ Digital Services and State Machines - I like to think of "state" as a double entendre
-- ⌨️ Begin BFS coding activity - specifically state machine part
+- 🗣️ Digital Services and State Machines - I like to think of "state" as a double entendre - Lauren
+- ⌨️ Begin BFS coding activity - specifically state machine part - Joshy, Lauren, Aaron, Andrew
 
 ### Afternoon
 
-- 🗣️ P2P Networking
+- 🗣️ P2P Networking - Andrew
 - ⌨️ More BFS.
 - ☕ Break
-- Platform Agnostic Bytecodes
-- ⌨️ Web Assembly exercise
-- 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux.
+- Platform Agnostic Bytecodes - Lauren
+- ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron
+- 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux. - Lauren
 
 
 
@@ -34,18 +34,18 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ### Morning
 
-- 🗣️ Consensus Part 1 - Authoring - Agreeing on Possibilities
-- ⌨️ More BFS
+- 🗣️ Blockchain Structure - Joshy
+- ⌨️ More BFS 
 - ☕ Break
-- 🗣️ Consensus Part 1: Authoring
+- 🗣️ Consensus Part 1 - Authoring - Agreeing on Possibilities - Joshy
 - 🎲 Manual Consensus Activity (aka BitStory)
 
 ### Afternoon
 
-- 🗣️ Account and UTXO models
+- 🗣️ Account and UTXO models - Andrew
 - ⌨️ More BFS
 - ☕ Break
-- 🗣️ Fees, Ordering, Resource Allocation
+- 🗣️ Econ & Game Theory in Blockchain - Maciej
 - ⌨️ More BFS, or some other activity associated with fees and ordering. Maybe some kind of auction thing.
 
 ## Wednesday
@@ -54,16 +54,16 @@ We introduce the concept of deterministic finality, explore its history, and dee
 We also explore light clients and bridges, both of which benefit from deterministic finality.
 ### Morning
 
-- 🗣️ Consensus Part 2 - Finality - Agreeing on Ordering
+- 🗣️ Consensus Part 2 - Finality - Agreeing on Ordering - Joshy
 - ☕ Break
-- 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) <!-- markdown-link-check-disable-line -->
+- 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) - Joshy, Andrew, Lauren, Aaron<!-- markdown-link-check-disable-line -->
   - _Note that this repo is private, intended to be shared with the student cohort's github team for read access._
     _This also allows for people to pull up on mobile if logged in to view easier_
-- ⌨🗣️ Aleph 0
+- ⌨🗣️ aBFT and Aleph 0 - Adam Gagol
 
 ### Afternoon
 
-- 🗣️ Light Clients Bridges
+- 🗣️ Light Clients Bridges - Joshy
 - ⌨️ Continue Coding on BFS
 - ☕ Break
 - 🧘 Flex time. Opportunity to clarify any missed points or otherwise touch up content. Or just a slot into which things can be pushed back.
@@ -76,18 +76,18 @@ Students spend the day getting hands on experience writing smart contracts for P
 
 ### Morning
 
-- 🗣️ EVM Concepts
-- ⌨️ Solidity Code Along
-- ⌨️ Vyper Code Along
+- 🗣️ EVM Concepts - Stephen Shelton
+- ⌨️ Solidity Code Along - Stephen Shelton
+- ⌨️ Vyper Code Along - Stephen Shelton
 - ☕ Break
-- 🗣️ Wasm Concepts
-- ⌨️ ink! Code Along
-- ⌨️ ask! Code Along (optional)
-- 🗣️ Introduce Contract Writing Workshop
+- 🗣️ Wasm Concepts - Filip Bielejec
+- ⌨️ ink! Code Along - Filip Bielejec
+- ⌨️ ask! Code Along (optional) - Filip Bielejec
+- 🗣️ Introduce Contract Writing Workshop - Joshy
 
 ### Afternoon
 
-- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop)
+- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop) - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec
 
 ## Friday
 
@@ -99,12 +99,12 @@ Students will launch a blockchain a la the blockchain module.
 Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
 
-- ⌨️ Start a Blockchain Activity
-- 🗣️ Unstoppable Applications Lecture
+- ⌨️ Start a Blockchain Activity - Joshy
+- 🗣️ Unstoppable Applications Lecture - Nuke man Dan
 - ☕ Break
-- 🗣️ Types of Forks
-- ⌨️ Forking Exercises
+- 🗣️ Types of Forks - Maciej
+- ⌨️ Forking Exercises - Joshy
 
 ### Afternoon
 
-🎲⌨️☕ In the afternoon we will use the chain that we launched in the morning to execute the smart contracts competition.
+🎲⌨️☕ In the afternoon we will use the chain that we launched in the morning to execute the smart contracts competition. - Joshy, Lauren, Aaron, Stephen Shelton,  Filip Bielejec
