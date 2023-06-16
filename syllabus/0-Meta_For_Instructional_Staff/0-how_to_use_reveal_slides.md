@@ -147,26 +147,3 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 # More help needed?
 
 👋 Please reach out to the academy content & docs team on element for support!
-
-    Enterprise_Boundary(b1, "BankBosssundary") {
-
-    SystemDb_Ext(SystemE, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")
-
-    System_Boundary(b2, "BankBoundary2") {
-    System(SystemA, "Banking System A")
-    System(SystemB, "Banking System B", "A system of the bank, with personal bank accounts.")
-    }
-
-    System_Ext(SystemC, "E-mail system", "The internal Microsoft Exchange e-mail system.")
-    SystemDb(SystemD, "Banking System D Database", "A system of the bank, with personal bank accounts.")
-
-    Boundary(b3, "BankBoundary3", "boundary") {
-    SystemQueue(SystemF, "Banking System F Queue", "A system of the bank, with personal bank accounts.")
-    SystemQueue_Ext(SystemG, "Banking System G Queue", "A system of the bank, with personal bank accounts.")
-    }
-    }
-
-    BiRel(customerA, SystemAA, "Uses")
-    BiRel(SystemAA, SystemE, "Uses")
-    Rel(SystemAA, SystemC, "Sends e-mails", "SMTP")
-    Rel(SystemC, customerA, "Sends e-mails to")
