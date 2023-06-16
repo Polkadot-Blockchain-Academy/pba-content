@@ -65,6 +65,108 @@ subsequent lines are just seen in speaker view.
 
 ---
 
+# How to use Mermaid Diagrams
+
+[Mermaid](https://mermaid.js.org) lets you create diagrams and visualizations using text and code.
+
+It is a JavaScript based diagramming and charting tool that renders Markdown-inspired text definitions to create and modify diagrams dynamically.
+
+First of all lets see some examples of diagrams that Mermaid can show with its integration with revealJS;
+
+---v
+
+### [A Flowchart](https://mermaid.js.org/syntax/flowchart.html)
+
+  <div class="mermaid">
+    <pre>
+      %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+      flowchart TD
+        A[Start] --> B{Is it?};
+        B -- Yes --> C[OK];
+        C --> D[Rethink];
+        D --> B;
+        B -- No ----> E[End];
+    </pre>
+  </div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+    flowchart TD
+      A[Start] --> B{Is it?};
+      B -- Yes --> C[OK];
+      C --> D[Rethink];
+      D --> B;
+      B -- No ----> E[End];
+  </pre>
+</div>
+```
+
+---v
+
+### Entity relationship diagram
+
+<div class="mermaid">
+  <pre>
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+  </pre>
+</div>
+```
+
+---v
+
+### Useful links
+
+- [Mermaid Syntax](https://mermaid.js.org/syntax/flowchart.html)
+- [Mermaid Live Editor with examples](https://mermaid.live/)
+
+---
+
 # More help needed?
 
 👋 Please reach out to the academy content & docs team on element for support!
+
+    Enterprise_Boundary(b1, "BankBosssundary") {
+
+    SystemDb_Ext(SystemE, "Mainframe Banking System", "Stores all of the core banking information about customers, accounts, transactions, etc.")
+
+    System_Boundary(b2, "BankBoundary2") {
+    System(SystemA, "Banking System A")
+    System(SystemB, "Banking System B", "A system of the bank, with personal bank accounts.")
+    }
+
+    System_Ext(SystemC, "E-mail system", "The internal Microsoft Exchange e-mail system.")
+    SystemDb(SystemD, "Banking System D Database", "A system of the bank, with personal bank accounts.")
+
+    Boundary(b3, "BankBoundary3", "boundary") {
+    SystemQueue(SystemF, "Banking System F Queue", "A system of the bank, with personal bank accounts.")
+    SystemQueue_Ext(SystemG, "Banking System G Queue", "A system of the bank, with personal bank accounts.")
+    }
+    }
+
+    BiRel(customerA, SystemAA, "Uses")
+    BiRel(SystemAA, SystemE, "Uses")
+    Rel(SystemAA, SystemC, "Sends e-mails", "SMTP")
+    Rel(SystemC, customerA, "Sends e-mails to")

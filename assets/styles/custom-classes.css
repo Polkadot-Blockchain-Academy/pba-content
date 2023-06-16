@@ -194,3 +194,23 @@ th {
 	vertical-align: middle;
 	line-height: 100px;
 }
+
+
+/* Split the screen in half */
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 2rem;
+}
+
+.split-left {
+  left: 0;
+}
+
+.split-right {
+  right: 0;
+}
