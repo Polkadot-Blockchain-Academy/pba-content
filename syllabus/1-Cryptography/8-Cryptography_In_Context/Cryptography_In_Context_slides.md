@@ -13,7 +13,7 @@ duration: 1 hour
 <pba-flex center>
 
 1. Keeping Secrets Secret
-1. Security vs Usability
+1. Security and Usability
 
 </pba-flex>
 
@@ -23,7 +23,7 @@ duration: 1 hour
 
 What _is_ a secret in cryptography?
 
-Data that nobody else knows, that you can use.
+Data that nobody else knows.
 
 ---
 
@@ -48,31 +48,37 @@ Let's go over each of these in order.
 
 ---
 
+## Randomness
+
+Some algorithms require randomness. If the randomness is compromised, the private key or encrypted message can possibly be exposed.
+
+Notes:
+
+[one source](https://learn.saylor.org/mod/book/view.php?id=36341&chapterid=18921)
+
+---
+
 ## Side Channel Attacks
 
 A side channel attack is when a cryptographic system is attacked, and the attacker has another source of information outputted by the system.
 
 ---
 
-## Types of Side Channel Attacks
+## Timing Attacks
 
-- Timing
-  - Different instructions
-  - CPU Branch prediction
-  - Memory access
-- RF emissions
-- Power consumption
-- Sound of a computer running
+A timing attack can be possible if any of the following<br> depend on the contents of a secret:
+
+<pba-flex center>
+
+- Different instruction execution
+- CPU Branch prediction
+- Memory access patterns
+
+</pba-flex>
 
 Notes:
 
 There are many crazy forms of side channel attack, but the primary one is timing. Timing is also the only one that gets reliably sent back over a long distance.
-
-Sources for exotic attacks:
-
-- [general survey of EM side channel attacks](https://arxiv.org/abs/1903.07703)
-- [sound-based attack](https://www.iacr.org/archive/crypto2014/86160149/86160149.pdf)
-- [EM side channel attack from 15m with 500 traces only](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1648290&dswid=6646)
 
 ---
 
@@ -82,6 +88,10 @@ Imagine this is the source code for a password checker:
 
 ```rust
 fn verify_password(actual: &[u8], entered: &[u8]) -> bool {
+ if actual.len() != entered.len() {
+    return false;
+ }
+
  for i in 0..actual.len() {
   if entered.get(i) != actual.get(i) {
    return false;
@@ -240,6 +250,12 @@ Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even 
 
 ### DO NOT ROLL YOUR OWN CRYPTO
 
+Notes:
+
+Be very, very careful whenever you do _anything_ that touches a secret. That includes any operation involving the secret, or reading/writing it somewhere.
+
+When necessary, talk to a security expert or cryptographer.
+
 ---
 
 ## Using Cryptographic Libraries Safely
@@ -249,6 +265,18 @@ Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even 
 - Use the most reputable library you can
 - Realize when things need serious consideration
   - Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamal
+
+Notes:
+
+Reputableness of a library is some combination of:
+
+- used by many people
+- audited for security
+- reliable cryptographic literature
+- minimal external dependencies
+- recommended by cryptographers
+
+If you get low-level enough in cryptography libraries to see these terms referenced in more than just a description, you're probably too low level.
 
 <!-- Maybe add something about this as an example:
 https://github.com/MystenLabs/ed25519-unsafe-libs. To put it in few words, the interface for signing
@@ -260,12 +288,24 @@ cryptography. -->
 
 ## Physical Security
 
-Physical access to a running computer can usually let an attacker have full access to your secrets with enough effort.
+Full physical access to a running computer can usually let an attacker have full access to your secrets with enough effort.
 
 Some possible means:
 
 - Scanning all disk storage
 - Take out the RAM and swap it into a different computer to read (cold boot attack)
+- Proximate side-channel attacks
+  - RF emissions
+  - Power consumption
+  - Sound of a computer running
+
+Notes:
+
+Sources for exotic attacks:
+
+- [general survey of EM side channel attacks](https://arxiv.org/abs/1903.07703)
+- [sound-based attack](https://www.iacr.org/archive/crypto2014/86160149/86160149.pdf)
+- [EM side channel attack from 15m with 500 traces only](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1648290&dswid=6646)
 
 ---
 
@@ -279,9 +319,15 @@ We don't go into this much, as there are many available resources around physica
 
 ---
 
-## Security vs Usability
+## Security and Usability
 
-The general usability of a system is typically inversely prportional to the security.
+The accessibility of a secret is typically inversely proportional to the security.
+
+Making a secret more secure is often impractical, depending on the usage.
+
+Notes:
+
+This is not explicitly true in all cases, but it is a good rule of thumb. Additionally, note that impractical != impossible.
 
 ---
 
@@ -358,3 +404,9 @@ Cryptographic secrets are easy to have multiple of.
 So don't make users use the same one for everything!
 
 As much as possible, one root secret shouldn't be _both_ used regularly, and extremely valuable.
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
