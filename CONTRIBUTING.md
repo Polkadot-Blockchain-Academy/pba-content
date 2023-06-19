@@ -97,9 +97,9 @@ yarn
 
 **To see what reveal can do, please view the slides and their source for details:**
 
-- [How-to use reveal slides](./syllabus/0-Meta_For_Instructional_Staff/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
-- [Lecture template slides](./syllabus/0-Meta_For_Instructional_Staff/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
-- [Copy & paste slide templates](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
+- [How-to use reveal slides](./syllabus/0-Internal_Faculty_Resources/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
+- [Lecture template slides](./syllabus/0-Internal_Faculty_Resources/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
+- [Copy & paste slide templates](./syllabus/0-Internal_Faculty_Resources/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
 
 ---
 
@@ -111,7 +111,7 @@ Running this command will open a new browser tab and _watch for file changes_ (u
 yarn start
 ```
 
-**There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./syllabus/0-Internal_Faculty_Resources/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 

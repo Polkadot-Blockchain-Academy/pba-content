@@ -1,12 +1,12 @@
 ---
-title: Content Workshop - Instructional Staff Briefing
+title: Content Workshop - Faculty Briefing
 description: Briefing for Instructors and TAs contributing to the Academy
 duration: 1 hour
 ---
 
 # Content Workshop
 
-### _Instructional Staff Briefing_
+### _Faculty Briefing_
 
 ---
 
@@ -28,7 +28,7 @@ Notes:
 1. Introductory Game
 1. Logistics (times, dates, location)
 1. Curriculum Overview
-1. Formal commitments from instructional staff
+1. Formal commitments from Faculty
 1. Pedagogy - Teaching Tips
 1. Content Brainstorming
 1. Guest Lessons
