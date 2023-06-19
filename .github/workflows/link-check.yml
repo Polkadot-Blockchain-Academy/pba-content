@@ -1,6 +1,9 @@
 name: Check Links
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   markdown-link-check:
