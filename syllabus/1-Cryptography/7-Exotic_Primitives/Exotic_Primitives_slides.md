@@ -40,6 +40,10 @@ duration: 1 hour
 
 - `eval(sk,input) -> output`
 
+Notes:
+
+The output of verification being an option represents the possibility of an invalid signature
+
 ---
 
 ## VRF Output properties
@@ -48,6 +52,7 @@ duration: 1 hour
   - i.e. eval should be deterministic
 - It should be pseudo-random
 - But until the VRF is revealed, only the holder<br/>of the secret key knows the output
+- Revealing output does not leak secret key
 
 ---
 
@@ -88,6 +93,8 @@ Notes:
 Common coins were used in consensus before blockchains were a thing.
 Dfinity based their consensus on this.
 But this needs a DKG, and it's unclear if a decentralized protocol can do those easily.
+
+A participant in a RingVRF could still only reveal _one_ random number.
 
 ---
 
@@ -160,11 +167,13 @@ Notes:
 
 - NP relation: `function(statement, witness) -> bool`
 
-* `prove(statement, witness) -> proof`
+- `prove(statement, witness) -> proof`
 
-* `verify(statement, proof) -> bool`
+- `verify(statement, proof) -> bool`
 
 ---
+
+## ZK Proof Example
 
 _Example:_ Schnorr signatures are ZK Proofs
 
@@ -173,9 +182,13 @@ _Example:_ Schnorr signatures are ZK Proofs
 
 ---
 
-- **Proof of knowledge** - if you can compute correct proofs of a statement, you should be able to compute a witness for it.
+## zk-SNARK
+
+**Z**ero-**K**nowledge **S**uccinct **N**on-interactive **Ar**gument of **K**nowledge
 
 - **Zero knowledge** - the proof reveals nothing about the witness that was not revealed by the statement itself.
+- **Succinct** - the proof is small
+- **Proof of knowledge** - if you can compute correct proofs of a statement, you should be able to compute a witness for it.
 
 ---
 
@@ -190,6 +203,8 @@ _Example:_ Schnorr signatures are ZK Proofs
 - With a small proof even if the witness is large (_succinctness_)
 
 ---
+
+## What can we show?
 
 - There are many schemes to produce succinct ZK proofs of knowledge (_ZK-SNARKs_) for every NP relation.
 
