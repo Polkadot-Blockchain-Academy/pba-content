@@ -1,6 +1,6 @@
 # Rust Demo for Hashes
 
-> See [the instructions for Evcxr](../../0-Meta_For_Instructional_Staff/6b-how-to-use-evcxr-in-a-shell.md) REPL before you begin.
+> See [the 0-Internal_Faculty_Resources for Evcxr](../../0-Internal_Faculty_Resources/6b-how-to-use-evcxr-in-a-shell.md) REPL before you begin.
 
 ---
 

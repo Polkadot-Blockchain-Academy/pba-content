@@ -206,7 +206,8 @@ polkadot build-spec --chain rococo-local \
 ```
 
 Notes:
-Tutorial https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/
+
+Tutorials https://docs.substrate.io/tutorials/build-a-parachain/
 
 ---v
 
@@ -321,10 +322,7 @@ para-2000-genesis-state
 
 # Activity
 
-Follow the [connect a local parachain](https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/) to launch your own network.
-<br/><br/>
-
-https://docs.substrate.io/tutorials/connect-relay-and-parachains/connect-a-local-parachain/
+Follow the [connect a local parachain](https://docs.substrate.io/tutorials/build-a-parachain/connect-a-local-parachain/) to launch your own network.
 
 ---
 
