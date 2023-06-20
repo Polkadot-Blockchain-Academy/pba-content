@@ -48,6 +48,39 @@ The input `r` is typically a source of randomness, for example the movement patt
 
 ---
 
+## Symmetric Encryption Guarantees
+
+Provides:
+
+- Confidentiality
+- Authenticity*
+
+Does not provide:
+
+- Integrity*
+- Non-Repudiation
+
+Notes:
+
+- Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
+- Integrity: There is no proper integrity check, however the changed section of the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
+
+---
+
+## Non-repudiation for Symmetric Encryption
+
+There is cryptographic proof that the secret was known to the producer of the encrypted message.
+
+<br/>
+
+_However_, knowledge of the secret is not restricted to one party: Both (or all) parties in a symmetrically encrypted communication know the secret. Additionally, in order to prove this to anyone, they must _also_ gain knowledge of the secret.
+
+Notes:
+
+The degree of non-repudiation given by pure symmetric crytography is not very useful.
+
+---
+
 ## Symmetric Encryption
 
 #### _Example: XOR Cipher_
@@ -162,6 +195,25 @@ The input `r` is typically a source of randomness, for example the movement patt
 
 ---
 
+## Asymmetric Encryption Guarantees
+
+Provides:
+
+- Confidentiality
+
+Does not provide:
+
+- Integrity*
+- Authenticity
+- Non-Repudiation
+
+Notes:
+
+- Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
+- Integrity: There is no proper integrity check, however the changed section of the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
+
+---
+
 ## Diffie-Hellman Key Exchange
 
 <img style="height: 500px" src="../../../assets/img/1-Cryptography/Diffie-Hellman_Key_Exchange_horizontal.svg" />
@@ -229,12 +281,13 @@ In practice, asymmetric encryption is _almost always_ hybrid encryption.
 | Confidentiality | Yes       | Yes        | Yes           | Yes                    |
 | Authenticity    | Yes*      | No         | Yes*          | Yes                    |
 | Integrity       | No*       | No*         | Yes          | Yes                    |
-| Non-repudiation | No        | No         | No            | No                    |
+| Non-repudiation | No        | No*         | No            | No*                    |
 
 Notes:
 
 - Symmetric-Authentication and Authenticated-Authenticity: The message could only be sent by someone who knows the shared secret key. In most cases, this is functionally authentication to the receiving party.
 - Symmetric-Integrity and Asymmetric-Integrity: There is no proper integrity check, however the message will be gibberish if it has been changed. Detection of gibberish could function as a form of integrity-checking.
+- Non-Repudation: Even though none of these primitives provide non-repudiation on their own, it's very possible to add non-repudation to asymmetric and hybrid schemes via signatures.
 - Note that encryption also, most importantly, makes the data _available_ to everyone who should have access.
 
 ---

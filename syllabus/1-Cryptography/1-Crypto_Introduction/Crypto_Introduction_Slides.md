@@ -182,7 +182,7 @@ If data is tampered with, it is detectable. In other words, it possible to check
 
 <br/>
 
-Integrity ensures that a third party cannot sneakily change some data I created.
+Integrity ensures that if data I create is corrupted, it can be detected.
 
 ---v
 
@@ -205,7 +205,7 @@ Digital signatures provide a guarantee that the signed information has not been 
 
 ## Non-repudiation
 
-The sender of a message cannot deny that they sent it. Someone with the message can prove that the sender sent it.
+The sender of a message cannot deny that they sent it.
 
 <br/>
 
@@ -327,27 +327,13 @@ It has a special property: it proves (beyond reasonable doubt) that the signer (
 
 ---
 
-## Non-repudiation for Signatures
+## Non-repudiation for Crypgraphic Signatures
 
 There is cryptographic proof that the secret was known to the producer of the signature.
 
 <br/>
 
 The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br/>
-
----v
-
-## Non-repudiation for Symmetric Cryptography
-
-There is cryptographic proof that the secret was known to the producer of the encrypted message.
-
-<br/>
-
-_However_, knowledge of the secret is not restricted to one party: Both (or all) parties in a symmetrically encrypted communication know the secret. Additionally, in order to prove this to anyone, they must _also_ gain knowledge of the secret.
-
-Notes:
-
-The degree of non-repudiation given by pure symmetric crytography is not very useful.
 
 ---
 

@@ -281,18 +281,6 @@ Keccak is available for Ethereum compatibility.
 
 Let's see which cryptographic properties apply to hashes.
 
-<pba-flex center>
-
-- Confidentiality
-- Authenticity
-- Integrity
-- Non-repudiation
-- Availability
-
-</pba-flex>
-
-<!-- TODO: Figure out a way to make this pretty, maybe in table form? Or maybe with highlighting on the text? -->
-
 ---v
 
 ## Confidentiality
@@ -317,8 +305,6 @@ Anyone can make a hash, so hashes provide no authenticity guarantees.
 ## Integrity
 
 A hash changes if the data changes, so it does provide integrity.
-
-However, if an attacker can control the hash, they can always construct a fake hash, as there are no authenticity guarantees!
 
 ---v
 
@@ -385,24 +371,6 @@ Hash of pub key:
   0x8fea32b38ed87b4739378aa48f73ea5d0333b973ee72c5cb7578b143f82cf7e9
                                                                     ^^
 ```
-
-<!--
-
-I'm replacing multisigs with this comment so it is in the PR without having to remember it. I feel that the discussion of multisigs here is not great, as it is a "fake" multisig anyways. It is a trusted-authority-enforced multisig, which could be implemented by just storing the public keys and threshold number, and then just having the authority tell others "I got the threshold here" or not. I think this should just be mentioned in advanced digital signatures, when there is more context.
-
--->
-
----
-
-## Internal System IDs
-
-Modules within a system may have their own information<br/>stored in other parts of the system.
-
-Storage they authorize use of by the module's internal logic.
-
-Notes:
-
-The hash of some input (e.g. a byte-string representing the module) can be used to identify a particular module within a system.
 
 ---
 
