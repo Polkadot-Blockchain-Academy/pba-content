@@ -4,7 +4,7 @@ description: XCM Core Concepts, Terms, and Logic for Web3 Engineers
 duration: 1 hour
 ---
 
-# Cross Consensus Messaging (XCM)
+# Cross-Consensus Messaging (XCM)
 
 ## _Core Concepts, Terms, and Logic_
 
@@ -16,7 +16,7 @@ Notes:
 - Polkadot & parachains conceptually
 - Assets (NFTs and fungibles)
 
----
+---v
 
 ## _At the end of this lecture, you will be able to:_
 
@@ -28,33 +28,29 @@ Notes:
 
 ---
 
-## What cross-chain use cases exist?
+# Cross-chain use cases
 
-Performing operations on different blockchains?
-
-<!--
-- Transfers
-- One contract calling another contract
-- Credential checking
-- Voting
-Engage the audience and expect them to say transfers as the use case, then show them the other problems worth solving
--->
-
-How might you go about designing a _system_ to facilitate them?
+Why would we want to perform operations on different blockchains?
 
 Notes:
 
 EXERCISE: ask the class to raise hands and postulate on generally what one might do.
+We are expecting them to say transfers, but there are so many other things you could do, so many more problems worth solving with cross-chain:
+- One contract calling another contract
+- Credential checking
+- Voting
 
----
+---v
 
 ## 🎬 Some Concrete Use-cases
 
 <pba-flex center>
 
-1. Cross-consensus asset transfers
-2. Execute platform-specific actions (extrinsics) such as governance voting
-3. Enables single use-case chains e.g. [Collectives](https://github.com/paritytech/cumulus/tree/master/parachains/runtimes/assets) as asset parachains, Identity
+- Cross-consensus asset transfers
+- Execute platform-specific actions such as governance voting
+- Enables single use-case chains
+    - [Collectives](https://github.com/paritytech/cumulus/tree/master/parachains/runtimes/collectives)
+    - Identity chains
 
 Notes:
 
@@ -65,31 +61,31 @@ XCM enables a single chain to direct the actions of many other chains, which hid
 
 ---
 
-### XCM aims to be a _language communicating intentions between consensus systems._
+> XCM is a **language** for communicating **intentions** between **consensus systems**.
 
----
+---v
 
-## Cross _Consensus_?
+### Consensus systems
 
-**Consensus systems**: A chain, contract or other global, encapsulated, state machine singleton.
+A chain, contract or other global, encapsulated, state machine singleton.
 
 <pba-flex center>
 
-<!-- - Can be any programmatic state-transition system that exists within consensus which can send/receive datagrams. -->
-
-- It does not even have to be a _distributed_ system, only that it can form _some_ kind of consensus.
+It does not even have to be a _distributed_ system, only that it can form _some_ kind of consensus.
 
 Notes:
 
-A consensus system does not necessarily have to be a blockchain or a smart contract, it can be something that already exists in the Web 2.0 world, such as an AWS server.
+A consensus system does not necessarily have to be a blockchain or a smart contract.
+It can be something that already exists in the Web 2.0 world, such as an EC2 instance in an AWS server.
+XCM is Cross-Consensus since it's much more than cross chain.
 
----
+---v
 
-## 🤟 A Format, not a Protocol
+### ✉️ A Format, not a Protocol
 
 XCM is a **_messaging format_**.
 
-It is akin to the post card from the post office
+It is akin to the post card from the post office.
 
 It is _not_ a messaging protocol!
 
@@ -97,9 +93,12 @@ A post card doesn't send itself!
 
 Notes:
 
-It cannot be used to actually “send” any message between systems; its utility is only in expressing what should be done by the receiver.
-like many aspects core to Substrate, this separation of concerns empowers us to be far more generic and enable much more.
+It cannot be used to actually "send" any message between systems; its utility is only in expressing what should be done by the receiver.
+Like many aspects core to Substrate, this separation of concerns empowers us to be far more generic and enable much more.
 A post card relies on the postal service to get itself sent towards its receivers, and that is what a messaging protocol does.
+
+The transport layer concerns itself with sending arbitrary blobs, it doesn't care about the format.
+A common format has its benefits though, as we'll see next.
 
 ---
 
@@ -109,10 +108,9 @@ Drawbacks of relying on native messaging or transaction format:
 
 <pba-flex center>
 
-- Lack of uniformity between consensus systems on message format
+- Native message format changes from system to system, it also could change within the _same_ system, e.g. when upgrading it
 - Common cross-consensus use-cases do not map one-to-one to a single transaction
-- Operations on consensus systems have different assumptions e.g. fee payment
-- Consensus systems may evolve over time
+- Different consensus systems have different assumptions e.g. fee payment
 
 Notes:
 
@@ -123,54 +121,117 @@ Notes:
   Onward notifications of transfers, needed for a coherent reserve-asset framework, do not exist in chains unaware of others.
   Some use-cases don't require accounts.
 - Some systems assume that fee payment had already been negotiated, while some do not.
-- If a consensus system changes a pallet from one place to another, it breaks the native message but not XCM
 
 TODO: Why not just send EVM programs. Why XCVM instead of EVM?
 Add Shawn's picture.
 It's up to the interpreter to interpret the intention how it makes sense.
 
----
+---v
 
-## XCM Communication Model
+### Message format changes
 
-XCM is designed around four 'A's:
-
-<pba-flex center>
-
-- **Agnostic**: No assumptions about Consensus System messaged
-- **Absolute**: Guaranteed delivery, interpretation, and ordering
-- **Asynchronous**: No assumption of blocking for sender/receiver
-- **Asymmetric**: No results or callbacks (separately communicated!)
-
-Notes:
-
-The 4 'A's are assumptions XCM makes over the transport protocol.
-These are things it assumes.
-Context: consensus systems are deterministic.
-
-TODO: "Relies on" is better to use.
-
-TODO: If you compare it with IBC, they don't make these assumptions. You factor in fallibility of the transport protocol.
-
-TODO: Further down the line, reference XCMP.
-
-TODO: Break into 4 slides to explain all of them .
-
-- **Agnostic**: XCM makes no assumptions about the nature of the Consensus System between which messages are being passed.
-- **Absolute**: XCM messages are guaranteed to be delivered and interpreted accurately, in order and in a timely fashion. The message format does not do much about the message possibly not being delivered.
-- **Asynchronous**: XCM messages in no way assume that the sender will be blocking on its completion. You can't just block execution in the middle of a block, it has to be asynchronous. Different systems have different ways of tracking time.
-- **Asymmetric**: XCM messages do not have results.
-  Any results must be separately communicated to the sender with an additional message.
+<img style="width: 1050px;" alt="Against native messaging" src="../../../assets/img/7-XCM/against-native-messaging.svg" />
 
 ---v
 
-## Async vs Sync
+### Message format changes
 
-XCM crossing the barrier between a single consensus system<br/>cannot generally be synchronous.
+<img style="width: 1050px;" alt="Against native messaging 2" src="../../../assets/img/7-XCM/against-native-messaging-2.svg" />
 
-No guarantees on delivery time.
+---v
+
+### Message format changes
+
+<img rounded style="width: 1050px;" alt="XCM executor routing calls" src="../../../assets/img/7-XCM/xcm-executor-routing-calls.png" />
 
 Notes:
+
+XCM abstracts away the actual on-chain operation that will be called, which lets the recipient redirect calls to always make them valid.
+
+---v
+
+### No one-to-one mapping
+
+```mermaid
+graph TD
+    subgraph Message
+        WithdrawAsset-->DepositAlice["DepositAsset (Alice)"]
+        DepositAlice-->DepositBob["DepositAsset (Bob)"]
+    end
+```
+
+Notes:
+
+You might want to withdraw some assets and deposit some amount to one account and another to another.
+Using transactions, you'd have to send many messages to achieve this.
+
+---v
+
+### Different assumptions
+
+```mermaid
+graph LR
+    A[Chain A]--"Pays for fees"-->B[Chain B]
+    A--"Doesn't pay for fees"-->C[Chain C]
+```
+
+Notes:
+
+Different systems have different assumptions.
+Using native messages, you'd have to tailor your messages to all systems you want to message.
+
+---
+
+## Four 'A's
+
+XCM assumes the following things from the underlying environment.
+
+<pba-flex center>
+
+- **Agnostic**
+- **Absolute**
+- **Asynchronous**
+- **Asymmetric**
+
+Notes:
+
+The 4 'A's are assumptions XCM makes over the transport protocol and overall the environment where these messages are sent and processed.
+
+---v
+
+## Agnostic
+
+XCM makes no assumptions about the nature of the Consensus System between which messages are being passed.
+
+Notes:
+
+XCM is not restricted to Polkadot, it's a language that can be used for communication between any systems.
+For example, EVM-chains or Cosmos hubs.
+
+---v
+
+## Absolute
+
+XCM assumes that the environment guarantees delivery, interpretation, and ordering of messages.
+
+Notes:
+
+The message format does not do much about the message possibly not being delivered.
+In IBC, for example, you factor in fallibility of the transport protocol into your messages.
+
+---v
+
+## Asynchronous
+
+XCMs crossing the barrier between a single consensus system cannot generally be synchronous.
+
+XCM in no way assume that the sender will be blocking on messages.
+
+Notes:
+
+You can't just block execution in the middle of a block, it has to be asynchronous.
+Different systems have different ways of tracking time.
+No assumption of blocking for sender/receiver.
 
 Generally, consensus systems are not designed to operate in sync with external systems.
 They intrinsically need to have a uniform state to reason about and do not, by default, have the means to verify states of other consensus systems.
@@ -178,20 +239,18 @@ Thus, each consensus system cannot make any guarantees on the expected time requ
 
 ---v
 
-## XCM is "fire and forget"
+## Asymmetric
 
-XCM has no results:
+XCM doesn't assume there'll be messages flowing in the other direction.
 
-<pba-flex center>
-
-- No errors reported to sender
-- No callbacks for sender
+If you want to send responses, you have to make it explicitly.
 
 Notes:
 
-The receiver side can and does handle errors, but the sender will not be notified, unless the error handler specifically tries to send back an XCM that makes some sort of XCM that notifies status back to the origin, but such an action should be considered as constructing a separate XCM for the sole purpose of reporting information, rather than an intrinsic functionality built into XCM, akin to how UDP can also create a "response" to an incoming datagram, yet the response is too considered as a separate UDP datagram instance.
-
-TODO: XCM is a bit like REST. XCMP is a bit like TCP/IP. Not quite. Analogies can often hurt more than they help.
+There are no results or callbacks.
+Any results must be separately communicated to the sender with an additional message.
+The receiver side can and does handle errors, but the sender will not be notified, unless the error handler specifically tries to send back an XCM that makes some sort of XCM that notifies status back to the origin, but such an action should be considered as constructing a separate XCM for the sole purpose of reporting information, rather than an intrinsic functionality built into XCM.
+XCM is a bit like REST. XCMP is a bit like TCP/IP. Not quite. Analogies can often hurt more than they help.
 
 ---
 
@@ -199,7 +258,11 @@ TODO: XCM is a bit like REST. XCMP is a bit like TCP/IP. Not quite. Analogies ca
 
 How does one consensus system address another?
 
-Location in consensus might be the whole system or an isolatable part in the system.
+We need a concept of locations.
+
+A location might be the whole system or an isolatable part in the system.
+
+<pba-flex center>
 
 Examples:
 
@@ -210,17 +273,42 @@ Examples:
 
 Notes:
 
-The `MultiLocation` type identifies any single _location_ that exists within the world of consensus.
-Representing a scalable multi-shard blockchain such as Polkadot, a lowly ERC-20 asset account on a parachain, a smart contract on some chain, etc.
+The `Location` type identifies any single _location_ that exists within the world of consensus.
+Representing a scalable multi-shard blockchain such as Polkadot, an ERC-20 asset account on a parachain, a smart contract on some chain, etc.
 It is always represented as a location _relative_ to the current consensus system, and never as an absolute path, due to the fact that the network structure can always change, and so absolute paths can quickly go out of date.
 
 ---v
 
 ## Location hierarchy
 
-There's a hierarchy of locations within consensus.
+```mermaid
+graph TD;
+    Relay-->A[Parachain A];
+    Relay-->B[Parachain B];
+    B-->Alice[Account A]
+    B-->Bob[Account B]
+    A-->Pallet[Pallet Contracts]
+    Pallet-->SCA[Smart Contract A]
+    Pallet-->SCB[Smart Contract B]
+```
 
-TODO: Add diagrams
+Notes:
+
+Locations form a hierarchy.
+
+---v
+
+## Location Representation
+
+```mermaid
+graph TD
+    Location-->Parents & Junctions
+    Junctions-->Parachain & AccountId32 & PalletInstance & ...
+```
+
+Notes:
+
+Junctions are ways to descend the location hierarchy
 
 ---v
 
@@ -228,302 +316,470 @@ TODO: Add diagrams
 
 We can imagine a hypothetical location that contains all top-level consensus systems.
 
----v
-
-## Relative vs absolute
-
-We express locations in two ways, `MultiLocation` is relative and `InteriorMultiLocation` is absolute.
-We need relative locations because some consensus systems might change their location.
-If a system moves, relative is better.
-In general, you want to work with relative locations since you don't care which particular relay chain you are on.
-In the case of bridges, you go between consensus systems, so you use absolute locations.
-
-```rust
-pub type MultiLocation = RelativeMultiLocation;
-pub type InteriorMultiLocation = AbsoluteMultiLocation;
-// TODO: Rename them to just Location
-
-pub struct RelativeMultiLocation {
-    pub parents: u8,
-    pub interior: Junctions,
-}
-
-pub struct AbsoluteMultiLocation; // TODO
+```mermaid
+graph TD;
+    UniversalLocation[Universal Location]-->RelayA[Relay A]
+    UniversalLocation-->RelayB[Relay B]
+    RelayA-->BranchA[...]
+    RelayB-->BranchB[...]
 ```
 
 ---v
 
-## MultiAsset
+## Relative vs absolute
 
-We identify assets with locations.
-We identify the native token of a chain to its location.
+We can express locations in two ways, relative or absolute.
 
----
+In general, relative locations are better.
 
-## Junction
-
-An item in a path to describe the<br/>relative location of a consensus system:
-
-<pba-flex center>
-
-- `Parachain`
-- `AccountId32`
-- `PalletInstance`
-- `GeneralKey`
+In the case of bridges, absolute locations are needed.
 
 Notes:
 
-This is akin to a directory on a file path, e.g. the `foo` in `/foo/bar`.
+We need relative locations because some consensus systems might change their location.
+If a system moves, relative is better.
 
----
-
-## MultiLocation Examples
-
-TODO: I would use diagrams and split it into more slides.
-
-- `../Parachain(1000)`: Evaluated within a parachain, this would identify our sibling parachain of index 1000. (In Rust we would write `MultiLocation { parents: 1, junctions: X1(Parachain(1000)) }` or alternatively `ParentThen(Parachain(1000)).into()`.)
-
-- `../AccountId32(0x1234...cdef)`: Evaluated within a parachain, this would identify the 32-byte account 0x1234…cdef on the relay chain.
-
-- `Parachain(42)/AccountKey20(0x1234...abcd)`: Evaluated on a relay chain, this would identify the 20-byte account 0x1234…abcd on parachain number 42 (presumably something like Moonbeam which hosts Ethereum-compatible accounts).
-
----
-
-## MultiLocation Examples
-
-<!-- TODO DESIGN: use multilocation graphic from above and add labels in fragment / new slide here -->
-<!-- Base on this set of slides: https://docs.google.com/presentation/d/18qRqqw73L9NTWOX1cfGe5sh484UgvlpMHGekQHu9_8M/edit#slide=id.g8063ab3d6f_0_1418 . If hard, just make these into images via screenshot & use full screen -->
-
-TODO: Too many things going on. Circle the different examples.
-Add a "You are here" marker instead of "Origin: Polkadot".
-Add a bridge example with Polkadot<>Kusama.
-
-<img rounded style="width: 650px;" src="../../../assets/img/7-XCM/mod1-multilocation-picture.png" alt="MultiLocation Example" />
-
-Notes:
-speak to an example of non-parachain multi-location that would use a bridge
-XCM reasons about addressing (as in a postal address) that must include understanding where you are, not just where you are going!
-This will be very powerful later on (Origins)
-
-<!-- TODO: does XCM explicitly need to know the Origin of the message? Could there be anonymous XCM? (no "return to sender" field on mail) -->
-
----
+---v
 
 ## Cross-Consensus Origins
 
-A `MultiLocation` denoting where an XCM originated from
+`Location`s are used to denote where an XCM originated from
 
 _Relative_ to the current location
 
 Can be converted into a pallet origin in a FRAME runtime
 
-TODO: Used for privileges.
+Used for determining privileges during XCM execution.
 
 Notes:
 
-Since `MultiLocation`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it.
-This is calling re-anchoring.
-
-TODO (remove): Native is direct mapping, when you happen to have the exact equivalent of a runtime origin.
-Happens in parachains in the polkadot parachain pallet.
-You usually want the sovereign account.
+Reanchoring:
+Since `Location`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it.
 
 ---
 
-## `MultiLocation` established!
+## Location Examples
 
-Now we know how to describe the destination, what _do we want to send_?
+---v
 
-Let's start with messages (XCVM Programs!) about **_assets_**.
+### Sibling parachain
+
+`../Parachain(1001)`
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub["📍 AssetHub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    style AssetHub stroke:red
+```
 
 Notes:
+
+What does the location resolve to if evaluated on Parachain(1000)?
+
+---v
+
+### Sibling parachain
+
+`../Parachain(1001)`
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub["📍 AssetHub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Polkadot
+    style AssetHub stroke:red
+    style Polkadot stroke:red
+    style Collectives stroke:red,stroke-width:2
+    linkStyle 1 stroke:red
+    linkStyle 2 stroke:red,stroke-dasharray:5
+```
+
+---v
+
+### Relay account
+
+`../AccountId32(0x1234...cdef)`
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub["📍 AssetHub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    Polkadot-->Account["AccountId32 (0x1234...cdef)"]
+    style AssetHub stroke:red
+```
+
+Notes:
+
+What does the location resolve to if evaluated on Parachain(1000)?
+
+---v
+
+### Relay account
+
+`../AccountId32(0x1234...cdef)`
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub["📍 AssetHub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    Polkadot-->Account["AccountId32 (0x1234...cdef)"]
+    AssetHub-->Polkadot
+    style Polkadot stroke:red
+    style AssetHub stroke:red
+    style Account stroke:red,stroke-width:2
+    linkStyle 3 stroke:red,stroke-dasharray:5
+    linkStyle 2 stroke:red
+```
+
+---v
+
+### Parachain account
+
+`Parachain(1000)/AccountId32(0x1234...cdef)`
+
+```mermaid
+graph TD
+    Polkadot["📍 Polkadot"]-->AssetHub["AssetHub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Account["AccountId32 (0x1234...cdef)"]
+    style Polkadot stroke:red
+```
+
+Notes:
+
+What does the location resolve to if evaluated on the relay chain?
+
+---v
+
+### Parachain account
+
+`Parachain(1000)/AccountId32(0x1234...cdef)`
+
+```mermaid
+graph TD
+    Polkadot["📍 Polkadot"]-->AssetHub["AssetHub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Account["AccountId32 (0x1234...cdef)"]
+    style Polkadot stroke:red
+    style AssetHub stroke:red
+    style Account stroke:red,stroke-width:2
+    linkStyle 0 stroke:red
+    linkStyle 2 stroke:red
+```
+
+---v
+
+### Bridge
+
+`../../GlobalConsensus(Kusama)/Parachain(1000)`
+
+```mermaid
+graph TD
+    Universe[Universal Location]-->Polkadot
+    Universe-->Kusama
+    Polkadot-->PolkaA["📍Asset Hub (1000)"]
+    Polkadot-->PolkaB[Bridge Hub]
+    PolkaA-->Alice
+    PolkaA-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+    Kusama-->KusamA["Asset Hub (1000)"]
+    Kusama-->KusamB[Bridge Hub]
+    style PolkaA stroke:red
+```
+
+Notes:
+Speak to an example of non-parachain multi-location that would use a bridge
+XCM reasons about addressing (as in a postal address) that must include understanding where you are, not just where you are going!
+This will be very powerful later on (Origins)
+
+---v
+
+### Bridge
+
+`../../GlobalConsensus(Kusama)/Parachain(1000)`
+
+```mermaid
+graph TD
+    Universe[Universal Location]-->Polkadot
+    Universe-->Kusama
+    Polkadot-->PolkaA["📍Asset Hub (1000)"]
+    Polkadot-->PolkaB[Bridge Hub]
+    PolkaA-->Alice
+    PolkaA-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+    Kusama-->KusamA["Asset Hub (1000)"]
+    Kusama-->KusamB[Bridge Hub]
+    PolkaA-->Polkadot
+    Polkadot-->Universe
+    style PolkaA stroke:red
+    style Polkadot stroke:red
+    style Universe stroke:red
+    style Kusama stroke:red
+    style KusamA stroke:red,stroke-width:2
+    linkStyle 1 stroke:red
+    linkStyle 7 stroke:red
+    linkStyle 9 stroke:red,stroke-dasharray:5
+    linkStyle 10 stroke:red,stroke-dasharray:5
+```
+
+Notes:
+
+Even with Bridge Hubs, the relative location is what you'd expect.
+Bridge Hubs are just a way for routing messages.
+They are an implementation detail of the transport layer.
 
 ---
 
 <pba-col>
 
-### 💰 `MultiAsset` in XCM
+## 💰 Assets in XCM
 
-There are many _classes_ of assets (fungible, NFTs,...)
+Most messages will deal with assets in some way.
 
-TODO: Rename to `Asset` and rename `VersionedMultiAsset` to `MultiAsset`.
+How do we address these assets?
 
-```rust
-struct MultiAsset {
-   pub id: AssetId,
-   pub fun: Fungibility,
-}
+---v
+
+### Asset Representation
+
+```mermaid
+graph TD
+    Asset-->AssetId & Fungibility
+    AssetId-->Location
+    Fungibility-->Fungible & NonFungible
 ```
-
-The datatype `MultiAsset` describes them all.
-
----
-
-## Asset Representation
-
-<div style="font-size: smaller">
-
-```rust
-struct Asset {
-    pub id: AssetId,
-    pub fun: Fungibility,
-}
-
-struct AssetId(Location);
-
-enum Fungibility {
-    Fungible(u128),
-    NonFungible(AssetInstance),
-}
-
-// enum AssetInstance {
-//     Undefined,
-//     Index(u128),
-//     Array4([u8; 4]),
-//     Array8([u8; 8]),
-//     Array16([u8; 16]),
-//     Array32([u8; 32]),
-// }
-```
-
-</div>
 
 Notes:
 
-A MultiAsset is composed of an asset ID and an enum representing the fungibility of the asset.
-Asset IDs can either be Concrete or Abstract:
-Concrete assets - can be identified by a `MultiLocation` path that leads to the system that issues it
-Abstract assets - can be identified only by a label/name
+We use locations, which we've already discussed, to refer to assets.
+
+A Asset is composed of an asset ID and an enum representing the fungibility of the asset.
+Asset IDs are the location that leads to the system that issues it, this can be just an index in an assets pallet, for example.
 
 Assets can also either be fungible or non-fungible:
 Fungible - each token of this asset has the same value as any other
 NonFungible - each token of this asset is unique and cannot be seen as having the same value as any other token under this asset
 
-Non-fungible assets will then also need to further specify which exact token it represents under the same asset ID, and we use the AssetInstance enum to express the uniqueness of such a token.
+---v
 
----
+### Asset filtering and wildcards
 
-## Convenience methods to create `MultiAsset`
-
-```rust
-/// Creates 10 billion units of fungible native tokens
-let fungible_asset: MultiAsset = (Here, 10_000_000_000u128).into();
-
-/// Creates an NFT with an Undefined asset instance
-let nft: MultiAsset = ([0; 32], [TODO...]).into();
+```mermaid
+graph TD
+    AssetFilter-->Definite & Wild
+    Definite-->Asset1[Asset 1] & Asset2[Asset 2] & ...
+    Wild-->All & AllOf
 ```
 
 Notes:
 
-In Polkadot, a unit of native token = 1 planck, and 10 billion plancks = 1 DOT
-
----
-
-## Asset Wildcards and Filters
-
-TODO: More pictures.
-Use the filters to select assets from an image with a grid of lots of assets.
-
-```rust
-enum WildMultiAsset {
-    All,
-    AllOf { id: AssetId, fun: WildFungibility },
-    AllCounted(u32),
-    AllOfCounted { id: AssetId, fun: WildFungibility, count: u32 },
-}
-
-enum WildFungibility {
-    Fungible,
-    NonFungible,
-}
-
-enum MultiAssetFilter {
-    Definite(MultiAssets),
-    Wild(WildMultiAsset),
-}
-
-struct MultiAssets(Vec<MultiAsset>);
-```
-
-Notes:
-
-These are types used by various instructions that want to express the idea to select all of one kind of assets in the holding register, but do not know the exact amount of assets that already exists in holding.
-"Wild" in this context has the same meaning as the "wild" in "wildcard".
-The "counted" variants is used when we want to limit the amount of assets that the wildcard can select.
-This is very useful in cases where we want to give an upper limit to the execution time required to select the assets within the holding register, or that we simply just want the specified number of types of assets within the specified class of assets.
+Sometimes we don't want to specify an asset, but rather filter a collection of them.
+In this case, we can either list all the assets we want or use a wildcard to select all of them.
+In reality, it's better to use the counted variant of the wildcards, for benchmarking.
 
 ---
 
 ## Reanchoring
 
-TODO: Add a table of the location interpretations by the different parachains.
-Also add UniversalLocation.
+How do different locations reference the same asset?
 
-`Location`s are relative.
-
-**Scenario:**<br/>
-Current consensus system is `AssetHub` on Polkadot.
-
-Destination consensus system is `Collectives` on Polkadot.
-
-We want to send USDT to collectives.
-
-<pba-flex center>
-
-- Where is the universal location of `Here`? (Poladot or Kusama or what)
-- What happens when I send an `Asset`<br/>with an `AssetId` of `Here` to `../Collectives`?
-
-Misinterpretation ensues.
+```mermaid
+graph TD
+    Polkadot-->AssetHub["Asset Hub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Alice
+    AssetHub-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+```
 
 Notes:
 
-MultiLocations are relative, so they must be updated and rewritten when sent to another chain.
+Locations are relative, so they must be updated and rewritten when sent to another chain.
 
----
+---v
 
-## 🤹 Multiple models for transferring assets
+### DOT from Asset Hub
 
-<pba-flex center>
+```mermaid
+graph TD
+    Polkadot-->AssetHub["📍 Asset Hub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Alice
+    AssetHub-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+    AssetHub-->Polkadot
+    style AssetHub stroke:red
+    style Polkadot stroke:red,stroke-width:2
+    linkStyle 5 stroke:red,stroke-dasharray:5
+```
 
-1. "Remote control" an account on another system
-2. Reserve transfers
-3. Teleport transfers
+`..`
 
 Notes:
 
-We might want to simply control an account on a remote chain, allowing the local chain to have an address on the remote chain for receiving funds and to eventually transfer those funds it controls into other accounts on that remote chain.
-Accounts that are controllable by a remote chain are often referred to as **Sovereign accounts**.
+Native tokens are referenced by the location to their system.
+
+---v
+
+### DOT from Alice
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub["Asset Hub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Alice["📍 Alice"]
+    AssetHub-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+    Alice-->AssetHub
+    AssetHub-->Polkadot
+    style Alice stroke:red
+    style AssetHub stroke:red
+    style Polkadot stroke:red,stroke-width:2
+    linkStyle 5 stroke:red,stroke-dasharray:5
+    linkStyle 6 stroke:red,stroke-dasharray:5
+```
+
+`../..`
+
+---v
+
+### Universal Location of DOT
+
+```mermaid
+graph TD
+    Universe["📍 Universal Location"]-->Polkadot
+    Polkadot-->AssetHub["Asset Hub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Alice
+    AssetHub-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+    style Universe stroke:red
+    style Polkadot stroke:red,stroke-width:2
+    linkStyle 0 stroke:red
+```
+
+`GlobalConsensus(Polkadot)`
+
+---v
+
+### USDT from Asset Hub
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub["📍 Asset Hub (1000)"]
+    Polkadot-->Collectives["Collectives (1001)"]
+    AssetHub-->Alice
+    AssetHub-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+    style AssetHub stroke:red
+    style AssetsPallet stroke:red
+    style Asset stroke:red,stroke-width:2
+    linkStyle 3 stroke:red
+    linkStyle 4 stroke:red
+```
+
+`PalletInstance(50)/GeneralIndex(1984)`
+
+---v
+
+### USDT from Collectives
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub["Asset Hub (1000)"]
+    Polkadot-->Collectives["📍 Collectives (1001)"]
+    AssetHub-->Alice
+    AssetHub-->AssetsPallet[Pallet Assets]
+    AssetsPallet-->Asset[USDT]
+    Collectives-->Polkadot
+    style Collectives stroke:red
+    style AssetHub stroke:red
+    style Polkadot stroke:red
+    style AssetsPallet stroke:red
+    style Asset stroke:red,stroke-width:2
+    linkStyle 0 stroke:red
+    linkStyle 3 stroke:red
+    linkStyle 4 stroke:red
+    linkStyle 5 stroke:red,stroke-dasharray:5
+```
+
+`../Parachain(1000)/PalletInstance(50)/GeneralIndex(1984)`
+
+---v
+
+### Reanchoring to the rescue
+
+```mermaid
+graph LR
+    Collectives-->USDTCollectives
+    subgraph OutgoingMessage[Outgoing message]
+        USDTCollectives[USDT from Collectives' perspective]
+    end
+    USDTCollectives--Reanchoring-->USDTAssetHub
+    subgraph IncomingMessage[Incoming message]
+        USDTAssetHub[USDT from Asset Hub's perspective]
+    end
+    USDTAssetHub-->AssetHub[Asset Hub]
+```
+
+<!-- TODO: Here it would be better to link to the subgraphs themselves, but we need a newer version of MermaidJS for that -->
 
 ---
 
-## 🤹 Multiple models for transferring assets
+## 🤹 Cross-consensus transfers
 
-<pba-cols>
-<pba-col>
+Notes:
 
-TODO: Divide into two slides.
-TODO: Talk about sovereign accounts before? I don't think we have.
+The two ways of transferring assets between consensus systems are teleports and reserve transfers.
 
-<!-- <img rounded style="width: 500px;" src="../../../assets/img/7-XCM/rm-tx.png" alt="Remote Transfer" /> -->
+---v
+
+### Sovereign Accounts
+
+```mermaid
+graph TD
+    Polkadot-->AssetHub & Collectives
+    AssetHub-->Alice
+    Collectives-->AliceSA["Alice's sovereign account"]
+```
+
+Notes:
+
+A sovereign account is an account on one system that is controlled by another on a different system.
+A single account on a system can have multiple sovereign accounts on many other systems.
+In this example, Alice is an account on AssetHub, and it controls a sovereign account on Collectives.
+
+When transferring between consensus systems, the sovereign account is the one that gets the funds on the destination system.
+
+---v
+
+### 1. Asset teleportation
+
 <img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport" />
 
-</pba-col>
-<pba-col>
+Notes:
 
-TODO: Add case where A = R.
+Teleportation works by burning the assets on the source chain and minting them on the destination chain.
+This method is the simplest one, but requires a lot of trust, since failure to burn or mint on either side will affect the total issuance.
+
+---v
+
+### 2. Reserve asset transfers
 
 <img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer" />
 
-</pba-col>
-</pba-cols>
-
 Notes:
 
-TODO: use examples from here https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392 to describe the images
+Reserve asset transfers are more complicated, since they bring in a third actor called the reserve chain.
+Chain A and B needn't trust each other, they only need to trust the reserve chain.
+The reserve chain holds the real assets, A and B deal only with derivatives.
+The transfer is made by burning derivatives from A, moving them from A's SA to B's SA in R, then minting on B.
 
-TODO: You can use XCM with UTXO-based models.
+In some cases, the sender, A, can also be the reserve for a particular asset, in which case the process is simplified, there's no burning of derivatives.
+This usually happens with parachains' native tokens.
 
----
+---v
 
 ## Next steps
 
@@ -532,35 +788,10 @@ TODO: You can use XCM with UTXO-based models.
 1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
 2. XCM Format [repository](https://github.com/paritytech/xcm-format)
 3. XCM [Docs](https://paritytech.github.io/xcm-docs/)
-<!-- 1. TODO: fill this in - polkadot / cumulus / parachains repos?  -->
 
 ---
 
-## Glossary
-
-TODO: Move this to the docs and link there.
-
-<!-- TODO: ensure these are in the class glossary! Remove this slide and simply reference in the slides -->
-
-- UMP (Upward Message Passing) allows parachains to send messages to their relay chain.
-- DMP (Downward Message Passing) allows the relay chain to pass messages down to one of their parachains.
-- HRMP (Horizontal Message Passing)
-- XCM
-- XCVM
-- XCMP (Cross-Consensus Message Passing), which is perhaps the best known of them, allows the parachains to send messages between themselves.
-- {XCM} Junctions
-- MultiLocations
-- Sovereign account(s)
-- Holding register
-- Consensus system
-- {XCM} Instructions
-- {XCM config} Barriers
-- {XCM config} Filters
-- UDP {networking}
-- TTL {networking}
-
----
-
-## Polkadot Network Diagram
-
-<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" alt="Relay Network Diagram" style="width:800px;" />
+<figure>
+    <img rounded src="../../../assets/img/7-XCM/subscan-xcm-dashboard.png" alt="Subscan XCM Dashboard" style="width: 50%;" />
+    <figcaption>Source: <a href="https://polkadot.subscan.io/xcm_dashboard">Subscan</a></figcaption>
+</figure>
