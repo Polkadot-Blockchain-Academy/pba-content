@@ -60,7 +60,7 @@ Notes:
 
 ---
 
-## What does Cumulus?
+## What is the Role of Cumulus?
 
 ---v
 <div class="r-stack">
@@ -76,9 +76,9 @@ Notes:
 
 </br>
 
-- Enables runtime validation
+- Enables runtime validation by providing candidates to the parachains protocol
 <!-- .element: class="fragment" data-fragment-index="4" -->
-- Makes the parachain  to communicate with the relay chain
+- Couples parachain finality to that of the relay chain
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes: 
@@ -91,17 +91,17 @@ Notes:
 
 ---
 
-## Cumulus Enables Runtime Validation
+## How Cumulus Enables Runtime Validation
 
 ---
 
-### What's Runtime Validation?
+### What is Runtime Validation?
 
-- Relay chain validates states transitions described by the Runtime of every parachain
+- The relay chain ensures that every parachain block follows the rules defined by that parachain's current code.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Constraint: the relay chain must be able to execute the Runtime Validation without knowing the all previous state of the parachain
+- Constraint: the relay chain must be able to execute Runtime Validation of a parachain block without access to the entirety of that parachain's state
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -121,9 +121,9 @@ Notes:
 
 ---v
 
-#### Proof Validation Function - PVF
+#### Parachain Validation Function - PVF
 
-- The STF of the Parachain must be store on the Relay Chain
+- The STF of the Parachain must be stored on the Relay Chain
 
 ``` rust [6]
 /// A struct that carries code of a parachain validation function and its hash.
@@ -138,7 +138,7 @@ pub struct Pvf {
 
 </br>
 
-- New state transitions that occur on a parachain must be validated against the registered PVF 
+- New state transitions that occur on a parachain must be validated against the registered parachain code via the PVF 
 
 Notes:
 
@@ -160,8 +160,8 @@ Notes:
   
 ##### Witness Data
 
-- Needed by the validator as a solution to not having the entire previous state
-  - It allows the reconstruction of a partial in-memory merkle trie (not sure those are the correct words)
+- Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
+  - It allows the reconstruction of a sparse in-memory merkle trie
   
 ---v
 
@@ -176,9 +176,9 @@ Notes:
 
 </br>
 
-- Composed by only the data used in the state transition with the relative inclusion proof
+- Composed of only the data used in the state transitions of the block being validated
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- This makes the biggest limitation of the PoV (max 5MiB)
+- This makes up the majority of the data in a collation (max 5MiB)
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
@@ -223,7 +223,7 @@ In the first image the PVF was not only composed by the Runtime but also by func
 
 ---v
 
-#### Let's do step back
+#### Let's Take a Step Back
 
 <div class="r-stack">
 <img src="../assets/pov_path_1.svg" style="width: 70%" />
@@ -237,7 +237,7 @@ The input of the runtime validation process is the PoV and the function called i
 
 ---v
 
-#### What the validate_block function actually does?
+#### What Does validate_block Actually Do?
 
 ```rust [1|2-3|5]
 fn validate_block(input: InputParams) -> Output {
@@ -264,7 +264,7 @@ then ensure that the storage root matches the storage root in the `parent_head`.
 
 ---v
 
-##### Why replacing host functions?
+##### Why Replace Host Functions?
 
 <img src="../assets/validate_block.svg" style="width: 1500px" />
 
@@ -308,24 +308,22 @@ Notes:
 
 - The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
 
-- The PoV is too big to be included on-chain, validators will then produce a constant size **Candidate Block Recepeit** to represent the just validated block
+- The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Recepeit** to represent the freshly validated block
 
-- PoVBlock, though, can't be lost because other checks on the parachain block needs to be done
+- But the PoV must remain available after backing, since it will be used to validate the block during the approvals process.
 
 ---v
 
-#### Pending Availability Phases
+#### The Availability Process
 
 - Erasure coding is applied to the PoV
 - At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available 
-
-- NOT SURE HOW MUCH OF THIS IS IN CONFLICT WITH Async Backing
 
 ---
 
 ### What cumulus does for you
 
-Starting from a Substrate-based chain Cumulus changes both client and runtime to make them work with the polkadot protocol abstracting all the complexity we just explained
+Starting from a Substrate-based chain Cumulus changes both client and runtime to make them work with Polkadot, abstracting away the complexity we just explained
 
 ---v
 
@@ -390,11 +388,11 @@ Notes:
 
 ---
 
-## Cumulus makes the parachain to communicate with the relay chain
+## How Cumulus Enables Parachain-Relay Chain Communication
 
 ---v
 
-- Every collator run also a polkadot full node
+- Every collator also runs a Polkadot full node
 
 </br>
 
@@ -408,7 +406,7 @@ the collator could also run a separeted RPC node
 
 ---
 
-### Relay chain interface
+### Relay Chain Interface
 
 ```rust [1-2]
 /// Trait that provides all necessary methods for interaction 
@@ -424,7 +422,7 @@ pub trait RelayChainInterface: Send + Sync {
 It is responsible for:
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- following the relay chain and providing block and finality notification stream
+- following the relay chain and providing block and finality notification streams
 - runtime api calls into the relay chain state for message processing
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -605,10 +603,10 @@ https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgra
 ##### PVF Pre-Chekcing Process
 
 - The relay chain keeps track of all the new PVFs that need to be checked
-- Each validator checks if the compilation of a PVF is valid and does not require to much time, then it votes
+- Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
   - binary vote: accept or reject
 - As soon as the super majority is reached the voting is concluded
-- The state of the new PVF is update in the relay chain
+- The state of the new PVF is updated on the relay chain
 
 Notes:
 
