@@ -280,7 +280,7 @@ pba-flex[right] {
 .reveal * li dl,
 .reveal * li ul {
 	margin-top: 0.3em;
-	margin-left: -2em;
+	margin-left: -1em;
 }
 
 .reveal ul,
@@ -290,11 +290,11 @@ pba-flex[right] {
 	padding-left: 2em;
 }
 
-.reveal ol li {
+.reveal ol > li {
   counter-increment: count-ol;
 }
 
-.reveal ol li ol li {
+.reveal * li ol  > li {
   counter-increment: count-ol-ol;
 }
 
@@ -311,7 +311,7 @@ pba-flex[right] {
 	color: var(--r-link-color-hover);
 }
 
-.reveal ol > li::marker {
+.reveal ol > li::before {
 	font-family: "Unbounded";
 	font-size: 0.75em;
 	position: relative;
@@ -323,11 +323,11 @@ pba-flex[right] {
 	font-weight: bold;
 }
 
-.reveal ol > li::marker {
+.reveal ol > li::before {
 	content: counters(count-ol,".") ": ";
 }
 
-.reveal * li ol  > li::marker {
+.reveal * li ol  > li::before {
 	content: counters(count-ol-ol,".") ": ";
 }
 

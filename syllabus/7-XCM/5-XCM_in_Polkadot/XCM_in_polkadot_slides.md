@@ -362,7 +362,7 @@ Notes:
 
 Statemine is a common-good parachain that allows hosting arbitrary assets.
 
-You can visit the whole xcm configuration [here](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/statemine/src/xcm_config.rs)
+You can visit the whole xcm configuration [here](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/asset-hub-polkadot/src/xcm_config.rs)
 
 ---
 

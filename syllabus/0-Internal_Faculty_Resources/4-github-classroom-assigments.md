@@ -2,7 +2,7 @@
 
 [GitHub Education](https://education.github.com/) provides a lot of nice features for formal educational institutions and their students.
 One of the tools we can leverage in the PBA is [GitHub Classroom](https://classroom.github.com/) that allows for **using a base git repo as a source for assignments**.
-Our [Rust Entrance Exam](https://github.com/Polkadot-Blockchain-Academy/Rust-Entrance-Exam) uses this feature, so we can have individuals or groups work privately from each other, while staff can see and assess everyone's work. <!-- markdown-link-check-disable-line -->
+Our [Rust Entrance Exam](https://github.com/Polkadot-Blockchain-Academy/Rust-Entrance-Exam) uses this feature, so we can have individuals or groups work privately from each other, while faculty can see and assess everyone's work. <!-- markdown-link-check-disable-line -->
 It also can allow for automated testing (via a version of GitHub Actions / CI).
 
 > If you want to create an assignment, please let the **owners of the [PBA org](https://github.com/orgs/Polkadot-Blockchain-Academy/people?query=role%3Aowner)** know so, as you will need to get permissions updated.

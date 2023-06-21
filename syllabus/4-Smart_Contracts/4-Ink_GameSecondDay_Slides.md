@@ -74,10 +74,12 @@ No overpainting! First player to paint a field owns it.<br/>
 
 - Worst 😱
   - Cross-contract call to `game`<br/><br/>
+
 ```rust
 #[ink(message)]
 pub fn dimensions(&self) -> (u32, u32)
 ```
+
 <br/><br/>
 
 <!-- .element: class="fragment" -->
@@ -117,6 +119,7 @@ fn pay_winner()
   self.transfer(winner, …);
 }
 ```
+
 </pba-col>
 <!-- .element: class="fragment" -->
 <pba-col center>
@@ -254,9 +257,11 @@ impl<T: Config> AddressGenerator<T> for DefaultAddressGenerator {
 ```
 
 ➜ All inputs are known
+
 <!-- .element: class="fragment"  -->
 
 ➜ Generate low `T::AccountId` with known inputs
+
 <!-- .element: class="fragment"  -->
 
 ---
