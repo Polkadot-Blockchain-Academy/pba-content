@@ -155,8 +155,8 @@ XCM abstracts away the actual on-chain operation that will be called, which lets
 ```mermaid
 graph TD
     subgraph Message
-        WithdrawAsset-->DepositAlice["DepositAsset (Alice)"]
-        DepositAlice-->DepositBob["DepositAsset (Bob)"]
+        WithdrawAsset(WithdrawAsset)-->DepositAlice("DepositAsset(Alice)")
+        DepositAlice-->DepositBob("DepositAsset(Bob)")
     end
 ```
 
@@ -171,8 +171,8 @@ Using transactions, you'd have to send many messages to achieve this.
 
 ```mermaid
 graph LR
-    A[Chain A]--"Pays for fees"-->B[Chain B]
-    A--"Doesn't pay for fees"-->C[Chain C]
+    A(Chain A)--"Pays for fees"-->B(Chain B)
+    A--"Doesn't pay for fees"-->C(Chain C)
 ```
 
 Notes:
@@ -283,13 +283,13 @@ It is always represented as a location _relative_ to the current consensus syste
 
 ```mermaid
 graph TD;
-    Relay-->A[Parachain A];
-    Relay-->B[Parachain B];
-    B-->Alice[Account A]
-    B-->Bob[Account B]
-    A-->Pallet[Pallet Contracts]
-    Pallet-->SCA[Smart Contract A]
-    Pallet-->SCB[Smart Contract B]
+    Relay(Relay)-->A(Parachain A)
+    Relay-->B(Parachain B)
+    B-->Alice(Account A)
+    B-->Bob(Account B)
+    A-->Pallet(Pallet Contracts)
+    Pallet-->SCA(Smart Contract A)
+    Pallet-->SCB(Smart Contract B)
 ```
 
 Notes:
@@ -300,11 +300,35 @@ Locations form a hierarchy.
 
 ## Location Representation
 
-```mermaid
-graph TD
-    Location-->Parents & Junctions
-    Junctions-->Parachain & AccountId32 & PalletInstance & ...
+<pba-cols>
+
+<pba-col>
+
+```rust
+struct Location {
+    parents: u8,
+    junctions: Junctions,
+}
 ```
+
+</pba-col>
+
+<pba-col>
+
+```rust
+enum Junction {
+    Parachain,
+    AccountId32,
+    PalletInstance,
+    GeneralIndex,
+    GlobalConsensus,
+    ...
+}
+```
+
+</pba-col>
+
+</pba-cols>
 
 Notes:
 
@@ -318,10 +342,10 @@ We can imagine a hypothetical location that contains all top-level consensus sys
 
 ```mermaid
 graph TD;
-    UniversalLocation[Universal Location]-->RelayA[Relay A]
-    UniversalLocation-->RelayB[Relay B]
-    RelayA-->BranchA[...]
-    RelayB-->BranchB[...]
+    UniversalLocation(Universal Location)-->RelayA(Relay A)
+    UniversalLocation-->RelayB(Relay B)
+    RelayA-->BranchA(...)
+    RelayB-->BranchB(...)
 ```
 
 ---v
@@ -368,9 +392,8 @@ Since `Location`s are relative, when an XCM gets sent over to another chain, the
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["📍 AssetHub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    style AssetHub stroke:red
+    Polkadot(Polkadot)-->AssetHub("📍 AssetHub (1000)")
+    Polkadot-->Collectives("Collectives (1001)")
 ```
 
 Notes:
@@ -385,14 +408,11 @@ What does the location resolve to if evaluated on Parachain(1000)?
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["📍 AssetHub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
+    Polkadot(Polkadot)-->AssetHub("📍 AssetHub (1000)")
+    Polkadot-->Collectives("Collectives (1001)")
     AssetHub-->Polkadot
-    style AssetHub stroke:red
-    style Polkadot stroke:red
-    style Collectives stroke:red,stroke-width:2
-    linkStyle 1 stroke:red
-    linkStyle 2 stroke:red,stroke-dasharray:5
+    linkStyle 0 opacity:0.3
+    linkStyle 2 stroke-dasharray:5
 ```
 
 ---v
@@ -403,10 +423,9 @@ graph TD
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["📍 AssetHub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    Polkadot-->Account["AccountId32 (0x1234...cdef)"]
-    style AssetHub stroke:red
+    Polkadot-->AssetHub("📍 AssetHub (1000)")
+    Polkadot-->Collectives("Collectives (1001)")
+    Polkadot-->Account("AccountId32 (0x1234...cdef)")
 ```
 
 Notes:
@@ -421,15 +440,14 @@ What does the location resolve to if evaluated on Parachain(1000)?
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["📍 AssetHub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    Polkadot-->Account["AccountId32 (0x1234...cdef)"]
+    Polkadot(Polkadot)-->AssetHub("📍 AssetHub (1000)")
+    Polkadot-->Collectives("Collectives (1001)"):::disabled
+    Polkadot-->Account("AccountId32 (0x1234...cdef)")
     AssetHub-->Polkadot
-    style Polkadot stroke:red
-    style AssetHub stroke:red
-    style Account stroke:red,stroke-width:2
-    linkStyle 3 stroke:red,stroke-dasharray:5
-    linkStyle 2 stroke:red
+    linkStyle 0 opacity:0.3
+    linkStyle 1 opacity:0.3
+    linkStyle 3 stroke-dasharray:5
+    classDef disabled opacity:0.3
 ```
 
 ---v
@@ -440,10 +458,9 @@ graph TD
 
 ```mermaid
 graph TD
-    Polkadot["📍 Polkadot"]-->AssetHub["AssetHub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    AssetHub-->Account["AccountId32 (0x1234...cdef)"]
-    style Polkadot stroke:red
+    Polkadot("📍 Polkadot")-->AssetHub("AssetHub (1000)")
+    Polkadot-->Collectives("Collectives (1001)")
+    AssetHub-->Account("AccountId32 (0x1234...cdef)")
 ```
 
 Notes:
@@ -458,14 +475,11 @@ What does the location resolve to if evaluated on the relay chain?
 
 ```mermaid
 graph TD
-    Polkadot["📍 Polkadot"]-->AssetHub["AssetHub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    AssetHub-->Account["AccountId32 (0x1234...cdef)"]
-    style Polkadot stroke:red
-    style AssetHub stroke:red
-    style Account stroke:red,stroke-width:2
-    linkStyle 0 stroke:red
-    linkStyle 2 stroke:red
+    Polkadot("📍 Polkadot")-->AssetHub("AssetHub (1000)")
+    Polkadot-->Collectives("Collectives (1001)"):::disabled
+    AssetHub-->Account("AccountId32 (0x1234...cdef)")
+    linkStyle 1 opacity:0.3
+    classDef disabled opacity:0.3
 ```
 
 ---v
@@ -476,15 +490,15 @@ graph TD
 
 ```mermaid
 graph TD
-    Universe[Universal Location]-->Polkadot
-    Universe-->Kusama
-    Polkadot-->PolkaA["📍Asset Hub (1000)"]
-    Polkadot-->PolkaB[Bridge Hub]
-    PolkaA-->Alice
-    PolkaA-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
-    Kusama-->KusamA["Asset Hub (1000)"]
-    Kusama-->KusamB[Bridge Hub]
+    Universe(Universal Location)-->Polkadot(Polkadot)
+    Universe-->Kusama(Kusama)
+    Polkadot-->PolkaA("📍 Asset Hub (1000)")
+    Polkadot-->PolkaB(Bridge Hub)
+    PolkaA-->Alice(Alice)
+    PolkaA-->AssetsPallet(Pallet Assets)
+    AssetsPallet-->Asset(USDT)
+    Kusama-->KusamA("Asset Hub (1000)")
+    Kusama-->KusamB(Bridge Hub)
     style PolkaA stroke:red
 ```
 
@@ -501,26 +515,27 @@ This will be very powerful later on (Origins)
 
 ```mermaid
 graph TD
-    Universe[Universal Location]-->Polkadot
-    Universe-->Kusama
-    Polkadot-->PolkaA["📍Asset Hub (1000)"]
-    Polkadot-->PolkaB[Bridge Hub]
-    PolkaA-->Alice
-    PolkaA-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
-    Kusama-->KusamA["Asset Hub (1000)"]
-    Kusama-->KusamB[Bridge Hub]
+    Universe(Universal Location)-->Polkadot(Polkadot)
+    Universe-->Kusama(Kusama)
+    Polkadot-->PolkaA("📍 Asset Hub (1000)")
+    Polkadot-->PolkaB(Bridge Hub):::disabled
+    PolkaA-->Alice(Alice):::disabled
+    PolkaA-->AssetsPallet(Pallet Assets):::disabled
+    AssetsPallet-->Asset(USDT):::disabled
+    Kusama-->KusamA("Asset Hub (1000)")
+    Kusama-->KusamB(Bridge Hub):::disabled
     PolkaA-->Polkadot
     Polkadot-->Universe
-    style PolkaA stroke:red
-    style Polkadot stroke:red
-    style Universe stroke:red
-    style Kusama stroke:red
-    style KusamA stroke:red,stroke-width:2
-    linkStyle 1 stroke:red
-    linkStyle 7 stroke:red
-    linkStyle 9 stroke:red,stroke-dasharray:5
-    linkStyle 10 stroke:red,stroke-dasharray:5
+    linkStyle 0 opacity:0.3
+    linkStyle 2 opacity:0.3
+    linkStyle 3 opacity:0.3
+    linkStyle 4 opacity:0.3
+    linkStyle 5 opacity:0.3
+    linkStyle 6 opacity:0.3
+    linkStyle 8 opacity:0.3
+    linkStyle 9 stroke-dasharray:5
+    linkStyle 10 stroke-dasharray:5
+    classDef disabled opacity:0.3
 ```
 
 Notes:
@@ -543,11 +558,18 @@ How do we address these assets?
 
 ### Asset Representation
 
-```mermaid
-graph TD
-    Asset-->AssetId & Fungibility
-    AssetId-->Location
-    Fungibility-->Fungible & NonFungible
+```rust
+struct Asset {
+    pub id: AssetId,
+    pub fun: Fungibility,
+}
+
+struct AssetId(Location); // <- We reuse the location!
+
+enum Fungibility {
+    Fungible(u128),
+    NonFungible(AssetInstance),
+}
 ```
 
 Notes:
@@ -565,11 +587,22 @@ NonFungible - each token of this asset is unique and cannot be seen as having th
 
 ### Asset filtering and wildcards
 
-```mermaid
-graph TD
-    AssetFilter-->Definite & Wild
-    Definite-->Asset1[Asset 1] & Asset2[Asset 2] & ...
-    Wild-->All & AllOf
+```rust
+enum AssetFilter {
+    Definite(Assets),
+    Wild(WildAsset),
+}
+
+enum WildAsset {
+    All,
+    AllOf { id: AssetId, fun: WildFungibility },
+    // Counted variants
+}
+
+enum WildFungibility {
+    Fungible,
+    NonFungible,
+}
 ```
 
 Notes:
@@ -586,11 +619,11 @@ How do different locations reference the same asset?
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["Asset Hub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    AssetHub-->Alice
-    AssetHub-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
+    Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
+    Polkadot-->Collectives("Collectives (1001)")
+    AssetHub-->Alice(Alice)
+    AssetHub-->AssetsPallet(Pallet Assets)
+    AssetsPallet-->Asset(USDT)
 ```
 
 Notes:
@@ -603,18 +636,22 @@ Locations are relative, so they must be updated and rewritten when sent to anoth
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["📍 Asset Hub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    AssetHub-->Alice
-    AssetHub-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
+    Polkadot(Polkadot)-->AssetHub("📍 Asset Hub (1000)")
+    Polkadot-->Collectives("Collectives (1001)"):::disabled
+    AssetHub-->Alice(Alice):::disabled
+    AssetHub-->AssetsPallet(Pallet Assets):::disabled
+    AssetsPallet-->Asset(USDT):::disabled
     AssetHub-->Polkadot
-    style AssetHub stroke:red
-    style Polkadot stroke:red,stroke-width:2
-    linkStyle 5 stroke:red,stroke-dasharray:5
+    linkStyle 0 opacity:0.3
+    linkStyle 1 opacity:0.3
+    linkStyle 2 opacity:0.3
+    linkStyle 3 opacity:0.3
+    linkStyle 4 opacity:0.3
+    linkStyle 5 stroke-dasharray:5
+    classDef disabled opacity:0.3
 ```
 
-`..`
+`../Here`
 
 Notes:
 
@@ -626,21 +663,24 @@ Native tokens are referenced by the location to their system.
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["Asset Hub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    AssetHub-->Alice["📍 Alice"]
-    AssetHub-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
+    Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
+    Polkadot-->Collectives("Collectives (1001)"):::disabled
+    AssetHub-->Alice("📍 Alice")
+    AssetHub-->AssetsPallet(Pallet Assets):::disabled
+    AssetsPallet-->Asset(USDT):::disabled
     Alice-->AssetHub
     AssetHub-->Polkadot
-    style Alice stroke:red
-    style AssetHub stroke:red
-    style Polkadot stroke:red,stroke-width:2
-    linkStyle 5 stroke:red,stroke-dasharray:5
-    linkStyle 6 stroke:red,stroke-dasharray:5
+    linkStyle 0 opacity:0.3
+    linkStyle 1 opacity:0.3
+    linkStyle 2 opacity:0.3
+    linkStyle 3 opacity:0.3
+    linkStyle 4 opacity:0.3
+    linkStyle 5 stroke-dasharray:5
+    linkStyle 6 stroke-dasharray:5
+    classDef disabled opacity:0.3
 ```
 
-`../..`
+`../../Here`
 
 ---v
 
@@ -648,15 +688,18 @@ graph TD
 
 ```mermaid
 graph TD
-    Universe["📍 Universal Location"]-->Polkadot
-    Polkadot-->AssetHub["Asset Hub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    AssetHub-->Alice
-    AssetHub-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
-    style Universe stroke:red
-    style Polkadot stroke:red,stroke-width:2
-    linkStyle 0 stroke:red
+    Universe("📍 Universal Location")-->Polkadot(Polkadot)
+    Polkadot-->AssetHub("Asset Hub (1000)"):::disabled
+    Polkadot-->Collectives("Collectives (1001)"):::disabled
+    AssetHub-->Alice(Alice):::disabled
+    AssetHub-->AssetsPallet(Pallet Assets):::disabled
+    AssetsPallet-->Asset(USDT):::disabled
+    linkStyle 1 opacity:0.3
+    linkStyle 2 opacity:0.3
+    linkStyle 3 opacity:0.3
+    linkStyle 4 opacity:0.3
+    linkStyle 5 opacity:0.3
+    classDef disabled opacity:0.3
 ```
 
 `GlobalConsensus(Polkadot)`
@@ -667,16 +710,17 @@ graph TD
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["📍 Asset Hub (1000)"]
-    Polkadot-->Collectives["Collectives (1001)"]
-    AssetHub-->Alice
-    AssetHub-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
-    style AssetHub stroke:red
-    style AssetsPallet stroke:red
-    style Asset stroke:red,stroke-width:2
+    Polkadot(Polkadot):::disabled-->AssetHub("📍 Asset Hub (1000)")
+    Polkadot-->Collectives("Collectives (1001)"):::disabled
+    AssetHub-->Alice(Alice):::disabled
+    AssetHub-->AssetsPallet(Pallet Assets)
+    AssetsPallet-->Asset(USDT)
+    linkStyle 0 opacity:0.3
+    linkStyle 1 opacity:0.3
+    linkStyle 2 opacity:0.3
     linkStyle 3 stroke:red
     linkStyle 4 stroke:red
+    classDef disabled opacity:0.3
 ```
 
 `PalletInstance(50)/GeneralIndex(1984)`
@@ -687,21 +731,16 @@ graph TD
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub["Asset Hub (1000)"]
-    Polkadot-->Collectives["📍 Collectives (1001)"]
-    AssetHub-->Alice
-    AssetHub-->AssetsPallet[Pallet Assets]
-    AssetsPallet-->Asset[USDT]
+    Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
+    Polkadot-->Collectives("📍 Collectives (1001)")
+    AssetHub-->Alice(Alice):::disabled
+    AssetHub-->AssetsPallet(Pallet Assets)
+    AssetsPallet-->Asset(USDT)
     Collectives-->Polkadot
-    style Collectives stroke:red
-    style AssetHub stroke:red
-    style Polkadot stroke:red
-    style AssetsPallet stroke:red
-    style Asset stroke:red,stroke-width:2
-    linkStyle 0 stroke:red
-    linkStyle 3 stroke:red
-    linkStyle 4 stroke:red
-    linkStyle 5 stroke:red,stroke-dasharray:5
+    linkStyle 1 opacity:0.3
+    linkStyle 2 opacity:0.3
+    linkStyle 5 stroke-dasharray:5
+    classDef disabled opacity:0.3
 ```
 
 `../Parachain(1000)/PalletInstance(50)/GeneralIndex(1984)`
@@ -712,15 +751,15 @@ graph TD
 
 ```mermaid
 graph LR
-    Collectives-->USDTCollectives
+    Collectives(Collectives)-->USDTCollectives
     subgraph OutgoingMessage[Outgoing message]
-        USDTCollectives[USDT from Collectives' perspective]
+        USDTCollectives(USDT from Collectives' perspective)
     end
     USDTCollectives--Reanchoring-->USDTAssetHub
     subgraph IncomingMessage[Incoming message]
-        USDTAssetHub[USDT from Asset Hub's perspective]
+        USDTAssetHub(USDT from Asset Hub's perspective)
     end
-    USDTAssetHub-->AssetHub[Asset Hub]
+    USDTAssetHub-->AssetHub(Asset Hub)
 ```
 
 <!-- TODO: Here it would be better to link to the subgraphs themselves, but we need a newer version of MermaidJS for that -->
@@ -739,9 +778,9 @@ The two ways of transferring assets between consensus systems are teleports and 
 
 ```mermaid
 graph TD
-    Polkadot-->AssetHub & Collectives
-    AssetHub-->Alice
-    Collectives-->AliceSA["Alice's sovereign account"]
+    Polkadot(Polkadot)-->AssetHub(Asset Hub) & Collectives(Collectives)
+    AssetHub-->Alice(Alice)
+    Collectives-->AliceSA("Alice's sovereign account")
 ```
 
 Notes:
