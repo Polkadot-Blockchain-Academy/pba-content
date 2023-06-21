@@ -23,7 +23,7 @@ duration: 1 hour
 
 What _is_ a secret in cryptography?
 
-Data that nobody else knows.
+Data that you know, that nobody else knows.
 
 ---
 
@@ -48,7 +48,7 @@ Let's go over each of these in order.
 
 ---
 
-## Randomness
+## Bad Randomness
 
 Some algorithms require randomness. If the randomness is compromised, the private key or encrypted message can possibly be exposed.
 
@@ -70,8 +70,8 @@ A timing attack can be possible if any of the following<br> depend on the conten
 
 <pba-flex center>
 
-- Different instruction execution
-- CPU Branch prediction
+- Which instructions execute
+- Branching (if statements)
 - Memory access patterns
 
 </pba-flex>
