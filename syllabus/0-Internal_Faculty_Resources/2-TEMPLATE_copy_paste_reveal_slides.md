@@ -637,13 +637,15 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 ### [A Flowchart](https://mermaid.js.org/syntax/flowchart.html)
 
   <div class="mermaid">
+    <pre>
       %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
       flowchart TD
-        A[Start] --> B{Is it?};
-        B -- Yes --> C[OK];
-        C --> D[Rethink];
+        A(Start) --> B{Is it?};
+        B -- Yes --> C(OK);
+        C --> D(Rethink);
         D --> B;
-        B -- No ----> E[End];
+        B -- No ----> E(End);
+      </pre>
   </div>
 
 ---v
@@ -652,8 +654,15 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ```html
 <div class="mermaid">
-  %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%% flowchart TD A[Start] --> B{Is it?}; B -- Yes
-  --> C[OK]; C --> D[Rethink]; D --> B; B -- No ----> E[End];
+  <pre>
+      %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+      flowchart TD
+        A(Start) --> B{Is it?};
+        B -- Yes --> C(OK);
+        C --> D(Rethink);
+        D --> B;
+        B -- No ----> E(End);
+  </pre>
 </div>
 ```
 
@@ -681,6 +690,273 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
     Node ||--o{ Wallet : places_order
     Wallet ||--|{ Account : owner
     Node }|..|{ Some-IP : uses
+  </pre>
+</div>
+```
+
+---v
+
+### Sequence diagram
+
+<div class="mermaid">
+  <pre>
+  sequenceDiagram
+      Alice->>John: Hello John, how are you?
+      John-->>Alice: Great!
+      Alice-)John: See you later!
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+  sequenceDiagram
+      Alice->>John: Hello John, how are you?
+      John-->>Alice: Great!
+      Alice-)John: See you later!
+  </pre>
+</div>
+```
+
+---v
+
+### Class Diagram
+
+<div class="mermaid">
+  <pre>
+    classDiagram
+      note "From Duck till Zebra"
+      Animal <|-- Duck
+      note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
+      Animal <|-- Fish
+      Animal <|-- Zebra
+      Animal : +int age
+      Animal : +String gender
+      Animal: +isMammal()
+      Animal: +mate()
+      class Duck{
+          +String beakColor
+          +swim()
+          +quack()
+      }
+      class Fish{
+          -int sizeInFeet
+          -canEat()
+      }
+      class Zebra{
+          +bool is_wild
+          +run()
+      }
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    classDiagram
+      note "From Duck till Zebra"
+      Animal <|-- Duck
+      note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
+      Animal <|-- Fish
+      Animal <|-- Zebra
+      Animal : +int age
+      Animal : +String gender
+      Animal: +isMammal()
+      Animal: +mate()
+      class Duck{
+          +String beakColor
+          +swim()
+          +quack()
+      }
+      class Fish{
+          -int sizeInFeet
+          -canEat()
+      }
+      class Zebra{
+          +bool is_wild
+          +run()
+      }
+  </pre>
+</div>
+```
+
+---v
+
+### State diagram (v2)
+
+<div class="mermaid">
+  <pre>
+  stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+  stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+  </pre>
+</div>
+```
+
+---v
+
+### User Journey
+
+<div class="mermaid">
+  <pre>
+  journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+  </pre>
+</div>
+```
+
+---v
+
+### Gantt
+
+<div class="mermaid">
+  <pre>
+    gantt
+      apple :a, 2017-07-20, 1w
+      banana :crit, b, 2017-07-23, 1d
+      cherry :active, c, after b a, 1d
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    gantt
+      apple :a, 2017-07-20, 1w
+      banana :crit, b, 2017-07-23, 1d
+      cherry :active, c, after b a, 1d
+  </pre>
+</div>
+```
+
+---v
+
+### Pie Chart
+
+<div class="mermaid">
+  <pre>
+    pie title Pets adopted by volunteers
+      "Dogs" : 386
+      "Cats" : 85
+      "Rats" : 15
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    pie title Pets adopted by volunteers
+      "Dogs" : 386
+      "Cats" : 85
+      "Rats" : 15
+  </pre>
+</div>
+```
+
+---v
+
+### Git Graph
+
+<div class="mermaid">
+  <pre>
+    gitGraph
+      commit
+      commit
+      branch develop
+      checkout develop
+      commit
+      commit
+      checkout main
+      merge develop
+      commit
+      commit
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    gitGraph
+      commit
+      commit
+      branch develop
+      checkout develop
+      commit
+      commit
+      checkout main
+      merge develop
+      commit
+      commit
   </pre>
 </div>
 ```
