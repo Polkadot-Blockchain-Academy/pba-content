@@ -499,7 +499,6 @@ graph TD
     AssetsPallet-->Asset(USDT)
     Kusama-->KusamA("Asset Hub (1000)")
     Kusama-->KusamB(Bridge Hub)
-    style PolkaA stroke:red
 ```
 
 Notes:
@@ -718,8 +717,6 @@ graph TD
     linkStyle 0 opacity:0.3
     linkStyle 1 opacity:0.3
     linkStyle 2 opacity:0.3
-    linkStyle 3 stroke:red
-    linkStyle 4 stroke:red
     classDef disabled opacity:0.3
 ```
 
