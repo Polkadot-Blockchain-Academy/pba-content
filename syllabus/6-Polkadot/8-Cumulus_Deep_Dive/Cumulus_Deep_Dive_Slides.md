@@ -148,7 +148,7 @@ The code is hashed and saved in the storage of the relay chain. There is another
 
 #### Proof Of Validity - POV
 
-- Polkadot requires that a Parachain block is transmitted to the relay chain in a fixed format: **PoVBlock**
+- Polkadot requires that a Parachain block is transmitted to the relay chain in a fixed format: **Collation**
 
 <img src="../assets/pov_block.svg" width="40%"/>
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -344,7 +344,7 @@ Cumulus changes the compilation behavior to produce beside the normal state tran
 
 #### Generate collations
 
-- The block production phase is modified to create the PoVBlock, the main changes to substrate are: 
+- The block production phase is modified to create the Collation, the main changes to substrate are: 
   - access to the storage are used to create the witness data
   - outgoing messages are stored in the PoV to let be processed by the relay chain
 
