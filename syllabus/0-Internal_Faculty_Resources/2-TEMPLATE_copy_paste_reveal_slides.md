@@ -624,6 +624,76 @@ More info: https://revealjs.com/math/
 
 ---
 
+# How to use Mermaid Diagrams
+
+[Mermaid](https://mermaid.js.org) lets you create diagrams and visualizations using text and code.
+
+It is a JavaScript based diagramming and charting tool that renders Markdown-inspired text definitions to create and modify diagrams dynamically.
+
+First of all lets see some examples of diagrams that Mermaid can show with its integration with revealJS;
+
+---v
+
+### [A Flowchart](https://mermaid.js.org/syntax/flowchart.html)
+
+  <div class="mermaid">
+      %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+      flowchart TD
+        A[Start] --> B{Is it?};
+        B -- Yes --> C[OK];
+        C --> D[Rethink];
+        D --> B;
+        B -- No ----> E[End];
+  </div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%% flowchart TD A[Start] --> B{Is it?}; B -- Yes
+  --> C[OK]; C --> D[Rethink]; D --> B; B -- No ----> E[End];
+</div>
+```
+
+---v
+
+### Entity relationship diagram
+
+<div class="mermaid">
+  <pre>
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+  </pre>
+</div>
+
+---v
+
+### And its code
+
+```html
+<div class="mermaid">
+  <pre>
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+  </pre>
+</div>
+```
+
+---v
+
+### Useful links
+
+- [Mermaid Syntax](https://mermaid.js.org/syntax/flowchart.html)
+- [Mermaid Live Editor with examples](https://mermaid.live/)
+
+---
+
 # More help needed?
 
 _Please reach out to the academy content & docs team on element for support!_
