@@ -265,7 +265,7 @@ The above instruction is the one used for offering some requested information th
 TODO: Less implementation details. Describe the scenario and why it's important.
 Why are these traits implemented here? Because they need storage, FRAME gives us that.
 
-### Asset Trap/Claims with PalletXcm
+## Asset Trap/Claims with `pallet-xcm`
 
 What happens when there are still funds in the holding register after the execution of every instruction is done?
 
@@ -279,7 +279,7 @@ Notes:
 
 ---v
 
-### Asset Trap/Claims with `pallet-xcm`
+## Asset Trap/Claims with `pallet-xcm`
 
 - **`pallet-xcm` asset trapper**: Trapped assets are stored in the `AssetTraps` storage item and indexed by `BlakeTwo256((origin, assets))`
 
