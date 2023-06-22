@@ -64,14 +64,12 @@ Notes:
 
 ---v
 <div class="r-stack">
+<!-- TEMPORARY - TODO: animations
 <img src="../assets/cumulus_sketch_1.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="0" -->
 <img src="../assets/cumulus_sketch_2.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
 <img src="../assets/cumulus_sketch_3.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<img src="../assets/cumulus_sketch_4.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="3" -->
+-->
+<img src="../assets/cumulus_sketch.svg" style="width: 70%" />
 </div>
 
 </br>
@@ -150,7 +148,7 @@ The code is hashed and saved in the storage of the relay chain. There is another
 
 - Polkadot requires that a Parachain block is transmitted to the relay chain in a fixed format: **Collation**
 
-<img src="../assets/pov_block.svg" width="40%"/>
+<img src="../assets/collation_structure.svg" width="40%"/>
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -226,8 +224,8 @@ In the first image the PVF was not only composed by the Runtime but also by func
 #### Let's Take a Step Back
 
 <div class="r-stack">
-<img src="../assets/pov_path_1.svg" style="width: 70%" />
-<img src="../assets/pov_path_2.svg" style="width: 70%" />
+<img src="../assets/collation_path_1.svg" style="width: 70%" />
+<img src="../assets/collation_path_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
@@ -266,7 +264,12 @@ then ensure that the storage root matches the storage root in the `parent_head`.
 
 ##### Why Replace Host Functions?
 
-<img src="../assets/validate_block.svg" style="width: 1500px" />
+<div class="r-stack">
+<img src="../assets/replace_host_function_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/replace_host_function_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
 
 Notes: 
 
