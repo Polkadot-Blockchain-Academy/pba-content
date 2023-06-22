@@ -50,14 +50,30 @@ fn hash(s: &[u8]) -> [u8; 32];
 
 ```text
 hash('hello') =
- 0x324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf
+ 0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8
 ```
 
 **Large input (1.2 MB):**
 
 ```text
-hash(polkadot_runtime-v9190.compact.compressed.wasm) =
+hash(Harry_Potter_series_as_string) =
  0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
+```
+
+---
+
+## Input Sensitivity
+
+Changing even 1 bit of a hash function _completely_ scrambles the output.
+
+```text
+hash('hello') =
+ 0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8
+```
+
+```text
+hash('hellp') =
+ 0x7bc9c272894216442e0ad9df694c50b6a0e12f6f4b3d9267904239c63a7a0807
 ```
 
 ---
@@ -205,7 +221,8 @@ They may attempt to trick someone into signing one message.
 
 Notes:
 
-Attacker has intention to impersonate the signer with the other.
+Attacker has intention to impersonate the signer with the other. Generally speaking, even finding a
+single hash collision often results in the hash function being considered unsafe.
 
 ---
 
@@ -287,12 +304,26 @@ Let's see which cryptographic properties apply to hashes.
 
 Sending or publically posting a hash of some data $D$ keeps $D$ confidential, as only those who already knew $D$ recognize $H(D)$ as representing $D$.
 
-Both cryptographic and non-cryptographic hashes work for this.
+Both cryptographic and non-cryptographic hashes work for this. _only if the input space is large enough_.
+
+---v
+
+## Confidentiality Bad Example
+
+Imagine playing rock, paper, scissors by posting hashes and then revealing. However, if the message is either "rock", "paper", or "scissors", the output will always be either:
+
+```text
+hash('rock') = 0x10977e4d68108d418408bc9310b60fc6d0a750c63ccef42cfb0ead23ab73d102
+hash('paper') = 0xea923ca2cdda6b54f4fb2bf6a063e5a59a6369ca4c4ae2c4ce02a147b3036a21
+hash('scissors') = 0x389a2d4e358d901bfdf22245f32b4b0a401cc16a4b92155a2ee5da98273dad9a
+```
+
+The other player doesn't need to undo the hash function to know what you played!
 
 Notes:
 
-An important caveat here is that the data space has to be _sufficiently large_.
-If you tried to implement voting by sending a hash of your vote, and your vote was either "yes" or "no", it is simple to brute-force check which it was. Adding some randomness to the hash fixes this.
+The data space has to be _sufficiently large_.
+Adding some randomness to input of the hash fixes this. Add x bits of randomness to make it x bits of security on that hash.
 
 ---v
 
@@ -317,12 +348,6 @@ However, if used in another cryptographic primitive that _does_ provide non-repu
 Notes:
 
 This is key in digital signatures. However, it's important to realize that if $D$ is kept secret, $H(D)$ is basically meaningless.
-
----v
-
-## Availability
-
-A hash does not provide any data availability. Nobody is able to learn $D$ after receiving $H(D)$.
 
 ---
 

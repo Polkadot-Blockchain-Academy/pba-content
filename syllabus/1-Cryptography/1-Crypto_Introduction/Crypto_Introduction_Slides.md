@@ -128,7 +128,7 @@ Cryptography alone cannot make strong guarantees that data is available to peopl
 Notes:
 
 There are many schemes to get around this, and this topic will come up later in the course.
-We will touch on erasure coding, which covers this a bit
+We will touch on erasure coding, which makes data availability more efficient.
 
 ---
 
@@ -192,7 +192,7 @@ Physical signatures provide weak authenticity guarantees<br/>(i.e. they are quit
 
 ---v
 
-## Physical Signatures
+## An Ideal Signature
 
 <img style="width: 900px;" src="../../../assets/img/1-Cryptography/Data-Integrity.png" />
 
@@ -215,11 +215,10 @@ Non-repudiation ensures if Bob sends me some data, I can prove to a third party 
 
 ## One-Way Functions
 
-One-way functions form the basis of both<br/>**(cryptographic) hashing** and **asymmetric cryptography**.
+One-way functions form the basis of both<br/>**(cryptographic) hashing** and **asymmetric cryptography**. A function $f$ is one way if:
 
-- Functions for which we know fast algorithms to compute
-- But for which we believe to be hard to invert
-- And for which there may be some secret which makes it easy
+- it is reasonably fast to compute
+- it is very, very slow to undo
 
 Notes:
 
@@ -312,7 +311,7 @@ _Using only the public key_, information can be transformed ("encrypted") such t
 
 ## Digital Signatures
 
-**Signing function**: a pure function which operates on some<br/>_message data_ and some _secret_ to yield a _signature_.
+**Signing function**: a function which operates on some<br/>_message data_ and some _secret_ to yield a _signature_.
 
 A **signature** _proves_ that the signer had knowledge of the secret,<br/>without revealing the secret itself.
 
@@ -322,6 +321,8 @@ Notes:
 
 A **signing function** is a pure function which operates on some _message data_ (which may or may not be small, depending on the function) and some _secret_ (a small piece of information known only to the operator).
 The result of this function is a small piece of data called a _signature_.
+
+Pure means that it has no side effects.
 
 It has a special property: it proves (beyond reasonable doubt) that the signer (i.e. operator of the signing function) had knowledge of the secret and utilized this knowledge with the specific _message_ data, yet it does not reveal the secret itself, nor can knowledge of the signature be used to create other signatures (e.g. for alternative message data).
 
