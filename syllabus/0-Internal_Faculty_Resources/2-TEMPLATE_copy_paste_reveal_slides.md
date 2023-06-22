@@ -636,98 +636,85 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### [A Flowchart](https://mermaid.js.org/syntax/flowchart.html)
 
-  <div class="mermaid">
-    <pre>
-      %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
-      flowchart TD
-        A(Start) --> B{Is it?};
-        B -- Yes --> C(OK);
-        C --> D(Rethink);
-        D --> B;
-        B -- No ----> E(End);
-      </pre>
-  </div>
+  <diagram class="mermaid">
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+    flowchart TD
+      A(Start) --> B{Is it?};
+      B -- Yes --> C(OK);
+      C --> D(Rethink);
+      D --> B;
+      B -- No ----> E(End);
+  </diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
-      %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
-      flowchart TD
-        A(Start) --> B{Is it?};
-        B -- Yes --> C(OK);
-        C --> D(Rethink);
-        D --> B;
-        B -- No ----> E(End);
-  </pre>
-</div>
+  <diagram class="mermaid">
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+    flowchart TD
+      A(Start) --> B{Is it?};
+      B -- Yes --> C(OK);
+      C --> D(Rethink);
+      D --> B;
+      B -- No ----> E(End);
+  </diagram>
 ```
 
 ---v
 
 ### Entity relationship diagram
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     erDiagram
     Node ||--o{ Wallet : places_order
     Wallet ||--|{ Account : owner
     Node }|..|{ Some-IP : uses
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     erDiagram
     Node ||--o{ Wallet : places_order
     Wallet ||--|{ Account : owner
     Node }|..|{ Some-IP : uses
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
 
 ### Sequence diagram
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
   sequenceDiagram
       Alice->>John: Hello John, how are you?
       John-->>Alice: Great!
       Alice-)John: See you later!
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
   sequenceDiagram
       Alice->>John: Hello John, how are you?
       John-->>Alice: Great!
       Alice-)John: See you later!
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
 
 ### Class Diagram
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     classDiagram
       note "From Duck till Zebra"
       Animal <|-- Duck
@@ -751,16 +738,14 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
           +bool is_wild
           +run()
       }
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     classDiagram
       note "From Duck till Zebra"
       Animal <|-- Duck
@@ -784,16 +769,14 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
           +bool is_wild
           +run()
       }
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
 
 ### State diagram (v2)
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
   stateDiagram-v2
     [*] --> Still
     Still --> [*]
@@ -803,16 +786,14 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
     Moving --> Crash
     Crash --> [*]
 
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
   stateDiagram-v2
     [*] --> Still
     Still --> [*]
@@ -821,16 +802,14 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
     Moving --> Still
     Moving --> Crash
     Crash --> [*]
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
 
 ### User Journey
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
   journey
     title My working day
     section Go to work
@@ -840,16 +819,14 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
     section Go home
       Go downstairs: 5: Me
       Sit down: 5: Me
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     journey
     title My working day
     section Go to work
@@ -859,72 +836,62 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
     section Go home
       Go downstairs: 5: Me
       Sit down: 5: Me
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
 
 ### Gantt
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     gantt
       apple :a, 2017-07-20, 1w
       banana :crit, b, 2017-07-23, 1d
       cherry :active, c, after b a, 1d
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     gantt
       apple :a, 2017-07-20, 1w
       banana :crit, b, 2017-07-23, 1d
       cherry :active, c, after b a, 1d
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
 
 ### Pie Chart
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     pie title Pets adopted by volunteers
       "Dogs" : 386
       "Cats" : 85
       "Rats" : 15
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     pie title Pets adopted by volunteers
       "Dogs" : 386
       "Cats" : 85
       "Rats" : 15
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
 
 ### Git Graph
 
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     gitGraph
       commit
       commit
@@ -936,16 +903,14 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
       merge develop
       commit
       commit
-  </pre>
-</div>
+</diagram>
 
 ---v
 
 ### And its code
 
 ```html
-<div class="mermaid">
-  <pre>
+<diagram class="mermaid">
     gitGraph
       commit
       commit
@@ -957,8 +922,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
       merge develop
       commit
       commit
-  </pre>
-</div>
+</diagram>
 ```
 
 ---v
