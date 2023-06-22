@@ -624,7 +624,7 @@ More info: https://revealjs.com/math/
 
 ---
 
-# How to use Mermaid Diagrams
+# Mermaid Diagrams
 
 [Mermaid](https://mermaid.js.org) lets you create diagrams and visualizations using text and code.
 
@@ -650,6 +650,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
   <diagram class="mermaid">
     %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
@@ -677,6 +678,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
     erDiagram
@@ -701,6 +703,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
   sequenceDiagram
@@ -744,6 +747,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
     classDiagram
@@ -792,6 +796,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
   stateDiagram-v2
@@ -825,6 +830,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
     journey
@@ -854,6 +860,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
     gantt
@@ -878,6 +885,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
     pie title Pets adopted by volunteers
@@ -909,6 +917,7 @@ First of all lets see some examples of diagrams that Mermaid can show with its i
 
 ### And its code
 
+<!-- prettier-ignore -->
 ```html
 <diagram class="mermaid">
     gitGraph

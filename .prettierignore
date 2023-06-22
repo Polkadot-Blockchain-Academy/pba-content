@@ -11,4 +11,3 @@ yarn.lock
 # Ignore files that don't need *text* formatting
 assets
 plugin
-**/*.md
