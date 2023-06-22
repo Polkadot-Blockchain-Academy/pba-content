@@ -209,7 +209,7 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introd
 
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
 - Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
-- Anonymous blockchain transactions typically employ ring signatures.
+- Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
 
 Notes:
 

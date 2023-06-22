@@ -72,7 +72,7 @@ This means the verifier will need to run the correct hash function on the messag
 
 Signatures provide many useful properties:
 
-- Confidentiality: Same as a hash
+- Confidentiality: Weak, the same as a hash
 - Authenticity: Yes
 - Integrity: Yes
 - Non-repudiation: Yes
@@ -154,6 +154,12 @@ Hierarchical Deterministic Key Derivation
 Key derivation allows one to derive (virtually limitless)<br/>child keys from one "parent".
 
 Derivations can either be "hard" or "soft".
+
+---
+
+## Hard vs. Soft
+
+<img style="width: 1200px;" src="../../../assets/img/1-Cryptography/soft-vs-hard-derivation.png">
 
 ---
 
@@ -244,6 +250,10 @@ Mention that these derivations create entirely new secret seeds.
 ---
 
 # Mnemonics and Seed Creation
+
+Notes:
+
+These are all different _representation_ of a secret. Fundamentally doesn't really change anything.
 
 ---
 

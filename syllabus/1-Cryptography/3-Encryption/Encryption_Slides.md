@@ -42,6 +42,8 @@ Symmetric encryption libraries should generally all expose some basic functions:
 - `fn encrypt(k, msg) -> ciphertext;` <br/> Takes `k` and a message; returns the ciphertext.
 - `fn decrypt(k, ciphertext) -> msg;` <br/> Takes `k` and a ciphertext; returns the original message.
 
+It always holds that `decrypt(k, encrypt(k, msg)) == msg`.
+
 Notes:
 
 The input `r` is typically a source of randomness, for example the movement pattern of a mouse.
@@ -188,6 +190,8 @@ Asymmetric encryption libraries should generally all expose some basic functions
 - `fn public_key(sk) -> pk;` <br/> Generate a `pk` (public key) from the private key `sk`.
 - `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes the public key and a message; returns the ciphertext.
 - `fn decrypt(sk, ciphertext) -> msg;` <br/> For the inputs `sk` and a ciphertext; returns the original message.
+
+It always holds that `decrypt(sk, encrypt(public_key(sk), msg)) == msg`.
 
 Notes:
 

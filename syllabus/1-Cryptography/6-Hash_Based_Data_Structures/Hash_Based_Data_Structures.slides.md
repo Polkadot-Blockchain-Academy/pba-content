@@ -22,6 +22,10 @@ duration: 1 hour
 
 A hash chain is a linked list using hashes to connect nodes.
 
+Notes:
+
+Each block has the hash of the previous one.
+
 ---
 
 ## Merkle Trees
