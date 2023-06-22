@@ -45,7 +45,7 @@ We will see an example of this in the XCM pallet, with the teleport_assets and r
 
 1. Allows to interact with the `xcm-executor` by executing xcm messages.
    These can be filtered through the `XcmExecuteFilter`.
-1. Provides an easier interface to do `reserveTransferAssets` and `TeleportAssets`.
+1. Provides an easier interface to do reserve based transfers and teleports.
    The origins capable of doing these actions can be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`.
 1. Handles XCM version negotiation duties.
 1. Handles asset-trap/claim duties.
@@ -285,12 +285,12 @@ Notes:
 
 - **`pallet-xcm` asset claimer**: `pallet-xcm` also allows for claiming trapped assets, providing that:
   - the origin claiming the assets is identical to the one that trapped them.
-  - the `multiAsset` being claimed is identical to the one that was trapped
+  - the `Asset` being claimed is identical to the one that was trapped
 
 Notes:
 
-- Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `multiAsset`.
-- Every time such `multiAsset` gets reclaimed, the counter decrements by one.
+- Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `Asset`.
+- Every time such `Asset` gets reclaimed, the counter decrements by one.
 
 ---
 
