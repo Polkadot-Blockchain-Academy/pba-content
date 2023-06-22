@@ -4,6 +4,77 @@ description: How and why the PBA creates and grades assessments
 duration: 30 minuets
 ---
 
+<!-- .slide: data-background-color="#F35289" -->
+
+<h1 style="color:#FFFF;"> ⏰ TODOs before Berkeley ⏰ </h1>
+
+---v
+
+## 🗣️ Dry Runs (Lectures)
+
+- New faculty (required!)
+- New and Major refactored content (required!)
+
+Notes:
+
+Anyone still need this? We have VERY little time!
+
+---v
+
+## 💻 Beta Testing (Hands-on/Code)
+
+- New Material
+- Assignments
+
+Notes:
+
+Anyone still need this? We have VERY little time!
+
+---v
+
+## 📆 Founders Track Lessons required
+
+- Flag what is applicable for Founders track in module README
+
+Notes:
+
+- founders track pilot program (30% of class, branching off 1/3 of day starting in the smart contracts module)
+  - working with daily play-by-play on core content, but need to identify what founders will get most value from: the non-hands-on stuff and concepts most of all past the SC mod
+  - internal calendar of events getting close to final draft, will go student and faculty facing ASAP
+
+---v
+
+## 🤙 1on1 checking pre-UCB
+
+- Modules to meet with Nuke to cover their [key milestones](https://hackmd.io/aE6i_ZQpSwaOSfHVpApOcg?both)
+
+---v
+
+## 🙌 Assignment Grading Plan
+
+- Rubrics and solutions (required!)
+- Who owns grading?
+  - VERY tight turnaround (Start Sunday, ideally done Monday)
+
+---v
+
+## ✅ Create Learning Outcomes
+
+1. Update your module `lesson-plan.md` with LOs
+1. Map overall LOs to define assignment specific LOs in README
+1. Map assignment LOs to Competency Checklist
+1. _Granular list of tests per checklist item that (a fraction of) must pass_
+
+- Scope mapping LOs->tests for now in an issue, impl autograding where possible soon
+
+Notes:
+
+Tests are not mission-critical, but the checklists are to generate a score.
+Defining the tests lays the foundation for autograding.
+WIP [assignment template](https://github.com/Polkadot-Blockchain-Academy/pba-autograded-assigment-template) we can work together to put in place for each assignment when it's ready
+
+---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Graded Assignments Scheme
