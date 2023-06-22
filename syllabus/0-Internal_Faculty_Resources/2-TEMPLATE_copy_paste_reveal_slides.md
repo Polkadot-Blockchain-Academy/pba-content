@@ -624,6 +624,325 @@ More info: https://revealjs.com/math/
 
 ---
 
+# Mermaid Diagrams
+
+[Mermaid](https://mermaid.js.org) lets you create diagrams and visualizations using text and code.
+
+It is a JavaScript based diagramming and charting tool that renders Markdown-inspired text definitions to create and modify diagrams dynamically.
+
+First of all lets see some examples of diagrams that Mermaid can show with its integration with revealJS;
+
+---v
+
+### [A Flowchart](https://mermaid.js.org/syntax/flowchart.html)
+
+  <diagram class="mermaid">
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+    flowchart TD
+      A(Start) --> B{Is it?};
+      B -- Yes --> C(OK);
+      C --> D(Rethink);
+      D --> B;
+      B -- No ----> E(End);
+  </diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+  <diagram class="mermaid">
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+    flowchart TD
+      A(Start) --> B{Is it?};
+      B -- Yes --> C(OK);
+      C --> D(Rethink);
+      D --> B;
+      B -- No ----> E(End);
+  </diagram>
+```
+
+---v
+
+### Entity relationship diagram
+
+<diagram class="mermaid">
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+</diagram>
+```
+
+---v
+
+### Sequence diagram
+
+<diagram class="mermaid">
+  sequenceDiagram
+      Alice->>John: Hello John, how are you?
+      John-->>Alice: Great!
+      Alice-)John: See you later!
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+  sequenceDiagram
+      Alice->>John: Hello John, how are you?
+      John-->>Alice: Great!
+      Alice-)John: See you later!
+</diagram>
+```
+
+---v
+
+### Class Diagram
+
+<diagram class="mermaid">
+    classDiagram
+      note "From Duck till Zebra"
+      Animal <|-- Duck
+      note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
+      Animal <|-- Fish
+      Animal <|-- Zebra
+      Animal : +int age
+      Animal : +String gender
+      Animal: +isMammal()
+      Animal: +mate()
+      class Duck{
+          +String beakColor
+          +swim()
+          +quack()
+      }
+      class Fish{
+          -int sizeInFeet
+          -canEat()
+      }
+      class Zebra{
+          +bool is_wild
+          +run()
+      }
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    classDiagram
+      note "From Duck till Zebra"
+      Animal <|-- Duck
+      note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
+      Animal <|-- Fish
+      Animal <|-- Zebra
+      Animal : +int age
+      Animal : +String gender
+      Animal: +isMammal()
+      Animal: +mate()
+      class Duck{
+          +String beakColor
+          +swim()
+          +quack()
+      }
+      class Fish{
+          -int sizeInFeet
+          -canEat()
+      }
+      class Zebra{
+          +bool is_wild
+          +run()
+      }
+</diagram>
+```
+
+---v
+
+### State diagram (v2)
+
+<diagram class="mermaid">
+  stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+  stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+</diagram>
+```
+
+---v
+
+### User Journey
+
+<diagram class="mermaid">
+  journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+</diagram>
+```
+
+---v
+
+### Gantt
+
+<diagram class="mermaid">
+    gantt
+      apple :a, 2017-07-20, 1w
+      banana :crit, b, 2017-07-23, 1d
+      cherry :active, c, after b a, 1d
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    gantt
+      apple :a, 2017-07-20, 1w
+      banana :crit, b, 2017-07-23, 1d
+      cherry :active, c, after b a, 1d
+</diagram>
+```
+
+---v
+
+### Pie Chart
+
+<diagram class="mermaid">
+    pie title Pets adopted by volunteers
+      "Dogs" : 386
+      "Cats" : 85
+      "Rats" : 15
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    pie title Pets adopted by volunteers
+      "Dogs" : 386
+      "Cats" : 85
+      "Rats" : 15
+</diagram>
+```
+
+---v
+
+### Git Graph
+
+<diagram class="mermaid">
+    gitGraph
+      commit
+      commit
+      branch develop
+      checkout develop
+      commit
+      commit
+      checkout main
+      merge develop
+      commit
+      commit
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    gitGraph
+      commit
+      commit
+      branch develop
+      checkout develop
+      commit
+      commit
+      checkout main
+      merge develop
+      commit
+      commit
+</diagram>
+```
+
+---v
+
+### Useful links
+
+- [Mermaid Syntax](https://mermaid.js.org/syntax/flowchart.html)
+- [Mermaid Live Editor with examples](https://mermaid.live/)
+
+---
+
 # More help needed?
 
 _Please reach out to the academy content & docs team on element for support!_

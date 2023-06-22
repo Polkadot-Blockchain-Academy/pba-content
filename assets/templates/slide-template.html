@@ -59,6 +59,9 @@
   <script src="{{{base}}}/plugin/zoom/zoom.js"></script>
   <script src="{{{base}}}/plugin/notes/notes.js"></script>
   <script src="{{{base}}}/plugin/math/math.js"></script>
+  <script src="{{base}}/assets/plugin/mermaid.js"></script>
+  <script src="{{base}}/assets/plugin/mermaid-theme.js"></script>
+
   <script>
     function extend() {
       var target = {};
@@ -81,12 +84,26 @@
       center: true,
       transition: 'default', // none/fade/slide/convex/concave/zoom
       slideNumber: true,
+      mermaid: {
+          startOnLoad: false,
+          logLevel: 3,
+          theme: 'base',
+          themeVariables: {
+              primaryColor: purple,
+              primaryTextColor: white,
+              primaryBorderColor: pink,
+              lineColor: pink,
+              secondaryColor: lightPurple,
+              tertiaryColor: lightPurple,
+          },
+      },
       plugins: [
         RevealMarkdown,
         RevealHighlight,
         RevealZoom,
         RevealNotes,
-        RevealMath
+        RevealMath,
+        RevealMermaid
       ]
     };
 
