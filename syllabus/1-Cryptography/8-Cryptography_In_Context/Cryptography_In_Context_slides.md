@@ -278,11 +278,94 @@ Reputableness of a library is some combination of:
 
 If you get low-level enough in cryptography libraries to see these terms referenced in more than just a description, you're probably too low level.
 
-<!-- Maybe add something about this as an example:
-https://github.com/MystenLabs/ed25519-unsafe-libs. To put it in few words, the interface for signing
-data on some ed25519 libs was secret.sign(message, my_pubkey) instead of just secret.sign(message),
-and because of that if you let an attacker control the my_pubkey input, you could result in unsafe
-cryptography. -->
+---
+
+# Horror Stories
+
+Notes:
+
+Only go through a few of these based on interest and remaining time.
+
+---v
+
+## PS3 Secret Key Leak
+
+**Problem**: Bad randomness
+
+**Description**: The ps3 developers didn't use randomness when signing with an algorithm that required randomness.
+
+**Consequence**: Every PS3 was hardcoded to trust that key. When hackers got the key, they were then able to pretend to be Sony and write any software that ran on the PS3. In practice, it made running pirated games trivial.
+
+Notes:
+
+[source](https://www.engadget.com/2010-12-29-hackers-obtain-ps3-private-cryptography-key-due-to-epic-programm.html)
+
+---v
+
+## IOTA's Novel Hash Function
+
+**Problem**: Rolling your own crypto
+
+**Description**: IOTA was a cryptocurrency with a value of 1.9B at the time. They wrote their own hash function, and researchers found severe vulnerabilities.
+
+**Consequence**: Kind security researchers reported the flaw directly to devs. They had to pause the blockchain for 3 days, generate new address for _all_ accounts, and swap to KECCAK.
+
+Notes:
+
+IOTA originally rolled their own hash function in an effort to be quantum-proof.
+
+Some hash function weaknesses are weak. This was not. The proof of concept exploit literally found two hashes that correspond to a message for the blockchain sending a small amount of currency, and another that corresponded to a message sending a huge amount of money.
+
+[exploit POC](https://github.com/mit-dci/tangled-curl/blob/master/vuln-iota.md)
+[shutdown source](https://www.bitfinex.com/posts/215)
+
+---v
+
+## How the NSA wiretapped all cellphone calls for years
+
+**Problem**: Small key space / secret technique
+
+**Description**: The standard for cellphone calls up until the mid-late 2000s (GSM A5/1) used 54-bit keys, and the method was meant to be secret. It did not stay secret, and became extremely easily crackable.
+
+**Consequence**: Intelligence agencies could and did easily wiretap calls. There were many brute-force attacks against the key space.
+
+Notes:
+
+When the standardization process started, professors proposed 128-bit keys. Western european (british especially) intelligence agencies wanted weaker security. Snowden eventually came out and said the NSA could easily read A5/1 calls.
+
+[article source](http://goodenoughsecurity.blogspot.com/2011/10/gsm-a51-substandard-security-pt2.html)
+[source on weakening](https://www.aftenposten.no/verden/i/Olkl/sources-we-were-pressured-to-weaken-the-mobile-security-in-the-80s)
+
+---v
+
+## Why HTTPS isn't as secure as you'd hope
+
+**Problem**: Cryptographic primitive assumptions not upheld
+
+**Description**: Encryption _does not_ generally hide the length of the underlying message. HTTPS often uses compression before encryption. The compression makes duplicated strings smaller.
+
+**Consequence**: An exploit called BREACH can reveal a secret from an HTTPS-protected website in under 30 seconds. All websites have had to add mitigation to offset this attack.
+
+Notes:
+
+Mitigation looks like:
+
+- randomizing size of response content after compression
+- separating secrest from user input
+- disabling HTTP compression (this is expensive though)
+- randomizing secrets per request
+
+[source](https://arstechnica.com/information-technology/2013/08/gone-in-30-seconds-new-attack-plucks-secrets-from-https-protected-pages/)
+
+---
+
+## Physical Security
+
+<img style="width: 900px;" src="../../../assets/img/1-Cryptography/xkcd-physical-security.png" />
+
+Notes:
+
+Source is a classic XKCD comic.
 
 ---
 
