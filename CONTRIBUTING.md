@@ -217,6 +217,41 @@ Once you've followed the set-up instructions and have the repository running loc
 
 </details>
 
+### Formatting Markdown, TOML, JSON
+
+We enforce the use of a few formatters, the primary one being [Prettier](https://prettier.io/) that is included in the dev-dependencies for this repository.
+The [.vscode/settings.json](.vscode/settings.json) config file details these including extensions to use that are compatible with the CI that checks compliance.
+In [package.json](./package.json) we include a handy tool to format all markdown docs easily:
+
+```sh
+# This will format all `syllabus/*.md` files
+yarn fmt
+```
+
+If (and only if) formatting _breaks_ markdown from rendering correctly, you may use `<!-- prettier-ignore -->` preceding a block in markdown to skip formatting like this:
+
+````markdown
+<!-- prettier-ignore -->
+```html
+<pba-cols>
+<pba-col>
+
+### What's up, yo?
+
+</pba-col>
+<pba-col>
+
+- Yo
+- Yo
+- Yo
+
+</pba-col>
+</pba-cols>
+```
+````
+
+The above ` ```html ` block will not be formatted.
+
 ### Check embedded links
 
 To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:
