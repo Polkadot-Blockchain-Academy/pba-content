@@ -624,6 +624,138 @@ More info: https://revealjs.com/math/
 
 ---
 
+## Charts
+
+<p>
+A plugin for Reveal.js allowing to easily add charts using Chart.js.
+</p>
+
+<p style="font-size: 1.2rem; margin-top: 1.2rem; color: #999;">There is a known bug:<br /> Chart (meaning the < canvas > tag) needs to be in a full HTML slide (no md allowed); this means that the whole slide that contains a chart MUST be written in plain HTML.
+
+---v
+<canvas data-chart="line" style="height: 300px">
+
+<!--
+{
+ "data": {
+  "labels": ["January"," February"," March"," April"," May"," June"," July"],
+  "datasets":[
+   {
+    "data":[4,7,10,25,56,78,140],
+    "label":"Polkadot","backgroundColor":"#E6007A"
+   },
+   {
+    "data":[10,27,40,75,80,155,340],
+    "label":"Kusama","backgroundColor":"#000"
+   }
+  ]
+ }
+}
+-->
+</canvas>
+
+---v
+
+### The code
+
+```html
+<canvas data-chart="line" style="height: 300px">
+  <!--
+{
+ "data": {
+  "labels": ["January"," February"," March"," April"," May"," June"," July"],
+  "datasets":[
+   {
+    "data":[4,7,10,25,56,78,140],
+    "label":"Polkadot","backgroundColor":"#E6007A"
+   },
+   {
+    "data":[10,27,40,75,80,155,340],
+    "label":"Kusama","backgroundColor":"#000"
+   }
+  ]
+ }
+}
+-->
+</canvas>
+```
+
+<pba-flex left>
+  Note : < !-- and --> are intentional
+</pba-flex>
+
+---v
+
+<section style="margin-top: 100px">
+  <h5>Bar chart with CSV data</h5>
+  <div style="height:480px">
+  <canvas data-chart="bar" >
+    January, February, March, April, May, June, July
+    My first dataset, 65, 59, 80, 81, 56, 55, 40
+    My second dataset, 28, 48, 40, 19, 86, 27, 90
+  </canvas>
+  </div>
+</section>
+
+---v
+
+### Previous slides' code:
+
+```html
+<section style="margin-top: 100px">
+  <h5>Bar chart with CSV data</h5>
+  <div style="height:480px">
+    <canvas data-chart="bar">
+      January, February, March, April, May, June, July My first dataset, 65, 59, 80, 81, 56, 55, 40 My second dataset,
+      28, 48, 40, 19, 86, 27, 90
+    </canvas>
+  </div>
+</section>
+```
+
+---v
+
+<section style="margin-top: 100px">
+  <h5>Stacked bar chart from CSV file with JSON configuration</h5>
+  <div style="height:480px">
+  <canvas data-chart="bar" data-chart-src="./data.csv">
+    <!--
+    {
+    "data" : {
+    "datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+    },
+    "options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
+    }
+    -->
+  </canvas>
+  </div>
+  <div style="font-size:1.2rem">(There is a data.csv file located under same dir in order for this slide to work</div>
+</section>
+
+---v
+
+### Previous slide's code:
+
+```html
+<section style="margin-top: 100px">
+  <h5>Stacked bar chart from CSV file with JSON configuration</h5>
+  <div style="height:480px">
+    <canvas data-chart="bar" data-chart-src="./data.csv">
+      <!--
+    {
+    "data" : {
+    "datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+    },
+    "options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
+    }
+    -->
+    </canvas>
+  </div>
+</section>
+```
+
+---
+
 # Mermaid Diagrams
 
 [Mermaid](https://mermaid.js.org) lets you create diagrams and visualizations using text and code.
