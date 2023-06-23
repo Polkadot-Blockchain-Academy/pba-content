@@ -99,7 +99,7 @@ Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
 
 - ⌨️ Start a Blockchain Activity - Joshy  - Founders NOT Required
-- 🗣️ Unstoppable Applications Lecture - Nuke man Dan  - Founders NOT Required
+- 🗣️ Unstoppable Applications Lecture - Nuke - Founders NOT Required (HIGHLY suggested?)
 - ☕ Break
 - 🗣️ Types of Forks - Maciej - Founders NOT Required
 - ⌨️ Forking Exercises - Joshy - Founders NOT Required
