@@ -21,8 +21,8 @@ Students learn about expressing agreements as code and are left wondering where 
 - 🗣️ P2P Networking - Andrew - Founders NOT Required
 - ⌨️ More BFS.
 - ☕ Break
-- Platform Agnostic Bytecodes - Lauren  - Founders Required
-- ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron  - Founders Required
+- Platform Agnostic Bytecodes - Lauren - Founders Required
+- ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron - Founders Required
 - 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux. - Lauren - Founders Required
 
 ## Tuesday
@@ -32,8 +32,8 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ### Morning
 
-- 🗣️ Blockchain Structure - Joshy  - Founders Required
-- ⌨️ More BFS 
+- 🗣️ Blockchain Structure - Joshy - Founders Required
+- ⌨️ More BFS
 - ☕ Break
 - 🗣️ Consensus Part 1 - Authoring - Agreeing on Possibilities - Joshy - Founders Required
 - 🎲 Manual Consensus Activity (aka BitStory) - Founders Required
@@ -55,7 +55,7 @@ We also explore light clients and bridges, both of which benefit from determinis
 
 - 🗣️ Consensus Part 2 - Finality - Agreeing on Ordering - Joshy - Founders Required
 - ☕ Break
-- 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) - Joshy, Andrew, Lauren, Aaron  - Founders NOT Required<!-- markdown-link-check-disable-line -->
+- 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) - Joshy, Andrew, Lauren, Aaron - Founders NOT Required<!-- markdown-link-check-disable-line -->
   - _Note that this repo is private, intended to be shared with the student cohort's github team for read access._
     _This also allows for people to pull up on mobile if logged in to view easier_
 - ⌨🗣️ aBFT and Aleph 0 - Adam Gagol - Founders NOT Required
@@ -75,9 +75,9 @@ Students spend the day getting hands on experience writing smart contracts for P
 
 ### Morning
 
-- 🗣️ EVM Concepts - Stephen Shelton - Founders  Required
-- ⌨️ Solidity Code Along - Stephen Shelton - Founders  Required
-- ⌨️ Vyper Code Along - Stephen Shelton - Founders  Required
+- 🗣️ EVM Concepts - Stephen Shelton - Founders Required
+- ⌨️ Solidity Code Along - Stephen Shelton - Founders Required
+- ⌨️ Vyper Code Along - Stephen Shelton - Founders Required
 - ☕ Break
 - 🗣️ Wasm Concepts - Filip Bielejec - Founders Required
 - ⌨️ ink! Code Along - Filip Bielejec - Founders Required
@@ -86,7 +86,7 @@ Students spend the day getting hands on experience writing smart contracts for P
 
 ### Afternoon
 
-- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop) - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec  - Founders NOT Required
+- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop) - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec - Founders NOT Required
 
 ## Friday
 
@@ -98,7 +98,7 @@ Students will launch a blockchain a la the blockchain module.
 Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
 
-- ⌨️ Start a Blockchain Activity - Joshy  - Founders NOT Required
+- ⌨️ Start a Blockchain Activity - Joshy - Founders NOT Required
 - 🗣️ Unstoppable Applications Lecture - Nuke - Founders NOT Required (HIGHLY suggested?)
 - ☕ Break
 - 🗣️ Types of Forks - Maciej - Founders NOT Required
@@ -106,4 +106,4 @@ Then they will use that chain to launch their smart contracts a la the contracts
 
 ### Afternoon
 
-🎲⌨️☕ In the afternoon we will use the chain that we launched in the morning to execute the smart contracts competition. - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec  - Founders NOT Required
+🎲⌨️☕ In the afternoon we will use the chain that we launched in the morning to execute the smart contracts competition. - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec - Founders NOT Required
