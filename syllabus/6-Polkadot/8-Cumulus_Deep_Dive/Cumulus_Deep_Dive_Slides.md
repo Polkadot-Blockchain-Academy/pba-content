@@ -8,19 +8,20 @@ duration: 1 hours
 
 ---
 
-<!--
 ### Outline
 
 <pba-flex center>
 
 1. [What is Cumulus?](#what-is-cumulus)
-1. [Cumulus Runtime Validation](#cumulus-runtime-validation)
-1. [Cumulus on the Node Side](#cumulus-on-the-node-side)
-1. [Transform Solo to Parachain](#transform-solo-to-parachain)
-1. [References](#references)
+2. [Cumulus Runtime Validation](#how-cumulus-enables-runtime-validation)
+3. [Cumulus on the Node Side](#how-cumulus-enables-parachain-relay-chain-communication)
+4. [Runtime Upgrades](##runtime-upgrades)
+5. [Transform Solo to Parachain](#transform-solo-to-parachain)
+6. [References](#references)
 
 </pba-flex> 
--->
+
+---
 
 ## What is Cumulus?
 
@@ -32,10 +33,10 @@ SDK for building substrate/FRAME-based Parachains
 ---v
 
 <div class="r-stack">
-<img src="../assets/spc_1.svg" style="width: 1500px" />
-<img src="../assets/spc_2.svg" style="width: 1500px" />
+<img src="../assets/spc_1.svg" style="width: 70%" />
+<img src="../assets/spc_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="../assets/spc_3.svg" style="width: 1500px" />
+<img src="../assets/spc_3.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -63,21 +64,16 @@ Notes:
 ## What is the Role of Cumulus?
 
 ---v
+
 <div class="r-stack">
-<!-- TEMPORARY - TODO: animations
 <img src="../assets/cumulus_sketch_1.svg" style="width: 70%" />
 <img src="../assets/cumulus_sketch_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
 <img src="../assets/cumulus_sketch_3.svg" style="width: 70%" />
--->
-<img src="../assets/cumulus_sketch.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img src="../assets/cumulus_sketch_4.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="3" -->
 </div>
-
-</br>
-
-- Enables runtime validation by providing candidates to the parachains protocol
-<!-- .element: class="fragment" data-fragment-index="4" -->
-- Couples parachain finality to that of the relay chain
-<!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes: 
 - A substrate Based Chain is composed by:
@@ -86,6 +82,37 @@ Notes:
 
 - Cumulus act as a wrapper around a those two parts to make them adapt to the polkadot protocol.
 - It not only abstract the complexity around the creation of the PVF and the PoV but also continuously interact with the relay chain to continue producing block with the pooled security
+
+---v
+
+
+<pba-cols>
+<pba-col center>
+
+<img src="../assets/cumulus_sketch_5.svg" style="width: 100%" />
+
+</pba-col>
+<pba-col center>
+
+- Persisted validation data
+- Downward messages
+- Processed UMP messages and HRMP messages
+- Included para head and headers for any other included parablocks (full data can be requested from availability service)
+- Notice of applied code update if any
+
+</pba-col>
+</pba-cols>
+
+Notes: 
+
+The majority of this things will be treated in this lecture or later in the Polkadot module
+
+---v
+
+</br>
+
+- Enables runtime validation by providing candidates to the parachains protocol
+- Couples parachain finality to that of the relay chain
 
 ---
 
@@ -166,9 +193,9 @@ Notes:
 ###### Example of Witness Data Construction
 
 <div class="r-stack">
-<img src="../assets/pov_inclusion_proof_1.svg" style="width: 70%" />
+<img src="../assets/pov_witness_data_1.svg" style="width: 70%" />
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="../assets/pov_inclusion_proof_2.svg" style="width: 70%" />
+<img src="../assets/pov_witness_data_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
@@ -182,9 +209,9 @@ Notes:
 Notes:
 
 orage: values present in the POV
-green: hash of the sibilings node required for the pov
+green: hash of the siblings node required for the pov
 white: hash of the nodes that are constructed with orange and green nodes
-red: not reuired hash
+red: not required hash
 blue: head of the trie, hash present in the previous block header
 
 ---v
@@ -355,7 +382,7 @@ Cumulus changes the compilation behavior to produce beside the normal state tran
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+### Questions
 
 <!--
 ### Cumulus Validation Blob
@@ -653,7 +680,7 @@ In Cumulus, take a look at:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+## Questions
 
 ---
 
