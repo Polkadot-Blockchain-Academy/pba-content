@@ -9,7 +9,7 @@ We want students to stay engaged the entire time but also be free to explore.
 
 ## Faucet / UBI
 
-We don't want students to go broke and be out for the rest of the day, so we need some kind of UBI pallet on the chain that gives each registered address new tokens each block or each few blocks.
+We don't want students to go broke and be out for the rest of the day, so we include a faucet from which students can claim a basic income at a regular interval.
 Maybe the payout can increase as the competition goes on so the stakes get higher.
 
 ## Ideas
