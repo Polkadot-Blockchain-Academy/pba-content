@@ -21,7 +21,7 @@ Students learn about expressing agreements as code and are left wondering where 
 - 🗣️ P2P Networking - Andrew - Founders NOT Required
 - ⌨️ More BFS.
 - ☕ Break
-- Platform Agnostic Bytecodes - Lauren - Founders Required
+- 🗣️ Platform Agnostic Bytecodes - Lauren - Founders Required
 - ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron - Founders Required
 - 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux. - Lauren - Founders Required
 
