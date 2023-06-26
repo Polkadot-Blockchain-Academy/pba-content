@@ -26,7 +26,7 @@ Compare and contrast to cosmwasm and others (if there are others?)
 
 ## Idiosyncracies
 
-* Are there any?
+- Are there any?
 
 ---
 
@@ -42,9 +42,9 @@ show an example
 
 ## High Level Languages
 
-* ink!
-* ask!
-* There could be plenty of others.
+- ink!
+- ask!
+- There could be plenty of others.
 
 ---
 
@@ -65,10 +65,10 @@ IDK if this is really necessary. Up to the instructor.
 
 Make it clear that students should have these tools installed or available already or should be doing their aboslute best to install them as you go. They will need these tools immenently.
 
-* contracts-ui
-* DRink?
-* Polkadot js?
-* ink-playgroud?
+- contracts-ui
+- DRink?
+- Polkadot js?
+- ink-playgroud?
 
 @piotr, @filip, I'll leave it largely up to you what the standard dev environment should be. It is good to be flexible and let students use the tools they like. But many students will have no prior preference or experience, and we need to be able to recommend a fully concrete stack for them.
 
@@ -94,9 +94,9 @@ write, deploy, interact
 
 Show a few bad things that could be done to help develop blockchain thinking models.
 
-* A call that only executes if the proper hard-coded password is passed as a param (insecure, the code and therefore the password is onchain)
-* An attempted improvement where the password is not hardcoded. It is passed to the constructor and stored in a private variable. (still insecure. All storage is publicly visible from off-chain.)
-* If time permits and students are digging this, try storing a hash in storage and requiring the preimage as a password. This is actually secure for only-call-once functions. But if you intend to call it multiple times, the first call leaks the password publicly.
+- A call that only executes if the proper hard-coded password is passed as a param (insecure, the code and therefore the password is onchain)
+- An attempted improvement where the password is not hardcoded. It is passed to the constructor and stored in a private variable. (still insecure. All storage is publicly visible from off-chain.)
+- If time permits and students are digging this, try storing a hash in storage and requiring the preimage as a password. This is actually secure for only-call-once functions. But if you intend to call it multiple times, the first call leaks the password publicly.
 
 ---
 
