@@ -21,7 +21,7 @@ Students learn about expressing agreements as code and are left wondering where 
 - 🗣️ P2P Networking - Andrew - Founders NOT Required
 - ⌨️ More BFS.
 - ☕ Break
-- Platform Agnostic Bytecodes - Lauren - Founders Required
+- 🗣️ Platform Agnostic Bytecodes - Lauren - Founders Required
 - ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron - Founders Required
 - 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux. - Lauren - Founders Required
 
@@ -79,14 +79,13 @@ Students spend the day getting hands on experience writing smart contracts for P
 - ⌨️ Solidity Code Along - Stephen Shelton - Founders Required
 - ⌨️ Vyper Code Along - Stephen Shelton - Founders Required
 - ☕ Break
-- 🗣️ Wasm Concepts - Filip Bielejec - Founders Required
-- ⌨️ ink! Code Along - Filip Bielejec - Founders Required
-- ⌨️ ask! Code Along (optional) - Filip Bielejec - Founders NOT Required
+- 🗣️ Wasm Concepts - Filip Bielejec and Piotr Mikolajczyk - Founders Required
+- ⌨️ ink! Code Along - Filip Bielejec and Piotr Mikolajczyk - Founders Required
 - 🗣️ Introduce Contract Writing Workshop - Joshy - Founders Required
 
 ### Afternoon
 
-- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop) - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec - Founders NOT Required
+- ⌨️ [Contract Writing Workshop](https://github.com/Polkadot-Blockchain-Academy/Contract-Writing-Workshop) - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec, and Piotr Mikolajczyk - Founders NOT Required
 
 ## Friday
 
