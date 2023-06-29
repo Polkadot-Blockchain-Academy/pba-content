@@ -257,12 +257,14 @@ The above ` ```html ` block will not be formatted.
 To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:
 
 ```sh
-# This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
-yarn links <Module Number>
-
-# This will check a single file
-
+# Link check a single file (or use regex to match)
 yarn links <relative-link-to/the-top-working-dir/file.md>
+
+# Link check all content files
+yarn links syllabus/**/*.md
+
+# This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
+yarn mod-links <Module Number>
 ```
 
 The same tool is also run by our CI on all files for all pushes to all branches.
