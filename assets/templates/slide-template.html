@@ -59,8 +59,12 @@
   <script src="{{{base}}}/plugin/zoom/zoom.js"></script>
   <script src="{{{base}}}/plugin/notes/notes.js"></script>
   <script src="{{{base}}}/plugin/math/math.js"></script>
+
   <script src="{{{base}}}/assets/plugin/mermaid.js"></script>
   <script src="{{{base}}}/assets/plugin/mermaid-theme.js"></script>
+
+  <script src="{{{base}}}/assets/plugin/chart/chart.js"></script>
+  <script src="{{{base}}}/assets/plugin/chart/chart.min.js"></script>
 
   <script>
     function extend() {
@@ -97,13 +101,26 @@
               tertiaryColor: lightPurple,
           },
       },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" } , // color of grid lines
+          },
+        },
+        line: { borderColor: [ "#ccc" , "#E6007A", "#6D3AEE" ], "borderDash": [ [5,10], [0,0] ] },
+        bar: { backgroundColor: [ "#ccc" , "#E6007A", "#6D3AEE" ]},
+      },
       plugins: [
         RevealMarkdown,
         RevealHighlight,
         RevealZoom,
         RevealNotes,
         RevealMath,
-        RevealMermaid
+        RevealMermaid,
+        RevealChart
       ]
     };
 
