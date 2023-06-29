@@ -141,13 +141,13 @@ Promise can make a village of 100 shit in the same corner, but not 8 billion.
 
 One example is money, it allows strangers to coordinate over time because they don't have to hunt down the same person later to get the second half of the trade. They know that everyone else around them will accept the money for whatever goods and services they choose. In some ways the thing that is used for money is just a matter of convention. One thing we're going to try to do is make some improvements on money itself.
 
+```
          promises - trade over time
         /                            \
-
-simple swaps credit - trading an abstract notion of value today for
-\ / a debt to be repaid over time
-money - trade for abstract notion of value
-
+simple swaps                 credit - trading an abstract notion of value today for
+        \                           /                   a debt to be repaid over time
+        money - trade for abstract notion of value
+```
 
 Notes:
 
