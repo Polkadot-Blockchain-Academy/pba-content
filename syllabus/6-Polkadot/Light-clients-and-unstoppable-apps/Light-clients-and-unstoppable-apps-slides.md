@@ -56,17 +56,32 @@ duration: 45+ mins
   This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but facebook, twitter, whatsapp etc etc);
 </aside>
 
+Note:
+This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but facebook, twitter, whatsapp etc etc);
+
 ---v
 
 ## The Web 3 vision
 
 <img rounded style="width: 80%;" src="../../../assets/img/Light-clients/web3.png " />
 
+Note:
+This is the vision of what web3 should look like.. Validators and End users all over the world, where everyone can connect to anyone available around and exchange information;
+
+With a show of hands…
+How many people in here, think that we are close to this at the moment?
+How many people in here, think that we are far from this at the moment?
+
 ---v
 
 ## The Web 3 reality
 
 <img rounded style="width: 80%;" src="../../../assets/img/Light-clients/web3_reality.png " />
+
+Note:
+Many applications or services may advertise as decentralized but, how much they really are?
+
+I want to say one thing - and pause there for a few seconds to let it sink in;
 
 ---
 
@@ -77,6 +92,10 @@ duration: 45+ mins
 ## The reality of blockchains today
 
 <img rounded style="width: 100%;" src="../../../assets/img/Light-clients/reality_bc_today.png " />
+
+Note:
+Intro to next slide:
+Here is how this is happening in reality at the moment, or how one could possibly connect to the network today
 
 ---v
 
@@ -95,6 +114,13 @@ node client</div>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
 
+Note:
+This is the reality of how things really are today
+
+WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS apps or any custom one) today:
+
+(Read slides)
+
 ---v
 
 <h4>USER-CONTROLLED NODE</h4>
@@ -110,6 +136,9 @@ node client</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
+
+Note:
+(Read slides)
 
 ---v
 
@@ -131,6 +160,15 @@ node client</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="3" -->
 </pba-cols>
+
+Note:
+In the 3rd party case the user relies on the 3rd party node to connect to, in order to communicate with the network.
+(audience) With a show of hands Why this needs fixing?
+Possibility of censorship or hijacking
+Reliability
+
+Front running is the act of placing a transaction in a queue with the knowledge of a future transaction
+
 ---v
 
 ## The reality of blockchains we want
@@ -156,6 +194,12 @@ node client</div>
 <p style="font-size:1.5rem">...but lighter!</p>
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Note:
+When I joined the team of substrate connect, I asked this same question.. And the response I got was…. (\*)
+Back then I was like… “Yeah – thanks I guess”
+
+But that was actually true!
 
 ---v
 
@@ -186,6 +230,15 @@ node client</div>
 <!-- .element: class="fragment" data-fragment-index="5" -->
 </ul>
 
+Note:
+Before anything else – lets remember the node types in the network
+
+(......After the Clicks!....)
+
+Any combination of “validator”, “archive”, “bootnode” and “JSON-RPC node” is possible, except for “light” and “archive” that are mutually incompatible.
+
+Depending on context, the word “full node” is generally used to designate either the opposite of a light node, or a node that hasn’t any or combination of the characteristics above. At the moment, almost all nodes on the network are either validators or full nodes.
+
 ---v
 
 # What is a light client/node?
@@ -205,6 +258,9 @@ on demand;
   <li> It connects to the network and interacts in a fully trust-less way with it;</li>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 </ul>
+
+Note:
+Read the slides
 
 ---v
 
@@ -226,6 +282,20 @@ on demand;
 <h2>How does a light client know what/who to trust</h2>
 <img rounded style="width: 100%" src="../../../assets/img/Light-clients/know-who-to-trust.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Note:
+As we know Substrate chains provides the concept of FINALITY which is VERY important for the light clients!
+
+Once a block has been finalized, it is guaranteed to always be part of the best chain. By extension, the parent of a finalized block is always finalized as well etc etc
+
+For finality Substrate/Polkadot nodes use the GrandPa algorithm. Authorized nodes, emit votes on the network, when 2/3rds or more have voted for a specific block, it effectively becomes finalized.
+
+These votes are been collected in what is called a **justification**
+
+It is used by nodes who might not have received all the votes, or for example if they were offline, In order to verify the authenticity of the blocks;
+
+A Light client receives these justifications and this way it verifies the authenticity of a block.
+
 ---v
 
 <pba-cols>
@@ -318,9 +388,21 @@ ready</div>
   </pba-col>
 </pba-cols>
 
+Note:
+Now… Concerning the Polkadot solution of light clients for all substrate chains…
+
+(click through the slide)
+You may have heard all these words..
+
+and I have to draw a line here… We have 3 different categories/things
+
+We said the generics about light clients
+
+Lets be more specific now, and clarify few things in the Polkadot Ecosystem
+
 ---v
 
-<h1>smoldot<h1>
+<h1>Smoldot<h1>
 
 <div style="font-size:2.5rem; color: #fff">light client implementation</div>
   <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -352,7 +434,7 @@ Note:
 
 ---v
 
-<h1>substrate-connect<h1>
+<h1>Substrate Connect<h1>
 
 <div style="font-size:2.5rem; color: #fff">npm package</div>
   <!-- .element: class="fragment" data-fragment-index="1" -->
