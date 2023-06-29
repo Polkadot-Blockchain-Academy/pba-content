@@ -38,6 +38,10 @@ duration: 45+ mins
   background: var(--r-heading-color);
   font-size: 1.5rem;
 }
+
+.lc-mermaid svg {
+  max-width: 70% !important;
+}
 </style>
 
 # Light clients<br/>and<br/>Unstoppable Apps
@@ -253,7 +257,7 @@ ready</div>
 
 <p style="font-size: 1.5rem; padding-top: 100px;">“Full”: not really a type - depends on context - a node that does not fulfill any of the characteristics below.</p>
 
----v
+---
 
 <pba-cols>
   <pba-col left>
@@ -314,9 +318,96 @@ ready</div>
   </pba-col>
 </pba-cols>
 
----
+---v
 
-## NEXT SLIDES FOR LIGHT CLIENTS
+<h1>smoldot<h1>
+
+<div style="font-size:2.5rem; color: #fff">light client implementation</div>
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+
+## rust
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<div>
+  <div style="font-size:1.5rem; color: #fff">smoldot-light-js (/wasm-node) - npm/deno</div>
+  <div style="font-size:1.5rem; color: #fff">smoldot (/lib) - Rust library</div>
+  <div style="font-size:1.5rem; color: #fff">smoldot-light (/light-base)</div>
+  <div style="font-size:1.5rem; color: #fff">smoldot-full-node (/full-node)</div>
+</div>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<img style="width: 10rem; padding-top: 3rem" src="../../../assets/img/Light-clients/poweredBy.png" />
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+<a href="https://github.com/smol-dot/smoldot/">https://github.com/smol-dot/smoldot/</a>
+
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+Note:
+
+- smoldot-light-js (/wasm-node): A JavaScript package that can connect to a Substrate-based chains as a light client. Works both in the browser and in NodeJS/Deno. This is the main component of this repository.
+- smoldot (/lib): An unopinionated Rust library of general-purpose primitives that relate to Substrate and Polkadot. Serves as a base for the other components.
+- smoldot-light (/light-base): A platform-agnostic Rust library that can connect to a Substrate-based chain as a light client. Serves as the base for the smoldot-light-js component explained above.
+- smoldot-full-node (/full-node): A work-in-progress prototype of a full node binary that can connect to Substrate-base chains. Doesn't yet support many features that the official client supports.
+
+---v
+
+<h1>substrate-connect<h1>
+
+<div style="font-size:2.5rem; color: #fff">npm package</div>
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+
+## javascript/typescript
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+<div style="font-size:2rem; color: #fff">Standalone / RPC provider polkadotJS</div>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<p style="margin-top: 5rem"><a href="https://github.com/paritytech/substrate-connect/">https://github.com/paritytech/substrate-connect/</a></p>
+
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+---v
+
+<h1>CAPI<h1>
+
+<div style="font-size:2.5rem; color: #fff">deno / npm packages</div>
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+
+## javascript/typescript
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+<div style="font-size:2rem; color: #fff">server and fluent API for multichain interactions</div>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<p style="margin-top: 5rem"><a href="https://github.com/paritytech/capi/">https://github.com/paritytech/capi/</a></p>
+
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+---v
+
+<diagram class="mermaid lc-mermaid">
+  stateDiagram-v2
+    Smoldot --> Substrate_connect
+    Substrate_connect --> PolkadotJS_API
+    PolkadotJS_API --> UI_dAPP
+
+    Smoldot --> CAPI
+    CAPI --> UI_dAPP
+
+    Smoldot --> smoldot_libraries(Rust_or_JS)
+    smoldot_libraries(Rust_or_JS) --> Custom_Code(with_JSON_RPC_API)
+    Custom_Code(with_JSON_RPC_API) --> UI_dAPP
+
+</diagram>
+
+---v
+
+### Each tab opens its own connections
+
+<img style="width: 90%" src="../../../assets/img/Light-clients/exampletabs.png" />
 
 ---
 
@@ -365,13 +456,34 @@ The dApp (UI) connects to a node client that the user has installed on their mac
 <pba-flex center>
 
 1. Install dependencies<br/>
-   (e.g. rust, openssl, cmake, llvm etc);
-1. Clone from github the `polkadot` repo;
+(e.g. rust, openssl, cmake, llvm etc);
+<!-- .element: class="fragment" data-fragment-index="1" -->
+1. Clone from github the "polkadot" repo;
+<!-- .element: class="fragment" data-fragment-index="2" -->
 1. Build the node locally;
+<!-- .element: class="fragment" data-fragment-index="3" -->
 1. Start the node locally;
-1. Wait for node to synchronize;
+<!-- .element: class="fragment" data-fragment-index="4" -->
+1. Wait for the node to synchronize;
+   <!-- .element: class="fragment" data-fragment-index="5" -->
+   <pba-flex>
 
-<pba-flex>
+---v
+
+<p>...wait for the node to synchronize...</p>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<p>....</p>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<p>......
+<!-- .element: class="fragment" data-fragment-index="3" -->
+<p>.........</p>
+<!-- .element: class="fragment" data-fragment-index="4" -->
+<p>.............</p>
+<!-- .element: class="fragment" data-fragment-index="5" -->
+<p>..................</p>
+<!-- .element: class="fragment" data-fragment-index="6" -->
+<p>ok</p>
+<!-- .element: class="fragment" data-fragment-index="7" -->
 
 ---v
 
@@ -477,4 +589,10 @@ mainChain.sendJsonRpc(
 
 ---
 
-<img rounded style="width: 800px" src="../assets/BATMAN3.jpg" alt="Back to the other slides, Batman!" />
+# Some demo maybe…?
+
+<img src="../../../assets/img/Light-clients/code.jpg" />
+
+---
+
+# Questions?
