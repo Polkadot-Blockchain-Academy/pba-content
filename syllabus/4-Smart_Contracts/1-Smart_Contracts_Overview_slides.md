@@ -45,31 +45,84 @@ primitive trade, dead weight loss, coordinating over time, this is another examp
 
 ---
 
-So you want to make some kind of agreement to coordinate with another person.
-But you don't want to get ripped off. (we'll build my house this week, then we'll build your house next month.)
+# Trust
 
-Trust
+So you want to make some kind of agreement.
+But you don't want to get ripped off.
 
-- genuine trust - you can build it over time through a slow give and take like you do with your family or long term business partners for example
-- you can believe that a person will act faithfully because they are incentivized to do so.
+Notes:
 
-The first kind of trust is sometimes a "dirty word" in web3 spaces.
+For example: we'll build my house this week, then we'll build your house next month.
+
+---v
+
+# Personal vs Rational Trust
+
+- personal trust - you can build it over time through a slow give and take like you do with your family or long term business partners for example
+- rational trust - you can believe that a person will act faithfully because they are incentivized to do so.
+
+---v
+## Trust: A Dirty Word
+
+"trust" is sometimes a _dirty word_ in web3 spaces.
+
+TODO image of dealing with a shady-looking banker or bmv employee and thinking "do I really want this guy knowing where I live?"
+
+Notes:
+
+"less trust more truth" right? RIGHT?
+
+This saying refers to scenarios where you have to treat strangers as though you had personal trust with them.
+This happens all the time when you give a merchant your credit card number and trust that they won't buy stuff online with it.
+
+---v
+
+## Personal Trust for Performance
 
 The truth is that this kind of trust can make things really efficient, and it is reasonable to leverage this trust _when it is warranted_
 
 how to bootstrap genuine trust: start small and accept a small counterparty risk. Gradually increase over time.
 
+Notes:
+
+TODO too many words on this slide. MAke the same good point with fewer words.
+
 It takes a long time and a lot of effort and cumulative risk to bootstrap this trust, so if you have it, you should use it.
 
-When you shouldn't rely on genuine trust? when you don't have it. When the banker at the big bank tells you you can't have your money back unless you verify your identity by telling them where you live. (figure thinking do I really want this guy knowing where I live?)
+When you shouldn't rely on personal trust?
+when you don't have it.
+When the banker at the big bank tells you you can't have your money back unless you verify your identity by telling them where you live.
+
+---v
+
+## Rational Trust Everywhere
+
+Not really trust at all
+
+TODO decide what to actually _show_ on the slide
+Maybe a silly figure of margerine or something saying it isn't really butter.
+
+Notes:
+
+In the increasingly common case that you are interacting with strangers, and you do _not_ have personal trust, we strive for rational trust.
+Rational trust is not really "trust" in the dirty word sense at all.
+It is more of a civic trust.
+Knowing that the people you are interacting with are likely to honor their promises because they are incentivized to do so.
+We'll focus a lot on setting up these incentives this week.
 
 ---
 
-So let's look at some existing technologies that allow us to scaffold the second kind of trust.
-Like all technologies, the older more original versions are not always as sexy as the newer versions.
+# Scaffolding Trust
+
 (show slides of bicycles, flying machines, electric lights evolving over time)
 
-Promise
+Notes:
+So let's look at some existing technologies that allow us to scaffold the second kind of trust.
+As in all lines of technology, the older more original versions are not always as sexy as the newer versions.
+
+---v
+
+## Promises and Reputation
 
 - how enforceable is it?
 - does it work in small setting?
@@ -84,9 +137,8 @@ Promise can make a village of 100 shit in the same corner, but not 8 billion.
 
 ---
 
-Let's focus in on the idea of trade for a bit and explore some of the tools we've built there.
+## Business and Trade
 
-When you need to coordinate among strangers, you need promises to be backed by something.
 One example is money, it allows strangers to coordinate over time because they don't have to hunt down the same person later to get the second half of the trade. They know that everyone else around them will accept the money for whatever goods and services they choose. In some ways the thing that is used for money is just a matter of convention. One thing we're going to try to do is make some improvements on money itself.
 
          promises - trade over time
@@ -96,16 +148,22 @@ simple swaps credit - trading an abstract notion of value today for
 \ / a debt to be repaid over time
 money - trade for abstract notion of value
 
+
+Notes:
+
+Let's focus in on the idea of trade and business for a bit and explore some of the tools we've built there.
 trading over time requires trust for sure
 money only requires trust to get started. After it has caught on, it is sticky. Everyone wants their money to still be valuable.
 
----
+---v
+
+## x
 
 So how do we actually get people to keep their promises? Well, maybe social norm of keeping promises is kind of sticky too. If people tend to keep promises, the society prospers. But eventualy it will be sufficiently profitable to defect.
 
 ---
 
-Contracts :tada:
+# Contracts :tada:
 
 Contracts are promises. They can involve money, but they can be so much more general than just money.
 traditionally, contracts are special promises that the government will enforce.
@@ -113,19 +171,31 @@ traditionally, contracts are special promises that the government will enforce.
 The key idea is that the government is big enough to have power over individuals interacting, and if anyone tries to rip someone else off, the government will step in and make sure the contract is upheld.
 This allows us to interact as if we trusted each other. Then the stickiness sets in and people actually do start to trust each other.
 
+---v
+
 This is the power of contracts!
 As long as the government fairly and reliably enforces them.
+
+---v
+
+TODO figure of slave owners
+
+Notes:
 
 Of course sometimes the government can be a lot like the slave owner.
 We need to watch out for that...
 
-What is a Contract?
+---v
+
+## What is a Contract Again?
+
 (to summarize)
+
 A way for strangers to trust each other within some limited scope to accomplish something together.
 
 ---
 
-What is a smart contract?
+# Smart contracts
 
 This CS guy Nick Szabo and some other cipherpunks realized in the 90s. That contract law and computer sciene actually had a lot in common.
 
