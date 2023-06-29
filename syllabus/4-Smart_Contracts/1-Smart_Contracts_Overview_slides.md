@@ -195,31 +195,69 @@ A way for strangers to trust each other within some limited scope to accomplish 
 
 ---
 
-# Smart contracts
+# Smart Contracts
 
-This CS guy Nick Szabo and some other cipherpunks realized in the 90s. That contract law and computer sciene actually had a lot in common.
+1. Expression
+2. Execution / Enforcement
 
-Look at contracts in two parts
+Notes:
 
-1. expressing them
-2. executing/enforcing them
+This CS guy Nick Szabo and some other cipherpunks realized in the 90s that contract law and computer science actually had a lot in common.
+
+Look at contracts in two parts.
+The part about actually codifying what you agree to unambiguously.
+And then the part about making sure it actually happens, and what to do if something goes wrong.
 
 Programming languages are good at part 1 and computers are good at part 2.
 
-So Szabo has this idea of the smart contract
+---v
 
----
+## Smart Contracts - Szabo Definition
 
-Szabo definition
+<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote>
+
+Broad definition
+aka Szabo definition
+formulated c 1997
+
+Notes:
+
+So Szabo has this idea of the smart contracts which is basically to write contractual agreements as computer programs in programming languages.
+And then run those programs on some computer that will execute the instructions faithfully with machine-like precision.
+He was pretty excited about some of the research in multi-party computation that was happening at the time and had a sense that this vision might be right around the corner.
+
+BTW, there is a second definition that we'll call the Narrow definition or the "Web3 definition" that I'll tell you in a day or two when we have more foundational material built.
+It makes sense that back in '97 people were thinking more big picture and we got this broad definition, and now 25 years later we have a more precise, technically specific definition.
+
 https://nakamotoinstitute.org/the-god-protocols/
 https://nakamotoinstitute.org/formalizing-securing-relationships/
-A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.
+TODO I got the definition above from https://youtu.be/v_-mxyN4pcY?t=296 but there might be a better and older one in the second link.
+
+---v
+
+## Smart Contract Objectives
+
+* Retain all the value of traditional governmental contracts
+  * Can trust strangers promises
+  * Can coordinate with little risk
+  * etc
+* Remove ambiguity about what contracts are enforceable
+* Make writing and understanding contracts more approachable
+* Make contract execution and enforcement more efficient
+
+Notes:
+
+TODO find link to court case that set precident for contracts that were "frolic and gamble" or something not being enforceable.
 
 ---
 
-expression and enforcement...
+# Expression and Enforcement
 
-Part 1 - Expression
+TODO repeat slide from about about treating contracts in two parts.
+
+---
+
+# Expression -- Part 1
 
 Domain Specific Languages
 are important
@@ -259,34 +297,55 @@ One goal of mine is to make smart contracts more accessible to everyday people s
 
 ---
 
-Part 2 - Execution / Enforcement
+# Execution / Enforcement -- Part 2
 
-Once a legal agreement is made, it must be executed / enforced.
+TODO images of courts, judges, jails for the traditional system.
+also images of "executing computer code" whatever that might look like. - or maybe of a contract deployment success in a dapp ui.
 
-Traditional system
-There is rarely an official submission moment.
+Notes:
+
+Once a legal agreement is made, it must be executed / enforced somewhere
+
+---v
+
+## Traditional Execution
+
+* There is rarely an official submission moment.
+* Parties Self Execute
+* Sometimes, that's it. Success.
+* Sometimes it goes to court.
+
+Notes:
+
 Parties just sign.
 Sometimes there is a witness
 Sometimes even a notary
 Rarely a submission to a judge.
 
-Parties self execute.
 On the happy path, no further action is necessary - this is actually a decided strength of the traditional system - it is maximally lazy
 When there is a dispute, parties can go to court for a human judge to rule.
 Judge enforces through powerful agencies like police and jails, and through social consensus.
 In practice there is little consideration for scaling, queue length, ruling priority, resource exhaustion. But in principle there could be. The existing systems of the nation states could be optimized considerably without having to even adopt any real smart contracts.
 
-Computer system
-There is a deployment moment
+---v
+
+# Computerized Execution
+
+* There is a deployment moment
+* Sometimes there are checkpoints or milestones or other official interactions
+* Sometimes there is dispute resolution
+
+Notes:
+
 You start some process on some computer and that computer faithfully executes the program for users to interact with.
 At first you can think of it like a computer in the basement and we walk up to it when we want to interact. This is how nintendo works. Multiple controllers and multiple physically present users.
 The internet makes it bettter in some ways. We can interact with our smart contract remotely instead of being physically present.
 But now there is the question of the server operator. Are they really executing the correct contract?
 The corrupt server opporator is analogous to a corrupt judge.
 
----
+---v
 
-Code is law meme
+TODO: Code is law memes; show the and explain it.
 
 ---
 
@@ -318,66 +377,3 @@ voting machine
 P2P networking
 
 PAB
-
-Part 1 - Expression
-
-Domain Specific Languages
-are important
-oldest writing samples are clerical
-Humans have been inventing dsls forever.
-It's one of our main things.
-
-Contract law
-is a DSL
-is an important part of society
-is hard to read (screenshot of legaleze)
-
-Computer Programming
-also a DSL
-independant evolution from contract law
-Can be quite hard to read (asm or solidity), good ones can also be easier to read. - example about napoleon wanting the average educated citizen to be able to understand the napoleonic code
-
-They are not so different
-They are both DSL meant to precisely express the nuances of detailed human agreements
-They are both hard to read for non experts
-someone in the early 90s had the realization that they were similar and had the idea that programming may be the future of law.
-Nick Szabo
-
-smart contracts broad definition
-Insert definition
-
-Cultures are different
-
-- legal culture always adds, rarely removes
-- legal culture is all about human judgement
-- programmers love negative diffs
-- programmers prefer to express things elegantly and minimally
-- programmers like testing
-- programming in about repeatability and objectivity
-
-One goal of mine is to make smart contracts more accessible to everyday people so that you can read your own contracts
-
-Part 2 - Execution / Enforcement
-
-Once a legal agreement is made, it must be executed / enforced.
-
-Traditional system
-There is rarely an official submission moment.
-Parties just sign.
-Sometimes there is a witness
-Sometimes even a notary
-Rarely a submission to a judge.
-
-Parties self execute.
-On the happy path, no further action is necessary - this is actually a decided strength of the traditional system - it is maximally lazy
-When there is a dispute, parties can go to court for a human judge to rule.
-Judge enforces through powerful agencies like police and jails, and through social consensus.
-In practice there is little consideration for scaling, queue length, ruling priority, resource exhaustion. But in principle there could be. The existing systems of the nation states could be optimized considerably without having to even adopt any real smart contracts.
-
-Computer system
-There is a deployment moment
-You start some process on some computer and that computer faithfully executes the program for users to interact with.
-At first you can think of it like a computer in the basement and we walk up to it when we want to interact. This is how nintendo works. Multiple controllers and multiple physically present users.
-The internet makes it bettter in some ways. We can interact with our smart contract remotely instead of being physically present.
-But now there is the question of the server operator. Are they really executing the correct contract?
-The corrupt server opporator is analogous to a corrupt judge.
