@@ -12,7 +12,7 @@ duration: 45+ mins
   margin-top: 1rem !important;
 }
 
-.font-weight-bold {
+.font-bold {
   font-weight: bold;
 }
 
@@ -24,8 +24,7 @@ duration: 45+ mins
   background-color: green;
 }
 
-.bold_under {
-  font-weight: bold;
+.font-under {
   text-decoration: underline;
 }
 
@@ -104,8 +103,8 @@ Here is how this is happening in reality at the moment, or how one could possibl
   <pba-col left>
     <div>App connects to a third-party-owned publicly-accessible
 node client</div>
-    <div class="red bordered-box"><span class="font-weight-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</div>
-<div class="green bordered-box"><span class="font-weight-bold">Convenient:</span> Works transparently</div>
+    <div class="red bordered-box"><span class="font-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</div>
+<div class="green bordered-box"><span class="font-bold">Convenient:</span> Works transparently</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
   <pba-col left>
@@ -127,8 +126,8 @@ WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS apps
 <pba-cols>
   <pba-col left>
     <div>App connects to a node client that the user has installed on their machine</div>
-    <div class="green bordered-box"><span class="font-weight-bold">Secure</span><br />Trustless: connects to multiple nodes, verifies everything</div>
-<div class="red bordered-box"><span class="font-weight-bold">Convenient:</span> Works transparently</div>
+    <div class="green bordered-box"><span class="font-bold">Secure</span><br />Trustless: connects to multiple nodes, verifies everything</div>
+<div class="red bordered-box"><span class="font-bold">Convenient:</span> Works transparently</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
    <pba-col left>
@@ -209,23 +208,23 @@ But that was actually true!
 
 <ul>
   <li>
-    <span class="bold_under">Validator:</span> node configured to potentially produce blocks.
+    <span class="font-bold font-under">Validator:</span> node configured to potentially produce blocks.
   </li>
 <!-- .element: class="fragment" data-fragment-index="1" -->
   <li>
-    <span class="bold_under">JSON-RPC:</span> node which gives public access to its JSON-RPC endpoint.
+    <span class="font-bold font-under">JSON-RPC:</span> node which gives public access to its JSON-RPC endpoint.
   </li>
 <!-- .element: class="fragment" data-fragment-index="2" -->
   <li>
-    <span class="bold_under">Bootnode:</span> node whose address can be found in the chain specification. Necessary to kick-off the network.
+    <span class="font-bold font-under">Bootnode:</span> node whose address can be found in the chain specification. Necessary to kick-off the network.
   </li>
 <!-- .element: class="fragment" data-fragment-index="3" -->
   <li>
-    <span class="bold_under">Archive:</span> stores the entire state of the chain at each block since block #0. Useful to access historical data.
+    <span class="font-bold font-under">Archive:</span> stores the entire state of the chain at each block since block #0. Useful to access historical data.
   </li>
 <!-- .element: class="fragment" data-fragment-index="4" -->
   <li>
-    <span class="bold_under polkadot">Light client:</span><span class="polkadot"> doesn’t store the entire state of the chain but requests it on demand.</span>
+    <span class="font-bold font-under polkadot">Light client:</span><span class="polkadot"> doesn’t store the entire state of the chain but requests it on demand.</span>
   </li>
 <!-- .element: class="fragment" data-fragment-index="5" -->
 </ul>
@@ -340,8 +339,6 @@ ready</div>
   <!-- .element: class="fragment" data-fragment-index="6" -->
       <li>smoldot</li>
   <!-- .element: class="fragment" data-fragment-index="2" -->
-      <li>Deno</li>
-  <!-- .element: class="fragment" data-fragment-index="5" -->
       <li>browser-friendly</li>
   <!-- .element: class="fragment" data-fragment-index="2" -->
       <li>npm package</li>
@@ -354,8 +351,6 @@ ready</div>
   <!-- .element: class="fragment" data-fragment-index="3" -->
       <li>npm package</li>
   <!-- .element: class="fragment" data-fragment-index="2" -->
-      <li>substrate_connect</li>
-  <!-- .element: class="fragment" data-fragment-index="1" -->
       <li>javascript</li>
   <!-- .element: class="fragment" data-fragment-index="6" -->
       <li>substrate_connect</li>
@@ -376,8 +371,6 @@ ready</div>
   <!-- .element: class="fragment" data-fragment-index="2" -->
       <li>smoldot</li>
   <!-- .element: class="fragment" data-fragment-index="3" -->
-      <li>CAPI</li>
-  <!-- .element: class="fragment" data-fragment-index="5" -->
       <li>substrate_connect</li>
   <!-- .element: class="fragment" data-fragment-index="4" -->
       <li>javascript</li>
@@ -452,32 +445,11 @@ Note:
 
 ---v
 
-<h1>CAPI<h1>
-
-<div style="font-size:2.5rem; color: #fff">deno / npm packages</div>
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-
-## javascript/typescript
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-<div style="font-size:2rem; color: #fff">server and fluent API for multichain interactions</div>
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-<p style="margin-top: 5rem"><a href="https://github.com/paritytech/capi/">https://github.com/paritytech/capi/</a></p>
-
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
----v
-
 <diagram class="mermaid lc-mermaid">
   stateDiagram-v2
     Smoldot --> Substrate_connect
     Substrate_connect --> PolkadotJS_API
     PolkadotJS_API --> UI_dAPP
-
-    Smoldot --> CAPI
-    CAPI --> UI_dAPP
 
     Smoldot --> smoldot_libraries(Rust_or_JS)
     smoldot_libraries(Rust_or_JS) --> Custom_Code(with_JSON_RPC_API)
@@ -497,8 +469,8 @@ Note:
 
 The dApp (UI) connects to a third-party-owned publicly-accessible node client
 
-<p class="red bordered-box"><span class="font-weight-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</p>
-<p class="green bordered-box"><span class="font-weight-bold">Convenient:</span> Works transparently</p>
+<p class="red bordered-box"><span class="font-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</p>
+<p class="green bordered-box"><span class="font-bold">Convenient:</span> Works transparently</p>
 
 ---v
 
@@ -528,8 +500,8 @@ const chainName = await api.rpc.system.chain();
 
 The dApp (UI) connects to a node client that the user has installed on their machine
 
-<p class="green bordered-box"><span class="font-weight-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
-<p class="red bordered-box"><span class="font-weight-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</p>
+<p class="green bordered-box"><span class="font-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
+<p class="red bordered-box"><span class="font-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</p>
 
 ---v
 
@@ -589,8 +561,8 @@ const chainName = await api.rpc.system.chain();
 
 The uApp (UI) connects to an _integrated_ light client
 
-<p class="green bordered-box"><span class="font-weight-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
-<p class="green bordered-box"><span class="font-weight-bold">Convenient:</span> Works transparently</p>
+<p class="green bordered-box"><span class="font-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
+<p class="green bordered-box"><span class="font-bold">Convenient:</span> Works transparently</p>
 
 ---v
 
