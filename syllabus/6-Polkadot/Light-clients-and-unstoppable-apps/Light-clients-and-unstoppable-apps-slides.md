@@ -55,7 +55,8 @@ duration: 45+ mins
   This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but facebook, twitter, whatsapp etc etc);
 </aside>
 
-Note:
+Notes:
+
 This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but facebook, twitter, whatsapp etc etc);
 
 ---v
@@ -64,7 +65,8 @@ This is web 2. This is where most of applications in the web are at the moment (
 
 <img rounded style="width: 80%;" src="../../../assets/img/Light-clients/web3.png " />
 
-Note:
+Notes:
+
 This is the vision of what web3 should look like.. Validators and End users all over the world, where everyone can connect to anyone available around and exchange information;
 
 With a show of hands…
@@ -77,7 +79,8 @@ How many people in here, think that we are far from this at the moment?
 
 <img rounded style="width: 80%;" src="../../../assets/img/Light-clients/web3_reality.png " />
 
-Note:
+Notes:
+
 Many applications or services may advertise as decentralized but, how much they really are?
 
 I want to say one thing - and pause there for a few seconds to let it sink in;
@@ -92,7 +95,8 @@ I want to say one thing - and pause there for a few seconds to let it sink in;
 
 <img rounded style="width: 100%;" src="../../../assets/img/Light-clients/reality_bc_today.png " />
 
-Note:
+Notes:
+
 Intro to next slide:
 Here is how this is happening in reality at the moment, or how one could possibly connect to the network today
 
@@ -113,7 +117,8 @@ node client</div>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
 
-Note:
+Notes:
+
 This is the reality of how things really are today
 
 WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS apps or any custom one) today:
@@ -136,7 +141,8 @@ WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS apps
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
 
-Note:
+Notes:
+
 (Read slides)
 
 ---v
@@ -160,7 +166,8 @@ Note:
   <!-- .element: class="fragment" data-fragment-index="3" -->
 </pba-cols>
 
-Note:
+Notes:
+
 In the 3rd party case the user relies on the 3rd party node to connect to, in order to communicate with the network.
 (audience) With a show of hands Why this needs fixing?
 Possibility of censorship or hijacking
@@ -194,7 +201,8 @@ Front running is the act of placing a transaction in a queue with the knowledge 
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Note:
+Notes:
+
 When I joined the team of substrate connect, I asked this same question.. And the response I got was…. (\*)
 Back then I was like… “Yeah – thanks I guess”
 
@@ -229,7 +237,8 @@ But that was actually true!
 <!-- .element: class="fragment" data-fragment-index="5" -->
 </ul>
 
-Note:
+Notes:
+
 Before anything else – lets remember the node types in the network
 
 (......After the Clicks!....)
@@ -258,7 +267,8 @@ on demand;
 <!-- .element: class="fragment" data-fragment-index="4" -->
 </ul>
 
-Note:
+Notes:
+
 Read the slides
 
 ---v
@@ -282,7 +292,8 @@ Read the slides
 <img rounded style="width: 100%" src="../../../assets/img/Light-clients/know-who-to-trust.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-Note:
+Notes:
+
 As we know Substrate chains provides the concept of FINALITY which is VERY important for the light clients!
 
 Once a block has been finalized, it is guaranteed to always be part of the best chain. By extension, the parent of a finalized block is always finalized as well etc etc
@@ -381,7 +392,8 @@ ready</div>
   </pba-col>
 </pba-cols>
 
-Note:
+Notes:
+
 Now… Concerning the Polkadot solution of light clients for all substrate chains…
 
 (click through the slide)
@@ -418,7 +430,7 @@ Lets be more specific now, and clarify few things in the Polkadot Ecosystem
 
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
-Note:
+Notes:
 
 - smoldot-light-js (/wasm-node): A JavaScript package that can connect to a Substrate-based chains as a light client. Works both in the browser and in NodeJS/Deno. This is the main component of this repository.
 - smoldot (/lib): An unopinionated Rust library of general-purpose primitives that relate to Substrate and Polkadot. Serves as a base for the other components.
@@ -461,7 +473,7 @@ Note:
 
 ### Each tab opens its own connections
 
-<img style="width: 90%" src="../../../assets/img/Light-clients/exampletabs.png" />
+<img style="width: 90%" src="../../../assets/img/Light-clients/example-tabs.png" />
 
 ---
 
