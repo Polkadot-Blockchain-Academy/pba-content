@@ -12,7 +12,7 @@ duration: 1 hour
 
 A PAB is a bytecode that follows two main principles: 
 
-- Turing Completness, as a standard bytecode would respect 
+- Turing Completeness, as a standard bytecode would respect 
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -128,7 +128,7 @@ Features that a PAB should follow:
 Notes:
 
 + Hardware Independence: It should not be tightly related to a specific architecture, otherwise the execution on different machine could be convoluted
-+ Efficency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
++ Efficiency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
 + Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
 + Support as Compilation Target: The PAB should be possible to be compiled by as many as possible High Level languages 
 
@@ -149,7 +149,7 @@ A SmartContract is *Arbitrary Code* that should be executed by multiple nodes, w
 
 Notes: 
 
-Security is one of the main issue of a blockchain, this is one of the most important features for a PAB in a decentralized network, an users can't be able to create malicius code that is capable od destroy a node or simply slow down the network.
+Security is one of the main issue of a blockchain, this is one of the most important features for a PAB in a decentralized network, an users can't be able to create malicious code that is capable od destroy a node or simply slow down the network.
 
 Of course the security can be seen by various point of view and some examples are:
 + Compilation takes too much time -> compiling bomb
@@ -365,9 +365,9 @@ The Rust compiler uses for dynamic/heap memory and to pass non primitives values
 
 Notes: 
 
-Here's an example, wasm sees linear memory like a byte array and if it tries to acces the second byte, it would use an index 1. When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base\_linear\_memory + 1.
+Here's an example, wasm sees linear memory like a byte array and if it tries to access the second byte, it would use an index 1. When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base\_linear\_memory + 1.
 
-Buffer overlow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information. Even if the offset is only positive there are embedders that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
+Buffer overflow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information. Even if the offset is only positive there are embedders that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
 
 ---
 
@@ -389,7 +389,7 @@ There are multiple ways to execute wasm:
 
 Notes: 
 
-AOT: Compile all the code at the beginning, this allows to makes a lot of improvement to the final code efficency
+AOT: Compile all the code at the beginning, this allows to makes a lot of improvement to the final code efficiency
 JIT: The code is compiled only when needed, examples are functions that are compiled only when called, this leave space only to partials improvements
 SPC: This is a specific technique of compilation that is made in linear time, the compilation is done only passing once on the code
 Interpretation: The wasm blob is treated as any other interpreted language and executed in a Virtual Machine
@@ -399,13 +399,16 @@ Interpretation: The wasm blob is treated as any other interpreted language and e
 ### Wasmtime
 
 - It is a stand alone wasm environment
-- The techniques of execution are AOT or JIT 
+- Wasmtime is built on the optimizing Cranelift code generator to quickly generate high-quality machine code either at runtime (JIT) or ahead-of-time (AOT)
 - It executes the compiled wasm blob in sanboxed environment while keeping everything extremely secure
+
 
 Notes: 
 
 + wasmtime book: https://docs.wasmtime.dev/
 + Used in substrate as embedder for the blockchain logic
+
+Cranelift is a fast, secure, relatively simple and innovative compiler backend. It takes an intermediate representation of a program generated by some frontend and compiles it to executable machine code
 
 ---v
 
@@ -415,7 +418,7 @@ Notes:
 - Focus on simple, correct and deterministic WebAssembly execution
 - The technique of execution is interpretation but:
   - The wasm code is transpiled to WASMI IR, another stack-based bytecode
-  - The WASMIM IR is then interpreted by a Virtual Machine
+  - The WASMI IR is then interpreted by a Virtual Machine
 
 Notes:
 
@@ -433,13 +436,10 @@ There are also light clients, where both Runtime and Client are implemented in w
   - the node's client as embedder for the node's runtime
     - the node's runtime as embedder for the SmartContract
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <img style="height: 30vh" src="img/pab/mind-blown-explosion.gif" alt="mind blow explosion" />
-<!-- .element: class="fragment" data-fragment-index="2" -->
 
 We have a double recursion of a PAB that embed itself
-<!-- .element: class="fragment" data-fragment-index="2" -->
 
 -->
 
@@ -452,21 +452,20 @@ We have a double recursion of a PAB that embed itself
 ## EVM
 
 - The **Ethereum Virtual Machine** executes a stack machine
-  - Interesting: here the bytecode was create to be executed in a blockchain, so instructions are not hardware-dependent but there are instruction tightly realated to Cryptography and others blockchain field 
-- There is a transient linear memory for each contract (?)
+  - Interesting: here the bytecode was create to be executed in a blockchain, so instructions are not hardware-dependent but there are instruction tightly related to Cryptography and others blockchain instructions
 
 ---v
 
 ## CosmWasm
 
-- Wasm is always uesed but the used different tools
+- Wasm is always used but with different tools
 - They use CosmWasm as Embedder and internally is used Wasmer, a Single Pass Compiler
 
 ---v
 
 ## Solana eBPF
 
-- eBPF is used as PAB, but intrinsecaly eBPF has a lot of restrictions
+- eBPF is used as PAB, but intrinsically eBPF has a lot of restrictions
 - Solana forked the eBPF backend of LLVM to makes every program to be compiled in eBPF
 - The Embedder is rbpf, a virtual machine for eBPF programs
 
@@ -484,14 +483,12 @@ https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
   
 </br>
 
-Being so simple and "Hardware-Indendent" there are work in progress projects to test if it is suitable to become the new polkadot smart contract language
+Being so simple and "Hardware-Independent" there are work in progress experiments to test if it is suitable to become the new polkadot smart contract language
   
 Notes: 
-resources: polkadot blogpost - polkavm + risc-v specs
+Discussion about using RISC-V as smart contract language: https://forum.polkadot.network/t/exploring-alternatives-to-wasm-for-smart-contracts/2434
 
----
-
-All refereces can be found in the speaker notes
+RISC-V Instruction Set Manual, Unprivileged ISA: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf
 
 ---
 
