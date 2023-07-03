@@ -332,22 +332,16 @@ Notes:
   - The upward messages sent
   - Is there a runtime upgrade to schedule?
 
----
+---v
 
-### Data Availability Protocol
-
-- The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
+#### Candidate Recepeit
 
 - The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Recepeit** to represent the freshly validated block
 
-- But the PoV must remain available after backing, since it will be used to validate the block during the approvals process.
+Notes:
 
----v
-
-#### The Availability Process
-
-- Erasure coding is applied to the PoV
-- At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available 
+The Candidate Recepeit contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
+The Candidate Recepeit only represents a PoV, it does not substitute it
 
 ---
 
@@ -554,19 +548,46 @@ Finality now is not anymore up to the parachain but the collators needs to follo
 
 ### Ensuring Block Availability
 
-- On a solo chain a block gets part of the canonical chain by:
-  - Being distributed to other nodes in the network
-  - Being a valid block that can be imported by a majority of the validators
-- On a Parachain a block only needs to be accepted by the relay chain validators to be part of the canonical chain
-- The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
-- So, the relay chain could expect some parent block for the next block that no one is aware of
+- The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
+
+- Why is needed?
+  - The PoV must remain available after backing, since it will be used to validate the block during the approvals process.
+  - Collator can send a block to the relay chain without distributing it in the Parachain network, if accepted then new blocks should be build on top of an unknown parent
+
+---v
+
+#### Malicious collator example
+
+<div class="r-stack">
+<img src="../assets/malicious_collator_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/malicious_collator_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="../assets/malicious_collator_3.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
 
 Notes:
+
+- On a Parachain a block only needs to be accepted by the relay chain validators to be part of the canonical chain, problem:
+- The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
+- So, the relay chain could expect some parent block for the next block that no one is aware of
 
 - Collators can be malicious and just do not propagate their block in the network
 - Collators could crash after sending the block to the relay chain, but before propagating it in the Parachain network.
 
+---v
+
+#### The Availability Process
+
+- Erasure coding is applied to the PoV
+- At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available 
+
+<img src="../assets/malicious_collator_4.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 ---
+<!-- Commented temorary, I still need to understand this piece of code properly to insert it in the slides
 
 ### Ensuring Block Availability
 
@@ -592,19 +613,17 @@ loop {
 }
 ```
 
-Notes:
+Commented Notes
 
 - PoV recovery
 - Relay chain stores the PoVs for 24 hours
 - Every node relay chain/parachain can ask the relay chain validators for their piece to restore the PoV
-
----
+-->
 
 ## Runtime Upgrades
 
 - Every Substrate blockchain supports runtime upgrades
 <!-- .element: class="fragment" data-fragment-index="0" -->
-
 
 ##### Problem
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -626,7 +645,7 @@ Now almost every change to the client and the runtime of the substrate based-cha
 
 ---v
 
-##### Solution
+##### Solutio
 
 Relay chain needs a fairly hard guarantee that the PVFs can be compiled within a reasonable amount of time
 <!-- .element: class="fragment" data-fragment-index="0" -->
