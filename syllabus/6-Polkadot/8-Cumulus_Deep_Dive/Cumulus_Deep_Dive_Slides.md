@@ -428,11 +428,11 @@ Notes:
 
 - Being part of the relay chain network the collator:
   - is able to pass collations to validators
-  - is informed of new relay chain blocks <!--keeping active the block production and consensus logic-->
+  - is informed of new relay chain blocks 
 
 Notes:
 
-the collator could also run a separeted RPC node
+the collator could also run a separated RPC node
 
 ---
 
@@ -467,43 +467,42 @@ It can be run as an in-process full-node or a separate RPC node.
 
 ### Parachain System Pallet 
 
+**Handles low-level details of being a parachain**
 
-```rust
-//! `cumulus-pallet-parachain-system` handles low-level details
-//! of being a parachain.
-/// It's responsibilities include:
-//!
-//! - ingestion of the parachain validation data
-//! - ingestion of incoming downward and horizontal
-//!   messages and dispatching them
-//! - coordinating upgrades with the relay-chain
-//! - communication of parachain outputs, such as
-//!   sent messages, signalling an upgrade, etc.
-```
+</br>
+
+- Responsibilities:
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+  - ingestion of the parachain validation data
+  - ingestion and dispatch of incoming downward and lateral messages
+  - coordinating upgrades with the Relay Chain
+  - communication of parachain outputs, such as sent messages, signaling an upgrade, etc
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 
----
+Notes: 
 
-### Finality
-
-```rust
-loop {
-    let finalized = finalized_relay_chain_blocks_stream.next().await;
-
-    let parachain_block = match get_parachain_block_for_relay_chain_block(finalized) {
-        Some(b) => b,
-        None => continue,
-    };
-
-    set_finalized_parachain_block(parachain_block);
-}
-```
+code: https://github.com/paritytech/cumulus/blob/de80e29608c42f6a7b2557eee017eab178ef9c94/pallets/parachain-system/src/lib.rs#L19
 
 ---
 
-### Triggering Block Authoring
+### Consensus Mechanism
 
-```rust
+The parachain node is modified to become a Collator able to: 
++ achieve sequencing consensus
+<!-- .element: class="fragment" data-fragment-index="1" -->
++ leave finality to the relay chain
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---v
+
+### Sequencer Consensus
+
+The Collators need to author new blocks, they do so on new relay chain block import
+
+```rust[2|4-8|10]
 loop {
     let imported = import_relay_chain_blocks_stream.next().await;
 
@@ -517,11 +516,39 @@ loop {
     }
 }
 ```
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
 - `parachain_trigger_block_authoring` itself can decide if it wants to build a block.
 - e.g. the parachain having a block time of 30 seconds
+
+---v
+
+### Finality
+
+Being part also of the relay chain network implies to inherit the finality from the inclusion of a block in the relay-chain
+
+</br>
+
+```rust[2|4-8|10]
+loop {
+    let finalized = finalized_relay_chain_blocks_stream.next().await;
+
+    let finalized_parachain_block = 
+      match get_parachain_block_from_relay_chain_block(finalized) {
+        Some(b) => b,
+        None => continue,
+    };
+
+    set_finalized_parachain_block(finalized_parachain_block);
+}
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+
+Finality now is not anymore up to the parachain but the collators needs to follow the relay-chain block production to understand which block to use to continue building on
 
 ---
 
