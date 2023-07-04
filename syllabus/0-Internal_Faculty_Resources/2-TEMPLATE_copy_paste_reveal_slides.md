@@ -624,6 +624,457 @@ More info: https://revealjs.com/math/
 
 ---
 
+## Charts
+
+<p>
+A plugin for Reveal.js allowing to easily add charts using Chart.js.
+</p>
+
+<p style="font-size: 1.2rem; margin-top: 1.2rem; color: #999;">There is a known bug:<br /> Chart (meaning the < canvas > tag) needs to be in a full HTML slide (no md allowed); this means that the whole slide that contains a chart MUST be written in plain HTML.
+
+---v
+<canvas data-chart="line" style="height: 300px">
+
+<!--
+{
+ "data": {
+  "labels": ["January"," February"," March"," April"," May"," June"," July"],
+  "datasets":[
+   {
+    "data":[4,7,10,25,56,78,140],
+    "label":"Polkadot","backgroundColor":"#E6007A"
+   },
+   {
+    "data":[10,27,40,75,80,155,340],
+    "label":"Kusama","backgroundColor":"#000"
+   }
+  ]
+ }
+}
+-->
+</canvas>
+
+---v
+
+### The code
+
+```html
+<canvas data-chart="line" style="height: 300px">
+  <!--
+{
+ "data": {
+  "labels": ["January"," February"," March"," April"," May"," June"," July"],
+  "datasets":[
+   {
+    "data":[4,7,10,25,56,78,140],
+    "label":"Polkadot","backgroundColor":"#E6007A"
+   },
+   {
+    "data":[10,27,40,75,80,155,340],
+    "label":"Kusama","backgroundColor":"#000"
+   }
+  ]
+ }
+}
+-->
+</canvas>
+```
+
+<pba-flex left>
+  Note : < !-- and --> are intentional
+</pba-flex>
+
+---v
+
+<section style="margin-top: 100px">
+  <h5>Bar chart with CSV data</h5>
+  <div style="height:480px">
+  <canvas data-chart="bar" >
+    January, February, March, April, May, June, July
+    My first dataset, 65, 59, 80, 81, 56, 55, 40
+    My second dataset, 28, 48, 40, 19, 86, 27, 90
+  </canvas>
+  </div>
+</section>
+
+---v
+
+### Previous slides' code:
+
+```html
+<section style="margin-top: 100px">
+  <h5>Bar chart with CSV data</h5>
+  <div style="height:480px">
+    <canvas data-chart="bar">
+      January, February, March, April, May, June, July My first dataset, 65, 59, 80, 81, 56, 55, 40 My second dataset,
+      28, 48, 40, 19, 86, 27, 90
+    </canvas>
+  </div>
+</section>
+```
+
+---v
+
+<section style="margin-top: 100px">
+  <h5>Stacked bar chart from CSV file with JSON configuration</h5>
+  <div style="height:480px">
+  <canvas data-chart="bar" data-chart-src="./data.csv">
+    <!--
+    {
+    "data" : {
+    "datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+    },
+    "options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
+    }
+    -->
+  </canvas>
+  </div>
+  <div style="font-size:1.2rem">(There is a data.csv file located under same dir in order for this slide to work</div>
+</section>
+
+---v
+
+### Previous slide's code:
+
+```html
+<section style="margin-top: 100px">
+  <h5>Stacked bar chart from CSV file with JSON configuration</h5>
+  <div style="height:480px">
+    <canvas data-chart="bar" data-chart-src="./data.csv">
+      <!--
+    {
+    "data" : {
+    "datasets" : [{ "backgroundColor": "#0f0" }, { "backgroundColor": "#0ff" } ]
+    },
+    "options": { "scales": { "x": { "stacked": true }, "y": { "stacked": true } } }
+    }
+    -->
+    </canvas>
+  </div>
+</section>
+```
+
+---
+
+# Mermaid Diagrams
+
+[Mermaid](https://mermaid.js.org) lets you create diagrams and visualizations using text and code.
+
+It is a JavaScript based diagramming and charting tool that renders Markdown-inspired text definitions to create and modify diagrams dynamically.
+
+First of all lets see some examples of diagrams that Mermaid can show with its integration with revealJS;
+
+---v
+
+### [A Flowchart](https://mermaid.js.org/syntax/flowchart.html)
+
+  <diagram class="mermaid">
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+    flowchart TD
+      A(Start) --> B{Is it?};
+      B -- Yes --> C(OK);
+      C --> D(Rethink);
+      D --> B;
+      B -- No ----> E(End);
+  </diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+  <diagram class="mermaid">
+    %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+    flowchart TD
+      A(Start) --> B{Is it?};
+      B -- Yes --> C(OK);
+      C --> D(Rethink);
+      D --> B;
+      B -- No ----> E(End);
+  </diagram>
+```
+
+---v
+
+### Entity relationship diagram
+
+<diagram class="mermaid">
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    erDiagram
+    Node ||--o{ Wallet : places_order
+    Wallet ||--|{ Account : owner
+    Node }|..|{ Some-IP : uses
+</diagram>
+```
+
+---v
+
+### Sequence diagram
+
+<diagram class="mermaid">
+  sequenceDiagram
+      Alice->>John: Hello John, how are you?
+      John-->>Alice: Great!
+      Alice-)John: See you later!
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+  sequenceDiagram
+      Alice->>John: Hello John, how are you?
+      John-->>Alice: Great!
+      Alice-)John: See you later!
+</diagram>
+```
+
+---v
+
+### Class Diagram
+
+<diagram class="mermaid">
+    classDiagram
+      note "From Duck till Zebra"
+      Animal <|-- Duck
+      note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
+      Animal <|-- Fish
+      Animal <|-- Zebra
+      Animal : +int age
+      Animal : +String gender
+      Animal: +isMammal()
+      Animal: +mate()
+      class Duck{
+          +String beakColor
+          +swim()
+          +quack()
+      }
+      class Fish{
+          -int sizeInFeet
+          -canEat()
+      }
+      class Zebra{
+          +bool is_wild
+          +run()
+      }
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    classDiagram
+      note "From Duck till Zebra"
+      Animal <|-- Duck
+      note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
+      Animal <|-- Fish
+      Animal <|-- Zebra
+      Animal : +int age
+      Animal : +String gender
+      Animal: +isMammal()
+      Animal: +mate()
+      class Duck{
+          +String beakColor
+          +swim()
+          +quack()
+      }
+      class Fish{
+          -int sizeInFeet
+          -canEat()
+      }
+      class Zebra{
+          +bool is_wild
+          +run()
+      }
+</diagram>
+```
+
+---v
+
+### State diagram (v2)
+
+<diagram class="mermaid">
+  stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+  stateDiagram-v2
+    [*] --> Still
+    Still --> [*]
+
+    Still --> Moving
+    Moving --> Still
+    Moving --> Crash
+    Crash --> [*]
+</diagram>
+```
+
+---v
+
+### User Journey
+
+<diagram class="mermaid">
+  journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    journey
+    title My working day
+    section Go to work
+      Make tea: 5: Me
+      Go upstairs: 3: Me
+      Do work: 1: Me, Cat
+    section Go home
+      Go downstairs: 5: Me
+      Sit down: 5: Me
+</diagram>
+```
+
+---v
+
+### Gantt
+
+<diagram class="mermaid">
+    gantt
+      apple :a, 2017-07-20, 1w
+      banana :crit, b, 2017-07-23, 1d
+      cherry :active, c, after b a, 1d
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    gantt
+      apple :a, 2017-07-20, 1w
+      banana :crit, b, 2017-07-23, 1d
+      cherry :active, c, after b a, 1d
+</diagram>
+```
+
+---v
+
+### Pie Chart
+
+<diagram class="mermaid">
+    pie title Pets adopted by volunteers
+      "Dogs" : 386
+      "Cats" : 85
+      "Rats" : 15
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    pie title Pets adopted by volunteers
+      "Dogs" : 386
+      "Cats" : 85
+      "Rats" : 15
+</diagram>
+```
+
+---v
+
+### Git Graph
+
+<diagram class="mermaid">
+    gitGraph
+      commit
+      commit
+      branch develop
+      checkout develop
+      commit
+      commit
+      checkout main
+      merge develop
+      commit
+      commit
+</diagram>
+
+---v
+
+### And its code
+
+<!-- prettier-ignore -->
+```html
+<diagram class="mermaid">
+    gitGraph
+      commit
+      commit
+      branch develop
+      checkout develop
+      commit
+      commit
+      checkout main
+      merge develop
+      commit
+      commit
+</diagram>
+```
+
+---v
+
+### Useful links
+
+- [Mermaid Syntax](https://mermaid.js.org/syntax/flowchart.html)
+- [Mermaid Live Editor with examples](https://mermaid.live/)
+
+---
+
 # More help needed?
 
 _Please reach out to the academy content & docs team on element for support!_

@@ -23,6 +23,8 @@ We have now learnt about the XCVM and FRAME.
 
 The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
 
+**It also allows us to send/execute XCM and interact with the XCM executor**.
+
 ---
 
 ## How XCM is expected to be used
@@ -34,6 +36,28 @@ Instead, _parachain developers_ write XCVM programs, and package them up into FR
 Notes:
 
 We will see an example of this in the XCM pallet, with the teleport_assets and reserve_transfer_assets extrinsics.
+
+---
+
+### Key roles of `pallet-xcm`
+
+<pba-flex center>
+
+1. Allows to interact with the `xcm-executor` by executing xcm messages.
+   These can be filtered through the `XcmExecuteFilter`.
+1. Provides an easier interface to do reserve based transfers and teleports.
+   The origins capable of doing these actions can be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`.
+1. Handles XCM version negotiation duties.
+1. Handles asset-trap/claim duties.
+1. Allows sending arbitrary messages to other chains for certain origins.
+   The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
+
+</pba-flex>
+
+Notes:
+
+- Even when `palletXcm` allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls.
+  In the case of the latter, it appends the `DescendOrigin` instruction to make sure non-root origins cannot act on behalf of the parachain.
 
 ---
 
@@ -241,13 +265,32 @@ The above instruction is the one used for offering some requested information th
 TODO: Less implementation details. Describe the scenario and why it's important.
 Why are these traits implemented here? Because they need storage, FRAME gives us that.
 
-## Asset Trapping
+## Asset Trap/Claims with `pallet-xcm`
 
-What happens when there are still funds in the `HoldingRegister` after the execution of every instruction is done ?
+What happens when there are still funds in the holding register after the execution of every instruction is done?
 
-`pallet-xcm` implements the `DropAssets` trait which defines what to do with the funds. The current implementation traps these assets by adding an asset trap. Then, these funds will need to be eventually claimed back by the same origin via `AssetClaims` instruction, which requires the implementation of `ClaimAssets` trait.
+- `AssetTrap` determines what to do with assets that remain; any type that implements `DropAssets` can be an `AssetTrap`.
+- `AssetClaim` determines how to reclaim assets that were trapped; any type that implements `AssetClaims` can be an `AssetClaim`.
 
-These traps are stored in `AssetTraps`, a map where the key is the blake2 (256bits) of the `(origin, assets)` tuple. The storage value is the number of times this tuple has been trapped. The user have to perform as many claims as traps occured.
+Notes:
+
+- Any situation in which the holding register contains assets after the execution of the XCM message would lead to asset trapping.
+- This is handled in the `post_execute` function of the xcm-executor.
+
+---v
+
+## Asset Trap/Claims with `pallet-xcm`
+
+- **`pallet-xcm` asset trapper**: Trapped assets are stored in the `AssetTraps` storage item and indexed by `BlakeTwo256((origin, assets))`
+
+- **`pallet-xcm` asset claimer**: `pallet-xcm` also allows for claiming trapped assets, providing that:
+  - the origin claiming the assets is identical to the one that trapped them.
+  - the `Asset` being claimed is identical to the one that was trapped
+
+Notes:
+
+- Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `Asset`.
+- Every time such `Asset` gets reclaimed, the counter decrements by one.
 
 ---
 

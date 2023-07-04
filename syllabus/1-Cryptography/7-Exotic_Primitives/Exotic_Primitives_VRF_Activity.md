@@ -24,7 +24,7 @@ Or we can simplify bidding etc.
 - One good way to get an input is for all players to do a commit-reveal and combine the results, however you could choose whatever technique you'd like.
 - Players know their own VRF output (i.e. the cards in their hand), but other players don't until the game calls for them to reveal their card, by publishing a VRF output.
 
-You can choose what VRF library you want to use, though we recommend the [sp_consensus_vrf Rust crate](https://paritytech.github.io/substrate/master/sp_consensus_vrf/schnorrkel/index.html).
+You can choose what VRF library you want to use, though we recommend the [`schnorrkel` Rust crate](https://github.com/w3f/schnorrkel).
 
 ## Ways this protocol fails to simulate actual card drawing
 
