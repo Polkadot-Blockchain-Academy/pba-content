@@ -152,13 +152,13 @@ XCM abstracts away the actual on-chain operation that will be called, which lets
 
 ### No one-to-one mapping
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     subgraph Message
         WithdrawAsset(WithdrawAsset)-->DepositAlice("DepositAsset(Alice)")
         DepositAlice-->DepositBob("DepositAsset(Bob)")
     end
-```
+</diagram>
 
 Notes:
 
@@ -169,11 +169,11 @@ Using transactions, you'd have to send many messages to achieve this.
 
 ### Different assumptions
 
-```mermaid
+<diagram class="mermaid">
 graph LR
     A(Chain A)--"Pays for fees"-->B(Chain B)
     A--"Doesn't pay for fees"-->C(Chain C)
-```
+</diagram>
 
 Notes:
 
@@ -281,7 +281,7 @@ It is always represented as a location _relative_ to the current consensus syste
 
 ## Location hierarchy
 
-```mermaid
+<diagram class="mermaid">
 graph TD;
     Relay(Relay)-->A(Parachain A)
     Relay-->B(Parachain B)
@@ -290,7 +290,7 @@ graph TD;
     A-->Pallet(Pallet Contracts)
     Pallet-->SCA(Smart Contract A)
     Pallet-->SCB(Smart Contract B)
-```
+</diagram>
 
 Notes:
 
@@ -340,13 +340,13 @@ Junctions are ways to descend the location hierarchy
 
 We can imagine a hypothetical location that contains all top-level consensus systems.
 
-```mermaid
+<diagram class="mermaid">
 graph TD;
     UniversalLocation(Universal Location)-->RelayA(Relay A)
     UniversalLocation-->RelayB(Relay B)
     RelayA-->BranchA(...)
     RelayB-->BranchB(...)
-```
+</diagram>
 
 ---v
 
@@ -390,11 +390,11 @@ Since `Location`s are relative, when an XCM gets sent over to another chain, the
 
 `../Parachain(1001)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub("📍 AssetHub (1000)")
     Polkadot-->Collectives("Collectives (1001)")
-```
+</diagram>
 
 Notes:
 
@@ -406,14 +406,14 @@ What does the location resolve to if evaluated on Parachain(1000)?
 
 `../Parachain(1001)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub("📍 AssetHub (1000)")
     Polkadot-->Collectives("Collectives (1001)")
     AssetHub-->Polkadot
     linkStyle 0 opacity:0.3
     linkStyle 2 stroke-dasharray:5
-```
+</diagram>
 
 ---v
 
@@ -421,12 +421,12 @@ graph TD
 
 `../AccountId32(0x1234...cdef)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot-->AssetHub("📍 AssetHub (1000)")
     Polkadot-->Collectives("Collectives (1001)")
     Polkadot-->Account("AccountId32 (0x1234...cdef)")
-```
+</diagram>
 
 Notes:
 
@@ -438,7 +438,7 @@ What does the location resolve to if evaluated on Parachain(1000)?
 
 `../AccountId32(0x1234...cdef)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub("📍 AssetHub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -448,7 +448,7 @@ graph TD
     linkStyle 1 opacity:0.3
     linkStyle 3 stroke-dasharray:5
     classDef disabled opacity:0.3
-```
+</diagram>
 
 ---v
 
@@ -456,12 +456,12 @@ graph TD
 
 `Parachain(1000)/AccountId32(0x1234...cdef)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot("📍 Polkadot")-->AssetHub("AssetHub (1000)")
     Polkadot-->Collectives("Collectives (1001)")
     AssetHub-->Account("AccountId32 (0x1234...cdef)")
-```
+</diagram>
 
 Notes:
 
@@ -473,14 +473,14 @@ What does the location resolve to if evaluated on the relay chain?
 
 `Parachain(1000)/AccountId32(0x1234...cdef)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot("📍 Polkadot")-->AssetHub("AssetHub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
     AssetHub-->Account("AccountId32 (0x1234...cdef)")
     linkStyle 1 opacity:0.3
     classDef disabled opacity:0.3
-```
+</diagram>
 
 ---v
 
@@ -488,7 +488,7 @@ graph TD
 
 `../../GlobalConsensus(Kusama)/Parachain(1000)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Universe(Universal Location)-->Polkadot(Polkadot)
     Universe-->Kusama(Kusama)
@@ -499,7 +499,7 @@ graph TD
     AssetsPallet-->Asset(USDT)
     Kusama-->KusamA("Asset Hub (1000)")
     Kusama-->KusamB(Bridge Hub)
-```
+</diagram>
 
 Notes:
 Speak to an example of non-parachain multi-location that would use a bridge
@@ -512,7 +512,7 @@ This will be very powerful later on (Origins)
 
 `../../GlobalConsensus(Kusama)/Parachain(1000)`
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Universe(Universal Location)-->Polkadot(Polkadot)
     Universe-->Kusama(Kusama)
@@ -535,7 +535,7 @@ graph TD
     linkStyle 9 stroke-dasharray:5
     linkStyle 10 stroke-dasharray:5
     classDef disabled opacity:0.3
-```
+</diagram>
 
 Notes:
 
@@ -616,14 +616,14 @@ In reality, it's better to use the counted variant of the wildcards, for benchma
 
 How do different locations reference the same asset?
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)")
     AssetHub-->Alice(Alice)
     AssetHub-->AssetsPallet(Pallet Assets)
     AssetsPallet-->Asset(USDT)
-```
+</diagram>
 
 Notes:
 
@@ -633,7 +633,7 @@ Locations are relative, so they must be updated and rewritten when sent to anoth
 
 ### DOT from Asset Hub
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub("📍 Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -648,7 +648,7 @@ graph TD
     linkStyle 4 opacity:0.3
     linkStyle 5 stroke-dasharray:5
     classDef disabled opacity:0.3
-```
+</diagram>
 
 `../Here`
 
@@ -660,7 +660,7 @@ Native tokens are referenced by the location to their system.
 
 ### DOT from Alice
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -677,7 +677,7 @@ graph TD
     linkStyle 5 stroke-dasharray:5
     linkStyle 6 stroke-dasharray:5
     classDef disabled opacity:0.3
-```
+</diagram>
 
 `../../Here`
 
@@ -685,7 +685,7 @@ graph TD
 
 ### Universal Location of DOT
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Universe("📍 Universal Location")-->Polkadot(Polkadot)
     Polkadot-->AssetHub("Asset Hub (1000)"):::disabled
@@ -699,7 +699,7 @@ graph TD
     linkStyle 4 opacity:0.3
     linkStyle 5 opacity:0.3
     classDef disabled opacity:0.3
-```
+</diagram>
 
 `GlobalConsensus(Polkadot)`
 
@@ -707,7 +707,7 @@ graph TD
 
 ### USDT from Asset Hub
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot):::disabled-->AssetHub("📍 Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -718,7 +718,7 @@ graph TD
     linkStyle 1 opacity:0.3
     linkStyle 2 opacity:0.3
     classDef disabled opacity:0.3
-```
+</diagram>
 
 `PalletInstance(50)/GeneralIndex(1984)`
 
@@ -726,7 +726,7 @@ graph TD
 
 ### USDT from Collectives
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("📍 Collectives (1001)")
@@ -738,7 +738,7 @@ graph TD
     linkStyle 2 opacity:0.3
     linkStyle 5 stroke-dasharray:5
     classDef disabled opacity:0.3
-```
+</diagram>
 
 `../Parachain(1000)/PalletInstance(50)/GeneralIndex(1984)`
 
@@ -746,7 +746,7 @@ graph TD
 
 ### Reanchoring to the rescue
 
-```mermaid
+<diagram class="mermaid">
 graph LR
     Collectives(Collectives)-->USDTCollectives
     subgraph OutgoingMessage[Outgoing message]
@@ -757,7 +757,7 @@ graph LR
         USDTAssetHub(USDT from Asset Hub's perspective)
     end
     USDTAssetHub-->AssetHub(Asset Hub)
-```
+</diagram>
 
 <!-- TODO: Here it would be better to link to the subgraphs themselves, but we need a newer version of MermaidJS for that -->
 
@@ -773,12 +773,12 @@ The two ways of transferring assets between consensus systems are teleports and 
 
 ### Sovereign Accounts
 
-```mermaid
+<diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->AssetHub(Asset Hub) & Collectives(Collectives)
     AssetHub-->Alice(Alice)
     Collectives-->AliceSA("Alice's sovereign account")
-```
+</diagram>
 
 Notes:
 
