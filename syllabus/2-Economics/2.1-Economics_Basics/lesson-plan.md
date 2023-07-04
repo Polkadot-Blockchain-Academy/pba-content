@@ -28,7 +28,8 @@ We want to go through the following concepts:
 - Understanding Incentives
 - Demand & Supply
 - Market Forms
-- The economics of Specialization
+- The Economics of Specialization
+- Time as Ultimate Resource
 - Behavioral Biases
 
 ### Activity: (90-120min)
