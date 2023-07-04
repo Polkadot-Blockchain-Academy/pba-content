@@ -92,7 +92,7 @@ Other examples of PABs used right now:
 
 - Portability
 <!-- .element: class="fragment" data-fragment-index="1" -->
-    - Block Hardware Centralization
+    - Avoid Hardware Centralization
 <!-- .element: class="fragment" data-fragment-index="3" -->
 - Determinism
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -144,7 +144,7 @@ A sandboxed environment must be created by the executor of the PAB.
 
 </br>
 
-A SmartContract is *Arbitrary Code* that should be executed by multiple nodes, we don't want SmartContracts capable of destroying the nodes on which they are executed 
+A SmartContract is *Arbitrary Code* that may be executed on other people's infrastructure, we don't want SmartContracts capable of destroying the nodes on which they are executed 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes: 
@@ -283,7 +283,7 @@ There is another type of stack used in wasm and that's called: shadow stack, res
 
 ## Wasm seems to be a perfect PAB, but
 
-- How works the communication with the environemt?
+- How does communication with the environment work?
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - How the memory is managed?
 <!-- .element: class="fragment" data-fragment-index="2" -->
