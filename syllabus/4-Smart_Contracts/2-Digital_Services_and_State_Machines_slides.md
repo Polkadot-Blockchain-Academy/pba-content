@@ -39,6 +39,11 @@ Cryptographic guarantees are about interactions with the service provider, not p
 
 <img style="width: 300px;" src="./img/Web2.png" />
 
+Notes:
+
+TODO Maybe add a second version of this image where it is a little mesh of facebook servers connected with pink lines.
+This shows that there is at least redundancy for accident protection.
+
 ---v
 
 ## Digital Services
