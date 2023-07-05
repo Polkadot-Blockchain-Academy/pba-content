@@ -7,6 +7,14 @@ description: Principles of coordination, contracts, smart contracts, and compari
 
 ## Overview
 
+Notes:
+
+In this module we're going to talk about Smart Contracts.
+Before we can understand smart contracts and what makes them smart, we need to understand what contracts are in the first place.
+Afterall we are standing on the shoulders of giants here.
+And in order to understand what contracts are, we'll start all the way back at human coordination.
+We'll see that contracts are just a pretty good technology to achieve coordination, and that smart contracts are a improvement on that technology.
+
 ---
 
 ## Coordination
