@@ -36,6 +36,7 @@ Notes:
 
 EXERCISE: ask the class to raise hands and postulate on generally what one might do.
 We are expecting them to say transfers, but there are so many other things you could do, so many more problems worth solving with cross-chain:
+
 - One contract calling another contract
 - Credential checking
 - Voting
@@ -49,8 +50,8 @@ We are expecting them to say transfers, but there are so many other things you c
 - Cross-consensus asset transfers
 - Execute platform-specific actions such as governance voting
 - Enables single use-case chains
-    - [Collectives](https://github.com/paritytech/cumulus/tree/master/parachains/runtimes/collectives)
-    - Identity chains
+  - [Collectives](https://github.com/paritytech/cumulus/tree/master/parachains/runtimes/collectives)
+  - Identity chains
 
 Notes:
 
@@ -250,7 +251,9 @@ Notes:
 There are no results or callbacks.
 Any results must be separately communicated to the sender with an additional message.
 The receiver side can and does handle errors, but the sender will not be notified, unless the error handler specifically tries to send back an XCM that makes some sort of XCM that notifies status back to the origin, but such an action should be considered as constructing a separate XCM for the sole purpose of reporting information, rather than an intrinsic functionality built into XCM.
-XCM is a bit like REST. XCMP is a bit like TCP/IP. Not quite. Analogies can often hurt more than they help.
+XCM is a bit like REST.
+XCMP is a bit like TCP/IP but not quite.
+Analogies can often hurt more than they help.
 
 ---
 
@@ -497,8 +500,8 @@ graph TD
     PolkaA-->Alice(Alice)
     PolkaA-->AssetsPallet(Pallet Assets)
     AssetsPallet-->Asset(USDT)
-    Kusama-->KusamA("Asset Hub (1000)")
-    Kusama-->KusamB(Bridge Hub)
+    Kusama-->KusamaA("Asset Hub (1000)")
+    Kusama-->KusamaB(Bridge Hub)
 </diagram>
 
 Notes:
