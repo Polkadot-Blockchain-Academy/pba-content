@@ -47,27 +47,26 @@ Coordination is also what allows this team of workers, along with many others li
 Notes:
 There are so many examples of things we can achieve only through coordination, not as individuals, it would be impossible to list them all
 
+---v
 
-## Why Should We Coordinate?
+## Voluntarty vs Forced Coordination
 
-Coordination can happen by force / slavery
-Could also be voluntary.
-
-TODO figure of slavery. Or maybe two images juxtaposing voluntary and forced coordination. Like neighbors building a community center beside slaves building some building. Or indentured servants carrying heavy loads vs power lifters doing their sport.
+![](./img/overview/voluntary-coordination.jpeg)
+![](./img/overview/forced-coordination.jpeg)
 
 Notes:
 
+Coordiation can happen volunterily or by force.
 We could simply avoid considering slavery because it is immoral.
-And this is a really good heuristic btw; I recommend you all avoid slavery because it is immoral in your daily lives.
+And avoiding slavery is a really good heuristic btw; I recommend you all avoid slavery because it is immoral in your daily lives.
 
-We can also think of it as:
+But it's about more than that.
 We want to create conditions (incentives) where voluntary coordination can happen freely and easily.
 When we don't have these conditions, you do end up with slavery.
 Because eventually someone sees the potential of coordination and forces it to happen.
 
----
-
-primitive trade, dead weight loss, coordinating over time, this is another example of needing trust
+By building proper tools for voluntary coordination, we can help prevent forced coordination from happening in the first place.
+We can also help those who are enslaved coordinate to rise up for their liberation.
 
 ---
 
@@ -165,6 +164,15 @@ Promise can make a village of 100 shit in the same corner, but not 8 billion.
 
 ## Business and Trade
 
+primitive trade, dead weight loss, coordinating over time, this is another example of needing trust
+
+---v
+
+## Business and Trade 2
+
+TODO the three vertical slides i nthis column need to tell the story more clearly.
+We're trying to look at business, trade, money, finance as an example or case study, then generalize to contracts.
+
 One example is money, it allows strangers to coordinate over time because they don't have to hunt down the same person later to get the second half of the trade. They know that everyone else around them will accept the money for whatever goods and services they choose. In some ways the thing that is used for money is just a matter of convention. One thing we're going to try to do is make some improvements on money itself.
 
 ```
@@ -191,23 +199,31 @@ So how do we actually get people to keep their promises? Well, maybe social norm
 
 # Contracts :tada:
 
-Contracts are promises. They can involve money, but they can be so much more general than just money.
-traditionally, contracts are special promises that the government will enforce.
+- **Contracts are Promises**
+- Some involve money, but they're much **more general than just money**.
+- Traditionally, contracts are special promises that the **government will enforce**.
+
+Notes:
 
 The key idea is that the government is big enough to have power over individuals interacting, and if anyone tries to rip someone else off, the government will step in and make sure the contract is upheld.
 This allows us to interact as if we trusted each other. Then the stickiness sets in and people actually do start to trust each other.
 
 ---v
 
+# Promises with Force
+
+![](./img/overview/whitehouse-construction.jpeg)
+![](./img/overview/pyramid-construction.jpeg    ) <!-- .element: class="fragment" -->
+![](./img/overview/big-brother.jpeg) <!-- .element: class="fragment" -->
+
+Together, we build anything!
+
 This is the power of contracts!
-As long as the government fairly and reliably enforces them.
-
----v
-
-TODO figure of slave owners
 
 Notes:
+Contracts are promises that, thanks to their backing, are as powerful as the government itself.
 
+As long as the government fairly and reliably enforces them, we can get really far.
 Of course sometimes the government can be a lot like the slave owner.
 We need to watch out for that...
 
