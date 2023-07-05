@@ -573,6 +573,7 @@ a {
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
 
 /* work-sans-800italic - latin */
 @font-face {
