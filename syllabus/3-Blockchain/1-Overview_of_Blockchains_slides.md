@@ -233,7 +233,7 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ## A Shared History
 
-<img style="height: 500px;" src="img/sapiens.jpg" />
+<img style="height: 500px;" src="./img/sapiens.jpg" />
 
 Notes:
 
