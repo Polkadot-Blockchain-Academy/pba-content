@@ -233,24 +233,26 @@ We need to watch out for that...
 
 (to summarize)
 
-A way for strangers to trust each other within some limited scope to accomplish something together.
+A promise, made between parties, backed by the government, to coordinate together to accomplish something together.
+
+Notes:
+
+The notion of promise is very abstract.
+It could involve coordinating over time.
+It could involve money or even credit.
+It could have multiple possible valid outcomes.
 
 ---
 
 # Smart Contracts
 
-1. Expression
-2. Execution / Enforcement
+![](./img/overview/szabo.jpeg) <!-- .element: class="fragment" -->
 
 Notes:
 
-This CS guy Nick Szabo and some other cipherpunks realized in the 90s that contract law and computer science actually had a lot in common.
+This CS guy, Nick Szabo, and some other cipherpunks realized in the 90s that contract law and computer science actually had a lot in common, and developed the idea of smart contracts.
 
-Look at contracts in two parts.
-The part about actually codifying what you agree to unambiguously.
-And then the part about making sure it actually happens, and what to do if something goes wrong.
-
-Programming languages are good at part 1 and computers are good at part 2.
+We'll develop the same ideas here.
 
 ---v
 
@@ -295,7 +297,15 @@ TODO find link to court case that set precident for contracts that were "frolic 
 
 # Expression and Enforcement
 
-TODO repeat slide from about about treating contracts in two parts.
+1. Expression
+2. Execution / Enforcement
+
+Notes:
+As we work through Szabo's ideas, we'll look at smart contracts in two parts.
+The part about actually codifying what you agree to unambiguously - expression.
+And then the part about making sure it actually happens, and what to do if something goes wrong - execution / enforcement.
+
+Programming languages are good at part 1 and computers are good at part 2.
 
 ---
 
