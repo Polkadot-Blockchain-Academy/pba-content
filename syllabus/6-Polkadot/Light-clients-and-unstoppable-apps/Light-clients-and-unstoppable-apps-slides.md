@@ -5,39 +5,6 @@ duration: 45+ mins
 ---
 
 <style type="text/css">
-.bordered-box {
-  background-color: green;
-  border-radius: 1rem;
-  padding: 1rem;
-  margin-top: 1rem !important;
-}
-
-.font-bold {
-  font-weight: bold;
-}
-
-.red {
-  background-color: red;
-}
-
-.green {
-  background-color: green;
-}
-
-.font-under {
-  text-decoration: underline;
-}
-
-.polkadot {
-  color: var(--r-heading-color);
-}
-
-.polkadot-bubble {
-  color: white;
-  background: var(--r-heading-color);
-  font-size: 1.5rem;
-}
-
 .lc-mermaid svg {
   max-width: 70% !important;
 }
@@ -107,8 +74,8 @@ Here is how this is happening in reality at the moment, or how one could possibl
   <pba-col left>
     <div>App connects to a third-party-owned publicly-accessible
 node client</div>
-    <div class="red bordered-box"><span class="font-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</div>
-<div class="green bordered-box"><span class="font-bold">Convenient:</span> Works transparently</div>
+    <div class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</div>
+    <div class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
   <pba-col left>
@@ -131,8 +98,8 @@ WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS apps
 <pba-cols>
   <pba-col left>
     <div>App connects to a node client that the user has installed on their machine</div>
-    <div class="green bordered-box"><span class="font-bold">Secure</span><br />Trustless: connects to multiple nodes, verifies everything</div>
-<div class="red bordered-box"><span class="font-bold">Convenient:</span> Works transparently</div>
+    <div class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Secure</span><br />Trustless: connects to multiple nodes, verifies everything</div>
+    <div class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
    <pba-col left>
@@ -216,23 +183,23 @@ But that was actually true!
 
 <ul>
   <li>
-    <span class="font-bold font-under">Validator:</span> node configured to potentially produce blocks.
+    <span class="font-bold underline">Validator:</span> node configured to potentially produce blocks.
   </li>
 <!-- .element: class="fragment" data-fragment-index="1" -->
   <li>
-    <span class="font-bold font-under">JSON-RPC:</span> node which gives public access to its JSON-RPC endpoint.
+    <span class="font-bold underline">JSON-RPC:</span> node which gives public access to its JSON-RPC endpoint.
   </li>
 <!-- .element: class="fragment" data-fragment-index="2" -->
   <li>
-    <span class="font-bold font-under">Bootnode:</span> node whose address can be found in the chain specification. Necessary to kick-off the network.
+    <span class="font-bold underline">Bootnode:</span> node whose address can be found in the chain specification. Necessary to kick-off the network.
   </li>
 <!-- .element: class="fragment" data-fragment-index="3" -->
   <li>
-    <span class="font-bold font-under">Archive:</span> stores the entire state of the chain at each block since block #0. Useful to access historical data.
+    <span class="font-bold underline">Archive:</span> stores the entire state of the chain at each block since block #0. Useful to access historical data.
   </li>
 <!-- .element: class="fragment" data-fragment-index="4" -->
   <li>
-    <span class="font-bold font-under polkadot">Light client:</span><span class="polkadot"> doesn’t store the entire state of the chain but requests it on demand.</span>
+    <span class="font-bold underline text-[var(--r-heading-color)]">Light client:</span><span class="text-[var(--r-heading-color)]"> doesn’t store the entire state of the chain but requests it on demand.</span>
   </li>
 <!-- .element: class="fragment" data-fragment-index="5" -->
 </ul>
@@ -318,19 +285,19 @@ A Light client receives these justifications and this way it verifies the authen
 </pba-cols>
 <pba-cols>
   <pba-col left>
-    <div class="polkadot-bubble bordered-box">Fully verifies all blocks (authenticity/validity)</div>
-    <div class="polkadot-bubble bordered-box">Holds all the chain’s storage in its database</div>
-    <div class="polkadot-bubble bordered-box">Holds all past blocks in its database</div>
-    <div class="polkadot-bubble bordered-box">At initial startup, can take hours to be
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Fully verifies all blocks (authenticity/validity)</div>
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all the chain’s storage in its database</div>
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all past blocks in its database</div>
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">At initial startup, can take hours to be
 ready</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 
   <pba-col left>
-    <div class="polkadot-bubble bordered-box">Only verifies the authenticity of blocks</div>
-    <div class="polkadot-bubble bordered-box">Requests state of the chain on demand</div>
-    <div class="polkadot-bubble bordered-box">No database whatsoever</div>
-    <div class="polkadot-bubble bordered-box">Initializes in few seconds</div>
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Only verifies the authenticity of blocks</div>
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Requests state of the chain on demand</div>
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">No database whatsoever</div>
+    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Initializes in few seconds</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
 </pba-cols>
@@ -423,7 +390,9 @@ Lets be more specific now, and clarify few things in the Polkadot Ecosystem
 </div>
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-<img style="width: 10rem; padding-top: 3rem" src="../../../assets/img/Light-clients/poweredBy.png" />
+<p class="inline-table">
+  <img style="width: 10rem; padding-top: 3rem" src="../../../assets/img/Light-clients/poweredBy.png" />
+</p>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 <a href="https://github.com/smol-dot/smoldot/">https://github.com/smol-dot/smoldot/</a>
@@ -481,8 +450,8 @@ Notes:
 
 The dApp (UI) connects to a third-party-owned publicly-accessible node client
 
-<p class="red bordered-box"><span class="font-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</p>
-<p class="green bordered-box"><span class="font-bold">Convenient:</span> Works transparently</p>
+<p class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</p>
+<p class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</p>
 
 ---v
 
@@ -512,8 +481,8 @@ const chainName = await api.rpc.system.chain();
 
 The dApp (UI) connects to a node client that the user has installed on their machine
 
-<p class="green bordered-box"><span class="font-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
-<p class="red bordered-box"><span class="font-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</p>
+<p class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
+<p class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</p>
 
 ---v
 
@@ -573,8 +542,8 @@ const chainName = await api.rpc.system.chain();
 
 The uApp (UI) connects to an _integrated_ light client
 
-<p class="green bordered-box"><span class="font-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
-<p class="green bordered-box"><span class="font-bold">Convenient:</span> Works transparently</p>
+<p class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
+<p class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</p>
 
 ---v
 
@@ -657,8 +626,9 @@ mainChain.sendJsonRpc(
 
 # Some demo maybe…?
 
-<img src="../../../assets/img/Light-clients/code.jpg" />
-
+<p class="inline-table">
+  <img src="../../../assets/img/Light-clients/code.jpg" />
+</p>
 ---
 
 # Questions?
