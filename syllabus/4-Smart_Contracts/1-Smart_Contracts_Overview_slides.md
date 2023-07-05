@@ -11,7 +11,7 @@ description: Principles of coordination, contracts, smart contracts, and compari
 
 ## Coordination
 
-Coordination makes the boat go faster and the houses better
+![](./img/overview/railroad.jpeg)
 
 Examples of coordinated activities:
 dancing, music band
@@ -20,7 +20,25 @@ rowing team
 building homes, buildings, roads
 Doing the above safely through beaurocracies like inspection and certificaition proceedures, automobile registration
 
+Notes:
+
+Coordinated activity is the basis of so much human behavior.
+Consider the building we're in right now.
+It has a whole crew of technicians, janitors, grounds people,to run it, not to mention the crew it took to build it.
+
+Coordination is also what allows this team of workers, along with many others like it, to complete a railroad that stretches aacross a continent.
+
 ---v
+
+## Coordination
+
+![](./img/overview/basketball-strategy.webp) <!-- .element: class="fragment" -->
+![](./img/overview/org-chart.jpg) <!-- .element: class="fragment" -->
+![](./img/overview/skydiving.webp) <!-- .element: class="fragment" -->
+
+Notes:
+There are so many examples of things we can achieve only through coordination, not as individuals, it would be impossible to list them all
+
 
 ## Why Should We Coordinate?
 
