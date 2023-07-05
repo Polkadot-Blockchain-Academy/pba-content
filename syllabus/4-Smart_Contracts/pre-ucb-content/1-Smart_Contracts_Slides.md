@@ -713,7 +713,7 @@ A program can call functions directly or indirectly through a function table.
 
 ## Stack-based Virtual Machine
 
-<img rounded style="width: 1000px;" src="../img/wasm/Stack_1.png" />
+<img rounded style="width: 1000px;" src="../img/wasm/Stck_1.png" />
 
 We want to add 2 numbers.
 
