@@ -25,13 +25,13 @@ The participants...
 ### Content
 
 We want to go through the following concepts:
-  - [What is Game Theory?](#what-is-game-theory)
-  - [What is a Game?](#what-is-a-game)
-  - [Types of Games](#types-of-games)
-  - [Common Games](#common-games)
-  - [Nash Equilibrium](#nash-equilibrium)
-  - [Equilibrium Selection](#equilibrium-selection)
 
+- What is Game Theory?
+- What is a Game?
+- Types of Games
+- Common Games
+- Nash Equilibrium
+- Equilibrium Selection
 
 ### Activity (90-120min)
 
