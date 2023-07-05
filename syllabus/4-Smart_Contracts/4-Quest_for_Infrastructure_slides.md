@@ -51,12 +51,6 @@ We have seen some hints so far. Let's check them out.
 
 ---v
 
-## P2P Networking
-
-Replace the operator with a system where peers all have power.
-
----v
-
 ## Diversity and Redundancy
 
 * Geographical - for natural disasters and terrorist attacks
@@ -64,12 +58,36 @@ Replace the operator with a system where peers all have power.
 * Moral - so all compases are represented in the network, and no grou can impose hegemony
 * Of compute hardware - incase some is bugged or backdoored or prohibitively expensive
 
+Notes:
+
+Web2 gets a lot of this right. At least they are good at the first two and preventing accidental data loss etc. There is a lot to be kept from web 2.
+
+But indeed there is also some to be thrwon out or improved.
+
+---v
+
+## P2P Networking
+
+Replace the operator with a system where peers all have power.
+
+Notes:
+
+We saw well how this worked out well in the file sharing and anonymous browsing domains (bit torrent,)
+
 ---v
 
 ## Reproduceable Execution
 
 * Computers are better than courts
 * PABs make distributed code execution practical
+
+Notes:
+
+We saw even back in the early 2000s with java web applets that allowing more people to run the same program is hugely useful.
+
+A few decades later we have much better tech for this, and it is even more valuable.
+
+PABs make it practical for diverse parties all over the world to run the same software deterministically on their bespoke hardware in their unique environments.
 
 ---
 
