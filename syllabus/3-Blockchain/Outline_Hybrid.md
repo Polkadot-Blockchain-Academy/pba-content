@@ -11,7 +11,7 @@ Students learn about expressing agreements as code and are left wondering where 
 
 - 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class. - Lauren, Joshy - Founders Required
 - 🗣️ Overview of Smart Contracts Lecture - Lauren - Founders Required
-- 🚧 TODO Some activity. Maybe something like Emre's unstoppable applications from Cambridge, maybe implement a smart contract as an actix_web server. - Joshy / Aaron - Founders NOT Required
+- 🚧⌨️ TODO Activity. Something like Emre's unstoppable applications from Cambridge, then implement your smart contract as an actix_web server. - Joshy / Aaron - Founders NOT Required
 - ☕ Break
 - 🗣️ Digital Services and State Machines - I like to think of "state" as a double entendre - Lauren - Founders Required
 - ⌨️ Begin BFS coding activity - specifically state machine part - Joshy, Lauren, Aaron, Andrew - Founders NOT Required
