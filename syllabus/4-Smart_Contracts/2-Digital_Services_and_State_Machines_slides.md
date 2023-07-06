@@ -166,19 +166,22 @@ Opens the door to new application stacks:
 - Custom rendering, moderation, interfaces
 
 Notes:
-We want to allow users to interact with the system without having to trust intermediaries who might stand in the middle between the users. If we can do that, it opens the door to this new application stack where we disentangle all the layers. 
+We want to allow users to interact with the system without having to trust intermediaries who might stand in the middle between the users. If we can do that, it opens the door to this new application stack where we disentangle all the layers.   
+
+OKAY - so we're at the halfway point within this lecture, let's check in. At this point, we've been through the history of the web and hopefully understand the evolution from simple peer to pee communications to straight up digital services.   
+Adding to that, from my from first lecture, we ALSO understand that both software and contracts are solutions to expressing agreements, and during Aaron's activity, we practiced building a simple web2 style smart contract.     
+Now I want to start formalizing the semantics of how we actually build a smart contract.  
+It turns out there is a mathematical (or computer science maybe?) term called a state machine. And it maps really well to what we just built and the kinds of interactions we want to build. 
 
 ---
 
 ## State Machines
 
-We can formalize this notion of shared story with state machine model.
 
 <img width="800px" src="./img/state-machine-general.svg" />
 
 Notes:
-We can formalize this notion of shared story with state machine model.
-And luckily most of the systems, maybe all of them, but definitely most that we care about can be modeled as state machines. So State machine, it's not a real machine that you can build and touch and operate and stuff like that. It's a model comprised of a set of states and a set of rules about how to transition between the states. 
+What's interesting is that most systems, maybe all of them, but definitely most that we care about can be modeled as state machines. So State machine, it's not a real machine that you can build and touch and operate and stuff like that. It's a model comprised of a set of states and a set of rules about how to transition between the states. 
 Looking at the diagram, maybe my state machine starts in state one over here and then somebody pokes it in some particular way, or to use more blockchainy lingo, they send a transaction and that puts the state machine into into State-two. 
 And so, what we're going to be doing with the blockchain is tracking a complete history of all of these transitions and if we know the history of all the transitions, then we should know what state we're in right now
 
