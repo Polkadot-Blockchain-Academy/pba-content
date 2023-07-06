@@ -10,7 +10,7 @@ duration: 2 hour
 
 ## Overview
 
-- Which pieces are in the economic puzzle that make the Polkadot Network?
+- Which economic pieces build the the Polkadot Network?
 - What are their mechanisms and incentives?
 - How are those pieces interrelated?
 
@@ -20,7 +20,7 @@ FIXME - diagram https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7c
 
 ---
 
-# Tokenomics
+# Token Economics
 
 ---
 
@@ -33,32 +33,34 @@ FIXME - diagram https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7c
 - Planck = smallest unit of account.
   - Reference to Planck Length = the smallest possible distance in Physics.
 - **Utility Token** with several use-cases:
-- Governance (decentralization)
-- Bonding in slot auctions (utility)
-- Staking (security)
-- Message passing (e.g., transfers)
+  - Governance (decentralization)
+  - Bonding in slot auctions (utility)
+  - Staking (security)
+  - Message passing (e.g., transfers)
 
 ---
 
 ## Inflation Model
 
 - Expansion in token supply.
-- Main source: Staking rewards for validators and nominators.
+- Token minted from thin air.
+  - Used to pay staking rewards for validators and nominators.
+  - (Indirectly) fund Treasury.
 - Central economic variables of the model are:
 - **Exogenous**:
 - Staking rate (Total amount of staked DOT / Total amount of DOT).
 - **Endogenous**:
 - Optimal staking rate (a sufficient backing for validators to provide reasonable security).
-- Targeted inflation rate (10%).
+- Total inflation rate (10%).
 
 ---
 
 ## Inflation Model
 
 - Different **states** of DOT:
-- **Liquid**: Used for messaging and liquidity on markets.
-- **Bonded (Staking)**: Economic mass that guarantees the security of the network.
-- **Bonded (Parachains)**: The demand for DOT tokens by parachains.
+  - **Liquid**: Used for messaging and liquidity on markets.
+  - **Bonded (Staking)**: Economic mass that guarantees the security of the network.
+  - **Bonded (Parachains)**: The demand for DOT tokens by parachains.
 - The goal is to obtain (some) **sensible ratio** between those three token states.
 
 ---
@@ -116,35 +118,47 @@ FIXME update
 
 ---
 
-## Outlook Changes
+## Potential changes incoming
 
-- Detach total inflation from maximum inflation from stakers
-- This guarantees a sustainable inflow to Treasury
+- The current system incentivizes to move the staking rate to the ideal rate.
+- Then, Treasury inflow would be 0 DOT.
+- That is not sustainable.
+- Proposed change: Detach inflation to stakers from total inflation and divert the rest to Treasury directly.
 
 ---
 
 ## Staking: Concept
 
-- **Nominated Proof-Of-Stake (NPoS)** protocol as consensus mechanism.
+- **Nominated Proof-Of-Stake (NPoS)**.
 - Economic incentives of **validators** and **nominators** are aligned with those of the network.
-- Good behavior is rewarded with staking rewards.
-- Malicious / Neglecting behavior is punished (slashed).
+  - Good behavior is rewarded with staking rewards.
+  - Malicious / Neglecting behavior is punished (slashed).
 - Currently, minimum total stake is `~1.6M DOTs.
-- Total stake is pooled from validators (self-stake) and their nominators (nominated stake)
-- High degree of inclusion
-- High security
-- The goal is to get as much **skin-in-the-game** as possible.
-- Validators:
-- Self-stake, reputation (identity), future rewards (self-stake + commission).
-- Nominators:
-- Bonded tokens
 - The total stake in the system directly translates to the **economic security** that it provides.
+- Total stake is pooled from validators (self-stake) and their nominators (nominated stake)
+  - High degree of inclusion
+  - High security
+  - The goal is to get as much **skin-in-the-game** as possible.
+---
+
+## Validators
+
+- What makes Validators resilient:
+  - Self-stake
+  - Reputation (identity)
+  - High future rewards (self-stake + commission)
 
 ---
 
+## Nominators
+
+- Bond tokens for up to 16 validators that they deem trustworthy.
+- They have an incentive to find the best ones that match their preferences.
+- They are tasked to collectively curate the set of active validators.
+
 ---
 
-## Staking: Rewards
+## Rewards
 
 <pba-cols>
 <pba-col>
@@ -179,7 +193,7 @@ _What are staking rewards for?_
   - Self-stake as main indicator of skin-in-the-game.
   - Higher commission, ceteris paribus, leaves a validator with more incentives to behave.
 - Various sources of trust: [Nominating and Validator Selection On Polkadot](https://polkadot.network/blog/nominating-and-validator-selection-on-polkadot/)
-- Efficient validator recommendation is on-going research (later more).
+- Efficient validator recommendation is one of my research topics.
 
 ---
 
@@ -242,27 +256,43 @@ _What are staking rewards for?_
 
 ## Outlook Polkadot 2.0
 
-- Based on [Gav’s Keynote at Polkadot Decoded]()
-- We move away from regarding parachains as distinct entities.
-- Parachains become cores that can be fluidly rented and shared
+- Based on [Gav’s Keynote at Polkadot Decoded](https://www.youtube.com/watch?v=GIB1WeVuJD0)
+- A new narrative of the whole Polkadot system.
+- We move away from regarding Parachains as a distinct entity but rather regard Polkadot as global distributed computer.
+- It's spaces and apps rather than chains.
+- This computer has computation cores that can be allocated flexible to applications that need it.
+- Corestime can be bought, shared, resold.
 
 ---
 
-## Blockspace
-
-- What is it?
-
----
-
-## Allocating Blockspace
-
-- (Potentially) remove Auctions
-- Add instantaneous markets and bulk markets
-- Share / Sell unused blockspace
+## Core Attributes of Blockspace
+- **Security**: The scarcest resource in blockchain, crucial in preventing consensus faults or 51% attacks that could compromise transactions.
+- **Availability**: Ensuring blockspace is available without long waiting times or uncertain costs for a smooth, seamless interaction within the decentralized ecosystem.
+- **Flexibility**: The ability of blockspace to be fine-tuned by the consumer for specific use-cases.
 
 ---
 
-## Moving to Polkadot 2.0
+## Blockspace Ecosystem
+- A networked collection of individual blockspace producers (blockchains) offering secured, fit-for-purpose, efficiently-allocated, and cost-effective blockspace.
+- A valuable aspect of a blockspace ecosystem is its connective tissue of shared security and composability.
+- Dapp developers or blockspace providers can focus on their unique features, reusing existing capabilities within the ecosystem.
+
+For example, a supply chain traceability application could use different types of blockspace for identity verification, asset tokenization, and source traceability.
+
+---
+
+## Bulk markets
+
+It's not yet finalized how they work but likely:
+- Around 75% of cores are allocated to the market.
+- Cores are sold for 4 weeks as NFT by a broker.
+- Unrented cores go to the instantanous market.
+- Price de-/increases relative to demand.
+- Current tenants have a priority buy right for their core (s).
+
+---
+
+## Why the change?
 
 - This allows for low barriers of entry for people to simply deploy their code to a core and test stuff
 - It makes blockspace more efficient, because not all teams can/want to have a full block every 6/12 seconds.
@@ -277,8 +307,8 @@ _What are staking rewards for?_
   - Slashes
   - Staking inefficiencies (deviations from optimal staking rate)
 - Through governance, everybody can submit proposals to initiate treasury spending.
-- It currently holds around XX TODO DOT.
-- Spending is incentivized by a burn mechanism (0.1% each month).
+- It currently holds around 46M DOT.
+- Spending is incentivized by a burn mechanism (1% every 26 days).
 
 ---
 
@@ -317,3 +347,4 @@ _What are staking rewards for?_
 ## Further Reading
 
 - [Agile Coretime RFC](https://github.com/polkadot-fellows/RFCs/pull/1)
+- [Discussion on Changing Inflation Model](https://forum.polkadot.network/t/adjusting-the-current-inflation-model-to-sustain-treasury-inflow/3301)
