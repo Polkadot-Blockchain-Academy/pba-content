@@ -344,7 +344,8 @@ It's not yet finalized how they work but likely:
 
 ---
 
-## Further Reading
+## Further Resources
 
 - [Agile Coretime RFC](https://github.com/polkadot-fellows/RFCs/pull/1)
 - [Discussion on Changing Inflation Model](https://forum.polkadot.network/t/adjusting-the-current-inflation-model-to-sustain-treasury-inflow/3301)
+- [Gav's Talk about Polkadot 2.0](https://www.youtube.com/watch?v=GIB1WeVuJD0)
