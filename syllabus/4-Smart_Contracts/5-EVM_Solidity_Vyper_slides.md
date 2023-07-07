@@ -159,9 +159,10 @@ show an example
 
 # Solidity
 
-Inspired by java
-Been around a long time
-... FIXME TODO
+* Designed for EVM
+* Similar to C++, Java, etc.
+* Includes inheritance (including MI)
+* Criticized for being difficult to reason about security
 
 ---v
 
@@ -170,19 +171,23 @@ Been around a long time
 FIXME TODO: IDK if this is really necessary.
 Up to the instructor.
 
+Stephen: I think some amount of context on semantics is useful before jumping
+into coding, but obviously a fullblown intro on the language is not feasible
+(esp. if we want to do the same for Vyper).
+
+I suggest covering some of the fundamental aspects:
+
+* Basic types
+* storage vs memory
+* construction (with context of deployment)
+* modifiers (?)
+
 ---v
 
 ## Dev Environment
 
-Make it clear that students should have these tools installed already or should be doing their absolute best to install them as you go. They will need these tools immanently.
-
-- Remix
-- Metamask?
-- Polkadot js?
-
-Notes:
-
-FIXME TODO: @notlesh, I'll leave it largely up to you what the standard dev environment should be. It is good to be flexible and let students use the tools they like. But many students will have no prior preference or experience, and we need to be able to recommend a fully concrete stack for them.
+TODO: Introduce Remix here. It might make sense to mention some other tools as
+well, but not in any detail. I think Remix is the clear choice to use hands-on.
 
 ---v
 
@@ -200,15 +205,69 @@ Code along and explain as you go
 
 write, deploy, interact
 
+---
+
+# Storing or Secrets On-Chain
+
+TODO: format this -- how to do the one-click-per-line thing?
+
+Can we store secrets on-chain? What if we want to password-protect a particular
+contract call?
+
+Obviously we can't store any plaintext secrets on-chain, as doing so reveals
+them.
+
 ---v
 
-## Beware Public Information
+## Storing Hashed Secrets On-Chain
 
-Show a few bad things that could be done to help develop blockchain thinking models.
+What about storing the hash of a password on chain and using this to verify some
+user-input?
 
-- A call that only executes if the proper hard-coded password is passed as a param (insecure, the code and therefore the password is onchain)
-- An attempted improvement where the password is not hardcoded. It is passed to the constructor and stored in a private variable. (still insecure. All storage is publicly visible from off-chain.)
-- If time permits and students are digging this, try storing a hash in storage and requiring the presage as a password. This is actually secure for only-call-once functions. But if you intend to call it multiple times, the first call leaks the password publicly.
+Accepting a pre-hash also reveals the secret. This reveal may occur in a txn
+before it is executed and settled, allowing someone to frontrun it.
+
+---v
+
+## Verifying with commit-reveal
+
+One potential solution is a commit-reveal scheme where we hash our reveal with
+some salt, then later reveal it.
+
+```
+// stored on-chain:
+secret_hash = hash(secret)
+```
+
+```
+// first txn, this must execute and settle on chain before the final reveal.
+// this associates a user with the soon-to-be-revealed secret
+commitment = hash(salt, alleged_secret)
+```
+
+```
+// final reveal, this must not be made public until commitment is recorded
+reveal = alleged_secret, salt
+verify(alleged_secret == secret)
+verify(commitment == hash(salt, alleged_secret))
+```
+
+---v
+
+## Alternative: Signature
+
+Another approach is to use public-key cryptography. We can store the public key
+of some keypair and then demand a signature from the corresponding private-key.
+
+This can be expanded with multisig schemes and similar.
+
+How does this differ from the commit-reveal scheme?
+
+Note:
+
+Commit-reveal requires that a specific secret be revealed at some point for
+verification. A signature scheme provides a lot more flexibility for keeping the
+secret(s) secure.
 
 ---
 
