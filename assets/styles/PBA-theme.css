@@ -231,6 +231,8 @@ pba-flex[right] {
 .reveal img,
 .reveal video,
 .reveal iframe {
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1300px;
 	max-height: 800px;
 	margin-top: 10px;
