@@ -67,27 +67,24 @@ FIXME - diagram https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7c
 
 ## Inflation Model
 
-<pba-cols>
-<pba-col>
-<pba-flex center>
-
-FIXME https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT5jMHSH5UE/edit#slide=id.g11d64647c6a_0_759 plot WITH!!!! Axis labels in the img!
-
-</pba-flex>
-</pba-col>
-<pba-col>
-
-- **Central variable**: Ideal staking rate of 53.5%.
-  - Highest staking rewards at the ideal staking rate.
-  - Incentives to (increase) decrease the staking rate it is (below) above the optimal.
-- Staking inefficiencies -> Treasury.
-- Ideal staking rate scales with number of active parachains.
-  - 0.5% downwards with each active (non-system) parachain until a minimum of 45%.
-
-</pba-col>
-</pba-cols>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="flex: 1; text-align: center;">
+        <img style="width: 650px; margin-right: 50px;" src="../../../assets/img/2-Economics/2.6-current_inflation_model_polkadot.png" />
+    </div>
+    <div style="flex: 1;">
+        <ul>
+            <li><strong>Central variable</strong>: Ideal staking rate (currently ~53.5%).
+            <li>Highest staking rewards at the ideal staking rate.</li>
+            <li>Incentives to (increase) decrease the staking rate it is (below) above the optimal.</li>
+            <li>Staking inefficiencies -> Treasury.</li>
+            <li>Ideal staking rate scales with number of active parachains (0.5% less with each parachain).
+            </li>
+        </ul>
+    </div>
+</div>
 
 ---
+
 
 ## Inflation
 
@@ -100,25 +97,6 @@ FIXME https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT
 
 Notes:
 Question: What do you think about Inflation?
-
----
-
-## Inflation Model
-
-<pba-cols>
-<pba-col>
-<pba-flex center>
-
-FIXME https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT5jMHSH5UE/edit#slide=id.g2573ec8a548_0_16 plot WITH!!!! Axis labels in the img!
-
-</pba-flex>
-</pba-col>
-<pba-col>
-
-FIXME update
-
-</pba-col>
-</pba-cols>
 
 ---
 
@@ -207,7 +185,7 @@ _What are staking rewards for?_
 
 ## What are Parachains?
 
-- Parachains are the layer-1 part of the protocol.
+- Parachains (or cores) are the layer-1 part of the protocol.
 - Blockchains of their own that run in parallel.
   - Highly domain specific and have high degree of flexibility in their architecture.
   - Share same messaging standard to be interoperable and exchange messages through the Relay Chain.
