@@ -21,6 +21,8 @@ Notes:
 
 The input `r` could be anything, for example the movement pattern of a mouse.
 
+For some cryptographies (ECDSA), the verify might not take in the public key as an input. It takes in the message and signature, and returns the public key if it is valid.
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -66,6 +68,21 @@ This means the verifier will need to run the correct hash function on the messag
 
 ---
 
+## Cryptographic Guarantees
+
+Signatures provide many useful properties:
+
+- Confidentiality: Weak, the same as a hash
+- Authenticity: Yes
+- Integrity: Yes
+- Non-repudiation: Yes
+
+Note:
+
+If a hash is signed, you can prove a signature is valid _without_ telling anyone the actual message that was signed, just the hash.
+
+---
+
 ## Signing Payloads
 
 Signing payloads are an important part of system design.<br/>
@@ -73,11 +90,21 @@ Users should have credible expectations about how their messages are used.
 
 For example, when a user authorizes a transfer,<br/>they almost always mean just one time.
 
+Notes:
+
+There need to be explicit rules about how a message is interpreted. If the same signature can be used in multiple contexts, there is the possibility that it will be maliciously resubmitted.
+
+In an application, this typically looks like namespacing in the signature payload.
+
 ---
 
 ## Signing and Verifying
 
 <img style="height: 600px" src="../../../assets/img/1-Cryptography/sig-verify-flow.svg" />
+
+Notes:
+
+Note that signing and encryption are _not_ inverses.
 
 ---
 
@@ -127,6 +154,12 @@ Hierarchical Deterministic Key Derivation
 Key derivation allows one to derive (virtually limitless)<br/>child keys from one "parent".
 
 Derivations can either be "hard" or "soft".
+
+---
+
+## Hard vs. Soft
+
+<img style="width: 1200px;" src="../../../assets/img/1-Cryptography/soft-vs-hard-derivation.png">
 
 ---
 
@@ -196,7 +229,9 @@ Wallets can use soft derivation to link all payments controlled by a single priv
 
 Notes:
 
-See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
+On the use case, taking each payment at a different address could help make the association between payment and customer.
+
+See: <https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation>
 
 ---
 
@@ -215,6 +250,10 @@ Mention that these derivations create entirely new secret seeds.
 ---
 
 # Mnemonics and Seed Creation
+
+Notes:
+
+These are all different _representation_ of a secret. Fundamentally doesn't really change anything.
 
 ---
 
@@ -273,8 +312,6 @@ Different key derivation functions affect the ability to use the same mnemonic i
 
 ---
 
-<!-- TODO: Gav comments in Cambridge already covered before HDHK? consider moving to Substrate module? -->
-
 # Signature Schemes
 
 ---
@@ -284,6 +321,7 @@ Different key derivation functions affect the ability to use the same mnemonic i
 - Uses Secp256k1 elliptic curve.
 - ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.
 - ECDSA complicates more advanced cryptographic techniques, like threshold signatures.
+- Nondeterministic
 
 ---
 
@@ -291,6 +329,7 @@ Different key derivation functions affect the ability to use the same mnemonic i
 
 - Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
 - Signing is 20-30x faster than ECDSA signatures.
+- Deterministic
 
 ---
 
