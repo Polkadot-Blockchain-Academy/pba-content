@@ -48,9 +48,9 @@ FIXME - diagram https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7c
   - (Indirectly) fund Treasury.
 - Central economic variables of the model are:
 - **Exogenous**:
-- Staking rate (Total amount of staked DOT / Total amount of DOT).
+  - Staking rate (Total amount of staked DOT / Total amount of DOT).
 - **Endogenous**:
-- Optimal staking rate (a sufficient backing for validators to provide reasonable security).
+  - Optimal staking rate (a sufficient backing for validators to provide reasonable security).
 - Total inflation rate (10%).
 
 ---
@@ -78,10 +78,11 @@ FIXME https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT
 <pba-col>
 
 - **Central variable**: Ideal staking rate of 53.5%.
-- Highest staking rewards at the ideal staking rate.
-- Incentives to (increase) decrease the staking rate it is (below) above the optimal.
+  - Highest staking rewards at the ideal staking rate.
+  - Incentives to (increase) decrease the staking rate it is (below) above the optimal.
 - Staking inefficiencies -> Treasury.
-  Ideal staking rate scales with number of active parachains.
+- Ideal staking rate scales with number of active parachains.
+  - 0.5% downwards with each active (non-system) parachain until a minimum of 45%.
 
 </pba-col>
 </pba-cols>
@@ -96,6 +97,9 @@ FIXME https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT
   - Predictable (maximum) inflation is good.
   - It incentivizes to work with the tokens (i.e., bond for good parachains, use for message passing).
   - Deflation can cause a halt of economic activity, because people start hoarding tokens.
+
+Notes:
+Question: What do you think about Inflation?
 
 ---
 
@@ -244,9 +248,9 @@ _What are staking rewards for?_
 ## What do Parachains get?
 
 - **Parachains pay for security**.
-- Every parachain is as secure as the Relay Chain.
-- Polkadot is a security alliance with network effects.
-- Not only scaling number of transactions, but it also scaling of security.
+  - Every parachain is as secure as the Relay Chain.
+  - Polkadot is a security alliance with network effects.
+  - Not only scaling number of transactions, but it also scaling of security.
 - Security is a pie of limited size, because financial resources are limited.
 - Every chain that secures itself need cut a piece of the cake, which leaves less to others (zero-sum).
 - Shared security protocols allow to keep the cake whole and entail it to all participants.
