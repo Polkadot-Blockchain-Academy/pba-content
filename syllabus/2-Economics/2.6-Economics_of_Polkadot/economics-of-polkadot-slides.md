@@ -14,6 +14,8 @@ duration: 2 hour
 - What are their mechanisms and incentives?
 - How are those pieces interrelated?
 
+Remark: There are currently many changes planned
+
 ---
 
 FIXME - diagram https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT5jMHSH5UE/edit#slide=id.g11e938688b1_0_46
@@ -146,7 +148,8 @@ Question: What do you think about Inflation?
 <pba-col>
 <pba-flex center>
 
-FIXME https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT5jMHSH5UE/edit#slide=id.g11ef14eef2c_0_463 into mermaid?
+<img style="width: 700px;" src="../../../assets/img/2-Economics/2.6-rewards_flow.png" />
+
 
 </pba-flex>
 </pba-col>
@@ -155,10 +158,7 @@ FIXME https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT
 _What are staking rewards for?_
 
 - **Validators**: Hardware, networking, and maintenance costs, **resilience**.
-
 - **Nominators**: Curation of the active set of validators, sort out the good from the bad ones (_Invisible Hand_).
-  - Effort compensation.
-  - Risk compensation.
 
 </pba-col>
 </pba-cols>
