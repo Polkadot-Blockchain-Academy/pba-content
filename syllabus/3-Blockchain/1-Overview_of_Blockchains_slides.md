@@ -51,7 +51,7 @@ Crypto not typically used except by military, but upheld guarantees when used.
 <img src="./img/Web0.png" />
 
 <!-- The following is an intentionally broken link in an img tag. Let's see if the CI catches it. -->
-<img src="https://dujivbiufbdisbvoiwehbivwdfber.com>
+<img src="https://dujivbiufbdisbvoiwehbivwdfber.com" >
 
 ---
 
