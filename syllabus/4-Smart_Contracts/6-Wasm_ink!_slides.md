@@ -1,11 +1,48 @@
 ---
-title: Wasm smart contracts and the ink! language
-description: Overview and history of the wasm contracts platform and languages that compile to it. Focus on architecting real-world smart contracts.
+title: WASM Smart Contracts in Ink!
+description: A working programmer’s guide to the crypto industry
 ---
 
-# Wasm Contracts
+<img rounded style="width: 600px;" src="img/ink/ink-logo-with-squid-white.svg" alt="ink!" />
+
+# WASM Smart Contracts in Ink!
+A working programmer’s guide
 
 ---
+
+# ink! vs. Solidity
+
+|                 | ink!                        | Solidity      |
+|-----------------|-----------------------------|---------------|
+| Virtual Machine | Any Wasm VM                 | EVM           |
+| Encoding        | Wasm                        | EVM Byte Code |
+| Language        | Rust                        | Standalone    |
+| Constructors    | Multiple                    | Single        |
+| Tooling         | Anything that supports Rust | Custom        |
+| Storage         | Variable                    | 256 bits      |
+| Interfaces?     | Yes: Rust traits            | Yes           |
+
+Notes:
+They are freshly of an EVM lecture so migh tbe wondering why another SC language
+The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
+
+---v
+
+# ink! overview
+- DSL in Rust
+- Inherits all the benefits
+ - Modern functional language
+ - Type & Memory safety
+- Compiled to WASM
+ - Ubuquitous
+ - Fast
+ 
+Notes:
+ink! is not a separate language 
+has access to vast collection of libraries, tooling
+WASM is targeting the browsers and quickly becoming the "assembly" od the web in lieu of JS
+
+---v
 
 # History of Pallet Contracts
 
