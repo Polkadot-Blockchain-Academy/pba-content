@@ -306,7 +306,7 @@ cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
 
 ```rust
     use ink::storage::Mapping;
-    
+
     #[ink(storage)]
     #[derive(Default)]
     pub struct Token {
@@ -350,11 +350,11 @@ each storage cell has a unique storage key and points to a SCALE encoded value
 
 ---
 
-## Storage Layout
+## Storage: Packed Layout
 
-```rust [1,7-8]
+```rust [6]
     use ink::storage::Mapping;
-    
+
     #[ink(storage)]
     #[derive(Default)]
     pub struct Token {
@@ -364,13 +364,121 @@ each storage cell has a unique storage key and points to a SCALE encoded value
     }
 ```
 
+* By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
+
 NOTE:
 Types that can be stored entirely under a single storage cell are called Packed Layout
-by default ink! stores all storage struct fields under a single storage cell 0x0 
-
-<!-- Consequentially, with a Packed storage layout, any message interacting with the contract storage will always need to operate on the entire contract storage struct. -->
+by default ink! stores all storage struct fields under a single storage cell
+as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
+which may be what you want or not
 
 ---
+
+
+## Storage: Packed Layout
+
+```rust [1-4,7]
+    use ink::storage::traits::{
+        StorageKey,
+        ManualKey,
+    };
+
+    #[ink(storage)]
+    pub struct Flipper<KEY: StorageKey = ManualKey<0xcafebabe>> {
+        value: bool,
+    }
+```
+
+* The storage key of the contracts root storage struct defaults to `0x00000000`
+* However you may store it under any arbitrary 4 bytes key instead
+
+---
+
+## Storage: Packed Layout
+
+<div style="font-size: 0.82em;">
+
+```json
+  "storage": {
+    "root": {
+      "layout": {
+        "struct": {
+          "fields": [
+            {
+              "layout": {
+                "leaf": {
+                  "key": "0xcafebabe",
+                  "ty": 0
+                }
+              },
+              "name": "value"
+            }
+          ],
+          "name": "Flipper"
+        }
+      },
+      "root_key": "0xcafebabe"
+    }
+  }
+```
+
+</div>
+
+NOTE:
+here a demonstartion of packed layout - value is stored under the root key
+
+---
+
+## Storage: Un-packed Layout
+
+```rust [1,7-8]
+    use ink::storage::Mapping;
+
+    #[ink(storage)]
+    #[derive(Default)]
+    pub struct Token {
+        total_supply: Balance,
+        balances: Mapping<AccountId, Balance>,
+        allowances: Mapping<(AccountId, AccountId), Balance>,
+    }
+```
+
+* Mapping consists of a key-value pairs stored directly in the contract storage cells
+
+
+---
+
+## Storage: Lazy
+
+```rust [1,5-6]
+use ink::storage::{traits::ManualKey, Lazy, Mapping};
+
+    #[ink(storage)]
+    pub struct Roulette {
+        pub data: Lazy<Data, ManualKey<0x44415441>>,
+        pub bets: Mapping<u32, Bet, ManualKey<0x42455453>>,
+    }
+```
+
+* Every type wrapped in `Lazy` has a separate storage cell.
+* `ManualKey` assignes explicit storage key to it.
+
+NOTE:
+packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
+there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
+mapping provides per-cell access
+Lazy storage cell can be auto-assigned or chosen manually
+Using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract. This may break your contract after an upgrade
+
+---
+
+## Storage: Lazy
+
+<img rounded style="width: 1000px;" src="img/ink/storage-layout.svg" />
+
+
+---
+
 
 <!-- TODOs -->
 <!-- storage -->
