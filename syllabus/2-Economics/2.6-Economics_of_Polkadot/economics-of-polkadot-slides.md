@@ -18,7 +18,7 @@ Remark: There are currently many changes planned
 
 ---
 
-FIXME - diagram https://docs.google.com/presentation/d/1zc1ViMiRSlbyTG-nqtxCiM7cQDbEy5G9qT5jMHSH5UE/edit#slide=id.g11e938688b1_0_46
+<img style="width: 1200px; margin-right: 50px;" src="../../../assets/img/2-Economics/2.6-polkadot_pieces.svg" />
 
 ---
 
