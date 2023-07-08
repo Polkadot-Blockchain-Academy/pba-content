@@ -1550,7 +1550,7 @@ Now imagine there are hundreds of people like Bob. Some of them even continue de
         <br><br>
         Getting data on chain is expensive, but there is no incentive to clean it up.
         <br><br>
-        This is a core misallignment of incentives that lead to Ethereum state size growing out of control.
+        This is a core misalignment of incentives that lead to Ethereum state size growing out of control.
     </pba-col>
     <pba-col>
         <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract_many.drawio.svg" alt="Some Pic" />
@@ -1559,7 +1559,7 @@ Now imagine there are hundreds of people like Bob. Some of them even continue de
 
 Notes:
 
-We need to focus on this "why bother" part. This is a core example of a misallignment of incentives that lead to Ethereum state size growing out of control.
+We need to focus on this "why bother" part. This is a core example of a misalignment of incentives that lead to Ethereum state size growing out of control.
 
 Getting the data to state is indeed expensive but once we do... why clean it? There is no incentive to do so. So the chain was getting overwhelmed in junk.
 
@@ -1637,7 +1637,7 @@ So what we had originally is Bob paid for his smart contract and then simply wen
 
 Notes:
 
-Afterwards Bob deploys his contract in the same way but before running of to play a guitar he removes it from the state and gets some of the gas back. He likes the extra money so he has an encentive to clean.
+Afterwards Bob deploys his contract in the same way but before running of to play a guitar he removes it from the state and gets some of the gas back. He likes the extra money so he has an incentive to clean.
 
 But wait... So what is the actual cost if he paid 10 and got 10 back? And it might not be obvious but it is an...
 
@@ -1658,8 +1658,8 @@ _"The loss of other alternatives when one option is chosen."_
 <img style="width: 400px" src="../../assets/img/3-Blockchain/opp_cost.drawio.svg" alt="Some Pic" />
 
 Notes:
-
-Generally oppurtunity cost is the loss of other alternatives when making a choice. When choosing between 10 and 30$ the oppurtunity cost of picking 30 is 10, the other option you are forgoing.
+d
+Generally opportunity cost is the loss of other alternatives when making a choice. When choosing between 10 and 30$ the opportunity cost of picking 30 is 10, the other option you are forgoing.
 
 ---v
 
@@ -1683,9 +1683,9 @@ Generally oppurtunity cost is the loss of other alternatives when making a choic
 
 Notes:
 
-Going back to the topic of Ethereum the real cost for Bob is not the 10$ he paid for storage as he regains it later. The cost is in loosing the oppurtunity of investing the money elsewere. Just locking your funds is sort of a punishment by itself. Even if you regain them later. This is especially true in inflationary systems, and spoiler alert that most of them.
+Going back to the topic of Ethereum the real cost for Bob is not the 10$ he paid for storage as he regains it later. The cost is in loosing the opportunity of investing the money elsewhere. Just locking your funds is sort of a punishment by itself. Even if you regain them later. This is especially true in inflationary systems, and spoiler alert that most of them.
 
-The oppurtunity cost is a clever mechanism that allows us to include costs without directly charging them, and we also need to be super aware so we don't accidentally punish the users by not thinking of some external oppurtunity costs.
+The opportunity cost is a clever mechanism that allows us to include costs without directly charging them, and we also need to be super aware so we don't accidentally punish the users by not thinking of some external opportunity costs.
 
 ---v
 
@@ -1693,17 +1693,17 @@ The oppurtunity cost is a clever mechanism that allows us to include costs witho
 
 #### _Extra Examples_
 
-- Creating invalid blocks in Bitcoin never gets directly punished even if the block is rejected by the network. The real cost is the oppurtunity cost, as the miner could have mined a valid block instead.
-- Polkadot native token DOT is inflationary (\~7.5% per year) but it can be staked to earn rewards (~15% per year). Not staking DOT has an oppurtunity cost which incentivies staking to secure the network.
+- Creating invalid blocks in Bitcoin never gets directly punished even if the block is rejected by the network. The real cost is the opportunity cost, as the miner could have mined a valid block instead.
+- Polkadot native token DOT is inflationary (\~7.5% per year) but it can be staked to earn rewards (~15% per year). Not staking DOT has an opportunity cost which incentives staking to secure the network.
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
-There is a lot of awesome examples of oppurtunity costs in blockchain. For instance Creating invalid blocks in Bitcoin never gets directly punished even if the block is rejected by the network. The real cost is the oppurtunity cost, as the miner could have mined a valid block instead.
+There is a lot of awesome examples of opportunity costs in blockchain. For instance Creating invalid blocks in Bitcoin never gets directly punished even if the block is rejected by the network. The real cost is the opportunity cost, as the miner could have mined a valid block instead.
 
 =fragment=
 
-and the Polkadot native token DOT is inflationary (\~7.5% per year) but it can be staked to earn rewards (~15% per year). Not staking DOT has an oppurtunity cost which incentivies staking to secure the network.
+and the Polkadot native token DOT is inflationary (\~7.5% per year) but it can be staked to earn rewards (~15% per year). Not staking DOT has an opportunity cost which incentives staking to secure the network.
 
 And there are also many other staking and DeFi examples out there.
 
@@ -1739,7 +1739,7 @@ Notes:
 
 In the Ethereum example you could argue that the network getting clogged is the externality of the single developer not cleaning after himself. And it affects all the users of the chain. The chain is an example of a common good.
 
-As protocol engineers or system designers you need to identify those externaility costs and price them in.
+As protocol engineers or system designers you need to identify those externality costs and price them in.
 
 ---v
 
@@ -1752,7 +1752,7 @@ As protocol engineers or system designers you need to identify those externailit
         <br>
         <strong> Negative Externality Cost </strong>
         <br><br>
-        In the Ethereum State Storage problem we priced in the negative externaility as the oppurtunity cost of locking your funds.
+        In the Ethereum State Storage problem we priced in the negative externality as the opportunity cost of locking your funds.
     </pba-col>
     <pba-col>
         <img style="width: 700px" src="../../assets/img/3-Blockchain/opp_cost_locking.drawio.svg" alt="Some Pic" />
@@ -1761,7 +1761,7 @@ As protocol engineers or system designers you need to identify those externailit
 
 Notes:
 
-That's what we did with the oppurtunity cost in Ethereum. We made it so burdening the chain is actually expensive for the perpetrator. We alligned his incentives with the incentives of the chain.
+That's what we did with the opportunity cost in Ethereum. We made it so burdening the chain is actually expensive for the perpetrator. We aligned his incentives with the incentives of the chain.
 
 ---v
 
@@ -1785,7 +1785,7 @@ That's what we did with the oppurtunity cost in Ethereum. We made it so burdenin
 
 Notes:
 
-But not all externailities are negative.
+But not all externalities are negative.
 
 For example the whole oracle scheme makes it so the chain can get information from the real world. This is a positive externality for the network that can further use this extra information.
 
@@ -1816,7 +1816,7 @@ So having that mind should they pay any transaction fees when submitting votes?
 <pba-cols>
     <pba-col>
         <br>
-        <strong> Benefical Transactions </strong>
+        <strong> Beneficial Transactions </strong>
         <br><br>
         Such a transaction can be totally free.
         <br><br>
@@ -2025,13 +2025,13 @@ If we could somehow limit the information the game would change in our favour. W
 Notes:
 
 - Let's imagine this new improved scenario. Each validator uses a VRF to generate a random number.
-- There is some tresold and validators with a sufficiently small number will have the right to be Approval Checkers.
+- There is some threshold and validators with a sufficiently small number will have the right to be Approval Checkers.
 
 =fragment=
 
 - Approval Checkers reveal themselves by showing their low numbers (with a vrf proof attached) and publish a vote at the same time. If all the votes received confirm the block is fine it passes.
 
-This method has this nice property that attackers don't learn who the appvoal checkers are until they reveal themselves. So they cannot plan ahead.
+This method has this nice property that attackers don't learn who the approval checkers are until they reveal themselves. So they cannot plan ahead.
 
 ---v
 
@@ -2131,7 +2131,7 @@ What happens when for some reason the assumptions evolve and change? The game ch
 
 Notes:
 
-A super good example of that is what is very recently happening in Etheruem. And I mean literally this month. There is a new layer 2 protocol called EigenLayer that allows stakers to stake the same funds for multiple apps at the same time. This is called restaking.
+A super good example of that is what is very recently happening in Ethereum. And I mean literally this month. There is a new layer 2 protocol called EigenLayer that allows stakers to stake the same funds for multiple apps at the same time. This is called restaking.
 
 This is not something natively available in Ethereum and it wasn't taken into consideration when slashes/rewards were designed.
 
@@ -2156,7 +2156,7 @@ This is not something natively available in Ethereum and it wasn't taken into co
 
 Notes:
 
-The consequences of restaking are still not fully understood and the research is ongoing. I encourage you to read the speaker notes for further reading. The whole field of blockchain incentivisation and protocol design is still developing so there are many unknowns but overall I hope all the methods shown today help you in making more informed decisions later down the line. Thats it...
+The consequences of restaking are still not fully understood and the research is ongoing. I encourage you to read the speaker notes for further reading. The whole field of blockchain incentivization and protocol design is still developing so there are many unknowns but overall I hope all the methods shown today help you in making more informed decisions later down the line. Thats it...
 
 - Podcast: https://www.youtube.com/watch?v=aP9f_1v9Ulc
 - Whitepaper: https://2039955362-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FPy2Kmkwju3mPSo9jrKKt%2Fuploads%2F9tExk4U2OdiRKGEsUWqW%2FEigenLayer_WhitePaper.pdf?alt=media&token=c20ac4bd-badd-4826-9fb6-492923741c9e
