@@ -12,7 +12,7 @@ duration: 1 hour
 
 We often want a succinct representation of some data<br/>with the expectation that we are referring to the same data.
 
-##### A "fingerprint".
+##### A "fingerprint"
 
 ---
 
@@ -50,14 +50,30 @@ fn hash(s: &[u8]) -> [u8; 32];
 
 ```text
 hash('hello') =
-	0x324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf
+ 0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8
 ```
 
 **Large input (1.2 MB):**
 
 ```text
-hash(polkadot_runtime-v9190.compact.compressed.wasm) =
-	0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
+hash(Harry_Potter_series_as_string) =
+ 0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
+```
+
+---
+
+## Input Sensitivity
+
+Changing even 1 bit of a hash function _completely_ scrambles the output.
+
+```text
+hash('hello') =
+ 0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8
+```
+
+```text
+hash('hellp') =
+ 0x7bc9c272894216442e0ad9df694c50b6a0e12f6f4b3d9267904239c63a7a0807
 ```
 
 ---
@@ -132,7 +148,7 @@ Exercise: Write your own benchmarking script that compares the performance of th
 Notes:
 
 Benchmarks for the _cryptographic_ hashing algorithms.
-Source: https://www.blake2.net/
+Source: <https://www.blake2.net/>
 
 ---
 
@@ -143,7 +159,7 @@ Source: https://www.blake2.net/
 Notes:
 
 Benchmarks for the XX-hash algorithms.
-Source: https://github.com/Cyan4973/xxHash#benchmarks
+Source: <https://github.com/Cyan4973/xxHash#benchmarks>
 
 ---
 
@@ -205,7 +221,8 @@ They may attempt to trick someone into signing one message.
 
 Notes:
 
-Attacker has intention to impersonate the signer with the other.
+Attacker has intention to impersonate the signer with the other. Generally speaking, even finding a
+single hash collision often results in the hash function being considered unsafe.
 
 ---
 
@@ -216,7 +233,7 @@ Attacker has intention to impersonate the signer with the other.
 
 > With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday.
 
-- Must to compare each output with every other, not with a single one.<br/>
+- Must compare each output with every other, not with a single one.<br/>
 - Number of possible "hits" increases exponentially for more attempts, reducing the expected success to the square-root of what a specific target would be.
 
 </pba-col>
@@ -239,9 +256,9 @@ Notes:
 
 e.g., a 256 bit hash output yields 2^128 security
 
-- https://en.wikipedia.org/wiki/Birthday_attack
+- <https://en.wikipedia.org/wiki/Birthday_attack>
 
-- https://en.wikipedia.org/wiki/Birthday_problem
+- <https://en.wikipedia.org/wiki/Birthday_problem>
 
 ---
 
@@ -274,6 +291,63 @@ Keccak is available for Ethereum compatibility.
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Applications
+
+---
+
+## Cryptographic Guarantees
+
+Let's see which cryptographic properties apply to hashes.
+
+---v
+
+## Confidentiality
+
+Sending or publically posting a hash of some data $D$ keeps $D$ confidential, as only those who already knew $D$ recognize $H(D)$ as representing $D$.
+
+Both cryptographic and non-cryptographic hashes work for this. _only if the input space is large enough_.
+
+---v
+
+## Confidentiality Bad Example
+
+Imagine playing rock, paper, scissors by posting hashes and then revealing. However, if the message is either "rock", "paper", or "scissors", the output will always be either:
+
+```text
+hash('rock') = 0x10977e4d68108d418408bc9310b60fc6d0a750c63ccef42cfb0ead23ab73d102
+hash('paper') = 0xea923ca2cdda6b54f4fb2bf6a063e5a59a6369ca4c4ae2c4ce02a147b3036a21
+hash('scissors') = 0x389a2d4e358d901bfdf22245f32b4b0a401cc16a4b92155a2ee5da98273dad9a
+```
+
+The other player doesn't need to undo the hash function to know what you played!
+
+Notes:
+
+The data space has to be _sufficiently large_.
+Adding some randomness to input of the hash fixes this. Add x bits of randomness to make it x bits of security on that hash.
+
+---v
+
+## Authenticity
+
+Anyone can make a hash, so hashes provide no authenticity guarantees.
+
+---v
+
+## Integrity
+
+A hash changes if the data changes, so it does provide integrity.
+
+---v
+
+## Non-Repudiation
+
+Hashes on their own cannot provide authenticity, and as such cannot provide non-repudiation.
+
+However, if used in another cryptographic primitive that _does_ provide non-repudiation, $H(D)$ provides the same non-repudation as $D$ itself.
+
+Notes:
+
+This is key in digital signatures. However, it's important to realize that if $D$ is kept secret, $H(D)$ is basically meaningless.
 
 ---
 
@@ -322,28 +396,6 @@ Hash of pub key:
   0x8fea32b38ed87b4739378aa48f73ea5d0333b973ee72c5cb7578b143f82cf7e9
                                                                     ^^
 ```
-
----
-
-## Multi-Signatures
-
-<img style="width: 1200px; border-radius: 0" src="../../../assets/img/1-Cryptography/Multi-Signatures.png" />
-
-Notes:
-
-By hashing a concatenation of several public keys, a system can create new IDs that require signature thresholds to authorize activity.
-
----
-
-## Internal System IDs
-
-Modules within a system may have their own information<br/>stored in other parts of the system.
-
-Storage they authorize use of by the module's internal logic.
-
-Notes:
-
-The hash of some input (e.g. a byte-string representing the module) can be used to identify a particular module within a system.
 
 ---
 
@@ -399,7 +451,7 @@ The hash of the information can succinctly represent the information and commit 
 
 ## Data Structures (in Brief)
 
-This is the focus of the next lesson.
+This is the focus of a later lesson.
 
 Notes:
 For now, just a brief introduction.
@@ -413,6 +465,8 @@ Pointer-based linked lists are a foundation of programming.
 But pointers are independent from the data they reference,<br/>so the data can be modified while maintaining the list.
 
 That is, pointer-based linked lists are not tamper evident.
+
+<img src="../../../assets/img/1-Cryptography/Hash-Chains.png" alt="Linked List"> </img>
 
 ---
 

@@ -231,6 +231,8 @@ pba-flex[right] {
 .reveal img,
 .reveal video,
 .reveal iframe {
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1300px;
 	max-height: 800px;
 	margin-top: 10px;
@@ -573,6 +575,7 @@ a {
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
 
 /* work-sans-800italic - latin */
 @font-face {

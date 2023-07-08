@@ -140,3 +140,28 @@ fn cbc_encrypt(plain_text: Vec<u8>, key: [u8; BLOCK_SIZE]) -> Vec<u8> {
 fn cbc_decrypt(cipher_text: Vec<u8>, key: [u8; BLOCK_SIZE]) -> Vec<u8> {
 	todo!()
 }
+
+/// Another mode which you can implement on your own is counter mode.
+/// This mode is secure as well, and is used in real world applications.
+/// It allows parallelized encryption and decryption, as well as random read access when decrypting.
+///
+/// In this mode, there is an index for each block being encrypted (the "counter"), as well as a random nonce.
+/// For a 128-bit cipher, the nonce is 64 bits long.
+///
+/// For the ith block, the 128-bit value V of `nonce | counter` is constructed, where | denotes
+/// concatenation. Then, V is encrypted with the key using ECB mode. Finally, the encrypted V is
+/// XOR'd with the plaintext to produce the ciphertext.
+///
+/// A very clear diagram is present here:
+/// https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)
+///
+/// Once again, you will need to generate a random nonce which is 64 bits long. This should be
+/// inserted as the first block of the ciphertext.
+fn ctr_encrypt(plain_text: Vec<u8>, key: [u8; BLOCK_SIZE]) -> Vec<u8> {
+	// Remember to generate a random nonce
+	todo!()
+}
+
+fn ctr_decrypt(cipher_text: Vec<u8>, key: [u8; BLOCK_SIZE]) -> Vec<u8> {
+	todo!()
+}

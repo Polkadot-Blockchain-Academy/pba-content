@@ -23,7 +23,7 @@ duration: 30 mins
 - Can multiple nodes actually run the software and come to consensus?
 <!-- .element: class="fragment" -->
 
-NOTE:
+Notes:
 
 - Nakatomo coefficient
 - Most blockchain systems actually already have this.
@@ -41,7 +41,7 @@ NOTE:
 - Is the right "software" being executed by node operators?
 <!-- .element: class="fragment" -->
 
-NOTE:
+Notes:
 
 - Metamask
 - Mining/Staking Pool getting to large.
@@ -64,7 +64,7 @@ https://moxie.org/2022/01/07/web3-first-impressions.html
 - Important to remember that node operators are usually in neither.
 <!-- .element: class="fragment" -->
 
-NOTE:
+Notes:
 
 1. the cathedral and bazaar
 2. the papal model
@@ -82,7 +82,7 @@ https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar
 
 - This is where a meta-protocol, and rule-based upgrade systems becomes important.
 
-NOTE:
+Notes:
 
 Recall how if the governance of the chain decide to upgrade to protocol, node-operators don't have a
 say in that by default.
@@ -105,7 +105,7 @@ node-operators.
 The fellowship is a **_technical decision making body_** onchain, aimed at alleviating the above
 facades of centralization, but more so than anything else, the intellectual aspect.
 
-NOTE:
+Notes:
 
 - Technical, high focus on core protocol aspects for now.
 - decision-making: not saying it has absolute power yet.
@@ -117,7 +117,7 @@ NOTE:
 - Imperfect, not for everyone, opinionated 🥲!
 - Strictly better than not taking an action.
 
-NOTE:
+Notes:
 
 It is an _attempt_ at solving the issue. We believe it is strictly better than defining no rule
 around it and letting it be as-is, but it might be sub-optimal.

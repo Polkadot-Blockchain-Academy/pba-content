@@ -65,6 +65,61 @@ subsequent lines are just seen in speaker view.
 
 ---
 
+# How to use Polkadot icons
+
+All Polkadot icons exist under the directory `/assets/icons/polkadot/{type}/{icon_name}.svg`, where:
+
+- `type` can be one of: `line`, `solid`, `2color`;
+- `icon_name` is the name of the icon (e.g. `Alice`, `Oracles` etc);
+
+> You can find the icons' relative names by browsing to [Polkadot icons set - https://icons.polkadot.network](https://icons.polkadot.network)
+
+---v
+
+In order to effectively use those icons in their default form (meaning `line` in white, `solid` in Polkadot pink and `2color` in a combination of white and Polkadot pink) you can simply do:
+
+```html
+<img src="./assets/icons/polkadot/2color/Ecosystem.svg" />
+<img src="./assets/icons/polkadot/line/Ecosystem.svg" />
+<img src="./assets/icons/polkadot/solid/Ecosystem.svg" />
+```
+
+<br/> and the outcomes, accordingly, will be:
+
+<img src="../../assets/icons/polkadot/2color/Ecosystem.svg" /><br />
+<img src="../../assets/icons/polkadot/line/Ecosystem.svg" /><br />
+<img src="../../assets/icons/polkadot/solid/Ecosystem.svg" />
+
+---v
+
+For using custom colors and/or css attributes, you will need to add the `style` attribute on the `img` tag with the needed changes:
+
+```html
+<img
+  style="filter:
+    brightness(0)
+    saturate(100%)
+    invert(37%)
+    sepia(83%)
+    saturate(2704%)
+    hue-rotate(132deg)
+    brightness(93%)
+    contrast(84%);"
+  src="./assets/icons/polkadot/2color/Ecosystem.svg"
+/>
+```
+
+<br/> and the outcome, will be:
+
+<img
+  style="filter: brightness(0) saturate(100%) invert(37%) sepia(83%) saturate(2704%) hue-rotate(132deg) brightness(93%) contrast(84%);"
+  src="../../assets/icons/polkadot/2color/Ecosystem.svg"
+/>
+
+> For altering color the `filter` arg should be used[ a filter generator](https://angel-rs.github.io/css-color-filter-generator/) can be used for extracting code from hex color)
+
+---
+
 # More help needed?
 
 👋 Please reach out to the academy content & docs team on element for support!
