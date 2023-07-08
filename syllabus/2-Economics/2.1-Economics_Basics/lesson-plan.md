@@ -25,52 +25,19 @@ The participants...
 
 We want to go through the following concepts:
 
-- _Utility Function_:
-  - Map from consumption bundles to payoffs.
-  - Generally concave (explain this).
-  - Decreasing marginal utility.
-    - Example: Marginal utility increases with a fixed fee for a transaction as the volume of the transaction increases. (e.g., a $50000 transaction with a $5 fee is great value, a 10$ transaction with a $5 fee is very bad value.)
-- _Cost-Benefit Analyses_
-- _Opportunity Costs_
-  - In choice problems, costs from foregoing alternative options.
-  - Example: parachain auction bids.
-- _Inflation and token creation_
-  - Traditional use vs. use in crypto.
-  - Inflation vs. Deflation.
-    - Explain monetary base inflation, which is a bit different than 'traditional' inflation as used in economics.
-  - Discuss: E.g., Bitcoin vs. Polkadot.
-- _Comparative Advantage_
-  - Definition: Ability to produce a particular good or service at a lower opportunity cost than its trading partners.
-  - Discuss: Specialization in parachains.
-- _Rationality & Behavioral Biases_
-  - Define rationality and note that it is the underlying assumption for many theories.
-  - - _Incentives_
-      - It is imperative to build incentives correctly, otherwise users will find a way to exploit the system in any way possible to make money.
-  - There are plenty of systemic deviations from rationality which should be kept in mind when designing economic incentives.
-  - Examples: Loss Aversion, Endowment Effect, Gambler's Fallacy, Default Effect
-  - Groupthink and Groupshift: Pyschological effects (more extreme) when there are more people involved in a decision. Conversely, a single point of decision-making creates a single point of failure.
-  - Present Bias
-- _Competition_
-
-  - Has an intrinsic economic value; creates options and evolution.
-
-- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lesson part):
-  - Incentives: Slashing
-  - Tokenomics Model
-    - Compare Bitcoin, Ethereum and Polkadot's tokenomics. Is Bitcoin secure if it has no slashing?
-    - Which inflation model does Polkadot use and what are the parameters _(Save this for Polkadot)_
+- Understanding Incentives
+- Demand & Supply
+- Market Forms
+- The Economics of Specialization
+- Time as Ultimate Resource
+- Behavioral Biases
 
 ### Activity: (90-120min)
 
-- Plenary discussion: Do we need slashing?
-  - Not all PoS protocols employ slashing. Is this a good idea? What is the point of slashing? What are the arguments against slashing?
-  - Youtube Video: Micalis Talks on Algorand
-- Group work: Compare different tokenomics models
-  - [some more context here, should go beyond inflationary vs deflationary]
-- Discussion about the design decisions that are taken industry-wide, about pros and cons. Why did each team choose their economics? How does each protocol leverage economic concepts? What assumptions are they making, etc.
-- This may demand small prior reading about the different protocols and how they use.
-
-This session gives an overview of some basic economic concepts that seem important in a blockchain setting.
+- Classroom Discussions
+- Academy Games
+  - Ultimatum Game
+  - Cournot Competition
 
 ### Why is this important
 
@@ -90,52 +57,3 @@ The participants...
 
 - can explain the context and meaning of some of the most fundamental economic concepts,
 - can use them correctly.
-
-### Content
-
-We want to go through the following concepts:
-
-- _Utility Function_:
-  - Map from consumption bundles to payoffs.
-  - Generally concave (explain this).
-  - Decreasing marginal utility.
-    - Example: Marginal utility increases with a fixed fee for a transaction as the volume of the transaction increases. (e.g., a $50000 transaction with a $5 fee is great value, a 10$ transaction with a $5 fee is very bad value.)
-- _Cost-Benefit Analyses_
-- _Opportunity Costs_
-  - In choice problems, costs from foregoing alternative options.
-  - Example: parachain auction bids.
-- _Inflation and token creation_
-  - Traditional use vs. use in crypto.
-  - Inflation vs. Deflation.
-    - Explain monetary base inflation, which is a bit different than 'traditional' inflation as used in economics.
-  - Discuss: E.g., Bitcoin vs. Polkadot.
-- _Comparative Advantage_
-  - Definition: Ability to produce a particular good or service at a lower opportunity cost than its trading partners.
-  - Discuss: Specialization in parachains.
-- _Rationality & Behavioral Biases_
-  - Define rationality and note that it is the underlying assumption for many theories.
-  - - _Incentives_
-      - It is imperative to build incentives correctly, otherwise users will find a way to exploit the system in any way possible to make money.
-  - There are plenty of systemic deviations from rationality which should be kept in mind when designing economic incentives.
-  - Examples: Loss Aversion, Endowment Effect, Gambler's Fallacy, Default Effect
-  - Groupthink and Groupshift: Pyschological effects (more extreme) when there are more people involved in a decision. Conversely, a single point of decision-making creates a single point of failure.
-  - Present Bias
-- _Competition_
-
-  - Has an intrinsic economic value; creates options and evolution.
-
-- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lesson part):
-  - Incentives: Slashing
-  - Tokenomics Model
-    - Compare Bitcoin, Ethereum and Polkadot's tokenomics. Is Bitcoin secure if it has no slashing?
-    - Which inflation model does Polkadot use and what are the parameters _(Save this for Polkadot)_
-
-### Activity: (90-120min)
-
-- Plenary discussion: Do we need slashing?
-  - Not all PoS protocols employ slashing. Is this a good idea? What is the point of slashing? What are the arguments against slashing?
-  - Youtube Video: Micalis Talks on Algorand
-- Group work: Compare different tokenomics models
-  - [some more context here, should go beyond inflationary vs deflationary]
-- Discussion about the design decisions that are taken industry-wide, about pros and cons. Why did each team choose their economics? How does each protocol leverage economic concepts? What assumptions are they making, etc.
-- This may demand small prior reading about the different protocols and how they use.
