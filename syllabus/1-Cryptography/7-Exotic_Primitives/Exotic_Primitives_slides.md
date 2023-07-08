@@ -122,6 +122,7 @@ At a restaurant, when they ask you if you want soup or salad, even if you mumble
 ---v
 
 ## Erasure Coding Intuition
+
 How would you classify each of the following words?
 
 <span style="color: red;">file</span> pile pale tale tall rule tail rail rain <span style="color: blue;">ruin</span>
@@ -129,6 +130,7 @@ How would you classify each of the following words?
 ---v
 
 ## Erasure Coding Intuition
+
 How would you classify each of the following words?
 
 <span style="color: red;">file pile pale tale tall</span> <span style="color: purple;">rule</span> <span style="color: blue;"> tail rail rain ruin</span>
@@ -149,7 +151,7 @@ What if you receive `msg3`?
 
 Notes:
 
-If the messages are not far apart, it is impossible to distinguish in many cases. There is not enough "distance" between the two possibilities. 
+If the messages are not far apart, it is impossible to distinguish in many cases. There is not enough "distance" between the two possibilities.
 
 ---v
 

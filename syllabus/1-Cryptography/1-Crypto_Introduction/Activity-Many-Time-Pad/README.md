@@ -23,3 +23,21 @@ For instructor use only: https://joshorndorff.github.io/DanBonehsCryptoExercises
 
 - Generate cyphertext for some text: [PRIVATE-generate_ciphertexts-many-time-pad.py](./PRIVATE-generate_ciphertexts-many-time-pad.py)
 - Update the instructions to use the correct cyphertext: [Many_Time_Pad_Activity.md](./Many_Time_Pad_Activity.md)
+
+a^k = Ca
+a^a^k = a^Ca
+k = a^Ca
+
+b^k=Cb
+b
+
+a^b^k = a^Cb
+a^b^a^Ca = a^Cb
+b^Ca = a^Cb
+b = a^Ca^Cb
+a and b are english, we can guess words in `a` and look for words on the output (crib drag style)
+then k=b^Cb and/or k = a^Ca from likely hits
+bitwise so we can slowly reconstruct the key, building sentences.
+
+Ca^Cb = a^k^b^k = a^b
+a^Ca^Cb = a^a^b = b

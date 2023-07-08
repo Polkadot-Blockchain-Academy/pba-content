@@ -55,11 +55,11 @@ The input `r` is typically a source of randomness, for example the movement patt
 Provides:
 
 - Confidentiality
-- Authenticity*
+- Authenticity\*
 
 Does not provide:
 
-- Integrity*
+- Integrity\*
 - Non-Repudiation
 
 Notes:
@@ -207,7 +207,7 @@ Provides:
 
 Does not provide:
 
-- Integrity*
+- Integrity\*
 - Authenticity
 - Non-Repudiation
 
@@ -283,9 +283,9 @@ In practice, asymmetric encryption is _almost always_ hybrid encryption.
 | Property        | Symmetric | Asymmetric | Authenticated | Hybrid + Authenticated |
 | --------------- | --------- | ---------- | ------------- | ---------------------- |
 | Confidentiality | Yes       | Yes        | Yes           | Yes                    |
-| Authenticity    | Yes*      | No         | Yes*          | Yes                    |
-| Integrity       | No*       | No*         | Yes          | Yes                    |
-| Non-repudiation | No        | No*         | No            | No*                    |
+| Authenticity    | Yes\*     | No         | Yes\*         | Yes                    |
+| Integrity       | No\*      | No\*       | Yes           | Yes                    |
+| Non-repudiation | No        | No\*       | No            | No\*                   |
 
 Notes:
 
