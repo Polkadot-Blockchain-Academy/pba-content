@@ -118,7 +118,7 @@ Features that a PAB should follow:
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Efficency
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- Tool Simlicity
+- Tool Simplicity
 <!-- .element: class="fragment" data-fragment-index="3" -->
 - Support as Compilation Target
 <!-- .element: class="fragment" data-fragment-index="4" -->
@@ -129,12 +129,12 @@ Notes:
 
 + Hardware Independence: It should not be tightly related to a specific architecture, otherwise the execution on different machine could be convoluted
 + Efficiency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
-+ Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
 + Support as Compilation Target: The PAB should be possible to be compiled by as many as possible High Level languages 
++ Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
 
 ---v
 
-### Sanboxing?
+### Sandboxing?
 
 A sandbox environment is where potentially unsafe software code can be executed without affecting the security of the machine in which is executed.
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -169,6 +169,10 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 <!-- .element: class="fragment" data-fragment-index="2" -->
 <img style="width: 70%" src="img/pab/pab_path_4.svg"/>
 <!-- .element: class="fragment" data-fragment-index="3" -->
+<img style="width: 70%" src="img/pab/pab_path_5.svg"/>
+<!-- .element: class="fragment" data-fragment-index="4" -->
+<img style="width: 70%" src="img/pab/pab_path_6.svg"/>
+<!-- .element: class="fragment" data-fragment-index="5" -->
 </div>
 
 ---
@@ -296,7 +300,7 @@ Assuming all the things we said before wasm seems to be perfect but how those th
 
 ---
 
-## Communication with the Environemnt
+## Communication with the Environment 
 
 Let's call **Embedder** the program that will take the wasm blob as input and execute it
 <!-- .element: class="fragment" data-fragment-index="0" -->
@@ -335,7 +339,7 @@ Notes:
 
 ## Memory
 
-In addition to the stack Wasm has also access to memory provided by the embedder, the **Liner Memory**.
+In addition to the stack Wasm has also access to memory provided by the embedder, the **Linear Memory**.
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 </br>
@@ -400,7 +404,9 @@ Interpretation: The wasm blob is treated as any other interpreted language and e
 
 - It is a stand alone wasm environment
 - Wasmtime is built on the optimizing Cranelift code generator to quickly generate high-quality machine code either at runtime (JIT) or ahead-of-time (AOT)
-- It executes the compiled wasm blob in sanboxed environment while keeping everything extremely secure
+- It executes the compiled wasm blob in sandboxed environment while keeping everything extremely secure
+
+<!--TODO: graphics-->
 
 
 Notes: 
@@ -412,6 +418,20 @@ Cranelift is a fast, secure, relatively simple and innovative compiler backend. 
 
 ---v
 
+#### Wasm lifecycle in Wasmtime
+
+<div class="r-stack">
+<img style="width: 70%" src="img/pab/wasmtime_exec_1.svg" />
+<img style="width: 70%" src="img/pab/wasmtime_exec_2.svg"/>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img style="width: 70%" src="img/pab/wasmtime_exec_3.svg"/>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img style="width: 70%" src="img/pab/wasmtime_exec_4.svg"/>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+</div>
+
+---v
+
 ### Wasmi
 
 - It is a wasm environment with support for embedded environment such as WebAssembly itself 
@@ -420,6 +440,8 @@ Cranelift is a fast, secure, relatively simple and innovative compiler backend. 
   - The wasm code is transpiled to WASMI IR, another stack-based bytecode
   - The WASMI IR is then interpreted by a Virtual Machine
 
+<!--TODO: graphics-->
+
 Notes:
 
 proposal to switch from a stack based ir to registy based ir https://github.com/paritytech/wasmi/issues/361
@@ -427,6 +449,20 @@ proposal to switch from a stack based ir to registy based ir https://github.com/
 paper explaining the efficency of translating wasm to registry based code https://www.intel.com/content/www/us/en/developer/articles/technical/webassembly-interpreter-design-wasm-micro-runtime.html
 
 Due to it's characteristics it is mainly used to execute SmartContracts on chain
+
+---v
+
+#### Wasm lifecycle in Wasmi
+
+<div class="r-stack">
+<img style="width: 70%" src="img/pab/wasmi_exec_1.svg" />
+<img style="width: 70%" src="img/pab/wasmi_exec_2.svg"/>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img style="width: 70%" src="img/pab/wasmi_exec_3.svg"/>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<img style="width: 70%" src="img/pab/wasmi_exec_4.svg"/>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+</div>
 
 <!-- Really nice slide but there's not enough knowledge about substrate
 
