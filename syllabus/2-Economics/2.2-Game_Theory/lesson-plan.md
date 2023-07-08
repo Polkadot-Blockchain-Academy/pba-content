@@ -1,10 +1,11 @@
-## Lesson 2: Game Theory (60min)
+# Game Theory (~4 hours)
 
 This session aims to cover game theory concepts that are most relevant in a blockchain context.
 
 ### Why is this important
 
-Game theory is the study of incentives in strategic situations. Understanding a little of game theory is important for the upcoming sessions as well as the participants future work as incentive architects.
+Game theory is the study of incentives in strategic situations.
+Understanding a little of game theory is important for the upcoming sessions as well as the participants future work as incentive architects.
 
 ### Prerequisites
 
@@ -22,7 +23,7 @@ The participants...
 - ... know common games and understand how to analyze such games.
 - ... experience games first-hand.
 
-### Content
+---
 
 We want to go through the following concepts:
 
@@ -33,7 +34,7 @@ We want to go through the following concepts:
 - Nash Equilibrium
 - Equilibrium Selection
 
-### Activity (90-120min)
+### Activity (~1 hour)
 
 In this non-lesson part, we want the participants to experience several games first-hand.
 

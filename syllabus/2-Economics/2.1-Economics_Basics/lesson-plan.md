@@ -1,4 +1,4 @@
-## Lesson 1: Economics Basics (60min)
+# Economics Basics (~4 hours)
 
 This session gives an overview of some basic economic concepts that seem important in a blockchain setting.
 
@@ -21,9 +21,9 @@ The participants...
 - can explain the context and meaning of some of the most fundamental economic concepts,
 - can use them correctly.
 
-### Content
+---
 
-We want to go through the following concepts:
+## Lecture (1 hour)
 
 - Understanding Incentives
 - Demand & Supply
