@@ -18,14 +18,17 @@ revealOptions:
 # **Econ & Game Theory in Blockchain**
 
 Notes:
+
 - Presenter Introduction
 - Timeline clarification (after mod 2 and 3)
 - Today we'll be going through a brand new lecture on Econ & Game Theory in Blockchain
+
 ---
 
 # What's the goal?
 
 Notes:
+
 What's the goal of this lecture?
 ---v
 
@@ -47,6 +50,7 @@ What's the goal of this lecture?
 </pba-cols>
 
 Notes:
+
 By now you all should be familiar with all the terms and techniques from the Economy and Game Theory module like the Demand & Supply or Nash equilibrium.
 
 ---v
@@ -73,6 +77,7 @@ By now you all should be familiar with all the terms and techniques from the Eco
 </pba-cols>
 
 Notes:
+
 And you also just finished covering the basics of Blockchains so you all should be familiar with state transition functions as well as have some understanding of consensus protocols.
 
 ---v
@@ -83,12 +88,15 @@ And you also just finished covering the basics of Blockchains so you all should 
     alt="Some Pic" />
 
 Notes:
+
 Having all that in mind, the goal of this lecture is to combine the two and see how the economy and game theory can be applied to blockchain. To do that we'll provide some exemplary use-cases and case studies.
 
 ---
+
 # Landscape
 
 Notes:
+
 But first let's start with a quick summary of how we'll be approaching to bridge the gap between the two modules.
 
 ---v
@@ -106,6 +114,7 @@ But first let's start with a quick summary of how we'll be approaching to bridge
     </pba-col>
 
 Notes:
+
 Firstly, we'll be looking at various blockchain systems as isolated games.
 
 ---v
@@ -123,8 +132,8 @@ Firstly, we'll be looking at various blockchain systems as isolated games.
         <img style="width: 500px" src="../../assets/img/3-Blockchain/player.svg" alt="Some Pic" />
     </pba-col>
 
-
 Notes:
+
 Participants in those games will be for instance the miners, like in the Bitcoin protocol, maybe the validators in the Polkadot protocol or just some users of your smart contract.
 
 ---v
@@ -144,7 +153,8 @@ Participants in those games will be for instance the miners, like in the Bitcoin
     </pba-col>
 
 Notes:
-The protocol is essentially a set of rules that will define the game itself. The one we will be analysing.
+
+The protocol is essentially a set of rules that will define the game itself. The one we will be analyzing.
 
 ---v
 
@@ -164,7 +174,8 @@ The protocol is essentially a set of rules that will define the game itself. The
     </pba-col>
 
 Notes:
-And to properly analyse those games we need to have some value represenation, which in our case will be usually cryptocurrencies.
+
+And to properly analyze those games we need to have some value representation, which in our case will be usually cryptocurrencies.
 
 ---v
 
@@ -185,28 +196,33 @@ And to properly analyse those games we need to have some value represenation, wh
     </pba-col>
 
 Notes:
+
 And finally we'll be having various reward and punishment schemes that will shape the incentives of the players.
 
-Now that we have all the elements defining our blockchain games we can look for further paralells. 
----
+## Now that we have all the elements defining our blockchain games we can look for further parallels.
+
 # Market Emergence
 
 Notes:
+
 And first let's take a look at something that hopefully very familiar: Markets
 
 ---v
+
 ## Market Emergence
 
 _"A market is a composition of systems, institutions, procedures, social relations or infrastructures whereby parties engage in exchange."_
 
 Notes:
-So a market is a composition of systems where ppl exhchange stuff. This is the simplest way of putting it.
+
+So a market is a composition of systems where ppl exchange stuff. This is the simplest way of putting it.
 
 And Markets are the cornerstone of our economy and they are everywhere which also means they are thoroughly studied. Which is very fortunate for us.
 
 Now let's look at something that might also be pretty familiar to many...
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -215,10 +231,12 @@ Now let's look at something that might also be pretty familiar to many...
     alt="Some Pic" />
 
 Notes:
+
 The fee market.
-That's a chart of the average transaction fees in the Bitcoin network over time. As you can see the price is constatly fluctuating.
+That's a chart of the average transaction fees in the Bitcoin network over time. As you can see the price is constantly fluctuating.
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -237,9 +255,11 @@ That's a chart of the average transaction fees in the Bitcoin network over time.
 </pba-cols>
 
 Notes:
+
 Let's dive a bit deeper. So the users are bidding with how much they are willing to pay and miners are choosing the most lucrative transactions. If miners already included all the best transactions and there are not many new ones coming in they need to start accepting lower fees, so the price drops. But wait...?
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -254,9 +274,11 @@ Let's dive a bit deeper. So the users are bidding with how much they are willing
 </pba-cols>
 
 Notes:
+
 What is the actual product being exchanged here? When you have the crude oil market the goods being exchanged are clearly defined. What is actually being traded in here?
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -275,11 +297,13 @@ What is the actual product being exchanged here? When you have the crude oil mar
 </pba-cols>
 
 Notes:
+
 It's the BLOCKSPACE. Miners secure and produce blockspace and sell it in an auction to various users. Blockspace as a product is actually a pretty new way of thinking about blockchains so I highly suggest checking out the article linked in the notes.
 
 - https://polkadot.network/blog/blockspace-blockspace-ecosystems-how-polkadot-is-unlocking-the-full-potential-of-web3/
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -288,7 +312,7 @@ It's the BLOCKSPACE. Miners secure and produce blockspace and sell it in an auct
     <pba-col>
         <strong> Market Equilibrium </strong>
         <ul>
-            <li> The transactions that manage to get into the blocks have fees representative of the current market equilibrum </li>
+            <li> The transactions that manage to get into the blocks have fees representative of the current market equilibrium </li>
         </ul>
     </pba-col>
     <pba-col>
@@ -297,9 +321,11 @@ It's the BLOCKSPACE. Miners secure and produce blockspace and sell it in an auct
 </pba-cols>
 
 Notes:
-The price of blockspace is determined by the market equilibrum of supply and demand. Demand force is the users willing to transact and supply is the miners producing the blockspace. Transations that are actually included represent the current equilibrium.
+
+The price of blockspace is determined by the market equilibrium of supply and demand. Demand force is the users willing to transact and supply is the miners producing the blockspace. Transactions that are actually included represent the current equilibrium.
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -317,9 +343,11 @@ The price of blockspace is determined by the market equilibrum of supply and dem
 </pba-cols>
 
 Notes:
+
 We all know that the transaction fees can sometimes get outrageous. In cases where many users want to transact the demand can skyrocket. And what we see is the price equilibrium following suit.
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -344,6 +372,7 @@ And now let's think of what normal markets do. If our demand and price go extrem
 So the supply is often fixed and the demand is fluctuating. This is often the cause for the very volatile fee market.
 
 ---v
+
 ## Market Emergence
 
 #### _Fee Market_
@@ -365,32 +394,41 @@ Notes:
 
 And according to that theory some large blockchains actually tried implementing variable size blocks to react to the demand, but it's a pretty complex task and a big tradeoff.
 
-Some of you maybe recognise this image as the CryptoKitties game on Ethereum. It's a game where you can buy and breed digital cats. It was so popular that it actually clogged the Ethereum network and made normal transactions nearly unfeasible. And maybe now you have some additional insights into what actually happened there.
+Some of you maybe recognize this image as the CryptoKitties game on Ethereum. It's a game where you can buy and breed digital cats. It was so popular that it actually clogged the Ethereum network and made normal transactions nearly unfeasible. And maybe now you have some additional insights into what actually happened there.
 
 =5 sec pause=
 
 ---
+
 # Nash Equilibrium
 
 Notes:
+
 Now let's look at something a bit different that allows us to predict what users would do... a Nash Equilibrium.
 
 ---v
+
 ## Nash Equilibrium
+
 - Strategy from which no player wants to deviate
 - But what's the strategy for BTC mining?
 
 Notes:
+
 Nash Eq. is strategy from which no player wants to deviate. Pretty simple but what's the strategy for BTC mining? How can we leverage that knowledge?
 
 ---v
+
 ## Nash Equilibrium
+
 <img style="width: 500px" src="../../assets/img/3-Blockchain/honest_mining_meme.jpg" alt="Some Pic" />
 
 Notes:
-And more importantly... being honestly is the answer, right? 
+
+And more importantly... being honestly is the answer, right?
 
 ---v
+
 ## Nash Equilibrium
 
 #### _Bitcoin Mining_
@@ -398,9 +436,11 @@ And more importantly... being honestly is the answer, right?
 <img style="width: 400px" src="../../assets/img/3-Blockchain/bitcoin.svg" alt="Some Pic" />
 
 Notes:
-Let's dive in and actually see what's the answer. What's the Nash Equilibrum of Bitcoin mining? Is it being honest or dishonest?
+
+Let's dive in and actually see what's the answer. What's the Nash Equilibrium of Bitcoin mining? Is it being honest or dishonest?
 
 ---v
+
 ## Nash Equilibrium
 
 <pba-cols>
@@ -419,43 +459,51 @@ Let's dive in and actually see what's the answer. What's the Nash Equilibrum of 
     </pba-col>
 </pba-cols>
 
-
 Notes:
+
 Here we have a few assumptions, but the main ones are:
+
 - imagine we have only 2 miners
 - the block rewards is 2
 
-Let's figre out how many bitcoins each one of them will mine on average.
-
+Let's figure out how many bitcoins each one of them will mine on average.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (1).svg" alt="Some Pic" />
 
 Notes:
+
 If both miners are not mining honestly, none of them produce valid bitcoin blocks... then there are no ACTUAL bitcoins being mined. Remember that they don't cooperate but for instance try and push blocks with 9999 BTC in their account. So the reward is 0 for both.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (2).svg" alt="Some Pic" />
 
 Notes:
+
 If both are working honestly and making valid blocks they have an equal chance to mine a block and reap the rewards. Rest of the nodes will accept those blocks but the two miners compete for the same resource so each one will get a single BTC on average (as the mining reward is 2).
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (3).svg" alt="Some Pic" />
 
 Notes:
+
 If one of them is dishonest the other one can still keep working honestly and reap greater rewards as there is no competition. In that case the honest party gains 2 BTC.
 
 Now that we know who earns how many bitcoins in each scenario we need to shift out attention to another important force. Things like Twitter, Facebook or Bitcoin are often deemed as valuable because of their Network Effect.
 
 ---v
+
 ## Nash Equilibrium
+
 <br>
 
 #### _Network Effect_
@@ -464,13 +512,17 @@ _"The network effect is a business principle that illustrates the idea that when
 its value increases."_
 
 Notes:
-Generally the more ppl use some platform or believe in something the more valuable it is. It's a pretty simple concept but it's very important in the blockchain space. Bitcoin is precious to many because many people believe in it and mine it and exchange it. In blockchains if more pople use your chain it's more valuable.
+
+Generally the more ppl use some platform or believe in something the more valuable it is. It's a pretty simple concept but it's very important in the blockchain space. Bitcoin is precious to many because many people believe in it and mine it and exchange it. In blockchains if more people use your chain it's more valuable.
 
 ---v
+
 ## Nash Equilibrium
+
 <br>
 
 #### _Network Effect_
+
 <br>
 <strong>Assumptions revisited:</strong>
 <ul>
@@ -487,92 +539,117 @@ Generally the more ppl use some platform or believe in something the more valuab
 </ul>
 
 Notes:
+
 Let's add this extra assumption into our model. If there are more miners securing the network the coins itself are more valuable. We will use a super simple model here where the price of a coin is a square of the number of miners. We will be investigating small systems so it is a good enough approximation.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (4).svg" alt="Some Pic" />
 
 Notes:
-We can apply the changes by changing the evaluations of the miners coins. 
+
+We can apply the changes by changing the evaluations of the miners coins.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (4b).svg" alt="Some Pic" />
 
 Notes:
+
 If both miners honestly secure the network the coin price is 4 and in case of single honest miner the price is 1.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (5).svg" alt="Some Pic" />
 
 Notes:
+
 Now we can actually focus on finding the Nash Eq. so let's used the simplest method.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (6).svg" alt="Some Pic" />
 
-Notes: Assuming Miner B is honest the Miner A needs to choose between a payoff of 4 or 0.
+Notes:
+Assuming Miner B is honest the Miner A needs to choose between a payoff of 4 or 0.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (7).svg" alt="Some Pic" />
 
-Notes: He ofc chooses 4 as it's higher. We temporarily mark it with the red circle.
+Notes:
+He ofc chooses 4 as it's higher. We temporarily mark it with the red circle.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (8).svg" alt="Some Pic" />
 
-Notes: Same reasoning for B being dishonest and A chooses 2 over 0.
+Notes:
+Same reasoning for B being dishonest and A chooses 2 over 0.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (9).svg" alt="Some Pic" />
 
 Notes:
+
 Now we reverse the assumptions and assume A is honest and then B chooses between 4 and 0.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (10).svg" alt="Some Pic" />
 
-Notes: Similarly as before he should choose 4 as it's higher.
+Notes:
+Similarly as before he should choose 4 as it's higher.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (10b).svg" alt="Some Pic" />
 
-Notes: And the last remaining options will result in the circled 2.
+Notes:
+And the last remaining options will result in the circled 2.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (12).svg" alt="Some Pic" />
 
-Notes: Now the square with all the options circled is the Nash Eq. In our case it seems to be being honest.
+Notes:
+Now the square with all the options circled is the Nash Eq. In our case it seems to be being honest.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (13).svg" alt="Some Pic" />
 
 Notes:
+
 Not a big surprise, and being dishonest lands you with zero coins so it was too be expected. But what if we change the assumptions a bit?
 
 ---v
+
 ## Nash Equilibrium
+
 <br>
 What does it mean exactly to be <strong>dishonest</strong>?
 <br>
@@ -589,20 +666,23 @@ What does it mean exactly to be <strong>dishonest</strong>?
 
 If multiple miners break the protocol <strong>in the same way</strong>, it can be seen as a new protocol deviating from
 the main one.
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
+
 We were assuming that miners are either honest or dishonest, but what does being DISHONEST actually mean?
 
 =fragment=
 
-There are some mainstream rules (the protocol) and if an individual miner breaks them it seems like an isolated mistake or an attempt at cheating. This is what we were analysing before.
+There are some mainstream rules (the protocol) and if an individual miner breaks them it seems like an isolated mistake or an attempt at cheating. This is what we were analyzing before.
 
 =fragment=
 
 But what if multiple miners break the protocol in the same way? It can be seen as a new protocol deviating from the main one. And that's what we'll be looking at next. The dishonest miners are cooperating.
 
 ---v
+
 ## Nash Equilibrium
 
 <pba-cols>
@@ -623,60 +703,73 @@ But what if multiple miners break the protocol in the same way? It can be seen a
 </pba-cols>
 
 Notes:
+
 Assumptions are pretty much the same but this time around the dishonest miners will cooperate. Effectively they will be following a different modified protocol.
 
 So we will no longer consider them dishonest but they simply follow a different set of rules. Now miners choose to mine for the bitcoin BTC protocol or the bitcoin cash BCH protocol.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (15).svg" alt="Some Pic" />
 
 Notes:
+
 Let's quickly fill up this table with the same rules as before. Only this time of both miners follow BCH they ofc get the rewards in the BCH token.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (16).svg" alt="Some Pic" />
 
 Notes:
+
 Just as before we take the extra step and apply the network effect. If both miners secure the network price is 4 and if only 1 the price is 1.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (17).svg" alt="Some Pic" />
 
 Notes:
+
 Here we have all the prices adjusted.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (18).svg" alt="Some Pic" />
 
 Notes:
+
 Now let's take a look at what happens if Miner B miners BTC. Miner A would prefer to also mine bitcoin. So they are both mining the same thing.
 
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (19).svg" alt="Some Pic" />
 
 Notes:
+
 On the other hand if miner B mines BCH then it seems that Miner A prefers to mine BCH...
 
-
 ---v
+
 ## Nash Equilibrium
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (20).svg" alt="Some Pic" />
 
 Notes:
+
 And in fact what we have in here is two distinct Nash Equilibria!
 
 ---v
+
 ## Nash Equilibrium
 
 So is being honest the best strategy?
@@ -686,6 +779,7 @@ So is being honest the best strategy?
 
 Not always. If the majority of people are honest then honesty pays off. If the majority of people are _dishonest_ in the
 same way then be _dishonest_ with them.
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <br>
@@ -697,42 +791,47 @@ same way then be _dishonest_ with them.
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
+
 So is being honest the best strategy?
 
 =fragment=
 
 Not always. If the majority of people are honest then honesty pays off. If the majority of people are _dishonest_ in the same way then be _dishonest_ with them.
 
-
 =fragment=
 
 In fact it was proven that in PoW following the majority is the true Nash Equilibrium no matter what strategy/protocol they are using as long as it's consistent.
 
 - More complex examples will be explored later in the forks lecture on Friday
-https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=7bf78054192d98e999edcdf08971a5eed42518d2
+  https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=7bf78054192d98e999edcdf08971a5eed42518d2
 
 ---
+
 # Shelling Point
 
 Notes:
+
 On that topic... What if we have multiple Nash Equilibria? Shelling point often comes to the rescue.
 
 ---v
 
 ## Shelling Point
+
 - A solution that people tend to choose (easiest to coordinate on)
 - Generally it is also a Nash Equilibrium
 - How in the world can it be useful in Blockchain?
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
+
 So first a Shelling point is a strategy people tend to choose. It is generally a Nash Eq.
 
 =fragment=
 
-But how in the world is it useful to us in Blockchain? 
+But how in the world is it useful to us in Blockchain?
 
 ---v
+
 ## Shelling Point
 
 #### Detective game
@@ -750,11 +849,13 @@ But how in the world is it useful to us in Blockchain?
 </pba-cols>
 
 Notes:
+
 But before we can fully answer that let's explore a different game that can show you how Shelling points work. And I promise it will be applicable to Blockchain.
 
 So the story goes like that. We have to bank robbers and a detective. The detective interrogates he robbers and tries to make them confess or catch them lying.
 
 ---v
+
 ## Shelling Point
 
 #### _Detective game_
@@ -762,11 +863,13 @@ So the story goes like that. We have to bank robbers and a detective. The detect
 <img style="width: 550px" src="../../assets/img/3-Blockchain/interrogation_small.drawio.svg" alt="Some Pic" />
 
 Notes:
-If any of the robbers spill the beans and tell the thruth they both loose the game and go to prison. If both of them lie they get away with it. Seems super simple and it should be pretty straightforward that they both simply need to lie.
+
+If any of the robbers spill the beans and tell the truth they both loose the game and go to prison. If both of them lie they get away with it. Seems super simple and it should be pretty straightforward that they both simply need to lie.
 
 Seems like a safe strategy, right? But remember than both of them witnessed the same real events of the robbery...
 
 ---v
+
 ## Shelling Point
 
 #### _Detective game_
@@ -774,11 +877,13 @@ Seems like a safe strategy, right? But remember than both of them witnessed the 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/interrogation_large.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 But there are multiple lies they can construct. If they have inconsistent stories the detective will catch them. So now they need to coordinate on a specific lie and have all the details exactly the same or they are screwed.
 
-Contrast it with how easy it would be to just tell the truth. They both witnessed the truth so talking about it in a consitent way is trivial.
+Contrast it with how easy it would be to just tell the truth. They both witnessed the truth so talking about it in a consistent way is trivial.
 
 ---v
+
 ## Shelling Point
 
 #### _Detective game_
@@ -786,11 +891,13 @@ Contrast it with how easy it would be to just tell the truth. They both witnesse
 Truthful answers are one of the easiest strategies coordinate on, so they are the Shelling Points.
 
 Notes:
-That's why we can say that Truthful answers are one of the easiest strategies coordinate on, so they are the Shelling Points. The truth itself is a shelling point. 
+
+That's why we can say that Truthful answers are one of the easiest strategies coordinate on, so they are the Shelling Points. The truth itself is a shelling point.
 
 And this concept is vital to something in blockchain called...
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
@@ -801,9 +908,11 @@ Oracles are blockchain entities that provide information from the outside world 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/oracles.drawio.svg" alt="Some Pic" />
 
 Notes:
-Oracles. Oracles are super interesting becaue what they are trying to achievei is to provide information from the outside world to the blockchain. And that's a very very hard task.
+
+Oracles. Oracles are super interesting because what they are trying to achieve is to provide information from the outside world to the blockchain. And that's a very very hard task.
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
@@ -811,45 +920,54 @@ Oracles. Oracles are super interesting becaue what they are trying to achievei i
 Oracles are blockchain entities that provide information from the outside world to the blockchain.
 <br>
 <br>
+
 <div>
     <strong>External Information Examples:</strong>
     <ul>
         <li> What's the temperature in Berkeley? </li>
         <li> Who won the election? </li>
-        <li> What's the exchnage rate of USD to BTC? </li>
+        <li> What's the exchange rate of USD to BTC? </li>
     </ul>
 </div>
 
 Notes:
+
 Some examples of the information they can provide are for instance what's the current temperature in Berkeley? Who won the election? What's the exchange rate of USD to BTC? and may others.
 
 Let's actually see how they might work is a slightly simplified version with the temperate example.
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
+
 <br>
 <br>
 <img style="width: 900px" src="../../assets/img/3-Blockchain/temp1.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 So what's the temperature in Berkeley? Imagine you have a garden in Berkeley and you have on chain insurance that if the temperature is too high you get a payout. So you want to know the temperature in Berkeley.
 
 We know the answer lies somewhere on this axis. But what it is exactly?
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
+
 <br>
 <br>
 <img style="width: 900px" src="../../assets/img/3-Blockchain/temp2.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 We can ask some users to submit what they think the temperature is. Some of them will check it themselves, some will use weather apps and some will just guess.
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
@@ -857,9 +975,11 @@ We can ask some users to submit what they think the temperature is. Some of them
 <img style="width: 900px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 What we are hoping for is that the cluster of votes you can see here will be around the actual temperature. The best approach would be to check the median. And why is that?
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
@@ -877,6 +997,7 @@ What we are hoping for is that the cluster of votes you can see here will be aro
 </pba-cols>
 
 Notes:
+
 Honest voters are naturally coordinated. They will check the temperature and vote honestly all within some small margin of error.
 
 People that would lie to skew the results and would submit random values generally wouldn't cluster like the honest voters. To make a more dangerous attack they would need to strategically coordinate ona specific value and all lie about it. It's much harder to pull of than simply checking the temperature outside.
@@ -884,6 +1005,7 @@ People that would lie to skew the results and would submit random values general
 Submitting the truth is the Shelling Point in here and it makes it easy to be honest.
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
@@ -898,9 +1020,11 @@ Submitting the truth is the Shelling Point in here and it makes it easy to be ho
 </pba-cols>
 
 Notes:
+
 But what if there are some attackers? What can we do about them?
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
@@ -909,7 +1033,7 @@ But what if there are some attackers? What can we do about them?
     <pba-col>
         What to do with attackers? 
         <br><br>
-        If they go unpunished they can repeat the attack untill succesful
+        If they go unpunished they can repeat the attack until successful
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" alt="Some Pic" />
@@ -917,9 +1041,11 @@ But what if there are some attackers? What can we do about them?
 </pba-cols>
 
 Notes:
-If we never punish them they can repeat the attack untill they are succesful. And that's not good.
+
+If we never punish them they can repeat the attack until they are successful. And that's not good.
 
 ---v
+
 ## Shelling Point
 
 #### _Oracles_
@@ -928,9 +1054,9 @@ If we never punish them they can repeat the attack untill they are succesful. An
     <pba-col>
         What to do with attackers? 
         <br><br>
-        If they go unpunished they can repeat the attack untill succesful
+        If they go unpunished they can repeat the attack until successful
         <br><br>
-        Or even worse, they can make a milion fake identities and spam incorrect votes 
+        Or even worse, they can make a million fake identities and spam incorrect votes 
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" alt="Some Pic" />
@@ -938,32 +1064,39 @@ If we never punish them they can repeat the attack untill they are succesful. An
 </pba-cols>
 
 Notes:
-Or even worse, they can make a milion fake identities and spam incorrect votes. So we need to punish them.
+
+Or even worse, they can make a million fake identities and spam incorrect votes. So we need to punish them.
 
 But this is no longer a problem of a Shelling Point. The Shelling point did its job already. What we are talking about right now are...
 
 ---
+
 # Incentives
 
-
 Notes:
-Incetives. Incentives are the next big topic we will be exploring. And they are vital to the blockchain space.
+
+Incentives. Incentives are the next big topic we will be exploring. And they are vital to the blockchain space.
 
 ---v
+
 ## Incentives
+
 _"Something that encourages a person to do something."_
 <br><br>
+
 <div>In our case we want to shape incentives that motivate the users to submit honest values. </div>
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
-Incentives are things that encourage people to do something. 
+
+Incentives are things that encourage people to do something.
 
 =fragment=
 
-In our case we want to shape incentives that motivate the users to submit honest values. We need to build out incentives in a way that shapes the expected behaviour of the users to honesty.
+In our case we want to shape incentives that motivate the users to submit honest values. We need to build out incentives in a way that shapes the expected behavior of the users to honesty.
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -972,9 +1105,9 @@ In our case we want to shape incentives that motivate the users to submit honest
     <pba-col>
         What to do with attackers? 
         <br><br>
-        If they go unpunished they can repeat the attack untill succesful
+        If they go unpunished they can repeat the attack until successful
         <br><br>
-        Or even worse, they can make a milion fake identities and spam incorrect votes 
+        Or even worse, they can make a million fake identities and spam incorrect votes 
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" alt="Some Pic" />
@@ -982,9 +1115,11 @@ In our case we want to shape incentives that motivate the users to submit honest
 </pba-cols>
 
 Notes:
+
 So going back to our oracle problem how can we deal with attackers?
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -993,9 +1128,9 @@ So going back to our oracle problem how can we deal with attackers?
     <pba-col>
         <div style="color: grey;">What to do with attackers? 
         <br><br>
-        If they go unpunished they can repeat the attack untill succesful
+        If they go unpunished they can repeat the attack until successful
         <br><br></div>
-        <strong>Or even worse, they can make a milion fake identities and spam incorrect votes</strong>
+        <strong>Or even worse, they can make a million fake identities and spam incorrect votes</strong>
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="../../assets/img/3-Blockchain/mask.svg" alt="Some Pic" />
@@ -1006,6 +1141,7 @@ Note:
 Let's focus on the second issue of fake identities. How can we prevent that?
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -1029,9 +1165,10 @@ An attack where a single entity creates multiple fake identities is called a syb
 
 =fragment=
 
-One easy ready solution that is often used is making users lock some funds. Only a user with some funds locked can vote. The strength of the vote is propotional to the stake so making a milion accounts makes no sense. This is a very simple solution but it's not always applicable.
+One easy ready solution that is often used is making users lock some funds. Only a user with some funds locked can vote. The strength of the vote is proportional to the stake so making a million accounts makes no sense. This is a very simple solution but it's not always applicable.
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -1040,9 +1177,9 @@ One easy ready solution that is often used is making users lock some funds. Only
     <pba-col>
         <div style="color: grey;">What to do with attackers? </div>
         <br>
-        <strong>If they go unpunished they can repeat the attack untill succesful</strong>
+        <strong>If they go unpunished they can repeat the attack until successful</strong>
         <br><br>
-        <div style="color: grey;">Or even worse, they can make a milion fake identities and spam incorrect votes </div>
+        <div style="color: grey;">Or even worse, they can make a million fake identities and spam incorrect votes </div>
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="../../assets/img/3-Blockchain/gavel.svg" alt="Some Pic" />
@@ -1050,9 +1187,11 @@ One easy ready solution that is often used is making users lock some funds. Only
 </pba-cols>
 
 Notes:
+
 Now let's go back to the first issue of unpunished attackers. How can we deal with them so they don't continue attacking us?
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -1075,15 +1214,17 @@ Now let's go back to the first issue of unpunished attackers. How can we deal wi
 </pba-cols>
 
 Notes:
+
 Interestingly we already laid out the foundation for the defense. Voters have some funds locked in the system so they have Skin in the game.
 
 =fragment=
 
 If they vote incorrectly we can slash their funds. This is a very common solution in blockchain. Incorrect in that case would be very far from the median.
 
-We have designed some protective incentives and now the system seems safe. 
+We have designed some protective incentives and now the system seems safe.
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -1094,9 +1235,11 @@ Did we forget about something?
 <br><br>
 
 **Why would anyone participate in this system?**
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
+
 But did we forget about something? Anyone has any idea what it might be? What we are missing?
 
 =fragment=
@@ -1104,6 +1247,7 @@ But did we forget about something? Anyone has any idea what it might be? What we
 Why would anyone participate in this system? Why would anyone vote? Why would anyone lock their funds and take the risk?
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -1112,7 +1256,7 @@ Why would anyone participate in this system? Why would anyone vote? Why would an
     <pba-col>
         <strong> Ghost Town </strong>
         <br><br>
-        No user wants to pariticpate
+        No user wants to participate
         <br><br>
         Getting information from the real world is an effort and they voters are doing the protocol a service
     </pba-col>
@@ -1122,9 +1266,11 @@ Why would anyone participate in this system? Why would anyone vote? Why would an
 </pba-cols>
 
 Notes:
-Getting information from the real world is an effort and they voters are doing the protocol a service. So we need to incentivise them to participate. We need a rewards scheme or otherwise the network will be a ghost town.
+
+Getting information from the real world is an effort and they voters are doing the protocol a service. So we need to incentivize them to participate. We need a rewards scheme or otherwise the network will be a ghost town.
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -1147,11 +1293,12 @@ Getting information from the real world is an effort and they voters are doing t
 </pba-cols>
 
 Notes:
+
 If users are doing the protocol a service they need to be rewarded.
 
 =fragment=
 
-One way to do it is to mint some token rewards for well-behaved voters. 
+One way to do it is to mint some token rewards for well-behaved voters.
 
 =fragment=
 
@@ -1160,6 +1307,7 @@ Or distribute them from a previously acquired pool of rewards.
 But what is crucial here the protocol is safe and dependable only if there is enough voters so the incentives need to be designed in a way that encourages participation.
 
 ---v
+
 ## Incentives
 
 #### _Oracles_
@@ -1180,18 +1328,21 @@ But what is crucial here the protocol is safe and dependable only if there is en
 </pba-cols>
 
 Notes:
+
 Let's do a quick question. Can we distribute fixed value rewards for correct votes? As an example each Correct vote = 10$
 
 =question time=
 
 =fragment=
 
-No. We should base rewards on the size of the voter's stake. Otherwise the system is vulnerable to sybil attacks. If you have a milion fake identities you can vote a milion times and get a milion times the reward. So the reward should be propotional to the stake.
+No. We should base rewards on the size of the voter's stake. Otherwise the system is vulnerable to sybil attacks. If you have a million fake identities you can vote a million times and get a million times the reward. So the reward should be proportional to the stake.
 
 ---v
+
 ## Incentives
 
 **In summary:**
+
 - Make it easy to honest users and hard for attackers
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Service to the protocol needs to be rewarded
@@ -1202,31 +1353,35 @@ No. We should base rewards on the size of the voter's stake. Otherwise the syste
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
-Now let's summarise the main points.
+
+Now let's summarize the main points.
 
 We need to make it easy for honest nodes and hard for attackers. The Shelling Point as the foundational part of the design handles that for us.
 
 =fragment=
 
-Service to the protocol needs to be rewarded. We need to incentivise participation to guarantee reliable results.
+Service to the protocol needs to be rewarded. We need to incentivize participation to guarantee reliable results.
 
 =fragment=
 
-Destructive or interfering actions need to be punished. We need to disincentivise bad behaviour. In our case we did the slashes.
+Destructive or interfering actions need to be punished. We need to disincentivize bad behavior. In our case we did the slashes.
 
 =fragment=
 
 De-Sybiling the users can help defend against spam.
 
-We we have all of that our systems should be properly incentivised and safe... and on that note what happens when the incentives are...
+We we have all of that our systems should be properly incentivized and safe... and on that note what happens when the incentives are...
 
 ---
+
 # Misaligned Incentives
 
 Notes:
-Misaligned. When they promote some behaviour that is not good for the network.
+
+Misaligned. When they promote some behavior that is not good for the network.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1234,9 +1389,11 @@ Misaligned. When they promote some behaviour that is not good for the network.
 <img style="width: 200px" src="../../assets/img/3-Blockchain/eth.svg" alt="Some Pic" />
 
 Notes:
+
 Let's take a look at Ethereum. Ethereum is a blockchain that has a lot of smart contracts. And smart contracts are basically programs that run on the blockchain. They are stored on chain and they can be executed by anyone. For them to work a bunch of code needs to be deployed on the chain.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1256,9 +1413,11 @@ Let's take a look at Ethereum. Ethereum is a blockchain that has a lot of smart 
 </pba-cols>
 
 Notes:
+
 And moreover whenever we store something on chain (like a smart contract) it needs to be at least partially replicated among the nodes. Thousands of nodes store the same data which is not super efficient.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1278,9 +1437,11 @@ And moreover whenever we store something on chain (like a smart contract) it nee
 </pba-cols>
 
 Notes:
+
 Ethereum attempts to deal with it by introducing scaling fees. The more data you put in the state the more you need to pay. And that's on top of any computation costs.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1300,11 +1461,13 @@ Ethereum attempts to deal with it by introducing scaling fees. The more data you
 </pba-cols>
 
 Notes:
-Note that once we put something in state it has to stay there pretty much indefinitely untill we use it again. Because who knows, it might be relevant to some future state transitions. So nodes cannot simply discard it.
 
-Now let's epxlore an example.
+Note that once we put something in state it has to stay there pretty much indefinitely until we use it again. Because who knows, it might be relevant to some future state transitions. So nodes cannot simply discard it.
+
+Now let's explore an example.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1323,9 +1486,11 @@ Now let's epxlore an example.
 </pba-cols>
 
 Notes:
+
 So let's meet Bob. Bob is a developer and he happily deploys his awesome smart contract in Ethereum. He paid a hefty gas fee but so be it. His code was added to the state and now many nodes hold a copy of it.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1345,9 +1510,11 @@ So let's meet Bob. Bob is a developer and he happily deploys his awesome smart c
 </pba-cols>
 
 Notes:
-But imagine that one day Bob decides to become a musician or he just no longer likes programming. He doesn't care about his smart contract anymore. But the chain doesn't know about it. His code still lives in the state and has to be continously replicated and maintained.
+
+But imagine that one day Bob decides to become a musician or he just no longer likes programming. He doesn't care about his smart contract anymore. But the chain doesn't know about it. His code still lives in the state and has to be continuously replicated and maintained.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1367,9 +1534,11 @@ But imagine that one day Bob decides to become a musician or he just no longer l
 </pba-cols>
 
 Notes:
+
 Now imagine there are hundreds of people like Bob. Some of them even continue developing but, WHY BOTHER removing old data? They already paid for it. And some of them just don't care anymore.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1389,11 +1558,13 @@ Now imagine there are hundreds of people like Bob. Some of them even continue de
 </pba-cols>
 
 Notes:
+
 We need to focus on this "why bother" part. This is a core example of a misallignment of incentives that lead to Ethereum state size growing out of control.
 
 Getting the data to state is indeed expensive but once we do... why clean it? There is no incentive to do so. So the chain was getting overwhelmed in junk.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1403,7 +1574,7 @@ Getting the data to state is indeed expensive but once we do... why clean it? Th
         <br>
         <strong> The Goal </strong>
         <br><br>
-        Design new protocol rules that shape the behaviour of the users in a way that they start cleaning up the state.
+        Design new protocol rules that shape the behavior of the users in a way that they start cleaning up the state.
     </pba-col>
     <pba-col>
         <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract_clean.drawio.svg" alt="Some Pic" />
@@ -1411,9 +1582,11 @@ Getting the data to state is indeed expensive but once we do... why clean it? Th
 </pba-cols>
 
 Notes:
-So what can we do about it? What's the goal? We need to design new protocol rules that shape the behaviour of the users in a way that they start cleaning up the state. Hopefully without any side effects.
+
+So what can we do about it? What's the goal? We need to design new protocol rules that shape the behavior of the users in a way that they start cleaning up the state. Hopefully without any side effects.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
@@ -1433,41 +1606,51 @@ So what can we do about it? What's the goal? We need to design new protocol rule
 </pba-cols>
 
 Notes:
+
 One of the proposed solutions was the introduction of a Gas Refund. You pay a hefty fee when deploying data to state, but get some of it refunded when removing it. So now there is an incentive to clean up the state.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
+
 <br><br>
-<strong>Behaviour Before</strong>
+<strong>behavior Before</strong>
 
 <img style="width: 900px" src="../../assets/img/3-Blockchain/developer_musician.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 So what we had originally is Bob paid for his smart contract and then simply went away to play a guitar.
 
 ---v
+
 ## Misaligned Incentives
 
 #### _Ethereum State Storage Issue_
+
 <br><br>
-<strong>Behaviour After</strong>
+<strong>behavior After</strong>
 
 <img style="width: 900px" src="../../assets/img/3-Blockchain/developer_musician2.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 Afterwards Bob deploys his contract in the same way but before running of to play a guitar he removes it from the state and gets some of the gas back. He likes the extra money so he has an encentive to clean.
 
-But wait... So what is the actual cost if he paid 10 and got 10 back? And it might not be obvious but it is an... 
+But wait... So what is the actual cost if he paid 10 and got 10 back? And it might not be obvious but it is an...
 
 ---
+
 # Opportunity Cost
 
 Notes:
+
 Opportunity Cost. It's a very important concept in economics and it's also crucial in blockchain.
 
 ---v
+
 ## Opportunity Cost
 
 _"The loss of other alternatives when one option is chosen."_
@@ -1475,9 +1658,11 @@ _"The loss of other alternatives when one option is chosen."_
 <img style="width: 400px" src="../../assets/img/3-Blockchain/opp_cost.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 Generally oppurtunity cost is the loss of other alternatives when making a choice. When choosing between 10 and 30$ the oppurtunity cost of picking 30 is 10, the other option you are forgoing.
 
 ---v
+
 ## Opportunity Cost
 
 #### _Ethereum State Storage_
@@ -1497,11 +1682,13 @@ Generally oppurtunity cost is the loss of other alternatives when making a choic
 </pba-cols>
 
 Notes:
+
 Going back to the topic of Ethereum the real cost for Bob is not the 10$ he paid for storage as he regains it later. The cost is in loosing the oppurtunity of investing the money elsewere. Just locking your funds is sort of a punishment by itself. Even if you regain them later. This is especially true in inflationary systems, and spoiler alert that most of them.
 
 The oppurtunity cost is a clever mechanism that allows us to include costs without directly charging them, and we also need to be super aware so we don't accidentally punish the users by not thinking of some external oppurtunity costs.
 
 ---v
+
 ## Opportunity Cost
 
 #### _Extra Examples_
@@ -1511,6 +1698,7 @@ The oppurtunity cost is a clever mechanism that allows us to include costs witho
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
+
 There is a lot of awesome examples of oppurtunity costs in blockchain. For instance Creating invalid blocks in Bitcoin never gets directly punished even if the block is rejected by the network. The real cost is the oppurtunity cost, as the miner could have mined a valid block instead.
 
 =fragment=
@@ -1521,9 +1709,10 @@ And there are also many other staking and DeFi examples out there.
 
 ---
 
-# Externalities 
+# Externalities
 
 Notes:
+
 Now to actually appreciate what the we did in the previous section we need to talk about externalities.
 
 ---v
@@ -1533,6 +1722,7 @@ Now to actually appreciate what the we did in the previous section we need to ta
 _"A consequence of an economic activity that is experienced by unrelated third parties."_
 
 Notes:
+
 An externality is a consequence of an economic activity that is experienced by some third parties.
 
 ---v
@@ -1546,9 +1736,10 @@ The clogging of the chain with useless data is a negative externality that affec
 As protocol designers we need to be aware of such externalities and we can try and limit their effects by **pricing them in**.
 
 Notes:
+
 In the Ethereum example you could argue that the network getting clogged is the externality of the single developer not cleaning after himself. And it affects all the users of the chain. The chain is an example of a common good.
 
-As protocol engineers or system designers you need to identify those externaility costs and price them in. 
+As protocol engineers or system designers you need to identify those externaility costs and price them in.
 
 ---v
 
@@ -1569,6 +1760,7 @@ As protocol engineers or system designers you need to identify those externailit
 </pba-cols>
 
 Notes:
+
 That's what we did with the oppurtunity cost in Ethereum. We made it so burdening the chain is actually expensive for the perpetrator. We alligned his incentives with the incentives of the chain.
 
 ---v
@@ -1592,6 +1784,7 @@ That's what we did with the oppurtunity cost in Ethereum. We made it so burdenin
 </pba-cols>
 
 Notes:
+
 But not all externailities are negative.
 
 For example the whole oracle scheme makes it so the chain can get information from the real world. This is a positive externality for the network that can further use this extra information.
@@ -1604,10 +1797,10 @@ For example the whole oracle scheme makes it so the chain can get information fr
 
 The voters are providing a valuable service to the protocol.
 
-
 So if they submit the vote on chain through a transaction, should they pay any fees? <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
+
 The honest voters are providing a valuable service to the protocol.
 
 =fragment=
@@ -1635,12 +1828,13 @@ So having that mind should they pay any transaction fees when submitting votes?
 </pba-cols>
 
 Notes:
-And contrary to the common belief such a transaction can be totally free. 
+
+And contrary to the common belief such a transaction can be totally free.
 
 =fragment=
 
 But make sure it cannot be spammed! And it's super important, because if it is free it can be trivial.
-In our oracle system we can make sure there is only ONE vote per stake. This way we remain safe and can make the transaction free to further incentivise participation.
+In our oracle system we can make sure there is only ONE vote per stake. This way we remain safe and can make the transaction free to further incentivize participation.
 
 ---v
 
@@ -1668,12 +1862,15 @@ There are other free transactions that are not necessarily positive externalitie
 For instance in Bitcoin after mining a block you get a reward. This is a free transaction that is not a positive externality. It's just inherent to the block. Usually any logic that needs to be executed for every block (is inherent to the block) is free.
 
 ---
+
 # Complete vs Partial Information Games
 
 Notes:
+
 Now let's look at something totally different. We will talk about a concept crucial to game theory and that is information.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 _Do players know everything about the game state?_
@@ -1681,21 +1878,25 @@ _Do players know everything about the game state?_
 _Do players **NEED** to know everything about the game state?_
 
 Notes:
+
 We'll be looking at questions like do players know everything about the game state? Do they NEED to know everything about the game state? And how does it affect the game?
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting (Simplified)_
 
 <img style="width: 900px" src="../../assets/img/3-Blockchain/Approval_checkers.drawio.svg" alt="Some Pic" />
 
-Notes: 
+Notes:
+
 To investigate this topic we'll dive deeper into Polkadot and particularly the Approval Voting subsystem. This is something I personally work on at Parity and you will learn a lot more about it in the later modules.
 
 What you need to understand now is that there are some special nodes called validators. They as they name suggests validate if the new blocks in the network are valid and correct.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting (Simplified)_
@@ -1712,11 +1913,12 @@ What you need to understand now is that there are some special nodes called vali
     </pba-col>
 </pba-cols>
 
-
 Notes:
+
 But in Polkadot not every validator does all the work. They share the work and each block is checked only by a subset of validators. They are called Approval Checkers.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting (Simplified)_
@@ -1736,14 +1938,17 @@ But in Polkadot not every validator does all the work. They share the work and e
 </pba-cols>
 
 Notes:
+
 We also need to make some assumptions about the attackers willing to disrupt the network. We assume that attackers can DDoS some but not ALL Validators. Being DDoS'ed makes them unable to vote in time.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting_
 
 **Default Scenario**
+
 - Randomly select 3 Approval Checkers and announce them
 - Approval Checkers publish votes if they are selected
 - If all the votes received confirm the block is fine it passes
@@ -1751,16 +1956,19 @@ We also need to make some assumptions about the attackers willing to disrupt the
 <img style="width: 600px" src="../../assets/img/3-Blockchain/Approval_checkers.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 A default validation scenario would go like that. We randomly select 3 Approval Checkers and announce them. Approval Checkers publish votes if they are selected. If all the votes received confirm the block is fine it passes.
 
 But there is a problem with it? Does anyone know what it is?
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting_
 
 **Default Scenario**
+
 - Randomly select 3 Approval Checkers and announce them
 - Approval Checkers publish votes if they are selected
 - **Attackers use the information and DDoS the selected before they publish the vote** (except their insider)
@@ -1769,34 +1977,42 @@ But there is a problem with it? Does anyone know what it is?
 <img style="width: 600px" src="../../assets/img/3-Blockchain/validators_target_attack.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 If the attackers learn who the designated approval checkers are they can focus their attack. And only eliminate the relevant targets thus compromising the network.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting_
 
 **What was the Problem?**
+
 - Attackers learned everything about the game
 - Attackers could use this information before the validators could respond
 
 **How do we fix it?**
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
 - Limit the information the attackers have access to so they cannot plan ahead
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
+
 So let's ask ourselves what was the problem? The attackers learned everything about the game and could use this information before the validators could respond. The information is the weapon.
 
 =fragment=
 If we could somehow limit the information the game would change in our favour. We need to make this a game of incomplete information, where some things are hidden.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting_
 
 **Improved Scenario**
+
 - Each validator uses a VRF to generate a random number
 - Validators with a sufficiently small number will have the right to be Approval Checkers
 - Approval Checkers reveal themselves by showing their low numbers and publish a vote at the same time
@@ -1807,6 +2023,7 @@ If we could somehow limit the information the game would change in our favour. W
 <br>
 
 Notes:
+
 - Let's imagine this new improved scenario. Each validator uses a VRF to generate a random number.
 - There is some tresold and validators with a sufficiently small number will have the right to be Approval Checkers.
 
@@ -1814,25 +2031,29 @@ Notes:
 
 - Approval Checkers reveal themselves by showing their low numbers (with a vrf proof attached) and publish a vote at the same time. If all the votes received confirm the block is fine it passes.
 
-This method has this nice property that attackers don't learn who the appvoal checkers are untill they reveal themselves. So they cannot plan ahead.
+This method has this nice property that attackers don't learn who the appvoal checkers are until they reveal themselves. So they cannot plan ahead.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Polkadot Approval Voting_
 
 **What can the Attackers do?**
+
 - They no longer know who the Approval Checkers are so they have to guess
 - If they don't guess correctly they get heavily slashed
 
 <img style="width: 700px" src="../../assets/img/3-Blockchain/validators_random_attack.drawio.svg" alt="Some Pic" />
 
 Notes:
+
 So what can the attackers do? If they can no longer target DDoS they only can attack at random. This vastly reduces their chances of success and makes thm vulnerable to punishment if they fail.
 
 This is pretty much the method used in Polkadot and it's called a VRF based random assignment. It's a game of incomplete information.
 
 ---v
+
 ## Complete vs Incomplete Information Games
 
 #### _Extra Examples_
@@ -1840,15 +2061,19 @@ This is pretty much the method used in Polkadot and it's called a VRF based rand
 - BABE is a Polkadot mechanism for selecting new block producers (further covered in Polkadot module). It also uses a similar VRF scheme to generate random assignments
 
 Notes:
+
 Some other notable examples you will learn about in later modules are connected to BABE the Polkadot mechanism for selecting new block producers. It also uses a similar VRF scheme to generate random assignments.
 
 ---
+
 # Shifting Assumptions
 
 Notes:
+
 By now you might have noticed a pattern that usually we have a list of assumptions.
 
 ---v
+
 ## Shifting Assumptions
 
 <pba-cols>
@@ -1867,14 +2092,16 @@ By now you might have noticed a pattern that usually we have a list of assumptio
 </pba-cols>
 
 Notes:
+
 Some of the assumptions are connected to the number of players or maybe the access to information. And they are usually pretty stable.
 
 ---v
+
 ## Shifting Assumptions
 
 <pba-cols>
     <pba-col>
-        If any of the assumptions change the game changes as well. Old incentives that were previously sensible may now motivate a vastly different behaviour.
+        If any of the assumptions change the game changes as well. Old incentives that were previously sensible may now motivate a vastly different behavior.
     </pba-col>
     <pba-col>
         <img style="width: 300px" src="../../assets/img/3-Blockchain/assumptions_change.drawio.svg" alt="Some Pic" />
@@ -1882,9 +2109,11 @@ Some of the assumptions are connected to the number of players or maybe the acce
 </pba-cols>
 
 Notes:
-What happens when for some reason the assumptions evolve and change? The game changes as well. Old incentives that were previously sensible may now motivate a vastly different behaviour.
+
+What happens when for some reason the assumptions evolve and change? The game changes as well. Old incentives that were previously sensible may now motivate a vastly different behavior.
 
 ---v
+
 ## Shifting Assumptions
 
 #### _Restaking_
@@ -1901,11 +2130,13 @@ What happens when for some reason the assumptions evolve and change? The game ch
 </pba-cols>
 
 Notes:
+
 A super good example of that is what is very recently happening in Etheruem. And I mean literally this month. There is a new layer 2 protocol called EigenLayer that allows stakers to stake the same funds for multiple apps at the same time. This is called restaking.
 
 This is not something natively available in Ethereum and it wasn't taken into consideration when slashes/rewards were designed.
 
 ---v
+
 ## Shifting Assumptions
 
 #### _Restaking_
@@ -1924,6 +2155,7 @@ This is not something natively available in Ethereum and it wasn't taken into co
 </pba-cols>
 
 Notes:
+
 The consequences of restaking are still not fully understood and the research is ongoing. I encourage you to read the speaker notes for further reading. The whole field of blockchain incentivisation and protocol design is still developing so there are many unknowns but overall I hope all the methods shown today help you in making more informed decisions later down the line. Thats it...
 
 - Podcast: https://www.youtube.com/watch?v=aP9f_1v9Ulc
@@ -1932,4 +2164,3 @@ The consequences of restaking are still not fully understood and the research is
 ---
 
 # Thanks everyone!
-

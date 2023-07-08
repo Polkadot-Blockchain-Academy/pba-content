@@ -784,4 +784,3 @@ To solve this:
 ## 🔨 Subscan XCM retrieval
 
 <img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab" />
-
