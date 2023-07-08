@@ -9,4 +9,4 @@
 | M5     | 2.5 Days | [Substrate](./4-Substrate/)                                                         |
 | M6     | 5 days   | [Pallets and FRAME](./5-FRAME/)                                                     |
 | M7     | 2.5 Days | [Polkadot, Cumulus and Parachains](./6-Polkadot/)                                   |
-| M8     | 2 days   | [XCM](./8-XCM/)                                                                     |
+| M8     | 2 days   | [XCM](./7-XCM/)                                                                     |

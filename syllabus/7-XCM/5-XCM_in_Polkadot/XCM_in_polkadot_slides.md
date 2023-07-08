@@ -66,7 +66,7 @@ pub type Barrier = (
 
 ---v
 
-## 🚧 XCM `Barrier in Rococo
+## 🚧 XCM `Barrier` in Rococo
 
 - `TakeWeightCredit` and `AllowTopLevelPaidExecutionFrom` are used to prevent spamming for local/remote XCM execution.
 - `AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
@@ -88,12 +88,12 @@ parameter_types! {
   pub const Rococo: MultiAssetFilter =
     Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
 
-  pub const Statemine: MultiLocation = Parachain(1000).into();
+  pub const AssetHub: MultiLocation = Parachain(1000).into();
   pub const Contracts: MultiLocation = Parachain(1002).into();
   pub const Encointer: MultiLocation = Parachain(1003).into();
 
-  pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) =
-    (Rococo::get(), Statemine::get());
+  pub const RococoForAssetHub: (MultiAssetFilter, MultiLocation) =
+    (Rococo::get(), AssetHub::get());
   pub const RococoForContracts: (MultiAssetFilter, MultiLocation) =
     (Rococo::get(), Contracts::get());
   pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) =
@@ -101,7 +101,7 @@ parameter_types! {
 }
 
 pub type TrustedTeleporters = (
-  xcm_builder::Case<RococoForStatemine>,
+  xcm_builder::Case<RococoForAssetHub>,
   xcm_builder::Case<RococoForContracts>,
   xcm_builder::Case<RococoForEncointer>,
 );
@@ -112,7 +112,7 @@ pub type TrustedTeleporters = (
 ## 🤝 Trusted teleporters in Rococo
 
 - Teleporting involves trust between chains.
-- 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here**
+- 1000 (Asset Hub) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here**
 - **Here** represents the relay token
 
 ```rust
@@ -125,7 +125,7 @@ impl xcm_executor::Config for XcmConfig {
 
 Notes:
 
-- Statemine, Rococo and Encointer are able to teleport the relay chain token
+- Asset Hub, Rococo and Encointer are able to teleport the relay chain token
 - Any other chain sending a `ReceiveTeleportedAsset` or any other token being teleported will be rejected with `UntrustedTeleportLocation`.
 
 ---
@@ -357,234 +357,3 @@ Notes:
 - Signed origins are converted to `AccountId32` junction multilocations.
 
 ---
-
-## 🛠️ Statemine Xcm Config
-
-Statemine is a common-good parachain that allows hosting arbitrary assets.
-
-You can visit the whole xcm configuration [here](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/statemine/src/xcm_config.rs)
-
----
-
-## 🪙 Statemine Asset Transactors
-
-```rust
-parameter_types! {
-  pub const KsmLocation:  MultiLocation = MultiLocation::parent();
-}
-
-/// Means for transacting the native currency on this chain.
-pub type CurrencyTransactor = CurrencyAdapter<
-  // Use this currency:
-  Balances,
-  // Use this currency when it is a fungible asset
-  // matching the given location or name:
-  IsConcrete<KsmLocation>,
-  // Convert an XCM MultiLocation into a local account id:
-  LocationToAccountId,
-  // Our chain's account ID type
-  // (we can't get away without mentioning it explicitly):
-  AccountId,
-  // We don't track any teleports of `Balances`.
-  (),
->;
-```
-
-Notes:
-
-- From Statemine's point of view, the relay token is represented as **_MultiLocation { parents:1, interior: Here }_**.
-- The **_Balances_** pallet is being used to mint teleported assets.
-- Teleports are not tracked in any checking account.
-
----v
-
-## 🪙 Statemine Asset Transactors
-
-<div style="font-size: smaller">
-
-```rust
-/// Means for transacting assets besides the native currency on this chain.
-pub type FungiblesTransactor = FungiblesAdapter<
-  // Use this fungibles implementation:
-  Assets,
-  // Use this currency when it is a fungible asset
-  // matching the given location or name:
-  ConvertedConcreteAssetId<
-    AssetId, Balance,
-	AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
-	JustTry,
-  >,
-  // Convert an XCM MultiLocation into a local account id:
-  LocationToAccountId,
-  // Our chain's account ID type
-  // (we can't get away without mentioning it explicitly):
-  AccountId,
-  // We only want to allow teleports of known assets.
-  // We use non-zero issuance as an indication that this asset is known.
-  parachains_common::impls::NonZeroIssuance<AccountId, Assets>,
-  // The account to use for tracking teleports.
-  CheckingAccount,
->;
-```
-
-</div>
-
-Notes:
-
-- An asset with id `Id` are represented by `X2(PalletInstance(pallet_assets_index), GeneralIndex(Id)` thanks to **_AsPrefixedGeneralIndex_**.
-- Asset teleports **are** being tracked in **_CheckingAccount_**.
-  The reason is that Statemine is the reserve chain for those assets.
-
----v
-
-## 🪙 Statemine Asset Transactors
-
-- **FungiblesTransactor** refers to the way in which assets created in Statemine are Withdrawn/Deposited in the xcm-executor.
-- It is critical that Statemine assets are sendable to other chains!
-- **CurrencyTransactor** refers to the way in which teleports from the relay chain are handled.
-- Every time we receive a token with the parent multilocation, we mint in Balances.
-
-```rust
-/// Prepended junction to Id
-pub AssetsPalletLocation: MultiLocation =
-		PalletInstance(<Assets as PalletInfoAccess>::index() as u8).into();
-
-/// Means for transacting assets on this chain.
-pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor);
-```
-
----
-
-## 🤝 Statemine Trusted Teleporters
-
-- **NativeAsset**: Only allowed if the token multilocation matches the origin.
-- This is the case for the relay token, `origin_multilocation == asset_multilocation`.
-
-```rust
-pub struct XcmConfig;
-impl xcm_executor::Config for XcmConfig {
-  /* snip */
-  type IsTeleporter = NativeAsset;
-}
-```
-
-```rust
-impl FilterAssetLocation for NativeAsset {
-  fn filter_asset_location(asset: &MultiAsset, origin: &MultiLocation) -> bool {
-    matches!(asset.id, Concrete(ref id) if id == origin)
-  }
-}
-```
-
----
-
-## 🚧 Statemine `Barrier`
-
-Similar to Rococo, but unpaid execution is allowed from the relay chain
-
-```rust
-pub type Barrier = DenyThenTry<
-  DenyReserveTransferToRelayChain,
-  (
-    TakeWeightCredit,
-    AllowTopLevelPaidExecutionFrom<Everything>,
-    // Parent and its exec plurality get free execution
-    AllowUnpaidExecutionFrom<ParentOrParentsExecutivePlurality>,
-	// Expected responses are OK.
-	AllowKnownQueryResponses<PolkadotXcm>,
-	// Subscriptions for version tracking are OK.
-	AllowSubscriptionsFrom<ParentOrSiblings>,
-  ),
->;
-```
-
-Notes:
-
-- The relay chain has free execution
-- `DenyThenTry<A, B>` denies the execution if A is true, else evaluates B for allowance
-- `DenyReserveTransferToRelayChain` prevents sending a `InitiateReserveWithdraw`, `DepositReserveAsset` or `TransferReserveAsset` instruction to the relay.
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Debugging XCM
-
----
-
-## 🧐 Debugging XCM message failures
-
-Involves knowledge of the chain XCM configuration!
-
-Common steps to debug:
-
-1. Identify what the error means which will help you identify the context in which the error happened.
-1. Look in the xcm codebase to check where this error might have been thrown.
-   Was it thrown in the barrier?
-   Or in any specific instruction?
-1. Retrieve the failed received XCM.
-1. Check the chain XCM configuration to verify what could have failed.
-
----
-
-## 🕵️‍♂️ Identifying the error kind
-
-Look at the `ump.ExecutedUpward` event:
-
-<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure" />
-
----v
-
-## 🕵️‍♂️ Identifying the error kind
-
-- `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve.
-- `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
-- `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
-  Usually happens when the multilocation representing an asset does not match to those handled by the chain.
-
----v
-
-## 🕵️‍♂️ Identifying the error kind
-
-- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
-- `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
-- `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
-- `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
-
----v
-
-## 🕵️‍♂️ Identifying the error kind
-
-- `Barrier`: One of the barriers failed, we need to check the barriers individually.
-- `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown.
-  When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination.
-  In such a case, the safe XCM version is used instead.
-  However, if it is not set, then this error will be thrown.
-
----
-
-## 🔨 Decoding SCALE-encoded messages
-
-- **RelayChain**:
-  - XCM can be retrieved in the `paraInherent.enter` inherent
-  - The candidate for a specific parachain contains the ump messages sent to the relay.
-  - **UMP messages are usually executed one block after they are received**
-- **Parachain**:
-  - XCM can be retrieved in the `parachainSystem.setValidationData` inherent.
-  - **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
-
----v
-
-## 🔨 Decoding SCALE-encoded messages
-
-But all we see is a **SCALE-encoded message** which does not give us much information.
-To solve this:
-
-- We build a SCALE-decoder to retrieve the xcm message (the hard way).
-- We rely on subscan/polkaholic to see the XCM message received.
-
----v
-
-## 🔨 Subscan XCM retrieval
-
-<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab" />

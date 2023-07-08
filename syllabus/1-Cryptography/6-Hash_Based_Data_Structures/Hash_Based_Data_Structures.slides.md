@@ -22,6 +22,10 @@ duration: 1 hour
 
 A hash chain is a linked list using hashes to connect nodes.
 
+Notes:
+
+Each block has the hash of the previous one.
+
 ---
 
 ## Merkle Trees
@@ -29,6 +33,10 @@ A hash chain is a linked list using hashes to connect nodes.
 <img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-tree-all-purple.png" />
 
 A binary Merkle tree is a binary tree using hashes to connect nodes.
+
+Notes:
+
+Ralph Merkle is a Berkeley alum!
 
 ---
 
@@ -63,7 +71,7 @@ Explain what could happen when this fails.
 
 ---
 
-## Security
+## Proof Sizes
 
 Proof of a leaf has size $O(\log n)$<br/>and so do proofs of updates of a leaf
 
@@ -78,8 +86,20 @@ Proof of a leaf has size $O(\log n)$<br/>and so do proofs of updates of a leaf
 The data structure stores a map `key -> value`.<br/>
 We should be able to:
 
-1. Add new `<key,value>` pairs.
-1. Change the value associated with an existing key.
+<pba-flex center>
+
+- `put(key, value)`
+- `get(key)`
+- `delete(key)`
+
+</pba-flex>
+
+---
+
+## Provability in key-value databases
+
+We should also be able to perform the following operations for a provable key-value database:
+
 1. For any key, if `<key,value>` is in the database, we can prove it.
 1. If no value is associated to a key, we need to be able to prove that as well.
 
@@ -87,7 +107,7 @@ We should be able to:
 
 ## Types of Data Structures
 
-- _**Trees**_ are Rooted, Undirected Acyclic Graphs
+- _**Trees**_ are rooted, directed acyclic graphs where each child has only one parent.
 - _**Merkle Trees**_ are _trees_ which use hashes as links.
 - _**Tries**_ are a particular class of _trees_ where:
   - Given a particular piece of data, it will always be on a particular path.
@@ -109,6 +129,10 @@ _Words:_ to, tea, ted, ten, inn, A.
 
 Each node splits on the next digit in base $r$
 
+Notes:
+
+In this image, $r$ is 52 (26 lowercase + 26 uppercase).
+
 ---
 
 ## Patricia Trie
@@ -120,6 +144,32 @@ _Words:_ to, tea, ted, ten, inn, A.
 If only one option for a sequence we merge them.
 
 <!-- TODO maybe some code stuff with extension nodes etc. -->
+
+---
+
+## Patricia Trie Structures
+
+```rust
+pub enum Node {
+  Leaf {
+    partial_path: Slice<RADIX>,
+    value: Value
+  },
+  Branch {
+    partial_path: Slice<RADIX>,
+    children: [Option<Hash>; RADIX],
+    value: Option<Value>,
+  },
+}
+```
+
+Notes:
+
+The current implementation actually makes use of dedicated "extension" nodes instead of branch nodes that hold a partial path. There's a good explanation of them [here](https://ethereum.stackexchange.com/questions/39915/ethereum-merkle-patricia-trie-extension-node).
+
+Additionally, if the size of a value is particularly large, it is replaced with the hash of its value.
+
+<!-- TODO: Add a nice illustration similar to Shawn's dev-trie-backend-walk here. -->
 
 ---
 
@@ -148,6 +198,7 @@ What radix $r$ is best?
 
 ## Merkle Mountain Ranges
 
+- Efficient proofs and updates for a hash chain
 - Append only data structure
 - Lookup elements by number
 
