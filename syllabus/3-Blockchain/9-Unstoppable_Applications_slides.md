@@ -799,7 +799,7 @@ Notes:
 
 Notes:
 
-https://cryptoslate.com/op-ed-is-ethereum-now-under-u-s-control-99-of-latest-relay-blocks-are-censoring-the-network/
+https://cryptoslate.com/op-ed-is-ethereum-now-under-u-s-control-99-of-latest-relay-blocks-are-censoring-the-network/ <!-- markdown-link-check-disable-line -->
 
 - code is unstoppable, but platform _can_ sensor. ability -> responsibility (we may talk more on that latter)
 

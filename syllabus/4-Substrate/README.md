@@ -1,41 +1,45 @@
-## Day 0 
+## Day 1
 
-### Afternoon 
+### Morning (~4 hours max)
 
-- lecture: Intro to substrate (60 mins)
-- lecture: Wasm-meta protocol Part 1 (45 mins)
-- lecture: SCALE (45 mins)
+1. Lecture: Intro to substrate (60 mins)
+1. Lecture: Wasm-meta protocol Part 1 (45 mins)
+1. Lecture: SCALE (45 mins)
 
-## Day 1 (6 hours)
+### Afternoon (~4 hours max)
 
-### Morning 
+1. Lecture: Wasm-meta protocol Part 2 (60 mins)
+1. Lecture: Transaction Pool (90 mins)
 
-- lecture: Wasm-meta protocol Part 2 (60 mins)
-- lecture: Transaction Pool (90 mins)
+## Day 2
 
-### Afternoon
+### Morning (~4 hours max)
 
-- lecture + activity: JSON-RPC, Interaction with substrate-based chains (60m)
-- activity: FRAME-less node-template (rest of the day)
+1. Lecture + Activity: JSON-RPC, Interaction with substrate-based chains (60m)
+1. Activity: FRAME-less node-template (rest of the day)
+
+### Afternoon (~4 hours max)
+
+1. Lecture: Substrate Storage (60m)
+1. Workshop: Substrate CLI + Client code Overview
 
 > Graded assignments announced.
 
-## Day 2 (6 hours)
+## Day 2
 
-### Morning 
+### Morning (~4 hours max)
 
-- lecture: Substrate Storage (60m)
-- workshop: Substrate CLI + Client code Overview 
+1. Activity: FRAME-less node-template
 
-### Afternoon  
+### Afternoon (~4 hours max)
 
-- activity: FRAME-less node-template (rest of the day)
+> Move to FRAME module
 
 ## Reserve Ideas:
 
-- activity: Substrate folder structure
-- activity: wasm crate activity
-- lecture: PJS-API library
-- activity: build a `sub-du`
-- activity: consensus by Joshy
-- sub-xt
+1. Activity: Substrate folder structure
+1. Activity: Wasm crate activity
+1. Lecture: Polkadot.js-API library
+1. Activity: Build a `sub-du`
+1. Activity: consensus by Joshy
+1. sub-xt

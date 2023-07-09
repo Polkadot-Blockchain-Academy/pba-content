@@ -467,14 +467,14 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <li class="fragment">Wait for a block (or author one if it is your turn)</li>
 <li class="fragment">Prevote
   <ul>
-  <li>If the block is valid, Prevote for it.</li>
-  <li>If the block is invalid, Prevote `Nil`</li>
+    <li>If the block is valid, Prevote for it.</li>
+    <li>If the block is invalid, Prevote `Nil`</li>
   </ul>
 </li>
 <li class="fragment">Precommit
   <ul>
-  <li>Wait for 2/3 prevotes then Precommit
-  <li>If you don't get 2/3 prevotes, Precommit `Nil`</div>
+    <li>Wait for 2/3 prevotes then Precommit
+    <li>If you don't get 2/3 prevotes, Precommit `Nil`</div>
   </ul>
 </li>
 <li class="fragment">Complete
