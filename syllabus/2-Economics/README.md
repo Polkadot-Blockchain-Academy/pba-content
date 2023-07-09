@@ -2,10 +2,12 @@
 
 ## Learning Outcomes
 
-Completing this module module will:
+Completing this module will enable participants to:
 
-- know/understand X (FIXME more here)
-- be able to do Y (FIXME more here)
+- Understand and discuss the basic principles of economics, including the influence of incentives on human behavior, supply and demand, the value of time, and the role of prices in allocating resources.
+- Analyze and comprehend the principles of game theory, including strategic games, Nash equilibrium, and the role of incentives in shaping outcomes.
+- Understand and apply the concepts of price discovery mechanisms and their implications in various market settings.
+- Understand the principles of collective decision-making, including voting systems, group decision-making processes, and the role of consensus in collective decisions.
 
 ## Schedule
 
@@ -13,30 +15,39 @@ Completing this module module will:
 
 ### Day 1
 
--[Economics Basics](./2.1-Economics_Basics) - @jonasW3F (1.5 hrs)
-
-- Games part 1 - @coax1d (?? hrs)
-
-  - (what ones?)
+-[Economics Basics](./2.1-Economics_Basics) (~1.5 hrs)
+- Workshop (~1.5h)
+  - Classroom discussions
+  - Academy Games Part 1
+    - Ultimatum Game
+    - Cournot Competition
 
 - Lunch break (1 hr)
 
-- [Game Theory](./2.2-Game_Theory) - @jonasW3F (?? hrs)
-- Games part 2 - @coax1d (?? hrs)
-  - (what ones?)
+- [Game Theory](./2.2-Game_Theory) (~1.5 hrs)
+- Workshop (~2 hrs)
+  - Classroom discussions
+  - Academy Games Part 2
+    - Guessing Game
+    - Prisonner's Dilemma
+    - Public Goods Game
 
 ### Day 2
 
 - [Price Finding Mechanisms](./2.3-Price_Finding_Mechanisms) - @AlfonsoCev (?? hrs)
-- NFT auctions - @coax1d (?? hrs)
+- Workshop (?? hrs)
+  - Classroom discussions
+  - Academy Games NFT Auction 
 
 - Lunch (1 hr)
 
 - [Collective Decision Making](./2.4-Collective_Decision_Making) - @AlfonsoCev (?? hrs)
+- Workshop
+  - Classroom discussions
 
 ### (Extended)
 
 _Not yet implemented, but eventual content could include:_
 
-- Founders track tokenomics lesson ~4 hours - @jonasW3F
+- Founders track tokenomics lesson ~2 hours - @jonasW3F
 - [Game*Theory_Exploits*&\_Prediction_Markets](./2.5-Lesson_Plan_Game_Theory_Exploits_&_Prediction_Markets.md) - @AlfonsoCev ?
