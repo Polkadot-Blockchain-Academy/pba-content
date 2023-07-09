@@ -11,43 +11,51 @@ Draw content from:
 
 ### Day 1 (Half Day)
 **Afternoon**
-Lecture - Introduction to Polkadot (1 hr) @shawntabrizi or @rphmeier if on site
-Exercise - Explore a shared chain (30 m) @JoshOrndorff
+Lecture - Introduction to Polkadot (1 hr) @rphmeier
+Lecture and Possible Demonstration - Ecosystem / Economy 1, Staking + treasury + other (1.5 hr) @shawntabrizi
 Coffee Break (15 m)
-Lecture - Shared Security and Blockspace (1 hr) @shawntabrizi or perhaps @rphmeier if on site
-Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff
+Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier
 
 ### Day 2
 **Morning**
-Lecture - Ecosystem / Economy 1, Staking + treasury + other (1 hr) @shawntabrizi
-Exercise - Nominating, Validating (45 m) @JoshOrndorff
+
+Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff
+Lecture - Blockspace (.5 hr) @rphmeier
 Coffee Break (15 m)
+Exercise - Adder parachain + register parachains (1 h) @JoshOrndorff
 Lecture - Deep dive: Execution cores (1hr) @BradleyOlson64
 
 **Afternoon**
-Lecture - Ecosystem / Economy 2, Governance + Fellowship + other (1 hr) @shawntabrizi
-Exercise - Referenda, delegation, and voting on class chain (45 m) @JoshOrndorff
+Lecture - Ecosystem / Economy 2, Governance + Fellowship + other (1.5 hr) @shawntabrizi
+Demonstration - Referenda, delegation, and voting (30 m) @shawntabrizi
 Coffee Break (15 m)
-Lecture - Deep dive: Cumulus (1 hr) @JoshOrndorff Could reuse Andronik’s “Introduction to Cumulus” slides
-Lecture - Deep dive: Asynchronous Backing (1 hr) @BradleyOlson64
+Lecture - Deep dive: Cumulus (1.5 hr) @BradleyOlson64
 
 ### Day 3
 **Morning**
-Lecture - Deep dive: Perspectives on the Chain (1 hr) @BradleyOlson64
-Exercise - Adder parachain + register parachains (45 m) @JoshOrndorff
+Lecture - Cross-Chain Message Passing (45 m) @rphmeier
+Lecture + Exercise - Zombienet (1.5 hr) @pepoviola
 Coffee Break (15 m)
-Lecture - Cross-Chain Message Passing (1 hr) @shawntabrizi or perhaps @rphmeier if on site
+Lecture - Shallow Dive: Asynchronous Backing (30 m) @BradleyOlson64
+Lecture - Light Clients (1 hr) @wirednkod
 
 **Afternoon**
-Lecture - Polkadot vs Other Security/Scaling Part 1 (45 m) @Sophia-Gold
-Exercise - Upgrade chains to parachains, register through auctions (45 m) @JoshOrndorff
+Exercise - Upgrade chains to parachains, register through auctions (1.5 h) @JoshOrndorff
+Lecture - Polkadot vs Other Security/Scaling Part 1 (1 h) @Sophia-Gold
 Coffee Break (15 m)
-Lecture - Polkadot vs Other Security/Scaling Part 2 (45 m) @Sophia-Gold 
-Lectures - Guest content. (1-1.5 hr) Perhaps zombienet. Perhaps Gabriele’s Platform Agnostic Bytecode lecture.
+Lecture - Polkadot vs Other Security/Scaling Part 2 (1 h) @Sophia-Gold 
+Open discussion - Security/Scaling (remainder of day) @Sophia-Gold
 
 Assumptions: 
 
-- Content time per day: 3 hr mornings, 3.5-4 hr afternoons
-- Default 1 hr estimate for talks, including questions
-- Assumes we find the right break points to split exercises into 30-45 minute blocks. The later exercises may in practice be much longer than forecasted.
-- Assumes that Joshy is handling the presentation of exercises, though these will likely be split up more evenly. I’m certainly willing to help.
+- Max instruction window 9:00-6:00 (Lunch from 1:00-1:45)
+- Assumes Rob is willing to present all four lectures he gave in Buenos Aires and that he is generally available from the 2nd to the 4th
+- Assumes Rob's lectures will be same duration as in BA recordings
+- Assumes Shawn's "Shared Security and Blockspace" lecture can be replaced by Rob's "Execution Sharding" and "Blockspace" lectures
+- Assumes Rob's "Execution Sharding in Polkadot" lecture doesn't overlap too much with Joshy's "Introduction to the Parachains Protocol". Or we're happy to cover this twice at different depths.
+- Assumes that Rob's lighter 45 m coverage of XCMP can replace Shawn's planned 1.5 hour XCMP lecture
+
+Lesson Plan Goals:
+- Satisfy lesson dependencies (EX: "Deep Dive: Execution Cores" must come after "Introduction to the Parachains Protocol")
+- Place exercise time between lectures wherever possible for student engagement
+- Don't schedule any two lectures back to back from the same presenter unless requested
