@@ -23,15 +23,15 @@ Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier<br>
 Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff<br>
 Lecture - Blockspace (.5 hr) @rphmeier<br>
 Coffee Break (15 m)<br>
-Exercise - Adder parachain + register parachains (1.25 hr) @JoshOrndorff<br>
-Lecture - Deep dive: Execution cores (1 hr) @BradleyOlson64<br>
+Lecture - Deep dive: Execution cores (45 m) @BradleyOlson64<br>
+Lecture - Deep dive: Cumulus (1.5 hr) @BradleyOlson64<br>
 
 **Afternoon**
 
 Lecture - Ecosystem / Economy 2, Governance + Fellowship + other (1.5 hr) @shawntabrizi<br>
 Demonstration - Referenda, delegation, and voting (30 m) @shawntabrizi<br>
 Coffee Break (15 m)<br>
-Lecture - Deep dive: Cumulus (1.5 hr) @BradleyOlson64<br>
+Exercise - Adder parachain + register parachains (1.5 hr) @JoshOrndorff<br>
 
 ### Day 3
 **Morning**
