@@ -11,6 +11,7 @@ Draw content from:
 
 ### Day 1 (Half Day)
 **Afternoon**
+
 Lecture - Introduction to Polkadot (1 hr) @rphmeier<br>
 Lecture and Possible Demonstration - Ecosystem / Economy 1, Staking + treasury + other (1.5 hr) @shawntabrizi<br>
 Coffee Break (15 m)<br>
@@ -26,6 +27,7 @@ Exercise - Adder parachain + register parachains (1 h) @JoshOrndorff<br>
 Lecture - Deep dive: Execution cores (1hr) @BradleyOlson64<br>
 
 **Afternoon**
+
 Lecture - Ecosystem / Economy 2, Governance + Fellowship + other (1.5 hr) @shawntabrizi<br>
 Demonstration - Referenda, delegation, and voting (30 m) @shawntabrizi<br>
 Coffee Break (15 m)<br>
@@ -33,6 +35,7 @@ Lecture - Deep dive: Cumulus (1.5 hr) @BradleyOlson64<br>
 
 ### Day 3
 **Morning**
+
 Lecture - Cross-Chain Message Passing (45 m) @rphmeier<br>
 Lecture + Exercise - Zombienet (1.5 hr) @pepoviola<br>
 Coffee Break (15 m)<br>
@@ -40,6 +43,7 @@ Lecture - Shallow Dive: Asynchronous Backing (30 m) @BradleyOlson64<br>
 Lecture - Light Clients (1 hr) @wirednkod<br>
 
 **Afternoon**
+
 Exercise - Upgrade chains to parachains, register through auctions (1.5 h) @JoshOrndorff<br>
 Lecture - Polkadot vs Other Security/Scaling Part 1 (1 h) @Sophia-Gold<br>
 Coffee Break (15 m)<br>
