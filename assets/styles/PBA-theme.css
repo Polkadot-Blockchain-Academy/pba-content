@@ -41,6 +41,16 @@
 	--r-padding: 24px;
 }
 
+/* some specific color themes used in the substrate/frame lectures, but can be used everywhere. */
+:root {
+  --substrate-green: #24CC85;
+  --substrate-runtime: #BB8BA6;
+  --substrate-host: #8248DA;
+  --polkadot-ping: #DF1776;
+  --cumulus-blue: #6D9EEB;
+
+}
+
 /* box sizing;
 	https://css-tricks.com/box-sizing/#aa-universal-box-sizing-with-inheritance */
 html {
