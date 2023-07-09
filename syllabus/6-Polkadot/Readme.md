@@ -23,8 +23,8 @@ Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier<br>
 Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff<br>
 Lecture - Blockspace (.5 hr) @rphmeier<br>
 Coffee Break (15 m)<br>
-Exercise - Adder parachain + register parachains (1 h) @JoshOrndorff<br>
-Lecture - Deep dive: Execution cores (1hr) @BradleyOlson64<br>
+Exercise - Adder parachain + register parachains (1.25 hr) @JoshOrndorff<br>
+Lecture - Deep dive: Execution cores (1 hr) @BradleyOlson64<br>
 
 **Afternoon**
 
@@ -44,10 +44,10 @@ Lecture - Light Clients (1 hr) @wirednkod<br>
 
 **Afternoon**
 
-Exercise - Upgrade chains to parachains, register through auctions (1.5 h) @JoshOrndorff<br>
-Lecture - Polkadot vs Other Security/Scaling Part 1 (1 h) @Sophia-Gold<br>
+Exercise - Upgrade chains to parachains, register through auctions (1.5 hr) @JoshOrndorff<br>
+Lecture - Polkadot vs Other Security/Scaling Part 1 (1 hr) @Sophia-Gold<br>
 Coffee Break (15 m)<br>
-Lecture - Polkadot vs Other Security/Scaling Part 2 (1 h) @Sophia-Gold<br>
+Lecture - Polkadot vs Other Security/Scaling Part 2 (1 hr) @Sophia-Gold<br>
 Open discussion - Security/Scaling (remainder of day) @Sophia-Gold<br>
 
 Assumptions: 
