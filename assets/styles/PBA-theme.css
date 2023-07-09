@@ -226,6 +226,11 @@ pba-flex[right] {
 	line-height: 1.3;
 }
 
+.mermaid svg{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Ensure certain elements are never larger than the slide itself */
 /* Set in ./reveal.json -> "width": 1400, "height": 900, */
 .reveal img,
