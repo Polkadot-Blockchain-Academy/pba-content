@@ -37,14 +37,10 @@
 <body class="site">
   <header class="site-header">
     <!-- This logo is a link only on the watching server, not the production build -->
-    {{#watch}}
     <a href="{{{absoluteUrl}}}">
-      {{/watch}}
       <img style="height: 2.5vw;" class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/pba-logo-white.svg"
-      alt="PBA Logo">
-      {{#watch}}
+        alt="PBA Logo">
     </a>
-    {{/watch}}
   </header>
   <main class="reveal">
     <article class="slides">
@@ -91,17 +87,17 @@
       transition: 'default', // none/fade/slide/convex/concave/zoom
       slideNumber: true,
       mermaid: {
-          startOnLoad: false,
-          logLevel: 3,
-          theme: 'base',
-          themeVariables: {
-              primaryColor: purple,
-              primaryTextColor: white,
-              primaryBorderColor: pink,
-              lineColor: pink,
-              secondaryColor: lightPurple,
-              tertiaryColor: lightPurple,
-          },
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
       },
       chart: {
         defaults: {
@@ -109,11 +105,11 @@
           scale: {
             beginAtZero: true,
             ticks: { stepSize: 1 },
-            grid: { color: "lightgray" } , // color of grid lines
+            grid: { color: "lightgray" }, // color of grid lines
           },
         },
-        line: { borderColor: [ "#ccc" , "#E6007A", "#6D3AEE" ], "borderDash": [ [5,10], [0,0] ] },
-        bar: { backgroundColor: [ "#ccc" , "#E6007A", "#6D3AEE" ]},
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
       },
       plugins: [
         RevealMarkdown,
