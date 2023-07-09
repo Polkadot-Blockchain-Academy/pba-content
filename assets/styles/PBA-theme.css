@@ -14,10 +14,10 @@
 	--r-main-color: #fff;
 	--r-background-color: #140526;
 	--r-code-background-color: #000000;
-	--r-block-margin: 1.15em 0em 0em 0em;
-	--r-heading-margin: 0em 0em 0.6em 0em;
+	--r-block-margin: 0em 30px 15px 30px;
+	--r-heading-margin: 0em 0em 20px 0em;
 	--r-heading-font: "Unbounded";
-	--r-heading-color: #fff;
+	--r-heading-color: #d92f78;
 	--r-heading-line-height: 1.5em;
 	--r-heading-letter-spacing: 0.02em;
 	--r-heading-text-transform: none;
@@ -31,8 +31,10 @@
 	--r-code-font: monospace;
 	/* custom PBA var */
 	--r-code-font-size: 0.75em;
-	--r-link-color: #d92f78;
-	--r-link-color-dark: #A45CF6;
+	--r-link-color: #ccc;
+	--r-link-color-decoration: #d92f78;
+	--r-color-controls: #d92f78;
+	--r-link-color-dark: #;
 	--r-link-color-hover: #8d3aed;
 	--r-selection-background-color: #8d3aed;
 	--r-selection-color: #fff;
@@ -119,12 +121,17 @@ pba-cols {
 	margin: var(--r-block-margin);
   display: flex;
   align-items: center;
-  gap: calc(var(--r-padding) * 4);
+  gap: calc(var(--r-padding) * 2);
 }
 
 /* TODO: Columns hard coded in style for 2 only, for best results 3 and more need more styling calculated on total columns in slide... Seems to overflow slide on  right side...*/
 pba-col {
-  flex-basis: 44%;
+  display: flex;
+  flex: 1;
+}
+
+pba-col {
+	display: block;
 }
 
 pba-col:nth-of-type(2) {
@@ -150,10 +157,6 @@ pba-col[right] {
   flex-direction: column;
   align-items: right;
 	text-align: right;
-}
-
-pba-flex {
-	margin: var(--r-block-margin);
 }
 
 pba-flex[left] {
@@ -198,15 +201,6 @@ pba-flex[right] {
 	word-wrap: break-word;
 }
 
-.reveal h1:first-of-type,
-.reveal h2:first-of-type,
-.reveal h3:first-of-type,
-.reveal h4:first-of-type,
-.reveal h5:first-of-type,
-.reveal h6:first-of-type {
-	color: var(--r-link-color);
-}
-
 .reveal h1 {
 	font-size: var(--r-heading1-size);
 	text-shadow: var(--r-heading1-text-shadow);
@@ -237,11 +231,17 @@ pba-flex[right] {
 .reveal img,
 .reveal video,
 .reveal iframe {
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1300px;
 	max-height: 800px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
-.reveal img[rounded] {
+.reveal img[rounded],
+.reveal video[rounded],
+.reveal iframe[rounded]  {
 	border-radius: 0.6em;
 }
 
@@ -262,22 +262,45 @@ pba-flex[right] {
 	line-height: 1.2;
 }
 
-.reveal ol li,
-.reveal ul li {
-	margin: 0.5em 0em 0.5em 1em;
+.reveal ol {
+	margin-left: -2em;
 }
 
-.reveal ul {
+.reveal ul ~ ol {
+	margin-left: 0;
+}
+
+
+.reveal ol li,
+.reveal dl li,
+.reveal ul li {
+	margin: var(--r-block-margin);
+	margin-left: 1em;
+}
+
+.reveal * li ol,
+.reveal * li dl,
+.reveal * li ul {
+	margin-top: 0.3em;
+	margin-left: -1em;
+}
+
+.reveal ul,
+.reveal ol {
 	/* Remove default bullets/numbers on lists */
 	list-style: none !important;
-	padding-left:2em;
+	padding-left: 2em;
 }
 
-.reveal ol li {
+.reveal ol > li {
   counter-increment: count-ol;
 }
 
-.reveal ul li::before {
+.reveal * li ol  > li {
+  counter-increment: count-ol-ol;
+}
+
+.reveal ul > li::before {
 	font-family: "Unbounded";
 	font-size: 0.8em;
 	line-height: 1.5em;
@@ -287,33 +310,41 @@ pba-flex[right] {
 	font-family: monospace;
 	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
 	content: "\2688";
-	color: var(--r-link-color-dark);
+	color: var(--r-link-color-hover);
 }
 
-.reveal ol li::marker {
+.reveal ol > li::before {
 	font-family: "Unbounded";
 	font-size: 0.75em;
 	position: relative;
 	font-family: monospace;
 	/* Custom numbers and list item delimiter */
 	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
-	content: counters(count-ol,".") ": ";
 	/* Change the color */
-	color: var(--r-link-color-dark);
+	color: var(--r-link-color-hover);
 	font-weight: bold;
+}
+
+.reveal ol > li::before {
+	content: counters(count-ol,".") ": ";
+}
+
+.reveal * li ol  > li::before {
+	content: counters(count-ol-ol,".") ": ";
 }
 
 .reveal blockquote {
 	display: inline-block;
-	padding: 1em;
+	padding: 0.7em;
 	font-style: italic;
 	background: rgba(255, 255, 255, 0.1);
+	border-radius: 0.6em;
+	margin: var(--r-block-margin);
 }
 
 .reveal blockquote * {
 	margin: 0em !important;
 }
-
 .reveal q {
 	font-style: italic;
 }
@@ -410,13 +441,12 @@ pba-flex[right] {
 
 /* default elements, used in slide temple */
 a {
-  color: var(--r-link-color-dark);
-}
-
-.reveal a {
-	color: var(--r-link-color);
-	text-decoration: none;
+  color: var(--r-link-color);
+	text-decoration: underline dotted;
+	text-decoration-color: var(--r-link-color-decoration);
+	text-underline-offset: 0.25em;
 	transition: color 0.15s ease;
+	font-weight: bolder;
 }
 
 .reveal a:hover {
@@ -451,7 +481,7 @@ a {
 	 * NAVIGATION CONTROLS
 	 *********************************************/
 .reveal .controls {
-	color: var(--r-link-color);
+	color: var(--r-color-controls);
 }
 
 /*********************************************
@@ -459,7 +489,8 @@ a {
 	 *********************************************/
 .reveal .progress {
 	background: rgba(0, 0, 0, 0.2);
-	color: var(--r-link-color);
+	color: var(--r-color-controls);
+	height: 0.15em;
 }
 
 /*********************************************
@@ -544,6 +575,7 @@ a {
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
 
 /* work-sans-800italic - latin */
 @font-face {

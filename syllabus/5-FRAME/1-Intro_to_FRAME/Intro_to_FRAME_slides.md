@@ -1,39 +1,130 @@
 ---
-title: FRAME Overview
-description: FRAME Overview for Web3 engineers. FRAME, Pallets, System Pallet, Executive, Runtime Amalgamator.
+title: Introduction to FRAME
+description: An introduction into FRAME, a framework for building Substrate runtimes.
 duration: 1 hour
-instructors: ["Shawn Tabrizi, Kian Paimani"]
 ---
 
-# FRAME Overview
+## Lesson Plan
 
----v
+<table>
+<tr>
+  <td>Monday</td>
+  <td>Tuesday</td>
+  <td>Wednesday</td>
+  <td>Thursday</td>
+  <td>Friday</td>
+  <td>Weekend</td>
+</tr>
+<tr class="text-small">
+<td>
 
-## Agenda
+- Introduction To FRAME
+- Exercise: Proof of Existence Runtime
+- Pallet Coupling
+- FRAME Tips and Tricks
+- FRAME Common Knowledge (Pallets & Traits)
+- FRAME Assignment (whole week!)
 
-Recall the following figure:
+</td>
+<td>
 
-<image src="../../../assets/img/6-FRAME/frame0.svg" style="height: 600px">
+- Storage
+- Events & Errors
+- Calls
+- Hooks
 
-Notes:
+</td>
+<td>
 
-Without frame, there is the runtime and there is the client, and an API that sits in between.
+- Construct Runtime + Tests
+- Origins
+- Outer Enum
 
----v
+</td>
+<td>
 
-## Agenda
+- FRAME Benchmarking
+- Exercise: Benchmarking Example
 
-By the end of this lecture, you will fully understand this figure.
+</td>
+<td>
+
+- FRAME Under the Hood
+  - Deep Dive
+  - Executive
+- Migration & Try Runtime
+- Signed Extensions
+
+</td>
+<td>
+
+- Live Coding + Q/A Sessions (12pm-ish)
+- Complete FRAME Assignment
+
+</td>
+</tr>
+</table>
+
+---
+
+# Introduction to FRAME
+
+---
+
+## What is FRAME?
+
+FRAME is a Rust framework for more easily building Substrate runtimes.
+
+---
+
+## Explaining FRAME Concisely
+
+<pba-flex center>
+
+Writing the Sudo Pallet:
+
+Without FRAME: 2210 lines of code.
+
+With FRAME: 310 lines of code.
+
+7x Smaller.
+
+</pba-flex>
+
+---
+
+## Goals of FRAME
+
+- Make it easy and concise for developers to do development.
+- Provide maximum flexibility and compatibility for pallet developers.
+- Provide maximum modularity for runtime developers.
+- Be as similar to vanilla Rust as possible.
+
+---
+
+## Building Blocks of FRAME
+
+- FRAME Development
+  - Pallets
+  - Macros
+- FRAME Coordination
+  - FRAME System
+  - FRAME Executive
+  - Construct Runtime
+
+---
+
+## Pallets
+
+FRAME takes the opinion that the blockchain runtime should be composed of individual modules. We call these Pallets.
 
 <image src="../../../assets/img/6-FRAME/frame1.svg" style="height: 600px">
 
 ---
 
-## 1. A Pallet
+## Building Blocks of Pallets
 
-> An isolated unit of business logic that executes within a runtime.
-
-Contains:
+Pallets are composed of multiple parts common for runtime development:
 
 - Dispatchable extrinsics
 - Storage items
@@ -41,9 +132,9 @@ Contains:
   - Block initialization,
   - Finalizing block (_!= block finality i.e. GRANDPA_)
 
----v
+---
 
-### 1. A Pallet
+## More Building Blocks of Pallets
 
 And some less important ones:
 
@@ -53,561 +144,190 @@ And some less important ones:
 - Offchain workers
 - A lot more! but you will learn about them later.
 
----v
+---
 
 ### "Shell" Pallet
 
 ```rust
+pub use pallet::*;
+
 #[frame_support::pallet]
 pub mod pallet {
-  use frame_support::{pallet_prelude::*};
+  use frame_support::pallet_prelude::*;
   use frame_system::pallet_prelude::*;
 
-  // config trait
-  #[pallet::config]
-  trait Config: frame_system::Config {}
-
-  // storage items
-  #[pallet::storage]
-  pub type X = ..
-  #[pallet::storage]
-  pub type Y = ..
-
-  // dispatchables
   #[pallet::pallet]
-  pub struct Pallet<T>(PhantomData<T>);
-  #[pallet::call]
-  impl<T: Config> Pallet<T> {
-    fn tx_1(origin: OriginFor<T>, arg: u32) -> DispatchResult { .. }
-    fn tx_2(origin: OriginFor<T>, arg: u64) -> DispatchResult { .. }
-  }
+  #[pallet::generate_store(pub(super) trait Store)]
+  pub struct Pallet<T>(_);
 
-  // hooks
-  #[pallet::hooks]
-  impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
-    fn on_initialize() {}
-    fn on_finalize() {}
-  }
-
-  // other stuff, events, errors, genesis configs, unsigned validation etc.
+  #[pallet::config]  // snip
+  #[pallet::event]   // snip
+  #[pallet::error]   // snip
+  #[pallet::storage] // snip
+  #[pallet::call]    // snip
 }
 ```
-
----v
-
-### Config Trait.
-
-> Gateway to receive **_stuff_** from the outer world.
-
-```rust
-#[pallet::config]
-trait Config: frame_system::Config {
-  // An example of receiving an input type.
-  type ValueType: Into<u32> + Codec + Default;
-
-  // An example of receiving a const.
-  const MAX_VALUE: u32;
-
-  // A hook about what to do.
-  fn on_value_update(new_value: Self::ValueType);
-}
-```
-
-Everyone has access to system's config.
-
----v
-
-### Storage Items
-
-> The (holy) **_state_** of your blockchain!
-
-```rust
-// T::AccountId comes from system, T::ValueType comes form us.
-#[pallet::storage]
-pub type Values<T: Config> = StorageMap<_, T::AccountId, T::ValueType>;
-
-// A simpler storage item.
-#[pallet::storage]
-pub type Counter<T: Config> = StorageValue<_, u32>;
-```
-
-Notice: hash of the storage map.
-
----v
-
-### Extrinsics
-
-```rust
-#[pallet::storage]
-pub type Values<T: Config> = StorageMap<_, T::AccountId, T::ValueType>;
-#[pallet::storage]
-pub type Counter<T: Config> = StorageValue<_, u32>;
-
-#[pallet::pallet]
-pub struct Pallet<T>(PhantomData<T>);
-
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-  #[pallet::weight(0)]
-  pub fn set_value(origin: OriginFor<T>, value: u32) -> DispatchResult {
-    // checks the origin to be signed -- more on this later.
-    let who = ensure_signed(origin)?;
-
-    // check that this user has not submitted already.
-    if !<Values<T>>::contains_key(&who) {
-      if value > T::MAX_VALUE.into() {
-        return Err("failed".into())
-      }
-
-      // increment the counter .
-      Counter::<T>::mutate(|x| *x += 1);
-      let value: T::ValueType = value.into();
-      <Values<T>>::insert(who, value);
-      T::on_value_update(value);
-    } else {
-      return Err("already submitted".into())
-    }
-
-    Ok(())
-  }
-}
-```
-
-Notes:
-
-- expand `DispatchError`, and how you can convert from string into it.
-- expand `OriginFor`.
-- touch on "check-first, write last" and how currently we have `#[transactional]` almost by default.
-
----v
-
-### Hooks
-
-```rust
-#[pallet::hooks]
-impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
-  fn on_initialize(n: T::BlockNumber) -> Weight {
-    if n % 10 == Zero::zero() {
-      log::info!("count of users is {}", Counter::<T>::get());
-    }
-  }
-
-  fn on_finalize(_n: T::BlockNumber) {
-    // other stuff..
-  }
-}
-```
-
----v
-
-### Expanding The Code
-
-- Let's recap the whole pallet in one go.
-- Let's peek at the expanded code.
-
----v
-
-### Expanding The Code
-
-- `Pallet` implements the transactions as public functions.
-
-- `Pallet` implements `Hooks`, and some equivalents like `OnInitialize`.
-
-- `enum Call` that has in itself is just an encoding of the transaction's data
-
-- and implements `UnfilteredDispatchable` (which just forward the call back to `Pallet`)
-  ---v
-
-### Expanding The Code
-
-Make sure you understand why these 3 are the same!
-
-```rust
-let origin = ..;
-
-Pallet::<T>::set_value(origin, 10)
-
-Call::<T>::set_value(10).dispatch_bypass_filter(origin);
-<Call<T> as UnfilteredDispatch>::dispatch_bypass_filter(Call::<T>::set_value(10), origin);
-```
-
-<hr>
-
-And that's about it! Now let's look at what is this `frame_system` that everyone has to rely on.
 
 ---
 
-## 2. The System Pallet
+## FRAME Macros
 
-A container for common **types**, **functionality**, and opinionated **OS-style routines**.
+Rust allows you to write Macros, which is code that generates code.
 
-- common types: `<T as frame_system::Config>::AccountId`.
+FRAME uses Macros to simplify the development of Pallets, while keeping all of the benefits of using Rust.
 
-- common functionality: `set_code`, `set_storage`, `remark`
-
-- system-level functionality
-  - extrinsic count/length/weight(gas)
-  - what's the current block number?
-  - events
-  - runtime version, code update
-
-Notes:
-
-It stores all of the accounts as well, but that can be changed.
-
----v
-
-### Config Trait: Common Types
-
-```rust
-#[pallet::config]
-pub trait Config: {
-	// this is touched upon in the previous section:
-   type AccountId;
-
-   // these two will become relevant in executive part.
-   type Hash;
-   type Header;
-
-   // these are not, but should still be comprehensible.
-   type Index;
-   type BlockNumber;
-}
-```
-
----v
-
-### Storage Items: Accounting, Metering, Transient
-
-```rust
-#[pallet::storage]
-pub(super) type ExtrinsicCount<T: Config> = StorageValue<_, u32>;
-
-#[pallet::storage]
-pub(super) type AllExtrinsicsLen<T: Config> = StorageValue<_, u32>;
-
-#[pallet::storage]
-pub(super) type AllExtrinsicsWeight<T: Config> = StorageValue<_, ...>;
-
-#[pallet::storage]
-pub(super) type ExtrinsicData<T: Config> = StorageMap<_, Twox64Concat, u32, Vec<u8>, ValueQuery>;
-
-#[pallet::storage]
-pub(super) type Number<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
-
-#[pallet::storage]
-pub(super) type ParentHash<T: Config> = StorageValue<_, T::Hash, ValueQuery>;
-```
-
-> set before block execution, deleted in the beginning of the next block.
-
-Notes:
-
-You now know what to query from PJS api if you want to read the block number.
-
----v
-
-### System Pallet
-
-Let's See the Code.
+We will look more closely at each attribute throughout this module.
 
 ---
 
-## 3. `construct_runtime!` and Runtime Amalgamator.
+## See For Yourself
 
-Now, let's look at a minimal runtime amalgamator.
-This is where you glue the runtime together, and expose the things you care about as runtime apis.
+- `wc -l` will show the number of lines of a file.
+- `cargo expand` will expand the macros to "pure" Rust.
 
----v
+```sh
+➜  substrate git:(master) ✗ wc -l frame/sudo/src/lib.rs
+    310 frame/sudo/src/lib.rs
 
-## 3. `construct_runtime!` and Runtime Amalgamator.
+➜  substrate git:(master) ✗ cargo expand -p pallet-sudo | wc -l
+    2210
+```
+
+---
+
+## FRAME System
+
+The FRAME System is a Pallet which is assumed to always exist when using FRAME. You can see that in the `Config` of every Pallet:
 
 ```rust
-#![cfg_attr(not(feature = "std"), no_std)]
+#[pallet::config]
+pub trait Config: frame_system::Config { ... }
+```
 
-#[sp_version::runtime_version]
-pub const VERSION: RuntimeVersion = RuntimeVersion { .. };
+It contains all the most basic functions and types needed for a blockchain system. Also contains many low level extrinsics to manage your chain directly.
 
-parameter_types! { .. }
-impl frame_system::Config for Runtime { .. }
+<div class="flex-container">
+<div class="left-small">
 
-parameter_types! { .. }
-impl pallet_xyz::Config for Runtime { .. }
+- Block Number
+- Accounts
+- Hash
+- etc...
 
-parameter_types! { .. }
-impl pallet_pqr::Config for Runtime { .. }
+</div>
+<div class="right text-small">
 
-pub mod opaque { .. }
+- `T::BlockNumber`
+- `frame_system::Pallet::<T>::block_number()`
+- `T::AcccountId`
+- `T::Hash`
+- `T::Hashing::hash(&bytes)`
 
+</div>
+</div>
+
+---
+
+## FRAME Executive
+
+The FRAME Executive is a "coordinator", defining the order that your FRAME based runtime executes.
+
+```rust
+/// Actually execute all transitions for `block`.
+pub fn execute_block(block: Block) { ... }
+```
+
+- Initialize Block
+  - `on_runtime_upgrade` and `on_initialize` hooks
+- Initial Checks
+- Signature Verification
+- Execute Extrinsics
+  - `on_idle` and `on_finalize` hooks
+- Final Checks
+
+---
+
+## Construct Runtime
+
+Your final runtime is composed of Pallets, which are brought together with the `construct_runtime!` macro.
+
+```rust
+// Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
-  pub enum Runtime where
-  Block = Block,
-  NodeBlock = opaque::Block,
-  UncheckedExtrinsic = UncheckedExtrinsic
-  {
-    System: frame_system,
-    PalletXyz: pallet_xyx,
-    PalletPqr: pallet_pqr,
-  }
+	pub struct Runtime
+	where
+		Block = Block,
+		NodeBlock = opaque::Block,
+		UncheckedExtrinsic = UncheckedExtrinsic,
+	{
+		System: frame_system,
+		RandomnessCollectiveFlip: pallet_randomness_collective_flip,
+		Timestamp: pallet_timestamp,
+		Aura: pallet_aura,
+		Grandpa: pallet_grandpa,
+		Balances: pallet_balances,
+		TransactionPayment: pallet_transaction_payment,
+		Sudo: pallet_sudo,
+		// Include the custom logic from the pallet-template in the runtime.
+		TemplateModule: pallet_template,
+	}
 );
-
-pub type Executive = frame_executive::Executive<_, _, _, ...>;
-
-// this is the juicy part! all implementations seem to come from Executive!
-impl_runtime_apis! {
-  impl sp_api::Core<Block> for Runtime {
-    fn version() -> RuntimeVersion {
-      VERSION
-    }
-
-    fn execute_block(block: Block) {
-      Executive::execute_block(block);
-    }
-
-    fn initialize_block(header: &<Block as BlockT>::Header) {
-      Executive::initialize_block(header)
-    }
-  }
-
-  ...
-}
-```
-
----v
-
-## 3. `construct_runtime!` and Runtime Amalgamator.
-
-As you guessed it..
-
-Let's look at the full code, and expand it.
-
-<hr>
-
-An alternative to expanding macros:
-
-https://paritytech.github.io/polkadot/doc/polkadot_runtime/
-https://paritytech.github.io/substrate/master/kitchensink_runtime/index.html
-https://paritytech.github.io/substrate/master/kitchensink_runtime/type.AllPalletsWithSystem.html
-
----v
-
-## 3. `construct_runtime!` and Runtime Amalgamator.
-
-- struct `Runtime`
-- implements the `Config` trait of all pallets.
-- implements all of the runtime APIs as functions.
-- `type System`, `type SimplePallet`.
-- `AllPalletsWithSystem` etc.
-  - and recall that all pallets implement things like `Hooks`, `OnInitialize`, and all of these
-    traits are tuple-able.
-- enum Call
-- enum `Event`, `GenesisConfig`, etc. but we don't have them here.
-
----
-
-## 4. Executive
-
-> This part is somewhat optional to know in advance, but I want you to re-visit it in a week and
-> then understand it all.
-
-I present to you, Executive struct:
-
-```rust
-pub struct Executive<
-  System,
-  Block,
-  Context,
-  UnsignedValidator,
-  AllPalletsWithSystem,
-  OnRuntimeUpgrade = (),
->(
-  PhantomData<(
-    System,
-    Block,
-    Context,
-    UnsignedValidator,
-    AllPalletsWithSystem,
-    OnRuntimeUpgrade,
-  )>,
-);
-```
-
----v
-
-#### Expanding The Generic Types.
-
-```rust
-impl<
-    // System config, we know this now.
-    System: frame_system::Config,
-    // Constrained generics! understanding such syntax is key in rest of FRAME.
-    // https://riptutorial.com/rust/example/8574/associated-types
-    Block: sp_runtime::traits::Block<Header = System::Header, Hash = System::Hash>,
-    // Ignore for now.
-    Context: Default,
-    // Ignore for now.
-    UnsignedValidator,
-    // Something that has all the hooks. We don't know anything else about pallets here.
-    AllPalletsWithSystem: OnRuntimeUpgrade
-      + OnInitialize<System::BlockNumber>
-      + OnIdle<System::BlockNumber>
-      + OnFinalize<System::BlockNumber>
-      + OffchainWorker<System::BlockNumber>,
-    // Ignore for now.
-    COnRuntimeUpgrade: OnRuntimeUpgrade,
-  > Executive<System, Block, Context, UnsignedValidator, AllPalletsWithSystem, COnRuntimeUpgrade>
-where
-  // This is the juicy party, and we have to learn more sp_runtime traits to follow.
-  Block::Extrinsic: Checkable,
-  <Block::Extrinsic as Checkable>::Checked: Applyable
-  <<Block::Extrinsic as Checkable>::Checked as Applyable>::Call: Dispatchable<_>,
-{...}
-```
-
----v
-
-#### `Block::Extrinsic: Checkable`
-
-- Who implements `Checkable`?
-- That's right, the `generic::UncheckedExtrinsic` that we indeed used as `Block::Extrinsic` in the
-  top level runtime. Recall:
-
-```rust
-type UncheckedExtrinsic = generic::UncheckedExtrinsic<_, _, _, _>;
-type Header = ..
-type Block = generic::Block<Header, UncheckedExtrinsic>;
-type Executive = frame_executive::Executive<_, Block, ...>;
-```
-
----v
-
-#### What Does `Checkable<_>` Do?
-
-```rust
-impl Checkable<_> for UncheckedExtrinsic<_, _, _, _> {
-  // this is the output type.
-  type Checked = CheckedExtrinsic<AccountId, Call, Extra>;
-
-  fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityError> {
-    Ok(match self.signature {
-      Some((_)) => {
-        // signature verification
-        CheckedExtrinsic { signed: .., function: self.function }
-      },
-      None => {
-        // nothing to do, this is not signed.
-        CheckedExtrinsic { signed: None, function: self.function },
-      }
-    })
-  }
-}
-```
-
----v
-
-#### `<Block::Extrinsic as Checkable>::Checked: Applyable`
-
-- `UncheckedExtrinsic::Checked` is `CheckedExtrinsic`.
-- And it surely does implement `Applyable`.
-
----v
-
-#### What Does `Applyable<_>` Do?
-
-- TLDR: `Ok(self.call.dispatch(maybe_who.into()))`
-
----v
-
-#### Lastly: `<<Block::Extrinsic as Checkable>::Checked as Applyable>::Call: Dispatchable`
-
-- And guess who implemented `Dispatchable`, which we already looked at!
-- The `enum Call` that we had in our expanded file!
-
----v
-
-### Circling Back..
-
-So, to recap:
-
-```rust
-struct Runtime;
-
-impl frame_system::Config for Runtime {}
-impl simple_pallet::Config for Runtime {}
-
-enum Call {
-  System(frame_system::Call<Runtime>),
-  SimplePallet(simple_pallet::Call<Runtime>),
-}
-
-impl Dispatchable for Call {
-  fn dispatch(self, origin: _) -> Result<_, _> {
-    match self {
-      Call::System(system_call) => system_call.dispatch(),
-      Call::SimplePallet(simple_pallet_call) => system_pallet_call.dispatch(),
-    }
-  }
-}
-
-struct UncheckedExtrinsic {
-  function: Call,
-  signature: Option<_>,
-}
-
-type Executive = Executive<_, UncheckedExtrinsic, ...>;
-
-//
-let unchecked = UncheckedExtrinsic::new();
-let checked = unchecked.check();
-let _ = checked.apply();
-```
-
----v
-
-### Let's Put It All Together
-
-- in the context of how the executive's `fn execute_block` is working under the hood, with some simplifications:
-
-```rust
-fn execute_block(block: Block) {
-  // get some info out of the block.
-  let (header, extrinsics) = block.deconstruct()
-  let block_number = header.number();
-  let parent_hash = header.parent_hash();
-
-  // initialize the block, including all the on-initialize hooks.
-  // go to the impl and see how this is clearing previous TRANSIENT stuff.
-  <frame_system::Pallet<System>>::initialize(block_number, parent_hash, digest);
-  <AllPalletsWithSystem as OnInitialize<System::BlockNumber>>::on_initialize(_);
-
-  // execute extrinsics.
-  extrinsics.into_iter().for_each(|uxt: UncheckedExtrinsic| {
-    // recall how `Block::Extrinsic` was UncheckedExtrinsic, thus `uxt: UncheckedExtrinsic `
-    // first, go through `Checkable`, where the signature is checked.
-    let xt: CheckedExtrinsic = uxt.check(&Default::default())?;
-    // then `Applyable`, where actual `.dispatch` is called.
-    let _ = Applyable::apply::<_>(xt, _, _);
-  });
-
-  // execute some other hooks
-  <AllPalletsWithSystem as OnIdle<System::BlockNumber>>::on_idle(block_number);
-  <AllPalletsWithSystem as OnFinalize<System::BlockNumber>>::on_finalize(block_number);
-
-  <frame_system::Pallet<System>>::finalize()
-
-  // finally check roots.
-  let new_storage_root = sp_io::storage::root(version)[..];
-    assert!(header.state_root() == new_storage_root, "Storage root must match that calculated.");
-  let new_extrinsic_root = todo!();
-    assert!(
-      header.extrinsics_root() == new_extrinsic_root,
-      "Transaction trie root must be valid.",
-    );
-}
 ```
 
 ---
 
-## Recap
+## Pallet Configuration
 
-<image src="../../../assets/img/6-FRAME/frame1.svg" style="height: 600px">
+Before you can add a Pallet to the final runtime, it needs to be configured as defined in the `Config`.
+
+<div class="flex-container text-small">
+<div class="left" style="max-width: 50%;">
+
+In the Pallet:
+
+```rust
+/// The timestamp pallet configuration trait.
+#[pallet::config]
+pub trait Config: frame_system::Config {
+  type Moment: Parameter + Default + AtLeast32Bit + Scale<Self::BlockNumber, Output = Self::Moment> + Copy + MaxEncodedLen + scale_info::StaticTypeInfo;
+
+  type OnTimestampSet: OnTimestampSet<Self::Moment>;
+
+  #[pallet::constant]
+  type MinimumPeriod: Get<Self::Moment>;
+
+  type WeightInfo: WeightInfo;
+}
+```
+
+</div>
+
+<div class="right" style="max-width: 50%; padding-left: 10px;">
+
+In the Runtime:
+
+```rust
+/// The timestamp pallet configuration.
+
+impl pallet_timestamp::Config for Runtime {
+  type Moment = u64;
+
+  type OnTimestampSet = Aura;
+
+
+  type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
+
+  type WeightInfo = ();
+}
+```
+
+</div>
+</div>
+
+---
+
+## Exercise: Proof of Existence Blockchain
+
+Let's get our hands dirty and use all of these pieces together!
+
+https://docs.substrate.io/tutorials/build-application-logic/use-macros-in-a-custom-pallet/

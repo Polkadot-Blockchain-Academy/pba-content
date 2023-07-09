@@ -10,11 +10,9 @@ duration: 1 hour
 
 ## Introduction
 
-We often want a succinct representation of some data<br>with the expectation that we are referring to the same data.
+We often want a succinct representation of some data<br/>with the expectation that we are referring to the same data.
 
-<br>
-
-##### A "fingerprint".
+##### A "fingerprint"
 
 ---
 
@@ -25,9 +23,9 @@ We often want a succinct representation of some data<br>with the expectation tha
 1. Accept unbounded size input
 1. Map to a bounded output
 1. Be fast to compute
-1. Be computable strictly one-way<br>(difficult to find a pre-image for a hash)
-1. Resist pre-image attacks<br>(attacker controls one input)
-1. Resist collisions<br>(attacker controls both inputs)
+1. Be computable strictly one-way<br/>(difficult to find a pre-image for a hash)
+1. Resist pre-image attacks<br/>(attacker controls one input)
+1. Resist collisions<br/>(attacker controls both inputs)
 
 </pba-flex>
 
@@ -52,14 +50,30 @@ fn hash(s: &[u8]) -> [u8; 32];
 
 ```text
 hash('hello') =
-	0x324dcf027dd4a30a932c441f365a25e86b173defa4b8e58948253471b81b72cf
+ 0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8
 ```
 
 **Large input (1.2 MB):**
 
 ```text
-hash(polkadot_runtime-v9190.compact.compressed.wasm) =
-	0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
+hash(Harry_Potter_series_as_string) =
+ 0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
+```
+
+---
+
+## Input Sensitivity
+
+Changing even 1 bit of a hash function _completely_ scrambles the output.
+
+```text
+hash('hello') =
+ 0x1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8
+```
+
+```text
+hash('hellp') =
+ 0x7bc9c272894216442e0ad9df694c50b6a0e12f6f4b3d9267904239c63a7a0807
 ```
 
 ---
@@ -109,7 +123,7 @@ xxHash64 is about 20x faster than Blake2.
 
 ---
 
-## Examples of Hash Functions used in Blockchains
+## Hash Functions in Blockchains
 
 <pba-flex center>
 
@@ -129,29 +143,29 @@ Exercise: Write your own benchmarking script that compares the performance of th
 
 ### Hashing Benchmarks
 
-<img rounded style="height: 650px" src="../../../assets/img/1-Cryptography/crypto-bench.png"/>
+<img rounded style="height: 650px" src="../../../assets/img/1-Cryptography/crypto-bench.png" />
 
 Notes:
 
 Benchmarks for the _cryptographic_ hashing algorithms.
-Source: https://www.blake2.net/
+Source: <https://www.blake2.net/>
 
 ---
 
 #### XXHash - _Fast_ hashing algorithm
 
-<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png"/>
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/Benchmark-XXHash.png" />
 
 Notes:
 
 Benchmarks for the XX-hash algorithms.
-Source: https://github.com/Cyan4973/xxHash#benchmarks
+Source: <https://github.com/Cyan4973/xxHash#benchmarks>
 
 ---
 
 ## Non-Cryptographic Hash Functions
 
-Non-cryptographic hash functions provide weaker<br>guarantees in exchange for performance.
+Non-cryptographic hash functions provide weaker<br/>guarantees in exchange for performance.
 
 They are OK to use when you know that the input is not malicious.
 
@@ -161,7 +175,7 @@ They are OK to use when you know that the input is not malicious.
 
 ## One Way
 
-Given a hash, it should be difficult to find an input value (pre-image)<br>that would produce the given hash.
+Given a hash, it should be difficult to find an input value (pre-image)<br/>that would produce the given hash.
 
 That is, given `H(x)`, it should be difficult to find `x`.
 
@@ -173,7 +187,7 @@ We sometimes add random bytes to pre-images to prevent guesses based on context 
 
 ## Second Pre-Image Attacks
 
-Given a hash and a pre-image, it should be difficult to find _another_<br>pre-image that would produce the same hash.
+Given a hash and a pre-image, it should be difficult to find _another_<br/>pre-image that would produce the same hash.
 
 Given `H(x)`, it should be difficult to find any `x'`
 
@@ -187,7 +201,7 @@ Since most signature schemes perform some internal hashing, this second pre-imag
 
 ## Collision Resistance
 
-It should be difficult for someone to find two messages that<br>hash to the same value.
+It should be difficult for someone to find two messages that<br/>hash to the same value.
 
 It should be difficult to find an `x` and `y`
 
@@ -207,7 +221,8 @@ They may attempt to trick someone into signing one message.
 
 Notes:
 
-Attacker has intention to impersonate the signer with the other.
+Attacker has intention to impersonate the signer with the other. Generally speaking, even finding a
+single hash collision often results in the hash function being considered unsafe.
 
 ---
 
@@ -218,13 +233,13 @@ Attacker has intention to impersonate the signer with the other.
 
 > With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday.
 
-- Must to compare each output with every other, not with a single one.<br>
+- Must compare each output with every other, not with a single one.<br/>
 - Number of possible "hits" increases exponentially for more attempts, reducing the expected success to the square-root of what a specific target would be.
 
 </pba-col>
 <pba-col>
 
-<img style="width: 700px; border-radius: 0;" src="../../../assets/img/1-Cryptography/birthday-problem.svg"/>
+<img style="width: 700px; border-radius: 0;" src="../../../assets/img/1-Cryptography/birthday-problem.svg" />
 
 </pba-col>
 </pba-cols>
@@ -233,7 +248,7 @@ Attacker has intention to impersonate the signer with the other.
 
 ## Birthday Attack
 
-Thus, with a birthday attack, it is possible to find a collision of a hash function in $\sqrt {2^{n}}=2^{\frac{n}{2}}$, with $\cdot 2^{\frac{n}{2}}$ being the classical preimage resistance security.
+Thus, with a birthday attack, it is possible to find a collision of a hash function in $\sqrt {2^{n}}=2^{^{\frac{n}{2}}}$, with $\cdot 2^{^{\frac{n}{2}}}$ being the classical preimage resistance security.
 
 So, hash function security is only half of the bit space.
 
@@ -241,9 +256,9 @@ Notes:
 
 e.g., a 256 bit hash output yields 2^128 security
 
-- https://en.wikipedia.org/wiki/Birthday_attack
+- <https://en.wikipedia.org/wiki/Birthday_attack>
 
-- https://en.wikipedia.org/wiki/Birthday_problem
+- <https://en.wikipedia.org/wiki/Birthday_problem>
 
 ---
 
@@ -279,9 +294,66 @@ Keccak is available for Ethereum compatibility.
 
 ---
 
+## Cryptographic Guarantees
+
+Let's see which cryptographic properties apply to hashes.
+
+---v
+
+## Confidentiality
+
+Sending or publically posting a hash of some data $D$ keeps $D$ confidential, as only those who already knew $D$ recognize $H(D)$ as representing $D$.
+
+Both cryptographic and non-cryptographic hashes work for this. _only if the input space is large enough_.
+
+---v
+
+## Confidentiality Bad Example
+
+Imagine playing rock, paper, scissors by posting hashes and then revealing. However, if the message is either "rock", "paper", or "scissors", the output will always be either:
+
+```text
+hash('rock') = 0x10977e4d68108d418408bc9310b60fc6d0a750c63ccef42cfb0ead23ab73d102
+hash('paper') = 0xea923ca2cdda6b54f4fb2bf6a063e5a59a6369ca4c4ae2c4ce02a147b3036a21
+hash('scissors') = 0x389a2d4e358d901bfdf22245f32b4b0a401cc16a4b92155a2ee5da98273dad9a
+```
+
+The other player doesn't need to undo the hash function to know what you played!
+
+Notes:
+
+The data space has to be _sufficiently large_.
+Adding some randomness to input of the hash fixes this. Add x bits of randomness to make it x bits of security on that hash.
+
+---v
+
+## Authenticity
+
+Anyone can make a hash, so hashes provide no authenticity guarantees.
+
+---v
+
+## Integrity
+
+A hash changes if the data changes, so it does provide integrity.
+
+---v
+
+## Non-Repudiation
+
+Hashes on their own cannot provide authenticity, and as such cannot provide non-repudiation.
+
+However, if used in another cryptographic primitive that _does_ provide non-repudiation, $H(D)$ provides the same non-repudation as $D$ itself.
+
+Notes:
+
+This is key in digital signatures. However, it's important to realize that if $D$ is kept secret, $H(D)$ is basically meaningless.
+
+---
+
 ## Content-Derived Indexing
 
-Hash functions can be used to generate deterministic<br>and unique lookup keys for databases.
+Hash functions can be used to generate deterministic<br/>and unique lookup keys for databases.
 
 Notes:
 
@@ -291,9 +363,9 @@ Given some fixed property, like an ID and other metadata the user knows beforeha
 
 ## Data Integrity Checks
 
-Members of a peer-to-peer network may host and share<br>file chunks rather than large files.
+Members of a peer-to-peer network may host and share<br/>file chunks rather than large files.
 
-In [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent), each file chunk is hash identified so peers can<br>_request and verify_ the chunk is a member of the larger,<br>_content addressed_ file.
+In [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent), each file chunk is hash identified so peers can<br/>_request and verify_ the chunk is a member of the larger,<br/>_content addressed_ file.
 
 Notes:
 
@@ -311,8 +383,8 @@ The properties of hash functions allow other kinds of representations.
 
 ## Public Key Representation
 
-Because hashes serve as unique representations of other data,<br>that other data could include public keys.<br>
-A system can map a plurality of key sizes to a fixed length<br>(e.g. for use as a database key).
+Because hashes serve as unique representations of other data,<br/>that other data could include public keys.<br/>
+A system can map a plurality of key sizes to a fixed length<br/>(e.g. for use as a database key).
 
 For example, the ECDSA public key is 33 bytes:
 
@@ -327,31 +399,9 @@ Hash of pub key:
 
 ---
 
-## Multi-Signatures
-
-<img style="width: 1200px; border-radius: 0" src="../../../assets/img/1-Cryptography/Multi-Signatures.png"/>
-
-Notes:
-
-By hashing a concatenation of several public keys, a system can create new IDs that require signature thresholds to authorize activity.
-
----
-
-## Internal System IDs
-
-Modules within a system may have their own information<br>stored in other parts of the system.
-
-Storage they authorize use of by the module's internal logic.
-
-Notes:
-
-The hash of some input (e.g. a byte-string representing the module) can be used to identify a particular module within a system.
-
----
-
 ## Commitment Schemes
 
-It is often useful to commit to some information<br> without storing or revealing it:
+It is often useful to commit to some information<br/> without storing or revealing it:
 
 - A prediction market would want to reveal predictions only after the confirming/refuting event occurred.
 - Users of a system may want to discuss proposals without storing the proposal on the system.
@@ -369,7 +419,7 @@ However, participants should not be able to modify their predictions or proposal
 
 <pba-flex>
 
-It is normal to add some randomness to the message<br>to expand the input set size:
+It is normal to add some randomness to the message<br/>to expand the input set size:
 
 $$ hash(message + randomness) => commitment $$
 
@@ -401,7 +451,7 @@ The hash of the information can succinctly represent the information and commit 
 
 ## Data Structures (in Brief)
 
-This is the focus of the next lesson.
+This is the focus of a later lesson.
 
 Notes:
 For now, just a brief introduction.
@@ -412,15 +462,17 @@ For now, just a brief introduction.
 
 Pointer-based linked lists are a foundation of programming.
 
-But pointers are independent from the data they reference,<br>so the data can be modified while maintaining the list.
+But pointers are independent from the data they reference,<br/>so the data can be modified while maintaining the list.
 
 That is, pointer-based linked lists are not tamper evident.
+
+<img src="../../../assets/img/1-Cryptography/Hash-Chains.png" alt="Linked List"> </img>
 
 ---
 
 ## Hash-Based Linked Lists
 
-Hash-based lists make the reference related to the data they are referencing.<br>
+Hash-based lists make the reference related to the data they are referencing.<br/>
 The properties of hash functions make them a good choice for this application.
 
 Any change at any point in the list would create downstream changes to all hashes.
@@ -429,7 +481,7 @@ Any change at any point in the list would create downstream changes to all hashe
 
 ## Merkle Trees
 
-<img  src="../../../assets/img/1-Cryptography/Merkle-Tree.png"/>
+<img  src="../../../assets/img/1-Cryptography/Merkle-Tree.png" />
 
 Notes:
 
@@ -439,7 +491,7 @@ Each leaf is the hash of some data object and each node is the hash of its child
 
 ## Proofs
 
-Merkle trees allow many proofs relevant to the rest of this course,<br>e.g. that some data object is a member of the tree<br>without passing the entire tree.
+Merkle trees allow many proofs relevant to the rest of this course,<br/>e.g. that some data object is a member of the tree<br/>without passing the entire tree.
 
 **_More info in the next lesson._**
 
@@ -461,13 +513,13 @@ Sr25519 hashes the message as part of its signing process.
 
 **Transactions**
 
-In transactions in Substrate, key holders sign a<br>_hash of the instructions_ when the instructions<br>are longer than 256 bytes.
+In transactions in Substrate, key holders sign a<br/>_hash of the instructions_ when the instructions<br/>are longer than 256 bytes.
 
 ---
 
 ## Database Keys
 
-**TwoX64** is safe to use when users (read: attackers)<br>cannot control the input, e.g. when a<br>database key is a system-assigned index.
+**TwoX64** is safe to use when users (read: attackers)<br/>cannot control the input, e.g. when a<br/>database key is a system-assigned index.
 
 **Blake2** should be used for everything else.
 

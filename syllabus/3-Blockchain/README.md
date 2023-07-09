@@ -1,59 +1,24 @@
 # Blockchain Fundamentals Module
 
-<!--TODO update based on https://github.com/Polkadot-Blockchain-Academy/pba-content/pull/360 moving forward-->
-
 This module introduces students to the problem space that blockchain is trying to solve (resilient, equitable, trustless infrastructure) as well as the technical aspects of how it solves those problems and to what extent it falls short.
 
 The primary coding activity, which will run throughout the module is [Blockchain From Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/).
 
-The module is taught over 2.5 days
+## Collaboration with Smart Contracts Module
 
-## Lessons Overview
+In some PBA offerings, this module is slated to be taught immediately before the module on Smart Contracts.
+When this is the case, these two modules can be intertwined to achieve a more compelling learning experience.
 
-### Day 1 - Morning Session
+This intertwined approach begins with the Smart Contracts instructor defining and motivating the concept of a Smart contract, and leaving students wondering where such a contract could execute.
+It continues with the Blockchain instructor showing that a blockchain is a perfect place to run a smart contract, and introduces the technical aspects according to this module.
+Next, the Smart Contracts instructor gives students hands on experience building smart contracts in common blockchain-oriented programming environments.
+Finally, the super-module concludes with an activity in which students launch a blockchain and participate as node operators, then launch their own smart contracts on top of the just-launched blockchain.
 
-- Intro - Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class.
+When taught as a collaboration, the super-module requires roughly 5 days.
+For more details, see the [Hybrid Lesson Outline](Outline_Hybrid.md)
 
-- Overview of Blockchain Lecture
+## Independent Module
 
-- Begin BFS coding activity - specifically state machine part
-
-- Blockchain Structure Lecture
-
-- Continue BFS coding activity. Students should start the blockchain portion and finish the first lesson in that part even if they are not done with the state machine stuff yet (which is very likely). Then they can continue whichever part moves them
-
-### Day 1 - Afternoon Session
-
-- Consensus Part 1 Lecture - Authoring - Agreeing on Possibilities
-
-- Manual Consensus Activity (aka BitStory)
-
-- P2P Networking Lecture
-
-- Continue coding on BFS
-
-### Day 2 - Morning Session
-
-- Consensus Part 2 Lecture - Finality - Agreeing on Ordering
-
-- Grandpa Board Game Activity
-
-- Accounts vs UTXOs Lecture
-
-- Continue Coding on BFS
-
-### Day 2 - Afternoon Session
-
-- Resource Allocation lecture
-
-- BFS
-
-- Light Clients Bridges
-
-- BFS
-
-### Day 3 (Half Day)
-
-- Unstoppable Applications Lecture
-
-- Launch a blockchain activity
+When the aforementioned collaboration with the smart contracts module is not practical, this module may still be taught standalone.
+When taught as a standalone entity, the module requires roughly 2.5 - 3 days.
+For more details, see the [Standalone Lesson Outline](Outline_Standalone.md).

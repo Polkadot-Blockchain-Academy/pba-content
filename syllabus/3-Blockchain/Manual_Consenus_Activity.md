@@ -4,14 +4,14 @@ In this activity students will encounter and explore blockchain consensus mechan
 
 Students will collaborate in telling a shared story. The shared story is represented by a blockchain with one word in each block. To add a word to the story, a student must create a valid block, and draw that block on the community whiteboard\*
 
-<center>
+<pba-flex center>
 
 <!-- To use downstream -->
-<!-- <img src="../../slides/assets/img/3-Blockchain/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:600px;"/> -->
+<!-- <img src="../../slides/assets/img/3-Blockchain/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:600px;" /> -->
 
-<img src="../../assets/img/3-Blockchain/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:700px;"/>
+<img src="img/bitStoryLive.jpg" alt="Photo of bitstory content on whiteboard" style="width:700px;" />
 
-</center>
+</pba-flex>
 
 - If no whiteboard is available, you may be able to substitute; a paper, online drawing tool, or even a chalkboard if you are desperate.
 

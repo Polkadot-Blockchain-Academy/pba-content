@@ -26,11 +26,17 @@ A certification system specified conventions on who is allowed to issue certific
 
 For example, the certificate transparency protocol for TLS certificates helps protect against compromised Certificate Authorities.
 
+Notes:
+
+Certificate transparency: [explanation](https://certificate.transparency.dev/howctworks/) and [dashboard](https://ct.cloudflare.com/)
+
+- Maybe mention PGP web-of-trust style schemes
+
 ---
 
 ### Certificates in Web3
 
-We are building systems that don't have a "Certificate Authority".<br>
+We are building systems that don't have a "Certificate Authority".<br/>
 But we can still use certificates in some niche instances.
 
 Notes:
@@ -45,11 +51,11 @@ Potential example to give verbally:
 
 ### Multi-Signatures
 
-We often want signatures that must be signed<br>by multiple parties to become valid.
+We often want signatures that must be signed<br/>by multiple parties to become valid.
 
 <pba-flex center>
 
-- Require some threshold of members to<br>agree to a message
+- Require some threshold of members to<br/>agree to a message
 - Protect against key loss
 
 </pba-flex>
@@ -62,7 +68,7 @@ We often want signatures that must be signed<br>by multiple parties to become va
 
 - Verifier enforced
 - Cryptographic threshold
-- Cryptographic non-threshold<br>(a.k.a. signature aggregation)
+- Cryptographic non-threshold<br/>(a.k.a. signature aggregation)
 
 ---
 
@@ -83,6 +89,8 @@ Notes:
 
 This good experience comes at the cost of using state and more user interactions with the system, but is generally low.
 
+Even in a web3 system, the verifier can be _distinct_ from the blockchain. 5 people can entrust a verifier with the identity of "all 5 signed this" associated to a verifier-owned private key.
+
 ---
 
 ### Cryptographic Multi-Sigs
@@ -97,9 +105,13 @@ _Example: "The five key holders have signed this message."_
 
 ### Key Generation for Multi-Sigs
 
-In regular multi-signatures,<br>signatures from individual public keys are aggregated.
+In regular multi-signatures,<br/>signatures from individual public keys are aggregated.
 
 Each participant can choose their own key to use for the multi-signature.
+
+Note:
+
+In some cases, a security requirement of these systems is that every participant demonstrates ownership of the public key submitted for the multi-signature, otherwise security can be compromised.
 
 ---
 
@@ -155,7 +167,7 @@ Signatures can be aggregated without advance agreement upon the signer list, whi
 
 Verifying individual signatures is _slow_, but verifying aggregated ones is relatively fast.
 
-(Coming to Substrate soon.)
+(Coming to Substrate soonish.)
 
 ---
 
@@ -185,7 +197,7 @@ However...
 
 ### Schnorr and BLS Summary
 
-Schnorr & BLS multi-signatures avoid complicating verifier logic,<br>but introduce user experience costs such as:
+Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introduce user experience costs such as:
 
 - DKG protocols
 - Reduced key derivation ability
@@ -197,12 +209,13 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br>but introdu
 
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
 - Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
-- Anonymous blockchain transactions typically employ ring signatures.
+- Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
 
 Notes:
 
 - ZCash uses a ring signature based upon Groth16 zkSNARKs which makes the entire chain history be the anonymity set.
 - Monero uses ring signatures with smaller signer sets.
+- Ring signatures trade some _non-repudation_ for _privacy_.
 
 ---
 

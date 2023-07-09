@@ -12,14 +12,16 @@ duration: 1 hour
 
 Signature libraries should generally all expose some basic functions:
 
-- `fn generate_key(r) -> sk;` <br> Generate a `sk` (secret key) from some input `r`.
-- `fn public_key(sk) -> pk;` <br> Return the `pk` (public key) from a `sk`.
-- `fn sign(sk, msg) -> signature;` <br> Takes `sk` and a message; returns a digital signature.
-- `fn verify(pk, msg, signature) -> bool;` <br> For the inputs `pk`, a message, and a signature; returns whether the signature is valid.
+- `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
+- `fn public_key(sk) -> pk;` <br/> Return the `pk` (public key) from a `sk`.
+- `fn sign(sk, msg) -> signature;` <br/> Takes `sk` and a message; returns a digital signature.
+- `fn verify(pk, msg, signature) -> bool;` <br/> For the inputs `pk`, a message, and a signature; returns whether the signature is valid.
 
 Notes:
 
 The input `r` could be anything, for example the movement pattern of a mouse.
+
+For some cryptographies (ECDSA), the verify might not take in the public key as an input. It takes in the message and signature, and returns the public key if it is valid.
 
 ---
 
@@ -42,7 +44,7 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ## Hash Functions
 
-There are two lessons dedicated to hash functions.<br>But they are used as part of all signing processes.
+There are two lessons dedicated to hash functions.<br/>But they are used as part of all signing processes.
 
 For now, we only concern ourselves with using Blake2.
 
@@ -50,7 +52,7 @@ For now, we only concern ourselves with using Blake2.
 
 ## Hashed Messages
 
-As mentioned in the introduction,<br>it's often more practical to sign the hash of a message.
+As mentioned in the introduction,<br/>it's often more practical to sign the hash of a message.
 
 Therefore, the sign/verify API may be _used_ like:
 
@@ -61,29 +63,54 @@ Therefore, the sign/verify API may be _used_ like:
 
 </pba-flex>
 
-Where `H` is a hash function (for our purposes, Blake2).<br>
+Where `H` is a hash function (for our purposes, Blake2).<br/>
 This means the verifier will need to run the correct hash function on the message.
+
+---
+
+## Cryptographic Guarantees
+
+Signatures provide many useful properties:
+
+- Confidentiality: Weak, the same as a hash
+- Authenticity: Yes
+- Integrity: Yes
+- Non-repudiation: Yes
+
+Note:
+
+If a hash is signed, you can prove a signature is valid _without_ telling anyone the actual message that was signed, just the hash.
 
 ---
 
 ## Signing Payloads
 
-Signing payloads are an important part of system design.<br>
+Signing payloads are an important part of system design.<br/>
 Users should have credible expectations about how their messages are used.
 
-For example, when a user authorizes a transfer,<br>they almost always mean just one time.
+For example, when a user authorizes a transfer,<br/>they almost always mean just one time.
+
+Notes:
+
+There need to be explicit rules about how a message is interpreted. If the same signature can be used in multiple contexts, there is the possibility that it will be maliciously resubmitted.
+
+In an application, this typically looks like namespacing in the signature payload.
 
 ---
 
-## Asym. Encrypt. & Signatures
+## Signing and Verifying
 
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/asymmetric-crypto-flow-and-sig.svg"/>
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/sig-verify-flow.svg" />
+
+Notes:
+
+Note that signing and encryption are _not_ inverses.
 
 ---
 
 ## Replay Attacks
 
-Replay attacks occur when someone intercepts and resends a valid message.<br>
+Replay attacks occur when someone intercepts and resends a valid message.<br/>
 The receiver will carry out the instructions since the message contains a valid signature.
 
 <pba-flex center>
@@ -103,7 +130,7 @@ Tell the story of Ethereum Classic replays.
 
 ## Replay Attack Prevention
 
-Signing payloads should be designed so that they can<br>only be used _one time_ and in _one context_.<br>
+Signing payloads should be designed so that they can<br/>only be used _one time_ and in _one context_.<br/>
 Examples:
 
 <pba-flex center>
@@ -118,15 +145,21 @@ Examples:
 
 Hierarchical Deterministic Key Derivation
 
-<img style="width: 1100px;" src="../../../assets/img/1-Cryptography/HD-Deterministic-Wallet.png"/>
+<img style="width: 1100px;" src="../../../assets/img/1-Cryptography/HD-Deterministic-Wallet.png" />
 
 ---
 
 ## Hard vs. Soft
 
-Key derivation allows one to derive (virtually limitless)<br>child keys from one "parent".
+Key derivation allows one to derive (virtually limitless)<br/>child keys from one "parent".
 
 Derivations can either be "hard" or "soft".
+
+---
+
+## Hard vs. Soft
+
+<img style="width: 1200px;" src="../../../assets/img/1-Cryptography/soft-vs-hard-derivation.png">
 
 ---
 
@@ -144,9 +177,7 @@ Always do hard paths first, then conclude in soft paths.
 
 Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
 
-<br>
-
-<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
+<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png" />
 
 ---
 
@@ -154,9 +185,7 @@ Wallets can derive keys for use in different consensus systems while only needin
 
 Let's imagine we want to use this key on multiple networks, but we don't want the public keys to be connected to each other.
 
-<br>
-
-<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png"/>
+<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png" />
 
 ---
 
@@ -200,7 +229,9 @@ Wallets can use soft derivation to link all payments controlled by a single priv
 
 Notes:
 
-See: https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation
+On the use case, taking each payment at a different address could help make the association between payment and customer.
+
+See: <https://wiki.polkadot.network/docs/learn-accounts#soft-vs-hard-derivation>
 
 ---
 
@@ -220,11 +251,15 @@ Mention that these derivations create entirely new secret seeds.
 
 # Mnemonics and Seed Creation
 
+Notes:
+
+These are all different _representation_ of a secret. Fundamentally doesn't really change anything.
+
 ---
 
 ## Mnemonics
 
-Many wallets use a dictionary of words and give people phrases,<br>often 12 or 24 words, as these are easier to back up/recover than byte arrays.
+Many wallets use a dictionary of words and give people phrases,<br/>often 12 or 24 words, as these are easier to back up/recover than byte arrays.
 
 Notes:
 
@@ -265,7 +300,7 @@ _The first 5 words of the [BIP39 English dictionary](https://github.com/bitcoin/
 
 Of course, the secret key is a point on an elliptic curve, not a phrase.
 
-BIP39 applies 2,048 rounds of the SHA-512 hash function<br>to the mnemonic to derive a 64 byte key.
+BIP39 applies 2,048 rounds of the SHA-512 hash function<br/>to the mnemonic to derive a 64 byte key.
 
 Substrate uses the entropy byte array from the mnemonic.
 
@@ -277,8 +312,6 @@ Different key derivation functions affect the ability to use the same mnemonic i
 
 ---
 
-<!-- TODO: Gav comments in Cambridge already covered before HDHK? consider moving to Substrate module? -->
-
 # Signature Schemes
 
 ---
@@ -288,6 +321,7 @@ Different key derivation functions affect the ability to use the same mnemonic i
 - Uses Secp256k1 elliptic curve.
 - ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.
 - ECDSA complicates more advanced cryptographic techniques, like threshold signatures.
+- Nondeterministic
 
 ---
 
@@ -295,12 +329,13 @@ Different key derivation functions affect the ability to use the same mnemonic i
 
 - Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
 - Signing is 20-30x faster than ECDSA signatures.
+- Deterministic
 
 ---
 
 ## Sr25519
 
-Sr25519 addresses several small risk factors that emerged<br>from Ed25519 usage by blockchains.
+Sr25519 addresses several small risk factors that emerged<br/>from Ed25519 usage by blockchains.
 
 ---
 

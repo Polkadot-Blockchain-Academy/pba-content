@@ -1,6 +1,6 @@
 # Rust Demo for Hashes
 
-> See [the instructions for Evcxr](../../0-Meta_For_Instructional_Staff/6b-how-to-use-evcxr-in-a-shell.md) REPL before you begin.
+> See [the 0-Internal_Faculty_Resources for Evcxr](../../0-Internal_Faculty_Resources/6b-how-to-use-evcxr-in-a-shell.md) REPL before you begin.
 
 ---
 
@@ -137,7 +137,7 @@ loop {
 
 	// for all previous...
 	/*
-	Note: looping through this vec every time and checking each value is obviously really
+	Looping through this vec every time and checking each value is obviously really
 	inefficient. After the hash-based data structure lesson, perhaps students could code up a
 	better solution, like a sorted list with binary search.
 	*/
