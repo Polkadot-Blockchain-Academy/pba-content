@@ -15,7 +15,7 @@ The following several ciphertexts were intercepted on a peer-to-peer communicati
 - Each line contains one hex encoded message, in it'e entirety.
 - We believe all messages were encrypted with the same key.
 
-Your task is to extract _all_ of the plaintexts as well as the original key.
+Your task is to use [cryptanalysis](https://en.wikipedia.org/wiki/Cryptanalysis) to recover the plaintexts of all messages, as well as the encryption key used for them.
 
 ```text
 160111433b00035f536110435a380402561240555c526e1c0e431300091e4f04451d1d490d1c49010d000a0a4510111100000d434202081f0755034f13031600030d0204040e
