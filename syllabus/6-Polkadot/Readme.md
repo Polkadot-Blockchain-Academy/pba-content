@@ -11,40 +11,40 @@ Draw content from:
 
 ### Day 1 (Half Day)
 **Afternoon**
-Lecture - Introduction to Polkadot (1 hr) @rphmeier
-Lecture and Possible Demonstration - Ecosystem / Economy 1, Staking + treasury + other (1.5 hr) @shawntabrizi
-Coffee Break (15 m)
-Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier
+Lecture - Introduction to Polkadot (1 hr) @rphmeier<br>
+Lecture and Possible Demonstration - Ecosystem / Economy 1, Staking + treasury + other (1.5 hr) @shawntabrizi<br>
+Coffee Break (15 m)<br>
+Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier<br>
 
 ### Day 2
 **Morning**
 
-Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff
-Lecture - Blockspace (.5 hr) @rphmeier
-Coffee Break (15 m)
-Exercise - Adder parachain + register parachains (1 h) @JoshOrndorff
-Lecture - Deep dive: Execution cores (1hr) @BradleyOlson64
+Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff<br>
+Lecture - Blockspace (.5 hr) @rphmeier<br>
+Coffee Break (15 m)<br>
+Exercise - Adder parachain + register parachains (1 h) @JoshOrndorff<br>
+Lecture - Deep dive: Execution cores (1hr) @BradleyOlson64<br>
 
 **Afternoon**
-Lecture - Ecosystem / Economy 2, Governance + Fellowship + other (1.5 hr) @shawntabrizi
-Demonstration - Referenda, delegation, and voting (30 m) @shawntabrizi
-Coffee Break (15 m)
-Lecture - Deep dive: Cumulus (1.5 hr) @BradleyOlson64
+Lecture - Ecosystem / Economy 2, Governance + Fellowship + other (1.5 hr) @shawntabrizi<br>
+Demonstration - Referenda, delegation, and voting (30 m) @shawntabrizi<br>
+Coffee Break (15 m)<br>
+Lecture - Deep dive: Cumulus (1.5 hr) @BradleyOlson64<br>
 
 ### Day 3
 **Morning**
-Lecture - Cross-Chain Message Passing (45 m) @rphmeier
-Lecture + Exercise - Zombienet (1.5 hr) @pepoviola
-Coffee Break (15 m)
-Lecture - Shallow Dive: Asynchronous Backing (30 m) @BradleyOlson64
-Lecture - Light Clients (1 hr) @wirednkod
+Lecture - Cross-Chain Message Passing (45 m) @rphmeier<br>
+Lecture + Exercise - Zombienet (1.5 hr) @pepoviola<br>
+Coffee Break (15 m)<br>
+Lecture - Shallow Dive: Asynchronous Backing (30 m) @BradleyOlson64<br>
+Lecture - Light Clients (1 hr) @wirednkod<br>
 
 **Afternoon**
-Exercise - Upgrade chains to parachains, register through auctions (1.5 h) @JoshOrndorff
-Lecture - Polkadot vs Other Security/Scaling Part 1 (1 h) @Sophia-Gold
-Coffee Break (15 m)
-Lecture - Polkadot vs Other Security/Scaling Part 2 (1 h) @Sophia-Gold 
-Open discussion - Security/Scaling (remainder of day) @Sophia-Gold
+Exercise - Upgrade chains to parachains, register through auctions (1.5 h) @JoshOrndorff<br>
+Lecture - Polkadot vs Other Security/Scaling Part 1 (1 h) @Sophia-Gold<br>
+Coffee Break (15 m)<br>
+Lecture - Polkadot vs Other Security/Scaling Part 2 (1 h) @Sophia-Gold<br>
+Open discussion - Security/Scaling (remainder of day) @Sophia-Gold<br>
 
 Assumptions: 
 
