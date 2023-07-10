@@ -4,12 +4,6 @@ description: Light Clients and Unstoppable Apps, for Web3 engineers.
 duration: 45+ mins
 ---
 
-<style type="text/css">
-.lc-mermaid svg {
-  max-width: 70% !important;
-}
-</style>
-
 # Light clients<br/>and<br/>Unstoppable Apps
 
 ---
@@ -426,15 +420,15 @@ Notes:
 
 ---v
 
-<diagram class="mermaid lc-mermaid">
+<diagram class="mermaid">
   stateDiagram-v2
     Smoldot --> Substrate_connect
     Substrate_connect --> PolkadotJS_API
     PolkadotJS_API --> UI_dAPP
 
     Smoldot --> smoldot_libraries(Rust_or_JS)
-    smoldot_libraries(Rust_or_JS) --> Custom_Code(with_JSON_RPC_API)
-    Custom_Code(with_JSON_RPC_API) --> UI_dAPP
+    smoldot_libraries(Rust_or_JS) --> Custom_Code\n(with_JSON_RPC_API)
+    Custom_Code\n(with_JSON_RPC_API) --> UI_dAPP
 
 </diagram>
 
