@@ -32,7 +32,7 @@ The participants...
 - Time as Ultimate Resource
 - Behavioral Biases
 
-### Activity: (90-120min)
+### Activity: (~2 hours)
 
 - Classroom Discussions
 - Academy Games

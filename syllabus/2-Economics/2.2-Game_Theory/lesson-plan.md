@@ -25,6 +25,8 @@ The participants...
 
 ---
 
+## Lecture (~1.5 hrs)
+
 We want to go through the following concepts:
 
 - What is Game Theory?
@@ -34,7 +36,7 @@ We want to go through the following concepts:
 - Nash Equilibrium
 - Equilibrium Selection
 
-### Activity (~1 hour)
+### Activity (~2 hrs)
 
 In this non-lesson part, we want the participants to experience several games first-hand.
 
