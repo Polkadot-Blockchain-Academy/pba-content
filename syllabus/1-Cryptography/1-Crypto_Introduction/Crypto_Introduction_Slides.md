@@ -8,6 +8,16 @@ duration: 1 hour
 
 ---
 
+## Some Useful Equations
+
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/scary-equations.png" />
+
+Notes:
+
+Just kidding!
+
+---
+
 ## Goals for this lesson
 
 <pba-flex center>
