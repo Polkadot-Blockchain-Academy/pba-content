@@ -10,5 +10,6 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.lineNumbers": "relative"
 }
