@@ -54,6 +54,7 @@ properly paid for.
 
 ## Gasometer
 
+<img rounded style="margin-top: 25px; width: 500px;" src="img/frontier/GasometerDiagram.png" />
 * TODO: diagram, show that execution halts for each opcode to check gas balance
 * TODO: talk about disadvantages (perf)
 * TODO: talk about other resource metering?
