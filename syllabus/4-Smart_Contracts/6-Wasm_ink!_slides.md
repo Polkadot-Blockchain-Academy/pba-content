@@ -23,7 +23,7 @@ A working programmer’s guide
 | Interfaces?     | Yes: Rust traits            | Yes           |
 
 Notes:
-They are freshly of an EVM lecture so migh tbe wondering why another SC language
+They are freshly of an EVM lecture so might be wondering why another SC language
 The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
 
 ---
