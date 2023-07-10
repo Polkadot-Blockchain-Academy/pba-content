@@ -39,6 +39,13 @@
 	--r-selection-background-color: #8d3aed;
 	--r-selection-color: #fff;
 	--r-padding: 24px;
+
+  /* POLKADOT MAIN COLORS */
+  --r-hub-cyan: #00B2FF;
+  --r-hub-purple: #552BBF;
+  --r-hub-pink: #E6007A;
+  --r-hub-lime: #D3FF33;
+  --r-hub-green: #56F39A;
 }
 
 /* box sizing;
@@ -315,7 +322,7 @@ pba-flex[right] {
 	font-family: monospace;
 	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
 	content: "\2688";
-	color: var(--r-link-color-hover);
+  color: var(--r-hub-cyan);
 }
 
 .reveal ol > li::before {
@@ -326,7 +333,7 @@ pba-flex[right] {
 	/* Custom numbers and list item delimiter */
 	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
 	/* Change the color */
-	color: var(--r-link-color-hover);
+  color: var(--r-hub-cyan);
 	font-weight: bold;
 }
 
