@@ -465,6 +465,7 @@ Here we have a few assumptions, but the main ones are:
 
 - imagine we have only 2 miners
 - the block rewards is 2
+- miners can be honsently following the protocol or try to cheat and push invalid blocks (for instance one where they get 999 bitcoins)
 
 Let's figure out how many bitcoins each one of them will mine on average.
 
@@ -803,6 +804,7 @@ Not always. If the majority of people are honest then honesty pays off. If the m
 In fact it was proven that in PoW following the majority is the true Nash Equilibrium no matter what strategy/protocol they are using as long as it's consistent.
 
 - More complex examples will be explored later in the forks lecture on Friday
+- Paper investigating PoW Nash Equilibrium and following the majority:
   https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=7bf78054192d98e999edcdf08971a5eed42518d2
 
 ---
@@ -1306,6 +1308,8 @@ Or distribute them from a previously acquired pool of rewards.
 
 But what is crucial here the protocol is safe and dependable only if there is enough voters so the incentives need to be designed in a way that encourages participation.
 
+More precisely, incentives need to be roughly proportional to the value an attacker could gain by compromising the system. Low-stakes oracles don't need to have super aggresive incentives.
+
 ---v
 
 ## Incentives
@@ -1724,6 +1728,8 @@ _"A consequence of an economic activity that is experienced by unrelated third p
 Notes:
 
 An externality is a consequence of an economic activity that is experienced by some third parties.
+
+As an example, think of the pollutions you emit when driving a car. It's a negative externality that affects all the people around you. Alternatively imagine planting a tree in your garden simply because you like how it looks and gives you some shade. The tree improve the quality of air in the neighbourhood and that's a positive externality for the people around you.
 
 ---v
 
