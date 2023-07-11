@@ -852,7 +852,7 @@ a nice pattern is to perform the update and migration in one atomic transaction:
 
 ## Common Vulnerabilities
 
-```rust 
+```rust
 
 impl MyContract {
 
@@ -869,7 +869,7 @@ pub fn terminate(&mut self) -> Result<()> {
 - How would you fix it?
 
 NOTE:
-we start easy 
+we start easy
 answer: no AC in place
 
 ---
@@ -907,7 +907,7 @@ Answer: commit / reveal or an auction
 
 ## Common Vulnerabilities
 
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.72em;">
 
 ```rust [3-7,12,18]
 
@@ -936,46 +936,34 @@ pub fn swap(
 
 - Contract is a <font color="#8d3aed">DEX</font> <font color="#8d3aed">D</font>ecentralized <font color="#8d3aed">EX</font>change, follows the popular <font color="#8d3aed">AMM</font> (<font color="#8d3aed">A</font>utomated <font color="#8d3aed">M</font>arket <font color="#8d3aed">M</font>aker) design.
 - Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price.
+- What can go wrong here?
 
 NOTE:
-no slippage protection in place.
-bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
-this purchase will raise the price of the asset for the victim trader and increases his slippage
-if the bot sells right after the victims tx (back runs the victim) this is a sandwitch attack 
+Answer:
+- no slippage protection in place.
+- bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
+- this purchase will raise the price of the asset for the victim trader and increases his slippage
+- if the bot sells right after the victims tx (back runs the victim) this is a sandwitch attack
 
 ---
 
+## Common Vulnerabilities
 
+- Re-entrancy vulnerabilities
+- Sybil attacks
+- ...
+- Regulatory attacks :rofl:
+- ...
 
-<!-- TODOs -->
+NOTE:
+long list of possible attacks
+too long to fit into one lecture
+baseline: get an audit from a respectable firm
+publish your source code (security by obscurity is not securoty)
 
+---
 
-<!-- ## Dev Environment -->
+## End of Lecture
 
-<!-- documentation -->
-<!-- examples -->
-<!-- common vulnerabilities  -->
-<!-- - everything is public on-chain (show a frontrunning vulnerability on a DEX) -->
-<!-- - bidding: commit - reveal scheme  -->
-<!-- - re-entrancy & guard -->
-<!-- - quiz -->
-<!-- https://blocksecteam.medium.com/when-safemint-becomes-unsafe-lessons-from-the-hypebears-security-incident-2965209bda2a-->
+---
 
-<!-- ## Dev Environment -->
-
-<!-- Make it clear that students should have these tools installed or available already or should be doing their aboslute best to install them as you go. They will need these tools immenently. -->
-
-<!-- - contracts-ui -->
-<!-- - DRink? -->
-<!-- - Polkadot js? -->
-<!-- - ink-playgroud? -->
-
-<!-- @piotr, @filip, I'll leave it largely up to you what the standard dev environment should be. It is good to be flexible and let students use the tools they like. But many students will have no prior preference or experience, and we need to be able to recommend a fully concrete stack for them. -->
-
-<!-- ## Beware Public Information -->
-
-<!-- Show a few bad things that could be done to help develop blockchain thinking models. -->
-
-<!-- - A call that only executes if the proper hard-coded password is passed as a param (insecure, the code and therefore the password is onchain) -->
-<!-- - An attempted improvement where the password is not hardcoded. It is passed to the constructor and stored in a private variable. (still insecure. All storage is publicly visible from off-chain.) -->
-<!-- - If time permits and students are digging this, try storing a hash in storage and requiring the preimage as a password. This is actually secure for only-call-once functions. But if you intend to call it multiple times, the first call leaks the password publicly. -->
