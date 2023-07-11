@@ -148,7 +148,7 @@ pub struct Flipper {
     /// Stores a single `bool` value on the storage.
     value: bool,
 }
- 
+
 impl Flipper {
 ...
 ```
@@ -621,6 +621,53 @@ pub struct BetPlaced {
 
 ---
 
+## Defining shared behaviour
+
+<div style="font-size: 0.5em;">
+
+```rust [1-14|16-25]
+#[ink::trait_definition]
+pub trait PSP22 {
+    #[ink(message)]
+    fn total_supply(&self) -> Balance;
+
+    #[ink(message)]
+    fn balance_of(&self, owner: AccountId) -> Balance;
+
+    #[ink(message)]
+    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
+
+    #[ink(message)]
+    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
+    ...
+
+impl SimpleDex {
+    use psp22_trait::{PSP22Error, PSP22};
+
+    /// Returns balance of a PSP22 token for an account
+    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
+        let psp22: ink::contract_ref!(PSP22) = token.into();
+        psp22.balance_of(account)
+    }
+
+    ...
+
+```
+
+</div>
+
+* Trait Definition: `#[ink::trait_definition]`
+* Wrapper for interacting with the contract: `ink::contract_ref!`
+
+
+NOTE:
+(part of) PSP22 (ERC20 like) contract definition
+all contracts that respect this definition need to implement it
+you can now share the trait definition with other contracts
+getting a typed reference to an instance
+
+---
+
 ## Call runtime
 
 <div style="font-size: 0.5em;">
@@ -756,7 +803,7 @@ Will this work? (no, SCALE encoding is oblivious to names, only order matters)
 ## Contracts upgradeability: storage migrations
 
 ```rust [1-13|15-17]
-# new contract code
+// new contract code
 #[ink(message)]
 pub fn migrate(&mut self) -> Result<()> {
     if let Some(OldContractState { field_1, field_2 }) = get_contract_storage(&123)? {
@@ -766,11 +813,11 @@ pub fn migrate(&mut self) -> Result<()> {
         });
         return Ok(());
     }
-    
+
     return Err(Error::MigrationFailed);
 }
 
-# old contract code
+// old contract code
 #[ink(message)]
 pub fn set_code(&mut self, code_hash: [u8; 32], callback: Option<Selector>)
 ```
@@ -785,12 +832,19 @@ a nice pattern is to perform the update and migration in one atomic transaction:
 
 ---
 
+## Dev environment
+
+
+
+---
 
 <!-- TODOs -->
 
 
 <!-- ## Dev Environment -->
 <!-- write, deploy, interact with [flipper? roulette?]  -->
+<!-- documentation -->
+<!-- examples -->
 <!-- common vulnerabilities  -->
 <!-- - everything is public on-chain (show a frontrunning vulnerability on a DEX) -->
 <!-- - bidding: commit - reveal scheme  -->
