@@ -553,7 +553,61 @@ pub struct Token {
 }
 ```
 
-* Mapping consists of a key-value pairs stored directly in the contract storage cells
+* Mapping consists of a key-value pairs stored directly in the contract storage cells.
+* Each Mapping value lives under it's own storage key.
+* Mapping values do not have a contiguous storage layout: **it is not possible to iterate over the contents of a map!**
+
+NOTE:
+- Use Mapping when you need to store a lot of values of the same type.
+- if your message only accesses a single key of a Mapping, it will not load the whole mapping but only the value being accessed.
+- there are other collection types in ink!: HashMap or BTreeMap (to name a few).
+  - these data structures are all Packed, unlike Mapping!
+
+---
+
+## Storage: working with `Mapping`
+
+```rust
+pub fn transfer(&mut self) {
+    let caller = self.env().caller();
+
+    let balance = self.balances.get(caller).unwrap_or(0);
+    let endowment = self.env().transferred_value();
+
+    balance += endowment;
+}
+
+
+```
+
+* what is wrong here?
+
+NOTE:
+- working with mapping:
+- Mapping::get() method will result in an owned value (a local copy), as opposed to a direct reference into the storage. Changes to this value won't be reflected in the contract's storage "automatically". To avoid this common pitfall, the value must be inserted again at the same key after it was modified. The transfer function from above example illustrates this:
+
+---
+
+## Storage: working with `Mapping`
+
+```rust
+pub fn transfer(&mut self) {
+    let caller = self.env().caller();
+
+    let balance = self.balances.get(caller).unwrap_or(0);
+    let endowment = self.env().transferred_value();
+
+    self.balances.insert(caller, &(balance + endowment));
+}
+```
+
+* `Mapping::get()` returns a local copy, not a mutable reference to the storage!
+
+NOTE:
+- working with mapping:
+- `Mapping::get()` method will result in an owned value (a local copy).
+- Changes to this value won't be reflected in the contract's storage at all!
+- you need to inserted it again at the same key.
 
 ---
 
@@ -947,7 +1001,7 @@ impl MyContract {
       let caller = self.env().caller();
       self.env().terminate_contract(caller)
   }
-  
+
   ...
 }
 ```
@@ -1036,6 +1090,7 @@ Answer:
 
 ## Common Vulnerabilities
 
+- Integer overflows
 - Re-entrancy vulnerabilities
 - Sybil attacks
 - ...
@@ -1053,7 +1108,7 @@ NOTE:
 
 ## Pause
 
-NOTE: 
+NOTE:
 Piotr takes over to talk about making runtime calls from contracts and writing automated tests
 
 ---
