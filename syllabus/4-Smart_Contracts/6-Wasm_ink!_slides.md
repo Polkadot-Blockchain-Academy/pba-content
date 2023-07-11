@@ -8,6 +8,11 @@ description: A working programmer’s guide to the crypto industry
 # WASM Smart Contracts in Ink!
 A working programmer’s guide
 
+NOTE:
+- ask questions during the lecture, don't wait until the end
+- practical, but we go deeper where needed
+- some complexity is ommited in the examples (examples are not a production code)
+
 ---
 
 # ink! vs. Solidity
@@ -23,24 +28,27 @@ A working programmer’s guide
 | Interfaces?     | Yes: Rust traits            | Yes           |
 
 Notes:
-They are freshly of an EVM lecture so might be wondering why another SC language
-The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
+- students are freshly of an EVM lecture so might be wondering why another SC language
+- Virtual MAchine: any WASM VM: yes in theory, in practice bound pretty close to the Substarte & the contracts pallet
+- Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
+- The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
 
 ---
 
 # ink! overview
+
 - DSL in Rust
-- Inherits all the benefits
- - Modern functional language
- - Type & Memory safety
+- Inherits all the benefits of Rust
+  - Modern functional language
+  - Type & Memory safety
 - Compiled to WASM
- - Ubuquitous
- - Fast
+  - Ubiquitous
+  - Fast
 
 NOTE:
-ink! is not a separate language
-has access to vast collection of libraries, tooling
-WASM is targeting the browsers and quickly becoming the "assembly" od the web in lieu of JS
+- ink! is not a separate language
+- enjoys access to a vast collection of libraries developed for other purposes
+- WASM is targeting the browsers and quickly becoming the "assembly" od the web in lieu of JS
 
 ---
 
@@ -49,9 +57,10 @@ WASM is targeting the browsers and quickly becoming the "assembly" od the web in
 <img rounded style="width: 900px;" src="img/ink/lego0.png" />
 
 NOTE:
-technically ink! is just a language
-but in practice it has close ties to the larger Substrate framework
-Substarte is a framework for developing customized blockchains
+- Technically you could take a SC written in ink! and deploy it to any WASM-powered blockchain.
+  - in practice not that straight-forward.
+- ink! is closely tied to the larger Substrate framework.
+- Substarte is a framework for developing customized blockchain runtimes from composable pallets.
 
 ---
 
