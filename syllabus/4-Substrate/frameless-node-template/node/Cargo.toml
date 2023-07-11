@@ -1,11 +1,9 @@
 [package]
-name = "node-template"
-version = "4.0.0-dev"
-description = "A fresh FRAME-based Substrate node, ready for hacking."
-authors = ["Substrate DevHub <https://github.com/substrate-developer-hub>"]
-homepage = "https://substrate.io/"
+name = "node"
+description = "A minimal Substrate node, ready for hacking."
 edition = "2021"
-license = "Unlicense"
+license = "MIT-0"
+version = "0.1.0"
 publish = false
 repository = "https://github.com/substrate-developer-hub/substrate-node-template/"
 build = "build.rs"
@@ -14,47 +12,36 @@ build = "build.rs"
 targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
-name = "node-template"
+name = "node"
 
 [dependencies]
-clap = { version = "4.0.29", features = ["derive"] }
-
-sc-cli = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-core = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-executor = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-service = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-telemetry = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-keystore = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-transaction-pool = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-transaction-pool-api = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-consensus-aura = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-consensus-aura = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-consensus = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-consensus = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-finality-grandpa = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-finality-grandpa = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-client-api = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-runtime = { version = "7.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-timestamp = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-inherents = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-keyring = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-pallet-transaction-payment = { version = "4.0.0-dev", default-features = false, git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-
-# These dependencies are used for the node template's RPCs
+clap = { version = "4.0.9", features = ["derive"] }
+futures = { version = "0.3.21", features = ["thread-pool"] }
+futures-timer = "3.0.1"
 jsonrpsee = { version = "0.16.2", features = ["server"] }
-sc-rpc = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-api = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-rpc-api = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-blockchain = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sp-block-builder = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-sc-basic-authorship = { version = "0.10.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
-pallet-transaction-payment-rpc = { version = "4.0.0-dev", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
 
-# Local Dependencies
-node-template-runtime = { package = "frameless-runtime", path = "../frameless-runtime" }
+sc-cli = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-executor = {  git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-network = {  git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-service = {  git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-telemetry = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-transaction-pool-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-consensus-manual-seal = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-rpc-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-basic-authorship = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-block-builder = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+substrate-frame-rpc-system = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+
+runtime = { path = "../runtime" }
 
 [build-dependencies]
-substrate-build-script-utils = { version = "3.0.0", git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
 
 [features]
 default = []

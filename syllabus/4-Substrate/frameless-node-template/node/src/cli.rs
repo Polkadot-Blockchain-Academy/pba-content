@@ -1,9 +1,32 @@
 use sc_cli::RunCmd;
 
+#[derive(Debug, Clone)]
+pub enum Consensus {
+	ManualSeal(u64),
+	InstantSeal,
+}
+
+impl std::str::FromStr for Consensus {
+	type Err = String;
+
+	fn from_str(s: &str) -> Result<Self, Self::Err> {
+		Ok(if s == "instant-seal" {
+			Consensus::InstantSeal
+		} else if let Some(block_time) = s.strip_prefix("manual-seal-") {
+			Consensus::ManualSeal(block_time.parse().map_err(|_| "invalid block time")?)
+		} else {
+			return Err("incorrect consensus identifier".into())
+		})
+	}
+}
+
 #[derive(Debug, clap::Parser)]
 pub struct Cli {
-	#[clap(subcommand)]
+	#[command(subcommand)]
 	pub subcommand: Option<Subcommand>,
+
+	#[clap(long, default_value = "manual-seal-3000")]
+	pub consensus: Consensus,
 
 	#[clap(flatten)]
 	pub run: RunCmd,
@@ -12,7 +35,7 @@ pub struct Cli {
 #[derive(Debug, clap::Subcommand)]
 pub enum Subcommand {
 	/// Key management cli utilities
-	#[clap(subcommand)]
+	#[command(subcommand)]
 	Key(sc_cli::KeySubcommand),
 
 	/// Build a chain specification.
@@ -38,16 +61,4 @@ pub enum Subcommand {
 
 	/// Db meta columns information.
 	ChainInfo(sc_cli::ChainInfoCmd),
-
-	/// Custom -- extend it as you wish.
-	Custom(CustomCommand),
-}
-
-#[derive(Debug, clap::Parser)]
-pub struct CustomCommand {
-	/// The salt to use in the transaction. If none is supplied, a "random" one will be chosen
-	pub arg1: Option<u8>,
-
-	/// The seed to sign with. If none is provided, Alice's will be used.
-	pub arg2: Option<String>,
 }
