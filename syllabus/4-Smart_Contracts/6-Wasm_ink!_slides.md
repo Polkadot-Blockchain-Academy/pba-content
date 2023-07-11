@@ -201,7 +201,7 @@ pub mod flipper {
         }
 
         #[ink(constructor)]
-        pub fn new_default() -> Self {
+        pub fn default() -> Self {
             Self::new(Default::default())
         }
 
@@ -271,7 +271,9 @@ cargo contract instantiate --constructor default --suri //Alice
 
 Output:
 
-```
+<div style="font-size: 0.82em;">
+
+```bash [13-14]
  Dry-running default (skip with --skip-dry-run)
     Success! Gas required estimated at Weight(ref_time: 138893374, proof_size: 16689)
 ...
@@ -287,6 +289,8 @@ Output:
    Code hash 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad
     Contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
 ```
+
+</div>
 
 NOTE:
 - we see a bunch of information on gas usage
@@ -324,7 +328,7 @@ NOTE:
 
 <!-- Result: -->
 
-```
+```[6]
 "data": {
   "Tuple": {
     "ident": "Ok",
@@ -338,7 +342,7 @@ NOTE:
 ```
 ---
 
-## Interacting with the contracts: transactions
+## Interacting: transactions
 
 Sign and execute a transaction:
 
@@ -347,41 +351,18 @@ cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
   --message flip --suri //Alice --skip-confirm --execute
 ```
 
-Output:
-
-```
-Events
- Event Balances ➜ Withdraw
-   who: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-   amount: 1.813139954mUNIT
- Event Contracts ➜ Called
-   caller: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-   contract: 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
- Event Balances ➜ Deposit
-   who: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-   amount: 721.062099μUNIT
- Event TransactionPayment ➜ TransactionFeePaid
-   who: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-   actual_fee: 1.092077855mUNIT
-   tip: 0UNIT
- Event System ➜ ExtrinsicSuccess
-   dispatch_info: DispatchInfo { weight: Weight { ref_time: 1092077701, proof_size: 9050 }, class: Normal, pays_fee: Yes }
-```
-
----
-
-## Developing contracts
-
-Query:
+Query the state:
 
 ```bash
 cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
   --message get --suri //Alice --output-json
 ```
 
-State:
+Result:
 
-```
+<div style="font-size: 0.82em;">
+
+``` [6]
 "data": {
   "Tuple": {
     "ident": "Ok",
@@ -393,6 +374,8 @@ State:
   }
 }
 ```
+
+</div>
 
 NOTE:
 - if I query it again the bit is flipped
@@ -444,6 +427,7 @@ pub struct Token {
 NOTE:
 - now that we dipped our toes lets dissect more
 - starting with the storage
+- what does this code actually put into the chain storage?
 
 ---
 
@@ -460,13 +444,13 @@ NOTE:
 
 ## SCALE: examples of different types
 
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.72em;">
 
 | Type    | Decoding                              |                     Encoding | Remark                                                                         |
 |---------|---------------------------------------|------------------------------|--------------------------------------------------------------------------------|
 | Boolean | true                                  |                          0x0 | encoded using least significant bit of a single byte                           |
 |         | false                                 |                          0x1 |                                                                                |
-| Unsigned int | 42                                  |  2a00                         |                            |
+| Unsigned int | 42                                  |  0x2a00                         |                            |
 | Enum    | enum IntOrBool { Int(u8), Bool(bool)} |            0x002a and 0x0101 | first byte encodes the variant index, remaining bytes encode the data          |
 | Tuple   | (3, false)                            |                       0x0c00 | concatenation of each encoded value                                            |
 | Vector  | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
@@ -825,66 +809,11 @@ impl SimpleDex {
 * Trait Definition: `#[ink::trait_definition]`
 * Wrapper for interacting with the contract: `ink::contract_ref!`
 
-
 NOTE:
-(part of) PSP22 (ERC20 like) contract definition
-all contracts that respect this definition need to implement it
-you can now share the trait definition with other contracts
-getting a typed reference to an instance
-
----
-
-
-
-
-
-
-
-## Call runtime
-
-<div style="font-size: 0.5em;">
-
-```rust [23-27]
-#[derive(scale::Encode)]
-enum RuntimeCall {
-    #[codec(index = 4)]
-    Balances(BalancesCall),
-}
-
-#[derive(scale::Encode)]
-enum BalancesCall {
-    #[codec(index = 0)]
-    Transfer {
-        dest: MultiAddress<AccountId, ()>,
-        #[codec(compact)]
-        value: u128,
-    },
-}
-
-#[ink(message)]
-pub fn transfer_through_runtime(
-    &mut self,
-    receiver: AccountId,
-    value: Balance,
-) -> Result<(), RuntimeError> {
-    self.env()
-        .call_runtime(&RuntimeCall::Balances(BalancesCall::Transfer {
-            dest: receiver.into(),
-            value,
-        }))
-        .map_err(Into::into)
-}
-```
-
-</div>
-
-- Contract performs native token transfer.
-- `call_runtime` is an escape hatch from the VM sandboxed environment.
-- Call any dispatchable function of the blockchain runtime.
-- See also <font color="#8d3aed">[chain extension](https://use.ink/macros-attributes/chain-extension/)</font>.
-
-NOTE:
-allows for calling runtime dispatchable functions but not for returning data (cannot read from storage)
+- (part of) PSP22 (ERC20 like) contract definition
+- all contracts that respect this definition need to implement it
+- you can now share the trait definition with other contracts
+- while getting a typed reference to an instance
 
 ---
 
@@ -901,12 +830,12 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 
 - Within SC's lifecycle it is often necessary to perform an upgrade or a bugfix.
 - Contract's code and it's instance are separated.
-- Contract's address can be updated to point to a code stored on-chain.
+- Contract's address can be updated to point to a different code stored on-chain.
 
 NOTE:
-append only != immutable
-proxy pattern known from e.g. solidity is still possible
-Within the Substrate framework contract's code is stored on-chain and it's instance is a pointer to that code, al
+- append only != immutable
+- proxy pattern known from e.g. solidity is still possible
+- within the Substrate framework contract's code is stored on-chain and it's instance is a pointer to that code
 
 ---
 
@@ -923,15 +852,15 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 ```
 
 NOTE:
-you do not want to leave this message un-guarded
-solutions to `ensure_owner` can range from a very simple ones address checks
-to a multiple-role database of access controled accounts stored and maintained in a separate cotnract
+- you DO NOT want to leave this message un-guarded
+- solutions to `ensure_owner` can range from a very simple ones address checks
+- to a multiple-role database of access controled accounts stored and maintained in a separate cotnract
 
 ---
 
-## Contracts upgradeability: storage
+## Upgradeability: storage
 
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.72em;">
 
 ```rust [1-4,6-10|1-4,12-16|18-21]
 #[ink(message)]
@@ -963,16 +892,18 @@ pub fn get_values(&self) -> (u32, bool) {
 - Will this updated code work with the new definition and the old storage ?
 
 NOTE:
-Various potential changes that can result in backwards incompatibility:
-- Changing the order of variables
-- Introducing new variable(s) before any of the existing ones
-- Changing variable type(s)
-- Removing variables
-Will this work? (no, SCALE encoding is oblivious to names, only order matters)
+- Various potential changes that can result in backwards incompatibility:
+  - Changing the order of variables
+  - Introducing new variable(s) before any of the existing ones
+  - Changing variable type(s)
+  - Removing variables
+- Will this work? (no, SCALE encoding is oblivious to names, only order matters)
 
 ---
 
-## Contracts upgradeability: storage migrations
+## Upgradeability: storage migrations
+
+<div style="font-size: 0.82em;">
 
 ```rust [1-13|15-17]
 // new contract code
@@ -994,37 +925,39 @@ pub fn migrate(&mut self) -> Result<()> {
 pub fn set_code(&mut self, code_hash: [u8; 32], callback: Option<Selector>)
 ```
 
+</div>
+
 NOTE:
-if the new contract code does not match the stored state you can perform a storage migration
-think of regular relational DB and schema migrations
-a nice pattern is to perform the update and migration in one atomic transaction:
-- if anyting fails whole tx is reverted
-- won't end up in a broken state
-- make sure it can fit into one block!
+- if the new contract code does not match the stored state you can perform a storage migration
+- think of regular relational DB and schema migrations
+- a good pattern to follow is to perform the update and the migration in one atomic transaction:
+  - if anyting fails whole tx is reverted
+  - won't end up in a broken state
+  - make sure it can fit into one block!
 
 ---
 
 ## Common Vulnerabilities
 
 ```rust
-
 impl MyContract {
 
-#[ink(message)]
-pub fn terminate(&mut self) -> Result<()> {
-    let caller = self.env().caller();
-    self.env().terminate_contract(caller)
+  #[ink(message)]
+  pub fn terminate(&mut self) -> Result<()> {
+      let caller = self.env().caller();
+      self.env().terminate_contract(caller)
+  }
+  
+  ...
 }
-
-...
 ```
 
 - What is wrong with this contract?
 - How would you fix it?
 
 NOTE:
-we start easy
-answer: no AC in place
+- we start easy
+- answer: no AC in place
 
 ---
 
@@ -1110,12 +1043,73 @@ Answer:
 - ...
 
 NOTE:
-long list of possible attacks
-too long to fit into one lecture
-baseline: get an audit from a respectable firm
-publish your source code (security by obscurity is not securoty)
+- long list of possible attacks
+- too long to fit into one lecture
+- baseline: get an audit from a respectable firm
+- publish your source code (security by obscurity is not securoty)
 
 ---
+
+
+## Pause
+
+NOTE: 
+Piotr takes over to talk about making runtime calls from contracts and writing automated tests
+
+---
+
+
+## Call runtime
+
+<div style="font-size: 0.5em;">
+
+```rust [23-27]
+#[derive(scale::Encode)]
+enum RuntimeCall {
+    #[codec(index = 4)]
+    Balances(BalancesCall),
+}
+
+#[derive(scale::Encode)]
+enum BalancesCall {
+    #[codec(index = 0)]
+    Transfer {
+        dest: MultiAddress<AccountId, ()>,
+        #[codec(compact)]
+        value: u128,
+    },
+}
+
+#[ink(message)]
+pub fn transfer_through_runtime(
+    &mut self,
+    receiver: AccountId,
+    value: Balance,
+) -> Result<(), RuntimeError> {
+    self.env()
+        .call_runtime(&RuntimeCall::Balances(BalancesCall::Transfer {
+            dest: receiver.into(),
+            value,
+        }))
+        .map_err(Into::into)
+}
+```
+
+</div>
+
+- Contract performs native token transfer.
+- `call_runtime` is an escape hatch from the VM sandboxed environment.
+- Call any dispatchable function of the blockchain runtime.
+<!-- - See also <font color="#8d3aed">[chain extension](https://use.ink/macros-attributes/chain-extension/)</font>. -->
+
+NOTE:
+allows for calling runtime dispatchable functions but not for returning data (cannot read from storage)
+
+---
+
+<!-- TODO: Piotr's chain extension slides go here -->
+
+<!-- TODO: Piotr's e2e tests slides go here -->
 
 ## End of Lecture
 
