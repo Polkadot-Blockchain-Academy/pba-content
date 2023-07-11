@@ -1,5 +1,5 @@
 
-### Introduction (30 min) by Vince
+### Introduction (30 min) by Vince Di Giambattista
 1. Cyber threat landscape
 2. Cyber risk management
 3. Cyber and development
