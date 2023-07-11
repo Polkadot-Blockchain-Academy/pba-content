@@ -15,7 +15,7 @@ NOTE:
 
 ---
 
-# ink! vs. Solidity
+## Intro: ink! vs. Solidity
 
 |                 | ink!                        | Solidity      |
 |-----------------|-----------------------------|---------------|
@@ -27,7 +27,7 @@ NOTE:
 | Storage         | Variable                    | 256 bits      |
 | Interfaces?     | Yes: Rust traits            | Yes           |
 
-Notes:
+NOTE:
 - students are freshly of an EVM lecture so might be wondering why another SC language
 - Virtual MAchine: any WASM VM: yes in theory, in practice bound pretty close to the Substarte & the contracts pallet
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
@@ -35,7 +35,7 @@ Notes:
 
 ---
 
-# ink! overview
+## Intro: ink! overview
 
 - DSL in Rust
 - Inherits all the benefits of Rust
@@ -52,7 +52,7 @@ NOTE:
 
 ---
 
-## ink! & Substrate
+## Intro: ink! & Substrate
 
 <img rounded style="width: 900px;" src="img/ink/lego0.png" />
 
@@ -64,44 +64,44 @@ NOTE:
 
 ---
 
-## ink! & Substrate
+## Intro: ink! & Substrate
 
 <img rounded style="width: 900px;" src="img/ink/lego1.png" />
 
 NOTE:
-contracts written in ink! are compiled to WASM bytecode
-pallet contracts porvides
- - instrumentation
- - excution engine
- - gas metering
+- contracts written in ink! are compiled to WASM bytecode
+- pallet contracts provides
+  - instrumentation
+  - excution engine
+  - gas metering
 
 ---
 
 <img rounded style="width: 800px;" src="img/ink/schema1.png" />
 
 NOTE:
-pallet contracts is oblivious to the programming language
-it accepts wasm bytecode and executes it's instructions
+- pallet contracts is oblivious to the programming language
+- it accepts WASM bytecode and executes it's instructions
 
 ---
 
 <img rounded style="width: 800px;" src="img/ink/schema2.png" />
 
-Notes:
-contracts itself can be written in ink!
+NOTE:
+- contracts itself can be written in ink!
 
 ---
 
 <img rounded style="width: 800px;" src="img/ink/schema3.png" />
 
 NOTE:
-But also any other language that compilers to WASM
-- Solang
-- or ask!
+- But also any other language that compilers to WASM
+  - Solang
+  - or ask!
 
 ---
 
-## Developing contracts
+## Development: Prerequisites
 
 Install the required tooling
 
@@ -114,15 +114,15 @@ cargo install cargo-contract --force
 ```
 
 NOTE:
-Binaryen is a compiler and toolchain infrastructure library for WebAssembly
-at the moment ink! uses a few unstable Rust features, thus nightly is require
-rust source code is needed to compile it to wasm
-wasm target is added
-cargo-contract is a batteries included CLI tool for compiling, deploying and interacting with the contracts
+- Binaryen is a compiler and toolchain infrastructure library for WebAssembly
+- at the moment ink! uses a few unstable Rust features, thus nightly is require
+- rust source code is needed to compile it to wasm
+- wasm target is added
+- cargo-contract is a batteries included CLI tool for compiling, deploying and interacting with the contracts
 
 ---
 
-## Developing contracts
+## Development: cargo-contract
 
 Create a contract
 
@@ -139,44 +139,103 @@ cargo contract new flipper
   -rwxr-xr-x 1 filip filip 5186 Jul  7 11:11 lib.rs
 ```
 
+NOTE:
+- ask how many student have written some code in Rust, this should feel familiar to them
+
+---
+
+## Development: Cargo.toml
+
+<div style="font-size: 0.72em;">
+
+```toml
+[package]
+version = "0.1.0"
+authors = ["fbielejec"]
+edition = "2021"
+
+[dependencies]
+ink = { version = "=4.2.1", default-features = false }
+scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
+scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+
+[lib]
+path = "lib.rs"
+
+[features]
+default = ["std"]
+std = [
+    "ink/std",
+    "scale/std",
+    "scale-info/std",
+]
+```
+
+</div>
+
+NOTE:
+- who knows why is the std library not included by default?
+- Answer: contracts are compiled to WASM (executed ib a sandboxed environment with no system interfaces, no IO, no networking)
+
 ---
 
 ## Developing contracts
 
-Write contract code
+contract code
+
+<div style="font-size: 0.62em;">
 
 ```rust
 #[ink::contract]
-mod flipper {
+pub mod flipper {
 
-/// Defines the storage of your contract.
-/// Add new fields to the below struct in order
-/// to add new static storage fields to your contract.
-#[ink(storage)]
-pub struct Flipper {
-    /// Stores a single `bool` value on the storage.
-    value: bool,
+    #[ink(storage)]
+    pub struct Flipper {
+        value: bool,
+    }
+
+    impl Flipper {
+        #[ink(constructor)]
+        pub fn new(init_value: bool) -> Self {
+            Self { value: init_value }
+        }
+
+        #[ink(constructor)]
+        pub fn new_default() -> Self {
+            Self::new(Default::default())
+        }
+
+        #[ink(message)]
+        pub fn flip(&mut self) {
+            self.value = !self.value;
+        }
+
+        #[ink(message)]
+        pub fn get(&self) -> bool {
+            self.value
+        }
+    }
 }
-
-impl Flipper {
-...
 ```
+
+</div>
+
+NOTE:
+- basic contract that flips a bit in storage
+- contract will have a storage definition, constructor(s), messages
+- groupped in a module
 
 ---
 
-## Developing contracts
+## Developing contracts: Compilation & artifacts
 
-Compile the contract
+Compile:
 
 ```bash
 cargo +nightly contract build
 ```
 
----
-
-## Developing contracts
-
-Compilation artifacts
+Artifacts:
 
 ```
  [1/*] Building cargo project
@@ -193,28 +252,29 @@ Your contract artifacts are ready. You can find them in:
 ```
 
 NOTE:
-.wasm is the contract compiled bytecode
+- produces WASM bytecode and some additional artifacts:
+- .wasm is the contract compiled bytecode
 - .json is contract ABI aka metadata (for use with e.g. dapps)
   - definitions of events, storage, transactions
 - .contracts is both of these together
 
-<!-- <img rounded style="width: 1000px;" src="img/ink/build-artifacts3.png" /> -->
-
 ---
 
-## Developing contracts
+## Developing contracts: instantiate
 
-Deploy the contract
+Deploy:
 
 ```bash
 cargo contract instantiate --constructor default --suri //Alice
   --skip-confirm --execute
 ```
 
+Output:
+
 ```
  Dry-running default (skip with --skip-dry-run)
     Success! Gas required estimated at Weight(ref_time: 138893374, proof_size: 16689)
- ...
+...
   Event Contracts ➜ CodeStored
          code_hash: 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad
        Event Contracts ➜ Instantiated
@@ -229,21 +289,40 @@ cargo contract instantiate --constructor default --suri //Alice
 ```
 
 NOTE:
-we see a bunch of information on gas usage
-we see two events one for storing contract code another for instantiating the contract
-we will come back to that
-finally we see code hash and the newly created contracts address
+- we see a bunch of information on gas usage
+- we see two events one for storing contract code another for instantiating the contract
+  - why is that?
+  - code & instance are separated, we will come back to that
+- finally we see code hash and the newly created contracts address
 
 ---
 
-## Developing contracts
-
-Interact with the contract: query
+## Interacting with the contracts: queries
 
 ```bash
 cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
   --message get --suri //Alice --output-json
 ```
+
+- contract state?
+- tip: `default` constructor was called
+
+NOTE:
+- who can tell me what will be the contract state at this point?
+
+---
+
+
+## Interacting with the contracts: queries
+
+<!-- Query the contract state: -->
+
+<!-- ```bash -->
+<!-- cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8 -->
+<!--   --message get --suri //Alice --output-json -->
+<!-- ``` -->
+
+<!-- Result: -->
 
 ```
 "data": {
@@ -259,14 +338,16 @@ cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
 ```
 ---
 
-## Developing contracts
+## Interacting with the contracts: transactions
 
-Interact with the contract: transaction
+Sign and execute a transaction:
 
 ```bash
 cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
   --message flip --suri //Alice --skip-confirm --execute
 ```
+
+Output:
 
 ```
 Events
@@ -286,16 +367,19 @@ Events
  Event System ➜ ExtrinsicSuccess
    dispatch_info: DispatchInfo { weight: Weight { ref_time: 1092077701, proof_size: 9050 }, class: Normal, pays_fee: Yes }
 ```
+
 ---
 
 ## Developing contracts
 
-Interact with the contract: query
+Query:
 
 ```bash
 cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
   --message get --suri //Alice --output-json
 ```
+
+State:
 
 ```
 "data": {
@@ -309,6 +393,37 @@ cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
   }
 }
 ```
+
+NOTE:
+- if I query it again the bit is flipped
+- no surprises there
+
+---
+
+## Dev environment: Contracts UI
+
+<img rounded style="width: 1400px;" src="img/ink/contracts_ui_1.jpg" />
+
+NOTE:
+- there is also a graphical env for deploying & interacting with contracts
+- deploy & create an instance of flipper
+---
+
+## Dev environment: Contracts UI
+
+<img rounded style="width: 1400px;" src="img/ink/contracts_ui_2.jpg" />
+
+NOTE:
+- call a transacttion
+
+---
+
+## Dev environment: Contracts UI
+
+<img rounded style="width: 1400px;" src="img/ink/contracts_ui_3.jpg" />
+
+NOTE:
+- query state
 
 ---
 
@@ -327,8 +442,8 @@ pub struct Token {
 ```
 
 NOTE:
-now that we dipped our toes lets dissect more
-starting with the storage
+- now that we dipped our toes lets dissect more
+- starting with the storage
 
 ---
 
@@ -337,9 +452,9 @@ starting with the storage
 <font color="#8d3aed">SCALE</font> (*<font color="#8d3aed">S</font>imple <font color="#8d3aed">C</font>oncatenated <font color="#8d3aed">A</font>ggregate <font color="#8d3aed">L</font>ittle <font color="#8d3aed">E</font>ndian*)
 
 NOTE:
-Pallet contracts storage is organized like a key-value database
-SCALE codec is not self-describing (vide metadata)
-each storage cell has a unique storage key and points to a SCALE encoded value
+- Pallet contracts storage is organized like a key-value database
+- SCALE codec is not self-describing (vide metadata)
+- each storage cell has a unique storage key and points to a SCALE encoded value
 
 ---
 
@@ -378,10 +493,10 @@ pub struct Token {
 * By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
 
 NOTE:
-Types that can be stored entirely under a single storage cell are called Packed Layout
-by default ink! stores all storage struct fields under a single storage cell
-as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
-which may be what you want or not
+- Types that can be stored entirely under a single storage cell are called Packed Layout
+- by default ink! stores all storage struct fields under a single storage cell
+- as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
+- .. which may be what you want or not
 
 ---
 
@@ -436,7 +551,7 @@ pub struct Flipper<KEY: StorageKey = ManualKey<0xcafebabe>> {
 </div>
 
 NOTE:
-here a demonstartion of packed layout - value is stored under the root key
+- here a demonstartion of packed layout - value is stored under the root key
 
 ---
 
@@ -456,7 +571,6 @@ pub struct Token {
 
 * Mapping consists of a key-value pairs stored directly in the contract storage cells
 
-
 ---
 
 ## Storage: Lazy
@@ -475,11 +589,12 @@ pub struct Roulette {
 * `ManualKey` assignes explicit storage key to it.
 
 NOTE:
-packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
-there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
-mapping provides per-cell access
-Lazy storage cell can be auto-assigned or chosen manually
-Using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract. This may break your contract after an upgrade
+- packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
+- there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
+- mapping provides per-cell access
+- Lazy storage cell can be auto-assigned or chosen manually
+- Using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract.
+  - This may break your contract after an upgrade!
 
 ---
 
@@ -488,9 +603,9 @@ Using ManualKey instead of AutoKey might be especially desirable for upgradable 
 <img rounded style="width: 1000px;" src="img/ink/storage-layout.svg" />
 
 NOTE:
-only the pointer (the key) to the lazy type is stored under the root key
-only when there is a read of `d` will the pointer be de-referenced
-lazy is a bit of a mis-nomer here, because storage is already initialized
+- only the pointer (the key) to the lazy type is stored under the root key
+- only when there is a read of `d` will the pointer be de-referenced
+- lazy is a bit of a mis-nomer here, because storage is already initialized
 
 ---
 
@@ -514,8 +629,8 @@ pub fn non_default() -> Self {
 ```
 
 NOTE:
-no limit of the number of constructors
-constructors can call other constructors
+- no limit of the number of constructors
+- constructors can call other constructors
 
 ---
 
@@ -533,8 +648,8 @@ constructors can call other constructors
 - `&self` is a reference to the object you’re calling this method on
 
 NOTE:
-returns information about the contract state
-.. as stored on chain (agreed to by the nodes)
+- returns information about the contract state
+- .. as stored on chain (agreed to by the nodes)
 
 ---
 
@@ -552,33 +667,16 @@ pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
 - `payable` allows receiving value as part of the call to the ink! message
 
 NOTE:
-constructors are inherently payable
-ink! message will reject calls with funds if it's not marked as such
+- constructors are inherently payable
+- ink! message will reject calls with funds if it's not marked as such
 
 ---
 
 ## Error handling
 
-```rust
-#[ink(message)]
-pub fn spin(&mut self) -> Result<()> {
-    if !self.is_betting_period_over() {
-        return Err(RouletteError::BettingPeriodNotOver);
-};
-```
+<div style="font-size: 0.72em;">
 
-- ink! uses idiomatic Rust error handling: `Result<T,E>` type
-
-NOTE:
-messages are the `system boundary`
-returning error variant reverts the transaction
-panicing the same (`Result` is just being nice)
-
----
-
-## Error handling
-
-```rust [1-3|8-13|15]
+```rust [1-4|8-11,16|14,20]
 pub enum MyResult<T, E> {
     Ok(value: T),
     Err(msg: E),
@@ -588,13 +686,21 @@ pub enum MyResult<T, E> {
 #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
 pub enum MyError {
     InkEnvError(String),
-    BetAmountIsTooSmall,
-    NativeTransferFailed(String),
-    NotEnoughBalance,
+    BettingPeriodNotOver,
 }
 
+#[ink(message)]
+pub fn spin(&mut self) -> Result<()> {
+    if !self.is_betting_period_over() {
+        return Err(MyError::BettingPeriodNotOver);
+    ...
+};
+
 pub type Result<T> = core::result::Result<T, MyError>;
+
 ```
+
+</div>
 
 - ink! uses idiomatic Rust error handling: `Result<T,E>` type
 - Use the Err variant to pass your own semantics
@@ -602,9 +708,33 @@ pub type Result<T> = core::result::Result<T, MyError>;
 
 
 NOTE:
-messages are the `system boundary`
-returning error variant reverts the transaction
-panicing the same (`Result` is just being nice)
+- ink! uses idiomatic Rust error handling
+- ~~messages are the `system boundary`~~
+- returning error variant reverts the transaction
+  - panicing is the same as returning Err variant (`Result` is just being nice)
+
+---
+
+## Error handling: call stack
+
+```rust
+#[ink(message)]
+pub fn flip(&mut self) {
+    self.value = !self.value;
+
+    if self.env().block_number() % 2 != 0 {
+      panic!("Oh no!")
+    }
+
+}
+
+```
+
+- what is the state of this contract if the tx is called in an odd block number?
+
+NOTE:
+- answer: whatever it was prior to the tx:
+  - returning error variant reverts the entire tx on the call stack
 
 ---
 
@@ -623,10 +753,37 @@ pub struct BetPlaced {
 ```
 
 - Events are a way of letting the outside world know about what's happening inside the contract.
-- `#[ink(event)]` is a macro taht defines events.
+- `#[ink(event)]` is a macro that defines events.
 - Topics mark fields for indexing.
 
 <!-- NOTE: -->
+
+---
+
+## Events
+
+```rust
+#[ink(message)]
+pub fn flip(&mut self) {
+
+    if self.env().block_number() % 2 == 0 {
+      panic!("Oh no!")
+    }
+
+    Self::emit_event(
+        self.env(),
+        Event::Flipped(Flipped { }),
+    );
+
+    self.value = !self.value;
+}
+
+```
+
+- will this event be emitted in an odd block?
+
+NOTE:
+- answer: yes, but only because I reverted the condition :)
 
 ---
 
@@ -676,6 +833,12 @@ you can now share the trait definition with other contracts
 getting a typed reference to an instance
 
 ---
+
+
+
+
+
+
 
 ## Call runtime
 
@@ -841,24 +1004,6 @@ a nice pattern is to perform the update and migration in one atomic transaction:
 
 ---
 
-## Dev environment: Contracts UI
-
-<img rounded style="width: 1400px;" src="img/ink/contracts_ui_1.jpg" />
-
----
-
-## Dev environment: Contracts UI
-
-<img rounded style="width: 1400px;" src="img/ink/contracts_ui_2.jpg" />
-
----
-
-## Dev environment: Contracts UI
-
-<img rounded style="width: 1400px;" src="img/ink/contracts_ui_3.jpg" />
-
----
-
 ## Common Vulnerabilities
 
 ```rust
@@ -975,4 +1120,3 @@ publish your source code (security by obscurity is not securoty)
 ## End of Lecture
 
 ---
-
