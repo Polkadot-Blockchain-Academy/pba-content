@@ -185,6 +185,129 @@ I suggest covering some of the fundamental aspects:
 
 ---v
 
+## Basics
+
+```Solidity
+// 'contract' is analogous to 'class' in other OO languages
+contract Foo {
+    // the member variables of a contract are stored on-chain
+    public uint bar;
+
+    constructor(uint value) {
+        bar = value;
+    }
+}
+```
+
+---v
+
+## Functions
+
+```Solidity
+contract Foo {
+    function doSomething() public returns (bool) {
+        return true;
+    }
+}
+```
+
+---v
+
+## Payable
+
+```Solidity
+contract Foo {
+    uint256 received;
+    // this function can be called with value (Ether) given to it.
+    // in this simple example, the contract would never do anything with
+    // the Ether (effectively meaning it would be lost), but it will faithfully
+    // track the amount paid to it
+    function deposit() public payable {
+        received += msg.value;
+    }
+}
+```
+
+---v
+
+## Types
+
+```Solidity
+contract Foo {
+    function basics() public {
+        bool b = false;
+
+        // signed and unsigned ints
+        int32 i = -1;
+        int256 i2 = -10000;
+        uint8 u1 = 255;
+        uint16 u2 = 10000;
+        uint256 u3 = 99999999999999;
+
+        // dynamic length strings
+        string memory foo = "<3 Solidity";
+
+        // fixed length byte sequence
+        bytes1 = "a";
+    }
+
+    function advanced() public {
+        // address represents a 20-byte Ethereum address. it has
+        address a = 0x1010101010101010101010101010101010101010;
+        uint256 balance = a.balance;
+
+        // arrays
+        uint[3] arr = [1, 2, 3];
+
+        // mapping
+        mapping(address => uint) memory balances;
+        balances[a] = balance;
+    }
+}
+```
+
+---v
+
+## Enums
+
+```Solidity
+contract Foo {
+    enum Suite {
+        Hearts,
+        Diamonds,
+        Clubs,
+        Spades
+    }
+
+    function getHeartsSuite() public returns (Suite) {
+        Suite hearts = Suite.Hearts;
+        return hearts;
+    }
+}
+```
+
+---v
+
+## Structs
+
+```Solidity
+contract Foo {
+    struct Ballot {
+        uint32 index;
+        string name;
+    }
+
+    function makeSomeBallot() public returns (Ballot memory) {
+        Ballot memory ballot;
+        ballot.index = 1;
+        ballot.name = "John Doe";
+        return ballot;
+    }
+}
+```
+
+---v
+
 ## Dev Environment
 
 TODO: Introduce Remix here. It might make sense to mention some other tools as
