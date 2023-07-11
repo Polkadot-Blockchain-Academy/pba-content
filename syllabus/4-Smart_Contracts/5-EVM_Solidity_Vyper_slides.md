@@ -143,18 +143,12 @@ TODO: talk about different ways to call (may need more context first)
 
 # Programming the EVM
 
----v
+The EVM is ultimately programmed by creating bytecode. While it is possible to
+write bytecode by hand or through low-level assembly language, it is much more
+practical to use a higher-level language. We will look at two in particular:
 
-## EVM Assembly
-
-show an example
-
----v
-
-## High Level Languages
-
-- Solidity
-- Vyper
+* Solidity
+* Vyper
 
 ---
 
@@ -164,24 +158,6 @@ show an example
 * Similar to C++, Java, etc.
 * Includes inheritance (including MI)
 * Criticized for being difficult to reason about security
-
----v
-
-## Semantics
-
-FIXME TODO: IDK if this is really necessary.
-Up to the instructor.
-
-Stephen: I think some amount of context on semantics is useful before jumping
-into coding, but obviously a fullblown intro on the language is not feasible
-(esp. if we want to do the same for Vyper).
-
-I suggest covering some of the fundamental aspects:
-
-* Basic types
-* storage vs memory
-* construction (with context of deployment)
-* modifiers (?)
 
 ---v
 
@@ -310,8 +286,9 @@ contract Foo {
 
 ## Dev Environment
 
-TODO: Introduce Remix here. It might make sense to mention some other tools as
-well, but not in any detail. I think Remix is the clear choice to use hands-on.
+We will use the online [Remix IDE](https://remix.ethereum.org) for our sample
+coding. It provides an editor, compiler, EVM, and debugger all within the
+browser, making it trivial to get started.
 
 ---v
 
@@ -397,10 +374,103 @@ secret(s) secure.
 
 # Vyper
 
-TODO Continue analogously to Solidity lesson.
-Explain pythonic nature
-Explain focus on safety (at least compared to solidity)
-Show similar coding examples
+* Also designed for the EVM
+* Similar to Python
+* Intentionally lacks some features such as inheritance
+* Auditable: "Simplicity for the reader is more important than simplicity for the writer"
+
+---v
+
+## Compared to Solidity
+
+Vyper mostly lacks features found in Solidity, all in the spirit of improving
+readability. Some examples:
+
+* No Inheritance
+* No modifiers (TODO: cover this under Solidity)
+* No function overloading
+* No recursive calling (!)
+* No infinite-loops
+
+---v
+
+## Basics
+
+```Python
+# There is no `contract` keyword. Like Python Modules, a contract is implicitly
+# scoped by the file in which it is found.
+
+# storage variables are declared outside of any function
+bar: uint
+
+# init is used to deploy a contract and initialize its state
+@external
+def __init__(val):
+    self.bar = val
+```
+
+---v
+
+## Functions
+
+```Python
+@external
+def doSomething() -> bool:
+    return True
+```
+
+---v
+
+## Decorators and Payable
+
+```Python
+# Vyper contains decorators for restricting functions:
+
+@external # function can only be called externally
+@internal # function can only be called within current context
+@pure # cannot read state or environment vars
+@view # cannot alter contract state
+@payable # function may receive Ether
+
+# also, to cover the most common use case for Solidity's modifiers:
+@nonreentrant(<unique_key>) # prevents reentrancy for given id
+```
+
+source: https://docs.vyperlang.org/en/stable/control-structures.html#decorators-reference
+
+---v
+
+## Types
+
+```Python
+@external
+def basics():
+    b: bool = False
+
+    # signed and unsigned ints
+    i: int128 = -1
+    i2: int256 = -10000
+    # u: uint128 = 42 # TODO: docs say int<multiple of 8> should work...
+    u2: uint256 = 42
+
+    # fixed-point (base-10) decimal values
+    # this has the advantage that literals can be precisely expressed
+    f: decimal = 0.1 + 0.3 + 0.6
+    assert f == 1.0, "decimal literals are precise!"
+```
+
+---v
+
+## Remix Plugin
+
+Remix supports Vyper through a plugin, which can be easily enabled from within
+the IDE. (TODO: provide a few screenshots or other instructions)
+
+---v
+
+## EVM Assembly
+
+show an example
 
 ---
 
