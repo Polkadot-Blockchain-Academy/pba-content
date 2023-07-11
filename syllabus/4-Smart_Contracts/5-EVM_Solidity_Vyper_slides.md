@@ -228,7 +228,7 @@ contract Foo {
     }
 
     function advanced() public {
-        // address represents a 20-byte Ethereum address. it has
+        // address represents a 20-byte Ethereum address
         address a = 0x1010101010101010101010101010101010101010;
         uint256 balance = a.balance;
 
@@ -443,8 +443,9 @@ source: https://docs.vyperlang.org/en/stable/control-structures.html#decorators-
 ## Types
 
 ```Python
+# value types are small and/or fixed size and are copied
 @external
-def basics():
+def valueTypes():
     b: bool = False
 
     # signed and unsigned ints
@@ -453,10 +454,73 @@ def basics():
     # u: uint128 = 42 # TODO: docs say int<multiple of 8> should work...
     u2: uint256 = 42
 
-    # fixed-point (base-10) decimal values
+    # fixed-point (base-10) decimal values with 10 decimal points of precision
     # this has the advantage that literals can be precisely expressed
     f: decimal = 0.1 + 0.3 + 0.6
     assert f == 1.0, "decimal literals are precise!"
+
+    # address type for 20-byte Ethereum addresses
+    a: address = 0x1010101010101010101010101010101010101010
+    b = a.balance
+
+    # fixed size byte arrays
+    selector: bytes4 = 0x12345678
+
+    # bounded byte arrays
+    bytes: Bytes[123] = b"\x01"
+
+    # dynamic-length strings
+    name: String[16] = "Vyper"
+
+# reference types are potentially large and/or dynamicly sized.
+# they are copied-by-reference
+@external
+def referenceTypes():
+    # fixed size list. can also be multidimensional.
+    # all elements must be initialized
+    list: int128[4] = [1, 2, 3, -4]
+
+    # bounded, dynamic-size array. these have a max size but initialize to empty
+    dynArray: DynArray[int128, 3]
+    dynArray.append(1)
+    dynArray.append(5)
+    val: int128 = dynArray.pop() # == 5
+
+    map: HashMap[int128, int128]
+    map[0] = 0
+    map[1] = 10
+    map[2] = 20
+
+```
+
+---v
+
+## Enums
+
+```Python
+enum Suite {
+    Hearts,
+    Diamonds,
+    Clubs,
+    Spades
+}
+
+# "hearts" would be considered a value type
+hearts: Suite = Suite.Hearts
+```
+
+---v
+
+## Structs
+
+```Python
+struct Ballot:
+    index: uint256
+    name: string
+
+# "someBallot" would be considered a reference type
+someBallot: Ballot = Ballot({index: 1, name: "John Doe"})
+name: string = someBallot.name
 ```
 
 ---v
