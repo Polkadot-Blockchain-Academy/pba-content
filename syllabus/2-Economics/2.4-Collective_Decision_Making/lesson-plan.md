@@ -1,4 +1,4 @@
-# Collective Decision Making (~4 hours)
+# Collective Decision Making (~2 hours)
 
 This section provides an overview of the different mechanisms that can be used in a society to make decisions as a unit.
 
@@ -12,19 +12,19 @@ Governance, elections, delegation, etc., are key for the correct functioning of 
 
 ## Learning outcomes
 
-The student will develop basic intuition about NPoS, Polkadot governance, and the reason behind their design choices.
+The student will develop basic intuition about collective decision making, voting theory, and the reason behind their design choices.
 
 ## Learning objectives
 
-- Learn the most common voting rules
-- Learn the most common types of proof-of-stake
+- Learn the most common voting rules and their benefits and shortcomings.
 
 ---
 
-## Lecture (1 hour)
+## Lecture (1.5 hour)
 
 Slides: [2.4-Collective_Decision_Making_Slides.md](./2.4-Collective_Decision_Making_Slides.md)
 
-## Activity (~2 hours)
+## Activity (~1 hours)
 
-Analyze the different types of PoS as well as the different types of governance on blockchain networks, in terms of: runtime efficiency, ease of use, risk of centralization
+In this non-lesson part, we will have classroom discussions about the learned concepts.
+
