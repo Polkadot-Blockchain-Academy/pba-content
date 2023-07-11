@@ -832,23 +832,133 @@ a nice pattern is to perform the update and migration in one atomic transaction:
 
 ---
 
-## Dev environment
+## Dev environment: Contracts UI
 
-
+<img rounded style="width: 1400px;" src="img/ink/contracts_ui_1.jpg" />
 
 ---
+
+## Dev environment: Contracts UI
+
+<img rounded style="width: 1400px;" src="img/ink/contracts_ui_2.jpg" />
+
+---
+
+## Dev environment: Contracts UI
+
+<img rounded style="width: 1400px;" src="img/ink/contracts_ui_3.jpg" />
+
+---
+
+## Common Vulnerabilities
+
+```rust 
+
+impl MyContract {
+
+#[ink(message)]
+pub fn terminate(&mut self) -> Result<()> {
+    let caller = self.env().caller();
+    self.env().terminate_contract(caller)
+}
+
+...
+```
+
+- What is wrong with this contract?
+- How would you fix it?
+
+NOTE:
+we start easy 
+answer: no AC in place
+
+---
+
+## Common Vulnerabilities
+
+```rust [3,8,12-14]
+    #[ink(storage)]
+    pub struct SubstrateNameSystem {
+        registry: Mapping<AccountId, Vec<u8>>,
+    }
+
+    impl SubstrateNameSystem {
+        #[ink(message, payable)]
+        pub fn register(&mut self, name: Vec<u8>) {
+            let owner = self.env().caller();
+            let fee = self.env().transferred_value();
+
+            if !self.registry.contains(owner) && fee >= 100 {
+                self.registry.insert(owner, &name);
+            }
+        }
+```
+
+- On-chain domain name registry with a register fee of 100 pico.
+- Why is this a bad idea?
+
+NOTE:
+everything on-chain is public
+this will be front-run in no time
+Can you propose a better design?
+Answer: commit / reveal or an auction
+
+---
+
+## Common Vulnerabilities
+
+<div style="font-size: 0.82em;">
+
+```rust [3-7,12,18]
+
+#[ink(message)]
+pub fn swap(
+    &mut self,
+    token_in: AccountId,
+    token_out: AccountId,
+    amount_token_in: Balance,
+) -> Result<(), DexError> {
+    let this = self.env().account_id();
+    let caller = self.env().caller();
+
+    let amount_token_out = self.out_given_in(token_in, token_out, amount_token_in)?;
+
+    // transfer token_in from user to the contract
+    self.transfer_from_tx(token_in, caller, this, amount_token_in)?;
+
+    // transfer token_out from contract to user
+    self.transfer_tx(token_out, caller, amount_token_out)?;
+    ...
+}
+```
+
+</div>
+
+- Contract is a <font color="#8d3aed">DEX</font> <font color="#8d3aed">D</font>ecentralized <font color="#8d3aed">EX</font>change, follows the popular <font color="#8d3aed">AMM</font> (<font color="#8d3aed">A</font>utomated <font color="#8d3aed">M</font>arket <font color="#8d3aed">M</font>aker) design.
+- Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price.
+
+NOTE:
+no slippage protection in place.
+bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
+this purchase will raise the price of the asset for the victim trader and increases his slippage
+if the bot sells right after the victims tx (back runs the victim) this is a sandwitch attack 
+
+---
+
+
 
 <!-- TODOs -->
 
 
 <!-- ## Dev Environment -->
-<!-- write, deploy, interact with [flipper? roulette?]  -->
+
 <!-- documentation -->
 <!-- examples -->
 <!-- common vulnerabilities  -->
 <!-- - everything is public on-chain (show a frontrunning vulnerability on a DEX) -->
 <!-- - bidding: commit - reveal scheme  -->
 <!-- - re-entrancy & guard -->
+<!-- - quiz -->
 <!-- https://blocksecteam.medium.com/when-safemint-becomes-unsafe-lessons-from-the-hypebears-security-incident-2965209bda2a-->
 
 <!-- ## Dev Environment -->
