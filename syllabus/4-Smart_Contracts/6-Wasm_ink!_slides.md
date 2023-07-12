@@ -29,7 +29,7 @@ NOTE:
 
 NOTE:
 - students are freshly of an EVM lecture so might be wondering why another SC language
-- Virtual MAchine: any WASM VM: yes in theory, in practice bound pretty close to the Substarte & the contracts pallet
+- Virtual Machine: any WASM VM: yes in theory, in practice bound pretty close to the Substarte & the contracts pallet
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
 - The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
 
@@ -1113,6 +1113,31 @@ Piotr takes over to talk about making runtime calls from contracts and writing a
 
 ---
 
+## Interacting with the execution environment
+
+```rust [5-6]
+impl MyContract {
+  ...
+  #[ink(message)]
+  pub fn terminate(&mut self) -> Result<()> {
+      let caller = self.env().caller();
+      self.env().terminate_contract(caller)
+  }
+  ...
+}
+```
+
+---
+
+## Blockchain node onion
+
+---
+
+## Blockchain node onion
+
+<img rounded src="img/ink/blockchain-onion-1.svg" />
+
+---
 
 ## Call runtime
 
