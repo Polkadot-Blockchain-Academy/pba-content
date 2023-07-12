@@ -15,8 +15,10 @@ Completing this module will enable participants to:
 
 ### Day 1
 
--[Economics Basics](./2.1-Economics_Basics) (~1.5 hrs)
-- Workshop (~1.5h)
+- [Economics Basics](./2.1-Economics_Basics) (~1.5 hrs)
+
+- Workshop (~1.5hr)
+
   - Classroom discussions
   - Academy Games Part 1
     - Ultimatum Game
@@ -24,24 +26,25 @@ Completing this module will enable participants to:
 
 - Lunch break (1 hr)
 
-- [Game Theory](./2.2-Game_Theory) (~1.5 hrs)
-- Workshop (~2 hrs)
+- [Game Theory](./2.2-Game_Theory) (~1.5 hr)
+- Workshop (~2 hr)
   - Classroom discussions
   - Academy Games Part 2
     - Guessing Game
-    - Prisonner's Dilemma
+    - Prisoner's Dilemma
     - Public Goods Game
 
 ### Day 2
 
-- [Price Finding Mechanisms](./2.3-Price_Finding_Mechanisms) - @AlfonsoCev (?? hrs)
-- Workshop (?? hrs)
+- [Price Finding Mechanisms](./2.3-Price_Finding_Mechanisms) - @AlfonsoCev (?? hr)
+- Workshop (?? hr)
+
   - Classroom discussions
-  - Academy Games NFT Auction 
+  - Academy Games NFT Auction
 
 - Lunch (1 hr)
 
-- [Collective Decision Making](./2.4-Collective_Decision_Making) - @AlfonsoCev (?? hrs)
+- [Collective Decision Making](./2.4-Collective_Decision_Making) - @AlfonsoCev (?? hr)
 - Workshop
   - Classroom discussions
 

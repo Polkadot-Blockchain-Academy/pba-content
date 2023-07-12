@@ -4,7 +4,8 @@ This section provides an overview of the different mechanisms that can be used i
 
 ## Why it is important?
 
-Governance, elections, delegation, etc., are key for the correct functioning of decentralized organizations. In turn, decentralized applications are bringing new innovations and renewed interest to the theory of collective decision making.
+Governance, elections, delegation, etc., are key for the correct functioning of decentralized organizations.
+In turn, decentralized applications are bringing new innovations and renewed interest to the theory of collective decision making.
 
 ## Prerequisites
 
@@ -27,4 +28,3 @@ Slides: [2.4-Collective_Decision_Making_Slides.md](./2.4-Collective_Decision_Mak
 ## Activity (~1 hours)
 
 In this non-lesson part, we will have classroom discussions about the learned concepts.
-

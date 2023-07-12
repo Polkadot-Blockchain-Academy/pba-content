@@ -7,6 +7,7 @@ duration: 2 hour
 # The Economics of Polkadot
 
 ---
+
 ## Overview
 
 <ul>
@@ -194,7 +195,6 @@ Question: What do you think about Inflation?
 
 <img style="width: 700px;" src="../../../assets/img/2-Economics/2.6-rewards_flow.png" />
 
-
 </pba-flex>
 </pba-col>
 <pba-col>
@@ -229,7 +229,6 @@ Question: What do you think about Inflation?
 </ul>
 
 ---
-
 
 # Parachains
 
@@ -424,7 +423,6 @@ Question: What do you think about Inflation?
 </ul>
 
 ---
-
 
 ## Further Resources
 

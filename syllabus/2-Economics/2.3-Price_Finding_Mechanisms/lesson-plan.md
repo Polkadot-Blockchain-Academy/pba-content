@@ -4,7 +4,8 @@ The broad aim is to discuss price setting mechanisms.
 
 ### Why is this important
 
-Price discovery is one of the most important aspects in economics. Auctions, as most prominent device, are applied in the blockchain ecosystem.
+Price discovery is one of the most important aspects in economics.
+Auctions, as most prominent device, are applied in the blockchain ecosystem.
 
 ### Prerequisites
 

@@ -3,15 +3,22 @@
 This session is designed to introduce participants to the principles of game theory, as a significant branch of economics and mathematics, offering tools to analyze strategic interactions between rational decision-makers.
 
 ## Why is this important
-Game theory is fundamental to understanding incentives and strategies in situations where the outcome depends on the actions of multiple participants. It is a crucial tool for anyone seeking to understand the complex interactions and potential outcomes of strategic decisions. For incentive architects, and particularly those working within the blockchain space, game theory provides the analytical tools to predict behavior, optimize outcomes, and design robust systems.
+
+Game theory is fundamental to understanding incentives and strategies in situations where the outcome depends on the actions of multiple participants.
+It is a crucial tool for anyone seeking to understand the complex interactions and potential outcomes of strategic decisions.
+For incentive architects, and particularly those working within the blockchain space, game theory provides the analytical tools to predict behavior, optimize outcomes, and design robust systems.
 
 ## Prerequisites
+
 A basic understanding of economics is required as game theory builds upon many economic concepts such as utility, and rationality.
 
 ## Learning Outcomes
-By the end of this session, participants should be able to utilize core game theory concepts in subsequent sessions and in their analysis of real-world scenarios. They will be familiar with the framework of game theory and its applications.
+
+By the end of this session, participants should be able to utilize core game theory concepts in subsequent sessions and in their analysis of real-world scenarios.
+They will be familiar with the framework of game theory and its applications.
 
 ## Learning Objectives
+
 Upon completing this session, participants will...
 
 ... understand and explain basic game theory concepts, including strategic games, Nash equilibrium, and dominant strategies.
