@@ -1135,61 +1135,150 @@ impl MyContract {
 
 ## Blockchain node onion
 
-<img rounded src="img/ink/blockchain-onion-1.svg" />
+<img style="margin-top: 10px" width="600" src="img/ink/blockchain-onion-1.svg" />
+
+- networking
+- block production, dissemination, finalization
+- storage management
+- off-chain maintenance, querying, indexing
+
+---
+
+## Blockchain node onion
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="img/ink/blockchain-onion-2.svg" />
+
+- computing new state based on the previous one and a single transaction
+
+---
+
+## Blockchain node onion
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/blockchain-onion-3.svg" />
+
+- executing contract calls
+
+---
+
+## Standard API
+
+- `caller()`
+- `account_id()`
+- `balance()`
+- `block_number()`
+- `emit_event()`
+- `transfer()`
+- `hash_bytes()`
+- `debug_message()`
+- [_and many more_](https://docs.rs/ink_env/4.2.1/ink_env/index.html#functions)
+
+---
+
+## Standard API
+
+```rust
+impl MyContract {
+  ...
+  #[ink(message)]
+  pub fn terminate(&mut self) -> Result<()> {
+      let caller = self.env().caller();
+      self.env().terminate_contract(caller)
+  }
+  ...
+}
+```
+---
+
+## Interacting with the state transition function
+
+<br/>
+
+<div class="flex-container fragment">
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> User API </pre></h2></center> </div>
+
+<ul>
+<li>token transfer</li>
+<li>staking</li>
+<li>voting</li>
+<li>contract call</li>
+<li>...</li>
+</ul>
+</div>
+
+<div class="left fragment">
+<div style="text-align: center"> <center><h2><pre> Contract API </pre></h2></center> </div>
+
+<ul>
+<li>advanced cryptography</li>
+<li>bypassing standard restrictions</li>
+<li>outsourcing computation</li>
+<li>...</li>
+</ul>
+</div>
+</div>
+
+---
+
+## Runtime
+
+<br/>
+
+In Polkadot ecosystem _state transition function_ is called ***runtime***
 
 ---
 
 ## Call runtime
 
-<div style="font-size: 0.5em;">
+<br/>
 
-```rust [23-27]
-#[derive(scale::Encode)]
-enum RuntimeCall {
-    #[codec(index = 4)]
-    Balances(BalancesCall),
-}
-
-#[derive(scale::Encode)]
-enum BalancesCall {
-    #[codec(index = 0)]
-    Transfer {
-        dest: MultiAddress<AccountId, ()>,
-        #[codec(compact)]
-        value: u128,
-    },
-}
-
+```rust [7-10]
 #[ink(message)]
 pub fn transfer_through_runtime(
     &mut self,
     receiver: AccountId,
     value: Balance,
 ) -> Result<(), RuntimeError> {
-    self.env()
-        .call_runtime(&RuntimeCall::Balances(BalancesCall::Transfer {
-            dest: receiver.into(),
-            value,
-        }))
-        .map_err(Into::into)
+    let call_object = RuntimeCall::Balances(BalancesCall::Transfer {
+        receiver,
+        value,
+    });
+    
+    self.env().call_runtime(&call_object)
 }
 ```
 
-</div>
+---
 
-- Contract performs native token transfer.
-- `call_runtime` is an escape hatch from the VM sandboxed environment.
-- Call any dispatchable function of the blockchain runtime.
-<!-- - See also <font color="#8d3aed">[chain extension](https://use.ink/macros-attributes/chain-extension/)</font>. -->
+## Call runtime
 
-NOTE:
-allows for calling runtime dispatchable functions but not for returning data (cannot read from storage)
+<br/>
+
+```rust [12]
+#[ink(message)]
+pub fn transfer_through_runtime(
+    &mut self,
+    receiver: AccountId,
+    value: Balance,
+) -> Result<(), RuntimeError> {
+    let call_object = RuntimeCall::Balances(BalancesCall::Transfer {
+        receiver,
+        value,
+    });
+    
+    self.env().call_runtime(&call_object)
+}
+```
 
 ---
 
-<!-- TODO: Piotr's chain extension slides go here -->
+## Chain extensions
 
-<!-- TODO: Piotr's e2e tests slides go here -->
+<br/>
+
+Chain extension is a way to extend the runtime with custom functionalities _dedicated to contracts_.
+
+---
 
 ## End of Lecture
 
