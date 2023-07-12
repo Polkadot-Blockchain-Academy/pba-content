@@ -162,6 +162,7 @@ Allegory: A private document stored on server where sysadmin has _access_ can be
 ---v
 
 <!-- This slide should potentially be pushed into the lecture on encryption. I can see it in either spot. Alternately, could be cut entirely, as encrypted communication is not an emphasized topic. -->
+
 ## Confidentiality in Communication Channels
 
 Suppose Alice and Bob are sending confidential messages back and forth. There are some subtypes of confidentiality here:
