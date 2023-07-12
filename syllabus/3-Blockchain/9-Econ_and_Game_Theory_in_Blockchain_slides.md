@@ -2169,4 +2169,21 @@ The consequences of restaking are still not fully understood and the research is
 
 ---
 
+## Summary
+
+- Markets - Fee Markets
+- Nash Eq. - BTC Mining
+- Shelling Point - Oracles
+- Incentivization - Oracles
+- Opportunity cost - Ethereum State Storage Refunds
+- Externalities - Ethereum State Storage and Oracles
+- Complete vs Incomplete Information Games - Polkadot Approval Voting
+- Assumptions - Restaking
+
+Notes:
+
+So to summarize we talked about:
+
+---
+
 # Thanks everyone!
