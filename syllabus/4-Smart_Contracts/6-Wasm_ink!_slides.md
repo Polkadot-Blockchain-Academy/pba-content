@@ -1228,7 +1228,7 @@ In Polkadot ecosystem _state transition function_ is called ***runtime***
 
 ---
 
-## Call runtime
+## Calling runtime
 
 <br/>
 
@@ -1250,7 +1250,7 @@ pub fn transfer_through_runtime(
 
 ---
 
-## Call runtime
+## Calling runtime
 
 <br/>
 
@@ -1280,6 +1280,384 @@ Chain extension is a way to extend the runtime with custom functionalities _dedi
 
 ---
 
-## End of Lecture
+## Chain extensions
+
+<br/>
+
+**ink! side:**
+ - provide `ChainExtension` trait
+ - include extension in the `Environment` trait instantiation
+
+<br/>
+
+**runtime side:**
+ - handling extension calls
+ - extension logic itself
 
 ---
+
+## Provide `ChainExtension` trait
+
+```rust [1-7]
+#[ink::chain_extension]
+pub trait OutsourceHeavyCrypto {
+  type ErrorCode = OutsourcingErr;
+
+  #[ink(extension = 41)]
+  fn outsource(input: Vec<u8>) -> [u8; 32];
+}
+
+pub enum OutsourcingErr {
+  IncorrectData,
+}
+
+impl ink::env::chain_extension::FromStatusCode for OutsourcingErr {
+  fn from_status_code(status_code: u32) -> Result<(), Self> {
+    match status_code {
+      0 => Ok(()),
+      1 => Err(Self::IncorrectData),
+      _ => panic!("encountered unknown status code"),
+    }
+  }
+}
+```
+
+---
+
+## Provide `ChainExtension` trait
+
+```rust [9-21]
+#[ink::chain_extension]
+pub trait OutsourceHeavyCrypto {
+  type ErrorCode = OutsourcingErr;
+
+  #[ink(extension = 41)]
+  fn outsource(input: Vec<u8>) -> [u8; 32];
+}
+
+pub enum OutsourcingErr {
+  IncorrectData,
+}
+
+impl ink::env::chain_extension::FromStatusCode for OutsourcingErr {
+  fn from_status_code(status_code: u32) -> Result<(), Self> {
+    match status_code {
+      0 => Ok(()),
+      1 => Err(Self::IncorrectData),
+      _ => panic!("encountered unknown status code"),
+    }
+  }
+}
+```
+
+---
+
+## Include extension in the `Environment` trait instantiation
+
+<br/>
+
+```rust
+pub enum EnvironmentWithOutsourcing {}
+impl Environment for EnvironmentWithOutsourcing {
+    ... // use defaults from `DefaultEnvironment`
+    type ChainExtension = OutsourceHeavyCrypto;
+}
+
+#[ink::contract(env = crate::EnvironmentWithOutsourcing)]
+mod my_contract {
+  ...
+}
+```
+
+---
+
+## Include extension in the `Environment` trait instantiation
+
+<br/>
+
+```rust
+#[ink::contract(env = crate::EnvironmentWithOutsourcing)]
+mod my_contract {
+  fn process_data(&mut self, input: Vec<u8>) -> Result<(), OutsourcingErr> {
+    self.env().extension().outsource(subject)
+  }
+}
+```
+
+---
+
+## Handling extension calls
+
+<br/>
+
+```rust [5-11]
+pub struct HeavyCryptoOutsourcingExtension;
+
+impl ChainExtension<Runtime> for HeavyCryptoOutsourcingExtension {
+  fn call<E: Ext>(&mut self, env: Env) -> Result<RetVal, DispatchError> {
+    match env.func_id() {
+      41 => internal_logic(),
+      _ => {
+        error!("Called an unregistered `func_id`: {func_id}");
+        return Err(DispatchError::Other("Unimplemented func_id"))
+      }
+    }
+    Ok(RetVal::Converging(0))
+}
+```
+
+---
+
+## Testing contracts
+
+---
+
+## Testing contracts
+
+<br/>
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/blockchain-onion-3.svg" />
+
+---
+
+## Testing contracts
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="1000" src="img/ink/testing-contract-stack.svg" />
+
+---
+
+## Unit tests
+
+<br/>
+
+```rust [1-3]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+
+---
+
+## Unit tests
+
+<br/>
+
+```rust [5-9]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+
+---
+
+## Unit tests
+
+<br/>
+
+```rust [11-22]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+
+---
+
+## E2E tests
+
+<br/>
+
+```rust [1-7]
+#[ink_e2e::test]
+async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+  let constructor = Erc20Ref::new(total_supply);
+  let erc20 = client
+          .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
+          .await
+          .expect("instantiate failed");
+  
+  let mut call = erc20.call::<Erc20>();
+  let total_supply_msg = call.total_supply();
+  let total_supply_res = client
+          .call_dry_run(&ink_e2e::bob(), &total_supply_msg, 0, None)
+          .await;
+  ...
+}
+```
+
+---
+
+## E2E tests
+
+<br/>
+
+```rust [9-13]
+#[ink_e2e::test]
+async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+  let constructor = Erc20Ref::new(total_supply);
+  let erc20 = client
+          .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
+          .await
+          .expect("instantiate failed");
+  
+  let mut call = erc20.call::<Erc20>();
+  let total_supply_msg = call.total_supply();
+  let total_supply_res = client
+          .call_dry_run(&ink_e2e::bob(), &total_supply_msg, 0, None)
+          .await;
+  ...
+}
+```
+
+---
+
+## E2E tests
+
+<br/>
+
+```rust [14]
+#[ink_e2e::test]
+async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+  let constructor = Erc20Ref::new(total_supply);
+  let erc20 = client
+          .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
+          .await
+          .expect("instantiate failed");
+  
+  let mut call = erc20.call::<Erc20>();
+  let total_supply_msg = call.total_supply();
+  let total_supply_res = client
+          .call_dry_run(&ink_e2e::bob(), &total_supply_msg, 0, None)
+          .await;
+  ...
+}
+```
+
+---
+
+## E2E pipeline: traps, traps everywhere
+
+<div style="font-size: 0.6em">
+
+1. Preparing and encoding transaction data (_client side_)
+1. Signing the transaction (_client side_)
+1. Sending transaction to a node (_client side_)
+1. Block and event subscribing (_client side_)
+1. Transaction pool processing (_node side_)
+1. Block building (_node side_)
+1. Block dissemination (_node side_)
+1. Import queue processing (_node side_)
+1. Block finalizing (_node side_)
+1. Block execution (_node side_)
+1. Transaction execution (_runtime side_)
+1. Event emitting (_node side_)
+1. Event capturing (_client side_)
+1. Event processing (_client side_)
+1. State fetching via RPC calling (_client side_)
+1. State report (_node side_)
+1. State validation (_client side_)
+
+</div>
+
+---
+
+## Test core
+
+<br/>
+
+1. Preparing and encoding transaction data (_given_)
+1. Transaction execution (_when_)
+1. State validation (_then_)
+
+---
+
+## quasi-E2E tests
+
+<br/>
+
+Interact directly with runtime, skipping node layer.
+
+
+---
+
+## quasi-E2E tests
+
+<br/>
+
+```rust
+#[test]
+fn flipping() -> Result<(), Box<dyn Error>> {
+  let init_value = Session::<MinimalRuntime>::new(transcoder())?
+      .deploy_and(bytes(), "new", &["true".to_string()], vec![])?
+      .call_and("flip", &[])?
+      .call_and("flip", &[])?
+      .call_and("flip", &[])?
+      .call_and("get", &[])?
+      .last_call_return()
+      .expect("Call was successful");
+
+  assert_eq!(init_value, ok(Value::Bool(false)));
+
+  Ok(())
+}
+```
+
+---
+
+## Local playing with contracts using `drink-cli`
