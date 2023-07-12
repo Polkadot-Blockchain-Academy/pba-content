@@ -232,7 +232,7 @@ Generate keys to allow a third party to transform encrypted data so someone else
 
 ## Proxy Reencryption
 
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/proxy-reencryption.png" />
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/proxy-reencryption.png" />
 
 Notes:
 
@@ -243,7 +243,7 @@ Notes:
 ## Proxy Reencryption API
 
 - `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes your public key and a message; returns ciphertext.
-- `fn decrypt(sk, msg) -> ciphertext;` <br/> Takes your private key and a message; returns ciphertext.
+- `fn decrypt(sk, ciphertext) -> msg;` <br/> Takes your private key and a ciphertext; returns the message.
 - `fn get_reencryption_key(sk, pk) -> rk;` <br/> Takes your private key, and the recipient's public key; returns a reencryption key.
 - `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;` <br/> Take a reencryption key, and transform ciphertext to be decrypted by new party.
 
