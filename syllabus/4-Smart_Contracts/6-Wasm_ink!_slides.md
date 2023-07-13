@@ -410,6 +410,244 @@ NOTE:
 
 ---
 
+## Developing contracts: Constructors
+
+```rust [7,12,17|13,18,7-9|2-4,8]
+#[ink(storage)]
+pub struct Flipper {
+    value: bool,
+}
+
+#[ink(constructor)]
+pub fn new(init_value: bool) -> Self {
+    Self { value: init_value }
+}
+
+#[ink(constructor)]
+pub fn default() -> Self {
+    Self::new(Default::default())
+}
+
+#[ink(constructor)]
+pub fn non_default() -> Self {
+    Self::new(false)
+}
+```
+
+NOTE:
+- lets dissect what a contract code is built like
+- no limit of the number of constructors
+- constructors can call other constructors
+- constructors return the initial storage
+
+---
+
+## Developing contracts: Queries
+
+```rust
+#[ink(message)]
+pub fn get(&self) -> bool {
+    self.value
+}
+```
+
+- `#[ink(message)]` is how we tell ink! this is a function that can be called on the contract
+- `&self` is a reference to the contract's storage
+<!-- #you’re calling this method on  -->
+
+NOTE:
+- returns information about the contract state stored on chain
+- reaches to the storage, decodes it and returns the value
+
+---
+
+## Developing contracts: Mutations
+
+```rust [1-2|6]
+#[ink(message, payable)]
+pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
+    let player = self.env().caller();
+    let amount = self.env().transferred_value();
+    ...
+    self.data.set(&data);
+    ...
+```
+
+- `&mut self` is a mutable reference to the object you’re calling this method on
+- `payable` allows receiving value as part of the call to the ink! message
+
+NOTE:
+- constructors are inherently payable
+- ink! message will reject calls with funds if it's not marked as such
+- mutable reference alow sme to modify the storage.
+- queries are for free, mutations are metered (you pay gas)
+  - you will also pay for queries within such transactions
+
+---
+
+## Contracts: Error handling
+
+<div style="font-size: 0.72em;">
+
+```rust [1-4|8-11,16|14,20]
+pub enum MyResult<T, E> {
+    Ok(value: T),
+    Err(msg: E),
+}
+
+#[derive(Debug, PartialEq, Eq, Encode, Decode)]
+#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+pub enum MyError {
+    InkEnvError(String),
+    BettingPeriodNotOver,
+}
+
+#[ink(message)]
+pub fn spin(&mut self) -> Result<()> {
+    if !self.is_betting_period_over() {
+        return Err(MyError::BettingPeriodNotOver);
+    ...
+};
+
+pub type Result<T> = core::result::Result<T, MyError>;
+
+```
+
+</div>
+
+- ink! uses idiomatic Rust error handling: `Result<T,E>` type
+- Use the Err variant to pass your own semantics
+- Type aliases reduce boilerplate & enhance readability
+
+
+NOTE:
+- ink! uses idiomatic Rust error handling
+- ~~messages are the `system boundary`~~
+- returning error variant or panicing reverts the transaction
+  - panicing is the same as returning Err variant (`Result` is just being nice)
+
+---
+
+## Error handling: call stack
+
+```rust
+#[ink(message)]
+pub fn flip(&mut self) {
+    self.value = !self.value;
+
+    if self.env().block_number() % 2 != 0 {
+      panic!("Oh no!")
+    }
+
+}
+
+```
+
+- what is the state of this contract if the tx is called in an odd block number?
+
+NOTE:
+- answer: whatever it was prior to the tx:
+  - returning error variant reverts the entire tx on the call stack
+
+---
+
+## Contracts: Events
+
+```rust
+#[ink(event)]
+#[derive(Debug)]
+pub struct BetPlaced {
+    #[ink(topic)]
+    player: AccountId,
+    #[ink(topic)]
+    bet_type: BetType,
+    amount: Balance,
+}
+```
+
+- Events are a way of letting the outside world know about what's happening inside the contract.
+- `#[ink(event)]` is a macro that defines events.
+- Topics mark fields for indexing.
+
+NOTE:
+- events are especially important for dapps
+- storage is expensive: reading e.g. aggregate data from chain directly is impossible / impractical
+- dapps the can listen to the event, normalize & store off-chain and answer e.g. complex queries
+
+---
+
+## Contracts: Events
+
+```rust
+#[ink(message)]
+pub fn flip(&mut self) {
+
+    if self.env().block_number() % 2 == 0 {
+      panic!("Oh no!")
+    }
+
+    Self::emit_event(
+        self.env(),
+        Event::Flipped(Flipped { }),
+    );
+
+    self.value = !self.value;
+}
+
+```
+
+- What happens to the events from reverted transactions?
+- Will this event be emitted in an odd block?
+
+NOTE:
+- answer: yes, but only because I reverted the condition :)
+
+---
+
+## Contracts: Defining shared behaviour
+
+<div style="font-size: 0.5em;">
+
+```rust [1-14|17,22]
+#[ink::trait_definition]
+pub trait PSP22 {
+    #[ink(message)]
+    fn total_supply(&self) -> Balance;
+
+    #[ink(message)]
+    fn balance_of(&self, owner: AccountId) -> Balance;
+
+    #[ink(message)]
+    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
+
+    #[ink(message)]
+    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
+    ...
+
+impl SimpleDex {
+    use psp22_trait::{PSP22Error, PSP22};
+
+    /// Returns balance of a PSP22 token for an account
+    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
+        let psp22: ink::contract_ref!(PSP22) = token.into();
+        psp22.balance_of(account)
+    }
+    ...
+```
+
+</div>
+
+* Trait Definition: `#[ink::trait_definition]`.
+* Sharing the trait definition to do a cross-contract call.
+
+NOTE:
+- (part of) PSP22 (ERC20 like) contract definition
+- all contracts that respect this definition need to implement it
+- you can now share the trait definition with other contracts
+- while getting a typed reference to an instance
+
+---
+
 ## Deeper dive: Storage
 
 ```rust
@@ -454,10 +692,13 @@ NOTE:
 | Enum    | enum IntOrBool { Int(u8), Bool(bool)} |            0x002a and 0x0101 | first byte encodes the variant index, remaining bytes encode the data          |
 | Tuple   | (3, false)                            |                       0x0c00 | concatenation of each encoded value                                            |
 | Vector  | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
-| Struct  | {x:30, y:true}                        | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
+| Struct  | {x:30u64, y:true}                        | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
 
 </div>
 
+NOTE:
+- this table is not exhaustive
+- struct example: stored as an vector, names are ignored, only order matters, first four bytes encode the 64-byte integer and then the least significant bit of the last byte encodes the boolean
 ---
 
 ## Storage: Packed Layout
@@ -477,6 +718,7 @@ pub struct Token {
 * By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
 
 NOTE:
+- we talked about the kv database that the storage is, now how is it used precisely
 - Types that can be stored entirely under a single storage cell are called Packed Layout
 - by default ink! stores all storage struct fields under a single storage cell
 - as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
@@ -535,7 +777,7 @@ pub struct Flipper<KEY: StorageKey = ManualKey<0xcafebabe>> {
 </div>
 
 NOTE:
-- here a demonstartion of packed layout - value is stored under the root key
+- here a demonstration of packed layout - value is stored under the root key
 
 ---
 
@@ -584,7 +826,7 @@ pub fn transfer(&mut self) {
 
 NOTE:
 - working with mapping:
-- Mapping::get() method will result in an owned value (a local copy), as opposed to a direct reference into the storage. Changes to this value won't be reflected in the contract's storage "automatically". To avoid this common pitfall, the value must be inserted again at the same key after it was modified. The transfer function from above example illustrates this:
+- Answer: Mapping::get() method will result in an owned value (a local copy), as opposed to a direct reference into the storage. Changes to this value won't be reflected in the contract's storage "automatically". To avoid this common pitfall, the value must be inserted again at the same key after it was modified. The transfer function from above example illustrates this:
 
 ---
 
@@ -625,6 +867,7 @@ pub struct Roulette {
 
 * Every type wrapped in `Lazy` has a separate storage cell.
 * `ManualKey` assignes explicit storage key to it.
+* Why would you want to use a `ManualKey` instead of a generated one?
 
 NOTE:
 - packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
@@ -641,233 +884,9 @@ NOTE:
 <img rounded style="width: 1000px;" src="img/ink/storage-layout.svg" />
 
 NOTE:
-- only the pointer (the key) to the lazy type is stored under the root key
-- only when there is a read of `d` will the pointer be de-referenced
-- lazy is a bit of a mis-nomer here, because storage is already initialized
-
----
-
-## Constructors
-
-```rust [1,6,11|2,7-8]
-#[ink(constructor)]
-pub fn new(init_value: bool) -> Self {
-    Self { value: init_value }
-}
-
-#[ink(constructor)]
-pub fn default() -> Self {
-    Self::new(Default::default())
-}
-
-#[ink(constructor)]
-pub fn non_default() -> Self {
-    Self::new(false)
-}
-```
-
-NOTE:
-- no limit of the number of constructors
-- constructors can call other constructors
-
----
-
-## Queries
-
-```rust
-        #[ink(message)]
-        pub fn get(&self) -> bool {
-            self.value
-        }
-
-```
-
-- `#[ink(message)]` is how we tell ink! this is a function that can be called on the contract
-- `&self` is a reference to the object you’re calling this method on
-
-NOTE:
-- returns information about the contract state
-- .. as stored on chain (agreed to by the nodes)
-
----
-
-## Mutations
-
-```rust [1-4|1]
-#[ink(message, payable)]
-pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
-    let player = self.env().caller();
-    let amount = self.env().transferred_value();
-    ...
-```
-
-- `&mut self` is a mutable reference to the object you’re calling this method on
-- `payable` allows receiving value as part of the call to the ink! message
-
-NOTE:
-- constructors are inherently payable
-- ink! message will reject calls with funds if it's not marked as such
-
----
-
-## Error handling
-
-<div style="font-size: 0.72em;">
-
-```rust [1-4|8-11,16|14,20]
-pub enum MyResult<T, E> {
-    Ok(value: T),
-    Err(msg: E),
-}
-
-#[derive(Debug, PartialEq, Eq, Encode, Decode)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-pub enum MyError {
-    InkEnvError(String),
-    BettingPeriodNotOver,
-}
-
-#[ink(message)]
-pub fn spin(&mut self) -> Result<()> {
-    if !self.is_betting_period_over() {
-        return Err(MyError::BettingPeriodNotOver);
-    ...
-};
-
-pub type Result<T> = core::result::Result<T, MyError>;
-
-```
-
-</div>
-
-- ink! uses idiomatic Rust error handling: `Result<T,E>` type
-- Use the Err variant to pass your own semantics
-- Type aliases reduce boilerplate & enhance readability
-
-
-NOTE:
-- ink! uses idiomatic Rust error handling
-- ~~messages are the `system boundary`~~
-- returning error variant reverts the transaction
-  - panicing is the same as returning Err variant (`Result` is just being nice)
-
----
-
-## Error handling: call stack
-
-```rust
-#[ink(message)]
-pub fn flip(&mut self) {
-    self.value = !self.value;
-
-    if self.env().block_number() % 2 != 0 {
-      panic!("Oh no!")
-    }
-
-}
-
-```
-
-- what is the state of this contract if the tx is called in an odd block number?
-
-NOTE:
-- answer: whatever it was prior to the tx:
-  - returning error variant reverts the entire tx on the call stack
-
----
-
-## Events
-
-```rust
-#[ink(event)]
-#[derive(Debug)]
-pub struct BetPlaced {
-    #[ink(topic)]
-    player: AccountId,
-    #[ink(topic)]
-    bet_type: BetType,
-    amount: Balance,
-}
-```
-
-- Events are a way of letting the outside world know about what's happening inside the contract.
-- `#[ink(event)]` is a macro that defines events.
-- Topics mark fields for indexing.
-
-<!-- NOTE: -->
-
----
-
-## Events
-
-```rust
-#[ink(message)]
-pub fn flip(&mut self) {
-
-    if self.env().block_number() % 2 == 0 {
-      panic!("Oh no!")
-    }
-
-    Self::emit_event(
-        self.env(),
-        Event::Flipped(Flipped { }),
-    );
-
-    self.value = !self.value;
-}
-
-```
-
-- will this event be emitted in an odd block?
-
-NOTE:
-- answer: yes, but only because I reverted the condition :)
-
----
-
-## Defining shared behaviour
-
-<div style="font-size: 0.5em;">
-
-```rust [1-14|16-25]
-#[ink::trait_definition]
-pub trait PSP22 {
-    #[ink(message)]
-    fn total_supply(&self) -> Balance;
-
-    #[ink(message)]
-    fn balance_of(&self, owner: AccountId) -> Balance;
-
-    #[ink(message)]
-    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
-
-    #[ink(message)]
-    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
-    ...
-
-impl SimpleDex {
-    use psp22_trait::{PSP22Error, PSP22};
-
-    /// Returns balance of a PSP22 token for an account
-    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
-        let psp22: ink::contract_ref!(PSP22) = token.into();
-        psp22.balance_of(account)
-    }
-
-    ...
-
-```
-
-</div>
-
-* Trait Definition: `#[ink::trait_definition]`
-* Wrapper for interacting with the contract: `ink::contract_ref!`
-
-NOTE:
-- (part of) PSP22 (ERC20 like) contract definition
-- all contracts that respect this definition need to implement it
-- you can now share the trait definition with other contracts
-- while getting a typed reference to an instance
+- only the pointer (the key) to the lazy type is stored under the root key.
+- only when there is a read of `d` will the pointer be de-referenced and it's value decoded.
+- lazy is a bit of a mis-nomer here, because storage is already initialized.
 
 ---
 
@@ -916,7 +935,7 @@ NOTE:
 
 <div style="font-size: 0.72em;">
 
-```rust [1-4,6-10|1-4,12-16|18-21]
+```rust [1-4,6-10|1-4,12-16|18-21|23-26]
 #[ink(message)]
 pub fn get_values(&self) -> (u32, bool) {
     (self.x, self.y)
@@ -933,17 +952,13 @@ pub struct MyContractNew {
     y: bool,
     x: u32,
 }
-
-#[ink(message)]
-pub fn get_values(&self) -> (u32, bool) {
-    (self.y, self.x)
-}
 ```
 
 </div>
 
-- Make sure your updated code is compatible with the existing contracts state
-- Will this updated code work with the new definition and the old storage ?
+- Make sure your updated code is compatible with the existing contracts state.
+- Will the getter work with the new definition and the old storage ?
+<!-- - How about that one ? -->
 
 NOTE:
 - Various potential changes that can result in backwards incompatibility:
@@ -951,7 +966,7 @@ NOTE:
   - Introducing new variable(s) before any of the existing ones
   - Changing variable type(s)
   - Removing variables
-- Will this work? (no, SCALE encoding is oblivious to names, only order matters)
+- Answer: no, SCALE encoding is oblivious to names, only order matters
 
 ---
 
@@ -1243,7 +1258,7 @@ pub fn transfer_through_runtime(
         receiver,
         value,
     });
-    
+
     self.env().call_runtime(&call_object)
 }
 ```
@@ -1265,7 +1280,7 @@ pub fn transfer_through_runtime(
         receiver,
         value,
     });
-    
+
     self.env().call_runtime(&call_object)
 }
 ```
@@ -1531,7 +1546,7 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
           .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
           .await
           .expect("instantiate failed");
-  
+
   let mut call = erc20.call::<Erc20>();
   let total_supply_msg = call.total_supply();
   let total_supply_res = client
@@ -1555,7 +1570,7 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
           .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
           .await
           .expect("instantiate failed");
-  
+
   let mut call = erc20.call::<Erc20>();
   let total_supply_msg = call.total_supply();
   let total_supply_res = client
@@ -1579,7 +1594,7 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
           .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
           .await
           .expect("instantiate failed");
-  
+
   let mut call = erc20.call::<Erc20>();
   let total_supply_msg = call.total_supply();
   let total_supply_res = client
