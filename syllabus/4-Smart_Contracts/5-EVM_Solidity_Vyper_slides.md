@@ -538,3 +538,27 @@ Note:
 Commit-reveal requires that a specific secret be revealed at some point for
 verification. A signature scheme provides a lot more flexibility for keeping the
 secret(s) secure.
+
+---
+
+# TODO
+
+##### Some things that I think are currently lacking:
+
+* More gasometer
+* Various ways to call a contract
+* Transactions
+* Non-transactions (view calls / RPC queries)
+* Solidity modifiers
+* revert (raise in Vyper)
+* Ether denominations (and esp. talk about advantages of integer math)
+* Precompiles (original ones, plus what moonbeam has done?)
+* link to Ethernaut, etc.
+* checksum cases
+* Loops - introduce in solidity but cover in more depth with vyper (no inf loops)
+
+##### And some that I will probably leave out of scope
+* Assembly
+* ABI explanation, this is potentially a big (and dry?) topic
+* call data
+
