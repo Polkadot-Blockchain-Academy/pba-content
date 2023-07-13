@@ -18,7 +18,7 @@ Ethereum Virtual Machine
 * Spam-resistant: Opcodes and other resources are metered at a very granular level
 * Turing-complete (with a caveat)
 * Stack-based design
-* Ethereum-specific (EVM can query block hash, etc.)
+* Ethereum-specific (EVM can query block hash, accounts and balances, etc.)
 
 Note:
 
@@ -58,6 +58,7 @@ properly paid for.
 * TODO: diagram, show that execution halts for each opcode to check gas balance
 * TODO: talk about disadvantages (perf)
 * TODO: talk about other resource metering?
+* TODO: gas estimation (RPC call)
 
 ---
 
