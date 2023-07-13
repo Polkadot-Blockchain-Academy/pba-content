@@ -5,15 +5,38 @@ description: Principles of coordination, contracts, smart contracts, and compari
 
 # Smart Contracts
 
-## Overview
+## Two Definitions
+
+### Broad Definition <!-- .element: class="fragment" data-fragment-index="1" -->
+
+_aka Szabo definition_ 
+<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote> 
+
+### Narrow Definition
+_aka Web3 definition_
+<blockquote>A program that specifies how users can interact with state machine and is deployed permissionlessly to a blockchain network</blockquote>
 
 Notes:
 Intro 
 In this module we're going to talk about Smart Contracts.  
-Before we can understand smart contracts and what makes them smart, we need to understand what contracts are in the first place.  
-Afterall, we are standing on the shoulders of giants here.  
-And in order to understand what contracts are, we'll start all the way back at human coordination.  
-We'll see that contracts are just a pretty good technology to achieve coordination, and that smart contracts are an improvement on that technology.
+The first question we should answer is "wtf is a smart contract".
+The term has been around for a long time (longer than any blockchain platform) and has evolved over time.
+It was first introduced by this guy Nick Szabo in the '90s.
+
+CLICK - read szabo definition
+Szabo's definition is primitive and kind of vague.
+It might even be argued that it includes all computer programs.
+But it gets at the essence of his thinking at the time. Szabo studied both law and computer science and his big idea was that agreements that are traditionally contracts could be better expressed and enforced as computer programs.
+Over time, as this vision was gradually realized the term took on a more specific meaning and was refined quite a bit.
+
+CLICK - read web3 definition
+This definition is clearly more technical and precise, and that is helpful in a lot of ways.
+At this point we haven't even learned all the terms in the web3 definition, but we will have by the end of the week.
+The broad definition is useful in understanding the broader space and its philosophy.
+The narrow definition is useful when you're talking about deploying code to actual blockchain platforms.
+
+In this first lesson we'll focus mostly on Szabo's braoder notion and explore the ways in which smart contracts are a modern extension to an ancient technology: contracts.
+We'll also look at some criticisms of the term "smart contract" and some alternatives that might have been better if it weren't already way too late.
 
 ---
 
@@ -30,6 +53,11 @@ building homes, buildings, roads
 Doing the above safely through bureaucracies like inspection and certification procedures, automobile registration
 
 Notes:
+Before we can understand what makes smart contracts "smart" versions of contracts, we need to understand what contracts are in the first place.  
+Afterall, we are standing on the shoulders of giants here.  
+And in order to understand what contracts are, we'll start all the way back at human coordination.  
+We'll see that contracts are just a pretty good technology to achieve coordination, and that smart contracts are an improvement on that technology.
+
 Coordinated activity is the basis of so much human behavior.  
 Consider the building we're in right now.  
 It has a whole crew of technicians, janitors, grounds people to run it, not to mention the crew it took to build it.  
@@ -236,7 +264,7 @@ But! Eventually, it will be sufficiently profitable to defect and to break promi
 
 ---
 
-# Contracts 🎉
+# Contracts
 
 - **Contracts are Promises**
 - Some involve money, but they're much **more general than just money**.
@@ -293,7 +321,7 @@ Okay. Cool. All on the same page? Nodding heads? We can agree we understand this
 
 ---
 
-# Smart Contracts
+# Smart Contracts  🎉
 
 ![](./img/overview/szabo.jpeg) <!-- .element: class="fragment" -->
 
@@ -344,6 +372,19 @@ So we started all the way back at simple primitive trade. To personal trust. To 
 And now, we're going make the next iteration in this long, rich history of how to coordinate: which is the smart contract.
 
 TODO find link to court case that set precident for contracts that were "frolic and gamble" or something not being enforceable.
+
+---v
+
+## Smart Contracts 😠👎
+
+TODO Vitalik Tweet screenshot
+
+Notes:
+Of course, the term isn't perfect, and not everybody likes it.
+As you can see in the tweet, Vitalik has worried that the term is too catchy and gives the wrong impression...
+TODO flesh this out. I, actually like the term, so I'm the wrong person for this.
+
+With these caveats and criticisms in mind, it is still worth exploring the idea of contracts as computer programs.
 
 ---
 
