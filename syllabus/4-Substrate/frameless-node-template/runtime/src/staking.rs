@@ -1,15 +1,17 @@
+use crate::currency::CryptoCurrency;
+
 use super::*;
 
 /// The configuration trait for this module.
 pub trait Config {
 	/// Some type that can provide the currency functionality to this module.
-	type Currency: shared::CryptoCurrency;
+	type Currency: CryptoCurrency;
 }
 
 /// Just a type alias to make it easier to access the balance type coming in from
 /// `Config::Currency::Balance`. Try using `Config::Currency::Balance` directly and see why it
 /// won't work. Ruminate a lot on this, make sure you get it!
-type BalanceOf<T> = <<T as Config>::Currency as shared::CryptoCurrency>::Balance;
+type BalanceOf<T> = <<T as Config>::Currency as CryptoCurrency>::Balance;
 
 /// Just a wrapper for this module's implementations.
 ///
@@ -17,8 +19,8 @@ type BalanceOf<T> = <<T as Config>::Currency as shared::CryptoCurrency>::Balance
 /// interface of each module is its `Call` (followed by calling `dispatch` on it), not `Module`.
 pub struct Module<T: Config>(sp_std::marker::PhantomData<T>);
 impl<T: Config> Module<T> {
-	fn bond(sender: shared::AccountId, amount: BalanceOf<T>) -> shared::DispatchResult {
-		<T::Currency as shared::CryptoCurrency>::reserve(sender, amount)
+	fn bond(sender: shared::AccountId, amount: BalanceOf<T>) -> DispatchResult {
+		<T::Currency as CryptoCurrency>::reserve(sender, amount)
 	}
 }
 
@@ -30,8 +32,8 @@ pub enum Call<T: Config> {
 	Bond { amount: BalanceOf<T> },
 }
 
-impl<T: Config> shared::Dispatchable for Call<T> {
-	fn dispatch(self, sender: shared::AccountId) -> shared::DispatchResult {
+impl<T: Config> Dispatchable for Call<T> {
+	fn dispatch(self, sender: shared::AccountId) -> DispatchResult {
 		match self {
 			Call::Bond { amount } => Module::<T>::bond(sender, amount),
 		}

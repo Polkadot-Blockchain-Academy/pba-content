@@ -54,7 +54,6 @@ use log::info;
 use parity_scale_codec::{Decode, Encode};
 use shared::{AccountId, Block, Extrinsic};
 
-use shared::Dispatchable;
 use sp_api::impl_runtime_apis;
 use sp_runtime::{
 	create_runtime_str,
@@ -78,6 +77,17 @@ use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
 use crate::shared::{DispatchError, RuntimeCall};
+
+/// Final return type of all dispatch functions.
+pub type DispatchResult = Result<(), DispatchError>;
+
+/// Something that can be dispatched.
+///
+/// This is typically implemented for various `Call` enums.
+pub trait Dispatchable {
+	/// Dispatch self, assuming the given `sender`.
+	fn dispatch(self, sender: AccountId) -> DispatchResult;
+}
 
 /// Opaque types. This is what the lectures referred to as `ClientBlock`. Notice how
 /// `OpaqueExtrinsic` is merely a `Vec<u8>`.
@@ -195,7 +205,7 @@ impl Runtime {
 		sp_io::storage::set(key, &value.encode());
 	}
 
-	fn dispatch_extrinsic(ext: Extrinsic) -> shared::DispatchResult {
+	fn dispatch_extrinsic(ext: Extrinsic) -> DispatchResult {
 		log::debug!(target: LOG_TARGET, "dispatching {:?}", ext);
 
 		let sender =
@@ -437,6 +447,7 @@ mod tests {
 	fn set_value_call(value: u32) -> RuntimeCall {
 		RuntimeCall::System(shared::SystemCall::Set { value })
 	}
+
 	#[test]
 	fn host_function_call_works() {
 		TestExternalities::new_empty().execute_with(|| {

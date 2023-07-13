@@ -20,6 +20,7 @@
 use crate::{
 	shared::{self, DispatchResult, Get},
 	storage::{StorageMap, StorageValue},
+	Dispatchable,
 };
 use parity_scale_codec::{Decode, Encode};
 use scale_info::TypeInfo;
@@ -49,7 +50,7 @@ pub trait Config {
 	type MinimumBalance: shared::Get<Self::Balance>;
 
 	/// The numeric type that we use to store balances, e.g. `u64`.
-	type Balance: shared::BalanceT;
+	type Balance: BalanceT;
 }
 
 /// This module's `Call` enum.
@@ -164,7 +165,7 @@ impl<T: Config> Default for AccountBalance<T> {
 // NOTE: make sure to return correct [`Error`] types based on [`Call`] specifications.
 impl<T: Config> AccountBalance<T> {
 	/// Reserve `amount`, if possible.
-	fn reserve(&mut self, amount: T::Balance) -> shared::DispatchResult {
+	fn reserve(&mut self, amount: T::Balance) -> DispatchResult {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() => {
 				self.free = leftover;
@@ -176,7 +177,7 @@ impl<T: Config> AccountBalance<T> {
 	}
 
 	/// Unreserve `amount`, if possible.
-	fn unreserve(&mut self, amount: T::Balance) -> shared::DispatchResult {
+	fn unreserve(&mut self, amount: T::Balance) -> DispatchResult {
 		match self.reserved.checked_sub(&amount) {
 			Some(leftover) => {
 				self.reserved = leftover;
@@ -196,7 +197,7 @@ impl<T: Config> AccountBalance<T> {
 	}
 
 	/// Send/transfer `amount` from the free balance.
-	fn transfer(&mut self, amount: T::Balance) -> shared::DispatchResult {
+	fn transfer(&mut self, amount: T::Balance) -> DispatchResult {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() || leftover.is_zero() => {
 				self.free = leftover;
@@ -266,7 +267,7 @@ impl<T: Config> Module<T> {
 		sender: shared::AccountId,
 		dest: shared::AccountId,
 		amount: T::Balance,
-	) -> shared::DispatchResult {
+	) -> DispatchResult {
 		let mut sender_balance = BalancesMap::<T>::get(sender).ok_or(Error::<T>::DoesNotExist)?;
 		let mut dest_balance = BalancesMap::<T>::get(dest).unwrap_or_default();
 
@@ -282,7 +283,7 @@ impl<T: Config> Module<T> {
 	}
 
 	/// See [`Call::TransferAll`].
-	fn transfer_all(sender: shared::AccountId, dest: shared::AccountId) -> shared::DispatchResult {
+	fn transfer_all(sender: shared::AccountId, dest: shared::AccountId) -> DispatchResult {
 		let balance = BalancesMap::<T>::get(sender).ok_or(Error::<T>::DoesNotExist)?;
 		if !balance.reserved.is_zero() {
 			Err(Error::<T>::NotAllowed)?;
@@ -296,7 +297,7 @@ impl<T: Config> Module<T> {
 		sender: shared::AccountId,
 		who: shared::AccountId,
 		amount: T::Balance,
-	) -> shared::DispatchResult {
+	) -> DispatchResult {
 		if sender != T::Minter::get() {
 			Err(Error::<T>::NotAllowed)?;
 		}
@@ -324,7 +325,7 @@ impl<T: Config> Module<T> {
 	/// * [`Error::InsufficientFunds`] if the account does not have enough free funds to preform
 	///   this operation. Recall that an accounts free balance must always remain equal or above
 	///   `T::MinimumBalance`.
-	pub fn reserve(from: shared::AccountId, amount: T::Balance) -> shared::DispatchResult {
+	pub fn reserve(from: shared::AccountId, amount: T::Balance) -> DispatchResult {
 		let mut balance = BalancesMap::<T>::get(from).ok_or(Error::<T>::DoesNotExist)?;
 
 		balance.can_transfer(amount)?;
@@ -343,7 +344,7 @@ impl<T: Config> Module<T> {
 	/// * [`Error::Overflow`] if any type of arithmetic operation overflows.
 	/// * [`Error::InsufficientFunds`] if the account does not have enough reserved funds to preform
 	///   this operation.
-	pub fn unreserve(from: shared::AccountId, amount: T::Balance) -> shared::DispatchResult {
+	pub fn unreserve(from: shared::AccountId, amount: T::Balance) -> DispatchResult {
 		let mut balance = BalancesMap::<T>::get(from).ok_or(Error::<T>::DoesNotExist)?;
 
 		balance.unreserve(amount)?;
@@ -353,8 +354,8 @@ impl<T: Config> Module<T> {
 	}
 }
 
-impl<T: Config> shared::Dispatchable for Call<T> {
-	fn dispatch(self, sender: shared::AccountId) -> shared::DispatchResult {
+impl<T: Config> Dispatchable for Call<T> {
+	fn dispatch(self, sender: shared::AccountId) -> DispatchResult {
 		match self {
 			Call::Mint { dest, amount } => Module::<T>::mint(sender, dest, amount),
 			Call::Transfer { dest, amount } => Module::<T>::transfer(sender, dest, amount),
@@ -363,18 +364,18 @@ impl<T: Config> shared::Dispatchable for Call<T> {
 	}
 }
 
-impl<T: Config> shared::CryptoCurrency for Module<T> {
+impl<T: Config> CryptoCurrency for Module<T> {
 	type Balance = T::Balance;
 
 	fn transfer(
 		from: shared::AccountId,
 		to: shared::AccountId,
 		amount: Self::Balance,
-	) -> shared::DispatchResult {
+	) -> DispatchResult {
 		Module::<T>::transfer(from, to, amount)
 	}
 
-	fn reserve(from: shared::AccountId, amount: Self::Balance) -> shared::DispatchResult {
+	fn reserve(from: shared::AccountId, amount: Self::Balance) -> DispatchResult {
 		Module::<T>::reserve(from, amount)
 	}
 
@@ -385,4 +386,72 @@ impl<T: Config> shared::CryptoCurrency for Module<T> {
 	fn reserved_balance(of: shared::AccountId) -> Option<Self::Balance> {
 		BalancesMap::<T>::get(of).map(|b| b.reserved)
 	}
+}
+
+/// This is just a marker trait that wraps a bunch of other traits. It is meant to represent a
+/// numeric type, like a balance, e.g. `u32`.
+///
+/// It helps us not repeat the long list of traits multiple times, and instead just have `type:
+/// BalanceT`.
+///
+/// The blanket implementation for such marker traits is interesting and a common pattern.
+///
+/// Note the usage of `CheckedSub` and `CheckedAdd`, this is how we perform "overflow-safe"
+/// arithmetic.
+pub trait BalanceT:
+	Copy
+	+ Clone
+	+ Default
+	+ Encode
+	+ Decode
+	+ CheckedSub
+	+ CheckedAdd
+	+ Zero
+	+ Ord
+	+ PartialOrd
+	+ Eq
+	+ PartialEq
+	+ sp_std::fmt::Debug // TODO: RuntimeDebug?
+{
+}
+impl<
+		T: Copy
+			+ Clone
+			+ Default
+			+ Encode
+			+ Decode
+			+ CheckedSub
+			+ CheckedAdd
+			+ Ord
+			+ Zero
+			+ PartialOrd
+			+ Eq
+			+ PartialEq
+			+ sp_std::fmt::Debug,
+	> BalanceT for T
+{
+}
+
+/// A trait to represent basic functionality of a crypto-currency.
+///
+/// This should be implemented by `currency_module::Module`.
+pub trait CryptoCurrency {
+	/// The numeric type used to represent balances.
+	type Balance: BalanceT;
+
+	/// Transfer `amount` from `from` to `to`.
+	fn transfer(
+		from: shared::AccountId,
+		to: shared::AccountId,
+		amount: Self::Balance,
+	) -> DispatchResult;
+
+	/// Reserve exactly `amount` from `from`.
+	fn reserve(from: shared::AccountId, amount: Self::Balance) -> DispatchResult;
+
+	/// Get the free balance of a given account, `None` if not existent.
+	fn free_balance(of: shared::AccountId) -> Option<Self::Balance>;
+
+	/// Get the reserved balance of a given account, `None` if non-existent.
+	fn reserved_balance(of: shared::AccountId) -> Option<Self::Balance>;
 }
