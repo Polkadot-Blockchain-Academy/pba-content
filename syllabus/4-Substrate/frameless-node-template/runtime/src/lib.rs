@@ -315,15 +315,16 @@ impl_runtime_apis! {
 
 #[cfg(test)]
 mod tests {
-	use crate::shared::RuntimeCallWithTip;
-
 	use super::*;
+	use crate::shared::RuntimeCallWithTip;
 	use parity_scale_codec::Encode;
 	use shared::{Extrinsic, RuntimeCall, VALUE_KEY};
-	use sp_api::HeaderT;
 	use sp_core::hexdisplay::HexDisplay;
 	use sp_io::TestExternalities;
-	use sp_runtime::traits::Extrinsic as _;
+	use sp_runtime::{
+		traits::Extrinsic as _,
+		transaction_validity::{InvalidTransaction, TransactionValidityError},
+	};
 
 	fn set_value_call(value: u32) -> RuntimeCallWithTip {
 		RuntimeCallWithTip {
@@ -401,7 +402,10 @@ mod tests {
 
 		TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-			assert!(Runtime::do_apply_extrinsic(ext).is_err());
+			assert_eq!(
+				Runtime::do_apply_extrinsic(ext).unwrap_err(),
+				TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+			);
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
 		});
 	}
@@ -413,7 +417,30 @@ mod tests {
 
 		TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-			assert!(Runtime::do_apply_extrinsic(ext).is_err());
+			assert_eq!(
+				Runtime::do_apply_extrinsic(ext).unwrap_err(),
+				TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+			);
+			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+		});
+	}
+
+	#[test]
+	fn validate_works() {
+		// An unsigned `Set` cannot be validated. Same should go for one with a bad signature.
+		let ext = unsigned_set_value(42);
+
+		TestExternalities::new_empty().execute_with(|| {
+			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+			assert_eq!(
+				Runtime::do_validate_transaction(
+					TransactionSource::External,
+					ext,
+					Default::default()
+				)
+				.unwrap_err(),
+				TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+			);
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
 		});
 	}
@@ -475,16 +502,5 @@ mod tests {
 			// gucci.
 			Runtime::do_execute_block(block.clone());
 		})
-	}
-
-	#[test]
-	fn validate_works() {
-		let ext = Extrinsic::new_unsigned(set_value_call(42));
-
-		TestExternalities::new_empty().execute_with(|| {
-			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-			assert!(Runtime::do_apply_extrinsic(ext).is_err());
-			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-		});
 	}
 }

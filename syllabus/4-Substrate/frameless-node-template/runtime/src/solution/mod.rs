@@ -5,7 +5,6 @@ use crate::{
 	},
 	Runtime, LOG_TARGET, VERSION,
 };
-use log::info;
 use parity_scale_codec::{Decode, Encode};
 use sp_api::{HashT, TransactionValidity};
 use sp_core::crypto::UncheckedFrom;

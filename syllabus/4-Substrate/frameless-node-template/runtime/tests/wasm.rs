@@ -12,8 +12,9 @@ use sp_core::{
 use sp_io::TestExternalities;
 use sp_keyring::AccountKeyring::*;
 use sp_runtime::{
-	traits::{BlakeTwo256, Extrinsic as _},
-	BuildStorage,
+	traits::{BlakeTwo256, Block as BlockT, Extrinsic as _},
+	transaction_validity::{InvalidTransaction, TransactionValidityError},
+	ApplyExtrinsicResult, BuildStorage,
 };
 
 use crate::shared::HEADER_KEY;
@@ -45,11 +46,16 @@ fn sp_io_root() -> H256 {
 	H256::decode(&mut &sp_io::storage::root(Default::default())[..][..]).unwrap()
 }
 
-fn sign(call: RuntimeCall, signer: &sp_keyring::AccountKeyring) -> Extrinsic {
+fn signed(call: RuntimeCall, signer: &sp_keyring::AccountKeyring) -> Extrinsic {
 	let call_with_tip = RuntimeCallWithTip { tip: None, call };
 	let payload = (call_with_tip).encode();
 	let signature = signer.sign(&payload);
 	Extrinsic::new(call_with_tip, Some((signer.public(), signature, ()))).unwrap()
+}
+
+fn unsigned(call: RuntimeCall) -> Extrinsic {
+	let call_with_tip = RuntimeCallWithTip { tip: None, call };
+	Extrinsic::new(call_with_tip, None).unwrap()
 }
 
 fn author_and_import(
@@ -167,52 +173,174 @@ fn new_test_ext() -> TestExternalities {
 	let code = code_storage.top.get(sp_core::storage::well_known_keys::CODE).unwrap();
 	TestExternalities::new_with_code(code, storage)
 }
-#[test]
-fn empty_block() {
-	let mut state = new_test_ext();
-	state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
-	author_and_import(&mut state, vec![], || {});
+
+mod basics {
+	use super::*;
+	#[test]
+	fn empty_block() {
+		let mut state = new_test_ext();
+		state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
+		author_and_import(&mut state, vec![], || {});
+	}
+
+	#[test]
+	fn remark() {
+		let exts =
+			vec![signed(RuntimeCall::System(SystemCall::Remark { data: vec![42, 42] }), &Alice)];
+		let mut state = new_test_ext();
+
+		author_and_import(&mut state, exts, || assert!(sp_io::storage::get(VALUE_KEY).is_none()));
+	}
+
+	#[test]
+	fn set_value() {
+		let exts = vec![signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice)];
+		let mut state = new_test_ext();
+
+		state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
+		author_and_import(&mut state, exts, || assert!(sp_io::storage::get(VALUE_KEY).is_some()));
+	}
 }
 
-#[test]
-fn remark() {
-	let call = RuntimeCall::System(SystemCall::Remark { data: vec![42, 42] });
-	let exts = vec![sign(call, &Alice)];
+mod block_builder {
+	use sp_runtime::DispatchOutcome;
 
-	let mut state = new_test_ext();
+	use super::*;
 
-	author_and_import(&mut state, exts, || assert!(sp_io::storage::get(VALUE_KEY).is_none()));
+	#[test]
+	fn apply_unsigned() {
+		let ext = unsigned(RuntimeCall::System(SystemCall::Set { value: 42 }));
+		let mut state = new_test_ext();
+
+		let return_bytes =
+			executor_call(&mut state, "BlockBuilder_apply_extrinsic", ext.encode().as_slice())
+				.unwrap();
+
+		assert_eq!(
+			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes)
+				.unwrap()
+				.unwrap_err(),
+			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+		);
+	}
+
+	#[test]
+	fn apply_bad_signature() {
+		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice);
+		let other_sig = {
+			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice)
+				.signature
+				.unwrap()
+				.1
+		};
+		ext.signature.as_mut().unwrap().1 = other_sig;
+
+		let mut state = new_test_ext();
+
+		let return_bytes =
+			executor_call(&mut state, "BlockBuilder_apply_extrinsic", ext.encode().as_slice())
+				.unwrap();
+
+		assert_eq!(
+			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes)
+				.unwrap()
+				.unwrap_err(),
+			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+		);
+	}
+
+	#[test]
+	fn apply_with_error() {
+		let mut state = new_test_ext();
+		let ext = signed(
+			RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+			&Bob,
+		);
+
+		let return_bytes =
+			executor_call(&mut state, "BlockBuilder_apply_extrinsic", ext.encode().as_slice())
+				.unwrap();
+
+		assert!(matches!(
+			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes).unwrap().unwrap(),
+			DispatchOutcome::Err(_)
+		));
+	}
+
+	#[test]
+	fn apply_ok() {
+		let mut state = new_test_ext();
+		let ext = signed(
+			RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+			&Alice,
+		);
+
+		let return_bytes =
+			executor_call(&mut state, "BlockBuilder_apply_extrinsic", ext.encode().as_slice())
+				.unwrap();
+
+		assert!(matches!(
+			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes).unwrap().unwrap(),
+			DispatchOutcome::Ok(_)
+		));
+	}
 }
 
-#[test]
-fn basic_setup_works() {
-	let call = RuntimeCall::System(SystemCall::Set { value: 42 });
-	let exts = vec![sign(call, &Alice)];
+mod validate {
+	use sp_runtime::transaction_validity::TransactionSource;
 
-	let mut state = new_test_ext();
+	use super::*;
+	#[test]
+	fn validate_bad_signature() {
+		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice);
+		let other_sig = {
+			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice)
+				.signature
+				.unwrap()
+				.1
+		};
+		ext.signature.as_mut().unwrap().1 = other_sig;
 
-	state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
-	author_and_import(&mut state, exts, || assert!(sp_io::storage::get(VALUE_KEY).is_some()));
-}
+		let mut state = new_test_ext();
 
-#[test]
-fn apply_bad_signature_or_unsigned() {
-	todo!();
-}
+		let return_bytes = executor_call(
+			&mut state,
+			"TaggedTransactionQueue_validate_transaction",
+			(TransactionSource::External, ext, <Block as BlockT>::Hash::default())
+				.encode()
+				.as_slice(),
+		)
+		.unwrap();
 
-#[test]
-fn apply_with_error() {
-	todo!();
-}
+		assert_eq!(
+			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes)
+				.unwrap()
+				.unwrap_err(),
+			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+		);
+	}
 
-#[test]
-fn validate_bad_signature() {
-	todo!();
-}
+	#[test]
+	fn validate_unsigned() {
+		let ext = unsigned(RuntimeCall::System(SystemCall::Set { value: 42 }));
+		let mut state = new_test_ext();
 
-#[test]
-fn validate_unsigned() {
-	todo!();
+		let return_bytes = executor_call(
+			&mut state,
+			"TaggedTransactionQueue_validate_transaction",
+			(TransactionSource::External, ext, <Block as BlockT>::Hash::default())
+				.encode()
+				.as_slice(),
+		)
+		.unwrap();
+
+		assert_eq!(
+			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes)
+				.unwrap()
+				.unwrap_err(),
+			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+		);
+	}
 }
 
 mod currency {
@@ -222,11 +350,14 @@ mod currency {
 		// bob account cannot mint.
 		let mut state = new_test_ext();
 
-		let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 });
-		let exts = vec![sign(call, &Bob)];
+		let exts = vec![signed(
+			RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+			&Bob,
+		)];
 
 		author_and_import(&mut state, exts, || {
 			assert!(balance_of(Alice.public()).is_none());
+			assert!(balance_of(Bob.public()).is_none());
 			assert!(issuance().is_none());
 		});
 	}
@@ -234,8 +365,10 @@ mod currency {
 	#[test]
 	fn mint_success() {
 		// can mint if alice
-		let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 });
-		let exts = vec![sign(call, &Alice)];
+		let exts = vec![signed(
+			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
+			&Alice,
+		)];
 
 		let mut state = new_test_ext();
 
@@ -250,11 +383,11 @@ mod currency {
 	fn multi_mint_success() {
 		// can mint multiple times if alice
 		let exts = vec![
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
 				&Alice,
 			),
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 30 }),
 				&Alice,
 			),
@@ -273,13 +406,17 @@ mod currency {
 	fn mixed_mint() {
 		// can mint multiple times if alice
 		let exts = vec![
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
 				&Alice,
 			),
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 30 }),
 				&Bob,
+			),
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Charlie.public(), amount: 30 }),
+				&Charlie,
 			),
 		];
 
@@ -295,9 +432,10 @@ mod currency {
 	#[test]
 	fn mint_not_enough() {
 		// cannot mint amount less than `MinimumBalance`
-
-		let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 5 });
-		let exts = vec![sign(call, &Alice)];
+		let exts = vec![signed(
+			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 5 }),
+			&Alice,
+		)];
 
 		let mut state = new_test_ext();
 
@@ -311,8 +449,10 @@ mod currency {
 	fn mint_not_enough_edge() {
 		// still cannot mint amount less than `MinimumBalance`
 
-		let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 9 });
-		let exts = vec![sign(call, &Alice)];
+		let exts = vec![signed(
+			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 9 }),
+			&Alice,
+		)];
 
 		let mut state = new_test_ext();
 
@@ -322,8 +462,10 @@ mod currency {
 		});
 
 		// but 10 is ok.
-		let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 10 });
-		let exts = vec![sign(call, &Alice)];
+		let exts = vec![signed(
+			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 10 }),
+			&Alice,
+		)];
 		author_and_import(&mut state, exts, || {
 			assert_eq!(free_of(Bob.public()), Some(10));
 			assert_eq!(issuance(), Some(10));
@@ -336,12 +478,12 @@ mod currency {
 
 		let exts = vec![
 			// mint 100 for bob.
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
 			),
 			// transfer 20 to alice.
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer { dest: Alice.public(), amount: 20 }),
 				&Bob,
 			),
@@ -361,11 +503,11 @@ mod currency {
 		let spendable = 100 - 10;
 
 		let exts = vec![
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
 			),
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer {
 					dest: Alice.public(),
 					amount: spendable + 1,
@@ -387,11 +529,11 @@ mod currency {
 		let spendable = 100 - 10;
 
 		let exts = vec![
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
 			),
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer {
 					dest: Alice.public(),
 					amount: spendable,
@@ -412,11 +554,11 @@ mod currency {
 		let mut state = new_test_ext();
 
 		let exts = vec![
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
 			),
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer { dest: Alice.public(), amount: 100 }),
 				&Bob,
 			),
@@ -434,11 +576,11 @@ mod currency {
 		let mut state = new_test_ext();
 
 		let exts = vec![
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
 			),
-			sign(RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }), &Bob),
+			signed(RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }), &Bob),
 		];
 
 		author_and_import(&mut state, exts, || {
@@ -458,11 +600,11 @@ mod staking {
 		let mut state = new_test_ext();
 
 		let exts = vec![
-			sign(
+			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
 			),
-			sign(RuntimeCall::Staking(StakingCall::Bond { amount: 20 }), &Bob),
+			signed(RuntimeCall::Staking(StakingCall::Bond { amount: 20 }), &Bob),
 		];
 
 		author_and_import(&mut state, exts, || {
