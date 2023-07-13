@@ -1,5 +1,4 @@
 use parity_scale_codec::{Decode, Encode};
-use runtime::export::RuntimeGenesisConfig;
 use shared::{
 	AccountBalance, AccountId, Balance, Block, CurrencyCall, Extrinsic, Header, RuntimeCall,
 	RuntimeCallWithTip, StakingCall, SystemCall, EXTRINSICS_KEY, VALUE_KEY,
@@ -14,7 +13,7 @@ use sp_keyring::AccountKeyring::*;
 use sp_runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Extrinsic as _},
 	transaction_validity::{InvalidTransaction, TransactionValidityError},
-	ApplyExtrinsicResult, BuildStorage,
+	ApplyExtrinsicResult,
 };
 
 use crate::shared::HEADER_KEY;
@@ -168,9 +167,11 @@ fn executor_call(t: &mut TestExternalities, method: &str, data: &[u8]) -> Result
 
 fn new_test_ext() -> TestExternalities {
 	sp_tracing::try_init_simple();
-	let storage = RuntimeGenesisConfig::default().build_storage().unwrap();
-	let code_storage = storage.clone();
-	let code = code_storage.top.get(sp_core::storage::well_known_keys::CODE).unwrap();
+	let code = include_bytes!("../../target/debug/wbuild/runtime/runtime.wasm");
+	let mut storage: sp_core::storage::Storage = Default::default();
+	storage
+		.top
+		.insert(sp_core::storage::well_known_keys::CODE.to_vec(), code.to_vec());
 	TestExternalities::new_with_code(code, storage)
 }
 

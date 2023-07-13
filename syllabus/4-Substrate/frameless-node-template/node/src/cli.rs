@@ -1,8 +1,13 @@
 use sc_cli::RunCmd;
 
+/// The consensus system to use.
 #[derive(Debug, Clone)]
 pub enum Consensus {
+	/// Use manual seal, which basically produces blocks at fixed intervals, at the given interval.
+	///
+	/// Example: `manual-seal-3000` will produce a block every 3 seconds.
 	ManualSeal(u64),
+	/// Produce a new block instantly, as soon as at least one transaction exists in the pool.
 	InstantSeal,
 }
 
@@ -25,7 +30,7 @@ pub struct Cli {
 	#[command(subcommand)]
 	pub subcommand: Option<Subcommand>,
 
-	#[clap(long, default_value = "manual-seal-3000")]
+	#[clap(long, default_value = "manual-seal-1000")]
 	pub consensus: Consensus,
 
 	#[clap(flatten)]

@@ -1,42 +1,143 @@
-//! Lesson ideas:
+//! Welcome to the `Frameless` exercise, the third edition.
 //!
-//! ## Info points:
+//! > This assignment is based on Joshy's experiment, years ago, to explore building a Substrate
+//! > runtime using pure Rust. If you learn something new in this exercise, attribute it to his
+//! > work. We hope you to also explore new possibilities, and share it with other for education.
 //!
-//! - a few words about how to run this.
-//! - a few words about how to add dependencies, and the whole /std thing. Could be part of the
-//!   `substrate` crate docs.
-//! - order of api calls recap.
+//! > This assignment builds on top of the `mini_substrate` section of the pre-course material. It
+//! > is highly advices for you to re-familiarize yourself with that.
 //!
-//! ## Exercise Steps:
+//! ## Context
 //!
-//! * Remove the code needed to set the right state root from the template, and ask students to
-//! submit extrinsics and see it fail. They have to fix it.
+//! As the name suggest, this is Frameless runtime. It is a fully substrate-compatible runtime,
+//! which you can easily run with companion `node`, without using `frame`.
 //!
-//! * Remove the parts needed to do a code upgrade. They have to add it again, and make sure it
-//! works. Double check that they bump the spec version. Tell them how they can cause a version
-//! mismatch if they don't.
+//! To run the `node`, execute `cargo run -- --dev`, possibly with `--release`. `--dev` will ensure
+//! that a new database is created each time, and your chain starts afresh.
 //!
-//! *: use the same to nuke your chain.
+//! While you are welcome to explore the `node` folder, it is not part of this assignment, and you
+//! can leave it as-is.
 //!
-//! * Re-implement `mini_substrate` here. Some of the same traits are provided here, and you can
-//! reuse them.
+//! This node uses a tasting block-authoring/consensus scheme in which a block is produced at fixed
+//! intervals. See `--consensus` cli option.
 //!
-//! * Add signatures to your runtime.
+//! ## Warm Up
 //!
-//! * Add a custom fee to each extrinsic, if it is signed. It must be fraud proof of course!
+//! First, study the runtime code with the help of your instructor. You will soon realize that it is
+//! missing some key components. Most notable, the logic to:
 //!
-//! * Make dispatchables transactional, such that if they return `Err()`, their state update is
-//! reverted, but not the fee payment.
+//! 1. apply extrinsics
+//! 2. validate extrinsics for the tx-pool
+//! 3. finalize a block upon authoring.
 //!
-//! ## Cheat sheet
+//! are not complete. Your first task is to complete them, and make sure all local tests are
+//! passing. These tests ensure that your runtime has all the basics in place.
 //!
-//! ```ignore
-//! cargo remote run -- -- --dev --consensus manual-seal-1000
-//! wscat -c ws://127.0.0.1:9944 -x '{"jsonrpc":"2.0", "id":1, "method":"author_submitExtrinsic", "params": ["0x14002a000000"]}'
-//! wscat -c 127.0.0.1:9944 -x '{"jsonrpc":"2.0", "id":1, "method":"state_getStorage", "params": ["0x76616c7565"]}'
-//! ```
+//! The third objective above will ensure that when you author blocks, you set the correct state
+//! root and extrinsics root in the block header. This makes the block be a valid import-able block.
+//! This test demonstrates this property:
+#![doc = docify::embed!("src/lib.rs", import_and_author_equal)]
 //!
-//! TODO: don't mix some types that are defined in both `shared` and `sp_runtime`.
+//! As a part of both, you will realize that you are asked to implement proper signature checking.
+//! In this assignment, we are using the types from [`sp_runtime::generic`] (see [`shared`]).
+//! Studying these types and how the handle signatures within themselves should help you implement
+//! proper signature checking. All in all, your runtime should only work with signed extrinsics, and
+//! instantly reject unsigned (or badly signed) extrinsics. See the following tests:
+#![doc = docify::embed!("src/lib.rs", bad_signature_fails)]
+//!
+#![doc = docify::embed!("src/lib.rs", unsigned_set_value_does_not_work)]
+//!
+//! By the end of this section, you should fix the aforementioned two parts of your runtime,
+//! implement proper dispatch logic for [`shared::SystemCall`], and this should enable you yo pass
+//! all tests in this file. Moreover, your should be able to play with your blockchain, through
+//! running a node, and interacting with it via `curl`, `wscat` or a similar tool. See
+//! `encode_examples` test.
+//!
+//! > Most of [`shared::SystemCall`] instances are for you to use for learning. Try and upgrade your
+//! > chain using [`shared::SystemCall::Upgrade`]!
+//!
+//! TODO: prepare a diff for everything thus far to hand over at some point, or live code it.
+//! TODO: clear graph somewhere of the flow of import and authoring.
+//!
+//! ## Main Task
+//!
+//! Once you are done with the above, you can start your main objective, which is to re-implement
+//! everything you have done for `mini_substrate` here as well. That is, implement a simple currency
+//! system, with abilities to mint, transfer and reserve, and a staking system on top of it.
+//!
+//! ## Specification, Grading
+//!
+//! ### Grading
+//!
+//! Unlike `mini_substrate`, this assignment is primarily graded through a wasm executor, not by
+//! looking at the internals of y your runtime. Manual grading is a small part.
+//!
+//! That means:
+//!
+//! * we do not care *how* you implement the above modules.
+//! * but we do care about your storage layout being exactly as described in `mini_substrate`.
+//! * we do care about the extrinsic format being exactly as described in `shared.rs`.
+//!
+//! In other words, while we can't force you not to change [`shared`] module, we use an exact copy
+//! of this file to craft extrinsics/blocks to interact with your runtime, and we expect to find the
+//! types mentioned in there (eg. [`shared::AccountBalance`]) to be what we decode from your
+//! storage.
+//!
+//! > an example here is that you are still free to use your more generic currency module from
+//! > `mini_substrate`, and as long as you correctly configure it to use [`shared::Balance`] as its
+//! > balance type, everything should work just fine. Remember that if two different types can have
+//! > the same encoding.
+//!
+//! ### Dispatchables
+//!
+//! Similar to `mini_substrate`, the exact expectation of behavior for each instance of
+//! [`shared::RuntimeCallWithTip`] is document in its own file. This should be identical to what you
+//! had to code for `mini_substrate`.
+//!
+//! > As noted above, whether you want to use a trait like `Dispatchable` or not is up to you.
+//!
+//! ### Storage
+//!
+//! Exact same expectation as `mini_substrate`.
+//!
+//! * mapping [`shared::AccountId`] to [`shared::AccountBalance`] kept at `BalancesMap +
+//!   encode(account)`.
+//! * value of type [`shared::Balance`] for total issuance kept at `TotalIssuance`.
+//!
+//! > Again, you are free to use the same storage abstractions as in `mini_substrate` or not. We
+//! > highly advice you do ;)
+//!
+//! ### `BlockBuilder::apply_extrinsic`
+//!
+//! Recall that [`ApplyExtrinsicResult`] is essentially a nested `Result`. The outer one says
+//! whether applying the extrinsic to the block was fine, and the inner one says whether the
+//! extrinsic itself was *dispatched* fine.
+//!
+//! For example, a failed transfer will still live in a block, and is *applied* successfully, but it
+//! is not *dispatched* successfully.
+//!
+//! Your `apply_extrinsic` should:
+//!
+//! * Only return `Err` with [`sp_runtime::InvalidTransaction::BadProof)`] if the extrinsic has an
+//!   invalid signature. In all other cases, outer `Result` is `Ok`.
+//! * If the inner dispatch is failing, your return value should look like `Ok(Err(_))`, and we
+//!   don't care which variant of `DispatchError` you return.
+//!
+//! ### `TaggedTransactionQueue::validate_transaction`
+//!
+//! ### Additional Logic
+//!
+//! Additional to the specification of `mini_substrate`...
+//!
+//! ## Hints
+//!
+//! - Be aware of name duplicates.
+//!
+//!
+//! ## Ideas:
+//!
+//! - Transactional?
+//! - Unreserve and Unbond.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -45,7 +146,7 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 const LOG_TARGET: &'static str = "frameless";
 
-pub(crate) mod shared;
+pub mod shared;
 mod solution;
 
 use log::info;
@@ -89,10 +190,6 @@ pub mod opaque {
 	pub type Block = generic::Block<Header, OpaqueExtrinsic>;
 }
 
-pub mod export {
-	pub use super::RuntimeGenesisConfig;
-}
-
 /// This runtime version.
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
@@ -119,8 +216,7 @@ pub struct RuntimeGenesisConfig;
 #[cfg(feature = "std")]
 impl BuildStorage for RuntimeGenesisConfig {
 	fn assimilate_storage(&self, storage: &mut Storage) -> Result<(), String> {
-		// make sure to not remove this, as our tests always expect the WASM blob to be in the
-		// default state created by your `RuntimeGenesisConfig`.
+		// make sure to not remove this, as it might break the node code.
 		storage.top.insert(well_known_keys::CODE.into(), WASM_BINARY.unwrap().to_vec());
 
 		// if you want more data in your genesis, add it here.
@@ -179,6 +275,10 @@ impl Runtime {
 		header
 	}
 
+	/// Your code path to execute a block that has been previously authored.
+	///
+	/// Study this carefully, but you probably don't need to change it, other than providing a
+	/// proper `do_apply_extrinsic`.
 	fn do_execute_block(block: Block) {
 		info!(target: LOG_TARGET, "Entering execute_block. block: {:?}", block);
 		sp_io::storage::clear(&EXTRINSICS_KEY);
@@ -188,7 +288,7 @@ impl Runtime {
 				.expect("the only possible failure is signature check, which must have already been checked by `validate_transaction`; cannot fail; qed");
 		}
 
-		// check state root
+		// check state root. Clean the state prior to asking for the root.
 		sp_io::storage::clear(&HEADER_KEY);
 
 		// NOTE: if we forget to do this, how can you mess with the blockchain?
@@ -218,20 +318,21 @@ impl Runtime {
 			current.push(ext.encode());
 		});
 
-		// TODO: we don't have a means of dispatch, implement it!
-		// let outcome = Ok(());
+		// TODO: we don't have a means of dispatch, implement it! You probably want to match on
+		// `ext.call.function`, and start implementing different arms one at a time.
+		// Ok(Ok(()))
 		Runtime::solution_apply_extrinsic(ext)
 	}
 
 	fn do_validate_transaction(
-		source: TransactionSource,
+		_source: TransactionSource,
 		ext: <Block as BlockT>::Extrinsic,
-		block_hash: <Block as BlockT>::Hash,
+		_block_hash: <Block as BlockT>::Hash,
 	) -> TransactionValidity {
 		log::debug!(target: LOG_TARGET,"Entering validate_transaction. tx: {:?}", ext);
 		// TODO: we don't have a means of validating, implement it!
 		// Ok(Default::default())
-		Runtime::solution_validate_transaction(source, ext, block_hash)
+		Runtime::solution_validate_transaction(_source, ext, _block_hash)
 	}
 }
 
@@ -282,6 +383,7 @@ impl_runtime_apis! {
 	}
 
 	// Ignore everything after this.
+
 	impl sp_api::Metadata<Block> for Runtime {
 		fn metadata() -> OpaqueMetadata {
 			OpaqueMetadata::new(Default::default())
@@ -350,6 +452,17 @@ mod tests {
 	}
 
 	#[test]
+	#[docify::export]
+	fn host_function_call_works() {
+		// this is just to demonstrate to you that you should always wrap any code containing host
+		// functions in `TestExternalities`.
+		TestExternalities::new_empty().execute_with(|| {
+			sp_io::storage::get(&VALUE_KEY);
+		})
+	}
+
+	#[test]
+	#[docify::export]
 	fn encode_examples() {
 		// demonstrate some basic encodings. Example usage:
 		//
@@ -371,15 +484,7 @@ mod tests {
 	}
 
 	#[test]
-	fn host_function_call_works() {
-		// this is just to demonstrate to you that you should always wrap any code containing host
-		// functions in `TestExternalities`.
-		TestExternalities::new_empty().execute_with(|| {
-			sp_io::storage::get(&VALUE_KEY);
-		})
-	}
-
-	#[test]
+	#[docify::export]
 	fn signed_set_value_works() {
 		// A signed `Set` works.
 		let ext = signed_set_value(42);
@@ -391,6 +496,7 @@ mod tests {
 	}
 
 	#[test]
+	#[docify::export]
 	fn bad_signature_fails() {
 		// A poorly signed extrinsic must fail.
 		let signer = sp_keyring::AccountKeyring::Alice;
@@ -411,8 +517,9 @@ mod tests {
 	}
 
 	#[test]
+	#[docify::export]
 	fn unsigned_set_value_does_not_work() {
-		// An unsigned `Set` must fail.
+		// An unsigned `Set` must fail as well.
 		let ext = unsigned_set_value(42);
 
 		TestExternalities::new_empty().execute_with(|| {
@@ -426,6 +533,7 @@ mod tests {
 	}
 
 	#[test]
+	#[docify::export]
 	fn validate_works() {
 		// An unsigned `Set` cannot be validated. Same should go for one with a bad signature.
 		let ext = unsigned_set_value(42);
@@ -446,6 +554,7 @@ mod tests {
 	}
 
 	#[test]
+	#[docify::export]
 	fn import_and_author_equal() {
 		let ext1 = signed_set_value(42);
 		let ext2 = signed_set_value(43);

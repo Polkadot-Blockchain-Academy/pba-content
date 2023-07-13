@@ -10,11 +10,9 @@ pub type Signature = sp_core::sr25519::Signature;
 pub type AccountId = sp_core::sr25519::Public;
 
 /// The account id who's allowed to mint. This is the sr25519 representation of `Alice`.
-#[allow(unused)]
 pub const MINTER: [u8; 32] =
 	hex_literal::hex!["d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"];
 /// Minimum account balanced.
-#[allow(unused)]
 pub const MINIMUM_BALANCE: Balance = 10;
 /// The key to which [`SystemCall::Set`] will write the value.
 pub const VALUE_KEY: &[u8] = b"value"; // 76616c7565
