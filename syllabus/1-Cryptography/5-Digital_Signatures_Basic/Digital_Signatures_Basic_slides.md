@@ -27,7 +27,7 @@ For some cryptographies (ECDSA), the verify might not take in the public key as 
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Rust Demo
+# Subkey Demo
 
 ## Key Generation and Signing
 
@@ -138,6 +138,8 @@ Examples:
 - Monotonically increasing account nonces
 - Timestamps (or previous blocks)
 - Context identifiers like genesis hash and spec versions
+
+---
 
 # Signature Schemes
 
