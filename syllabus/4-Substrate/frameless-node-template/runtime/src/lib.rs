@@ -45,21 +45,19 @@ include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 const LOG_TARGET: &'static str = "frameless";
 
-mod currency;
-mod shared;
-mod staking;
-mod storage;
+pub(crate) mod shared;
+mod solution;
 
 use log::info;
 use parity_scale_codec::{Decode, Encode};
-use shared::{AccountId, Balance, Block, Extrinsic};
+use shared::Block;
 
 use sp_api::impl_runtime_apis;
 use sp_runtime::{
 	create_runtime_str,
 	generic::{self},
-	traits::{BlakeTwo256, Block as BlockT, Verify},
-	transaction_validity::{TransactionSource, TransactionValidity, ValidTransaction},
+	traits::{BlakeTwo256, Block as BlockT},
+	transaction_validity::{TransactionSource, TransactionValidity},
 	ApplyExtrinsicResult,
 };
 use sp_std::prelude::*;
@@ -69,38 +67,15 @@ use sp_storage::well_known_keys;
 #[cfg(any(feature = "std", test))]
 use sp_runtime::{BuildStorage, Storage};
 
-use sp_core::{crypto::UncheckedFrom, hexdisplay::HexDisplay, OpaqueMetadata, H256};
+use sp_core::{hexdisplay::HexDisplay, OpaqueMetadata, H256};
 use sp_runtime::traits::Hash;
 
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
+
 use sp_version::RuntimeVersion;
 
-use crate::shared::RuntimeCall;
-
-/// The errors that can occur during dispatch.
-#[derive(Debug, PartialEq, Clone)]
-pub enum DispatchError {
-	/// An error happening in `module_id`.
-	Module { module_id: &'static str },
-	/// All other errors, with some explanatory string.
-	Other(&'static str),
-}
-
-/// Final return type of all dispatch functions.
-pub type DispatchResult = Result<(), DispatchError>;
-
-/// Something that can be dispatched.
-///
-/// This is typically implemented for various `Call` enums.
-pub trait Dispatchable {
-	/// Dispatch self, assuming the given `sender`.
-	fn dispatch(self, sender: AccountId) -> DispatchResult;
-}
-
-pub trait Get<T> {
-	fn get() -> T;
-}
+use crate::shared::{EXTRINSICS_KEY, HEADER_KEY};
 
 /// Opaque types. This is what the lectures referred to as `ClientBlock`. Notice how
 /// `OpaqueExtrinsic` is merely a `Vec<u8>`.
@@ -153,58 +128,9 @@ impl BuildStorage for RuntimeGenesisConfig {
 	}
 }
 
-pub const HEADER_KEY: &[u8] = b"header"; // 686561646572
-pub const EXTRINSICS_KEY: &[u8] = b"extrinsics"; // 65787472696e736963
-
 /// The main struct in this module. In frame this comes from `construct_runtime!` macro.
 #[derive(Debug, Encode, Decode, PartialEq, Eq, Clone)]
 pub struct Runtime;
-
-pub struct Minter;
-impl Get<AccountId> for Minter {
-	fn get() -> AccountId {
-		AccountId::unchecked_from(shared::MINTER)
-	}
-}
-
-pub struct MinimumBalance;
-impl Get<Balance> for MinimumBalance {
-	fn get() -> Balance {
-		shared::MINIMUM_BALANCE
-	}
-}
-
-impl currency::Config for Runtime {
-	const MODULE_ID: &'static str = "CURRENCY";
-	type Minter = Minter;
-	type MinimumBalance = MinimumBalance;
-	type Balance = shared::Balance;
-}
-
-impl From<shared::CurrencyCall> for currency::Call<Runtime> {
-	fn from(value: shared::CurrencyCall) -> Self {
-		match value {
-			shared::CurrencyCall::Transfer { dest, amount } =>
-				currency::Call::<Runtime>::Transfer { dest, amount },
-			shared::CurrencyCall::Mint { dest, amount } =>
-				currency::Call::<Runtime>::Mint { dest, amount },
-			shared::CurrencyCall::TransferAll { dest } =>
-				currency::Call::<Runtime>::TransferAll { dest },
-		}
-	}
-}
-
-impl staking::Config for Runtime {
-	type Currency = currency::Module<Runtime>;
-}
-
-impl From<shared::StakingCall> for staking::Call<Runtime> {
-	fn from(value: shared::StakingCall) -> Self {
-		match value {
-			shared::StakingCall::Bond { amount } => staking::Call::<Runtime>::Bond { amount },
-		}
-	}
-}
 
 impl Runtime {
 	fn print_state() {
@@ -231,55 +157,6 @@ impl Runtime {
 		sp_io::storage::set(key, &value.encode());
 	}
 
-	fn dispatch_extrinsic(ext: Extrinsic) -> DispatchResult {
-		log::debug!(target: LOG_TARGET, "dispatching {:?}", ext);
-
-		let sender =
-			Self::do_check_signature(&ext).map_err(|_| DispatchError::Other("badSignature"))?;
-
-		// TODO: handle ext.function.tip.
-		// execute it
-		match ext.function.call {
-			RuntimeCall::System(shared::SystemCall::Set { value }) => {
-				sp_io::storage::set(shared::VALUE_KEY, &value.encode());
-			},
-			RuntimeCall::System(shared::SystemCall::Remark { data: _ }) => {},
-			RuntimeCall::System(shared::SystemCall::Upgrade { code }) => {
-				sp_io::storage::set(sp_core::storage::well_known_keys::CODE, &code);
-			},
-			RuntimeCall::Currency(currency_call) => {
-				let my_call: currency::Call<Runtime> = currency_call.into();
-				my_call.dispatch(sender)?;
-			},
-			RuntimeCall::Staking(staking_call) => {
-				let my_call: staking::Call<Runtime> = staking_call.into();
-				my_call.dispatch(sender)?;
-			},
-		}
-
-		Ok(())
-	}
-
-	fn apply_extrinsic_with_rollback(ext: Extrinsic) {
-		// note the extrinsic:
-		Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
-			current.push(ext.encode());
-		});
-
-		sp_io::storage::start_transaction();
-
-		let outcome = Self::dispatch_extrinsic(ext);
-
-		if outcome.is_ok() {
-			sp_io::storage::commit_transaction();
-		} else {
-			sp_io::storage::rollback_transaction();
-		}
-	}
-
-	// NOTE: this header is different when you are importing a block, and when you are executing a
-	// block. When you are importing a block, it is a full header. When you are building a block, it
-	// is a raw, unfinished header. For example, its state root is not yet quite known.
 	fn do_initialize_block(header: &<Block as BlockT>::Header) {
 		info!(
 			target: LOG_TARGET,
@@ -289,29 +166,16 @@ impl Runtime {
 		sp_io::storage::clear(&EXTRINSICS_KEY);
 	}
 
-	// NOTE: this should now write anything to state, because it is discarded. Moreover, this is not
-	// called in the import code path, so it MUST not write anything to state, otherwise it would
-	// lead to a consensus error, i.e. block import and authoring leading to different results. It
-	// should only return a header that is valid.
 	fn do_finalize_block() -> <Block as BlockT>::Header {
+		// fetch the header that was given to us at the beginning of the block.
 		let mut header = Self::get_state::<<Block as BlockT>::Header>(HEADER_KEY)
 			.expect("We initialized with header, it never got mutated, qed");
-
-		// the header itself contains the state root, so it cannot be inside the state (circular
-		// dependency..). Make sure in execute block path we have the same rule.
+		// and make sure to _remove_ it.
 		sp_io::storage::clear(&HEADER_KEY);
 
-		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
-
-		let extrinsics = Self::get_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
-		let extrinsics_root =
-			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
-
-		header.extrinsics_root = extrinsics_root;
-		header.state_root = sp_core::H256::decode(&mut &raw_state_root[..]).unwrap();
-
-		info!(target: LOG_TARGET, "finalizing block {:?}", header);
-		Self::print_state();
+		// TODO: set correct state root and extrinsics root, as described in the corresponding test
+		// case.
+		Self::solution_finalize_block(&mut header);
 		header
 	}
 
@@ -320,8 +184,8 @@ impl Runtime {
 		sp_io::storage::clear(&EXTRINSICS_KEY);
 
 		for extrinsic in block.clone().extrinsics {
-			// block import cannot fail.
-			Runtime::apply_extrinsic_with_rollback(extrinsic);
+			let _outcome = Runtime::do_apply_extrinsic(extrinsic)
+				.expect("the only possible failure is signature check, which must have already been checked by `validate_transaction`; cannot fail; qed");
 		}
 
 		// check state root
@@ -334,56 +198,44 @@ impl Runtime {
 
 		// check extrinsics root
 		let extrinsics = block.extrinsics.into_iter().map(|x| x.encode()).collect::<Vec<_>>();
-		let extrinsics_root =
-			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
+		let extrinsics_root = BlakeTwo256::ordered_trie_root(extrinsics, Default::default());
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
 
 		info!(target: LOG_TARGET, "Finishing block import.");
 		Self::print_state();
 	}
 
-	fn do_apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
-		info!(target: LOG_TARGET, "Entering apply_extrinsic: {:?}", extrinsic);
+	/// Apply a single extrinsic.
+	///
+	/// If an internal error occurs during the dispatch, such as "insufficient funds" etc, we don't
+	/// care about which variant of `DispatchError` you return. But, if a bad signature is provided,
+	/// then `Err(InvalidTransaction::BadProof)` must be returned.
+	fn do_apply_extrinsic(ext: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
+		info!(target: LOG_TARGET, "Entering apply_extrinsic: {:?}", ext);
 
-		Self::apply_extrinsic_with_rollback(extrinsic);
+		// note the extrinsic
+		Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
+			current.push(ext.encode());
+		});
 
-		Ok(Ok(()))
-	}
-
-	fn do_check_signature(ext: &<Block as BlockT>::Extrinsic) -> Result<AccountId, ()> {
-		match &ext.signature {
-			Some((signer, signature, extra_stuff)) => {
-				let payload = (ext.function.clone(), extra_stuff);
-				signature
-					.verify(payload.encode().as_ref(), signer)
-					.then(|| signer.clone())
-					.ok_or(())
-			},
-			None => Err(()),
-		}
+		// TODO: we don't have a means of dispatch, implement it!
+		// let outcome = Ok(());
+		Runtime::solution_apply_extrinsic(ext)
 	}
 
 	fn do_validate_transaction(
 		source: TransactionSource,
-		tx: <Block as BlockT>::Extrinsic,
+		ext: <Block as BlockT>::Extrinsic,
 		block_hash: <Block as BlockT>::Hash,
 	) -> TransactionValidity {
-		log::debug!(
-			target: LOG_TARGET,
-			"Entering validate_transaction. source: {:?}, tx: {:?}, block hash: {:?}",
-			source,
-			tx,
-			block_hash
-		);
-
-		// we don't know how to validate this -- It should be fine??
-		let data = tx.function;
-		Ok(ValidTransaction { provides: vec![data.encode()], ..Default::default() })
+		log::debug!(target: LOG_TARGET,"Entering validate_transaction. tx: {:?}", ext);
+		// TODO: we don't have a means of validating, implement it!
+		// Ok(Default::default())
+		Runtime::solution_validate_transaction(source, ext, block_hash)
 	}
 }
 
 impl_runtime_apis! {
-	// https://substrate.dev/rustdocs/master/sp_api/trait.Core.html
 	impl sp_api::Core<Block> for Runtime {
 		fn version() -> RuntimeVersion {
 			VERSION
@@ -398,7 +250,6 @@ impl_runtime_apis! {
 		}
 	}
 
-	// https://substrate.dev/rustdocs/master/sc_block_builder/trait.BlockBuilderApi.html
 	impl sp_block_builder::BlockBuilder<Block> for Runtime {
 		fn apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
 			Self::do_apply_extrinsic(extrinsic)
@@ -469,50 +320,78 @@ mod tests {
 	use super::*;
 	use parity_scale_codec::Encode;
 	use shared::{Extrinsic, RuntimeCall, VALUE_KEY};
+	use sp_api::HeaderT;
 	use sp_core::hexdisplay::HexDisplay;
 	use sp_io::TestExternalities;
 	use sp_runtime::traits::Extrinsic as _;
 
 	fn set_value_call(value: u32) -> RuntimeCallWithTip {
-		let call = RuntimeCall::System(shared::SystemCall::Set { value });
-		RuntimeCallWithTip { call, tip: None }
+		RuntimeCallWithTip {
+			call: RuntimeCall::System(shared::SystemCall::Set { value }),
+			tip: None,
+		}
+	}
+
+	fn unsigned_set_value(value: u32) -> Extrinsic {
+		let call = RuntimeCallWithTip {
+			call: RuntimeCall::System(shared::SystemCall::Set { value }),
+			tip: None,
+		};
+		Extrinsic::new(call, None).unwrap()
+	}
+
+	fn signed_set_value(value: u32) -> Extrinsic {
+		let call = set_value_call(value);
+		let signer = sp_keyring::AccountKeyring::Alice;
+		let payload = (call).encode();
+		let signature = signer.sign(&payload);
+		Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap()
 	}
 
 	#[test]
-	fn host_function_call_works() {
-		TestExternalities::new_empty().execute_with(|| {
-			sp_io::storage::get(&HEADER_KEY);
-		})
-	}
+	fn encode_examples() {
+		// demonstrate some basic encodings. Example usage:
+		//
+		// ```
+		// wscat -c 127.0.0.1:9944 -x '{"jsonrpc":"2.0", "id":1, "method":"state_getStorage", "params": ["0x123"]}'
+		// wscat -c ws://127.0.0.1:9944 -x '{"jsonrpc":"2.0", "id":1, "method":"author_submitExtrinsic", "params": ["0x123"]}'
+		// ```
+		let unsigned = Extrinsic::new_unsigned(set_value_call(42));
+		println!("unsigned = {:?} {:?}", unsigned, HexDisplay::from(&unsigned.encode()));
 
-	#[test]
-	fn unsigned_set_value_does_not_work() {
-		let ext = Extrinsic::new_unsigned(set_value_call(42));
-
-		TestExternalities::new_empty().execute_with(|| {
-			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-			assert!(Runtime::dispatch_extrinsic(ext).is_err());
-			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-		});
-	}
-
-	#[test]
-	fn signed_set_value_works() {
 		let signer = sp_keyring::AccountKeyring::Alice;
 		let call = set_value_call(42);
 		let payload = (call).encode();
 		let signature = signer.sign(&payload);
-		let ext = Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap();
+		let signed = Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap();
+		println!("signed {:?} {:?}", signed, HexDisplay::from(&signed.encode()));
 
+		println!("value key = {:?}", HexDisplay::from(&VALUE_KEY));
+	}
+
+	#[test]
+	fn host_function_call_works() {
+		// this is just to demonstrate to you that you should always wrap any code containing host
+		// functions in `TestExternalities`.
+		TestExternalities::new_empty().execute_with(|| {
+			sp_io::storage::get(&VALUE_KEY);
+		})
+	}
+
+	#[test]
+	fn signed_set_value_works() {
+		// A signed `Set` works.
+		let ext = signed_set_value(42);
 		TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-			Runtime::dispatch_extrinsic(ext).unwrap();
+			Runtime::do_apply_extrinsic(ext).unwrap().unwrap();
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), Some(42));
 		});
 	}
 
 	#[test]
 	fn bad_signature_fails() {
+		// A poorly signed extrinsic must fail.
 		let signer = sp_keyring::AccountKeyring::Alice;
 		let call = set_value_call(42);
 		let bad_call = set_value_call(43);
@@ -522,17 +401,90 @@ mod tests {
 
 		TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-			assert!(Runtime::dispatch_extrinsic(ext).is_err());
+			assert!(Runtime::do_apply_extrinsic(ext).is_err());
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
 		});
 	}
 
 	#[test]
-	fn encode_examples() {
-		let extrinsic = Extrinsic::new_unsigned(set_value_call(42));
-		println!("ext {:?}", HexDisplay::from(&extrinsic.encode()));
+	fn unsigned_set_value_does_not_work() {
+		// An unsigned `Set` must fail.
+		let ext = unsigned_set_value(42);
+
+		TestExternalities::new_empty().execute_with(|| {
+			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+			assert!(Runtime::do_apply_extrinsic(ext).is_err());
+			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+		});
 	}
 
 	#[test]
-	fn roots_are_set() {}
+	fn import_and_author_equal() {
+		let ext1 = signed_set_value(42);
+		let ext2 = signed_set_value(43);
+		let ext3 = signed_set_value(44);
+
+		let header = shared::Header {
+			digest: Default::default(),
+			extrinsics_root: Default::default(),
+			parent_hash: Default::default(),
+			number: 0,
+			state_root: Default::default(),
+		};
+
+		let block = TestExternalities::new_empty().execute_with(|| {
+			Runtime::do_initialize_block(&header);
+			drop(header);
+
+			Runtime::do_apply_extrinsic(ext1.clone()).unwrap().unwrap();
+			Runtime::do_apply_extrinsic(ext2.clone()).unwrap().unwrap();
+			Runtime::do_apply_extrinsic(ext3.clone()).unwrap().unwrap();
+
+			let header = Runtime::do_finalize_block();
+
+			assert!(
+				sp_io::storage::get(HEADER_KEY).is_none(),
+				"header must have been cleared from storage"
+			);
+			let extrinsics = sp_io::storage::get(EXTRINSICS_KEY)
+				.and_then(|bytes| <Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).ok())
+				.unwrap();
+			assert_eq!(extrinsics.len(), 3, "incorrect extrinsics recorded in state");
+
+			let expected_state_root = {
+				let raw_state_root = &sp_io::storage::root(Default::default())[..];
+				H256::decode(&mut &raw_state_root[..]).unwrap()
+			};
+			let expected_extrinsics_root =
+				BlakeTwo256::ordered_trie_root(extrinsics, Default::default());
+
+			assert_eq!(
+				header.state_root, expected_state_root,
+				"block finalization should set correct state root in header"
+			);
+			assert_eq!(
+				header.extrinsics_root, expected_extrinsics_root,
+				"block finalization should set correct extrinsics root in header"
+			);
+
+			Block { extrinsics: vec![ext1, ext2, ext3], header }
+		});
+
+		TestExternalities::new_empty().execute_with(|| {
+			// This should internally check state/extrinsics root. If it does not panic, then we are
+			// gucci.
+			Runtime::do_execute_block(block.clone());
+		})
+	}
+
+	#[test]
+	fn validate_works() {
+		let ext = Extrinsic::new_unsigned(set_value_call(42));
+
+		TestExternalities::new_empty().execute_with(|| {
+			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+			assert!(Runtime::do_apply_extrinsic(ext).is_err());
+			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+		});
+	}
 }

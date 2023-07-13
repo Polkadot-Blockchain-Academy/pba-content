@@ -258,8 +258,7 @@ impl Runtime {
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
 
 		let extrinsics = Self::get_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
-		let extrinsics_root =
-			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
+		let extrinsics_root = BlakeTwo256::ordered_trie_root(extrinsics, Default::default());
 
 		header.extrinsics_root = extrinsics_root;
 		header.state_root = sp_core::H256::decode(&mut &raw_state_root[..]).unwrap();
@@ -286,8 +285,7 @@ impl Runtime {
 
 		// check extrinsics root
 		let extrinsics = block.extrinsics.into_iter().map(|x| x.encode()).collect::<Vec<_>>();
-		let extrinsics_root =
-			BlakeTwo256::ordered_trie_root(extrinsics, sp_core::storage::StateVersion::V0);
+		let extrinsics_root = BlakeTwo256::ordered_trie_root(extrinsics, Default::default());
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
 	}
 

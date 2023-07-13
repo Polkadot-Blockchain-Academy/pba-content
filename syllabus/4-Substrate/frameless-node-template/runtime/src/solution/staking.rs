@@ -1,6 +1,7 @@
-use crate::currency::CryptoCurrency;
+use sp_runtime::DispatchOutcome;
 
-use super::*;
+use super::{currency::CryptoCurrency, Dispatchable};
+use crate::shared::*;
 
 /// The configuration trait for this module.
 pub trait Config {
@@ -19,7 +20,7 @@ type BalanceOf<T> = <<T as Config>::Currency as CryptoCurrency>::Balance;
 /// interface of each module is its `Call` (followed by calling `dispatch` on it), not `Module`.
 pub struct Module<T: Config>(sp_std::marker::PhantomData<T>);
 impl<T: Config> Module<T> {
-	fn bond(sender: shared::AccountId, amount: BalanceOf<T>) -> DispatchResult {
+	fn bond(sender: AccountId, amount: BalanceOf<T>) -> DispatchOutcome {
 		<T::Currency as CryptoCurrency>::reserve(sender, amount)
 	}
 }
@@ -33,7 +34,7 @@ pub enum Call<T: Config> {
 }
 
 impl<T: Config> Dispatchable for Call<T> {
-	fn dispatch(self, sender: shared::AccountId) -> DispatchResult {
+	fn dispatch(self, sender: AccountId) -> DispatchOutcome {
 		match self {
 			Call::Bond { amount } => Module::<T>::bond(sender, amount),
 		}

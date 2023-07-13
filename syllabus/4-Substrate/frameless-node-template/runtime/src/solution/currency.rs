@@ -1,61 +1,23 @@
-//! The crypto-currency module.
-//!
-//! It contains:
-//!
-//! 1. [`currency_module::Config`]: a wrapper for configurations of this module that should come
-//!        from the over-arching runtime.
-//! 2. [`currency_module::Module`]: a struct that will contain all the implementations, including
-//!    the transactions, and the [`shared::CryptoCurrency`] trait.
-//! 3. [`currency_module::Call`]: The `Call` type for this module.
-//!
-//! Among other things.
-//!
-//! This module contains two storage items:
-//!
-//! 1. [`currency_module::TotalIssuance`]: a `StorageValue` containing the sum of all balances in
-//!    the system.
-//! 2. [`currency_module::BalancesMap`]: a `StorageMap` that maps from an account ID to their
-//!    balance.
-
-use crate::{
-	shared::{self},
+use super::{
 	storage::{StorageMap, StorageValue},
-	DispatchResult, Dispatchable, Get,
+	Dispatchable, Get,
 };
+use crate::shared::*;
 use parity_scale_codec::{Decode, Encode};
 use scale_info::TypeInfo;
-use sp_runtime::traits::{CheckedAdd, CheckedSub, Zero};
+use sp_runtime::{
+	traits::{CheckedAdd, CheckedSub, Zero},
+	DispatchOutcome,
+};
 use sp_std::prelude::*;
 
-/// Configurations of this module, coming from the outer world/runtime.
-///
-/// These are basically all the things that we don't want to make a concrete decision about, so
-/// we let the outer world decide.
-///
-/// Within this module, we keep all implementation blocks generic over a `<T: Config>`, and use
-/// the associated items as `T::MinimumBalance`, `T::Balance` etc.
-///
-/// This is a very common pattern in Substrate!
 pub trait Config {
-	/// The identifier of this module.
 	const MODULE_ID: &'static str;
-
-	/// The account that is allowed to mint new tokens. Think: the admin.
-	type Minter: Get<shared::AccountId>;
-
-	/// The minimum *free* balances (as explained in [`AccountBalance::free`]) that should be
-	/// held by ANY account at ANY POINT IN TIME.
-	///
-	/// An account with free balance less than this amount is considered a logical error.
+	type Minter: Get<AccountId>;
 	type MinimumBalance: Get<Self::Balance>;
-
-	/// The numeric type that we use to store balances, e.g. `u64`.
 	type Balance: BalanceT;
 }
 
-/// This module's `Call` enum.
-///
-/// Contains all of the operations, and possible arguments (except `sender`, of course).
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, Clone)]
 #[scale_info(skip_type_params(T))]
@@ -70,7 +32,7 @@ pub enum Call<T: Config> {
 	/// * [`Error::InsufficientFunds`] if the `dest`'s free balance will not be enough to pass
 	/// the bar of `T::MinimumBalance`.
 	/// * [`Error::NotAllowed`] if the sender is not allowed to mint.
-	Mint { dest: shared::AccountId, amount: T::Balance },
+	Mint { dest: AccountId, amount: T::Balance },
 	/// Transfer `amount` to `dest`.
 	///
 	/// The `sender` must exist in ANY CASE, but the `dest` might be created in the process.
@@ -84,7 +46,7 @@ pub enum Call<T: Config> {
 	/// * [`Error::DoesNotExist`] if the sender does not exist.
 	/// * [`Error::InsufficientFunds`] if either `sender` or `dest` finish without
 	///   `T::MinimumBalance` of free balance left.
-	Transfer { dest: shared::AccountId, amount: T::Balance },
+	Transfer { dest: AccountId, amount: T::Balance },
 	/// Transfer all of sender's free balance to `dest`. This is equal to "destroying" the
 	/// sender account.
 	///
@@ -97,26 +59,14 @@ pub enum Call<T: Config> {
 	///
 	/// Since the sender is a valid account, with more than `T::MinimumBalance`, the recipient
 	/// is also guaranteed to have at least `T::MinimumBalance`.
-	TransferAll { dest: shared::AccountId },
+	TransferAll { dest: AccountId },
 }
 
-/// The error type of this module.
-///
-/// We will provide a conversion `From<Error> for shared::DispatchError`. This will allow us to
-/// easily convert the error of this particular module into the error of
-/// [`shared::DispatchResult`]. Moreover, it allows for the `?` operator to be easily used.
 pub enum Error<T: Config> {
-	/// The account of choice does not exist.
 	DoesNotExist,
-	/// Given operation is not allowed.
 	NotAllowed,
-	/// The account of choice does exist, but the amount that is being used is not enough to
-	/// cover the requested operation.
 	InsufficientFunds,
-	/// Some arithmetic operation overflowed.
 	Overflow,
-	/// We use T in a PhantomData so that `Error` is parameterized over `T`, allowing access to
-	/// Config items like `T::MODULE_ID` when we use `Error` later.
 	#[allow(non_camel_case_types)]
 	__marker(sp_std::marker::PhantomData<T>),
 }
@@ -133,39 +83,27 @@ impl<T: Config> sp_std::fmt::Debug for Error<T> {
 	}
 }
 
-impl<T: Config> From<Error<T>> for crate::DispatchError {
+impl<T: Config> From<Error<T>> for sp_runtime::DispatchError {
 	fn from(_: Error<T>) -> Self {
-		Self::Module { module_id: T::MODULE_ID }
+		Self::Other("SomeOtherErrorWeDontCareAbout")
 	}
 }
 
-/// A wrapper for the balance of a user/account.
-///
-/// The free balance of an account is the subset of the account balance that can be transferred
-/// out of the account. As noted elsewhere, the free balance of ALL accounts at ALL TIMES mut be
-/// equal or more than that of `T::MinimumBalance`.
-///
-/// Conversely, the reserved part of an account is a subset that CANNOT be transferred out,
-/// unless if explicitly unreserved.
+// We can store this because it has the same encoding as `shared::AccountBalance`.
 #[derive(Debug, Clone, Encode, Decode, PartialEq, Eq)]
 pub struct AccountBalance<T: Config> {
-	/// The free balance that they have. This can be transferred.
 	pub free: T::Balance,
-	/// The reserved balance that they have. This CANNOT be transferred.
 	pub reserved: T::Balance,
 }
 
-// NOTE: why can't we `derive` this? explore!
 impl<T: Config> Default for AccountBalance<T> {
 	fn default() -> Self {
 		Self { free: T::Balance::default(), reserved: T::Balance::default() }
 	}
 }
 
-// NOTE: make sure to return correct [`Error`] types based on [`Call`] specifications.
 impl<T: Config> AccountBalance<T> {
-	/// Reserve `amount`, if possible.
-	fn reserve(&mut self, amount: T::Balance) -> DispatchResult {
+	fn reserve(&mut self, amount: T::Balance) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() => {
 				self.free = leftover;
@@ -176,8 +114,7 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	/// Unreserve `amount`, if possible.
-	fn unreserve(&mut self, amount: T::Balance) -> DispatchResult {
+	fn unreserve(&mut self, amount: T::Balance) -> DispatchOutcome {
 		match self.reserved.checked_sub(&amount) {
 			Some(leftover) => {
 				self.reserved = leftover;
@@ -188,16 +125,14 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	/// Returns true if we have enough free balance to transfer `amount`.
-	fn can_transfer(&self, amount: T::Balance) -> DispatchResult {
+	fn can_transfer(&self, amount: T::Balance) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() || leftover.is_zero() => Ok(()),
 			_ => Err(Error::<T>::InsufficientFunds)?,
 		}
 	}
 
-	/// Send/transfer `amount` from the free balance.
-	fn transfer(&mut self, amount: T::Balance) -> DispatchResult {
+	fn transfer(&mut self, amount: T::Balance) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() || leftover.is_zero() => {
 				self.free = leftover;
@@ -207,8 +142,7 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	/// Returns true if this amount can be received
-	fn can_receive(&self, amount: T::Balance) -> DispatchResult {
+	fn can_receive(&self, amount: T::Balance) -> DispatchOutcome {
 		self.free
 			.checked_add(&amount)
 			.ok_or(Error::<T>::Overflow)
@@ -220,8 +154,7 @@ impl<T: Config> AccountBalance<T> {
 			.map_err(Into::into)
 	}
 
-	/// Add `amount` to the free balance, if possible.
-	fn receive(&mut self, amount: T::Balance) -> DispatchResult {
+	fn receive(&mut self, amount: T::Balance) -> DispatchOutcome {
 		self.free = self.free.checked_add(&amount).ok_or(Error::<T>::Overflow)?;
 		if self.free < T::MinimumBalance::get() {
 			Err(Error::<T>::InsufficientFunds)?
@@ -230,12 +163,9 @@ impl<T: Config> AccountBalance<T> {
 	}
 }
 
-/// A map from `AccountId` -> `AccountBalance`.
-///
-/// This is where the balance of each user should be stored.
 pub struct BalancesMap<T: Config>(sp_std::marker::PhantomData<T>);
 impl<T: Config> StorageMap for BalancesMap<T> {
-	type Key = shared::AccountId;
+	type Key = AccountId;
 	type Value = AccountBalance<T>;
 	fn raw_storage_key(key: Self::Key) -> Vec<u8> {
 		let mut final_key = b"BalancesMap".to_vec();
@@ -244,8 +174,6 @@ impl<T: Config> StorageMap for BalancesMap<T> {
 	}
 }
 
-/// The total issuance. This should track be the sum of **free and reserved** balance of all
-/// accounts, at all times.
 pub struct TotalIssuance<T: Config>(sp_std::marker::PhantomData<T>);
 impl<T: Config> StorageValue for TotalIssuance<T> {
 	type Value = T::Balance;
@@ -254,20 +182,9 @@ impl<T: Config> StorageValue for TotalIssuance<T> {
 	}
 }
 
-/// Just a wrapper for this module's implementations.
-///
-/// Note that this struct is itself public, but the internal implementations are not. The public
-/// interface of each module is its `Call` (followed by calling `dispatch` on it), not `Module`.
 pub struct Module<T: Config>(sp_std::marker::PhantomData<T>);
 impl<T: Config> Module<T> {
-	// NOTE: better not repeat yourself in documentation ;).
-
-	/// See [`Call::Transfer`].
-	fn transfer(
-		sender: shared::AccountId,
-		dest: shared::AccountId,
-		amount: T::Balance,
-	) -> DispatchResult {
+	fn transfer(sender: AccountId, dest: AccountId, amount: T::Balance) -> DispatchOutcome {
 		let mut sender_balance = BalancesMap::<T>::get(sender).ok_or(Error::<T>::DoesNotExist)?;
 		let mut dest_balance = BalancesMap::<T>::get(dest).unwrap_or_default();
 
@@ -282,8 +199,7 @@ impl<T: Config> Module<T> {
 		Ok(())
 	}
 
-	/// See [`Call::TransferAll`].
-	fn transfer_all(sender: shared::AccountId, dest: shared::AccountId) -> DispatchResult {
+	fn transfer_all(sender: AccountId, dest: AccountId) -> DispatchOutcome {
 		let balance = BalancesMap::<T>::get(sender).ok_or(Error::<T>::DoesNotExist)?;
 		if !balance.reserved.is_zero() {
 			Err(Error::<T>::NotAllowed)?;
@@ -292,12 +208,7 @@ impl<T: Config> Module<T> {
 		Self::transfer(sender, dest, amount)
 	}
 
-	/// See [`Call::Mint`].
-	fn mint(
-		sender: shared::AccountId,
-		who: shared::AccountId,
-		amount: T::Balance,
-	) -> DispatchResult {
+	fn mint(sender: AccountId, who: AccountId, amount: T::Balance) -> DispatchOutcome {
 		if sender != T::Minter::get() {
 			Err(Error::<T>::NotAllowed)?;
 		}
@@ -325,7 +236,7 @@ impl<T: Config> Module<T> {
 	/// * [`Error::InsufficientFunds`] if the account does not have enough free funds to preform
 	///   this operation. Recall that an accounts free balance must always remain equal or above
 	///   `T::MinimumBalance`.
-	pub fn reserve(from: shared::AccountId, amount: T::Balance) -> DispatchResult {
+	pub fn reserve(from: AccountId, amount: T::Balance) -> DispatchOutcome {
 		let mut balance = BalancesMap::<T>::get(from).ok_or(Error::<T>::DoesNotExist)?;
 
 		balance.can_transfer(amount)?;
@@ -344,7 +255,7 @@ impl<T: Config> Module<T> {
 	/// * [`Error::Overflow`] if any type of arithmetic operation overflows.
 	/// * [`Error::InsufficientFunds`] if the account does not have enough reserved funds to preform
 	///   this operation.
-	pub fn unreserve(from: shared::AccountId, amount: T::Balance) -> DispatchResult {
+	pub fn unreserve(from: AccountId, amount: T::Balance) -> DispatchOutcome {
 		let mut balance = BalancesMap::<T>::get(from).ok_or(Error::<T>::DoesNotExist)?;
 
 		balance.unreserve(amount)?;
@@ -355,7 +266,7 @@ impl<T: Config> Module<T> {
 }
 
 impl<T: Config> Dispatchable for Call<T> {
-	fn dispatch(self, sender: shared::AccountId) -> DispatchResult {
+	fn dispatch(self, sender: AccountId) -> DispatchOutcome {
 		match self {
 			Call::Mint { dest, amount } => Module::<T>::mint(sender, dest, amount),
 			Call::Transfer { dest, amount } => Module::<T>::transfer(sender, dest, amount),
@@ -367,37 +278,23 @@ impl<T: Config> Dispatchable for Call<T> {
 impl<T: Config> CryptoCurrency for Module<T> {
 	type Balance = T::Balance;
 
-	fn transfer(
-		from: shared::AccountId,
-		to: shared::AccountId,
-		amount: Self::Balance,
-	) -> DispatchResult {
+	fn transfer(from: AccountId, to: AccountId, amount: Self::Balance) -> DispatchOutcome {
 		Module::<T>::transfer(from, to, amount)
 	}
 
-	fn reserve(from: shared::AccountId, amount: Self::Balance) -> DispatchResult {
+	fn reserve(from: AccountId, amount: Self::Balance) -> DispatchOutcome {
 		Module::<T>::reserve(from, amount)
 	}
 
-	fn free_balance(of: shared::AccountId) -> Option<Self::Balance> {
+	fn free_balance(of: AccountId) -> Option<Self::Balance> {
 		BalancesMap::<T>::get(of).map(|b| b.free)
 	}
 
-	fn reserved_balance(of: shared::AccountId) -> Option<Self::Balance> {
+	fn reserved_balance(of: AccountId) -> Option<Self::Balance> {
 		BalancesMap::<T>::get(of).map(|b| b.reserved)
 	}
 }
 
-/// This is just a marker trait that wraps a bunch of other traits. It is meant to represent a
-/// numeric type, like a balance, e.g. `u32`.
-///
-/// It helps us not repeat the long list of traits multiple times, and instead just have `type:
-/// BalanceT`.
-///
-/// The blanket implementation for such marker traits is interesting and a common pattern.
-///
-/// Note the usage of `CheckedSub` and `CheckedAdd`, this is how we perform "overflow-safe"
-/// arithmetic.
 pub trait BalanceT:
 	Copy
 	+ Clone
@@ -411,7 +308,7 @@ pub trait BalanceT:
 	+ PartialOrd
 	+ Eq
 	+ PartialEq
-	+ sp_std::fmt::Debug // TODO: RuntimeDebug?
+	+ sp_std::fmt::Debug
 {
 }
 impl<
@@ -440,18 +337,14 @@ pub trait CryptoCurrency {
 	type Balance: BalanceT;
 
 	/// Transfer `amount` from `from` to `to`.
-	fn transfer(
-		from: shared::AccountId,
-		to: shared::AccountId,
-		amount: Self::Balance,
-	) -> DispatchResult;
+	fn transfer(from: AccountId, to: AccountId, amount: Self::Balance) -> DispatchOutcome;
 
 	/// Reserve exactly `amount` from `from`.
-	fn reserve(from: shared::AccountId, amount: Self::Balance) -> DispatchResult;
+	fn reserve(from: AccountId, amount: Self::Balance) -> DispatchOutcome;
 
 	/// Get the free balance of a given account, `None` if not existent.
-	fn free_balance(of: shared::AccountId) -> Option<Self::Balance>;
+	fn free_balance(of: AccountId) -> Option<Self::Balance>;
 
 	/// Get the reserved balance of a given account, `None` if non-existent.
-	fn reserved_balance(of: shared::AccountId) -> Option<Self::Balance>;
+	fn reserved_balance(of: AccountId) -> Option<Self::Balance>;
 }

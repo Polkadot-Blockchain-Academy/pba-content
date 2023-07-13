@@ -18,6 +18,11 @@ pub const MINTER: [u8; 32] =
 pub const MINIMUM_BALANCE: Balance = 10;
 /// The key to which [`SystemCall::Set`] will write the value.
 pub const VALUE_KEY: &[u8] = b"value"; // 76616c7565
+/// Temporary key used to store the header. This should always be clear at the end of the block.
+pub const HEADER_KEY: &[u8] = b"header"; // 686561646572
+/// Key used to store all extrinsics in a block. Should always remain at the end of the block, and
+/// be cleared at the beginning of the next block.
+pub const EXTRINSICS_KEY: &[u8] = b"extrinsics"; // 65787472696e736963
 
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, Clone)]

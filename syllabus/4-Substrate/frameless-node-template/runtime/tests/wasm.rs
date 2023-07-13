@@ -2,12 +2,21 @@ use parity_scale_codec::{Decode, Encode};
 use runtime::export::RuntimeGenesisConfig;
 use shared::{
 	AccountBalance, AccountId, Balance, Block, CurrencyCall, Extrinsic, Header, RuntimeCall,
-	RuntimeCallWithTip, StakingCall, SystemCall, VALUE_KEY,
+	RuntimeCallWithTip, StakingCall, SystemCall, EXTRINSICS_KEY, VALUE_KEY,
 };
-use sp_core::traits::{CallContext, CodeExecutor, Externalities};
+use sp_api::HashT;
+use sp_core::{
+	traits::{CallContext, CodeExecutor, Externalities},
+	H256,
+};
 use sp_io::TestExternalities;
 use sp_keyring::AccountKeyring::*;
-use sp_runtime::{traits::Extrinsic as _, BuildStorage};
+use sp_runtime::{
+	traits::{BlakeTwo256, Extrinsic as _},
+	BuildStorage,
+};
+
+use crate::shared::HEADER_KEY;
 
 mod shared;
 
@@ -32,6 +41,10 @@ fn issuance() -> Option<Balance> {
 	sp_io::storage::get(&key).and_then(|bytes| Balance::decode(&mut &bytes[..]).ok())
 }
 
+fn sp_io_root() -> H256 {
+	H256::decode(&mut &sp_io::storage::root(Default::default())[..][..]).unwrap()
+}
+
 fn sign(call: RuntimeCall, signer: &sp_keyring::AccountKeyring) -> Extrinsic {
 	let call_with_tip = RuntimeCallWithTip { tip: None, call };
 	let payload = (call_with_tip).encode();
@@ -40,12 +53,12 @@ fn sign(call: RuntimeCall, signer: &sp_keyring::AccountKeyring) -> Extrinsic {
 }
 
 fn author_and_import(
-	state: &mut TestExternalities,
+	import_state: &mut TestExternalities,
 	exts: Vec<Extrinsic>,
 	post: impl FnOnce() -> (),
 ) {
 	// ensure ext has some code in it, otherwise something is wrong.
-	let code = state
+	let code = import_state
 		.execute_with(|| sp_io::storage::get(&sp_core::storage::well_known_keys::CODE).unwrap());
 	assert!(code.len() > 0);
 
@@ -74,16 +87,58 @@ fn author_and_import(
 			.unwrap();
 
 	let block = Block { extrinsics, header };
-	log::debug!(target: LOG_TARGET, "authored a block with state root {:?}, importing now", block.header.state_root);
+	auth_state.commit_all().unwrap();
+	assert_eq!(
+		&auth_state.execute_with(|| sp_io_root()),
+		auth_state.backend.root(),
+		"something is wrong :/"
+	);
+
+	auth_state.execute_with(|| {
+		// check the extrinsics key is set.
+		let extrinsics = sp_io::storage::get(EXTRINSICS_KEY)
+			.and_then(|bytes| <Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).ok())
+			.unwrap_or_default();
+		assert_eq!(
+			extrinsics.len(),
+			block.extrinsics.len(),
+			"incorrect extrinsics recorded in state"
+		);
+
+		// check the header key is not set.
+		assert!(sp_io::storage::get(&HEADER_KEY).is_none());
+
+		// check state root.
+		assert_eq!(block.header.state_root, sp_io_root());
+
+		// check extrinsics root.
+		assert_eq!(
+			block.header.extrinsics_root,
+			BlakeTwo256::ordered_trie_root(extrinsics, Default::default())
+		);
+	});
+	drop(auth_state);
 
 	// now we import the block into a fresh new state.
-	executor_call(state, "Core_execute_block", &block.encode()).unwrap();
-	state.commit_all().unwrap();
-	assert_eq!(&block.header.state_root, state.backend.root());
-	// TODO: check extrinsic root is set.
+	executor_call(import_state, "Core_execute_block", &block.encode()).unwrap();
+	import_state.commit_all().unwrap();
+
+	import_state.execute_with(|| {
+		// check state root.
+		assert_eq!(block.header.state_root, sp_io_root());
+
+		// check extrinsics root.
+		assert_eq!(
+			block.header.extrinsics_root,
+			BlakeTwo256::ordered_trie_root(
+				block.extrinsics.into_iter().map(|e| e.encode()).collect::<Vec<_>>(),
+				Default::default()
+			)
+		);
+	});
 
 	log::debug!(target: LOG_TARGET, "all good; running post checks");
-	state.execute_with(|| post());
+	import_state.execute_with(|| post());
 }
 
 fn executor_call(t: &mut TestExternalities, method: &str, data: &[u8]) -> Result<Vec<u8>, ()> {
@@ -138,6 +193,26 @@ fn basic_setup_works() {
 
 	state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
 	author_and_import(&mut state, exts, || assert!(sp_io::storage::get(VALUE_KEY).is_some()));
+}
+
+#[test]
+fn apply_bad_signature_or_unsigned() {
+	todo!();
+}
+
+#[test]
+fn apply_with_error() {
+	todo!();
+}
+
+#[test]
+fn validate_bad_signature() {
+	todo!();
+}
+
+#[test]
+fn validate_unsigned() {
+	todo!();
 }
 
 mod currency {
