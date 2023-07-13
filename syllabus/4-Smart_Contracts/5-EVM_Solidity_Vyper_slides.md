@@ -223,11 +223,9 @@ contract Foo {
         uint16 u2 = 10000;
         uint256 u3 = 99999999999999;
 
-        // dynamic length strings
-        string memory foo = "<3 Solidity";
-
-        // fixed length byte sequence
-        bytes1 = "a";
+        // fixed length byte sequence (from 1 to 32 bytes)
+        // many bitwise operators can be performed on these
+        bytes1 oneByte = 0x01;
 
         // address represents a 20-byte Ethereum address
         address a = 0x1010101010101010101010101010101010101010;
@@ -266,6 +264,9 @@ Contract Foo {
         // mapping: can only be initialized from state variables
         mapping(uint => uint) storage balances = forLater;
         balances[0] = 500;
+
+        // dynamic length strings
+        string memory foo = "<3 Solidity";
 
         // also: Structs
 
