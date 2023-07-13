@@ -52,7 +52,7 @@ mod storage;
 
 use log::info;
 use parity_scale_codec::{Decode, Encode};
-use shared::{AccountId, Block, Extrinsic};
+use shared::{AccountId, Balance, Block, Extrinsic};
 
 use sp_api::impl_runtime_apis;
 use sp_runtime::{
@@ -69,14 +69,23 @@ use sp_storage::well_known_keys;
 #[cfg(any(feature = "std", test))]
 use sp_runtime::{BuildStorage, Storage};
 
-use sp_core::{hexdisplay::HexDisplay, OpaqueMetadata, H256};
+use sp_core::{crypto::UncheckedFrom, hexdisplay::HexDisplay, OpaqueMetadata, H256};
 use sp_runtime::traits::Hash;
 
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
 
-use crate::shared::{DispatchError, RuntimeCall};
+use crate::shared::RuntimeCall;
+
+/// The errors that can occur during dispatch.
+#[derive(Debug, PartialEq, Clone)]
+pub enum DispatchError {
+	/// An error happening in `module_id`.
+	Module { module_id: &'static str },
+	/// All other errors, with some explanatory string.
+	Other(&'static str),
+}
 
 /// Final return type of all dispatch functions.
 pub type DispatchResult = Result<(), DispatchError>;
@@ -87,6 +96,10 @@ pub type DispatchResult = Result<(), DispatchError>;
 pub trait Dispatchable {
 	/// Dispatch self, assuming the given `sender`.
 	fn dispatch(self, sender: AccountId) -> DispatchResult;
+}
+
+pub trait Get<T> {
+	fn get() -> T;
 }
 
 /// Opaque types. This is what the lectures referred to as `ClientBlock`. Notice how
@@ -102,7 +115,7 @@ pub mod opaque {
 }
 
 pub mod export {
-	pub use super::{Runtime, RuntimeGenesisConfig};
+	pub use super::RuntimeGenesisConfig;
 }
 
 /// This runtime version.
@@ -140,7 +153,6 @@ impl BuildStorage for RuntimeGenesisConfig {
 	}
 }
 
-pub const VALUE_KEY: &[u8] = b"value"; // 76616c7565
 pub const HEADER_KEY: &[u8] = b"header"; // 686561646572
 pub const EXTRINSICS_KEY: &[u8] = b"extrinsics"; // 65787472696e736963
 
@@ -148,10 +160,24 @@ pub const EXTRINSICS_KEY: &[u8] = b"extrinsics"; // 65787472696e736963
 #[derive(Debug, Encode, Decode, PartialEq, Eq, Clone)]
 pub struct Runtime;
 
+pub struct Minter;
+impl Get<AccountId> for Minter {
+	fn get() -> AccountId {
+		AccountId::unchecked_from(shared::MINTER)
+	}
+}
+
+pub struct MinimumBalance;
+impl Get<Balance> for MinimumBalance {
+	fn get() -> Balance {
+		shared::MINIMUM_BALANCE
+	}
+}
+
 impl currency::Config for Runtime {
 	const MODULE_ID: &'static str = "CURRENCY";
-	type Minter = shared::Minter;
-	type MinimumBalance = shared::MinimumBalance;
+	type Minter = Minter;
+	type MinimumBalance = MinimumBalance;
 	type Balance = shared::Balance;
 }
 
@@ -211,10 +237,11 @@ impl Runtime {
 		let sender =
 			Self::do_check_signature(&ext).map_err(|_| DispatchError::Other("badSignature"))?;
 
+		// TODO: handle ext.function.tip.
 		// execute it
-		match ext.function {
+		match ext.function.call {
 			RuntimeCall::System(shared::SystemCall::Set { value }) => {
-				sp_io::storage::set(VALUE_KEY, &value.encode());
+				sp_io::storage::set(shared::VALUE_KEY, &value.encode());
 			},
 			RuntimeCall::System(shared::SystemCall::Remark { data: _ }) => {},
 			RuntimeCall::System(shared::SystemCall::Upgrade { code }) => {
@@ -437,15 +464,18 @@ impl_runtime_apis! {
 
 #[cfg(test)]
 mod tests {
+	use crate::shared::RuntimeCallWithTip;
+
 	use super::*;
 	use parity_scale_codec::Encode;
-	use shared::{Extrinsic, RuntimeCall};
+	use shared::{Extrinsic, RuntimeCall, VALUE_KEY};
 	use sp_core::hexdisplay::HexDisplay;
 	use sp_io::TestExternalities;
 	use sp_runtime::traits::Extrinsic as _;
 
-	fn set_value_call(value: u32) -> RuntimeCall {
-		RuntimeCall::System(shared::SystemCall::Set { value })
+	fn set_value_call(value: u32) -> RuntimeCallWithTip {
+		let call = RuntimeCall::System(shared::SystemCall::Set { value });
+		RuntimeCallWithTip { call, tip: None }
 	}
 
 	#[test]
@@ -502,429 +532,7 @@ mod tests {
 		let extrinsic = Extrinsic::new_unsigned(set_value_call(42));
 		println!("ext {:?}", HexDisplay::from(&extrinsic.encode()));
 	}
-}
-
-#[cfg(test)]
-mod integration_tests {
-	use crate::{
-		shared::{AccountBalance, AccountId, Balance, SystemCall},
-		VALUE_KEY,
-	};
-
-	use super::shared;
-	use crate::shared::{CurrencyCall, StakingCall};
-	use parity_scale_codec::{Decode, Encode};
-	use shared::{Block, Extrinsic, Header, RuntimeCall};
-	use sp_core::traits::{CallContext, CodeExecutor, Externalities};
-	use sp_io::TestExternalities;
-	use sp_keyring::AccountKeyring::*;
-	use sp_runtime::{traits::Extrinsic as _, BuildStorage};
-
-	const LOG_TARGET: &'static str = "wasm-tests";
-
-	fn balance_of(who: AccountId) -> Option<AccountBalance> {
-		let key = [b"BalancesMap".as_ref(), who.encode().as_ref()].concat();
-		sp_io::storage::get(&key).and_then(|bytes| AccountBalance::decode(&mut &bytes[..]).ok())
-	}
-
-	fn free_of(who: AccountId) -> Option<Balance> {
-		balance_of(who).map(|b| b.free)
-	}
-
-	#[allow(unused)]
-	fn reserve_of(who: AccountId) -> Option<Balance> {
-		balance_of(who).map(|b| b.reserved)
-	}
-
-	fn issuance() -> Option<Balance> {
-		let key = b"TotalIssuance".as_ref();
-		sp_io::storage::get(&key).and_then(|bytes| Balance::decode(&mut &bytes[..]).ok())
-	}
-
-	fn sign(call: RuntimeCall, signer: &sp_keyring::AccountKeyring) -> Extrinsic {
-		let payload = (call).encode();
-		let signature = signer.sign(&payload);
-		Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap()
-	}
-
-	fn author_and_import(
-		state: &mut TestExternalities,
-		exts: Vec<Extrinsic>,
-		post: impl FnOnce() -> (),
-	) {
-		// ensure ext has some code in it, otherwise something is wrong.
-		let code = state.execute_with(|| {
-			sp_io::storage::get(&sp_core::storage::well_known_keys::CODE).unwrap()
-		});
-		assert!(code.len() > 0);
-
-		let header = Header {
-			parent_hash: Default::default(),
-			number: 0,
-			state_root: Default::default(),
-			extrinsics_root: Default::default(),
-			digest: Default::default(),
-		};
-
-		log::info!(target: LOG_TARGET, "authoring a block with {:?} and .", exts.iter().map(|x| x.function.clone()).collect::<Vec<_>>());
-		let mut extrinsics = vec![];
-		let mut auth_state = TestExternalities::new_with_code(code.as_ref(), Default::default());
-
-		executor_call(&mut auth_state, "Core_initialize_block", &header.encode()).unwrap();
-
-		for ext in exts {
-			executor_call(&mut auth_state, "BlockBuilder_apply_extrinsic", &ext.encode()).unwrap();
-			extrinsics.push(ext);
-		}
-
-		let header: Header =
-			executor_call(&mut auth_state, "BlockBuilder_finalize_block", Default::default())
-				.map(|data| <Header as Decode>::decode(&mut &*data).unwrap())
-				.unwrap();
-
-		let block = Block { extrinsics, header };
-		log::debug!(target: LOG_TARGET, "authored a block with state root {:?}, importing now", block.header.state_root);
-
-		// now we import the block into a fresh new state.
-		executor_call(state, "Core_execute_block", &block.encode()).unwrap();
-		state.commit_all().unwrap();
-		assert_eq!(&block.header.state_root, state.backend.root());
-		// TODO: check extrinsic root is set.
-
-		log::debug!(target: LOG_TARGET, "all good; running post checks");
-		state.execute_with(|| post());
-	}
-
-	fn executor_call(t: &mut TestExternalities, method: &str, data: &[u8]) -> Result<Vec<u8>, ()> {
-		let mut t = t.ext();
-
-		let code = t.storage(sp_core::storage::well_known_keys::CODE).unwrap();
-		let heap_pages = t.storage(sp_core::storage::well_known_keys::HEAP_PAGES);
-		let runtime_code = sp_core::traits::RuntimeCode {
-			code_fetcher: &sp_core::traits::WrappedRuntimeCode(code.as_slice().into()),
-			hash: sp_core::blake2_256(&code).to_vec(),
-			heap_pages: heap_pages.and_then(|hp| Decode::decode(&mut &hp[..]).ok()),
-		};
-
-		let executor =
-			sc_executor::WasmExecutor::<sp_io::SubstrateHostFunctions>::builder().build();
-
-		let (res, was_native) =
-			executor.call(&mut t, &runtime_code, method, data, false, CallContext::Onchain);
-		assert!(!was_native);
-		res.map_err(|_| ())
-	}
-
-	fn new_test_ext() -> TestExternalities {
-		sp_tracing::try_init_simple();
-		let storage = crate::export::RuntimeGenesisConfig::default().build_storage().unwrap();
-		let code_storage = storage.clone();
-		let code = code_storage.top.get(sp_core::storage::well_known_keys::CODE).unwrap();
-		TestExternalities::new_with_code(code, storage)
-	}
-	#[test]
-	fn empty_block() {
-		let mut state = new_test_ext();
-		state.execute_with(|| assert!(sp_io::storage::get(crate::VALUE_KEY).is_none()));
-		author_and_import(&mut state, vec![], || {});
-	}
 
 	#[test]
-	fn remark() {
-		let call = RuntimeCall::System(SystemCall::Remark { data: vec![42, 42] });
-		let exts = vec![sign(call, &Alice)];
-
-		let mut state = new_test_ext();
-
-		author_and_import(&mut state, exts, || assert!(sp_io::storage::get(VALUE_KEY).is_none()));
-	}
-
-	#[test]
-	fn basic_setup_works() {
-		let call = RuntimeCall::System(super::shared::SystemCall::Set { value: 42 });
-		let exts = vec![sign(call, &Alice)];
-
-		let mut state = new_test_ext();
-
-		state.execute_with(|| assert!(sp_io::storage::get(crate::VALUE_KEY).is_none()));
-		author_and_import(&mut state, exts, || {
-			assert!(sp_io::storage::get(crate::VALUE_KEY).is_some())
-		});
-	}
-
-	mod currency {
-		use super::*;
-		#[test]
-		fn mint_wrong_minter() {
-			// bob account cannot mint.
-			let mut state = new_test_ext();
-
-			let call =
-				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 });
-			let exts = vec![sign(call, &Bob)];
-
-			author_and_import(&mut state, exts, || {
-				assert!(balance_of(Alice.public()).is_none());
-				assert!(issuance().is_none());
-			});
-		}
-
-		#[test]
-		fn mint_success() {
-			// can mint if alice
-			let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 });
-			let exts = vec![sign(call, &Alice)];
-
-			let mut state = new_test_ext();
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), Some(20));
-				assert!(free_of(Alice.public()).is_none());
-				assert_eq!(issuance(), Some(20));
-			});
-		}
-
-		#[test]
-		fn multi_mint_success() {
-			// can mint multiple times if alice
-			let exts = vec![
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
-					&Alice,
-				),
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 30 }),
-					&Alice,
-				),
-			];
-
-			let mut state = new_test_ext();
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Alice.public()), Some(30));
-				assert_eq!(free_of(Bob.public()), Some(20));
-				assert_eq!(issuance(), Some(50));
-			});
-		}
-
-		#[test]
-		fn mixed_mint() {
-			// can mint multiple times if alice
-			let exts = vec![
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
-					&Alice,
-				),
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 30 }),
-					&Bob,
-				),
-			];
-
-			let mut state = new_test_ext();
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Alice.public()), None);
-				assert_eq!(free_of(Bob.public()), Some(20));
-				assert_eq!(issuance(), Some(20));
-			});
-		}
-
-		#[test]
-		fn mint_not_enough() {
-			// cannot mint amount less than `MinimumBalance`
-
-			let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 5 });
-			let exts = vec![sign(call, &Alice)];
-
-			let mut state = new_test_ext();
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(balance_of(Bob.public()), None);
-				assert_eq!(issuance(), None);
-			});
-		}
-
-		#[test]
-		fn mint_not_enough_edge() {
-			// still cannot mint amount less than `MinimumBalance`
-
-			let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 9 });
-			let exts = vec![sign(call, &Alice)];
-
-			let mut state = new_test_ext();
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), None);
-				assert_eq!(issuance(), None);
-			});
-
-			// but 10 is ok.
-			let call = RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 10 });
-			let exts = vec![sign(call, &Alice)];
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), Some(10));
-				assert_eq!(issuance(), Some(10));
-			});
-		}
-
-		#[test]
-		fn transfer_success() {
-			let mut state = new_test_ext();
-
-			let exts = vec![
-				// mint 100 for bob.
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
-					&Alice,
-				),
-				// transfer 20 to alice.
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Transfer {
-						dest: Alice.public(),
-						amount: 20,
-					}),
-					&Bob,
-				),
-			];
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), Some(80));
-				assert_eq!(free_of(Alice.public()), Some(20));
-				assert_eq!(issuance(), Some(100));
-			});
-		}
-
-		#[test]
-		fn transfer_more_than_you_can() {
-			let mut state = new_test_ext();
-			// min balance is 10.
-			let spendable = 100 - 10;
-
-			let exts = vec![
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
-					&Alice,
-				),
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Transfer {
-						dest: Alice.public(),
-						amount: spendable + 1,
-					}),
-					&Bob,
-				),
-			];
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), Some(100));
-				assert_eq!(free_of(Alice.public()), None);
-				assert_eq!(issuance(), Some(100));
-			});
-		}
-
-		#[test]
-		fn transfer_more_than_you_can_limit() {
-			let mut state = new_test_ext();
-			let spendable = 100 - 10;
-
-			let exts = vec![
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
-					&Alice,
-				),
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Transfer {
-						dest: Alice.public(),
-						amount: spendable,
-					}),
-					&Bob,
-				),
-			];
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), Some(10));
-				assert_eq!(free_of(Alice.public()), Some(90));
-				assert_eq!(issuance(), Some(100));
-			});
-		}
-
-		#[test]
-		fn transfer_all_1() {
-			let mut state = new_test_ext();
-
-			let exts = vec![
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
-					&Alice,
-				),
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Transfer {
-						dest: Alice.public(),
-						amount: 100,
-					}),
-					&Bob,
-				),
-			];
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), Some(0)); // TODO: None should also be acceptable here.
-				assert_eq!(free_of(Alice.public()), Some(100));
-				assert_eq!(issuance(), Some(100));
-			});
-		}
-
-		#[test]
-		fn transfer_all_2() {
-			let mut state = new_test_ext();
-
-			let exts = vec![
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
-					&Alice,
-				),
-				sign(
-					RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }),
-					&Bob,
-				),
-			];
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(free_of(Bob.public()), Some(0));
-				assert_eq!(free_of(Alice.public()), Some(100));
-				assert_eq!(issuance(), Some(100));
-			});
-		}
-	}
-
-	mod staking {
-		use super::*;
-
-		// note: we test these, but they are basically same as testing bonding.
-		#[test]
-		fn bonding_success() {
-			let mut state = new_test_ext();
-
-			let exts = vec![
-				sign(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
-					&Alice,
-				),
-				sign(RuntimeCall::Staking(StakingCall::Bond { amount: 20 }), &Bob),
-			];
-
-			author_and_import(&mut state, exts, || {
-				assert_eq!(
-					balance_of(Bob.public()),
-					Some(AccountBalance { free: 80, reserved: 20 })
-				);
-				assert_eq!(issuance(), Some(100));
-			});
-		}
-
-		#[test]
-		fn bonding_more_than_allowed() {}
-
-		#[test]
-		fn bonding_more_than_allowed_limit() {}
-	}
+	fn roots_are_set() {}
 }

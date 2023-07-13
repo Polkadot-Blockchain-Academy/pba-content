@@ -18,9 +18,9 @@
 //!    balance.
 
 use crate::{
-	shared::{self, DispatchResult, Get},
+	shared::{self},
 	storage::{StorageMap, StorageValue},
-	Dispatchable,
+	DispatchResult, Dispatchable, Get,
 };
 use parity_scale_codec::{Decode, Encode};
 use scale_info::TypeInfo;
@@ -47,7 +47,7 @@ pub trait Config {
 	/// held by ANY account at ANY POINT IN TIME.
 	///
 	/// An account with free balance less than this amount is considered a logical error.
-	type MinimumBalance: shared::Get<Self::Balance>;
+	type MinimumBalance: Get<Self::Balance>;
 
 	/// The numeric type that we use to store balances, e.g. `u64`.
 	type Balance: BalanceT;
@@ -133,7 +133,7 @@ impl<T: Config> sp_std::fmt::Debug for Error<T> {
 	}
 }
 
-impl<T: Config> From<Error<T>> for shared::DispatchError {
+impl<T: Config> From<Error<T>> for crate::DispatchError {
 	fn from(_: Error<T>) -> Self {
 		Self::Module { module_id: T::MODULE_ID }
 	}
