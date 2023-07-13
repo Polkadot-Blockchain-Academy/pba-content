@@ -207,11 +207,13 @@ contract Foo {
 
 ---v
 
-## Types
+## Types: "Value" Types
 
 ```Solidity
 contract Foo {
-    function basics() public {
+    // Value types are stored in-place in memory and require
+    // a full copy during assignment.
+    function valueTypes() public {
         bool b = false;
 
         // signed and unsigned ints
@@ -226,24 +228,104 @@ contract Foo {
 
         // fixed length byte sequence
         bytes1 = "a";
-    }
 
-    function advanced() public {
         // address represents a 20-byte Ethereum address
         address a = 0x1010101010101010101010101010101010101010;
         uint256 balance = a.balance;
 
-        // arrays
-        uint[3] arr = [1, 2, 3];
+        // also: Enums
 
-        // mapping
-        mapping(address => uint) memory balances;
-        balances[a] = balance;
+        // each variable is an independent copy
+        int x = 1;
+        int y = x;
+        y = 2;
+        require(x == 1);
+        require(x == 2);
     }
+
 }
 ```
 
 ---v
+
+## Types: "Reference" Types
+
+```Solidity
+Contract Foo {
+    // Reference types are stored as a reference to some other location. Only
+    // their reference must be copied during assignment.
+    contract Foo {
+    mapping(uint => uint) forLater;
+
+    // Reference types are stored as a reference to some other location. Only
+    // their reference must be copied during assignment.
+    function referenceTypes() public {
+        // arrays
+        uint8[3] memory arr = [1, 2, 3];
+
+        // mapping: can only be initialized from state variables
+        mapping(uint => uint) storage balances = forLater;
+        balances[0] = 500;
+
+        // also: Structs
+
+        // Two or more variables can share a reference, so be careful!
+        uint8[3] memory arr2 = arr;
+        arr2[0] = 42;
+        require(arr2[0] == 42);
+        require(arr[0] == 42); // arr and arr2 are the same thing, so mod to one affects the other
+    }
+}
+}
+```
+
+---v
+
+## Data Location
+
+`Data Location` refers to the storage of `Reference Types`. As these are passed
+by reference, it effectively dictates where this reference points to. It can be
+one of 3 places:
+
+* memory: Stored only in memory; cannot outlive a given external function call
+* storage: Stored in the contract's permanent on-chain storage
+* calldata: read-only data, using this can avoid copies
+
+---v
+
+## Data Location Sample
+
+```Solidity
+contract DataLocationSample {
+    struct Foo {
+        int i;
+    }
+
+    Foo storedFoo;
+
+    // Data Location specifiers affect function arguments and return values...
+    function test(Foo memory val) public returns (Foo memory) {
+        // ...and also variables within a function
+        Foo memory copy = val;
+
+        // storage varables must be assigned befor use.
+        Foo storage fooFromStorage = storedFoo;
+        fooFromStorage.i = 1;
+        require(storedFoo.i == 1, "writes to storage variables affect storage");
+
+        // memory variables can be initialized from storage variables
+        // (but not the other way around)
+        copy = fooFromStorage;
+
+        // but they are an independent copy
+        copy.i = 2;
+        require(copy.i == 2);
+        require(storedFoo.i == 1, "writes to memory variables cannot affect storage");
+
+        return fooFromStorage;
+    }
+}
+```
 
 ## Enums
 
