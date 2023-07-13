@@ -29,6 +29,8 @@ substrate-wasm-builder = { git = "https://github.com/paritytech/substrate", bran
 [dev-dependencies]
 sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
 sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sc-executor = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+
 
 [features]
 default = ["std"]

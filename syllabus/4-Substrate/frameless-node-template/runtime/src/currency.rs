@@ -133,7 +133,7 @@ impl<T: Config> sp_std::fmt::Debug for Error<T> {
 }
 
 impl<T: Config> From<Error<T>> for shared::DispatchError {
-	fn from(e: Error<T>) -> Self {
+	fn from(_: Error<T>) -> Self {
 		Self::Module { module_id: T::MODULE_ID }
 	}
 }

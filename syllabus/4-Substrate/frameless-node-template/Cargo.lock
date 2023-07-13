@@ -4895,6 +4895,7 @@ dependencies = [
  "hex-literal",
  "log",
  "parity-scale-codec",
+ "sc-executor",
  "scale-info",
  "serde",
  "sp-api",
