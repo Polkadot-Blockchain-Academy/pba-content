@@ -307,69 +307,7 @@ Code along and explain as you go
 
 write, deploy, interact
 
----
-
-# Storing or Secrets On-Chain
-
-TODO: format this -- how to do the one-click-per-line thing?
-
-Can we store secrets on-chain? What if we want to password-protect a particular
-contract call?
-
-Obviously we can't store any plaintext secrets on-chain, as doing so reveals
-them.
-
----v
-
-## Storing Hashed Secrets On-Chain
-
-What about storing the hash of a password on chain and using this to verify some
-user-input?
-
-Accepting a pre-hash also reveals the secret. This reveal may occur in a txn
-before it is executed and settled, allowing someone to frontrun it.
-
----v
-
-## Verifying with commit-reveal
-
-One potential solution is a commit-reveal scheme where we hash our reveal with
-some salt, then later reveal it.
-
-```
-// stored on-chain:
-secret_hash = hash(secret)
-```
-
-```
-// first txn, this must execute and settle on chain before the final reveal.
-// this associates a user with the soon-to-be-revealed secret
-commitment = hash(salt, alleged_secret)
-```
-
-```
-// final reveal, this must not be made public until commitment is recorded
-reveal = alleged_secret, salt
-verify(alleged_secret == secret)
-verify(commitment == hash(salt, alleged_secret))
-```
-
----v
-
-## Alternative: Signature
-
-Another approach is to use public-key cryptography. We can store the public key
-of some keypair and then demand a signature from the corresponding private-key.
-
-This can be expanded with multisig schemes and similar.
-
-How does this differ from the commit-reveal scheme?
-
-Note:
-
-Commit-reveal requires that a specific secret be revealed at some point for
-verification. A signature scheme provides a lot more flexibility for keeping the
-secret(s) secure.
+Stephen: adder or multiplier is trivially different than flipper (discuss)
 
 ---
 
@@ -539,4 +477,64 @@ show an example
 
 ---
 
-# Summary
+# Storing or Secrets On-Chain
+
+TODO: format this -- how to do the one-click-per-line thing?
+
+Can we store secrets on-chain? What if we want to password-protect a particular
+contract call?
+
+Obviously we can't store any plaintext secrets on-chain, as doing so reveals
+them.
+
+---v
+
+## Storing Hashed Secrets On-Chain
+
+What about storing the hash of a password on chain and using this to verify some
+user-input?
+
+Accepting a pre-hash also reveals the secret. This reveal may occur in a txn
+before it is executed and settled, allowing someone to frontrun it.
+
+---v
+
+## Verifying with commit-reveal
+
+One potential solution is a commit-reveal scheme where we hash our reveal with
+some salt, then later reveal it.
+
+```
+// stored on-chain:
+secret_hash = hash(secret)
+```
+
+```
+// first txn, this must execute and settle on chain before the final reveal.
+// this associates a user with the soon-to-be-revealed secret
+commitment = hash(salt, alleged_secret)
+```
+
+```
+// final reveal, this must not be made public until commitment is recorded
+reveal = alleged_secret, salt
+verify(alleged_secret == secret)
+verify(commitment == hash(salt, alleged_secret))
+```
+
+---v
+
+## Alternative: Signature
+
+Another approach is to use public-key cryptography. We can store the public key
+of some keypair and then demand a signature from the corresponding private-key.
+
+This can be expanded with multisig schemes and similar.
+
+How does this differ from the commit-reveal scheme?
+
+Note:
+
+Commit-reveal requires that a specific secret be revealed at some point for
+verification. A signature scheme provides a lot more flexibility for keeping the
+secret(s) secure.
