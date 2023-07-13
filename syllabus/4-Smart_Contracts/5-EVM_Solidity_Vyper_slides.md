@@ -54,11 +54,17 @@ properly paid for.
 
 ## Gasometer
 
-<img rounded style="margin-top: 25px; width: 500px;" src="img/frontier/GasometerDiagram.png" />
-* TODO: diagram, show that execution halts for each opcode to check gas balance
-* TODO: talk about disadvantages (perf)
-* TODO: talk about other resource metering?
-* TODO: gas estimation (RPC call)
+<img style="width: 100%; margin: 10px" src="img/frontier/GasometerDiagram.png" />
+
+* Checks before each opcode to make sure gas can be paid
+* Safe: prevents unpaid work from being done
+* Deterministic: results are unambiguous
+* Very inefficient: lots of branching and extra work
+
+Note: This not only makes it possible to prevent abuse, but crucially allows
+nodes to agree on doing so. A centralized service could easily impose a time
+limit, but decentralized nodes wouldn't be able to agree on the outcome of such
+a limit (or trust each other).
 
 ---
 
@@ -327,6 +333,8 @@ contract DataLocationSample {
     }
 }
 ```
+
+---v
 
 ## Enums
 
