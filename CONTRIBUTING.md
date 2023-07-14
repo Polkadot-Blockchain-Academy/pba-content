@@ -220,7 +220,6 @@ Once you've followed the set-up instructions and have the repository running loc
 ### Formatting Markdown, TOML, JSON
 
 We enforce the use of a few formatters, the primary one being [Prettier](https://prettier.io/) that is included in the dev-dependencies for this repository.
-The [.vscode/settings.json](.vscode/settings.json) config file details these including extensions to use that are compatible with the CI that checks compliance.
 In [package.json](./package.json) we include a handy tool to format all markdown docs easily:
 
 ```sh
