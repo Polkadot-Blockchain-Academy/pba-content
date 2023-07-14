@@ -1134,6 +1134,13 @@ impl MyContract {
 ---
 
 ## Blockchain node onion
+<br/>
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="img/ink/onions.png" />
+
+---
+
+## Blockchain node onion
 
 <img style="margin-top: 10px" width="600" src="img/ink/blockchain-onion-1.svg" />
 
@@ -1653,6 +1660,12 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
 1. State validation (_client side_)
 
 </div>
+
+---
+
+## E2E pipeline: traps, traps everywhere
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/trap.gif" />
 
 ---
 
