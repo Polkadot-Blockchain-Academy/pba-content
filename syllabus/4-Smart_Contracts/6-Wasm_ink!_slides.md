@@ -1166,10 +1166,10 @@ impl MyContract {
 - `account_id()`
 - `balance()`
 - `block_number()`
-- `emit_event()`
-- `transfer()`
-- `hash_bytes()`
-- `debug_message()`
+- `emit_event(event: Event)`
+- `transfer(dest: AccountId, value: Balance)`
+- `hash_bytes(input: &[u8], output: &mut [u8])`
+- `debug_message(msg: &str)`
 - [_and many more_](https://docs.rs/ink_env/4.2.1/ink_env/index.html#functions)
 
 ---
