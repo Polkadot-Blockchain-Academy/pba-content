@@ -1454,6 +1454,12 @@ impl ChainExtension<Runtime> for HeavyCryptoOutsourcingExtension {
 
 ---
 
+## Chain extension: reaching even further
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/chain-extension-reach.svg" />
+
+---
+
 ## Testing contracts
 
 ---
