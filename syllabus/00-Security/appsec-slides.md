@@ -409,4 +409,4 @@ There will be blood (**risk**), you need to manage the blood. But how?
 
 ---
 
-Don't forget to check lecture [materials](https://hackmd.io/CIafTaQFRg2wg-YXYVDhvw?view)
+Don't forget to check lecture [materials](./appSec-lecture-material.html)

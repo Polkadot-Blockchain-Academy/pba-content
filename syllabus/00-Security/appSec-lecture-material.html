@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        AppSec Lecture Material - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{background:#fff;color:#333;display:block;overflow-x:auto;padding:.5em}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{background-color:#eaffea;color:#55a532}.hljs-deletion{background-color:#ffecec;color:#bd2c00}.hljs-link{text-decoration:underline}.markdown-body{word-wrap:break-word;font-size:16px;line-height:1.5}.markdown-body:after,.markdown-body:before{content:"";display:table}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;line-height:1;margin-left:-20px;padding-right:4px}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-bottom:16px;margin-top:0}.markdown-body hr{background-color:#e7e7e7;border:0;height:.25em;margin:24px 0;padding:0}.markdown-body blockquote{border-left:.25em solid #ddd;color:#777;font-size:16px;padding:0 1em}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{background-color:#fcfcfc;border:1px solid;border-color:#ccc #ccc #bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb;color:#555;display:inline-block;font-size:11px;line-height:10px;padding:3px 5px;vertical-align:middle}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{font-weight:600;line-height:1.25;margin-bottom:16px;margin-top:24px}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{border-bottom:1px solid #eee;padding-bottom:.3em}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{color:#777;font-size:.85em}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{list-style-type:none;padding:0}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-bottom:0;margin-top:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{font-size:1em;font-style:italic;font-weight:700;margin-top:16px;padding:0}.markdown-body dl dd{margin-bottom:16px;padding:0 16px}.markdown-body table{display:block;overflow:auto;width:100%;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{border:1px solid #ddd;padding:6px 13px}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{background-color:#fff;box-sizing:initial;max-width:100%}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{background-color:initial;max-width:none;vertical-align:text-top}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{border:1px solid #ddd;display:block;float:left;margin:13px 0 0;overflow:hidden;padding:7px;width:auto}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{clear:both;color:#333;display:block;padding:5px 0 0}.markdown-body span.align-center{clear:both;display:block;overflow:hidden}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{clear:both;display:block;overflow:hidden}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{background-color:#0000000a;border-radius:3px;font-size:85%;margin:0;padding:.2em 0}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{content:"\00a0";letter-spacing:-.2em}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{background:#0000;border:0;font-size:100%;margin:0;padding:0;white-space:pre;word-break:normal}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{background-color:#f7f7f7;border-radius:3px;font-size:85%;line-height:1.45;overflow:auto;padding:16px}.markdown-body pre code,.markdown-body pre tt{word-wrap:normal;background-color:initial;border:0;display:inline;line-height:inherit;margin:0;max-width:auto;overflow:visible;padding:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{font-size:12px;line-height:1;overflow:hidden;padding:5px;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{background:#fff;border:0;padding:10px 8px 9px;text-align:right}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{background:#f8f8f8;border-top:0;font-weight:700}.news .alert .markdown-body blockquote{border:0;padding:0 0 0 40px}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{cursor:default!important;float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle}.markdown-body{max-width:758px;overflow:visible!important;padding-bottom:40px;padding-top:40px;position:relative}.markdown-body.next-editor{overflow-x:hidden!important}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{border-right:3px solid #6ce26c!important;box-sizing:initial;color:#afafaf!important;cursor:default;display:inline-block;min-width:20px;padding:0 8px 0 0;position:relative;text-align:right;z-index:4}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-bottom:none;border-left:none;border-top:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-collapse:inherit!important;border-spacing:0}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{margin-bottom:unset;overflow:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p:last-child{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{background-color:inherit;border-radius:0;overflow:visible;text-align:center;white-space:inherit}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{height:100%;max-width:100%}.markdown-body pre>code.wrap{word-wrap:break-word;white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap}.markdown-body .alert>p:last-child,.markdown-body .alert>ul:last-child{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{background-color:#000;background-position:50%;background-repeat:no-repeat;background-size:contain;cursor:pointer;display:table;overflow:hidden;text-align:center}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{object-fit:contain;width:100%;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{height:100%;left:0;position:absolute;top:0;width:100%}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{color:#fff;height:auto;left:50%;opacity:.3;position:absolute;top:50%;transform:translate(-50%,-50%);transition:opacity .2s;width:auto;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%}.figma{display:table;padding-bottom:56.25%;position:relative;width:100%}.figma iframe{border:1px solid #eee;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%}.markmap-container{height:300px}.markmap-container>svg{height:100%;width:100%}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{color:#777;margin:25px auto -25px;max-width:760px;position:relative;z-index:2}.toc .invisable-node{list-style-type:none}.ui-toc{bottom:20px;position:fixed;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{border-bottom-left-radius:0;border-top-left-radius:0;height:40px;padding:10px 4px}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{color:#fff;opacity:1;transition:opacity .2s}.ui-toc-label:focus{background-color:#ccc;color:#000;opacity:.3}.ui-toc-label:hover{background-color:#ccc;opacity:1;transition:opacity .2s}.ui-toc-dropdown{margin-bottom:20px;margin-top:20px;max-height:70vh;max-width:45vw;overflow:auto;padding-left:10px;padding-right:10px;text-align:inherit;width:25vw}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{letter-spacing:.0029em;padding-right:0}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{color:#767676;display:block;font-size:13px;font-weight:500;padding:4px 20px}.ui-toc-dropdown .nav>li:first-child:last-child>ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{background-color:initial;border-left:1px solid #000;color:#000;padding-left:19px;text-decoration:none}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{border-left:none;border-right:1px solid #000;padding-right:19px}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{background-color:initial;border-left:2px solid #000;color:#000;font-weight:700;padding-left:18px}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{border-left:none;border-right:2px solid #000;padding-right:18px}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{font-size:12px;font-weight:400;padding-bottom:1px;padding-left:30px;padding-top:1px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{font-size:12px;font-weight:400;padding-bottom:1px;padding-left:40px;padding-top:1px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{font-weight:500;padding-left:28px}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{font-weight:500;padding-left:38px}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{max-height:70vh;max-width:15vw;overflow:auto;position:fixed;top:0}.back-to-top,.expand-toggle,.go-to-bottom{color:#999;display:block;font-size:12px;font-weight:500;margin-left:10px;margin-top:10px;padding:4px 10px}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{background-position:50%;background-repeat:no-repeat;background-size:cover;border-radius:50%;display:block;height:20px;margin-bottom:2px;margin-right:5px;margin-top:2px;width:20px}.ui-user-icon.small{display:inline-block;height:18px;margin:0 0 .2em;vertical-align:middle;width:18px}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;padding-left:22px;text-decoration:none}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}.inline-spoiler-section{cursor:pointer}.inline-spoiler-section .spoiler-text{background-color:#333;border-radius:2px}.inline-spoiler-section .spoiler-text>*{opacity:0}.inline-spoiler-section .spoiler-img{filter:blur(10px)}.inline-spoiler-section.raw{background-color:#333;border-radius:2px}.inline-spoiler-section.raw>*{opacity:0}.inline-spoiler-section.unveil{cursor:auto}.inline-spoiler-section.unveil .spoiler-text{background-color:#3333331a}.inline-spoiler-section.unveil .spoiler-text>*{opacity:1}.inline-spoiler-section.unveil .spoiler-img{filter:none}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{color:#222;position:relative;z-index:1}.markdown-body.slides:before{background-color:currentColor;bottom:0;box-shadow:0 0 0 50vw;content:"";display:block;left:0;position:absolute;right:0;top:0;z-index:-1}.markdown-body.slides section[data-markdown]{background-color:#fff;margin-bottom:1.5em;position:relative;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{left:1em;max-height:100%;overflow:hidden;position:absolute;right:1em;top:50%;transform:translateY(-50%)}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{border:3px solid #777;content:"";height:1.5em;position:absolute;right:1em;top:-1.5em}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;-webkit-overflow-scrolling:touch;font-family:Source Sans Pro,Helvetica,Arial,sans-serif;letter-spacing:.025em}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}svg{text-shadow:none}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled comment-inner" data-hard-breaks="true"><div class="title-tags-preview"><h1 data-toggle="tooltip" data-placement="bottom" data-container=".navbar-default" data-offset="0,5" data-original-title="Title last changed by Serhan Bahar at 14/07/2023, 19:19:24" class="font-bold text-19 leading-120 !mt-0 text-zinc-800" id="PBA-AppSec-Draft" data-id="PBA-AppSec-Draft"><a class="anchor hidden-xs" href="#PBA-AppSec-Draft" title="PBA-AppSec-Draft"><span class="octicon octicon-link"></span></a>AppSec Lecture Material</h1><div class="flex flex-wrap gap-1 mb-4"></div></div><ul>
+<li><span>Security is a matter of balance, not too much, not less. Only adequate.</span></li>
+<li><span>Security is about your residual risks, not what you have prevented.</span></li>
+</ul><p><strong><span>1.  Securing SDLC</span></strong></p><p><strong><span>1.1. The Big Picture of AppSec</span></strong></p><p><img src="https://hackmd.io/_uploads/SkZLpbmYh.png" alt="" loading="lazy"></p><p><strong><span>Security needs to be enforced through the use of controls. Controls must be:</span></strong></p><ul>
+<li><span>Designed</span></li>
+<li><span>Developed</span></li>
+<li><span>Implemented</span></li>
+<li><span>Configured</span></li>
+<li><span>Operated</span></li>
+<li><span>Monitored</span></li>
+<li><span>Improved</span></li>
+</ul><p><strong><span>How do we decide on Controls?</span></strong></p><p><strong><span>RISK:</span></strong></p><p><span>The likelihood of a threat exploiting a vulnerability and thereby causing damage to an asset.</span></p><p><strong><span>1.1.1. A brief look at core principles</span></strong></p><p><span>In case you have yet to hear of the CIA Triad.</span></p><p><strong><span>Confidentiality</span></strong><br>
+<span>Protect sensitive data from improper disclosure (Intentional or accidental)</span></p><ul>
+<li><span>Privacy (more related to individuals)</span></li>
+<li><span>Secrecy (more related to business, military, IP)</span></li>
+</ul><p><strong><span>How to protect confidentiality</span></strong></p><ul>
+<li><span>Masking</span></li>
+<li><span>Obfuscation</span></li>
+<li><span>Tokenization</span></li>
+<li><span>Encryption</span></li>
+</ul><p><span>In summary, </span><strong><span>ensure that only authorised people can access their authorised entities.</span></strong></p><p><strong><span>Integrity</span></strong><br>
+<span>Protection of data and processes from accidental or intentional alteration or modifications</span></p><ul>
+<li><span>Accuracy</span></li>
+<li><span>Completeness</span></li>
+<li><span>Precision</span></li>
+<li><span>Reliability</span></li>
+<li><span>Authenticity</span></li>
+</ul><p><strong><span>How to protect integrity</span></strong></p><ul>
+<li><span>Hashing</span></li>
+<li><span>HMAC (aka keyed hashing)</span></li>
+<li><span>Digital Signatures (DSS, ECC etc)</span></li>
+<li><span>Code Signing</span></li>
+</ul><p><span>In summary, </span><strong><span>ensure that only authorised changes are made by authorised entities.</span></strong></p><p><strong><span>Availability</span></strong><br>
+<span>Protection of data to make it available when required</span></p><ul>
+<li><span>Systems</span></li>
+<li><span>Information</span></li>
+<li><span>Networks</span></li>
+<li><span>Personnel</span></li>
+<li><span>Software</span></li>
+</ul><p><strong><span>Availability within Applications</span></strong></p><ul>
+<li><span>Resilience (Withstand the attacks they will face)</span></li>
+<li><span>Error handling</span></li>
+<li><span>Scalability</span></li>
+<li><span>Number of users</span></li>
+<li><span>Transaction volume etc</span></li>
+</ul><p><span>In summary, </span><strong><span>ensure that the data will always be available when it is required. And business itself should decide the SLA, not the technical people.</span></strong></p><p><strong><span>The AAA (Triple A)</span></strong></p><ul>
+<li>
+<p><strong><span>Authentication (AuthN)</span></strong></p>
+<ul>
+<li><span>Validation (Validate, verify, prove) of the ID provided</span></li>
+<li><span>Rightful owner of the ID (2/3)</span>
+<ul>
+<li><span>Something you know</span></li>
+<li><span>Something you have</span></li>
+<li><span>Something you are</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Authorization (AuthZ)</span></strong></p>
+<ul>
+<li><span>Correct privilege levels of provided to subject</span></li>
+<li><span>Access Controls are the centre of the attention</span></li>
+<li><span>To permit authorized entities (persons, processes) to perform authorized functions</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Accountability</span></strong></p>
+<ul>
+<li><span>Ability to identify all entities involved</span></li>
+<li><span>Tracking and recording all(?) activity</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Non Repudiation</span></strong></p>
+<ul>
+<li><span>Ability to prevent a subject from denying a previous action with an object in a system</span></li>
+</ul>
+</li>
+</ul><p><strong><span>1.1.2. A brief look at design principles</span></strong></p><ul>
+<li>
+<p><strong><span>Good enough security</span></strong></p>
+<ul>
+<li><span>Don’t spend $10.000 on a safe to protect a $20 bill</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Least Privilege</span></strong></p>
+<ul>
+<li><span>Don’t give your safe’s key to everybody, give only what they need</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Separation of Duties</span></strong></p>
+<ul>
+<li><span>Don’t give the power of creating invoices, approving invoices and sending money to one person</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Defense in Depth</span></strong></p>
+<ul>
+<li><span>A castle has a moat, thick walls, restricted access points, high points for defence, multiple checkpoints inside etc.; what do you have?</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Fail-Safe</span></strong></p>
+<ul>
+<li><span>Any function that is not specifically authorised is denied by default</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Economy of Mechanism</span></strong></p>
+<ul>
+<li><span>Security is already a complex topic, don’t make it more complicated (KISS)</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Complete Mediation</span></strong></p>
+<ul>
+<li><span>Every critical operation must have verification at every time.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Open Design</span></strong></p>
+<ul>
+<li><span>Don’t even try: Security over obscurity</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Least Common Mechanism</span></strong></p>
+<ul>
+<li><span>is like the rarest key that opens specific locks, not used often but still can cause significant damage when it does.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Psychological Acceptability</span></strong></p>
+<ul>
+<li><span>There is no point if users cannot use your security controls seamlessly.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Weakest Link</span></strong></p>
+<ul>
+<li><span>A chain is only as strong as its weakest link (Booooo)</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Leverage Existing Components</span></strong></p>
+<ul>
+<li><span>Fewer components, fewer attack surface, but more;</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Single Point of Failure</span></strong></p>
+<ul>
+<li><span>If SPoF fails, means the entire system fails</span></li>
+</ul>
+</li>
+</ul><p><strong><span>1.1.3. Requirements</span></strong></p><ul>
+<li><span>Business Requirements</span></li>
+<li><span>Legal Requirements</span>
+<ul>
+<li><span>Compliance</span></li>
+</ul>
+</li>
+<li><span>Ethical Requirements</span></li>
+<li><span>Security &nbsp;Requirements</span></li>
+</ul><p><strong><span>Functional Requirements</span></strong></p><ul>
+<li><span>What the system will do</span></li>
+</ul><p><strong><span>Non-Functional Requirements (Security)</span></strong></p><ul>
+<li><span>How the system will do</span></li>
+</ul><p><strong><span>Benchmarking</span></strong></p><ul>
+<li><span>The way of doing that is by looking to other companies to see what they are doing</span>
+<ul>
+<li><span>Same industry sector</span></li>
+<li><span>Same region etc.</span></li>
+</ul>
+</li>
+</ul><p><strong><span>1.1.4. Architecture &amp; Design</span></strong></p><ul>
+<li><span>Identify Attack Surfaces</span>
+<ul>
+<li><span>What potential surfaces do you have?</span></li>
+</ul>
+</li>
+<li><span>Identify Attack Vectors</span>
+<ul>
+<li><span>What potential vectors do you have?</span></li>
+</ul>
+</li>
+<li><span>Allocate Security Controls</span>
+<ul>
+<li><span>Risk based approach</span></li>
+<li><span>Security Controls</span></li>
+</ul>
+</li>
+</ul><p><strong><span>Security controls can be;</span></strong></p><ul>
+<li><strong><span>Directive (Safeguard [Proactive] - means before the incident)</span></strong>
+<ul>
+<li><span>The policy is an example. This is what you are allowed to do, or you are not allowed to do</span></li>
+</ul>
+</li>
+</ul><p><strong><span>Security controls can be;</span></strong></p><ul>
+<li><strong><span>Deterrent (Safeguard [Proactive] - means before the incident)</span></strong>
+<ul>
+<li><span>Discourage somebody from doing something wrong. For ex. watching people with a security camera. Once they know they are under observation, they will hesitate.</span></li>
+</ul>
+</li>
+</ul><p><strong><span>Security controls can be;</span></strong></p><ul>
+<li><strong><span>Preventive (Safeguard [Proactive] - means before the incident)</span></strong>
+<ul>
+<li><span>Try to stop a person from doing something wrong. For ex. Password is a preventive control.</span></li>
+</ul>
+</li>
+</ul><p><strong><span>Security controls can be;</span></strong></p><ul>
+<li><strong><span>Detective (Countermeasures [Reactive] - means in the incident moment or afterwards)</span></strong>
+<ul>
+<li><span>Trying to detect an incident. For ex. logs</span></li>
+</ul>
+</li>
+</ul><p><strong><span>Security controls can be;</span></strong></p><ul>
+<li><strong><span>Corrective (Countermeasures [Reactive] - means afterwards)</span></strong>
+<ul>
+<li><span>Tries to reestablish control after an incident and correct the immediate problem.</span></li>
+</ul>
+</li>
+</ul><p><strong><span>Security controls can be;</span></strong></p><ul>
+<li><strong><span>Restoration/Recovery (Countermeasures [Reactive] - means afterwards)</span></strong>
+<ul>
+<li><span>Try to rebuild and get back to normal.</span></li>
+</ul>
+</li>
+</ul><p><strong><span>1.1.5. Implementation</span></strong></p><p><strong><span>Secure Coding Practices</span></strong></p><ul>
+<li><strong><span>Coding Standards</span></strong><br>
+<span>The adoption of coding standards is essential.</span>
+<ul>
+<li><span>Language-specific standards</span></li>
+<li><span>Avoidance of weak procedures</span></li>
+<li><span>Usage of commonly used modules</span></li>
+<li><span>Readability and maintainability</span></li>
+<li><span>Documentation</span></li>
+</ul>
+</li>
+</ul><p><strong><span>Document Relevant Coding Practices</span></strong></p><ul>
+<li><span>Coding Standards</span></li>
+<li><span>Coding Guidelines</span></li>
+<li><span>Regulatory Requirements</span></li>
+<li><span>Encryption algorithm implementations</span></li>
+<li><span>Logging</span></li>
+</ul><p><strong><span>Separation of Development and Operational Environment</span></strong><br>
+<strong><span>We need</span></strong></p><ul>
+<li><span>Protection of executable code</span></li>
+<li><span>Separate development environment</span>
+<ul>
+<li><span>Also, do separate QA or test environment</span></li>
+</ul>
+</li>
+<li><span>Version control</span></li>
+<li><span>Regression</span></li>
+</ul><p><span>In summary, </span><strong><span>The adaptation, communication and enforcement of coding are essential to increasing the quality of programming practices.</span></strong></p><p><strong><span>1.1.6. Testing</span></strong></p><ul>
+<li>
+<p><strong><span>Objective:</span></strong><span> Develop test cases for all possible scenarios (normal and abnormal usage, environmental and operational tests).</span></p>
+</li>
+<li>
+<p><strong><span>Importance of Regression testing:</span></strong><span> It ensures that new features do not break other functionalities.</span></p>
+</li>
+<li>
+<p><strong><span>Attack Surface Validation and Discovery</span></strong></p>
+<ul>
+<li><strong><span>Process:</span></strong><span> Review and validate previously documented attack surfaces, and discover new ones.</span></li>
+<li><strong><span>Focus areas:</span></strong><span> Inputs, outputs, architecture, networks, users, administrators, change control, and error handling.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Types of Application Testing</span></strong></p>
+<ul>
+<li><span>Normal user activity and errors.</span></li>
+<li><strong><span>Failure testing:</span></strong><span> Fault injection, cancellation of transaction, invalid input.</span></li>
+<li><strong><span>Capacity testing</span></strong><span>: Load, stress, break, and transaction capacity tests.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Testing Box and Approaches</span></strong></p>
+<ul>
+<li><strong><span>Concept of ‘Testing Box’:</span></strong><span> Consider the application as a box and test its strength, usefulness, sealing, manufacturing process, and environment adaptability.</span></li>
+<li><strong><span>Approaches:</span></strong><span> Black Box Testing, Interactive Application Security Testing (IAST), and White Box Testing.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Importance of Peer Review</span></strong></p>
+<ul>
+<li><strong><span>Benefits:</span></strong><span> Adherence to coding standards, consistency, training/mentoring of developers.</span></li>
+<li><strong><span>Challenges:</span></strong><span> Personality conflicts, personal opinions, time, independence, and skill of the assessor.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Vulnerability Assessment and Penetration Testing</span></strong></p>
+<ul>
+<li><strong><span>Vulnerability Assessments:</span></strong><span> Systematic examination of the system to identify security deficiencies.</span></li>
+<li><strong><span>Penetration Testing:</span></strong><span> A test methodology to circumvent or defeat the security features of a system.</span></li>
+<li><strong><span>Hats in Testing:</span></strong><span> White hat (Ethical), Grey hat (Semi-ethical), Black hat (Unauthorised, Non-ethical).</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>System Scanning and Privacy</span></strong></p>
+<ul>
+<li><span>Scanning: Involves querying, poking, probing, testing, and observing the system to discover deficiencies.</span></li>
+<li><span>Privacy concerns: Availability of sensitive data to unauthorised personnel.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Cryptography and its Challenges</span></strong></p>
+<ul>
+<li><strong><span>Importance of Cryptography:</span></strong><span> Secure key distribution and generation, secure key storage, and Random Number Generators.</span></li>
+<li><strong><span>Challenges:</span></strong><span> Lost keys, crypto-period, hard-coded credentials.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Ongoing Testing</span></strong></p>
+<ul>
+<li><span>Testing as an ongoing activity: Repeatable and consistent test cases, comparing results from different test cycles, re-testing after corrections.</span></li>
+<li><span>Support for Testing: Audit hooks, test cases, logs.</span></li>
+<li><span>Fuzzing: Testing the ‘edges’ using generated and mutated data.</span></li>
+<li><span>Synthetic Transactions: Simulating the actions of a user for constant health checks.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Documentation, Verification, and Validation</span></strong></p>
+<ul>
+<li><strong><span>Objective:</span></strong><span> Testing should discover flaws or deficiencies in controls.</span></li>
+<li><strong><span>Verification:</span></strong><span> Ensures all security controls documented in the design are built into the final application.</span></li>
+<li><strong><span>Validation:</span></strong><span> Check if the implemented security controls are correct to mitigate the risk.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Control Testing</span></strong></p>
+<ul>
+<li><span>Three Steps:</span>
+<ul>
+<li><span>Verify that each control was implemented as designed.</span></li>
+<li><span>Verify that the control is operating correctly.</span></li>
+<li><span>Validate that the control is accomplishing its intended function - mitigating the risk.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Known Common Problems</span></strong></p>
+<ul>
+<li><span>Use sources like OWASP, CVSS, and CWE to be aware of and mitigate common vulnerabilities.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Requirement Traceability Matrix (RTM)</span></strong></p>
+<ul>
+<li><span>Document test results, identify errors, and update the RTM to show completed tests and test status.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Classifying and Tracking Security Errors</span></strong></p>
+<ul>
+<li><span>All test results should be tracked, and deficiencies identified.</span></li>
+<li><span>Decisions to be made on breaking builds (Continuous Integration/Continuous Deployment).</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Ownership and Resolution of Security Deficiencies</span></strong></p>
+<ul>
+<li><span>Every security deficiency should have an owner responsible for addressing it.</span></li>
+<li><span>Addressing deficiencies depends on the severity, time, budget, other mitigating controls, and availability of solutions.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Re-testing and Risk Acceptance</span></strong></p>
+<ul>
+<li><span>After resolving problems, re-testing is necessary for satisfactory results.</span></li>
+<li><span>Risk Acceptance: The level of risk a manager is willing to accept on behalf of the organization, considering factors like cost-benefit, time, budget, need for implementation, and compensating controls.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Documentation</span></strong></p>
+<ul>
+<li><span>Importance of documentation: User guides, Installation guides, Operational guides, and System Security Plan (SSP).</span></li>
+<li><span>Undocumented Functionality: Look out for undocumented features, unauthorized functions, trap doors, maintenance hooks, and outgoing data streams.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Support for Audit</span></strong></p>
+<ul>
+<li><span>Audit hooks, Logs, Reports, Integrated test, Facility, and Synthetic transactions for maintaining a robust audit system.</span></li>
+</ul>
+</li>
+</ul><p><strong><span>2. Components of application security</span></strong></p><ul>
+<li>
+<p><strong><span>Threat Modelling</span></strong></p>
+<ul>
+<li><span>Identify your threats, before others do</span></li>
+<li><span>A structured approach to identify, quantify, and address the security threats and risks associated with an application</span></li>
+<li><span>An early-stage activity is used to define security requirements for design (in theory 🙂)</span></li>
+<li><span>“What could happen if a malicious user does this?”</span></li>
+<li><span>Joint effort between developers, security professionals and relevant stakeholders</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>2 Main Approaches for threat modelling:</span></strong></p>
+<ul>
+<li><span>Manual Threat Modelling</span>
+<ul>
+<li><span>Create data flow diagram that shows how data will flow</span></li>
+<li><span>A software bill of materials (SBOM) that provides the components that application uses</span></li>
+</ul>
+</li>
+<li><span>Manual Threat Modelling</span>
+<ul>
+<li><span>Web service integration points such as APIs and other 3rd party systems</span></li>
+<li><span>Popular techniques: STRIDE, PASTA, OCTAVE, and VAST</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>2 Main Approaches for threat modelling:</span></strong></p>
+<ul>
+<li><span>Threat modelling using a tool</span>
+<ul>
+<li><span>Popular tools: Threat Dragon by OWASP, MS Threat modelling tool, SecuriCAD, ThreatModeler, IriusRisk</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Security Analysis Tools</span></strong></p>
+<ul>
+<li><strong><span>SAST (Static Application Security Testing)</span></strong>
+<ul>
+<li><span>SAST tools perform analysis on the existing code, aiming to identify potential security vulnerabilities.</span></li>
+<li><span>Example: find issues like hardcoded passwords in plain text within the source code.</span></li>
+<li><span>The method used by SAST involves techniques such as taint analysis and data flow analysis.</span></li>
+<li><span>Taint analysis: This process involves tracing user input across the application to check if it is properly sanitised before being used.</span></li>
+<li><span>Data flow analysis: This technique involves the collection of run-time data while the code remains static.</span></li>
+<li><span>SAST (Static Application Security Testing) tools are commonly utilized during the development phase to detect and address issues early in the development lifecycle</span></li>
+<li><span>A significant number of current SAST providers offer integrated development environment (IDE) plugins.</span></li>
+<li><span>These plugins enable developers to conduct scans as the code is being written.</span></li>
+</ul>
+</li>
+<li><span>Be careful with;</span>
+<ul>
+<li><span>SAST tools are usually bound by limitations in the language that they cover.</span></li>
+<li><span>There is no one tool to rule them all.</span></li>
+<li><span>Understand your needs before buying expensive tools.</span></li>
+<li><span>SAST tools produce many false positives.</span>
+<ul>
+<li><span>You need to reduce the noise by tuning them</span></li>
+</ul>
+</li>
+<li><span>Always remember, those are static tools, which means cannot see how it runs in an environment.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>DAST (Dynamic Application Security Testing)</span></strong></p>
+<ul>
+<li><span>DAST tools analyse applications in a running environment, similar to automated penetration testing.</span></li>
+<li><span>They aim to identify vulnerabilities like parameter tampering, cross-site scripting, and improper redirects.</span></li>
+<li><span>Penetration testers frequently use DAST tools to detect easily exploitable weaknesses, thus reducing manual testing workload.</span></li>
+<li><span>DAST tools operate independently of the technology as they assess the running application for vulnerabilities.</span></li>
+<li><span>Example: These tools adopt an outside-in approach, focusing on HTTP conversations, indifferent to the underlying language or framework.</span></li>
+<li><span>Be careful;</span>
+<ul>
+<li><span>DAST tools cannot tell you the line of code where an issue is found. (unless it has been instrumented into the application)</span></li>
+<li><span>DAST is typically used later in the development lifecycle, resulting in later detection of issues compared to SAST.</span></li>
+</ul>
+</li>
+<li><span>Be careful;</span>
+<ul>
+<li><span>Running DAST in a developer’s local environment is uncommon, though possible.</span></li>
+<li><span>DAST doesn’t identify code-specific issues, like hardcoded passwords.</span></li>
+<li><span>DAST’s findings require expert analysis to confirm their validity.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>IAST (Interactive Application Security Testing)</span></strong></p>
+<ul>
+<li><span>IAST is a combination of SAST and DAST.</span></li>
+<li><span>Assesses the application from within through instrumenting the code.</span></li>
+<li><span>Example: The vendor supplies a library incorporated into the application build, enabling IAST tool operation within the app</span></li>
+<li><span>This inclusion allows IAST tools to access code, HTTP conversations, library data, backend connections, and configuration information.</span></li>
+<li><span>Be careful;</span>
+<ul>
+<li><span>IAST tools may require actual attack scenarios to detect vulnerabilities, which can be a drawback.</span></li>
+<li><span>In the absence of comprehensive testing, vulnerabilities may remain unnoticed until a specific feature is used.</span></li>
+<li><span>For instance, infrequently run functions, like certain reporting tasks, could carry unnoticed vulnerabilities to production.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Software Composition Analysis</span></strong></p>
+<ul>
+<li><span>Let’s agree that a small percentage of code is actually written by a developer from scratch. They use;</span>
+<ul>
+<li><span>Libraries</span></li>
+<li><span>Packages etc</span></li>
+</ul>
+</li>
+<li><span>If you try to create a project that handles math equations, there is already a secure and reliable library for this.</span>
+<ul>
+<li><span>This gave us convenience but also created friction in managing the sprawl of libraries used in an overall project. How do you know the libraries;</span>
+<ul>
+<li><span>are secure</span></li>
+<li><span>not breaching any licence etc.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span>The answer is the SCA tool.</span></li>
+<li><span>Software Composition Analysis (SCA) tools (usually) manage the use of open-source components and license tracking.</span></li>
+<li><span>They scan an application’s code base, including related items like containers and registries.</span></li>
+<li><span>They identify all open-source components, helping to create a software bill of materials.</span></li>
+<li><span>SCA tools provide licence compliance data and detect potential security vulnerabilities.</span></li>
+<li><span>Some tools even prioritise and automatically remediate open-source vulnerabilities.</span></li>
+<li><span>Be careful;</span>
+<ul>
+<li><span>About their potential to flag a library as insecure after it’s already in production.</span></li>
+<li><span>Might require upgrading other libraries or making significant architectural changes to address identified issues.</span></li>
+<li><span>Sometimes, the library flagged by the SCA tool isn’t insecure itself, but one it depends on might be.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Run-time protection tools</span></strong></p>
+<ul>
+<li><span>Example: Web Application Firewalls (WAFs), also known as Application Security Managers (ASMs), offer run-time protection for HTTP applications by applying rules to HTTP conversations and analyzing web traffic.</span></li>
+<li><span>They guard against common attacks like cross-site scripting (XSS) and SQL injection and can either report or block detected malicious patterns.</span></li>
+<li><span>Most WAF vendors also offer defence against robotic attacks (bots), such as DDoS, and are enhancing their solutions with machine learning and AI for proactive protection.</span></li>
+<li><span>Be careful;</span>
+<ul>
+<li><span>These tools need to detect malicious activity to report or block it, implying that a vulnerability needs to be identified first.</span></li>
+<li><span>There’s a risk that these tools could block legitimate traffic, particularly in cases of high-volume activities like large batch jobs.</span></li>
+</ul>
+</li>
+<li><span>Be careful;</span>
+<ul>
+<li><span>Proper management and vetting of the rules that govern WAFs and RASPs are crucial, as default rules may be too broad and trigger an overflow of alerts.</span></li>
+<li><span>These rules should be well understood, tested, and jointly managed by the application security and development teams, as what may seem suspicious for one application might be legitimate for another.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Vulnerability collection and prioritisation</span></strong></p>
+<ul>
+<li><span>Integrate defect tracking</span></li>
+<li><span>Examples: Jira, Asana, Bugzilla, DefectDojo, Spreadsheet, Pen &amp; Paper (if you brave enough)</span></li>
+<li><span>The challenging part:</span>
+<ul>
+<li><span>How do you get these vulnerabilities closed?</span></li>
+<li><span>How do you prioritise the vulnerabilities?</span></li>
+<li><span>Who owns the vulnerabilities?</span></li>
+<li><span>What if the vulnerability cannot be closed?</span></li>
+<li><span>Is there enough information for the development team to provide mitigation?</span></li>
+</ul>
+</li>
+<li><span>Prioritising vulnerabilities</span>
+<ul>
+<li><span>Impact &amp; Likelihood will give you the “Severity”</span></li>
+<li><span>Time to closure</span></li>
+</ul>
+</li>
+<li><span>Closing vulnerabilities</span>
+<ul>
+<li><span>Requires operational work</span></li>
+<li><span>Needs a very close partnership with developers/engineers</span></li>
+<li><span>What if you can’t close vulnerability?</span>
+<ul>
+<li><span>Find the stakeholders and;</span>
+<ul>
+<li><span>Give them a clear picture</span></li>
+<li><span>Ask for Risk management</span></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Risk Management but how?</span></strong></p>
+<ul>
+<li><strong><span>Risk Avoidance:</span></strong><span> This approach mitigates risk by refraining from activities that could negatively impact the organisation.</span></li>
+<li><strong><span>Risk Reduction:</span></strong><span> This risk management method aims to limit the losses rather than completely eradicate them. It accepts the risk but works to contain potential losses and prevent their spread.</span></li>
+<li><strong><span>Risk Sharing:</span></strong><span> In this case, the risk of potential loss is distributed among a group instead of being borne by an individual.</span></li>
+<li><strong><span>Transferring Risk:</span></strong><span> This involves contractually shifting risk to a third party. For instance, insuring against property damage or injury transfers the associated risks from the property owner to the insurance company.</span></li>
+<li><strong><span>Risk Acceptance and Retention:</span></strong><span> After applying risk sharing, risk transfer, and risk reduction measures, some risk inevitably remains, as it’s virtually impossible to eliminate all risks. This remaining risk is known as residual risk.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Vulnerability Disclosure Program</span></strong></p>
+<ul>
+<li><span>Vulnerability Disclosure Programs (VDPs) encourage researchers to report security vulnerabilities without fearing retaliation.</span></li>
+<li><span>VDPs facilitate the process of delivering security information to the appropriate team.</span></li>
+<li><span>They address challenges faced by researchers, such as knowing where to send information and having an unclear resolution path post-submission.</span></li>
+<li><span>VDPs aim to resolve these issues by implementing five core components of the policy.</span>
+<ul>
+<li><span>Purpose of the policy</span></li>
+<li><span>Scope</span></li>
+<li><span>Safe Harbor</span></li>
+<li><span>Process for submission</span></li>
+<li><span>Expectations</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>Bug Bounty Program</span></strong></p>
+<ul>
+<li><span>Bug Bounty Programs (BBPs) enhance VDPs by introducing incentives for submitted vulnerabilities.</span></li>
+<li><span>The organisation sets predefined guidance for payout, either pricing specific vulnerabilities or varying costs by severity.</span></li>
+<li><span>The organisation must plan for periodic bounty payouts.</span></li>
+<li><span>BBPs can be private (only for invited researchers) or public (open to any researcher).</span></li>
+<li><span>The organisation needs to triage submitted vulnerabilities, usually done by the application security team alongside the engineering team.</span></li>
+<li><span>They need to confirm the vulnerability and agree on its severity.</span></li>
+<li><span>Depending on the policy, it may allow public disclosure of the vulnerability if it isn’t resolved within the stipulated time frame.</span></li>
+<li><span>It’s crucial for the organisation to follow their own policy in resolving the issue within set timeframes and to maintain communication with the researcher, to avoid a potentially public issue.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>3. Shifting Left vs Shifting Right</span></strong></p>
+<ul>
+<li><span>“Shift left" is the practice of integrating security early in the software development life cycle, ideally at the requirements gathering and development phase.</span>
+<ul>
+<li><span>This term often emphasises the need to uncover security issues as early as possible in the development process.</span></li>
+<li><strong><span>The ideal time to rectify a security vulnerability is at the moment of its creation.</span></strong></li>
+</ul>
+</li>
+<li><span>“Shift right” involves strategically placing tools throughout the development life cycle and production environment to identify and protect against vulnerabilities.</span>
+<ul>
+<li><span>Penetration tests are conducted to discover potential issues.</span></li>
+<li><span>The “shift right” model allows for verification of tool functionality and report generation to assess effectiveness.</span></li>
+<li><span>This could disrupt the DevOps model, which emphasises speed and struggles with broken builds or gates.</span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><span>3.1. Shifting Left</span></strong></p>
+<ul>
+<li><span>Shifting left’ prioritises early security efforts in the development lifecycle, being more cost-effective and efficient than resolving issues later.</span></li>
+<li><span>Implementing ‘shift left’ can be challenging and might be overlooked if the organisation needs a quick solution.</span></li>
+<li><span>Secure development starts with appropriate architecture and design choices, considering security aspects like session management, encryption, and authorization.</span></li>
+<li><span>Utilising proven patterns and standards from reputable organisations, such as OWASP, aids in ensuring security.</span></li>
+<li><span>Decisions around data protection schemes should coincide with architectural decisions on data flow and database technology.</span></li>
+<li><span>Clear requirements for encryption strategies based on data classification should be established early.</span></li>
+<li><span>Implementing field-level encryption with proper key lifecycle management is easier before massive data accumulation.</span></li>
+<li><span>Challenges can arise with legacy applications, which may not support modern, granular encryption methods due to their design constraints. (Modern banking problem)</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>4. Known Attack Surfaces &amp; Vectors</span></strong></p>
+</li>
+<li>
+<p><strong><span>Known Rust Vulnerabilities (Surface &amp; Vectors)</span></strong></p>
+<ul>
+<li><span>Rust-specific issues: Most common issues are related to misuse of some common features of the language. These include: panicking on error handling, arithmetic errors, resource exhaustion, stack overflow.</span></li>
+<li><span>Unsafe code: Rust allows developers to write unsafe code blocks that bypass safety guarantees. It is absolutely needed in some cases, but such code may contain a number of vulnerabilities, including: use-after-free, out of bound access, double free, memory leaks and so on.</span></li>
+<li><span>Cryptographic errors: There are a number of cryptographic libraries in the Rust ecosystem, but using these requires knowledge of the underlying algorithms, including their weaknesses and possible vulnerabilities.</span></li>
+<li><span>API misuse: Incorrect usage of interfaces provided by third-party libraries may introduce vulnerabilities.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Known Substrate Vulnerabilities (Surface &amp; Vectors)</span></strong></p>
+<ul>
+<li><span>Insufficient testing: Being safety critical applications, blockchain projects must be rigorously tested, including following all the common practices of secure software lifecycle.</span></li>
+<li><span>Centralization vulnerabilities: If centralized components are present in a substrate-based project, they can be a point of failure.</span></li>
+<li><span>Pallet-specific vulnerabilities: Each pallet contains specific logic including its communication with other components of the project, which may introduce security issues.</span></li>
+<li><span>Incorrect access control: A type of an error in the business logic of the smart contract that lets unauthorized users access privileged functions.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Known ink! Vulnerabilities (Surface &amp; Vectors)</span></strong></p>
+<ul>
+<li><span>Denial-of-Service (DoS) attacks: Execution of smart contracts requires some amount of gas. Therefore, presence of some implementation issues may lead to gas exhaustion in the contract making it non-functional.</span></li>
+<li><span>Timestamp dependence: The developer always must be careful with all the operations that take into account the time in the system.</span></li>
+<li><span>Outdated version of ink!: The latest version of ink! always should be used.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Resources used to create slides</span></strong></p>
+</li>
+</ul><ol>
+<li>
+<p><span>Application Security Program Handbook, by Derek Fisher: </span><a href="https://www.manning.com/books/application-security-program-handbook" target="_blank" rel="noopener"><span>https://www.manning.com/books/application-security-program-handbook</span></a></p>
+</li>
+<li>
+<p><span>Agile Application Security, by Laura Bell, Michael Brunton-Spall, Rich Smith &amp; Jim Bird” </span><a href="https://www.oreilly.com/library/view/agile-application-security/9781491938836/" target="_blank" rel="noopener"><span>https://www.oreilly.com/library/view/agile-application-security/9781491938836/</span></a></p>
+</li>
+<li>
+<p><span>CSSLP Certified Secure Software Lifecycle Professional All-in-One Exam Guide, Third Edition, by Wm. Arthur Conklin, Daniel Paul Shoemaker: </span><a href="https://www.mheducation.co.uk/csslp-certified-secure-software-lifecycle-professional-all-in-one-exam-guide-third-edition-9781264258208-emea" target="_blank" rel="noopener"><span>https://www.mheducation.co.uk/csslp-certified-secure-software-lifecycle-professional-all-in-one-exam-guide-third-edition-9781264258208-emea</span></a></p>
+</li>
+<li>
+<p><span>(ISC)2 CISSP Certified Information Systems Security Professional Official Study Guide, by Mike Chapple, James Michael Stewart, Darril Gibson, David Seidl: </span><a href="https://www.wiley.com/en-gb/(ISC)2+CISSP+Certified+Information+Systems+Security+Professional+Official+Study+Guide+&amp;+Practice+Tests+Bundle,+3rd+Edition-p-9781119790020" target="_blank" rel="noopener"><span>https://www.wiley.com/en-gb/(ISC)2+CISSP+Certified+Information+Systems+Security+Professional+Official+Study+Guide+&amp;+Practice+Tests+Bundle,+3rd+Edition-p-9781119790020</span></a></p>
+</li>
+<li>
+<p><span>CISSP for Dummies, Lawrence C. Miller, Peter H. Gregory: </span><a href="https://www.wiley.com/en-gb/CISSP+For+Dummies,+7th+Edition-p-9781119806820" target="_blank" rel="noopener"><span>https://www.wiley.com/en-gb/CISSP+For+Dummies,+7th+Edition-p-9781119806820</span></a></p>
+</li>
+<li>
+<p><span>CISM Certified Information Security Manager Study Guide, by Mike Chapple: </span><a href="https://www.wiley.com/en-gb/CISM+Certified+Information+Security+Manager+Study+Guide-p-9781119801948" target="_blank" rel="noopener"><span>https://www.wiley.com/en-gb/CISM+Certified+Information+Security+Manager+Study+Guide-p-9781119801948</span></a></p>
+</li>
+<li>
+<p><span>Secure Rust Guidelines: </span><a href="https://anssi-fr.github.io/rust-guide" target="_blank" rel="noopener"><span>https://anssi-fr.github.io/rust-guide</span></a></p>
+</li>
+<li>
+<p><span>OWASP Smart Contract Top 10: </span><a href="https://owasp.org/www-project-smart-contract-top-10/" target="_blank" rel="noopener"><span>https://owasp.org/www-project-smart-contract-top-10/</span></a></p>
+</li>
+<li>
+<p><span>Smart Contract Weakness Classification and Test Cases: </span><a href="https://swcregistry.io/" target="_blank" rel="noopener"><span>https://swcregistry.io/</span></a></p>
+</li>
+</ol></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
