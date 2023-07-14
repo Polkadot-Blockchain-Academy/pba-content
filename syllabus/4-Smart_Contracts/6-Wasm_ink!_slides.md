@@ -1220,6 +1220,45 @@ impl MyContract {
 
 ---
 
+## Interacting with the state transition function
+
+<br/>
+
+<div class="flex-container">
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> User API </pre></h2></center> </div>
+<div style="text-align: center"> <center><h2><pre> (usually for humans) </pre></h2></center> </div>
+
+<ul>
+<li>token transfer</li>
+<li>staking</li>
+<li>voting</li>
+<li>contract call</li>
+<li>...</li>
+
+**_runtime call_**
+</ul>
+</div>
+
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> Contract API </pre></h2></center> </div>
+<div style="text-align: center"> <center><h2><pre> (only for contracts) </pre></h2></center> </div>
+
+<ul>
+<li>advanced cryptography</li>
+<li>bypassing standard restrictions</li>
+<li>outsourcing computation</li>
+<li>...</li>
+
+<br/>
+
+**_chain extension_**
+</ul>
+</div>
+</div>
+
+---
+
 ## Runtime
 
 <br/>
