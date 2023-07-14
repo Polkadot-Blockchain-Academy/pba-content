@@ -1134,6 +1134,13 @@ impl MyContract {
 ---
 
 ## Blockchain node onion
+<br/>
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="img/ink/onions.png" />
+
+---
+
+## Blockchain node onion
 
 <img style="margin-top: 10px" width="600" src="img/ink/blockchain-onion-1.svg" />
 
@@ -1166,10 +1173,10 @@ impl MyContract {
 - `account_id()`
 - `balance()`
 - `block_number()`
-- `emit_event()`
-- `transfer()`
-- `hash_bytes()`
-- `debug_message()`
+- `emit_event(event: Event)`
+- `transfer(dest: AccountId, value: Balance)`
+- `hash_bytes(input: &[u8], output: &mut [u8])`
+- `debug_message(msg: &str)`
 - [_and many more_](https://docs.rs/ink_env/4.2.1/ink_env/index.html#functions)
 
 ---
@@ -1214,6 +1221,45 @@ impl MyContract {
 <li>bypassing standard restrictions</li>
 <li>outsourcing computation</li>
 <li>...</li>
+</ul>
+</div>
+</div>
+
+---
+
+## Interacting with the state transition function
+
+<br/>
+
+<div class="flex-container">
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> User API </pre></h2></center> </div>
+<div style="text-align: center"> <center><h2><pre> (usually for humans) </pre></h2></center> </div>
+
+<ul>
+<li>token transfer</li>
+<li>staking</li>
+<li>voting</li>
+<li>contract call</li>
+<li>...</li>
+
+**_runtime call_**
+</ul>
+</div>
+
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> Contract API </pre></h2></center> </div>
+<div style="text-align: center"> <center><h2><pre> (only for contracts) </pre></h2></center> </div>
+
+<ul>
+<li>advanced cryptography</li>
+<li>bypassing standard restrictions</li>
+<li>outsourcing computation</li>
+<li>...</li>
+
+<br/>
+
+**_chain extension_**
 </ul>
 </div>
 </div>
@@ -1405,6 +1451,12 @@ impl ChainExtension<Runtime> for HeavyCryptoOutsourcingExtension {
     Ok(RetVal::Converging(0))
 }
 ```
+
+---
+
+## Chain extension: reaching even further
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/chain-extension-reach.svg" />
 
 ---
 
@@ -1614,6 +1666,12 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
 1. State validation (_client side_)
 
 </div>
+
+---
+
+## E2E pipeline: traps, traps everywhere
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/trap.gif" />
 
 ---
 
