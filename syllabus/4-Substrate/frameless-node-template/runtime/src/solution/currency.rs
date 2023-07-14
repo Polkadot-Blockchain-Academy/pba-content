@@ -92,8 +92,8 @@ impl<T: Config> From<Error<T>> for sp_runtime::DispatchError {
 // We can store this because it has the same encoding as `shared::AccountBalance`.
 #[derive(Debug, Clone, Encode, Decode, PartialEq, Eq)]
 pub struct AccountBalance<T: Config> {
-	pub free: T::Balance,
-	pub reserved: T::Balance,
+	free: T::Balance,
+	reserved: T::Balance,
 }
 
 impl<T: Config> Default for AccountBalance<T> {
@@ -103,7 +103,7 @@ impl<T: Config> Default for AccountBalance<T> {
 }
 
 impl<T: Config> AccountBalance<T> {
-	fn reserve(&mut self, amount: T::Balance) -> DispatchOutcome {
+	pub(crate) fn reserve(&mut self, amount: T::Balance) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() => {
 				self.free = leftover;
@@ -114,7 +114,8 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	fn unreserve(&mut self, amount: T::Balance) -> DispatchOutcome {
+	#[allow(unused)]
+	pub(crate) fn unreserve(&mut self, amount: T::Balance) -> DispatchOutcome {
 		match self.reserved.checked_sub(&amount) {
 			Some(leftover) => {
 				self.reserved = leftover;
@@ -125,14 +126,14 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	fn can_transfer(&self, amount: T::Balance) -> DispatchOutcome {
+	pub(crate) fn can_withdraw(&self, amount: T::Balance) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() || leftover.is_zero() => Ok(()),
 			_ => Err(Error::<T>::InsufficientFunds)?,
 		}
 	}
 
-	fn transfer(&mut self, amount: T::Balance) -> DispatchOutcome {
+	pub(crate) fn withdraw(&mut self, amount: T::Balance) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
 			Some(leftover) if leftover >= T::MinimumBalance::get() || leftover.is_zero() => {
 				self.free = leftover;
@@ -142,7 +143,7 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	fn can_receive(&self, amount: T::Balance) -> DispatchOutcome {
+	pub(crate) fn can_receive(&self, amount: T::Balance) -> DispatchOutcome {
 		self.free
 			.checked_add(&amount)
 			.ok_or(Error::<T>::Overflow)
@@ -154,7 +155,7 @@ impl<T: Config> AccountBalance<T> {
 			.map_err(Into::into)
 	}
 
-	fn receive(&mut self, amount: T::Balance) -> DispatchOutcome {
+	pub(crate) fn receive(&mut self, amount: T::Balance) -> DispatchOutcome {
 		self.free = self.free.checked_add(&amount).ok_or(Error::<T>::Overflow)?;
 		if self.free < T::MinimumBalance::get() {
 			Err(Error::<T>::InsufficientFunds)?
@@ -188,13 +189,17 @@ impl<T: Config> Module<T> {
 		let mut sender_balance = BalancesMap::<T>::get(sender).ok_or(Error::<T>::DoesNotExist)?;
 		let mut dest_balance = BalancesMap::<T>::get(dest).unwrap_or_default();
 
-		sender_balance.can_transfer(amount)?;
+		sender_balance.can_withdraw(amount)?;
 		dest_balance.can_receive(amount)?;
 
-		sender_balance.transfer(amount).expect("checked above");
+		sender_balance.withdraw(amount).expect("checked above");
 		dest_balance.receive(amount).expect("checked above");
 
-		BalancesMap::<T>::set(sender, sender_balance);
+		if sender_balance.free.is_zero() && sender_balance.reserved.is_zero() {
+			BalancesMap::<T>::clear(sender);
+		} else {
+			BalancesMap::<T>::set(sender, sender_balance);
+		}
 		BalancesMap::<T>::set(dest, dest_balance);
 		Ok(())
 	}
@@ -239,7 +244,7 @@ impl<T: Config> Module<T> {
 	pub fn reserve(from: AccountId, amount: T::Balance) -> DispatchOutcome {
 		let mut balance = BalancesMap::<T>::get(from).ok_or(Error::<T>::DoesNotExist)?;
 
-		balance.can_transfer(amount)?;
+		balance.can_withdraw(amount)?;
 		balance.reserve(amount).expect("checked above");
 
 		BalancesMap::<T>::set(from, balance);
@@ -255,6 +260,7 @@ impl<T: Config> Module<T> {
 	/// * [`Error::Overflow`] if any type of arithmetic operation overflows.
 	/// * [`Error::InsufficientFunds`] if the account does not have enough reserved funds to preform
 	///   this operation.
+	#[allow(unused)]
 	pub fn unreserve(from: AccountId, amount: T::Balance) -> DispatchOutcome {
 		let mut balance = BalancesMap::<T>::get(from).ok_or(Error::<T>::DoesNotExist)?;
 

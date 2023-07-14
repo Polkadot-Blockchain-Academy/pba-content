@@ -1,10 +1,12 @@
 use parity_scale_codec::{Decode, Encode};
+use runtime::shared::TREASURY;
 use shared::{
 	AccountBalance, AccountId, Balance, Block, CurrencyCall, Extrinsic, Header, RuntimeCall,
 	RuntimeCallWithTip, StakingCall, SystemCall, EXTRINSICS_KEY, VALUE_KEY,
 };
-use sp_api::HashT;
+use sp_api::{HashT, TransactionValidity};
 use sp_core::{
+	crypto::UncheckedFrom,
 	traits::{CallContext, CodeExecutor, Externalities},
 	H256,
 };
@@ -12,7 +14,7 @@ use sp_io::TestExternalities;
 use sp_keyring::AccountKeyring::*;
 use sp_runtime::{
 	traits::{BlakeTwo256, Block as BlockT, Extrinsic as _},
-	transaction_validity::{InvalidTransaction, TransactionValidityError},
+	transaction_validity::{InvalidTransaction, TransactionSource, TransactionValidityError},
 	ApplyExtrinsicResult,
 };
 
@@ -29,6 +31,10 @@ fn balance_of(who: AccountId) -> Option<AccountBalance> {
 
 fn free_of(who: AccountId) -> Option<Balance> {
 	balance_of(who).map(|b| b.free)
+}
+
+fn treasury() -> Option<Balance> {
+	free_of(AccountId::unchecked_from(TREASURY))
 }
 
 #[allow(unused)]
@@ -52,9 +58,30 @@ fn signed(call: RuntimeCall, signer: &sp_keyring::AccountKeyring) -> Extrinsic {
 	Extrinsic::new(call_with_tip, Some((signer.public(), signature, ()))).unwrap()
 }
 
+fn tipped(call: RuntimeCall, signer: &sp_keyring::AccountKeyring, tip: Balance) -> Extrinsic {
+	let call_with_tip = RuntimeCallWithTip { tip: Some(tip), call };
+	let payload = (call_with_tip).encode();
+	let signature = signer.sign(&payload);
+	Extrinsic::new(call_with_tip, Some((signer.public(), signature, ()))).unwrap()
+}
+
 fn unsigned(call: RuntimeCall) -> Extrinsic {
 	let call_with_tip = RuntimeCallWithTip { tip: None, call };
 	Extrinsic::new(call_with_tip, None).unwrap()
+}
+
+fn validate(to_validate: Extrinsic, state: &mut TestExternalities) -> TransactionValidity {
+	let return_bytes = executor_call(
+		state,
+		"TaggedTransactionQueue_validate_transaction",
+		(TransactionSource::External, to_validate, <Block as BlockT>::Hash::default())
+			.encode()
+			.as_slice(),
+	)
+	.unwrap();
+
+	// decode the bytes as a TransactionValidity.
+	<TransactionValidity as Decode>::decode(&mut &*return_bytes).unwrap()
 }
 
 fn author_and_import(
@@ -119,7 +146,7 @@ fn author_and_import(
 		// check extrinsics root.
 		assert_eq!(
 			block.header.extrinsics_root,
-			BlakeTwo256::ordered_trie_root(extrinsics, Default::default())
+			BlakeTwo256::ordered_trie_root(extrinsics, sp_runtime::StateVersion::V0)
 		);
 	});
 	drop(auth_state);
@@ -137,7 +164,7 @@ fn author_and_import(
 			block.header.extrinsics_root,
 			BlakeTwo256::ordered_trie_root(
 				block.extrinsics.into_iter().map(|e| e.encode()).collect::<Vec<_>>(),
-				Default::default()
+				sp_runtime::StateVersion::V0
 			)
 		);
 	});
@@ -263,8 +290,8 @@ mod block_builder {
 				.unwrap();
 
 		assert!(matches!(
-			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes).unwrap().unwrap(),
-			DispatchOutcome::Err(_)
+			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes).unwrap(),
+			Ok(DispatchOutcome::Err(_))
 		));
 	}
 
@@ -288,9 +315,8 @@ mod block_builder {
 }
 
 mod validate {
-	use sp_runtime::transaction_validity::TransactionSource;
-
 	use super::*;
+
 	#[test]
 	fn validate_bad_signature() {
 		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice);
@@ -303,20 +329,10 @@ mod validate {
 		ext.signature.as_mut().unwrap().1 = other_sig;
 
 		let mut state = new_test_ext();
-
-		let return_bytes = executor_call(
-			&mut state,
-			"TaggedTransactionQueue_validate_transaction",
-			(TransactionSource::External, ext, <Block as BlockT>::Hash::default())
-				.encode()
-				.as_slice(),
-		)
-		.unwrap();
+		let validity = validate(ext, &mut state);
 
 		assert_eq!(
-			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes)
-				.unwrap()
-				.unwrap_err(),
+			validity.unwrap_err(),
 			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
 		);
 	}
@@ -326,21 +342,242 @@ mod validate {
 		let ext = unsigned(RuntimeCall::System(SystemCall::Set { value: 42 }));
 		let mut state = new_test_ext();
 
-		let return_bytes = executor_call(
-			&mut state,
-			"TaggedTransactionQueue_validate_transaction",
-			(TransactionSource::External, ext, <Block as BlockT>::Hash::default())
-				.encode()
-				.as_slice(),
-		)
-		.unwrap();
+		let validity = validate(ext, &mut state);
 
 		assert_eq!(
-			<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes)
-				.unwrap()
-				.unwrap_err(),
+			validity.unwrap_err(),
 			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
 		);
+	}
+}
+
+mod tipping {
+	use super::*;
+	use crate::author_and_import;
+	use sp_runtime::transaction_validity::ValidTransaction;
+
+	mod validate {
+		use super::*;
+		#[test]
+		fn validate_sets_priority() {
+			// account with some balance can get a higher priority.
+			let mut state = new_test_ext();
+			let exts = vec![signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+				&Alice,
+			)];
+
+			// apply this to our state.
+			author_and_import(&mut state, exts, || {});
+
+			// now run validation on top of this state.
+			let to_validate = tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 5);
+			let validity = validate(to_validate, &mut state);
+			assert!(matches!(validity, Ok(ValidTransaction { priority: 5, .. })));
+		}
+
+		#[test]
+		fn priority_overflow() {
+			todo!();
+		}
+
+		#[test]
+		fn cannot_tip_if_not_not_enough_balance() {
+			// cannot tip and get a higher priority if not funded.
+			let mut state = new_test_ext();
+			let exts = vec![signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+				&Alice,
+			)];
+
+			// apply this to our state.
+			author_and_import(&mut state, exts, || {});
+
+			// tip value is higher than what alice has.
+			let to_validate =
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 25);
+			let validity = validate(to_validate, &mut state);
+			assert!(matches!(
+				validity,
+				Err(TransactionValidityError::Invalid(InvalidTransaction::Payment))
+			));
+		}
+
+		#[test]
+		fn cannot_tip_if_below_ed() {
+			// fund alice's account.
+			let mut state = new_test_ext();
+			let exts = vec![signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+				&Alice,
+			)];
+
+			// apply this to our state.
+			author_and_import(&mut state, exts, || {});
+
+			// tip is 15, leaving only 5 for alice.
+			let to_validate =
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 15);
+			let validity = validate(to_validate, &mut state);
+			assert!(matches!(
+				validity,
+				Err(TransactionValidityError::Invalid(InvalidTransaction::Payment))
+			));
+		}
+
+		#[test]
+		fn can_kill_oneself_with_tip() {
+			// fund alice's account.
+			let mut state = new_test_ext();
+			let exts = vec![signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+				&Alice,
+			)];
+
+			// apply this to our state.
+			author_and_import(&mut state, exts, || {});
+
+			// tip is 15, leaving only 5 for alice.
+			let to_validate =
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 20);
+			let validity = validate(to_validate, &mut state);
+			assert!(matches!(validity, Ok(ValidTransaction { priority: 20, .. })));
+		}
+
+		#[test]
+		fn cannot_tip_if_not_funded() {
+			// an account with no balance at all.
+			let to_validate =
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 10);
+			let validity = validate(to_validate, &mut new_test_ext());
+			assert!(matches!(
+				validity,
+				Err(TransactionValidityError::Invalid(InvalidTransaction::Payment))
+			));
+		}
+	}
+
+	mod apply {
+		use super::*;
+		#[test]
+		fn tip_unfunded_treasury() {
+			let mut state = new_test_ext();
+			state.execute_with(|| assert!(treasury().is_none()));
+
+			let exts = vec![
+				// alice gets 100.
+				signed(
+					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 100 }),
+					&Alice,
+				),
+				// sends 20 to bob, while tipping 5 of it. This will not create the treasury, and
+				// is an edge case where the total issuance needs to be updated.
+				tipped(
+					RuntimeCall::Currency(CurrencyCall::Transfer {
+						dest: Bob.public(),
+						amount: 20,
+					}),
+					&Alice,
+					5,
+				),
+			];
+
+			// apply this to our state.
+			author_and_import(&mut state, exts, || {
+				assert!(treasury().is_none());
+				assert_eq!(free_of(Alice.public()).unwrap(), 75);
+				assert_eq!(free_of(Bob.public()).unwrap(), 20);
+				assert_eq!(issuance(), Some(95));
+			});
+		}
+
+		#[test]
+		fn success_dispatch_withdraw_fee() {
+			// treasury is empty.
+			let mut state = new_test_ext();
+			state.execute_with(|| assert!(treasury().is_none()));
+
+			let exts = vec![
+				// alice gets 100.
+				signed(
+					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 100 }),
+					&Alice,
+				),
+				// sends 20 to bob, while tipping 10 of it. This creates treasury.
+				tipped(
+					RuntimeCall::Currency(CurrencyCall::Transfer {
+						dest: Bob.public(),
+						amount: 20,
+					}),
+					&Alice,
+					10,
+				),
+			];
+
+			// apply this to our state.
+			author_and_import(&mut state, exts, || {
+				assert_eq!(treasury().unwrap(), 10);
+				assert_eq!(free_of(Alice.public()).unwrap(), 70);
+				assert_eq!(free_of(Bob.public()).unwrap(), 20);
+				assert_eq!(issuance(), Some(100));
+			});
+		}
+
+		#[test]
+		fn tip_and_transfer_below_ed() {
+			let mut state = new_test_ext();
+			let exts = vec![
+				// alice gets 20.
+				signed(
+					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+					&Alice,
+				),
+				// sends 10 to bob, while tipping 5. This will fail, but the tip will go though.
+				tipped(
+					RuntimeCall::Currency(CurrencyCall::Transfer {
+						dest: Bob.public(),
+						amount: 10,
+					}),
+					&Alice,
+					5,
+				),
+			];
+
+			author_and_import(&mut state, exts, || {
+				assert!(treasury().is_none());
+				assert_eq!(free_of(Alice.public()).unwrap(), 15);
+				assert!(free_of(Bob.public()).is_none());
+				assert_eq!(issuance(), Some(15));
+			});
+		}
+
+		#[test]
+		fn tip_and_transfer_kill() {
+			let mut state = new_test_ext();
+			let exts = vec![
+				// alice gets 20.
+				signed(
+					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+					&Alice,
+				),
+				// sends 10 to bob, while tipping 10. This will work, and alice wil die.
+				tipped(
+					RuntimeCall::Currency(CurrencyCall::Transfer {
+						dest: Bob.public(),
+						amount: 10,
+					}),
+					&Alice,
+					10,
+				),
+			];
+
+			author_and_import(&mut state, exts, || {
+				assert_eq!(treasury(), Some(10));
+				assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
+				assert_eq!(free_of(Bob.public()), Some(10));
+				assert_eq!(issuance(), Some(20));
+			});
+		}
 	}
 }
 
@@ -566,7 +803,7 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), Some(0)); // TODO: None should also be acceptable here.
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
 			assert_eq!(free_of(Alice.public()), Some(100));
 			assert_eq!(issuance(), Some(100));
 		});
@@ -585,11 +822,33 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), Some(0));
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
 			assert_eq!(free_of(Alice.public()), Some(100));
 			assert_eq!(issuance(), Some(100));
 		});
 	}
+
+	#[test]
+	fn account_is_actually_destroyed() {
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+			),
+			signed(RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }), &Bob),
+		];
+
+		author_and_import(&mut state, exts, || {
+			// As opposed to storing something like `Some(0)`. In other tests we don't really care
+			// about this, but we check it here.
+			assert_eq!(balance_of(Bob.public()), None);
+		});
+	}
+
+	#[test]
+	fn cannot_transfer_all_when_reserved() {}
 }
 
 mod staking {
@@ -615,8 +874,12 @@ mod staking {
 	}
 
 	#[test]
-	fn bonding_more_than_allowed() {}
+	fn bonding_more_than_allowed() {
+		todo!();
+	}
 
 	#[test]
-	fn bonding_more_than_allowed_limit() {}
+	fn bonding_more_than_allowed_limit() {
+		todo!();
+	}
 }

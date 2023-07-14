@@ -5,7 +5,7 @@
 //! > work. We hope you to also explore new possibilities, and share it with other for education.
 //!
 //! > This assignment builds on top of the `mini_substrate` section of the pre-course material. It
-//! > is highly advices for you to re-familiarize yourself with that.
+//! > is highly recommended to re-familiarize yourself with that first.
 //!
 //! ## Context
 //!
@@ -18,81 +18,90 @@
 //! While you are welcome to explore the `node` folder, it is not part of this assignment, and you
 //! can leave it as-is.
 //!
-//! This node uses a tasting block-authoring/consensus scheme in which a block is produced at fixed
+//! This node uses a testing block-authoring/consensus scheme in which a block is produced at fixed
 //! intervals. See `--consensus` cli option.
 //!
 //! ## Warm Up
 //!
 //! First, study the runtime code with the help of your instructor. You will soon realize that it is
-//! missing some key components. Most notable, the logic to:
+//! missing some key components. Most notably, the logic to:
 //!
 //! 1. apply extrinsics
 //! 2. validate extrinsics for the tx-pool
-//! 3. finalize a block upon authoring.
+//! 3. finalize a block upon authoring
 //!
-//! are not complete. Your first task is to complete them, and make sure all local tests are
-//! passing. These tests ensure that your runtime has all the basics in place.
+//! are not complete. Your first task is to complete them to some extent, and make sure all local
+//! tests are passing. To do so, you won't need to alter tx-pool api yet, but you should provide a
+//! simple `apply_extrinsic`, and finish `finalize_block`.
 //!
 //! The third objective above will ensure that when you author blocks, you set the correct state
 //! root and extrinsics root in the block header. This makes the block be a valid import-able block.
 //! This test demonstrates this property:
 #![doc = docify::embed!("src/lib.rs", import_and_author_equal)]
 //!
+//! Also, if you run your chain with two nodes, you will be able to test this property. See Hints
+//! section below.
+//!
 //! As a part of both, you will realize that you are asked to implement proper signature checking.
 //! In this assignment, we are using the types from [`sp_runtime::generic`] (see [`shared`]).
 //! Studying these types and how the handle signatures within themselves should help you implement
-//! proper signature checking. All in all, your runtime should only work with signed extrinsics, and
+//! proper signature checking.
+//!
+//! All in all, your runtime should only work with signed extrinsics, and
 //! instantly reject unsigned (or badly signed) extrinsics. See the following tests:
 #![doc = docify::embed!("src/lib.rs", bad_signature_fails)]
 //!
 #![doc = docify::embed!("src/lib.rs", unsigned_set_value_does_not_work)]
 //!
-//! By the end of this section, you should fix the aforementioned two parts of your runtime,
-//! implement proper dispatch logic for [`shared::SystemCall`], and this should enable you yo pass
-//! all tests in this file. Moreover, your should be able to play with your blockchain, through
-//! running a node, and interacting with it via `curl`, `wscat` or a similar tool. See
-//! `encode_examples` test.
+//! By the end of this section, you should fix the aforementioned 3 parts of your runtime, implement
+//! proper dispatch logic for [`shared::SystemCall`], and this should enable you yo pass all tests
+//! in this file. Moreover, your should be able to play with your blockchain, through running a
+//! node, and interacting with it via `curl`, `wscat` or a similar tool. See `encode_examples` test.
 //!
 //! > Most of [`shared::SystemCall`] instances are for you to use for learning. Try and upgrade your
 //! > chain using [`shared::SystemCall::Upgrade`]!
 //!
-//! TODO: prepare a diff for everything thus far to hand over at some point, or live code it.
-//! TODO: clear graph somewhere of the flow of import and authoring.
+//! TODO: prepare a diff for everything thus far to hand over at some point, or live code it. TODO:
+//! clear graph somewhere of the flow of import and authoring.
 //!
 //! ## Main Task
 //!
 //! Once you are done with the above, you can start your main objective, which is to re-implement
-//! everything you have done for `mini_substrate` here as well. That is, implement a simple currency
-//! system, with abilities to mint, transfer and reserve, and a staking system on top of it.
+//! everything you have done for `mini_substrate` here. That is, implement a simple currency system,
+//! with abilities to mint, transfer and reserve, and a staking system on top of it.
 //!
 //! ## Specification, Grading
 //!
 //! ### Grading
 //!
 //! Unlike `mini_substrate`, this assignment is primarily graded through a wasm executor, not by
-//! looking at the internals of y your runtime. Manual grading is a small part.
+//! looking at the internals of your runtime. Manual grading is a small part. This means you should
+//! be very careful about adhering to the rules and specifications.
 //!
-//! That means:
+//! Automatic Wasm grading means:
 //!
-//! * we do not care *how* you implement the above modules.
+//! * we do not care about the internal of your runtime, other than the standard set of runtime
+//!   apis.
 //! * but we do care about your storage layout being exactly as described in `mini_substrate`.
-//! * we do care about the extrinsic format being exactly as described in `shared.rs`.
+//! * we do care about the extrinsic format being exactly as described in [`shared`].
 //!
-//! In other words, while we can't force you not to change [`shared`] module, we use an exact copy
-//! of this file to craft extrinsics/blocks to interact with your runtime, and we expect to find the
-//! types mentioned in there (eg. [`shared::AccountBalance`]) to be what we decode from your
-//! storage.
+//! While we can't force you not to change [`shared`] module, we use an exact copy of this file to
+//! craft extrinsics/blocks to interact with your runtime, and we expect to find the types mentioned
+//! in there (eg. [`shared::AccountBalance`]) to be what we decode from your storage.
 //!
-//! > an example here is that you are still free to use your more generic currency module from
-//! > `mini_substrate`, and as long as you correctly configure it to use [`shared::Balance`] as its
-//! > balance type, everything should work just fine. Remember that if two different types can have
-//! > the same encoding.
+//! That being said, you can use types that are equivalent to their encoding to the ones mentioned
+//! in [`shared`].
+//!
+//! > Example: You are still free to use your more generic currency module from `mini_substrate`,
+//! > and as long as you correctly configure it to use [`shared::Balance`] as its balance type,
+//! > everything should work just fine. Remember that two _different types_ can have the _same
+//! > encoding_.
 //!
 //! ### Dispatchables
 //!
 //! Similar to `mini_substrate`, the exact expectation of behavior for each instance of
-//! [`shared::RuntimeCallWithTip`] is document in its own file. This should be identical to what you
-//! had to code for `mini_substrate`.
+//! [`shared::RuntimeCallWithTip`] is document in its own documentation. This should be identical to
+//! what you had to code for `mini_substrate`.
 //!
 //! > As noted above, whether you want to use a trait like `Dispatchable` or not is up to you.
 //!
@@ -107,37 +116,136 @@
 //! > Again, you are free to use the same storage abstractions as in `mini_substrate` or not. We
 //! > highly advice you do ;)
 //!
+//! ### Additional Logic
+//!
+//! Notable new desired behavior, compared to `mini_substrate`:
+//!
+//! #### 1. Tipping
+//!
+//! The final [`shared::Extrinsic`]'s `Call`, namely [`shared::RuntimeCallWithTip`] contains `tip`
+//! field. As the name suggests, this is some additional funds that are sent by the user to chain.
+//! Other than this optional tip, all other extrinsics are free.
+//!
+//! Tipped extrinsics are prioritized over non-tipped ones through the virtue of a higher
+//! `priority`. This is further explained in `validate_transaction` section below.
+//!
+//! Deducting the tip from the sender must happen prior to executing anything else in the
+//! extrinsic. Failure to pay for fees is always a full failure of the extrinsic (similar to a
+//! failed signature check).
+//!
+//! Once the tip is deducted, it is added to the an account id specified by [`shared::TREASURY`].
+//! The same rules about account creation apply to this account as well.
+//!
+//! Total issuance must be kept up to date in all of the cases above.
+//!
+//! #### 2. Account Creation/Deletion
+//!
+//! An account that is destroyed should not be kept in storage with a value like
+//! `Default::default()`. Instead, it should be removed from storage. This is crucial to save space
+//! in your blockchain.
+//!
+//! As a rule of thumb, you should avoid storing `Some(Default::default())` in your storage.
+//! Instead, simply remove them.
+//!
 //! ### `BlockBuilder::apply_extrinsic`
 //!
+//! One of your objectives is to implement the logic for `apply_extrinsic`. Here, we describe what
+//! return value we expect from it.
+//!
 //! Recall that [`ApplyExtrinsicResult`] is essentially a nested `Result`. The outer one says
-//! whether applying the extrinsic to the block was fine, and the inner one says whether the
+//! whether _applying_ the extrinsic to the block was fine, and the inner one says whether the
 //! extrinsic itself was *dispatched* fine.
 //!
-//! For example, a failed transfer will still live in a block, and is *applied* successfully, but it
-//! is not *dispatched* successfully.
+//! For example, a failed transfer will still reside in a block, and is *applied* successfully, but
+//! it is not *dispatched* successfully. So such an extrinsic should something like `Ok(Err(_))` in
+//! its `apply_extrinsic`.
 //!
 //! Your `apply_extrinsic` should:
 //!
-//! * Only return `Err` with [`sp_runtime::InvalidTransaction::BadProof)`] if the extrinsic has an
-//!   invalid signature. In all other cases, outer `Result` is `Ok`.
+//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
+//!   [`sp_runtime::transaction_validity::InvalidTransaction::BadProof`] if the extrinsic has an
+//!   invalid signature.
+//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
+//!   [`sp_runtime::transaction_validity::InvalidTransaction::Payment`] if the extrinsic cannot pay
+//!   for its declared tip.
+//!
+//! In all other cases, outer `Result` is `Ok`.
+//!
 //! * If the inner dispatch is failing, your return value should look like `Ok(Err(_))`, and we
 //!   don't care which variant of `DispatchError` you return.
 //!
 //! ### `TaggedTransactionQueue::validate_transaction`
 //!
-//! ### Additional Logic
+//! Recall that the return type of `validate_transaction` is
+//! [`sp_runtime::transaction_validity::TransactionValidity`] which is simply a `Result`. Similar to
+//! the above, your `validate_transaction` implementation must:
 //!
-//! Additional to the specification of `mini_substrate`...
+//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
+//!   [`sp_runtime::transaction_validity::InvalidTransaction::BadProof`] if the extrinsic has an
+//!   invalid signature.
+//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
+//!   [`sp_runtime::transaction_validity::InvalidTransaction::Payment`] if the extrinsic cannot pay
+//!   for its declared tip.
+//!
+//! Moreover, if the signature and tip are valid, the
+//! [`sp_runtime::transaction_validity::ValidTransaction::priority`] must be set to the tip value
+//! (use a simple saturated conversion if needed).
 //!
 //! ## Hints
 //!
-//! - Be aware of name duplicates.
+//! ### Block Authoring vs. Import
 //!
+//! Recall that the api call flow in block authoring is:
 //!
-//! ## Ideas:
+//! ```ignore
+//! Core::initialize_block(raw_header);
 //!
-//! - Transactional?
-//! - Unreserve and Unbond.
+//! loop {
+//! 	BlockBuilder::apply_extrinsic
+//! }
+//!
+//! BlockBuilder::finalize_block() -> final_header
+//! ```
+//!
+//! The client builds a raw header that has `number` and a few other fields set, but no roots yet,
+//! and passes it to the runtime in `initialize_block`. The runtime stored this raw header at this
+//! point, and intends to return its final version in `finalize_block`.
+//!
+//! When importing a block, the api call flow is:
+//!
+//! ```ignore
+//! Core::initialize_block(final_header);
+//! Core::import_block(block);
+//! ```
+//!
+//! End of the day, you must ensure that the above two code paths come to the same state root, and
+//! record it in the block header, along with the root of all extrinsics.
+//!
+//! ### Logging
+//!
+//! Logging can be enabled by setting the `RUST_LOG` environment variable, as such:
+//!
+//! ```ignore
+//! RUST_LOG=frameless=debug cargo run
+//! ```
+//!
+//! Or equally:
+//!
+//! ```ignore
+//! cargo run -- --dev -l frameless=debug
+//! ```
+//!
+//! ### Running Two Nodes
+//!
+//! In order to run two nodes, execute the following commands in two different terminals.
+//!
+//! ```ignore
+//! cargo run -- --dev --alice -l frameless=debug
+//! cargo r -- --dev --bob -l frameless=debug --bootnodes /ip4/127.0.0.1/tcp/30333/p2p/<node-id-of-alice>
+//! ```
+//!
+//! If you let the former `--alice` node progress for a bit, you will see that `--bob` will start
+//! syncing from alice.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -264,14 +372,13 @@ impl Runtime {
 
 	fn do_finalize_block() -> <Block as BlockT>::Header {
 		// fetch the header that was given to us at the beginning of the block.
-		let mut header = Self::get_state::<<Block as BlockT>::Header>(HEADER_KEY)
+		let header = Self::get_state::<<Block as BlockT>::Header>(HEADER_KEY)
 			.expect("We initialized with header, it never got mutated, qed");
 		// and make sure to _remove_ it.
 		sp_io::storage::clear(&HEADER_KEY);
 
 		// TODO: set correct state root and extrinsics root, as described in the corresponding test
 		// case.
-		Self::solution_finalize_block(&mut header);
 		header
 	}
 
@@ -298,7 +405,8 @@ impl Runtime {
 
 		// check extrinsics root
 		let extrinsics = block.extrinsics.into_iter().map(|x| x.encode()).collect::<Vec<_>>();
-		let extrinsics_root = BlakeTwo256::ordered_trie_root(extrinsics, Default::default());
+		let extrinsics_root =
+			BlakeTwo256::ordered_trie_root(extrinsics, sp_runtime::StateVersion::V0);
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
 
 		info!(target: LOG_TARGET, "Finishing block import.");
@@ -320,8 +428,7 @@ impl Runtime {
 
 		// TODO: we don't have a means of dispatch, implement it! You probably want to match on
 		// `ext.call.function`, and start implementing different arms one at a time.
-		// Ok(Ok(()))
-		Runtime::solution_apply_extrinsic(ext)
+		Ok(Ok(()))
 	}
 
 	fn do_validate_transaction(
@@ -331,8 +438,7 @@ impl Runtime {
 	) -> TransactionValidity {
 		log::debug!(target: LOG_TARGET,"Entering validate_transaction. tx: {:?}", ext);
 		// TODO: we don't have a means of validating, implement it!
-		// Ok(Default::default())
-		Runtime::solution_validate_transaction(_source, ext, _block_hash)
+		Ok(Default::default())
 	}
 }
 
@@ -592,7 +698,7 @@ mod tests {
 				H256::decode(&mut &raw_state_root[..]).unwrap()
 			};
 			let expected_extrinsics_root =
-				BlakeTwo256::ordered_trie_root(extrinsics, Default::default());
+				BlakeTwo256::ordered_trie_root(extrinsics, sp_runtime::StateVersion::V0);
 
 			assert_eq!(
 				header.state_root, expected_state_root,

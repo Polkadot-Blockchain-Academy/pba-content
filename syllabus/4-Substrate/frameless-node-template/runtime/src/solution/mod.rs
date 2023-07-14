@@ -1,7 +1,8 @@
+use self::storage::{StorageMap, StorageValue};
 use crate::{
 	shared::{
 		AccountId, Balance, Block, CurrencyCall, Extrinsic, RuntimeCall, StakingCall, SystemCall,
-		EXTRINSICS_KEY, MINIMUM_BALANCE, MINTER, VALUE_KEY,
+		EXTRINSICS_KEY, MINIMUM_BALANCE, MINTER, TREASURY, VALUE_KEY,
 	},
 	Runtime, LOG_TARGET, VERSION,
 };
@@ -73,14 +74,12 @@ impl From<StakingCall> for staking::Call<Runtime> {
 	}
 }
 
+#[allow(unused)]
 impl Runtime {
 	pub(crate) fn solution_apply_extrinsic(ext: Extrinsic) -> ApplyExtrinsicResult {
 		log::debug!(target: LOG_TARGET, "dispatching {:?}", ext);
 
-		let sender =
-			Self::solution_check_signature(&ext).map_err(|_| InvalidTransaction::BadProof)?;
-
-		// TODO: handle ext.function.tip.
+		let (sender, _tip) = Self::solution_validate_transaction_inner(&ext)?;
 
 		// execute it
 		let dispatch_outcome = match ext.function.call {
@@ -111,25 +110,60 @@ impl Runtime {
 		let state_root = sp_core::H256::decode(&mut &raw_state_root[..]).unwrap();
 
 		let extrinsics = Self::get_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
-		let extrinsics_root = BlakeTwo256::ordered_trie_root(extrinsics, Default::default());
+		let extrinsics_root =
+			BlakeTwo256::ordered_trie_root(extrinsics, sp_runtime::StateVersion::V0);
 
 		header.extrinsics_root = extrinsics_root;
 		header.state_root = state_root;
 	}
 
-	pub(crate) fn solution_check_signature(
+	fn solution_validate_transaction_inner(
 		ext: &<Block as BlockT>::Extrinsic,
-	) -> Result<AccountId, ()> {
-		match &ext.signature {
+	) -> Result<(AccountId, u64), TransactionValidityError> {
+		// first, check the signature.
+		let signer = match &ext.signature {
 			Some((signer, signature, extra_stuff)) => {
 				let payload = (ext.function.clone(), extra_stuff);
 				signature
 					.verify(payload.encode().as_ref(), signer)
 					.then(|| signer.clone())
-					.ok_or(())
+					.ok_or(TransactionValidityError::Invalid(InvalidTransaction::BadProof))?
 			},
-			None => Err(()),
+			None => return Err(TransactionValidityError::Invalid(InvalidTransaction::BadProof)),
+		};
+
+		// then, check that they can pay for the fee.
+		if let Some(tip) = ext.function.tip {
+			let mut balance =
+				currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
+			let _ = balance
+				.withdraw(tip)
+				.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::Payment))?;
+			currency::BalancesMap::<Self>::set(signer.clone(), balance);
+
+			// We don't quite care of the treasury account is not funded and cannot handle the
+			// incoming tip.
+			// TODO: try and use our mutate api?
+			let mut treasury =
+				currency::BalancesMap::<Self>::get(AccountId::unchecked_from(TREASURY))
+					.unwrap_or_default();
+			match treasury.receive(tip) {
+				Ok(_) => {
+					currency::BalancesMap::<Self>::set(
+						AccountId::unchecked_from(TREASURY),
+						treasury,
+					);
+				},
+				Err(_) => {
+					let issuance = currency::TotalIssuance::<Self>::get();
+					let mut issuance = issuance.expect("someone paid some fee that was withdrawn; issuance must already be non-zero");
+					issuance -= tip;
+					currency::TotalIssuance::<Self>::set(issuance);
+				},
+			}
 		}
+
+		Ok((signer, ext.function.tip.map(|x| x as u64).unwrap_or_default()))
 	}
 
 	pub(crate) fn solution_validate_transaction(
@@ -137,14 +171,11 @@ impl Runtime {
 		ext: <Block as BlockT>::Extrinsic,
 		_block_hash: <Block as BlockT>::Hash,
 	) -> TransactionValidity {
-		log::debug!(
-			target: LOG_TARGET,
-			"Entering validate_transaction. tx: {:?}",
-			ext,
-		);
-
-		let _ = Self::solution_check_signature(&ext)
-			.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::BadProof))?;
-		Ok(ValidTransaction { provides: vec![ext.function.encode()], ..Default::default() })
+		let (_signer, tip) = Self::solution_validate_transaction_inner(&ext)?;
+		Ok(ValidTransaction {
+			provides: vec![ext.function.encode()],
+			priority: tip,
+			..Default::default()
+		})
 	}
 }
