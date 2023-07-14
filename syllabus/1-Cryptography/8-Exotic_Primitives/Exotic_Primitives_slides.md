@@ -206,7 +206,6 @@ _Redundancy for your secrets_
 
 - A secret is turned into $n$ shares, and be recovered by any $k$ of the shares. $k-1$ shares together reveals nothing about the secret.
 
-
 ---
 
 ## Shamir Secret Sharing
