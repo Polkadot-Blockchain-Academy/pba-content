@@ -426,22 +426,38 @@ _Domain Specific Languages_
 
 Notes: 
 Okay when we're talking expression we're really talking - Domain Specific Languages (which we say DSL for short).  
-Humans have been inventing DSL forever.  
-Contract law is a DSL and is an important part of society. It’s hard to read (read the sentence on the slide).  
-Computer Programming is also a DSL, which of course had it’s own independent evolution from contract law. 
-It can be quite hard to read (asm or solidity), whereas good ones can also be easier to read. 
-But really, the point I'm trying to make here is that legalese contract law and computer programming languages are not so different. They are both DSL meant to precisely express the nuances of detailed human agreements. And they're both hard to read for non experts. 
-Szabo recognized this similarity and thus had the idea that programming may be the future of law.   
-HOWEVER since we're talking similarities - we should also speak to the differences. And hence be careful with this legal and coding comparison. 
-The culture of the two can certainly be different: 
+Humans have been inventing DSL forever.
 
-- legal culture always adds, as in, they rarely remove laws - plus it’s all about human judgement
-- whereas programmers love negative diffs
-- we prefer to express things elegantly and minimally
-- we like testing
-- and programming in repeatability and objectivity   
+---v
+
+## Domain Specific Languages
+
+TODO image of linear b tablets
+TODO image of chess game with notation nearby
+
+Notes:
+
+From the ancient greek accounting and administrative language, [linear b](https://en.wikipedia.org/wiki/Linear_B), to the shorthand for summarizing chess games, to the ink! programming language that you will soon learn.
+Contract law is a DSL and is an important part of society. It’s hard to read (read the sentence on the slide).  
+Computer Programming languages are also DSLs, which of course had it’s own evolution, independent from contract law. 
+It can be quite hard to read (asm or solidity), whereas good ones can also be easier to read. 
+But really, the point I'm trying to make here is that legalese contract law and computer programming languages are not so different. They are both DSL meant to precisely express the nuances of detailed human agreements. And they're both hard to read for non experts.
+Szabo recognized this similarity and thus had the idea that programming may be the future of law.   
+
+---v
+
+## Coding Style
+
+- Adding laws vs negative diffs
+- Elegance vs handling each special case
+- Testing and Repeatability  
+
+Notes:
 
 Back to the thing about both being hard to read for non-experts, a goal of mine is to make smart contracts more accessible to everyday people so that people can read their own contracts! 
+
+HOWEVER since we're talking similarities - we should also speak to the differences. And hence be careful with this legal and coding comparison. 
+The culture of the two can certainly be different: 
 
 ---
  
