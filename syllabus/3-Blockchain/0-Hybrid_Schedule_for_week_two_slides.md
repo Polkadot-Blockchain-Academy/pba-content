@@ -102,10 +102,19 @@ Fri
 
 ## Smart Contracts Team
 
-
+Notes:
+Teaching today you'll have Lauren, Aaron, Joshy, and Andrew. 
+Stephen from Moonbeam, Piotr and Filip from Aleph0, will all be here later this week to do some smart contract lectures and activities as well. 
+The format for this morning will be lecture, activity, lecture, break, activity 
+After lunch it will be the same: lecture, activity, lecture, break, and activity! 
 ---
 
 ## Blockchain Team
+
+Notes:
+Then tomorrow Josh, Andrew, and Maciej will go from Smart Contracts to Blockchain things. Remember we're bouncing back and forth during the week, continuously building on the content and our definitions. 
+But we'll continue to follow that same format of lecture then activity, lecture and activity and so on. 
+I should caveat and share that Joshy and I both prior teachers, so we're big fans of hands on activities. We feel it's the opportunity to put your learning into practice. We don't want to be up here the entire time talking at you. We want you to be able to get your hands dirty and get into the code.  
 
 ---
 
