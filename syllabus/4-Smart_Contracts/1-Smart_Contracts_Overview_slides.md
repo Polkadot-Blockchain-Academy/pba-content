@@ -526,9 +526,9 @@ But this is where we'll end it today. I hope I've primed you with a few lingerin
 
 ---
 # ACTIVITY 
+
 Notes: 
-TODO - connect activity to the lecture 
-web2 style contracts in actix_web or whatever 
-- nth caller
-- blind bargaining
-- simple money
+
+Any questions?
+
+Now I'm going to turn it over to Aaron to demonstrate this idea of expressing contracts as programming code.
