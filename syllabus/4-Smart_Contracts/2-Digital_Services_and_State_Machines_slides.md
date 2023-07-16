@@ -271,13 +271,34 @@ And then therefore you can know the final state
 - Ride sharing platform
 - Voting system
 - Blackjack table
+- The app you just built
 
 </pba-flex>
 
 Notes:
 There are all kinds of these - uber, polkadot's governance, and gambling!
 
-Let's brainstorm now - just with your table - you can pick one here - OR you can invent your own - list out what the state and the transitions might be for each of these.
+Take a moment to brainstorm with your table about each of these three examples as well as the app you built in the previous activity.
+For each example, write out what are the state transitions and the the states.
+If possible, draw a complete LTS. If that is not possible, draw a partial LTS.
+
+---v
+
+## Garage Door Lock
+
+TODO figure of garage door opener
+
+Notes:
+One more team exercise.
+Draw a state transition diagram for a garage door lock keypad.
+
+If the user enters the correct 4 digits, the door opens (or closes if it was already open).
+The thing is, you could enter some random digits before you enter the correct code, and it would still open after the correct code.
+As you sketch your states, be sure to handle that correctly.
+
+This example is drawn from https://eng.libretexts.org/Under_Construction/Book%3A_Discrete_Structures/09%3A_Finite-State_Automata/9.02%3A_State_Transition_Diagrams which has many other excellent examples
+
+TODO add this example to blockchain from scratch.
 
 ---
 
