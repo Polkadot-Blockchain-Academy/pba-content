@@ -384,9 +384,9 @@ What are the _rules_ to change it?
 <pba-col>
 <pba-flex center>
 
-**Data Structure**
+**Shared History**
 
-How can we cryptographically represent a history so it is tamper-proof?
+Which potential histories exist?
 
 </pba-flex>
 </pba-col>
