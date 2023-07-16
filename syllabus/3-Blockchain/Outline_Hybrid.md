@@ -11,7 +11,7 @@ Students learn about expressing agreements as code and are left wondering where 
 
 - 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class. - Lauren, Joshy - Founders Required
 - 🗣️ Overview of Smart Contracts Lecture - Lauren - Founders Required
-- 🚧 TODO Some activity. Maybe something like Emre's unstoppable applications from Cambridge, maybe implement a smart contract as an actix_web server. - Joshy / Aaron - Founders NOT Required
+- 🚧 Rocket Cash Activity: Express contracts as code using rocket.rs - Aaron - Founders Required
 - ☕ Break
 - 🗣️ Digital Services and State Machines - I like to think of "state" as a double entendre - Lauren - Founders Required
 - ⌨️ Begin BFS coding activity - specifically state machine part - Joshy, Lauren, Aaron, Andrew - Founders NOT Required
@@ -23,7 +23,7 @@ Students learn about expressing agreements as code and are left wondering where 
 - ☕ Break
 - 🗣️ Platform Agnostic Bytecodes - Lauren - Founders Required
 - ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron - Founders Required
-- 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux. - Lauren - Founders Required
+- 🗣️ Closing Discussion - Where would we actually run these contracts? - Joshy - Founders Required
 
 ## Tuesday
 
@@ -34,6 +34,7 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 - 🗣️ Blockchain Structure - Joshy - Founders Required
 - ⌨️ More BFS
+- 🗣️ Blockchain on a P2P Network - Joshy - Founders Required
 - ☕ Break
 - 🗣️ Consensus Part 1 - Authoring - Agreeing on Possibilities - Joshy - Founders Required
 - 🎲 Manual Consensus Activity (aka BitStory) - Founders Required
@@ -98,7 +99,7 @@ Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
 
 - ⌨️ Start a Blockchain Activity - Joshy - Founders NOT Required
-- 🗣️ Unstoppable Applications Lecture - Nuke - Founders NOT Required (HIGHLY suggested?)
+- 🗣️ Unstoppable Applications Lecture - Nuke - Founders Required
 - ☕ Break
 - 🗣️ Types of Forks - Maciej - Founders NOT Required
 - ⌨️ Forking Exercises - Joshy - Founders NOT Required
