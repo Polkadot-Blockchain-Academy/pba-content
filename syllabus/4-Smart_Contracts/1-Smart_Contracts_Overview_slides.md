@@ -1,6 +1,6 @@
 ---
-title: Smart Contracts Overview
-description: Principles of coordination, contracts, smart contracts, and comparison with traditional legal infrastructure.
+title: Coordination and Trust in Web3
+description: Principles of coordination, contracts, smart contracts, and comparison with traditional legal infrastructure adn web3 infrastructure.
 ---
 
 # Smart Contracts
@@ -53,7 +53,7 @@ building homes, buildings, roads
 Doing the above safely through bureaucracies like inspection and certification procedures, automobile registration
 
 Notes:
-Before we can understand what makes smart contracts "smart" versions of contracts, we need to understand what contracts are in the first place.  
+Before we can understand the ways in which smart contracts are "smart" versions of contracts, we need to understand what contracts are in the first place.  
 Afterall, we are standing on the shoulders of giants here.  
 And in order to understand what contracts are, we'll start all the way back at human coordination.  
 We'll see that contracts are just a pretty good technology to achieve coordination, and that smart contracts are an improvement on that technology.
@@ -86,36 +86,37 @@ It is how massive organizations like corporations and governments are able to fu
 
 ---v
 
-## Voluntarty vs Forced Coordination
+## Voluntary vs Forced Coordination
 
 ![](./img/overview/voluntary-coordination.jpeg)
 
 Notes:
-It can happen voluntarily or by force. Here we have a picture of folks working together, let's assume voluntarily as they volunteer their time at a community garden. 
+It can happen voluntarily or by force. Here we have a picture of folks working together, let's assume voluntarily as they volunteer their time at a community garden. This is a wonderful example of human coordination at its best.
 
 ---
-## Voluntarty vs Forced Coordination
+## Voluntary vs Forced Coordination
 ![](./img/overview/forced-coordination.jpeg)
 
 Notes:
-But what about slavery? That's certainly a coordinated effort to force people to work.  
-Now, of course, we could simply avoid considering and discussing slavery because it is immoral.  
-And avoiding slavery is a really good heuristic btw; I recommend you all avoid slavery because it is immoral in your daily lives.
-But it's about more than that.  
-We want to create conditions (incentives) where voluntary coordination can happen freely and easily.  
-When we don't have these conditions, you do end up with slavery.  
-Because eventually someone sees the potential of coordination and forces it to happen.  
-By building proper tools for voluntary coordination, we can help prevent forced coordination from happening in the first place.   
-We can also help those who are enslaved coordinate to rise up for their liberation. 
+Of course Coordination can have it's ugly side.
+This is certainly a coordinated effort; people working together.  
+
+Most of us consider slavery a bad outcome.
+It IS a bad outcome.
+Even those with sketchier moral compasses would agree that _they_ don't want to be the slaves.
+
+We want to create conditions (incentives) where voluntary coordination can happen freely and easily.
+And thus slavery is unlikely. 
+By building proper tools for voluntary coordination, we can help prevent forced coordination from happening in the first place.
 
 ---
 # Trust
 
-So you want to make some kind of agreement.
+So you want to coordinate with someone.
 But you don't want to get ripped off.
 
 Notes:
-Alright let’s talk about trust - as it's required for coordination - Let's imagine, you want make an agreement, but you don't want to get ripped off.  
+Alright let’s talk about trust - as it's one common way to achieve coordination - Let's imagine, you want make an agreement, but you don't want to get ripped off.  
 Trust means I trust you not to rip me off.  
 Say for example, that we decide to build your house this week, I in turn believe that we’ll build mine next week. 
 
@@ -277,7 +278,15 @@ Ultimately, think of them as abstractions over promises. And traditionally what 
 And sure, that's valuable because governments are big and powerful. You could say that even in some sense, the government enforcing it is a lot like God enforcing it.  
 As in, the government is big enough to have power over individuals interacting, and if anyone tries to rip someone else off, the government will step in and make sure the contract is upheld.  
 Which essentially allows us to interact as if we trusted each other. Then, over time, the stickiness sets in and people actually do start to trust each other! Yay, happy days - do we see now how all of these concepts are beginning to connect with one another?    
-But wait! What am I talking about? We know the unfortunate truth which is that governments are unfortunately corruptible... 
+But wait! What am I talking about? We know the unfortunate truth which is that governments are unfortunately corruptible...
+
+TODO could point out that we are used to doing this kind of thing on smaller scales too.
+When siblings fight over a toy, parents might encourage them to agree to take turns. LAter when it is time to tarde, the parent might remind the child, "you said you would trade in 5 minutes, so now you have to." The parent is big enough to physically overpower the child if it were to come to that, and the child knows it, so therefore it rarely comes to that. The parent is the government.
+
+Same thing in sports. We all agree to the rules, and agree to let a referee make the judgement calls. The ref is the government. It big leagues where there can suspend players and affect their career this works. In the public park, it doesn't always, because the ref is just a peer and there is no real power differential.
+
+The government, by being the enforcer, can help people engage in so much voluntary coordination just by making them keep their own promises.
+Of course, a government with this power differential has its downsides too.
 
 ---v
 
@@ -287,10 +296,14 @@ But wait! What am I talking about? We know the unfortunate truth which is that g
 ![](./img/overview/pyramid-construction.jpeg    ) <!-- .element: class="fragment" -->
 
 Notes:
-this is a picture of the white house being built CLICK and of course the pyramids.  
-Together, we can build anything - this is the power of contracts!   
-Contracts are promises that, thanks to their backing, are as powerful as the government itself. 
-And as long as the government fairly and reliably enforces them, we can get really far.
+This is a picture of the white house being built CLICK and of course the pyramids.  
+
+Both are impressive works of human coordination.
+But to the workers they are much different.
+The construction crew building the white house was engaged in voluntary coordination through employment and they were probably excited about their new government too.
+The slaves building the pyramid, are engaged in forced coordination, and when they die, their corpses won't even make it in the pyramid, they'll just get thrown out in the desert.
+
+Our in this module is to design systems of coordination that make it likely and easy for voluntary coordination so that it is not necessary or desireable to resort to forced coordination.
 
 ---v
 
@@ -298,6 +311,7 @@ And as long as the government fairly and reliably enforces them, we can get real
 ![](./img/overview/big-brother.jpeg) <!-- .element: class="fragment" -->
 
 Notes:
+We want a government
 CLICK Of course sometimes the government can be a lot like the slave owner.
 Sooo we need to watch out for that...
 
@@ -328,8 +342,10 @@ Okay. Cool. All on the same page? Nodding heads? We can agree we understand this
 Notes:
 Amazing… so, now onto smart contracts! CLICK
 We've finally made it here, folks, horaayyy! 
-Back in the 90s, this CS guy, Nick Szabo, and some other cypher-punks realized that contract law and computer science actually had a lot in common, and thus developed the idea of smart contracts.
+Back in the 90s, this CS guy, Nick Szabo, and some other cypher-punks realized that contract law and computer science actually had a lot in common, and thus developed the _idea_ of smart contracts.
 And together, we'll develop and tease out those same comparisons here.
+
+But remember, our goal isn't just to observe 
 
 ---v
 
@@ -354,27 +370,6 @@ https://nakamotoinstitute.org/formalizing-securing-relationships/
 
 ---v
 
-## Smart Contract Objectives
-
-* Retain all the value of traditional governmental contracts
-  * Can trust strangers promises
-  * Can coordinate with little risk
-  * etc. 
-* Remove ambiguity about what contracts are enforceable
-* Make writing and understanding contracts more approachable
-* Make contract execution and enforcement more efficient
-
-Notes:
-Okay, so these are the goals of a smart contract. We basically want to keep all the good stuff that contracts brought us, but then of course make them better by not making the government the central point of enforcement. 
-We want to know, without a doubt that the contracts will be enforced. We want them to be approachable, legibility wise, and we want them to be efficient.    
-And really quickly, before I dive into the expression and enforcement part of smart contracts, I really quickly want us to review:  
-So we started all the way back at simple primitive trade. To personal trust. To rational trust - which allowed us to get money and credit and all this other stuff. Contracts were the golden child - those promises allowed us to really scale and achieve some incredible coordination.  
-And now, we're going make the next iteration in this long, rich history of how to coordinate: which is the smart contract.
-
-TODO find link to court case that set precident for contracts that were "frolic and gamble" or something not being enforceable.
-
----v
-
 ## Smart Contracts 😠👎
 
 TODO Vitalik Tweet screenshot
@@ -387,6 +382,25 @@ TODO flesh this out. I, actually like the term, so I'm the wrong person for this
 With these caveats and criticisms in mind, it is still worth exploring the idea of contracts as computer programs.
 
 ---
+
+## Smart Contract Objectives
+
+* Retain all the value of traditional governmental contracts
+  * Can trust strangers promises
+  * Can coordinate with little risk
+  * etc. 
+* Remove the need for a powerful government
+
+* Remove ambiguity about what contracts are enforceable
+* Make writing and understanding contracts more approachable
+* Make contract execution and enforcement more efficient
+
+Notes:
+Okay, so these are the goals of a smart contract. We basically want to keep all the good stuff that contracts brought us, but then of course make them better by not making the government the central point of enforcement. 
+We want to know, without a doubt that the contracts will be enforced. We want them to be approachable, legibility wise, and we want them to be efficient.
+And really quickly, before I dive into the expression and enforcement part of smart contracts, I really quickly want us to review:  
+So we started all the way back at simple primitive trade. To personal trust. To rational trust - which allowed us to get money and credit and all this other stuff. Contracts were the golden child - those promises allowed us to really scale and achieve some incredible coordination.  
+And now, we're going make the next iteration in this long, rich history of how to coordinate: which is the smart contract.
 
 # Expression and Enforcement
 
