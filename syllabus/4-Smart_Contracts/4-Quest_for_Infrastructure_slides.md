@@ -11,33 +11,39 @@ Where can I actually run these things!?
 
 ---
 
-Quick Review of Smart Contracts
+# Quick Review of Smart Contracts
 
 ---v
 
-Expression: Write code instead of long confusing legalese
+## Expression
+
+Write code instead of long confusing legalese
 
 ---v
 
-Execution: Let the computer run it instead of the judge interpreting it.
+## Execution
+
+Let the computer run it instead of the judge interpreting it.
 
 ---
 
-Quick Review of Service Providers
+# Quick Review of Service Providers
 
----v
+They are the technicians that keep the infra running.
 
 They are the technicians that keep the infra running.
 
 They don't have any particular morals, certainly not the same ones you have.
 
-They can be evil
+Notes: 
 
----v
+We need people to keep the computers online and replace broken hardware and make sure the data is backed up etc.
+But those people should be just that, technicians.
+They are not elected officials or Judges or anything like that.
+So we don't want to accidentally let them fil that role.
 
-They can back door
-
-Insert demo of hacking the actix-web contract from the backend
+Many, probably even most, data center workers are perfectly good people not trying to scam anyone.
+The point is that any individual server operator could be evil and it will be easier to coordinate voluntarily if people don't have to trust the server operator to do it.
 
 ---
 
@@ -60,7 +66,9 @@ We have seen some hints so far. Let's check them out.
 
 Notes:
 
-Web2 gets a lot of this right. At least they are good at the first two and preventing accidental data loss etc. There is a lot to be kept from web 2.
+Web2 gets a lot of this right. At least they are good at the first two and preventing accidental data loss etc.
+There is a lot to be kept from web 2.
+Some digital services, or subsystems of digital services may never even need web3 upgrades.
 
 But indeed there is also some to be thrown out or improved.
 
@@ -93,7 +101,7 @@ PABs make it practical for diverse parties all over the world to run the same so
 
 # Blockchain
 
-## Solves ALL Your Yroblems
+## Solves ALL Your Problems
 
 ![Moses descending Mt Sainai where the Lord God inscribed Blockchain upon the stone tablets](./img/moses-blockchain.png)
 
