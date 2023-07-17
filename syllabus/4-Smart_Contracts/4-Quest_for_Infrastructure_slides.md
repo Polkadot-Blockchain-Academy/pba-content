@@ -95,7 +95,7 @@ PABs make it practical for diverse parties all over the world to run the same so
 
 ## Solves ALL Your Yroblems
 
-Heavenly graphic. Maybe Moses coming down Mt Sainai with blockchain photoshopped where the stone tablets should be.
+![Moses descending Mt Sainai where the Lord God inscribed Blockchain upon the stone tablets](./img/moses-blockchain.png)
 
 ---v
 
