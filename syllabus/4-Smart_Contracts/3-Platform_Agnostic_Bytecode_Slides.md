@@ -356,12 +356,12 @@ Assuming all the things we said before wasm seems to be perfect but how those th
 Let's call **Embedder** the program that will take the wasm blob as input and execute it
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
-- the embedder may want to be able to pass arguments as input to functions defined in the wasm blob
+- the wasm blob may expect parameters from the embedder
   - embedder -> wasm
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- the execution could depend on external factor 
+- the embedder may act on a return value from the wasm
   - wasm -> embedder
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
