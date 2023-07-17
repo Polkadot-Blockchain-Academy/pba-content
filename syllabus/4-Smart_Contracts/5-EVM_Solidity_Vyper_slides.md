@@ -304,6 +304,35 @@ contract Foo {
 
 ---v
 
+## Modifiers
+
+* A special function that can be run as a precondition for other functions
+
+```Solidity
+contract Foo {
+    address deployer;
+
+    constructor() {
+        deployer = msg.sender;
+    }
+
+    // ensures that only the contract deployer can call a given function
+    modifier onlyDeployer {
+        require(msg.sender == deployer);
+        _; // the original function is inserted here
+    }
+
+    function doSomeAdminThing() public onlyDeployer() {
+        // this function can only be called if onlyDeployer() passes
+    }
+}
+```
+
+TODO: Note about readability and ability to do arbitrary things
+
+
+---v
+
 ## Payable
 
 ```Solidity
@@ -535,7 +564,7 @@ Vyper mostly lacks features found in Solidity, all in the spirit of improving
 readability. Some examples:
 
 * No Inheritance
-* No modifiers (TODO: cover this under Solidity)
+* No modifiers
 * No function overloading
 * No recursive calling (!)
 * No infinite-loops
@@ -599,7 +628,7 @@ def valueTypes():
     # signed and unsigned ints
     i: int128 = -1
     i2: int256 = -10000
-    # u: uint128 = 42 # TODO: docs say int<multiple of 8> should work...
+    u: uint128 = 42
     u2: uint256 = 42
 
     # fixed-point (base-10) decimal values with 10 decimal points of precision
