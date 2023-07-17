@@ -32,7 +32,7 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ### Morning
 
-- 🗣️ Blockchain Structure - Joshy - Founders Required
+- 🗣️ Blockchain Structure - Joshy - Founders Required - TODO maybe split this into two lessons. One about the data structure, and one about tracking one on a P2P network
 - ⌨️ More BFS
 - 🗣️ Blockchain on a P2P Network - Joshy - Founders Required
 - ☕ Break
