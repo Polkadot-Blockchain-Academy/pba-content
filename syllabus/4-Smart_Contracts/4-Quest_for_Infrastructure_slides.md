@@ -11,33 +11,39 @@ Where can I actually run these things!?
 
 ---
 
-Quick Review of Smart Contracts
+# Quick Review of Smart Contracts
 
 ---v
 
-Expression: Write code instead of long confusing legalese
+## Expression
+
+Write code instead of long confusing legalese
 
 ---v
 
-Execution: Let the computer run it instead of the judge interpreting it.
+## Execution
+
+Let the computer run it instead of the judge interpreting it.
 
 ---
 
-Quick Review of Service Providers
+# Quick Review of Service Providers
 
----v
+They are the technicians that keep the infra running.
 
-They are the technicians that keeo the infra running.
+They don't have any particular morals, certainly not the same ones you have.
 
-They don't ahve any particular morals, certainly not the same ones you have.
+They can be evil.
 
-They can be evil
+Notes: 
 
----v
+We need people to keep the computers online and replace broken hardware and make sure the data is backed up etc.
+But those people should be just that, technicians.
+They are not elected officials or Judges or anything like that.
+So we don't want to accidentally let them fil that role.
 
-They can back door
-
-Insert demo of hacking the actix-web contract from the backend
+Many, probably even most, data center workers are perfectly good people not trying to scam anyone.
+The point is that any individual server operator could be evil and it will be easier to coordinate voluntarily if people don't have to trust the server operator to do it.
 
 ---
 
@@ -54,15 +60,17 @@ We have seen some hints so far. Let's check them out.
 ## Diversity and Redundancy
 
 * Geographical - for natural disasters and terrorist attacks
-* Jurisdictional - to resist the incumbant governments - they are the ultimate server operators
-* Moral - so all compases are represented in the network, and no grou can impose hegemony
+* Jurisdictional - to resist the incumbent governments - they are the ultimate server operators
+* Moral - so all compasses are represented in the network, and no group can impose hegemony
 * Of compute hardware - incase some is bugged or backdoored or prohibitively expensive
 
 Notes:
 
-Web2 gets a lot of this right. At least they are good at the first two and preventing accidental data loss etc. There is a lot to be kept from web 2.
+Web2 gets a lot of this right. At least they are good at the first two and preventing accidental data loss etc.
+There is a lot to be kept from web 2.
+Some digital services, or subsystems of digital services may never even need web3 upgrades.
 
-But indeed there is also some to be thrwon out or improved.
+But indeed there is also some to be thrown out or improved.
 
 ---v
 
@@ -76,7 +84,7 @@ We saw well how this worked out well in the file sharing and anonymous browsing 
 
 ---v
 
-## Reproduceable Execution
+## Reproducible Execution
 
 * Computers are better than courts
 * PABs make distributed code execution practical
@@ -93,7 +101,7 @@ PABs make it practical for diverse parties all over the world to run the same so
 
 # Blockchain
 
-## Solves ALL Your Yroblems
+## Solves ALL Your Problems
 
 ![Moses descending Mt Sainai where the Lord God inscribed Blockchain upon the stone tablets](./img/moses-blockchain.png)
 
@@ -105,10 +113,10 @@ Allows us to replace the central server operator with a P2P network and Consensu
 
 Notes:
 
-Actually it is a falacy that blockchain solves all our problems.
+Actually it is a fallacy that blockchain solves all our problems.
 It actually solves some very specific coordination problems.
-It also brings some efficiency improvements to modern beuarocracies.
-It does not automatically make everyone elieve the same things or magically arrive in happy unicorn bunny land.
+It also brings some efficiency improvements to modern bureaucracies.
+It does not automatically make everyone believe the same things or magically arrive in happy unicorn bunny land.
 Tomorrow and Thursday will dig in on how the blockchain and its P2P network work together.
 
 ---v
