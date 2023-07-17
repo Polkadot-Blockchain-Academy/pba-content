@@ -528,6 +528,76 @@ RISC-V Instruction Set Manual, Unprivileged ISA: https://github.com/riscv/riscv-
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## Activity: Compiling Rust to Wasm
 
-<img rounded style="width: 300px" src="img/ink/question-mark.svg" />
+- Let's make a simple Rust crate that compiles to Wasm!
+- Clone https://github.com/Polkadot-Blockchain-Academy/pba-wasm-executor
+
+---v
+
+### Activity: Compiling Rust to Wasm
+
+- A target triple consists of three strings separated by a hyphen, with a possible fourth string at the end preceded by a hyphen.
+- The first is the **architecture**, the second is the **"vendor"**, the third is the **OS type**, and the optional fourth is environment type.
+
+* `wasm32-unknown-emscripten`: Legacy, provides some kind of `std`-like environment
+* `wasm32-unknown-unknown` ✓ WebAssembly: Can compile anywhere, can run anywhere, no `std`
+* `wasm32-wasi` ✓ WebAssembly with WASI
+
+---v
+
+### Rust -> Wasm Details
+
+```rust
+#[no_mangle] // don't re-name symbols while linking
+pub extern "C" fn add_one() { // use C-style ABI
+  ...
+}
+```
+
+and if a library:
+
+```
+[lib]
+crate-type = ["cdylib"]
+```
+
+---v
+
+### Activity: Compiling Rust to Wasm
+
+```
+rustup target add wasm32-unknown-unknown
+
+cargo build --target wasm32-unknown-unknown --release
+
+wasmtime ./target/wasm32-unknown-unknown/release/wasm-crate.wasm --invoke <func_name> <arg1> <arg2> ...
+```
+
+---v
+
+## Additional Resources! 😋
+
+> Check speaker notes (click "s" 😉)
+
+Notes:
+
+- More on Rust target spec:
+
+  - https://rust-lang.github.io/rfcs/0131-target-specification.html
+
+- Lin Clark's awesome talks on WASI (not super relevant to our work though):
+
+  - https://www.youtube.com/watch?v=fh9WXPu0hw8
+  - https://www.youtube.com/watch?v=HktWin_LPf4
+
+- `wasm-unknown` vs `wasm-wasi`:
+
+  - https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5
+
+- `extern "C"`:
+
+  - https://doc.rust-lang.org/std/keyword.extern.html
+  - https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code
+
+- Chapter 11 of this book is a great read: https://nostarch.com/rust-rustaceans
