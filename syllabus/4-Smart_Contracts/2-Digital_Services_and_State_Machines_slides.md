@@ -3,7 +3,7 @@ title: Digital Services as State Machines
 description: Digital Services approximate smart contracts; both are modeled as state machines.
 ---
 
-## Web 0
+## Web0
 
 Telegraph, Telephone
 
@@ -22,7 +22,7 @@ So this is like a property that we want to try to restore in web3.
 
 ---
 
-## Web 1
+## Web1
 
 Introduction of always-on servers.
 
@@ -40,7 +40,7 @@ Now authenticity guarantees for sure would have still been great here - to know 
 
 ---
 
-## Web 2
+## Web2
 
 Introduction of **Digital Services** with **Rich State**.
 
