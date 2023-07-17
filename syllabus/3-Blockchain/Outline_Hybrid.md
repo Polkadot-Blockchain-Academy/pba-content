@@ -32,7 +32,7 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ### Morning
 
-- 🗣️ Blockchain Structure - Joshy - Founders Required
+- 🗣️ Blockchain Structure - Joshy - Founders Required - TODO maybe split this into two lessons. One about the data structure, and one about tracking one on a P2P network
 - ⌨️ More BFS
 - 🗣️ Blockchain on a P2P Network - Joshy - Founders Required
 - ☕ Break
@@ -41,10 +41,10 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ### Afternoon
 
-- 🗣️ Account and UTXO models - Andrew - Founders Required
+- 🗣️ Econ & Game Theory in Blockchain - Maciej - Founders Required
 - ⌨️ More BFS
 - ☕ Break
-- 🗣️ Econ & Game Theory in Blockchain - Maciej - Founders Required
+- - 🗣️ Unstoppable Applications Lecture - Nuke - Founders Required
 - ⌨️ More BFS, or some other activity associated with fees and ordering. Maybe some kind of auction thing.
 
 ## Wednesday
@@ -59,14 +59,14 @@ We also explore light clients and bridges, both of which benefit from determinis
 - 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) - Joshy, Andrew, Lauren, Aaron - Founders NOT Required<!-- markdown-link-check-disable-line -->
   - _Note that this repo is private, intended to be shared with the student cohort's github team for read access._
     _This also allows for people to pull up on mobile if logged in to view easier_
-- ⌨🗣️ aBFT and Aleph 0 - Adam Gagol - Founders NOT Required
+- ⌨🗣️ aBFT and Aleph 0 - Piotr Mikolajczyk - Founders NOT Required
 
 ### Afternoon
-
-- 🗣️ Light Clients Bridges - Joshy - Founders Required
+- 🗣️ Account and UTXO models - Andrew - Founders Required
+- 🗣️ Full State Inclusion Proofs in Monero - Guest Content - Founders Not Required
 - ⌨️ Continue Coding on BFS
 - ☕ Break
-- 🧘 Flex time. Opportunity to clarify any missed points or otherwise touch up content. Or just a slot into which things can be pushed back.
+- 🗣️ Account and UTXO models - Andrew - Founders Required
 - ⌨️ BFS
 
 ## Thursday
@@ -99,7 +99,6 @@ Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
 
 - ⌨️ Start a Blockchain Activity - Joshy - Founders NOT Required
-- 🗣️ Unstoppable Applications Lecture - Nuke - Founders Required
 - ☕ Break
 - 🗣️ Types of Forks - Maciej - Founders NOT Required
 - ⌨️ Forking Exercises - Joshy - Founders NOT Required
