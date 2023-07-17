@@ -25,7 +25,7 @@ Note:
 It is critical that the EVM be 100% deterministic and that each implementation
 produce the same outcome. Even the smallest discrepancy between two running
 nodes would lead to different block hashes, violating consensus about the
-results. (TODO: too much elaboration? I'm sure other course material covers this).
+results.
 
 Charging appropriately for each opcode is also critical in order to prevent
 abuse. Opcodes which are underpriced can allow spam, allowing attackers to
@@ -70,14 +70,48 @@ a limit (or trust each other).
 
 ## Gas
 
-(TODO)
+The unit of account for EVM execution resources.
 
-Talk about:
+* `gas_limit`: specifies the maximum amount of gas a txn can pay
+* `gas_price`: specifies the exact price a txn will pay per gas
 
-* gas limit
-* gas price
-* EIP-1559
-* gas estimation
+A txn *must* be able to pay `gas_limit * gas_price` in order to be valid. This
+amount is initially deducted from the txn's sender account and any remaining gas
+is refunded after the txn has executed.
+
+---v
+
+## EIP-1559
+
+An improvement to gas pricing mechanism. Introduced in London hard-fork.
+
+```
+gas_price --> max_base_fee_per_gas
+          \-> max_priority_fee_per_gas
+```
+
+* Separates tip from gas price
+* `base_fee` is an algorithmic gas price, this is exactly what is paid and is burned
+* ...plus maybe tip if (`base_fee < max_base_fee + max_priority_fee`)
+* Algorithmic, congestion-based multiplier controls `base_fee`
+
+---v
+
+## Gas Estimation
+
+If a txn exhausts its `gas_limit` without finishing, it will produce an
+out-of-gas error and all changes made in the EVM are reverted (except for fee
+payment).
+
+In order to estimate the amount of gas a txn will need, an RPC method
+(`eth_estimateGas`) can perform a dry-run of the txn and record the amount
+used.
+
+However, there are a few caveats:
+
+* Run against current state (state may change)
+* The RPC node could lie to you
+* This is expensive infrastructure overhead and can be a spam vector
 
 ---
 
@@ -695,7 +729,8 @@ secret(s) secure.
 
 ##### Some things that I think are currently lacking:
 
-* More gasometer
+* Clean up (merge slides, reorder)
+* Visual aids
 * Various ways to call a contract
 * Transactions
 * Non-transactions (view calls / RPC queries)
