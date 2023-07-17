@@ -68,7 +68,9 @@ A state machine defines:
 
 </pba-flex>
 
-<img style="width: 900px;" src="./img/state-machine-general.svg" />
+<img style="width: 900px;" src="../4-Smart_Contracts/img/state-machine-general.svg" />
+
+<!-- FIXME - do you want to use shared img assets? Breaks the module specific intention of folders per mod... @joshy -->
 
 ---v
 

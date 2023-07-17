@@ -1,6 +1,6 @@
 ---
 title: The Quest for Infrastructure
-description: Summary and review Smart Contract principles, and observation that we have not yet thwarted the tyranical server operator
+description: Summary and review Smart Contract principles, and observation that we have not yet thwarted the tyrannical server operator
 ---
 
 # The Quest for Infrastructure
@@ -31,9 +31,9 @@ Let the computer run it instead of the judge interpreting it.
 
 They are the technicians that keep the infra running.
 
-They don't have any particular morals, certainly not the same ones you have.
+They are the technicians that keep the infra running.
 
-They can be evil.
+They don't have any particular morals, certainly not the same ones you have.
 
 Notes: 
 
@@ -59,10 +59,10 @@ We have seen some hints so far. Let's check them out.
 
 ## Diversity and Redundancy
 
-* Geographical - for natural disasters and terrorist attacks
-* Jurisdictional - to resist the incumbent governments - they are the ultimate server operators
-* Moral - so all compasses are represented in the network, and no group can impose hegemony
-* Of compute hardware - incase some is bugged or backdoored or prohibitively expensive
+- Geographical - for natural disasters and terrorist attacks
+- Jurisdictional - to resist the incumbent governments - they are the ultimate server operators
+- Moral - so all compasses are represented in the network, and no group can impose hegemony
+- Of compute hardware - incase some is bugged or backdoored or prohibitively expensive
 
 Notes:
 
@@ -86,8 +86,8 @@ We saw well how this worked out well in the file sharing and anonymous browsing 
 
 ## Reproducible Execution
 
-* Computers are better than courts
-* PABs make distributed code execution practical
+- Computers are better than courts
+- PABs make distributed code execution practical
 
 Notes:
 
@@ -121,9 +121,9 @@ Tomorrow and Thursday will dig in on how the blockchain and its P2P network work
 
 ---v
 
-## Blockchain Datastructure
+## Blockchain Data structure
 
-todo figure
+todo figure FIXME
 
 Notes:
 
@@ -135,7 +135,7 @@ This one is forked which is when things get really interesting, and when you nee
 
 ## Blockchain Consensus
 
-todo
+todo FIXME
 
 Notes:
 
