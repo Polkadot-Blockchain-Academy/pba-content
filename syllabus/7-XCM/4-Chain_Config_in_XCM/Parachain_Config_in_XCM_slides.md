@@ -702,31 +702,85 @@ Notes:
 
 ---
 
-### 🔃 `LocationInverter` via `xcm-builder`
+<!-- .slide: data-background-color="#4A2439" -->
 
-- Knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
+# Debugging XCM
 
-- Xcm-builder provides the `LocationInverter<Ancestry>` struct.
-  **Ancestry** indicates how to go from `root` (the top-level consensus system) to your chain.
+---
 
-##### Example:
+## 🧐 Debugging XCM message failures
 
-- **Ancestry**: `para_1000`
-- **Source to target**: `../para_2/account32_default`
-- **Target to source**: `../../para_1000`
+Involves knowledge of the chain XCM configuration!
+
+Common steps to debug:
+
+1. Identify what the error means which will help you identify the context in which the error happened.
+1. Look in the xcm codebase to check where this error might have been thrown.
+   Was it thrown in the barrier?
+   Or in any specific instruction?
+1. Retrieve the failed received XCM.
+1. Check the chain XCM configuration to verify what could have failed.
+
+---
+
+## 🕵️‍♂️ Identifying the error kind
+
+Look at the `ump.ExecutedUpward` event:
+
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure" />
 
 ---v
 
-### 🔃 `LocationInverter` via `xcm-builder`
+## 🕵️‍♂️ Identifying the error kind
 
-**_Important_**
+- `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve.
+- `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
+- `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
+  Usually happens when the multilocation representing an asset does not match to those handled by the chain.
 
-**`LocationInverter` configuration will disappear in XcmV3!**.
-Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept.
-However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**.
-`UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system.
+---v
 
-Example for parachain 1000 in Kusama:
+## 🕵️‍♂️ Identifying the error kind
 
-- **Ancestry**: `para_1000`
-- **UniversalLocation**: `GlobalConsensus(Kusama)/para_1000`
+- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
+- `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
+- `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
+- `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
+
+---v
+
+## 🕵️‍♂️ Identifying the error kind
+
+- `Barrier`: One of the barriers failed, we need to check the barriers individually.
+- `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown.
+  When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination.
+  In such a case, the safe XCM version is used instead.
+  However, if it is not set, then this error will be thrown.
+
+---
+
+## 🔨 Decoding SCALE-encoded messages
+
+- **RelayChain**:
+  - XCM can be retrieved in the `paraInherent.enter` inherent
+  - The candidate for a specific parachain contains the ump messages sent to the relay.
+  - **UMP messages are usually executed one block after they are received**
+- **Parachain**:
+  - XCM can be retrieved in the `parachainSystem.setValidationData` inherent.
+  - **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
+
+---v
+
+## 🔨 Decoding SCALE-encoded messages
+
+But all we see is a **SCALE-encoded message** which does not give us much information.
+To solve this:
+
+- We build a SCALE-decoder to retrieve the xcm message (the hard way).
+- We rely on subscan/polkaholic to see the XCM message received.
+
+---v
+
+## 🔨 Subscan XCM retrieval
+
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab" />

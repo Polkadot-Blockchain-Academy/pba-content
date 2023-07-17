@@ -4,7 +4,7 @@ description: An continuation of the ink! workshop.
 duration: 20 min
 ---
 
-<img rounded style="width: 1400px; padding-top:15px;" src="img/ink/advanced-workshop.jpg" alt="ink!" />
+<img rounded style="width: 1400px; padding-top:15px;" src="../img/ink/advanced-workshop.jpg" alt="ink!" />
 
 ---
 
@@ -94,7 +94,7 @@ pub fn dimensions(&self) -> (u32, u32)
 
 ## More Pitfalls
 
-<img rounded style="margin-top: 25px; width: 400px;" src="img/ink/oopsie.gif" />
+<img rounded style="margin-top: 25px; width: 400px;" src="../img/ink/oopsie.gif" />
 
 - Forgetting `--release`
 
@@ -142,7 +142,7 @@ fn pay_winner(
 
 ## Strategy 1<br/>Return Random Numbers
 
-<img rounded style="margin-top: 25px; width: 500px;" src="img/ink/0.png" />
+<img rounded style="margin-top: 25px; width: 500px;" src="../img/ink/0.png" />
 
 ---
 
@@ -163,7 +163,7 @@ fn pay_winner(
 
 ## Strategy 2<br/>Paint only free fields
 
-<img rounded style="margin-top: 25px; width: 500px;" src="img/ink/1.png" />
+<img rounded style="margin-top: 25px; width: 500px;" src="../img/ink/1.png" />
 
 ---
 
@@ -183,7 +183,7 @@ fn pay_winner(
 
 ## Strategy 3<br/>Shift computation off-chain
 
-<img rounded style="margin-top: 25px; width: 500px;" src="img/ink/2.png" />
+<img rounded style="margin-top: 25px; width: 500px;" src="../img/ink/2.png" />
 
 ---
 
@@ -210,7 +210,7 @@ fn pay_winner(
 
 ## Strategy 4<br/>Exploit player sorting in game loop
 
-<img rounded style="margin-top: 25px; width: 500px;" src="img/ink/3.png" />
+<img rounded style="margin-top: 25px; width: 500px;" src="../img/ink/3.png" />
 
 ---
 
@@ -268,8 +268,8 @@ impl<T: Config> AddressGenerator<T> for DefaultAddressGenerator {
 
 ## Strategy 5<br/>Checking these slides already yesterday
 
-<img rounded style="margin-top: 25px; width: 500px;" src="img/ink/4.png" />
+<img rounded style="margin-top: 25px; width: 500px;" src="../img/ink/4.png" />
 
 ---
 
-<!-- .slide: data-background="img/ink/Questions_2.svg"" -->
+<!-- .slide: data-background="../img/ink/Questions_2.svg"" -->
