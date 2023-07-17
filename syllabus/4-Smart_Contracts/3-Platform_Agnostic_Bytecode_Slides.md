@@ -136,20 +136,38 @@ Notes:
 
 ### Sandboxing?
 
-A sandbox environment is where potentially unsafe software code can be executed without affecting the security of the machine in which is executed.
+An environment for running untrusted code without affecting the host.
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<img style="height: 300px" src="./img/pab/sandbox.jpg" />
+
+A SmartContract is *Arbitrary Code* that may be executed on other people's infrastructure, we don't want SmartContracts capable of destroying the nodes on which they are executed 
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Notes: 
+
+CLICK read definition
+
+The term sandbox is an analogy to kids playing in a sandbox.
+The parent puts the kid in the sandbox and tells them they can play in the sandbox and they are safe as long as they stay in.
+Don't go in the woods and get bitten by a snake or in the road and get hit by a car.
+Just stay in the sandbox.
+
+Of course the analogy isn't perfect.
+The children in the sandbox stay there because the parent asked them to.
+They could leave anytime they wanted to.
+For actual untrusted code, a better analogy would be a walled garden or a Jail
+
+---v
+
+### Sandboxing?
+
+<img src="./img/pab/jail.jpg" /> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 A sandboxed environment must be created by the executor of the PAB.
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-</br>
-
-A SmartContract is *Arbitrary Code* that may be executed on other people's infrastructure, we don't want SmartContracts capable of destroying the nodes on which they are executed 
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-Notes: 
-
-Security is one of the main issue of a blockchain, this is one of the most important features for a PAB in a decentralized network, an users can't be able to create malicious code that is capable od destroy a node or simply slow down the network.
+Notes:
 
 Of course the security can be seen by various point of view and some examples are:
 + Compilation takes too much time -> compiling bomb
