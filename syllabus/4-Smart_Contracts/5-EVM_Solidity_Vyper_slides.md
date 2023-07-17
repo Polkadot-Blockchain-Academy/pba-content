@@ -123,7 +123,32 @@ ideas:
 * Early concepts (IIRC, was attempted to be built on Bitcoin first)
 * Shortcomings of Ethereum (storage bloat, ...?)
 * DAO & hardfork
-* Important updates, Eth 2.0
+* Important updates
+* The Merge
+* Ice ages (aka difficulty bombs)
+
+* Good resource: https://ethereum.org/en/history/
+* Nov 27, 2013: Vitalik released WP
+* Apr 21, 2014: Gav released YP
+* July 22, 2014: $18M raised (ICO lasted 42 days)
+* July 30, 2015: Frontier released -- bare bones
+* Sept 7: 2015: Frontier "thawed" -- (TODO: only txns allowed)? also, difficulty bomb introduced
+* Initial Launch: July 30, 2015
+* TODO: show as timeline, include block numbers
+* TODO: split into two slides (dev history, fork history)
+  * maybe another for major changes?
+
+---v
+
+## DAO Hack
+
+(TODO)
+
+* 2016: raised $150M worth of ETH
+* later that year: 3.6M ETH drained
+* reentrancy attack (TODO: briefly describe)
+* "Mainnet" Ethereum is the fork with the hack retroactively removed
+* Ethereum Classic: code is law
 
 ---v
 
