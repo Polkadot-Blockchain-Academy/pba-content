@@ -582,6 +582,10 @@ wasmtime ./target/wasm32-unknown-unknown/release/wasm-crate.wasm --invoke <func_
 
 Notes:
 
+- More on PAB:
+
+  - https://github.com/gabriele-0201/IPABDN/blob/main/thesis/IPABDN.pdf
+
 - More on Rust target spec:
 
   - https://rust-lang.github.io/rfcs/0131-target-specification.html
