@@ -23,9 +23,12 @@ description: Peer-to-Peer (P2P) networking for Web3 engineers
     <h2>ARPANET</h2>
     <ul>
         <li class="fragment">First operational packet-switching network</li>
-        <li class="fragment">Developed in the late 1960s by DARPA</li>
+        <li class="fragment">Developed in the late 1960s by DARPA(The Defense Advanced Research Projects Agency)</li>
         <li class="fragment">Laid the foundation for the modern internet</li>
     </ul>
+    <aside class="notes">
+        Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA program aimed at developing technologies for mass surveillance and data analysis. The project raised concerns about privacy and civil liberties, eventually leading to its cancellation in 2003 due to public outcry.
+    </aside>
 </section>
  
 ---
@@ -199,9 +202,10 @@ Notes:
 
 ---
 
-### Centralized vs Decentralized Networks
-
-<img style="width: 600px; height: 600px;" src="img/3.7-p2p-partition.svg" />
+<section>
+    <h2>Centralized vs Decentralized Networks</h2>
+    <img style="width: 600px" src="img/client_server_1.svg"/>
+</section>
 
 Notes:
 
@@ -209,15 +213,26 @@ Talk about how when a partition happens in P2P vs Centralized
 In p2p only one node needs to have a full copy in order for the file to
 be able to be distributed across the network
 
----v
+---
 
-## Centralized vs Decentralized Networks
+<section>
+    <h2>Centralized vs Decentralized Networks</h2>
+    <img style="width: 600px" src="img/client_server_2.svg"/>
+</section>
 
-<img style="width: 500px" src="img/3.7-p2p-partition2.svg" />
+---
 
-Notes:
+<section>
+    <h2>Centralized vs Decentralized Networks</h2>
+    <img style="width: 600px" src="img/p2p_topology_1.svg"/>
+</section>
 
-1. This is horrible and means all nodes are totally screwed
+---
+
+<section>
+    <h2>Centralized vs Decentralized Networks</h2>
+    <img style="width: 600px" src="img/p2p_topology_2.svg"/>
+</section>
 
 ---
 
@@ -320,7 +335,7 @@ Talk about advertising vs just blind sending and how that can be inefficient
     <div style="display: flex; justify-content: center;">
         <ol>
             <li class="fragment">Connect to a peer</li>
-            <li class="fragment">Ask peer for a list of their known nodes (Addresses to fill DHT)</li>
+            <li class="fragment">Ask peer for a list of their known nodes</li>
             <li class="fragment">Connect to random subset of peers from the list</li>
             <li class="fragment">Repeat steps 2 and 3</li>
         </ol>
@@ -353,16 +368,24 @@ Notes:
 Can anyone think of a way to exploit some of these networks?
 What would be some things to try to take advantage of?
 
----v
+---
 
-## Eclipse Attack
-
-<img style="width: 800px" src="img/3.7-p2p-eclipse-topology.svg" />
+<section>
+    <h2>Attacks</h2>
+    <img style="width: 600px" src="img/eclipse_attack_1.svg"/>
+</section>
 
 Notes:
 
 1. Distorts view of the healthy normal honest state of the network
 1. Transaction confirmations can be fictions
+
+---
+
+<section>
+    <h2>Attacks</h2>
+    <img style="width: 600px" src="img/eclipse_attack_2.svg"/>
+</section>
 
 ---
 
