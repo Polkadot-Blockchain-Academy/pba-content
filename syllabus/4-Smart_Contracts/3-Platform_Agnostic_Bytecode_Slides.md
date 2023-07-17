@@ -8,6 +8,25 @@ duration: 1 hour
 
 ---
 
+## Review of Compilers
+
+<img src="./img/pab/compiling.png" />
+
+🤯 Fun Side Reading: <!-- .element: class="fragment" data-fragment-index="1" -->
+[Reflections on Trusting Trust](https://www.cs.cmu.edu/~rdriley/487/papers/Thompson_1984_ReflectionsonTrustingTrust.pdf) <!-- .element: class="fragment" data-fragment-index="1" -->
+
+
+Notes:
+
+Just a very quick reminder of how compilers work.
+Humans write programs in some human readable language like Lauren talked about.
+Then the compiler translates the semantics of that program into an equivalent program in a much lower more machine-readable language called a bytecode.
+
+When ever I show this diagram or talk about compilers, I always like to mention one of my favorite essays ever.
+Ken Thompson's 1984 Turing Award lecture.
+
+---
+
 ## Definition
 
 A PAB is a bytecode that follows two main principles: 
@@ -23,6 +42,18 @@ A PAB is a bytecode that follows two main principles:
 Notes:
 
 Ideally a bytecode like this is designed to be executed on a virtual machine that follows general known patterns. 
+
+---v
+
+## Definition
+
+<img src="./img/pab/compiling_twice.png" />
+
+Notes:
+
+So when we are using a PAB, we need to compile twice.
+This is, of course, the cost to using a PAB.
+In this lesson we'll also explore the advantages.
 
 ---
 
@@ -74,7 +105,8 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 Notes:
 
-From left to right you can see different level of abstraction over the machine the code should be executed, generally the from an high level language you need two compilation step if you want to pass through a PAB.
+From left to right you can see different levels of abstraction over the program that will ultimately be run on some machine.
+Generally, from an high level language you need two compilation step if you want to pass through a PAB.
 
 Other examples of PABs used right now:
 + Inside the Linux Kernel -> eBPF
