@@ -6,24 +6,24 @@ title: Accounting Models & User Abstractions in Blockchains
 
 ---
 
-## Review what we have spoken about so far
-
-- Cryptography (Signatures, Hash functions, Hash based Data Structures)
-- Economics/Game Theory
-- Blockchain structure (The overall blockchain primitive, a hash list)
+<section>
+    <h2>Discussion Overview</h2>
+    <ul>
+        <li class="fragment">Cryptography, Signatures, Hash functions, Hash based Data Structures</li>
+        <li class="fragment">Economics/Game Theory</li>
+        <li class="fragment">Blockchain structure</li>
+    </ul>
+</section>
 
 ---
 
-## Where do we go from here?
-
-- We have some base elements ideas and concepts
-- now lets put them together into something cool..
-
-<img rounded style="width: 700px;" src="img/3.2-assembling-cartoon.png" />
-
-Notes:
-
-TODO: Help format images to look better
+<section>
+    <h2>Where do we go from here?</h2>
+    <ul>
+        <li class="fragment">We have some base elements, ideas, and concepts</li>
+        <li class="fragment">Now, let's put them together into something cool..</li>
+    </ul>
+</section>
 
 ---
 
@@ -39,122 +39,125 @@ TODO: Help format images to look better
 
 <img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="img/3.2-thinking-cartoon.png" />
 
-Notes:
+---
 
-TODO: Help format image to look better on slide
+<section>
+    <h2>State User Model</h2>
+    <img style="width: 600px;", src="img/utxo_state_1.svg"/> 
+</section>
 
 ---
 
-## Two different paradigms
-
-1. We craft a model in which the system acts as a global and trustless verifier
-
-Notes:
-
-TODO: Insert picture here which shows some money being sent from person A to person B and the System box is verifying whether the money I am attempting to spend is mine and the result that I am specifying to happen is valid
+<section>
+    <h2>State User Model</h2>
+    <img style="width: 600px;", src="img/utxo_state_2.svg"/> 
+</section>
 
 ---
 
-## Example
-
-<img style="width: 700px; height 500px; float:middle;" src="img/3.2-utxo-money-example.svg" />
-
----
-
-## Paradigm A How would we do this?
-
-1.  You have some uniquely identifiable piece of data with a signature attached(A hash which signifies some id of a spendable thing + a signature saying I can spend that thing) In other words we have some data that can be altered only by a specific entity so we want to provide proof we can alter it.
-1.  You have data which can be altered along with a key stating who can alter it.(Value + Pubkey)<br/>
-    $~~~~$Thing 1 we can refer to as an input<br/>
-    $~~~~$Thing 2 we can refer to as an output
+<section>
+    <h2>How to represent Joshy and Andrew?</h2>
+    <img style="width: 600px;", src="img/utxo_state_1.svg"/>
+</section>
 
 ---
 
-## Is this our State?<br/>What is our state?
-
-- A bunch of "outputs" (Some value or data which can be altered via a particular specified owner)
-
-Notes:
-
-TODO: Insert picture showing a table of hash values mapping to these "outputs"(Data + owner)
+<section>
+    <h2>User Representation</h2>
+    <img style="width: 600px;", src="img/utxo_state_3.svg"/>
+</section>
 
 ---
 
-## Visual What are we talking about here?
-
-| Key           | Value                                    |
-| ------------- | ---------------------------------------- |
-| Hash(tx0)     | (Pubkey5, Value = 100)                   |
-| Hash(tx1)     | (Pubkey2, Value = 42)                    |
-| Hash(tx2)     | (Pubkey1, Value = 33)                    |
-| **Hash(tx3)** | **(Pubkey3, Value = 20)**                |
-| **Hash(tx3)** | **(Pubkey1, Value = 74)**                |
-| Hash(tx4)     | (Pubkey42, Value = 200000)               |
-| Hash(tx5)     | (Pubkey39, Value = some big a&\* number) |
-| Hash(tx6)     | (Pubkey780, Value = 80)                  |
+<section>
+    <h2>How to send from Joshy to Andrew? What do you need?</h2>
+    <img style="width: 600px;", src="img/utxo_state_4.svg"/>
+</section>
 
 ---
 
-## So what is the notion of a User?
-
-- A public key and all of the uniquely identifiable data which can be manipulated by that public key
-
----
-
-### We described somewhat of the `State` Now lets talk about how to transition the State using this new verification model.
-
-Notes:
-
-TODO: Show some image of something transitioning
+<section>
+    <h2>What if we want to spend this?</h2>
+    <img style="width: 600px;", src="img/utxo_state_5.svg"/>
+</section>
 
 ---
 
-### A "Transaction"
-
-- Dont be confused it is essentially a request to change the state of the system.
-- What does a Transaction look like? How do inputs map to outputs?
-- A list of inputs + a list of outputs
-
----
-
-### What were those<br/>input-output thingies again?
-
-<img style="width: 700px; height 500px; float:middle;" src="img/3.2-utxo-transaction-format.svg" />
-
-Notes:
-
-TODO: Show picture of inputs and outputs in a transaction similar to UTXO frameless explain how new outputs are derived from previously specified outputs from the input
+<section>
+    <h2>Input</h2>
+    <img style="width: 600px;", src="img/utxo_transaction_1.svg"/>
+</section>
 
 ---
 
-### So what happens in a state transition<br/>or verification in this model?
-
-- Inputs signal which outputs from the state will be consumed
-- We must verify the signature given in the input with the corresponding specified outputs pubkey or owner
-- We must verify that the resulting state which has been provided is a valid one(We define what this is)
-- In the case of money or just a raw value we can assume that you cannot take some piece of moneys worth 10 and create a list of new outputs which have more than 10 moneys
+<section>
+    <h2>Transaction</h2>
+    <img style="width: 600px;", src="img/utxo_transaction_2.svg"/>
+</section>
 
 ---
 
-## Transition
-
-<img style="width: 700px; height 500px; float:middle;" src="img/3.2-utxo-transition.svg" />
+<section>
+    <h2>How to verify this state change is valid?</h2>
+    <ul>
+        <li class="fragment">We can actually spend this thing signature verification!</li>
+        <li class="fragment">Sum of the inputs is >= sum of the outputs</li>
+        <li class="fragment">No coins are worth 0</li>
+        <li class="fragment">Has this already been spent before?</li>
+    </ul> 
+    <aside class="notes">
+        Which did I forget??
+    </aside>
+</section>
 
 ---
 
-## Unspent Transaction Outputs(UTXOS) solved...
+<section>
+    <h2>Our new state</h2>
+    <img style="width: 600px;", src="img/utxo_state_6.svg"/>
+</section>
 
-<pba-cols>
-<pba-col>
+---
 
-- Now whenever someone mentions UTXO's and the UTXO model you can now fundamentally know what actually is being referenced..(Hopefully!)
+<section>
+    <h2>How do we generalize beyond money?</h2>
+    <img style="width: 600px;", src="img/utxo_state_7.svg"/>
+</section>
 
-</pba-col>
-<img rounded style="width: 400px; height 300px; float:middle;" src="img/3.2-cartoon-cheering.png" />
+---
 
-Notes:
+<section>
+    <h2>How do we generalize beyond money?</h2>
+    <img style="width: 600px;", src="img/utxo_state_8.svg"/>
+    <aside class="notes">
+        How are we going to verify now that the state transition is valid?
+    </aside>
+</section>
 
-TODO: Add some picture of a person cheering and happy
+---
+
+<section>
+    <h2>Transaction</h2>
+    <img style="width: 600px;", src="img/utxo_transaction_3.svg"/>
+</section>
+
+---
+
+<section>
+    <h2>Transaction</h2>
+    <img style="width: 600px;", src="img/utxo_transaction_4.svg"/>
+</section>
+
+---
+
+<section>
+    <h2>Is this a good model? Why or why not? Lets Discuss</h2>
+    <ul>
+        <li class="fragment">Scalability</li>
+        <li class="fragment">Privacy</li>
+        <li class="fragment">General Computation smart contracts</li>
+    </ul>
+</section>
 
 ---
 
