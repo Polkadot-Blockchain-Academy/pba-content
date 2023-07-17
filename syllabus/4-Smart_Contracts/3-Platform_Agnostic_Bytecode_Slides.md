@@ -22,7 +22,9 @@ Just a very quick reminder of how compilers work.
 Humans write programs in some human readable language like Lauren talked about.
 Then the compiler translates the semantics of that program into an equivalent program in a much lower more machine-readable language called a bytecode.
 
-When ever I show this diagram or talk about compilers, I always like to mention one of my favorite essays ever.
+CLICK
+
+Whenever I show this diagram or talk about compilers, I always like to mention one of my favorite essays ever.
 Ken Thompson's 1984 Turing Award lecture.
 
 ---
@@ -42,18 +44,6 @@ A PAB is a bytecode that follows two main principles:
 Notes:
 
 Ideally a bytecode like this is designed to be executed on a virtual machine that follows general known patterns. 
-
----v
-
-## Definition
-
-<img src="./img/pab/compiling_twice.png" />
-
-Notes:
-
-So when we are using a PAB, we need to compile twice.
-This is, of course, the cost to using a PAB.
-In this lesson we'll also explore the advantages.
 
 ---
 
@@ -106,7 +96,7 @@ In this lesson we'll also explore the advantages.
 Notes:
 
 From left to right you can see different levels of abstraction over the program that will ultimately be run on some machine.
-Generally, from an high level language you need two compilation step if you want to pass through a PAB.
+Generally, from a high level language you need two compilation step if you want to pass through a PAB.
 
 Other examples of PABs used right now:
 + Inside the Linux Kernel -> eBPF
@@ -115,6 +105,18 @@ Other examples of PABs used right now:
   + Full nodes
   + Light nodes (WASM inside WASM)
 + LLVM Toolchain -> LLVM IR
+
+---v
+
+## Compiling in a PAB
+
+<img src="./img/pab/compiling_twice.png" />
+
+Notes:
+
+So when we are using a PAB, we need to compile twice.
+This is, of course, the cost to using a PAB.
+In this lesson we'll also explore the advantages.
 
 ---
 
@@ -143,8 +145,7 @@ The main goal of a PAB is to make the code **portable**, you should be able to c
 
 ---
 
-## PABs Rating
-Features that a PAB should follow:
+## Desireable Features
 
 - Hardware Independence
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -249,7 +250,7 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 ---
 
-## Wasm's keypoins
+## Wasm's key points
 
 <pba-flex center>
 
@@ -263,7 +264,7 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - Fast (with near-native performance)
 <!-- .element: class="fragment" data-fragment-index="3" -->
-- Safe (executed in a sandoxed environment)
+- Safe (executed in a sandboxed environment)
 <!-- .element: class="fragment" data-fragment-index="4" -->
 - Open (programs can interoperate with their environment)
 <!-- .element: class="fragment" data-fragment-index="5" -->
