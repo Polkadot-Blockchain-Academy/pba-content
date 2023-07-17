@@ -15,7 +15,6 @@ duration: 1 hour
 🤯 Fun Side Reading: <!-- .element: class="fragment" data-fragment-index="1" -->
 [Reflections on Trusting Trust](https://www.cs.cmu.edu/~rdriley/487/papers/Thompson_1984_ReflectionsonTrustingTrust.pdf) <!-- .element: class="fragment" data-fragment-index="1" -->
 
-
 Notes:
 
 Just a very quick reminder of how compilers work.
@@ -31,19 +30,19 @@ Ken Thompson's 1984 Turing Award lecture.
 
 ## Definition
 
-A PAB is a bytecode that follows two main principles: 
+A PAB is a bytecode that follows two main principles:
 
-- Turing Completeness, as a standard bytecode would respect 
+- Turing Completeness, as a standard bytecode would respect
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Support for tooling that makes it executable on every machine 
+- Support for tooling that makes it executable on every machine
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
-Ideally a bytecode like this is designed to be executed on a virtual machine that follows general known patterns. 
+Ideally a bytecode like this is designed to be executed on a virtual machine that follows general known patterns.
 
 ---
 
@@ -99,12 +98,13 @@ From left to right you can see different levels of abstraction over the program 
 Generally, from a high level language you need two compilation step if you want to pass through a PAB.
 
 Other examples of PABs used right now:
-+ Inside the Linux Kernel -> eBPF
-+ Inside browsers -> WASM
-+ Inside Blockchains -> WASM
-  + Full nodes
-  + Light nodes (WASM inside WASM)
-+ LLVM Toolchain -> LLVM IR
+
+- Inside the Linux Kernel -> eBPF
+- Inside browsers -> WASM
+- Inside Blockchains -> WASM
+  - Full nodes
+  - Light nodes (WASM inside WASM)
+- LLVM Toolchain -> LLVM IR
 
 ---v
 
@@ -125,13 +125,13 @@ In this lesson we'll also explore the advantages.
 <pba-flex center>
 
 - Portability
-<!-- .element: class="fragment" data-fragment-index="1" -->
-    - Avoid Hardware Centralization
-<!-- .element: class="fragment" data-fragment-index="3" -->
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+      - Avoid Hardware Centralization
+  <!-- .element: class="fragment" data-fragment-index="3" -->
 - Determinism
-<!-- .element: class="fragment" data-fragment-index="2" -->
-    - Make consensus possible
-<!-- .element: class="fragment" data-fragment-index="4" -->
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+      - Make consensus possible
+  <!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
 
@@ -160,24 +160,26 @@ The main goal of a PAB is to make the code **portable**, you should be able to c
 
 Notes:
 
-+ Hardware Independence: It should not be tightly related to a specific architecture, otherwise the execution on different machine could be convoluted
-+ Efficiency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
-+ Support as Compilation Target: The PAB should be possible to be compiled by as many as possible High Level languages 
-+ Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
+- Hardware Independence: It should not be tightly related to a specific architecture, otherwise the execution on different machine could be convoluted
+- Efficiency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
+- Support as Compilation Target: The PAB should be possible to be compiled by as many as possible High Level languages
+- Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
 
 ---v
 
 ### Sandboxing?
 
 An environment for running untrusted code without affecting the host.
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <img style="height: 300px" src="./img/pab/sandbox.jpg" />
 
-A SmartContract is *Arbitrary Code* that may be executed on other people's infrastructure, we don't want SmartContracts capable of destroying the nodes on which they are executed 
+A SmartContract is _Arbitrary Code_ that may be executed on other people's infrastructure, we don't want SmartContracts capable of destroying the nodes on which they are executed
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Notes: 
+Notes:
 
 CLICK read definition
 
@@ -198,13 +200,15 @@ For actual untrusted code, a better analogy would be a walled garden or a Jail
 <img src="./img/pab/jail.jpg" /> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 A sandboxed environment must be created by the executor of the PAB.
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
 Of course the security can be seen by various point of view and some examples are:
-+ Compilation takes too much time -> compiling bomb
-+ Access to the environment -> "buffer overflow" techniques
+
+- Compilation takes too much time -> compiling bomb
+- Access to the environment -> "buffer overflow" techniques
 
 Those things can't be addressed by the PAB itself but they can give good guidelines and code design to make an 100% secure implementation of the executor possible.
 
@@ -237,7 +241,8 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 <pba-cols>
 <pba-col center>
 
-# WebAssembly 
+# WebAssembly
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-col>
@@ -255,13 +260,13 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 <pba-flex center>
 
 - Hardware-independent
-<!-- .element: class="fragment" data-fragment-index="1" -->
+  <!-- .element: class="fragment" data-fragment-index="1" -->
   - Binary instruction format for a stack-based virtual machine
-<!-- .element: class="fragment" data-fragment-index="1" -->
+  <!-- .element: class="fragment" data-fragment-index="1" -->
 - Supported as compilation target by many languages
-<!-- .element: class="fragment" data-fragment-index="2" -->
+  <!-- .element: class="fragment" data-fragment-index="2" -->
   - Rust, C, C++ and many others
-<!-- .element: class="fragment" data-fragment-index="2" -->
+  <!-- .element: class="fragment" data-fragment-index="2" -->
 - Fast (with near-native performance)
 <!-- .element: class="fragment" data-fragment-index="3" -->
 - Safe (executed in a sandboxed environment)
@@ -275,17 +280,18 @@ Notes:
 
 WASM seems to respect every rating points we defined before
 
-
 ---
+
 ## Stack-Based Virtual Machine Example
 
 <pba-cols>
 <pba-col center>
 
 Adding two number in wasm text representation (.wat)
+
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
 
-``` wasm [1-12|5|6|8]
+```wasm [1-12|5|6|8]
 (module
   (import "console" "log" (func $log (param i32)))
   (func $main
@@ -299,6 +305,7 @@ Adding two number in wasm text representation (.wat)
   (start $main)
 )
 ```
+
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 </pba-col>
@@ -326,6 +333,7 @@ Notes:
 
 Wasm has also a text representation,
 Wat has some features that allow for better readability:
+
 - Stack push operations can be grouped to its consuming instruction.
 - Labels can be applied to elements.
 - Blocks can enclosed with parenthesis instead of explicit start/end instructions.
@@ -351,9 +359,10 @@ Assuming all the things we said before wasm seems to be perfect but how those th
 
 ---
 
-## Communication with the Environment 
+## Communication with the Environment
 
 Let's call **Embedder** the program that will take the wasm blob as input and execute it
+
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 - the wasm blob may expect parameters from the embedder
@@ -366,7 +375,6 @@ Let's call **Embedder** the program that will take the wasm blob as input and ex
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-
 ---v
 
 ### Problem
@@ -376,6 +384,7 @@ Let's call **Embedder** the program that will take the wasm blob as input and ex
 </br>
 
 ### Solution
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <img src="img/pab/env_communication.svg" sytyle="width: 70%">
@@ -383,7 +392,7 @@ Let's call **Embedder** the program that will take the wasm blob as input and ex
 
 Notes:
 
-- Every interaction with the environment can be done only by a set of functions, called **Host Functions**, provided by the embedder and imported in wasm 
+- Every interaction with the environment can be done only by a set of functions, called **Host Functions**, provided by the embedder and imported in wasm
 - The embedder is able to call the functions defined in wasm blob, called **Runtime API**, and pass arguments through a shared memory
 
 ---
@@ -391,16 +400,17 @@ Notes:
 ## Memory
 
 In addition to the stack Wasm has also access to memory provided by the embedder, the **Linear Memory**.
+
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 </br>
 
 - This area will be used also used as a frontier for data sharing
-- To make everything secure the Embedder is doing incredibly convoluted things 
+- To make everything secure the Embedder is doing incredibly convoluted things
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-Notes: 
+Notes:
 
 From Wasm the Linear Memory is byte addressable
 Linear Memory can be manipulated using functions called 'store' and 'load'
@@ -418,9 +428,9 @@ The Rust compiler uses for dynamic/heap memory and to pass non primitives values
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
-Notes: 
+Notes:
 
-Here's an example, wasm sees linear memory like a byte array and if it tries to access the second byte, it would use an index 1. When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base\_linear\_memory + 1.
+Here's an example, wasm sees linear memory like a byte array and if it tries to access the second byte, it would use an index 1. When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base_linear_memory + 1.
 
 Buffer overflow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information. Even if the offset is only positive there are embedders that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
 
@@ -442,7 +452,7 @@ There are multiple ways to execute wasm:
 
 </pba-flex >
 
-Notes: 
+Notes:
 
 AOT: Compile all the code at the beginning, this allows to makes a lot of improvement to the final code efficiency
 JIT: The code is compiled only when needed, examples are functions that are compiled only when called, this leave space only to partials improvements
@@ -459,11 +469,10 @@ Interpretation: The wasm blob is treated as any other interpreted language and e
 
 <!--TODO: graphics-->
 
+Notes:
 
-Notes: 
-
-+ wasmtime book: https://docs.wasmtime.dev/
-+ Used in substrate as embedder for the blockchain logic
+- wasmtime book: https://docs.wasmtime.dev/
+- Used in substrate as embedder for the blockchain logic
 
 Cranelift is a fast, secure, relatively simple and innovative compiler backend. It takes an intermediate representation of a program generated by some frontend and compiles it to executable machine code
 
@@ -485,7 +494,7 @@ Cranelift is a fast, secure, relatively simple and innovative compiler backend. 
 
 ### Wasmi
 
-- It is a wasm environment with support for embedded environment such as WebAssembly itself 
+- It is a wasm environment with support for embedded environment such as WebAssembly itself
 - Focus on simple, correct and deterministic WebAssembly execution
 - The technique of execution is interpretation but:
   - The wasm code is transpiled to WASMI IR, another stack-based bytecode
@@ -564,15 +573,15 @@ https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
 ## RISC-V ?!
 
 - RISC-V is a new instruction-set architecture
-- main goals are: 
+- main goals are:
   - real ISA suitable for direct native hardware implementation
   - avoids “over-architecting”
-  
+
 </br>
 
 Being so simple and "Hardware-Independent" there are work in progress experiments to test if it is suitable to become the new polkadot smart contract language
-  
-Notes: 
+
+Notes:
 Discussion about using RISC-V as smart contract language: https://forum.polkadot.network/t/exploring-alternatives-to-wasm-for-smart-contracts/2434
 
 RISC-V Instruction Set Manual, Unprivileged ISA: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf

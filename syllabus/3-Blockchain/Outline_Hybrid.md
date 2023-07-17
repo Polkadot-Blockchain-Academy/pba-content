@@ -62,6 +62,7 @@ We also explore light clients and bridges, both of which benefit from determinis
 - ⌨🗣️ aBFT and Aleph 0 - Piotr Mikolajczyk - Founders NOT Required
 
 ### Afternoon
+
 - 🗣️ Account and UTXO models - Andrew - Founders Required
 - 🗣️ Full State Inclusion Proofs in Monero - Guest Content - Founders Not Required
 - ⌨️ Continue Coding on BFS
