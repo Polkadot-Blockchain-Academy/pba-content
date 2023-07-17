@@ -15,11 +15,11 @@ duration: 1 hours
 1. [What is Cumulus?](#what-is-cumulus)
 2. [Cumulus Runtime Validation](#how-cumulus-enables-runtime-validation)
 3. [Cumulus on the Node Side](#how-cumulus-enables-parachain-relay-chain-communication)
-4. [Runtime Upgrades](##runtime-upgrades)
+4. [Runtime Upgrades](#runtime-upgrades)
 5. [Transform Solo to Parachain](#transform-solo-to-parachain)
 6. [References](#references)
 
-</pba-flex> 
+</pba-flex>
 
 ---
 
@@ -28,6 +28,7 @@ duration: 1 hours
 > Cumulus clouds are shaped sort of like dots; together they form a system that is intricate, beautiful and functional
 
 SDK for building substrate/FRAME-based Parachains
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
@@ -43,18 +44,21 @@ SDK for building substrate/FRAME-based Parachains
 Notes:
 
 1.
+
 - Substrate is a framework for building blockchains
 - But only "solo" chains
 - Split into runtime/node side
 - FRAME allows you to build modular components reused by runtimes
 
 2.
+
 - Polkadot makes uses of Substrate
 - The concept of Parachains is introduced in Polkadot
 - It implements Parachain Sharding and Validation as node and runtime-side logic
 - Has its own networking protocols built with Substrate/libp2p
 
 3.
+
 - Cumulus uses the generic types of Substrate
 - These generic types/interfaces are extended to make them work with/for Parachains
 - Polkadot itself is providing APIs that are used by Cumulus to implement the Substrate interfaces/types
@@ -75,8 +79,10 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="3" -->
 </div>
 
-Notes: 
+Notes:
+
 - A substrate Based Chain is composed by:
+
   - Client
   - Runtime (= STF)
 
@@ -84,7 +90,6 @@ Notes:
 - It not only abstract the complexity around the creation of the PVF and the PoV but also continuously interact with the relay chain to continue producing block with the pooled security
 
 ---v
-
 
 <pba-cols>
 <pba-col center>
@@ -103,7 +108,7 @@ Notes:
 </pba-col>
 </pba-cols>
 
-Notes: 
+Notes:
 
 The majority of this things will be treated in this lecture or later in the Polkadot module
 
@@ -150,7 +155,7 @@ The majority of this things will be treated in this lecture or later in the Polk
 
 - The STF of the Parachain must be stored on the Relay Chain
 
-``` rust [6]
+```rust [6]
 /// A struct that carries code of a parachain validation function and its hash.
 ///
 /// Should be cheap to clone.
@@ -163,11 +168,11 @@ pub struct Pvf {
 
 </br>
 
-- New state transitions that occur on a parachain must be validated against the registered parachain code via the PVF 
+- New state transitions that occur on a parachain must be validated against the registered parachain code via the PVF
 
 Notes:
 
-The code is hashed and saved in the storage of the relay chain. There is another map in the storage where the paraId is the key and the ValidationCodeHash (the hasho of the PVF) is the value.
+The code is hashed and saved in the storage of the relay chain. There is another map in the storage where the paraId is the key and the ValidationCodeHash (the hash of the PVF) is the value.
 
 ---v
 
@@ -180,14 +185,13 @@ The code is hashed and saved in the storage of the relay chain. There is another
 
 Notes:
 
-
 ---v
-  
+
 ##### Witness Data
 
 - Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
   - It allows the reconstruction of a sparse in-memory merkle trie
-  
+
 ---v
 
 ###### Example of Witness Data Construction
@@ -208,7 +212,7 @@ Notes:
 
 Notes:
 
-orage: values present in the POV
+orange: values present in the POV
 green: hash of the siblings node required for the pov
 white: hash of the nodes that are constructed with orange and green nodes
 red: not required hash
@@ -237,12 +241,13 @@ blue: head of the trie, hash present in the previous block header
 </br>
 
 **WHY!?**
+
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-col>
 </pba-cols>
 
-Notes: 
+Notes:
 
 In the first image the PVF was not only composed by the Runtime but also by function needed to interpret all the information that are coming from the Parachain but opaque to the relay chain.
 
@@ -256,7 +261,7 @@ In the first image the PVF was not only composed by the Runtime but also by func
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
-Notes: 
+Notes:
 
 The input of the runtime validation process is the PoV and the function called in the PVF is 'validate_block', this will use the PoV to be able to call the effective runtime and then create an output representing the state transition, that's called candidate receipt, later you will understand why is needed.
 
@@ -281,7 +286,6 @@ fn validate_block(input: InputParams) -> Output {
 }
 ```
 
-
 Notes:
 
 We construct the sparse in-memory database from the storage proof inside the block data and
@@ -298,7 +302,7 @@ then ensure that the storage root matches the storage root in the `parent_head`.
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
-Notes: 
+Notes:
 
 We replace all the storage related host functions with functions inside the wasm blob.
 This means instead of calling into the host, we will stay inside the wasm execution.
@@ -324,7 +328,6 @@ fn validate_block(input: InputParams) -> Output {
 }
 ```
 
-
 Notes:
 
 - `create_output` includes for example:
@@ -338,7 +341,7 @@ Notes:
 
 - The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
 
-- The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Recepeit** to represent the freshly validated block
+- The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Recept** to represent the freshly validated block
 
 - But the PoV must remain available after backing, since it will be used to validate the block during the approvals process.
 
@@ -347,7 +350,7 @@ Notes:
 #### The Availability Process
 
 - Erasure coding is applied to the PoV
-- At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available 
+- At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available
 
 ---
 
@@ -366,7 +369,6 @@ Starting from a Substrate-based chain Cumulus changes both client and runtime to
 - This binary is required to register a Parachain on the relay chain
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-  
 Notes:
 Cumulus changes the compilation behavior to produce beside the normal state transition function used by the collator, also the PFV to a wasm blob
 
@@ -374,7 +376,7 @@ Cumulus changes the compilation behavior to produce beside the normal state tran
 
 #### Generate collations
 
-- The block production phase is modified to create the Collation, the main changes to substrate are: 
+- The block production phase is modified to create the Collation, the main changes to substrate are:
   - access to the storage are used to create the witness data
   - outgoing messages are stored in the PoV to let be processed by the relay chain
 
@@ -432,14 +434,14 @@ Notes:
 
 Notes:
 
-the collator could also run a separeted RPC node
+the collator could also run a separated RPC node
 
 ---
 
 ### Relay Chain Interface
 
 ```rust [1-2]
-/// Trait that provides all necessary methods for interaction 
+/// Trait that provides all necessary methods for interaction
 /// between collator and relay chain.
 #[async_trait]
 pub trait RelayChainInterface: Send + Sync {
@@ -450,6 +452,7 @@ pub trait RelayChainInterface: Send + Sync {
 </br>
 
 It is responsible for:
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 - following the relay chain and providing block and finality notification streams
@@ -465,8 +468,7 @@ It can be run as an in-process full-node or a separate RPC node.
 
 ---
 
-### Parachain System Pallet 
-
+### Parachain System Pallet
 
 ```rust
 //! `cumulus-pallet-parachain-system` handles low-level details
@@ -480,7 +482,6 @@ It can be run as an in-process full-node or a separate RPC node.
 //! - communication of parachain outputs, such as
 //!   sent messages, signalling an upgrade, etc.
 ```
-
 
 ---
 
@@ -578,16 +579,17 @@ Notes:
 - Every Substrate blockchain supports runtime upgrades
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
-
 ##### Problem
-<!-- .element: class="fragment" data-fragment-index="1" -->
-- What happen if the PVF compilation takes too long?
-<!-- .element: class="fragment" data-fragment-index="1" -->
-  - In approval checking, there may be many no-shows, leading to slow finality
-  - In disputes, neither side may reach supermajority. Nobody will get slashed and the chain will not be reverted or finalized.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
-  
+
+- What happen if the PVF compilation takes too long?
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+  - In approval checking, there may be many no-shows, leading to slow finality
+  - In disputes, neither side may reach super-majority. Nobody will get slashed and the chain will not be reverted or finalized.
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 </br>
   
 - Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
@@ -595,26 +597,28 @@ Notes:
 
 Notes:
 
-Now almost every change to the client and the runtime of the substrate based-chain is explained, is missing only the runtime upgrade managment that is not so easy as in a normal substrate-based solo chain.
+Now almost every change to the client and the runtime of the substrate based-chain is explained, is missing only the runtime upgrade management that is not so easy as in a normal substrate-based solo chain.
 
 ---v
 
 ##### Solution
 
 Relay chain needs a fairly hard guarantee that the PVFs can be compiled within a reasonable amount of time
+
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 </br>
 
-+ Collators execute a runtime upgrade but it is not applied
-+ The relay chain executes the **PVF Pre-Chekcing Process**
-+ The first parachain block that will be included after the end of the process needs to apply the new runtime
+- Collators execute a runtime upgrade but it is not applied
+- The relay chain executes the **PVF Pre-Checking Process**
+- The first parachain block that will be included after the end of the process needs to apply the new runtime
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </br>
 
 Cumulus autonomously follows the relay chain to apply the runtime when it's time
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
@@ -630,7 +634,7 @@ https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgra
 
 ---v
 
-##### PVF Pre-Chekcing Process
+##### PVF Pre-Checking Process
 
 - The relay chain keeps track of all the new PVFs that need to be checked
 - Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes

@@ -17,13 +17,23 @@ jobs:
         uses: bahmutov/npm-install@HEAD
         with:
           working-directory: .
-      - name: Build to `build` dir
+      - name: Build internal use static slides
         run: |
-          yarn build-github-pages
-      - name: Deploy to `gh-pages` branch
+          yarn build-internal-static-slides
+      - name: Deploy `internal-static-slides` branch https://do-not-share-pba-internal.on.fleek.co/
         uses: crazy-max/ghaction-github-pages@v2
         with:
-          target_branch: gh-pages
+          target_branch: internal-static-slides
+          build_dir: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build student use static slides
+        run: |
+          yarn build-student-static-slides
+      - name: Deploy `student-static-slides` branch to https://polkadot-blockchain-academy.on.fleek.co/
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: student-static-slides
           build_dir: build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
