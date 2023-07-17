@@ -66,9 +66,24 @@ nodes to agree on doing so. A centralized service could easily impose a time
 limit, but decentralized nodes wouldn't be able to agree on the outcome of such
 a limit (or trust each other).
 
+---v
+
+## Gas
+
+(TODO)
+
+Talk about:
+
+* gas limit
+* gas price
+* EIP-1559
+* gas estimation
+
 ---
 
 # History of EVM
+
+(TODO)
 
 ideas:
 * Early concepts (IIRC, was attempted to be built on Bitcoin first)
@@ -80,6 +95,8 @@ ideas:
 
 ## Ethereum as first smart contracting platform
 
+(TODO)
+
 ideas: talk about the real-world problems that we can reflect on
 * performance
 * frontrunning (etc)
@@ -89,6 +106,8 @@ ideas: talk about the real-world problems that we can reflect on
 ---v
 
 ## Idiosyncrasies
+
+(TODO)
 
 - Everything is 256bits
 - No floating point arithmetic
@@ -103,7 +122,7 @@ ideas: talk about the real-world problems that we can reflect on
 
 ---v
 
-## Contract accoutns vs EOAs
+## Contract accounts vs EOAs
 
 An account is designated by a 160-bit account ID. These accounts can be controlled in
 one of two ways: An `Externally-owned Account` or a `Contract Account`.
@@ -120,6 +139,36 @@ one of two ways: An `Externally-owned Account` or a `Contract Account`.
 * Created with immutable contract bytecode
 * May only ever do precisely what the code specifies
 * Account ID generated deterministically when bytecode is deployed
+
+---v
+
+## Transactions
+
+TODO: format this slide better
+
+All interactions which potentially change EVM state must come from signed
+transactions. The transaction's signature allows for the public key (and
+thereby the account id) to be recovered. The transaction must specify how
+much gas it is willing to pay and the sending account must be able to pay
+for this up front.
+
+Only an EoA can send a transaction since a contract account
+does not have a private key.
+
+#### Transactions can:
+
+* Send 0 or more Ether to some other account
+
+#### And optionally either:
+
+* Call an external function on an existing contract
+* OR Create a new contract
+
+---v
+
+## Transaction Structure
+
+TODO: show transaction contents
 
 ---v
 
@@ -373,6 +422,16 @@ contract Foo {
     }
 }
 ```
+
+---v
+
+## Ether Denominations
+
+Ether is 10**18 wei (TODO: elaborate, tie in to types / uint256)
+
+---
+
+## Solidity Hands-On
 
 ---v
 
