@@ -279,8 +279,7 @@ Both are impressive works of human coordination.
 But to the workers they are much different.
 The construction crew building the white house was engaged in voluntary coordination through employment and they were probably excited about their new government too.  
 The slaves building the pyramids, are engaged in forced coordination, and when they die, their corpses won't even make it in that pyramid, they'll just get thrown out in the desert.  
-
-Our job, this smart contract module, is to design systems of coordination that make it likely and easy for voluntary coordination so that it is not necessary or desireable to resort to forced coordination.
+Our job, in this smart contract module, is to design systems of coordination that make it likely and easy for voluntary coordination so that it is not necessary or desireable to resort to forced coordination.
 
 ---
 
@@ -288,8 +287,7 @@ Our job, this smart contract module, is to design systems of coordination that m
 ![](./img/overview/big-brother.jpeg) <!-- .element: class="fragment" -->
 
 Notes:
-So contracts, often require enforcers, who usually is the government - CLICK - Of course sometimes the government can be a lot like the slave owner.
-Sooo we need to watch out for that...
+We're doing that because contracts, which often require enforcers, who usually is the government - CLICK - Yeah, which could of course not always be a good thing... 
 
 ---
 
@@ -300,13 +298,14 @@ Sooo we need to watch out for that...
 A promise, made between parties, backed by the government, to coordinate together to accomplish something together.
 
 Notes:
-And yeah, that's what we're trying to solve. 
-Okay, again, just to make it clear, let’s make sure we’re all on the same page about what a contract is.
+So yeah, that's the goal and what we're trying to solve. 
+But, again, just before we go any further, let’s make sure we’re all on the same page about what a contract itself is.
 A promise, made between parties, backed by the government, to coordinate together to accomplish something together.
 The notion of promise is very abstract:  
 It could involve coordinating over time.  
 It could involve money or even credit.  
 It also could have multiple possible valid outcomes.  
+
 Okay. Cool. All on the same page? Nodding heads? We can agree we understand this concept? 
 
 ---
@@ -316,12 +315,9 @@ Okay. Cool. All on the same page? Nodding heads? We can agree we understand this
 ![](./img/overview/szabo.jpeg) <!-- .element: class="fragment" -->
 
 Notes:
-Amazing… so, now onto smart contracts! CLICK
-We've finally made it here, folks, horaayyy! 
+Amazing… because, now onto smart contracts! - CLICK - We've finally made it here, folks, horaayyy! 
 Back in the 90s, this CS guy, Nick Szabo, and some other cypher-punks realized that contract law and computer science actually had a lot in common, and thus developed the _idea_ of smart contracts.
-And together, we'll develop and tease out those same comparisons here.
-
-But remember, our goal isn't just to observe 
+And together we'll develop and tease out those same comparisons here.
 
 ---
 
@@ -337,9 +333,7 @@ Notes:
 So Szabo has this idea of the smart contract - which is basically to write contractual agreements as computer programs in programming languages.
 And then to run those programs on a computer that will then execute the instructions faithfully with machine-like precision.  
 He was pretty excited about some of the research in multi-party computation that was happening at the time and had a sense that this vision might be right around the corner.  
-BTW, there is a second smart contracts definition that we'll call the "Narrow definition" or maybe the "Web3 definition" that I'll tell you about in a day or two when we have more foundational material built and that's sort of what Szabo was beginning to allude to himself. 
-But, for now, it makes sense that back in '97, people were thinking about the bigger picture and thus we got this broad definition.  
-Of course now, 25 years later, we have a more precise, technically specific definition. 
+Remember, there is a second smart contract definition that we called the "Web3 definition" right at the beginning of this lecture. That definition is heavily dependent on content you'll learn during the blockchain module - so Joshy will be sure to build off of that later this week. 
 
 https://nakamotoinstitute.org/the-god-protocols/
 https://nakamotoinstitute.org/formalizing-securing-relationships/
@@ -348,14 +342,22 @@ https://nakamotoinstitute.org/formalizing-securing-relationships/
 
 ## Smart Contracts 😠👎
 
-TODO Vitalik Tweet screenshot
+![](./img/overview/vitalik.jpeg)
 
 Notes:
-Of course, the term isn't perfect, and not everybody likes it.
+Of course, I want to caveat that the term isn't perfect and not everybody likes it.
 As you can see in the tweet, Vitalik has worried that the term is too catchy and gives the wrong impression...
-TODO flesh this out. I, actually like the term, so I'm the wrong person for this.
 
 With these caveats and criticisms in mind, it is still worth exploring the idea of contracts as computer programs.
+
+---
+
+## Quick review of how we got here 
+
+Notes: 
+So remember we started all the way back at simple primitive trade. One solution to those problems were to have personal trust with one another. But that doesn't work for everything. So we evolved to use rational expectations based on incentives and reputation and societal norms. But then we had the problem of scalibility. Which brought us to, contracts, aka promises, which allowed us to really scale and achieve some incredible coordination. And to ensure that those contracts were upheld, the government functioned as a central point of enforcement. 
+But, as we've seen, that's not always a good thing.
+And so now, we're going make the next iteration in this long, rich history of how to coordinate: which is the smart contract.
 
 ---
 
@@ -366,30 +368,29 @@ With these caveats and criticisms in mind, it is still worth exploring the idea 
   * Can coordinate with little risk
   * etc. 
 * Remove the need for a powerful government
-
 * Remove ambiguity about what contracts are enforceable
 * Make writing and understanding contracts more approachable
 * Make contract execution and enforcement more efficient
 
-Notes:
-Okay, so these are the goals of a smart contract. We basically want to keep all the good stuff that contracts brought us, but then of course make them better by not making the government the central point of enforcement. 
-We want to know, without a doubt that the contracts will be enforced. We want them to be approachable, legibility wise, and we want them to be efficient.
-And really quickly, before I dive into the expression and enforcement part of smart contracts, I really quickly want us to review:  
-So we started all the way back at simple primitive trade. To personal trust. To rational trust - which allowed us to get money and credit and all this other stuff. Contracts were the golden child - those promises allowed us to really scale and achieve some incredible coordination.  
-And now, we're going make the next iteration in this long, rich history of how to coordinate: which is the smart contract.
+Notes: 
+These are the goals of a smart contract. We basically want to keep all the good stuff that contracts brought us, but then of course make them better by not making the government the central point of enforcement. 
+We want to know, without a doubt that the contracts will be enforced. We want them to be approachable, legibility wise, and we want them to be efficient. 
 
-# Expression and Enforcement
+---
+
+# Smart Contracts - Two Parts
 
 1. Expression
-2. Execution / Enforcement
+2. Execution / Enforcement 
 
-Notes:
-So, as we work through Szabo's ideas, we'll look at smart contracts in two parts.
-Expression - this is the part about actually codifying or expressing what you agree to unambiguously. From a programmer's perspective, this is by writing code. Or from a lawyer's perspective, this is writing up a bunch of pages of legalese, which basically is a DSL for being really specific in a legal contract.  
+Notes: 
+So, we'll look at smart contracts in two parts. 
+Expression - this is the part about actually codifying or expressing what you agree to unambiguously. 
+From a programmer's perspective, this is by writing code. Or from a lawyer's perspective, this is writing up a bunch of pages of legalese, which basically is a DSL for being really specific in a legal contract.  
 And then the part about making sure it actually happens? and what to do if something goes wrong? That’s the execution or enforcement part. 
-And this part is ultimately where the two worlds contrast - running unstoppable code on a blockchain vs. having courts and judges and police officers and things like that.   
-Essentially the idea of a smart contract is: we're going to take a contract, which we all feel really confident in our definition, and we're going to glue it together with all of Szabo’s incredible Computer Science research that's come out way more recently than contract research, and that all together is the next iteration and improvement on contracts.   
-I should note: of these two parts, Programming languages are good at part 1 and computers are good at part 2.  
+Execuition is ultimately where the two worlds contrast - running unstoppable code on a blockchain vs. having courts and judges and police officers and things like that.   
+Essentially the idea of a smart contract is: we're going to take a contract, which we all feel really confident in our definition, and we're going to glue it together with all of Szabo’s incredible Computer Science research that's come out way more recently than contract research, and that all together is the next iteration and improvement on contracts.  
+I should note - of these two parts, Programming languages are good at part 1 and computers are good at part 2.  
 
 ---
 
@@ -408,12 +409,29 @@ Humans have been inventing DSL forever.
 
 ## Domain Specific Languages
 
-TODO image of linear b tablets
-TODO image of chess game with notation nearby
+![](./img/overview/linearb.jpeg)
+
+Notes: 
+From the ancient greek accounting and administrative language, [linear b](https://en.wikipedia.org/wiki/Linear_B), 
+
+---
+
+## Domain Specific Languages
+
+![](./img/overview/chess.jpeg)
+
 
 Notes:
+to the shorthand for summarizing chess games,
 
-From the ancient greek accounting and administrative language, [linear b](https://en.wikipedia.org/wiki/Linear_B), to the shorthand for summarizing chess games, to the ink! programming language that you will soon learn.
+---
+
+## Domain Specific Languages
+
+![](./img/overview/ink.jpeg)
+
+Notes:
+to the ink! programming language that you will soon learn.
 Contract law is a DSL and is an important part of society. It’s hard to read (read the sentence on the slide).  
 Computer Programming languages are also DSLs, which of course had it’s own evolution, independent from contract law. 
 It can be quite hard to read (asm or solidity), whereas good ones can also be easier to read. 
@@ -429,7 +447,6 @@ Szabo recognized this similarity and thus had the idea that programming may be t
 - Testing and Repeatability  
 
 Notes:
-
 Back to the thing about both being hard to read for non-experts, a goal of mine is to make smart contracts more accessible to everyday people so that people can read their own contracts! 
 
 HOWEVER since we're talking similarities - we should also speak to the differences. And hence be careful with this legal and coding comparison. 
@@ -439,20 +456,18 @@ The culture of the two can certainly be different:
  
 # Execution / Enforcement -- Part 2
 
-![](./img/overview/court.jpeg) <!-- .element: class="fragment" -->
+![](./img/overview/court.jpeg)
 
 Notes:
-CLICK
 Okay, so now that we understand what it means to express and write a contract, imagine now that the legal agreement has been made, what comes next? 
 
 ---
 
 # Execution / Enforcement -- Part 2
 
-![](./img/overview/moonbeam.jpeg) <!-- .element: class="fragment" -->
+![](./img/overview/moonbeam.jpeg)
 
 Notes:
-CLICK
 Well it must be executed / enforced. Where does that happen? How does that work? 
 
 ---
@@ -492,13 +507,12 @@ Hmmm... so I wonder how we might solve this?
  
 # Code is Law 
 
-![](./img/overview/codeislaw.jpeg) <!-- .element: class="fragment" -->
+![](./img/overview/codeislaw.jpeg)
 
-Notes:
-CLICK   
+Notes: 
 So, after all of that talk comparing law and code, it's inevitable that we get here: 'Code is law' which is another web3-ism you'll hear quite often.  
 We know tech can be used to enforce rules. So we might wonder, do we actually need lawyers? Can code dictate what we can and cannot do? Can smart contracts be the answer? I'm not coming for lawyers. I'm sure they're nice. But could this be the answer to make life more trustless and secure?  
-But this is where we'll end it today. I hope I've primed you with a few lingering questions. These smart contracts do sound cool, but perhaps the execution, where it actually happens, hopefully is a bit opaque and puzzling still. That's what Joshy will be able to speak to this week ;)  
+But this is where we'll end it today. I hope I've primed you with a few lingering questions. These smart contracts do sound cool, but perhaps the execution, where it actually happens, hopefully is a bit opaque and puzzling still. That's what Joshy will be able to speak to this week.   
 
 ---
 # ACTIVITY 
