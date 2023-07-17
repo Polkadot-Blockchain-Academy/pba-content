@@ -1011,14 +1011,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:10.1.0":
-  version: 10.1.0
-  resolution: "fs-extra@npm:10.1.0"
+"fs-extra@npm:11.1.1":
+  version: 11.1.1
+  resolution: "fs-extra@npm:11.1.1"
   dependencies:
     graceful-fs: ^4.2.0
     jsonfile: ^6.0.1
     universalify: ^2.0.0
-  checksum: dc94ab37096f813cc3ca12f0f1b5ad6744dfed9ed21e953d72530d103cea193c2f81584a39e9dee1bea36de5ee66805678c0dddc048e8af1427ac19c00fffc50
+  checksum: fb883c68245b2d777fbc1f2082c9efb084eaa2bbf9fddaa366130d196c03608eebef7fb490541276429ee1ca99f317e2d73e96f5ca0999eefedf5a624ae1edfd
   languageName: node
   linkType: hard
 
@@ -1119,16 +1119,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:8.0.3":
-  version: 8.0.3
-  resolution: "glob@npm:8.0.3"
+"glob@npm:8.1.0":
+  version: 8.1.0
+  resolution: "glob@npm:8.1.0"
   dependencies:
     fs.realpath: ^1.0.0
     inflight: ^1.0.4
     inherits: 2
     minimatch: ^5.0.1
     once: ^1.3.0
-  checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
+  checksum: 92fbea3221a7d12075f26f0227abac435de868dd0736a17170663783296d0dd8d3d532a5672b4488a439bf5d7fb85cdd07c11185d6cd39184f0385cbdfb86a47
   languageName: node
   linkType: hard
 
@@ -1147,15 +1147,15 @@ __metadata:
   linkType: hard
 
 "glob@npm:^8.0.1":
-  version: 8.1.0
-  resolution: "glob@npm:8.1.0"
+  version: 8.0.3
+  resolution: "glob@npm:8.0.3"
   dependencies:
     fs.realpath: ^1.0.0
     inflight: ^1.0.4
     inherits: 2
     minimatch: ^5.0.1
     once: ^1.3.0
-  checksum: 92fbea3221a7d12075f26f0227abac435de868dd0736a17170663783296d0dd8d3d532a5672b4488a439bf5d7fb85cdd07c11185d6cd39184f0385cbdfb86a47
+  checksum: 50bcdea19d8e79d8de5f460b1939ffc2b3299eac28deb502093fdca22a78efebc03e66bf54f0abc3d3d07d8134d19a32850288b7440d77e072aa55f9d33b18c5
   languageName: node
   linkType: hard
 
@@ -1247,10 +1247,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:11.7.0":
-  version: 11.7.0
-  resolution: "highlight.js@npm:11.7.0"
-  checksum: 19e3fb8b56f4b361b057a8523b989dfeb6479bbd1e29cec3fac6fa5c78d09927d5fa61b7dba6631fdb57cfdca9b3084aa4da49405ceaf4a67f67beae2ed5b77d
+"highlight.js@npm:11.8.0":
+  version: 11.8.0
+  resolution: "highlight.js@npm:11.8.0"
+  checksum: d2578a57aee7315946ff19379053fd0a28b127baabf7617ab1d28d62cdc4eaf3d75053569cb8479a5afdc7a68f1ba9a6c1d612d8ae399b4b9aa43093b4fb6831
   languageName: node
   linkType: hard
 
@@ -2150,14 +2150,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open@npm:8.4.0":
-  version: 8.4.0
-  resolution: "open@npm:8.4.0"
+"open@npm:8.4.2":
+  version: 8.4.2
+  resolution: "open@npm:8.4.2"
   dependencies:
     define-lazy-prop: ^2.0.0
     is-docker: ^2.1.1
     is-wsl: ^2.2.0
-  checksum: e9545bec64cdbf30a0c35c1bdc310344adf8428a117f7d8df3c0af0a0a24c513b304916a6d9b11db0190ff7225c2d578885080b761ed46a3d5f6f1eebb98b63c
+  checksum: 6388bfff21b40cb9bd8f913f9130d107f2ed4724ea81a8fd29798ee322b361ca31fa2cdfb491a5c31e43a3996cfe9566741238c7a741ada8d7af1cb78d85cf26
   languageName: node
   linkType: hard
 
@@ -2515,20 +2515,20 @@ __metadata:
   linkType: hard
 
 "reveal-md@git+https://github.com/NukeManDan/reveal-md.git#patch-1":
-  version: 5.4.0
-  resolution: "reveal-md@https://github.com/NukeManDan/reveal-md.git#commit=73247a1265e4ede2dc8a342cb5a05b347fd41ca4"
+  version: 5.5.0
+  resolution: "reveal-md@https://github.com/NukeManDan/reveal-md.git#commit=889a10af0760bb1457565d056e7dc435d17c2fb0"
   dependencies:
     debug: 4.3.4
     express: 4.18.2
-    fs-extra: 10.1.0
-    glob: 8.0.3
-    highlight.js: 11.7.0
+    fs-extra: 11.1.1
+    glob: 8.1.0
+    highlight.js: 11.8.0
     livereload: 0.9.3
     lodash: 4.17.21
     mustache: 4.2.0
-    open: 8.4.0
+    open: 8.4.2
     puppeteer: 1.20.0
-    reveal.js: 4.4.0
+    reveal.js: 4.5.0
     serve-favicon: 2.5.0
     try-require: 1.2.1
     update-notifier: 5.1.0
@@ -2539,14 +2539,14 @@ __metadata:
       optional: true
   bin:
     reveal-md: bin/reveal-md.js
-  checksum: bbad2b76227d15abfe8bd3668ff3e50723fded7bdbaf8f6eb390db95ba9a7eb93d689e8c201537e836f52b262ea4ba7d7b490a172059e083ba6a331c44d204b2
+  checksum: ab8e58e70b5d9ac38a9c1f74abae0d5fed4ca260f8461a445a523adc90c125dd686a0b93cad7171790a6fe5e7805e9f1bb2e07409e26cf140b0edf2828dbd70c
   languageName: node
   linkType: hard
 
-"reveal.js@npm:4.4.0":
-  version: 4.4.0
-  resolution: "reveal.js@npm:4.4.0"
-  checksum: e3918968e919a53d7a572b175c81ba53133617f60ab149085e57c93a441ff5195434a187b127f0e8c29a0a073fe49c4b9cbec92245ad7d62ae65f0fb80de6ede
+"reveal.js@npm:4.5.0":
+  version: 4.5.0
+  resolution: "reveal.js@npm:4.5.0"
+  checksum: c6bd879c603c426666fc33da78b98e0cc14d073f2b6f62ac8f3d3b737c31dc95d21a7fa3ff920d6cc0f5adb28efc0e1fc46d7408065bad1feff6cefcf2986143
   languageName: node
   linkType: hard
 

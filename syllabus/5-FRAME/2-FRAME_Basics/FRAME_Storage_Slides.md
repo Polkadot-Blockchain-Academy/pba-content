@@ -1325,7 +1325,7 @@ More info in the docs...
 
 ### Read the StorageMap Docs for API
 
-https://paritytech.github.io/substrate/master/frame_support/pallet_prelude/struct.StorageMap.html
+https://crates.parity.io/frame_support/pallet_prelude/struct.StorageMap.html
 
 ---
 

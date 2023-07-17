@@ -255,6 +255,18 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 ---
 
+## DAGS
+
+FIXME content here
+
+---
+
+FIXME - Split off into separate lecture about blockchains on P2P networks.
+Include history stuff about bitcoin altcoins ethereum etc
+Classify what is the state machine in each.
+Point out that Ethereum allows user-deployable smart contracts
+Remind of two definitions of contracts
+
 ## Nodes
 
 Software agents that participate in blockchain network.<br/>
@@ -315,3 +327,9 @@ Notes:
 
 Sometimes known as mempool (thanks bitcoin 🙄)
 Authoring nodes determine the order of upcoming transactions. In some sense they can see the future.
+
+---
+
+FIXME Foreshadow forks where players disagree on the rules
+History: dao fork bch fork
+foreshadow consensus: arbitrary additional constraints for a block to be valid

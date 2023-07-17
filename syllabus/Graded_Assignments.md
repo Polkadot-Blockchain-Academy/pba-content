@@ -25,13 +25,14 @@ Therefore some assignments may only be useful when content is taught in a partic
 
 This list links to all graded assignments used in the PBA, roughly in order of where they will appear in the course.
 
-Offered In | Link | Description
----------- | ---- | -----------
-BA | Cryptography Capture The Flag, Merkle Tree, Nash Solver | https://github.com/Polkadot-Blockchain-Academy/pba-ctf-assignment--master
-BA | Accounts OR Utxo Cryptocurrency without runtime framework | https://github.com/Polkadot-Blockchain-Academy/frameless-node-template--master
-Camb | Review and Critique a Whitepaper | https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/cambridge-2022/syllabus/midterm
-Camb, BA | Write a FRAME-based Runtime | https://github.com/Polkadot-Blockchain-Academy/frame-assignment--master
-BA | Reserve Asset Transfers in XCM | https://github.com/Polkadot-Blockchain-Academy/xcm-assigment--master
+| Offered In | Link                                       | Description                                                                                     |
+| ---------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| BA         | Cryptography CTF, Merkle Tree, Nash Solver | https://github.com/Polkadot-Blockchain-Academy/pba-ctf-assignment--master                       |
+| UCB        | On-chain Bridge Contract al la BTC-Relay   | https://github.com/Polkadot-Blockchain-Academy/bridge-assignment-master                         |
+| BA         | Accounts/Utxo Cryptocurrency runtime       | https://github.com/Polkadot-Blockchain-Academy/frameless-node-template--master                  |
+| Camb       | Review and Critique a Whitepaper           | https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/cambridge-2022/syllabus/midterm |
+| Camb, BA   | Write a FRAME-based Runtime                | https://github.com/Polkadot-Blockchain-Academy/frame-assignment--master                         |
+| BA         | Reserve Asset Transfers in XCM             | https://github.com/Polkadot-Blockchain-Academy/xcm-assigment--master                            |
 
 ## Idea Stubs
 
@@ -92,3 +93,4 @@ Of these bids, the highest bidder wins and pays the price they bid
 
 ```rust
 fn candle_auction(Vec<Bid>, end_time: Duration) -> AuctionWinner
+```

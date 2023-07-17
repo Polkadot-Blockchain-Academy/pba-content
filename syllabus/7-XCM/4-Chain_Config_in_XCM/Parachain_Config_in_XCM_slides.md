@@ -51,7 +51,7 @@ impl Config for XcmConfig {
   // Who do we trust as teleporters
   type IsTeleporter = ?;
   // How we invert locations
-  type LocationInverter = ?;
+  type UniversalLocation = ?;
   // Pre-execution filters
   type Barrier = ?;
   // How we weigh a message
@@ -702,203 +702,85 @@ Notes:
 
 ---
 
-### 🔃 `LocationInverter` via `xcm-builder`
+<!-- .slide: data-background-color="#4A2439" -->
 
-- Knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
-
-- Xcm-builder provides the `LocationInverter<Ancestry>` struct.
-  **Ancestry** indicates how to go from `root` (the top-level consensus system) to your chain.
-
-##### Example:
-
-- **Ancestry**: `para_1000`
-- **Source to target**: `../para_2/account32_default`
-- **Target to source**: `../../para_1000`
-
----v
-
-### 🔃 `LocationInverter` via `xcm-builder`
-
-**_Important_**
-
-**`LocationInverter` configuration will disappear in XcmV3!**.
-Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept.
-However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**.
-`UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system.
-
-Example for parachain 1000 in Kusama:
-
-- **Ancestry**: `para_1000`
-- **UniversalLocation**: `GlobalConsensus(Kusama)/para_1000`
+# Debugging XCM
 
 ---
 
-### 🎨 `pallet-xcm`
+## 🧐 Debugging XCM message failures
 
-- Main connection between the FRAME subsystem and the XCM subsystem.
-- **`pallet-xcm` allows us to send/execute XCM and interact with the `xcm-executor`**.
-- Configurable to filter executions/teleporting or sending among others.
+Involves knowledge of the chain XCM configuration!
 
----v
+Common steps to debug:
 
-### 🎨 Key roles of `pallet-xcm`
-
-<pba-flex center>
-
-1. Allows to interact with the `xcm-executor` by executing xcm messages.
-   These can be filtered through the `XcmExecuteFilter`.
-1. Provides an easier interface to do `reserveTransferAssets` and `TeleportAssets`.
-   The origins capable of doing these actions can be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`.
-1. Handles XCM version negotiation duties.
-1. Handles asset-trap/claim duties.
-1. Allows sending arbitrary messages to other chains for certain origins.
-   The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
-
-</pba-flex>
-
-Notes:
-
-- Even when `palletXcm` allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls.
-  In the case of the latter, it appends the `DescendOrigin` instruction to make sure non-root origins cannot act on behalf of the parachain.
-
----v
-
-### 🎨 `pallet-xcm`
-
-```rust [0|5|10-12|15|20|23]
-impl pallet_xcm::Config for Runtime {
-  type RuntimeEvent = RuntimeEvent;
-  // Who can send XCM messages?
-  // How are origins handled?
-  type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-  // How do we route messages?
-  type XcmRouter = XcmRouter;
-  // Who can execute XCMs/teleport assets/reserve-transfer assets?
-  // How are origins handled?
-  type ExecuteXcmOrigin = EnsureXcmOrigin<
-    RuntimeOrigin,
-	LocalOriginToLocation
-  >;
-  // Who and what messages are allowed to be executed?
-  type XcmExecuteFilter = Everything;
-  // The XCM executor itself
-  type XcmExecutor = XcmExecutor;
-  // Who and what kind of assets are allowed to be teleported
-  // via the `teleport_asset` extrinsic?
-  type XcmTeleportFilter = Everything;
-  // Who and what kind of assets are allowed to be transferred
-  // as a reserve asset via the `reserve_transfer_assets` extrinsic?
-  type XcmReserveTransferFilter = Everything;
-  type Weigher = XcmWeigher;
-  type LocationInverter = LocationInverter<Ancestry>;
-  type RuntimeOrigin = RuntimeOrigin;
-  type RuntimeCall = RuntimeCall;
-  const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
-  // What XCM version do we advertise as supported
-  type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
-}
-```
+1. Identify what the error means which will help you identify the context in which the error happened.
+1. Look in the xcm codebase to check where this error might have been thrown.
+   Was it thrown in the barrier?
+   Or in any specific instruction?
+1. Retrieve the failed received XCM.
+1. Check the chain XCM configuration to verify what could have failed.
 
 ---
 
-### 🛄 Asset Trap/Claims with PalletXcm
+## 🕵️‍♂️ Identifying the error kind
 
-- `AssetTrap` determines what to do with assets that remain in the holding register after the XCM instructions are executed.
-- `AssetClaim` determines how to reclaim assets that were trapped.
+Look at the `ump.ExecutedUpward` event:
 
-```rust
-impl Config for XcmConfig {
-  /* snip */
-  type AssetClaim = PalletXcm;
-  type AssetTrap = PalletXcm;
-  /* snip */
-}
-```
-
-Notes:
-
-- Any situation in which the holding register contains assets after the execution of the XCM message would lead to asset trapping.
-- This is handled in the `post_execute` function of the xcm-executor.
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure" />
 
 ---v
 
-### 🛄 Asset Trap/Claims with `PalletXcm`
+## 🕵️‍♂️ Identifying the error kind
 
-- **`PalletXcm` asset trapper**: Trapped assets are stored in the `AssetTraps` storage item and indexed by `BlakeTwo256((origin, assets))`
+- `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve.
+- `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
+- `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
+  Usually happens when the multilocation representing an asset does not match to those handled by the chain.
 
-- **`PalletXcm` asset claimer**: `PalletXcm` also allows for claiming trapped assets, providing that:
-  - the origin claiming the assets is identical to the one that trapped them.
-  - the `multiAsset` being claimed is identical to the one that was trapped
+---v
 
-Notes:
+## 🕵️‍♂️ Identifying the error kind
 
-- Each map element on `AssetTraps` holds a counter of how many times such origin has trapped such `multiAsset`.
-- Every time such `multiAsset` gets reclaimed, the counter decrements by one.
+- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
+- `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
+- `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
+- `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
+
+---v
+
+## 🕵️‍♂️ Identifying the error kind
+
+- `Barrier`: One of the barriers failed, we need to check the barriers individually.
+- `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown.
+  When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination.
+  In such a case, the safe XCM version is used instead.
+  However, if it is not set, then this error will be thrown.
 
 ---
 
-## 🗣️ version negotiation with `pallet-xcm`
+## 🔨 Decoding SCALE-encoded messages
 
-XCM is an **extensible message format**.
-
-Versioning allows chains to communicate as XCM evolves.
-
-```rust
-pub enum VersionedXcm {
-    V0(v0::Xcm),
-    V1(v1::Xcm),
-    V2(v2::Xcm),
-}
-```
-
-Notes:
-
-- V0 and V1 were removed with the addition of XCM v3.
+- **RelayChain**:
+  - XCM can be retrieved in the `paraInherent.enter` inherent
+  - The candidate for a specific parachain contains the ump messages sent to the relay.
+  - **UMP messages are usually executed one block after they are received**
+- **Parachain**:
+  - XCM can be retrieved in the `parachainSystem.setValidationData` inherent.
+  - **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
 
 ---v
 
-## 🗣️ version negotiation with `pallet-xcm`
+## 🔨 Decoding SCALE-encoded messages
 
-But chains need to be aware of the version supported by each other.
-`SubscribeVersion` and `QueryResponse` play a key role here:
+But all we see is a **SCALE-encoded message** which does not give us much information.
+To solve this:
 
-```rust
-enum Instruction {
-  /* snip */
-  SubscribeVersion {
-        query_id: QueryId,
-        max_response_weight: u64,
-  },
-  QueryResponse {
-        query_id: QueryId,
-        response: Response,
-        max_weight: u64,
-  },
-  /* snip */
-}
-```
-
-Notes:
-
-- `query_id` would be identical in the `SubscribeVersion` and `QueryResponse` instructions.
-- Likewise, `max_response_weight` should also match `max_weight` in the response
+- We build a SCALE-decoder to retrieve the xcm message (the hard way).
+- We rely on subscan/polkaholic to see the XCM message received.
 
 ---v
 
-## 🗣️ version negotiation with `pallet-xcm`
+## 🔨 Subscan XCM retrieval
 
-- `ResponseHandler`: The component in charge of handling response messages from other chains.
-- `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
-
-```rust
- impl Config for XcmConfig {
-  /* snip */
-  type ResponseHandler = PalletXcm;
-  type SubscriptionService = PalletXcm;
- }
-```
-
-Notes:
-
-- `PalletXcm` keeps track of the versions of each chain when it receives a response.
-- It also keeps track of which chains it needs to notify whenever we change our version
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab" />

@@ -14,9 +14,9 @@
   - Kerckhoffs's Principle: If security depends on secret _methods_, they can easily be reverse engineered (e.g. CSS for DVDs).
   - Security should depend on knowledge of secret _information_, with open methods.
 - Therefore, we'd like some guarantees:
-  - Message authenticity (origin, provinence): If you receive a message from me, you know it's from me.
+  - Message authenticity (origin, providence): If you receive a message from me, you know it's from me.
   - Data integrity: You know that message contents have not been tampered with.
-  - (Optional) Data accessibility: We share an expectation that only those who know some secret information can access the data in a meaningful way. (Let's not get too carried away here, e.g. analyzing what one can glean from ciphertext exchange (e.g. "these two parties exchange frequent long messages").)
+  - (Optional) Data confidentiality: We share an expectation that only those who know some secret information can access the data in a meaningful way. (Let's not get too carried away here, e.g. analyzing what one can glean from ciphertext exchange (e.g. "these two parties exchange frequent long messages").)
   - Nonrepudiation: (Asymmetric only), the signer of a message cannot deny signing it. E.g. "I didn't authorize that transfer" is not a legitimate claim in a cryptographic system.
 
 ### Working with constrained resources
@@ -32,7 +32,7 @@
   - Succinct representation of some pre-image with the expectation that we are referring to the same pre-image (larger data set, history, commitment).
   - Map an infinite domain to a finite domain, but we assume collission resistance
   - Cryptographic vs. Non-cryptographic:
-    - Cryptographic is slower, but provides stronger guarantees on collission resistance
+    - Cryptographic is slower, but provides stronger guarantees on collision resistance
 
 ### Practice
 
@@ -62,7 +62,7 @@
     - "PRNG" => In Substrate, we use for things like generating keyless accounts
   - Secure vs. insecure => when an attacker can mine hashes to lopside a data structure
   - Substrate uses Blake2 (cryptographic) and TwoX64Concat (non-cryptographic)
-    - TwoX is about 20x faster (source: https://github.com/Cyan4973/xxHash#benchmarks)
+    - TwoX is about 20x faster (source: <https://github.com/Cyan4973/xxHash#benchmarks>)
     - TwoX is safe when a user (read: attacker) cannot control keys, e.g. a system-assigned index.
     - Blake2 should be used for everything else.
   - Serve as keys in a database
@@ -72,7 +72,7 @@
 - Don't roll your own => it can probably be broken
 - Attackers will always go for the weakest link => large key space does not equal security
 
-### Ideas for exercises:
+### Ideas for exercises
 
 - List modern applications of cryptography (https, bank cards, medical implants, etc.)
 - List historical cryptography (substitution cipher) and weaknesses

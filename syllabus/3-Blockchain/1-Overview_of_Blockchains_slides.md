@@ -83,6 +83,7 @@ Cryptographic guarantees are about interactions with the service provider, not p
 People rely on digital services every day.
 They are inescapable and valuable.
 
+- Game Servers (AOE or Minecraft)
 - Twitter, Instagram, Facebook, etc.
 - Journalism and sources
 - Banks
@@ -232,7 +233,7 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ## A Shared History
 
-<img style="height: 500px;" src="img/sapiens.jpg" />
+<img style="height: 500px;" src="./img/sapiens.jpg" />
 
 Notes:
 
@@ -383,9 +384,9 @@ What are the _rules_ to change it?
 <pba-col>
 <pba-flex center>
 
-**Data Structure**
+**Shared History**
 
-How can we cryptographically represent a history so it is tamper-proof?
+Which potential histories exist?
 
 </pba-flex>
 </pba-col>
