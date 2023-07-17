@@ -92,6 +92,71 @@ Notes:
 </section>
 
 ---
+
+# Historical P2P applications
+
+Notes:
+    Napster, Limewire
+---
+
+<section>
+    <h2>Napster</h2>
+    <ul>
+        <li class="fragment">Launched in 1999, popular P2P platform</li>
+        <li class="fragment">Central server for indexing, P2P for transfers</li>
+        <li class="fragment">Shutdown in 2001 due to legal issues</li>
+    </ul>
+    <aside class="notes">
+        Napster's story is closely tied with the band Metallica. In 2000, Metallica discovered that a demo of their song "I Disappear" was being circulated via Napster before its official release. This led to Metallica filing a lawsuit against Napster for copyright infringement. Napster had to comply by banning hundreds of thousands of users from their platform who were sharing Metallica's music. This was a turning point in digital copyright law and played a significant role in Napster's eventual shutdown in 2001.
+    </aside>
+</section>
+
+---
+
+<section>
+    <h2>Napster Setup</h2>
+    <img style="width: 600px" src="img/napster_1.svg"/>
+</section>
+
+---
+
+<section>
+    <h2>Napster Setup</h2>
+    <img style="width: 600px" src="img/napster_2.svg"/>
+</section>
+
+---
+
+<section>
+    <h2>Napster Setup</h2>
+    <img style="width: 600px" src="img/napster_3.svg"/>
+</section>
+
+---
+
+<section>
+    <h2>Napster Setup</h2>
+    <img style="width: 600px" src="img/napster_4.svg"/>
+</section>
+
+---
+<section data-auto-animate data-transition="fade">
+    <h2>Gnutella(Limewire)</h2>
+    <ul>
+        <li class="fragment">Each node serves as both a client and a server no central server</li>
+        <li class="fragment">Query all connected nodes for files</li>
+        <li class="fragment">Gain peer connections to the network via Bootnodes</li>
+        <li class="fragment">Ordered to shutdown in 2010 by United States Court</li>
+    </u1>
+    <aside class="notes">
+        <ul>
+            <li>Check local filestore for file and if it is not available, forward the request to all connected peers.</li>
+            <li>Gnutella generates a significant amount of network traffic by flooding the network with requests.</li>
+        </ul>
+    </aside>
+</section>
+---
+
 <section>
     <h2>Client-Server vs Peer-to-Peer (P2P) Networks</h2>
     <table>
@@ -213,6 +278,42 @@ Notes:
 Talk about advertising vs just blind sending and how that can be inefficient
 
 ---
+<section>
+    <h2>Structured vs Unstructured P2P Networks</h2>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Structured P2P Networks</th>
+                <th>Unstructured P2P Networks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="fragment">
+                <td>Organization</td>
+                <td>Nodes are organized following specific protocols and structures (like Distributed Hash Tables)</td>
+                <td>Nodes are connected in an ad-hoc manner without any particular organization</td>
+            </tr>
+            <tr class="fragment">
+                <td>Search Efficiency</td>
+                <td>Efficient search operations due to structured nature</td>
+                <td>Search operations may be less efficient and can involve flooding the network</td>
+            </tr>
+            <tr class="fragment">
+                <td>Flexibility</td>
+                <td>Less flexible as changes in topology require restructuring</td>
+                <td>Highly flexible as nodes can freely join, leave, and reorganize</td>
+            </tr>
+            <tr class="fragment">
+                <td>Privacy</td>
+                <td>Data location is predictable due to structured organization</td>
+                <td>Greater potential for anonymity</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+---
 
 <section>
     <h2>Discovery</h2>
@@ -232,20 +333,8 @@ Talk about advertising vs just blind sending and how that can be inefficient
 
 Notes:
     1. What are some of the types of applications that lend themselves to this kind of network topology? Can anyone think of any?
-    2. File sharing(Music)
+    2. File sharing(Music)?
     3. Messaging and communication? 
----
-
-## Napster
-
-Notes:
-    1. Talk through napster architecture
-    2. What do you think is the issue with this architecture? 
-
----v
-
-## Bearshare/Limewire
-
 ---
 
 ## Initial Discovery
