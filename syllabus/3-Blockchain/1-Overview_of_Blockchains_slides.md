@@ -203,11 +203,14 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 
 <img rounded style="width: 500px;" src="./img/bitcoin-transaction.png" />
 
-<!-- TODO update above image to styled diagram -->
 
-Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus.
+Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus. <!-- .element: class="fragment" -->
 
 Notes:
+
+Who knows where the figure is from?
+
+CLICK
 
 Bitcoin was first.
 It was a money app.
@@ -250,10 +253,13 @@ Let the market decide.
 
 ## Smart contracts - Two Definitions
 
-#### Broad Definition <small>_aka Szabo definition_</small>
+<br />
+<br />
+
+#### Broad Definition <small style="margin-top:20px;">_"Szabo definition"_</small>
 
 <blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote> 
 
-#### Narrow Definition <small>_aka Web3 definition_</small>
+#### Narrow Definition <small style="margin-top:20px;">_"Web3 definition"_</small>
 
-<blockquote>A program that specifies how users can interact with state machine and is deployed permissionlessly to a blockchain network</blockquote>
+<blockquote>A program that specifies how users can interact with a state machine and is deployed permissionlessly to a blockchain network</blockquote>
