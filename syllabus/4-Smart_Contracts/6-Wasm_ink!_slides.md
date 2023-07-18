@@ -122,8 +122,10 @@ cargo install dylint-link
 cargo install cargo-contract --force
 ```
 
-Notes:
+* [binaryen](https://github.com/WebAssembly/binaryen) is a compiler for WebAssembly.
+* [dylint-link](https://github.com/trailofbits/dylint) adds DSL specific lints.
 
+NOTE:
 - Binaryen is a compiler and toolchain infrastructure library for WebAssembly
 - at the moment ink! uses a few unstable Rust features, thus nightly is require
 - rust source code is needed to compile it to wasm
