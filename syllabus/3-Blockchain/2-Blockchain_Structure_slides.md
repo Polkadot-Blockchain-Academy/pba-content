@@ -315,6 +315,7 @@ Notes:
 
 So hopefully some parts of this figure look familiar.
 What do you see here?
+
 - Diverse servers.
 - In a p2p network.
 - Each with their own view of the blockchain.

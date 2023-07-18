@@ -108,6 +108,7 @@ So now we understand the goals of web3. How do we achieve them? The key is allow
 > Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
 
 > Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
+
 <!-- .element: class="fragment" -->
 
 _-- Yuval Noah Harari, Sapiens --_
@@ -203,7 +204,6 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 
 <img rounded style="width: 500px;" src="./img/bitcoin-transaction.png" />
 
-
 Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus. <!-- .element: class="fragment" -->
 
 Notes:
@@ -258,7 +258,7 @@ Let the market decide.
 
 #### Broad Definition <small style="margin-top:20px;">_"Szabo definition"_</small>
 
-<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote> 
+<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote>
 
 #### Narrow Definition <small style="margin-top:20px;">_"Web3 definition"_</small>
 
