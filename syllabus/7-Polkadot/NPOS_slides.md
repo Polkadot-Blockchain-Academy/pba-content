@@ -34,8 +34,8 @@ Why do we use PoS?
 - Remember that Polkadot is at the end of the day a validator-set-as-a-service.
 - Secure Blockspace, the main product of Polkadot is provided by these validators.
 
-<image src="../../assets/img/4-Substrate/dev-6-x-npos-vsas.svg" style="width: 1000px">
-<!-- [](../../assets/img/4-Substrate/dev-6-x-npos-vsas.svg) -->
+<image src="../../assets/img/5-Substrate/dev-6-x-npos-vsas.svg" style="width: 1000px">
+<!-- [](../../assets/img/5-Substrate/dev-6-x-npos-vsas.svg) -->
 
 ---
 
@@ -68,7 +68,7 @@ Assumptions:
 
 **Solo-POS**
 
-<image src="../../assets/img/4-Substrate/dev-6-x-npos-0.svg" style="width: 1000px">
+<image src="../../assets/img/5-Substrate/dev-6-x-npos-0.svg" style="width: 1000px">
 
 ---v
 
@@ -86,7 +86,7 @@ Low amount of stake that we can capture, impossible for those who don't want to 
 
 **Single-Delegation-POS**
 
-<image src="../../assets/img/4-Substrate/dev-6-x-npos-1.svg" style="width: 1000px">
+<image src="../../assets/img/5-Substrate/dev-6-x-npos-1.svg" style="width: 1000px">
 
 ---v
 
@@ -107,7 +107,7 @@ Notes:
 
 **Multi-Delegation-POS**
 
-<image src="../../assets/img/4-Substrate/dev-6-x-npos-2.svg" style="width: 1000px">
+<image src="../../assets/img/5-Substrate/dev-6-x-npos-2.svg" style="width: 1000px">
 
 ---v
 
@@ -125,13 +125,13 @@ Same issue as before.
 
 **Nominated Proof of Stake**
 
-<image src="../../assets/img/4-Substrate/dev-6-x-npos-3.svg" style="width: 1000px">
+<image src="../../assets/img/5-Substrate/dev-6-x-npos-3.svg" style="width: 1000px">
 
 ---v
 
 **Nominated Proof of Stake**
 
-<image src="../../assets/img/4-Substrate/dev-6-x-npos-4.svg" style="width: 1000px">
+<image src="../../assets/img/5-Substrate/dev-6-x-npos-4.svg" style="width: 1000px">
 
 ---v
 
@@ -299,7 +299,7 @@ A common example: we allow signed submissions. What if they send solutions that 
 
 ## Additional Resources! 😋
 
-<img width="300px" rounded src="../../assets/img/4-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 
 > Check speaker notes (click "s" 😉)
 

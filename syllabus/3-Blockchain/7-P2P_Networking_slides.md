@@ -43,7 +43,8 @@ description: Peer-to-Peer (P2P) networking for Web3 engineers
 </section>
 
 Notes:
-    Mention TCP/UDP use packet switching to deploy their data transport protocol
+Mention TCP/UDP use packet switching to deploy their data transport protocol
+
 ---
 
 <section>
@@ -52,7 +53,7 @@ Notes:
 </section>
 
 Notes:
-    Mention that headers contain some addressing, destination information, and ordering typically depending
+Mention that headers contain some addressing, destination information, and ordering typically depending
 
 ---
 
@@ -99,7 +100,8 @@ Notes:
 # Historical P2P applications
 
 Notes:
-    Napster, Limewire
+Napster, Limewire
+
 ---
 
 <section>
@@ -143,6 +145,7 @@ Notes:
 </section>
 
 ---
+
 <section data-auto-animate data-transition="fade">
     <h2>Gnutella(Limewire)</h2>
     <ul>
@@ -274,6 +277,7 @@ be able to be distributed across the network
 </section>
 
 ---
+
 ## Gossip Protocol
 
 <img style="width: 500px" src="img/3.7-p2p-gossip-1.svg" />
@@ -293,6 +297,7 @@ Notes:
 Talk about advertising vs just blind sending and how that can be inefficient
 
 ---
+
 <section>
     <h2>Structured vs Unstructured P2P Networks</h2>
     <table>
@@ -346,10 +351,8 @@ Talk about advertising vs just blind sending and how that can be inefficient
 
 ## Applications
 
-Notes:
-    1. What are some of the types of applications that lend themselves to this kind of network topology? Can anyone think of any?
-    2. File sharing(Music)?
-    3. Messaging and communication? 
+Notes: 1. What are some of the types of applications that lend themselves to this kind of network topology? Can anyone think of any? 2. File sharing(Music)? 3. Messaging and communication?
+
 ---
 
 ## Initial Discovery
@@ -422,7 +425,6 @@ Notes:
 </section>
 
 ---
-
 
 <section>
     <h2>Conclusion</h2>
