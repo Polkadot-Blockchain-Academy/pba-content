@@ -788,7 +788,17 @@ name: string = someBallot.name
 ## Remix Plugin
 
 Remix supports Vyper through a plugin, which can be easily enabled from within
-the IDE. (TODO: provide a few screenshots or other instructions)
+the IDE. First, search for "Vyper" in the plugins tab:
+
+<img style="width: 55%; margin: 10px" src="img/frontier/RemixInstallVyper1.png" />
+
+---v
+
+## Remix Plugin
+
+Use Vyper through the new Vyper tab and use "Remote Compiler"
+
+<img style="width: 55%; margin: 10px" src="img/frontier/RemixInstallVyper2.png" />
 
 ---
 
