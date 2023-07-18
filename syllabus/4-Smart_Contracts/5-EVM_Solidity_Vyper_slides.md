@@ -29,7 +29,7 @@ results.
 
 ---
 
-# History of EVM
+# History of Ethereum
 
 (TODO)
 
@@ -897,24 +897,12 @@ secret(s) secure.
 
 *  gas: mention alternative (hint at benchmarking?)
 
-** [ ] Various ways to call a contract
-** [.] Transactions
-*  [.] Solidity modifiers
-*  [ ] revert (raise in Vyper)
-*  [ ] Ether denominations (and esp. talk about advantages of integer math)
+** [.] Transactions - should mention revert here
 *  [ ] Precompiles (original ones, plus what moonbeam has done?)
+*  [ ] link to Ethernaut, Zoombies, other resources, etc.
 
 *  [ ] Non-transactions (view calls / RPC queries)
 *  [ ] checksum cases
-*  [ ] link to Ethernaut, etc.
 *  [ ] Loops - introduce in solidity but cover in more depth with vyper (no inf loops)
 *  [ ] Tokenization, wrapped tokens, etc.
-
-TODO: layout:
-* make gas its own top level section
-
-##### And some that I will probably leave out of scope
-* Assembly
-* ABI explanation, this is potentially a big (and dry?) topic
-* call data
 
