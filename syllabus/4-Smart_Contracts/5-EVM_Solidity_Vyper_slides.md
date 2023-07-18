@@ -420,7 +420,10 @@ contract Foo {
 }
 ```
 
-TODO: Note about readability and ability to do arbitrary things
+Note:
+
+Although Modifiers can be an elegant way to require preconditions, they can do
+entirely arbitrary things, and auditing code requires carefully reading them.
 
 
 ---v
