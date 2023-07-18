@@ -29,7 +29,7 @@ NOTE:
 
 NOTE:
 - students are freshly of an EVM lecture so might be wondering why another SC language
-- Virtual Machine: any WASM VM: yes in theory, in practice bound pretty close to the Substarte & the contracts pallet
+- Virtual Machine: any WASM VM: yes in theory, in practice bound pretty close to the platform it runs on (Substrate & the contracts pallet)
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
 - The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
 
@@ -439,6 +439,7 @@ NOTE:
 - no limit of the number of constructors
 - constructors can call other constructors
 - constructors return the initial storage
+- a lot of complexity conveniently hidden behind macros
 
 ---
 
@@ -1120,11 +1121,13 @@ NOTE:
 
 ---
 
-
 ## Pause
 
+Optional challenge: [github.com/Polkadot-Blockchain-Academy/adder](https://github.com/Polkadot-Blockchain-Academy/adder)
+
 NOTE:
-Piotr takes over to talk about making runtime calls from contracts and writing automated tests
+Piotr takes over to talk about making runtime calls from contracts and writing automated tests.
+there is a 15 minute challenge if you want.
 
 ---
 
