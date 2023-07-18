@@ -131,19 +131,19 @@ It's up to the interpreter to interpret the intention how it makes sense.
 
 ### Message format changes
 
-<img style="width: 1050px;" alt="Against native messaging" src="../../../assets/img/7-XCM/against-native-messaging.svg" />
+<img style="width: 1050px;" alt="Against native messaging" src="../../../assets/img/8-XCM/against-native-messaging.svg" />
 
 ---v
 
 ### Message format changes
 
-<img style="width: 1050px;" alt="Against native messaging 2" src="../../../assets/img/7-XCM/against-native-messaging-2.svg" />
+<img style="width: 1050px;" alt="Against native messaging 2" src="../../../assets/img/8-XCM/against-native-messaging-2.svg" />
 
 ---v
 
 ### Message format changes
 
-<img rounded style="width: 1050px;" alt="XCM executor routing calls" src="../../../assets/img/7-XCM/xcm-executor-routing-calls.png" />
+<img rounded style="width: 1050px;" alt="XCM executor routing calls" src="../../../assets/img/8-XCM/xcm-executor-routing-calls.png" />
 
 Notes:
 
@@ -795,7 +795,7 @@ When transferring between consensus systems, the sovereign account is the one th
 
 ### 1. Asset teleportation
 
-<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport" />
+<img rounded style="width: 500px;" src="../../../assets/img/8-XCM/teleport.png" alt="Teleport" />
 
 Notes:
 
@@ -806,7 +806,7 @@ This method is the simplest one, but requires a lot of trust, since failure to b
 
 ### 2. Reserve asset transfers
 
-<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer" />
+<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/reserve-tx.png" alt="Reserve Transfer" />
 
 Notes:
 
@@ -831,6 +831,6 @@ This usually happens with parachains' native tokens.
 ---
 
 <figure>
-    <img rounded src="../../../assets/img/7-XCM/subscan-xcm-dashboard.png" alt="Subscan XCM Dashboard" style="width: 50%;" />
+    <img rounded src="../../../assets/img/8-XCM/subscan-xcm-dashboard.png" alt="Subscan XCM Dashboard" style="width: 50%;" />
     <figcaption>Source: <a href="https://polkadot.subscan.io/xcm_dashboard">Subscan</a></figcaption>
 </figure>

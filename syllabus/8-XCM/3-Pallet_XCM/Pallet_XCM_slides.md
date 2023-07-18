@@ -213,7 +213,7 @@ XCM version negotiation:
 
 ## 🗣️ XCM Version Negotiation
 
-<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" alt="Xcm Versioning" />
+<img style="width: 900px;" src="../../../assets/img/8-XCM/xcm-versioning.png" alt="Xcm Versioning" />
 
 ---
 
