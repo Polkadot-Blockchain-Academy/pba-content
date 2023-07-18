@@ -15,7 +15,7 @@ Ethereum Virtual Machine
 ## EVM Properties
 
 * Deterministic: execution outcome easy to agree upon
-* Spam-resistant: Opcodes and other resources are metered at a very granular level
+* Spam-resistant: CPU and other resources are metered at a very granular level
 * Turing-complete (with a caveat)
 * Stack-based design
 * Ethereum-specific (EVM can query block hash, accounts and balances, etc.)
@@ -26,11 +26,6 @@ It is critical that the EVM be 100% deterministic and that each implementation
 produce the same outcome. Even the smallest discrepancy between two running
 nodes would lead to different block hashes, violating consensus about the
 results.
-
-Charging appropriately for each opcode is also critical in order to prevent
-abuse. Opcodes which are underpriced can allow spam, allowing attackers to
-force the network to do more work than are paid for by fees, or even outright
-DoS.
 
 ---
 
@@ -261,13 +256,25 @@ does not have a private key.
 
 ---v
 
-## Bytecode
+## Opcodes and Bytecode
 
-Executable code is stored on-chain in the form of bytecode. Only `Contract
-Account`s have bytecode, and this bytecode controls what these accounts do when
-they are interacted with.
+An opcode is a single byte which represents an instruction for the VM to execute.
+Functions compile down into a sequence of opcodes, which we call bytecode. This
+bytecode is bundled together and becomes the on-chain contract code.
 
-TODO: example bytecode, etc.
+The EVM executes bytecode one opcode at a time until it is done, explicitly
+halts, or the gasometer runs out of gas.
+
+### ABI
+
+ABI ("Application Binary Interface") describes the bytecode for a contract by
+annotating where functions and other objects exist and how they are formatted.
+
+---v
+
+## Review Contract Code on Etherscan
+
+https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984?a=0xd0fc8ba7e267f2bc56044a7715a489d851dc6d78#code
 
 ---v
 
