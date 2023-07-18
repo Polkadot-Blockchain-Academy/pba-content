@@ -1,0 +1,68 @@
+[package]
+name = "frameless-runtime"
+version = "1.0.0-dev"
+repository = 'https://github.com/substrate-developer-hub/recipes'
+edition = "2021"
+license = "GPL-3.0-or-later"
+description = "A Substrate runtime that is built without FRAME."
+
+[dependencies]
+log = "0.4"
+serde = { version = "1.0", optional = true, features = ["derive"] }
+parity-scale-codec = { version = '3.1.2', default-features = false, features = ['derive'] }
+scale-info = { version = "2.1.1", default-features = false, features = ["derive"] }
+parity-util-mem = { version = '0.12.0', optional = true }
+
+sp-api = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-debug-derive = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false, features = ["force-debug"] }
+sp-block-builder = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-core = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-inherents = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-io = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false, features = ["with-tracing"] }
+sp-offchain = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-runtime = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-session = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-std = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-storage = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-transaction-pool = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-version = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-timestamp = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+
+# Only to experiment with metadata..
+frame-metadata = { git = 'https://github.com/paritytech/frame-metadata/', tag = 'v15.0.0', default-features = false, features = ["v14"] }
+
+# These were added for Aura / Grandpa API support
+hex-literal = "0.3.4"
+sp-consensus-aura = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-application-crypto = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+sp-finality-grandpa = { git = 'https://github.com/paritytech/substrate', branch = "polkadot-v0.9.35", default_features = false}
+
+
+[build-dependencies]
+substrate-wasm-builder = { git = "https://github.com/paritytech/substrate.git", branch = "polkadot-v0.9.35" }
+
+[features]
+default = ["std"]
+std = [
+	"sp-debug-derive/std",
+	"sp-block-builder/std",
+	"sp-inherents/std",
+	"sp-offchain/std",
+	"parity-scale-codec/std",
+	"sp-core/std",
+	"sp-std/std",
+	"serde",
+	"sp-api/std",
+	"sp-session/std",
+	"sp-io/std",
+	"sp-runtime/std",
+	"sp-transaction-pool/std",
+	"sp-version/std",
+	"parity-util-mem",
+	"sp-storage/std",
+	"sp-consensus-aura/std",
+	"sp-application-crypto/std",
+	"sp-finality-grandpa/std",
+
+	"frame-metadata/std"
+]
