@@ -32,87 +32,6 @@ abuse. Opcodes which are underpriced can allow spam, allowing attackers to
 force the network to do more work than are paid for by fees, or even outright
 DoS.
 
----v
-
-## Turing completeness and the Halting Problem
-
-* EVM: Turing-complete instruction set
-
-* But what about the Halting Problem?
-* Obviously cannot allow infinite loops
-* Solution: Gasometer, a way to pre-pay for each opcode execution
-
-Note:
-
-The Halting Problem tells us that it's not possible to know that an arbitrary
-program will properly stop. To prevent such abuse, we check that there is gas
-remaining before every single opcode execution. Since gas is limited, this
-ensures that no EVM execution will run forever and that all work performed is
-properly paid for.
-
----v
-
-## Gasometer
-
-<img style="width: 100%; margin: 10px" src="img/frontier/GasometerDiagram.png" />
-
-* Checks before each opcode to make sure gas can be paid
-* Safe: prevents unpaid work from being done
-* Deterministic: results are unambiguous
-* Very inefficient: lots of branching and extra work
-
-Note: This not only makes it possible to prevent abuse, but crucially allows
-nodes to agree on doing so. A centralized service could easily impose a time
-limit, but decentralized nodes wouldn't be able to agree on the outcome of such
-a limit (or trust each other).
-
----v
-
-## Gas
-
-The unit of account for EVM execution resources.
-
-* `gas_limit`: specifies the maximum amount of gas a txn can pay
-* `gas_price`: specifies the exact price a txn will pay per gas
-
-A txn *must* be able to pay `gas_limit * gas_price` in order to be valid. This
-amount is initially deducted from the txn's sender account and any remaining gas
-is refunded after the txn has executed.
-
----v
-
-## EIP-1559
-
-An improvement to gas pricing mechanism. Introduced in London hard-fork.
-
-```
-gas_price --> max_base_fee_per_gas
-          \-> max_priority_fee_per_gas
-```
-
-* Separates tip from gas price
-* `base_fee` is an algorithmic gas price, this is exactly what is paid and is burned
-* ...plus maybe tip if (`base_fee < max_base_fee + max_priority_fee`)
-* Algorithmic, congestion-based multiplier controls `base_fee`
-
----v
-
-## Gas Estimation
-
-If a txn exhausts its `gas_limit` without finishing, it will produce an
-out-of-gas error and all changes made in the EVM are reverted (except for fee
-payment).
-
-In order to estimate the amount of gas a txn will need, an RPC method
-(`eth_estimateGas`) can perform a dry-run of the txn and record the amount
-used.
-
-However, there are a few caveats:
-
-* Run against current state (state may change)
-* The RPC node could lie to you
-* This is expensive infrastructure overhead and can be a spam vector
-
 ---
 
 # History of EVM
@@ -174,6 +93,89 @@ ideas: talk about the real-world problems that we can reflect on
 - Reentrancy
 - ABI
 - Exponential memory expansion cost
+
+---
+
+# Gas
+
+## Turing completeness and the Halting Problem
+
+* EVM: Turing-complete instruction set
+
+* But what about the Halting Problem?
+* Obviously cannot allow infinite loops
+* Solution: Gasometer, a way to pre-pay for each opcode execution
+
+Note:
+
+The Halting Problem tells us that it's not possible to know that an arbitrary
+program will properly stop. To prevent such abuse, we check that there is gas
+remaining before every single opcode execution. Since gas is limited, this
+ensures that no EVM execution will run forever and that all work performed is
+properly paid for.
+
+---v
+
+## Gasometer
+
+<img style="width: 100%; margin: 10px" src="img/frontier/GasometerDiagram.png" />
+
+* Checks before each opcode to make sure gas can be paid
+* Safe: prevents unpaid work from being done
+* Deterministic: results are unambiguous
+* Very inefficient: lots of branching and extra work
+
+Note: This not only makes it possible to prevent abuse, but crucially allows
+nodes to agree on doing so. A centralized service could easily impose a time
+limit, but decentralized nodes wouldn't be able to agree on the outcome of such
+a limit (or trust each other).
+
+---v
+
+## Gas limits and prices
+
+The unit of account for EVM execution resources.
+
+* `gas_limit`: specifies the maximum amount of gas a txn can pay
+* `gas_price`: specifies the exact price a txn will pay per gas
+
+A txn *must* be able to pay `gas_limit * gas_price` in order to be valid. This
+amount is initially deducted from the txn's sender account and any remaining gas
+is refunded after the txn has executed.
+
+---v
+
+## EIP-1559
+
+An improvement to gas pricing mechanism. Introduced in London hard-fork.
+
+```
+gas_price --> max_base_fee_per_gas
+          \-> max_priority_fee_per_gas
+```
+
+* Separates tip from gas price
+* `base_fee` is an algorithmic gas price, this is exactly what is paid and is burned
+* ...plus maybe tip if (`base_fee < max_base_fee + max_priority_fee`)
+* Algorithmic, congestion-based multiplier controls `base_fee`
+
+---v
+
+## Gas Estimation
+
+If a txn exhausts its `gas_limit` without finishing, it will produce an
+out-of-gas error and all changes made in the EVM are reverted (except for fee
+payment).
+
+In order to estimate the amount of gas a txn will need, an RPC method
+(`eth_estimateGas`) can perform a dry-run of the txn and record the amount
+used.
+
+However, there are a few caveats:
+
+* Run against current state (state may change)
+* The RPC node could lie to you
+* This is expensive infrastructure overhead and can be a spam vector
 
 ---
 
@@ -537,15 +539,20 @@ Code along and explain as you go
 
 ---v
 
-## Deployment and interaction with Flipper
+## Student-exercise: Multiplier
 
----v
+Quick practice assigment:
 
-## Adder or Multiplier
+Remix: https://remix.ethereum.org
 
-write, deploy, interact
+* Write a contract which has a `uint256` storage value
+* Write function(s) to multiply it with a user-specified value
+* Interact with it: can you force an overflow?
 
-Stephen: adder or multiplier is trivially different than flipper (discuss)
+Bonus:
+
+* Prevent your multiplier function from overflowing
+* Rewrite this prevention as a `modifier noOverflow()`
 
 ---
 
@@ -707,11 +714,9 @@ name: string = someBallot.name
 Remix supports Vyper through a plugin, which can be easily enabled from within
 the IDE. (TODO: provide a few screenshots or other instructions)
 
----v
+---
 
-## EVM Assembly
-
-show an example
+## Vyper Hands-On
 
 ---
 
