@@ -61,11 +61,19 @@ ideas:
 
 ## DAO Hack
 
-(TODO)
+A DAO ("Decentralized Autonomous Organization") is much like a business entity
+run by code rather than by humans. Like any other business entity, it has assets
+and can carry out operations, but its legal status is unclear.
+
+The earliest DAO ("The DAO") on Ethereum suffered a catastrophic hack due to a
+bug in its code. The community disagreed on whether or not to hard-fork and
+revert this, resulting in Ethereum splitting into two different chains.
+
+Brief history:
 
 * 2016: raised $150M worth of ETH
 * later that year: 3.6M ETH drained
-* reentrancy attack (TODO: briefly describe)
+* reentrancy attack due to its `withdraw` function sending funds BEFORE recording them
 * "Mainnet" Ethereum is the fork with the hack retroactively removed
 * Ethereum Classic: code is law
 
@@ -73,13 +81,13 @@ ideas:
 
 ## Ethereum as first smart contracting platform
 
-(TODO)
+Ethereum has faced many challenges as the pioneer of smart contracts.
 
-ideas: talk about the real-world problems that we can reflect on
-* performance
-* frontrunning (etc)
-* hacks
-* problems with aggregating smart contract protocols together
+* Performance: Underpriced opcodes have been attacked as a spam or DoS vector
+* High gas fees: Overwhelming demand low block-space supply
+* Frontrunning: Inserting transactions before, after, or in place of others in order to economically benefit
+* Hacks: Many hacks have exploited smart contract vulnerabilities
+* Problems with aggregating smart contract protocols together
 
 ---v
 
