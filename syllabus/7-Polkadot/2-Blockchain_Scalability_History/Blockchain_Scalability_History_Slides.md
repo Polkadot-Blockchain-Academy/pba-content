@@ -28,7 +28,7 @@ At the end of the lecture, for the curious readers, there's be links for further
 
 ---
 
-<img style="width: 250px" src="../../../assets/img/5-Polkadot/Scalability_History/Bitcoin.png" alt="Bitcoin Logo">
+<img style="width: 250px" src="../../../assets/img/7-Polkadot/Scalability_History/Bitcoin.png" alt="Bitcoin Logo">
 
 ## Bitcoin
 
@@ -48,7 +48,7 @@ What if try to increase that limit?
 
 ### Payment channels
 
-<img style="width: 400px" src="../../../assets/img/5-Polkadot/Scalability_History/channel-lock.png" alt="channel-lock">
+<img style="width: 400px" src="../../../assets/img/7-Polkadot/Scalability_History/channel-lock.png" alt="channel-lock">
 
 <pba-flex center>
 
@@ -102,7 +102,7 @@ We'll come to other limitations of channels in the state channels later.
 
 ### Payment channels: Lightning Network
 
-<img style="width: 800px" src="../../../assets/img/5-Polkadot/Scalability_History/channel-3-nodes.png" alt="channel-3-nodes">
+<img style="width: 800px" src="../../../assets/img/7-Polkadot/Scalability_History/channel-3-nodes.png" alt="channel-3-nodes">
 
 Notes:
 On the base chain, your fee is based solely on the space your transaction takes up in a block – the value being transmitted doesn’t matter – $1 and $10,000,000 payments cost the same.
@@ -114,7 +114,7 @@ Without any kind of incentive, Carol may not want to weaken her own position.
 
 ---
 
-<img style="width: 150px" src="../../../assets/img/5-Polkadot/Scalability_History/Ethereum.png" alt="Ethereum Logo">
+<img style="width: 150px" src="../../../assets/img/7-Polkadot/Scalability_History/Ethereum.png" alt="Ethereum Logo">
 
 ## Ethereum
 
@@ -219,11 +219,11 @@ If an invalid transaction is suspected, a fraud proof is submitted and resolved 
 </pba-col>
 <pba-col center>
 
-<img style="width: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Arbitrum.png" alt="Arbitrum Logo">
+<img style="width: 200px" src="../../../assets/img/7-Polkadot/Scalability_History/Arbitrum.png" alt="Arbitrum Logo">
 
-<img style="width: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Optimism.png" alt="Optimism Logo">
+<img style="width: 200px" src="../../../assets/img/7-Polkadot/Scalability_History/Optimism.png" alt="Optimism Logo">
 
-<img style="width: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Boba.png" alt="Boba Logo">
+<img style="width: 200px" src="../../../assets/img/7-Polkadot/Scalability_History/Boba.png" alt="Boba Logo">
 
 </pba-col>
 </pba-cols>
@@ -232,7 +232,7 @@ If an invalid transaction is suspected, a fraud proof is submitted and resolved 
 
 ### Optimistic Rollups: Transaction bundle
 
-<img style="width: 800px" src="../../../assets/img/5-Polkadot/Scalability_History/rollup-batch.svg" alt="rollup-batch">
+<img style="width: 800px" src="../../../assets/img/7-Polkadot/Scalability_History/rollup-batch.svg" alt="rollup-batch">
 
 On Ethereum, these are posted to a so called "calldata" and in the future to the blob storage provided by Danksharding.
 
@@ -261,7 +261,7 @@ This way optimistic rollups utilize cryptoeconomic incentives to ensure validato
 
 ### Optimistic Rollups: Fraud proofs
 
-<img style="width: 1200px" src="../../../assets/img/5-Polkadot/Scalability_History/fraud-proof.svg" alt="Fraud Proof">
+<img style="width: 1200px" src="../../../assets/img/7-Polkadot/Scalability_History/fraud-proof.svg" alt="Fraud Proof">
 
 ---v
 
@@ -295,8 +295,8 @@ Security model relies on at least one honest node executing rollup transactions 
 
 ### zkRollups
 
-<img style="height: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/ZkSync.png" alt="ZkSync Logo">
-<img style="height: 200px" src="../../../assets/img/5-Polkadot/Scalability_History/Starkware.jpeg" alt="Starkware Logo">
+<img style="height: 200px" src="../../../assets/img/7-Polkadot/Scalability_History/ZkSync.png" alt="ZkSync Logo">
+<img style="height: 200px" src="../../../assets/img/7-Polkadot/Scalability_History/Starkware.jpeg" alt="Starkware Logo">
 
 zkRollups come in 2 flavors:
 
@@ -367,7 +367,7 @@ We will cover both data and execution sharding in depth in the next lecture.
 
 ### Execution sharding via random sampling
 
-<img style="width: 1200px" src="../../../assets/img/5-Polkadot/Scalability_History/shards.svg" alt="shards">
+<img style="width: 1200px" src="../../../assets/img/7-Polkadot/Scalability_History/shards.svg" alt="shards">
 
 ---v
 
@@ -388,7 +388,7 @@ The second point ensures that processing messages is also secure.
 
 ### Sharding on the Scalability Trilemma
 
-<img style="width: 800px" src="../../../assets/img/5-Polkadot/Scalability_History/sharding-trilemma.svg" alt="sharding-trilemma">
+<img style="width: 800px" src="../../../assets/img/7-Polkadot/Scalability_History/sharding-trilemma.svg" alt="sharding-trilemma">
 
 Notes:
 
@@ -420,7 +420,7 @@ Protocols like dYdX are moving from a smart-contract/rollup to a separate L1 blo
 
 ### Galaxy Brain Idea
 
-<img style="width: 500px" src="../../../assets/img/5-Polkadot/Scalability_History/galaxy-brain-sharding.jpg" alt="Meme">
+<img style="width: 500px" src="../../../assets/img/7-Polkadot/Scalability_History/galaxy-brain-sharding.jpg" alt="Meme">
 
 ---
 
@@ -480,7 +480,7 @@ pub struct ParachainBlockData<B: BlockT> {
 
 ### Validation process
 
-<img style="width: 1000px" src="../../../assets/img/5-Polkadot/Scalability_History/POV_PVF_Diagram.png" alt="POV_PVF_Diagram">
+<img style="width: 1000px" src="../../../assets/img/7-Polkadot/Scalability_History/POV_PVF_Diagram.png" alt="POV_PVF_Diagram">
 
 ---
 

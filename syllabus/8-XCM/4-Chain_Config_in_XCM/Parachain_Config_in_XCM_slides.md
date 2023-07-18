@@ -200,7 +200,7 @@ Notes:
 - Useful when we want to withdraw/deposit tokens from a multilocation defined origin
 - Useful when we want to dispatch as signed origins from a multilocation defined origin.
 
-<img src="../../../assets/img/7-XCM/location_to_account_id_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+<img src="../../../assets/img/8-XCM/location_to_account_id_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
 
 Notes:
 
@@ -329,7 +329,7 @@ Notes:
 - Define how we are going to withdraw and deposit assets
 - Heavily dependant on the assets we want our chain to transfer
 
-<img src="../../../assets/img/7-XCM/asset_transactor_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+<img src="../../../assets/img/8-XCM/asset_transactor_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
 
 Notes:
 
@@ -516,7 +516,7 @@ Physical vs Computed origin
 - Physical origin: the consensus system that built this particular XCM and sent it to the recipient
 - Computed origin: the entity that ultimately instructed the consensus system to build the XCM
 
-<img src="../../../assets/img/7-XCM/physical_vs_computed_origin.svg" alt="Physical vs Computed origin">
+<img src="../../../assets/img/8-XCM/physical_vs_computed_origin.svg" alt="Physical vs Computed origin">
 
 **Must make sure which origin a barrier should apply to!**
 
@@ -727,7 +727,7 @@ Common steps to debug:
 
 Look at the `ump.ExecutedUpward` event:
 
-<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure" />
+<img rounded style="width: 800px;" src="../../../assets/img/8-XCM/failed-ump.png" alt="Ump failure" />
 
 ---v
 
@@ -783,4 +783,4 @@ To solve this:
 
 ## 🔨 Subscan XCM retrieval
 
-<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab" />
+<img rounded style="width: 800px;" src="../../../assets/img/8-XCM/subscan_xcm.png" alt="Subscan XCM tab" />

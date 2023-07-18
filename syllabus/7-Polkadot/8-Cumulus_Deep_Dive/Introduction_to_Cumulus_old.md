@@ -30,7 +30,7 @@ SDK for building substrate/FRAME-based Parachains
 
 ---v
 
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-1.svg" style="width: 1500px" />
+<img src="../../../assets/img/7-Polkadot/cumulus/cumulus-1.svg" style="width: 1500px" />
 
 Notes:
 
@@ -41,7 +41,7 @@ Notes:
 
 ---v
 
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-2.svg" style="width: 1500px" />
+<img src="../../../assets/img/7-Polkadot/cumulus/cumulus-2.svg" style="width: 1500px" />
 
 Notes:
 
@@ -52,7 +52,7 @@ Notes:
 
 ---v
 
-<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-3.svg" style="width: 1500px" />
+<img src="../../../assets/img/7-Polkadot/cumulus/cumulus-3.svg" style="width: 1500px" />
 
 Notes:
 
@@ -276,7 +276,7 @@ Notes:
 
 ## Relay chain interface
 
-<img rounded src="../../../assets/img/5-Polkadot/cumulus/relay-chain-interface.png" style="width: 600px" />
+<img rounded src="../../../assets/img/7-Polkadot/cumulus/relay-chain-interface.png" style="width: 600px" />
 
 Notes:
 

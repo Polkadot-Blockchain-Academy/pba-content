@@ -14,7 +14,7 @@ What is the core problem we want to solve?
 
 Trustless provisioning of infrastructure.
 
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -143,7 +143,7 @@ Then we _MUST_ agree on:
 
 Notes:
 
-Now that we have a formal mathy model of systems that we care about, we can see that the notion of shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
+Now that we have a formal math-y model of systems that we care about, we can see that the notion of shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
 
 ---
 
