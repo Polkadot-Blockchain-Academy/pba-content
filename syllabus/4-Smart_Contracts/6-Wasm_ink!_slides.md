@@ -503,7 +503,7 @@ pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
 NOTE:
 - constructors are inherently payable
 - ink! message will reject calls with funds if it's not marked as such
-- mutable reference alow sme to modify the storage.
+- mutable references allow me to modify the storage.
 - queries are for free, mutations are metered (you pay gas)
   - you will also pay for queries within such transactions
 
@@ -606,16 +606,17 @@ NOTE:
 #[ink(message)]
 pub fn flip(&mut self) {
 
-    if self.env().block_number() % 2 == 0 {
-      panic!("Oh no!")
-    }
-
     Self::emit_event(
         self.env(),
         Event::Flipped(Flipped { }),
     );
 
     self.value = !self.value;
+
+    if self.env().block_number() % 2 == 0 {
+      panic!("Oh no!")
+    }
+
 }
 
 ```
