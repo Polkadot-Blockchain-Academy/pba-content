@@ -179,10 +179,6 @@ However, there are a few caveats:
 
 ---
 
-# EVM Concepts
-
----v
-
 ## Contract accounts vs EOAs
 
 An account is designated by a 160-bit account ID. These accounts can be controlled in
@@ -201,7 +197,7 @@ one of two ways: An `Externally-owned Account` or a `Contract Account`.
 * May only ever do precisely what the code specifies
 * Account ID generated deterministically when bytecode is deployed
 
----v
+---
 
 ## Transactions
 
@@ -229,7 +225,31 @@ does not have a private key.
 
 ## Transaction Structure
 
-TODO: show transaction contents
+(TODO): redo this, point out what's useful, show image instead...?
+
+```json
+{ 
+  hash: "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060",
+  blockHash: "0x4e3a3754410177e6937ef1f84bba68ea139e8d1a2258c5f85db9f1cd715a1bdd",
+  blockNumber: 55555,
+  chainId: null,
+
+  gas: 21000,
+  gasPrice: 10000000000000,
+
+  nonce: 0,
+
+  input: "0x1234567800000001",
+
+  from: "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+  r: "0x88ff6cf0fefd94db46111149ae4bfc179e9b94721fffd821d38d16464b3f71d0",
+  s: "0x45e0aff800961cfce805daef7016b9b675c137a6a41a548f7b60a3484c06a33a",
+  v: "0x1c",
+
+  to: "0x5df9b87991262f6ba471f09758cde1c0fc1de734",
+  value: 12345,
+}
+```
 
 ---v
 
@@ -252,9 +272,71 @@ their respective storage.
 
 ---v
 
-## Calling contracts
+## Calling Contracts
 
-TODO: talk about different ways to call (may need more context first)
+Contract functions can be invoked in two ways different ways:
+
+* EoAs can call a contract functions directly
+* Contracts can call other contracts (called "messaging")
+
+#### Types of contract messaging
+
+* Normal `call`: Another contract is called and can change its own state
+* `staticcall`: A "safe" way to call another contract with no state changes
+* `delegatecall`: A way to call another contract but modify our state instead
+
+Note:
+
+Transactions are the only means through which state changes happen. 
+
+---v
+
+## Message Object
+
+Within the context of a contract call, we always have the `msg` object, which
+lets us know how we were called.
+
+```
+msg.data (bytes): complete calldata (input data) of call
+msg.gas (uint256): available gas
+msg.sender (address): sender of the current message
+msg.sig (bytes4) first 4 bytes of calldata (function signature)
+msg.value (uint256) amount of Ether sent with this call
+```
+
+---v
+
+## Ether Denominations
+
+Ether is stored and operated on through integer math. In order to avoid
+the complication of decimal math, it's stored as a very small integer: `Wei`.
+
+```
+1 Ether = 1_000_000_000_000_000_000 Wei (10^18)
+```
+
+Note: 
+
+Integer math with such insignificant units mostly avoids truncation issues and
+makes it easy to agree on outcomes.
+
+---v
+
+## Named Denominations
+
+Other denominations have been officially named, but aren't as often used:
+
+```
+wei                 = 1 wei
+kwei (babbage)      = 1_000 wei
+mwei (lovelace)     = 1_000_000 wei
+gwei (shannon)      = 1_000_000_000 wei
+microether (szabo)  = 1_000_000_000_000 wei
+milliether (finney) = 1_000_000_000_000_000 wei
+ether               = 1_000_000_000_000_000_000 wei
+```
+
+`gwei` is often used when talking about gas.
 
 ---
 
@@ -512,12 +594,6 @@ contract Foo {
     }
 }
 ```
-
----v
-
-## Ether Denominations
-
-Ether is 10**18 wei (TODO: elaborate, tie in to types / uint256)
 
 ---
 
