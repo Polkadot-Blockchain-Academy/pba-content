@@ -15,6 +15,10 @@ duration: 30 min
 A Blockchain **cryptographically guarantees** that a history of events has not been tampered with.
 This allows interested parties to have a **shared history**.
 
+Notes:
+
+And it allows them to know whether they have identical histories in O(1) by just comparing the tip of the chain.
+
 ---
 
 ## Hash Linked List
@@ -70,7 +74,9 @@ A state machine defines:
 
 <img style="width: 900px;" src="../4-Smart_Contracts/img/state-machine-general.svg" />
 
-<!-- FIXME - do you want to use shared img assets? Breaks the module specific intention of folders per mod... @joshy -->
+<!-- FIXME - do you want to use shared img assets? Breaks the module specific intention of folders per mod... @joshy -Nuke
+Let's see how the hybrid contracts/blockchain thing goes first; then sort this. -Joshy
+-->
 
 ---v
 
@@ -259,15 +265,62 @@ Packets from the outside world with _zero_ or more signatures attached.
 
 ## DAGS
 
-FIXME content here
+**Directed Acyclic Graphs**
+
+<img style="margin-left: 215px;" src="./img/forks.svg" />
+
+Notes:
+
+In math there is a notion of a Directed Acyclic Graph.
+Define graph, than directed, than acyclic.
+Blockchains are examples of DAGs.
+Actually blockchains are a specific kind of a DAG called a tree.
+Sometimes you will hear me talk about the "block tree" which really means all the histories of the chain.
+
+But there are more kinds of DAGs than just trees.
+Consider if someone authored a block that looks like this.
+
+CLICK
+
+---v
+
+## DAGS
+
+**Directed Acyclic Graphs**
+
+![forks represent alternate histories](./img/dag.svg)
+
+Notes:
+
+What if a block could have more than one parent!?
+It could allow parallelization and increased throughput!
+But it also leads to problems.
+What if there are conflicting transactions in the two parent histories?
+How do you even know if there are conflicting histories?
 
 ---
 
-FIXME - Split off into separate lecture about blockchains on P2P networks.
-Include history stuff about bitcoin altcoins ethereum etc
-Classify what is the state machine in each.
-Point out that Ethereum allows user-deployable smart contracts
-Remind of two definitions of contracts
+<!-- FIXME
+
+This might be a good place to split the lesson.
+The part before this is about a data structure.
+The part after this is about a P2P network of nodes that track this data structure.
+-->
+
+## Blockchain 💒 P2P Networks
+
+<img style="width: 900px;" src="./img/blockchain_p2p.svg" />
+
+Notes:
+
+So hopefully some parts of this figure look familiar.
+What do you see here?
+
+- Diverse servers.
+- In a p2p network.
+- Each with their own view of the blockchain.
+
+---v
 
 ## Nodes
 
@@ -317,21 +370,43 @@ Many nodes only perform a subset of these tasks
 
 ---
 
+## Blockspace
+
+A resource created, and often sold, by a decentralized blockchain network.
+
+<img style="width: 700px;" src="./img/Web2Web3Stacks.png" />
+
+#### Learn more:
+
+- Article: https://a16zcrypto.com/blockspace-explained/
+- Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
+- Podcast: https://youtu.be/jezH_7qEk50?t=5330
+
+Notes:
+
+A Blockchain network is a replacement for a centralized server.
+It sells a product to application deployers.
+The state machine is the application layer, and the blockchain is the server replacement.
+In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc.
+Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
+
+---v
+
 ## Transaction Pool
 
-Contains transactions that are not yet in blocks.
-
-Constantly prioritizing and re-prioritizing transactions.
-
-Operates as a blockspace market.
+- Contains transactions that are not yet in blocks.
+- Constantly prioritizing and re-prioritizing transactions.
+- Operates as a blockspace market.
 
 Notes:
 
 Sometimes known as mempool (thanks bitcoin 🙄)
 Authoring nodes determine the order of upcoming transactions. In some sense they can see the future.
 
----
-
-FIXME Foreshadow forks where players disagree on the rules
+Foreshadow forks where players disagree on the rules
 History: dao fork bch fork
 foreshadow consensus: arbitrary additional constraints for a block to be valid
+
+---
+
+# Let's Buidl It
