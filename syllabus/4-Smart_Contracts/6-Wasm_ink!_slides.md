@@ -702,8 +702,8 @@ Notes:
 Notes:
 
 - Pallet contracts storage is organized like a key-value database
-- SCALE codec is not self-describing (vide metadata)
 - each storage cell has a unique storage key and points to a SCALE encoded value
+- SCALE codec is not self-describing (vide metadata)
 
 ---
 
@@ -884,7 +884,7 @@ Notes:
 
 ## Storage: Lazy
 
-```rust [1,5-6]
+```rust [1,5]
 use ink::storage::{traits::ManualKey, Lazy, Mapping};
 
 #[ink(storage)]
@@ -901,9 +901,9 @@ pub struct Roulette {
 NOTE:
 - packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
 - there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
-- mapping provides per-cell access
-- Lazy storage cell can be auto-assigned or chosen manually
-- Using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract.
+- lazy provides per-cell access, like a mapping
+- lazy storage cell can be auto-assigned or chosen manually
+- using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract.
   - This may break your contract after an upgrade!
 
 ---
@@ -934,11 +934,12 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 - Contract's code and it's instance are separated.
 - Contract's address can be updated to point to a different code stored on-chain.
 
-Notes:
-
+NOTE:
 - append only != immutable
 - proxy pattern known from e.g. solidity is still possible
 - within the Substrate framework contract's code is stored on-chain and it's instance is a pointer to that code
+ - incentivizes cleaning up after oneself
+ - big storage optimization
 
 ---
 
@@ -954,8 +955,7 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 
 ```
 
-Notes:
-
+NOTE:
 - you DO NOT want to leave this message un-guarded
 - solutions to `ensure_owner` can range from a very simple ones address checks
 - to a multiple-role database of access controlled accounts stored and maintained in a separate contract
@@ -1056,10 +1056,47 @@ impl MyContract {
 - What is wrong with this contract?
 - How would you fix it?
 
-Notes:
-
+NOTE:
 - we start easy
 - answer: no AC in place
+- parity wallet 150 million `hack`
+
+---
+
+## Common Vulnerabilities: blast from the past
+
+<img rounded style="width: 900px;" src="img/ink/anyone_can_kill_it.jpg" alt="ink!" />
+
+<div style="font-size: 0.72em;">
+
+* [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit:
+* https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+
+
+<!-- ```solidity -->
+<!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -->
+<!--   suicide(_to); -->
+<!-- } -->
+
+<!-- function initMultiowned(address[] _owners, uint _required) only_uninitialized { -->
+<!--   m_numOwners = _owners.length + 1; -->
+<!--   m_owners[1] = uint(msg.sender); -->
+<!--   m_ownerIndex[uint(msg.sender)] = 1; -->
+<!--   for (uint i = 0; i < _owners.length; ++i) -->
+<!--   { -->
+<!--     m_owners[2 + i] = uint(_owners[i]); -->
+<!--     m_ownerIndex[uint(_owners[i])] = 2 + i; -->
+<!--   } -->
+<!--   m_required = _required; -->
+<!-- } -->
+<!-- ``` -->
+
+</div>
+
+NOTE:
+- might seem trivial but a very similar hack has happend in the past trapping a lot of funds
+- see: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+- hacker has "accidentally" called an unprotected `initMultiowned` and proceeded to delete the contract code
 
 ---
 
@@ -1086,12 +1123,11 @@ Notes:
 - On-chain domain name registry with a register fee of 100 pico.
 - Why is this a bad idea?
 
-Notes:
-
-everything on-chain is public
-this will be front-run in no time
-Can you propose a better design?
-Answer: commit / reveal or an auction
+NOTE:
+- everything on-chain is public
+- this will be front-run in no time
+- Can you propose a better design?
+- Answer: commit / reveal or an auction
 
 ---
 
@@ -1141,11 +1177,38 @@ Answer:
 
 ## Common Vulnerabilities
 
+```rust [7,12-14]
+#[ink(message)]
+pub fn swap(
+    &mut self,
+    token_in: AccountId,
+    token_out: AccountId,
+    amount_token_in: Balance,
+    min_amount_token_out: Balance,
+) -> Result<(), DexError> {
+
+    ...
+
+    if amount_token_out < min_amount_token_out {
+        return Err(DexError::TooMuchSlippage);
+    }
+
+...
+}
+```
+
+NOTE:
+- slippage protection in place
+
+---
+
+## Common Vulnerabilities
+
 - Integer overflows
 - Re-entrancy vulnerabilities
 - Sybil attacks
 - ...
-- Regulatory attacks :rofl:
+- Regulatory attacks 😅
 - ...
 
 Notes:
