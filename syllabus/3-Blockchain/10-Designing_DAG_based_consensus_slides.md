@@ -10,24 +10,8 @@ description: A formal, yet friendly consensus framework
 ## Goals of this lecture
 <br/>
 
-1. $~$
-2.
-
----
-
-## Goals of this lecture
-<br/>
-
-1. formalize the consensus problem and related concepts
-2.
-
----
-
-## Goals of this lecture
-<br/>
-
-1. formalize the consensus problem and related concepts
-2. provide a framework for designing DAG-based consensus protocols
+1. formalize the consensus problem and related concepts <!-- .element: class="fragment"-->
+2. provide a framework for designing DAG-based consensus protocols <!-- .element: class="fragment"-->
 
 ---
 
@@ -201,16 +185,11 @@ _Intuition: protocol will eventually work synchronously, but it needs to be safe
 
 The best one can hope for in **asynchronous** scenario is **probabilistic** protocol tolerating **up to** \\(f\\) faults for \\(3f+1\\) participants.
 
----
-
-## Consequence
-<br/>
-
-The best one can hope for in **asynchronous** scenario is **probabilistic** protocol tolerating **up to** \\(f\\) faults for \\(3f+1\\) participants.
-
 <br/>
 
 > ✅ <font color="#c2ff33">**Doable!**</font> 
+<!-- .element: class="fragment"-->
+
 ---
 
 ## Note on randomness
@@ -251,17 +230,11 @@ Protocols that are **not responsive** have to **wait for** \\(\Delta\\) **time**
 
 Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
 
----
-
-## Responsiveness
-<br/>
-
-Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
-
 <br/>
 <br/>
 
 > <font color="#c2ff33">Why \\(2f+1\\)?</font>
+<!-- .element: class="fragment"-->
 
 ---
 
@@ -307,18 +280,20 @@ Up to this point, we covered:
 
 > (In an asynchronous network) **reliably** send a single message to all other nodes.
 
----
-
-## Warmup exercise: broadcast
-<br/>
-
-> (In an asynchronous network) **reliably** send a single message to all other nodes.
 <br/>
 <br/>
 
-1. (_validity_) If the sender is honest and broadcasts a message `m`, then every honest node outputs `m`.
-2. (_integrity_) If an honest node outputs a message `m`, then it must have been broadcast by the sender.
-3. (_agreement_) If an honest node outputs a message `m`, every other honest node outputs `m`.
+- (_validity_) If the sender is honest and broadcasts a message \\(m\\), then every honest node outputs \\(m\\).
+
+<!-- .element: class="fragment"-->
+
+- (_integrity_) If an honest node outputs a message \\(m\\), then it must have been broadcast by the sender.
+
+<!-- .element: class="fragment"-->
+
+- (_agreement_) If an honest node outputs a message \\(m\\), every other honest node outputs \\(m\\).
+
+<!-- .element: class="fragment"-->
 
 ---
 
@@ -442,24 +417,8 @@ Intuition: graph represents the dependencies between messages (units).
 ## Framework core
 <br/>
 
-1. $~$
-2. 
-
----
-
-## Framework core
-<br/>
-
-1. We maintain a local DAG representing our knowledge of the units.
-2. 
-
----
-
-## Framework core
-<br/>
-
-1. We maintain a local DAG representing our knowledge of the units.
-2. We perform a local, offline consensus on our DAG.
+1. We maintain a local DAG representing our knowledge of the units. <!-- .element: class="fragment"-->
+2. We perform a local, offline consensus on our DAG. <!-- .element: class="fragment"-->
 
 ---
 
@@ -482,25 +441,9 @@ Intuition: graph represents the dependencies between messages (units).
 ## Clue observations
 <br/>
 
- - local DAGs might differ...
- - $~$
-
----
-
-## Clue observations
-<br/>
-
-- local DAGs might differ...
-- but they are guaranteed to **converge to the same DAG**
-
----
-
-## Clue observations
-<br/>
-
-- local DAGs might differ...
-- but they are guaranteed to converge to the same DAG
-- the offline consensus is guaranteed to produce the same result
+- local DAGs might differ... <!-- .element: class="fragment"-->
+- but they are guaranteed to converge to the same DAG <!-- .element: class="fragment"-->
+- the offline consensus is guaranteed to produce the same result <!-- .element: class="fragment"-->
 
 ---
 
@@ -524,15 +467,6 @@ It is put into the local consensus protocol.
  - nodes receive transactions and put them into units
  - nodes send each other their new units
  - (locally) nodes come up with a linear ordering of the units and make blocks from chunks
-
----
-
-## Digression: block production, information dissemination and finalization
-<br/>
-
-The common approach (e.g. in Substrate):
- - production and dissemination is done in the same layer
- - afterwards, nodes perform consensus on finalizing disseminated blocks
 
 ---
 
@@ -570,48 +504,13 @@ but we have to make common decision about unit ordering!
 ## Key concept: availability
 <br/>
 
-Intuitively, a block is **available** if:
-<br/>
-
- - $~$
- - $~$
- - 
-
----
-
-## Key concept: availability
-<br/>
-
-Intuitively, a block is **available** if:
-<br/>
-
-- most of the nodes have it
-- $~$
--
-
----
-
-## Key concept: availability
-<br/>
-
 Intuitively, a unit is **available** if:
+
 <br/>
 
-- most of the nodes have it
-- it was distributed pretty promptly (we won't call a unit available, if it finally arrived everywhere after a month)
--
-
----
-
-## Key concept: availability
-<br/>
-
-Intuitively, a unit is **available** if:
-<br/>
-
-- most of the nodes have it
-- it was distributed pretty promptly (we won't call a unit available, if it finally arrived everywhere after a month)
-- most of the nodes know that most of the nodes know that most of the nodes know... that it is available (mutual awareness)
+- most of the nodes have it <!-- .element: class="fragment"-->
+- it was distributed pretty promptly (we won't call a unit available, if it finally arrived everywhere after a month) <!-- .element: class="fragment"-->
+- most of the nodes know that most of the nodes know that most of the nodes know... that it is available (mutual awareness) <!-- .element: class="fragment"-->
 
 ---
 
