@@ -567,3 +567,51 @@ Vote<sub><font color="#c2ff33">U</font></sub>(<font color="#e6007a">V</font>) =
 <br/>
 
 _(U comes from the earlier round than V)_
+
+---
+
+## Bonus: generating randomness
+<br/>
+
+Sig<sub>`sk`</sub>(nonce)
+<!-- .element: class="fragment"-->
+<br/>
+
+<div class="fragment">
+
+- randomness must be unpredictable
+- delayed reveal
+- must depend on \\(f+1\\) nodes
+- cannot be disturbed by the adversary
+
+</div>
+
+---
+
+## Standard way
+<br/>
+
+<img rounded style="width: 600px;" src="img/3.10-shamir.svg" />
+
+---
+
+## Standard way
+<br/>
+
+<img rounded style="width: 600px;" src="img/3.10-shamir-2.svg" />
+
+Problem: need for trusted dealer! <!-- .element: class="fragment"-->
+
+---
+
+## One simple trick
+<br/>
+
+<font color="#c2ff33">Everybody is dealing secrets</font> <!-- .element: class="fragment"-->
+
+---
+
+## Combining randomness
+<br/>
+
+<img rounded style="width: 600px;" src="img/3.10-xoring.svg" />
