@@ -107,28 +107,6 @@ In the end Kenny may not agree that Whistlin' Willie's is the best option for di
 
 Image source: https://southparkstudios.mtvnimages.com/images/shows/south-park/clip-thumbnails/season-14/1402/south-park-s14e02c03-ill-show-them-f-obscene-16x9.jpg
 
----v
-
-## Example 2: Which side of the road to drive on
-
-In the last module we discussed the coordination game and its two Nash equilibria. We discussed that if there is no communication allowed among participants, a Shelling point may help.
-
-Luckily in real life, communication is possible so we can run a consensus algorithm instead of rely on a Shelling point.
-
-- Termination -
-- Agreement -
-- Integrity -
-
-Notes:
-
-Imagine all the drivers are allowed to participate in the consensus. Most are honest because they don't want to crash, but
-some may be Byzantine.
-Someone please volunteer to describe what one of these means in this example.
-
-- Termination - All honest drivers will eventually decide which lane to drive in
-- Agreement - All honest drivers will agree on the same lane to drive in
-- Integrity - The decision will be one of the participants suggestions. Doesn't mean much in this case because there are only two choices. It's basically guaranteed that they will both be suggested by at least _someone_
-
 ---
 
 ## Byzantine Generals Problem
@@ -155,9 +133,17 @@ Several divisions of the Byzantine army are camped around an enemy city. They pl
 If the attack is coordinated, they will probably be successful, but if it is uncoordinated, they will probably be defeated.
 What do our three properties mean in this scenario?
 
-- Termination -
-- Agreement -
-- Integrity -
+- Termination - every honest general will eventually decide when to attack
+- Agreement - honest general will all agree to attack ta the same time
+- Integrity - the attack time will have been proposed by at least one honest general
+
+---v
+
+## Byzantine Generals: Solved
+
+<img height="600px" alt="Cover page: Practical Byzantine Fault Tolerance" src="./img/pbft-cover.png" />
+
+_Miguel Castro and Barbara Liskov, 1999_
 
 ---v
 
@@ -208,16 +194,6 @@ Imagine that one of the sensors has an overflow _bug_ such that when the airspee
 Are these crash faults or byzantine?
 
 In a blockchain system, bugs in the code may cause nodes whose operators are intending to be honest, to deviate from the protocol anyway. This is why client diversity is important.
-
----v
-
-## Byzantine Generals: Solved
-
-<img height="600px" alt="Cover page: Practical Byzantine Fault Tolerance" src="./img/pbft-cover.png" />
-
-<div style="font-size:0.8em">
-
-_Miguel Castro and Barbara Liskov, 1999_
 
 ---
 
@@ -473,14 +449,14 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 </li>
 <li class="fragment">Precommit
   <ul>
-    <li>Wait for 2/3 prevotes then Precommit
-    <li>If you don't get 2/3 prevotes, Precommit `Nil`</div>
+    <li>Wait for 2/3 prevotes then Precommit</li>
+    <li>If you don't get 2/3 prevotes, Precommit `Nil`</li>
   </ul>
 </li>
 <li class="fragment">Complete
   <ul>
-  <li>Wait for 2/3 Precommits them finalize
-  <li>If you don't get it, throw the block away
+  <li>Wait for 2/3 Precommits them finalize</li>
+  <li>If you don't get it, throw the block away</li>
   </ul>
 </li>
 </ol>
