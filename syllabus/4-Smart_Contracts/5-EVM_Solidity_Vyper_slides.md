@@ -817,6 +817,44 @@ Use Vyper through the new Vyper tab and use "Remote Compiler"
 
 ---
 
+## Reentrancy
+
+The DAO Vulnerability
+
+```Java
+    function withdraw() public {
+        // Check user's balance
+        require(
+            balances[msg.sender] >= 1 ether,
+            "Insufficient funds.  Cannot withdraw"
+        );
+        uint256 bal = balances[msg.sender];
+
+        // Withdraw user's balance
+        (bool sent, ) = msg.sender.call{value: bal}("");
+        require(sent, "Failed to withdraw sender's balance");
+
+        // Update user's balance.
+        balances[msg.sender] = 0;
+    }
+```
+
+Note: We make a call to withdraw user's balance before updating our internal state.
+
+---v
+
+## How can this be avoided?
+
+---v
+
+## How can this be avoided?
+
+* Commit state BEFORE contract call
+* Modifier that prevents reentrancy (Solidity)
+* `@nonreentrant` decorator (Vyper)
+
+---
+
 # Storing Secrets On-Chain
 
 Can we store secrets on-chain? What if we want to password-protect a particular
