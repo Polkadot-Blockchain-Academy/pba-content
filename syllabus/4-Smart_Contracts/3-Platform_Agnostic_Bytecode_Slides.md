@@ -591,7 +591,7 @@ RISC-V Instruction Set Manual, Unprivileged ISA: https://github.com/riscv/riscv-
 ## Activity: Compiling Rust to Wasm
 
 - Let's make a simple Rust crate that compiles to Wasm!
-- Clone https://github.com/Polkadot-Blockchain-Academy/pba-ucb-wasm-executor
+- Clone the repo
 
 ---v
 
