@@ -1,141 +1,41 @@
-## Lesson 1: Economics Basics (60min)
+# Economics Basics
 
-This session gives an overview of some basic economic concepts that seem important in a blockchain setting.
-
-### Why is this important
-
-Understanding the fundamental concepts in economics is important for the upcoming sessions as well as the student's future work as incentive architects.
-
-### Prerequisites
-
-None.
-
-### Learning Outcomes
-
-The participants should be able to utilize core economic concepts as taught in this session to the next sessions.
-
-### Learning Objectives
-
-The participants...
-
-- can explain the context and meaning of some of the most fundamental economic concepts,
-- can use them correctly.
-
-### Content
-
-We want to go through the following concepts:
-
-- _Utility Function_:
-  - Map from consumption bundles to payoffs.
-  - Generally concave (explain this).
-  - Decreasing marginal utility.
-    - Example: Marginal utility increases with a fixed fee for a transaction as the volume of the transaction increases. (e.g., a $50000 transaction with a $5 fee is great value, a 10$ transaction with a $5 fee is very bad value.)
-- _Cost-Benefit Analyses_
-- _Opportunity Costs_
-  - In choice problems, costs from foregoing alternative options.
-  - Example: parachain auction bids.
-- _Inflation and token creation_
-  - Traditional use vs. use in crypto.
-  - Inflation vs. Deflation.
-    - Explain monetary base inflation, which is a bit different than 'traditional' inflation as used in economics.
-  - Discuss: E.g., Bitcoin vs. Polkadot.
-- _Comparative Advantage_
-  - Definition: Ability to produce a particular good or service at a lower opportunity cost than its trading partners.
-  - Discuss: Specialization in parachains.
-- _Rationality & Behavioral Biases_
-  - Define rationality and note that it is the underlying assumption for many theories.
-  - - _Incentives_
-      - It is imperative to build incentives correctly, otherwise users will find a way to exploit the system in any way possible to make money.
-  - There are plenty of systemic deviations from rationality which should be kept in mind when designing economic incentives.
-  - Examples: Loss Aversion, Endowment Effect, Gambler's Fallacy, Default Effect
-  - Groupthink and Groupshift: Pyschological effects (more extreme) when there are more people involved in a decision. Conversely, a single point of decision-making creates a single point of failure.
-  - Present Bias
-- _Competition_
-
-  - Has an intrinsic economic value; creates options and evolution.
-
-- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lesson part):
-  - Incentives: Slashing
-  - Tokenomics Model
-    - Compare Bitcoin, Ethereum and Polkadot's tokenomics. Is Bitcoin secure if it has no slashing?
-    - Which inflation model does Polkadot use and what are the parameters _(Save this for Polkadot)_
-
-### Activity: (90-120min)
-
-- Plenary discussion: Do we need slashing?
-  - Not all PoS protocols employ slashing. Is this a good idea? What is the point of slashing? What are the arguments against slashing?
-  - Youtube Video: Micalis Talks on Algorand
-- Group work: Compare different tokenomics models
-  - [some more context here, should go beyond inflationary vs deflationary]
-- Discussion about the design decisions that are taken industry-wide, about pros and cons. Why did each team choose their economics? How does each protocol leverage economic concepts? What assumptions are they making, etc.
-- This may demand small prior reading about the different protocols and how they use.
-
-This session gives an overview of some basic economic concepts that seem important in a blockchain setting.
+This session lays the groundwork for understanding basic economic principles. These principles provide the framework within which decisions are made and analyzed in the field of economics and beyond.
 
 ### Why is this important
 
-Understanding the fundamental concepts in economics is important for the upcoming sessions as well as the student's future work as incentive architects.
+Understanding fundamental concepts in economics is crucial not only for the upcoming sessions but also for the student's future work as incentive architects. Economics, at its core, is the study of how people make decisions in the face of scarcity and how these decisions impact the world around them. As incentive architects, understanding these dynamics allows students to design systems and mechanisms that guide decision-making towards desirable outcomes.
 
 ### Prerequisites
 
-None.
+None. This session is designed as an introduction to economics and assumes no prior knowledge.
 
 ### Learning Outcomes
 
-The participants should be able to utilize core economic concepts as taught in this session to the next sessions.
+Upon completion of this session, participants should be able to utilize core economic concepts as taught in this session in subsequent sessions. They'll be equipped with a basic understanding of economic theory and how it applies to real-world scenarios.
 
 ### Learning Objectives
 
-The participants...
+Upon completing this session, participants...
 
-- can explain the context and meaning of some of the most fundamental economic concepts,
-- can use them correctly.
+- Can explain the context and meaning of some of the most fundamental economic concepts, such as supply and demand, opportunity cost, marginal utility, the influence of time on value, and comparative advantage.
+- Can correctly apply these concepts when analyzing economic scenarios or designing incentives.
+  Understand how these concepts form the foundation of more complex economic theories and models.
 
-### Content
+## Lecture (~1.5 hours)
 
-We want to go through the following concepts:
+- Understanding Incentives
+- Demand & Supply
+- Market Forms
+- The Economics of Specialization
+- Time as Ultimate Resource
+- Behavioral Biases
 
-- _Utility Function_:
-  - Map from consumption bundles to payoffs.
-  - Generally concave (explain this).
-  - Decreasing marginal utility.
-    - Example: Marginal utility increases with a fixed fee for a transaction as the volume of the transaction increases. (e.g., a $50000 transaction with a $5 fee is great value, a 10$ transaction with a $5 fee is very bad value.)
-- _Cost-Benefit Analyses_
-- _Opportunity Costs_
-  - In choice problems, costs from foregoing alternative options.
-  - Example: parachain auction bids.
-- _Inflation and token creation_
-  - Traditional use vs. use in crypto.
-  - Inflation vs. Deflation.
-    - Explain monetary base inflation, which is a bit different than 'traditional' inflation as used in economics.
-  - Discuss: E.g., Bitcoin vs. Polkadot.
-- _Comparative Advantage_
-  - Definition: Ability to produce a particular good or service at a lower opportunity cost than its trading partners.
-  - Discuss: Specialization in parachains.
-- _Rationality & Behavioral Biases_
-  - Define rationality and note that it is the underlying assumption for many theories.
-  - - _Incentives_
-      - It is imperative to build incentives correctly, otherwise users will find a way to exploit the system in any way possible to make money.
-  - There are plenty of systemic deviations from rationality which should be kept in mind when designing economic incentives.
-  - Examples: Loss Aversion, Endowment Effect, Gambler's Fallacy, Default Effect
-  - Groupthink and Groupshift: Pyschological effects (more extreme) when there are more people involved in a decision. Conversely, a single point of decision-making creates a single point of failure.
-  - Present Bias
-- _Competition_
+### Activity: (~2 hours)
 
-  - Has an intrinsic economic value; creates options and evolution.
+In this interactive part, we want the participants to experience foster the learnings in classroom discussions and play several games first-hand.
 
-- **Polkadot Reference** (the idea of these parts is to apply the concepts to Polkadot at a somewhat deeper level and to prepare for the non-lesson part):
-  - Incentives: Slashing
-  - Tokenomics Model
-    - Compare Bitcoin, Ethereum and Polkadot's tokenomics. Is Bitcoin secure if it has no slashing?
-    - Which inflation model does Polkadot use and what are the parameters _(Save this for Polkadot)_
-
-### Activity: (90-120min)
-
-- Plenary discussion: Do we need slashing?
-  - Not all PoS protocols employ slashing. Is this a good idea? What is the point of slashing? What are the arguments against slashing?
-  - Youtube Video: Micalis Talks on Algorand
-- Group work: Compare different tokenomics models
-  - [some more context here, should go beyond inflationary vs deflationary]
-- Discussion about the design decisions that are taken industry-wide, about pros and cons. Why did each team choose their economics? How does each protocol leverage economic concepts? What assumptions are they making, etc.
-- This may demand small prior reading about the different protocols and how they use.
+- Classroom Discussions
+- Academy Games
+  - Ultimatum Game
+  - Cournot Competition
