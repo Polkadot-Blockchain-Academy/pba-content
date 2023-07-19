@@ -794,6 +794,10 @@ someBallot: Ballot = Ballot({index: 1, name: "John Doe"})
 name: string = someBallot.name
 ```
 
+---
+
+## Vyper Hands-On
+
 ---v
 
 ## Remix Plugin
@@ -810,10 +814,6 @@ the IDE. First, search for "Vyper" in the plugins tab:
 Use Vyper through the new Vyper tab and use "Remote Compiler"
 
 <img style="width: 55%; margin: 10px" src="img/frontier/RemixInstallVyper2.png" />
-
----
-
-## Vyper Hands-On
 
 ---
 
