@@ -1,3 +1,0 @@
-## Workshops
-
-- use some of https://github.com/shawntabrizi/xcm-workshop ?
