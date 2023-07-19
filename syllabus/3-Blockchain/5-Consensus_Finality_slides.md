@@ -157,7 +157,6 @@ Are these crash faults or byzantine?
 
 In a blockchain system, bugs in the code may cause nodes whose operators are intending to be honest, to deviate from the protocol anyway. This is why client diversity is important.
 
-
 ## Byzantine Generals Problem
 
 <pba-cols>
@@ -757,7 +756,6 @@ Notes:
 
 - 7 = # Validators
 - 5 = # Threshold
-
 
 ---
 
