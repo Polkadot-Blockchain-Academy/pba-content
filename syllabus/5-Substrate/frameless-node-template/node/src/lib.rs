@@ -1,3 +1,3 @@
 pub mod chain_spec;
-pub mod rpc;
+pub(crate) mod cli;
 pub mod service;
