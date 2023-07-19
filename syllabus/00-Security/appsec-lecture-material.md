@@ -7,7 +7,8 @@
 
 **1.1. The Big Picture of AppSec**
 
-![](https://hackmd.io/_uploads/SkZLpbmYh.png)
+<!-- ![](https://hackmd.io/_uploads/SkZLpbmYh.png) -->
+<!-- TODO FIXME get this file local!! 405 code! -->
 
 **Security needs to be enforced through the use of controls. Controls must be:**
 
@@ -543,7 +544,7 @@ In summary, **The adaptation, communication and enforcement of coding are essent
 
 1.  Application Security Program Handbook, by Derek Fisher: <https://www.manning.com/books/application-security-program-handbook>
 2.  Agile Application Security, by Laura Bell, Michael Brunton-Spall, Rich Smith & Jim Bird” <https://www.oreilly.com/library/view/agile-application-security/9781491938836/>
-3.  CSSLP Certified Secure Software Lifecycle Professional All-in-One Exam Guide, Third Edition, by Wm. Arthur Conklin, Daniel Paul Shoemaker: <https://www.mheducation.co.uk/csslp-certified-secure-software-lifecycle-professional-all-in-one-exam-guide-third-edition-9781264258208-emea>
+3.  CSSLP Certified Secure Software Lifecycle Professional All-in-One Exam Guide, Third Edition, by Wm. Arthur Conklin, Daniel Paul Shoemaker: <https://www.mheducation.co.uk/csslp-certified-secure-software-lifecycle-professional-all-in-one-exam-guide-third-edition-9781264258208-emea> <!-- markdown-link-check-disable-line -->
 
 4.  (ISC)2 CISSP Certified Information Systems Security Professional Official Study Guide, by Mike Chapple, James Michael Stewart, Darril Gibson, David Seidl: <https://www.wiley.com/en-gb/(ISC)2+CISSP+Certified+Information+Systems+Security+Professional+Official+Study+Guide+&+Practice+Tests+Bundle,+3rd+Edition-p-9781119790020>
 5.  CISSP for Dummies, Lawrence C. Miller, Peter H. Gregory: <https://www.wiley.com/en-gb/CISSP+For+Dummies,+7th+Edition-p-9781119806820>
