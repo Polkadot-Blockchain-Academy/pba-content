@@ -6,11 +6,9 @@ description: A working programmer’s guide to the crypto industry
 <img rounded style="width: 600px;" src="img/ink/ink-logo-with-squid-white.svg" alt="ink!" />
 
 # WASM Smart Contracts in Ink!
-
 A working programmer’s guide
 
 NOTE:
-
 - ask questions during the lecture, don't wait until the end
 - practical, but we go deeper where needed
 - some complexity is ommited in the examples (examples are not a production code)
@@ -20,7 +18,7 @@ NOTE:
 ## Intro: ink! vs. Solidity
 
 |                 | ink!                        | Solidity      |
-| --------------- | --------------------------- | ------------- |
+|-----------------|-----------------------------|---------------|
 | Virtual Machine | Any Wasm VM                 | EVM           |
 | Encoding        | Wasm                        | EVM Byte Code |
 | Language        | Rust                        | Standalone    |
@@ -30,7 +28,6 @@ NOTE:
 | Interfaces?     | Yes: Rust traits            | Yes           |
 
 NOTE:
-
 - students are freshly of an EVM lecture so might be wondering why another SC language
 - Virtual Machine: any WASM VM: yes in theory, in practice bound pretty close to the Substarte & the contracts pallet
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
@@ -49,7 +46,6 @@ NOTE:
   - Fast
 
 NOTE:
-
 - ink! is not a separate language
 - enjoys access to a vast collection of libraries developed for other purposes
 - WASM is targeting the browsers and quickly becoming the "assembly" od the web in lieu of JS
@@ -61,7 +57,6 @@ NOTE:
 <img rounded style="width: 900px;" src="img/ink/lego0.png" />
 
 NOTE:
-
 - Technically you could take a SC written in ink! and deploy it to any WASM-powered blockchain.
   - in practice not that straight-forward.
 - ink! is closely tied to the larger Substrate framework.
@@ -74,7 +69,6 @@ NOTE:
 <img rounded style="width: 900px;" src="img/ink/lego1.png" />
 
 NOTE:
-
 - contracts written in ink! are compiled to WASM bytecode
 - pallet contracts provides
   - instrumentation
@@ -86,7 +80,6 @@ NOTE:
 <img rounded style="width: 800px;" src="img/ink/schema1.png" />
 
 NOTE:
-
 - pallet contracts is oblivious to the programming language
 - it accepts WASM bytecode and executes it's instructions
 
@@ -95,7 +88,6 @@ NOTE:
 <img rounded style="width: 800px;" src="img/ink/schema2.png" />
 
 NOTE:
-
 - contracts itself can be written in ink!
 
 ---
@@ -103,7 +95,6 @@ NOTE:
 <img rounded style="width: 800px;" src="img/ink/schema3.png" />
 
 NOTE:
-
 - But also any other language that compilers to WASM
   - Solang
   - or ask!
@@ -123,7 +114,6 @@ cargo install cargo-contract --force
 ```
 
 NOTE:
-
 - Binaryen is a compiler and toolchain infrastructure library for WebAssembly
 - at the moment ink! uses a few unstable Rust features, thus nightly is require
 - rust source code is needed to compile it to wasm
@@ -150,7 +140,6 @@ cargo contract new flipper
 ```
 
 NOTE:
-
 - ask how many student have written some code in Rust, this should feel familiar to them
 
 ---
@@ -185,7 +174,6 @@ std = [
 </div>
 
 NOTE:
-
 - who knows why is the std library not included by default?
 - Answer: contracts are compiled to WASM (executed ib a sandboxed environment with no system interfaces, no IO, no networking)
 
@@ -233,7 +221,6 @@ pub mod flipper {
 </div>
 
 NOTE:
-
 - basic contract that flips a bit in storage
 - contract will have a storage definition, constructor(s), messages
 - groupped in a module
@@ -265,7 +252,6 @@ Your contract artifacts are ready. You can find them in:
 ```
 
 NOTE:
-
 - produces WASM bytecode and some additional artifacts:
 - .wasm is the contract compiled bytecode
 - .json is contract ABI aka metadata (for use with e.g. dapps)
@@ -307,7 +293,6 @@ Output:
 </div>
 
 NOTE:
-
 - we see a bunch of information on gas usage
 - we see two events one for storing contract code another for instantiating the contract
   - why is that?
@@ -327,10 +312,10 @@ cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
 - tip: `default` constructor was called
 
 NOTE:
-
 - who can tell me what will be the contract state at this point?
 
 ---
+
 
 ## Interacting with the contracts: queries
 
@@ -355,7 +340,6 @@ NOTE:
   }
 }
 ```
-
 ---
 
 ## Interacting: transactions
@@ -378,7 +362,7 @@ Result:
 
 <div style="font-size: 0.82em;">
 
-```[6]
+``` [6]
 "data": {
   "Tuple": {
     "ident": "Ok",
@@ -394,7 +378,6 @@ Result:
 </div>
 
 NOTE:
-
 - if I query it again the bit is flipped
 - no surprises there
 
@@ -405,10 +388,8 @@ NOTE:
 <img rounded style="width: 1400px;" src="img/ink/contracts_ui_1.jpg" />
 
 NOTE:
-
 - there is also a graphical env for deploying & interacting with contracts
 - deploy & create an instance of flipper
-
 ---
 
 ## Dev environment: Contracts UI
@@ -416,7 +397,6 @@ NOTE:
 <img rounded style="width: 1400px;" src="img/ink/contracts_ui_2.jpg" />
 
 NOTE:
-
 - call a transacttion
 
 ---
@@ -426,7 +406,6 @@ NOTE:
 <img rounded style="width: 1400px;" src="img/ink/contracts_ui_3.jpg" />
 
 NOTE:
-
 - query state
 
 ---
@@ -446,7 +425,6 @@ pub struct Token {
 ```
 
 NOTE:
-
 - now that we dipped our toes lets dissect more
 - starting with the storage
 - what does this code actually put into the chain storage?
@@ -455,10 +433,9 @@ NOTE:
 
 <img rounded style="width: 1000px;" src="img/ink/storage.svg" />
 
-<font color="#8d3aed">SCALE</font> (_<font color="#8d3aed">S</font>imple <font color="#8d3aed">C</font>oncatenated <font color="#8d3aed">A</font>ggregate <font color="#8d3aed">L</font>ittle <font color="#8d3aed">E</font>ndian_)
+<font color="#8d3aed">SCALE</font> (*<font color="#8d3aed">S</font>imple <font color="#8d3aed">C</font>oncatenated <font color="#8d3aed">A</font>ggregate <font color="#8d3aed">L</font>ittle <font color="#8d3aed">E</font>ndian*)
 
 NOTE:
-
 - Pallet contracts storage is organized like a key-value database
 - SCALE codec is not self-describing (vide metadata)
 - each storage cell has a unique storage key and points to a SCALE encoded value
@@ -469,15 +446,15 @@ NOTE:
 
 <div style="font-size: 0.72em;">
 
-| Type         | Decoding                              | Encoding                     | Remark                                                                         |
-| ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
-| Boolean      | true                                  | 0x0                          | encoded using least significant bit of a single byte                           |
-|              | false                                 | 0x1                          |                                                                                |
-| Unsigned int | 42                                    | 0x2a00                       |                                                                                |
-| Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a and 0x0101            | first byte encodes the variant index, remaining bytes encode the data          |
-| Tuple        | (3, false)                            | 0x0c00                       | concatenation of each encoded value                                            |
-| Vector       | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
-| Struct       | {x:30, y:true}                        | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
+| Type    | Decoding                              |                     Encoding | Remark                                                                         |
+|---------|---------------------------------------|------------------------------|--------------------------------------------------------------------------------|
+| Boolean | true                                  |                          0x0 | encoded using least significant bit of a single byte                           |
+|         | false                                 |                          0x1 |                                                                                |
+| Unsigned int | 42                                  |  0x2a00                         |                            |
+| Enum    | enum IntOrBool { Int(u8), Bool(bool)} |            0x002a and 0x0101 | first byte encodes the variant index, remaining bytes encode the data          |
+| Tuple   | (3, false)                            |                       0x0c00 | concatenation of each encoded value                                            |
+| Vector  | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
+| Struct  | {x:30, y:true}                        | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
 
 </div>
 
@@ -497,16 +474,16 @@ pub struct Token {
 }
 ```
 
-- By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
+* By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
 
 NOTE:
-
 - Types that can be stored entirely under a single storage cell are called Packed Layout
 - by default ink! stores all storage struct fields under a single storage cell
 - as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
 - .. which may be what you want or not
 
 ---
+
 
 ## Storage: Packed Layout
 
@@ -522,8 +499,8 @@ pub struct Flipper<KEY: StorageKey = ManualKey<0xcafebabe>> {
 }
 ```
 
-- The storage key of the contracts root storage struct defaults to `0x00000000`
-- However you may store it under any arbitrary 4 bytes key instead
+* The storage key of the contracts root storage struct defaults to `0x00000000`
+* However you may store it under any arbitrary 4 bytes key instead
 
 ---
 
@@ -558,7 +535,6 @@ pub struct Flipper<KEY: StorageKey = ManualKey<0xcafebabe>> {
 </div>
 
 NOTE:
-
 - here a demonstartion of packed layout - value is stored under the root key
 
 ---
@@ -577,12 +553,11 @@ pub struct Token {
 }
 ```
 
-- Mapping consists of a key-value pairs stored directly in the contract storage cells.
-- Each Mapping value lives under it's own storage key.
-- Mapping values do not have a contiguous storage layout: **it is not possible to iterate over the contents of a map!**
+* Mapping consists of a key-value pairs stored directly in the contract storage cells.
+* Each Mapping value lives under it's own storage key.
+* Mapping values do not have a contiguous storage layout: **it is not possible to iterate over the contents of a map!**
 
 NOTE:
-
 - Use Mapping when you need to store a lot of values of the same type.
 - if your message only accesses a single key of a Mapping, it will not load the whole mapping but only the value being accessed.
 - there are other collection types in ink!: HashMap or BTreeMap (to name a few).
@@ -605,10 +580,9 @@ pub fn transfer(&mut self) {
 
 ```
 
-- what is wrong here?
+* what is wrong here?
 
 NOTE:
-
 - working with mapping:
 - Mapping::get() method will result in an owned value (a local copy), as opposed to a direct reference into the storage. Changes to this value won't be reflected in the contract's storage "automatically". To avoid this common pitfall, the value must be inserted again at the same key after it was modified. The transfer function from above example illustrates this:
 
@@ -627,10 +601,9 @@ pub fn transfer(&mut self) {
 }
 ```
 
-- `Mapping::get()` returns a local copy, not a mutable reference to the storage!
+* `Mapping::get()` returns a local copy, not a mutable reference to the storage!
 
 NOTE:
-
 - working with mapping:
 - `Mapping::get()` method will result in an owned value (a local copy).
 - Changes to this value won't be reflected in the contract's storage at all!
@@ -650,11 +623,10 @@ pub struct Roulette {
 }
 ```
 
-- Every type wrapped in `Lazy` has a separate storage cell.
-- `ManualKey` assignes explicit storage key to it.
+* Every type wrapped in `Lazy` has a separate storage cell.
+* `ManualKey` assignes explicit storage key to it.
 
 NOTE:
-
 - packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
 - there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
 - mapping provides per-cell access
@@ -669,7 +641,6 @@ NOTE:
 <img rounded style="width: 1000px;" src="img/ink/storage-layout.svg" />
 
 NOTE:
-
 - only the pointer (the key) to the lazy type is stored under the root key
 - only when there is a read of `d` will the pointer be de-referenced
 - lazy is a bit of a mis-nomer here, because storage is already initialized
@@ -696,7 +667,6 @@ pub fn non_default() -> Self {
 ```
 
 NOTE:
-
 - no limit of the number of constructors
 - constructors can call other constructors
 
@@ -716,7 +686,6 @@ NOTE:
 - `&self` is a reference to the object you’re calling this method on
 
 NOTE:
-
 - returns information about the contract state
 - .. as stored on chain (agreed to by the nodes)
 
@@ -736,7 +705,6 @@ pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
 - `payable` allows receiving value as part of the call to the ink! message
 
 NOTE:
-
 - constructors are inherently payable
 - ink! message will reject calls with funds if it's not marked as such
 
@@ -776,8 +744,8 @@ pub type Result<T> = core::result::Result<T, MyError>;
 - Use the Err variant to pass your own semantics
 - Type aliases reduce boilerplate & enhance readability
 
-NOTE:
 
+NOTE:
 - ink! uses idiomatic Rust error handling
 - ~~messages are the `system boundary`~~
 - returning error variant reverts the transaction
@@ -803,7 +771,6 @@ pub fn flip(&mut self) {
 - what is the state of this contract if the tx is called in an odd block number?
 
 NOTE:
-
 - answer: whatever it was prior to the tx:
   - returning error variant reverts the entire tx on the call stack
 
@@ -854,7 +821,6 @@ pub fn flip(&mut self) {
 - will this event be emitted in an odd block?
 
 NOTE:
-
 - answer: yes, but only because I reverted the condition :)
 
 ---
@@ -894,11 +860,10 @@ impl SimpleDex {
 
 </div>
 
-- Trait Definition: `#[ink::trait_definition]`
-- Wrapper for interacting with the contract: `ink::contract_ref!`
+* Trait Definition: `#[ink::trait_definition]`
+* Wrapper for interacting with the contract: `ink::contract_ref!`
 
 NOTE:
-
 - (part of) PSP22 (ERC20 like) contract definition
 - all contracts that respect this definition need to implement it
 - you can now share the trait definition with other contracts
@@ -922,7 +887,6 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 - Contract's address can be updated to point to a different code stored on-chain.
 
 NOTE:
-
 - append only != immutable
 - proxy pattern known from e.g. solidity is still possible
 - within the Substrate framework contract's code is stored on-chain and it's instance is a pointer to that code
@@ -942,7 +906,6 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 ```
 
 NOTE:
-
 - you DO NOT want to leave this message un-guarded
 - solutions to `ensure_owner` can range from a very simple ones address checks
 - to a multiple-role database of access controled accounts stored and maintained in a separate cotnract
@@ -983,7 +946,6 @@ pub fn get_values(&self) -> (u32, bool) {
 - Will this updated code work with the new definition and the old storage ?
 
 NOTE:
-
 - Various potential changes that can result in backwards incompatibility:
   - Changing the order of variables
   - Introducing new variable(s) before any of the existing ones
@@ -1020,7 +982,6 @@ pub fn set_code(&mut self, code_hash: [u8; 32], callback: Option<Selector>)
 </div>
 
 NOTE:
-
 - if the new contract code does not match the stored state you can perform a storage migration
 - think of regular relational DB and schema migrations
 - a good pattern to follow is to perform the update and the migration in one atomic transaction:
@@ -1049,7 +1010,6 @@ impl MyContract {
 - How would you fix it?
 
 NOTE:
-
 - we start easy
 - answer: no AC in place
 
@@ -1121,7 +1081,6 @@ pub fn swap(
 
 NOTE:
 Answer:
-
 - no slippage protection in place.
 - bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
 - this purchase will raise the price of the asset for the victim trader and increases his slippage
@@ -1139,13 +1098,13 @@ Answer:
 - ...
 
 NOTE:
-
 - long list of possible attacks
 - too long to fit into one lecture
 - baseline: get an audit from a respectable firm
 - publish your source code (security by obscurity is not securoty)
 
 ---
+
 
 ## Pause
 
@@ -1175,7 +1134,6 @@ impl MyContract {
 ---
 
 ## Blockchain node onion
-
 <br/>
 
 <img style="margin-top: 50px;margin-bottom: 50px" width="800" src="img/ink/onions.png" />
@@ -1236,7 +1194,6 @@ impl MyContract {
   ...
 }
 ```
-
 ---
 
 ## Interacting with the state transition function
@@ -1287,7 +1244,6 @@ impl MyContract {
 <li>...</li>
 
 **_runtime call_**
-
 </ul>
 </div>
 
@@ -1304,7 +1260,6 @@ impl MyContract {
 <br/>
 
 **_chain extension_**
-
 </ul>
 </div>
 </div>
@@ -1315,7 +1270,7 @@ impl MyContract {
 
 <br/>
 
-In Polkadot ecosystem _state transition function_ is called **_runtime_**
+In Polkadot ecosystem _state transition function_ is called ***runtime***
 
 ---
 
@@ -1376,16 +1331,14 @@ Chain extension is a way to extend the runtime with custom functionalities _dedi
 <br/>
 
 **ink! side:**
-
-- provide `ChainExtension` trait
-- include extension in the `Environment` trait instantiation
+ - provide `ChainExtension` trait
+ - include extension in the `Environment` trait instantiation
 
 <br/>
 
 **runtime side:**
-
-- handling extension calls
-- extension logic itself
+ - handling extension calls
+ - extension logic itself
 
 ---
 
@@ -1737,6 +1690,7 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
 <br/>
 
 Interact directly with runtime, skipping node layer.
+
 
 ---
 
