@@ -1,113 +1,47 @@
-## Lesson 2: Game Theory (60min)
+# Game Theory (~4 hours)
 
-This session aims to cover game theory concepts that are most relevant in a blockchain context.
+This session is designed to introduce participants to the principles of game theory, as a significant branch of economics and mathematics, offering tools to analyze strategic interactions between rational decision-makers.
 
-### Why is this important
+## Why is this important
 
-Game theory is the study of incentives in strategic situations. Understanding a little of game theory is important for the upcoming sessions as well as the participants future work as incentive architects.
+Game theory is fundamental to understanding incentives and strategies in situations where the outcome depends on the actions of multiple participants.
+It is a crucial tool for anyone seeking to understand the complex interactions and potential outcomes of strategic decisions.
+For incentive architects, and particularly those working within the blockchain space, game theory provides the analytical tools to predict behavior, optimize outcomes, and design robust systems.
 
-### Prerequisites
+## Prerequisites
 
-Economic fundamentals.
+A basic understanding of economics is required as game theory builds upon many economic concepts such as utility, and rationality.
 
-### Learning Outcomes
+## Learning Outcomes
 
-The participants should be able to utilize core game theory concepts as taught in this session to the next sessions.
+By the end of this session, participants should be able to utilize core game theory concepts in subsequent sessions and in their analysis of real-world scenarios.
+They will be familiar with the framework of game theory and its applications.
 
-### Learning Objectives
+## Learning Objectives
 
-The participants...
+Upon completing this session, participants will...
 
-- can solve canonical 2x2 matrix games.
-- can solve public good games.
+... understand and explain basic game theory concepts, including strategic games, Nash equilibrium, and dominant strategies.
+... be familiar with common games such as the Prisoner's Dilemma, coordination games, and public goods games, and understand how to analyze these games in terms of strategies and payoffs.
+... have experienced game theory first-hand through playing and analyzing games, aiding their understanding of the principles and their application.
 
-### Content
+---
 
-We plan to cover the following content:
+## Lecture (~1.5 hrs)
 
-- _Nash Equilibrium_: Most fundamental concept. A state in which no player has an incentive to unilaterally deviate. That is, everyone plays a _best response_ to everyone else's behavior.
-- We will discuss Nash equilibrium in a couple of canonical games, among which the first three can easily be discussed in 2x2 matrices:
-  - _Coordination Game_: Games in which the players get most if they all make the same choice (i.e., if they coordinate). A coordination game always has multiple equilibria. Examples: Money adoption, standard adoption, etc.
-  - **Blockchain Example:** Why does money have value? Money only has value because people agree that it does. Money adoption (and token adoption) relies on this, as well as on _network effects_.
-    - Network Effect: If network effects lead to a monopoly (and lack of change), then systems must have other means of evolving and adapting. Public ownership is one possible solution (but an public company controlled by committee).
-    - Anti-network effect: If there were only one Blockchain, then people couldn't bet on which Blockchain could do better and make money on that bet. Options allow evolution, so there is sometimes a societal gain from not coalescing on a single solution. Having more options, in and of itself, is a good thing because it allows the isolation of different factors, and creates a market in which people can bet on markets.
-  - **Blockchain Example:** To come!!
-  - _Prisoner's Dilemma_: A game in which the players fail to achieve the socially desirable outcome but end up in a state that is inferior for both. Examples:
-  - _Chicken Game_ (or Hawk-Dove Game): These are anti-coordination games in which players choosing opposite strategies are equilibria.
-  - _Zero-Sum Games_: A broader class of games in which the payoffs always add up to zero for any outcome.
-- Additional important concepts that we touch upon when discussing above games.
-  - _Schelling Point_: An equilibrium in a coordination game that is particularly salient, due to social norms.
-  - _Dominant Strategies_: Strategies that are optimal no matter what the other player does. The Nash equilibrium in the prisonners' dilemma is in dominant strategies.
-- _Public Good_: A public good is good whose consumption is rivalrous but non-exclusive.
-  - _Public Good Game_: A game in which players can bear costs for the provision of public good. If enough contribute, then it is produced, and can be consumed by everyone. Main problem: free-riding. It is never an equilibrium for everyone to contribute.
-  - _Open source software_ is another example. There is a marginal gain for contributing to consensus; you know it will be done correctly if you do it, and you have an underlying stake in the system (if your electricity is the same as the mining cost, you still have a stake in the value of bitcoin, so there is value.)
-  - _Solution_: punishment for non-cooperation or subsidies.
-  - _Tragedy of the Commons_ could be discussed here as well.
-- **Polkadot Reference**:
-  - Public good parachains (subsidies as a solution).
-  - Consensus as public good game (slashes and rewards as solution).
+We want to go through the following concepts:
 
-### Activity (90-120min)
+- What is Game Theory?
+- What is a Game?
+- Types of Games
+- Common Games
+- Nash Equilibrium
+- Equilibrium Selection
 
-In this non-lesson part, we want the participants to solve specific games.
+### Activity (~2 hrs)
 
-- Calculate Nash equilibrium in different games.
-- Some other problem sets from GT
+In this interactive part, we want the participants to experience foster the learnings in classroom discussions and play several games first-hand.
 
-[Maybe we could also start here with some class-room experiments?]
-
-This session aims to cover game theory concepts that are most relevant in a blockchain context.
-
-### Why is this important
-
-Game theory is the study of incentives in strategic situations. Understanding a little of game theory is important for the upcoming sessions as well as the participants future work as incentive architects.
-
-### Prerequisites
-
-Economic fundamentals.
-
-### Learning Outcomes
-
-The participants should be able to utilize core game theory concepts as taught in this session to the next sessions.
-
-### Learning Objectives
-
-The participants...
-
-- can solve canonical 2x2 matrix games.
-- can solve public good games.
-
-### Content
-
-We plan to cover the following content:
-
-- _Nash Equilibrium_: Most fundamental concept. A state in which no player has an incentive to unilaterally deviate. That is, everyone plays a _best response_ to everyone else's behavior.
-- We will discuss Nash equilibrium in a couple of canonical games, among which the first three can easily be discussed in 2x2 matrices:
-  - _Coordination Game_: Games in which the players get most if they all make the same choice (i.e., if they coordinate). A coordination game always has multiple equilibria. Examples: Money adoption, standard adoption, etc.
-  - **Blockchain Example:** Why does money have value? Money only has value because people agree that it does. Money adoption (and token adoption) relies on this, as well as on _network effects_.
-    - Network Effect: If network effects lead to a monopoly (and lack of change), then systems must have other means of evolving and adapting. Public ownership is one possible solution (but an public company controlled by committee).
-    - Anti-network effect: If there were only one Blockchain, then people couldn't bet on which Blockchain could do better and make money on that bet. Options allow evolution, so there is sometimes a societal gain from not coalescing on a single solution. Having more options, in and of itself, is a good thing because it allows the isolation of different factors, and creates a market in which people can bet on markets.
-  - **Blockchain Example:** To come!!
-  - _Prisoner's Dilemma_: A game in which the players fail to achieve the socially desirable outcome but end up in a state that is inferior for both. Examples:
-  - _Chicken Game_ (or Hawk-Dove Game): These are anti-coordination games in which players choosing opposite strategies are equilibria.
-  - _Zero-Sum Games_: A broader class of games in which the payoffs always add up to zero for any outcome.
-- Additional important concepts that we touch upon when discussing above games.
-  - _Schelling Point_: An equilibrium in a coordination game that is particularly salient, due to social norms.
-  - _Dominant Strategies_: Strategies that are optimal no matter what the other player does. The Nash equilibrium in the prisonners' dilemma is in dominant strategies.
-- _Public Good_: A public good is good whose consumption is rivalrous but non-exclusive.
-  - _Public Good Game_: A game in which players can bear costs for the provision of public good. If enough contribute, then it is produced, and can be consumed by everyone. Main problem: free-riding. It is never an equilibrium for everyone to contribute.
-  - _Open source software_ is another example. There is a marginal gain for contributing to consensus; you know it will be done correctly if you do it, and you have an underlying stake in the system (if your electricity is the same as the mining cost, you still have a stake in the value of bitcoin, so there is value.)
-  - _Solution_: punishment for non-cooperation or subsidies.
-  - _Tragedy of the Commons_ could be discussed here as well.
-- **Polkadot Reference**:
-  - Public good parachains (subsidies as a solution).
-  - Consensus as public good game (slashes and rewards as solution).
-
-### Activity (90-120min)
-
-In this non-lesson part, we want the participants to solve specific games.
-
-- Calculate Nash equilibrium in different games.
-- Some other problem sets from GT
-
-[Maybe we could also start here with some class-room experiments?]
+- Guessing Game
+- Prisonner's Dilemma
+- Public Goods Game

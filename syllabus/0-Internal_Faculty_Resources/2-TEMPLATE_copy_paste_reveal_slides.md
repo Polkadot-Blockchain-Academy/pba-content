@@ -283,13 +283,13 @@ Using<br/>`<pba-col right>`
 
 ## Images
 
-<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png" />
+<img style="width: 50vw" src="../../assets/img/5-Substrate/WebAssembly.png" />
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<img style="width: 50vw" src="../../assets/img/4-Substrate/WebAssembly.png" />
+<img style="width: 50vw" src="../../assets/img/5-Substrate/WebAssembly.png" />
 ```
 
 ---
