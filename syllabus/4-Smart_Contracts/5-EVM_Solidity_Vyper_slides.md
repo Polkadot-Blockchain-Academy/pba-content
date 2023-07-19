@@ -164,11 +164,11 @@ gas_price --> max_base_fee_per_gas
 
 ---v
 
-## Gas Estimation
+## OOG and Gas Estimation
 
 If a txn exhausts its `gas_limit` without finishing, it will produce an
-out-of-gas error and all changes made in the EVM are reverted (except for fee
-payment).
+OOG (out-of-gas) error and all changes made in the EVM are reverted (except for
+fee payment).
 
 In order to estimate the amount of gas a txn will need, an RPC method
 (`eth_estimateGas`) can perform a dry-run of the txn and record the amount
@@ -182,8 +182,9 @@ However, there are a few caveats:
 
 ---
 
-## Contract accounts vs EOAs
+## Account Types
 
+Ethereum account IDs are 160 bit. There are two types 
 An account is designated by a 160-bit account ID. These accounts can be controlled in
 one of two ways: An `Externally-owned Account` or a `Contract Account`.
 
@@ -824,15 +825,13 @@ Use Vyper through the new Vyper tab and use "Remote Compiler"
 
 ---
 
-# Storing or Secrets On-Chain
-
-TODO: format this -- how to do the one-click-per-line thing?
+# Storing Secrets On-Chain
 
 Can we store secrets on-chain? What if we want to password-protect a particular
 contract call?
 
 Obviously we can't store any plaintext secrets on-chain, as doing so reveals
-them.
+them. <!-- .element: class="fragment" -->
 
 ---v
 
@@ -843,6 +842,7 @@ user-input?
 
 Accepting a pre-hash also reveals the secret. This reveal may occur in a txn
 before it is executed and settled, allowing someone to frontrun it.
+<!-- .element: class="fragment" -->
 
 ---v
 
@@ -905,4 +905,5 @@ secret(s) secure.
 *  [ ] checksum cases
 *  [ ] Loops - introduce in solidity but cover in more depth with vyper (no inf loops)
 *  [ ] Tokenization, wrapped tokens, etc.
+*  [ ] PoS
 
