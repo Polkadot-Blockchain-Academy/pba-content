@@ -75,7 +75,7 @@ Another desireable property that is sometimes too obvious to say.
 
 ---
 
-## Example 1: Where to go for dinner
+## Example: Where to go for dinner
 
 <pba-cols>
 <pba-col>
@@ -106,44 +106,6 @@ Kenny and Cartman propose Casa Bonita.
 In the end Kenny may not agree that Whistlin' Willie's is the best option for dinner, but he will agree that it is the legitimate group decision.
 
 Image source: https://southparkstudios.mtvnimages.com/images/shows/south-park/clip-thumbnails/season-14/1402/south-park-s14e02c03-ill-show-them-f-obscene-16x9.jpg
-
----
-
-## Byzantine Generals Problem
-
-<pba-cols>
-<pba-col>
-
-<img rounded style="width: 700px" src="./img/byzantine-generals.png" />
-
-</pba-col>
-
-<pba-col>
-
-- Divisions plan to attack
-- Must make coordinated attack to succeed
-- Some generals might be traitors and behave maliciously
-
-</pba-col>
-</pba-cols>
-
-Notes:
-
-Several divisions of the Byzantine army are camped around an enemy city. They plan to attack the city, but have not yet decided when to attack.
-If the attack is coordinated, they will probably be successful, but if it is uncoordinated, they will probably be defeated.
-What do our three properties mean in this scenario?
-
-- Termination - every honest general will eventually decide when to attack
-- Agreement - honest general will all agree to attack ta the same time
-- Integrity - the attack time will have been proposed by at least one honest general
-
----v
-
-## Byzantine Generals: Solved
-
-<img height="600px" alt="Cover page: Practical Byzantine Fault Tolerance" src="./img/pbft-cover.png" />
-
-_Miguel Castro and Barbara Liskov, 1999_
 
 ---v
 
@@ -195,6 +157,65 @@ Are these crash faults or byzantine?
 
 In a blockchain system, bugs in the code may cause nodes whose operators are intending to be honest, to deviate from the protocol anyway. This is why client diversity is important.
 
+
+## Byzantine Generals Problem
+
+<pba-cols>
+<pba-col>
+
+<img rounded style="width: 700px" src="./img/byzantine-generals.png" />
+
+</pba-col>
+
+<pba-col>
+
+- Divisions plan to attack
+- Must make coordinated attack to succeed
+- Some generals might be traitors and behave maliciously
+
+</pba-col>
+</pba-cols>
+
+[Cornell Lecture Slides](https://www.cs.cornell.edu/courses/cs6410/2018fa/slides/18-distributed-systems-byzantine-agreement.pdf)
+
+Notes:
+
+Several divisions of the Byzantine army are camped around an enemy city.
+They plan to attack the city, but have not yet decided when to attack.
+If the attack is coordinated, they will probably be successful, but if it is uncoordinated, they will probably be defeated.
+What do our three properties mean in this scenario?
+
+- Termination - every honest general will eventually decide when to attack
+- Agreement - honest general will all agree to attack ta the same time
+- Integrity - the attack time will have been proposed by at least one honest general
+
+Leslie Lamport proposed this problem in the form of a story as a typical representative of the distributed consensus problem.
+
+This is a big moment for us, so let's stop and savor it.
+Two days ago Lauren kicked us off by talking about human coordination.
+How it can achieve long railroads and the great pyramids and sports teams and dancing, and even this academic program.
+Since then we've looked through so many layers of abstraction (contracts, smart contracts, state machines, dags) and so many technical implementation details (P2P networking, platform agnostic bytecodes, blockchain headers, merkle proofs).
+We've taken a huge class of problems - human coordination problems - and distilled them down to their absolute essence.
+Human coordinate at global scale reduced to this one cute, carefully stated problem.
+
+---v
+
+## Byzantine Generals: Solved
+
+<img height="600px" alt="Cover page: Practical Byzantine Fault Tolerance" src="./img/pbft-cover.png" />
+
+_Miguel Castro and Barbara Liskov, 1999_
+
+Notes:
+
+And great news.
+The problem is solved!
+At least under some conditions.
+And also great news.
+We have a pretty good understanding of under what circumstances it is solvable.
+
+Before I can tell you exactly how and where it can be solved, we have to understand networks a little bit.
+
 ---
 
 # History Lesson
@@ -207,7 +228,7 @@ A network is one of:
 
 - **Synchronous** - When sent, a message is received immediately by all.
 - **Asynchronous** - When a message is sent it may be received after some delay, or not at all. The sender doe not know whether it is received. Messages may be received in different orders by different parties.
-- **Partially Synchronous** - When a message is sent, it may be received after some delay up to a maximum delay, $T$. It may not be dropped entirely. Messages may be received in different orders by different parties.
+- **Partially Synchronous** - When a message is sent, it may be received after some delay up to a maximum delay, $T$. It may not be dropped entirely. Messages may be received in different orders by different parties. <!-- .element: class="fragment"-->
 
 Roughly analogous to real-time (async) vs. turn-based (sync) games.
 
@@ -249,6 +270,8 @@ A system is one of:
 ## FLP Impossibility
 
 <img style="padding: 0 200px 0 0" src="./img/FLP-impossible.png" />
+
+[Excellent Podcast with Ethan Buchman](https://open.spotify.com/episode/7z7qnOrLTVGa5T0s0MquJd)
 
 Notes:
 
@@ -527,30 +550,214 @@ Once you have a finality gadget installed, you have to make sure you only ever a
 
 ## Vote on Chains, not Blocks
 
-<pba-cols style="gap:0">
-<pba-col>
+<img style="width: 1000px" src="./img/grandpa-round/4.6-validators-vote-on-chain.png"/>
 
+Notes:
 BFT finality with $n$ authorities is in $O(n^2)$.
 Tendermint does this at **every block**.
 This bounds the size of the authority set.
 
 With separated, we treat each vote as a vote not only for one block,but also for each ancestor block.
 This significantly reduces the number of total messages sent.
+Allows the chain to stay live even when many validators are offline
 
-</pba-col>
-<pba-col>
-
-<pba-flex center>
-
-- Allows the chain to stay live even when many validators are offline
-- Allows for a challenge period to delay finality if needed
-
-</pba-flex>
-</pba-col>
-</pba-cols>
 ---
 
-TODO crib Andre's grandpa slides
+## A GRANDPA Round
+
+Each validator **broadcasts** a **prevote** for the **highest block** that it thinks **should** be **finalized**
+
+- For **honest** validators, this block **must include** the chain that was previously finalized
+- This **new chain** could be **several blocks** longer than the **last finalized** chain
+
+NOTES:
+
+A **validator** that is designated as the **primary** broadcasts the highest block that it thinks could be final from the previous round
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-1.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-2.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+Each validator **computes** the **highest block** that can be **finalized based** on the set of **prevotes**
+
+- i.e. we find the **common ancestor** of all votes that has **support** from **more** than $\frac{2}{3}N + 1$ validators
+- We refer to this block as the **prevote GHOST**
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-3.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+We define the round **estimate** as the **highest ancestor** of the **prevote GHOST** for which it is **still possible** to **precommit**
+
+- i.e. when **no precommit** votes have been **sent** out yet, then:
+
+`estimate == prevote GHOST`
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-4.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+If the **estimate** extends the **last finalized** chain, then each validator will cast a **precommit** for that chain.
+
+Each validator **waits** to receive **enough precommits** to be able to finalize
+
+- We again find the **common ancestor** of the **estimate** which has **threshold precommits**
+- We declare that **block** as **finalized**
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-5.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-6.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+The **round** is deemed **completable**:
+
+- if the **estimate** is **lower** than the **prevote GHOST**
+- or if it's **impossible** to have a **supermajority** on any **block higher** than the current **estimate**
+
+Validators **start** a **new round** after it becomes **completable**.
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-6.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-7.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-8.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round (Alt)
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-6.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round (Alt)
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-7-alternative.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round (Alt)
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-8-alternative.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
+---
+
+## A GRANDPA Round (Alt)
+
+<img style="width: 400px" src="./img/grandpa-round/4.6-grandpa-round-9-alternative.png"/>
+
+Notes:
+
+- 7 = # Validators
+- 5 = # Threshold
+
 
 ---
 
