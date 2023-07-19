@@ -53,25 +53,25 @@ The DOT token can be in one of the following states:
 
 ## Reserved Balances
 
-<image src="../../../assets/img/5-Polkadot/reserved-balance.svg" style="width: 1000px">
+<image src="../../../assets/img/7-Polkadot/reserved-balance.svg" style="width: 1000px">
 
 ---
 
 ## Reserved Balance Example
 
-<image src="../../../assets/img/5-Polkadot/reserved-balance-example.svg" style="width: 1000px">
+<image src="../../../assets/img/7-Polkadot/reserved-balance-example.svg" style="width: 1000px">
 
 ---
 
 ## Locked Balances
 
-<image src="../../../assets/img/5-Polkadot/locked-balance.svg" style="width: 1000px">
+<image src="../../../assets/img/7-Polkadot/locked-balance.svg" style="width: 1000px">
 
 ---
 
 ## Locked Balance Example
 
-<image src="../../../assets/img/5-Polkadot/locked-balance-example.svg" style="width: 1000px">
+<image src="../../../assets/img/7-Polkadot/locked-balance-example.svg" style="width: 1000px">
 
 ---
 
