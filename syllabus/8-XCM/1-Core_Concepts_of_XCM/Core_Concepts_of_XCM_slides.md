@@ -131,19 +131,19 @@ It's up to the interpreter to interpret the intention how it makes sense.
 
 ### Message format changes
 
-<img style="width: 1050px;" alt="Against native messaging" src="../../../assets/img/7-XCM/against-native-messaging.svg" />
+<img style="width: 1050px;" alt="Against native messaging" src="../../../assets/img/8-XCM/against-native-messaging.svg" />
 
 ---v
 
 ### Message format changes
 
-<img style="width: 1050px;" alt="Against native messaging 2" src="../../../assets/img/7-XCM/against-native-messaging-2.svg" />
+<img style="width: 1050px;" alt="Against native messaging 2" src="../../../assets/img/8-XCM/against-native-messaging-2.svg" />
 
 ---v
 
 ### Message format changes
 
-<img rounded style="width: 1050px;" alt="XCM executor routing calls" src="../../../assets/img/7-XCM/xcm-executor-routing-calls.png" />
+<img rounded style="width: 1050px;" alt="XCM executor routing calls" src="../../../assets/img/8-XCM/xcm-executor-routing-calls.png" />
 
 Notes:
 
@@ -153,7 +153,7 @@ XCM abstracts away the actual on-chain operation that will be called, which lets
 
 ### No one-to-one mapping
 
-<diagram class="mermaid">
+<diagram class="mermaid smaller">
 graph TD
     subgraph Message
         WithdrawAsset(WithdrawAsset)-->DepositAlice("DepositAsset(Alice)")
@@ -341,15 +341,17 @@ Junctions are ways to descend the location hierarchy
 
 ## Universal location
 
-We can imagine a hypothetical location that contains all top-level consensus systems.
-
-<diagram class="mermaid">
+<diagram class="mermaid smaller">
 graph TD;
     UniversalLocation(Universal Location)-->RelayA(Relay A)
     UniversalLocation-->RelayB(Relay B)
     RelayA-->BranchA(...)
     RelayB-->BranchB(...)
 </diagram>
+
+Notes:
+
+We can imagine a hypothetical location that contains all top-level consensus systems.
 
 ---v
 
@@ -619,7 +621,7 @@ In reality, it's better to use the counted variant of the wildcards, for benchma
 
 How do different locations reference the same asset?
 
-<diagram class="mermaid">
+<diagram class="mermaid small">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)")
@@ -636,7 +638,9 @@ Locations are relative, so they must be updated and rewritten when sent to anoth
 
 ### DOT from Asset Hub
 
-<diagram class="mermaid">
+`../Here`
+
+<diagram class="mermaid small">
 graph TD
     Polkadot(Polkadot)-->AssetHub("📍 Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -653,8 +657,6 @@ graph TD
     classDef disabled opacity:0.3
 </diagram>
 
-`../Here`
-
 Notes:
 
 Native tokens are referenced by the location to their system.
@@ -663,7 +665,9 @@ Native tokens are referenced by the location to their system.
 
 ### DOT from Alice
 
-<diagram class="mermaid">
+`../../Here`
+
+<diagram class="mermaid small">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -682,13 +686,13 @@ graph TD
     classDef disabled opacity:0.3
 </diagram>
 
-`../../Here`
-
 ---v
 
 ### Universal Location of DOT
 
-<diagram class="mermaid">
+`GlobalConsensus(Polkadot)`
+
+<diagram class="mermaid smaller">
 graph TD
     Universe("📍 Universal Location")-->Polkadot(Polkadot)
     Polkadot-->AssetHub("Asset Hub (1000)"):::disabled
@@ -704,13 +708,13 @@ graph TD
     classDef disabled opacity:0.3
 </diagram>
 
-`GlobalConsensus(Polkadot)`
-
 ---v
 
 ### USDT from Asset Hub
 
-<diagram class="mermaid">
+`PalletInstance(50)/GeneralIndex(1984)`
+
+<diagram class="mermaid small">
 graph TD
     Polkadot(Polkadot):::disabled-->AssetHub("📍 Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -723,13 +727,13 @@ graph TD
     classDef disabled opacity:0.3
 </diagram>
 
-`PalletInstance(50)/GeneralIndex(1984)`
-
 ---v
 
 ### USDT from Collectives
 
-<diagram class="mermaid">
+`../Parachain(1000)/PalletInstance(50)/GeneralIndex(1984)`
+
+<diagram class="mermaid small">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("📍 Collectives (1001)")
@@ -743,26 +747,20 @@ graph TD
     classDef disabled opacity:0.3
 </diagram>
 
-`../Parachain(1000)/PalletInstance(50)/GeneralIndex(1984)`
-
 ---v
 
 ### Reanchoring to the rescue
 
 <diagram class="mermaid">
 graph LR
-    Collectives(Collectives)-->USDTCollectives
-    subgraph OutgoingMessage[Outgoing message]
+    subgraph OutgoingMessage[Outgoing message from Collectives]
         USDTCollectives(USDT from Collectives' perspective)
     end
     USDTCollectives--Reanchoring-->USDTAssetHub
-    subgraph IncomingMessage[Incoming message]
+    subgraph IncomingMessage[Incoming message in Asset Hub]
         USDTAssetHub(USDT from Asset Hub's perspective)
     end
-    USDTAssetHub-->AssetHub(Asset Hub)
 </diagram>
-
-<!-- TODO: Here it would be better to link to the subgraphs themselves, but we need a newer version of MermaidJS for that -->
 
 ---
 
@@ -795,7 +793,7 @@ When transferring between consensus systems, the sovereign account is the one th
 
 ### 1. Asset teleportation
 
-<img rounded style="width: 500px;" src="../../../assets/img/7-XCM/teleport.png" alt="Teleport" />
+<img rounded style="width: 500px;" src="../../../assets/img/8-XCM/teleport.png" alt="Teleport" />
 
 Notes:
 
@@ -806,7 +804,7 @@ This method is the simplest one, but requires a lot of trust, since failure to b
 
 ### 2. Reserve asset transfers
 
-<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer" />
+<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/reserve-tx.png" alt="Reserve Transfer" />
 
 Notes:
 
@@ -831,6 +829,6 @@ This usually happens with parachains' native tokens.
 ---
 
 <figure>
-    <img rounded src="../../../assets/img/7-XCM/subscan-xcm-dashboard.png" alt="Subscan XCM Dashboard" style="width: 50%;" />
+    <img rounded src="../../../assets/img/8-XCM/subscan-xcm-dashboard.png" alt="Subscan XCM Dashboard" style="width: 50%;" />
     <figcaption>Source: <a href="https://polkadot.subscan.io/xcm_dashboard">Subscan</a></figcaption>
 </figure>

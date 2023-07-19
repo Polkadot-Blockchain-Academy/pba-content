@@ -14,11 +14,9 @@ What is the core problem we want to solve?
 
 Trustless provisioning of infrastructure.
 
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
 
 Notes:
-
-Potential for some discussion here, engage the audience.
 
 Something kind of like a server, that doesn't rely on a server operator, and has strong guarantees like Cryptography has to offer.
 
@@ -39,11 +37,6 @@ Crypto guarantees:
 - Authorship
 
 ---
-
-LOTS OF CONTENT WAS SNIPPED FROM HERE
-TODO SMOOTH OVER THE SEAM
-
----v
 
 ## Application Disentanglement
 
@@ -116,10 +109,9 @@ So now we understand the goals of web3. How do we achieve them? The key is allow
 
 > Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
 
-_-- Yuval Noah Harari, Sapiens --_
+<!-- .element: class="fragment" -->
 
-TODO expand vertical slides about shared story.
-Maybe retell some sub0 content
+_-- Yuval Noah Harari, Sapiens --_
 
 ---v
 
@@ -151,7 +143,7 @@ Then we _MUST_ agree on:
 
 Notes:
 
-Now that we have a formal mathy model of systems that we care about, we can see that the notion shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
+Now that we have a formal math-y model of systems that we care about, we can see that the notion of shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren't newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.
 
 ---
 
@@ -174,7 +166,7 @@ What are the _rules_ to change it?
 <pba-col>
 <pba-flex center>
 
-**Shared History**
+**Shared History** (data structure)
 
 Which potential histories exist?
 
@@ -212,13 +204,41 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 
 <img rounded style="width: 500px;" src="./img/bitcoin-transaction.png" />
 
-<!-- TODO update above image to styled diagram -->
-
-Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus.
+Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus. <!-- .element: class="fragment" -->
 
 Notes:
 
-Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
+Who knows where the figure is from?
+
+CLICK
+
+Bitcoin was first.
+It was a money app.
+The first app chain.
+It hosts a smart contract in the broad definition.
+
+It was the first time most people considered a digital service that was not run by a particular person.
+
+Figure source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
+
+---v
+
+## Litecoin, Monero, Dogecoin
+
+<img src="./img/altcoins.png" />
+
+Notes:
+
+Only a few year later people realized they could fork the code and make small changed and improvements.
+Some changes were trivial.
+Some were interesting: monero and privacy.
+
+For me personally, this was a small crisis.
+I thought bitcoin was the one global one.
+Aren't these other coins undermining the narrative?
+NO! The point is that anytime you don't like the system or have an idea for a better one, you can do it!
+If you don't like bitcoin, build your own coin and make it better.
+Let the market decide.
 
 ---v
 
@@ -229,34 +249,17 @@ Source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 - Accounts can store balances, but can also store executable code (smart contracts)
 - Each contract can have its own internal state and API
 
-TODO Consider introducing second definition of smart contract here.
-If not here, it definitely has to go somewhere.
-Maybe even bring Lauren back on stage for a camio since contracts is more her domain.
-
 ---v
 
-## Hard Forks
+## Smart contracts - Two Definitions
 
-Historically, upgrading blockchains meant getting everyone to update their node software.
+<br />
+<br />
 
-"This had made many people very angry and has been widely regarded as a bad move."
+#### Broad Definition <small style="margin-top:20px;">_"Szabo definition"_</small>
 
----
+<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote>
 
-## Blockspace
+#### Narrow Definition <small style="margin-top:20px;">_"Web3 definition"_</small>
 
-A resource created, and often sold, by a decentralized blockchain network.
-
-<img style="width: 700px;" src="./img/Web2Web3Stacks.png" />
-
----
-
-## Learn more:
-
-- Article: https://a16zcrypto.com/blockspace-explained/
-- Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
-- Podcast: https://youtu.be/jezH_7qEk50?t=5330
-
-Notes:
-
-A Blockchain network is a replacement for a centralized server. It sells a product to application deployers. The state machine is the application layer, and the blockchain is the server replacement. In the same way that applications pay data centers for server resources like cpu time, disk space, bandwidth etc. Applications (maybe via their developers or users) pay for the privilege of having their history attested to and their state tracked by a trustless unstoppable consensus layer.
+<blockquote>A program that specifies how users can interact with a state machine and is deployed permissionlessly to a blockchain network</blockquote>
