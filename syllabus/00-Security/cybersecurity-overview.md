@@ -12,17 +12,17 @@ duration: 30 minutes
 # Cyber Security Overview
 
 - Cyber threat landscape
-    -  Key threat actors
-    -  Largest crypto heists / loss
-    -  Crypto incidents
+  - Key threat actors
+  - Largest crypto heists / loss
+  - Crypto incidents
 - Cyber risk management
-  -  What is it ? 
-  -  Inherent & Residual risk
-  -  Key steps of an attack
-  -  Importance of culture
+  - What is it ?
+  - Inherent & Residual risk
+  - Key steps of an attack
+  - Importance of culture
 - Cyber and development
-  -  Development and key focus
-  -  CI/CD
+  - Development and key focus
+  - CI/CD
 - Conclusion
 - Q&A
 
@@ -33,6 +33,7 @@ duration: 30 minutes
 <img rounded style="height: 600px" src="./img/cybersecurity-overview/2-landscape.png" />
 
 - ==> Different actors with different drivers but commonalities on modus operandi
+
 ---
 
 ## LARGEST CRYPTO LOSS
@@ -43,14 +44,13 @@ Notes:
 On the crypto ecosystem there have been number of cyber events !
 https://medium.com/ngrave/the-history-of-crypto-hacks-top-10-biggest-heists-that-shocked-the-crypto-industry-828a12495e76
 
-Some were ponzi scheme, most were breaches/exploits
----
+## Some were ponzi scheme, most were breaches/exploits
 
 ## MORE RECENT CRYPTO INCIDENTS
 
 <img rounded style="height: 600px" src="./img/cybersecurity-overview/4-incidents.png" />
 
--  ==> Strong cyber control foundation decrease exposure to incidents 
+- ==> Strong cyber control foundation decrease exposure to incidents
 
 Notes:
 
@@ -73,7 +73,7 @@ https://www.reuters.com/investigates/special-report/fintech-crypto-binance-dirty
 
 ---
 
-## INFOSEC & CYBER RISK - Taxonomy	
+## INFOSEC & CYBER RISK - Taxonomy
 
 <img rounded style="height: 600px" src="./img/cybersecurity-overview/5-taxonomy.png" />
 
@@ -87,12 +87,11 @@ Both Threats and Vulnerabilities are evolving over time based on multiple factor
 
 ## TAXONOMY - Threats Examples
 
-
 - Cyber Criminal : In the last 12 months, cyber criminal activity +200%
 - Insider / Disgruntled employee : lot of evolution on resources
 - Hacktivist : Crypto projects and Web3 have some detractors
 - Terrorist : they are increasingly using cyber as a weapon
-- Nation state : Geopolitical evolution with China, North Korean, Russia/Ukraine 
+- Nation state : Geopolitical evolution with China, North Korean, Russia/Ukraine
 - "Government" : There is lot of regulatory scrutiny on crypto area
 - Media : Web3 & Cryptocurrency evolutions are regularly in the Media
 - Competitors : Polkadot approach is a game changer
@@ -107,8 +106,7 @@ Both Threats and Vulnerabilities are evolving over time based on multiple factor
 
 ## WHAT IS CYBER RISK MANAGEMENT (2/2)
 
-<img rounded style="height: 600px" src="./img/cybersecurity-overview/8-risk.png />
----
+## <img rounded style="height: 600px" src="./img/cybersecurity-overview/8-risk.png />
 
 ## INHERENT AND RESIDUAL RISK
 
@@ -117,12 +115,13 @@ Both Threats and Vulnerabilities are evolving over time based on multiple factor
 
 - ==> Having visibility of inherent risk facilitates a common view on area of focus and priorities
 
-Notes:    
+Notes:
+
 - It is foundational to identify inherent risk. Including in partnership with asset owner. Especially from an impact perspective
 
 - Controls are key to :
-    -  Reduce likelihood of initial compromise
-     - Limit the impact of compromise once a foothold has been established 
+  - Reduce likelihood of initial compromise
+  - Limit the impact of compromise once a foothold has been established
 
 And to enhance ability to detect compromise asap
 
@@ -136,13 +135,14 @@ Starting from the inherent risk is foundational as the threat landscape will evo
 
 Notes:
 Usually an attacker is not attacking directly the target but :
+
 1. Collect information leveraging the digital footprint available (linkedin profile, dns records, website, repositories, 3rd parties, anything publicly available)
 2. Use information available and vulnerabilities to create a “weapon” to prepare an attack
-3. Deliver the “weapon” via available channels : email (prof./person.), usb, WhatsApp/Signal/Telegram, webpage (legit or squatting), code update, etc 
+3. Deliver the “weapon” via available channels : email (prof./person.), usb, WhatsApp/Signal/Telegram, webpage (legit or squatting), code update, etc
 4. Use the “weapon” delivered on the victim’s system to execute code
 5. Get a foothold on the target
 6. Move laterally smoothly to reach the target objective including staying hidden for a period of time
-7. Execute final objective : ransom, denial or service, data exfiltration, corruption, fund stealing 
+7. Execute final objective : ransom, denial or service, data exfiltration, corruption, fund stealing
 
 ---
 
@@ -155,6 +155,7 @@ Usually an attacker is not attacking directly the target but :
 ## INFOSEC & CYBER RISK - EMBEDDED
 
 Security embedded and partnering at each steps with key success factors:
+
 - Upfront threat modeling
 - Peers code review
 - Code scanning
@@ -162,21 +163,20 @@ Security embedded and partnering at each steps with key success factors:
 - Pentest
 - Secret management
 - Supply chain management
-- Monitoring 
+- Monitoring
 - Playbooks
-
 
 ---
 
-## INFOSEC & CYBER RISK - CICD 
+## INFOSEC & CYBER RISK - CICD
 
-This is a continuous process, at each steps 
+This is a continuous process, at each steps
 
 <img rounded style="height: 600px" src="./img/cybersecurity-overview/13-cicd.png" />
 
 ---
 
-## CONCLUSION 
+## CONCLUSION
 
 <img rounded style="height: 600px" src="./img/cybersecurity-overview/14-conclusion.png" />
 
@@ -184,19 +184,18 @@ This is a continuous process, at each steps
 
 ## NEXT PRACTICAL SESSIONS
 
-
 - Security Awareness (40/50mn) :
-Context and adversaries, Attack Surface and Social Engineering
+  Context and adversaries, Attack Surface and Social Engineering
 - User Centric Security in Web3 (40/50mn) :
-Wallet landscape, Key management and User device protection
+  Wallet landscape, Key management and User device protection
 - Infrastructure Security (40/50mn) :
-Concentration, deplatforming, supply chain risks, Key management on the nodes and Passwords management for Infrastructure
+  Concentration, deplatforming, supply chain risks, Key management on the nodes and Passwords management for Infrastructure
 - Application Security (60mn) :
-Securing SDLC, Components of AppSec and Known Attack Surfaces & Vectors
+  Securing SDLC, Components of AppSec and Known Attack Surfaces & Vectors
 
 ---
 
-## 
+##
 
 <img rounded style="height: 600px" src="./img/cybersecurity-overview/16-QA.png" />
 
@@ -208,6 +207,6 @@ Securing SDLC, Components of AppSec and Known Attack Surfaces & Vectors
 
 ---
 
-## APPENDIX - STREETLIGHT EFFECT 
+## APPENDIX - STREETLIGHT EFFECT
 
 <img rounded style="height: 600px" src="./img/cybersecurity-overview/18-street.png" />

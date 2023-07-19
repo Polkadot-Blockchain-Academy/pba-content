@@ -1,5 +1,5 @@
 ---
-title: User Centric Security in Web3 # Also update the h1 header on the first slide to the same name
+title: User Centric Security in Web3
 description: Describe your slides here
 duration: 45 min
 ---
@@ -19,7 +19,19 @@ But also give the opportunity to dig into the rabbit holes for those who may wan
 
 ---
 
-**"Security is a process, not a product"**
+## Goal for today:
+
+<pba-flex center>
+
+- Understand the different types of wallets - and the risks associated with them
+- Get the basic foundation to be able to outline a strategy to protect your private keys
+- Be familiar with the best practices to protect your computer and digital tools
+
+</pba-flex>
+
+---
+
+> Security is a process, not a product.
 
 _Bruce Scheiner ([Click here to kill everybody](https://en.wikipedia.org/wiki/Click_Here_to_Kill_Everybody), 2019)_
 
@@ -30,56 +42,20 @@ Security is something that is different for everyone, for every moment or use ca
 
 ---
 
-### Outline
-
-<!--
-You can reference slides within this presentation like [this other slide](#at-the-end-of-this-lecture-you-will-be-able-to) by use of the header title.
-
-Please make your lecture precise.
-
-- Limit the main points in a lecture to five or fewer.
-- Create effective visuals, analogies, demonstrations, and examples to reinforce the main points.
-  {TAs and the Parity design team can assist! Please let us know marking an item here as `TODO`}
-- Emphasize your objectives and key points in the beginning, as you get to them, and as a summary at the end.
-
--->
-
-<pba-flex center>
-
-1. Keys and key management
-1. Wallet landscape
-1. Sharding and Secret Sharing
-1. Best Protecting Practices
-
-</pba-flex>
-
----
-
-### _At the end of this lecture, you will be able to:_
-
-<pba-flex center>
-
-- Understand the different types of wallets - and the risks associated with them
-- Get the basic foundation to be able to outline a strategy to protect your private keys.
-- Be familiar with the best practices to protect your computer and digital tools
-
-</pba-flex>
-
----
-
 ## Threats or what we need to be worried about
 
 <pba-flex center>
 
 - Vulnerabilities on laptops/phones
 - Network vulnerabilities
-- Poor self Operational Security
+- Poor Operational Security
 
 </pba-flex>
 
 Notes:
 
-What is a threat? It is a _potential_ danger that can trespass security and put your assets are risks.
+What is a threat?
+It is a _potential_ danger that can trespass security and put your assets are risks.
 The threats are the events/things/personas in the horizon we need to have an eye on them.
 
 Different security context - have a different security threats.
@@ -89,54 +65,61 @@ Edward Snowden faces different security threats (changing geopolitical situation
 
 ### Vulnerably on Laptop - What not to do
 
-<img rounded style="width: 500px" src="./img/Web3Sec/vuln.jpg" />
+<img rounded style="width: 800px" src="./img/Web3Sec/vuln.jpg" />
 
 ---
 
-### Vulnerability on network - What not to do
+### Vulnerability on Network - What not to do
 
-<img rounded style="width: 500px" src="./img/Web3Sec/Network_vuln.jpg" />
+<img rounded style="width: 800px" src="./img/Web3Sec/Network_vuln.jpg" />
 
 ---
 
-### Poor self Operational Security - What not to do
+### Poor Operational Security - What not to do
 
-## <img rounded style="width: 500px" src="./img/Web3Sec/PoorOpSec.jpg" />
+<img rounded style="width: 800px" src="./img/Web3Sec/PoorOpSec.jpg" />
 
-## Risk or what can go wrong - definitions
+---
 
-But, What is a risk?
+# Risk
+
+... What is risk?
 
 Notes:
 
-What is a risk? According to Oxford English Dictionary is the _possibility_ of loss, injury, or other adverse or welcome circumstance; a chance or situation of situation of something bad happening.
+What is a risk?
+
+According to Oxford English Dictionary is the _possibility_ of loss, injury, or other adverse or welcome circumstance; a chance or situation of situation of something bad happening.
 But that is what _bad_ means in security terms?
 
 ---
 
-## Let's visit the C I A triad
+## Let's visit the `C` `I` `A` triad
 
-- Confidentiality - keep information private.
-- Availability - have information accessible when you need it.
-- Integrity - keep information as you have note it down when you stored it.
+- `C`onfidentiality - keep information private.
+- `A`vailability - have information accessible when you need it.
+- `I`ntegrity - keep information as you have note it down when you stored it.
 
-#### (_you will see this many times_)
+Notes:
+
+We will see this many times!
 
 ---
 
-## Risks or what can go wrong
+## Risks: what can go wrong
 
 <pba-flex center>
 
 - Keys compromised - Loss of confidentiality
-
 - Keys lost - Loss of availability/integrity
 
 </pba-flex>
 
 Notes:
 
-In this case, which risks (things that can go wrong) we need to be aware? That someone else has access to our keys? Then they are compromised.
+In this case, which risks (things that can go wrong) we need to be aware?
+That someone else has access to our keys?
+Then they are compromised.
 Or that we cannot access back our keys because we cannot access them or they are noted/stored wrongly.
 By our fault or others fault.
 
@@ -146,13 +129,13 @@ But - what are these keys?
 
 ## Keys compromised - Bad risk management
 
-<img rounded style="width: 500px" src="./img/Web3Sec/compromised.jpg" />
+<img rounded style="width: 800px" src="./img/Web3Sec/compromised.jpg" />
 
 ---
 
 ## Keys lost - Bad risk management
 
-<img rounded style="width: 500px" src="./img/Web3Sec/keyslost.jpg" />
+<img rounded style="width: 800px" src="./img/Web3Sec/keyslost.jpg" />
 
 ---
 
@@ -198,8 +181,7 @@ A key is protected by
 
 <pba-flex center>
 
-- Strong math
-- Length
+- Strong math, overall length, ...
 - **Handling of the key (key management) by humans or machines**
 
 </pba-flex>
@@ -207,7 +189,8 @@ A key is protected by
 Notes:
 
 We have determined that this keys are important for the user to operate on the blockchain.
-But how secure they are? They are protected by strong math (the encryption algorithms that they confer their particular asymmetric properties).
+But how secure they are?
+They are protected by strong math (the encryption algorithms that they confer their particular asymmetric properties).
 They are long, so any adversary will need to take longer to(if) calculate the original private key with a longer key than when a shorter key (is just a cases of attempts, cpu speed and probabilistic).
 And the most important - and most of the time the weakest: how we handle these keys.
 
@@ -217,9 +200,12 @@ And the most important - and most of the time the weakest: how we handle these k
 
 <pba-flex center>
 
-- Loss of confidentiality - your key is leaked or compromised - i.e: someone else has access to the wallet.
-- Loss of availability - you cannot access your key anymore - i.e: you don't know where you noted.
-- Loss of integrity - your key is wrong - i.e: you noted the key incorrectly.
+- Loss of confidentiality - your key is leaked or compromised.<br/>
+  i.e: someone else has access to the wallet.
+- Loss of availability - you cannot access your key anymore.<br/>
+  i.e: you don't know where you noted.
+- Loss of integrity - your key is wrong.<br/>
+  i.e: you noted the key incorrectly.
 
 </pba-flex>
 
@@ -231,27 +217,32 @@ That they key is available - you can access to it when you need it - the hard di
 
 ---
 
-## Quick and dirty definitions on public/private keys
+## _Keys overly simplified_
 
-- The public key is used to receive tokens - and by definition is **public**
+## Cryptocurrency user definitions
 
-- The private key is used to sign transactions - and should stay **private**
+- The public key is used to receive tokens (**public**)
 
-- The seed is used to calculate the private key - and should stay **private**.
+- The private key is used to sign transactions (**private**)
+
+- The seed is used to calculate the private key (**private**)
 
 ---
 
 ### Multisig accounts
 
-<img rounded style="width: 500px" src="./img/Web3Sec/multiSig.jpg" />
+<img rounded style="width: 900px" src="./img/Web3Sec/multiSig.jpg" />
 
-A multisig is composed of one or more addresses and a threshold.
-The threshold defines how many signatories (participating addresses) need to agree on submitting an extrinsic for the call to be successful.
-This is particularly interesting when protecting tokens (funds) or opinions (on chain voting).
+<pba-flex center>
+
+- One or more keys and a threshold
+- The threshold defines how many signatories<br/>must sign for a sig check t be valid.
+
+</pba-flex>
 
 Notes:
 
-These address can be distributed among different individuals - even in different locations - so a transaction is only validated when the minimum required of signatures are achieved.
+These pub keys (addresses) can be distributed among different individuals - even in different locations - so a transaction is only validated when the minimum required of signatures are achieved.
 This way the individuals-parties need to agree on signing a particular transactional.
 This is a common way to protect corporate funds or big amount of tokens - and not to rely in one individual or single point of failure.
 
@@ -263,7 +254,7 @@ The individual can still operate with this wallet (and most recommended, migrate
 
 ## What is a wallet
 
-<img rounded style="width: 500px" src="./img/Web3Sec/keymaker.jpg" />
+<img rounded style="width: 800px" src="./img/Web3Sec/keymaker.jpg" />
 
 A wallet holds a pair of cryptographic keys (public and private).
 
@@ -307,9 +298,9 @@ This is the todays standard for hot wallets.
 
 ---
 
-## Everything connected to the internet is at bigger risk
+## Internet connection = _bigger_ risk
 
-<img rounded style="width: 500px" src="./img/Web3Sec/listening.jpg" />
+<img rounded style="width: 800px" src="./img/Web3Sec/listening.jpg" />
 
 The listening post (2005) - Exhibited in the British Museum
 
@@ -357,15 +348,16 @@ The need to the physical interaction for this restricts the operation of the har
 
 ---
 
-## Polkadot Vault
+## [Polkadot Vault](https://signer.parity.io/)
+
+<img rounded style="width: 800px" src="./img/Web3Sec/vault.jpg" />
 
 Polkadot Vault is a software app that transforms an Android or iOS device in an air-gapped hardware wallet.
-The wallet is not connected to the net or even to the device which is interacting with the blockchain.
-The signing of the transactions is made by a series of QR communications between computer and the Vault Device.
-
-<img rounded style="width: 500px" src="./img/Web3Sec/vault.jpg" />
 
 Notes:
+
+The signing of the transactions is made by a series of QR communications between computer and the Vault Device.
+The wallet is not connected to the net or even to the device which is interacting with the blockchain.
 
 Some hardware wallets are completely air-gapped - like Vault, software installed in a android or iOS device in Airplane mode -
 
@@ -438,6 +430,7 @@ Shamir Secret Sharing is an efficient Secret Sharing algorithm for distributing 
 The secret is mathematically divided into parts (the "shares") from which the secret can be reassembled only when a sufficient number of shares are combined.
 
 There are different implementation of it: we will take a look to Banana Split
+
 Notes:
 
 SSS is used to secure a secret in a distributed form, most often to secure encryption keys.
@@ -451,7 +444,7 @@ He is the S on the RSA algorithm (Rivest-Shamir-Adleman)
 
 ---
 
-### Banana Split - bs.parity.io
+### Banana Split - [bs.parity.io](https://bs.parity.io)
 
 - Offline HTML file used to generate and recover secrets
 - To be used in air-gapped computers and local printers
@@ -464,34 +457,41 @@ He is the S on the RSA algorithm (Rivest-Shamir-Adleman)
 
 - Security is contextual
 - Define your risk appetite
-- Backups not only of information also for processes - do not rely on single point of failure.
+- Backups not only of information also for processes.<br/>
+  Do not rely on single point of failure.
 - Don't put all your eggs in the same basket
 
-Notes:
-
 ---
+
+<!-- .slide: data-background-color="#4A2439" -->
 
 ### Some mental exercises (1)
 
-What is the operational model to a wallet that is transferring funds to third parties every day?
+> What is the operational model to a wallet that is transferring funds to third parties every day?
 
 ---
+
+<!-- .slide: data-background-color="#4A2439" -->
 
 ### Some mental exercises (2)
 
-How to protect a personal wallet with 10 million tokens?
+> How to protect a personal wallet with 10 million tokens?
 
 ---
+
+<!-- .slide: data-background-color="#4A2439" -->
 
 ### Some mental exercises (3)
 
-How to protect an corporate wallet with 100 million tokens?
+> How to protect an corporate wallet with 100 million tokens?
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 ### Some mental exercises (4)
 
-How to ensure C I A of a wallet, in a future when we would not be around?
+> sHow to ensure `C` `I` `A` of a wallet, in a future when we would not be around?
 
 ---
 
@@ -505,20 +505,17 @@ How to ensure C I A of a wallet, in a future when we would not be around?
 
 ---
 
-## Conclusion
-
----
-
 ### Never Assume - Practice a legitimate distrust.
 
 - Many actors or institutions have different objectives of the one you have.
 
 - Software have bugs and errors.
-  They are made by people like you and me, which needs to eat and go to sleep.
+  They are made by people like you and me,<br/>which needs to eat and go to sleep.
 - No technology is agnostic.
-  This includes they technology we communicate with, we work with or the one we use to keep us entertained.
+  This includes they technology we communicate with,<br/>we work with or the one we use to keep us entertained.
 - Sometimes we are our worst adversary.
-  Be diligent.
+
+> Be diligent. 🖖
 
 ---
 
