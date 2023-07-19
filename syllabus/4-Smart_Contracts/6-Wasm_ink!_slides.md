@@ -32,7 +32,7 @@ Notes:
 Notes:
 
 - students are freshly of an EVM lecture so might be wondering why another SC language
-- Virtual Machine: any WASM VM: yes in theory, in practice bound pretty close to the Substrate & the contracts pallet
+- Virtual Machine: any WASM VM: yes in theory, in practice bound pretty close to the platform it runs on (Substrate & the contracts pallet)
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
 - The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
 
@@ -122,7 +122,10 @@ cargo install dylint-link
 cargo install cargo-contract --force
 ```
 
-Notes:
+- [binaryen](https://github.com/WebAssembly/binaryen) is a compiler for WebAssembly.
+- [dylint-link](https://github.com/trailofbits/dylint) adds DSL specific lints.
+
+NOTE:
 
 - Binaryen is a compiler and toolchain infrastructure library for WebAssembly
 - at the moment ink! uses a few unstable Rust features, thus nightly is require
@@ -431,6 +434,253 @@ Notes:
 
 ---
 
+## Developing contracts: Constructors
+
+```rust [7,12,17|13,18,7-9|2-4,8]
+#[ink(storage)]
+pub struct Flipper {
+    value: bool,
+}
+
+#[ink(constructor)]
+pub fn new(init_value: bool) -> Self {
+    Self { value: init_value }
+}
+
+#[ink(constructor)]
+pub fn default() -> Self {
+    Self::new(Default::default())
+}
+
+#[ink(constructor)]
+pub fn non_default() -> Self {
+    Self::new(false)
+}
+```
+
+NOTE:
+
+- lets dissect what a contract code is built like
+- no limit of the number of constructors
+- constructors can call other constructors
+- constructors return the initial storage
+- a lot of complexity conveniently hidden behind macros
+
+---
+
+## Developing contracts: Queries
+
+```rust
+#[ink(message)]
+pub fn get(&self) -> bool {
+    self.value
+}
+```
+
+- `#[ink(message)]` is how we tell ink! this is a function that can be called on the contract
+- `&self` is a reference to the contract's storage
+<!-- #you’re calling this method on  -->
+
+NOTE:
+
+- returns information about the contract state stored on chain
+- reaches to the storage, decodes it and returns the value
+
+---
+
+## Developing contracts: Mutations
+
+```rust [1-2|6]
+#[ink(message, payable)]
+pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
+    let player = self.env().caller();
+    let amount = self.env().transferred_value();
+    ...
+    self.data.set(&data);
+    ...
+```
+
+- `&mut self` is a mutable reference to the object you’re calling this method on
+- `payable` allows receiving value as part of the call to the ink! message
+
+NOTE:
+
+- constructors are inherently payable
+- ink! message will reject calls with funds if it's not marked as such
+- mutable references allow me to modify the storage.
+- queries are for free, mutations are metered (you pay gas)
+  - you will also pay for queries within such transactions
+
+---
+
+## Contracts: Error handling
+
+<div style="font-size: 0.72em;">
+
+```rust [1-4|8-11,16|14,20]
+pub enum MyResult<T, E> {
+    Ok(value: T),
+    Err(msg: E),
+}
+
+#[derive(Debug, PartialEq, Eq, Encode, Decode)]
+#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
+pub enum MyError {
+    InkEnvError(String),
+    BettingPeriodNotOver,
+}
+
+#[ink(message)]
+pub fn spin(&mut self) -> Result<()> {
+    if !self.is_betting_period_over() {
+        return Err(MyError::BettingPeriodNotOver);
+    ...
+};
+
+pub type Result<T> = core::result::Result<T, MyError>;
+
+```
+
+</div>
+
+- ink! uses idiomatic Rust error handling: `Result<T,E>` type
+- Use the Err variant to pass your own semantics
+- Type aliases reduce boilerplate & enhance readability
+
+NOTE:
+
+- ink! uses idiomatic Rust error handling
+- ~~messages are the `system boundary`~~
+- returning error variant or panicing reverts the transaction
+  - panicing is the same as returning Err variant (`Result` is just being nice)
+
+---
+
+## Error handling: call stack
+
+```rust
+#[ink(message)]
+pub fn flip(&mut self) {
+    self.value = !self.value;
+
+    if self.env().block_number() % 2 != 0 {
+      panic!("Oh no!")
+    }
+
+}
+
+```
+
+- what is the state of this contract if the tx is called in an odd block number?
+
+NOTE:
+
+- answer: whatever it was prior to the tx:
+  - returning error variant reverts the entire tx on the call stack
+
+---
+
+## Contracts: Events
+
+```rust
+#[ink(event)]
+#[derive(Debug)]
+pub struct BetPlaced {
+    #[ink(topic)]
+    player: AccountId,
+    #[ink(topic)]
+    bet_type: BetType,
+    amount: Balance,
+}
+```
+
+- Events are a way of letting the outside world know about what's happening inside the contract.
+- `#[ink(event)]` is a macro that defines events.
+- Topics mark fields for indexing.
+
+NOTE:
+
+- events are especially important for dapps
+- storage is expensive: reading e.g. aggregate data from chain directly is impossible / impractical
+- dapps the can listen to the event, normalize & store off-chain and answer e.g. complex queries
+
+---
+
+## Contracts: Events
+
+```rust
+#[ink(message)]
+pub fn flip(&mut self) {
+
+    Self::emit_event(
+        self.env(),
+        Event::Flipped(Flipped { }),
+    );
+
+    self.value = !self.value;
+
+    if self.env().block_number() % 2 == 0 {
+      panic!("Oh no!")
+    }
+
+}
+
+```
+
+- What happens to the events from reverted transactions?
+- Will this event be emitted in an odd block?
+
+NOTE:
+
+- answer: yes, but only because I reverted the condition :)
+
+---
+
+## Contracts: Defining shared behaviour
+
+<div style="font-size: 0.5em;">
+
+```rust [1-14|17,22]
+#[ink::trait_definition]
+pub trait PSP22 {
+    #[ink(message)]
+    fn total_supply(&self) -> Balance;
+
+    #[ink(message)]
+    fn balance_of(&self, owner: AccountId) -> Balance;
+
+    #[ink(message)]
+    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
+
+    #[ink(message)]
+    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
+    ...
+
+impl SimpleDex {
+    use psp22_trait::{PSP22Error, PSP22};
+
+    /// Returns balance of a PSP22 token for an account
+    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
+        let psp22: ink::contract_ref!(PSP22) = token.into();
+        psp22.balance_of(account)
+    }
+    ...
+```
+
+</div>
+
+- Trait Definition: `#[ink::trait_definition]`.
+- Sharing the trait definition to do a cross-contract call.
+
+NOTE:
+
+- (part of) PSP22 (ERC20 like) contract definition
+- all contracts that respect this definition need to implement it
+- you can now share the trait definition with other contracts
+- while getting a typed reference to an instance
+
+---
+
 ## Deeper dive: Storage
 
 ```rust
@@ -460,8 +710,8 @@ Notes:
 Notes:
 
 - Pallet contracts storage is organized like a key-value database
-- SCALE codec is not self-describing (vide metadata)
 - each storage cell has a unique storage key and points to a SCALE encoded value
+- SCALE codec is not self-describing (vide metadata)
 
 ---
 
@@ -469,17 +719,22 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
-| Type         | Decoding                              | Encoding                     | Remark                                                                          |
-| ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------- |
-| Boolean      | true                                  | 0x0                          | encoded using least significant bit of a single byte                            |
-|              | false                                 | 0x1                          |                                                                                 |
-| Unsigned int | 42                                    | 0x2a00                       |                                                                                 |
-| Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a and 0x0101            | first byte encodes the variant index, remaining bytes encode the data           |
-| Tuple        | (3, false)                            | 0x0c00                       | concatenation of each encoded value                                             |
-| Vector       | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by concatenation of each item's encoding |
-| Struct       | {x:30, y:true}                        | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                        |
+| Type         | Decoding                              | Encoding                     | Remark                                                                         |
+| ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
+| Boolean      | true                                  | 0x0                          | encoded using least significant bit of a single byte                           |
+|              | false                                 | 0x1                          |                                                                                |
+| Unsigned int | 42                                    | 0x2a00                       |                                                                                |
+| Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a and 0x0101            | first byte encodes the variant index, remaining bytes encode the data          |
+| Tuple        | (3, false)                            | 0x0c00                       | concatenation of each encoded value                                            |
+| Vector       | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
+| Struct       | {x:30u64, y:true}                     | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
 
 </div>
+
+NOTE:
+
+- this table is not exhaustive
+- struct example: stored as an vector, names are ignored, only order matters, first four bytes encode the 64-byte integer and then the least significant bit of the last byte encodes the boolean
 
 ---
 
@@ -499,8 +754,9 @@ pub struct Token {
 
 - By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
 
-Notes:
+NOTE:
 
+- We talked about the kv database that the storage is, now how is it used precisely
 - Types that can be stored entirely under a single storage cell are called Packed Layout
 - by default ink! stores all storage struct fields under a single storage cell
 - as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
@@ -557,9 +813,9 @@ pub struct Flipper<KEY: StorageKey = ManualKey<0xcafebabe>> {
 
 </div>
 
-Notes:
+NOTE:
 
-- here a demonstration of packed layout - value is stored under the root key
+- demonstration of the packed layout - value is stored under the root key
 
 ---
 
@@ -610,7 +866,7 @@ pub fn transfer(&mut self) {
 Notes:
 
 - working with mapping:
-- Mapping::get() method will result in an owned value (a local copy), as opposed to a direct reference into the storage. Changes to this value won't be reflected in the contract's storage "automatically". To avoid this common pitfall, the value must be inserted again at the same key after it was modified. The transfer function from above example illustrates this:
+- Answer: Mapping::get() method will result in an owned value (a local copy), as opposed to a direct reference into the storage. Changes to this value won't be reflected in the contract's storage "automatically". To avoid this common pitfall, the value must be inserted again at the same key after it was modified. The transfer function from above example illustrates this:
 
 ---
 
@@ -640,7 +896,7 @@ Notes:
 
 ## Storage: Lazy
 
-```rust [1,5-6]
+```rust [1,5]
 use ink::storage::{traits::ManualKey, Lazy, Mapping};
 
 #[ink(storage)]
@@ -651,15 +907,16 @@ pub struct Roulette {
 ```
 
 - Every type wrapped in `Lazy` has a separate storage cell.
-- `ManualKey` assigns explicit storage key to it.
+- `ManualKey` assignes explicit storage key to it.
+- Why would you want to use a `ManualKey` instead of a generated one?
 
-Notes:
+NOTE:
 
 - packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
 - there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
-- mapping provides per-cell access
-- Lazy storage cell can be auto-assigned or chosen manually
-- Using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract.
+- lazy provides per-cell access, like a mapping
+- lazy storage cell can be auto-assigned or chosen manually
+- using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract.
   - This may break your contract after an upgrade!
 
 ---
@@ -668,242 +925,11 @@ Notes:
 
 <img rounded style="width: 1000px;" src="img/ink/storage-layout.svg" />
 
-Notes:
-
-- only the pointer (the key) to the lazy type is stored under the root key
-- only when there is a read of `d` will the pointer be de-referenced
-- lazy is a bit of a misnomer here, because storage is already initialized
-
----
-
-## Constructors
-
-```rust [1,6,11|2,7-8]
-#[ink(constructor)]
-pub fn new(init_value: bool) -> Self {
-    Self { value: init_value }
-}
-
-#[ink(constructor)]
-pub fn default() -> Self {
-    Self::new(Default::default())
-}
-
-#[ink(constructor)]
-pub fn non_default() -> Self {
-    Self::new(false)
-}
-```
-
-Notes:
-
-- no limit of the number of constructors
-- constructors can call other constructors
-
----
-
-## Queries
-
-```rust
-        #[ink(message)]
-        pub fn get(&self) -> bool {
-            self.value
-        }
-
-```
-
-- `#[ink(message)]` is how we tell ink! this is a function that can be called on the contract
-- `&self` is a reference to the object you’re calling this method on
-
-Notes:
-
-- returns information about the contract state
-- .. as stored on chain (agreed to by the nodes)
-
----
-
-## Mutations
-
-```rust [1-4|1]
-#[ink(message, payable)]
-pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
-    let player = self.env().caller();
-    let amount = self.env().transferred_value();
-    ...
-```
-
-- `&mut self` is a mutable reference to the object you’re calling this method on
-- `payable` allows receiving value as part of the call to the ink! message
-
-Notes:
-
-- constructors are inherently payable
-- ink! message will reject calls with funds if it's not marked as such
-
----
-
-## Error handling
-
-<div style="font-size: 0.72em;">
-
-```rust [1-4|8-11,16|14,20]
-pub enum MyResult<T, E> {
-    Ok(value: T),
-    Err(msg: E),
-}
-
-#[derive(Debug, PartialEq, Eq, Encode, Decode)]
-#[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
-pub enum MyError {
-    InkEnvError(String),
-    BettingPeriodNotOver,
-}
-
-#[ink(message)]
-pub fn spin(&mut self) -> Result<()> {
-    if !self.is_betting_period_over() {
-        return Err(MyError::BettingPeriodNotOver);
-    ...
-};
-
-pub type Result<T> = core::result::Result<T, MyError>;
-
-```
-
-</div>
-
-- ink! uses idiomatic Rust error handling: `Result<T,E>` type
-- Use the Err variant to pass your own semantics
-- Type aliases reduce boilerplate & enhance readability
-
-Notes:
-
-- ink! uses idiomatic Rust error handling
-- ~~messages are the `system boundary`~~
-- returning error variant reverts the transaction
-  - panicing is the same as returning Err variant (`Result` is just being nice)
-
----
-
-## Error handling: call stack
-
-```rust
-#[ink(message)]
-pub fn flip(&mut self) {
-    self.value = !self.value;
-
-    if self.env().block_number() % 2 != 0 {
-      panic!("Oh no!")
-    }
-
-}
-
-```
-
-- what is the state of this contract if the tx is called in an odd block number?
-
-Notes:
-
-- answer: whatever it was prior to the tx:
-  - returning error variant reverts the entire tx on the call stack
-
----
-
-## Events
-
-```rust
-#[ink(event)]
-#[derive(Debug)]
-pub struct BetPlaced {
-    #[ink(topic)]
-    player: AccountId,
-    #[ink(topic)]
-    bet_type: BetType,
-    amount: Balance,
-}
-```
-
-- Events are a way of letting the outside world know about what's happening inside the contract.
-- `#[ink(event)]` is a macro that defines events.
-- Topics mark fields for indexing.
-
-<!-- Notes:
- -->
-
----
-
-## Events
-
-```rust
-#[ink(message)]
-pub fn flip(&mut self) {
-
-    if self.env().block_number() % 2 == 0 {
-      panic!("Oh no!")
-    }
-
-    Self::emit_event(
-        self.env(),
-        Event::Flipped(Flipped { }),
-    );
-
-    self.value = !self.value;
-}
-
-```
-
-- will this event be emitted in an odd block?
-
-Notes:
-
-- answer: yes, but only because I reverted the condition :)
-
----
-
-## Defining shared behavior
-
-<div style="font-size: 0.5em;">
-
-```rust [1-14|16-25]
-#[ink::trait_definition]
-pub trait PSP22 {
-    #[ink(message)]
-    fn total_supply(&self) -> Balance;
-
-    #[ink(message)]
-    fn balance_of(&self, owner: AccountId) -> Balance;
-
-    #[ink(message)]
-    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
-
-    #[ink(message)]
-    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
-    ...
-
-impl SimpleDex {
-    use psp22_trait::{PSP22Error, PSP22};
-
-    /// Returns balance of a PSP22 token for an account
-    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
-        let psp22: ink::contract_ref!(PSP22) = token.into();
-        psp22.balance_of(account)
-    }
-
-    ...
-
-```
-
-</div>
-
-- Trait Definition: `#[ink::trait_definition]`
-- Wrapper for interacting with the contract: `ink::contract_ref!`
-
-Notes:
-
-- (part of) PSP22 (ERC20 like) contract definition
-- all contracts that respect this definition need to implement it
-- you can now share the trait definition with other contracts
-- while getting a typed reference to an instance
+NOTE:
+
+- only the pointer (the key) to the lazy type is stored under the root key.
+- only when there is a read of `d` will the pointer be de-referenced and it's value decoded.
+- lazy is a bit of a mis-nomer here, because storage is already initialized.
 
 ---
 
@@ -922,11 +948,13 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 - Contract's code and it's instance are separated.
 - Contract's address can be updated to point to a different code stored on-chain.
 
-Notes:
+NOTE:
 
 - append only != immutable
 - proxy pattern known from e.g. solidity is still possible
 - within the Substrate framework contract's code is stored on-chain and it's instance is a pointer to that code
+- incentivizes cleaning up after oneself
+- big storage optimization
 
 ---
 
@@ -942,7 +970,7 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 
 ```
 
-Notes:
+NOTE:
 
 - you DO NOT want to leave this message un-guarded
 - solutions to `ensure_owner` can range from a very simple ones address checks
@@ -954,7 +982,7 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
-```rust [1-4,6-10|1-4,12-16|18-21]
+```rust [1-4,6-10|1-4,12-16|18-21|23-26]
 #[ink(message)]
 pub fn get_values(&self) -> (u32, bool) {
     (self.x, self.y)
@@ -971,17 +999,12 @@ pub struct MyContractNew {
     y: bool,
     x: u32,
 }
-
-#[ink(message)]
-pub fn get_values(&self) -> (u32, bool) {
-    (self.y, self.x)
-}
 ```
 
 </div>
 
-- Make sure your updated code is compatible with the existing contracts state
-- Will this updated code work with the new definition and the old storage ?
+- Make sure your updated code is compatible with the existing contracts state.
+- Will the getter work with the new definition and the old storage ?
 
 Notes:
 
@@ -990,7 +1013,7 @@ Notes:
   - Introducing new variable(s) before any of the existing ones
   - Changing variable type(s)
   - Removing variables
-- Will this work? (no, SCALE encoding is oblivious to names, only order matters)
+- Answer: no, SCALE encoding is oblivious to names, only order matters
 
 ---
 
@@ -1049,10 +1072,48 @@ impl MyContract {
 - What is wrong with this contract?
 - How would you fix it?
 
-Notes:
+NOTE:
 
 - we start easy
 - answer: no AC in place
+- parity wallet 150 million `hack`
+
+---
+
+## Common Vulnerabilities: blast from the past
+
+<img rounded style="width: 900px;" src="img/ink/anyone_can_kill_it.jpg" alt="ink!" />
+
+<div style="font-size: 0.72em;">
+
+- [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit:
+- https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+
+<!-- ```solidity -->
+<!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -->
+<!--   suicide(_to); -->
+<!-- } -->
+
+<!-- function initMultiowned(address[] _owners, uint _required) only_uninitialized { -->
+<!--   m_numOwners = _owners.length + 1; -->
+<!--   m_owners[1] = uint(msg.sender); -->
+<!--   m_ownerIndex[uint(msg.sender)] = 1; -->
+<!--   for (uint i = 0; i < _owners.length; ++i) -->
+<!--   { -->
+<!--     m_owners[2 + i] = uint(_owners[i]); -->
+<!--     m_ownerIndex[uint(_owners[i])] = 2 + i; -->
+<!--   } -->
+<!--   m_required = _required; -->
+<!-- } -->
+<!-- ``` -->
+
+</div>
+
+NOTE:
+
+- might seem trivial but a very similar hack has happend in the past trapping a lot of funds
+- see: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+- hacker has "accidentally" called an unprotected `initMultiowned` and proceeded to delete the contract code
 
 ---
 
@@ -1079,12 +1140,12 @@ Notes:
 - On-chain domain name registry with a register fee of 100 pico.
 - Why is this a bad idea?
 
-Notes:
+NOTE:
 
-everything on-chain is public
-this will be front-run in no time
-Can you propose a better design?
-Answer: commit / reveal or an auction
+- everything on-chain is public
+- this will be front-run in no time
+- Can you propose a better design?
+- Answer: commit / reveal or an auction
 
 ---
 
@@ -1134,11 +1195,39 @@ Answer:
 
 ## Common Vulnerabilities
 
+```rust [7,12-14]
+#[ink(message)]
+pub fn swap(
+    &mut self,
+    token_in: AccountId,
+    token_out: AccountId,
+    amount_token_in: Balance,
+    min_amount_token_out: Balance,
+) -> Result<(), DexError> {
+
+    ...
+
+    if amount_token_out < min_amount_token_out {
+        return Err(DexError::TooMuchSlippage);
+    }
+
+...
+}
+```
+
+NOTE:
+
+- slippage protection in place
+
+---
+
+## Common Vulnerabilities
+
 - Integer overflows
 - Re-entrancy vulnerabilities
 - Sybil attacks
 - ...
-- Regulatory attacks :rofl:
+- Regulatory attacks 😅
 - ...
 
 Notes:
@@ -1152,9 +1241,11 @@ Notes:
 
 ## Pause
 
-Notes:
+Optional challenge: [github.com/Polkadot-Blockchain-Academy/adder](https://github.com/Polkadot-Blockchain-Academy/adder)
 
-Piotr takes over to talk about making runtime calls from contracts and writing automated tests
+NOTE:
+Piotr takes over to talk about making runtime calls from contracts and writing automated tests.
+There is a 15 minute challenge for you in the meantime.
 
 ---
 
