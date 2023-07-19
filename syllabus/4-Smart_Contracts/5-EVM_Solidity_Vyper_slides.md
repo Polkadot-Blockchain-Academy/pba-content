@@ -31,26 +31,17 @@ results.
 
 # History of Ethereum
 
-(TODO)
-
-ideas:
-* Early concepts (IIRC, was attempted to be built on Bitcoin first)
-* Shortcomings of Ethereum (storage bloat, ...?)
-* DAO & hardfork
-* Important updates
-* The Merge
-* Ice ages (aka difficulty bombs)
-
-* Good resource: https://ethereum.org/en/history/
-* Nov 27, 2013: Vitalik released WP
-* Apr 21, 2014: Gav released YP
-* July 22, 2014: $18M raised (ICO lasted 42 days)
-* July 30, 2015: Frontier released -- bare bones
-* Sept 7: 2015: Frontier "thawed" -- (TODO: only txns allowed)? also, difficulty bomb introduced
-
-* TODO: show as timeline, include block numbers
-* TODO: split into two slides (dev history, fork history)
-  * maybe another for major changes?
+* Nov 2013: Vitalik released WP
+* Apr 2014: Gav released YP
+* July 2014: $18M raised (ICO lasted 42 days)
+* July 2015: Frontier released -- bare bones, Proof of Work
+* Sept 2015: Frontier "thawed", difficulty bomb introduced
+* July 2016: DAO Fork
+* 2016-2019: Optimizations, opcode cost tuning, difficulty bomb delays
+* 2020: Staking contract deployed, Beacon Chain launched
+* 2021: EIP-1559, prep for The Merge
+* 2022: The Merge (Proof of Stake)
+* 2023: Staking withdraw support
 
 ---v
 
@@ -68,7 +59,7 @@ Brief history:
 
 * 2016: raised $150M worth of ETH
 * later that year: 3.6M ETH drained
-* reentrancy attack due to its `withdraw` function sending funds BEFORE recording them
+* reentrancy attack
 * "Mainnet" Ethereum is the fork with the hack retroactively removed
 * Ethereum Classic: code is law
 
@@ -83,18 +74,16 @@ Ethereum has faced many challenges as the pioneer of smart contracts.
 * Frontrunning: Inserting transactions before, after, or in place of others in order to economically benefit
 * Hacks: Many hacks have exploited smart contract vulnerabilities
 * Problems with aggregating smart contract protocols together
+* Storage bloat: Misaligned incentives with burden of storage
 
 ---v
 
 ## Idiosyncrasies
 
-(TODO)
-
 - Everything is 256bits
 - No floating point arithmetic
 - Revert
 - Reentrancy
-- ABI
 - Exponential memory expansion cost
 
 ---
