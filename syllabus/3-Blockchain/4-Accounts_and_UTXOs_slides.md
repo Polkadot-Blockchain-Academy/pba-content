@@ -179,7 +179,9 @@ title: Accounting Models & User Abstractions in Blockchains
 </section>
 
 Notes:
-    This seems logical right?
+
+This seems logical right?
+
 ---
 
 <section>
@@ -199,8 +201,8 @@ Notes:
 <section>
     <h2>How do we verify and handle this transaction?</h2>
     <ul>
-        <li class="fragment">Verify enough funds are in Joshys account</li>
-        <li class="fragment">Verify this amount + Andrews amount dont exceed the max value</li>
+        <li class="fragment">Verify enough funds are in Joshy's account</li>
+        <li class="fragment">Verify this amount + Andrews amount don't exceed the max value</li>
         <li class="fragment">Check the nonce of the transaction</li>
         <li class="fragment">Do the actual computation of output values</li>
     </ul>
@@ -237,7 +239,7 @@ Notes:
         <li class="fragment">Privacy</li>
         <li class="fragment">General Computation</li>
     </ul>
-    <aside class="notes">Parallelization? Storage space, privacy solutios?</aside>
+    <aside class="notes">Parallelization? Storage space, privacy solutions?</aside>
 </section>
 
 ---
@@ -248,6 +250,7 @@ Notes:
 </section>
 
 ---
+
 <section>
     <h2>The end</h2>
 </section>
