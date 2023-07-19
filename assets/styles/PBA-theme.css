@@ -606,3 +606,8 @@ a {
 			 url('./fonts/work-sans/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('./fonts/work-sans/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
 }
+
+.fragment.hide-fragment.current-fragment {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
