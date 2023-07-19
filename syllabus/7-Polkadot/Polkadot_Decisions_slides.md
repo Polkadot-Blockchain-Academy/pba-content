@@ -71,7 +71,7 @@ Decisions that can be easily changed in the future.
 
 ---
 
-<image src="../../../assets/img/5-Polkadot/less-trust-more-truth.svg" style="width: 1000px; filter: invert();">
+<image src="../../../assets/img/7-Polkadot/less-trust-more-truth.svg" style="width: 1000px; filter: invert();">
 
 ---
 
@@ -159,7 +159,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 ### Cross-Chain Message-Passing
 
-<image src="../../../assets/img/5-Polkadot/xcmp-2.svg" style="height: 500px;">
+<image src="../../../assets/img/7-Polkadot/xcmp-2.svg" style="height: 500px;">
 
 
 </pba-col>
@@ -167,7 +167,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 ### Cross-Consensus Message Format
 
-<image src="../../../assets/img/5-Polkadot/xcm-stack.svg" style="height: 500px;">
+<image src="../../../assets/img/7-Polkadot/xcm-stack.svg" style="height: 500px;">
 
 - Type 2 Decision
 
@@ -185,7 +185,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 <pba-cols>
 <pba-col>
 
-<image src="../../../assets/img/5-Polkadot/xcmp-finalization.svg" style="height: 500px;">
+<image src="../../../assets/img/7-Polkadot/xcmp-finalization.svg" style="height: 500px;">
 
 </pba-col>
 <pba-col>
