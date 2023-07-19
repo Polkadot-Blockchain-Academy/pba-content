@@ -9,11 +9,11 @@ duration: 45 min
 
 Notes: 
 
-In this session we will cover the basic of wallet ( private and public pairs), key management ( how to protect your public-private keys), how to protect the endpoint you are using to manage your keys, and some tips, tricks and security best practices and logics.
+In this session we will cover the basic of wallet ( private and public pairs of keys ), key management ( how to protect your public-private keys), how to protect the endpoint you are using to manage your keys, and some tips, tricks and security best practices and logics.
 
 In the end, we will give you some advice in case you are compromised.
 
-The objective of the session is to provide a set of guidelines and mental models to questions the operational security of oyur keys. Some of you might find these advices basic, while others will find it useful. Some of the ideas are just abstractions of more complex technical concepts, as we would like to approach it in a high level educational piece. But also give the opportunity to dig into the rabbit holes for those who may want to follow Alice in that direction. 
+The objective of the session is to provide a set of guidelines and mental models to questions the operational security of your keys. Some of you might find these advices basic, while others will find it useful. Some of the ideas are just abstractions of more complex technical concepts, as we would like to approach it in a high level educational piece. But also give the opportunity to dig into the rabbit holes for those who may want to follow Alice in that direction. 
 
 ---
 
@@ -24,7 +24,7 @@ _Bruce Scheiner (Click here to kill everybody, 2019)_
 
 Notes:
 
-Security is not something that is set in stone, it some that is in changing from - it is framework/a mental model that helps you to tackle the specific problem of protecting your assets. Security is something that is different for everyone, for every moment or usecase. 
+Security is not something that is set in stone, it some that is in changing from - it is framework/it is mental model that helps you to tackle the specific problem of protecting your assets. Security is something that is different for everyone, for every moment or usecases. 
 
 ---
 
@@ -79,7 +79,8 @@ Please make your lecture precise.
 Notes:
 
 What is a threat? It is a _potential_ danger that can tresspass security and put your assets are risks. The threats are the events/things/personas in the horizon we need to have an eye on them.
-Different security context have - have a different security threats. Edward Snownen face different security threats ( changing geopolitical situations, nation state actors, ...) than a regular random internet user ( script kidding phissing attempt, port scanning, non targeted malware, ...).
+
+Different security context - have a different security threats. Edward Snownen faces different security threats ( changing geopolitical situations, nation state actors, ...) than a regular random internet user ( script kidding phissing attempt, port scanning, non targeted malware, ...).
 
 ---
 
@@ -95,7 +96,7 @@ Different security context have - have a different security threats. Edward Snow
 
 ---
 
-### Poor seld Operational Security - What not to do
+### Poor self Operational Security - What not to do
 
 ![](img/Web3Sec/PoorOpSec.jpg)
 ---
@@ -108,7 +109,7 @@ But, What is a risk?
 
 Notes:
 
-What is a risk? According to Oxford English Dictionary is the *possibility* of loss, injury, or other adverse or welcome circustance; a chance or situation of situation of something bad happening. But that is what bad means in security terms?
+What is a risk? According to Oxford English Dictionary is the *possibility* of loss, injury, or other adverse or welcome circustance; a chance or situation of situation of something bad happening. But that is what _bad_ means in security terms?
 
 ---
 
@@ -136,7 +137,7 @@ What is a risk? According to Oxford English Dictionary is the *possibility* of l
 
 Notes:
 
-In this case, what risks ( things that can go wron g) we need to be aware? That someone else has access to our keys? They are compromised. Or that we cannot access back our keys becuase we cannot access them or they are noted/stores wrong. By our fault or others.
+In this case, which risks ( things that can go wrong ) we need to be aware? That someone else has access to our keys? Then they are compromised. Or that we cannot access back our keys becuase we cannot access them or they are noted/stored wrongly. By our fault or others fault.
 
 But - what are these keys?
 
@@ -326,7 +327,7 @@ In most of the systems, the device includes some other manual controls that need
 
 ## Polkadot Vault
 
-Polkadot Vault is a software app that transforms an Android or iOS device in an airgapper hardware wallet. The wallet is not connected to the net or even to the device which is interacting with the blockchain. The signing of the transactions is made by a series of QR communications between computer and the Vault Device.
+Polkadot Vault is a software app that transforms an Android or iOS device in an airgapped hardware wallet. The wallet is not connected to the net or even to the device which is interacting with the blockchain. The signing of the transactions is made by a series of QR communications between computer and the Vault Device.
 
 ![](img/Web3Sec/vault.jpg)
 
@@ -423,7 +424,7 @@ It was invented in the late 70;s by the isreali cryptographer. He is the S on th
 
 * Security is contextual
 * Define your risk apetite
-* Backups not only of information also or processes - do not rely on single point of failure.
+* Backups not only of information also for processes - do not rely on single point of failure.
 * Don't put all your eggs in the same basket
 
 Notes:
@@ -451,14 +452,14 @@ How to protect an corporate wallet with 100 million tokens?
 
 ### Some mental exercises (4)
 
-How to ensure C I A of a wallet, in a future when we are would not be around?
+How to ensure C I A of a wallet, in a future when we would not be around?
 
 ---
 
 ### Last but not least - Basic laptop/phone hygiene
 
 * Software up-to-date
-* Use of different profiles or even differnt computers
+* Use of different profiles or even different computers
 * Avoid malicious enviroments (links containing malware)
 * Double-triple check the software we download for the internet
 * Second factor of authentication where possible - physical key prefered
@@ -473,12 +474,14 @@ How to ensure C I A of a wallet, in a future when we are would not be around?
 
 * Many actors or institutions have different objetives of the one you have. 
 * Software have bugs and errors. They are made by people like you and me, which needs to eat and go to sleep.
-* No technology is agnostic. This includes they technology we communicate with, we work with or the one we use to keep us entertaiment.
+* No technology is agnostic. This includes they technology we communicate with, we work with or the one we use to keep us entertained.
 * Sometimes we are our worst adversary. Be diligent.
 
 ---
 
-## References
+## Thank you!
+
+### Questions ?
 
 <!--
 Compile an **annotated** list of URLs to source material referenced in making these lessons.
