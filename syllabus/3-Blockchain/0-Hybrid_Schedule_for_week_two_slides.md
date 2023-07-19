@@ -104,10 +104,10 @@ Fri
 
 Notes:
 
-Teaching today you'll have Lauren, Aaron, Joshy, and Andrew. 
-Stephen from Moonbeam, Piotr and Filip from Aleph0, will all be here later this week to do some smart contract lectures and activities as well. 
-The format for this morning will be lecture, activity, break, lecture, activity 
-After lunch it will be the same: lecture, activity, break, lecture, and activity! 
+Teaching today you'll have Lauren, Aaron, Joshy, and Andrew.
+Stephen from Moonbeam, Piotr and Filip from Aleph0, will all be here later this week to do some smart contract lectures and activities as well.
+The format for this morning will be lecture, activity, break, lecture, activity
+After lunch it will be the same: lecture, activity, break, lecture, and activity!
 
 ---
 

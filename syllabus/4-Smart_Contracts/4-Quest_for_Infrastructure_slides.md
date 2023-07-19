@@ -35,7 +35,7 @@ They are the technicians that keep the infra running.
 
 They don't have any particular morals, certainly not the same ones you have.
 
-Notes: 
+Notes:
 
 We need people to keep the computers online and replace broken hardware and make sure the data is backed up etc.
 But those people should be just that, technicians.

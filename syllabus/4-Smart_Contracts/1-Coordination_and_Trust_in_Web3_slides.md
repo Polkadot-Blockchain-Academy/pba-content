@@ -47,7 +47,7 @@ Over time, as this vision was gradually realized, the term took on a more specif
 
 _aka Web3 definition_ <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<blockquote>A program that specifies how users can interact with state machine and is deployed permissionlessly to a blockchain network</blockquote> <!-- .element: class="fragment" data-fragment-index="1" -->
+<blockquote>A program that specifies how users can interact with a state machine and is deployed permissionlessly to a blockchain network</blockquote> <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
