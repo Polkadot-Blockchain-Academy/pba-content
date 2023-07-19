@@ -72,6 +72,7 @@ title: Accounting Models & User Abstractions in Blockchains
 <section>
     <h2>How to send from Joshy to Andrew? What do you need?</h2>
     <img style="width: 600px;", src="img/utxo_state_4.svg"/>
+    <aside class="notes">What would be catastrophic if we got wrong??</aside>
 </section>
 
 ---
@@ -79,6 +80,7 @@ title: Accounting Models & User Abstractions in Blockchains
 <section>
     <h2>What if we want to spend this?</h2>
     <img style="width: 600px;", src="img/utxo_state_5.svg"/>
+    <aside class="notes">Why do we say spend here and not modify?</aside>
 </section>
 
 ---
@@ -93,6 +95,7 @@ title: Accounting Models & User Abstractions in Blockchains
 <section>
     <h2>Transaction</h2>
     <img style="width: 600px;", src="img/utxo_transaction_2.svg"/>
+    <aside class="notes">Why do we not send all of the 70 to Andrew?</aside>
 </section>
 
 ---
@@ -155,7 +158,7 @@ title: Accounting Models & User Abstractions in Blockchains
     <ul>
         <li class="fragment">Scalability</li>
         <li class="fragment">Privacy</li>
-        <li class="fragment">General Computation smart contracts</li>
+        <li class="fragment">General Computation</li>
     </ul>
 </section>
 
@@ -232,9 +235,16 @@ Notes:
     <ul>
         <li class="fragment">Scalability</li>
         <li class="fragment">Privacy</li>
-        <li class="fragment">General Computation smart contracts</li>
+        <li class="fragment">General Computation</li>
     </ul>
     <aside class="notes">Parallelization? Storage space, privacy solutios?</aside>
+</section>
+
+---
+
+<section>
+    <h2>Small shill Tuxedo</h2>
+    https://github.com/Off-Narrative-Labs/Tuxedo
 </section>
 
 ---
