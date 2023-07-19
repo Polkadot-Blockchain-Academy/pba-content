@@ -71,11 +71,16 @@ duration: 30min
 
 ## A New Output Definition
 
+<pba-flex center>
+
 - ID
 - Amount
 - Owner
 - Mask
-- All in a single Pedersen commitment
+- All in a single<br/>
+  Pedersen commitment
+
+</pba-flex>
 
 ---
 
