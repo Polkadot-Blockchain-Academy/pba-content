@@ -140,7 +140,7 @@ _Intuition: there's a well-defined notion of a protocol round_
 <br/>
 <br/>
 
-_Intuition: you can't tell whether a node has crushed or has a long delay_
+_Intuition: you can't tell whether a node has crashed or has a long delay_
 
 ---
 
