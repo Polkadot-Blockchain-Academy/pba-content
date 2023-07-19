@@ -37,8 +37,8 @@ duration: 30min
 
 ## ZK Proofs
 
-- ZK-SNARKs - A small proof that's fast to verify (`<= O(sqrt(n))`)
-- ZK-sNARKs - A small proof that's not fast to verify (`>= O(n)`, frequently `O(n log n)`)
+- ZK-SNARKs - A small proof that's fast to verify (<= $O(\sqrt{n})$)
+- ZK-sNARKs - A small proof that's not fast to verify (>= $O(n)$, frequently $O(n log n)$)
 - ZK-STARKs - A small proof that's fast to verify, based on hash functions
 - All of these can prove the execution of an arbitrary program (via an arithmetic circuit)
 - None of these reveal anything about the arguments to the program
