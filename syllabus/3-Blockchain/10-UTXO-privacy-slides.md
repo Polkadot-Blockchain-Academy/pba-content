@@ -1,3 +1,9 @@
+---
+title: Adding Privacy to the UTXO model
+description: Explore some techniques for adding privacy to the UTXO model
+duration: 30min
+---
+
 # Adding Privacy
  
 ---
