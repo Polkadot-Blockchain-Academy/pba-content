@@ -149,7 +149,7 @@ The main goal of a PAB is to make the code **portable**, you should be able to c
 
 - Hardware Independence
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- Efficency
+- Efficiency
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - Tool Simplicity
 <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -387,7 +387,7 @@ Let's call **Embedder** the program that will take the wasm blob as input and ex
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<img src="img/pab/env_communication.svg" sytyle="width: 70%">
+<img src="img/pab/env_communication.svg" style="width: 70%">
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -432,7 +432,7 @@ Notes:
 
 Here's an example, wasm sees linear memory like a byte array and if it tries to access the second byte, it would use an index 1. When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base_linear_memory + 1.
 
-Buffer overflow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information. Even if the offset is only positive there are embedders that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
+Buffer overflow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information. Even if the offset is only positive there are embedded that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
 
 ---
 
@@ -504,9 +504,9 @@ Cranelift is a fast, secure, relatively simple and innovative compiler backend. 
 
 Notes:
 
-proposal to switch from a stack based ir to registy based ir https://github.com/paritytech/wasmi/issues/361
+proposal to switch from a stack based ir to registry based ir https://github.com/paritytech/wasmi/issues/361
 
-paper explaining the efficency of translating wasm to registry based code https://www.intel.com/content/www/us/en/developer/articles/technical/webassembly-interpreter-design-wasm-micro-runtime.html
+paper explaining the efficiency of translating wasm to registry based code https://www.intel.com/content/www/us/en/developer/articles/technical/webassembly-interpreter-design-wasm-micro-runtime.html <!-- markdown-link-check-disable-line -->
 
 Due to it's characteristics it is mainly used to execute SmartContracts on chain
 
@@ -563,7 +563,7 @@ We have a double recursion of a PAB that embed itself
 
 - eBPF is used as PAB, but intrinsically eBPF has a lot of restrictions
 - Solana forked the eBPF backend of LLVM to makes every program to be compiled in eBPF
-- The Embedder is rbpf, a virtual machine for eBPF programs
+- The Embedder is rBFP, a virtual machine for eBPF programs
 
 Notes:
 https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
