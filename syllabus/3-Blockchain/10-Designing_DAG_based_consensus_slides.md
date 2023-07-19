@@ -8,6 +8,7 @@ description: A formal, yet friendly consensus framework
 ---
 
 ## Goals of this lecture
+
 <br/>
 
 1. formalize the consensus problem and related concepts <!-- .element: class="fragment"-->
@@ -16,6 +17,7 @@ description: A formal, yet friendly consensus framework
 ---
 
 ## What is consensus?
+
 <br/>
 
 - a **process** of agreeing on the same result among a group of participants
@@ -25,6 +27,7 @@ description: A formal, yet friendly consensus framework
 ---
 
 ## Consensus features
+
 <br/>
 
 liveness, safety, integrity
@@ -32,6 +35,7 @@ liveness, safety, integrity
 ---
 
 ## We have already seen some
+
 <br/>
 
 Nakamoto
@@ -49,6 +53,7 @@ Tendermint
 ---
 
 ## Who is running the protocol?
+
 <br/>
 
 Participants, called **nodes**
@@ -56,6 +61,7 @@ Participants, called **nodes**
 ---
 
 ## Nodes
+
 <br/>
 
 - nodes can be either honest or malicious
@@ -67,6 +73,7 @@ Participants, called **nodes**
 ---
 
 ## Public key infrastructure
+
 <br/>
 
 - every node has its own <font color="#c2ff33">private</font> and <font color="#e6007a">public</font> key
@@ -76,6 +83,7 @@ Participants, called **nodes**
 ---
 
 ## Public key infrastructure
+
 <br/>
 
 authenticated point-to-point communication
@@ -83,6 +91,7 @@ authenticated point-to-point communication
 ---
 
 ## Adversary
+
 <br/>
 
 Adversary **can** control the network delays, but is _computationally bounded_, i.e. it **cannot** break the cryptography (like forging the signatures).
@@ -90,6 +99,7 @@ Adversary **can** control the network delays, but is _computationally bounded_, 
 ---
 
 ## Network
+
 <br/>
 
 Communication via network... but what kind of network?
@@ -97,6 +107,7 @@ Communication via network... but what kind of network?
 ---
 
 ## Network models
+
 <br/>
 
 synchronous
@@ -108,6 +119,7 @@ asynchronous
 ---
 
 ## Network models: synchronous
+
 <br/>
 
 > There exists a known upper bound \\(\Delta\\) on message delivery time.
@@ -120,6 +132,7 @@ _Intuition: there's a well-defined notion of a protocol round_
 ---
 
 ## Network models: asynchronous
+
 <br/>
 
 > There is no upper bound on message delay, though delivery is guaranteed.
@@ -127,11 +140,12 @@ _Intuition: there's a well-defined notion of a protocol round_
 <br/>
 <br/>
 
-_Intuition: you can't tell whether a node has crushed or has a long delay_
+_Intuition: you can't tell whether a node has crashed or has a long delay_
 
 ---
 
 ## Network models: asynchronous
+
 <br/>
 
 > There is no upper bound on message delay, though delivery is guaranteed.
@@ -145,6 +159,7 @@ _Intuition: you can't tell whether a node has crushed or has a long delay_
 ---
 
 ## Network models: partially synchronous
+
 <br/>
 
 > There exists a known bound \\(\Delta\\), and an unknown point in time **GST** after which the communication becomes synchronous with a delay \\(\Delta\\).
@@ -157,6 +172,7 @@ _Intuition: protocol will eventually work synchronously, but it needs to be safe
 ---
 
 ## Crucial theoretical results
+
 <br/>
 
 > [FLP theorem] It is impossible to have a deterministic protocol that solves consensus in an asynchronous system in which at least one process may fail by crashing.
@@ -169,6 +185,7 @@ _Intuition: protocol will eventually work synchronously, but it needs to be safe
 ---
 
 ## Crucial theoretical results
+
 <br/>
 
 > [FLP theorem] It is impossible to have a <font color="#c2ff33">deterministic</font> protocol that solves consensus in an <font color="#c2ff33">asynchronous</font> system in which at least one process may fail by crashing.
@@ -181,18 +198,21 @@ _Intuition: protocol will eventually work synchronously, but it needs to be safe
 ---
 
 ## Consequence
+
 <br/>
 
 The best one can hope for in **asynchronous** scenario is **probabilistic** protocol tolerating **up to** \\(f\\) faults for \\(3f+1\\) participants.
 
 <br/>
 
-> ✅ <font color="#c2ff33">**Doable!**</font> 
+> ✅ <font color="#c2ff33">**Doable!**</font>
+
 <!-- .element: class="fragment"-->
 
 ---
 
 ## Note on randomness
+
 <br/>
 
 Real probability is actually needed in the extremely hostile environment.
@@ -205,6 +225,7 @@ In case where the adversary is not legendarily vicious, even a dumb (but non-tri
 ---
 
 ## Responsiveness
+
 <br/>
 
 Protocols that are **not responsive** have to **wait for** \\(\Delta\\) **time** to proceed to the next round.
@@ -213,6 +234,7 @@ Protocols that are **not responsive** have to **wait for** \\(\Delta\\) **time**
 ---
 
 ## Responsiveness
+
 <br/>
 
 Protocols that are **not responsive** have to **wait for** \\(\Delta\\) **time** to proceed to the next round.
@@ -226,6 +248,7 @@ Protocols that are **not responsive** have to **wait for** \\(\Delta\\) **time**
 ---
 
 ## Responsiveness
+
 <br/>
 
 Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
@@ -234,11 +257,13 @@ Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to procee
 <br/>
 
 > <font color="#c2ff33">Why \\(2f+1\\)?</font>
+
 <!-- .element: class="fragment"-->
 
 ---
 
 ## Responsiveness
+
 <br/>
 
 Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
@@ -251,6 +276,7 @@ Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to procee
 ---
 
 ## Responsiveness
+
 <br/>
 
 Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to proceed to the next round.
@@ -263,9 +289,11 @@ Protocols that are **responsive** **wait for** \\(2f+1\\) **messages** to procee
 ---
 
 ## Checkpoint
+
 <br/>
 
 Up to this point, we covered:
+
 - consensus problem
 - node types and adversary
 - inter-node communication
@@ -276,6 +304,7 @@ Up to this point, we covered:
 ---
 
 ## Warmup exercise: broadcast
+
 <br/>
 
 > (In an asynchronous network) **reliably** send a single message to all other nodes.
@@ -298,6 +327,7 @@ Up to this point, we covered:
 ---
 
 ## Reliable broadcast protocol (RBC)
+
 <br/>
 
 <img rounded style="width: 1200px;" src="img/3.10-rbc.svg" />
@@ -305,6 +335,7 @@ Up to this point, we covered:
 ---
 
 ## Reliable broadcast in practice
+
 <br/>
 
 Due to the very high communication complexity we use heuristics or cryptography-based tricks.
@@ -312,6 +343,7 @@ Due to the very high communication complexity we use heuristics or cryptography-
 ---
 
 ## Blockchain protocol vs Atomic broadcast
+
 <br/>
 
 Atomic broadcast
@@ -322,6 +354,7 @@ Atomic broadcast
 ---
 
 ## Randomness formalized
+
 <br/>
 
 Randomness beacon
@@ -332,6 +365,7 @@ Randomness beacon
 ---
 
 ## Atomic broadcast: timeline
+
 <br/>
 
 <img rounded style="width: 1200px;" src="img/3.10-timeline-1.svg" />
@@ -339,6 +373,7 @@ Randomness beacon
 ---
 
 ## Atomic broadcast: timeline
+
 <br/>
 
 <img rounded style="width: 1200px;" src="img/3.10-timeline-2.svg" />
@@ -346,15 +381,18 @@ Randomness beacon
 ---
 
 ## Fun fact
+
 <br/>
 
 Aleph paper, as the first, also achieved fully asynchronous randomness beacon:
- - with efficient setup (\\(O(1)\\) rounds, \\(O(N^2)\\) communication)
- - with \\(O(1)\\) expected rounds to output a random value with \\(O(N)\\) communication per round
+
+- with efficient setup (\\(O(1)\\) rounds, \\(O(N^2)\\) communication)
+- with \\(O(1)\\) expected rounds to output a random value with \\(O(N)\\) communication per round
 
 ---
 
 ## Consensus protocols (selection)
+
 <br/>
 
 <pba-cols>
@@ -396,6 +434,7 @@ Aleph paper, as the first, also achieved fully asynchronous randomness beacon:
 ---
 
 ## DAG
+
 <br/>
 
 Directed Acyclic Graph
@@ -406,6 +445,7 @@ Directed Acyclic Graph
 ---
 
 ## How does it relate to consensus?
+
 <br/>
 
 Intuition: graph represents the dependencies between messages (units).
@@ -416,6 +456,7 @@ Intuition: graph represents the dependencies between messages (units).
 ---
 
 ## Framework core
+
 <br/>
 
 1. We maintain a local DAG representing our knowledge of the units. <!-- .element: class="fragment"-->
@@ -424,6 +465,7 @@ Intuition: graph represents the dependencies between messages (units).
 ---
 
 ## Framework core
+
 <br/>
 
 1. We maintain a local DAG representing our knowledge of the units.
@@ -432,14 +474,16 @@ Intuition: graph represents the dependencies between messages (units).
 ---
 
 ## Framework core (in other words)
+
 <br/>
 
-1. (online): sending and receiving units that contribute to the local DAG 
+1. (online): sending and receiving units that contribute to the local DAG
 2. (offline): everybody performs a local consensus on the DAG, just by looking at it
 
 ---
 
 ## Clue observations
+
 <br/>
 
 - local DAGs might differ... <!-- .element: class="fragment"-->
@@ -449,6 +493,7 @@ Intuition: graph represents the dependencies between messages (units).
 ---
 
 ## Adversary control
+
 <br/>
 
 <img rounded style="width: 600px;" src="img/3.10-adversarial-control.svg" />
@@ -456,6 +501,7 @@ Intuition: graph represents the dependencies between messages (units).
 ---
 
 ## Randomness? Where is randomness?
+
 <br/>
 
 It is put into the local consensus protocol.
@@ -463,46 +509,53 @@ It is put into the local consensus protocol.
 ---
 
 ## Relation to the atomic consensus problem
+
 <br/>
 
- - nodes receive transactions and put them into units
- - nodes send each other their new units
- - (locally) nodes come up with a linear ordering of the units and make blocks from chunks
+- nodes receive transactions and put them into units
+- nodes send each other their new units
+- (locally) nodes come up with a linear ordering of the units and make blocks from chunks
 
 ---
 
 ## Digression: block production, information dissemination and finalization
+
 <br/>
 
 The common approach (e.g. in Substrate):
+
 - production and dissemination is done in the same layer
 - afterwards, nodes perform consensus on finalizing disseminated blocks
 
 <br/>
 
 Natural approach for DAG-based protocols:
- - information dissemination happens as 'the first phase'
- - block building and (instant) finalization happens locally
+
+- information dissemination happens as 'the first phase'
+- block building and (instant) finalization happens locally
 
 ---
 
 ## Main consequences of the different separation
+
 <br/>
 
- - block signatures
- - speed
+- block signatures
+- speed
 
 ---
 
 ## Local consensus: goal
+
 <br/>
 
-Local copies might differ significantly, blocks might have not come to all nodes yet, etc... 
+Local copies might differ significantly, blocks might have not come to all nodes yet, etc...
 but we have to make common decision about unit ordering!
 
 ---
 
 ## Key concept: availability
+
 <br/>
 
 Intuitively, a unit is **available** if:
@@ -516,6 +569,7 @@ Intuitively, a unit is **available** if:
 ---
 
 ## Availability
+
 <br/>
 
 If a unit is available, it is a good candidate for being chosen as an 'anchor' in extending current ordering.
@@ -523,6 +577,7 @@ If a unit is available, it is a good candidate for being chosen as an 'anchor' i
 ---
 
 ## Lightweight case study
+
 <br/>
 
 Aleph Zero BFT protocol
@@ -530,6 +585,7 @@ Aleph Zero BFT protocol
 ---
 
 ## Head
+
 <br/>
 
 <img rounded style="width: 600px;" src="img/3.10-heads.svg" />
@@ -537,6 +593,7 @@ Aleph Zero BFT protocol
 ---
 
 ## Building blocks
+
 <br/>
 
 <img rounded style="width: 800px;" src="img/3.10-building-blocks.svg" />
@@ -544,6 +601,7 @@ Aleph Zero BFT protocol
 ---
 
 ## Choosing head
+
 <br/>
 
 <img rounded style="width: 500px;" src="img/3.10-choosing-head.svg" />
@@ -551,30 +609,35 @@ Aleph Zero BFT protocol
 ---
 
 ## Availability determination
+
 <br/>
 
 Units vote for each other's availability.
 
 ---
 
-## (Part of) availability determination 
+## (Part of) availability determination
+
 <br/>
 
 Vote<sub><font color="#c2ff33">U</font></sub>(<font color="#e6007a">V</font>) =
- - \[\[<font color="#c2ff33">U</font> is parent of <font color="#e6007a">V</font>\]\] if <font color="#e6007a">V</font> is from the round just after the round of <font color="#c2ff33">U</font>
- - `0`/`1` if all children of <font color="#c2ff33">U</font> voted `0`/`1`
- - `CommonVote(round(`<font color="#c2ff33">U</font>`), round(`<font color="#e6007a">V</font>`))` otherwise
-<br/>
-<br/>
+
+- \[\[<font color="#c2ff33">U</font> is parent of <font color="#e6007a">V</font>\]\] if <font color="#e6007a">V</font> is from the round just after the round of <font color="#c2ff33">U</font>
+- `0`/`1` if all children of <font color="#c2ff33">U</font> voted `0`/`1`
+- `CommonVote(round(`<font color="#c2ff33">U</font>`), round(`<font color="#e6007a">V</font>`))` otherwise
+  <br/>
+  <br/>
 
 _(U comes from the earlier round than V)_
 
 ---
 
 ## Bonus: generating randomness
+
 <br/>
 
 Sig<sub>`sk`</sub>(nonce)
+
 <!-- .element: class="fragment"-->
 <br/>
 
@@ -590,6 +653,7 @@ Sig<sub>`sk`</sub>(nonce)
 ---
 
 ## Standard way
+
 <br/>
 
 <img rounded style="width: 600px;" src="img/3.10-shamir.svg" />
@@ -597,6 +661,7 @@ Sig<sub>`sk`</sub>(nonce)
 ---
 
 ## Standard way
+
 <br/>
 
 <img rounded style="width: 600px;" src="img/3.10-shamir-2.svg" />
@@ -606,6 +671,7 @@ Problem: need for trusted dealer! <!-- .element: class="fragment"-->
 ---
 
 ## One simple trick
+
 <br/>
 
 <font color="#c2ff33">Everybody is dealing secrets</font> <!-- .element: class="fragment"-->
@@ -613,6 +679,7 @@ Problem: need for trusted dealer! <!-- .element: class="fragment"-->
 ---
 
 ## Combining randomness
+
 <br/>
 
 <img rounded style="width: 600px;" src="img/3.10-xoring.svg" />
