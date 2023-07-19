@@ -183,57 +183,59 @@ graph LR
 
 ## The `WithdrawAsset` instruction
 
-<pba-cols>
-<pba-col>
-
-`WithdrawAsset` has no location specified for assets.
-
-They are _temporarily_ held in what in the Holding Register.
-
-</pba-col>
-<pba-col>
+<pba-flex center>
 
 ```rust
-// There are a number of instructions
-// which place assets on the Holding Register.
-// One very simple one is the
-// `WithdrawAsset` instruction.
-
 enum Instruction {
+    /* snip */
     WithdrawAsset(Assets),
     /* snip */
 }
 ```
 
-</pba-col>
-
 Notes:
+
+There are a number of instructions
+which place assets on the Holding Register.
+One very simple one is the
+`WithdrawAsset` instruction.
 
 It withdraws some assets from the account of the location specified in the Origin Register.
 But what does it do with them?
 If they don’t get deposited anywhere then it's a pretty useless operation.
-These assets are held in the holding register until they are deposited somewhere.
+These assets are held in the holding register until something is done with them, for example, using the following instruction.
+
+---v
+
+## The `BuyExecution` instruction
+
+<pba-flex center>
+
+```rust
+enum Instruction {
+    /* snip */
+    BuyExecution {
+        fees: Asset,
+        weight_limit: WeightLimit,
+    },
+    /* snip */
+}
+```
+
+Notes:
+
+This instruction uses the specified assets in the Holding register to buy weight for the execution of the following instructions.
+It's used in systems that pay fees.
 
 ---v
 
 ## The `DepositAsset` instruction
 
-<pba-cols>
-<pba-col>
-
-Takes assets from the holding register and deposits them in a beneficiary.<br/>
-Typically an instruction that places assets into the holding register would have been executed.
-
-</pba-col>
-<pba-col>
+<pba-flex center>
 
 ```rust
-// There are a number of instructions
-// which operate on the Holding Register.
-// One very simple one is the
-// `DepositAsset` instruction.
-
 enum Instruction {
+    /* snip */
     DepositAsset {
         assets: AssetFilter,
         beneficiary: Location,
@@ -242,80 +244,21 @@ enum Instruction {
 }
 ```
 
-</pba-col>
-</pba-cols>
-
 Notes:
 
-TODO: this slide looks right, see above todo (from Nuke)
+Takes assets from the holding register and deposits them in a beneficiary.
+Typically an instruction that places assets into the holding register would have been executed previously.
 
 ---v
 
-## The `Transact` instruction
-
-<pba-cols>
-<pba-col>
-
-Executes a scale-encoded transaction.
-
-It dispatches from a FRAME origin derived from the origin register.
-
-`OriginKind` defines the type of FRAME origin that should be derived: _root_, _signed_, _parachain_..
-
-</pba-col>
-<pba-col>
-
-```rust
-// Transact allows to execute arbitrary
-// calls in a chain. It is the most generic
-// instruction, as it allows the interaction
-// with any runtime pallet
-enum Instruction {
-    /* snip */
-    Transact {
-      	origin_type: OriginKind,
-    	  require_weight_at_most: u64,
-    	  call: Vec<u8>, // Blob
-    },
-    /* snip */
-}
-```
-
-</pba-col>
-</pba-cols>
-
----v
-
-## The `BuyExecution` instruction
-
-<pba-cols>
-<pba-col>
-
-Text
-
-</pba-col>
-<pba-col>
-
-```rust
-BuyExecution {
-    fees: Asset,
-    weight_limit: WeightLimit,
-}
-```
-
-</pba-col>
-
----v
-
-## Putting it all together, a simple program
+## Putting it all together
 
 <pba-flex center>
 
 ```rust
 Xcm(vec![
-    WithdrawAsset((Here, 10).into()),
-    BuyExecution { fees: (Here, 10).into(), weight_limit: Unlimited },
-    Transact { ... },
-    DepositAsset { ... },
+    WithdrawAsset((Here, amount).into()),
+    BuyExecution { fees: (Here, amount).into(), weight_limit: Unlimited },
+    DepositAsset { assets: All.into(), beneficiary: AccountId32 { ... }.into() },
 ])
 ```
