@@ -631,7 +631,7 @@ file:*
 pragma solidity ^0.7.0;
 ```
 
-Bonus:
+#### Bonus:
 
 * Prevent your multiplier function from overflowing
 * Rewrite this prevention as a `modifier noOverflow()`
