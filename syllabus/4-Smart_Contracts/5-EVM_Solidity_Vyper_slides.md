@@ -740,7 +740,7 @@ def valueTypes():
     # bounded byte arrays
     bytes: Bytes[123] = b"\x01"
 
-    # dynamic-length strings
+    # dynamic-length, fixed-bounds strings
     name: String[16] = "Vyper"
 
 # reference types are potentially large and/or dynamicly sized.
