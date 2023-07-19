@@ -65,19 +65,19 @@ Edward Snowden faces different security threats (changing geopolitical situation
 
 ### Vulnerably on Laptop - What not to do
 
-<img rounded style="width: 800px" src="./img/Web3Sec/vuln.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/vuln.jpg" />
 
 ---
 
 ### Vulnerability on Network - What not to do
 
-<img rounded style="width: 800px" src="./img/Web3Sec/Network_vuln.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/Network_vuln.jpg" />
 
 ---
 
 ### Poor Operational Security - What not to do
 
-<img rounded style="width: 800px" src="./img/Web3Sec/PoorOpSec.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/PoorOpSec.jpg" />
 
 ---
 
@@ -129,13 +129,13 @@ But - what are these keys?
 
 ## Keys compromised - Bad risk management
 
-<img rounded style="width: 800px" src="./img/Web3Sec/compromised.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/compromised.jpg" />
 
 ---
 
 ## Keys lost - Bad risk management
 
-<img rounded style="width: 800px" src="./img/Web3Sec/keyslost.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/keyslost.jpg" />
 
 ---
 
@@ -231,7 +231,7 @@ That they key is available - you can access to it when you need it - the hard di
 
 ### Multisig accounts
 
-<img rounded style="width: 900px" src="./img/Web3Sec/multiSig.jpg" />
+<img rounded style="width: 900px" src="./img/web3_sec/multiSig.jpg" />
 
 <pba-flex center>
 
@@ -254,7 +254,7 @@ The individual can still operate with this wallet (and most recommended, migrate
 
 ## What is a wallet
 
-<img rounded style="width: 800px" src="./img/Web3Sec/keymaker.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/keymaker.jpg" />
 
 A wallet holds a pair of cryptographic keys (public and private).
 
@@ -269,7 +269,7 @@ As the wallet contains the keys in order to operate with the tokens, a keychain 
 
 Hot n Cold
 
-<img rounded style="width: 500px" src="./img/Web3Sec/hotncold.jpg" />
+<img rounded style="width: 500px" src="./img/web3_sec/hotncold.jpg" />
 
 Notes:
 
@@ -300,7 +300,7 @@ This is the todays standard for hot wallets.
 
 ## Internet connection = _bigger_ risk
 
-<img rounded style="width: 800px" src="./img/Web3Sec/listening.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/listening.jpg" />
 
 The listening post (2005) - Exhibited in the British Museum
 
@@ -350,7 +350,7 @@ The need to the physical interaction for this restricts the operation of the har
 
 ## [Polkadot Vault](https://signer.parity.io/)
 
-<img rounded style="width: 800px" src="./img/Web3Sec/vault.jpg" />
+<img rounded style="width: 800px" src="./img/web3_sec/vault.jpg" />
 
 Polkadot Vault is a software app that transforms an Android or iOS device in an air-gapped hardware wallet.
 

@@ -1,11 +1,10 @@
 ---
-title: Cyber Security Overivew
-description: Key drivers around Cyber Security, Introduction to the other modules :
-Security Awareness (40/50mn)
-User Centric Security in Web3 (40/50mn)
-Infrastructure Security (40/50mn)
-Application Security (1h)
-
+title: Cyber Security Overview
+description: "Key drivers around Cyber Security, Introduction to the other modules
+  Security Awareness (40/50mn)
+  User Centric Security in Web3 (40/50mn)
+  Infrastructure Security (40/50mn)
+  Application Security (1h)"
 duration: 30 minutes
 ---
 
