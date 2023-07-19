@@ -619,16 +619,27 @@ Code along and explain as you go
 
 Quick practice assigment:
 
-Remix: https://remix.ethereum.org
-
 * Write a contract which has a `uint256` storage value
 * Write function(s) to multiply it with a user-specified value
 * Interact with it: can you force an overflow?
+
+*Very recently, overflow checks have been added to Solidity. You can disable
+these by specifying an older compiler. Add this to the very top of your `.sol`
+file:*
+
+```
+pragma solidity ^0.7.0;
+```
 
 Bonus:
 
 * Prevent your multiplier function from overflowing
 * Rewrite this prevention as a `modifier noOverflow()`
+
+Remix: https://remix.ethereum.org
+
+Note: the constant `constant public MAX_INT_HEX = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;`
+may be helpful.
 
 ---
 
