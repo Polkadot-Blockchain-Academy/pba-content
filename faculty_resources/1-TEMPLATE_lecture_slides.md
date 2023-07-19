@@ -138,7 +138,7 @@ Compile a list of:
 - examples of the concepts covered in this lesson applied to a project, to case-study
 - useful resources related to the lesson
 
-- Reference other slides/materials by relative directory in this repo, like the [copy-paste slide templates](../../content-templates/slides/copy-paste-reveal-template-slides.md)
+- Reference other slides/materials by relative directory in this repo, like the [copy-paste slide templates](../content-templates/slides/copy-paste-reveal-template-slides.md)
 -->
 
 <pba-flex center>

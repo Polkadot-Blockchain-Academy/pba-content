@@ -8,7 +8,7 @@ duration: 5 minuets
 
 These slides are built with [reveal.js](https://revealjs.com/).
 
-Please first view the [CONTRIBUTING.md](../../CONTRIBUTING.md) guide on how to use these slides.
+Please first view the [CONTRIBUTING.md](../CONTRIBUTING.md) guide on how to use these slides.
 
 These slides serve as a feature demo of reveal for you! 🎉
 
@@ -86,9 +86,9 @@ In order to effectively use those icons in their default form (meaning `line` in
 
 <br/> and the outcomes, accordingly, will be:
 
-<img src="../../assets/icons/polkadot/2color/Ecosystem.svg" /><br />
-<img src="../../assets/icons/polkadot/line/Ecosystem.svg" /><br />
-<img src="../../assets/icons/polkadot/solid/Ecosystem.svg" />
+<img src="../assets/icons/polkadot/2color/Ecosystem.svg" /><br />
+<img src="../assets/icons/polkadot/line/Ecosystem.svg" /><br />
+<img src="../assets/icons/polkadot/solid/Ecosystem.svg" />
 
 ---v
 
@@ -113,7 +113,7 @@ For using custom colors and/or css attributes, you will need to add the `style` 
 
 <img
   style="filter: brightness(0) saturate(100%) invert(37%) sepia(83%) saturate(2704%) hue-rotate(132deg) brightness(93%) contrast(84%);"
-  src="../../assets/icons/polkadot/2color/Ecosystem.svg"
+  src="../assets/icons/polkadot/2color/Ecosystem.svg"
 />
 
 > For altering color the `filter` arg should be used[ a filter generator](https://angel-rs.github.io/css-color-filter-generator/) can be used for extracting code from hex color)
