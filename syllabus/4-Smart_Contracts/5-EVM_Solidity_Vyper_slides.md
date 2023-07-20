@@ -8,17 +8,17 @@ description: Overview and history of the EVM and languages that compile to it.
 
 Ethereum Virtual Machine
 
-* A VM designed specifically for the constraints and features of Ethereum
+- A VM designed specifically for the constraints and features of Ethereum
 
 ---v
 
 ## EVM Properties
 
-* Deterministic: execution outcome easy to agree upon
-* Spam-resistant: CPU and other resources are metered at a very granular level
-* Turing-complete (with a caveat)
-* Stack-based design
-* Ethereum-specific (EVM can query block hash, accounts and balances, etc.)
+- Deterministic: execution outcome easy to agree upon
+- Spam-resistant: CPU and other resources are metered at a very granular level
+- Turing-complete (with a caveat)
+- Stack-based design
+- Ethereum-specific (EVM can query block hash, accounts and balances, etc.)
 
 Note:
 
@@ -31,17 +31,17 @@ results.
 
 # History of Ethereum
 
-* Nov 2013: Vitalik released WP
-* Apr 2014: Gav released YP
-* July 2014: $18M raised (ICO lasted 42 days)
-* July 2015: Frontier released -- bare bones, Proof of Work
-* Sept 2015: Frontier "thawed", difficulty bomb introduced
-* July 2016: DAO Fork
-* 2016-2019: Optimizations, opcode cost tuning, difficulty bomb delays
-* 2020: Staking contract deployed, Beacon Chain launched
-* 2021: EIP-1559, prep for The Merge
-* 2022: The Merge (Proof of Stake)
-* 2023: Staking withdraw support
+- Nov 2013: Vitalik released WP
+- Apr 2014: Gav released YP
+- July 2014: $18M raised (ICO lasted 42 days)
+- July 2015: Frontier released -- bare bones, Proof of Work
+- Sept 2015: Frontier "thawed", difficulty bomb introduced
+- July 2016: DAO Fork
+- 2016-2019: Optimizations, opcode cost tuning, difficulty bomb delays
+- 2020: Staking contract deployed, Beacon Chain launched
+- 2021: EIP-1559, prep for The Merge
+- 2022: The Merge (Proof of Stake)
+- 2023: Staking withdraw support
 
 ---v
 
@@ -57,11 +57,11 @@ revert this, resulting in Ethereum splitting into two different chains.
 
 Brief history:
 
-* 2016: raised $150M worth of ETH
-* later that year: 3.6M ETH drained
-* reentrancy attack
-* "Mainnet" Ethereum is the fork with the hack retroactively removed
-* Ethereum Classic: code is law
+- 2016: raised $150M worth of ETH
+- later that year: 3.6M ETH drained
+- reentrancy attack
+- "Mainnet" Ethereum is the fork with the hack retroactively removed
+- Ethereum Classic: code is law
 
 ---v
 
@@ -69,12 +69,12 @@ Brief history:
 
 Ethereum has faced many challenges as the pioneer of smart contracts.
 
-* Performance: Underpriced opcodes have been attacked as a spam or DoS vector
-* High gas fees: Overwhelming demand low block-space supply
-* Frontrunning: Inserting transactions before, after, or in place of others in order to economically benefit
-* Hacks: Many hacks have exploited smart contract vulnerabilities
-* Problems with aggregating smart contract protocols together
-* Storage bloat: Misaligned incentives with burden of storage
+- Performance: Underpriced opcodes have been attacked as a spam or DoS vector
+- High gas fees: Overwhelming demand low block-space supply
+- Frontrunning: Inserting transactions before, after, or in place of others in order to economically benefit
+- Hacks: Many hacks have exploited smart contract vulnerabilities
+- Problems with aggregating smart contract protocols together
+- Storage bloat: Misaligned incentives with burden of storage
 
 ---v
 
@@ -92,11 +92,11 @@ Ethereum has faced many challenges as the pioneer of smart contracts.
 
 ## Turing completeness and the Halting Problem
 
-* EVM: Turing-complete instruction set
+- EVM: Turing-complete instruction set
 
-* But what about the Halting Problem?
-* Obviously cannot allow infinite loops
-* Solution: Gasometer, a way to pre-pay for each opcode execution
+- But what about the Halting Problem?
+- Obviously cannot allow infinite loops
+- Solution: Gasometer, a way to pre-pay for each opcode execution
 
 Note:
 
@@ -112,10 +112,10 @@ properly paid for.
 
 <img style="width: 100%; margin: 10px" src="img/frontier/GasometerDiagram.png" />
 
-* Checks before each opcode to make sure gas can be paid
-* Safe: prevents unpaid work from being done
-* Deterministic: results are unambiguous
-* Very inefficient: lots of branching and extra work
+- Checks before each opcode to make sure gas can be paid
+- Safe: prevents unpaid work from being done
+- Deterministic: results are unambiguous
+- Very inefficient: lots of branching and extra work
 
 Note: This not only makes it possible to prevent abuse, but crucially allows
 nodes to agree on doing so. A centralized service could easily impose a time
@@ -128,10 +128,10 @@ a limit (or trust each other).
 
 Gas: unit of account for EVM execution resources.
 
-* `gas_limit`: specifies the maximum amount of gas a txn can pay
-* `gas_price`: specifies the exact price a txn will pay per gas
+- `gas_limit`: specifies the maximum amount of gas a txn can pay
+- `gas_price`: specifies the exact price a txn will pay per gas
 
-A txn *must* be able to pay `gas_limit * gas_price` in order to be valid. This
+A txn _must_ be able to pay `gas_limit * gas_price` in order to be valid. This
 amount is initially deducted from the txn's sender account and any remaining gas
 is refunded after the txn has executed.
 
@@ -146,10 +146,10 @@ gas_price --> max_base_fee_per_gas
           \-> max_priority_fee_per_gas
 ```
 
-* Separates tip from gas price
-* `base_fee` is an algorithmic gas price, this is exactly what is paid and is burned
-* ...plus maybe tip if (`base_fee < max_base_fee + max_priority_fee`)
-* Algorithmic, congestion-based multiplier controls `base_fee`
+- Separates tip from gas price
+- `base_fee` is an algorithmic gas price, this is exactly what is paid and is burned
+- ...plus maybe tip if (`base_fee < max_base_fee + max_priority_fee`)
+- Algorithmic, congestion-based multiplier controls `base_fee`
 
 ---v
 
@@ -165,9 +165,9 @@ used.
 
 However, there are a few caveats:
 
-* Run against current state (state may change)
-* The RPC node could lie to you
-* This is expensive infrastructure overhead and can be a spam vector
+- Run against current state (state may change)
+- The RPC node could lie to you
+- This is expensive infrastructure overhead and can be a spam vector
 
 ---
 
@@ -178,16 +178,16 @@ hold and send Ether, but they are controlled very differently.
 
 ### Externally-owned Account (EOA)
 
-* Traditional user-controlled account (e.g. wallet)
-* Controlled via private keys
-* Account ID generated by hashing public key
-* Uses an incrementing nonce to prevent replay attacks
+- Traditional user-controlled account (e.g. wallet)
+- Controlled via private keys
+- Account ID generated by hashing public key
+- Uses an incrementing nonce to prevent replay attacks
 
 ### Contract Account
 
-* Controlled by immutable bytecode
-* May only ever do precisely what the code specifies
-* Account ID generated deterministically when bytecode is deployed
+- Controlled by immutable bytecode
+- May only ever do precisely what the code specifies
+- Account ID generated deterministically when bytecode is deployed
 
 ---
 
@@ -198,21 +198,21 @@ about what the transaction should do and how it will pay for itself.
 
 #### Some of the fields:
 
-* **value**: 0 or more Ether to send with the txn
-* **to**: the target of this transaction
-* **input**: Optional input data for creating or calling a contract
-* **gas_limit**: Max gas the txn will pay
-* **gas_price**: (or EIP-1559 equivalent)
-* **nonce**: prevents replay attacks and forces ordering
-* **signature**: proves ownership of private keys, allows recoving Account ID
+- **value**: 0 or more Ether to send with the txn
+- **to**: the target of this transaction
+- **input**: Optional input data for creating or calling a contract
+- **gas_limit**: Max gas the txn will pay
+- **gas_price**: (or EIP-1559 equivalent)
+- **nonce**: prevents replay attacks and forces ordering
+- **signature**: proves ownership of private keys, allows recoving Account ID
 
 ---v
 
 ## Possible use-cases:
 
-* Call a contract's external function (`input` specifies function and arguments)
-* Create a contract (`input` specifies contract's bytecode)
-* Neither (`input` empty)
+- Call a contract's external function (`input` specifies function and arguments)
+- Create a contract (`input` specifies contract's bytecode)
+- Neither (`input` empty)
 
 In all cases, Ether can be sent (`Neither` being a normal Ether send).
 
@@ -222,10 +222,10 @@ In all cases, Ether can be sent (`Neither` being a normal Ether send).
 
 Before executing (or gossiping) txns, some validity checks should be run:
 
-* Is the `gas_limit` sufficent? (`21_000` minimum at least pays for processing)
-* Is the signature valid? (Side effect: public key recovered)
-* Can the account pay for `gas_limit * gas_price`?
-* Is this a valid (and reasonable) nonce for the account?
+- Is the `gas_limit` sufficent? (`21_000` minimum at least pays for processing)
+- Is the signature valid? (Side effect: public key recovered)
+- Can the account pay for `gas_limit * gas_price`?
+- Is this a valid (and reasonable) nonce for the account?
 
 Note:
 
@@ -261,7 +261,7 @@ https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984?a=0xd0fc8b
 
 `Contract Account`s contain a sandboxed state, which stores everything that the
 contract writes to storage. Contracts may not write to storage outside of their
-own sandbox, but they can call other contracts whose bytecode *might* write to
+own sandbox, but they can call other contracts whose bytecode _might_ write to
 their respective storage.
 
 ---v
@@ -270,18 +270,18 @@ their respective storage.
 
 Contract functions can be invoked in two ways different ways:
 
-* EoAs can call a contract functions directly
-* Contracts can call other contracts (called "messaging")
+- EoAs can call a contract functions directly
+- Contracts can call other contracts (called "messaging")
 
 #### Types of contract messaging
 
-* Normal `call`: Another contract is called and can change its own state
-* `staticcall`: A "safe" way to call another contract with no state changes
-* `delegatecall`: A way to call another contract but modify our state instead
+- Normal `call`: Another contract is called and can change its own state
+- `staticcall`: A "safe" way to call another contract with no state changes
+- `delegatecall`: A way to call another contract but modify our state instead
 
 Note:
 
-Transactions are the only means through which state changes happen. 
+Transactions are the only means through which state changes happen.
 
 ---v
 
@@ -309,7 +309,7 @@ the complication of decimal math, it's stored as a very small integer: `Wei`.
 1 Ether = 1_000_000_000_000_000_000 Wei (10^18)
 ```
 
-Note: 
+Note:
 
 Integer math with such insignificant units mostly avoids truncation issues and
 makes it easy to agree on outcomes.
@@ -340,17 +340,17 @@ The EVM is ultimately programmed by creating bytecode. While it is possible to
 write bytecode by hand or through low-level assembly language, it is much more
 practical to use a higher-level language. We will look at two in particular:
 
-* Solidity
-* Vyper
+- Solidity
+- Vyper
 
 ---
 
 # Solidity
 
-* Designed for EVM
-* Similar to C++, Java, etc.
-* Includes inheritance (including MI)
-* Criticized for being difficult to reason about security
+- Designed for EVM
+- Similar to C++, Java, etc.
+- Includes inheritance (including MI)
+- Criticized for being difficult to reason about security
 
 ---v
 
@@ -384,7 +384,7 @@ contract Foo {
 
 ## Modifiers
 
-* A special function that can be run as a precondition for other functions
+- A special function that can be run as a precondition for other functions
 
 ```Solidity
 contract Foo {
@@ -410,7 +410,6 @@ Note:
 
 Although Modifiers can be an elegant way to require preconditions, they can do
 entirely arbitrary things, and auditing code requires carefully reading them.
-
 
 ---v
 
@@ -513,9 +512,9 @@ contract Foo {
 by reference, it effectively dictates where this reference points to. It can be
 one of 3 places:
 
-* memory: Stored only in memory; cannot outlive a given external function call
-* storage: Stored in the contract's permanent on-chain storage
-* calldata: read-only data, using this can avoid copies
+- memory: Stored only in memory; cannot outlive a given external function call
+- storage: Stored in the contract's permanent on-chain storage
+- calldata: read-only data, using this can avoid copies
 
 ---v
 
@@ -619,13 +618,13 @@ Code along and explain as you go
 
 Quick practice assigment:
 
-* Write a contract which has a `uint256` storage value
-* Write function(s) to multiply it with a user-specified value
-* Interact with it: can you force an overflow?
+- Write a contract which has a `uint256` storage value
+- Write function(s) to multiply it with a user-specified value
+- Interact with it: can you force an overflow?
 
-*Very recently, overflow checks have been added to Solidity. You can disable
+_Very recently, overflow checks have been added to Solidity. You can disable
 these by specifying an older compiler. Add this to the very top of your `.sol`
-file:*
+file:_
 
 ```
 pragma solidity ^0.7.0;
@@ -633,8 +632,8 @@ pragma solidity ^0.7.0;
 
 #### Bonus:
 
-* Prevent your multiplier function from overflowing
-* Rewrite this prevention as a `modifier noOverflow()`
+- Prevent your multiplier function from overflowing
+- Rewrite this prevention as a `modifier noOverflow()`
 
 Remix: https://remix.ethereum.org
 
@@ -645,10 +644,10 @@ may be helpful.
 
 # Vyper
 
-* Also designed for the EVM
-* Similar to Python
-* Intentionally lacks some features such as inheritance
-* Auditable: "Simplicity for the reader is more important than simplicity for the writer"
+- Also designed for the EVM
+- Similar to Python
+- Intentionally lacks some features such as inheritance
+- Auditable: "Simplicity for the reader is more important than simplicity for the writer"
 
 ---v
 
@@ -657,11 +656,11 @@ may be helpful.
 Vyper mostly lacks features found in Solidity, all in the spirit of improving
 readability. Some examples:
 
-* No Inheritance
-* No modifiers
-* No function overloading
-* No recursive calling (!)
-* No infinite-loops
+- No Inheritance
+- No modifiers
+- No function overloading
+- No recursive calling (!)
+- No infinite-loops
 
 ---v
 
@@ -849,9 +848,9 @@ Note: We make a call to withdraw user's balance before updating our internal sta
 
 ## How can this be avoided?
 
-* Commit state BEFORE contract call
-* Modifier that prevents reentrancy (Solidity)
-* `@nonreentrant` decorator (Vyper)
+- Commit state BEFORE contract call
+- Modifier that prevents reentrancy (Solidity)
+- `@nonreentrant` decorator (Vyper)
 
 ---
 
@@ -872,6 +871,7 @@ user-input?
 
 Accepting a pre-hash also reveals the secret. This reveal may occur in a txn
 before it is executed and settled, allowing someone to frontrun it.
+
 <!-- .element: class="fragment" -->
 
 ---v
@@ -915,4 +915,3 @@ Note:
 Commit-reveal requires that a specific secret be revealed at some point for
 verification. A signature scheme provides a lot more flexibility for keeping the
 secret(s) secure.
-
