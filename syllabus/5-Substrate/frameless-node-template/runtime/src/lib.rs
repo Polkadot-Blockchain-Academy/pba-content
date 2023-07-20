@@ -149,9 +149,9 @@
 //!
 //! #### Nonce
 //!
-//! You should implement a nonce system, as explained as a part of the tx-pool logic. In short, the
-//! validation of each transaction should `require` nonce `(sender, n-1)` and provide `(sender, n)`.
-//! See `TaggedTransactionQueue` below for more information.
+//! You should implement a nonce system, as explained as a part of the tx-pool lecture. In short,
+//! the validation of each transaction should `require` nonce `(sender, n-1)` and provide `(sender,
+//! n)`. See `TaggedTransactionQueue` below for more information.
 //!
 //! Note that your nonce should be checked as a part of transaction pool api, which means it should
 //! be implemented as efficiently as possibly, next to other checks that need to happen.
@@ -197,6 +197,8 @@
 //! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
 //!   [`sp_runtime::transaction_validity::InvalidTransaction::Payment`] if the extrinsic cannot pay
 //!   for its declared tip.
+//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Future`] or
+//!   `Stale` if the nonce is too high or too low.
 //!
 //! Moreover, if the signature and tip are valid, the
 //! [`sp_runtime::transaction_validity::ValidTransaction::priority`] must be set to the tip value
