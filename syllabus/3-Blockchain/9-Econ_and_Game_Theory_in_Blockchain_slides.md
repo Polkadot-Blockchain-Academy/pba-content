@@ -199,7 +199,9 @@ Notes:
 
 And finally we'll be having various reward and punishment schemes that will shape the incentives of the players.
 
-## Now that we have all the elements defining our blockchain games we can look for further parallels.
+Now that we have all the elements defining our blockchain games we can look for further parallels.
+
+---v
 
 # Market Emergence
 
@@ -275,7 +277,9 @@ Let's dive a bit deeper. So the users are bidding with how much they are willing
 
 Notes:
 
-What is the actual product being exchanged here? When you have the crude oil market the goods being exchanged are clearly defined. What is actually being traded in here?
+What is the actual product being exchanged here? When you have the crude oil market the goods being exchanged are clearly defined. It's crude oil barrels. What is actually being traded in here?
+
+Anyone has an idea what it might be?
 
 ---v
 
@@ -367,7 +371,7 @@ We all know that the transaction fees can sometimes get outrageous. In cases whe
 
 Notes:
 
-And now let's think of what normal markets do. If our demand and price go extremely high the suppliers would have an incentive to produce more. But in blockchains that's not directly possible. More miners often don't mean more blockspace but MORE SECURE blockspace.
+And now let's think of what normal markets do. If our demand and price go extremely high the suppliers would have an incentive to produce more. But in blockchains that's not directly possible. More miners often don't mean more blockspace but MORE SECURE blockspace. That means a better quality blockspace.
 
 So the supply is often fixed and the demand is fluctuating. This is often the cause for the very volatile fee market.
 
@@ -465,7 +469,7 @@ Here we have a few assumptions, but the main ones are:
 
 - imagine we have only 2 miners
 - the block rewards is 2
-- miners can be honsently following the protocol or try to cheat and push invalid blocks (for instance one where they get 999 bitcoins)
+- miners can be honestly following the protocol or try to cheat and push invalid blocks (for instance one where they get 999 bitcoins)
 
 Let's figure out how many bitcoins each one of them will mine on average.
 
@@ -801,7 +805,7 @@ Not always. If the majority of people are honest then honesty pays off. If the m
 
 =fragment=
 
-In fact it was proven that in PoW following the majority is the true Nash Equilibrium no matter what strategy/protocol they are using as long as it's consistent.
+In fact it was proven that in PoW following the majority is the true Nash Equilibrium no matter what strategy/protocol they are using as long as it's consistent. So Bitcoin mining is in fact a huge coordination game and this is why honesty AKA following the BTC protocol usually pays off.
 
 - More complex examples will be explored later in the forks lecture on Friday
 - Paper investigating PoW Nash Equilibrium and following the majority:
@@ -911,7 +915,7 @@ Oracles are blockchain entities that provide information from the outside world 
 
 Notes:
 
-Oracles. Oracles are super interesting because what they are trying to achieve is to provide information from the outside world to the blockchain. And that's a very very hard task.
+Oracles. Firstly who in the room heard of oracles? Raise your hands. Oracles are super interesting because what they are trying to achieve is to provide information from the outside world to the blockchain. And that's a very very hard task.
 
 ---v
 
@@ -1002,7 +1006,7 @@ Notes:
 
 Honest voters are naturally coordinated. They will check the temperature and vote honestly all within some small margin of error.
 
-People that would lie to skew the results and would submit random values generally wouldn't cluster like the honest voters. To make a more dangerous attack they would need to strategically coordinate ona specific value and all lie about it. It's much harder to pull of than simply checking the temperature outside.
+People that would lie to skew the results and would submit random values generally wouldn't cluster like the honest voters. To make a more dangerous attack they would need to strategically coordinate on a specific value and all lie about it. It's much harder to pull of than simply checking the temperature outside.
 
 Submitting the truth is the Schelling Point in here and it makes it easy to be honest.
 
@@ -1308,7 +1312,7 @@ Or distribute them from a previously acquired pool of rewards.
 
 But what is crucial here the protocol is safe and dependable only if there is enough voters so the incentives need to be designed in a way that encourages participation.
 
-More precisely, incentives need to be roughly proportional to the value an attacker could gain by compromising the system. Low-stakes oracles don't need to have super aggresive incentives.
+More precisely, incentives need to be roughly proportional to the value an attacker could gain by compromising the system. Low-stakes oracles don't need to have super aggressive incentives.
 
 ---v
 
@@ -1641,9 +1645,9 @@ So what we had originally is Bob paid for his smart contract and then simply wen
 
 Notes:
 
-Afterwards Bob deploys his contract in the same way but before running of to play a guitar he removes it from the state and gets some of the gas back. He likes the extra money so he has an incentive to clean.
+Afterwards Bob deploys his contract in the same way but before running of to play a guitar he removes it from the state and gets some of the gas back. He likes the extra money so he has an incentive to clean. In here we're presenting the version where he recovers the full value for educational purposes but Ethereum only refunds a portion of the gas.
 
-But wait... So what is the actual cost if he paid 10 and got 10 back? And it might not be obvious but it is an...
+But wait... So what is the actual cost if he paid 10 and got 10 back? Anyone has any idea? Cost might not be obvious but it is an...
 
 ---
 
@@ -1687,7 +1691,11 @@ Generally opportunity cost is the loss of other alternatives when making a choic
 
 Notes:
 
-Going back to the topic of Ethereum the real cost for Bob is not the 10$ he paid for storage as he regains it later. The cost is in loosing the opportunity of investing the money elsewhere. Just locking your funds is sort of a punishment by itself. Even if you regain them later. This is especially true in inflationary systems, and spoiler alert that most of them.
+Going back to the topic of Ethereum the real cost for Bob is not the 10$ he paid for storage as he regains it later. The cost is in losing the opportunity of investing the money elsewhere. 
+
+=fragment=
+
+Just locking your funds is sort of a punishment by itself. Even if you regain them later. This is especially true in inflationary systems, and spoiler alert that most of them.
 
 The opportunity cost is a clever mechanism that allows us to include costs without directly charging them, and we also need to be super aware so we don't accidentally punish the users by not thinking of some external opportunity costs.
 
@@ -1729,7 +1737,7 @@ Notes:
 
 An externality is a consequence of an economic activity that is experienced by some third parties.
 
-As an example, think of the pollutions you emit when driving a car. It's a negative externality that affects all the people around you. Alternatively imagine planting a tree in your garden simply because you like how it looks and gives you some shade. The tree improve the quality of air in the neighbourhood and that's a positive externality for the people around you.
+As an example, think of the pollution you emit when driving a car. It's a negative externality that affects all the people around you. Alternatively imagine planting a tree in your garden simply because you like how it looks and gives you some shade. The tree improves the quality of air in the neighbourhood and that's a positive externality for the people around you.
 
 ---v
 
