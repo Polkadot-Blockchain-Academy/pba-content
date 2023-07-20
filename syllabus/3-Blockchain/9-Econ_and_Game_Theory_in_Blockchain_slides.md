@@ -43,7 +43,7 @@ What's the goal of this lecture?
             <li> Demand & Supply </li>
             <li> Markets </li>
             <li> Nash Equilibrium </li>
-            <li> Shelling Point </li>
+            <li> Schelling Point </li>
             <li> <strong>...</strong> </li>
         </ul>
     </pba-col>
@@ -809,15 +809,15 @@ In fact it was proven that in PoW following the majority is the true Nash Equili
 
 ---
 
-# Shelling Point
+# Schelling Point
 
 Notes:
 
-On that topic... What if we have multiple Nash Equilibria? Shelling point often comes to the rescue.
+On that topic... What if we have multiple Nash Equilibria? Schelling point often comes to the rescue.
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 - A solution that people tend to choose (easiest to coordinate on)
 - Generally it is also a Nash Equilibrium
@@ -826,7 +826,7 @@ On that topic... What if we have multiple Nash Equilibria? Shelling point often 
 
 Notes:
 
-So first a Shelling point is a strategy people tend to choose. It is generally a Nash Eq.
+So first a Schelling point is a strategy people tend to choose. It is generally a Nash Eq.
 
 =fragment=
 
@@ -834,7 +834,7 @@ But how in the world is it useful to us in Blockchain?
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### Detective game
 
@@ -852,13 +852,13 @@ But how in the world is it useful to us in Blockchain?
 
 Notes:
 
-But before we can fully answer that let's explore a different game that can show you how Shelling points work. And I promise it will be applicable to Blockchain.
+But before we can fully answer that let's explore a different game that can show you how Schelling points work. And I promise it will be applicable to Blockchain.
 
 So the story goes like that. We have to bank robbers and a detective. The detective interrogates he robbers and tries to make them confess or catch them lying.
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Detective game_
 
@@ -872,7 +872,7 @@ Seems like a safe strategy, right? But remember than both of them witnessed the 
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Detective game_
 
@@ -886,21 +886,21 @@ Contrast it with how easy it would be to just tell the truth. They both witnesse
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Detective game_
 
-Truthful answers are one of the easiest strategies coordinate on, so they are the Shelling Points.
+Truthful answers are one of the easiest strategies coordinate on, so they are the Schelling Points.
 
 Notes:
 
-That's why we can say that Truthful answers are one of the easiest strategies coordinate on, so they are the Shelling Points. The truth itself is a shelling point.
+That's why we can say that Truthful answers are one of the easiest strategies coordinate on, so they are the Schelling Points. The truth itself is a Schelling point.
 
 And this concept is vital to something in blockchain called...
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -915,7 +915,7 @@ Oracles. Oracles are super interesting because what they are trying to achieve i
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -940,7 +940,7 @@ Let's actually see how they might work is a slightly simplified version with the
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -956,7 +956,7 @@ We know the answer lies somewhere on this axis. But what it is exactly?
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -970,7 +970,7 @@ We can ask some users to submit what they think the temperature is. Some of them
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -982,7 +982,7 @@ What we are hoping for is that the cluster of votes you can see here will be aro
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -1004,11 +1004,11 @@ Honest voters are naturally coordinated. They will check the temperature and vot
 
 People that would lie to skew the results and would submit random values generally wouldn't cluster like the honest voters. To make a more dangerous attack they would need to strategically coordinate ona specific value and all lie about it. It's much harder to pull of than simply checking the temperature outside.
 
-Submitting the truth is the Shelling Point in here and it makes it easy to be honest.
+Submitting the truth is the Schelling Point in here and it makes it easy to be honest.
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -1027,7 +1027,7 @@ But what if there are some attackers? What can we do about them?
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -1048,7 +1048,7 @@ If we never punish them they can repeat the attack until they are successful. An
 
 ---v
 
-## Shelling Point
+## Schelling Point
 
 #### _Oracles_
 
@@ -1069,7 +1069,7 @@ Notes:
 
 Or even worse, they can make a million fake identities and spam incorrect votes. So we need to punish them.
 
-But this is no longer a problem of a Shelling Point. The Shelling point did its job already. What we are talking about right now are...
+But this is no longer a problem of a Schelling Point. The Schelling point did its job already. What we are talking about right now are...
 
 ---
 
@@ -1360,7 +1360,7 @@ Notes:
 
 Now let's summarize the main points.
 
-We need to make it easy for honest nodes and hard for attackers. The Shelling Point as the foundational part of the design handles that for us.
+We need to make it easy for honest nodes and hard for attackers. The Schelling Point as the foundational part of the design handles that for us.
 
 =fragment=
 
@@ -2173,7 +2173,7 @@ The consequences of restaking are still not fully understood and the research is
 
 - Markets - Fee Markets
 - Nash Eq. - BTC Mining
-- Shelling Point - Oracles
+- Schelling Point - Oracles
 - Incentivization - Oracles
 - Opportunity cost - Ethereum State Storage Refunds
 - Externalities - Ethereum State Storage and Oracles
