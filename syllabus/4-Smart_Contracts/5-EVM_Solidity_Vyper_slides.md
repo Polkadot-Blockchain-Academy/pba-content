@@ -4,13 +4,13 @@ description: Overview and history of the EVM and languages that compile to it.
   Focus on architecting real-world smart contracts.
 ---
 
-# EVM
+## EVM
 
-Ethereum Virtual Machine
+**Ethereum Virtual Machine**
 
-- A VM designed specifically for the constraints and features of Ethereum
+A VM designed specifically for the constraints and features of Ethereum
 
----v
+---
 
 ## EVM Properties
 
@@ -20,16 +20,19 @@ Ethereum Virtual Machine
 - Stack-based design
 - Ethereum-specific (EVM can query block hash, accounts and balances, etc.)
 
-Note:
+Notes:
 
 It is critical that the EVM be 100% deterministic and that each implementation
-produce the same outcome. Even the smallest discrepancy between two running
+produce the same outcome.
+Even the smallest discrepancy between two running
 nodes would lead to different block hashes, violating consensus about the
 results.
 
 ---
 
-# History of Ethereum
+## History of Ethereum
+
+<pba-flex center>
 
 - Nov 2013: Vitalik released WP
 - Apr 2014: Gav released YP
@@ -43,29 +46,29 @@ results.
 - 2022: The Merge (Proof of Stake)
 - 2023: Staking withdraw support
 
+</pba-flex>
+
 ---v
 
 ## DAO Hack
 
-A DAO ("Decentralized Autonomous Organization") is much like a business entity
-run by code rather than by humans. Like any other business entity, it has assets
-and can carry out operations, but its legal status is unclear.
+1. 2016: raised $150M worth of ETH
+1. Later that year: 3.6M ETH drained
+1. Reentrancy attack
+1. "Mainnet" Ethereum forks to retroactively undo hack
+1. Ethereum Classic: code is law
 
-The earliest DAO ("The DAO") on Ethereum suffered a catastrophic hack due to a
-bug in its code. The community disagreed on whether or not to hard-fork and
-revert this, resulting in Ethereum splitting into two different chains.
+Notes:
 
-Brief history:
+A DAO ("Decentralized Autonomous Organization") is much like a business entity run by code rather than by humans.
+Like any other business entity, it has assets and can carry out operations, but its legal status is unclear.
 
-- 2016: raised $150M worth of ETH
-- later that year: 3.6M ETH drained
-- reentrancy attack
-- "Mainnet" Ethereum is the fork with the hack retroactively removed
-- Ethereum Classic: code is law
+The earliest DAO ("The DAO") on Ethereum suffered a catastrophic hack due to a bug in its code.
+The DAO community disagreed on whether or not to hard-fork and revert the hack, resulting in Ethereum splitting into two different chains.
 
 ---v
 
-## Ethereum as first smart contracting platform
+## The first smart contracting platform
 
 Ethereum has faced many challenges as the pioneer of smart contracts.
 
@@ -88,9 +91,9 @@ Ethereum has faced many challenges as the pioneer of smart contracts.
 
 ---
 
-# Gas
+## Gas
 
-## Turing completeness and the Halting Problem
+> Turing completeness and the Halting Problem
 
 - EVM: Turing-complete instruction set
 
@@ -98,29 +101,27 @@ Ethereum has faced many challenges as the pioneer of smart contracts.
 - Obviously cannot allow infinite loops
 - Solution: Gasometer, a way to pre-pay for each opcode execution
 
-Note:
+Notes:
 
-The Halting Problem tells us that it's not possible to know that an arbitrary
-program will properly stop. To prevent such abuse, we check that there is gas
-remaining before every single opcode execution. Since gas is limited, this
-ensures that no EVM execution will run forever and that all work performed is
-properly paid for.
+The Halting Problem tells us that it's not possible to know that an arbitrary program will properly stop.
+To prevent such abuse, we check that there is gas remaining before every single opcode execution.
+Since gas is limited, this ensures that no EVM execution will run forever and that all work performed is properly paid for.
 
 ---v
 
 ## Gasometer
 
-<img style="width: 100%; margin: 10px" src="img/frontier/GasometerDiagram.png" />
+<img style="width: 1200px" src="img/frontier/GasometerDiagram.png" />
 
 - Checks before each opcode to make sure gas can be paid
 - Safe: prevents unpaid work from being done
 - Deterministic: results are unambiguous
 - Very inefficient: lots of branching and extra work
 
-Note: This not only makes it possible to prevent abuse, but crucially allows
-nodes to agree on doing so. A centralized service could easily impose a time
-limit, but decentralized nodes wouldn't be able to agree on the outcome of such
-a limit (or trust each other).
+Notes:
+
+This not only makes it possible to prevent abuse, but crucially allows nodes to agree on doing so.
+A centralized service could easily impose a time limit, but decentralized nodes wouldn't be able to agree on the outcome of such a limit (or trust each other).
 
 ---v
 
@@ -131,37 +132,42 @@ Gas: unit of account for EVM execution resources.
 - `gas_limit`: specifies the maximum amount of gas a txn can pay
 - `gas_price`: specifies the exact price a txn will pay per gas
 
-A txn _must_ be able to pay `gas_limit * gas_price` in order to be valid. This
-amount is initially deducted from the txn's sender account and any remaining gas
-is refunded after the txn has executed.
+A txn _must_ be able to pay `gas_limit * gas_price` in order to be valid.
+
+Notes:
+
+This amount is initially deducted from the txn's sender account and any remaining gas is refunded after the txn has executed.
 
 ---v
 
 ## EIP-1559
 
-An improvement to gas pricing mechanism. Introduced in London hard-fork.
+An improvement to gas pricing mechanism.
 
 ```
 gas_price --> max_base_fee_per_gas
           \-> max_priority_fee_per_gas
 ```
 
+<!-- FIXME TODO mermaid or img for above -->
+
 - Separates tip from gas price
 - `base_fee` is an algorithmic gas price, this is exactly what is paid and is burned
 - ...plus maybe tip if (`base_fee < max_base_fee + max_priority_fee`)
 - Algorithmic, congestion-based multiplier controls `base_fee`
 
+Notes:
+
+https://eips.ethereum.org/EIPS/eip-1559
+Introduced in London hard-fork.
+
 ---v
 
 ## OOG and Gas Estimation
 
-If a txn exhausts its `gas_limit` without finishing, it will produce an
-OOG (out-of-gas) error and all changes made in the EVM are reverted (except for
-fee payment).
+If a txn exhausts its `gas_limit` without finishing, it will produce an OOG (out-of-gas) error and all changes made in the EVM are reverted (except for fee payment).
 
-In order to estimate the amount of gas a txn will need, an RPC method
-(`eth_estimateGas`) can perform a dry-run of the txn and record the amount
-used.
+In order to estimate the amount of gas a txn will need, an RPC method (`eth_estimateGas`) can perform a dry-run of the txn and record the amount used.
 
 However, there are a few caveats:
 
@@ -173,30 +179,44 @@ However, there are a few caveats:
 
 ## Account Types
 
-There are two types of Ethereum accounts. Both use 160-bit account IDs and can
-hold and send Ether, but they are controlled very differently.
+There are two types of Ethereum accounts.
+Both use 160-bit account IDs and can hold and send Ether, but they are controlled very differently.
 
-### Externally-owned Account (EOA)
+---v
 
-- Traditional user-controlled account (e.g. wallet)
+## Account Types
+
+<pba-cols>
+<pba-col>
+
+**Externally-owned Account (EOA)**
+
+- Traditional user-controlled account
 - Controlled via private keys
 - Account ID generated by hashing public key
 - Uses an incrementing nonce to prevent replay attacks
 
-### Contract Account
+</pba-col>
+<pba-col>
+
+**Contract Account**
 
 - Controlled by immutable bytecode
 - May only ever do precisely what the code specifies
 - Account ID generated deterministically when bytecode is deployed
 
+</pba-col>
+</pba-cols>
+
 ---
 
 ## Transactions
 
-A transaction is a signed payload from an EoA which contains details
-about what the transaction should do and how it will pay for itself.
+A transaction is a signed payload from an EoA which contains details about what the transaction should do and how it will pay for itself.
 
-#### Some of the fields:
+---v
+
+## Transactions fields:
 
 - **value**: 0 or more Ether to send with the txn
 - **to**: the target of this transaction
@@ -204,7 +224,8 @@ about what the transaction should do and how it will pay for itself.
 - **gas_limit**: Max gas the txn will pay
 - **gas_price**: (or EIP-1559 equivalent)
 - **nonce**: prevents replay attacks and forces ordering
-- **signature**: proves ownership of private keys, allows recoving Account ID
+- **signature**: proves ownership of private keys, allows receiving Account ID
+- _there can be more_
 
 ---v
 
@@ -222,47 +243,50 @@ In all cases, Ether can be sent (`Neither` being a normal Ether send).
 
 Before executing (or gossiping) txns, some validity checks should be run:
 
-- Is the `gas_limit` sufficent? (`21_000` minimum at least pays for processing)
+- Is the `gas_limit` sufficient? (`21_000` minimum at least pays for processing)
 - Is the signature valid? (Side effect: public key recovered)
 - Can the account pay for `gas_limit * gas_price`?
 - Is this a valid (and reasonable) nonce for the account?
 
-Note:
+Notes:
 
-These checks come with overhead, so it's important to discard invalid txns as quickly
-as possible if it is invalid. This includes not gossiping it to peers, who have to also
-verify it.
+These checks come with overhead, so it's important to discard invalid txns as quickly as possible if it is invalid.
+This includes not gossiping it to peers, who have to also verify it.
 
 ---
 
 ## Opcodes and Bytecode
 
 An opcode is a single byte which represents an instruction for the VM to execute.
-Functions compile down into a sequence of opcodes, which we call bytecode. This
-bytecode is bundled together and becomes the on-chain contract code.
 
-The EVM executes bytecode one opcode at a time until it is done, explicitly
-halts, or the gasometer runs out of gas.
+The EVM executes bytecode one opcode at a time until it is done, explicitly halts, or the gasometer runs out of gas.
 
-### ABI
+Notes:
 
-ABI ("Application Binary Interface") describes the bytecode for a contract by
-annotating where functions and other objects exist and how they are formatted.
+Functions compile down into a sequence of opcodes, which we call bytecode.
+This bytecode is bundled together and becomes the on-chain contract code.
+
+---
+
+## ABI
+
+ABI ("Application Binary Interface") describes the bytecode for a contract by annotating where functions and other objects exist and how they are formatted.
 
 ---v
 
-## Review Contract Code on Etherscan
+<!-- .slide: data-background-color="#4A2439" -->
 
-https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984?a=0xd0fc8ba7e267f2bc56044a7715a489d851dc6d78#code
+## Exercise
+
+Review this [Contract Code on Etherscan](https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984?a=0xd0fc8ba7e267f2bc56044a7715a489d851dc6d78#code)
 
 ---v
 
 ## Sandboxed Contract State
 
 `Contract Account`s contain a sandboxed state, which stores everything that the
-contract writes to storage. Contracts may not write to storage outside of their
-own sandbox, but they can call other contracts whose bytecode _might_ write to
-their respective storage.
+contract writes to storage.
+Contracts may not write to storage outside of their own sandbox, but they can call other contracts whose bytecode _might_ write to their respective storage.
 
 ---v
 
@@ -273,13 +297,15 @@ Contract functions can be invoked in two ways different ways:
 - EoAs can call a contract functions directly
 - Contracts can call other contracts (called "messaging")
 
-#### Types of contract messaging
+---v
+
+## Types of contract messaging
 
 - Normal `call`: Another contract is called and can change its own state
 - `staticcall`: A "safe" way to call another contract with no state changes
 - `delegatecall`: A way to call another contract but modify our state instead
 
-Note:
+Notes:
 
 Transactions are the only means through which state changes happen.
 
@@ -287,8 +313,7 @@ Transactions are the only means through which state changes happen.
 
 ## Message Object
 
-Within the context of a contract call, we always have the `msg` object, which
-lets us know how we were called.
+Within the context of a contract call, we always have the `msg` object, which lets us know how we were called.
 
 ```
 msg.data (bytes): complete calldata (input data) of call
@@ -302,17 +327,16 @@ msg.value (uint256) amount of Ether sent with this call
 
 ## Ether Denominations
 
-Ether is stored and operated on through integer math. In order to avoid
-the complication of decimal math, it's stored as a very small integer: `Wei`.
+Ether is stored and operated on through integer math.
+In order to avoid the complication of decimal math, it's stored as a very small integer: `Wei`.
 
 ```
 1 Ether = 1_000_000_000_000_000_000 Wei (10^18)
 ```
 
-Note:
+Notes:
 
-Integer math with such insignificant units mostly avoids truncation issues and
-makes it easy to agree on outcomes.
+Integer math with such insignificant units mostly avoids truncation issues and makes it easy to agree on outcomes.
 
 ---v
 
@@ -334,23 +358,31 @@ ether               = 1_000_000_000_000_000_000 wei
 
 ---
 
-# Programming the EVM
+## Programming the EVM
 
-The EVM is ultimately programmed by creating bytecode. While it is possible to
-write bytecode by hand or through low-level assembly language, it is much more
-practical to use a higher-level language. We will look at two in particular:
+The EVM is ultimately programmed by creating bytecode.
+While it is possible to write bytecode by hand or through low-level assembly language, it is much more practical to use a higher-level language.
+We will look at two in particular:
+
+<pba-flex center>
 
 - Solidity
 - Vyper
 
+</pba-flex>
+
 ---
 
-# Solidity
+## Solidity
+
+<pba-flex center>
 
 - Designed for EVM
 - Similar to C++, Java, etc.
 - Includes inheritance (including MI)
 - Criticized for being difficult to reason about security
+
+</pba-flex>
 
 ---v
 
@@ -384,7 +416,7 @@ contract Foo {
 
 ## Modifiers
 
-- A special function that can be run as a precondition for other functions
+A special function that can be run as a precondition for other functions
 
 ```Solidity
 contract Foo {
@@ -406,7 +438,7 @@ contract Foo {
 }
 ```
 
-Note:
+Notes:
 
 Although Modifiers can be an elegant way to require preconditions, they can do
 entirely arbitrary things, and auditing code requires carefully reading them.
@@ -428,7 +460,7 @@ contract Foo {
 }
 ```
 
-Note:
+Notes:
 
 The actual payment accounting is handled by the EVM automatically, we don't need
 to update our own account balance.
@@ -480,8 +512,8 @@ contract Foo {
 contract Foo {
     mapping(uint => uint) forLater;
 
-    // Reference types are stored as a reference to some other location. Only
-    // their reference must be copied during assignment.
+    // Reference types are stored as a reference to some other location.
+    // Only their reference must be copied during assignment.
     function referenceTypes() public {
         // arrays
         uint8[3] memory arr = [1, 2, 3];
@@ -508,9 +540,9 @@ contract Foo {
 
 ## Data Location
 
-`Data Location` refers to the storage of `Reference Types`. As these are passed
-by reference, it effectively dictates where this reference points to. It can be
-one of 3 places:
+`Data Location` refers to the storage of `Reference Types`.
+As these are passed by reference, it effectively dictates where this reference points to.
+It can be one of 3 places:
 
 - memory: Stored only in memory; cannot outlive a given external function call
 - storage: Stored in the contract's permanent on-chain storage
@@ -533,7 +565,7 @@ contract DataLocationSample {
         // ...and also variables within a function
         Foo memory copy = val;
 
-        // storage varables must be assigned befor use.
+        // storage variables must be assigned before use.
         Foo storage fooFromStorage = storedFoo;
         fooFromStorage.i = 1;
         require(storedFoo.i == 1, "writes to storage variables affect storage");
@@ -594,17 +626,18 @@ contract Foo {
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 ## Solidity Hands-On
 
 ---v
 
 ## Dev Environment
 
-We will use the online [Remix IDE](https://remix.ethereum.org) for our sample
-coding. It provides an editor, compiler, EVM, and debugger all within the
-browser, making it trivial to get started.
+We will use the online [Remix IDE](https://remix.ethereum.org) for our sample coding.
+It provides an editor, compiler, EVM, and debugger all within the browser, making it trivial to get started.
 
-https://remix.ethereum.org
+> https://remix.ethereum.org
 
 ---v
 
@@ -614,35 +647,36 @@ Code along and explain as you go
 
 ---v
 
-## Student-exercise: Multiplier
+<!-- .slide: data-background-color="#4A2439" -->
 
-Quick practice assigment:
+## Exercise: Multiplier
 
 - Write a contract which has a `uint256` storage value
 - Write function(s) to multiply it with a user-specified value
 - Interact with it: can you force an overflow?
 
-_Very recently, overflow checks have been added to Solidity. You can disable
-these by specifying an older compiler. Add this to the very top of your `.sol`
-file:_
+> Overflow checks have been added to Solidity.
+> You can disable these by specifying an older compiler.
+> Add this to the very top of your `.sol` file:
+>
+> ```Solidity
+> pragma solidity ^0.7.0;
+> ```
 
-```
-pragma solidity ^0.7.0;
-```
+---v
+
+<!-- .slide: data-background-color="#4A2439" -->
 
 #### Bonus:
 
 - Prevent your multiplier function from overflowing
 - Rewrite this prevention as a `modifier noOverflow()`
 
-Remix: https://remix.ethereum.org
-
-Note: the constant `constant public MAX_INT_HEX = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;`
-may be helpful.
+> The constant `constant public MAX_INT_HEX = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;` may be helpful.
 
 ---
 
-# Vyper
+## Vyper
 
 - Also designed for the EVM
 - Similar to Python
@@ -654,7 +688,8 @@ may be helpful.
 ## Compared to Solidity
 
 Vyper mostly lacks features found in Solidity, all in the spirit of improving
-readability. Some examples:
+readability.
+Some examples:
 
 - No Inheritance
 - No modifiers
@@ -667,7 +702,8 @@ readability. Some examples:
 ## Basics
 
 ```Python
-# There is no `contract` keyword. Like Python Modules, a contract is implicitly
+# There is no `contract` keyword.
+# Like Python Modules, a contract is implicitly
 # scoped by the file in which it is found.
 
 # storage variables are declared outside of any function
@@ -706,6 +742,8 @@ def doSomething() -> bool:
 @nonreentrant(<unique_key>) # prevents reentrancy for given id
 ```
 
+Notes:
+
 source: https://docs.vyperlang.org/en/stable/control-structures.html#decorators-reference
 
 ---v
@@ -742,15 +780,17 @@ def valueTypes():
     # dynamic-length, fixed-bounds strings
     name: String[16] = "Vyper"
 
-# reference types are potentially large and/or dynamicly sized.
+# reference types are potentially large and/or dynamically sized.
 # they are copied-by-reference
 @external
 def referenceTypes():
-    # fixed size list. can also be multidimensional.
+    # fixed size list.
+    # It can also be multidimensional.
     # all elements must be initialized
     list: int128[4] = [1, 2, 3, -4]
 
-    # bounded, dynamic-size array. these have a max size but initialize to empty
+    # bounded, dynamic-size array.
+    # these have a max size but initialize to empty
     dynArray: DynArray[int128, 3]
     dynArray.append(1)
     dynArray.append(5)
@@ -795,6 +835,8 @@ name: string = someBallot.name
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 ## Vyper Hands-On
 
 ---v
@@ -802,9 +844,10 @@ name: string = someBallot.name
 ## Remix Plugin
 
 Remix supports Vyper through a plugin, which can be easily enabled from within
-the IDE. First, search for "Vyper" in the plugins tab:
+the IDE.
+First, search for "Vyper" in the plugins tab:
 
-<img style="width: 55%; margin: 10px" src="img/frontier/RemixInstallVyper1.png" />
+<img rounded style="width: 500px;" src="img/frontier/RemixInstallVyper1.png" />
 
 ---v
 
@@ -812,7 +855,7 @@ the IDE. First, search for "Vyper" in the plugins tab:
 
 Use Vyper through the new Vyper tab and use "Remote Compiler"
 
-<img style="width: 55%; margin: 10px" src="img/frontier/RemixInstallVyper2.png" />
+<img rounded style="width: 500px" src="img/frontier/RemixInstallVyper2.png" />
 
 ---
 
@@ -825,7 +868,8 @@ The DAO Vulnerability
         // Check user's balance
         require(
             balances[msg.sender] >= 1 ether,
-            "Insufficient funds.  Cannot withdraw"
+            "Insufficient funds.
+ Cannot withdraw"
         );
         uint256 bal = balances[msg.sender];
 
@@ -838,11 +882,7 @@ The DAO Vulnerability
     }
 ```
 
-Note: We make a call to withdraw user's balance before updating our internal state.
-
----v
-
-## How can this be avoided?
+We make a call to withdraw user's balance before updating our internal state.
 
 ---v
 
@@ -854,13 +894,17 @@ Note: We make a call to withdraw user's balance before updating our internal sta
 
 ---
 
-# Storing Secrets On-Chain
+## Storing Secrets On-Chain
 
-Can we store secrets on-chain? What if we want to password-protect a particular
+Can we store secrets on-chain?
+
+What if we want to password-protect a particular
 contract call?
 
 Obviously we can't store any plaintext secrets on-chain, as doing so reveals
-them. <!-- .element: class="fragment" -->
+them.
+
+<!-- .element: class="fragment" -->
 
 ---v
 
@@ -869,7 +913,8 @@ them. <!-- .element: class="fragment" -->
 What about storing the hash of a password on chain and using this to verify some
 user-input?
 
-Accepting a pre-hash also reveals the secret. This reveal may occur in a txn
+Accepting a pre-hash also reveals the secret.
+This reveal may occur in a txn
 before it is executed and settled, allowing someone to frontrun it.
 
 <!-- .element: class="fragment" -->
@@ -903,15 +948,17 @@ verify(commitment == hash(salt, alleged_secret))
 
 ## Alternative: Signature
 
-Another approach is to use public-key cryptography. We can store the public key
-of some keypair and then demand a signature from the corresponding private-key.
+Another approach is to use public-key cryptography.
+We can store the public key
+of some key pair and then demand a signature from the corresponding private-key.
 
 This can be expanded with multisig schemes and similar.
 
 How does this differ from the commit-reveal scheme?
 
-Note:
+Notes:
 
 Commit-reveal requires that a specific secret be revealed at some point for
-verification. A signature scheme provides a lot more flexibility for keeping the
+verification.
+A signature scheme provides a lot more flexibility for keeping the
 secret(s) secure.
