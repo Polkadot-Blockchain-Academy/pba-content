@@ -228,7 +228,7 @@ A network is one of:
 
 - **Synchronous** - When sent, a message is received immediately by all.
 - **Asynchronous** - When a message is sent it may be received after some delay, or not at all. The sender doe not know whether it is received. Messages may be received in different orders by different parties.
-- **Partially Synchronous** - When a message is sent, it may be received after some delay up to a maximum delay, $T$. It may not be dropped entirely. Messages may be received in different orders by different parties. <!-- .element: class="fragment"-->
+- **Partially Synchronous** - When a message is sent, it may be received after some delay up to a maximum delay, $T$. It may not be dropped entirely. Messages may be received in different orders by different parties.
 
 Roughly analogous to real-time (async) vs. turn-based (sync) games.
 
