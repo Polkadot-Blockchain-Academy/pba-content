@@ -1,8 +1,11 @@
+use std::cell::RefCell;
+
+use crate::shared::HEADER_KEY;
 use parity_scale_codec::{Decode, Encode};
 use runtime::shared::TREASURY;
 use shared::{
 	AccountBalance, AccountId, Balance, Block, CurrencyCall, Extrinsic, Header, RuntimeCall,
-	RuntimeCallWithTip, StakingCall, SystemCall, EXTRINSICS_KEY, VALUE_KEY,
+	RuntimeCallExt, StakingCall, SystemCall, EXTRINSICS_KEY, VALUE_KEY,
 };
 use sp_api::{HashT, TransactionValidity};
 use sp_core::{
@@ -18,11 +21,16 @@ use sp_runtime::{
 	ApplyExtrinsicResult,
 };
 
-use crate::shared::HEADER_KEY;
+// TODO: in most tests, we use alice to mint in her own account, and then use her own account to
+// transact. to separate the checks for nonce, it would be nice to separate this.
 
 mod shared;
 
 const LOG_TARGET: &'static str = "wasm-tests";
+
+thread_local! {
+	pub static CALLED_AUTHOR_AND_IMPORT: RefCell<bool> = RefCell::new(false);
+}
 
 fn balance_of(who: AccountId) -> Option<AccountBalance> {
 	let key = [b"BalancesMap".as_ref(), who.encode().as_ref()].concat();
@@ -31,6 +39,10 @@ fn balance_of(who: AccountId) -> Option<AccountBalance> {
 
 fn free_of(who: AccountId) -> Option<Balance> {
 	balance_of(who).map(|b| b.free)
+}
+
+fn nonce_of(who: AccountId) -> Option<u32> {
+	balance_of(who).map(|b| b.nonce)
 }
 
 fn treasury() -> Option<Balance> {
@@ -51,22 +63,27 @@ fn sp_io_root() -> H256 {
 	H256::decode(&mut &sp_io::storage::root(Default::default())[..][..]).unwrap()
 }
 
-fn signed(call: RuntimeCall, signer: &sp_keyring::AccountKeyring) -> Extrinsic {
-	let call_with_tip = RuntimeCallWithTip { tip: None, call };
+fn signed(call: RuntimeCall, signer: &sp_keyring::AccountKeyring, nonce: u32) -> Extrinsic {
+	let call_with_tip = RuntimeCallExt { tip: None, call, nonce };
 	let payload = (call_with_tip).encode();
 	let signature = signer.sign(&payload);
 	Extrinsic::new(call_with_tip, Some((signer.public(), signature, ()))).unwrap()
 }
 
-fn tipped(call: RuntimeCall, signer: &sp_keyring::AccountKeyring, tip: Balance) -> Extrinsic {
-	let call_with_tip = RuntimeCallWithTip { tip: Some(tip), call };
+fn tipped(
+	call: RuntimeCall,
+	signer: &sp_keyring::AccountKeyring,
+	nonce: u32,
+	tip: Balance,
+) -> Extrinsic {
+	let call_with_tip = RuntimeCallExt { tip: Some(tip), call, nonce };
 	let payload = (call_with_tip).encode();
 	let signature = signer.sign(&payload);
 	Extrinsic::new(call_with_tip, Some((signer.public(), signature, ()))).unwrap()
 }
 
 fn unsigned(call: RuntimeCall) -> Extrinsic {
-	let call_with_tip = RuntimeCallWithTip { tip: None, call };
+	let call_with_tip = RuntimeCallExt { tip: None, call, nonce: 0 };
 	Extrinsic::new(call_with_tip, None).unwrap()
 }
 
@@ -84,11 +101,24 @@ fn validate(to_validate: Extrinsic, state: &mut TestExternalities) -> Transactio
 	<TransactionValidity as Decode>::decode(&mut &*return_bytes).unwrap()
 }
 
+fn apply(ext: Extrinsic, state: &mut TestExternalities) -> ApplyExtrinsicResult {
+	let return_bytes =
+		executor_call(state, "BlockBuilder_apply_extrinsic", ext.encode().as_slice()).unwrap();
+
+	// decode the bytes as a ApplyExtrinsicResult.
+	<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes).unwrap()
+}
+
 fn author_and_import(
 	import_state: &mut TestExternalities,
 	exts: Vec<Extrinsic>,
 	post: impl FnOnce() -> (),
 ) {
+	CALLED_AUTHOR_AND_IMPORT.with(|c| {
+		assert!(!*c.borrow(), "author_and_import called already in a test thread?");
+		*c.borrow_mut() = true
+	});
+
 	// ensure ext has some code in it, otherwise something is wrong.
 	let code = import_state
 		.execute_with(|| sp_io::storage::get(&sp_core::storage::well_known_keys::CODE).unwrap());
@@ -109,8 +139,12 @@ fn author_and_import(
 	executor_call(&mut auth_state, "Core_initialize_block", &header.encode()).unwrap();
 
 	for ext in exts {
-		executor_call(&mut auth_state, "BlockBuilder_apply_extrinsic", &ext.encode()).unwrap();
-		extrinsics.push(ext);
+		let apply_outcome = apply(ext.clone(), &mut auth_state);
+		if apply_outcome.is_ok() {
+			extrinsics.push(ext);
+		} else {
+			log::error!(target: LOG_TARGET, "extrinsic {:?} failed to apply: {:?}", ext, apply_outcome);
+		}
 	}
 
 	let header: Header =
@@ -152,7 +186,8 @@ fn author_and_import(
 	drop(auth_state);
 
 	// now we import the block into a fresh new state.
-	executor_call(import_state, "Core_execute_block", &block.encode()).unwrap();
+	executor_call(import_state, "Core_execute_block", &block.encode())
+		.expect("execute block returned error; invalid block?");
 	import_state.commit_all().unwrap();
 
 	import_state.execute_with(|| {
@@ -208,21 +243,28 @@ mod basics {
 	fn empty_block() {
 		let mut state = new_test_ext();
 		state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
-		author_and_import(&mut state, vec![], || {});
+		author_and_import(&mut state, vec![], || {
+			assert_eq!(balance_of(Alice.public()), None);
+			assert_eq!(balance_of(Bob.public()), None);
+		});
 	}
 
 	#[test]
 	fn remark() {
 		let exts =
-			vec![signed(RuntimeCall::System(SystemCall::Remark { data: vec![42, 42] }), &Alice)];
+			vec![signed(RuntimeCall::System(SystemCall::Remark { data: vec![42, 42] }), &Alice, 0)];
 		let mut state = new_test_ext();
 
-		author_and_import(&mut state, exts, || assert!(sp_io::storage::get(VALUE_KEY).is_none()));
+		author_and_import(&mut state, exts, || {
+			assert!(sp_io::storage::get(VALUE_KEY).is_none());
+			assert_eq!(nonce_of(Alice.public()), Some(1));
+			assert_eq!(nonce_of(Bob.public()), None);
+		});
 	}
 
 	#[test]
 	fn set_value() {
-		let exts = vec![signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice)];
+		let exts = vec![signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0)];
 		let mut state = new_test_ext();
 
 		state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
@@ -254,9 +296,9 @@ mod block_builder {
 
 	#[test]
 	fn apply_bad_signature() {
-		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice);
+		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0);
 		let other_sig = {
-			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice)
+			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice, 0)
 				.signature
 				.unwrap()
 				.1
@@ -283,6 +325,7 @@ mod block_builder {
 		let ext = signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 			&Bob,
+			0,
 		);
 
 		let return_bytes =
@@ -301,6 +344,7 @@ mod block_builder {
 		let ext = signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 			&Alice,
+			0,
 		);
 
 		let return_bytes =
@@ -319,9 +363,9 @@ mod validate {
 
 	#[test]
 	fn validate_bad_signature() {
-		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice);
+		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0);
 		let other_sig = {
-			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice)
+			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice, 0)
 				.signature
 				.unwrap()
 				.1
@@ -365,13 +409,15 @@ mod tipping {
 			let exts = vec![signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 				&Alice,
+				0,
 			)];
 
 			// apply this to our state.
 			author_and_import(&mut state, exts, || {});
 
 			// now run validation on top of this state.
-			let to_validate = tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 5);
+			let to_validate =
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 1, 5);
 			let validity = validate(to_validate, &mut state);
 			assert!(matches!(validity, Ok(ValidTransaction { priority: 5, .. })));
 		}
@@ -388,6 +434,7 @@ mod tipping {
 			let exts = vec![signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 				&Alice,
+				0,
 			)];
 
 			// apply this to our state.
@@ -395,7 +442,7 @@ mod tipping {
 
 			// tip value is higher than what alice has.
 			let to_validate =
-				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 25);
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 1, 25);
 			let validity = validate(to_validate, &mut state);
 			assert!(matches!(
 				validity,
@@ -410,6 +457,7 @@ mod tipping {
 			let exts = vec![signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 				&Alice,
+				0,
 			)];
 
 			// apply this to our state.
@@ -417,7 +465,7 @@ mod tipping {
 
 			// tip is 15, leaving only 5 for alice.
 			let to_validate =
-				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 15);
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 1, 15);
 			let validity = validate(to_validate, &mut state);
 			assert!(matches!(
 				validity,
@@ -432,6 +480,7 @@ mod tipping {
 			let exts = vec![signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 				&Alice,
+				0,
 			)];
 
 			// apply this to our state.
@@ -439,7 +488,7 @@ mod tipping {
 
 			// tip is 15, leaving only 5 for alice.
 			let to_validate =
-				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 20);
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 1, 20);
 			let validity = validate(to_validate, &mut state);
 			assert!(matches!(validity, Ok(ValidTransaction { priority: 20, .. })));
 		}
@@ -448,7 +497,7 @@ mod tipping {
 		fn cannot_tip_if_not_funded() {
 			// an account with no balance at all.
 			let to_validate =
-				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 10);
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0, 10);
 			let validity = validate(to_validate, &mut new_test_ext());
 			assert!(matches!(
 				validity,
@@ -469,6 +518,7 @@ mod tipping {
 				signed(
 					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 100 }),
 					&Alice,
+					0,
 				),
 				// sends 20 to bob, while tipping 5 of it. This will not create the treasury, and
 				// is an edge case where the total issuance needs to be updated.
@@ -478,6 +528,7 @@ mod tipping {
 						amount: 20,
 					}),
 					&Alice,
+					1,
 					5,
 				),
 			];
@@ -502,6 +553,7 @@ mod tipping {
 				signed(
 					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 100 }),
 					&Alice,
+					0,
 				),
 				// sends 20 to bob, while tipping 10 of it. This creates treasury.
 				tipped(
@@ -510,6 +562,7 @@ mod tipping {
 						amount: 20,
 					}),
 					&Alice,
+					1,
 					10,
 				),
 			];
@@ -527,26 +580,29 @@ mod tipping {
 		fn tip_and_transfer_below_ed() {
 			let mut state = new_test_ext();
 			let exts = vec![
-				// alice gets 20.
+				// Bob gets 20.
 				signed(
-					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
+					RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
 					&Alice,
+					0,
 				),
-				// sends 10 to bob, while tipping 5. This will fail, but the tip will go though.
+				// bob sends 10 to charlie, while tipping 5. This will fail, but the tip will go
+				// though.
 				tipped(
 					RuntimeCall::Currency(CurrencyCall::Transfer {
-						dest: Bob.public(),
+						dest: Charlie.public(),
 						amount: 10,
 					}),
-					&Alice,
+					&Bob,
+					0,
 					5,
 				),
 			];
 
 			author_and_import(&mut state, exts, || {
 				assert!(treasury().is_none());
-				assert_eq!(free_of(Alice.public()).unwrap(), 15);
-				assert!(free_of(Bob.public()).is_none());
+				assert_eq!(free_of(Bob.public()).unwrap(), 15);
+				assert!(free_of(Charlie.public()).is_none());
 				assert_eq!(issuance(), Some(15));
 			});
 		}
@@ -559,6 +615,7 @@ mod tipping {
 				signed(
 					RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 					&Alice,
+					0,
 				),
 				// sends 10 to bob, while tipping 10. This will work, and alice wil die.
 				tipped(
@@ -567,6 +624,7 @@ mod tipping {
 						amount: 10,
 					}),
 					&Alice,
+					1,
 					10,
 				),
 			];
@@ -583,6 +641,7 @@ mod tipping {
 
 mod currency {
 	use super::*;
+
 	#[test]
 	fn mint_wrong_minter() {
 		// bob account cannot mint.
@@ -591,11 +650,12 @@ mod currency {
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 			&Bob,
+			0,
 		)];
 
 		author_and_import(&mut state, exts, || {
 			assert!(balance_of(Alice.public()).is_none());
-			assert!(balance_of(Bob.public()).is_none());
+			assert_eq!(nonce_of(Bob.public()), Some(1));
 			assert!(issuance().is_none());
 		});
 	}
@@ -606,13 +666,17 @@ mod currency {
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
 			&Alice,
+			0,
 		)];
 
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
 			assert_eq!(free_of(Bob.public()), Some(20));
-			assert!(free_of(Alice.public()).is_none());
+			assert_eq!(
+				balance_of(Alice.public()).unwrap(),
+				AccountBalance { free: 0, reserved: 0, nonce: 1 }
+			);
 			assert_eq!(issuance(), Some(20));
 		});
 	}
@@ -624,10 +688,12 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
 				&Alice,
+				0,
 			),
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 30 }),
 				&Alice,
+				1,
 			),
 		];
 
@@ -647,21 +713,24 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
 				&Alice,
+				0,
 			),
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 30 }),
 				&Bob,
+				0,
 			),
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Charlie.public(), amount: 30 }),
 				&Charlie,
+				0,
 			),
 		];
 
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Alice.public()), None);
+			assert_eq!(free_of(Alice.public()), Some(0));
 			assert_eq!(free_of(Bob.public()), Some(20));
 			assert_eq!(issuance(), Some(20));
 		});
@@ -673,6 +742,7 @@ mod currency {
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 5 }),
 			&Alice,
+			0,
 		)];
 
 		let mut state = new_test_ext();
@@ -684,12 +754,13 @@ mod currency {
 	}
 
 	#[test]
-	fn mint_not_enough_edge() {
+	fn mint_not_enough_edge_1() {
 		// still cannot mint amount less than `MinimumBalance`
 
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 9 }),
 			&Alice,
+			0,
 		)];
 
 		let mut state = new_test_ext();
@@ -698,11 +769,17 @@ mod currency {
 			assert_eq!(free_of(Bob.public()), None);
 			assert_eq!(issuance(), None);
 		});
+	}
+
+	#[test]
+	fn mint_not_enough_edge_2() {
+		let mut state = new_test_ext();
 
 		// but 10 is ok.
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 10 }),
 			&Alice,
+			0,
 		)];
 		author_and_import(&mut state, exts, || {
 			assert_eq!(free_of(Bob.public()), Some(10));
@@ -719,11 +796,13 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
+				0,
 			),
 			// transfer 20 to alice.
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer { dest: Alice.public(), amount: 20 }),
 				&Bob,
+				0,
 			),
 		];
 
@@ -744,6 +823,7 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
+				0,
 			),
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer {
@@ -751,12 +831,13 @@ mod currency {
 					amount: spendable + 1,
 				}),
 				&Bob,
+				0,
 			),
 		];
 
 		author_and_import(&mut state, exts, || {
 			assert_eq!(free_of(Bob.public()), Some(100));
-			assert_eq!(free_of(Alice.public()), None);
+			assert_eq!(free_of(Alice.public()), Some(0));
 			assert_eq!(issuance(), Some(100));
 		});
 	}
@@ -770,6 +851,7 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
+				0,
 			),
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer {
@@ -777,6 +859,7 @@ mod currency {
 					amount: spendable,
 				}),
 				&Bob,
+				0,
 			),
 		];
 
@@ -795,10 +878,12 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
+				0,
 			),
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Transfer { dest: Alice.public(), amount: 100 }),
 				&Bob,
+				0,
 			),
 		];
 
@@ -817,8 +902,13 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
+				0,
 			),
-			signed(RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }), &Bob),
+			signed(
+				RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }),
+				&Bob,
+				0,
+			),
 		];
 
 		author_and_import(&mut state, exts, || {
@@ -836,8 +926,13 @@ mod currency {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
+				0,
 			),
-			signed(RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }), &Bob),
+			signed(
+				RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }),
+				&Bob,
+				0,
+			),
 		];
 
 		author_and_import(&mut state, exts, || {
@@ -849,6 +944,13 @@ mod currency {
 
 	#[test]
 	fn cannot_transfer_all_when_reserved() {}
+}
+
+mod nonce {
+	#[test]
+	fn test_it() {
+		todo!();
+	}
 }
 
 mod staking {
@@ -863,12 +965,16 @@ mod staking {
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
 				&Alice,
+				0,
 			),
-			signed(RuntimeCall::Staking(StakingCall::Bond { amount: 20 }), &Bob),
+			signed(RuntimeCall::Staking(StakingCall::Bond { amount: 20 }), &Bob, 0),
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(balance_of(Bob.public()), Some(AccountBalance { free: 80, reserved: 20 }));
+			assert_eq!(
+				balance_of(Bob.public()),
+				Some(AccountBalance { free: 80, reserved: 20, nonce: 1 })
+			);
 			assert_eq!(issuance(), Some(100));
 		});
 	}

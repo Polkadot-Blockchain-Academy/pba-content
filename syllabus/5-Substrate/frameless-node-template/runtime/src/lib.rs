@@ -100,7 +100,7 @@
 //! ### Dispatchables
 //!
 //! Similar to `mini_substrate`, the exact expectation of behavior for each instance of
-//! [`shared::RuntimeCallWithTip`] is document in its own documentation. This should be identical to
+//! [`shared::RuntimeCallExt`] is document in its own documentation. This should be identical to
 //! what you had to code for `mini_substrate`.
 //!
 //! > As noted above, whether you want to use a trait like `Dispatchable` or not is up to you.
@@ -122,7 +122,7 @@
 //!
 //! #### 1. Tipping
 //!
-//! The final [`shared::Extrinsic`]'s `Call`, namely [`shared::RuntimeCallWithTip`] contains `tip`
+//! The final [`shared::Extrinsic`]'s `Call`, namely [`shared::RuntimeCallExt`] contains `tip`
 //! field. As the name suggests, this is some additional funds that are sent by the user to chain.
 //! Other than this optional tip, all other extrinsics are free.
 //!
@@ -147,6 +147,15 @@
 //! As a rule of thumb, you should avoid storing `Some(Default::default())` in your storage.
 //! Instead, simply remove them.
 //!
+//! #### Nonce
+//!
+//! You should implement a nonce system, as explained as a part of the tx-pool logic. In short, the
+//! validation of each transaction should `require` nonce `(sender, n-1)` and provide `(sender, n)`.
+//! See `TaggedTransactionQueue` below for more information.
+//!
+//! Note that your nonce should be checked as a part of transaction pool api, which means it should
+//! be implemented as efficiently as possibly, next to other checks that need to happen.
+//!
 //! ### `BlockBuilder::apply_extrinsic`
 //!
 //! One of your objectives is to implement the logic for `apply_extrinsic`. Here, we describe what
@@ -168,6 +177,8 @@
 //! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
 //!   [`sp_runtime::transaction_validity::InvalidTransaction::Payment`] if the extrinsic cannot pay
 //!   for its declared tip.
+//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Future`] or
+//!   `Stale` if the nonce is too high or too low.
 //!
 //! In all other cases, outer `Result` is `Ok`.
 //!
@@ -199,11 +210,9 @@
 //!
 //! ```ignore
 //! Core::initialize_block(raw_header);
-//!
 //! loop {
 //! 	BlockBuilder::apply_extrinsic
 //! }
-//!
 //! BlockBuilder::finalize_block() -> final_header
 //! ```
 //!
@@ -246,6 +255,13 @@
 //!
 //! If you let the former `--alice` node progress for a bit, you will see that `--bob` will start
 //! syncing from alice.
+//!
+//! ### Extra: `SignedExtensions`
+//!
+//! What we have implemented in this extra as added fields to our [`shared::RuntimeCallExt`] should
+//! have ideally been implemented as a signed extension. In a separate branch, explore this, and ask
+//! for our feedback. If make progress on this front, DO NOT submit it for grading, as our grading
+//! will work with the simpler `RuntimeCallExt` model.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -379,6 +395,7 @@ impl Runtime {
 
 		// TODO: set correct state root and extrinsics root, as described in the corresponding test
 		// case.
+		let header = Self::solution_finalize_block(header);
 		header
 	}
 
@@ -421,14 +438,16 @@ impl Runtime {
 	fn do_apply_extrinsic(ext: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
 		info!(target: LOG_TARGET, "Entering apply_extrinsic: {:?}", ext);
 
-		// note the extrinsic
-		Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
-			current.push(ext.encode());
-		});
-
 		// TODO: we don't have a means of dispatch, implement it! You probably want to match on
 		// `ext.call.function`, and start implementing different arms one at a time.
-		Ok(Ok(()))
+		Self::solution_apply_extrinsic(ext.clone()).map(|outcome| {
+			// note the extrinsic
+			Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
+				current.push(ext.encode());
+			});
+			outcome
+		})
+		// Ok(Ok(()))
 	}
 
 	fn do_validate_transaction(
@@ -438,7 +457,8 @@ impl Runtime {
 	) -> TransactionValidity {
 		log::debug!(target: LOG_TARGET,"Entering validate_transaction. tx: {:?}", ext);
 		// TODO: we don't have a means of validating, implement it!
-		Ok(Default::default())
+		Self::solution_validate_transaction(_source, ext, _block_hash)
+		// Ok(Default::default())
 	}
 }
 
@@ -524,7 +544,7 @@ impl_runtime_apis! {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::shared::RuntimeCallWithTip;
+	use crate::shared::RuntimeCallExt;
 	use parity_scale_codec::Encode;
 	use shared::{Extrinsic, RuntimeCall, VALUE_KEY};
 	use sp_core::hexdisplay::HexDisplay;
@@ -534,23 +554,25 @@ mod tests {
 		transaction_validity::{InvalidTransaction, TransactionValidityError},
 	};
 
-	fn set_value_call(value: u32) -> RuntimeCallWithTip {
-		RuntimeCallWithTip {
+	fn set_value_call(value: u32, nonce: u32) -> RuntimeCallExt {
+		RuntimeCallExt {
 			call: RuntimeCall::System(shared::SystemCall::Set { value }),
 			tip: None,
+			nonce,
 		}
 	}
 
 	fn unsigned_set_value(value: u32) -> Extrinsic {
-		let call = RuntimeCallWithTip {
+		let call = RuntimeCallExt {
 			call: RuntimeCall::System(shared::SystemCall::Set { value }),
 			tip: None,
+			nonce: 0,
 		};
 		Extrinsic::new(call, None).unwrap()
 	}
 
-	fn signed_set_value(value: u32) -> Extrinsic {
-		let call = set_value_call(value);
+	fn signed_set_value(value: u32, nonce: u32) -> Extrinsic {
+		let call = set_value_call(value, nonce);
 		let signer = sp_keyring::AccountKeyring::Alice;
 		let payload = (call).encode();
 		let signature = signer.sign(&payload);
@@ -576,11 +598,11 @@ mod tests {
 		// wscat -c 127.0.0.1:9944 -x '{"jsonrpc":"2.0", "id":1, "method":"state_getStorage", "params": ["0x123"]}'
 		// wscat -c ws://127.0.0.1:9944 -x '{"jsonrpc":"2.0", "id":1, "method":"author_submitExtrinsic", "params": ["0x123"]}'
 		// ```
-		let unsigned = Extrinsic::new_unsigned(set_value_call(42));
+		let unsigned = Extrinsic::new_unsigned(set_value_call(42, 0));
 		println!("unsigned = {:?} {:?}", unsigned, HexDisplay::from(&unsigned.encode()));
 
 		let signer = sp_keyring::AccountKeyring::Alice;
-		let call = set_value_call(42);
+		let call = set_value_call(42, 0);
 		let payload = (call).encode();
 		let signature = signer.sign(&payload);
 		let signed = Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap();
@@ -593,7 +615,7 @@ mod tests {
 	#[docify::export]
 	fn signed_set_value_works() {
 		// A signed `Set` works.
-		let ext = signed_set_value(42);
+		let ext = signed_set_value(42, 0);
 		TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
 			Runtime::do_apply_extrinsic(ext).unwrap().unwrap();
@@ -606,8 +628,8 @@ mod tests {
 	fn bad_signature_fails() {
 		// A poorly signed extrinsic must fail.
 		let signer = sp_keyring::AccountKeyring::Alice;
-		let call = set_value_call(42);
-		let bad_call = set_value_call(43);
+		let call = set_value_call(42, 0);
+		let bad_call = set_value_call(43, 0);
 		let payload = (bad_call).encode();
 		let signature = signer.sign(&payload);
 		let ext = Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap();
@@ -662,9 +684,9 @@ mod tests {
 	#[test]
 	#[docify::export]
 	fn import_and_author_equal() {
-		let ext1 = signed_set_value(42);
-		let ext2 = signed_set_value(43);
-		let ext3 = signed_set_value(44);
+		let ext1 = signed_set_value(42, 0);
+		let ext2 = signed_set_value(43, 1);
+		let ext3 = signed_set_value(44, 2);
 
 		let header = shared::Header {
 			digest: Default::default(),

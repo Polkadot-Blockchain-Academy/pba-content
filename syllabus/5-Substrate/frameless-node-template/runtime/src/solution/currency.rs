@@ -92,13 +92,14 @@ impl<T: Config> From<Error<T>> for sp_runtime::DispatchError {
 // We can store this because it has the same encoding as `shared::AccountBalance`.
 #[derive(Debug, Clone, Encode, Decode, PartialEq, Eq)]
 pub struct AccountBalance<T: Config> {
-	free: T::Balance,
-	reserved: T::Balance,
+	pub free: T::Balance,
+	pub reserved: T::Balance,
+	pub nonce: u32,
 }
 
 impl<T: Config> Default for AccountBalance<T> {
 	fn default() -> Self {
-		Self { free: T::Balance::default(), reserved: T::Balance::default() }
+		Self { free: T::Balance::default(), reserved: T::Balance::default(), nonce: 0 }
 	}
 }
 

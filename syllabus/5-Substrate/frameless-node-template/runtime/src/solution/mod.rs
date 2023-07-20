@@ -77,12 +77,10 @@ impl From<StakingCall> for staking::Call<Runtime> {
 #[allow(unused)]
 impl Runtime {
 	pub(crate) fn solution_apply_extrinsic(ext: Extrinsic) -> ApplyExtrinsicResult {
-		log::debug!(target: LOG_TARGET, "dispatching {:?}", ext);
-
-		let (sender, _tip) = Self::solution_validate_transaction_inner(&ext)?;
+		let (sender, _tip, _nonce) = Self::solution_validate_transaction_inner(&ext)?;
 
 		// execute it
-		let dispatch_outcome = match ext.function.call {
+		let dispatch_outcome = match ext.clone().function.call {
 			RuntimeCall::System(SystemCall::Set { value }) => {
 				sp_io::storage::set(VALUE_KEY, &value.encode());
 				Ok(())
@@ -102,10 +100,14 @@ impl Runtime {
 			},
 		};
 
+		log::debug!(target: LOG_TARGET, "dispatched {:?}, outcome = {:?}", ext, dispatch_outcome);
+
 		Ok(dispatch_outcome)
 	}
 
-	pub(crate) fn solution_finalize_block(header: &mut <Block as BlockT>::Header) {
+	pub(crate) fn solution_finalize_block(
+		mut header: <Block as BlockT>::Header,
+	) -> <Block as BlockT>::Header {
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
 		let state_root = sp_core::H256::decode(&mut &raw_state_root[..]).unwrap();
 
@@ -115,11 +117,12 @@ impl Runtime {
 
 		header.extrinsics_root = extrinsics_root;
 		header.state_root = state_root;
+		header
 	}
 
 	fn solution_validate_transaction_inner(
 		ext: &<Block as BlockT>::Extrinsic,
-	) -> Result<(AccountId, u64), TransactionValidityError> {
+	) -> Result<(AccountId, u64, u32), TransactionValidityError> {
 		// first, check the signature.
 		let signer = match &ext.signature {
 			Some((signer, signature, extra_stuff)) => {
@@ -132,17 +135,30 @@ impl Runtime {
 			None => return Err(TransactionValidityError::Invalid(InvalidTransaction::BadProof)),
 		};
 
+		let mut balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
+		let nonce = balance.nonce;
+
+		// then check that their nonce is correct. Best to check this first, since it's cheap.
+		match nonce.cmp(&ext.function.nonce) {
+			sp_std::cmp::Ordering::Equal => {},
+			sp_std::cmp::Ordering::Greater =>
+				return Err(TransactionValidityError::Invalid(InvalidTransaction::Stale)),
+			sp_std::cmp::Ordering::Less =>
+				return Err(TransactionValidityError::Invalid(InvalidTransaction::Future)),
+		}
+
+		balance.nonce = balance.nonce.saturating_add(1);
+
 		// then, check that they can pay for the fee.
 		if let Some(tip) = ext.function.tip {
-			let mut balance =
-				currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
 			let _ = balance
 				.withdraw(tip)
 				.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::Payment))?;
-			currency::BalancesMap::<Self>::set(signer.clone(), balance);
-
 			// We don't quite care of the treasury account is not funded and cannot handle the
 			// incoming tip.
+			// The writes in this code are redundant in `validate_transaction`, but we write it like
+			// this so we can reuse it. FRAME does the same in certain places as well.
+
 			// TODO: try and use our mutate api?
 			let mut treasury =
 				currency::BalancesMap::<Self>::get(AccountId::unchecked_from(TREASURY))
@@ -163,7 +179,11 @@ impl Runtime {
 			}
 		}
 
-		Ok((signer, ext.function.tip.map(|x| x as u64).unwrap_or_default()))
+		// update tip and nonce.
+		currency::BalancesMap::<Self>::set(signer.clone(), balance);
+
+		let tip = ext.function.tip.map(|x| x as u64).unwrap_or_default();
+		Ok((signer, tip, nonce))
 	}
 
 	pub(crate) fn solution_validate_transaction(
@@ -171,11 +191,9 @@ impl Runtime {
 		ext: <Block as BlockT>::Extrinsic,
 		_block_hash: <Block as BlockT>::Hash,
 	) -> TransactionValidity {
-		let (_signer, tip) = Self::solution_validate_transaction_inner(&ext)?;
-		Ok(ValidTransaction {
-			provides: vec![ext.function.encode()],
-			priority: tip,
-			..Default::default()
-		})
+		let (signer, tip, nonce) = Self::solution_validate_transaction_inner(&ext)?;
+		let provides = vec![(signer.clone(), nonce).encode()];
+		let requires = vec![(signer.clone(), nonce.saturating_sub(1)).encode()];
+		Ok(ValidTransaction { requires, provides, priority: tip, ..Default::default() })
 	}
 }

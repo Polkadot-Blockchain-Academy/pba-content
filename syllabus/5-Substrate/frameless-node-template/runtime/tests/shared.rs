@@ -111,19 +111,23 @@ pub enum RuntimeCall {
 	System(SystemCall),
 }
 
-/// The final runtime call, which is a callable operation, and an optional tip.
+/// Extended, final runtime call.
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
 #[derive(Encode, Decode, TypeInfo, Debug, PartialEq, Eq, Clone)]
-pub struct RuntimeCallWithTip {
-	pub tip: Option<Balance>,
+pub struct RuntimeCallExt {
+	/// The callable operation.
 	pub call: RuntimeCall,
+	/// The nonce.
+	pub nonce: u32,
+	/// Optional tip.
+	pub tip: Option<Balance>,
 }
 
 /// Final extrinsic type of the runtime.
 ///
 /// Our tests will use the given types to interact with your runtime. Note that you can use any
 /// other type on your runtime type, as long as you can convert it to/from these types.
-pub type Extrinsic = generic::UncheckedExtrinsic<AccountId, RuntimeCallWithTip, Signature, ()>;
+pub type Extrinsic = generic::UncheckedExtrinsic<AccountId, RuntimeCallExt, Signature, ()>;
 
 /// The header type of the runtime.
 pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
@@ -145,4 +149,9 @@ pub struct AccountBalance {
 	pub free: Balance,
 	/// The reserved balance that they have. This CANNOT be transferred.
 	pub reserved: Balance,
+	/// The nonce of the account. Increment every time an account successfully transacts.
+	///
+	/// Once an account is created, it should have a nonce of 0. By the end of the transaction,
+	/// this value is increment to 1.
+	pub nonce: u32,
 }
