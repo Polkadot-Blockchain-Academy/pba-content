@@ -30,7 +30,10 @@ sc-transaction-pool-api = { git = "https://github.com/paritytech/substrate", bra
 sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
 sc-consensus-manual-seal = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
 sc-rpc-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-offchain = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
 sc-basic-authorship = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+
 sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
 sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
 sp-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }

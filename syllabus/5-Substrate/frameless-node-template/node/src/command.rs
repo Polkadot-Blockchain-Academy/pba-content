@@ -3,7 +3,7 @@ use crate::{
 	cli::{Cli, Subcommand},
 	service,
 };
-use sc_cli::{ChainSpec, RuntimeVersion, SubstrateCli};
+use sc_cli::SubstrateCli;
 use sc_service::PartialComponents;
 
 impl SubstrateCli for Cli {
@@ -37,10 +37,6 @@ impl SubstrateCli for Cli {
 			path =>
 				Box::new(chain_spec::ChainSpec::from_json_file(std::path::PathBuf::from(path)).map_err(|e| format!("encountered an error while trying to load a spec from file. If you don't have a spec file, run with --dev: {:?}", e))?),
 		})
-	}
-
-	fn native_runtime_version(_: &Box<dyn ChainSpec>) -> &'static RuntimeVersion {
-		&runtime::VERSION
 	}
 }
 

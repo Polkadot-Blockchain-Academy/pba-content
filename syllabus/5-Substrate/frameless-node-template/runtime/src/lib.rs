@@ -129,9 +129,9 @@
 //! Tipped extrinsics are prioritized over non-tipped ones through the virtue of a higher
 //! `priority`. This is further explained in `validate_transaction` section below.
 //!
-//! Deducting the tip from the sender must happen prior to executing anything else in the
-//! extrinsic. Failure to pay for fees is always a full failure of the extrinsic (similar to a
-//! failed signature check).
+//! Deducting the tip from the sender must happen prior to executing anything else in the extrinsic.
+//! Failure to pay for fees is always a full failure of the extrinsic (similar to a failed signature
+//! check).
 //!
 //! Once the tip is deducted, it is added to the an account id specified by [`shared::TREASURY`].
 //! The same rules about account creation apply to this account as well.
@@ -204,6 +204,14 @@
 //! [`sp_runtime::transaction_validity::ValidTransaction::priority`] must be set to the tip value
 //! (use a simple saturated conversion if needed).
 //!
+//! ### `Core_execute_block`
+//!
+//! The `execute_block` expects a valid block in which all transactions will get included. That is,
+//! it will expect all `ApplyExtrinsicResult` to be `Ok(_)`. Note that a failed dispatch is
+//! acceptable, like `Ok(Err(_))`.
+//!
+//! You should not need to change this API, but studying it will be fruitful.
+//!
 //! ## Hints
 //!
 //! ### Block Authoring vs. Import
@@ -213,7 +221,7 @@
 //! ```ignore
 //! Core::initialize_block(raw_header);
 //! loop {
-//! 	BlockBuilder::apply_extrinsic
+//!     BlockBuilder::apply_extrinsic
 //! }
 //! BlockBuilder::finalize_block() -> final_header
 //! ```
@@ -411,7 +419,7 @@ impl Runtime {
 
 		for extrinsic in block.clone().extrinsics {
 			let _outcome = Runtime::do_apply_extrinsic(extrinsic)
-				.expect("the only possible failure is signature check, which must have already been checked by `validate_transaction`; cannot fail; qed");
+				.expect("A block author has provided us with an invalid block; bailing; qed");
 		}
 
 		// check state root. Clean the state prior to asking for the root.
@@ -601,15 +609,15 @@ mod tests {
 		// wscat -c ws://127.0.0.1:9944 -x '{"jsonrpc":"2.0", "id":1, "method":"author_submitExtrinsic", "params": ["0x123"]}'
 		// ```
 		let unsigned = Extrinsic::new_unsigned(set_value_call(42, 0));
-		println!("unsigned = {:?} {:?}", unsigned, HexDisplay::from(&unsigned.encode()));
 
 		let signer = sp_keyring::AccountKeyring::Alice;
 		let call = set_value_call(42, 0);
 		let payload = (call).encode();
 		let signature = signer.sign(&payload);
 		let signed = Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap();
-		println!("signed {:?} {:?}", signed, HexDisplay::from(&signed.encode()));
 
+		println!("unsigned = {:?} {:?}", unsigned, HexDisplay::from(&unsigned.encode()));
+		println!("signed {:?} {:?}", signed, HexDisplay::from(&signed.encode()));
 		println!("value key = {:?}", HexDisplay::from(&VALUE_KEY));
 	}
 
@@ -659,6 +667,7 @@ mod tests {
 				TransactionValidityError::Invalid(InvalidTransaction::BadProof)
 			);
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+			todo!("assert here that this extrinsic has not been noted");
 		});
 	}
 
@@ -740,6 +749,6 @@ mod tests {
 			// This should internally check state/extrinsics root. If it does not panic, then we are
 			// gucci.
 			Runtime::do_execute_block(block.clone());
-		})
+		});
 	}
 }

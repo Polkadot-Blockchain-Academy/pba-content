@@ -193,7 +193,7 @@ impl Runtime {
 	) -> TransactionValidity {
 		let (signer, tip, nonce) = Self::solution_validate_transaction_inner(&ext)?;
 		let provides = vec![(signer.clone(), nonce).encode()];
-		let requires = vec![(signer.clone(), nonce.saturating_sub(1)).encode()];
+		let requires = if nonce != 0 { vec![(signer.clone(), nonce - 1).encode()] } else { vec![] };
 		Ok(ValidTransaction { requires, provides, priority: tip, ..Default::default() })
 	}
 }
