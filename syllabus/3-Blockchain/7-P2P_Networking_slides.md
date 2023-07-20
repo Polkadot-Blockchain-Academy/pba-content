@@ -7,160 +7,133 @@ description: Peer-to-Peer (P2P) networking for Web3 engineers
 
 ---
 
-<section data-auto-animate data-transition="fade">
-  <h2>Introduction/Agenda</h2>
-  <ul>
-    <li class="fragment">History of p2p networks</li>
-    <li class="fragment">Discuss the network layer and network conditions that blockchains operate on(Mostly)</li>
-    <li class="fragment">Talk about traditional web2 network overlays pros vs cons with web3 network overlays</li>
-    <li class="fragment">Discuss attacks and how to address along with the underlying threat model</li>
-  </ul>
-</section>
+# Introduction/Agenda
+- History of p2p networks
+- Discuss the network layer and network conditions that blockchains operate on(Mostly)
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Talk about traditional web2 network overlays pros vs cons with web3 network overlays
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Discuss attacks and how to address along with the underlying threat model
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
-<section data-auto-animate data-transition="fade">
-    <h2>ARPANET</h2>
-    <ul>
-        <li class="fragment">First operational packet-switching network</li>
-        <li class="fragment">Developed in the late 1960s by DARPA(The Defense Advanced Research Projects Agency)</li>
-        <li class="fragment">Laid the foundation for the modern internet</li>
-    </ul>
-    <aside class="notes">
-        Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA program aimed at developing technologies for mass surveillance and data analysis. The project raised concerns about privacy and civil liberties, eventually leading to its cancellation in 2003 due to public outcry.
-    </aside>
-</section>
- 
----
+# ARPANET
+- First operational packet-switching network
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Developed in the late 1960s by DARPA(The Defense Advanced Research Projects Agency)
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Laid the foundation for the modern internet
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
-<section data-auto-animate data-transition="fade">
-    <h2>Packet Switching</h2>
-    <ul>
-        <li class="fragment">Mode of data transmission in which a message is broken into a number of parts that are sent independently(Packets)</li>
-        <li class="fragment">Packets are sent over whatever route is optimal</li>
-        <li class="fragment">Packets are reassembled at the destination</li>
-    </ul>
-</section>
-
-Notes:
-Mention TCP/UDP use packet switching to deploy their data transport protocol
+Notes: Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA program aimed at developing technologies for mass surveillance and data analysis. The project raised concerns about privacy and civil liberties, eventually leading to its cancellation in 2003 due to public outcry.
 
 ---
 
-<section>
-    <h2>Packet Switching</h2>
-    <img style="width: 600px" src="img/message_packet.svg"/>
-</section>
-
-Notes:
-Mention that headers contain some addressing, destination information, and ordering typically depending
-
----
-
-<section>
-    <h2>Packet Switching</h2>
-    <img style="width: 600px" src="img/packet_switching_1.svg"/>
-</section>
+# Packet Switching
+- Mode of data transmission in which a message is broken into a number of parts that are sent independently(Packets)
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Packets are sent over whatever route is optimal
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Packets are reassembled at the destination
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
-<section>
-    <h2>Packet Switching</h2>
-    <img style="width: 600px" src="img/packet_switching_2.svg"/>
-</section>
+# Packet Switching
+<img src="img/message_packet.svg" alt="Packet Switching" style="width: 600px">
+
+Notes: Mention that headers contain some addressing, destination information, and ordering typically depending
 
 ---
 
-<section>
-    <h2>Packet Switching</h2>
-    <img style="width: 600px" src="img/packet_switching_3.svg"/>
-</section>
+# Packet Switching
+<img src="img/packet_switching_1.svg" alt="Packet Switching" style="width: 600px">
 
 ---
 
-<section>
-    <h2>Packet Switching</h2>
-    <img style="width: 600px" src="img/packet_switching_4.svg"/>
-</section>
+# Packet Switching
+<img src="img/packet_switching_2.svg" alt="Packet Switching" style="width: 600px">
+
 
 ---
 
-<section data-auto-animate data-transition="fade">
-    <h2>Peer-to-Peer (P2P) Networks</h2>
-    <ul>
-        <li class="fragment">P2P is a decentralized form of network structure</li>
-        <li class="fragment">Unlike client-server model, all nodes (peers) are equal participants</li>
-        <li class="fragment">Data is shared directly between systems without a central server</li>
-        <li class="fragment">Peers contribute resources, including bandwidth, storage space, and processing power</li>
-    </u1>
-</section>
+# Packet Switching
+<img src="img/packet_switching_3.svg" alt="Packet Switching" style="width: 600px">
+
+---
+
+# Packet Switching
+<img src="img/packet_switching_4.svg" alt="Packet Switching" style="width: 600px">
+
+---
+
+# Peer-to-Peer (P2P) Networks
+- P2P is a decentralized form of network structure
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Unlike client-server model, all nodes (peers) are equal participants
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Data is shared directly between systems without a central server
+<!-- .element: class="fragment" data-fragment-index="4" -->
+- Peers contribute resources, including bandwidth, storage space, and processing power
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---
 
 # Historical P2P applications
 
 Notes:
-Napster, Limewire
+    Napster, Limewire
 
 ---
 
-<section>
-    <h2>Napster</h2>
-    <ul>
-        <li class="fragment">Launched in 1999, popular P2P platform</li>
-        <li class="fragment">Central server for indexing, P2P for transfers</li>
-        <li class="fragment">Shutdown in 2001 due to legal issues</li>
-    </ul>
-    <aside class="notes">
-        Napster's story is closely tied with the band Metallica. In 2000, Metallica discovered that a demo of their song "I Disappear" was being circulated via Napster before its official release. This led to Metallica filing a lawsuit against Napster for copyright infringement. Napster had to comply by banning hundreds of thousands of users from their platform who were sharing Metallica's music. This was a turning point in digital copyright law and played a significant role in Napster's eventual shutdown in 2001.
-    </aside>
-</section>
+# Napster
+- Launched in 1999, popular P2P platform
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Central server for indexing, P2P for transfers
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Shutdown in 2001 due to legal issues
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+Notes:
+    Napster's story is closely tied with the band Metallica. In 2000, Metallica discovered that a demo of their song "I Disappear" was being circulated via Napster before its official release. This led to Metallica filing a lawsuit against Napster for copyright infringement. Napster had to comply by banning hundreds of thousands of users from their platform who were sharing Metallica's music. This was a turning point in digital copyright law and played a significant role in Napster's eventual shutdown in 2001.
 
 ---
 
-<section>
-    <h2>Napster Setup</h2>
-    <img style="width: 600px" src="img/napster_1.svg"/>
-</section>
+# Napster Setup
+<img src="img/napster_1.svg" alt="Napster Setup" style="width: 600px">
 
 ---
 
-<section>
-    <h2>Napster Setup</h2>
-    <img style="width: 600px" src="img/napster_2.svg"/>
-</section>
+# Napster Setup
+<img src="img/napster_2.svg" alt="Napster Setup" style="width: 600px">
 
 ---
 
-<section>
-    <h2>Napster Setup</h2>
-    <img style="width: 600px" src="img/napster_3.svg"/>
-</section>
+# Napster Setup
+<img src="img/napster_3.svg" alt="Napster Setup" style="width: 600px">
 
 ---
 
-<section>
-    <h2>Napster Setup</h2>
-    <img style="width: 600px" src="img/napster_4.svg"/>
-</section>
+# Napster Setup
+<img src="img/napster_4.svg" alt="Napster Setup" style="width: 600px">
 
 ---
 
-<section data-auto-animate data-transition="fade">
-    <h2>Gnutella(Limewire)</h2>
-    <ul>
-        <li class="fragment">Each node serves as both a client and a server no central server</li>
-        <li class="fragment">Query all connected nodes for files</li>
-        <li class="fragment">Gain peer connections to the network via Bootnodes</li>
-        <li class="fragment">Ordered to shutdown in 2010 by United States Court</li>
-    </u1>
-    <aside class="notes">
-        <ul>
-            <li>Check local filestore for file and if it is not available, forward the request to all connected peers.</li>
-            <li>Gnutella generates a significant amount of network traffic by flooding the network with requests.</li>
-        </ul>
-    </aside>
-</section>
+# Gnutella(Limewire)
+- Each node serves as both a client and a server no central server
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Query all connected nodes for files
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Gain peer connections to the network via Bootnodes
+<!-- .element: class="fragment" data-fragment-index="4" -->
+- Ordered to shutdown in 2010 by United States Court
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+Notes:
+    - Check local filestore for file and if it is not available, forward the request to all connected peers.
+    - Gnutella generates a significant amount of network traffic by flooding the network with requests.
+
 ---
 
 <section>
@@ -205,76 +178,61 @@ Napster, Limewire
 
 ---
 
-<section>
-    <h2>Centralized vs Decentralized Networks</h2>
-    <img style="width: 600px" src="img/client_server_1.svg"/>
-</section>
+## Centralized vs Decentralized Networks
+<img src="img/client_server_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
 
 Notes:
-
-Talk about how when a partition happens in P2P vs Centralized
-In p2p only one node needs to have a full copy in order for the file to
-be able to be distributed across the network
+Talk about how when a partition happens in P2P vs Centralized. In p2p, only one node needs to have a full copy in order for the file to be able to be distributed across the network.
 
 ---
 
-<section>
-    <h2>Centralized vs Decentralized Networks</h2>
-    <img style="width: 600px" src="img/client_server_2.svg"/>
-</section>
+## Centralized vs Decentralized Networks
+<img src="img/client_server_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
 
 ---
 
-<section>
-    <h2>Centralized vs Decentralized Networks</h2>
-    <img style="width: 600px" src="img/p2p_topology_1.svg"/>
-</section>
+## Centralized vs Decentralized Networks
+<img src="img/p2p_topology_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
 
 ---
 
-<section>
-    <h2>Centralized vs Decentralized Networks</h2>
-    <img style="width: 600px" src="img/p2p_topology_2.svg"/>
-</section>
+## Centralized vs Decentralized Networks
+<img src="img/p2p_topology_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
 
 ---
 
-<section>
-    <h2>Advantages to Decentralized Networks</h2>
-    <ul>
-        <li class="fragment">No privileged nodes</li>
-        <li class="fragment">Less bottlenecks with bandwidth</li>
-        <li class="fragment">DOS resistant</li>
-        <li class="fragment">No centralized infrastructure necessary (Except internet for now...)</li>
-    </ul>
-    <aside class="notes">
-        <ol>
-            <li>No single node or nodes (CDN) have access to all of the content or files or is critical for operating the network. Each node has a copy of the data.</li>
-            <li>No central node carrying all of the load of traffic. Block production and Block peering/importing can be mentioned here.</li>
-            <li>Difficult to overload the network or DOS (Not a single node is privileged).</li>
-            <li>Although many nodes are run on Centralized cloud compute platforms, they don't have to be (Typically).</li>
-        </ol>
-    </aside>
-</section>
+# Advantages to Decentralized Networks
+- No privileged nodes
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+- Less bottlenecks with bandwidth
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+- DOS resistant
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+- No centralized infrastructure necessary (Except internet for now...)
+  <!-- .element: class="fragment" data-fragment-index="5" -->
+
+Notes:
+1. No single node or nodes (CDN) have access to all of the content or files or is critical for operating the network. Each node has a copy of the data.
+2. No central node carrying all of the load of traffic. Block production and Block peering/importing can be mentioned here.
+3. Difficult to overload the network or DOS (Not a single node is privileged).
+4. Although many nodes are run on Centralized cloud compute platforms, they don't have to be (Typically).
 
 ---
 
-<section>
-    <h2>Difficulties or Disadvantages</h2>
-    <ul>
-        <li class="fragment">Since it is permissionless, a node can share malicious resources</li>
-        <li class="fragment">Latency</li>
-        <li class="fragment">Difficult to regulate illicit activity</li>
-        <li class="fragment">The network is limited by nodes with the weakest hardware</li>
-    </ul>
-    <aside class="notes">
-        <ol>
-            <li>Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection. Mention finality time!</li>
-            <li>No central point to go and snoop all users data (for better or for worse).</li>
-            <li>Why we have hardware requirements for blockchain networks.</li>
-        </ol>
-    </aside>
-</section>
+# Difficulties or Disadvantages
+- Since it is permissionless, a node can share malicious resources
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+- Latency
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+- Difficult to regulate illicit activity
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+- The network is limited by nodes with the weakest hardware
+  <!-- .element: class="fragment" data-fragment-index="5" -->
+
+Notes:
+1. Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection. Mention finality time!
+2. No central point to go and snoop all users data (for better or for worse).
+3. Why we have hardware requirements for blockchain networks.
 
 ---
 
@@ -335,48 +293,43 @@ Talk about advertising vs just blind sending and how that can be inefficient
 
 ---
 
-<section>
-    <h2>Discovery</h2>
-    <div style="display: flex; justify-content: center;">
-        <ol>
-            <li class="fragment">Connect to a peer</li>
-            <li class="fragment">Ask peer for a list of their known nodes</li>
-            <li class="fragment">Connect to random subset of peers from the list</li>
-            <li class="fragment">Repeat steps 2 and 3</li>
-        </ol>
-    </div>
-</section>
+# Discovery
+1. Connect to a peer
+   <!-- .element: class="fragment" data-fragment-index="2" -->
+2. Ask peer for a list of their known nodes
+   <!-- .element: class="fragment" data-fragment-index="3" -->
+3. Connect to random subset of peers from the list
+   <!-- .element: class="fragment" data-fragment-index="4" -->
+4. Repeat steps 2 and 3
+   <!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---
 
-## Applications
-
-Notes: 1. What are some of the types of applications that lend themselves to this kind of network topology? Can anyone think of any? 2. File sharing(Music)? 3. Messaging and communication?
+# Applications
+Notes:
+1. What are some of the types of applications that lend themselves to this kind of network topology? Can anyone think of any?
+2. File sharing(Music)?
+3. Messaging and communication?
 
 ---
 
-## Initial Discovery
-
+# Initial Discovery
 - Bootnode/bootnodes (More on this later in Substrate)
 
 Notes:
-
-1.) Must know someone who is participating in the network initially(Bootnode)
+1. Must know someone who is participating in the network initially(Bootnode)
 
 ---
 
-## Attacks
-
+# Attacks
 Notes:
-Can anyone think of a way to exploit some of these networks?
-What would be some things to try to take advantage of?
+- Can anyone think of a way to exploit some of these networks?
+- What would be some things to try to take advantage of?
 
 ---
 
-<section>
-    <h2>Attacks</h2>
-    <img style="width: 600px" src="img/eclipse_attack_1.svg"/>
-</section>
+# Attacks
+<img style="width: 600px" src="img/eclipse_attack_1.svg"/>
 
 Notes:
 
@@ -385,50 +338,39 @@ Notes:
 
 ---
 
-<section>
-    <h2>Attacks</h2>
-    <img style="width: 600px" src="img/eclipse_attack_2.svg"/>
-</section>
+# Attacks
+<img style="width: 600px" src="img/eclipse_attack_2.svg"/>
+
+---
+# Eclipse Attack Execution
+1. Flood a target node with a bunch of malicious peer addresses
+   <!-- .element: class="fragment" data-fragment-index="2" -->
+2. The targeted node then stores these malicious peers and utilizes them when re-syncing on next bootup
+   <!-- .element: class="fragment" data-fragment-index="3" -->
+3. DOS targeted node to take it offline to force a resync with these new malicious peers
+   <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
-<section>
-    <h2>Eclipse Attack Execution</h2>
-    <div style="display: flex; justify-content: center;">
-        <ol>
-            <li class="fragment">Flood a target node with a bunch of malicious peer addresses</li>
-            <li class="fragment">The targeted node then stores these malicious peers and utilizes them when re-syncing on next bootup</li>
-            <li class="fragment">DOS targeted node to take it offline to force a resync with these new malicious peers</li>
-        </ol>
-    </div>
-</section>
+# Preventing Attacks
+- Restrict inbound connections in some way
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+- Random selection of peers to connect with
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+- Deterministic node selection (Bootnodes)
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+- Restricting new nodes (Probably not what we want...)
+  <!-- .element: class="fragment" data-fragment-index="5" -->
+
+Notes:
+1. Be wary of new connections with other nodes
+2. Don't just take the most recent request for connections to avoid the flooding
+3. Bootnodes with higher credibility and trust (Can be a bottleneck) - Rotate bootnodes as they are also subject to attacks
 
 ---
 
-<section>
-    <h2>Preventing Attacks</h2>
-    <div style="display: flex; justify-content: center;">
-        <ul>
-            <li class="fragment">Restrict inbound connections in some way</li>
-            <li class="fragment">Random selection of peers to connect with</li>
-            <li class="fragment">Deterministic node selection (Bootnodes)</li>
-            <li class="fragment">Restricting new nodes (Probably not what we want...)</li>
-        </ul>
-    </div>
-    <aside class="notes">
-        <ol>
-            <li>Be wary of new connections with other nodes</li>
-            <li>Don't just take the most recent request for connections to avoid the flooding</li>
-            <li>Bootnodes with higher credibility and trust (Can be a bottleneck) - Rotate bootnodes as they are also subject to attacks</li>
-        </ol>
-    </aside>
-</section>
+# Conclusion
+P2P networks offer us a path forward towards applications which are more decentralized and censorship resilient
 
----
-
-<section>
-    <h2>Conclusion</h2>
-    P2P networks offer us a path forward towards applications which are more decentralized and censorship resilient
-</section>
 
 ---
