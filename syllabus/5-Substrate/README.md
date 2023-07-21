@@ -1,4 +1,4 @@
-## Day 1
+## Day 1 (Monday)
 
 ### Morning (~4 hours max)
 
@@ -11,7 +11,7 @@
 1. Lecture: Wasm-meta protocol Part 2 (60 mins)
 1. Lecture: Transaction Pool (90 mins)
 
-## Day 2
+## Day 2 (Teusday)
 
 ### Morning (~4 hours max)
 
@@ -25,7 +25,7 @@
 
 > Graded assignments announced.
 
-## Day 2
+## Day 3 (Wednesday)
 
 ### Morning (~4 hours max)
 
