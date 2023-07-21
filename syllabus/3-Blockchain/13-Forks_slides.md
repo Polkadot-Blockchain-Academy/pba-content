@@ -36,7 +36,7 @@ In an ideal world blockchains would look like this:
 
 #### Real World
 
-Things not always go according to plan:
+Things don't always go according to plan:
 
 <br>
 
