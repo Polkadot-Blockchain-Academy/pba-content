@@ -1,5 +1,5 @@
 ---
-title: Substrate CLI
+title: (Deprecated)Substrate CLI
 description: A brief look at the Substrate CLI.
 duration: 1 hour
 ---

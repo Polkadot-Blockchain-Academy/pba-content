@@ -1,5 +1,5 @@
 ---
-title: Substrate Folder Structure
+title: (Deprecated)Substrate Folder Structure
 description:
 duration: 30m lecture + 60m node-template activity + 60m wasm-crate activity
 ---

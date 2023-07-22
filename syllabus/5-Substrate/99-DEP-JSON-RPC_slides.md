@@ -1,5 +1,5 @@
 ---
-title: JSON-RPC Protocol
+title: (Deprecated)JSON-RPC Protocol
 description: Substrate Overview for Web3 engineers
 duration: 45 minutes
 ---
@@ -143,3 +143,10 @@ Notes:
 
 - see "Client Libraries" here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
 - https://paritytech.github.io/json-rpc-interface-spec/introduction.html
+
+
+TODO:
+
+subxt, especially usage of light clients.
+
+safe and unsafe RPCs
