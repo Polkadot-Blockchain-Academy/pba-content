@@ -144,7 +144,6 @@ Notes:
 - see "Client Libraries" here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
 - https://paritytech.github.io/json-rpc-interface-spec/introduction.html
 
-
 TODO:
 
 subxt, especially usage of light clients.
