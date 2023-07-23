@@ -49,7 +49,7 @@ Stuff you should remember to say
 ## Pictures
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic" />
+<img style="width: 800px" src="../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic" />
 
 #### _Leave a note on why this one matters_
 
@@ -283,18 +283,18 @@ Using<br/>`<pba-col right>`
 
 ## Images
 
-<img style="width: 50vw" src="../../assets/img/5-Substrate/WebAssembly.png" />
+<img style="width: 50vw" src="../assets/img/5-Substrate/WebAssembly.png" />
 
 ---v
 
 <!-- prettier-ignore -->
 ```html
-<img style="width: 50vw" src="../../assets/img/5-Substrate/WebAssembly.png" />
+<img style="width: 50vw" src="../assets/img/5-Substrate/WebAssembly.png" />
 ```
 
 ---
 
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
+<!-- .slide: data-background="../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
 More info on reveal/reveal-md backgrounds:
 
@@ -305,7 +305,7 @@ More info on reveal/reveal-md backgrounds:
 
 <!-- prettier-ignore -->
 ```html
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-image-transparent.png" -->
+<!-- .slide: data-background="../assets/img/0-Shared/bg-circles-image-transparent.png" -->
 
 More info on reveal/reveal-md backgrounds:
 
@@ -315,11 +315,11 @@ More info on reveal/reveal-md backgrounds:
 
 ---v
 
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
+<!-- .slide: data-background="../assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
 <!-- prettier-ignore -->
 ```html
-<!-- .slide: data-background="../../assets/img/0-Shared/bg-circles-color-transparent.png" -->
+<!-- .slide: data-background="../assets/img/0-Shared/bg-circles-color-transparent.png" -->
 
 <pba-cols padded>
 <pba-col color>
