@@ -12,7 +12,7 @@ duration: 45 minutes
 
 ### The Need For a Common Language
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-json.svg" />
+<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-json.svg" />
 
 ---
 
