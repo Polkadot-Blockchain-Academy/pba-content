@@ -8,45 +8,30 @@ duration: 1 hour
 
 ---
 
-## 🫀 The XCVM
+# 🫀 The XCVM
 
 At the core of XCM lies the **Cross-Consensus Virtual Machine (XCVM)**.
 
-A “message” in XCM is an XCVM program.
+A “message” in XCM is an XCVM program, which is a sequence of instructions.
 
-The XCVM is a state machine, state is kept track in **Registers**.
+The XCVM is a state machine, state is kept track in **registers**.
 
 Notes:
 
-It’s an ultra-high level non-Turing-complete computer whose instructions are designed to be roughly at the same level as transactions.
+It’s an ultra-high level non-Turing-complete computer.
 Messages are one or more XCM instructions.
 The program executes until it either runs to the end or hits an error, at which point it finishes up and halts.
 An XCM executor following the XCVM specification is provided by Parity, and it can be extended or customized, or even ignored altogether and users can create their own construct that follows the XCVM spec.
 
 ---
 
-### XCVM Instructions
+# 📜 XCVM Instructions
 
 XCVM Instructions might change a register, they might change the state of the consensus system or both.
 
-One example of such an instruction is `TransferAsset` which is used to transfer an asset to some other address on the remote system.
-It needs to be told which asset(s) to transfer and to whom/where the asset is to be transferred.
+---v
 
-```rust
-enum Instruction {
-    TransferAsset {
-        assets: Assets,
-        beneficiary: Location,
-    }
-    /* snip */
-}
-```
-
----
-
-## XCVM Instructions preview
-
-Four kinds of instructions:
+## Kinds of instructions
 
 <pba-flex center>
 
@@ -55,39 +40,92 @@ Four kinds of instructions:
 - Information
 - System Notification
 
-</pba-flex>
+---v
+
+## Example: TransferAsset
+
+An instruction used to transfer assets to some other address.
+
+<pba-flex center>
+
+```rust
+TransferAsset {
+    assets: Assets,
+    beneficiary: Location,
+}
+```
 
 Notes:
 
-`Instruction` is a bad name for the kind of XCVM instructions that we have, but it means instructions that result in a state change in the local consensus system, or instruct the local consensus system to achieve some desired behavior.
-
-TODO example of XCM message that intuitively makes sense for students that can reason about assets and fees, highlight lines in code block and talk to them.
-Highlight LOCATION and ASSET instructions, that we will go into next
+This instruction is a command.
+It needs to know which assets to transfer and to which account to transfer them to.
 
 ---
 
-## XCVM Registers
+# XCVM Registers
 
-TODO: Diagram
-
-- Registers _are_ the state of XCVM
-- Note that XCVM registers are temporary/transient
-
----
-
-## Basic XCVM Operation
-
-TODO: Diagram
-
-XCVM operates as a fetch-dispatch loop
-
-_Common in state machines_
+<diagram class="mermaid">
+graph LR
+    subgraph Registers[ ]
+        Holding(Holding)
+        Origin(Origin)
+        More(...)
+    end
+</diagram>
 
 Notes:
 
-TODO: Graphics about a state machine similar to how the XCVM operates
+Registers _are_ the state of XCVM.
+Note that they are temporary/transient.
+We'll talk about are the `holding` and `origin` registers, but there are more.
+
+---v
+
+## 📍 The Origin Register
+
+Contains the `Location` of the cross-consensus origin where the XCM originated from.
+
+Notes:
+
+This `Location` can change over the course of program execution.
+
+---v
+
+### 💸 The Holding Register
+
+Expresses a number of assets in control of the xcm execution that have no on-chain representation.
+
+They don't belong to any account.
+
+It can be seen as the register holding "unspent assets".
 
 ---
+
+# Basic XCVM Operation
+
+<diagram class="mermaid">
+graph LR
+    subgraph Program
+        WithdrawAsset-->BuyExecution
+        BuyExecution-->DepositAsset
+        DepositAsset
+    end
+    Program-.->Fetch
+    Fetch(Fetch Instruction)-->Execute(Execute instruction)
+    Execute-->Fetch
+    Execute-.->Registers
+    subgraph Registers
+        Holding(Holding)
+        Origin(Origin)
+        More(...)
+    end
+</diagram>
+
+Notes:
+
+The XCVM fetches instruction from the program and executes them one by one.
+
+---v
 
 ## XCVM vs. Standard State Machine
 
@@ -106,72 +144,98 @@ Notes:
    This ensures that error handling logic from a previous program does not affect any appended code (i.e. the code in the error handler register does not loop infinitely, the code in the Appendix register cannot access the result of the code execution in the error handler).
 3. Code that is run regardless of the execution result of the XCM program.
 
+---v
+
+## More complete XCVM operation
+
+<diagram class="mermaid">
+graph LR
+    subgraph Program
+        WithdrawAsset-->BuyExecution
+        BuyExecution-->DepositAsset
+        DepositAsset
+    end
+    Program-.->Fetch
+    Fetch(Fetch Instruction)-->Execute(Execute instruction)
+    Execute-->Fetch
+    Execute-.->Registers
+    subgraph Registers
+        Holding(Holding)
+        Origin(Origin)
+        ErrorRegister(Error)
+        ErrorHandler(Error Handler)
+        AppendixRegister(Appendix)
+        More(...)
+    end
+    Execute-- Error -->Error(Error Handler)
+    Error-.->ErrorHandler
+    Error-.->ErrorRegister
+    Error-->Appendix
+    Appendix-.->AppendixRegister
+    Execute-->Appendix
+</diagram>
+
 ---
 
-### 📍 The Origin Register
+# 💁 XCM by example
 
-Contains the `Location` of the cross-consensus origin where the XCM originated from.
+---v
 
-It is always the relative view from the consensus system in which the XCM is executed.
+## The `WithdrawAsset` instruction
 
-Notes:
-
-TODO: should there be 2 columns for this slide and the other registers?
-(from Nuke)
-
----
-
-### 💁 The Holding Register
-
-Expresses a number of assets in control of the xcm-execution but that have no representation on-chain.
-
-It can be seen as the register holding "unspent assets".
-
-Example: Let's take a look at another XCM instruction: `WithdrawAsset`: it withdraws some assets from the account of the place specified in the Origin Register.
-But what does it do with them?
-if they don’t get deposited anywhere then it’s surely a pretty useless operation.
-These assets are held in the holding register until they are deposited anywhere else.
-
----
-
-### 💁 XCM by example: The `WithdrawAsset` instruction
-
-`WithdrawAsset` has no location specified for assets.
-
-They are _temporarily_ held in what in the Holding Register.
+<pba-flex center>
 
 ```rust
-// There are a number of instructions
-// which place assets on the Holding Register.
-// One very simple one is the
-// `WithdrawAsset` instruction.
-
 enum Instruction {
+    /* snip */
     WithdrawAsset(Assets),
     /* snip */
 }
 ```
 
----
+Notes:
 
-### 💁 XCM by example: The `DepositAsset` instruction
+There are a number of instructions
+which place assets on the Holding Register.
+One very simple one is the
+`WithdrawAsset` instruction.
 
-<pba-cols>
-<pba-col>
+It withdraws some assets from the account of the location specified in the Origin Register.
+But what does it do with them?
+If they don’t get deposited anywhere then it's a pretty useless operation.
+These assets are held in the holding register until something is done with them, for example, using the following instruction.
 
-Takes assets from the holding register and deposits them in a beneficiary.<br/>
-Typically an instruction that places assets into the holding register would have been executed.
+---v
 
-</pba-col>
-<pba-col>
+## The `BuyExecution` instruction
+
+<pba-flex center>
 
 ```rust
-// There are a number of instructions
-// which operate on the Holding Register.
-// One very simple one is the
-// `DepositAsset` instruction.
-
 enum Instruction {
+    /* snip */
+    BuyExecution {
+        fees: Asset,
+        weight_limit: WeightLimit,
+    },
+    /* snip */
+}
+```
+
+Notes:
+
+This instruction uses the specified assets in the Holding register to buy weight for the execution of the following instructions.
+It's used in systems that pay fees.
+
+---v
+
+## The `DepositAsset` instruction
+
+<pba-flex center>
+
+```rust
+enum Instruction {
+    /* snip */
     DepositAsset {
         assets: AssetFilter,
         beneficiary: Location,
@@ -180,94 +244,21 @@ enum Instruction {
 }
 ```
 
-</pba-col>
-</pba-cols>
-
 Notes:
 
-TODO: this slide looks right, see above todo (from Nuke)
+Takes assets from the holding register and deposits them in a beneficiary.
+Typically an instruction that places assets into the holding register would have been executed previously.
 
----
+---v
 
-### 💁 XCM by example: The `Transact` instruction
+## Putting it all together
 
-<pba-cols>
-<pba-col>
-
-Executes a scale-encoded transaction.
-
-It dispatches from a FRAME origin derived from the origin register.
-
-OriginKind defines the type of FRAME origin that should be derived: _root_, _signed_, _parachain_..
-
-</pba-col>
-<pba-col>
+<pba-flex center>
 
 ```rust
-// Transact allows to execute arbitrary
-// calls in a chain. It is the most generic
-// instruction, as it allows the interaction
-// with any runtime pallet
-enum Instruction {
-    /* snip */
-    Transact {
-		origin_type: OriginKind,
-		require_weight_at_most: u64,
-		call: Vec<u8>, // Blob
-	},
-    /* snip */
-}
+Xcm(vec![
+    WithdrawAsset((Here, amount).into()),
+    BuyExecution { fees: (Here, amount).into(), weight_limit: Unlimited },
+    DepositAsset { assets: All.into(), beneficiary: AccountId32 { ... }.into() },
+])
 ```
-
-</pba-col>
-</pba-cols>
-
----
-
-### Creating messages
-
-```rust
-Withdraw,
-Deposit
-```
-
----
-
-## Fees
-
-```rust
-Withdraw,
-BuyExecution,
-Deposit,
-```
-
----
-
-### 💁 XCM by example: The `ClearOrigin` instruction
-
-<pba-cols>
-<pba-col>
-
-It clears the origin stored in the origin register.
-
-Useful to execute subsequent messages without a potentially-abusable origin.
-
-Example: we withdraw assets from a parachain controlled account, but then we don't want Transact to be executed
-
-</pba-col>
-<pba-col>
-
-```rust
-// Clear Origin is key to maintain isolation
-// between instructions that are executed
-// with a particular origin and instructions
-// that are not.
-enum Instruction {
-    /* snip */
-    ClearOrigin
-    /* snip */
-}
-```
-
-</pba-col>
-</pba-cols>
