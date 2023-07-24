@@ -1,9 +1,0 @@
-[package]
-name = "wasm-crate-bin"
-version = "0.1.0"
-authors = ["kianenigma"]
-edition = "2021"
-
-[[bin]]
-name = "wasm-crate-bin"
-path = "src/main.rs"
