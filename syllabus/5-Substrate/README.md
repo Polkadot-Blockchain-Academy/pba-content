@@ -1,35 +1,37 @@
-## Day 1
+## Day 1 (Monday)
 
 ### Morning (~4 hours max)
 
-1. Lecture: Intro to substrate (60 mins)
-1. Lecture: Wasm-meta protocol Part 1 (45 mins)
-1. Lecture: SCALE (45 mins)
+- Introduction ✅ (60m)
+- Wasm Meta Protocol (90m)
+- Activity: Finding Runtime APIs and Host Functions in Substrate
 
 ### Afternoon (~4 hours max)
 
-1. Lecture: Wasm-meta protocol Part 2 (60 mins)
-1. Lecture: Transaction Pool (90 mins)
-
-## Day 2
-
-### Morning (~4 hours max)
-
-1. Lecture + Activity: JSON-RPC, Interaction with substrate-based chains (60m)
-1. Activity: FRAME-less node-template (rest of the day)
-
-### Afternoon (~4 hours max)
-
-1. Lecture: Substrate Storage (60m)
-1. Workshop: Substrate CLI + Client code Overview
+- Show Me The Code (60m)
+- Substrate Interactions (60m)
+- FRAME-Less Activity (60m)
 
 > Graded assignments announced.
 
-## Day 2
+## Day 2 (Tuesday)
 
 ### Morning (~4 hours max)
 
-1. Activity: FRAME-less node-template
+- Transaction Pool (60m)
+- SCALE (60m)
+- Substrate/FRAME Tips and Tricks
+
+### Afternoon (~4 hours max)
+
+- FRAME-Less Activity
+
+## Day 2 (Wednesday)
+
+### Morning (~4 hours max)
+
+- Substrate Storage (90m)
+- FRAME-Less Activity
 
 ### Afternoon (~4 hours max)
 
