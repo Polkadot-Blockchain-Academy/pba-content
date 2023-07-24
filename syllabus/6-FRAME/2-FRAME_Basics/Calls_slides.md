@@ -31,18 +31,17 @@ Here is a sentence which should help clarify their relationship, and why they ar
 Here is a simple pallet call. Let's break it down.
 
 ```rust
-#[pallet::call]
+#[pallet::call(weight(<T as Config>::WeightInfo))]
 impl<T: Config> Pallet<T> {
 	#[pallet::call_index(0)]
-	#[pallet::weight(T::WeightInfo::transfer())]
 	pub fn transfer(
 		origin: OriginFor<T>,
 		dest: AccountIdLookupOf<T>,
 		#[pallet::compact] value: T::Balance,
 	) -> DispatchResult {
-		let transactor = ensure_signed(origin)?;
+		let source = ensure_signed(origin)?;
 		let dest = T::Lookup::lookup(dest)?;
-		<Self as Currency<_>>::transfer( &transactor, &dest, value, ExistenceRequirement::AllowDeath)?;
+		<Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
 		Ok(())
 	}
 }
@@ -219,13 +218,62 @@ Note that this also implies there can only be 256 calls per pallet due to the 1 
 
 ## Weight
 
-Each call must also include a `weight` attribute:
-
-```rust
-#[pallet::weight(T::WeightInfo::transfer())]
-```
+Each call must also include specify a call `weight`.
 
 We have another lecture on Weights and Benchmarking, but the high level idea is that this weight function tells us how complex the call is, and the fees that should be charged to the user.
+
+---
+
+## Weight Per Call
+
+This can be done per call:
+
+```rust [3]
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+	#[pallet::weight(T::WeightInfo::transfer())]
+	#[pallet::call_index(0)]
+	pub fn transfer(
+		origin: OriginFor<T>,
+		dest: AccountIdLookupOf<T>,
+		#[pallet::compact] value: T::Balance,
+	) -> DispatchResult {
+		let source = ensure_signed(origin)?;
+		let dest = T::Lookup::lookup(dest)?;
+		<Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
+		Ok(())
+	}
+}
+```
+
+---
+
+## Weight for the Pallet
+
+Or for all calls in the pallet:
+
+```rust [1]
+#[pallet::call(weight(<T as Config>::WeightInfo))]
+impl<T: Config> Pallet<T> {
+	#[pallet::call_index(0)]
+	pub fn transfer(
+		origin: OriginFor<T>,
+		dest: AccountIdLookupOf<T>,
+		#[pallet::compact] value: T::Balance,
+	) -> DispatchResult {
+		let source = ensure_signed(origin)?;
+		let dest = T::Lookup::lookup(dest)?;
+		<Self as fungible::Mutate<_>>::transfer(&source, &dest, value, Expendable)?;
+		Ok(())
+	}
+}
+```
+
+In this case, the weight function name is assumed to match the call name for all calls.
+
+NOTES:
+
+https://github.com/paritytech/substrate/pull/13932
 
 ---
 
