@@ -14,7 +14,11 @@ In this presentation, we will go over two of the tools you have access to when d
 
 ---
 
-## Errors
+# Errors
+
+---
+
+## Intro to Errors
 
 Not all extrinsics are valid. It could be for a number of reasons:
 
@@ -47,13 +51,13 @@ From: `substrate/primitives/runtime/src/lib.rs`
 
 ```rust [0|6-10|13-14|15-16]
 /// Reason why a dispatch call failed.
-#[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, PartialEq)]
-#[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
+#[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, PartialEq, MaxEncodedLen)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum DispatchError {
 	/// Some error occurred.
 	Other(
 		#[codec(skip)]
-		#[cfg_attr(feature = "std", serde(skip_deserializing))]
+		#[cfg_attr(feature = "serde", serde(skip_deserializing))]
 		&'static str,
 	),
 	/// Failed to lookup some data.
@@ -75,6 +79,14 @@ pub enum DispatchError {
 	/// The number of transactional layers has been reached, or we are not in a transactional
 	/// layer.
 	Transactional(TransactionalError),
+	/// Resources exhausted, e.g. attempt to read/write data which is too large to manipulate.
+	Exhausted,
+	/// The state is corrupt; this is generally not going to fix itself.
+	Corruption,
+	/// Some resource (e.g. a preimage) is unavailable right now. This might fix itself later.
+	Unavailable,
+	/// Root origin is not allowed.
+	RootNotAllowed,
 }
 ```
 
@@ -90,8 +102,8 @@ From: `substrate/primitives/runtime/src/lib.rs`
 pub const MAX_MODULE_ERROR_ENCODED_SIZE: usize = 4;
 
 /// Reason why a pallet call failed.
-#[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo)]
-#[cfg_attr(feature = "std", derive(Serialize, Deserialize))]
+#[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, MaxEncodedLen)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ModuleError {
 	/// Module index, matching the metadata module index.
 	pub index: u8,
@@ -99,7 +111,7 @@ pub struct ModuleError {
 	pub error: [u8; MAX_MODULE_ERROR_ENCODED_SIZE],
 	/// Optional error message.
 	#[codec(skip)]
-	#[cfg_attr(feature = "std", serde(skip_deserializing))]
+	#[cfg_attr(feature = "serde", serde(skip_deserializing))]
 	pub message: Option<&'static str>,
 }
 ```
@@ -110,22 +122,10 @@ So an error is at most just 5 bytes.
 
 ## Declaring Errors
 
-```rust [0|36-43|59-60]
+```rust [0|23-30|47-48]
 #![cfg_attr(not(feature = "std"), no_std)]
 
-/// Edit this file to define custom logic or remove it if it is not needed.
-/// Learn more about FRAME and the core library of Substrate FRAME pallets:
-/// <https://docs.substrate.io/v3/runtime/frame>
 pub use pallet::*;
-
-#[cfg(test)]
-mod mock;
-
-#[cfg(test)]
-mod tests;
-
-#[cfg(feature = "runtime-benchmarks")]
-mod benchmarking;
 
 #[frame_support::pallet]
 pub mod pallet {
@@ -140,7 +140,6 @@ pub mod pallet {
 	}
 
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
 	pub struct Pallet<T>(_);
 
 	#[pallet::storage]
@@ -166,7 +165,8 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {
 		/// This function allows the current owner to set a new owner.
 		/// If there is no owner, this function will return an error.
-		#[pallet::weight(0)]
+		#[pallet::weight(u64::default())]
+		#[pallet::call_index(0)]
 		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			let current_owner = CurrentOwner::<T>::get().ok_or(Error::<T>::NoOwner)?;
@@ -315,7 +315,11 @@ https://github.com/paritytech/substrate/pull/10242
 
 ---
 
-## Events
+# Events
+
+---
+
+## Intro to Events
 
 When an extrinsic completes successfully, there is often some metadata you would like to expose to the outside world about what exactly happened during the execution.
 
@@ -327,22 +331,10 @@ Or maybe there is some significant state transition that you know users
 
 ## Declaring and Emitting Events
 
-```rust [22-27|45-53|65]
+```rust [10-15|32-37|50]
 #![cfg_attr(not(feature = "std"), no_std)]
 
-/// Edit this file to define custom logic or remove it if it is not needed.
-/// Learn more about FRAME and the core library of Substrate FRAME pallets:
-/// <https://docs.substrate.io/v3/runtime/frame>
 pub use pallet::*;
-
-#[cfg(test)]
-mod mock;
-
-#[cfg(test)]
-mod tests;
-
-#[cfg(feature = "runtime-benchmarks")]
-mod benchmarking;
 
 #[frame_support::pallet]
 pub mod pallet {
@@ -357,7 +349,6 @@ pub mod pallet {
 	}
 
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
 	pub struct Pallet<T>(_);
 
 	#[pallet::storage]
@@ -376,23 +367,21 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// The owner has been updated.
-		OwnerChanged {
-			old: T::AccountId,
-			new: T::AccountId,
-		},
+		OwnerChanged,
 	}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		/// This function allows the current owner to set a new owner.
 		/// If there is no owner, this function will return an error.
-		#[pallet::weight(0)]
+		#[pallet::weight(u64::default())]
+		#[pallet::call_index(0)]
 		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			let current_owner = CurrentOwner::<T>::get().ok_or(Error::<T>::NoOwner)?;
 			ensure!(current_owner == who, Error::<T>::NotAuthorized);
-			CurrentOwner::<T>::put(new.clone());
-			Self::deposit_event(Event::<T>::OwnerChanged { old: who, new: new });
+			CurrentOwner::<T>::put(new);
+			Self::deposit_event(Event::<T>::OwnerChanged);
 			Ok(())
 		}
 	}
@@ -419,12 +408,17 @@ impl<T: Config> Pallet<T> {
 	}
 }
 ```
+<br />
+
+`frame/support/procedural/src/pallet/expand/event.rs`
 
 ---
 
 ## Deposit Event in System
 
 Events are just a storage item in FRAME System.
+
+`frame/system/src/lib.rs`
 
 ```rust
 /// Events deposited for the current block.
@@ -436,7 +430,7 @@ Events are just a storage item in FRAME System.
 /// just in case someone still reads them from within the runtime.
 #[pallet::storage]
 pub(super) type Events<T: Config> =
-	StorageValue<_, Vec<Box<EventRecord<T::Event, T::Hash>>>, ValueQuery>;
+	StorageValue<_, Vec<Box<EventRecord<T::RuntimeEvent, T::Hash>>>, ValueQuery>;
 
 /// The number of events in the `Events<T>` list.
 #[pallet::storage]
@@ -450,9 +444,11 @@ pub(super) type EventCount<T: Config> = StorageValue<_, EventIndex, ValueQuery>;
 
 Depositing events ultimately just appends a new event to this storage.
 
+`frame/system/src/lib.rs`
+
 ```rust [0|1-4|34|13-16]
 /// Deposits an event into this block's event record.
-pub fn deposit_event(event: impl Into<T::Event>) {
+pub fn deposit_event(event: impl Into<T::RuntimeEvent>) {
 	Self::deposit_event_indexed(&[], event.into());
 }
 
@@ -461,7 +457,7 @@ pub fn deposit_event(event: impl Into<T::Event>) {
 ///
 /// This will update storage entries that correspond to the specified topics.
 /// It is expected that light-clients could subscribe to this topics.
-pub fn deposit_event_indexed(topics: &[T::Hash], event: T::Event) {
+pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
 	let block_number = Self::block_number();
 	// Don't populate events on genesis.
 	if block_number.is_zero() {
@@ -505,25 +501,33 @@ pub fn deposit_event_indexed(topics: &[T::Hash], event: T::Event) {
 
 ## You Cannot Read Events
 
+`frame/system/src/lib.rs`
+
 ```rust
-/// Get the current events deposited by the runtime.
+/// Get a single event at specified index.
 ///
 /// Should only be called if you know what you are doing and outside of the runtime block
 /// execution else it can have a large impact on the PoV size of a block.
-pub fn read_events_no_consensus() -> Vec<Box<EventRecord<T::Event, T::Hash>>> {
-	Events::<T>::get()
+pub fn event_no_consensus(index: usize) -> Option<T::RuntimeEvent> {
+	Self::read_events_no_consensus().nth(index).map(|e| e.event.clone())
 }
 
 /// Get the current events deposited by the runtime.
 ///
-/// N O T E: This should only be used in tests. Reading events from the runtime can have a large
+/// NOTE: This should only be used in tests. Reading events from the runtime can have a large
 /// impact on the PoV size of a block. Users should use alternative and well bounded storage
 /// items for any behavior like this.
+///
+/// NOTE: Events not registered at the genesis block and quietly omitted.
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
-pub fn events() -> Vec<EventRecord<T::Event, T::Hash>> {
+pub fn events() -> Vec<EventRecord<T::RuntimeEvent, T::Hash>> {
+	debug_assert!(
+		!Self::block_number().is_zero(),
+		"events not registered at the genesis block"
+	);
 	// Dereferencing the events here is fine since we are not in the
 	// memory-restricted runtime.
-	Self::read_events_no_consensus().into_iter().map(|e| *e).collect()
+	Self::read_events_no_consensus().map(|e| *e).collect()
 }
 ```
 
@@ -535,6 +539,8 @@ Remember to set the block number to greater than zero!
 
 Some tools in FRAME System for you:
 
+`frame/system/src/lib.rs`
+
 ```rust
 /// Set the block number to something in particular. Can be used as an alternative to
 /// `initialize` for tests that don't need to bother with the other environment entries.
@@ -545,13 +551,13 @@ pub fn set_block_number(n: T::BlockNumber) {
 
 /// Assert the given `event` exists.
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
-pub fn assert_has_event(event: T::Event) {
+pub fn assert_has_event(event: T::RuntimeEvent) {
 	assert!(Self::events().iter().any(|record| record.event == event))
 }
 
 /// Assert the last event equal to the given `event`.
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
-pub fn assert_last_event(event: T::Event) {
+pub fn assert_last_event(event: T::RuntimeEvent) {
 	assert_eq!(Self::events().last().expect("events expected").event, event);
 }
 ```
