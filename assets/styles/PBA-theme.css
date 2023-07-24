@@ -39,6 +39,13 @@
 	--r-selection-background-color: #8d3aed;
 	--r-selection-color: #fff;
 	--r-padding: 24px;
+
+  /* POLKADOT MAIN COLORS */
+  --r-hub-cyan: #00B2FF;
+  --r-hub-purple: #552BBF;
+  --r-hub-pink: #E6007A;
+  --r-hub-lime: #D3FF33;
+  --r-hub-green: #56F39A;
 }
 
 /* box sizing;
@@ -87,7 +94,7 @@ section.has-light-background h6 {
 
 .reveal .slides section,
 .reveal .slides section>section {
-	line-height: 1.3;
+	/* line-height: 1.3; */
 	font-weight: inherit;
 }
 
@@ -226,11 +233,31 @@ pba-flex[right] {
 	line-height: 1.3;
 }
 
+.mermaid svg {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 70% !important;
+}
+
+.mermaid.small {
+	display: block;
+	margin: auto;
+	width: 70%;
+}
+
+.mermaid.smaller {
+	display: block;
+	margin: auto;
+	width: 50%;
+}
+
 /* Ensure certain elements are never larger than the slide itself */
 /* Set in ./reveal.json -> "width": 1400, "height": 900, */
 .reveal img,
 .reveal video,
 .reveal iframe {
+  margin-left: auto;
+  margin-right: auto;
   max-width: 1300px;
 	max-height: 800px;
 	margin-top: 10px;
@@ -280,7 +307,7 @@ pba-flex[right] {
 .reveal * li dl,
 .reveal * li ul {
 	margin-top: 0.3em;
-	margin-left: -2em;
+	margin-left: -1em;
 }
 
 .reveal ul,
@@ -290,11 +317,11 @@ pba-flex[right] {
 	padding-left: 2em;
 }
 
-.reveal ol li {
+.reveal ol > li {
   counter-increment: count-ol;
 }
 
-.reveal ol li ol li {
+.reveal * li ol  > li {
   counter-increment: count-ol-ol;
 }
 
@@ -308,10 +335,10 @@ pba-flex[right] {
 	font-family: monospace;
 	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
 	content: "\2688";
-	color: var(--r-link-color-hover);
+  color: var(--r-hub-cyan);
 }
 
-.reveal ol > li::marker {
+.reveal ol > li::before {
 	font-family: "Unbounded";
 	font-size: 0.75em;
 	position: relative;
@@ -319,15 +346,15 @@ pba-flex[right] {
 	/* Custom numbers and list item delimiter */
 	/* CSS Code/unicode, hex: https://www.w3schools.com/charsets/ref_utf_symbols.asp */
 	/* Change the color */
-	color: var(--r-link-color-hover);
+  color: var(--r-hub-cyan);
 	font-weight: bold;
 }
 
-.reveal ol > li::marker {
+.reveal ol > li::before {
 	content: counters(count-ol,".") ": ";
 }
 
-.reveal * li ol  > li::marker {
+.reveal * li ol  > li::before {
 	content: counters(count-ol-ol,".") ": ";
 }
 
@@ -573,6 +600,7 @@ a {
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
 			 url('./fonts/work-sans/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+}
 
 /* work-sans-800italic - latin */
 @font-face {
