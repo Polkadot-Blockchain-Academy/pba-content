@@ -72,35 +72,7 @@
 //! with abilities to mint, transfer and reserve, and a staking system on top of it. Additionally,
 //! we are asking you to add a basic tip and nonce system as well.
 //!
-//! ## Specification, Grading
-//!
-//! ### Grading
-//!
-//! Unlike `mini_substrate`, this assignment is primarily graded through a wasm executor, not by
-//! looking at the internals of your runtime. Manual grading is a small part. This means you should
-//! be very careful about adhering to the rules and specifications.
-//!
-//! Automatic Wasm grading means:
-//!
-//! * we do not care about the internal of your runtime, other than the standard set of runtime
-//!   apis.
-//! * but we do care about your storage layout being exactly as described in `mini_substrate`.
-//! * we do care about the extrinsic format being exactly as described in [`shared`].
-//! * our tests are fairly similar to `import_and_author_equal`. We construct a block, author it,
-//!   then import it, then assert that the process was correct, and finally add a number of
-//!   assertions about the state ourselves.
-//!
-//! While we can't force you not to change [`shared`] module, we use an exact copy of this file to
-//! craft extrinsics/blocks to interact with your runtime, and we expect to find the types mentioned
-//! in there (eg. [`shared::AccountBalance`]) to be what we decode from your storage.
-//!
-//! That being said, you can use types that are equivalent to their encoding to the ones mentioned
-//! in [`shared`].
-//!
-//! > Example: You are still free to use your more generic currency module from `mini_substrate`,
-//! > and as long as you correctly configure it to use [`shared::Balance`] as its balance type,
-//! > everything should work just fine. Remember that two _different types_ can have the _same
-//! > encoding_.
+//! ## Specification
 //!
 //! ### Dispatchables
 //!
@@ -145,12 +117,14 @@
 //!
 //! #### 2. Account Creation/Deletion
 //!
-//! An account that is destroyed should not be kept in storage with a value like
+//! An account that starts a transaction with non-zero `free` and `reserved`, but finishes it with
+//! equal to zero values for `free` and `reserved` (by `TransferAll` or equivalent) is notionally
+//! "destroyed". Such an account should not be kept in storage with a value like
 //! `Default::default()`. Instead, it should be removed from storage. This is crucial to save space
 //! in your blockchain.
 //!
-//! As a rule of thumb, you should avoid storing `Some(Default::default())` in your storage.
-//! Instead, simply remove them.
+//! In such cases, the nonce information is also forgotten. This is not how things work in a real
+//! blockchain, as it opens the door for replay attacks, but we keep it like this for simplicity.
 //!
 //! #### Nonce
 //!
@@ -217,6 +191,56 @@
 //!
 //! You should not need to change this API, but studying it will be fruitful.
 //!
+//! ## Grading
+//!
+//! This assignment is primarily graded through automatic tests, not by looking at the internals of
+//! your runtime. Manual grading is a small part. This means you should be very careful about
+//! adhering to the rules and specifications.
+//!
+//! Automatic Wasm grading means:
+//!
+//! * we do not care about the internals of your runtime, other than the standard set of runtime
+//!   apis.
+//! * we do not care if you derive some additional trait for some type anywhere.
+//! * but we do care about your storage layout being exactly as described in `mini_substrate`.
+//! * we do care about the extrinsic format being exactly as described in [`shared`].
+//! * our tests are fairly similar to `import_and_author_equal`. We construct a block, author it,
+//!   then import it, then assert that the process was correct, and finally add a number of
+//!   assertions about the state ourselves.
+//!
+//! While we can't force you not to change [`shared`] module, we use an exact copy of this file to
+//! craft extrinsics/blocks to interact with your runtime, and we expect to find the types mentioned
+//! in there (eg. [`shared::AccountBalance`]) to be what we decode from your storage.
+//!
+//! That being said, you can use types that are equivalent to their encoding to the ones mentioned
+//! in [`shared`].
+//!
+//! Our tests are consisted of 5 main modules:
+//!
+//! * basics: this set of tests only check that you can properly execute the [`shared::SystemCall`]
+//!   variants.
+//! * `block_builder` and `validate_transaction` apis: these tests check the return type of these
+//!   two runtime apis, excluding the details for tipping and nonce. They will use
+//!   [`shared::SystemCall`].
+//!
+//! If you implement the above two correctly, you will be granted a score of 1.
+//!
+//! * correct implementation of the currency and staking system.
+//!
+//! If you implement the above correctly, you will be granted a score of 2.
+//!
+//! * correct implementation of the tipping and nonce system.
+//!
+//! If you implement the above correctly, you will be granted a score of 3 or more.
+//!
+//! We expect all students to pass the pillars marked above in a linear fashion. In other words, we
+//! see it unlikely for you to be able to implement the currency system correctly, without
+//! implementing the basics first. Students who don't follow this pattern will be assessed on a
+//! case-by-case basis.
+//!
+//! > Given that this is the first time that this assignment is being auto-graded, you can request a
+//! > pre-submit from your each of your teachers at most once. This is subject to availability.
+//!
 //! ## Hints
 //!
 //! ### Block Authoring vs. Import
@@ -271,7 +295,7 @@
 //! If you let the former `--alice` node progress for a bit, you will see that `--bob` will start
 //! syncing from alice.
 //!
-//! ### OPTIONAL: `SignedExtensions`
+//! ### EXTRA/OPTIONAL: `SignedExtensions`
 //!
 //! What we have implemented in this extra as added fields to our [`shared::RuntimeCallExt`] should
 //! have ideally been implemented as a signed extension. In a separate branch, explore this, and ask
