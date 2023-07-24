@@ -26,7 +26,7 @@
 
 - FRAME-Less Activity
 
-## Day 2 (Wednesday)
+## Day 3 (Wednesday)
 
 ### Morning (~4 hours max)
 

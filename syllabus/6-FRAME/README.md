@@ -39,7 +39,7 @@
 
 ## Weekend
 
-- Complete Frameless Exercise
+- Complete FRAMEless Exercise
 
 ## Day 4 - Monday
 
