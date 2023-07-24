@@ -10,6 +10,7 @@ Draw content from:
 ## Lessons Overview
 
 ### Day 1 (Half Day)
+
 **Afternoon**
 
 Lecture - Introduction to Polkadot (1 hr) @rphmeier<br>
@@ -18,6 +19,7 @@ Coffee Break (15 m)<br>
 Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier<br>
 
 ### Day 2
+
 **Morning**
 
 Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff<br>
@@ -34,6 +36,7 @@ Coffee Break (15 m)<br>
 Exercise - Adder parachain + register parachains (1.5 hr) @JoshOrndorff<br>
 
 ### Day 3
+
 **Morning**
 
 Lecture - Cross-Chain Message Passing (45 m) @rphmeier<br>
@@ -50,7 +53,7 @@ Coffee Break (15 m)<br>
 Lecture - Polkadot vs Other Security/Scaling Part 2 (1 hr) @Sophia-Gold<br>
 Open discussion - Security/Scaling (remainder of day) @Sophia-Gold<br>
 
-Assumptions: 
+Assumptions:
 
 - Max instruction window 9:00-6:00 (Lunch from 1:00-1:45)
 - Assumes Rob is willing to present all four lectures he gave in Buenos Aires and that he is generally available from the 2nd to the 4th
@@ -60,6 +63,7 @@ Assumptions:
 - Assumes that Rob's lighter 45 m coverage of XCMP can replace Shawn's planned 1.5 hour XCMP lecture
 
 Lesson Plan Goals:
+
 - Satisfy lesson dependencies (EX: "Deep Dive: Execution Cores" must come after "Introduction to the Parachains Protocol")
 - Place exercise time between lectures wherever possible for student engagement
 - Don't schedule any two lectures back to back from the same presenter unless requested
