@@ -34,8 +34,10 @@ pub const VALUE_KEY: &[u8] = b"value";
 ///
 /// Hex: 0x686561646572
 pub const HEADER_KEY: &[u8] = b"header";
-/// Key used to store all extrinsics in a block. Should always remain at the end of the block, and
-/// be cleared at the beginning of the next block.
+/// Key used to store all extrinsics in a
+///
+/// block. Should always remain at the end of the block, and be cleared at the beginning of the next
+/// block.
 pub const EXTRINSICS_KEY: &[u8] = b"extrinsics";
 
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]

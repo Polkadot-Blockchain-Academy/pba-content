@@ -237,6 +237,17 @@ fn new_test_ext() -> TestExternalities {
 	TestExternalities::new_with_code(code, storage)
 }
 
+/*
+- basic + block_builder + validate => 1
+- currency + staking => 2
+- tipping + nonce => 3 or 4
+
+- if first 3 parts are failing, but the staking+currency is fine, we handle case by case.
+- lenience will be acceptable.
+
+TODO for Nuke: publish the solved mini_substrate.
+*/
+
 mod basics {
 	use super::*;
 	#[test]

@@ -1,4 +1,4 @@
-//! Welcome to the `Frameless` exercise, the third edition.
+//! Welcome to the `Frame-less` exercise, the third edition.
 //!
 //! > This assignment is based on Joshy's experiment, years ago, to explore building a Substrate
 //! > runtime using pure Rust. If you learn something new in this exercise, attribute it to his
@@ -9,8 +9,8 @@
 //!
 //! ## Context
 //!
-//! As the name suggest, this is Frameless runtime. It is a fully substrate-compatible runtime,
-//! which you can easily run with companion `node`, without using `frame`.
+//! As the name suggest, this is Frame-less runtime. It is a substrate-compatible runtime, which you
+//! can easily run with companion `node`, without using `frame`.
 //!
 //! To run the `node`, execute `cargo run -- --dev`, possibly with `--release`. `--dev` will ensure
 //! that a new database is created each time, and your chain starts afresh.
@@ -30,25 +30,29 @@
 //! 2. validate extrinsics for the tx-pool
 //! 3. finalize a block upon authoring
 //!
-//! are not complete. Your first task is to complete them to some extent, and make sure all local
-//! tests are passing. To do so, you won't need to alter tx-pool api yet, but you should provide a
-//! simple `apply_extrinsic`, and finish `finalize_block`.
+//! are not complete. Your first task is to complete them, and make sure all local tests are
+//! passing. provide a simple `apply_extrinsic`, and finish `finalize_block`. For this first
+//! section, you can leave the tx-pool api as-is.
 //!
-//! The third objective above will ensure that when you author blocks, you set the correct state
-//! root and extrinsics root in the block header. This makes the block be a valid import-able block.
-//! This test demonstrates this property:
+//! * For `apply_extrinsic`, start by only implementing [`shared::SystemCall::Set`] for now, this is
+//!   the only one used in tests.
+//! * For `finalize_block`, your main task is to obtain the `raw_header` that is placed onchain in
+//!   `initialize_block`, and to place a correct `state_root` and `extrinsics_root` in it.
+//!
+//! Fixing `finalize_block` makes the block be a valid import-able block. This test demonstrates
+//! this property:
 #![doc = docify::embed!("src/lib.rs", import_and_author_equal)]
 //!
 //! Also, if you run your chain with two nodes, you will be able to test this property. See Hints
 //! section below.
 //!
-//! As a part of both, you will realize that you are asked to implement proper signature checking.
-//! In this assignment, we are using the types from [`sp_runtime::generic`] (see [`shared`]).
-//! Studying these types and how the handle signatures within themselves should help you implement
-//! proper signature checking.
+//! You will soon realize that you are asked to implement proper signature checking. In this
+//! assignment, we are using the types from [`sp_runtime::generic`] (see [`shared`]). Studying these
+//! types and how the handle signatures within themselves should help you implement proper signature
+//! checking.
 //!
-//! All in all, your runtime should only work with signed extrinsics, and
-//! instantly reject unsigned (or badly signed) extrinsics. See the following tests:
+//! All in all, your runtime should only work with signed extrinsics, and instantly reject unsigned
+//! (or badly signed) extrinsics. See the following tests:
 #![doc = docify::embed!("src/lib.rs", bad_signature_fails)]
 //!
 #![doc = docify::embed!("src/lib.rs", unsigned_set_value_does_not_work)]
@@ -61,14 +65,12 @@
 //! > Most of [`shared::SystemCall`] instances are for you to use for learning. Try and upgrade your
 //! > chain using [`shared::SystemCall::Upgrade`]!
 //!
-//! TODO: prepare a diff for everything thus far to hand over at some point, or live code it. TODO:
-//! clear graph somewhere of the flow of import and authoring.
-//!
 //! ## Main Task
 //!
 //! Once you are done with the above, you can start your main objective, which is to re-implement
 //! everything you have done for `mini_substrate` here. That is, implement a simple currency system,
-//! with abilities to mint, transfer and reserve, and a staking system on top of it.
+//! with abilities to mint, transfer and reserve, and a staking system on top of it. Additionally,
+//! we are asking you to add a basic tip and nonce system as well.
 //!
 //! ## Specification, Grading
 //!
@@ -84,6 +86,9 @@
 //!   apis.
 //! * but we do care about your storage layout being exactly as described in `mini_substrate`.
 //! * we do care about the extrinsic format being exactly as described in [`shared`].
+//! * our tests are fairly similar to `import_and_author_equal`. We construct a block, author it,
+//!   then import it, then assert that the process was correct, and finally add a number of
+//!   assertions about the state ourselves.
 //!
 //! While we can't force you not to change [`shared`] module, we use an exact copy of this file to
 //! craft extrinsics/blocks to interact with your runtime, and we expect to find the types mentioned
@@ -133,8 +138,8 @@
 //! Failure to pay for fees is always a full failure of the extrinsic (similar to a failed signature
 //! check).
 //!
-//! Once the tip is deducted, it is added to the an account id specified by [`shared::TREASURY`].
-//! The same rules about account creation apply to this account as well.
+//! Once the tip is deducted, it is added to an account id specified by [`shared::TREASURY`]. The
+//! same rules about account creation apply to this account as well.
 //!
 //! Total issuance must be kept up to date in all of the cases above.
 //!
@@ -177,8 +182,8 @@
 //! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
 //!   [`sp_runtime::transaction_validity::InvalidTransaction::Payment`] if the extrinsic cannot pay
 //!   for its declared tip.
-//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Future`] or
-//!   `Stale` if the nonce is too high or too low.
+//! * Return `Err` with [`sp_runtime::transaction_validity::InvalidTransaction::Future`] or `Stale`
+//!   if the nonce is too high or too low.
 //!
 //! In all other cases, outer `Result` is `Ok`.
 //!
@@ -197,10 +202,10 @@
 //! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Invalid`] and
 //!   [`sp_runtime::transaction_validity::InvalidTransaction::Payment`] if the extrinsic cannot pay
 //!   for its declared tip.
-//! * Return `Err` with [`sp_runtime::transaction_validity::TransactionValidityError::Future`] or
-//!   `Stale` if the nonce is too high or too low.
+//! * Return `Err` with [`sp_runtime::transaction_validity::InvalidTransaction::Future`] or `Stale`
+//!   if the nonce is too high or too low.
 //!
-//! Moreover, if the signature and tip are valid, the
+//! Moreover, if tip is provided (and can paid at the time), the
 //! [`sp_runtime::transaction_validity::ValidTransaction::priority`] must be set to the tip value
 //! (use a simple saturated conversion if needed).
 //!
@@ -266,7 +271,7 @@
 //! If you let the former `--alice` node progress for a bit, you will see that `--bob` will start
 //! syncing from alice.
 //!
-//! ### Extra: `SignedExtensions`
+//! ### OPTIONAL: `SignedExtensions`
 //!
 //! What we have implemented in this extra as added fields to our [`shared::RuntimeCallExt`] should
 //! have ideally been implemented as a signed extension. In a separate branch, explore this, and ask
@@ -431,7 +436,7 @@ impl Runtime {
 		assert_eq!(block.header.state_root, state_root);
 
 		// check extrinsics root
-		let extrinsics = block.extrinsics.into_iter().map(|x| x.encode()).collect::<Vec<_>>();
+		let extrinsics = Self::get_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY).unwrap_or_default();
 		let extrinsics_root =
 			BlakeTwo256::ordered_trie_root(extrinsics, sp_runtime::StateVersion::V0);
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
@@ -449,14 +454,10 @@ impl Runtime {
 		info!(target: LOG_TARGET, "Entering apply_extrinsic: {:?}", ext);
 
 		// TODO: we don't have a means of dispatch, implement it! You probably want to match on
-		// `ext.call.function`, and start implementing different arms one at a time.
-		Self::solution_apply_extrinsic(ext.clone()).map(|outcome| {
-			// note the extrinsic
-			Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
-				current.push(ext.encode());
-			});
-			outcome
-		})
+		// `ext.call.function`, and start implementing different arms one at a time. Also, this is
+		// called from both authoring and importing. It should "note" any extrinsic that
+		// successfully executes in EXTRINSICS_KEY.
+		Self::solution_apply_extrinsic(ext.clone())
 		// Ok(Ok(()))
 	}
 
@@ -466,9 +467,12 @@ impl Runtime {
 		_block_hash: <Block as BlockT>::Hash,
 	) -> TransactionValidity {
 		log::debug!(target: LOG_TARGET,"Entering validate_transaction. tx: {:?}", ext);
-		// TODO: we don't have a means of validating, implement it!
+
 		Self::solution_validate_transaction(_source, ext, _block_hash)
-		// Ok(Default::default())
+		// TODO: we don't have a means of validating, implement it!
+		// NOTE: every transaction must provide _something_, we provide a dummy value here.
+		// Ok(sp_runtime::transaction_validity::ValidTransaction { provides: vec![ext.encode()],
+		// ..Default::default() })
 	}
 }
 
@@ -584,13 +588,20 @@ mod tests {
 	fn signed_set_value(value: u32, nonce: u32) -> Extrinsic {
 		let call = set_value_call(value, nonce);
 		let signer = sp_keyring::AccountKeyring::Alice;
-		let payload = (call).encode();
+		let payload = call.encode();
 		let signature = signer.sign(&payload);
 		Extrinsic::new(call, Some((signer.public(), signature, ()))).unwrap()
 	}
 
-	#[test]
+	/// Return the list of extrinsics that are noted in the `EXTRINSICS_KEY`.
+	fn noted_extrinsics() -> Vec<Vec<u8>> {
+		sp_io::storage::get(EXTRINSICS_KEY)
+			.and_then(|bytes| <Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).ok())
+			.unwrap_or_default()
+	}
+
 	#[docify::export]
+	#[test]
 	fn host_function_call_works() {
 		// this is just to demonstrate to you that you should always wrap any code containing host
 		// functions in `TestExternalities`.
@@ -599,8 +610,8 @@ mod tests {
 		})
 	}
 
-	#[test]
 	#[docify::export]
+	#[test]
 	fn encode_examples() {
 		// demonstrate some basic encodings. Example usage:
 		//
@@ -621,20 +632,24 @@ mod tests {
 		println!("value key = {:?}", HexDisplay::from(&VALUE_KEY));
 	}
 
-	#[test]
 	#[docify::export]
+	#[test]
 	fn signed_set_value_works() {
 		// A signed `Set` works.
 		let ext = signed_set_value(42, 0);
 		TestExternalities::new_empty().execute_with(|| {
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+			assert_eq!(noted_extrinsics().len(), 0);
+
 			Runtime::do_apply_extrinsic(ext).unwrap().unwrap();
+
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), Some(42));
+			assert_eq!(noted_extrinsics().len(), 1, "transaction should have been noted!");
 		});
 	}
 
-	#[test]
 	#[docify::export]
+	#[test]
 	fn bad_signature_fails() {
 		// A poorly signed extrinsic must fail.
 		let signer = sp_keyring::AccountKeyring::Alice;
@@ -651,11 +666,12 @@ mod tests {
 				TransactionValidityError::Invalid(InvalidTransaction::BadProof)
 			);
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
+			assert_eq!(noted_extrinsics().len(), 0, "transaction should have not been noted!");
 		});
 	}
 
-	#[test]
 	#[docify::export]
+	#[test]
 	fn unsigned_set_value_does_not_work() {
 		// An unsigned `Set` must fail as well.
 		let ext = unsigned_set_value(42);
@@ -667,12 +683,12 @@ mod tests {
 				TransactionValidityError::Invalid(InvalidTransaction::BadProof)
 			);
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), None);
-			todo!("assert here that this extrinsic has not been noted");
+			assert_eq!(noted_extrinsics().len(), 0);
 		});
 	}
 
-	#[test]
 	#[docify::export]
+	#[test]
 	fn validate_works() {
 		// An unsigned `Set` cannot be validated. Same should go for one with a bad signature.
 		let ext = unsigned_set_value(42);
@@ -692,9 +708,10 @@ mod tests {
 		});
 	}
 
-	#[test]
 	#[docify::export]
+	#[test]
 	fn import_and_author_equal() {
+		// a few dummy extrinsics.
 		let ext1 = signed_set_value(42, 0);
 		let ext2 = signed_set_value(43, 1);
 		let ext3 = signed_set_value(44, 2);
@@ -707,6 +724,7 @@ mod tests {
 			state_root: Default::default(),
 		};
 
+		// authoring a block:
 		let block = TestExternalities::new_empty().execute_with(|| {
 			Runtime::do_initialize_block(&header);
 			drop(header);
@@ -721,10 +739,8 @@ mod tests {
 				sp_io::storage::get(HEADER_KEY).is_none(),
 				"header must have been cleared from storage"
 			);
-			let extrinsics = sp_io::storage::get(EXTRINSICS_KEY)
-				.and_then(|bytes| <Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).ok())
-				.unwrap();
-			assert_eq!(extrinsics.len(), 3, "incorrect extrinsics recorded in state");
+			let extrinsics = noted_extrinsics();
+			assert_eq!(extrinsics.len(), 3, "incorrect extrinsics_key recorded in state");
 
 			let expected_state_root = {
 				let raw_state_root = &sp_io::storage::root(Default::default())[..];
@@ -745,6 +761,7 @@ mod tests {
 			Block { extrinsics: vec![ext1, ext2, ext3], header }
 		});
 
+		// now re-importing it.
 		TestExternalities::new_empty().execute_with(|| {
 			// This should internally check state/extrinsics root. If it does not panic, then we are
 			// gucci.

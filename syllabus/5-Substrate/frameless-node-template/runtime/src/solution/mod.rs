@@ -101,6 +101,10 @@ impl Runtime {
 		};
 
 		log::debug!(target: LOG_TARGET, "dispatched {:?}, outcome = {:?}", ext, dispatch_outcome);
+		// note the extrinsic
+		Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
+			current.push(ext.encode());
+		});
 
 		Ok(dispatch_outcome)
 	}

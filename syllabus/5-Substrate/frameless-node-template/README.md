@@ -5,4 +5,4 @@
 > 1. `./src/solution`
 > 2. `./tests`
 
-Run `cargo doc -p runtime --open`, and start hacking 🚀
+Run `cargo doc -p runtime --open --no-deps`, and start hacking 🚀
