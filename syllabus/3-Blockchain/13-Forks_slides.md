@@ -22,6 +22,7 @@ revealOptions:
 # Landscape
 
 ---v
+
 ## Landscape
 
 #### Ideal World
@@ -32,6 +33,7 @@ In an ideal world blockchains would look like this:
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/no_fork.drawio.svg" />
 
 ---v
+
 ## Landscape
 
 #### Real World
@@ -43,6 +45,7 @@ Things don't always go according to plan:
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_small.drawio.svg" />
 
 ---v
+
 ## Landscape
 
 #### Chaotic Real World
@@ -134,6 +137,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 ## Consensus Forks
 
 #### _Validity Set_
+
 <br>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/BTC_block.drawio.svg" />
 
@@ -142,15 +146,16 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 ## Consensus Forks
 
 #### _Validity Set_
+
 <br>
 <img style="width: 300px" src="../../assets/img/3-Blockchain/forks/BTC_header.drawio.svg" />
-
 
 ---v
 
 ## Consensus Forks
 
 #### _Validity Set_
+
 <br>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/BTC_header_constraints.drawio.svg" />
 
@@ -159,6 +164,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 ## Consensus Forks
 
 #### _Validity Set_
+
 <br>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set.drawio.svg" />
 
@@ -167,6 +173,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 ## Consensus Forks
 
 #### _Validity Set_
+
 <br>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/universal_set.drawio.svg" />
 
@@ -175,6 +182,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 ## Consensus Forks
 
 #### _Validity Set_
+
 <br>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set_old.drawio.svg" />
 
@@ -183,10 +191,12 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 ## Consensus Forks
 
 #### _Validity Set_
+
 <br>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set_new.drawio.svg" />
 
 ---v
+
 ## Consensus Forks
 
 #### _Validity Set_
@@ -274,7 +284,6 @@ Is decreasing or increasing blocksize a soft fork?
 		<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/soft_forks_s50.drawio.svg" />
     </pba-col>
 </pba-cols>
-
 
 ---v
 
@@ -364,6 +373,7 @@ Is decreasing or increasing blocksize a soft fork?
 </pba-cols>
 
 ---
+
 # Hard Forks
 
 ---v
@@ -376,6 +386,7 @@ Is decreasing or increasing blocksize a soft fork?
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_hard.drawio.svg" />
 
 ---v
+
 ## Fork Categorisation
 
 #### _Hard Forks_
@@ -396,6 +407,7 @@ Is decreasing or increasing blocksize a soft fork?
 </pba-cols>
 
 ---v
+
 ## Fork Categorisation
 
 #### _Hard Forks_
@@ -418,6 +430,7 @@ Is decreasing or increasing blocksize a soft fork?
 </pba-cols>
 
 ---v
+
 ## Fork Categorisation
 
 #### _Hard Forks_
@@ -433,6 +446,7 @@ Is decreasing or increasing blocksize a soft fork?
 </pba-cols>
 
 ---v
+
 ## Fork Categorisation
 
 #### _Hard Forks_
@@ -482,6 +496,7 @@ Is decreasing or increasing blocksize a soft fork?
 </pba-cols>
 
 ---v
+
 ## Fork Categorisation
 
 #### _Full Forks_
@@ -523,7 +538,6 @@ Is decreasing or increasing blocksize a soft fork?
 
 ## Summary
 
-
 <pba-cols>
     <pba-col>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_s50.drawio.svg" />
@@ -541,6 +555,7 @@ Is decreasing or increasing blocksize a soft fork?
 </pba-cols>
 
 Notes:
+
 - Bitcoin cash pivot from hard to full because they didn't have enough HP.
 - Soft are often preferred for changes because with >50%HP they do not fracture the community (BTC community logic)
 - Hard can be preferred as they seem to better represent minorities. If some people don't agree with the majority they naturally fork off and are not peer pressured to follow (ETH community logic)
@@ -552,4 +567,3 @@ Notes:
 ---
 
 <img style="width: 1800px" src="../../assets/img/3-Blockchain/forks/forks.drawio.svg" />
-

@@ -325,7 +325,7 @@ https://github.com/paritytech/substrate/issues/10413
 
 ## Big Picture: Pipeline of Extension
 
-<img rounded src="../../../assets/img/5-Substrate/dev-5-x-signed-extensions.svg" />
+<img rounded src="../../assets/img/5-Substrate/dev-5-x-signed-extensions.svg" />
 
 ---
 
