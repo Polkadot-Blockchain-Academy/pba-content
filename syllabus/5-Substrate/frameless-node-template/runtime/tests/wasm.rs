@@ -232,7 +232,6 @@ fn new_test_ext() -> TestExternalities {
 	let code_path =
 		std::option_env!("WASM_FILE").unwrap_or("../target/debug/wbuild/runtime/runtime.wasm");
 	log::info!(target: LOG_TARGET, "reading wasm file from {}", code_path);
-	println!("trying to read wasm path from {}", code_path);
 	let code = std::fs::read(code_path).unwrap();
 	let mut storage: sp_core::storage::Storage = Default::default();
 	storage
