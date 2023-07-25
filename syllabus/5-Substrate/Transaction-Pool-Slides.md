@@ -36,7 +36,19 @@ Let's take a closer look.
 
 ### Paths of a Transaction
 
-TODO figure of multiple nodes each with its own view of chain and pool
+<img src="./img/tx-pool/blockchain_p2p.svg" />
+
+Notes:
+Previously, in the blockchain module, we saw this figure.
+It points out that each node has its own view of the blockchain.
+Now I'll show you another layer of detail which is that each node also has its own transaction pool
+CLICK
+
+---v
+
+### Paths of a Transaction
+
+<img src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
 
 Notes:
 There are many paths a transaction can take from the user who signed it to a finalized block.
