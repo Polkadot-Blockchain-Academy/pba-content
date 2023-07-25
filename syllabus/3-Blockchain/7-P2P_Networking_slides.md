@@ -9,65 +9,245 @@ description: Peer-to-Peer (P2P) networking for Web3 engineers
 
 ## Introduction/Agenda
 
-- Discuss the network layer and network conditions that blockchains operate on(Mostly)
-- Talk about traditional web2 network overlays pros vs cons with web3 network overlays
-- Discuss attacks and how to address along with the underlying threat model
-- Libp2p
+- History of p2p networks <!-- .element: class="fragment" data-fragment-index="1" -->
+- Discuss the network layer and network conditions that blockchains operate on(Mostly) <!-- .element: class="fragment" data-fragment-index="2" -->
+- Talk about traditional web2 network overlays pros vs cons with web3 network overlays <!-- .element: class="fragment" data-fragment-index="3" -->
+- Discuss attacks and how to address along with the underlying threat model <!-- .element: class="fragment" data-fragment-index="4" -->
+
+---
+
+## ARPANET
+
+- First operational packet-switching network <!-- .element: class="fragment" data-fragment-index="2" -->
+- Developed in the late 1960s by DARPA(The Defense Advanced Research Projects Agency) <!-- .element: class="fragment" data-fragment-index="3" -->
+- Laid the foundation for the modern internet <!-- .element: class="fragment" data-fragment-index="4" -->
+
+Notes:
+
+Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA program aimed at developing technologies for mass surveillance and data analysis. The project raised concerns about privacy and civil liberties, eventually leading to its cancellation in 2003 due to public outcry.
+
+---
+
+## Packet Switching
+
+- Mode of data transmission in which a message is broken into a number of parts that are sent independently(Packets) <!-- .element: class="fragment" data-fragment-index="2" -->
+- Packets are sent over whatever route is optimal <!-- .element: class="fragment" data-fragment-index="3" -->
+- Packets are reassembled at the destination <!-- .element: class="fragment" data-fragment-index="4" -->
+
+---
+
+## Packet Switching
+
+<img src="img/message_packet.svg" alt="Packet Switching" style="width: 600px">
+
+Notes:
+Mention that headers contain some addressing, destination information, and ordering typically depending
+
+---
+
+## Packet Switching
+
+<img src="img/packet_switching_1.svg" alt="Packet Switching" style="width: 600px">
+
+---
+
+## Packet Switching
+
+<img src="img/packet_switching_2.svg" alt="Packet Switching" style="width: 600px">
+
+---
+
+## Packet Switching
+
+<img src="img/packet_switching_3.svg" alt="Packet Switching" style="width: 600px">
+
+---
+
+## Packet Switching
+
+<img src="img/packet_switching_4.svg" alt="Packet Switching" style="width: 600px">
+
+---
+
+## Peer-to-Peer (P2P) Networks
+
+- P2P is a decentralized form of network structure <!-- .element: class="fragment" data-fragment-index="2" -->
+- Unlike client-server model, all nodes (peers) are equal participants <!-- .element: class="fragment" data-fragment-index="3" -->
+- Data is shared directly between systems without a central server <!-- .element: class="fragment" data-fragment-index="4" -->
+- Peers contribute resources, including bandwidth, storage space, and processing power <!-- .element: class="fragment" data-fragment-index="5" -->
+
+---
+
+## Historical P2P applications
+
+Notes:
+
+Napster, Limewire
+
+---
+
+## Napster
+
+- Launched in 1999, popular P2P platform <!-- .element: class="fragment" data-fragment-index="2" -->
+- Central server for indexing, P2P for transfers <!-- .element: class="fragment" data-fragment-index="3" -->
+- Shutdown in 2001 due to legal issues <!-- .element: class="fragment" data-fragment-index="4" -->
+
+Notes:
+
+Napster's story is closely tied with the band Metallica.
+In 2000, Metallica discovered that a demo of their song "I Disappear" was being circulated via Napster before its official release.
+This led to Metallica filing a lawsuit against Napster for copyright infringement.
+Napster had to comply by banning hundreds of thousands of users from their platform who were sharing Metallica's music.
+This was a turning point in digital copyright law and played a significant role in Napster's eventual shutdown in 2001.
+
+---
+
+## Napster Setup
+
+<img src="img/napster_1.svg" alt="Napster Setup" style="width: 600px">
+
+---
+
+## Napster Setup
+
+<img src="img/napster_2.svg" alt="Napster Setup" style="width: 600px">
+
+---
+
+## Napster Setup
+
+<img src="img/napster_3.svg" alt="Napster Setup" style="width: 600px">
+
+---
+
+## Napster Setup
+
+<img src="img/napster_4.svg" alt="Napster Setup" style="width: 600px">
+
+---
+
+## Gnutella(Limewire)
+
+- Each node serves as both a client and a server no central server <!-- .element: class="fragment" data-fragment-index="2" -->
+- Query all connected nodes for files <!-- .element: class="fragment" data-fragment-index="3" -->
+- Gain peer connections to the network via Bootnodes <!-- .element: class="fragment" data-fragment-index="4" -->
+- Ordered to shutdown in 2010 by United States Court <!-- .element: class="fragment" data-fragment-index="5" -->
+
+Notes:
+
+- Check local filestore for file and if it is not available, forward the request to all connected peers.
+- Gnutella generates a significant amount of network traffic by flooding the network with requests.
+
+---
+
+<section>
+    <h2>Client-Server vs Peer-to-Peer (P2P) Networks</h2>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Client-Server Network</th>
+                <th>P2P Network</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="fragment">
+                <td>Structure</td>
+                <td>Centralized: One or more central servers control the network</td>
+                <td>Decentralized: All nodes (peers) participate equally</td>
+            </tr>
+            <tr class="fragment">
+                <td>Data Flow</td>
+                <td>Server provides data to clients</td>
+                <td>Peers directly share data with each other</td>
+            </tr>
+            <tr class="fragment">
+                <td>Resource Management</td>
+                <td>Servers manage resources and control access</td>
+                <td>Peers contribute resources including bandwidth, storage space, and processing power</td>
+            </tr>
+            <tr class="fragment">
+                <td>Scalability</td>
+                <td>Can be limited by server capacity</td>
+                <td>Highly scalable due to the distribution of resources</td>
+            </tr>
+            <tr class="fragment">
+                <td>Security</td>
+                <td>Centralized security measures, single point of failure</td>
+                <td>Potential for some security issues, malware(Depending on how it is implemented)</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 ---
 
 ## Centralized vs Decentralized Networks
 
+<img src="img/client_server_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
+
 Notes:
 
-2.) Not all p2p clients must run the same software they can develop their own (BTC, Ethereum etc...) Further decentralization.
+Talk about how when a partition happens in P2P vs Centralized.
+In p2p, only one node needs to have a full copy in order for the file to be able to be distributed across the network.
+
+---
+
+## Centralized vs Decentralized Networks
+
+<img src="img/client_server_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
+
+---
+
+## Centralized vs Decentralized Networks
+
+<img src="img/p2p_topology_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
+
+---
+
+## Centralized vs Decentralized Networks
+
+<img src="img/p2p_topology_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
 
 ---
 
 ## Advantages to Decentralized Networks
 
-- No privileged nodes
-- Less bottlenecks with bandwidth
-- DOS resistent
-- No centralized infrastructure necessary(Except internet for now...)
+- No privileged nodes <!-- .element: class="fragment" data-fragment-index="2" -->
+- Less bottlenecks with bandwidth <!-- .element: class="fragment" data-fragment-index="3" -->
+- DOS resistant <!-- .element: class="fragment" data-fragment-index="4" -->
+- No centralized infrastructure necessary (Except internet for now...) <!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 
-1. No single node or nodes(CDN) have access to all of the content or files or is critical for operating the network. Each node has a copy of the data.
-1. No central node carrying all of the load of traffic. Block production and Block peering/importing can be mentioned here
-1. Difficult to overload the network or DOS (Not single node is privileged)
-1. Although many nodes are run on Centralized cloud compute platforms they don't have to be(Typically)
+1. No single node or nodes (CDN) have access to all of the content or files or is critical for operating the network.
+   Each node has a copy of the data.
+1. No central node carrying all of the load of traffic.
+   Block production and Block peering/importing can be mentioned here.
+1. Difficult to overload the network or DOS (Not a single node is privileged).
+1. Although many nodes are run on Centralized cloud compute platforms, they don't have to be (Typically).
 
 ---
 
 ## Difficulties or Disadvantages
 
-- Since it is permissionless a node can share malicious resources
-- Latency
-- Difficult to regulate illicit activity
-- The network is limited by nodes with the weakest hardware
+- Since it is permissionless, a node can share malicious resources <!-- .element: class="fragment" data-fragment-index="2" -->
+- Latency <!-- .element: class="fragment" data-fragment-index="3" -->
+- Difficult to regulate illicit activity <!-- .element: class="fragment" data-fragment-index="4" -->
+- The network is limited by nodes with the weakest hardware <!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 
-2. Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection mention finality time!
-3. No central point to go and snoop all users data(for better or for worse)
-4. Why we have hardware requirements for blockchain networks
-
----
-
-## Initial Discovery
-
-- Bootnode/bootnodes (More on this later in Substrate)
-
-Notes:
-
-1.) Must know someone who is participating in the network initially(Bootnode)
+1. Latency may be an issue if we need to wait for many peers to receive the data produced from a single node since everyone may not have a direct connection.
+   Mention finality time!
+1. No central point to go and snoop all users data (for better or for worse).
+1. Why we have hardware requirements for blockchain networks.
 
 ---
 
 ## Gossip Protocol
 
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-1.svg" />
+<img style="width: 500px" src="img/3.7-p2p-gossip-1.svg" />
 
 Notes:
 
@@ -77,7 +257,7 @@ Notes:
 
 ## Gossip Protocol
 
-<img style="width: 85s0px" src="../../assets/img/3-Blockchain/3.7-p2p-gossip-2.svg" />
+<img style="width: 85s0px" src="img/3.7-p2p-gossip-2.svg" />
 
 Notes:
 
@@ -85,38 +265,69 @@ Talk about advertising vs just blind sending and how that can be inefficient
 
 ---
 
-## Discovery
-
-<pba-flex center>
-
-1. Connect to a peer
-1. Ask peer for a list of their known nodes(Addresses to fill DHT)
-1. Connect to random subset of peers from the list
-1. Repeat steps 2 and 3
-
-</pba-flex>
+<section>
+    <h2>Structured vs Unstructured P2P Networks</h2>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Structured P2P Networks</th>
+                <th>Unstructured P2P Networks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="fragment">
+                <td>Organization</td>
+                <td>Nodes are organized following specific protocols and structures (like Distributed Hash Tables)</td>
+                <td>Nodes are connected in an ad-hoc manner without any particular organization</td>
+            </tr>
+            <tr class="fragment">
+                <td>Search Efficiency</td>
+                <td>Efficient search operations due to structured nature</td>
+                <td>Search operations may be less efficient and can involve flooding the network</td>
+            </tr>
+            <tr class="fragment">
+                <td>Flexibility</td>
+                <td>Less flexible as changes in topology require restructuring</td>
+                <td>Highly flexible as nodes can freely join, leave, and reorganize</td>
+            </tr>
+            <tr class="fragment">
+                <td>Privacy</td>
+                <td>Data location is predictable due to structured organization</td>
+                <td>Greater potential for anonymity</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 ---
 
-## Partitions
+## Discovery
 
-<img style="width: 600px" src="../../assets/img/3-Blockchain/3.7-p2p-partition.svg" />
+1. Connect to a peer <!-- .element: class="fragment" data-fragment-index="2" -->
+1. Ask peer for a list of their known nodes <!-- .element: class="fragment" data-fragment-index="3" -->
+1. Connect to random subset of peers from the list <!-- .element: class="fragment" data-fragment-index="4" -->
+1. Repeat steps 2 and 3 <!-- .element: class="fragment" data-fragment-index="5" -->
 
-Notes:
+---
 
-Talk about how when a partition happens in P2P vs Centralized
-In p2p only one node needs to have a full copy in order for the file to
-be able to be distributed across the network
-
----v
-
-## Partitions
-
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-partition2.svg" />
+## Applications
 
 Notes:
 
-1. This is horrible and means all nodes are totally screwed
+1. What are some of the types of applications that lend themselves to this kind of network topology? Can anyone think of any?
+1. File sharing(Music)?
+1. Messaging and communication?
+
+---
+
+## Initial Discovery
+
+- Bootnode/bootnodes (More on this later in Substrate)
+
+Notes:
+
+1. Must know someone who is participating in the network initially(Bootnode)
 
 ---
 
@@ -124,279 +335,51 @@ Notes:
 
 Notes:
 
-Show picture of something scary and devious here
+- Can anyone think of a way to exploit some of these networks?
+- What would be some things to try to take advantage of?
 
----v
+---
 
-## Eclipse Attack
+## Attacks
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/3.7-p2p-eclipse-topology.svg" />
+<img style="width: 600px" src="img/eclipse_attack_1.svg"/>
 
 Notes:
 
 1. Distorts view of the healthy normal honest state of the network
 1. Transaction confirmations can be fictions
 
----v
+---
+
+## Attacks
+
+<img style="width: 600px" src="img/eclipse_attack_2.svg"/>
+
+---
 
 ## Eclipse Attack Execution
 
-<pba-flex center>
+1. Flood a target node with a bunch of malicious peer addresses <!-- .element: class="fragment" data-fragment-index="2" -->
+1. The targeted node then stores these malicious peers and utilizes them when re-syncing on next bootup <!-- .element: class="fragment" data-fragment-index="3" -->
+1. DOS targeted node to take it offline to force a resync with these new malicious peers <!-- .element: class="fragment" data-fragment-index="4" -->
 
-1. Flood a target node with a bunch of malicious peer addresses
-1. The targeted node then stores these malicious peers and utilizes them when re-syncing on next bootup
-1. DOS targeted node to take it offline to force a resync with these new malicious peers
-
-</pba-flex>
-
----v
+---
 
 ## Preventing Attacks
 
-<pba-flex center>
-
-- Restrict inbound connections in some way
-- Random selection of peers to connect with
-- Deterministic node selection. (Bootnodes)
-- Restricting new nodes (Probably not what we want...)
-
-</pba-flex>
+- Restrict inbound connections in some way <!-- .element: class="fragment" data-fragment-index="2" -->
+- Random selection of peers to connect with <!-- .element: class="fragment" data-fragment-index="3" -->
+- Deterministic node selection (Bootnodes) <!-- .element: class="fragment" data-fragment-index="4" -->
+- Restricting new nodes (Probably not what we want...) <!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 
 1. Be wary of new connections with other nodes
-   <br/>
 1. Don't just take the most recent request for connections to avoid the flooding
-   <br/>
-1. Bootnodes with higher credibility and trust (Can be a bottleneck) - Rotate bootnodes they are subject as well to attacks and should be rotated
+1. Bootnodes with higher credibility and trust (Can be a bottleneck) - Rotate bootnodes as they are also subject to attacks
 
 ---
 
-## libp2p
+## Conclusion
 
-<pba-flex center>
-
-- Toolbox for developing systems built on top of the p2p networking
-- Simply put helpful in establishing encrypted and authenticated channels between two peers
-
-</pba-flex>
-
-Notes:
-
-What is libp2p
-
----
-
-## Addressing(MultiAddress)
-
-<pba-flex center>
-
-- Generalization of an IP
-- Multiaddress is to an IP address what a transport is to TCP/IP
-- EX
-- `/ip4/127.0.0.1/tcp/30333`
-- `/dns/example.com/udp/5015/quic`
-- `/ip6/fe80::0202:b3ff:fe1e:8329/tcp/10350/ws`
-
-</pba-flex>
-
-Notes:
-
-Show example here, it is important for looking at chain-spec
-
----
-
-## Protocols<br/>(Generic Protocol Negotiation)
-
-- You can change your encryption protocol via the protocol negotiation!
-- Ping
-- Identify
-
-Notes:
-
-1. ProtocolIds to differentiate
-   <br/>
-1. Health checks to check the liveness of a node is it even online?
-   <br/>
-1. Peers exchange information about each other such as public keys and known addresses
-
----
-
-## KAD-DHT
-
-- Simply put a hash table containing a set of data entries these data entries are distributed across the network
-- There is no central registry where to obtain everything
-- When we want some piece of data offered by the network we search for its distance to specific peers
-
----v
-
-## DHT Operations in libp2p
-
-- `FIND_NODE`: given a key, find the closest nodes to the key
-- `PUT_VALUE`: add a `key-value` mapping to the DHT
-- `GET_VALUE`: given a key, retrieve the value
-- `ADD_PROVIDERS`: advertising in the network that a peer is providing a given key
-- `GET_PROVIDERS`: finding out what peers can provide the value for a specified key
-
----v
-
-## Example Findkey(k=Block45)
-
-<img style="width: 500px" src="../../assets/img/3-Blockchain/3.7-p2p-find-node-libp2p.svg" />
-
----
-
-## Peers
-
-```rust
-// PeerId
-/ip4/7.7.7.7/tcp/4242/p2p/QmYyQSo1c1Ym7orWxLYvCrM2EmxFTANf8wXmmE7DWjhx5N
-```
-
-```rust
-// PeerInfo
-struct Peerinfo<PeerId, Others> {
-    peer_id: PeerId,
-    other_multiaddresses: Others // Others is a type which is a Set
-}
-
-// PeerStore
-```
-
-Notes:
-
-1. You can encapsulate a p2p address into a new multi address to provide enough info to dial a peer over TCP!
-   <br/>
-1. Set of multiaddresses a particular peer is listening on
-   <br/>
-1. Table of peer keys and addresses and associated metadata like an address book. Universal multiaddress book.
-
----
-
-## Transports
-
-<pba-flex center>
-
-- TCP
-- UDP
-- QUIC and more...
-
-</pba-flex>
-
-Notes:
-
-2. Generally for p2p connections we need ordering though so UDP alone doesn't work for everything
-   <br/>
-3. Ordering built on udp
-
----
-
-## Stream Multiplexing
-
-Notes:
-
-Very Brief overview.
-
----
-
-## Security and Maliciousness
-
-From Game theory...<br/>
-Just because a particular type of attack is theoretically possible/feasible does not mean that it is practical...
-
----v
-
-## Identity and Trust
-
-<pba-flex center>
-
-- Every node has an public private key pair or `PeerId`.
-- Authorization is NOT default.
-
-</pba-flex>
-
-Notes:
-
-1. Allows to verify who we are talking too.
-1. Some systems may not require any authorization from a peer you can think of this as a tuning on permission...
-
----v
-
-## Reputation systems
-
-<pba-flex center>
-
-- Blacklist IP
-- Duplicate messages
-- Connections with high reputation nodes,<br/>_Any issues with this?_
-
-</pba-flex>
-
-Notes:
-
-1. Identify bad actors we use reputation in Substrate
-1. People may be malicious and spam us with duplicate data
-1. Try to maintain connections with the nodes that have the highest reputation (With some randomness to allow new nodes to join)
-
----
-
-## DOS
-
-<pba-flex center>
-
-- KAD-DHT are vulnerable to sybil attacks.
-- Querying
-- Targeting of specific keys(Block 42)
-- Do this by generating Ids close to the target key based on the DHT distance metric
-
-</pba-flex>
-
-Notes:
-
-2.) A DHT query may need to be routed through several peers before the query is fulfilled.(Those peers can be malicious and attempt to lie)
-
-3.) If a malicious actor wants to target a specific key they can improve their chances of being in the lookup path. By spinning up nodes next to the nodes providing a specific key based on the DHT distance metric
-
----v
-
-## Sybil Attacks
-
-<pba-flex center>
-
-- Sybil attacks are hard to defend against and<br/>precautions can be taken at the application level to mitigate<br/>
-  (Proof of work perhaps?)
-
-</pba-flex>
-
-Notes:
-
-1. So even though we might be receiving malicious blocks we can identify that by verifying that block is valid and edit reputation accordingly
-
----v
-
-## S/Kademlia paper in libp2p
-
-<pba-flex center>
-
-- Query multiple disjoint lookup paths<br/>
-  (Paths which don't share any routing peers)<br/>
-  _in parallel_
-
-</pba-flex>
-
----
-
-## Additional Resources
-
-<pba-flex center>
-
-- https://curriculum.pl-launchpad.io/curriculum/libp2p/
-- https://docs.libp2p.io/concepts/
-
-</pba-flex>
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
+P2P networks offer us a path forward towards applications which are more decentralized and censorship resilient

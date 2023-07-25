@@ -131,7 +131,7 @@ Block authors will normally choose the set of transactions that would yield the 
 
 ## Bitcoin Fee Market
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/3.3-fees-bitcoin-average-fee.png" />
+<img style="width: 800px" src="img/3.3-fees-bitcoin-average-fee.png" />
 
 Notes:
 
@@ -175,11 +175,11 @@ If it runs out of gas, it terminates the program.
 
 ## Gas Rates
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/3.3-fees-ethereum-average-gas-price.png" />
+<img style="width: 800px" src="img/3.3-fees-ethereum-average-gas-price.png" />
 
 Notes:
 
-[Source: Etherscan](https://etherscan.io/chart/gasprice)
+[Source: Etherscan](https://etherscan.io/chart/gasprice) <!-- markdown-link-check-disable-line -->
 
 ---
 

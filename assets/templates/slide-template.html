@@ -37,14 +37,10 @@
 <body class="site">
   <header class="site-header">
     <!-- This logo is a link only on the watching server, not the production build -->
-    {{#watch}}
     <a href="{{{absoluteUrl}}}">
-      {{/watch}}
       <img style="height: 2.5vw;" class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/pba-logo-white.svg"
-      alt="PBA Logo">
-      {{#watch}}
+        alt="PBA Logo">
     </a>
-    {{/watch}}
   </header>
   <main class="reveal">
     <article class="slides">
@@ -59,6 +55,15 @@
   <script src="{{{base}}}/plugin/zoom/zoom.js"></script>
   <script src="{{{base}}}/plugin/notes/notes.js"></script>
   <script src="{{{base}}}/plugin/math/math.js"></script>
+
+  <script src="{{{base}}}/assets/plugin/mermaid.js"></script>
+  <script src="{{{base}}}/assets/plugin/mermaid-theme.js"></script>
+
+  <script src="{{{base}}}/assets/plugin/chart/chart.js"></script>
+  <script src="{{{base}}}/assets/plugin/chart/chart.min.js"></script>
+
+  <script src="{{{base}}}/assets/plugin/tailwindcss.min.js"></script>
+
   <script>
     function extend() {
       var target = {};
@@ -81,12 +86,39 @@
       center: true,
       transition: 'default', // none/fade/slide/convex/concave/zoom
       slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
       plugins: [
         RevealMarkdown,
         RevealHighlight,
         RevealZoom,
         RevealNotes,
-        RevealMath
+        RevealMath,
+        RevealMermaid,
+        RevealChart
       ]
     };
 
