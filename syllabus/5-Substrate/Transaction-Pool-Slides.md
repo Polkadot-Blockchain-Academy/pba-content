@@ -128,6 +128,7 @@ We won't go deeply into the mechanism, but validators can specify alternate wasm
 
 * Make fast pre-checks
 * Determine whether the transaction is ready now or may be ready in the future
+* Determine a dependency graph among the transactions
 * Give the transaction a priority
 
 ---v
