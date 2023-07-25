@@ -156,14 +156,18 @@ We won't go deeply into the mechanism, but validators can specify alternate wasm
 ## Jobs of the API
 
 * Make fast pre-checks
+* Give the transaction a priority
 * Determine whether the transaction is ready now or may be ready in the future
 * Determine a dependency graph among the transactions
-* Give the transaction a priority
 
 Notes:
 
 So we spoke earlier about the jobs of a transaction pool in general.
+Specifically the pre-checks and the priority
 Here is a more specific list of tasks that Substrate's TaggedTransactionPool does.
+
+The second two points are the new additions, and they are the duty of the "tags" after which the tagged transaction queue is named.
+
 The results of all of this are returned to the client side through a shared type `ValidTransaction` or `InvalidTransaction`
 
 ---v
@@ -182,6 +186,32 @@ pub struct ValidTransaction {
 
 [`ValidTransaction` Rustdocs](https://paritytech.github.io/substrate/master/sp_runtime/transaction_validity/struct.ValidTransaction.html)
 
+Notes:
+We indicate that the transaction passes the prechecks at all by returning this valid transaction struct.
+If it weren't even valid, we would return a different, `InvalidTransaction` struct.
+You learned yesterday how to navigate the rustdocs to find the docs on that one.
+
+Priority we've discussed.
+It is worth noting that the notion of priority is intentionally opaque to the client.
+The runtime may assign this value however it sees fit.
+
+Provides and requires all forming a dependency graph between the transactions.
+Requires is a list of currently unmet dependency transactions.
+This transaction will be ready in a future where these dependencies are met so it is kept in the pool.
+
+A simple intuitive example of this is payments.
+Image alice pays bob some tokens in transaction1.
+Then bob pays those same tokes to charlie in transaction2.
+trasnaction2 will be valid only after transaction1 has been applied.
+It is a dependency.
+
+Longevity is a field I'm not so familiar with.
+It is how long the transaction should stay in the pool before being dropped or re-validated.
+TODO what are the units? How does one set it?
+
+And finally whether the transaction should be gossiped.
+This is usually true.
+Only in special edge cases would this be false.
 
 ---v
 
