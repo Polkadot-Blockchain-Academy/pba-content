@@ -69,21 +69,38 @@ There is periodic re-validation if transactions have been in the pool for a long
   * Fee per blockspace
 * This is all off-chain
 
+Notes:
+
+There are a few more things the Substrate tx pool does too, and we will look at them in detail soon.
+
 ---
 
 ## Tx Pool Runtime Api
 
-TODO paste trait definition
+```rust
+pub trait TaggedTransactionQueue<Block: BlockT>: Core<Block> {
+    fn validate_transaction(
+        &self,
+        __runtime_api_at_param__: <Block as BlockT>::Hash,
+        source: TransactionSource,
+        tx: <Block as BlockT>::Extrinsic,
+    ) -> Result<TransactionValidity, ApiError> { ... }
+}
+```
+
+[`TaggedTransactionQueue` Rustdocs](https://paritytech.github.io/substrate/master/sp_transaction_pool/runtime_api/trait.TaggedTransactionQueue.html)
 
 Notes:
 
 This is another runtime api, similar to the block builder and the core that are used for creating and importing blocks.
+Like most others, it requires that the Core api also be implemented.
+
 This one is slightly different in that it is actually called from off-chain, and is not part of your STF.
 So let's talk about that for a little bit.
 
 ---v
 
-### slide title
+### Runtime vs STF
 
 <img src="./img/tx-pool/peter-parker-glasses-off.png" />
 
@@ -94,7 +111,7 @@ It is nearly true.
 
 ---v
 
-### slide title
+### Runtime vs STF
 
 <img src="./img/tx-pool/peter-parker-glasses-on.png" />
 
@@ -106,9 +123,9 @@ But as we can see here, when we put our glasses on, actually only some of the ap
 
 ## Why is pool logic in the runtime?
 
-* Types are upgradable
-* Transactions are upgradeable
-* If you want to prioritize transactions, you need to understand the transaction
+* Transaction type is Opaque
+* Runtime logic is opaque
+* You must understand the transaction to prioritize it
 
 Notes:
 
@@ -131,9 +148,32 @@ We won't go deeply into the mechanism, but validators can specify alternate wasm
 * Determine a dependency graph among the transactions
 * Give the transaction a priority
 
+Notes:
+
+So we spoke earlier about the jobs of a transaction pool in general.
+Here is a more specific list of tasks that Substrate's TaggedTransactionPool does.
+The results of all of this are returned to the client side through a shared type `ValidTransaction` or `InvalidTransaction`
+
 ---v
 
-### Example 1: A nonce-based account system
+### `ValidTransaction`
+
+```rust
+pub struct ValidTransaction {
+    pub priority: TransactionPriority,
+    pub requires: Vec<TransactionTag>,
+    pub provides: Vec<TransactionTag>,
+    pub longevity: TransactionLongevity,
+    pub propagate: bool,
+}
+```
+
+[`ValidTransaction` Rustdocs](https://paritytech.github.io/substrate/master/sp_runtime/transaction_validity/struct.ValidTransaction.html)
+
+
+---v
+
+### Example 1: Nonced Account System
 
 TODO what to show on slide
 
@@ -144,7 +184,7 @@ provides this nonce for this account
 
 ---v
 
-### Example 3: A UTXO system
+### Example 2: UTXO System
 
 TODO what to show on slide
 
