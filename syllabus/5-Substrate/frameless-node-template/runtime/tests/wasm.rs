@@ -229,12 +229,15 @@ fn executor_call(t: &mut TestExternalities, method: &str, data: &[u8]) -> Result
 
 fn new_test_ext() -> TestExternalities {
 	sp_tracing::try_init_simple();
-	let code = include_bytes!("../../target/debug/wbuild/runtime/runtime.wasm");
+	let code_path =
+		std::option_env!("WASM_FILE").unwrap_or("../target/debug/wbuild/runtime/runtime.wasm");
+	log::info!(target: LOG_TARGET, "reading wasm file from {}", code_path);
+	let code = std::fs::read(code_path).unwrap();
 	let mut storage: sp_core::storage::Storage = Default::default();
 	storage
 		.top
 		.insert(sp_core::storage::well_known_keys::CODE.to_vec(), code.to_vec());
-	TestExternalities::new_with_code(code, storage)
+	TestExternalities::new_with_code(&code, storage)
 }
 
 /*

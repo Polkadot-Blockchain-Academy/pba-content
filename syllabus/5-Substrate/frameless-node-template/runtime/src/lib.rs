@@ -623,6 +623,19 @@ mod tests {
 			.unwrap_or_default()
 	}
 
+	#[test]
+	fn does_it_print() {
+		// runt this with `cargo test does_it_print -- --nocapture`
+		println!("Something");
+	}
+
+	#[test]
+	fn does_it_log() {
+		// run this with RUST_LOG=frameless=trace cargo test -p runtime does_it_log
+		sp_tracing::try_init_simple();
+		log::info!(target: LOG_TARGET, "Something");
+	}
+
 	#[docify::export]
 	#[test]
 	fn host_function_call_works() {
