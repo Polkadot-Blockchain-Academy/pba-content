@@ -215,7 +215,18 @@ Only in special edge cases would this be false.
 
 ---v
 
-### Example 1: Nonced Account System
+### Example 1: UTXO System
+
+<img src="./img/tx-pool/utxo.svg" />
+
+Notes:
+Prioritize by implicit tip (difference of inputs and outputs)
+Requires all missing input transactions
+provides this input
+
+---v
+
+### Example 2: Nonced Account System
 
 <img src="./img/tx-pool/accounts.svg" />
 
@@ -224,16 +235,9 @@ Prioritize by explicit tip
 Requires all previous nonces for this account
 provides this nonce for this account
 
----v
-
-### Example 2: UTXO System
-
-<img src="./img/tx-pool/utxo.svg" />
-
-Notes:
-Prioritize by implicit tip (difference of inputs and outputs)
-Requires all missing input transactions
-provides this input
+This demonstrates one of the biggest downsides of the Accounts system.
+Transactions cannot deterministically specify the initial state on which they operate.
+There is only an inherent ordering between transactions from the same account.
 
 ---v
 
