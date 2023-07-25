@@ -1297,7 +1297,7 @@ Now that we know that transparent hashers are extremely useful, there are really
 <div class="flex-container">
 <div class="left">
 
-<img src="../../assets/img/5-Substrate/unbalanced-tree.svg" />
+<img src="../../../assets/img/5-Substrate/unbalanced-tree.svg" />
 
 </div>
 <div class="right">

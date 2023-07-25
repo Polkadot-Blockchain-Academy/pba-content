@@ -2,7 +2,7 @@ use self::storage::{StorageMap, StorageValue};
 use crate::{
 	shared::{
 		AccountId, Balance, Block, CurrencyCall, Extrinsic, RuntimeCall, StakingCall, SystemCall,
-		EXTRINSICS_KEY, MINIMUM_BALANCE, MINTER, TREASURY, VALUE_KEY,
+		EXTRINSICS_KEY, MINIMUM_BALANCE, SUDO, TREASURY, VALUE_KEY,
 	},
 	Runtime, LOG_TARGET, VERSION,
 };
@@ -14,7 +14,7 @@ use sp_runtime::{
 	transaction_validity::{
 		InvalidTransaction, TransactionSource, TransactionValidityError, ValidTransaction,
 	},
-	ApplyExtrinsicResult, DispatchOutcome,
+	ApplyExtrinsicResult, DispatchError, DispatchOutcome,
 };
 use sp_std::prelude::*;
 
@@ -33,7 +33,7 @@ pub trait Get<T> {
 pub struct Minter;
 impl Get<AccountId> for Minter {
 	fn get() -> AccountId {
-		AccountId::unchecked_from(MINTER)
+		AccountId::unchecked_from(SUDO)
 	}
 }
 
@@ -86,6 +86,13 @@ impl Runtime {
 				Ok(())
 			},
 			RuntimeCall::System(SystemCall::Remark { data: _ }) => Ok(()),
+			RuntimeCall::System(SystemCall::SudoRemark { data: _ }) => {
+				if sender == AccountId::unchecked_from(SUDO) {
+					Ok(())
+				} else {
+					Err(DispatchError::BadOrigin)
+				}
+			},
 			RuntimeCall::System(SystemCall::Upgrade { code }) => {
 				sp_io::storage::set(sp_core::storage::well_known_keys::CODE, &code);
 				Ok(())
