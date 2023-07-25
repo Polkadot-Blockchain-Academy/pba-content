@@ -14,3 +14,7 @@
 
 # direnv cache
 .direnv
+
+.vscode
+
+.git

@@ -77,7 +77,7 @@ Signatures provide many useful properties:
 - Integrity: Yes
 - Non-repudiation: Yes
 
-Note:
+Notes:
 
 If a hash is signed, you can prove a signature is valid _without_ telling anyone the actual message that was signed, just the hash.
 
