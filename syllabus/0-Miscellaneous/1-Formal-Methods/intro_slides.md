@@ -1,8 +1,7 @@
 ---
-title: Formal Methods for Rust 
+title: Formal Methods for Rust
 description: Introduction to the Guest Lecture on formal methods for Rust verification.
 duration: 60 minutes
-
 ---
 
 # Formal Methods for Rust
@@ -11,23 +10,18 @@ duration: 60 minutes
 
 ## Outline
 
-<!--
-Outline
-TODO: add links 
--->
-
 <pba-flex center>
 
 1. Intro to Formal Methods
 1. Landscape of Techniques for Rust
-1. Focus on Kani: Bounded Model Checker 
-1. Applications to Polkadot 
+1. Focus on Kani: Bounded Model Checker
+1. Applications to Polkadot
 
 </pba-flex>
 
 ---
 
-##  Introduction to Formal Methods 
+## Introduction to Formal Methods
 
 #### _Story Time!_
 
@@ -37,7 +31,6 @@ TODO: add links
 
 <img style="width: 30vw" src="../../../assets/img/Guest_Lectures/Formal_Methods/ariane.jpg" >
 
-    
 - in **1996**, the launcher [rocket disintegrated](https://www-users.cse.umn.edu/~arnold/disasters/ariane.html) 39 secs after take-off.
 - **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point
 - **Mistake**: reusing inertial reference platform of Ariane-4, where overflow cannot happen due to different operational conditions
@@ -58,19 +51,16 @@ Notes:
 ## Formal Methods to the Rescue!
 
 - Verify/prove correctness of software with reasonable mathematical guarantees.
-- **Traditionally**, costs and efforts were justifiable in _safety-critical_ software like avionics, nuclear reactors, medical imaging, etc. 
+- **Traditionally**, costs and efforts were justifiable in _safety-critical_ software like avionics, nuclear reactors, medical imaging, etc.
 - however, things have changed ...
 
-
 Notes:
-
 
 ---v
 
 ## It is no longer Rocket Science!
 
-
-- AWS formally verifies Key-Value storage nodes in Amazon S3 (Rust Implementation). 
+- AWS formally verifies Key-Value storage nodes in Amazon S3 (Rust Implementation).
 - Meta detects resource leaks and race conditions in Android apps
 - Uber uses static analysis to find Null-pointer exceptions
 - Ethreum's Beacon chain and Tendermint consensus formally verified for safety and liveness guarantees
@@ -91,14 +81,17 @@ Notes:
 
 </pba-flex>
 
+---v
+
 ## More like _Light-weight Formal Methods_
+
 1. rigorously **detecting bugs** >> proving overall correctness of system.
 1. Developer-centric **Usability** (e.g. workflow integration)
 
-
 Notes:
+
 - Drastic Speed-up in Underlying Constraint-Solver engines
-- reduce the scope of bugs; focus on particular bugs like resource leaks,  
+- reduce the scope of bugs; focus on particular bugs like resource leaks,
 - combine symbolic and concrete executions;
 
 ---v
@@ -110,7 +103,7 @@ Notes:
 - lot at stake, justifies the cost and efforts
 - business logic is compact and modular, within limits
 
----v 
+---v
 
 ## Key Takeaways
 
@@ -121,7 +114,7 @@ Notes:
 - **not a Panacea** but can improve software quality
 - getting more and more **accessible**
 - useful for increasing **reliability and security** of blockchains
-</pba-flex>
+  </pba-flex>
 
 Notes:
 
@@ -133,11 +126,12 @@ Great blog that explains the trade-offs between soundness and tractability
 ## Tools Landscape
 
 <img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg" height="750">
-
 <!-- TODO: Need to convert an image similar to this into an svg. Want the green circle to appear as a transition. Use Figma for creating the image. -->
 
 Notes:
+
 Links to tools listed
+
 - [Isabelle](https://isabelle.in.tum.de/)
 - [Coq](https://coq.inria.fr/)
 - [TLA+](https://github.com/tlaplus)
@@ -157,7 +151,6 @@ Links to tools listed
 <pba-col center>
 
 <img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
-
 
 </pba-col>
 
@@ -181,7 +174,6 @@ Links to tools listed
 
 <img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
 
-
 </pba-col>
 
 <pba-col center>
@@ -190,18 +182,19 @@ Links to tools listed
 
 - code-level
 - specify expected behavior (information/data flow)
-- default checks: bugs like arithmetic overflow, out-of-bound access panics 
+- default checks: bugs like arithmetic overflow, out-of-bound access panics
 
 </pba-col>
 </pba-cols>
 
 ---v
 
+## Tools Landscape
+
 <pba-cols>
 <pba-col center>
 
 <img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
-
 
 </pba-col>
 
@@ -211,28 +204,28 @@ Links to tools listed
 
 - code-level
 - checks for code smells
-- other syntactic Properties 
+- other syntactic Properties
 
 </pba-col>
 </pba-cols>
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
 
-## Our Focus: Kani
-
+# Our Focus: Kani
 
 ---
 
 ## Kani: Model Checking tool for Rust
 
-- open-source Rust verifier by AWS 
+- open-source Rust verifier by AWS
 - underlying technique used: [Bounded Model Checking](https://www.cs.cmu.edu/~emc/papers/Books%20and%20Edited%20Volumes/Bounded%20Model%20Checking.pdf)
 - Can be used to _prove_:
-    - absence of arithmetic overflows
-    - absence of runtime errors (index out of bounds, panics)
-    - User Specified Properties (enhanced PropTesting)
-    - memory safety when using unsafe Rust
+  - absence of arithmetic overflows
+  - absence of runtime errors (index out of bounds, panics)
+  - User Specified Properties (enhanced PropTesting)
+  - memory safety when using unsafe Rust
 
 ---v
 
@@ -267,7 +260,7 @@ fn check_my_property() {
 
 - Kani tries to prove that all valid inputs produce outputs that meet specifications, without panicking.
 
-- Else, Kani generates a trace that points to the failure. 
+- Else, Kani generates a trace that points to the failure.
 
 </pba-col>
 
@@ -284,10 +277,11 @@ fn check_my_property() {
 #[cfg(test)]
 fn test_u32 {
   let val: u16 = 42;
-  assert_eq!(u16::decode(&mut 
+  assert_eq!(u16::decode(&mut
     val.encode()[..]).unwrap(), val)
 }
 ```
+
 fixed value `42`
 
 </pba-col>
@@ -300,7 +294,7 @@ fixed value `42`
 #[cfg(fuzzing)]
 fuzz_target!(|data: &[u8]|) {
   let val = u16::arbitrary(data);
-  assert_eq!(u16::decode(&mut 
+  assert_eq!(u16::decode(&mut
     val.encode()[..]).unwrap(), val)
 }
 ```
@@ -319,10 +313,11 @@ multiple random values of `u16`
 #[kani::proof]
 fn proof_u32_roundtrip {
   let val: u16 = kani::any();
-  assert_eq!(u16::decode(&mut 
+  assert_eq!(u16::decode(&mut
     val.encode()[..]).unwrap(), val)
 }
 ```
+
 verifies exhaustively all values of `u16`
 </pba-col>
 
@@ -331,14 +326,16 @@ verifies exhaustively all values of `u16`
 ### Under the Hood: Bounded Model Checking
 
 #### Idea:
+
 - Search for counterexamples in (bounded) executions paths
 - However, this search is an NP-hard problem
 
 #### Method:
+
 - Efficiently reduce problem to a Propositional Satisfiability (SAT) problem
 - counterexmaple for property $\phi$ exists in $P$ $\iff$ $SAT_{\phi,P}$ is satisfiable.
 - verification reduced to problem of searching satisfiable assignment to a SAT formula.
-- leverages highly optimized SAT solvers making the search tractable. 
+- leverages highly optimized SAT solvers making the search tractable.
 
 ---v
 
@@ -364,6 +361,7 @@ fn foo(x: i32) -> i32 {
     w+z
 }
 ```
+
 </pba-col>
 
 <pba-col centre>
@@ -388,22 +386,20 @@ z != 7 /\ w != 9 (negation of the assert condition)
 </pba-col>
 </pba-cols>
 
-
 <!--
-TODO: Depict this reduction with a diagram. 
+TODO: Depict this reduction with a diagram.
 
 -->
-
 
 ---v
 
 ## How does it handle loops?
 
-- *Bounded* in BMC to the rescue!
+- _Bounded_ in BMC to the rescue!
 
 - loops are unwinded up to a certain bounded depth $k$, else the verification does not terminate. (show in Demo)
 
-- determining the *sweet-spot* $k$ is a trade-off between _tractability_ and _verification confidence_ . 
+- determining the _sweet-spot_ $k$ is a trade-off between _tractability_ and _verification confidence_ .
 
 ---v
 
@@ -440,6 +436,7 @@ fn check_initialize_prefix() {
 ## Dealing with Loops: Summary
 
 **Process:**
+
 - start with unwinding $k$ times
 - if no bug is found, increase $k$ until either:
   - A bug is found
@@ -472,7 +469,6 @@ impl<'a> Arbitrary<'a> for Rgb {
 }
 ```
 
-
 ---
 
 ## Exercise
@@ -486,7 +482,6 @@ impl<'a> Arbitrary<'a> for Rgb {
 - `EncodeAppend(vec,item) == Encode(vec.append(item))`
 - ......
 
-
 <!--
 Any other FRAME pallet that they can write Proof Harnesses for?
 
@@ -497,10 +492,11 @@ DecodeLength, EncodeAppend more properties for SCALE;
 
 ---
 
-## Less Trust
+<!-- .slide: data-background-color="#4A2439" -->
 
-## More Truth
+# Less Trust.
 
+# More Truth.
 
 <!-- Meta TODOs:
 add internal reference link to chapters
