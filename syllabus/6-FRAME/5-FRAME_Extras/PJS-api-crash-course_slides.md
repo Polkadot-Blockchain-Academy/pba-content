@@ -12,7 +12,7 @@ duration: 1 hour
 
 - De facto library to work with all FRAME-based substrate runtimes.
 
-<img src="../../assets/img/6-FRAME/pjs.png" style="width: 500px" />
+<img src="../../../assets/img/6-FRAME/pjs.png" style="width: 500px" />
 
 ---v
 
