@@ -9,7 +9,22 @@ duration: 30 minutes
 
 ## Transaction Pools
 
-<img src="./img/tx-pool/BlockspaceBooth.png" />
+<pba-cols>
+<pba-col>
+
+<img style="width: 500px;" src="./img/tx-pool/BlockspaceBooth.png" />
+
+</pba-col>
+
+<pba-col>
+<img style="width: 500px; margin-left: -100px; margin-top: 250px;" src="./img/tx-pool/short-line.png" /> <!-- .element: class="fragment" -->
+</pba-col>
+
+<pba-col>
+<img style="width: 700px; margin-left: -100px; margin-top: 100px;" src="./img/tx-pool/long-line.png" /> <!-- .element: class="fragment" -->
+</pba-col>
+
+</pba-cols>
 
 
 Notes:
@@ -36,7 +51,7 @@ Let's take a closer look.
 
 ### Paths of a Transaction
 
-<img src="./img/tx-pool/blockchain_p2p.svg" />
+<img style="width: 900px;" src="./img/tx-pool/blockchain_p2p.svg" />
 
 Notes:
 Previously, in the blockchain module, we saw this figure.
@@ -48,7 +63,7 @@ CLICK
 
 ### Paths of a Transaction
 
-<img src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
+<img style="width: 900px;" src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
 
 Notes:
 There are many paths a transaction can take from the user who signed it to a finalized block.
@@ -114,7 +129,7 @@ So let's talk about that for a little bit.
 
 ### Runtime vs STF
 
-<img src="./img/tx-pool/peter-parker-glasses-off.png" />
+<img style="width: 1100px;" src="./img/tx-pool/peter-parker-glasses-off.png" />
 
 Notes:
 It is commonly said that the runtime is basically your STF.
@@ -125,7 +140,7 @@ It is nearly true.
 
 ### Runtime vs STF
 
-<img src="./img/tx-pool/peter-parker-glasses-on.png" />
+<img style="width: 1100px;" src="./img/tx-pool/peter-parker-glasses-on.png" />
 
 Notes:
 
@@ -243,7 +258,7 @@ There is only an inherent ordering between transactions from the same account.
 
 ## Always Re-check On-chain
 
-<img src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
+<img style="width: 900px;" src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
 
 Notes:
 
