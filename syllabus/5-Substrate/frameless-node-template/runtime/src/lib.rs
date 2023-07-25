@@ -262,8 +262,7 @@
 //! When importing a block, the api call flow is:
 //!
 //! ```ignore
-//! Core::initialize_block(final_header);
-//! Core::import_block(block);
+//! Core::execute_block(block);
 //! ```
 //!
 //! End of the day, you must ensure that the above two code paths come to the same state root, and
