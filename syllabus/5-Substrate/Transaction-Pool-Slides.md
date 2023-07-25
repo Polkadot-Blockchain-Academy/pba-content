@@ -217,7 +217,7 @@ Only in special edge cases would this be false.
 
 ### Example 1: Nonced Account System
 
-TODO Account diagram
+<img src="./img/tx-pool/account.svg" />
 
 Notes:
 Prioritize by explicit tip
@@ -239,7 +239,7 @@ provides this input
 
 ## Always Re-check On-chain
 
-TODO what to show on slide
+<img src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
 
 Notes:
 
@@ -247,4 +247,4 @@ None of this new pool information changes the fundamentals you learned last week
 You must execute the state transitions in full on chain.
 
 Most of the time you are not the block author.
-When you import a block from another node, you cannot trust them to have done the pre-checks correctly
+When you import a block from another node, you cannot trust them to have done the pre-checks correctly.
