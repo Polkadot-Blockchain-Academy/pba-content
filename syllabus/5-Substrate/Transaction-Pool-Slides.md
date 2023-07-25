@@ -217,7 +217,7 @@ Only in special edge cases would this be false.
 
 ### Example 1: Nonced Account System
 
-<img src="./img/tx-pool/account.svg" />
+<img src="./img/tx-pool/accounts.svg" />
 
 Notes:
 Prioritize by explicit tip
