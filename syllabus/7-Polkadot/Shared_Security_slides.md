@@ -22,15 +22,20 @@ Let’s explore…
 
 ## What is Security?
 
+Nearly every attack to a blockchain falls into one of these two buckets:
+
+- Technical Security (cryptography)
+- Economic Security (game theory + economics)
+
+We will focus on Economic Security.
+
 ---
 
-Security is represented by the economic cost to change the canonical history of a blockchain.
+Economic Security is represented by the economic cost to change the canonical history of a blockchain.
 
 <image src="../../../assets/img/7-Polkadot/chain-fork.svg" style="width: 1000px">
 
-
 Chains with higher security are more resilient to malicious activity, like a double spend attack.
-
 
 ---
 
@@ -57,27 +62,39 @@ It is up to the blockchain to come to consensus as to which of these two transac
 
 In this example, someone is explicitly taking advantage of fragmentation in the network to try and create two different canonical chains.
 
-<image src="../../../assets/img/7-Polkadot/network-attack.svg" style="width: 1000px">
+<image src="../../../assets/img/7-Polkadot/network-attack.svg" style="width: 900px">
 
 ---
 
-## What is the economic cost?
+## What happens after the attack?
 
 Eventually, the network fragmentation will resolve, and consensus messages will allow us to prove that the malicious nodes **equivocated**.
 
-<image src="../../../assets/img/7-Polkadot/network-attack-2.svg" style="width: 1000px">
+<image src="../../../assets/img/7-Polkadot/network-attack-2.svg" style="width: 900px">
 
 That is, they signed messages that validated two conflicting chains.
 
 ---
 
+## What is the economic cost?
+
+This will result in **slashing** the malicious nodes, which should be economically large enough to deter these kinds of malicious activities from occurring.
+
+---
+
 So Economics and Security are tightly coupled in Blockchians.
+
+<image src="../../../assets/img/7-Polkadot/economics-security.svg" style="width: 900px">
+
+---
+
+# The Bootstrapping Problem
 
 ---
 
 ### What is the Bootstrapping Problem?
 
-Describes the struggle that new chains face to keep their chain secure, when their token economics are not yet sufficient or stable.
+The bootstrapping problem is the struggle that new chains face to keep their chain secure, when their token economics are not yet sufficient or stable.
 
 Arguably, the scarcest resource in blockchain is economic security - there simply is not enough to go around.
 
@@ -109,6 +126,8 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 # Shared Security
 
+<image src="../../../assets/img/7-Polkadot/spongebob.jpg" style="width: 900px">
+
 ---
 
 ## Different Forms of "Shared Security" Today
@@ -127,17 +146,73 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 ## Polkadot’s Shared Security
 
+<pba-cols>
+
+<pba-col>
+
+<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+
+</pba-col>
+
+<pba-col>
+
 Polkadot is unique in that it provides all connected parachains with the same security guarantees as the Relay Chain itself.
 
 This is native to the protocol, and one of its core functionalities.
 
+</pba-col>
+
+</pba-cols>
+
 ---
 
-## Wasm
+## Building Blocks of Shared Security
+
+<pba-cols>
+
+<pba-col>
+
+1. Execution Meta-Protocol
+2. Coordination / Validation
+3. Security Hub
+
+</pba-col>
+
+<pba-col>
+
+- Wasm
+- Parachains Protocol
+- Relay Chain
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+# Wasm
+
+---
+
+## You can't overemphasize Wasm
+
+<pba-cols>
+
+<pba-col>
+
+<image src="../../../assets/img/6-FRAME/wasm-in-storage.png" style="width: 700px">
+
+</pba-col>
+
+<pba-col>
 
 In the Polkadot ecosystem, each chain has their state transition function represented by a Wasm blob which is stored on the blockchain itself.
 
-This has many implications, but the key point here is that it is very easy to share and safe to execute.
+This has many implications, which we have covered, but the key point in this context is that it is very easy to share, generic, and safe to execute.
+
+</pba-col>
+
+</pba-cols>
 
 ---
 
@@ -175,6 +250,18 @@ Wasm Runtimes
 
 ---
 
+## In short...
+
+- As you have learned, the Polkadot Client is basically a Wasm executor.
+- All of the chains in our ecosystem use Wasm for their state transition function.
+- The Wasm meta-protocol allows Polkadot to execute any chain on the fly!
+
+> Note that we ACTUALLY EXECUTE the blocks of other chains.
+>
+> Less trust, more truth!
+
+---
+
 # Parachain Validation
 
 ---
@@ -191,29 +278,31 @@ This enables Polkadot to scale.
 
 ## How to validate a block?
 
-<image src="../../../assets/img/7-Polkadot/parachain-validation.svg" style="width: 1000px">
+<image src="../../../assets/img/7-Polkadot/parachain-validation.svg" style="width: 1200px">
 
 ---
 
-## Parachains submit new blocks with a proof-of-validity to the network.
+## Submitting Parachain Blocks
 
-<image src="../../../assets/img/7-Polkadot/parachain-validation-multiple.svg" style="width: 1000px">
+Parachains submit new blocks with a proof-of-validity to the network.
+
+<image src="../../../assets/img/7-Polkadot/parachain-validation-multiple.svg" style="width: 900px">
 
 Wasm Runtime and latest state root for Parachains already stored on the relay chain.
 
 ---
 
-## Polkadot Validators
-
-<image src="../../../assets/img/7-Polkadot/parachain-validators.svg" style="width: 800px">
-
 Parachains Protocol has new blocks that it needs to validate and include.
+
+<image src="../../../assets/img/7-Polkadot/parachain-validators.svg" style="width: 600px">
+
+## Polkadot Validators
 
 ---
 
 A random subset of validators are assigned to execute the parachain blocks.
 
-<image src="../../../assets/img/7-Polkadot/parachain-validators-colored.svg" style="width: 800px">
+<image src="../../../assets/img/7-Polkadot/parachain-validators-colored.svg" style="width: 600px">
 
 The new state root is then committed to the relay chain so the process can repeat.
 
@@ -227,6 +316,37 @@ The new state root is then committed to the relay chain so the process can repea
 
 ---
 
+# The Relay Chain
+
+---
+
+## The Security Hub for Polkadot
+
+<pba-cols>
+
+<pba-col>
+
+<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+
+</pba-col>
+
+<pba-col>
+
+The Relay Chain is the anchor for the Polkadot Network.
+
+- Provides a base economic utility token with DOT.
+- Provides a group of high quality Validators.
+- Stores essential data needed for each parachain.
+- Establishes finality for parachain blocks.
+
+</pba-col>
+
+</pba-cols>
+
+---
+
+## Parachain Blocks Get Finalized
+
 <pba-cols>
 
 <pba-col>
@@ -236,8 +356,6 @@ The new state root is then committed to the relay chain so the process can repea
 </pba-col>
 
 <pba-col>
-
-## Parachain Blocks Get Finalized
 
 Relay chain block producers commit the new state root to the relay chain once the Parachains Protocol has been completed.
 
@@ -251,17 +369,17 @@ The Parachain state committed on Polkadot is the **canonical chain**.
 
 ---
 
+## Trust-Free Interactions
+
 <pba-cols>
 
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/parachain-finalization.svg" style="width: 500px">
+<image src="../../../assets/img/7-Polkadot/xcmp-finalization.svg" style="width: 500px">
 
 </pba-col>
 
 <pba-col>
-
-## Trust-Free Interactions
 
 This also means that finalization on Polkadot implies finalization of all interactions between all parachains at the same height.
 
@@ -270,6 +388,29 @@ So, shared security not only secures the individual chains, but the interactions
 </pba-col>
 
 </pba-cols>
+
+---
+
+## Building Blocks of Shared Security
+
+<pba-cols>
+
+<pba-col>
+
+1. Execution Meta-Protocol
+2. Coordination / Validation
+3. Security Hub
+
+</pba-col>
+
+<pba-col>
+
+Other protocols say they are providing shared security... but do they have these key building blocks?
+
+</pba-col>
+
+</pba-cols>
+
 
 ---
 
