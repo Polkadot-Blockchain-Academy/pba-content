@@ -10,7 +10,7 @@ As we learned in Chapter 3, the XCM pallet serves as a bridge between the XCVM s
 
 ---
 
-# _At the end of this lecture, you will be able to:_
+### _At the end of this lecture, you will be able to:_
 
 <pba-flex center>
 
@@ -45,7 +45,7 @@ End Result: The `scheduleXcmpTask` event fires successfully on Turing Network, w
 
 The XCM call sets up a recurring task, such as an auto-transfer of MOVR every Monday. Turing Network is responsible for triggering the action when its condition is met. The overall flow of the entire product is shown in the diagram below.
 
-<img style="width: 900px;" src="../../../assets/img/7-XCM/high-level-product-flow.jpg" alt="High level product flow - Moonriver and Turing Network" />
+<img style="width: 900px;" src="../../../assets/img/8-XCM/high-level-product-flow.jpg" alt="High level product flow - Moonriver and Turing Network" />
 
 High level product flow - Moonriver and Turing Network
 
@@ -92,7 +92,7 @@ In this section, we will construct the XCM message using Moonriver’s `xcmTrans
 
 1. Destination: This refers to the target chain to which the message will be sent. Since we will be sending the message to the Turing Network (paraId 2114 on Kusama), we will set the value to {Relay, 2114}.
     
-<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-transactor-extrinsic.png" alt="The first couple of parameters in the xcmtransactor.transactThroughDerivative() extrinsic call" />
+<img style="width: 900px;" src="../../../assets/img/8-XCM/xcm-transactor-extrinsic.png" alt="The first couple of parameters in the xcmtransactor.transactThroughDerivative() extrinsic call" />
 
 ---v
 
@@ -103,7 +103,7 @@ In this section, we will construct the XCM message using Moonriver’s `xcmTrans
 
 Once the parameters are filled in, we can submit and sign the transaction. With all the inputs defined, we can kick off the XCM message directly from the extrinsic tab of polkadot.js apps.
 
-<img src="../../../assets/img/7-XCM/polkadot-xcm-call.png" alt="The polkadotXcm.send() extrinsic call to fire the XCM message" />
+<img src="../../../assets/img/8-XCM/polkadot-xcm-call.png" alt="The polkadotXcm.send() extrinsic call to fire the XCM message" />
 
 After firing the message, events from both the sender and recipient parachains should appear in the Polkadot.js app Network tab. Screenshots of this process will be demonstrated in the [Debugging Live](#debugging-live) section below.
 
