@@ -1,6 +1,6 @@
 ---
 title: Formal Methods for Rust 
-description: Introduction to the Guest LEcture on formal methods for Rust verification.
+description: Introduction to the Guest Lecture on formal methods for Rust verification.
 duration: 60 minutes
 
 ---
@@ -19,10 +19,8 @@ TODO: add links
 <pba-flex center>
 
 1. Intro to Formal Methods
-1. Overview of Techniques
-1. Formal Method Tools for Rust: 
-    * Kani: Bounded Model Checker
-    * MIRAI: Abstract Interpreter
+1. Landscape of Techniques for Rust
+1. Focus on Kani: Bounded Model Checker 
 1. Applications to Polkadot 
 
 </pba-flex>
@@ -39,10 +37,11 @@ TODO: add links
 
 <img style="width: 30vw" src="../../../assets/img/Guest_Lectures/Formal_Methods/ariane.jpg" >
 
+    
 - in **1996**, the launcher [rocket disintegrated](https://www-users.cse.umn.edu/~arnold/disasters/ariane.html) 39 secs after take-off.
 - **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point
 - **Mistake**: reusing inertial reference platform of Ariane-4, where overflow cannot happen due to different operational conditions
-- **Cost**: `$`500M payload, `$`8B development program
+- **Cost**: 500M USD payload, 8B USD development program
 
 Notes:
 
@@ -65,7 +64,6 @@ Notes:
 
 Notes:
 
-Speaker view ONLY notes
 
 ---v
 
@@ -79,8 +77,6 @@ Speaker view ONLY notes
 
 Notes:
 
-Stuff you should remember to say. Are more examples required? maybe rust specific? 
-
 ---v
 
 ## Formal Methods Today
@@ -90,15 +86,12 @@ Stuff you should remember to say. Are more examples required? maybe rust specifi
 <pba-flex center>
 
 - verification tools more efficient
-
 - goals more focused, promises less lofty
-
 - combination of analysis techniques
 
 </pba-flex>
 
 ## More like _Light-weight Formal Methods_
-
 1. rigorously **detecting bugs** >> proving overall correctness of system.
 1. Developer-centric **Usability** (e.g. workflow integration)
 
@@ -106,9 +99,18 @@ Stuff you should remember to say. Are more examples required? maybe rust specifi
 Notes:
 - Drastic Speed-up in Underlying Constraint-Solver engines
 - reduce the scope of bugs; focus on particular bugs like resource leaks,  
-- combine symbolic and concrete executions executions;
+- combine symbolic and concrete executions;
 
 ---v
+
+## Formal Methods <> Blockchains
+
+#### Hammer finally found the nail!
+
+- lot at stake, justifies the cost and efforts
+- business logic is compact and modular, within limits
+
+---v 
 
 ## Key Takeaways
 
@@ -117,58 +119,108 @@ Notes:
 ### Formal Methods is ...
 
 - **not a Panacea** but can improve software quality
-
 - getting more and more **accessible**
-
 - useful for increasing **reliability and security** of blockchains
 </pba-flex>
 
 Notes:
 
-Make sure to include things here to say to students, perhaps a hint or two.
-Realize that students will be able to view the speaker's notes, as they will have access to them on their devices.
+http://www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/
+Great blog that explains the trade-offs between soundness and tractability
 
 ---
 
-## Landscape of Techniques
+## Tools Landscape
 
-<img style="width: 120vw" src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape_FM.png" >
+<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg" height="750">
 
 <!-- TODO: Need to convert an image similar to this into an svg. Want the green circle to appear as a transition. Use Figma for creating the image. -->
 
-
-Our Focus: Rust Verification
+Notes:
+Links to tools listed
+- [Isabelle](https://isabelle.in.tum.de/)
+- [Coq](https://coq.inria.fr/)
+- [TLA+](https://github.com/tlaplus)
+- [StateRight](https://github.com/stateright/stateright)
+- [Prusti](https://www.pm.inf.ethz.ch/research/prusti.html)
+- [Kani](https://github.com/model-checking/kani)
+- [MIRAI](https://github.com/facebookexperimental/MIRAI)
+- [Flowistry](https://github.com/willcrichton/flowistry)
+- [Substrace](https://github.com/kaiserkarel/substrace)
+- [Clippy](https://github.com/rust-lang/rust-clippy)
 
 ---v
 
-## Spectrum of Tools for Rust
+## Tools Landscape
 
-(Descending order in terms user interactions): 
+<pba-cols>
+<pba-col center>
 
-- KMIR
-- Prusti
-- Creusot
-- Crux-MIR
-- MIRAI
-- Kani
-- Flux
-- Fuzzers: AFL, Honggfuzz, LibFuzzer
+<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
 
-(TODO: tabular form of advantages, disadvantages, application scenarios, automation )
-<!-- TODO: Give a brief overview of the existing tools, advantages/disadvantages and scenarios to use them. Preferable in a tabular format.   -->
 
+</pba-col>
+
+<pba-col center>
+
+#### Quint/ State-Right (Model-checkers)
+
+- Humongous effort modelling the system & specifying properties
+- Abstraction gap
+- Reason about complex properties: safety & liveness of consensus mechanism
+
+</pba-col>
+</pba-cols>
+
+---v
+
+## Tools Landscape
+
+<pba-cols>
+<pba-col center>
+
+<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
+
+
+</pba-col>
+
+<pba-col center>
+
+#### Static Analyzers
+
+- code-level
+- specify expected behavior (information/data flow)
+- default checks: bugs like arithmetic overflow, out-of-bound access panics 
+
+</pba-col>
+</pba-cols>
+
+---v
+
+<pba-cols>
+<pba-col center>
+
+<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
+
+
+</pba-col>
+
+<pba-col center>
+
+#### Linters
+
+- code-level
+- checks for code smells
+- other syntactic Properties 
+
+</pba-col>
+</pba-cols>
 
 ---
 
 
-## Our Focus
+## Our Focus: Kani
 
-<pba-flex center>
-
-- **Bounded Model Checking** with [Kani](https://github.com/model-checking/kani)
-- **Abstract Interpretation** with [MIRAI](https://github.com/facebookexperimental/MIRAI)
-
-</pba-flex>
 
 ---
 
@@ -186,15 +238,13 @@ Our Focus: Rust Verification
 
 lets see some Magic and then the Trick
 
-> Demo of the Rectangle-Example from Kani repo
+> Demo of the Rectangle-Example
 
 ---v
 
 ## Proof Harness
 
 <pba-col centre>
-
-### Template
 
 ```rust
 use my_crate::{function_under_test, meets_specification, precondition};
@@ -217,18 +267,18 @@ fn check_my_property() {
 
 - Kani tries to prove that all valid inputs produce outputs that meet specifications, without panicking.
 
-- Otherwise Kani will generate a trace that points to the failure. 
+- Else, Kani generates a trace that points to the failure. 
 
 </pba-col>
 
 ---v
 
-SCALE codec property: `decode(encode(x)) == x`
+## Property: `decode(encode(x)) == x`
 
 <pba-cols>
 <pba-col center>
 
-#### Test
+**Test**
 
 ```rust
 #[cfg(test)]
@@ -244,7 +294,7 @@ fixed value `42`
 
 <pba-col center>
 
-#### Fuzzing
+**Fuzzing**
 
 ```rust
 #[cfg(fuzzing)]
@@ -255,14 +305,14 @@ fuzz_target!(|data: &[u8]|) {
 }
 ```
 
-random value of `u16`
+multiple random values of `u16`
 
 </pba-col>
 </pba-cols>
 
 <pba-col center>
 
-#### Kani Proof 
+**Kani Proof**
 
 ```rust
 #[cfg(kani)]
@@ -427,28 +477,29 @@ impl<'a> Arbitrary<'a> for Rgb {
 
 ## Exercise
 
-Verify [Compact Encoding](https://github.com/paritytech/parity-scale-codec/blob/master/src/compact.rs) of integer types in the SCALE Codec
+> Verify [Fixed-width](https://github.com/paritytech/parity-scale-codec/blob/master/src/codec.rs) & [Compact](https://github.com/paritytech/parity-scale-codec/blob/master/src/compact.rs) Encoding for integer types in SCALE.
 
-The properties to verify are open to students, but must include _roundtrip_. 
+#### Open Ended properties!
+
+- _RoundTrip_: `Decode (Encode (x)) == x`
+- `DecodeLength(x) == Decode(x).length()`
+- `EncodeAppend(vec,item) == Encode(vec.append(item))`
+- ......
+
 
 <!--
 Any other FRAME pallet that they can write Proof Harnesses for?
 
 TODO: write-up the exercises in PBA format
+
+DecodeLength, EncodeAppend more properties for SCALE;
 -->
 
 ---
 
-## References
+## Less Trust
 
-<!--
-Compile an **annotated** list of URLs to source material referenced in making these lessons.
-Ideally this is exhaustive, it can be cleaned up before delivery to students, but must include _why_ a reference is used.
-For example:
-
-- [ss58-registry](https://github.com/paritytech/ss58-registry) - A list of known SS58 account types as an enum, typically used by the Polkadot, Kusama or Substrate ecosystems.
-- [wiki on parathreads](https://wiki.polkadot.network/docs/learn-parathreads) - A description of the parathread model.
--->
+## More Truth
 
 
 <!-- Meta TODOs:
