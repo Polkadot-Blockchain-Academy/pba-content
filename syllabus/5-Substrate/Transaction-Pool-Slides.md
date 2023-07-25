@@ -121,3 +121,47 @@ But if it is not on-chain, can individual validators customize it.
 In short yes.
 There is a mechanism for this.
 We won't go deeply into the mechanism, but validators can specify alternate wasm blocs to use instead of the official one.
+
+---
+
+## Jobs of the API
+
+* Make fast pre-checks
+* Determine whether the transaction is ready now or may be ready in the future
+* Give the transaction a priority
+
+---v
+
+### Example 1: A nonce-based account system
+
+TODO what to show on slide
+
+Notes:
+Prioritize by explicit tip
+Requires all previous nonces for this account
+provides this nonce for this account
+
+---v
+
+### Example 3: A UTXO system
+
+TODO what to show on slide
+
+Notes:
+Prioritize by implicit tip (difference of inputs and outputs)
+Requires all missing input transactions
+provides this input
+
+---v
+
+## Always Re-check On-chain
+
+TODO what to show on slide
+
+Notes:
+
+None of this new pool information changes the fundamentals you learned last week.
+You must execute the state transitions in full on chain.
+
+Most of the time you are not the block author.
+When you import a block from another node, you cannot trust them to have done the pre-checks correctly
