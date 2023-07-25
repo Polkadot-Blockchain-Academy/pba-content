@@ -175,7 +175,7 @@ pub struct ValidTransaction {
 
 ### Example 1: Nonced Account System
 
-TODO what to show on slide
+TODO Account diagram
 
 Notes:
 Prioritize by explicit tip
@@ -186,7 +186,7 @@ provides this nonce for this account
 
 ### Example 2: UTXO System
 
-TODO what to show on slide
+<img src="./img/tx-pool/utxo.svg" />
 
 Notes:
 Prioritize by implicit tip (difference of inputs and outputs)
