@@ -66,9 +66,58 @@ There is periodic re-validation if transactions have been in the pool for a long
 * Prioritized by...
   * Fee
   * Bribe
-  * fee per blockspace
+  * Fee per blockspace
 * This is all off-chain
 
 ---
 
-##
+## Tx Pool Runtime Api
+
+TODO paste trait definition
+
+Notes:
+
+This is another runtime api, similar to the block builder and the core that are used for creating and importing blocks.
+This one is slightly different in that it is actually called from off-chain, and is not part of your STF.
+So let's talk about that for a little bit.
+
+---v
+
+### slide title
+
+<img src="./img/tx-pool/peter-parker-glasses-off.png" />
+
+Notes:
+It is commonly said that the runtime is basically your STF.
+This is a good first order approximation.
+It is nearly true.
+
+---v
+
+### slide title
+
+<img src="./img/tx-pool/peter-parker-glasses-on.png" />
+
+Notes:
+
+But as we can see here, when we put our glasses on, actually only some of the apis are part of the stf.
+
+---v
+
+## Why is pool logic in the runtime?
+
+* Types are upgradable
+* Transactions are upgradeable
+* If you want to prioritize transactions, you need to understand the transaction
+
+Notes:
+
+So if this is not part of the STF why is it in the runtime at all?
+This logic is tightly related to the runtime application logic.
+The types are opaque outside of the runtime.
+So this logic must go in the runtime.
+
+But if it is not on-chain, can individual validators customize it.
+In short yes.
+There is a mechanism for this.
+We won't go deeply into the mechanism, but validators can specify alternate wasm blocs to use instead of the official one.
