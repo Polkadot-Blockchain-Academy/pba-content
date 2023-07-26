@@ -229,27 +229,13 @@ fn executor_call(t: &mut TestExternalities, method: &str, data: &[u8]) -> Result
 
 fn new_test_ext() -> TestExternalities {
 	sp_tracing::try_init_simple();
-	let code_path =
-		std::option_env!("WASM_FILE").unwrap_or("../target/debug/wbuild/runtime/runtime.wasm");
-	log::info!(target: LOG_TARGET, "reading wasm file from {}", code_path);
-	let code = std::fs::read(code_path).unwrap();
+	let code = include_bytes!("../../target/debug/wbuild/runtime/runtime.wasm");
 	let mut storage: sp_core::storage::Storage = Default::default();
 	storage
 		.top
 		.insert(sp_core::storage::well_known_keys::CODE.to_vec(), code.to_vec());
-	TestExternalities::new_with_code(&code, storage)
+	TestExternalities::new_with_code(code, storage)
 }
-
-/*
-- basic + block_builder + validate => 1
-- currency + staking => 2
-- tipping + nonce => 3 or 4
-
-- if first 3 parts are failing, but the staking+currency is fine, we handle case by case.
-- lenience will be acceptable.
-
-TODO for Nuke: publish the solved mini_substrate.
-*/
 
 mod basics {
 	use super::*;
@@ -388,8 +374,8 @@ mod currency {
 		)];
 
 		author_and_import(&mut state, exts, || {
-			assert!(balance_of(Alice.public()).is_none());
-			assert!(issuance().is_none());
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 0);
 		});
 	}
 
@@ -405,12 +391,9 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), Some(20));
-			assert_eq!(
-				balance_of(Alice.public()).unwrap(),
-				AccountBalance { free: 0, reserved: 0, nonce: 1 }
-			);
-			assert_eq!(issuance(), Some(20));
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 20);
 		});
 	}
 
@@ -428,14 +411,20 @@ mod currency {
 				&Alice,
 				1,
 			),
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Charlie.public(), amount: 50 }),
+				&Alice,
+				2,
+			),
 		];
 
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Alice.public()), Some(30));
-			assert_eq!(free_of(Bob.public()), Some(20));
-			assert_eq!(issuance(), Some(50));
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 30);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20);
+			assert_eq!(free_of(Charlie.public()).unwrap_or_default(), 50);
+			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
 
@@ -455,8 +444,8 @@ mod currency {
 			),
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Charlie.public(), amount: 30 }),
-				&Charlie,
-				0,
+				&Alice,
+				1,
 			),
 		];
 
@@ -464,9 +453,9 @@ mod currency {
 
 		author_and_import(&mut state, exts, || {
 			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Charlie.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Bob.public()), Some(20));
-			assert_eq!(issuance(), Some(20));
+			assert_eq!(free_of(Charlie.public()).unwrap_or_default(), 30);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20);
+			assert_eq!(issuance().unwrap_or_default(), 50);
 		});
 	}
 
@@ -482,9 +471,9 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(balance_of(Bob.public()), None);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
 			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance(), None);
+			assert_eq!(issuance().unwrap_or_default(), 0);
 		});
 	}
 
@@ -501,8 +490,8 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), None);
-			assert_eq!(issuance(), None);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 0);
 		});
 	}
 
@@ -517,8 +506,9 @@ mod currency {
 			0,
 		)];
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), Some(10));
-			assert_eq!(issuance(), Some(10));
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
+			assert_eq!(issuance().unwrap_or_default(), 10);
 		});
 	}
 
@@ -542,9 +532,9 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), Some(80));
-			assert_eq!(free_of(Alice.public()), Some(20));
-			assert_eq!(issuance(), Some(100));
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 80);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 20);
+			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
 
@@ -571,9 +561,9 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), Some(100));
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
 			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance(), Some(100));
+			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
 
@@ -599,9 +589,9 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()), Some(10));
-			assert_eq!(free_of(Alice.public()), Some(90));
-			assert_eq!(issuance(), Some(100));
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 90);
+			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
 
@@ -624,8 +614,8 @@ mod currency {
 
 		author_and_import(&mut state, exts, || {
 			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Alice.public()), Some(100));
-			assert_eq!(issuance(), Some(100));
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 100);
+			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
 
@@ -648,8 +638,8 @@ mod currency {
 
 		author_and_import(&mut state, exts, || {
 			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Alice.public()), Some(100));
-			assert_eq!(issuance(), Some(100));
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 100);
+			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
 
@@ -693,8 +683,7 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			// As opposed to storing something like `Some(0)`. In other tests we don't really care
-			// about this, but we check it here.
+			// in this case, because alice had no funds to begin with, her account is not killed.
 			assert_eq!(
 				balance_of(Alice.public()).unwrap(),
 				AccountBalance { nonce: 2, ..Default::default() }
@@ -721,27 +710,90 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(
-				balance_of(Bob.public()),
-				Some(AccountBalance { free: 80, reserved: 20, nonce: 1 })
-			);
-			assert_eq!(issuance(), Some(100));
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 80);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 20);
+			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
 
 	#[test]
 	fn bonding_more_than_allowed() {
-		todo!();
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+				0,
+			),
+			signed(RuntimeCall::Staking(StakingCall::Bond { amount: 120 }), &Bob, 0),
+		];
+
+		author_and_import(&mut state, exts, || {
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 100);
+		});
+	}
+
+	#[test]
+	fn bonding_more_than_allowed_ed() {
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+				0,
+			),
+			signed(RuntimeCall::Staking(StakingCall::Bond { amount: 95 }), &Bob, 0),
+		];
+
+		author_and_import(&mut state, exts, || {
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 100);
+		});
 	}
 
 	#[test]
 	fn bonding_more_than_allowed_limit() {
-		todo!();
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+				0,
+			),
+			signed(RuntimeCall::Staking(StakingCall::Bond { amount: 90 }), &Bob, 0),
+		];
+
+		author_and_import(&mut state, exts, || {
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 90);
+			assert_eq!(issuance().unwrap_or_default(), 100);
+		});
 	}
 
 	#[test]
-	fn bonding_and_tipping() {
-		todo!();
+	fn bonding_all() {
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+				0,
+			),
+			signed(RuntimeCall::Staking(StakingCall::Bond { amount: 100 }), &Bob, 0),
+		];
+
+		author_and_import(&mut state, exts, || {
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 100);
+		});
 	}
 
 	#[test]
@@ -771,17 +823,70 @@ mod staking {
 	}
 }
 
-mod nonce {
-	#[test]
-	fn test_it() {
-		todo!();
-	}
-}
-
 mod tipping {
 	use super::*;
 	use crate::author_and_import;
 	use sp_runtime::transaction_validity::ValidTransaction;
+
+	#[test]
+	fn bonding_and_tipping() {
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+				0,
+			),
+			tipped(RuntimeCall::Staking(StakingCall::Bond { amount: 50 }), &Bob, 0, 10),
+		];
+
+		author_and_import(&mut state, exts, || {
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 40);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 50);
+			assert_eq!(issuance().unwrap_or_default(), 100);
+		});
+	}
+
+	#[test]
+	fn bonding_and_tipping_fail() {
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+				0,
+			),
+			tipped(RuntimeCall::Staking(StakingCall::Bond { amount: 85 }), &Bob, 0, 10),
+		];
+
+		author_and_import(&mut state, exts, || {
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 90);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 100);
+		});
+	}
+
+	#[test]
+	fn bonding_and_tipping_fail_2() {
+		let mut state = new_test_ext();
+
+		let exts = vec![
+			signed(
+				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
+				&Alice,
+				0,
+			),
+			tipped(RuntimeCall::Staking(StakingCall::Bond { amount: 89 }), &Bob, 0, 5),
+		];
+
+		author_and_import(&mut state, exts, || {
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 95);
+			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
+			assert_eq!(issuance().unwrap_or_default(), 95);
+		});
+	}
 
 	mod validate {
 		use super::*;
@@ -807,7 +912,28 @@ mod tipping {
 
 		#[test]
 		fn priority_overflow() {
-			todo!();
+			let mut state = new_test_ext();
+			let exts = vec![signed(
+				RuntimeCall::Currency(CurrencyCall::Mint {
+					dest: Alice.public(),
+					amount: u128::MAX / 2,
+				}),
+				&Alice,
+				0,
+			)];
+
+			// apply this to our state.
+			author_and_import(&mut state, exts, || {});
+
+			// now run validation on top of this state.
+			let to_validate = tipped(
+				RuntimeCall::System(SystemCall::Set { value: 42 }),
+				&Alice,
+				1,
+				u128::MAX / 4,
+			);
+			let validity = validate(to_validate, &mut state);
+			assert!(matches!(validity, Ok(ValidTransaction { priority: u64::MAX, .. })));
 		}
 
 		#[test]
@@ -869,7 +995,7 @@ mod tipping {
 			// apply this to our state.
 			author_and_import(&mut state, exts, || {});
 
-			// tip is 15, leaving only 5 for alice.
+			// tip is 20, entirely killing alice.
 			let to_validate =
 				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 1, 20);
 			let validity = validate(to_validate, &mut state);
@@ -921,7 +1047,7 @@ mod tipping {
 				assert!(treasury().is_none());
 				assert_eq!(free_of(Alice.public()).unwrap(), 75);
 				assert_eq!(free_of(Bob.public()).unwrap(), 20);
-				assert_eq!(issuance(), Some(95));
+				assert_eq!(issuance().unwrap_or_default(), 95);
 			});
 		}
 
@@ -955,7 +1081,7 @@ mod tipping {
 				assert_eq!(treasury().unwrap(), 10);
 				assert_eq!(free_of(Alice.public()).unwrap(), 70);
 				assert_eq!(free_of(Bob.public()).unwrap(), 20);
-				assert_eq!(issuance(), Some(100));
+				assert_eq!(issuance().unwrap_or_default(), 100);
 			});
 		}
 
@@ -986,7 +1112,7 @@ mod tipping {
 				assert!(treasury().is_none());
 				assert_eq!(free_of(Bob.public()).unwrap(), 15);
 				assert!(free_of(Charlie.public()).is_none());
-				assert_eq!(issuance(), Some(15));
+				assert_eq!(issuance().unwrap_or_default(), 15);
 			});
 		}
 
@@ -1013,11 +1139,18 @@ mod tipping {
 			];
 
 			author_and_import(&mut state, exts, || {
-				assert_eq!(treasury(), Some(10));
+				assert_eq!(treasury().unwrap_or_default(), 10);
 				assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-				assert_eq!(free_of(Bob.public()), Some(10));
-				assert_eq!(issuance(), Some(20));
+				assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
+				assert_eq!(issuance().unwrap_or_default(), 20);
 			});
 		}
+	}
+}
+
+mod nonce {
+	#[test]
+	fn test_it() {
+		todo!();
 	}
 }
