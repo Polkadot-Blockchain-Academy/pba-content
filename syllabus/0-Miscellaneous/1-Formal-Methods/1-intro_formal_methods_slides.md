@@ -29,7 +29,7 @@ duration: 60 minutes
 
 ### _Ariane 5 Rocket - Flight 501_
 
-<img style="width: 30vw" src="../../../assets/img/Guest_Lectures/Formal_Methods/ariane.jpg" >
+<img rounded style="width: 400px" src="./img/ariane.jpg" >
 
 - in **1996**, the launcher rocket disintegrated 39 secs after take-off.
 - **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point
@@ -44,11 +44,11 @@ Link to article: (https://www-users.cse.umn.edu/~arnold/disasters/ariane.html)
 
 ## Software Correctness is _very_ important
 
-> Program testing can be used to show the presence of bugs, but never to show their absence!
+> Program testing can be used to show the presence of bugs,<br/>but never to show their absence!
 >
 > --Edgard Dijkstra--
 
-#### Hence, the necessity to go beyond Testing <!-- .element: class="fragment" -->
+**_Hence, the necessity to go beyond testing_** <!-- .element: class="fragment" -->
 
 ---v
 
@@ -80,7 +80,7 @@ Notes:
 
 ## Formal Methods Today
 
-> ...have gone from being theoretical research interests to delivering practical cost-effective tools
+From being theoretical research interests<br/> to delivering practical cost-effective tools
 
 <pba-flex center>
 
@@ -114,7 +114,7 @@ Notes:
 
 ## Formal Methods ↔ Blockchains
 
-#### Hammer finally found the nail!
+**Hammer finally found the nail!**
 
 - Lot at stake, justifies the cost and efforts
 - Business logic is compact and modular, within limits
@@ -134,7 +134,7 @@ Note:
 
 <pba-flex center>
 
-### Formal Methods is ...
+**_Formal Methods are..._**
 
 - **Not a Panacea** but can improve software quality
 - Getting more and more **accessible**
@@ -151,7 +151,7 @@ Notes:
 
 ## Tools Landscape
 
-<img height="400px" src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
+<img rounded style="width: 700px" src="./img/Landscape.svg">
 
 Notes:
 
@@ -175,7 +175,7 @@ Links to listed tools
 <pba-cols>
 <pba-col center>
 
-<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
+<img rounded style="width: 700px" src="./img/Landscape.svg">
 
 </pba-col>
 
@@ -204,7 +204,7 @@ Notes:
 <pba-cols>
 <pba-col center>
 
-<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
+<img rounded style="width: 700px" src="./img/Landscape.svg">
 
 </pba-col>
 
@@ -235,7 +235,7 @@ Notes:
 <pba-cols>
 <pba-col center>
 
-<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
+<img rounded style="width: 700px" src="./img/Landscape.svg">
 
 </pba-col>
 
@@ -309,6 +309,8 @@ fn check_my_property() {
    assert!(meets_specification(input, output));
 }
 ```
+
+<!-- .element: style="font-size:0.62em"-->
 
 - Kani tries to prove that all valid inputs produce outputs that meet specifications, without panicking.
 - Else, Kani generates a trace that points to the failure.
@@ -476,6 +478,8 @@ fn check_initialize_prefix() {
 }
 ```
 
+<!-- .element: style="font-size:0.62em"-->
+
 ---v
 
 ## Dealing with Loops: Summary
@@ -518,7 +522,10 @@ impl<'a> Arbitrary<'a> for Rgb {
 
 > Verify [Fixed-width](https://github.com/paritytech/parity-scale-codec/blob/master/src/codec.rs) & [Compact](https://github.com/paritytech/parity-scale-codec/blob/master/src/compact.rs) Encoding for integer types in SCALE.
 
-#### Open Ended properties!
+<br/>
+<br/>
+
+**Open Ended properties!**
 
 - _RoundTrip_: `Decode (Encode (x)) == x`
 - `DecodeLength(x) == Decode(x).length()`
@@ -536,3 +543,9 @@ Notes:
 # More Verification
 
 # Less Bugs
+
+<br/>
+<br/>
+<br/>
+
+**_Questions?_**
