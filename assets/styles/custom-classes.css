@@ -196,7 +196,7 @@ th {
 }
 
 .no-bullet-padding ul,
-ul>li::before {
+.no-bullet-padding ul>li::before {
 	padding: 0 !important;
 	/* Remove padding */
 	margin: 0 !important;
