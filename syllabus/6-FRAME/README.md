@@ -10,7 +10,7 @@
 
 - Introduction To FRAME
 - Exercise: Proof of Existence Runtime
-- FRAME Assignment (whole week!)
+- FRAME Assignment (1.5 weeks - deadline weekend after Polkadot module)
 
 ## Day 2 - Thurs
 

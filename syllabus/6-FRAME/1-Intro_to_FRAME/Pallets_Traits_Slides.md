@@ -32,15 +32,15 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 
 ---
 
-## Balances Pallet & Currency Trait
+## Balances Pallet & Fungible Traits
 
 ---
 
-## Assets Pallet & Fungibles Trait
+## Assets Pallet & Fungibles Traits
 
 ---
 
-## NFT Pallet & Non-Fungibles Trait
+## NFT Pallet & Non-Fungibles Traits
 
 ---
 
@@ -52,11 +52,15 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 
 ---
 
-## Collectives + Membership Pallet
+## Conviction Voting + Referenda Pallet
+
+(Open Governance)
 
 ---
 
-## Democracy Pallet
+## Ranked Collectives + Whitelist Pallet
+
+(Technical Fellowship)
 
 ---
 
