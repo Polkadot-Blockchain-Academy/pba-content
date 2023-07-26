@@ -126,7 +126,7 @@ Note:
   Techniques are not scalable on large codebases.
 - Complexity of runtime business logic is magnitude lower.
   Lot of interest in Smart Contract verification.
-- Check out [Certora](https://www.certora.com/), [Echidna](https://github.com/crytic/echidna), [Securify](https://mysecurify.com/), etc.
+- Check out [Certora](https://www.certora.com/), [Echidna](https://github.com/crytic/echidna), [Securify](https://mysecurify.com/), etc. <!-- markdown-link-check-disable-line -->
 
 ---v
 
@@ -259,13 +259,13 @@ Notes:
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Our Focus: Kani
+# Our Focus: [Kani](https://github.com/model-checking/kani)
 
 ---
 
 ## Kani: Model Checking tool for Rust
 
-- Open-source Rust verifier by AWS
+- [Open-source Rust verifier](https://github.com/model-checking/kani) by AWS
 - Underlying technique used: Bounded Model Checking
 - Can be used to _prove_:
   - Absence of arithmetic overflows

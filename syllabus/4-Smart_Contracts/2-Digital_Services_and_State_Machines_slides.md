@@ -79,7 +79,7 @@ So that brings us to web2.
 1999 or 2004, wherever you want to put it really.
 Web2 brings the introduction of Digital Services with Rich state - so we're talking about web apps.
 Who here remembers Myspace? I was obsessed with curating my top 8.
-And then of course facebook or whatever social media platform and beyond.
+And then of course Facebook or whatever social media platform and beyond.
 But it's not just media either, there's eBay and Amazon and you can register to vote online and there's all these Services where you just go online you fill some data into a web form - maybe you don't even have to do a page reload - and that basically submits a transaction to some back-end server somewhere!
 So we begin to get these really really useful Digital Services.
 You can even think about things like Google search for example, that hardly existed in web1.
