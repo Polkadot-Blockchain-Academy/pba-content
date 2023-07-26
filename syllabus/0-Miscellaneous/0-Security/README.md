@@ -22,7 +22,7 @@
 2. Key management on the nodes
 3. Passwords management for Infrastructure
 
-### [Application Security](./appsec-slides.md) (60mn) by Serhan Bashar
+### Application Security (60mn) by Serhan Bashar
 
 1. Securing SDLC
 2. Components of AppSec

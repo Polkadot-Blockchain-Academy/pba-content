@@ -96,10 +96,11 @@ yarn
 ---
 
 **To see what reveal can do, please view the slides and their source for details:**
+[](./faculty_resources/0-how_to_use_reveal_slides.md)
 
-- [How-to use reveal slides](./syllabus/0-Internal_Faculty_Resources/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
-- [Lecture template slides](./syllabus/0-Internal_Faculty_Resources/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
-- [Copy & paste slide templates](./syllabus/0-Internal_Faculty_Resources/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
+- [How-to use reveal slides](./faculty_resources/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
+- [Lecture template slides](./faculty_resources/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
+- [Copy & paste slide templates](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
 
 ---
 
