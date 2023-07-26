@@ -408,6 +408,7 @@ impl<T: Config> Pallet<T> {
 	}
 }
 ```
+
 <br />
 
 `frame/support/procedural/src/pallet/expand/event.rs`

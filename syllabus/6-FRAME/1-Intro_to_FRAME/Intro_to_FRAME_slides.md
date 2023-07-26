@@ -252,7 +252,7 @@ It contains all the most basic functions and types needed for a blockchain syste
 
 - `T::BlockNumber`
 - `frame_system::Pallet::<T>::block_number()`
-- `T::AcccountId`
+- `T::AccountId`
 - `T::Hash`
 - `T::Hashing::hash(&bytes)`
 
