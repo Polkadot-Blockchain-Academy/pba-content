@@ -571,6 +571,8 @@ Each validator **broadcasts** a **prevote** for the **highest block** that it th
 - For **honest** validators, this block **must include** the chain that was previously finalized
 - This **new chain** could be **several blocks** longer than the **last finalized** chain
 
+Notes:
+
 A **validator** that is designated as the **primary** broadcasts the highest block that it thinks could be final from the previous round
 
 ---
