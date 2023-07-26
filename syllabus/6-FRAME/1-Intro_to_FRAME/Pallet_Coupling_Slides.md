@@ -156,41 +156,40 @@ It looks like this:
 ```rust [3]
 #[pallet::config]
 pub trait Config<I: 'static = ()>: frame_system::Config {
-	type Currency: Currency<Self::AccountId> + ReservableCurrency<Self::AccountId>;
+	type NativeBalance: fungible::Inspect<Self::AccountId> + fungible::Mutate<Self::AccountId>;
 
 	// -- snip --
 }
 ```
 
-Here you can see that this pallet requires some associated type `Currency` to be configured which implements some traits `Currency` and `ReservableCurrency`, however there is no requirements on how or where that type is configured.
+Here you can see that this pallet requires some associated type `NativeBalance` to be configured which implements some traits `fungible::Inspect` and `fungible::Mutate`, however there is no requirements on how or where that type is configured.
 
 ---
 
 ## Trait Definition
 
-To begin loose coupling, you need to define a trait / interface that can be provided and depended on. A very common example is the `Currency` trait, which most often is implemented by `pallet_balances`.
+To begin loose coupling, you need to define a trait / interface that can be provided and depended on. A very common example is the `fungible::*` traits, which most often is implemented by `pallet_balances`.
 
 ```rust
-/// Abstraction over a fungible assets system.
-pub trait Currency<AccountId> {
-	/// The balance of an account.
-	type Balance: Balance + MaybeSerializeDeserialize + Debug + MaxEncodedLen + FixedPointOperand;
+/// Trait for providing balance-inspection access to a fungible asset.
+pub trait Inspect<AccountId>: Sized {
+	/// Scalar type for representing balance of an account.
+	type Balance: Balance;
 
-	/// The 'free' balance of a given account.
-	/// This is the only balance that matters in terms of most operations on tokens.
-	fn free_balance(who: &AccountId) -> Self::Balance;
+	/// The total amount of issuance in the system.
+	fn total_issuance() -> Self::Balance;
 
-	/// Transfer some liquid free balance to another user.
-	fn transfer(
-		source: &AccountId,
-		dest: &AccountId,
-		value: Self::Balance,
-		existence_requirement: ExistenceRequirement,
-	) -> DispatchResult;
+	/// The total amount of issuance in the system excluding those which are controlled by the
+	/// system.
+	fn active_issuance() -> Self::Balance {
+		Self::total_issuance()
+	}
 
 	// -- snip --
 }
 ```
+
+`frame/support/src/traits/tokens/fungible/regular.rs`
 
 ---
 
@@ -199,19 +198,20 @@ pub trait Currency<AccountId> {
 This trait can then be implemented by a Pallet, for example `pallet_balances`.
 
 ```rust
-impl<T: Config<I>, I: 'static> Currency<T::AccountId> for Pallet<T, I>
-where
-	T::Balance: MaybeSerializeDeserialize + Debug,
-{
+impl<T: Config<I>, I: 'static> fungible::Inspect<T::AccountId> for Pallet<T, I> {
 	type Balance = T::Balance;
 
-	fn free_balance(who: &T::AccountId) -> Self::Balance {
-		Self::account(who).free
+	fn total_issuance() -> Self::Balance {
+		TotalIssuance::<T, I>::get()
 	}
+	fn active_issuance() -> Self::Balance {
+		TotalIssuance::<T, I>::get().saturating_sub(InactiveIssuance::<T, I>::get())
 
 	// -- snip --
 }
 ```
+
+`frame/balances/src/impl_fungible.rs`
 
 Any pallet, even one you write, could implement this trait.
 
@@ -224,7 +224,7 @@ Another pallet can then, separately, depend on this trait.
 ```rust [3]
 #[pallet::config]
 pub trait Config: frame_system::Config {
-	type Currency: Currency<Self::AccountId>;
+	type NativeBalance: fungible::Inspect<Self::AccountId> + fungible::Mutate<Self::AccountId>;
 }
 ```
 
@@ -234,8 +234,8 @@ And can use this trait throughout their pallet:
 #[pallet::weight(0)]
 pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
 	let from = ensure_signed(origin)?;
-	let amount = T::Currency::free_balance(&from);
-	T::Currency::transfer(&from, &to, amount, AllowDeath)
+	let amount = T::NativeBalance::balance(&from);
+	T::NativeBalance::transfer(&from, &to, amount, Expendable)
 }
 ```
 
@@ -246,10 +246,10 @@ pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
 Finally, in the runtime configuration, we concretely define which pallet implements the trait.
 
 ```rust
-/// Configuration of a pallet using the `Currency` trait.
+/// Configuration of a pallet using the `fungible::*` traits.
 impl pallet_voting::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
-	type Currency = pallet_balances::Pallet<Runtime>;
+	type NativeBalance = pallet_balances::Pallet<Runtime>;
 }
 ```
 
@@ -271,7 +271,7 @@ When done right, it can be very powerful; like the ERC20 token format.
 
 Many new pallet developers also find loose coupling challenging because associated types are not concretely defined... on purpose.
 
-For example, note that the `Currency` trait has a generic `Balances` type.
+For example, note that the `fungible::*` trait has a generic `Balances` type.
 
 This allows pallet developers can configure most unsigned integers types (`u32`, `u64`, `u128`) as the `Balance` type for their chain, however, this also means that you need to be more clever when doing math or other operations with those generic types.
 
