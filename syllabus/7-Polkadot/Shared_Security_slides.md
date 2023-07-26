@@ -420,18 +420,18 @@ Other protocols say they are providing shared security... but do they have these
 
 ## Re-Staking Solution
 
-<pba-cols>
+<div class="grid grid-cols-3 text-small">
 
-<pba-col>
+<div>
 
 ### Pros
 
 - Seems to be protocol agnostic, and can be “backported” to new and existing chains.
 - Smaller / newer chains can rely on more valuable and stable economies.
 
-</pba-col>
+</div>
 
-<pba-col>
+<div class="col-span-2">
 
 
 ### Cons
@@ -440,18 +440,27 @@ Other protocols say they are providing shared security... but do they have these
 - No real computational verification or protection provided by these systems.
 - Seems to ultimately fall back on centralized sources of trust.
 
-</pba-col>
+</div>
 
-</pba-cols>
+</div>
+
+Notes:
+
+See the section on "Key Risks and Vulnerabilities" here:
+
+https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primitive/
+
+> Generally there are two main attack vectors of EigenLayer. One is that many validators collude to attack a set of middleware services simultaneously. The other is that the protocols that leverage EigenLayer and are built through it may have unintended slashing vulnerabilities and there is a risk of honest nodes getting slashed.
+>
+> Much of the EigenLayer mechanism relies upon a rebalancing algorithm that takes into account the different validators and their accompanying stake and security capacity and usage. This underpins the success of the protocol. If this rebalancing mechanism fails (e.g. slow to adjust, latency, incorrect parameters) then EigeinLayer opens itself up to different attack vectors, particularly around cryptoeconomic security. It essentially replicates the same vulnerabilities that it sought to solve with merge-mining. So attention must be paid to ensuring that the system is accurately updating any outstanding restaked $ETH and that it remains fully collateralized.
 
 ---
 
-
 ## Optimistic Rollups
 
-<pba-cols>
+<div class="grid grid-cols-3 text-small">
 
-<pba-col>
+<div>
 
 ### Pros
 
@@ -460,9 +469,9 @@ Other protocols say they are providing shared security... but do they have these
 - They can stuff a lot of data in their STF.
 - They can use compiled code native to modern processors.
 
-</pba-col>
+</div>
 
-<pba-col>
+<div class="col-span-2">
 
 ### Cons
 
@@ -473,17 +482,17 @@ Other protocols say they are providing shared security... but do they have these
 	- On-chain costs to perform the interactive protocol.
 	- Congestion of the network.
 
-</pba-col>
+</div>
 
-</pba-cols>
+</div>
 
 ---
 
 ## Zero Knowledge Rollups
 
-<pba-cols>
+<div class="grid grid-cols-3 text-small">
 
-<pba-col>
+<div>
 
 ### Pros
 
@@ -493,9 +502,9 @@ Other protocols say they are providing shared security... but do they have these
 - Instant Finality (at high costs).
 - Exciting future if recursive proofs work out.
 
-</pba-col>
+</div>
 
-<pba-col>
+<div class="col-span-2">
 
 ### Cons
 
@@ -507,17 +516,17 @@ Other protocols say they are providing shared security... but do they have these
 	- On-chain costs to submit and execute proofs on settlement layer.
 	- Congestion of the network.
 
-</pba-col>
+</div>
 
-</pba-cols>
+</div>
 
 ---
 
 ## Polkadot Native Shared Security
 
-<pba-cols>
+<div class="grid grid-cols-2 text-small">
 
-<pba-col>
+<div>
 
 ### Pros
 
@@ -527,16 +536,25 @@ Other protocols say they are providing shared security... but do they have these
 - Data availability provided by the existing validators.
 - Much less concern of centralization from collators vs sequencers and provers.
 
-</pba-col>
+</div>
 
-<pba-col>
+<div>
 
 ### Cons
 
+- Certain limitations enforced to keep parachains compatible with the parachains protocol.
+	- Wasm STF
+	- No Custom Host Function
+	- Constrained Execution Environment
 - Wasm is unfortunately still 2x slower than native compilation.
 - Requires lot of data being provided and available in PoV.
-- Certain limitations enforced to keep parachains compatible with the parachains protocol.
 
-</pba-col>
+</div>
 
-</pba-cols>
+</div>
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
