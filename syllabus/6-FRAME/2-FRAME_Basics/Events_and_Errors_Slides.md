@@ -504,12 +504,13 @@ pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
 `frame/system/src/lib.rs`
 
 ```rust
-/// Get a single event at specified index.
+/// Get the current events deposited by the runtime.
 ///
 /// Should only be called if you know what you are doing and outside of the runtime block
 /// execution else it can have a large impact on the PoV size of a block.
-pub fn event_no_consensus(index: usize) -> Option<T::RuntimeEvent> {
-	Self::read_events_no_consensus().nth(index).map(|e| e.event.clone())
+pub fn read_events_no_consensus(
+) -> impl sp_std::iter::Iterator<Item = Box<EventRecord<T::RuntimeEvent, T::Hash>>> {
+	Events::<T>::stream_iter()
 }
 
 /// Get the current events deposited by the runtime.
