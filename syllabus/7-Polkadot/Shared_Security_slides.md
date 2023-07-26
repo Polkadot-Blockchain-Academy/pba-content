@@ -14,9 +14,20 @@ Shared Security is an Economic Scaling Solution for Blockchains.
 
 ---
 
+<div class="grid grid-cols-2">
+<div>
+
 But that is just an answer that sits at the surface. The topic goes much deeper than that.
 
 Let’s explore…
+
+</div>
+<div>
+
+<image src="../../../assets/img/7-Polkadot/iceburg.jpg" style="width: 500px">
+
+</div>
+</div>
 
 ---
 
@@ -133,7 +144,7 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 ## Different Forms of "Shared Security" Today
 
 - Native: Native shared security is implemented at the protocol level, and is represented as  a Layer 0 blockchain, working underneath Layer 1 chains.
-- Rollups: Optimistic and zero knowledge rollups use a settlement layer to provide security and finality to their transactions.
+- Rollups: Optimistic and Zero-Knowledge Rollups use a settlement layer to provide security and finality to their transactions.
 - Re-Staking: Some protocols allow the use of already staked tokens to secure another network, usually through the creation of a derivative token.
 
 ## but these different forms are not equal…
@@ -174,7 +185,7 @@ This is native to the protocol, and one of its core functionalities.
 
 1. Execution Meta-Protocol
 2. Coordination / Validation
-3. Security Hub
+3. Security Hub / Settlement Layer
 
 </pba-col>
 
@@ -399,7 +410,7 @@ So, shared security not only secures the individual chains, but the interactions
 
 1. Execution Meta-Protocol
 2. Coordination / Validation
-3. Security Hub
+3. Security Hub / Settlement Layer
 
 </pba-col>
 
@@ -488,7 +499,7 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 
 ---
 
-## Zero Knowledge Rollups
+## Zero-Knowledge Rollups
 
 <div class="grid grid-cols-3 text-small">
 
