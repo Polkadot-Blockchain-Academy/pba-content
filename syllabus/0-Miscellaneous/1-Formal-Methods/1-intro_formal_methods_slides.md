@@ -151,7 +151,7 @@ Notes:
 
 ## Tools Landscape
 
-<img style="width: 700px" src="./img/Landscape.svg">
+<img style="width: 700px" src="./img/Landscape.svg"/>
 
 Notes:
 
@@ -175,7 +175,7 @@ Links to listed tools
 <pba-cols>
 <pba-col center>
 
-<img style="width: 700px" src="./img/Landscape.svg">
+<img style="width: 700px" src="./img/Landscape.svg"/>
 
 </pba-col>
 
@@ -204,7 +204,7 @@ Notes:
 <pba-cols>
 <pba-col center>
 
-<img style="width: 700px" src="./img/Landscape.svg">
+<img style="width: 700px" src="./img/Landscape.svg"/>
 
 </pba-col>
 
@@ -235,7 +235,7 @@ Notes:
 <pba-cols>
 <pba-col center>
 
-<img style="width: 700px" src="./img/Landscape.svg">
+<img style="width: 700px" src="./img/Landscape.svg"/>
 
 </pba-col>
 
