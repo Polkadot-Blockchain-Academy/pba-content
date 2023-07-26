@@ -77,6 +77,8 @@ Decisions that can be easily changed in the future.
 
 ## Against Blockchain Maximalism
 
+<img width="1000px" src="../../assets/img/5-Substrate/dev-4.1-maximalism.png" />
+
 ---
 
 ## “The best blockchain today will not be the best blockchain tomorrow.”
@@ -113,7 +115,7 @@ Polkadot tries to accomplish that mission by solving three problems:
 2. Shared Security
 3. Interoperability
 
-</pba-flex
+</pba-flex>
 ---
 
 ## The Decisions
