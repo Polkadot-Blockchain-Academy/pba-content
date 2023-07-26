@@ -21,9 +21,6 @@ use sp_runtime::{
 	ApplyExtrinsicResult,
 };
 
-// TODO: in most tests, we use alice to mint in her own account, and then use her own account to
-// transact. to separate the checks for nonce, it would be nice to separate this.
-
 mod shared;
 
 const LOG_TARGET: &'static str = "wasm-tests";
