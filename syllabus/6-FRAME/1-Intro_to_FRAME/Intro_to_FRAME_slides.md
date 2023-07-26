@@ -6,7 +6,7 @@ duration: 1 hour
 
 ## Lesson Plan
 
-<table>
+<table class="no-bullet-padding">
 <tr>
   <td>Monday</td>
   <td>Tuesday</td>
@@ -18,33 +18,50 @@ duration: 1 hour
 <tr class="text-small">
 <td>
 
-- Introduction To FRAME
-- Exercise: Proof of Existence Runtime
-- Pallet Coupling
-- FRAME Tips and Tricks
-- FRAME Common Knowledge (Pallets & Traits)
-- FRAME Assignment (whole week!)
+- Substrate Lectures
 
 </td>
 <td>
 
-- Storage
+- Substrate Lectures
+
+</td>
+<td>
+
+- Introduction to FRAME
+- 👩‍💻 Exercise: Proof of Existence Runtime
+- Announce FRAME Assignment
+
+</td>
+<td>
+
+- Pallet Coupling
+- FRAME Common Knowledge (Pallets & Traits)
+- FRAME Storage
+
+</td>
+<td>
+
 - Events & Errors
 - Calls
 - Hooks
-
-</td>
-<td>
-
-- Construct Runtime + Tests
 - Origins
 - Outer Enum
 
 </td>
 <td>
 
+- Complete FRAMEless Exercise
+
+</td>
+</tr>
+<tr class="text-small">
+<td>
+
+- Construct Runtime + Tests
+- 👨‍💻 Exercise: Tests
 - FRAME Benchmarking
-- Exercise: Benchmarking Example
+- 👨🏾‍💻 Exercise: Benchmarking
 
 </td>
 <td>
@@ -52,14 +69,30 @@ duration: 1 hour
 - FRAME Under the Hood
   - Deep Dive
   - Executive
-- Migration & Try Runtime
 - Signed Extensions
+- Migrations & Try Runtime
 
 </td>
 <td>
 
-- Live Coding + Q/A Sessions (12pm-ish)
-- Complete FRAME Assignment
+- Spill Over + Live Coding
+- Polkadot Lectures
+
+</td>
+
+<td>
+
+- Polkadot Lectures
+
+</td>
+<td>
+
+- Polkadot Lectures
+
+</td>
+<td>
+
+- Complete FRAME Exercise
 
 </td>
 </tr>
