@@ -126,7 +126,7 @@ Note:
   Techniques are not scalable on large codebases.
 - Complexity of runtime business logic is magnitude lower.
   Lot of interest in Smart Contract verification.
-- Check out [Certora](https://www.certora.com/), [Echidna](https://github.com/crytic/echidna), [Securify](https://mysecurify.com/), etc. <!-- markdown-link-check-disable-line -->
+- Check out Certora, Echidna, Securify, and more [here](https://ethereum.org/en/developers/docs/smart-contracts/formal-verification/)
 
 ---v
 
