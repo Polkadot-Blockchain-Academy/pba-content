@@ -15,7 +15,7 @@ duration: 60 minutes
 1. Intro to Formal Methods
 1. Landscape of Techniques for Rust
 1. Focus on Kani: Bounded Model Checker
-1. Applications to Polkadot
+1. Applications to Substrate
 
 </pba-flex>
 
@@ -31,12 +31,14 @@ duration: 60 minutes
 
 <img style="width: 30vw" src="../../../assets/img/Guest_Lectures/Formal_Methods/ariane.jpg" >
 
-- in **1996**, the launcher [rocket disintegrated](https://www-users.cse.umn.edu/~arnold/disasters/ariane.html) 39 secs after take-off.
+- in **1996**, the launcher rocket disintegrated 39 secs after take-off.
 - **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point
 - **Mistake**: reusing inertial reference platform of Ariane-4, where overflow cannot happen due to different operational conditions
-- **Cost**: 500M USD payload, 8B USD development program
+- **Cost**: `$`500M  payload, `$`8B development program
 
 Notes:
+
+Link to article: (https://www-users.cse.umn.edu/~arnold/disasters/ariane.html)
 
 ---v
 
@@ -50,11 +52,12 @@ Notes:
 
 ## Formal Methods to the Rescue!
 
-- Verify/prove correctness of software with reasonable mathematical guarantees.
+- Given a system (code) and Specification (behavior), verify/prove correctness with reasonable mathematical guarantees.
 - **Traditionally**, costs and efforts were justifiable in _safety-critical_ software like avionics, nuclear reactors, medical imaging, etc.
 - however, things have changed ...
 
 Notes:
+this is how Formal Methods were motivated; to prove the absence of Bugs! A bit of fear-mongering in my opinion. 
 
 ---v
 
@@ -66,6 +69,8 @@ Notes:
 - Ethreum's Beacon chain and Tendermint consensus formally verified for safety and liveness guarantees
 
 Notes:
+- Personally think of formal methods as a more systematic way of detecting bugs. 
+- Ideally, verifying if your property holds on all possible inputs.
 
 ---v
 
@@ -75,11 +80,17 @@ Notes:
 
 <pba-flex center>
 
-- verification tools more efficient
 - goals more focused, promises less lofty
+- verification tools more efficient
 - combination of analysis techniques
 
 </pba-flex>
+
+Notes:
+
+- Limiting attention to a particular class of bugs, resource leaks, data-races, etc.
+- Drastic Speed-up in Underlying Constraint-Solver engines. For example, Z3 by microsoft, can solve constraints with billions of variables.  
+- Unified theory with blurring lines; Combining both static and dynamic techniques. 
 
 ---v
 
@@ -90,9 +101,10 @@ Notes:
 
 Notes:
 
-- Drastic Speed-up in Underlying Constraint-Solver engines
-- reduce the scope of bugs; focus on particular bugs like resource leaks,
-- combine symbolic and concrete executions;
+- Realised the importance of Developer experience. 
+- No more obscure logic that the developer has to learn to write specifications. 
+- You will see how intuitive it is to verify code. 
+
 
 ---v
 
@@ -102,6 +114,14 @@ Notes:
 
 - lot at stake, justifies the cost and efforts
 - business logic is compact and modular, within limits
+
+Note:
+
+- Reputation along with money at stake.
+
+- A simple android app has 100k java classes. Techniques are not scalable on large codebases. 
+- Complexity of runtime business logic is magnitude lower. Lot of interest in Smart Contract verification. 
+- Check Certora, Echidna, Securify, etc.
 
 ---v
 
@@ -118,19 +138,19 @@ Notes:
 
 Notes:
 
-http://www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/
-Great blog that explains the trade-offs between soundness and tractability
+- [Great blog](http://www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/) that explains the trade-offs between soundness and tractability
+
 
 ---
 
-## Tools Landscape
+<!-- .slide: data-background-color="#4A2439" -->
 
-<img src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg" height="750">
-<!-- TODO: Need to convert an image similar to this into an svg. Want the green circle to appear as a transition. Use Figma for creating the image. -->
+## Tools Landscape
+<img height="400px" src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
 
 Notes:
 
-Links to tools listed
+Links to listed tools
 
 - [Isabelle](https://isabelle.in.tum.de/)
 - [Coq](https://coq.inria.fr/)
@@ -165,6 +185,14 @@ Links to tools listed
 </pba-col>
 </pba-cols>
 
+Notes:
+
+- Design-level, verifying protocol design. 
+- Always a discrepancy in your model and actual code. 
+- Safety: nothing bad ever happens; no two honest nodes agree on different state
+- Liveness: something good eventually happens; eventually 2/3rds reach consensus
+
+
 ---v
 
 ## Tools Landscape
@@ -181,11 +209,18 @@ Links to tools listed
 #### Static Analyzers
 
 - code-level
-- specify expected behavior (information/data flow)
+- information/ dataflow properties; access control for code; 
+- specify expected behavior (properties). Roundtrip property: decode (encode (x)) == x
 - default checks: bugs like arithmetic overflow, out-of-bound access panics
 
 </pba-col>
 </pba-cols>
+
+Notes:
+
+- Eg. for code access control: ensure that certain sensitive parts of runtime are only accessible by Root origin
+- MIRAI is developed by facebook; uses technique called abstract interpretation; specifically useful for detecting panics statically and information flow properties
+- Kani: we will dive deeper soon
 
 ---v
 
@@ -209,6 +244,10 @@ Links to tools listed
 </pba-col>
 </pba-cols>
 
+Notes:
+- [Substrace](https://github.com/KaiserKarel/substrace) is a linter specifically for Substrate
+- Flowistry allows you to track dependency between variables; slices only the relevant portion for a given location. 
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -220,16 +259,22 @@ Links to tools listed
 ## Kani: Model Checking tool for Rust
 
 - open-source Rust verifier by AWS
-- underlying technique used: [Bounded Model Checking](https://www.cs.cmu.edu/~emc/papers/Books%20and%20Edited%20Volumes/Bounded%20Model%20Checking.pdf)
+- underlying technique used: Bounded Model Checking
 - Can be used to _prove_:
   - absence of arithmetic overflows
   - absence of runtime errors (index out of bounds, panics)
   - User Specified Properties (enhanced PropTesting)
   - memory safety when using unsafe Rust
+- Provides a concrete test-case triggering the bug if verification fails
+
+Notes:
+
+Link to Bounded Model Checking paper for interested folks [here](https://www.cs.cmu.edu/~emc/papers/Books%20and%20Edited%20Volumes/Bounded%20Model%20Checking.pdf)
+For example when you are accessing/modifying mutable static variable
 
 ---v
 
-lets see some Magic and then the Trick
+lets see some Magic first
 
 > Demo of the Rectangle-Example
 
@@ -266,12 +311,12 @@ fn check_my_property() {
 
 ---v
 
-## Property: `decode(encode(x)) == x`
+Property: `decode(encode(x)) == x`
 
 <pba-cols>
 <pba-col center>
 
-**Test**
+Test
 
 ```rust
 #[cfg(test)]
@@ -288,7 +333,7 @@ fixed value `42`
 
 <pba-col center>
 
-**Fuzzing**
+Fuzzing
 
 ```rust
 #[cfg(fuzzing)]
@@ -306,7 +351,7 @@ multiple random values of `u16`
 
 <pba-col center>
 
-**Kani Proof**
+Kani Proof
 
 ```rust
 #[cfg(kani)]
@@ -332,10 +377,13 @@ verifies exhaustively all values of `u16`
 
 #### Method:
 
-- Efficiently reduce problem to a Propositional Satisfiability (SAT) problem
-- counterexmaple for property $\phi$ exists in $P$ $\iff$ $SAT_{\phi,P}$ is satisfiable.
+- Efficiently reduce problem to a Constraint Satisfaction (SAT) problem
 - verification reduced to problem of searching satisfiable assignment to a SAT formula.
 - leverages highly optimized SAT solvers making the search tractable.
+
+Notes:
+
+Kani uses miniSAT as the backend engine; a lot of other verification tools use Z3 solver. 
 
 ---v
 
@@ -381,15 +429,11 @@ z != 7 /\ w != 9 (negation of the assert condition)
 
 - else the solver found a failing test (counterexample)
 
-<!-- show the number of clauses and variables used in the formula in the demo-->>
+<!-- show the number of clauses and variables used in the formula in the demo-->
 
 </pba-col>
 </pba-cols>
 
-<!--
-TODO: Depict this reduction with a diagram.
-
--->
 
 ---v
 
@@ -397,7 +441,7 @@ TODO: Depict this reduction with a diagram.
 
 - _Bounded_ in BMC to the rescue!
 
-- loops are unwinded up to a certain bounded depth $k$, else the verification does not terminate. (show in Demo)
+- loops are unwinded up to a certain bounded depth $k$, else the verification does not terminate. 
 
 - determining the _sweet-spot_ $k$ is a trade-off between _tractability_ and _verification confidence_ .
 
@@ -447,8 +491,6 @@ fn check_initialize_prefix() {
 
 ## Implementing Arbitrary for custom type
 
-Show demo for the following type:
-
 ```rust
 use arbitrary::{Arbitrary, Result, Unstructured};
 
@@ -482,23 +524,14 @@ impl<'a> Arbitrary<'a> for Rgb {
 - `EncodeAppend(vec,item) == Encode(vec.append(item))`
 - ......
 
-<!--
-Any other FRAME pallet that they can write Proof Harnesses for?
+Notes:
 
-TODO: write-up the exercises in PBA format
-
-DecodeLength, EncodeAppend more properties for SCALE;
--->
-
+- Potentially, we might play around with a few of these properties during a workshop this weekend. 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Less Trust.
+# More Verification
 
-# More Truth.
+# Less Bugs
 
-<!-- Meta TODOs:
-add internal reference link to chapters
-
--->
