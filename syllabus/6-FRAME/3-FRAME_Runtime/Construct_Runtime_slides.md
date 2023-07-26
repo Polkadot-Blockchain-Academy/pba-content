@@ -405,7 +405,7 @@ impl frame_system::Config for Runtime {
 ```rust
 #[pallet::config]
 pub trait Config: frame_system::Config + pallet_aura::Config {
-  type Currency: ...
+  type NativeBalance: ...
   type MinimumDelegation: Get<BalanceOf<Self>>;
 }
 ```

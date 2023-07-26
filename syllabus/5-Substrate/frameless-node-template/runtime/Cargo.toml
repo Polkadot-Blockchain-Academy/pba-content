@@ -1,0 +1,61 @@
+[package]
+name = "runtime"
+version = "0.3.0"
+edition = "2021"
+
+[dependencies]
+parity-scale-codec = { version = "3.0.0", default-features = false }
+scale-info = { version = "2.6.0", default-features = false }
+serde = { version = "1.0.130", optional = true }
+log = { version = "0.4.14" }
+
+sp-storage = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-io = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-core = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-version = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-std = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-inherents = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-block-builder = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-session = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-offchain = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+hex-literal = { version = "0.4.1" }
+
+docify = "0.2.0"
+
+[build-dependencies]
+substrate-wasm-builder = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", optional = true }
+
+[dev-dependencies]
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+sc-executor = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api", default-features = false }
+
+
+[features]
+default = ["std"]
+std = [
+	"parity-scale-codec/std",
+	"scale-info/std",
+	"serde",
+
+	"sp-storage/std",
+	"sp-io/std",
+	"sp-api/std",
+	"sp-core/std",
+	"sp-runtime/std",
+	"sp-std/std",
+	"sp-version/std",
+	"sp-std/std",
+	"sp-inherents/std",
+	"sp-block-builder/std",
+	"sp-session/std",
+	"sp-transaction-pool/std",
+	"sp-offchain/std",
+
+	"substrate-wasm-builder",
+]
+
+

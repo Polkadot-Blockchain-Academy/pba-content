@@ -109,7 +109,7 @@ In regular multi-signatures,<br/>signatures from individual public keys are aggr
 
 Each participant can choose their own key to use for the multi-signature.
 
-Note:
+Notes:
 
 In some cases, a security requirement of these systems is that every participant demonstrates ownership of the public key submitted for the multi-signature, otherwise security can be compromised.
 
