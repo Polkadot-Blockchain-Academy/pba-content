@@ -1,6 +1,6 @@
 ---
 title: Formal Methods for Rust
-description: Introduction to the Guest Lecture on formal methods for Rust verification.
+description: Introductory lesson on formal methods for Rust verification
 duration: 60 minutes
 ---
 
@@ -34,7 +34,7 @@ duration: 60 minutes
 - in **1996**, the launcher rocket disintegrated 39 secs after take-off.
 - **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point
 - **Mistake**: reusing inertial reference platform of Ariane-4, where overflow cannot happen due to different operational conditions
-- **Cost**: `$`500M  payload, `$`8B development program
+- **Cost**: `$`500M payload, `$`8B development program
 
 Notes:
 
@@ -44,7 +44,9 @@ Link to article: (https://www-users.cse.umn.edu/~arnold/disasters/ariane.html)
 
 ## Software Correctness is _very_ important
 
-> Program testing can be used to show the presence of bugs, but never to show their absence! - Edgard Dijkstra
+> Program testing can be used to show the presence of bugs, but never to show their absence!
+>
+> --Edgard Dijkstra--
 
 #### Hence, the necessity to go beyond Testing <!-- .element: class="fragment" -->
 
@@ -57,7 +59,8 @@ Link to article: (https://www-users.cse.umn.edu/~arnold/disasters/ariane.html)
 - however, things have changed ...
 
 Notes:
-this is how Formal Methods were motivated; to prove the absence of Bugs! A bit of fear-mongering in my opinion. 
+
+this is how Formal Methods were motivated; to prove the absence of Bugs! A bit of fear-mongering in my opinion.
 
 ---v
 
@@ -66,17 +69,18 @@ this is how Formal Methods were motivated; to prove the absence of Bugs! A bit o
 - AWS formally verifies Key-Value storage nodes in Amazon S3 (Rust Implementation).
 - Meta detects resource leaks and race conditions in Android apps
 - Uber uses static analysis to find Null-pointer exceptions
-- Ethreum's Beacon chain and Tendermint consensus formally verified for safety and liveness guarantees
+- Ethereum's Beacon chain and Tendermint consensus formally verified for safety and liveness guarantees
 
 Notes:
-- Personally think of formal methods as a more systematic way of detecting bugs. 
+
+- Personally think of formal methods as a more systematic way of detecting bugs.
 - Ideally, verifying if your property holds on all possible inputs.
 
 ---v
 
 ## Formal Methods Today
 
-> _...have gone from being theoretical research interests to delivering practical cost-effective tools_
+> ...have gone from being theoretical research interests to delivering practical cost-effective tools
 
 <pba-flex center>
 
@@ -89,26 +93,26 @@ Notes:
 Notes:
 
 - Limiting attention to a particular class of bugs, resource leaks, data-races, etc.
-- Drastic Speed-up in Underlying Constraint-Solver engines. For example, Z3 by microsoft, can solve constraints with billions of variables.  
-- Unified theory with blurring lines; Combining both static and dynamic techniques. 
+- Drastic Speed-up in Underlying Constraint-Solver engines.
+  For example, Z3 by microsoft, can solve constraints with billions of variables.
+- Unified theory with blurring lines; Combining both static and dynamic techniques.
 
 ---v
 
 ## More like _Light-weight Formal Methods_
 
-1. rigorously **detecting bugs** >> proving overall correctness of system.
+1. Rigorously **detecting bugs** → proving overall correctness of system.
 1. Developer-centric **Usability** (e.g. workflow integration)
 
 Notes:
 
-- Realised the importance of Developer experience. 
-- No more obscure logic that the developer has to learn to write specifications. 
-- You will see how intuitive it is to verify code. 
-
+- Realized the importance of Developer experience.
+- No more obscure logic that the developer has to learn to write specifications.
+- You will see how intuitive it is to verify code.
 
 ---v
 
-## Formal Methods <> Blockchains
+## Formal Methods ↔ Blockchains
 
 #### Hammer finally found the nail!
 
@@ -119,9 +123,11 @@ Note:
 
 - Reputation along with money at stake.
 
-- A simple android app has 100k java classes. Techniques are not scalable on large codebases. 
-- Complexity of runtime business logic is magnitude lower. Lot of interest in Smart Contract verification. 
-- Check Certora, Echidna, Securify, etc.
+- A simple android app has 100k java classes.
+  Techniques are not scalable on large codebases.
+- Complexity of runtime business logic is magnitude lower.
+  Lot of interest in Smart Contract verification.
+- Check out [Certora](https://www.certora.com/), [Echidna](https://github.com/crytic/echidna), [Securify](https://mysecurify.com/), etc.
 
 ---v
 
@@ -140,12 +146,12 @@ Notes:
 
 - [Great blog](http://www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/) that explains the trade-offs between soundness and tractability
 
-
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
 ## Tools Landscape
+
 <img height="400px" src="../../../assets/img/Guest_Lectures/Formal_Methods/Landscape.svg">
 
 Notes:
@@ -187,11 +193,10 @@ Links to listed tools
 
 Notes:
 
-- Design-level, verifying protocol design. 
-- Always a discrepancy in your model and actual code. 
+- Design-level, verifying protocol design.
+- Always a discrepancy in your model and actual code.
 - Safety: nothing bad ever happens; no two honest nodes agree on different state
 - Liveness: something good eventually happens; eventually 2/3rds reach consensus
-
 
 ---v
 
@@ -209,8 +214,9 @@ Notes:
 #### Static Analyzers
 
 - code-level
-- information/ dataflow properties; access control for code; 
-- specify expected behavior (properties). Roundtrip property: decode (encode (x)) == x
+- information/ dataflow properties; access control for code;
+- specify expected behavior (properties).
+  Roundtrip property: decode (encode (x)) == x
 - default checks: bugs like arithmetic overflow, out-of-bound access panics
 
 </pba-col>
@@ -245,8 +251,9 @@ Notes:
 </pba-cols>
 
 Notes:
+
 - [Substrace](https://github.com/KaiserKarel/substrace) is a linter specifically for Substrate
-- Flowistry allows you to track dependency between variables; slices only the relevant portion for a given location. 
+- Flowistry allows you to track dependency between variables; slices only the relevant portion for a given location.
 
 ---
 
@@ -274,7 +281,7 @@ For example when you are accessing/modifying mutable static variable
 
 ---v
 
-lets see some Magic first
+### _Lets see some Magic first_
 
 > Demo of the Rectangle-Example
 
@@ -383,7 +390,7 @@ verifies exhaustively all values of `u16`
 
 Notes:
 
-Kani uses miniSAT as the backend engine; a lot of other verification tools use Z3 solver. 
+Kani uses miniSAT as the backend engine; a lot of other verification tools use Z3 solver.
 
 ---v
 
@@ -434,14 +441,13 @@ z != 7 /\ w != 9 (negation of the assert condition)
 </pba-col>
 </pba-cols>
 
-
 ---v
 
 ## How does it handle loops?
 
 - _Bounded_ in BMC to the rescue!
 
-- loops are unwinded up to a certain bounded depth $k$, else the verification does not terminate. 
+- loops are unwound up to a certain bounded depth $k$, else the verification does not terminate.
 
 - determining the _sweet-spot_ $k$ is a trade-off between _tractability_ and _verification confidence_ .
 
@@ -526,7 +532,8 @@ impl<'a> Arbitrary<'a> for Rgb {
 
 Notes:
 
-- Potentially, we might play around with a few of these properties during a workshop this weekend. 
+- Potentially, we might play around with a few of these properties during a workshop this weekend.
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -534,4 +541,3 @@ Notes:
 # More Verification
 
 # Less Bugs
-
