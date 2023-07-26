@@ -81,9 +81,7 @@ echo '{ "jsonrpc":"2.0", "id":1,  "method":"system_chain" }' | websocat -B 99999
 
 - `system_name`, `system_chain`, `system_chainType`, `system_health`, `system_version`, `system_nodeRoles`, `rpc_methods`, `state_getRuntimeVersion`, `state_getMetadata`
 
-NOTES
-
-```shZ
+```sh
 # Polkadot public endpoint
 echo '{"jsonrpc":"2.0", "id":1, "method":"system_chain" }' | websocat -B 99999999 wss://rpc.polkadot.io | jq
 ```
