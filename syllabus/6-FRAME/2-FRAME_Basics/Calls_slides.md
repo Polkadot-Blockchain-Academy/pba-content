@@ -271,7 +271,7 @@ impl<T: Config> Pallet<T> {
 
 In this case, the weight function name is assumed to match the call name for all calls.
 
-NOTES:
+Notes:
 
 https://github.com/paritytech/substrate/pull/13932
 
