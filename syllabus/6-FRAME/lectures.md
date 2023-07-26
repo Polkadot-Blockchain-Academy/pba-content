@@ -8,13 +8,13 @@
 
 > Ordering constraint: things that I think should come before one another.
 
-- error and call refund >> weight. Because of this, weight is explained broadly as a part of
+- Error and call refund >> weight. Because of this, weight is explained broadly as a part of
   transactions (quite early), and then there is a separate lecture toward the end about the details
   and benchmarking.
 
 ### Essentials
 
-- Intro to FRAME (kian)
+- Intro to FRAME (Kian)
 
   - simple-pallet
   - breeze over system, covers
@@ -28,7 +28,7 @@
   - Call Encoding (indices)
   - Weight basics
 
-- Frame Storage (shawn)
+- Frame Storage (Shawn)
 
 - Pallet Hooks
 
@@ -56,7 +56,7 @@
 
 - Metadata
 
-- Benchmarking (shawn)
+- Benchmarking (Shawn)
 
   - Weight classes
 
@@ -68,7 +68,7 @@
 
 - Frame Executive: Revisiting and Leftover
 
-- Testing a Pallet (kian)
+- Testing a Pallet (Kian)
   - How to write tests for a pallet.
   - ExtBuilder patter
   - `sp_io::TestExternalities`
@@ -84,10 +84,10 @@
   - sanity-checks by Kian
   - ...
 
-- Transactional layers/dispatch (shawn)
-- Signed Extensions, ValidateUnsigned TransactionValidity (priority) (kian)
+- Transactional layers/dispatch (Shawn)
+- Signed Extensions, ValidateUnsigned TransactionValidity (priority) (Kian)
 - Digests
-- Migration + Try-Runtime (kian)
+- Migration + Try-Runtime (Kian)
 - Custom RPCs + Runtime APIs (maybe, we will probably deprecate it)
 - Pallet Instancing
 
@@ -104,4 +104,3 @@
 ### Part 4: Interesting Case Studies (for Q&A Sessions and such)
 
 - Staking, Offchain Workers etc.
--
