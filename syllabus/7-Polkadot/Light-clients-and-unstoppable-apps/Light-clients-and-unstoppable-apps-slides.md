@@ -13,12 +13,12 @@ duration: 45+ mins
 <img rounded style="width: 80%;" src="./img/web2.png" />
 
 <aside class="notes">
-  This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but facebook, twitter, whatsapp etc etc);
+  This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but Facebook, Twitter, WhatsApp etc etc);
 </aside>
 
 Notes:
 
-This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but facebook, twitter, whatsapp etc etc);
+This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but Facebook, Twitter, WhatsApp etc etc);
 
 ---v
 
