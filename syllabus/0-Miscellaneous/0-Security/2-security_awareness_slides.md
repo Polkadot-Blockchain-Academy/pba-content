@@ -76,7 +76,9 @@ These can include various techniques, some of which could be phishing emails, so
 
 Notes:
 
-Those are some big numbers, that's $1.23 Trillion. As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralization and Web3. These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.
+Those are some big numbers, that's $1.23 Trillion.
+As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralization and Web3.
+These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.
 
 ---
 
@@ -140,7 +142,8 @@ It may sound far-fetched, but this is a very real problem in the Web3 ecosystem 
 Notes:
 
 So now we know some of the ways that threat actors can strike, let's take a moment to look at who and why.
-As mentioned before, a lot of attacks in the Web3 ecosystem are financially motivated - especially for nation states which are experiencing financial sanctions due to whatever geopolitical antics they are involved in. While that's true, we can't rule out politically motivated attacks.
+As mentioned before, a lot of attacks in the Web3 ecosystem are financially motivated - especially for nation states which are experiencing financial sanctions due to whatever geopolitical antics they are involved in.
+While that's true, we can't rule out politically motivated attacks.
 
 - Lazarus Group
   - $400m in 2021
@@ -171,7 +174,8 @@ Individuals or small groups who take advantage of easily exploitable vulnerabili
 
 Notes:
 
-Opportunists can impact us from phishing through to being in the wrong place at the wrong time. Keep your guard up when in transit or a public place, all it takes is a momentary lapse in focus for a device to be stolen.
+Opportunists can impact us from phishing through to being in the wrong place at the wrong time.
+Keep your guard up when in transit or a public place, all it takes is a momentary lapse in focus for a device to be stolen.
 
 ---v
 
@@ -187,11 +191,13 @@ Source: <a href="https://www.youtube.com/watch?v=j25VkESewZg">I Pickpocketed a P
 
 #### Organized Crime Groups (OCGs)
 
-More sophisticated adversaries with dedicated resources and a more defined focus. They operate like traditional criminal organizations and often engage in large-scale, financially motivated attacks.
+More sophisticated adversaries with dedicated resources and a more defined focus.
+They operate like traditional criminal organizations and often engage in large-scale, financially motivated attacks.
 
 Notes:
 
-OCGs will have more information than a mere opportunist, with more time spent assessing their targets - vulnerabilities affecting the cyber realm, but even social media, gaining a better understanding - for example: knowledge of frequent travel locations, offices, events, etc. This knowledge can be used to carry out more advanced phishing campaigns, also known as spearphishing - but more on that later.
+OCGs will have more information than a mere opportunist, with more time spent assessing their targets - vulnerabilities affecting the cyber realm, but even social media, gaining a better understanding - for example: knowledge of frequent travel locations, offices, events, etc.
+This knowledge can be used to carry out more advanced phishing campaigns, also known as spearphishing - but more on that later.
 
 These details can be used for extortion, be it compromising information or physical threats, through to kidnap for those higher value targets.
 
@@ -199,7 +205,8 @@ These details can be used for extortion, be it compromising information or physi
 
 #### Nation States
 
-The most sophisticated and well-resourced adversaries in the landscape. They have significant technical capabilities and may engage in cyber-espionage sabotage, or warfare.
+The most sophisticated and well-resourced adversaries in the landscape.
+They have significant technical capabilities and may engage in cyber-espionage sabotage, or warfare.
 
 Notes:
 
@@ -265,7 +272,8 @@ These can put your devices - be it phone, laptop, or hardware wallet - at risk o
 
 Notes:
 
-So what can we do to mitigate these attacks? For a start use our own, trusted, cables - consider identifying them in a distinctive way: that could be wrapping some tape around the end, breaking out the ol' sharpie (other permanent markers are available), or applying a coat of nail polish.
+So what can we do to mitigate these attacks?
+For a start use our own, trusted, cables - consider identifying them in a distinctive way: that could be wrapping some tape around the end, breaking out the ol' sharpie (other permanent markers are available), or applying a coat of nail polish.
 
 Don't use that charger you found randomly left in a café, even if it was offered to you by a nice businessman, and it's probably best to not pick up that mysterious USB on the side of the road anyway.
 
@@ -341,7 +349,8 @@ Nor are you going to be able to rapidly grow out your hair
 
 Notes:
 
-In Feng Shui, having a solid wall behind you is considered favorable, especially when sitting at a desk. A solid wall represents support, stability, and protection.
+In Feng Shui, having a solid wall behind you is considered favorable, especially when sitting at a desk.
+A solid wall represents support, stability, and protection.
 
 There's truth to this, it also adds privacy - so if you happen to be working in a public place, consider the flow of energy and listen to Feng Shui - find a nice wall to sit against.
 
@@ -351,7 +360,8 @@ There's truth to this, it also adds privacy - so if you happen to be working in 
 
 Notes:
 
-It’s no secret that folks in tech love their stickers, they make our devices unique versus our friends and colleagues - but this also comes with downsides. There’s a tipping point between a casual interest and direct involvement: stickers can act like a fingerprint, but what kind of information can we glean from them?
+It’s no secret that folks in tech love their stickers, they make our devices unique versus our friends and colleagues - but this also comes with downsides.
+There’s a tipping point between a casual interest and direct involvement: stickers can act like a fingerprint, but what kind of information can we glean from them?
 
 ---v
 
@@ -482,16 +492,18 @@ Not to say don't post, but add a delay to obscure your live location and minimiz
 ### Reacting to a Phish
 
 1. Stop
-2. Take a moment
-3. Verify
-4. Report
+1. Take a moment
+1. Verify
+1. Report
 
 Notes:
 
-So why is phishing suddenly important? It's not, it's always been important - but downplayed.
+So why is phishing suddenly important?
+It's not, it's always been important - but downplayed.
 We're in a rapidly evolving space, which comes with a lot of eyes - for better or for worse.
 
-It's always preferred to be interrupted for a second opinion on a potential phishing attempt than an unfolding incident, it'll even put a big smile on the faces of security folks all over. After all, we're there to help, rather than preach from our ivory towers and reprimand those who make mistakes.
+It's always preferred to be interrupted for a second opinion on a potential phishing attempt than an unfolding incident, it'll even put a big smile on the faces of security folks all over.
+After all, we're there to help, rather than preach from our ivory towers and reprimand those who make mistakes.
 
 ---
 
