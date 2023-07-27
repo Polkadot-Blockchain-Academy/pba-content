@@ -100,7 +100,7 @@ pub enum CurrencyCall {
 	/// ### Errors
 	///
 	/// * If any type of arithmetic operation overflows.
-	/// * If the sender has any free balance left.
+	/// * If the sender has any reserve balance left.
 	///
 	/// Since the sender is a valid account, with more than [`MINIMUM_BALANCE`], the recipient
 	/// is also guaranteed to have at least [`MINIMUM_BALANCE`].

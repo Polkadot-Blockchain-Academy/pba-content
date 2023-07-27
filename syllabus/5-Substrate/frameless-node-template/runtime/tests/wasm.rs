@@ -21,6 +21,12 @@ use sp_runtime::{
 	ApplyExtrinsicResult,
 };
 
+// TODO: The requirement to leave noted extrinsics in the state is not super clear. This one
+// tests will check it. Nonetheless, the `import_and_author_equal` will check it. We will only
+// check it here, but not in other tests.
+
+// TODO: the only way to kill should be TransferAll, not Transfer.
+
 mod shared;
 
 const LOG_TARGET: &'static str = "wasm-tests";
@@ -159,11 +165,11 @@ fn author_and_import(
 
 	auth_state.execute_with(|| {
 		// check the extrinsics key is set.
-		let extrinsics = sp_io::storage::get(EXTRINSICS_KEY)
+		let noted_extrinsics = sp_io::storage::get(EXTRINSICS_KEY)
 			.and_then(|bytes| <Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).ok())
 			.unwrap_or_default();
 		assert_eq!(
-			extrinsics.len(),
+			noted_extrinsics.len(),
 			block.extrinsics.len(),
 			"incorrect extrinsics recorded in state"
 		);
@@ -177,7 +183,7 @@ fn author_and_import(
 		// check extrinsics root.
 		assert_eq!(
 			block.header.extrinsics_root,
-			BlakeTwo256::ordered_trie_root(extrinsics, sp_runtime::StateVersion::V0)
+			BlakeTwo256::ordered_trie_root(noted_extrinsics, sp_runtime::StateVersion::V0)
 		);
 	});
 	drop(auth_state);
@@ -236,6 +242,7 @@ fn new_test_ext() -> TestExternalities {
 
 mod basics {
 	use super::*;
+
 	#[test]
 	fn empty_block() {
 		let mut state = new_test_ext();
@@ -272,7 +279,11 @@ mod basics {
 	}
 }
 
-mod block_builder {
+/// These tests will only check `apply_extrinsic`, using `SystemCall`, for:
+///
+/// 1. signatures
+/// 2. correct distinction of `apply` and `dispatch` error.
+mod block_builder_sig_dispatch_error {
 	use super::*;
 
 	#[test]
@@ -305,22 +316,50 @@ mod block_builder {
 	}
 
 	#[test]
-	fn apply_with_error() {
+	fn apply_with_dispatch_error() {
 		let mut state = new_test_ext();
 		let ext = signed(RuntimeCall::System(SystemCall::SudoRemark { data: vec![42] }), &Bob, 0);
 		assert!(matches!(apply(ext, &mut state), Ok(Err(_))));
 	}
 
 	#[test]
-	fn apply_ok() {
+	fn apply_okay() {
 		let mut state = new_test_ext();
 		let ext = signed(RuntimeCall::System(SystemCall::SudoRemark { data: vec![42] }), &Alice, 0);
+		assert!(matches!(apply(ext, &mut state), Ok(Ok(_))));
+
+		let ext = signed(RuntimeCall::System(SystemCall::Remark { data: vec![42] }), &Alice, 0);
 		assert!(matches!(apply(ext, &mut state), Ok(Ok(_))));
 	}
 }
 
-mod validate_tx {
+/// These tests will only check the validate unsigned, using `SystemCall`, for:
+///
+/// 1. signatures
+/// 2. correct distinction of `apply` and `dispatch` error.
+mod validate_tx_sig_dispatch_error {
 	use super::*;
+
+	#[test]
+	fn validate_okay() {
+		let ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0);
+		let mut state = new_test_ext();
+		let validity = validate(ext, &mut state);
+
+		// For now, we just check that this is ok. We don't check anything else.
+		assert!(validity.is_ok());
+	}
+
+	#[test]
+	fn validate_with_dispatch_error() {
+		// Bob won't be able to dispatch this, but we should not need to care about this.
+		let ext = signed(RuntimeCall::System(SystemCall::SudoRemark { data: vec![42] }), &Bob, 0);
+		let mut state = new_test_ext();
+		let validity = validate(ext, &mut state);
+
+		// For now, we just check that this is ok. We don't check anything else.
+		assert!(validity.is_ok());
+	}
 
 	#[test]
 	fn validate_bad_signature() {
@@ -885,10 +924,11 @@ mod tipping {
 		});
 	}
 
-	mod validate {
+	mod validate_tx {
 		use super::*;
+
 		#[test]
-		fn validate_sets_priority() {
+		fn tip_sets_priority() {
 			// account with some balance can get a higher priority.
 			let mut state = new_test_ext();
 			let exts = vec![signed(
@@ -934,19 +974,16 @@ mod tipping {
 		}
 
 		#[test]
-		fn cannot_tip_if_not_not_enough_balance() {
-			// cannot tip and get a higher priority if not funded.
+		fn tip_over_balance() {
+			// cannot tip to an amount that I don't even have.
 			let mut state = new_test_ext();
 			let exts = vec![signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 				&Alice,
 				0,
 			)];
-
-			// apply this to our state.
 			author_and_import(&mut state, exts, || {});
 
-			// tip value is higher than what alice has.
 			let to_validate =
 				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 1, 25);
 			let validity = validate(to_validate, &mut state);
@@ -958,15 +995,13 @@ mod tipping {
 
 		#[test]
 		fn cannot_tip_if_below_ed() {
-			// fund alice's account.
+			// cannot tip such that I end below ED.
 			let mut state = new_test_ext();
 			let exts = vec![signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
 				&Alice,
 				0,
 			)];
-
-			// apply this to our state.
 			author_and_import(&mut state, exts, || {});
 
 			// tip is 15, leaving only 5 for alice.
@@ -981,7 +1016,7 @@ mod tipping {
 
 		#[test]
 		fn can_kill_oneself_with_tip() {
-			// fund alice's account.
+			// But I can kill myself with a correct tip amount
 			let mut state = new_test_ext();
 			let exts = vec![signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Alice.public(), amount: 20 }),
@@ -1010,12 +1045,22 @@ mod tipping {
 				Err(TransactionValidityError::Invalid(InvalidTransaction::Payment))
 			));
 		}
+
+		#[test]
+		fn can_tip_zero_always() {
+			// You can always tip zero.
+			let to_validate =
+				tipped(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0, 0);
+			let validity = validate(to_validate, &mut new_test_ext());
+			assert!(matches!(validity, Ok(ValidTransaction { priority: 0, .. })));
+		}
 	}
 
 	mod apply {
 		use super::*;
+
 		#[test]
-		fn tip_unfunded_treasury() {
+		fn tip_unfunded_treasury_burn() {
 			let mut state = new_test_ext();
 			state.execute_with(|| assert!(treasury().is_none()));
 
@@ -1146,8 +1191,84 @@ mod tipping {
 }
 
 mod nonce {
-	#[test]
-	fn test_it() {
-		todo!();
+	use super::*;
+	use sp_runtime::transaction_validity::ValidTransaction;
+
+	const CALL: RuntimeCall = RuntimeCall::System(SystemCall::Set { value: 42 });
+
+	// create alice and set her nonce to 1.
+	fn setup_alice() -> TestExternalities {
+		let mut state = new_test_ext();
+		let exts = vec![signed(CALL, &Alice, 0), signed(CALL, &Alice, 1), signed(CALL, &Alice, 2)];
+		author_and_import(&mut state, exts, || {});
+		state
+	}
+
+	mod validate {
+		use super::*;
+
+		#[test]
+		fn future() {
+			let mut state = setup_alice();
+
+			let ext = signed(CALL, &Alice, 5);
+			let validity = validate(ext, &mut state);
+			let expected_requires = vec![(&Alice.public(), 4).encode()];
+			let expected_provides = vec![(&Alice.public(), 5).encode()];
+			assert!(matches!(validity, Ok(ValidTransaction { requires, provides, .. })
+				if requires == expected_requires && provides == expected_provides));
+		}
+
+		#[test]
+		fn stale() {
+			let mut state = setup_alice();
+
+			let ext = signed(CALL, &Alice, 2);
+			let validity = validate(ext, &mut state);
+			assert_eq!(validity.unwrap_err(), InvalidTransaction::Stale.into());
+		}
+
+		#[test]
+		fn ready() {
+			let mut state = setup_alice();
+
+			let ext = signed(CALL, &Alice, 3);
+			let validity = validate(ext, &mut state);
+			let expected_requires: Vec<Vec<u8>> = vec![];
+			let expected_provides = vec![(&Alice.public(), 3).encode()];
+			assert!(matches!(validity, Ok(ValidTransaction { requires, provides, .. })
+				if requires == expected_requires && provides == expected_provides));
+		}
+	}
+
+	mod apply {
+		use super::*;
+
+		#[test]
+		fn stale() {
+			let mut state = setup_alice();
+
+			let ext = signed(CALL, &Alice, 2);
+			let apply_result = apply(ext, &mut state);
+			assert_eq!(apply_result.unwrap_err(), InvalidTransaction::Stale.into());
+		}
+
+		#[test]
+		fn future() {
+			let mut state = setup_alice();
+
+			let ext = signed(CALL, &Alice, 4);
+			let apply_result = apply(ext, &mut state);
+			assert_eq!(apply_result.unwrap_err(), InvalidTransaction::Future.into());
+		}
+
+		#[test]
+		fn ready() {
+			let mut state = setup_alice();
+
+			let ext = signed(CALL, &Alice, 3);
+			let apply_result = apply(ext, &mut state);
+			assert!(apply_result.is_ok());
+		}
 	}
 }

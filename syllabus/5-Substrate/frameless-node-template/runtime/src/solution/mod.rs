@@ -77,7 +77,7 @@ impl From<StakingCall> for staking::Call<Runtime> {
 #[allow(unused)]
 impl Runtime {
 	pub(crate) fn solution_apply_extrinsic(ext: Extrinsic) -> ApplyExtrinsicResult {
-		let (sender, _tip, _nonce) = Self::solution_validate_transaction_inner(&ext)?;
+		let sender = Self::inner_pre_dispatch(&ext)?;
 
 		// execute it
 		let dispatch_outcome = match ext.clone().function.call {
@@ -131,10 +131,9 @@ impl Runtime {
 		header
 	}
 
-	fn solution_validate_transaction_inner(
+	fn check_signature(
 		ext: &<Block as BlockT>::Extrinsic,
-	) -> Result<(AccountId, u64, u32), TransactionValidityError> {
-		// first, check the signature.
+	) -> Result<AccountId, TransactionValidityError> {
 		let signer = match &ext.signature {
 			Some((signer, signature, extra_stuff)) => {
 				let payload = (ext.function.clone(), extra_stuff);
@@ -145,20 +144,14 @@ impl Runtime {
 			},
 			None => return Err(TransactionValidityError::Invalid(InvalidTransaction::BadProof)),
 		};
+		Ok(signer)
+	}
 
+	fn collect_tip(
+		ext: &<Block as BlockT>::Extrinsic,
+		signer: AccountId,
+	) -> Result<(), TransactionValidityError> {
 		let mut balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
-		let nonce = balance.nonce;
-
-		// then check that their nonce is correct. Best to check this first, since it's cheap.
-		match nonce.cmp(&ext.function.nonce) {
-			sp_std::cmp::Ordering::Equal => {},
-			sp_std::cmp::Ordering::Greater =>
-				return Err(TransactionValidityError::Invalid(InvalidTransaction::Stale)),
-			sp_std::cmp::Ordering::Less =>
-				return Err(TransactionValidityError::Invalid(InvalidTransaction::Future)),
-		}
-
-		balance.nonce = balance.nonce.saturating_add(1);
 
 		// then, check that they can pay for the fee.
 		if let Some(tip) = ext.function.tip {
@@ -190,11 +183,65 @@ impl Runtime {
 			}
 		}
 
-		// update tip and nonce.
 		currency::BalancesMap::<Self>::set(signer.clone(), balance);
 
-		let tip = ext.function.tip.map(|x| x as u64).unwrap_or_default();
-		Ok((signer, tip, nonce))
+		Ok(())
+	}
+
+	fn check_nonce_pre_dispatch(
+		ext: &<Block as BlockT>::Extrinsic,
+		signer: AccountId,
+	) -> Result<(), TransactionValidityError> {
+		let mut balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
+
+		match balance.nonce.cmp(&ext.function.nonce) {
+			sp_std::cmp::Ordering::Equal => {},
+			sp_std::cmp::Ordering::Greater =>
+				return Err(TransactionValidityError::Invalid(InvalidTransaction::Stale)),
+			sp_std::cmp::Ordering::Less =>
+				return Err(TransactionValidityError::Invalid(InvalidTransaction::Future)),
+		}
+
+		balance.nonce = balance.nonce.saturating_add(1);
+		currency::BalancesMap::<Self>::set(signer.clone(), balance);
+
+		Ok(())
+	}
+
+	fn check_nonce_validate(
+		ext: &<Block as BlockT>::Extrinsic,
+		signer: AccountId,
+	) -> TransactionValidity {
+		let balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
+
+		log::trace!(target: LOG_TARGET, "checking nonce for {:?} with {:?} and {:?}", signer, balance.nonce, ext.function.nonce);
+		let requires = match balance.nonce.cmp(&ext.function.nonce) {
+			sp_std::cmp::Ordering::Equal => {
+				vec![]
+			},
+			sp_std::cmp::Ordering::Greater =>
+				return Err(TransactionValidityError::Invalid(InvalidTransaction::Stale)),
+			sp_std::cmp::Ordering::Less => vec![(signer.clone(), ext.function.nonce - 1).encode()],
+		};
+
+		let provides = vec![(signer.clone(), ext.function.nonce).encode()];
+
+		Ok(ValidTransaction {
+			requires,
+			provides,
+			priority: ext.function.tip.unwrap_or_default().try_into().unwrap_or(u64::MAX),
+			..Default::default()
+		})
+	}
+
+	fn inner_pre_dispatch(
+		ext: &<Block as BlockT>::Extrinsic,
+	) -> Result<AccountId, TransactionValidityError> {
+		let signer = Self::check_signature(ext)?;
+		Self::check_nonce_pre_dispatch(ext, signer)?;
+		Self::collect_tip(ext, signer)?;
+
+		Ok(signer)
 	}
 
 	pub(crate) fn solution_validate_transaction(
@@ -202,9 +249,10 @@ impl Runtime {
 		ext: <Block as BlockT>::Extrinsic,
 		_block_hash: <Block as BlockT>::Hash,
 	) -> TransactionValidity {
-		let (signer, tip, nonce) = Self::solution_validate_transaction_inner(&ext)?;
-		let provides = vec![(signer.clone(), nonce).encode()];
-		let requires = if nonce != 0 { vec![(signer.clone(), nonce - 1).encode()] } else { vec![] };
-		Ok(ValidTransaction { requires, provides, priority: tip, ..Default::default() })
+		let signer = Self::check_signature(&ext)?;
+		let valid = Self::check_nonce_validate(&ext, signer)?;
+		Self::collect_tip(&ext, signer)?;
+
+		Ok(valid)
 	}
 }

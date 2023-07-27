@@ -465,7 +465,6 @@ impl Runtime {
 		assert_eq!(block.header.extrinsics_root, extrinsics_root);
 
 		info!(target: LOG_TARGET, "Finishing block import.");
-		Self::print_state();
 	}
 
 	/// Apply a single extrinsic.
