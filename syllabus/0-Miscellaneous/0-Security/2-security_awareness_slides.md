@@ -8,11 +8,11 @@ separator: "\r?\n---\r?\n"
 verticalSeparator: "\r?\n---v\r?\n"
 # Below can be any of these: https://revealjs.com/config/
 revealOptions:
-    transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
-	backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
-	slideNumber: true
-	controls: true
-	progress: true
+  transition: "slide" # animation between slides = none/fade/slide/convex/concave/zoom
+  backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
+  slideNumber: true
+  controls: true
+  progress: true
 ---
 
 # Security Awareness in Web3
@@ -227,20 +227,20 @@ In the context of Web3, nation states may be interested in:
 #### Theft
 
 <pba-cols>
-  <pba-col>
+<pba-col center>
 
-    - Laptops
-    - Phones
-    - Keys
+- Laptops
+- Phones
+- Keys
 
-  </pba-col>
-  <pba-col>
+</pba-col>
+<pba-col center>
 
-    - Auld Wallets
-    - ID Documents
-    - Hardware Wallets
+- Auld Wallets
+- ID Documents
+- Hardware Wallets
 
-  </pba-col>
+</pba-col>
 </pba-cols>
 
 Notes:
