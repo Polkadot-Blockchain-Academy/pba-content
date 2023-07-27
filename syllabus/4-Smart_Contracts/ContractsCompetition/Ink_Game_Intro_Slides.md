@@ -7,7 +7,7 @@ duration: 20 min
 <img rounded style="width: 1200px; padding-top:15px;" src="../img/ink/beginners-workshop.jpg" alt="ink!" />
 
 Notes:
-This workshop was an idea that came from first wave of PBA in Cambridge. The first time it was ever played was back in Buenos Aires. 
+This workshop was an idea that came from first wave of PBA in Cambridge. The first time it was ever played was back in Buenos Aires. It's very much a PBA right of passage, so it's exciting to be able to play today.
 
 ---
 
@@ -50,9 +50,9 @@ This is us playing in BA earlier this year.
 
 Notes: 
 The game has three components:  
-click 1. the first is a game contract, which is something that we have taken care of. I will deploy it and run it on Rococo. The game contract runs the game loop. It invokes each player contract and it determines the score.  
-click 2. And the player.contract, that's your job. so we we have a template for a very basic player and you can basically modify it in any way you like. I will explain the scoring function in a moment.
-click 3. Lastly, we have a front-end that we will put on the big screen here, but it's online, you can open it up on your laptop and follow the game locally. 
+**click** the first is a game contract, which is something that we have taken care of. I will deploy it and run it on Rococo. The game contract runs the game loop. It invokes each player contract and it determines the score.  
+**click** And the player.contract, that's your job. so we we have a template for a very basic player and you can basically modify it in any way you like. I will explain the scoring function in a moment.  
+**click** Lastly, we have a front-end that we will put on the big screen here, but it's online, you can open it up on your laptop and follow the game locally. 
 ---
 
 ## The Process
@@ -64,14 +64,13 @@ click 3. Lastly, we have a front-end that we will put on the big screen here, bu
 1. 📺️️ It runs for some minutes, we watch it on screen<!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
-So the process is as follows:
-click - you brainstorm and create a contract that plays on your behalf ideally in a better way than the other contracts
-click - you deploy the contract to the Rococo test net
-click - you register your contract as a player with the game contract. We will publish the addresses and it's it's not complicated you can just use contracts UI. I will also show it in a second 
-click -  then we start the game. We have a script that calls the game contract regularly and the front end will display the changes 
-click - so the game will run for some minutes. Your contract will already be uploaded at this point - so you can't do anything. The contract will play on your behalf. Meaning it's hands off. I mean you can also change it with upgradable contract patterns and stuff, but in general, you won't have to. So you can
-just watch the game play out. 
-If you're familiar with AI agents, that's also a similar idea, where you have an agent that plays a game on your behalf.
+So the process is as follows:  
+**click** - you brainstorm and create a contract that plays on your behalf ideally in a better way than the other contracts  
+**click** - you deploy the contract to the Rococo testnet  
+**click** - you register your contract as a player with the game contract. We will publish the addresses and it's it's not complicated you can just use contracts UI. I will also show it in a second  
+**click** -  then we start the game. We have a script that calls the game contract regularly and the front end will display the changes  
+**click** - so the game will run for some minutes. Your contract will already be uploaded at this point - so you can't do anything. The contract will play on your behalf. Meaning it's hands off. I mean you can also change it with upgradable contract patterns and stuff, but in general, you won't have to. So you can just watch the game play out.  
+If you're familiar with AI agents, that's also a similar idea, where you have an agent that plays a game on your behalf.  
 
 ---
 
@@ -163,10 +162,10 @@ We have a repository app set up with the template for this - I will share the li
 **click** - and it can just return a random constant value. So this is the most simple player ever.
 What your player needs to do is to have one message, that has a defined selector, so you don't have to think more about this. It's just that it needs to have this function and this function is called by the game with every round. And whatever you return from this function. This is your your turn for the game.  
 So if in this case you return an option some(1,2), this would mean you paint the pixel at X1 Y2.  
-In that case, it would be a very boring play. 
-**click** - Who can tell me what would happen here? 
-*(a player that only makes one turn - it always tries to paint the same field. And if someone else also chose the same magic numbers then it wouldn't even make a turn at all.)*
-So there's a couple things of how you can improve on that and I will show some hints later, but for now what we're gonna do is look at the repository and see how we can get started with this.
+In that case, it would be a very boring play.  
+Who can tell me what would happen here?  
+*(a player that only makes one turn - it always tries to paint the same field. And if someone else also chose the same magic numbers then it wouldn't even make a turn at all.)*  
+**click** - So there's a couple things of how you can improve on that and I will show some hints later, but for now what we're gonna do is look at the repository and see how we can get started with this.
 
 ---
 
@@ -230,7 +229,7 @@ This is a simple example - we're just giving you exposure to the flow of uploadi
 [https://splash.use.ink](https://splash.use.ink)
 
 Notes:
-The next slides go over strategy. 
+The next slides go over strategy. (maybe wait to to go through until you've played one game)
 
 ---
 
@@ -307,11 +306,11 @@ There's details in here. You could deploy locally to test things out. there's al
 
 <!-- .element: class="fragment" -->
 
----
-
-<!-- .slide: data-background="../img/ink/Questions_2.svg"" -->
-
 Notes:
 **click**  Lastly, some ideas for for your agent in the game you can you yourself can call your contract. as often as you want and this won't contribute to the gas used during the game. You can during the game you could also call a set of function of your contract if you want to adapt something.   
 **click**  You could also Generate random numbers. There are a couple of libraries out there, if you want to go along those lines you have to pay attention that it's a no standard Library. typically a random number generator libraries they typically have a feature that you need to enable in order to make them no standard compatible
 **click** A clever strategy would be a query which fields are free. that's a bit more complex  with the with the code snippet that we have in this Advanced repository, this would give you a hint.
+
+---
+
+<!-- .slide: data-background="../img/ink/Questions_2.svg"" -->
