@@ -134,9 +134,11 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	pub(crate) fn can_withdraw(&self, amount: T::Balance) -> DispatchOutcome {
+	pub(crate) fn can_withdraw(&self, amount: T::Balance, allow_zero: bool) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
-			Some(leftover) if leftover >= T::MinimumBalance::get() || leftover.is_zero() => Ok(()),
+			Some(leftover)
+				if leftover >= T::MinimumBalance::get() || (leftover.is_zero() && allow_zero) =>
+				Ok(()),
 			_ => Err(Error::<T>::InsufficientFunds)?,
 		}
 	}
@@ -193,11 +195,16 @@ impl<T: Config> StorageValue for TotalIssuance<T> {
 
 pub struct Module<T: Config>(sp_std::marker::PhantomData<T>);
 impl<T: Config> Module<T> {
-	fn transfer(sender: AccountId, dest: AccountId, amount: T::Balance) -> DispatchOutcome {
+	fn transfer(
+		sender: AccountId,
+		dest: AccountId,
+		amount: T::Balance,
+		allow_zero: bool,
+	) -> DispatchOutcome {
 		let mut sender_balance = BalancesMap::<T>::get(sender).ok_or(Error::<T>::DoesNotExist)?;
 		let mut dest_balance = BalancesMap::<T>::get(dest).unwrap_or_default();
 
-		sender_balance.can_withdraw(amount)?;
+		sender_balance.can_withdraw(amount, allow_zero)?;
 		dest_balance.can_receive(amount)?;
 
 		sender_balance.withdraw(amount).expect("checked above");
@@ -218,7 +225,7 @@ impl<T: Config> Module<T> {
 			Err(Error::<T>::NotAllowed)?;
 		}
 		let amount = balance.free;
-		Self::transfer(sender, dest, amount)
+		Self::transfer(sender, dest, amount, true)
 	}
 
 	fn mint(sender: AccountId, who: AccountId, amount: T::Balance) -> DispatchOutcome {
@@ -283,7 +290,7 @@ impl<T: Config> Dispatchable for Call<T> {
 	fn dispatch(self, sender: AccountId) -> DispatchOutcome {
 		match self {
 			Call::Mint { dest, amount } => Module::<T>::mint(sender, dest, amount),
-			Call::Transfer { dest, amount } => Module::<T>::transfer(sender, dest, amount),
+			Call::Transfer { dest, amount } => Module::<T>::transfer(sender, dest, amount, false),
 			Call::TransferAll { dest } => Module::<T>::transfer_all(sender, dest),
 		}
 	}
@@ -293,7 +300,7 @@ impl<T: Config> CryptoCurrency for Module<T> {
 	type Balance = T::Balance;
 
 	fn transfer(from: AccountId, to: AccountId, amount: Self::Balance) -> DispatchOutcome {
-		Module::<T>::transfer(from, to, amount)
+		Module::<T>::transfer(from, to, amount, false)
 	}
 
 	fn reserve(from: AccountId, amount: Self::Balance) -> DispatchOutcome {

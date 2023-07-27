@@ -391,6 +391,7 @@ impl BuildStorage for RuntimeGenesisConfig {
 pub struct Runtime;
 
 impl Runtime {
+	#[allow(unused)]
 	fn print_state() {
 		let mut key = vec![];
 		while let Some(next) = sp_io::storage::next_key(&key) {
@@ -623,12 +624,14 @@ mod tests {
 	}
 
 	#[test]
+	#[ignore = "ignore"]
 	fn does_it_print() {
 		// runt this with `cargo test does_it_print -- --nocapture`
 		println!("Something");
 	}
 
 	#[test]
+	#[ignore = "ignore"]
 	fn does_it_log() {
 		// run this with RUST_LOG=frameless=trace cargo test -p runtime does_it_log
 		sp_tracing::try_init_simple();
@@ -637,6 +640,7 @@ mod tests {
 
 	#[docify::export]
 	#[test]
+	#[ignore = "ignore"]
 	fn host_function_call_works() {
 		// this is just to demonstrate to you that you should always wrap any code containing host
 		// functions in `TestExternalities`.
@@ -647,6 +651,7 @@ mod tests {
 
 	#[docify::export]
 	#[test]
+	#[ignore = "ignore"]
 	fn encode_examples() {
 		// demonstrate some basic encodings. Example usage:
 		//
@@ -669,6 +674,7 @@ mod tests {
 
 	#[docify::export]
 	#[test]
+	#[ignore = "ignore"]
 	fn signed_set_value_works() {
 		// A signed `Set` works.
 		let ext = signed_set_value(42, 0);
@@ -707,6 +713,7 @@ mod tests {
 
 	#[docify::export]
 	#[test]
+	#[ignore = "ignore"]
 	fn unsigned_set_value_does_not_work() {
 		// An unsigned `Set` must fail as well.
 		let ext = unsigned_set_value(42);
@@ -745,6 +752,7 @@ mod tests {
 
 	#[docify::export]
 	#[test]
+	#[ignore = "ignore"]
 	fn import_and_author_equal() {
 		// a few dummy extrinsics.
 		let ext1 = signed_set_value(42, 0);

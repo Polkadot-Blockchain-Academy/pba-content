@@ -158,12 +158,10 @@ impl Runtime {
 			let _ = balance
 				.withdraw(tip)
 				.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::Payment))?;
-			// We don't quite care of the treasury account is not funded and cannot handle the
-			// incoming tip.
+
 			// The writes in this code are redundant in `validate_transaction`, but we write it like
 			// this so we can reuse it. FRAME does the same in certain places as well.
 
-			// TODO: try and use our mutate api?
 			let mut treasury =
 				currency::BalancesMap::<Self>::get(AccountId::unchecked_from(TREASURY))
 					.unwrap_or_default();
@@ -175,9 +173,10 @@ impl Runtime {
 					);
 				},
 				Err(_) => {
-					let issuance = currency::TotalIssuance::<Self>::get();
-					let mut issuance = issuance.expect("someone paid some fee that was withdrawn; issuance must already be non-zero");
-					issuance -= tip;
+					let mut issuance = currency::TotalIssuance::<Self>::get().unwrap_or_default();
+					issuance = issuance.checked_sub(tip).expect(
+						"issuance cannot be less; we already check sender must have this amount; qed",
+					);
 					currency::TotalIssuance::<Self>::set(issuance);
 				},
 			}

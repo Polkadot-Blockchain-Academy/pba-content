@@ -27,9 +27,14 @@ use sp_runtime::{
 
 // TODO: the only way to kill should be TransferAll, not Transfer.
 
+// TODO:The specification is not super clear about validation of future transactions not being a
+// failure.
+
+// TODO: Clear distinction between apply and dispatch.
+
 mod shared;
 
-const LOG_TARGET: &'static str = "wasm-tests";
+const LOG_TARGET: &'static str = "grading";
 
 thread_local! {
 	pub static CALLED_AUTHOR_AND_IMPORT: RefCell<bool> = RefCell::new(false);
@@ -232,12 +237,18 @@ fn executor_call(t: &mut TestExternalities, method: &str, data: &[u8]) -> Result
 
 fn new_test_ext() -> TestExternalities {
 	sp_tracing::try_init_simple();
-	let code = include_bytes!("../../target/debug/wbuild/runtime/runtime.wasm");
+	let code_path = std::option_env!("WASM_FILE").unwrap_or(if cfg!(debug_assertions) {
+		"../target/debug/wbuild/runtime/runtime.wasm"
+	} else {
+		"../target/release/wbuild/runtime/runtime.wasm"
+	});
+	let code = std::fs::read(code_path).expect("code should be present");
+	log::info!(target: LOG_TARGET, "reading code from {}", code_path);
 	let mut storage: sp_core::storage::Storage = Default::default();
 	storage
 		.top
 		.insert(sp_core::storage::well_known_keys::CODE.to_vec(), code.to_vec());
-	TestExternalities::new_with_code(code, storage)
+	TestExternalities::new_with_code(&code, storage)
 }
 
 mod basics {
@@ -328,7 +339,7 @@ mod block_builder_sig_dispatch_error {
 		let ext = signed(RuntimeCall::System(SystemCall::SudoRemark { data: vec![42] }), &Alice, 0);
 		assert!(matches!(apply(ext, &mut state), Ok(Ok(_))));
 
-		let ext = signed(RuntimeCall::System(SystemCall::Remark { data: vec![42] }), &Alice, 0);
+		let ext = signed(RuntimeCall::System(SystemCall::Remark { data: vec![42] }), &Alice, 1);
 		assert!(matches!(apply(ext, &mut state), Ok(Ok(_))));
 	}
 }
@@ -632,7 +643,7 @@ mod currency {
 	}
 
 	#[test]
-	fn transfer_all_1() {
+	fn transfer_all_manually_wont_work() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -649,8 +660,8 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
 			assert_eq!(issuance().unwrap_or_default(), 100);
 		});
 	}
@@ -1128,7 +1139,7 @@ mod tipping {
 		}
 
 		#[test]
-		fn tip_and_transfer_below_ed() {
+		fn tip_and_transfer_below_ed_burn() {
 			let mut state = new_test_ext();
 			let exts = vec![
 				// Bob gets 20.
@@ -1159,7 +1170,7 @@ mod tipping {
 		}
 
 		#[test]
-		fn tip_and_transfer_kill() {
+		fn tip_and_transfer_cannot_kill() {
 			let mut state = new_test_ext();
 			let exts = vec![
 				// alice gets 20.
@@ -1182,8 +1193,8 @@ mod tipping {
 
 			author_and_import(&mut state, exts, || {
 				assert_eq!(treasury().unwrap_or_default(), 10);
-				assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-				assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
+				assert_eq!(free_of(Alice.public()).unwrap_or_default(), 10);
+				assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
 				assert_eq!(issuance().unwrap_or_default(), 20);
 			});
 		}
@@ -1270,5 +1281,19 @@ mod nonce {
 			let apply_result = apply(ext, &mut state);
 			assert!(apply_result.is_ok());
 		}
+	}
+
+	#[test]
+	fn nonce_is_set_after_successful_apply() {
+		let mut state = new_test_ext();
+		let exts = vec![
+			signed(CALL, &Alice, 0),
+			signed(CALL, &Alice, 1),
+			signed(CALL, &Alice, 2),
+			signed(CALL, &Alice, 3),
+		];
+		author_and_import(&mut state, exts, || {
+			assert_eq!(nonce_of(Alice.public()).unwrap(), 4);
+		})
 	}
 }
