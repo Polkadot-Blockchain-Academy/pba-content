@@ -24,7 +24,7 @@ revealOptions:
 
 - Be able to describe the threats which exist in the Web3 space
 - Navigate the risks posed with confidence
-- Understand the measures taken to minimise impact
+- Understand the measures taken to minimize impact
 
 ---
 
@@ -36,21 +36,21 @@ Notes: Security folks love their jargon and acronyms, you may be familiar with s
 ---v
 
 #### Threat Actor
-Any individual, group, or entity that poses a potential risk or threat to the security of a system or organisation.
+Any individual, group, or entity that poses a potential risk or threat to the security of a system or organization.
 
 Notes: Threat actors can be hackers, cybercriminals, social engineers, insiders, state-sponsored groups, or other malicious actors.
 
 ---v
 
 #### Attack Surface
-The points of entry, or potential vulnerabilities in a system that could be exploited by a threat actor to compromise or gain unauthorised access.
+The points of entry, or potential vulnerabilities in a system that could be exploited by a threat actor to compromise or gain unauthorized access.
 
 Notes: This ranges from network interfaces, APIs, software, hardware and infrastructure, through to human factors.
 
 ---v
 
 #### Attack Vector
-Specific paths or methods that threat actors use to launch attacks against a system or organisation. 
+Specific paths or methods that threat actors use to launch attacks against a system or organization. 
 
 Notes: These can include various techniques, some of which could be phishing emails, software vulnerabilities, social engineering, malware, or brute-force attacks.
 
@@ -58,11 +58,11 @@ Notes: These can include various techniques, some of which could be phishing ema
 
 ## Eyes are on us
 
-- Crypto Market Capitalisation: $1,231,359,133,397
+- Crypto Market Capitalization: $1,231,359,133,397
 - 24 Hour Trading Volume: $39,807,353,848
 
 Notes:
-Those are some big numbers, that's $1.23 Trillion. As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralisation and Web3. These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.
+Those are some big numbers, that's $1.23 Trillion. As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralization and Web3. These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.
 
 ---
 
@@ -71,7 +71,7 @@ Those are some big numbers, that's $1.23 Trillion. As a result, there are a lot 
 #### _there is no scope_
 
 Notes:
-In the real world, there is minimal scope - financially motivated attackers do not follow a code of ethics, and will monetise whatever they can get their hands on.
+In the real world, there is minimal scope - financially motivated attackers do not follow a code of ethics, and will monetize whatever they can get their hands on.
 
 ---v
 
@@ -91,7 +91,7 @@ Notes: Financially motivated attacks are among the most common, earnings from th
 Notes: 
 Attackers can and will exploit anything, these can be on-chain attacks - such as exploitation of vulnerabilities in smart contracts, or even crafting and sending their own malicious smart contracts
 
-Ransomware and denial of service attacks can be utilised to reduce confidence in or extort funds from projects
+Ransomware and denial of service attacks can be utilized to reduce confidence in or extort funds from projects
 
 Mechanics of protocols themselves can be taken advantage of through 51% attacks, double spends, or malicious validation
 
@@ -103,7 +103,7 @@ Mechanics of protocols themselves can be taken advantage of through 51% attacks,
     - Impersonating to pivot deeper
 
 Notes: 
-You know you're you, and your teams know you're you - this trust can be taken advantage of by attackers, impersonating people with social capital and good social standing to pivot deeper into organisations and networks - or even something as simple as identity theft to launder money.
+You know you're you, and your teams know you're you - this trust can be taken advantage of by attackers, impersonating people with social capital and good social standing to pivot deeper into organizations and networks - or even something as simple as identity theft to launder money.
 
 It may sound far-fetched, but this is a very real problem in the Web3 ecosystem - so if a request seems a bit bizarre, it's never a bad idea to check in and verify via an alternative line of communication which has already been established.
 
@@ -141,20 +141,20 @@ As mentioned before, a lot of attacks in the Web3 ecosystem are financially moti
 ---v
 
 #### Opportunists
-Individuals or small groups who take advantage of easily exploitable vulnerabilities without significant planning, often targeting low-hanging fruit and utilising readily available tools and techniques.
+Individuals or small groups who take advantage of easily exploitable vulnerabilities without significant planning, often targeting low-hanging fruit and utilizing readily available tools and techniques.
 
 Notes:
 Opportunists can impact us from phishing through to being in the wrong place at the wrong time. Keep your guard up when in transit or a public place, all it takes is a momentary lapse in focus for a device to be stolen.
 
 ---v
 
-<img style="height: 60vh" data-src="./img/security-awareness/pickpocket.gif" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/pickpocket.gif" />
 Source: <a href="https://www.youtube.com/watch?v=j25VkESewZg">I Pickpocketed a Pickpocket</a>
 
 ---v
 
-#### Organised Crime Groups (OCGs)
-More sophisticated adversaries with dedicated resources and a more defined focus. They operate like traditional criminal organisations and often engage in large-scale, financially motivated attacks.
+#### Organized Crime Groups (OCGs)
+More sophisticated adversaries with dedicated resources and a more defined focus. They operate like traditional criminal organizations and often engage in large-scale, financially motivated attacks.
 
 Notes: OCGs will have more information than a mere opportunist, with more time spent assessing their targets - vulnerabilities affecting the cyber realm, but even social media, gaining a better understanding - for example: knowledge of frequent travel locations, offices, events, etc. This knowledge can be used to carry out more advanced phishing campaigns, also known as spearphishing - but more on that later.
 
@@ -198,7 +198,7 @@ In the context of Web3, nation states may be interested in:
 
 Notes:
 A lot is at stake, even when an opportunist strikes - for most people our entire lives are on our devices these days.
-Losing a device can mean lost, and potentially compromised, second factor authentication - locking you out, but letting a crook in, but also the poential exposure of your wallet seeds, along with whatever is signed in.
+Losing a device can mean lost, and potentially compromised, second factor authentication - locking you out, but letting a crook in, but also the potential exposure of your wallet seeds, along with whatever is signed in.
 
 Lost or stolen keys and ID documents pose an increased physical threat: the leak of your home address and the means to access it, which can also extend to workplaces or infrastructure locations
 
@@ -207,7 +207,7 @@ Lost or stolen keys and ID documents pose an increased physical threat: the leak
 #### Tampering
 <iframe width="1440" height="646" data-src="https://www.youtube.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
 
-Note: Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn't stopped - there are powerful SoCs, Systems on a Chip, which can be utilised by attackers.
+Note: Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn't stopped - there are powerful SoCs, Systems on a Chip, which can be utilized by attackers.
 
 They range from devices, such as the Rubber Ducky, through to a simple USB-USB cable which looks innocuous enough, but can wreak havoc - and even exfiltrate data or allow for remote control.
 
@@ -216,7 +216,7 @@ These can put your devices - be it phone, laptop, or hardware wallet - at risk o
 ---v
 
 #### Tampering: Mitigations
-<img style="height: 60vh" data-src="./img/security-awareness/cables.png" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/cables.png" />
 
 Notes:
 So what can we do to mitigate these attacks? For a start use our own, trusted, cables - consider identifying them in a distinctive way: that could be wrapping some tape around the end, breaking out the ol' sharpie (other permanent markers are available), or applying a coat of nail polish.
@@ -254,7 +254,7 @@ Privacy screens are a mitigation, but they're not infallible - they reduce the v
 ---v
 
 ### Shoulder Surfing
-<img style="height: 60vh" data-src="./img/security-awareness/com-truise.png" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/com-truise.png" />
 
 Notes:
 Besides, we know that Mr Tom Cruise runs at a 22° angle, rendering privacy screens useless.
@@ -262,7 +262,7 @@ Besides, we know that Mr Tom Cruise runs at a 22° angle, rendering privacy scre
 ---v
 
 ### Shoulder Surfing
-<img style="height: 60vh" data-src="./img/security-awareness/shoulder-pads.jpg" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/shoulder-pads.jpg" />
 
 Notes:
 It's unrealistic that you can wear shoulder pads all the time to block the view of your sweet sweet screen real estate.
@@ -270,7 +270,7 @@ It's unrealistic that you can wear shoulder pads all the time to block the view 
 ---v
 
 ### Shoulder Surfing
-<img style="height: 60vh" data-src="./img/security-awareness/scousers.jpg" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/scousers.jpg" />
 
 Notes:
 Nor are you going to be able to rapidly grow out your hair 
@@ -278,10 +278,10 @@ Nor are you going to be able to rapidly grow out your hair
 ---v
 
 ### Shoulder Surfing
-<img style="height: 60vh" data-src="./img/security-awareness/shouldersurf.jpg" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/shouldersurf.jpg" />
 
 Notes:
-In Feng Shui, having a solid wall behind you is considered favourable, especially when sitting at a desk. A solid wall represents support, stability, and protection. 
+In Feng Shui, having a solid wall behind you is considered favorable, especially when sitting at a desk. A solid wall represents support, stability, and protection. 
 
 There's truth to this, it also adds privacy - so if you happen to be working in a public place, consider the flow of energy and listen to Feng Shui - find a nice wall to sit against.
 
@@ -305,7 +305,7 @@ Notes:
     - DevOps: Cloud service/provider stickers
     - Security: Security tools and software
 - Employer
-    - Lots of brand-specific stickers can indicate affiliation to an organisation or project
+    - Lots of brand-specific stickers can indicate affiliation to an organization or project
 
 Cover in transit - benefit of protected device
 
@@ -317,7 +317,7 @@ Cover in transit - benefit of protected device
     Call it what you will, but it can be a source of information disclosure
   </pba-col>
   <pba-col center>
-    <img style="height: 60vh" data-src="./img/security-awareness/btc-coat.png" />
+    <img style="height: 60vh" data-src="./img/2-security_awareness/btc-coat.png" />
   </pba-col>
 </pba-cols>
 
@@ -380,11 +380,11 @@ Actions and decisions are circumstantial
 
 Phishing is easier than ever, just ask ChatGPT:
 
-<img style="height: 60vh" data-src="./img/security-awareness/gpt-github-email.png" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/gpt-github-email.png" />
 
 
 Notes:
-Not only is phishing getting cheaper, the bar to entry has been signifincantly lowered.
+Not only is phishing getting cheaper, the bar to entry has been significantly lowered.
 Existing trusted email infrastructure and its exploitation leads to more and more convincing attacks, paired with the rise of services like ChatGPT, the risk is increasing.
 
 ---v
@@ -393,7 +393,7 @@ Existing trusted email infrastructure and its exploitation leads to more and mor
 
 Phishers are getting smarter, and your digital footprint is on their radar.
 
-<img style="height: 60vh" data-src="./img/security-awareness/gpt-travel-email.png" />
+<img style="height: 60vh" data-src="./img/2-security_awareness/gpt-travel-email.png" />
 
 Notes:
 Posting online comes with its share of danger, broadcasting your location to the world.
@@ -401,7 +401,7 @@ Think again before you post, could an adversary use this information to target y
 
 There is also the issue of consent - avoid blindly tagging people and tainting their operational security, ask first - it's also just a nice thing to do, rather than making bold assumptions about what they are on board with.
 
-Not to say don't post, but add a delay to obscure your live location and minimise physical risks
+Not to say don't post, but add a delay to obscure your live location and minimize physical risks
 
 ---v
 
