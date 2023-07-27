@@ -76,7 +76,9 @@ These can include various techniques, some of which could be phishing emails, so
 
 Notes:
 
-Those are some big numbers, that's $1.23 Trillion. As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralization and Web3. These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.
+Those are some big numbers, that's $1.23 Trillion.
+As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralization and Web3.
+These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.
 
 ---
 
@@ -140,7 +142,8 @@ It may sound far-fetched, but this is a very real problem in the Web3 ecosystem 
 Notes:
 
 So now we know some of the ways that threat actors can strike, let's take a moment to look at who and why.
-As mentioned before, a lot of attacks in the Web3 ecosystem are financially motivated - especially for nation states which are experiencing financial sanctions due to whatever geopolitical antics they are involved in. While that's true, we can't rule out politically motivated attacks.
+As mentioned before, a lot of attacks in the Web3 ecosystem are financially motivated - especially for nation states which are experiencing financial sanctions due to whatever geopolitical antics they are involved in.
+While that's true, we can't rule out politically motivated attacks.
 
 - Lazarus Group
   - $400m in 2021
@@ -171,22 +174,30 @@ Individuals or small groups who take advantage of easily exploitable vulnerabili
 
 Notes:
 
-Opportunists can impact us from phishing through to being in the wrong place at the wrong time. Keep your guard up when in transit or a public place, all it takes is a momentary lapse in focus for a device to be stolen.
+Opportunists can impact us from phishing through to being in the wrong place at the wrong time.
+Keep your guard up when in transit or a public place, all it takes is a momentary lapse in focus for a device to be stolen.
 
 ---v
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/pickpocket.gif" />
+#### I Pickpocketed a Pickpocket
+
+<img rounded style="width: 1100px" data-src="./img/2-security_awareness/pickpocket.gif" />
+
+Notes:
+
 Source: <a href="https://www.youtube.com/watch?v=j25VkESewZg">I Pickpocketed a Pickpocket</a>
 
 ---v
 
 #### Organized Crime Groups (OCGs)
 
-More sophisticated adversaries with dedicated resources and a more defined focus. They operate like traditional criminal organizations and often engage in large-scale, financially motivated attacks.
+More sophisticated adversaries with dedicated resources and a more defined focus.
+They operate like traditional criminal organizations and often engage in large-scale, financially motivated attacks.
 
 Notes:
 
-OCGs will have more information than a mere opportunist, with more time spent assessing their targets - vulnerabilities affecting the cyber realm, but even social media, gaining a better understanding - for example: knowledge of frequent travel locations, offices, events, etc. This knowledge can be used to carry out more advanced phishing campaigns, also known as spearphishing - but more on that later.
+OCGs will have more information than a mere opportunist, with more time spent assessing their targets - vulnerabilities affecting the cyber realm, but even social media, gaining a better understanding - for example: knowledge of frequent travel locations, offices, events, etc.
+This knowledge can be used to carry out more advanced phishing campaigns, also known as spearphishing - but more on that later.
 
 These details can be used for extortion, be it compromising information or physical threats, through to kidnap for those higher value targets.
 
@@ -194,7 +205,8 @@ These details can be used for extortion, be it compromising information or physi
 
 #### Nation States
 
-The most sophisticated and well-resourced adversaries in the landscape. They have significant technical capabilities and may engage in cyber-espionage sabotage, or warfare.
+The most sophisticated and well-resourced adversaries in the landscape.
+They have significant technical capabilities and may engage in cyber-espionage sabotage, or warfare.
 
 Notes:
 
@@ -242,9 +254,11 @@ Lost or stolen keys and ID documents pose an increased physical threat: the leak
 
 #### Tampering
 
-<iframe width="1440" height="646" data-src="https://www.youtube.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
+<iframe width="1440" height="646" data-src="https://www.youtube-nocookie.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
 
-Note: Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn't stopped - there are powerful SoCs, Systems on a Chip, which can be utilized by attackers.
+Notes:
+
+Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn't stopped - there are powerful SoCs, Systems on a Chip, which can be utilized by attackers.
 
 They range from devices, such as the Rubber Ducky, through to a simple USB-USB cable which looks innocuous enough, but can wreak havoc - and even exfiltrate data or allow for remote control.
 
@@ -254,11 +268,12 @@ These can put your devices - be it phone, laptop, or hardware wallet - at risk o
 
 #### Tampering: Mitigations
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/cables.png" />
+<img rounded style="width: 500px" data-src="./img/2-security_awareness/cables.png" />
 
 Notes:
 
-So what can we do to mitigate these attacks? For a start use our own, trusted, cables - consider identifying them in a distinctive way: that could be wrapping some tape around the end, breaking out the ol' sharpie (other permanent markers are available), or applying a coat of nail polish.
+So what can we do to mitigate these attacks?
+For a start use our own, trusted, cables - consider identifying them in a distinctive way: that could be wrapping some tape around the end, breaking out the ol' sharpie (other permanent markers are available), or applying a coat of nail polish.
 
 Don't use that charger you found randomly left in a café, even if it was offered to you by a nice businessman, and it's probably best to not pick up that mysterious USB on the side of the road anyway.
 
@@ -280,9 +295,11 @@ If you're on a network that isn't your own or trusted (home, hotspot, place of w
 
 Phishing and its counterparts, vishing, smishing, etc.
 
-## Notes:
+Notes:
 
 Phishing and attacks under its umbrella are still a very real threat, but often downplayed - but more on them later.
+
+---
 
 # Situational Awareness
 
@@ -298,7 +315,7 @@ Privacy screens are a mitigation, but they're not infallible - they reduce the v
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/com-truise.png" />
+<img rounded style="width: 350px" data-src="./img/2-security_awareness/com-truise.png" />
 
 Notes:
 
@@ -308,7 +325,7 @@ Besides, we know that Mr Tom Cruise runs at a 22° angle, rendering privacy scre
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/shoulder-pads.jpg" />
+<img rounded style="width: 700px" data-src="./img/2-security_awareness/shoulder-pads.jpg" />
 
 Notes:
 
@@ -318,7 +335,7 @@ It's unrealistic that you can wear shoulder pads all the time to block the view 
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/scousers.jpg" />
+<img rounded style="width: 700px" data-src="./img/2-security_awareness/scousers.jpg" />
 
 Notes:
 
@@ -328,11 +345,12 @@ Nor are you going to be able to rapidly grow out your hair
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/shouldersurf.jpg" />
+<img rounded style="width: 700px" data-src="./img/2-security_awareness/shouldersurf.jpg" />
 
 Notes:
 
-In Feng Shui, having a solid wall behind you is considered favorable, especially when sitting at a desk. A solid wall represents support, stability, and protection.
+In Feng Shui, having a solid wall behind you is considered favorable, especially when sitting at a desk.
+A solid wall represents support, stability, and protection.
 
 There's truth to this, it also adds privacy - so if you happen to be working in a public place, consider the flow of energy and listen to Feng Shui - find a nice wall to sit against.
 
@@ -342,7 +360,8 @@ There's truth to this, it also adds privacy - so if you happen to be working in 
 
 Notes:
 
-It’s no secret that folks in tech love their stickers, they make our devices unique versus our friends and colleagues - but this also comes with downsides. There’s a tipping point between a casual interest and direct involvement: stickers can act like a fingerprint, but what kind of information can we glean from them?
+It’s no secret that folks in tech love their stickers, they make our devices unique versus our friends and colleagues - but this also comes with downsides.
+There’s a tipping point between a casual interest and direct involvement: stickers can act like a fingerprint, but what kind of information can we glean from them?
 
 ---v
 
@@ -374,7 +393,7 @@ Cover in transit - benefit of protected device
     Call it what you will, but it can be a source of information disclosure
   </pba-col>
   <pba-col center>
-    <img style="height: 60vh" data-src="./img/2-security_awareness/btc-coat.png" />
+    <img rounded style="width: 700px" data-src="./img/2-security_awareness/btc-coat.png" />
   </pba-col>
 </pba-cols>
 
@@ -397,22 +416,24 @@ The last point applies to tattoos too, unless it's a Dogecoin tattoo.
 ### Social Media
 
 <pba-cols>
-  <pba-col center>
-    #### The Usual Suspects
+<pba-col center>
 
-    - Twitter
-    - Meta
-    - Linkedin
+#### The Usual Suspects
 
-  </pba-col>
-  <pba-col center>
-    #### The Less Obvious
+- Twitter
+- Meta
+- Linkedin
 
-    - Telegram
-    - WhatsApp
-    - Discord
+</pba-col>
+<pba-col center>
 
-  </pba-col>
+#### The Less Obvious
+
+- Telegram
+- WhatsApp
+- Discord
+
+</pba-col>
 </pba-cols>
 
 Notes:
@@ -442,7 +463,7 @@ Actions and decisions are circumstantial
 
 Phishing is easier than ever, just ask ChatGPT:
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/gpt-github-email.png" />
+<img rounded style="width: 1000px" data-src="./img/2-security_awareness/gpt-github-email.png" />
 
 Notes:
 
@@ -455,7 +476,7 @@ Existing trusted email infrastructure and its exploitation leads to more and mor
 
 Phishers are getting smarter, and your digital footprint is on their radar.
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/gpt-travel-email.png" />
+<img rounded style="width: 1000px" data-src="./img/2-security_awareness/gpt-travel-email.png" />
 
 Notes:
 
@@ -471,16 +492,18 @@ Not to say don't post, but add a delay to obscure your live location and minimiz
 ### Reacting to a Phish
 
 1. Stop
-2. Take a moment
-3. Verify
-4. Report
+1. Take a moment
+1. Verify
+1. Report
 
 Notes:
 
-So why is phishing suddenly important? It's not, it's always been important - but downplayed.
+So why is phishing suddenly important?
+It's not, it's always been important - but downplayed.
 We're in a rapidly evolving space, which comes with a lot of eyes - for better or for worse.
 
-It's always preferred to be interrupted for a second opinion on a potential phishing attempt than an unfolding incident, it'll even put a big smile on the faces of security folks all over. After all, we're there to help, rather than preach from our ivory towers and reprimand those who make mistakes.
+It's always preferred to be interrupted for a second opinion on a potential phishing attempt than an unfolding incident, it'll even put a big smile on the faces of security folks all over.
+After all, we're there to help, rather than preach from our ivory towers and reprimand those who make mistakes.
 
 ---
 
