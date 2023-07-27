@@ -1056,7 +1056,7 @@ mod tipping {
 		}
 	}
 
-	mod apply {
+	mod apply_extrinsic {
 		use super::*;
 
 		#[test]
@@ -1204,7 +1204,7 @@ mod nonce {
 		state
 	}
 
-	mod validate {
+	mod validate_transaction {
 		use super::*;
 
 		#[test]
@@ -1241,7 +1241,7 @@ mod nonce {
 		}
 	}
 
-	mod apply {
+	mod apply_extrinsic {
 		use super::*;
 
 		#[test]
