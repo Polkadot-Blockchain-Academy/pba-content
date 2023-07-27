@@ -31,7 +31,7 @@ Draw content from:
 
 **Afternoon**
 
-13:45 Lecture - Governance + Fellowship (1.5 hr) @shawntabrizi<br>
+13:45 Lecture - Ecosystem and Economy (1.5 hr) @shawntabrizi<br>
 15:15 Demonstration - Referenda, delegation, and voting (30 m) @shawntabrizi<br>
 15:45 Coffee Break (15 m)<br>
 16:00 Exercise - Adder parachain + register parachains (2 hr) @JoshOrndorff<br>
