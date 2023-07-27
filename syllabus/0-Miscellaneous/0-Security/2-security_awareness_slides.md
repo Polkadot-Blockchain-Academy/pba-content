@@ -175,7 +175,12 @@ Opportunists can impact us from phishing through to being in the wrong place at 
 
 ---v
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/pickpocket.gif" />
+#### I Pickpocketed a Pickpocket
+
+<img rounded style="width: 1100px" data-src="./img/2-security_awareness/pickpocket.gif" />
+
+Notes:
+
 Source: <a href="https://www.youtube.com/watch?v=j25VkESewZg">I Pickpocketed a Pickpocket</a>
 
 ---v
@@ -242,9 +247,11 @@ Lost or stolen keys and ID documents pose an increased physical threat: the leak
 
 #### Tampering
 
-<iframe width="1440" height="646" data-src="https://www.youtube.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
+<iframe width="1440" height="646" data-src="https://www.youtube-nocookie.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
 
-Note: Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn't stopped - there are powerful SoCs, Systems on a Chip, which can be utilized by attackers.
+Notes:
+
+Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn't stopped - there are powerful SoCs, Systems on a Chip, which can be utilized by attackers.
 
 They range from devices, such as the Rubber Ducky, through to a simple USB-USB cable which looks innocuous enough, but can wreak havoc - and even exfiltrate data or allow for remote control.
 
@@ -254,7 +261,7 @@ These can put your devices - be it phone, laptop, or hardware wallet - at risk o
 
 #### Tampering: Mitigations
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/cables.png" />
+<img rounded style="width: 500px" data-src="./img/2-security_awareness/cables.png" />
 
 Notes:
 
@@ -280,9 +287,11 @@ If you're on a network that isn't your own or trusted (home, hotspot, place of w
 
 Phishing and its counterparts, vishing, smishing, etc.
 
-## Notes:
+Notes:
 
 Phishing and attacks under its umbrella are still a very real threat, but often downplayed - but more on them later.
+
+---
 
 # Situational Awareness
 
@@ -298,7 +307,7 @@ Privacy screens are a mitigation, but they're not infallible - they reduce the v
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/com-truise.png" />
+<img rounded style="width: 350px" data-src="./img/2-security_awareness/com-truise.png" />
 
 Notes:
 
@@ -308,7 +317,7 @@ Besides, we know that Mr Tom Cruise runs at a 22° angle, rendering privacy scre
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/shoulder-pads.jpg" />
+<img rounded style="width: 700px" data-src="./img/2-security_awareness/shoulder-pads.jpg" />
 
 Notes:
 
@@ -318,7 +327,7 @@ It's unrealistic that you can wear shoulder pads all the time to block the view 
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/scousers.jpg" />
+<img rounded style="width: 700px" data-src="./img/2-security_awareness/scousers.jpg" />
 
 Notes:
 
@@ -328,7 +337,7 @@ Nor are you going to be able to rapidly grow out your hair
 
 ### Shoulder Surfing
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/shouldersurf.jpg" />
+<img rounded style="width: 700px" data-src="./img/2-security_awareness/shouldersurf.jpg" />
 
 Notes:
 
@@ -374,7 +383,7 @@ Cover in transit - benefit of protected device
     Call it what you will, but it can be a source of information disclosure
   </pba-col>
   <pba-col center>
-    <img style="height: 60vh" data-src="./img/2-security_awareness/btc-coat.png" />
+    <img rounded style="width: 700px" data-src="./img/2-security_awareness/btc-coat.png" />
   </pba-col>
 </pba-cols>
 
@@ -397,22 +406,24 @@ The last point applies to tattoos too, unless it's a Dogecoin tattoo.
 ### Social Media
 
 <pba-cols>
-  <pba-col center>
-    #### The Usual Suspects
+<pba-col center>
 
-    - Twitter
-    - Meta
-    - Linkedin
+#### The Usual Suspects
 
-  </pba-col>
-  <pba-col center>
-    #### The Less Obvious
+- Twitter
+- Meta
+- Linkedin
 
-    - Telegram
-    - WhatsApp
-    - Discord
+</pba-col>
+<pba-col center>
 
-  </pba-col>
+#### The Less Obvious
+
+- Telegram
+- WhatsApp
+- Discord
+
+</pba-col>
 </pba-cols>
 
 Notes:
@@ -442,7 +453,7 @@ Actions and decisions are circumstantial
 
 Phishing is easier than ever, just ask ChatGPT:
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/gpt-github-email.png" />
+<img rounded style="width: 1000px" data-src="./img/2-security_awareness/gpt-github-email.png" />
 
 Notes:
 
@@ -455,7 +466,7 @@ Existing trusted email infrastructure and its exploitation leads to more and mor
 
 Phishers are getting smarter, and your digital footprint is on their radar.
 
-<img style="height: 60vh" data-src="./img/2-security_awareness/gpt-travel-email.png" />
+<img rounded style="width: 1000px" data-src="./img/2-security_awareness/gpt-travel-email.png" />
 
 Notes:
 
