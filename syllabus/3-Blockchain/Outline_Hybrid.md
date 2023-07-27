@@ -21,7 +21,7 @@ Students learn about expressing agreements as code and are left wondering where 
 - 🗣️ P2P Networking - Andrew - Founders NOT Required
 - ⌨️ More BFS.
 - ☕ Break
-- 🗣️ Platform Agnostic Bytecodes - Lauren - Founders Required
+- 🗣️ Platform Agnostic Bytecodes - Joshy - Founders Required
 - ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron - Founders Required
 - 🗣️ Closing Discussion - Where would we actually run these contracts? - Joshy - Founders Required
 
@@ -32,9 +32,8 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ### Morning
 
-- 🗣️ Blockchain Structure - Joshy - Founders Required - TODO maybe split this into two lessons. One about the data structure, and one about tracking one on a P2P network
+- 🗣️ Blockchain Structure - Joshy - Founders Required
 - ⌨️ More BFS
-- 🗣️ Blockchain on a P2P Network - Joshy - Founders Required
 - ☕ Break
 - 🗣️ Consensus Part 1 - Authoring - Agreeing on Possibilities - Joshy - Founders Required
 - 🎲 Manual Consensus Activity (aka BitStory) - Founders Required
@@ -59,15 +58,15 @@ We also explore light clients and bridges, both of which benefit from determinis
 - 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) - Joshy, Andrew, Lauren, Aaron - Founders NOT Required<!-- markdown-link-check-disable-line -->
   - _Note that this repo is private, intended to be shared with the student cohort's github team for read access._
     _This also allows for people to pull up on mobile if logged in to view easier_
-- ⌨🗣️ aBFT and Aleph 0 - Piotr Mikolajczyk - Founders NOT Required
+- ⌨🗣️ DAG Based Consensus - Piotr Mikolajczyk - Founders NOT Required
 
 ### Afternoon
 
 - 🗣️ Account and UTXO models - Andrew - Founders Required
-- 🗣️ Full State Inclusion Proofs in Monero - Guest Content - Founders Not Required
+- 🗣️ Privacy in the UTXO model - Guest Content - Founders Not Required
 - ⌨️ Continue Coding on BFS
 - ☕ Break
-- 🗣️ Account and UTXO models - Andrew - Founders Required
+- 🗣️ Light Clients and Bridges - Joshy - Founders Required
 - ⌨️ BFS
 
 ## Thursday
@@ -106,4 +105,5 @@ Then they will use that chain to launch their smart contracts a la the contracts
 
 ### Afternoon
 
-🎲⌨️☕ In the afternoon we will use the chain that we launched in the morning to execute the smart contracts competition. - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec - Founders NOT Required
+🎲⌨️☕ Ink! Game - Lauren
+🎲⌨️☕ Use the chain that we launched in the morning to execute the smart contracts competition. - Joshy, Lauren, Aaron, Stephen Shelton, Filip Bielejec - Founders NOT Required
