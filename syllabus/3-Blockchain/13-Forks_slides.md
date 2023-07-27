@@ -30,7 +30,7 @@ revealOptions:
 In an ideal world blockchains would look like this:
 <br><br>
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/no_fork.drawio.svg" />
+<img style="width: 800px" src="./img/forks/no_fork.drawio.svg" />
 
 ---v
 
@@ -42,7 +42,7 @@ Things don't always go according to plan:
 
 <br>
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_small.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_small.drawio.svg" />
 
 ---v
 
@@ -54,7 +54,7 @@ And sometimes they get extra messy:
 
 <br>
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_chaos.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_chaos.drawio.svg" />
 
 ---
 
@@ -66,7 +66,7 @@ And sometimes they get extra messy:
 
 #### _Fork Identification_
 
-<img style="width: 500px" src="../../assets/img/3-Blockchain/forks/forks_and_boxes.drawio.svg" />
+<img style="width: 500px" src="./img/forks/forks_and_boxes.drawio.svg" />
 
 ---v
 
@@ -74,7 +74,7 @@ And sometimes they get extra messy:
 
 #### _Fork Categorisation_
 
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/forks_in_boxes.drawio.svg" />
+<img style="width: 800px" src="./img/forks/forks_in_boxes.drawio.svg" />
 
 Notes:
 
@@ -91,7 +91,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Forks Family Tree_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_family.drawio.svg" />
 
 ---
 
@@ -104,14 +104,14 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Transitory Forks_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_transitory.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_family_transitory.drawio.svg" />
 
 ---v
 
 ## Transitory Forks
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/transitory_forks.drawio.svg" />
+<img style="width: 800px" src="./img/forks/transitory_forks.drawio.svg" />
 
 ---
 
@@ -124,7 +124,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Consensus Forks_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_consensus.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_family_consensus.drawio.svg" />
 
 ---v
 
@@ -139,7 +139,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Validity Set_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/BTC_block.drawio.svg" />
+<img style="width: 800px" src="./img/forks/BTC_block.drawio.svg" />
 
 ---v
 
@@ -148,7 +148,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Validity Set_
 
 <br>
-<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/BTC_header.drawio.svg" />
+<img style="width: 300px" src="./img/forks/BTC_header.drawio.svg" />
 
 ---v
 
@@ -157,7 +157,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Validity Set_
 
 <br>
-<img style="width: 500px" src="../../assets/img/3-Blockchain/forks/BTC_header_constraints.drawio.svg" />
+<img style="width: 500px" src="./img/forks/BTC_header_constraints.drawio.svg" />
 
 ---v
 
@@ -166,7 +166,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Validity Set_
 
 <br>
-<img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set.drawio.svg" />
+<img style="width: 500px" src="./img/forks/validity_set.drawio.svg" />
 
 ---v
 
@@ -175,7 +175,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Validity Set_
 
 <br>
-<img style="width: 500px" src="../../assets/img/3-Blockchain/forks/universal_set.drawio.svg" />
+<img style="width: 500px" src="./img/forks/universal_set.drawio.svg" />
 
 ---v
 
@@ -184,7 +184,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Validity Set_
 
 <br>
-<img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set_old.drawio.svg" />
+<img style="width: 500px" src="./img/forks/validity_set_old.drawio.svg" />
 
 ---v
 
@@ -193,7 +193,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Validity Set_
 
 <br>
-<img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set_new.drawio.svg" />
+<img style="width: 500px" src="./img/forks/validity_set_new.drawio.svg" />
 
 ---v
 
@@ -203,10 +203,10 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 
 <pba-cols>
     <pba-col>
-		<img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set_new.drawio.svg" />
+		<img style="width: 500px" src="./img/forks/validity_set_new.drawio.svg" />
     </pba-col>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_soft.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
 </pba-cols>
@@ -222,7 +222,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 #### _Soft Forks_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_soft.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_family_soft.drawio.svg" />
 
 ---v
 
@@ -232,7 +232,7 @@ Why? Forks in the same category will exhibit similar behaviour and will require 
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_soft.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
@@ -255,7 +255,7 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_soft.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
@@ -277,11 +277,11 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_soft.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
-		<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/soft_forks_s50.drawio.svg" />
+		<img style="width: 800px" src="./img/forks/soft_forks_s50.drawio.svg" />
     </pba-col>
 </pba-cols>
 
@@ -293,11 +293,11 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_soft.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
-		<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/soft_forks_g50.drawio.svg" />
+		<img style="width: 800px" src="./img/forks/soft_forks_g50.drawio.svg" />
     </pba-col>
 </pba-cols>
 
@@ -312,7 +312,7 @@ Is decreasing or increasing blocksize a soft fork?
 #### _Hidden Forks_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_hidden.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_family_hidden.drawio.svg" />
 
 ---v
 
@@ -322,7 +322,7 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_hidden.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_hidden.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
@@ -343,7 +343,7 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_hidden.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_hidden.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
@@ -364,11 +364,11 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_hidden.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_hidden.drawio.svg" />
 		<div style="font-size: 50px;">N ⊆ O</div>
     </pba-col>
     <pba-col>
-		<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/soft_forks_hidden.drawio.svg" />
+		<img style="width: 800px" src="./img/forks/soft_forks_hidden.drawio.svg" />
     </pba-col>
 </pba-cols>
 
@@ -383,7 +383,7 @@ Is decreasing or increasing blocksize a soft fork?
 #### _Hard Forks_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_hard.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_family_hard.drawio.svg" />
 
 ---v
 
@@ -393,7 +393,7 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_hard.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
 		<div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
@@ -414,7 +414,7 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_hard.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
 		<div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
@@ -437,11 +437,11 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_hard.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
 		<div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
-			<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/hard_forks_s50.drawio.svg" />
+			<img style="width: 800px" src="./img/forks/hard_forks_s50.drawio.svg" />
     </pba-col>
 </pba-cols>
 
@@ -453,11 +453,11 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 300px" src="../../assets/img/3-Blockchain/forks/venn_hard.drawio.svg" />
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
 		<div style="font-size: 50px;">O ⊆ N</div>
     </pba-col>
     <pba-col>
-			<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/hard_forks_g50.drawio.svg" />
+			<img style="width: 800px" src="./img/forks/hard_forks_g50.drawio.svg" />
     </pba-col>
 </pba-cols>
 
@@ -472,7 +472,7 @@ Is decreasing or increasing blocksize a soft fork?
 #### _Full Forks_
 
 <br>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_full.drawio.svg" />
+<img style="width: 800px" src="./img/forks/fork_family_full.drawio.svg" />
 
 ---v
 
@@ -482,7 +482,7 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 200px" src="../../assets/img/3-Blockchain/forks/venn_full.drawio.svg" />
+		<img style="width: 200px" src="./img/forks/venn_full.drawio.svg" />
 		<div style="font-size: 50px;">O ∩ N = ∅</div>
     </pba-col>
     <pba-col>
@@ -503,7 +503,7 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 200px" src="../../assets/img/3-Blockchain/forks/venn_full.drawio.svg" />
+		<img style="width: 200px" src="./img/forks/venn_full.drawio.svg" />
 		<div style="font-size: 50px;">O ∩ N = ∅</div>
     </pba-col>
     <pba-col>
@@ -526,11 +526,11 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 200px" src="../../assets/img/3-Blockchain/forks/venn_full.drawio.svg" />
+		<img style="width: 200px" src="./img/forks/venn_full.drawio.svg" />
 		<div style="font-size: 50px;">O ∩ N = ∅</div>
     </pba-col>
     <pba-col>
-		<img style="width: 600px" src="../../assets/img/3-Blockchain/forks/full_forks__&_50.drawio.svg" />
+		<img style="width: 600px" src="./img/forks/full_forks__&_50.drawio.svg" />
     </pba-col>
 </pba-cols>
 
@@ -540,17 +540,17 @@ Is decreasing or increasing blocksize a soft fork?
 
 <pba-cols>
     <pba-col>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_s50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/soft_forks_s50.drawio.svg" />
 		<br>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_g50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/soft_forks_g50.drawio.svg" />
     </pba-col>
 	<pba-col>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_s50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/hard_forks_s50.drawio.svg" />
 		<br>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_g50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/hard_forks_g50.drawio.svg" />
     </pba-col>
     <pba-col>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/full_forks__&_50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/full_forks__&_50.drawio.svg" />
     </pba-col>
 </pba-cols>
 
@@ -566,4 +566,4 @@ Notes:
 
 ---
 
-<img style="width: 1800px" src="../../assets/img/3-Blockchain/forks/forks.drawio.svg" />
+<img style="width: 1800px" src="./img/forks/forks.drawio.svg" />
