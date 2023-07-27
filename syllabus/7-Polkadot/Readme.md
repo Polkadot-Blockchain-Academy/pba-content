@@ -17,7 +17,7 @@ Draw content from:
 14:45 Lecture - Decisions of Polkadot (1 hr) @shawntabrizi<br>
 15:45 Coffee Break (15 m)<br>
 16:00 Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier<br>
-17:00 Lecture - Simple Shared Security (1.5 hr) @shawntabrizi<br>
+17:00 Lecture - Simple Shared Security (1 hr) @shawntabrizi<br>
 
 ### Day 2
 
