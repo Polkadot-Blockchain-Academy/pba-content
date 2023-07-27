@@ -115,6 +115,13 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
+	pub(crate) fn can_reserve(&self, amount: T::Balance) -> DispatchOutcome {
+		match self.free.checked_sub(&amount) {
+			Some(leftover) if leftover >= T::MinimumBalance::get() => Ok(()),
+			_ => Err(Error::<T>::InsufficientFunds)?,
+		}
+	}
+
 	#[allow(unused)]
 	pub(crate) fn unreserve(&mut self, amount: T::Balance) -> DispatchOutcome {
 		match self.reserved.checked_sub(&amount) {
@@ -245,7 +252,7 @@ impl<T: Config> Module<T> {
 	pub fn reserve(from: AccountId, amount: T::Balance) -> DispatchOutcome {
 		let mut balance = BalancesMap::<T>::get(from).ok_or(Error::<T>::DoesNotExist)?;
 
-		balance.can_withdraw(amount)?;
+		balance.can_reserve(amount)?;
 		balance.reserve(amount).expect("checked above");
 
 		BalancesMap::<T>::set(from, balance);
