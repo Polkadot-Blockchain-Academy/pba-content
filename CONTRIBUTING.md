@@ -112,7 +112,7 @@ Running this command will open a new browser tab and _watch for file changes_ (u
 yarn start
 ```
 
-**There is a [base slide template example](./syllabus/0-Internal_Faculty_Resources/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
