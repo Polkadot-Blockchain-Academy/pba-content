@@ -26,11 +26,7 @@ instructors: ["Kian Paimani"]
 
 ```rust
 frame_support::construct_runtime!(
-  pub struct Runtime where
-    Block = Block,
-    NodeBlock = opaque::Block,
-    UncheckedExtrinsic = UncheckedExtrinsic,
-  {
+  pub struct Runtime {
     System: frame_system,
     Timestamp: pallet_timestamp,
     Balances: pallet_balances,
@@ -46,11 +42,7 @@ frame_support::construct_runtime!(
 
 ```rust [2]
 frame_support::construct_runtime!(
-  pub struct Runtime where
-    Block = Block,
-    NodeBlock = opaque::Block,
-    UncheckedExtrinsic = UncheckedExtrinsic,
-  {
+  pub struct Runtime {
     System: frame_system,
     Timestamp: pallet_timestamp,
     Balances: pallet_balances,
@@ -108,11 +100,7 @@ pallet_dpos::Pallet::<Test>::force_change_authorities(..);
 
 ```rust [3-5]
 frame_support::construct_runtime!(
-  pub struct Runtime where
-    Block = Block,
-    NodeBlock = opaque::Block,
-    UncheckedExtrinsic = UncheckedExtrinsic,
-  {
+  pub struct Runtime {
     System: frame_system,
     Timestamp: pallet_timestamp,
     Balances: pallet_balances,
@@ -139,11 +127,7 @@ Notes:
 
 ```rust [7-11|7-12]
 frame_support::construct_runtime!(
-  pub struct Runtime where
-    Block = Block,
-    NodeBlock = opaque::Block,
-    UncheckedExtrinsic = UncheckedExtrinsic,
-  {
+  pub struct Runtime {
     System: frame_system,
     Timestamp: pallet_timestamp,
     Balances: pallet_balances,
@@ -264,11 +248,7 @@ enum RuntimeCall {
 
 ```rust [7-9]
 frame_support::construct_runtime!(
-  pub struct Runtime where
-    Block = Block,
-    NodeBlock = opaque::Block,
-    UncheckedExtrinsic = UncheckedExtrinsic,
-  {
+  pub struct Runtime {
     System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
     Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
     Dpos: pallet_dpos,
@@ -285,11 +265,7 @@ frame_support::construct_runtime!(
 
 ```rust [7-9]
 frame_support::construct_runtime!(
-  pub struct Runtime where
-    Block = Block,
-    NodeBlock = opaque::Block,
-    UncheckedExtrinsic = UncheckedExtrinsic,
-  {
+  pub struct Runtime {
     System: frame_system = 1,
     Balances: pallet_balances = 0,
     Dpos: pallet_dpos = 2,
