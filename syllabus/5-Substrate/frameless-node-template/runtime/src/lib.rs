@@ -752,12 +752,12 @@ mod tests {
 
 	#[docify::export]
 	#[test]
-	#[ignore = "ignore"]
 	fn import_and_author_equal() {
 		// a few dummy extrinsics.
 		let ext1 = signed_set_value(42, 0);
 		let ext2 = signed_set_value(43, 1);
 		let ext3 = signed_set_value(44, 2);
+		let ext4 = unsigned_set_value(2);
 
 		let header = shared::Header {
 			digest: Default::default(),
@@ -775,6 +775,7 @@ mod tests {
 			Runtime::do_apply_extrinsic(ext1.clone()).unwrap().unwrap();
 			Runtime::do_apply_extrinsic(ext2.clone()).unwrap().unwrap();
 			Runtime::do_apply_extrinsic(ext3.clone()).unwrap().unwrap();
+			let _ = Runtime::do_apply_extrinsic(ext4.clone()).unwrap_err();
 
 			let header = Runtime::do_finalize_block();
 

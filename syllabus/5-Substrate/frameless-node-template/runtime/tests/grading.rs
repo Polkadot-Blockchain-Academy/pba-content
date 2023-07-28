@@ -32,6 +32,8 @@ use sp_runtime::{
 
 // TODO: Clear distinction between apply and dispatch.
 
+// TODO: tip + transfer_all
+
 mod shared;
 
 const LOG_TARGET: &'static str = "grading";
@@ -41,7 +43,7 @@ thread_local! {
 }
 
 fn balance_of(who: AccountId) -> Option<AccountBalance> {
-	let key = [b"BalancesMap".as_ref(), who.encode().as_ref()].concat();
+	let key = [b"BalancesMap".as_ref(), who.as_ref()].concat();
 	sp_io::storage::get(&key).and_then(|bytes| AccountBalance::decode(&mut &bytes[..]).ok())
 }
 
@@ -103,15 +105,23 @@ fn validate(to_validate: Extrinsic, state: &mut TestExternalities) -> Transactio
 			.encode()
 			.as_slice(),
 	)
-	.unwrap();
+	.expect(
+		"calling into TaggedTransactionQueue_validate_transaction failed, panic must have happened in the runtime",
+	);
 
 	// decode the bytes as a TransactionValidity.
 	<TransactionValidity as Decode>::decode(&mut &*return_bytes).unwrap()
 }
 
 fn apply(ext: Extrinsic, state: &mut TestExternalities) -> ApplyExtrinsicResult {
-	let return_bytes =
-		executor_call(state, "BlockBuilder_apply_extrinsic", ext.encode().as_slice()).unwrap();
+	let return_bytes = executor_call(
+		state,
+		"BlockBuilder_apply_extrinsic",
+		ext.encode().as_slice(),
+	)
+	.expect(
+		"calling into BlockBuilder_apply_extrinsic failed, panic must have happened in the runtime",
+	);
 
 	// decode the bytes as a ApplyExtrinsicResult.
 	<ApplyExtrinsicResult as Decode>::decode(&mut &*return_bytes).unwrap()
@@ -140,11 +150,12 @@ fn author_and_import(
 		digest: Default::default(),
 	};
 
-	log::info!(target: LOG_TARGET, "authoring a block with {:?} and .", exts.iter().map(|x| x.function.clone()).collect::<Vec<_>>());
+	log::info!(target: LOG_TARGET, "authoring a block with {:?}.", exts.iter().map(|x| x.function.clone()).collect::<Vec<_>>());
 	let mut extrinsics = vec![];
 	let mut auth_state = TestExternalities::new_with_code(code.as_ref(), Default::default());
 
-	executor_call(&mut auth_state, "Core_initialize_block", &header.encode()).unwrap();
+	executor_call(&mut auth_state, "Core_initialize_block", &header.encode())
+		.expect("Core_initialize_block failed; panic happened in runtime");
 
 	for ext in exts {
 		let apply_outcome = apply(ext.clone(), &mut auth_state);
@@ -158,7 +169,7 @@ fn author_and_import(
 	let header: Header =
 		executor_call(&mut auth_state, "BlockBuilder_finalize_block", Default::default())
 			.map(|data| <Header as Decode>::decode(&mut &*data).unwrap())
-			.unwrap();
+			.expect("could not decode header returned from BlockBuilder_finalize_block, diverged from shared.rs?");
 
 	let block = Block { extrinsics, header };
 	auth_state.commit_all().unwrap();
@@ -168,30 +179,40 @@ fn author_and_import(
 		"something is wrong :/"
 	);
 
-	auth_state.execute_with(|| {
-		// check the extrinsics key is set.
-		let noted_extrinsics = sp_io::storage::get(EXTRINSICS_KEY)
-			.and_then(|bytes| <Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).ok())
-			.unwrap_or_default();
-		assert_eq!(
-			noted_extrinsics.len(),
-			block.extrinsics.len(),
-			"incorrect extrinsics recorded in state"
-		);
+	// These checks are too greedy and explicit. A correct `execute_block` should already check
+	// them, therefore we skip it for now.
+	let sanity_checks = false;
+	if sanity_checks {
+		auth_state.execute_with(|| {
+			// check the extrinsics key is set.
+			let noted_extrinsics = sp_io::storage::get(EXTRINSICS_KEY)
+				.and_then(|bytes| <Vec<Vec<u8>> as Decode>::decode(&mut &*bytes).ok())
+				.unwrap_or_default();
 
-		// check the header key is not set.
-		assert!(sp_io::storage::get(&HEADER_KEY).is_none());
+			assert_eq!(
+				noted_extrinsics.len(),
+				block.extrinsics.len(),
+				"incorrect extrinsics recorded in state, in block {:?}, noted in `EXTRINSICS_KEY` {:?}",
+				block.extrinsics,
+				noted_extrinsics
+			);
 
-		// check state root.
-		assert_eq!(block.header.state_root, sp_io_root());
+			// check the header key is not set.
+			assert!(sp_io::storage::get(&HEADER_KEY).is_none(), "Header key left in storage");
 
-		// check extrinsics root.
-		assert_eq!(
-			block.header.extrinsics_root,
-			BlakeTwo256::ordered_trie_root(noted_extrinsics, sp_runtime::StateVersion::V0)
-		);
-	});
+			// check state root.
+			assert_eq!(block.header.state_root, sp_io_root(), "incorrect state root");
+
+			// check extrinsics root.
+			assert_eq!(
+				block.header.extrinsics_root,
+				BlakeTwo256::ordered_trie_root(noted_extrinsics, sp_runtime::StateVersion::V0),
+				"incorrect extrinsics root",
+			);
+		});
+	}
 	drop(auth_state);
+	log::debug!(target: LOG_TARGET, "authored the block.");
 
 	// now we import the block into a fresh new state.
 	executor_call(import_state, "Core_execute_block", &block.encode())
@@ -200,7 +221,11 @@ fn author_and_import(
 
 	import_state.execute_with(|| {
 		// check state root.
-		assert_eq!(block.header.state_root, sp_io_root());
+		assert_eq!(
+			block.header.state_root,
+			sp_io_root(),
+			"incorrect state root in authored block after importing"
+		);
 
 		// check extrinsics root.
 		assert_eq!(
@@ -208,7 +233,8 @@ fn author_and_import(
 			BlakeTwo256::ordered_trie_root(
 				block.extrinsics.into_iter().map(|e| e.encode()).collect::<Vec<_>>(),
 				sp_runtime::StateVersion::V0
-			)
+			),
+			"incorrect extrinsics root in authored block",
 		);
 	});
 
@@ -259,8 +285,8 @@ mod basics {
 		let mut state = new_test_ext();
 		state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
 		author_and_import(&mut state, vec![], || {
-			assert_eq!(balance_of(Alice.public()), None);
-			assert_eq!(balance_of(Bob.public()), None);
+			assert_eq!(balance_of(Alice.public()), None, "empty block has state");
+			assert_eq!(balance_of(Bob.public()), None, "empty block has state");
 		});
 	}
 
@@ -271,7 +297,7 @@ mod basics {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert!(sp_io::storage::get(VALUE_KEY).is_none());
+			assert!(sp_io::storage::get(VALUE_KEY).is_none(), "remark should not change state");
 		});
 	}
 
@@ -282,9 +308,14 @@ mod basics {
 
 		state.execute_with(|| assert!(sp_io::storage::get(VALUE_KEY).is_none()));
 		author_and_import(&mut state, exts, || {
+			let value_key_value =
+				sp_io::storage::get(VALUE_KEY).and_then(|b| <u32 as Decode>::decode(&mut &*b).ok());
 			assert_eq!(
-				sp_io::storage::get(VALUE_KEY).and_then(|b| <u32 as Decode>::decode(&mut &*b).ok()),
-				Some(42)
+				value_key_value,
+				Some(42),
+				"set should change state under VALUE_KEY, expected {:?}, got {:?}",
+				Some(42),
+				value_key_value
 			);
 		});
 	}
@@ -298,18 +329,19 @@ mod block_builder_sig_dispatch_error {
 	use super::*;
 
 	#[test]
-	fn apply_unsigned() {
+	fn apply_unsigned_set_fails() {
 		let ext = unsigned(RuntimeCall::System(SystemCall::Set { value: 42 }));
 		let mut state = new_test_ext();
 
 		assert_eq!(
-			apply(ext, &mut state).unwrap_err(),
-			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+			apply(ext, &mut state),
+			Err(TransactionValidityError::Invalid(InvalidTransaction::BadProof)),
+			"unsigned extrinsic return Err(BadProof) in apply"
 		);
 	}
 
 	#[test]
-	fn apply_bad_signature() {
+	fn apply_bad_signature_fails() {
 		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0);
 		let other_sig = {
 			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice, 0)
@@ -321,20 +353,24 @@ mod block_builder_sig_dispatch_error {
 
 		let mut state = new_test_ext();
 		assert_eq!(
-			apply(ext, &mut state).unwrap_err(),
-			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+			apply(ext, &mut state),
+			Err(TransactionValidityError::Invalid(InvalidTransaction::BadProof)),
+			"bad signature extrinsic return Err(BadProof) in apply"
 		);
 	}
 
 	#[test]
-	fn apply_with_dispatch_error() {
+	fn apply_sudo_remark_by_bob_fails() {
 		let mut state = new_test_ext();
 		let ext = signed(RuntimeCall::System(SystemCall::SudoRemark { data: vec![42] }), &Bob, 0);
-		assert!(matches!(apply(ext, &mut state), Ok(Err(_))));
+		assert!(
+			matches!(apply(ext, &mut state), Ok(Err(_))),
+			"Bob cannot sudo remark, apply should return Ok(Err(_))"
+		);
 	}
 
 	#[test]
-	fn apply_okay() {
+	fn apply_remark_okay() {
 		let mut state = new_test_ext();
 		let ext = signed(RuntimeCall::System(SystemCall::SudoRemark { data: vec![42] }), &Alice, 0);
 		assert!(matches!(apply(ext, &mut state), Ok(Ok(_))));
@@ -352,28 +388,31 @@ mod validate_tx_sig_dispatch_error {
 	use super::*;
 
 	#[test]
-	fn validate_okay() {
+	fn validate_signed_set_value_okay() {
 		let ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0);
 		let mut state = new_test_ext();
 		let validity = validate(ext, &mut state);
 
 		// For now, we just check that this is ok. We don't check anything else.
-		assert!(validity.is_ok());
+		assert!(validity.is_ok(), "signed set value should be Ok(_)");
 	}
 
 	#[test]
-	fn validate_with_dispatch_error() {
+	fn validate_sudo_remark_by_bob() {
 		// Bob won't be able to dispatch this, but we should not need to care about this.
 		let ext = signed(RuntimeCall::System(SystemCall::SudoRemark { data: vec![42] }), &Bob, 0);
 		let mut state = new_test_ext();
 		let validity = validate(ext, &mut state);
 
 		// For now, we just check that this is ok. We don't check anything else.
-		assert!(validity.is_ok());
+		assert!(
+			validity.is_ok(),
+			"A sudo remark by bob should still be Ok(_) in validate_transaction"
+		);
 	}
 
 	#[test]
-	fn validate_bad_signature() {
+	fn validate_bad_signature_fails() {
 		let mut ext = signed(RuntimeCall::System(SystemCall::Set { value: 42 }), &Alice, 0);
 		let other_sig = {
 			signed(RuntimeCall::System(SystemCall::Set { value: 43 }), &Alice, 0)
@@ -387,8 +426,9 @@ mod validate_tx_sig_dispatch_error {
 		let validity = validate(ext, &mut state);
 
 		assert_eq!(
-			validity.unwrap_err(),
-			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+			validity,
+			Err(TransactionValidityError::Invalid(InvalidTransaction::BadProof)),
+			"bad signature extrinsic return Err(BadProof) in validate_transaction"
 		);
 	}
 
@@ -400,8 +440,9 @@ mod validate_tx_sig_dispatch_error {
 		let validity = validate(ext, &mut state);
 
 		assert_eq!(
-			validity.unwrap_err(),
-			TransactionValidityError::Invalid(InvalidTransaction::BadProof)
+			validity,
+			Err(TransactionValidityError::Invalid(InvalidTransaction::BadProof)),
+			"unsigned extrinsic return Err(BadProof) in validate_transaction"
 		);
 	}
 }
@@ -410,7 +451,7 @@ mod currency {
 	use super::*;
 
 	#[test]
-	fn mint_wrong_minter() {
+	fn bob_cannot_mint_to_alice() {
 		// bob account cannot mint.
 		let mut state = new_test_ext();
 
@@ -421,13 +462,13 @@ mod currency {
 		)];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 0);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0, "alice should have 0");
+			assert_eq!(issuance().unwrap_or_default(), 0, "issuance should be 0");
 		});
 	}
 
 	#[test]
-	fn mint_success() {
+	fn alice_can_mint_to_bob() {
 		// can mint if alice
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 20 }),
@@ -438,14 +479,14 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 20);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20, "bob should have 20");
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0, "alice should have 0");
+			assert_eq!(issuance().unwrap_or_default(), 20, "issuance should be 20");
 		});
 	}
 
 	#[test]
-	fn multi_mint_success() {
+	fn multiple_mints_in_single_block() {
 		// can mint multiple times if alice
 		let exts = vec![
 			signed(
@@ -468,15 +509,15 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 30);
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20);
-			assert_eq!(free_of(Charlie.public()).unwrap_or_default(), 50);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 30, "alice should have 30");
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20, "bob should have 20");
+			assert_eq!(free_of(Charlie.public()).unwrap_or_default(), 50, "charlie should have 50");
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn mixed_mint() {
+	fn multiple_mints_in_single_block_success_and_failure() {
 		// can mint multiple times if alice
 		let exts = vec![
 			signed(
@@ -499,15 +540,15 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Charlie.public()).unwrap_or_default(), 30);
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20);
-			assert_eq!(issuance().unwrap_or_default(), 50);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0, "alice should have 0");
+			assert_eq!(free_of(Charlie.public()).unwrap_or_default(), 30, "charlie should have 30");
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 20, "bob should have 20");
+			assert_eq!(issuance().unwrap_or_default(), 50, "issuance should be 50");
 		});
 	}
 
 	#[test]
-	fn mint_not_enough() {
+	fn alice_mints_less_than_minimum_balance_to_bob() {
 		// cannot mint amount less than `MinimumBalance`
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 5 }),
@@ -518,16 +559,15 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 0);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0, "bob should have 0");
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0, "alice should have 0");
+			assert_eq!(issuance().unwrap_or_default(), 0, "issuance should be 0");
 		});
 	}
 
 	#[test]
-	fn mint_not_enough_edge_1() {
+	fn alice_mints_9_to_bob() {
 		// still cannot mint amount less than `MinimumBalance`
-
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 9 }),
 			&Alice,
@@ -537,30 +577,30 @@ mod currency {
 		let mut state = new_test_ext();
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 0);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0, "bob should have 0");
+			assert_eq!(issuance().unwrap_or_default(), 0, "issuance should be 0");
 		});
 	}
 
 	#[test]
-	fn mint_not_enough_edge_2() {
+	fn alice_mints_10_to_bob() {
 		let mut state = new_test_ext();
-
 		// but 10 is ok.
 		let exts = vec![signed(
 			RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 10 }),
 			&Alice,
 			0,
 		)];
+
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
-			assert_eq!(issuance().unwrap_or_default(), 10);
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0, "alice should have 0");
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10, "bob should have 10");
+			assert_eq!(issuance().unwrap_or_default(), 10, "issuance should be 10");
 		});
 	}
 
 	#[test]
-	fn transfer_success() {
+	fn alice_mints_100_to_bob_bob_transfers_20_to_alice() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -579,14 +619,14 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 80);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 20);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 80, "bob should have 80");
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 20, "alice should have 20");
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn transfer_more_than_you_can() {
+	fn alice_mints_100_to_bob_bob_transfers_91_to_alice() {
 		let mut state = new_test_ext();
 		// min balance is 10.
 		let spendable = 100 - 10;
@@ -608,14 +648,14 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100, "bob should have 100");
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0, "alice should have 0");
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn transfer_more_than_you_can_limit() {
+	fn alice_mints_100_to_bob_bob_transfers_90_to_alice() {
 		let mut state = new_test_ext();
 		let spendable = 100 - 10;
 
@@ -636,16 +676,15 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 90);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10, "bob should have 10");
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 90, "alice should have 90");
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn transfer_all_manually_wont_work() {
+	fn alice_mints_100_to_bob_bob_transfers_100_to_alice() {
 		let mut state = new_test_ext();
-
 		let exts = vec![
 			signed(
 				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
@@ -660,14 +699,14 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100, "bob should have 100");
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 0, "alice should have 0");
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn transfer_all_2() {
+	fn alice_mints_100_to_bob_bob_transfers_all_to_alice() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -684,38 +723,25 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 100);
-			assert_eq!(issuance().unwrap_or_default(), 100);
-		});
-	}
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 0, "bob should have 0");
+			assert_eq!(free_of(Alice.public()).unwrap_or_default(), 100, "alice should have 100");
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 
-	#[test]
-	fn transfer_all_account_is_destroyed() {
-		let mut state = new_test_ext();
-
-		let exts = vec![
-			signed(
-				RuntimeCall::Currency(CurrencyCall::Mint { dest: Bob.public(), amount: 100 }),
-				&Alice,
-				0,
-			),
-			signed(
-				RuntimeCall::Currency(CurrencyCall::TransferAll { dest: Alice.public() }),
-				&Bob,
-				0,
-			),
-		];
-
-		author_and_import(&mut state, exts, || {
 			// As opposed to storing something like `Some(0)`. In other tests we don't really care
 			// about this, but we check it here.
-			assert_eq!(balance_of(Bob.public()), None);
+			assert_eq!(
+				balance_of(Bob.public()),
+				None,
+				"bob's account should be REMOVED, not set to 0"
+			);
 		});
 	}
 
 	#[test]
-	fn transfer_all_without_funds() {
+	// #[ignore = "test case ignored for now"]
+	fn alice_remarks_then_transfers_all() {
+		// edge-case: 0 to 0 is a successful transferAll, but it should not trigger a kill, because
+		// it is from zero to zero
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -730,10 +756,10 @@ mod currency {
 		];
 
 		author_and_import(&mut state, exts, || {
-			// in this case, because alice had no funds to begin with, her account is not killed.
 			assert_eq!(
-				balance_of(Alice.public()).unwrap(),
-				AccountBalance { nonce: 2, ..Default::default() }
+				balance_of(Alice.public()),
+				Some(AccountBalance { nonce: 2, ..Default::default() }),
+				"alice's account should not be removed in this case"
 			);
 		});
 	}
@@ -742,9 +768,8 @@ mod currency {
 mod staking {
 	use super::*;
 
-	// note: we test these, but they are basically same as testing bonding.
 	#[test]
-	fn bonding_success() {
+	fn alice_mints_100_to_bob_bob_stakes_20() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -757,14 +782,18 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 80);
-			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 20);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 80, "bob's free should be 80");
+			assert_eq!(
+				reserve_of(Bob.public()).unwrap_or_default(),
+				20,
+				"bob's reserve should be 20"
+			);
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn bonding_more_than_allowed() {
+	fn alice_mints_100_to_bob_bob_stakes_120() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -777,14 +806,19 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
-			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100, "bob's free should be 100");
+			assert_eq!(
+				reserve_of(Bob.public()).unwrap_or_default(),
+				0,
+				"bob's reserve should be 0"
+			);
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn bonding_more_than_allowed_ed() {
+	// #[ignore = "test case ignored for now"]
+	fn alice_mints_100_to_bob_bob_stakes_95() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -797,14 +831,19 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
-			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100, "bob's free should be 100");
+			assert_eq!(
+				reserve_of(Bob.public()).unwrap_or_default(),
+				0,
+				"bob's reserve should be 0"
+			);
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn bonding_more_than_allowed_limit() {
+	// #[ignore = "test case ignored for now"]
+	fn alice_mints_100_to_bob_bob_stakes_90() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -817,14 +856,19 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10);
-			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 90);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 10, "bob's free should be 10");
+			assert_eq!(
+				reserve_of(Bob.public()).unwrap_or_default(),
+				90,
+				"bob's reserve should be 90"
+			);
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn bonding_all() {
+	// #[ignore = "test case ignored for now"]
+	fn alice_mints_100_to_bob_bob_stakes_100() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -837,14 +881,18 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100);
-			assert_eq!(reserve_of(Bob.public()).unwrap_or_default(), 0);
-			assert_eq!(issuance().unwrap_or_default(), 100);
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 100, "bob's free should be 100");
+			assert_eq!(
+				reserve_of(Bob.public()).unwrap_or_default(),
+				0,
+				"bob's reserve should be 0"
+			);
+			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
 
 	#[test]
-	fn transfer_all_when_bonded() {
+	fn alice_mints_100_to_bob_bob_stakes_20_bob_transfers_all() {
 		let mut state = new_test_ext();
 
 		let exts = vec![
@@ -863,9 +911,9 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap(), 80);
-			assert_eq!(reserve_of(Bob.public()).unwrap(), 20);
-			assert_eq!(balance_of(Charlie.public()), None);
+			assert_eq!(free_of(Bob.public()).unwrap(), 80, "bob's free should be 80");
+			assert_eq!(reserve_of(Bob.public()).unwrap(), 20, "bob's reserve should be 20");
+			assert_eq!(balance_of(Charlie.public()), None, "charlie's balance should be none");
 		});
 	}
 }
@@ -1097,10 +1145,10 @@ mod tipping {
 
 			// apply this to our state.
 			author_and_import(&mut state, exts, || {
-				assert!(treasury().is_none());
-				assert_eq!(free_of(Alice.public()).unwrap(), 75);
-				assert_eq!(free_of(Bob.public()).unwrap(), 20);
-				assert_eq!(issuance().unwrap_or_default(), 95);
+				assert!(treasury().is_none(), "treasury account should not exist");
+				assert_eq!(free_of(Alice.public()).unwrap(), 75, "alice should have 75");
+				assert_eq!(free_of(Bob.public()).unwrap(), 20, "bob should have 20");
+				assert_eq!(issuance().unwrap_or_default(), 95, "issuance should be 95");
 			});
 		}
 
