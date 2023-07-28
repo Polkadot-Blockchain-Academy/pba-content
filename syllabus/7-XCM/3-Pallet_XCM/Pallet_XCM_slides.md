@@ -79,9 +79,16 @@ Notes:
 
 - `execute`
 
-  Direct access to the XCM executor. It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution. Then it executes the message **locally** and returns the outcome as an event. It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
+  Direct access to the XCM executor.
+  
+  It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
 
 <img rounded style="width: 500px;" src="../../../assets/img/7-XCM/pallet-xcm-execute.svg" alt="pallet-xcm-execute" />
+
+Notes:
+
+It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution.
+It executes the message **locally** and returns the outcome as an event.
 
 ---v
 
@@ -89,27 +96,33 @@ Notes:
 
 - `send`
 
-  This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
+Sends a message to the provided destination.
 
-<img rounded style="width: 1000px;" src="../../../assets/img/7-XCM/pallet-xcm-send-paras.svg" alt="pallet-xcm-send" />
+<img rounded style="width: 1200px;" src="../../../assets/img/7-XCM/pallet-xcm-send-paras.svg" alt="pallet-xcm-send" />
+
+_Diagram showcases an HRMP channel_
+
+Notes:
+
+This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
 
 ---
 
 ## `pallet-xcm` Asset Transfer extrinsics
 
-We have already seen what teleports and reserve transfers mean in lesson 7.1; A quick reminder.
-
 <pba-cols>
 <pba-col>
-- Teleport assets
 <img rounded style="width: 400px;" src="../../../assets/img/7-XCM/teleport.png" alt="Reserve Transfer" />
 </pba-col>
 
 <pba-col>
-- Reserve transfer assets
 <img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" alt="Reserve Transfer" />
 </pba-col>
 </pba-cols>
+
+Notes:
+
+We have already seen what teleports and reserve transfers mean in lesson 7.1; A quick reminder.
 
 ---v
 
