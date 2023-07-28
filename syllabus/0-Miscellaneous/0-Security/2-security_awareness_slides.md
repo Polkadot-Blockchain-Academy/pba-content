@@ -22,10 +22,12 @@ revealOptions:
 ---
 
 ### _Lesson Objectives:_
+<pba-flex center>
 
 - Be able to describe the threats which exist in the Web3 space
 - Navigate the risks posed with confidence
 - Understand the measures taken to minimize impact
+</pba-flex>
 
 ---
 
@@ -70,9 +72,11 @@ These can include various techniques, some of which could be phishing emails, so
 ---
 
 ## Eyes are on us
+<pba-flex center>
 
 - Crypto Market Capitalization: $1,231,359,133,397
 - 24 Hour Trading Volume: $39,807,353,848
+</pba-flex>
 
 Notes:
 
@@ -94,7 +98,7 @@ In the real world, there is minimal scope - financially motivated attackers do n
 
 #### Funds
 
-- Quickest and easiest way to make money: attack wallets and services
+Quickest and easiest way to make money: attack wallets and services
 
 Notes:
 
@@ -103,11 +107,13 @@ Financially motivated attacks are among the most common, earnings from these can
 ---v
 
 #### Networks & Infrastructure
+<pba-flex center>
 
 - Smart Contracts
 - Ransomware
 - Impact on network availability
 - Malicious code injection/node creation
+</pba-flex>
 
 Notes:
 
@@ -120,10 +126,12 @@ Mechanics of protocols themselves can be taken advantage of through 51% attacks,
 ---v
 
 #### Personally Identifiable Information
+<pba-flex center>
 
-- Identity theft and impersonation
-  - Account takeover
-  - Impersonating to pivot deeper
+- Account takeover
+- Identity theft
+- Impersonation
+</pba-flex>
 
 Notes:
 
@@ -134,10 +142,12 @@ It may sound far-fetched, but this is a very real problem in the Web3 ecosystem 
 ---
 
 ## A look at potential adversaries
+<pba-flex center>
 
 - Lazarus Group (APT 38)
 - Sanctioned Nation States
 - Future Adversaries
+</pba-flex>
 
 Notes:
 
@@ -280,10 +290,12 @@ Don't use that charger you found randomly left in a café, even if it was offere
 ---v
 
 #### Hacking
+<pba-flex center>
 
 - Direct attacks
 - DNS poisoning
 - Targeted Man in the Middle attacks
+</pba-flex>
 
 Notes:
 
@@ -368,10 +380,12 @@ There’s a tipping point between a casual interest and direct involvement: stic
 ### Device Stickers
 
 Some things can be identified from these, such as:
+<pba-flex center>
 
 - Role
 - Industry
 - Employer/Projects
+</pba-flex>
 
 Notes:
 
@@ -386,14 +400,14 @@ Cover in transit - benefit of protected device
 
 ---v
 
-### Clothing, Swag, Drip
 
 <pba-cols>
   <pba-col>
+    <h3>Clothing, Swag, Drip</h3>
     Call it what you will, but it can be a source of information disclosure
   </pba-col>
   <pba-col center>
-    <img rounded style="width: 700px" data-src="./img/2-security_awareness/btc-coat.png" />
+    <img rounded style="width: 500px" data-src="./img/2-security_awareness/btc-coat.png" />
   </pba-col>
 </pba-cols>
 
@@ -476,7 +490,7 @@ Existing trusted email infrastructure and its exploitation leads to more and mor
 
 Phishers are getting smarter, and your digital footprint is on their radar.
 
-<img rounded style="width: 1000px" data-src="./img/2-security_awareness/gpt-travel-email.png" />
+<img rounded style="width: 800px" data-src="./img/2-security_awareness/gpt-travel-email.png" />
 
 Notes:
 
@@ -490,11 +504,13 @@ Not to say don't post, but add a delay to obscure your live location and minimiz
 ---v
 
 ### Reacting to a Phish
+<pba-flex center>
 
 1. Stop
 1. Take a moment
 1. Verify
 1. Report
+</pba-flex>
 
 Notes:
 
@@ -509,4 +525,4 @@ After all, we're there to help, rather than preach from our ivory towers and rep
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-# Questions
+# Questions?
