@@ -148,9 +148,11 @@ Allow the user to perform a reserve-backed transfer. Its limited version takes a
 
 ## 🗣️ version negotiation with `pallet-xcm`
 
-XCM is an **extensible message format**.
+XCM is a **versioned message format**.
 
-Meaning that this is a versioned messaging format as well. One version may contain more or different instructions than another, so for parties to communicate via XCM, it is important to know which version the other party is using. XCM enables a version subscription model, where parties can subscribe to each other to get notified of version updates. 
+One version may contain more or different instructions than another, so for parties to communicate via XCM, it is important to know which version the other party is using.
+
+XCM has a version subscription mechanism, where parties can subscribe to version updates from others.
 
 ```rust
 pub enum VersionedXcm {
