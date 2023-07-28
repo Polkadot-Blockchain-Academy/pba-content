@@ -342,12 +342,11 @@ impl frame_system::Config for Runtime {
   type Hashing = sp_runtime::traits::BlakeTwo256;
   type Hash = sp_core::H256;
   type Lookup = sp_runtime::traits::IdentityLookup<Self::AccountId>;
-  type Header = sp_runtime::testing::Header;
+  type Block = Block;
   // This is rather detailed, come ask us if you want to know more!
   type AccountData = pallet_balances::AccountData<Balance>;
 
-  type Index = u32;
-  type BlockNumber = u32;
+  type Nonce = u32;
   type AccountId = u32;
 
   type DbWeight = (); // Get<_>
