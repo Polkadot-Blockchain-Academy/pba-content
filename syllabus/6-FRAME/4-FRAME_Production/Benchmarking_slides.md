@@ -282,7 +282,7 @@ For each component and repeat:
 #[pallet::storage]
 #[pallet::whitelist_storage]
 #[pallet::getter(fn block_number)]
-pub(super) type Number<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
+pub(super) type Number<T: Config> = StorageValue<_, BlockNumberFor<T>, ValueQuery>;
 ```
 
 - Some keys are accessed every block:
