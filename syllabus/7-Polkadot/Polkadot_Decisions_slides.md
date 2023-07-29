@@ -12,6 +12,10 @@ duration: 1 hour
 
 Jeff Bezos outlined in an annual letter to Amazon shareholders how he approaches decision making, by categorizing decisions as either Type 1 or Type 2 decisions.
 
+Notes:
+
+https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm
+
 ---
 
 ## Type 1 Decisions
@@ -54,24 +58,17 @@ Decisions that can be easily changed in the future.
 
 ---
 
-## A Format for Discussing Decisions
-
-- What is (the decision)?
-- What do we need to consider when making (the decision)?
-	- Is it a Type 1 or Type 2 decision?
-- What decisions has (chain) decided to make and why?
-	- What tradeoffs have they chosen?
-- What decisions have others decided to make?
-	- How might those decisions be better or worse?
-- Where can the blockchain community still improve on (the decision)?
-
----
-
 ## The Philosophies of Polkadot
 
 ---
 
 <image src="../../../assets/img/7-Polkadot/less-trust-more-truth.svg" style="width: 1000px; filter: invert();">
+
+Notes:
+
+This is the slogan of the Web3 Summit, and seeing that Polkadot is our biggest bet on a Web3 future, it is apt that we use this phrase as a staple of the philosophy which backs Polkadot. The whole reason we have developed blockchain technologies was to address the trust problems that we face with those who wield power in our world.
+
+I want to note the phrase is NOT “No Trust, Only Truth”. This, from what I can tell so far, is mostly impossible. We should not use points of trust to invalidate working solutions. For example, it is not an expectation everyone who uses Polkadot will read each individual line of open source code before they run it. Our goal should be to minimize trust, where possible, and make it obvious to everyone who uses our tools what kinds of trust assumptions they run on
 
 ---
 
@@ -79,9 +76,17 @@ Decisions that can be easily changed in the future.
 
 <img width="1000px" src="../../assets/img/5-Substrate/dev-4.1-maximalism.png" />
 
+Notes:
+
+Polkadot fundamentally believes in a multi-chain future. One where chains cooperate and provide greater value to one another, rather than where they strictly compete and try to kill one another. This is rare to find today, since cryptocurrencies are prone to becoming “investment vehicles”, where the creation of a new blockchain can be seen as a threat to the existing “investments”. With the blockchain maximalism mentality, people are choosing to value their “investments” over innovation and progression, and this isn’t best for our goals to provide the best technologies to the world.
+
 ---
 
 ## “The best blockchain today will not be the best blockchain tomorrow.”
+
+Notes:
+
+This philosophy is a realization that building a blockchain is trying to build a piece of software which will last forever. The we will not be successful engineering Polkadot simply for the problems we find today. By the time we have built X, the world will need Y, and so on. This is why we have invested so much time building platforms and SDKs, not just products. We need to make sure these technologies are able to adapt and evolve in order to stay relevant for users
 
 ---
 
@@ -91,6 +96,16 @@ Decisions that can be easily changed in the future.
 
 ## The Blockchain Scalability Trilemma
 
+<div class="grid grid-cols-2">
+
+<div>
+
+<image src="../../../assets/img/7-Polkadot/trilemma.svg" style="height: 400px;">
+
+
+</div>
+
+<div>
 
 - Security: How much does it cost to attack the network?
 
@@ -98,12 +113,20 @@ Decisions that can be easily changed in the future.
 
 - Decentralization: How decentralized is the network?
 
+</div>
+
+</div>
+
 
 ---
 
 ## In one sentence...
 
-> Polkadot’s mission is to provide secure, scalable, and unstoppable infrastructure for Web3 applications and services.
+> Polkadot’s mission is to provide secure, scalable, and resilient infrastructure for Web3 applications and services.
+
+Notes:
+
+Note the difference between “decentralization” as a mission vs "resilience".
 
 ---
 
@@ -124,33 +147,90 @@ Polkadot tries to accomplish that mission by solving three problems:
 
 ## Wasm
 
+<div class="grid grid-cols-3">
+
+<div>
+
+<img style="width: 400px;" src="../../../assets/img/0-Shared/logo/webassembly-blue.png" />
+
+</div>
+
+<div class="col-span-2">
+
 WebAssembly is the backbone of Polkadot. It is a fast, safe, and open meta-protocol which powers all of the state transitions of our ecosystem.
 
 It standardizes how chains execute, sandboxes that execution for improved security, and allows teams to build on Polkadot using any language that can be compiled into Wasm.
+
+</div>
+
+</div>
 
 ---
 
 ## Sharding
 
+<div class="grid grid-cols-2">
+
+<div>
+
 Polkadot scales primarily by parallelizing execution on separate data shards.
 
 These parallel chains (shards) are called Parachains.
+
+</div>
+
+<div>
+
+<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/sharding.svg" />
+
+</div>
+
+</div>
 
 ---
 
 ## App-Chains
 
+<div class="grid grid-cols-2">
+
+<div>
+
+<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/app-chain.svg" />
+
+</div>
+
+<div>
+
 Another key scaling decision is the choice of heterogeneous shards, allowing for application specific chains.
 
 Specialized solutions for problems are more performant than generalized solutions, as they can incorporate more details about the problem space.
+
+</div>
+
+</div>
+
 
 ---
 
 ## Interoperability
 
+<div class="grid grid-cols-2">
+
+<div>
+
 Individual application chains will inherently lack the ability to provide a full suite of solutions for end users.
 
 Interoperability allows parachains to work together to complete, complex end-to-end scenarios.
+
+</div>
+
+<div>
+
+<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/interoperability.svg" />
+
+</div>
+
+</div>
 
 ---
 
@@ -180,6 +260,32 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 ## Shared Security
 
+
+<div class="grid grid-cols-2">
+
+<div>
+
+An often overlooked problem is economic scaling of the entire blockchain ecosystem.
+
+Polkadot is unique in that it provides all connected parachains with the same security guarantees as the Relay Chain itself.
+
+</div>
+
+<div>
+
+<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+
+</div>
+
+</div>
+
+Notes:
+
+Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
+
+Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender.  Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
+
+
 ---
 
 ## Trust-Free Interactions
@@ -203,33 +309,33 @@ So, shared security not only secures the individual chains, but the interactions
 
 ---
 
-<pba-cols>
-<pba-col>
+## Hybrid Consensus
 
-### Wasm
+<div class="grid grid-cols-2">
 
-WebAssembly is a key part of enabling trust-free shared security and interoperability. It allows the Relay Chain to trustlessly validate the blocks of connected parachains.
+<div>
 
-</pba-col>
-<pba-col>
+## BABE
 
-### Parachains Protocol
+### Block Production
 
-The Parachains Protocol is comprised of many subsystems such as the PVF (Parachain Validation Function), Approval Process, Inclusion Pipeline, AnV (Availability and Validity Protocol), etc… It is the most advanced multi-chain coordination software that exists today.
+<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/babe.svg" />
 
-</pba-col>
-<pba-col>
+BABE is forkful, with probabilistic finality.
 
-### Relay Chain
+</div>
 
-A coordination chain that manages its own block producers, parachain validators, consensus and finality across all parachains, and more. It is what many people think of when we say “Polkadot”, but is really just one small part of the overall ecosystem.
+<div>
 
-</pba-col>
-</pba-cols>
+## GRANDPA
 
----
+### Finality Gadget
 
-## Babe & Grandpa
+<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/grandpa.png" />
+
+</div>
+
+</div>
 
 ---
 
@@ -247,21 +353,48 @@ Polkadot has a strong belief that light clients are a necessary component for a 
 
 ## On-Chain Runtime & Forkless Upgrades
 
+<div class="grid grid-cols-3">
+
+<div class="col-span-2">
+
 The Polkadot protocol specification defines a clear separation between the blockchain client and runtime (state transition function).
 
 This is primarily useful to implement the Parachains protocol, but also allows for chains to “forklessly” upgrade their code.
 
 This gives the Polkadot Relay Chain and all connected parachains an evolutionary advantage over others in the blockchain space.
 
+</div>
+
+<div>
+
+<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/runtime-upgrade.png" />
+
+</div>
+
+</div>
+
 ---
 
 ## On-Chain Governance
+
+<div class="grid grid-cols-3">
+
+<div class="col-span-2">
 
 Polkadot and its parachains need to change over time to stay relevant, and the network was designed from the beginning to have a transparent and sophisticated process to not only approve or reject changes but also **enact them automatically**.
 
 - Governance decisions can literally change the underlying code of the chain (since it is on-chain).
 - 50% of the total stake in the system should be able to control the future of the system.
 - Users have the option to lock their tokens to increase the “conviction” of their vote.
+</div>
+
+<div>
+
+<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/voting.svg" />
+
+</div>
+
+</div>
 
 ---
 
@@ -303,4 +436,13 @@ Polkadot has made many Type 2 decisions, many of which have already, and will co
 
 ---
 
-## The Discussion
+## A Format for Discussing Decisions
+
+- What is (the decision)?
+- What do we need to consider when making (the decision)?
+	- Is it a Type 1 or Type 2 decision?
+- What decisions has (chain) decided to make and why?
+	- What tradeoffs have they chosen?
+- What decisions have others decided to make?
+	- How might those decisions be better or worse?
+- Where can the blockchain community still improve on (the decision)?
