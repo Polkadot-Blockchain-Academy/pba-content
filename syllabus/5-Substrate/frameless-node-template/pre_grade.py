@@ -39,13 +39,21 @@ for folder in os.listdir(base_directory):
               for line in stderr_file.readlines():
                 if "Summary" in line:
                   print(line)
+
+            # read stderr.txt, and replace any instance of "/Users/kianenigma/Desktop/Parity/pba/" in it with ""
+            with open("stderr.txt", "r") as stderr_file:
+              stderr_content = stderr_file.read()
+              stderr_content = stderr_content.replace("/Users/kianenigma/Desktop/Parity/pba/", "")
+              with open("stderr.txt", "w") as stderr_file:
+                stderr_file.write(stderr_content)
+
             os.rename("stderr.txt", os.path.join(full_folder_path, "stderr.txt"))
           # if a file `result.xml` exists in the current folder, move it to `full_folder_path`.abs
           if os.path.exists("result.xml"):
             os.rename("result.xml", os.path.join(full_folder_path, "result.xml"))
 
-            # subprocess.run(["git", "add", "result.xml"], cwd=full_folder_path)
-            # subprocess.run(["git", "commit", "-m", "Add result.xml"], cwd=full_folder_path)
-            # output = subprocess.run(["git", "push"], cwd=full_folder_path)
+            subprocess.run(["git", "add", "."], cwd=full_folder_path)
+            subprocess.run(["git", "commit", "-m", "Add results"], cwd=full_folder_path)
+            output = subprocess.run(["git", "push"], cwd=full_folder_path)
         else:
           print(f"Could not find {wasm_file_path}, skipping to next folder.")
