@@ -44,9 +44,9 @@ duration: 1 hour
 
 - Events & Errors
 - Calls
-- Hooks
 - Origins
 - Outer Enum
+- Hooks
 
 </td>
 <td>
