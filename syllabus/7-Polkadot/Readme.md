@@ -26,11 +26,11 @@ Draw content from:
 
 **Morning**
 
-9:00  Lecture - Introduction to the Parachains Protocol (1 hr) @JoshOrndorff<br>
-10:00 Lecture - Blockspace (.5 hr) @rphmeier<br>
-10:30 Lecture - Deep dive: Execution cores (1 hr) @BradleyOlson64<br>
-11:30 Coffee Break (15 m)<br>
-11:45 Lecture - Deep dive: Cumulus (1 hr) @BradleyOlson64<br>
+9:00  Discussion - Parachains Protocol AMA (.5 hr) @JoshOrndorff<br>
+9:30  Lecture - Blockspace (.5 hr) @rphmeier<br>
+10:00 Lecture - Deep dive: Execution cores (1 hr) @BradleyOlson64<br>
+11:00 Coffee Break (15 m)<br>
+11:15 Lecture - Deep dive: Cumulus (1.25 hr) @BradleyOlson64<br>
 
 **Afternoon**
 
