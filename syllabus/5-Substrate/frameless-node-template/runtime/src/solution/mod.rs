@@ -1,4 +1,7 @@
-use self::storage::{StorageMap, StorageValue};
+use self::{
+	currency::BalancesMap,
+	storage::{StorageMap, StorageValue},
+};
 use crate::{
 	shared::{
 		AccountId, Balance, Block, CurrencyCall, Extrinsic, RuntimeCall, StakingCall, SystemCall,
@@ -151,12 +154,13 @@ impl Runtime {
 		ext: &<Block as BlockT>::Extrinsic,
 		signer: AccountId,
 	) -> Result<(), TransactionValidityError> {
+		let allow_death = false; // The tip in itself is never capable of killing an account.
 		let mut balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
 
 		// then, check that they can pay for the fee.
 		if let Some(tip) = ext.function.tip {
-			let _ = balance
-				.withdraw(tip)
+			balance
+				.withdraw(tip, allow_death)
 				.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::Payment))?;
 
 			// The writes in this code are redundant in `validate_transaction`, but we write it like
@@ -191,6 +195,7 @@ impl Runtime {
 		ext: &<Block as BlockT>::Extrinsic,
 		signer: AccountId,
 	) -> Result<(), TransactionValidityError> {
+		// This one, crucially, does not set the nonce, as it might need to be reverted.
 		let mut balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
 
 		match balance.nonce.cmp(&ext.function.nonce) {
@@ -200,9 +205,6 @@ impl Runtime {
 			sp_std::cmp::Ordering::Less =>
 				return Err(TransactionValidityError::Invalid(InvalidTransaction::Future)),
 		}
-
-		balance.nonce = balance.nonce.saturating_add(1);
-		currency::BalancesMap::<Self>::set(signer.clone(), balance);
 
 		Ok(())
 	}
@@ -239,6 +241,10 @@ impl Runtime {
 		let signer = Self::check_signature(ext)?;
 		Self::check_nonce_pre_dispatch(ext, signer)?;
 		Self::collect_tip(ext, signer)?;
+
+		let mut balance = BalancesMap::<Runtime>::get(signer).expect("account must exist; qed");
+		balance.nonce += 1;
+		BalancesMap::<Runtime>::set(signer.clone(), balance);
 
 		Ok(signer)
 	}

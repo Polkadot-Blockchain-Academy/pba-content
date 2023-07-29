@@ -432,8 +432,7 @@ impl Runtime {
 		// and make sure to _remove_ it.
 		sp_io::storage::clear(&HEADER_KEY);
 
-		// TODO: set correct state root and extrinsics root, as described in the corresponding test
-		// case.
+		Runtime::print_state();
 		let header = Self::solution_finalize_block(header);
 		header
 	}
@@ -443,7 +442,8 @@ impl Runtime {
 	/// Study this carefully, but you probably don't need to change it, other than providing a
 	/// proper `do_apply_extrinsic`.
 	fn do_execute_block(block: Block) {
-		info!(target: LOG_TARGET, "Entering execute_block. block: {:?}", block);
+		// info!(target: LOG_TARGET, "Entering execute_block block: {:?} (exts: {})", block,
+		// block.extrinsics.len());
 		sp_io::storage::clear(&EXTRINSICS_KEY);
 
 		for extrinsic in block.clone().extrinsics {
@@ -453,6 +453,8 @@ impl Runtime {
 
 		// check state root. Clean the state prior to asking for the root.
 		sp_io::storage::clear(&HEADER_KEY);
+
+		Self::print_state();
 
 		// NOTE: if we forget to do this, how can you mess with the blockchain?
 		let raw_state_root = &sp_io::storage::root(VERSION.state_version())[..];
@@ -475,13 +477,7 @@ impl Runtime {
 	/// then `Err(InvalidTransaction::BadProof)` must be returned.
 	fn do_apply_extrinsic(ext: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
 		info!(target: LOG_TARGET, "Entering apply_extrinsic: {:?}", ext);
-
-		// TODO: we don't have a means of dispatch, implement it! You probably want to match on
-		// `ext.call.function`, and start implementing different arms one at a time. Also, this is
-		// called from both authoring and importing. It should "note" any extrinsic that
-		// successfully executes in EXTRINSICS_KEY.
 		Self::solution_apply_extrinsic(ext.clone())
-		// Ok(Ok(()))
 	}
 
 	fn do_validate_transaction(
@@ -492,10 +488,6 @@ impl Runtime {
 		log::debug!(target: LOG_TARGET,"Entering validate_transaction. tx: {:?}", ext);
 
 		Self::solution_validate_transaction(_source, ext, _block_hash)
-		// TODO: we don't have a means of validating, implement it!
-		// NOTE: every transaction must provide _something_, we provide a dummy value here.
-		// Ok(sp_runtime::transaction_validity::ValidTransaction { provides: vec![ext.encode()],
-		// ..Default::default() })
 	}
 }
 
@@ -810,6 +802,8 @@ mod tests {
 			// This should internally check state/extrinsics root. If it does not panic, then we are
 			// gucci.
 			Runtime::do_execute_block(block.clone());
+
+			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), Some(44));
 		});
 	}
 }

@@ -143,9 +143,11 @@ impl<T: Config> AccountBalance<T> {
 		}
 	}
 
-	pub(crate) fn withdraw(&mut self, amount: T::Balance) -> DispatchOutcome {
+	pub(crate) fn withdraw(&mut self, amount: T::Balance, allow_zero: bool) -> DispatchOutcome {
 		match self.free.checked_sub(&amount) {
-			Some(leftover) if leftover >= T::MinimumBalance::get() || leftover.is_zero() => {
+			Some(leftover)
+				if leftover >= T::MinimumBalance::get() || (leftover.is_zero() && allow_zero) =>
+			{
 				self.free = leftover;
 				Ok(())
 			},
@@ -207,7 +209,7 @@ impl<T: Config> Module<T> {
 		sender_balance.can_withdraw(amount, allow_zero)?;
 		dest_balance.can_receive(amount)?;
 
-		sender_balance.withdraw(amount).expect("checked above");
+		sender_balance.withdraw(amount, allow_zero).expect("checked above");
 		dest_balance.receive(amount).expect("checked above");
 
 		if sender_balance.free.is_zero() && sender_balance.reserved.is_zero() {
