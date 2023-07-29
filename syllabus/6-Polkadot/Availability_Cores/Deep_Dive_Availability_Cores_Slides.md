@@ -46,43 +46,6 @@ Polkadot's primary product is _blockspace_.
 
 ---
 
-## Disecting Polkadot Blockspace
-
-In a parachain block you get:
-
-<pba-flex center>
-
-- Proof of Validity
-    - max size: 5 megabytes
-- Code upgrade 
-    - max size: 4 megabytes
-    - cooldown: 14400 blocks
-- HRMP messages 
-    - Max message size: 102400 bytes
-    - Messages per block per channel: 10
-    - Max channels: 30
-- UMP messages
-    - Max message size: 65531 bytes
-    - Messages per block: 16
-
-</pba-flex>
-
-Notes:
-
-- POV size implicitly limits operations per block
-
-Why not put everything in the POV?
-
-Short answer: Different data availability requirements
-
-Longer answer: Code upgrades and cross consensus messages have different data availability requirements than ordinary parachain operations.
-
-The relay chain needs to keep a copy of the current code for each parachain for PVF execution. 
-
-HRMP and UMP messages must be made available to their recipients, so they need to be cached on the relay chain for an indeterminate period.
-
----
-
 ## Blockspace, Use It or Lose It
 
 Polkadot blockspace is consumed in two ways:
@@ -99,6 +62,7 @@ Polkadot blockspace is consumed in two ways:
 <pba-col center>
 
   - Availability cores are the abstraction we use to allocate Polkadot's blockspace.
+  - Allocated via leases and on-demand claims
   - Cores divide blockspace supply into discrete units, 1 parachain block per relay chain block per core
   - Why "availability"?
   - Why "core"?
@@ -113,8 +77,40 @@ Polkadot blockspace is consumed in two ways:
 
 Notes:
 
-- "Availability", because a core is considered occupied by a parachain block candidate during the period when that candidate is being made available via erasure coding. But cores mediate access to the entire parablock validation pipeline, not just availability.
+- "Availability", because a core is considered occupied by a parachain block candidate while that candidate is being made available. But cores mediate access to the entire parablock validation pipeline, not just availability.
 - "Core", because many candidates can be made available in parallel, mimicking the parallel computation per core in a computer processor.
+
+---
+
+## Availability
+
+Though cores gate the entire parachain block pipeline, the availability process alone determines when these cores are considered occupied vs free.
+
+To recap, the goals of availability are:
+1. To ensure that approvers will always be able to recover the PoVs to validate their assigned blocks
+2. To ensure that parachain nodes can recover blocks in the case that a parablock author maliciously refuses to share them
+
+---
+
+## The Availability Process
+
+Core States: Free, Scheduled, Occupied
+
+<pba-flex center>
+
+1. Block author places a candidate on-chain as backed, immediately occupying its scheduled core
+1. Candidate backers distribute erasure coded PoV chunks
+1. Validators distribute statements as to which candidates they have chunks for
+1. Availability threshold 2/3 (vs 1/3 needed to reconstruct POV)
+1. Core freed when bitfields indicate availability
+1. Approvers or parachain nodes retrieve PoV chunks as needed
+
+</pba-flex>
+
+Notes:
+- CoreState: Free -> core has not been assigned a parachain via lease or on-demand claim
+- CoreState: Scheduled -> Core has an assigned parachain and is currently unoccupied
+- CoreState: Occupied -> Core has assignment and is occupied by a parablock pending availability
 
 ---
 
@@ -137,6 +133,18 @@ If you have a lease on core 4, then you have the right to fill train car 4 on ea
 
 ---
 
+## The Big Picture
+
+<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
+
+Notes:
+
+- Which steps of the parachains protocol are missing, and why?
+- Going to dive into each piece
+- Questions?
+
+---
+
 ## Backing Group Formation
 
 <img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/validator-groups.png" alt="Train">
@@ -151,7 +159,7 @@ To understand how cores divide up parachains protocol work among validators, we 
 
 ## Assigning Backing Groups to Cores
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_backing_groups_with_cores.svg" alt="Train">
+<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_backing_groups_with_cores.svg" alt="Train">
 
 Notes:
 
@@ -182,7 +190,7 @@ Q: Why don't we just have all active validators approve each candidate?
 
 ## Assigning Leases and Claims to Cores
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" alt="Train">
+<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" alt="Train">
 
 Notes:
 
@@ -194,27 +202,27 @@ Notes:
 
 ## Putting the Pieces Together
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
+<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
 
 Notes:
-
-- Depicts how leases are mapped to validator subsets
 
 ---
 
-## Occupying Assigned Cores
+## Occupying Assigned Cores: With Lease
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores.svg" alt="Train">
+<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_with_lease.svg" alt="">
 
-Notes:
+---
 
-If a parachain has a lease for space in a relay block and that parachain's collators fail to supply a parablock candidate, what does that equate to in our freight train metaphor?
+## Occupying Assigned Cores: On Demand
 
-How about when the same happens for a parachain with an on-demand claim?
+<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_on_demand.svg" alt="">
 
 ---
 
 ## Core States in the Runtime
+
+In file: polkadot/runtime/parachains/src/scheduler.rs
 
 ```rust
 
@@ -250,6 +258,8 @@ Notes:
 
 ## Core Assignments in The Runtime
 
+In file: polkadot/runtime/parachains/src/scheduler.rs
+
 ```rust
 
 #[pallet::storage]
@@ -283,6 +293,8 @@ Notes:
 ---
 
 ## On-Demand Queue in The Runtime
+
+In file: polkadot/runtime/parachains/src/scheduler.rs
 
 ```rust
 
@@ -361,14 +373,10 @@ Notes:
 
 ## Cores and Backing On-Chain, Code
 
-Function `request_backable_candidates` from the Provisioner subsystem
+Function `request_backable_candidates` from the Provisioner subsystem, simplified for readability
 
 ```rust
-
-/// Requests backable candidates from Prospective Parachains subsystem
-/// based on core states.
-///
-/// Should be called when prospective parachains are enabled.
+/// Requests backable candidates based on core states.
 async fn request_backable_candidates(
 	availability_cores: &[CoreState],
 	bitfields: &[SignedAvailabilityBitfield],
@@ -380,19 +388,15 @@ async fn request_backable_candidates(
 	let mut selected_candidates = Vec::with_capacity(availability_cores.len());
 
 	for (core_idx, core) in availability_cores.iter().enumerate() {
-		let (para_id, required_path) = match core {
+		let (para_id) = match core {
 			CoreState::Scheduled(scheduled_core) => {
-				// The core is free, pick the first eligible candidate from
-				// the fragment tree.
-				(scheduled_core.para_id, Vec::new())
+				scheduled_core.para_id
 			},
 			CoreState::Occupied(occupied_core) => {
 				if bitfields_indicate_availability(core_idx, bitfields, &occupied_core.availability)
 				{
 					if let Some(ref scheduled_core) = occupied_core.next_up_on_available {
-						// The candidate occupying the core is available, choose its
-						// child in the fragment tree.
-						(scheduled_core.para_id, vec![occupied_core.candidate_hash])
+						scheduled_core.para_id
 					} else {
 						continue
 					}
@@ -402,7 +406,7 @@ async fn request_backable_candidates(
 					}
 					if let Some(ref scheduled_core) = occupied_core.next_up_on_time_out {
 						// Candidate's availability timed out, practically same as scheduled.
-						(scheduled_core.para_id, Vec::new())
+						scheduled_core.para_id
 					} else {
 						continue
 					}
@@ -416,14 +420,7 @@ async fn request_backable_candidates(
 
 		match candidate_hash {
 			Some(hash) => selected_candidates.push(hash),
-			None => {
-				gum::debug!(
-					target: LOG_TARGET,
-					leaf_hash = ?relay_parent,
-					core = core_idx,
-					"No backable candidate returned by prospective parachains",
-				);
-			},
+			None => (),
 		}
 	}
 
@@ -441,23 +438,6 @@ Notes:
             - next_up_on_available
         - availability time out
             - next_up_on_timeout
-
----
-
-## Cores and Erasure Coding (Availability)
-
-<pba-flex center>
-
-- Core freed when bitfields indicate availability
-- 1/3 needed to reconstruct POV
-- Availability threshold 2/3 
-- But what do bits represent?
-
-</pba-flex>
-
-Notes:
-
-- Available candidate considered included on the relay chain
 
 ---
 
@@ -491,27 +471,50 @@ Notes:
 
 ---
 
-## Cores and Roadmap Items
+# Cores and Roadmap Items
 
-<pba-cols>
-<pba-col center>
+<img rounded style="width: 600px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/road.jpeg" alt="">
 
-- Exotic core scheduling
-	- Multiple cores per parachain
-	- Overlapping leases of many lengths
-	- Lease + On-demand
-- Strided blockspace regions
-	- EX: 2 chains each with 12 sec blocks
-- Cross timeframe cost comparisons
+---
+
+## Exotic core scheduling
+
+<pba-flex center>
+
+- Multiple cores per parachain
+- Overlapping leases of many lengths
+- Lease + On-demand
+
+</pba-flex>
+
+<img rounded style="width: 70%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/exotic_core_scheduling.svg" alt="">
+
+---
+
+## Divisible and Marketable Blockspace
+
+<pba-flex center>
+
+- Core sharing via use-threshold blockspace regions
 - Secondary markets for blockspace regions
 
-</pba-col>
-<pba-col center>
+</pba-flex>
 
-<img rounded style="width: 600px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/road.jpeg" alt="Processor cores image">
+---
 
-</pba-col>
-</pba-cols>
+## Blockspace vs Core Time
+
+Blockspace is a universal term for the product of blockchains, while core time is Polkadot's particular abstraction for allocating blockspace or other computation.
+
+Cores can secure computation other than blocks. For example, a smart contract could be deployed on a core directly.
+
+Allocating cores by time rather than for a fixed block size could allow for smaller or larger parachain blocks to be handled seamlessly.
+
+---
+
+## Core Time, and the Polkadot Ubiquitous Computer
+
+TODO
 
 ---
 
