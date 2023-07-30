@@ -288,7 +288,7 @@ The Relay Chain Runtime has a DMP pallet which manages
 		_,
 		Twox64Concat,
 		ParaId,
-		Vec<InboundDownwardMessage<T::BlockNumber>>,
+		Vec<InboundDownwardMessage<BlockNumberFor<T>>>,
 		ValueQuery,
 	>;
 
