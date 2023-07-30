@@ -1,4 +1,6 @@
 > This has the solution, don't share directly with students.
+> Template to share with students can be found here: https://github.com/Polkadot-Blockchain-Academy/frame-benchmarking-exercise--master
+> Keep these two repos up to date.
 
 # FRAME Benchmarking Exercise
 
