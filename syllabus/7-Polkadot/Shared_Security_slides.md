@@ -275,6 +275,21 @@ Wasm Runtimes
 
 ---
 
+## Maximizing Scaling
+
+A scalable proof of stake system is one where:
+
+- security is as **shared** as possible
+- execution is as **sharded** as possible
+
+Notes:
+
+You should not confuse shared security with sharded security.
+
+a.k.a. cosmos is a sharded security network.
+
+---
+
 ## Execution Sharding
 
 Execution Sharding is the process of distributing blockchain execution responsibilities across a validator set.
@@ -319,9 +334,12 @@ The new state root is then committed to the relay chain so the process can repea
 
 ## How do we stop things from going wrong?
 
-- Data Availability: Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
-- Approval Checking: Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block. If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
-- Disputes Handling: When someone disputes the validity of a parablock, all validators must then check the block and cast a vote. The validators on the losing side of the dispute are slashed.
+- Data Availability
+  - Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
+- Approval Checking
+  - Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block. If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
+- Disputes Handling
+  - When someone disputes the validity of a parablock, all validators must then check the block and cast a vote. The validators on the losing side of the dispute are slashed.
 
 ---
 

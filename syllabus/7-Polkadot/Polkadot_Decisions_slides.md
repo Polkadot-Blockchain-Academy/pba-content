@@ -8,6 +8,12 @@ duration: 1 hour
 
 ---
 
+## The Decisions of Polkadot
+
+This presentation will try to distinguish the core decisions of Polkadot from the current implementation details of the network.
+
+---
+
 ## Creating an “Invention Machine”
 
 Jeff Bezos outlined in an annual letter to Amazon shareholders how he approaches decision making, by categorizing decisions as either Type 1 or Type 2 decisions.
@@ -400,9 +406,23 @@ Polkadot and its parachains need to change over time to stay relevant, and the n
 
 ## On-Chain Treasury
 
+<div class="grid grid-cols-2">
+
+<div>
+
 Polkadot has designed at its core a self-funded treasury pool to incentivize the development and evolution of the protocol.
 
 It is entirely controlled on-chain by the governance system of Polkadot, which means that it is immune to the regulations which would normally be imposed to centralized entities.
+
+</div>
+
+<div>
+
+<img style="width: 600px;" src="../../../assets/img/7-Polkadot/decisions/treasury.svg" />
+
+</div>
+
+</div>
 
 ---
 
