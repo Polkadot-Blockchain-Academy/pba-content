@@ -35,9 +35,8 @@ Draw content from:
 **Afternoon**
 
 14:00 Lecture - Ecosystem and Economy (1.5 hr) @shawntabrizi<br>
-15:30 Demonstration - Referenda, delegation, and voting (30 m) @shawntabrizi<br>
-16:00 Coffee Break (15 m)<br>
-16:15 Exercise - Adder parachain + register parachains (1.5 hr) @JoshOrndorff<br>
+15:30 Coffee Break (15 m)<br>
+15:45 Exercise - Adder parachain + register parachains (1.5 hr) @JoshOrndorff<br>
 
 ### Day 3
 
