@@ -10,7 +10,7 @@ duration: 1 hour
 
 ## The Decisions of Polkadot
 
-This presentation will try to distinguish the core decisions of Polkadot from the current implementation details of the network.
+This presentation will try to explain the core decisions which define the Polkadot network.
 
 ---
 
@@ -148,6 +148,8 @@ Polkadot tries to accomplish that mission by solving three problems:
 ---
 
 ## The Decisions
+
+What makes Polkadot... Polkadot?
 
 ---
 
@@ -291,7 +293,6 @@ Security in proof-of-stake networks depends on economics, so there can only exis
 
 Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender.  Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
 
-
 ---
 
 ## Trust-Free Interactions
@@ -373,7 +374,7 @@ This gives the Polkadot Relay Chain and all connected parachains an evolutionary
 
 <div>
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/runtime-upgrade.png" />
+<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/runtime-upgrade.png" />
 
 </div>
 
@@ -385,7 +386,7 @@ This gives the Polkadot Relay Chain and all connected parachains an evolutionary
 
 <div class="grid grid-cols-3">
 
-<div class="col-span-2">
+<div class="col-span-2 text-small">
 
 Polkadot and its parachains need to change over time to stay relevant, and the network was designed from the beginning to have a transparent and sophisticated process to not only approve or reject changes but also **enact them automatically**.
 
@@ -396,7 +397,7 @@ Polkadot and its parachains need to change over time to stay relevant, and the n
 
 <div>
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/voting.svg" />
+<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/voting.svg" />
 
 </div>
 
