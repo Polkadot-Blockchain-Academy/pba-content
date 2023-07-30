@@ -17,6 +17,8 @@ mod benchmarking;
 
 pub mod weights;
 
+use crate::weights::WeightInfo;
+
 #[frame_support::pallet]
 pub mod pallet {
 	use crate::*;
@@ -41,6 +43,7 @@ pub mod pallet {
 		/// Because this pallet emits events, it depends on the runtime's definition of an event.
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
+		// Added WeightInfo
 		type WeightInfo: weights::WeightInfo;
 	}
 
@@ -96,7 +99,7 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {
 		// An extrinsic which (inefficiently) counts to `amount` and stores it.
 		#[pallet::call_index(0)]
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(T::WeightInfo::counter((*amount).into()))]
 		pub fn counter(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
 			for i in 0..=amount {
@@ -108,7 +111,7 @@ pub mod pallet {
 
 		// An extrinsic which puts claims the indexes up to `amount` for a user.
 		#[pallet::call_index(1)]
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(T::WeightInfo::counter((*amount).into()))]
 		pub fn claimer(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			for i in 0..=amount {
@@ -120,7 +123,7 @@ pub mod pallet {
 		// An extrinsic which transfers the entire free balance of a user to another user.
 		// Includes a call to `transfer`, which is implemented in a different pallet.
 		#[pallet::call_index(2)]
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(T::WeightInfo::transfer_all())]
 		pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
 			let from = ensure_signed(origin)?;
 			let amount = T::Currency::free_balance(&from);
@@ -129,7 +132,7 @@ pub mod pallet {
 
 		// An extrinsic which has two very different logical paths.
 		#[pallet::call_index(3)]
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(T::WeightInfo::branch_true().max(T::WeightInfo::branch_false()))]
 		pub fn branched_logic(origin: OriginFor<T>, branch: bool) -> DispatchResultWithPostInfo {
 			let _who = ensure_signed(origin)?;
 			if branch {
@@ -137,11 +140,11 @@ pub mod pallet {
 				(0..1337).for_each(|x| {
 					T::Hashing::hash(&x.encode());
 				});
-				Ok(().into())
+				Ok(Some(T::WeightInfo::branch_true()).into())
 			} else {
 				// This branch uses storage.
 				MyValue::<T>::put(69);
-				Ok(().into())
+				Ok(Some(T::WeightInfo::branch_false()).into())
 			}
 		}
 
@@ -150,7 +153,7 @@ pub mod pallet {
 
 		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
 		#[pallet::call_index(4)]
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(T::WeightInfo::register_voter(T::MaxVoters::get()))]
 		pub fn register_voter(
 			origin: OriginFor<T>,
 			who: T::AccountId,
@@ -159,13 +162,14 @@ pub mod pallet {
 			let mut voters = Voters::<T>::get();
 			ensure!(!voters.contains(&who), Error::<T>::AlreadyVoter);
 			voters.try_push(who).map_err(|_| Error::<T>::TooManyVoters)?;
+			let voter_len = voters.len();
 			Voters::<T>::set(voters);
-			Ok(().into())
+			Ok(Some(T::WeightInfo::register_voter(voter_len as u32)).into())
 		}
 
 		// Allow a registered voter to make or update their vote.
 		#[pallet::call_index(5)]
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(T::WeightInfo::make_vote(T::MaxVoters::get()))]
 		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResultWithPostInfo {
 			let who = ensure_signed(origin)?;
 			let voters = Voters::<T>::get();
@@ -181,14 +185,15 @@ pub mod pallet {
 			} else {
 				votes.try_push(user_vote).map_err(|_| Error::<T>::TooManyVoters)?;
 			}
+			let votes_len = votes.len();
 			Votes::<T>::set(votes);
 			Self::deposit_event(Event::<T>::NewVote { who });
-			Ok(().into())
+			Ok(Some(T::WeightInfo::make_vote(votes_len as u32)).into())
 		}
 
 		// Attempt to resolve a vote, which emits the outcome and resets the votes.
 		#[pallet::call_index(6)]
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(T::WeightInfo::close_vote(T::MaxVoters::get()))]
 		pub fn close_vote(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 			// Any user can attempt to close the vote.
 			let _who = ensure_signed(origin)?;
@@ -219,7 +224,7 @@ pub mod pallet {
 			}
 
 			Votes::<T>::kill();
-			Ok(().into())
+			Ok(Some(T::WeightInfo::close_vote(votes_len as u32)).into())
 		}
 
 		// Extra Credit: Make a `remove_voter` function, and benchmark it.

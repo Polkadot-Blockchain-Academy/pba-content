@@ -1,3 +1,5 @@
+> This has the solution, don't share directly with students.
+
 # FRAME Benchmarking Exercise
 
 This is a clone of the `substrate-node-template` that includes a `Template` pallet with some arbitrary logic, specifically designed to help you understand how to define the benchmarking for the pallet calls.
