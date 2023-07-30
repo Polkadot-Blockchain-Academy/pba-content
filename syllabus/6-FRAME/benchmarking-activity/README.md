@@ -80,7 +80,6 @@ pallet \
 --repeat=20 \
 --pallet=pallet-template \
 --extrinsic="*" \
---execution=wasm \
 --wasm-execution=compiled \
 --heap-pages=4096 \
 --output=./pallets/template/src/weights.rs \
