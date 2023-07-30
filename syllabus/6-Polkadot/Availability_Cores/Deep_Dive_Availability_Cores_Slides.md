@@ -86,7 +86,12 @@ Notes:
 
 Though cores gate the entire parachain block pipeline, the availability process alone determines when these cores are considered occupied vs free.
 
+<pba-flex left>
+
 To recap, the goals of availability are:
+
+</pba-flex>
+
 1. To ensure that approvers will always be able to recover the PoVs to validate their assigned blocks
 2. To ensure that parachain nodes can recover blocks in the case that a parablock author maliciously refuses to share them
 
@@ -101,8 +106,8 @@ Core States: Free, Scheduled, Occupied
 1. Block author places a candidate on-chain as backed, immediately occupying its scheduled core
 1. Candidate backers distribute erasure coded PoV chunks
 1. Validators distribute statements as to which candidates they have chunks for
-1. Availability threshold 2/3 (vs 1/3 needed to reconstruct POV)
-1. Core freed when bitfields indicate availability
+1. Availability threshold is met (2/3 vs the 1/3 needed to reconstruct POV)
+1. Candidate marked as included on chain and core freed
 1. Approvers or parachain nodes retrieve PoV chunks as needed
 
 </pba-flex>
@@ -120,12 +125,14 @@ Notes:
 
 Notes:
 
-- Most apt metaphor: train
+- Metaphor: Freight train
 - Relay block: Train leaving station every 6 seconds
 - Potential Parablock: Car space in scheduled train
 - Availability core: Car index within all trains
 
 If you have a lease on core 4, then you have the right to fill train car 4 on each train with whatever you want to ship.
+
+Q: How would an on-demand claim be represented in this metaphor?
 
 ---
 
@@ -145,15 +152,15 @@ Notes:
 
 ---
 
-## Backing Group Formation
+## Assigning Leases and Claims to Cores
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/validator-groups.png" alt="Train">
+<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" alt="Train">
 
 Notes:
 
-To understand how cores divide up parachains protocol work among validators, we first need to understand how those validators are grouped.
-- Validators randomly assigned to groups at start of session.
-- Group count is active validator count / max group size rounded up
+- Leases have indices and pair to cores with the same index
+- Cores not designated as on-demand and without a paired lease are left free, their blockspace wasted
+- When on-demand claims are queued, they are each assigned a designated core in ascending order bounded by the on-demand core count
 
 ---
 
@@ -166,6 +173,17 @@ Notes:
 - Round robin, fixed intervals
 
 This prevents a byzantine backing group from interrupting the liveness of any one parachain for too long.
+
+---
+
+## Backing Group Formation
+
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/validator-groups.png" alt="Train">
+
+Notes:
+
+- Validators randomly assigned to groups at start of session.
+- Group count is active validator count / max group size rounded up
 
 ---
 
@@ -188,18 +206,6 @@ Q: Why don't we just have all active validators approve each candidate?
 
 ---
 
-## Assigning Leases and Claims to Cores
-
-<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" alt="Train">
-
-Notes:
-
-- Leases have indices and pair to cores with the same index
-- Cores for lease without a paired lease are left free, their blockspace wasted
-- When on-demand claims are queued, they are each assigned a designated core in ascending order bounded by the on-demand core count
-
----
-
 ## Putting the Pieces Together
 
 <img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
@@ -211,6 +217,10 @@ Notes:
 ## Occupying Assigned Cores: With Lease
 
 <img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_with_lease.svg" alt="">
+
+Notes:
+
+Q: What step of the parachains protocol takes place between "Supplied backable candidate" and "availability process?
 
 ---
 
@@ -250,9 +260,7 @@ pub struct ParathreadEntry {
 
 Notes:
 
-- Vector of possible core occupant types
-- None -> unoccupied
-- retries tracked for on-demand
+Q: When Option is None, what does that indicate?
 
 ---
 
@@ -317,6 +325,7 @@ pub struct QueuedParathread {
 
 Notes:
 
+- Why ParathreadClaimQueue in the code? (Naming change)
 - Vec of queued parathreads
 - `next_core_offset` determines the parathread core which will be pre-assigned the next claim to enter the queue
 
@@ -328,9 +337,9 @@ Notes:
 
 ## How Core Assignments Mediate Backing
 
-Each collation contains a `relay_parent` field corresponding to the included relay block on which that collation is based
+Each parablock candidate is built in the context of a particular `relay_parent`. Important pieces of that context include max PoV size, current parachain runtime code, and backing group assignments.
 
-Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group
+Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group.
 
 ---
 
@@ -360,14 +369,17 @@ if Some(candidate.descriptor().para_id) != rp_state.assignment {
 
 <pba-flex center>
 
-- Candidates provided to BABE according to core assignment
+- For each scheduled (un-occupied) core a candidate is retrieved from the off-chain backing process
+- Candidates are provided to block author according to core assignment
 - Backed on-chain -> immediately occupies core
-- Prior occupant must vacate first
 
 </pba-flex>
 
 Notes:
+- Review possible core states
 - Mention time-out vs made available
+
+Q: What does "immediately occupies core" imply?
 
 ---
 
@@ -489,6 +501,10 @@ Notes:
 
 <img rounded style="width: 70%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/exotic_core_scheduling.svg" alt="">
 
+Notes:
+
+- Each color represents a parachain
+
 ---
 
 ## Divisible and Marketable Blockspace
@@ -500,9 +516,13 @@ Notes:
 
 </pba-flex>
 
+Notes:
+
+- Example: Region spanning 100 blocks. Split the region use so that each of two parties can submit up to 50 parablocks. Ownership proportion is enforced throughout the region such that each party can't submit more than 5 out of the first 10 blocks.
+
 ---
 
-## Blockspace vs Core Time
+## Framing Shift: Blockspace vs Core Time
 
 Blockspace is a universal term for the product of blockchains, while core time is Polkadot's particular abstraction for allocating blockspace or other computation.
 
@@ -512,18 +532,13 @@ Allocating cores by time rather than for a fixed block size could allow for smal
 
 ---
 
-## Core Time, and the Polkadot Ubiquitous Computer
-
-TODO
-
----
-
 ## Resources
 
 <pba-col center>
 
 1. [Implementers Guide: Scheduler Pallet](https://paritytech.github.io/polkadot/book/runtime/scheduler.html)
-1. [Forum Post: Strided Blockspace Regions](https://forum.polkadot.network/t/unifying-bulk-and-mid-term-blockspace-with-strided-regions/2228)
+1. [RFC: Agile Coretime](https://github.com/polkadot-fellows/RFCs/pull/1)
+1. [RFC: Coretime Scheduling Regions](https://github.com/polkadot-fellows/rfcs/pull/3)
 1. [Rob Habermeier's Blog: Polkadot Blockspace Over Blockchains](https://www.rob.tech/polkadot-blockspace-over-blockchains/)
 
 </pba-col>
