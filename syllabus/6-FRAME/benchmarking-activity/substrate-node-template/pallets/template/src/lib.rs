@@ -15,6 +15,9 @@ mod tests;
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
 
+pub mod weights;
+use weights::WeightInfo;
+
 #[frame_support::pallet]
 pub mod pallet {
 	use crate::*;
@@ -25,7 +28,6 @@ pub mod pallet {
 		<<T as Config>::Currency as Currency<<T as frame_system::Config>::AccountId>>::Balance;
 
 	#[pallet::pallet]
-	#[pallet::generate_store(pub(super) trait Store)]
 	pub struct Pallet<T>(_);
 
 	/// Configure the pallet by specifying the parameters and types on which it depends.
@@ -39,6 +41,8 @@ pub mod pallet {
 
 		/// Because this pallet emits events, it depends on the runtime's definition of an event.
 		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+
+		type WeightInfo: weights::WeightInfo;
 	}
 
 	#[pallet::storage]
@@ -89,10 +93,10 @@ pub mod pallet {
 		NoVoters,
 	}
 
-	#[pallet::call]
+	#[pallet::call(weight(<T as Config>::WeightInfo))]
 	impl<T: Config> Pallet<T> {
 		// An extrinsic which (inefficiently) counts to `amount` and stores it.
-		#[pallet::weight(0)]
+		#[pallet::call_index(0)]
 		pub fn counter(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
 			for i in 0..=amount {
@@ -103,7 +107,7 @@ pub mod pallet {
 		}
 
 		// An extrinsic which puts claims the indexes up to `amount` for a user.
-		#[pallet::weight(0)]
+		#[pallet::call_index(1)]
 		pub fn claimer(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			for i in 0..=amount {
@@ -114,7 +118,7 @@ pub mod pallet {
 
 		// An extrinsic which transfers the entire free balance of a user to another user.
 		// Includes a call to `transfer`, which is implemented in a different pallet.
-		#[pallet::weight(0)]
+		#[pallet::call_index(2)]
 		pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
 			let from = ensure_signed(origin)?;
 			let amount = T::Currency::free_balance(&from);
@@ -122,7 +126,7 @@ pub mod pallet {
 		}
 
 		// An extrinsic which has two very different logical paths.
-		#[pallet::weight(0)]
+		#[pallet::call_index(3)]
 		pub fn branched_logic(origin: OriginFor<T>, branch: bool) -> DispatchResultWithPostInfo {
 			let _who = ensure_signed(origin)?;
 			if branch {
@@ -142,7 +146,7 @@ pub mod pallet {
 		// scenarios.
 
 		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
-		#[pallet::weight(0)]
+		#[pallet::call_index(4)]
 		pub fn register_voter(
 			origin: OriginFor<T>,
 			who: T::AccountId,
@@ -156,7 +160,7 @@ pub mod pallet {
 		}
 
 		// Allow a registered voter to make or update their vote.
-		#[pallet::weight(0)]
+		#[pallet::call_index(5)]
 		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResultWithPostInfo {
 			let who = ensure_signed(origin)?;
 			let voters = Voters::<T>::get();
@@ -178,7 +182,7 @@ pub mod pallet {
 		}
 
 		// Attempt to resolve a vote, which emits the outcome and resets the votes.
-		#[pallet::weight(0)]
+		#[pallet::call_index(6)]
 		pub fn close_vote(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 			// Any user can attempt to close the vote.
 			let _who = ensure_signed(origin)?;
