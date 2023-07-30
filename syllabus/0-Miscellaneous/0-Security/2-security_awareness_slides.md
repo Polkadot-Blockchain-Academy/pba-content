@@ -28,7 +28,7 @@ revealOptions:
 - Be able to describe the threats which exist in the Web3 space
 - Navigate the risks posed with confidence
 - Understand the measures taken to minimize impact
-  
+
 </pba-flex>
 
 ---
@@ -79,7 +79,7 @@ These can include various techniques, some of which could be phishing emails, so
 
 - Crypto Market Capitalization: $1,231,359,133,397
 - 24 Hour Trading Volume: $39,807,353,848
-  
+
 </pba-flex>
 
 Notes:
@@ -101,7 +101,6 @@ In the real world, there is minimal scope - financially motivated attackers do n
 ---v
 
 #### Funds
-
 
 Quickest and easiest way to make money: attack wallets and services
 
@@ -133,6 +132,7 @@ Mechanics of protocols themselves can be taken advantage of through 51% attacks,
 ---v
 
 #### Personally Identifiable Information
+
 <pba-flex center>
 
 - Account takeover
@@ -150,6 +150,7 @@ It may sound far-fetched, but this is a very real problem in the Web3 ecosystem 
 ---
 
 ## A look at potential adversaries
+
 <pba-flex center>
 
 - Lazarus Group (APT 38)
