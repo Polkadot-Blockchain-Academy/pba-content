@@ -257,7 +257,7 @@ One way to write a migration is to write it inside the pallet.
 
 ```rust
 #[pallet::hooks]
-impl<T: Config> Hooks<T::BlockNumber> for Pallet<T> {
+impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_runtime_upgrade() -> Weight {
     migrate_stuff_and_things_here_and_there<T>();
   }
@@ -274,7 +274,7 @@ impl<T: Config> Hooks<T::BlockNumber> for Pallet<T> {
 
 ```rust [4-8]
 #[pallet::hooks]
-impl<T: Config> Hooks<T::BlockNumber> for Pallet<T> {
+impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_runtime_upgrade() -> Weight {
     if guard_that_stuff_has_not_been_migrated() {
       migrate_stuff_and_things_here_and_there<T>();
@@ -303,7 +303,7 @@ enum StorageVersion {
 pub type Version = StorageValue<_, StorageVersion>;
 
 #[pallet::hooks]
-impl<T: Config> Hooks<T::BlockNumber> for Pallet<T> {
+impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_runtime_upgrade() -> Weight {
     if let StorageVersion::V2 = Version::<T>::get() {
       // do migration
@@ -347,7 +347,7 @@ current.put::<Pallet<T>>();
 
 ```rust
 #[pallet::hooks]
-impl<T: Config> Hooks<T::BlockNumber> for Pallet<T> {
+impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_runtime_upgrade() -> Weight {
     let current = Pallet::<T>::current_storage_version();
     let onchain = Pallet::<T>::on_chain_storage_version();

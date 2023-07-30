@@ -179,11 +179,7 @@ Each pallet can define a `struct GenesisConfig` --> `<PalletName>Config`.
 
 ```rust
 construct_runtime!(
-  pub enum Runtime where
-  Block = Block,
-  NodeBlock = opaque::Block,
-  UncheckedExtrinsic = UncheckedExtrinsic
-  {
+  pub enum Runtime {
     System: frame_system,
     PalletA: pallet_a,
   }

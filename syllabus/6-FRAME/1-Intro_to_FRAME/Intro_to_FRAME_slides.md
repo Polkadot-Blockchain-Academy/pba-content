@@ -250,7 +250,7 @@ It contains all the most basic functions and types needed for a blockchain syste
 </div>
 <div class="right text-small">
 
-- `T::BlockNumber`
+- `BlockNumberFor<T>`
 - `frame_system::Pallet::<T>::block_number()`
 - `T::AccountId`
 - `T::Hash`
@@ -287,12 +287,7 @@ Your final runtime is composed of Pallets, which are brought together with the `
 ```rust
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
-	pub struct Runtime
-	where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic,
-	{
+	pub struct Runtime {
 		System: frame_system,
 		RandomnessCollectiveFlip: pallet_randomness_collective_flip,
 		Timestamp: pallet_timestamp,
