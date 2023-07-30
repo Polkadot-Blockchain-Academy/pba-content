@@ -63,8 +63,8 @@ fn set_votes<T: Config>(ayes: u32, nays: u32, abstain: u32) -> DispatchResultWit
 // - Where it makes sense, use components to get parameterized weight outputs.
 // - Add a verification function to each benchmark to make sure the expected code executed.
 // - Don't forget to use the `whitelisted_caller` for the `Origin`.
-// - You can iteratively test your benchmarks with:
-// 		`cargo test -p pallet-template --features runtime-benchmarks`
+// - You can iteratively test your benchmarks with: `cargo test -p pallet-template --features
+//   runtime-benchmarks`
 benchmarks! {
 	// Write a benchmark for `i` hashes.
 	hashing {

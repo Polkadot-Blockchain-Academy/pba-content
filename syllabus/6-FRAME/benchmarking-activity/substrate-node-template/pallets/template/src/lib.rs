@@ -16,7 +16,6 @@ mod tests;
 mod benchmarking;
 
 pub mod weights;
-use weights::WeightInfo;
 
 #[frame_support::pallet]
 pub mod pallet {
@@ -93,10 +92,11 @@ pub mod pallet {
 		NoVoters,
 	}
 
-	#[pallet::call(weight(<T as Config>::WeightInfo))]
+	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		// An extrinsic which (inefficiently) counts to `amount` and stores it.
 		#[pallet::call_index(0)]
+		#[pallet::weight(u64::default())]
 		pub fn counter(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let _who = ensure_signed(origin)?;
 			for i in 0..=amount {
@@ -108,6 +108,7 @@ pub mod pallet {
 
 		// An extrinsic which puts claims the indexes up to `amount` for a user.
 		#[pallet::call_index(1)]
+		#[pallet::weight(u64::default())]
 		pub fn claimer(origin: OriginFor<T>, amount: u8) -> DispatchResult {
 			let who = ensure_signed(origin)?;
 			for i in 0..=amount {
@@ -119,6 +120,7 @@ pub mod pallet {
 		// An extrinsic which transfers the entire free balance of a user to another user.
 		// Includes a call to `transfer`, which is implemented in a different pallet.
 		#[pallet::call_index(2)]
+		#[pallet::weight(u64::default())]
 		pub fn transfer_all(origin: OriginFor<T>, to: T::AccountId) -> DispatchResult {
 			let from = ensure_signed(origin)?;
 			let amount = T::Currency::free_balance(&from);
@@ -127,6 +129,7 @@ pub mod pallet {
 
 		// An extrinsic which has two very different logical paths.
 		#[pallet::call_index(3)]
+		#[pallet::weight(u64::default())]
 		pub fn branched_logic(origin: OriginFor<T>, branch: bool) -> DispatchResultWithPostInfo {
 			let _who = ensure_signed(origin)?;
 			if branch {
@@ -147,6 +150,7 @@ pub mod pallet {
 
 		// Register a user which is allowed to be a voter. Only callable by the `Root` origin.
 		#[pallet::call_index(4)]
+		#[pallet::weight(u64::default())]
 		pub fn register_voter(
 			origin: OriginFor<T>,
 			who: T::AccountId,
@@ -161,6 +165,7 @@ pub mod pallet {
 
 		// Allow a registered voter to make or update their vote.
 		#[pallet::call_index(5)]
+		#[pallet::weight(u64::default())]
 		pub fn make_vote(origin: OriginFor<T>, vote: Vote) -> DispatchResultWithPostInfo {
 			let who = ensure_signed(origin)?;
 			let voters = Voters::<T>::get();
@@ -183,6 +188,7 @@ pub mod pallet {
 
 		// Attempt to resolve a vote, which emits the outcome and resets the votes.
 		#[pallet::call_index(6)]
+		#[pallet::weight(u64::default())]
 		pub fn close_vote(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 			// Any user can attempt to close the vote.
 			let _who = ensure_signed(origin)?;
