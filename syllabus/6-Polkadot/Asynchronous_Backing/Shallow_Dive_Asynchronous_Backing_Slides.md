@@ -160,16 +160,32 @@ Note:
 
 ---
 
+## The Unincluded Segment
+
+<pba-flex center>
+
+- A parachain's record of all parablocks on a particular chain fork produced but not yet included
+- Used to apply limitations when constructing future blocks
+- Lives in the parachain runtime
+- Viwed from the perspective of a new parablock under construction
+
+</pba-flex>
+
+Notes:
+
+Limitation example, upward messages remaining before the relay chain would have to drop incoming messages from our parachain
+
+---
+
 ## Unincluded Segment
 
 <img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/unincluded_segment_1.svg" alt="">
 
 Notes:
 
-- Lives in the parachain runtime
-- Viwed from the perspective of a new parablock under construction
 - Segment added to as each new block is imported on chain
 - Segment shrinks when one of its ancestor blocks becomes included
+- Maximum unincluded segment capacity is set both on the parachain and relay chain
 
 ---v
 
@@ -183,6 +199,19 @@ UsedBandwidth:
     pub ump_msg_count: u32,
     pub ump_total_bytes: u32,
     pub hrmp_outgoing: BTreeMap\<ParaId, HrmpChannelUpdate\>,
+
+---
+
+## Prospective Parachains
+
+<pba-flex center>
+
+- The relay chain's record of all candidates on all chain forks from all parachains
+- As if you folded all unincluded segments into one huge structure
+- Used to store candidates and later provide them to the on-chain backing process
+- Lives in the relay client (off chain)
+
+</pba-flex>
 
 ---
 
