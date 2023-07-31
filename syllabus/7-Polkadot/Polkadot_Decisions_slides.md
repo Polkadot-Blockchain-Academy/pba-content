@@ -149,7 +149,7 @@ Polkadot tries to accomplish that mission by solving three problems:
 
 ## The Decisions
 
-What makes Polkadot... Polkadot?
+What are the type 1 decisions which make Polkadot... Polkadot?
 
 ---
 
@@ -234,35 +234,13 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 <div>
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/interoperability.svg" />
-
-</div>
-
-</div>
-
----
-
-## XCMP & XCM
-
-<pba-cols>
-<pba-col>
-
-### Cross-Chain Message-Passing
-
 <image src="../../../assets/img/7-Polkadot/xcmp-2.svg" style="height: 500px;">
 
+A visual of XCMP channels between Parachains.
 
-</pba-col>
-<pba-col>
+</div>
 
-### Cross-Consensus Message Format
-
-<image src="../../../assets/img/7-Polkadot/xcm-stack.svg" style="height: 500px;">
-
-- Type 2 Decision
-
-</pba-col>
-</pba-cols>
+</div>
 
 ---
 
@@ -295,24 +273,39 @@ Polkadot introduces a shared security model so that chains can interact with oth
 
 ---
 
+## Execution Cores
+
+Polkadot's Shared Security is powered through the creation and allocation of execution cores.
+
+<img style="width: 1000px;" src="../../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+
+Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
+
+---
+
 ## Trust-Free Interactions
 
-<pba-cols>
-<pba-col>
+<div class="grid grid-cols-3">
+
+<div>
 
 <image src="../../../assets/img/7-Polkadot/xcmp-finalization.svg" style="height: 500px;">
 
-</pba-col>
-<pba-col>
+</div>
+
+<div class="col-span-2 text-left">
 
 A key result of shared security through the Relay Chain is that it keeps track of the state of all parachains and keeps them in lock step.
 
-That means blocks which are finalized on Polkadot imply finalization of all interactions between all parachains at the same height.
+That means blocks which are finalized on Polkadot imply **finalization of all interactions** between all parachains at the same height.
 
 So, shared security not only secures the individual chains, but the interactions between chains too.
 
-</pba-col>
-</pba-cols>
+This is continuing to evolve with the addition of "accords" / SPREE.
+
+</div>
+
+</div>
 
 ---
 
@@ -322,23 +315,21 @@ So, shared security not only secures the individual chains, but the interactions
 
 <div>
 
-## BABE
-
 ### Block Production
 
 <img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/babe.svg" />
 
-BABE is forkful, with probabilistic finality.
+Current implementation is BABE, which is forkful with probabilistic finality.
 
 </div>
 
 <div>
 
-## GRANDPA
-
 ### Finality Gadget
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/grandpa.png" />
+<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/grandpa.png" />
+
+Current implementation is GRANDPA, which is robust and scalable against network partitions.
 
 </div>
 
@@ -348,6 +339,8 @@ BABE is forkful, with probabilistic finality.
 
 ## Light Client First Mentality
 
+<div class="text-left">
+
 Polkadot has a strong belief that light clients are a necessary component for a Web3 future. It has been uncompromising in enabling first class light client support as a primary part of its development process:
 
 - In-Browser Wasm Client (Substrate Connect)
@@ -356,13 +349,15 @@ Polkadot has a strong belief that light clients are a necessary component for a 
 - Merkle Tries and other LC compatible data structures
 - Maximizing statically known metadata to offset reliance on full nodes.
 
+</div>
+
 ---
 
 ## On-Chain Runtime & Forkless Upgrades
 
 <div class="grid grid-cols-3">
 
-<div class="col-span-2">
+<div class="col-span-2 text-left">
 
 The Polkadot protocol specification defines a clear separation between the blockchain client and runtime (state transition function).
 
@@ -386,13 +381,13 @@ This gives the Polkadot Relay Chain and all connected parachains an evolutionary
 
 <div class="grid grid-cols-3">
 
-<div class="col-span-2 text-small">
+<div class="col-span-2 text-left">
 
 Polkadot and its parachains need to change over time to stay relevant, and the network was designed from the beginning to have a transparent and sophisticated process to not only approve or reject changes but also **enact them automatically**.
 
 - Governance decisions can literally change the underlying code of the chain (since it is on-chain).
 - 50% of the total stake in the system should be able to control the future of the system.
-- Users have the option to lock their tokens to increase the “conviction” of their vote.
+
 </div>
 
 <div>
@@ -409,7 +404,7 @@ Polkadot and its parachains need to change over time to stay relevant, and the n
 
 <div class="grid grid-cols-2">
 
-<div>
+<div class="text-left">
 
 Polkadot has designed at its core a self-funded treasury pool to incentivize the development and evolution of the protocol.
 
@@ -427,37 +422,149 @@ It is entirely controlled on-chain by the governance system of Polkadot, which m
 
 ---
 
+## The Implementation of Polkadot
+
+What are the type 2 decisions of Polkadot?
+
+---
+
+## Parachains
+
+Polkadot was designed around Parachains, but the exact meaning and manifestation of a Parachain is evolving.
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<img style="height: 200px;" src="../../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
+
+</div>
+
+<div>
+
+<img style="height: 200px;" src="../../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+
+</div>
+
+</div>
+
+<br />
+
+- Originally, parachains would be long term applications-chains.
+- On-Demand Parachains (formerly parathreads) changed that viewpoint to also include chains which can spin-up and spin-down at will.
+- The future protocol will have even more exotic core scheduling and even more agile core usage, all because the type 1 decision around parachains is actually **execution cores**.
+
+Notes:
+
+- https://hackmd.io/9xhCNYIOQny0v0QTsWuNwQ#/
+- https://www.youtube.com/watch?v=GIB1WeVuJD0
+
+---
+
+## XCM
+
+### Cross-Consensus Message Format
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<image src="../../../assets/img/7-Polkadot/xcm-stack.svg" style="height: 500px;">
+
+Instructions to teleport an asset between parachains.
+
+
+</div>
+
+<div>
+
+While cross-chain interoperability (XCMP) is a type 1 decision, exactly the language that chains speak to eachother is not.
+
+XCM is Parity's current flavor of a cross-consensus message format, but we already see other teams try out their own ideas, or push updates to the XCM format specification.
+
+</div>
+
+</div>
+
+Notes:
+
+https://github.com/paritytech/xcm-format
+
+---
+
 ## Nominated Proof-of-Stake
 
-- Type 2 Decision
+<div class="grid grid-cols-3 text-small">
+<div>
 
-One of Polkadot’s primary functions is to provide security not only to itself, but also to the connected Parachains. The staking system is a critical focus of the network, and we have one of the most advanced staking systems to date.
+One of Polkadot’s primary functions is to provide security not only to itself, but also to the connected Parachains.
 
+The staking system is a critical focus of the network, and we have one of the most advanced staking systems to date.
+
+</div>
+
+<div class="col-span-2">
 
 - NPoS over DPoS to better allocate stake.
+	- We see ~25% more stake behind the elected set on NPoS compared with DPoS.
 	- At the cost of complexity and scaling.
 - Economic incentives to distribute funds evenly across validators.
 - Super-linear slashing system to discourage validator centralization.
 - Actual value being generated by staking, justifying rewards.
 
+</div>
+
+</div>
+
+<br />
+
+The protocol has been actively evolving over time, making it more performant and accessible to users, for example with nomination pools.
+
 ---
 
-## Other Type 2 Decisions
+## SASSAFRAS
 
-Polkadot has made many Type 2 decisions, many of which have already, and will continue to change over time:
+While hybrid consensus is a type 1 decision, the underlying protocols can continue to evolve, such as from BABE to SASSAFRAS.
 
-- The specifics of the governance process (most recently OpenGov)
-- Extensions to staking (like nomination pools, fast unstake, etc…)
-- Integrated multi-sig, proxies, batching, account abstractions, etc…
-- Treasury spending outlets (tips, bounties, fellowship, etc…)
-- On-chain storage management, data structures, and deposits.
-- Allocation of Parachain execution cores (pay-as-you-go vs long term).
-- XCM format, available instructions, and message queue behavior.
-- and so on…
+> Semi Anonymous Sortition of Staked Assignees For Fixed-time Rhythmic Assignment of Slots
+
+An extension of BABE and acts as a constant-time block production protocol. This approach tries to address the shortcomings of BABE by ensuring that exactly one block is produced with time-constant intervals. The protocol utilizes zk-SNARKs to construct a ring-VRF and is a work in progress.
+
+---
+
+## OpenGov
+
+The specifics of Polkadot's on-chain governance system has changed multiple times in its history.
+
+- To bootstrap the network, a Sudo account was used to initialize the chain.
+- Then a multi-party system, including token holders, an elected council, and a technical council was used.
+- Most recently, the councils have been removed, and token holders are now in full control of the Polkadot governance systems.
+
+---
+
+## Treasury and Fellowships
+
+An on-chain treasury has and will always exist; but how exactly it spends funds and to whom has evolved over time:
+
+- Initially there were just simple proposals which were approved by the governance system.
+- Then Bounties and Tips were introduced, increasing access to larger and smaller funding mechanisms.
+- Most recently, fellowships have started to form, which represent organizations who can earn regular salaries from the network itself.
+
+---
+
+## and many more...
+
+Polkadot is **designed** to evolve, and make type 2 decision making fast and easy.
+
+An invention machine.
 
 ---
 
 ## A Format for Discussing Decisions
+
+What questions should you ask when learning about the decisions of a Protocol?
+
+<br />
 
 - What is (the decision)?
 - What do we need to consider when making (the decision)?
@@ -467,3 +574,9 @@ Polkadot has made many Type 2 decisions, many of which have already, and will co
 - What decisions have others decided to make?
 	- How might those decisions be better or worse?
 - Where can the blockchain community still improve on (the decision)?
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
