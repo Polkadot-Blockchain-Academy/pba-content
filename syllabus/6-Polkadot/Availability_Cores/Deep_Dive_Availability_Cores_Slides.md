@@ -8,15 +8,7 @@ duration: 1 hour
 
 Notes:
 
-Hello!
-
-I'm Bradley Olson
-
-Was student at first Academy in Cambridge
-
-Currently on Parachains Core Team at Parity
-
-Will present 3 lectures providing a window into Polkadot core, a slice of where we're at and where we're headed.
+We will present 3 lectures providing a window into Polkadot core, a slice of where we're at and where we're headed.
 
 First a look at availability cores, the abstraction enabling flexible purchases of blockspace under the umbrella of Polkadot shared security.
 
@@ -32,7 +24,7 @@ Lets get to it
 - How do cores map parachain leases and claims to validator subsets?
 - How do cores gate each step of the parachains protocol?
 - What advantages do cores give us now?
-- What roadmap items do cores accomodate?
+- What roadmap items do cores accommodate?
 
 </pba-flex>
 
@@ -40,7 +32,7 @@ Lets get to it
 
 ## Review, Blockspace
 
-> Blockspace is the capacity of a blockchain to finalize and commit operations
+> Blockspace is the capacity of a blockchain<br/>to finalize and commit operations
 
 Polkadot's primary product is _blockspace_.
 
@@ -49,10 +41,15 @@ Polkadot's primary product is _blockspace_.
 ## Blockspace, Use It or Lose It
 
 Polkadot blockspace is consumed in two ways:
-1. When the relay chain validates, includes, and finalizes a parachain block
-2. When the capacity to validate a parachain block is left unused and expires
 
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/OpenGov-PBA2/stopwatch.png" alt="Stopwatch">
+<pba-flex center>
+
+1. When the relay chain validates,<br/>includes, and finalizes a parachain block
+1. When the capacity to validate a parachain block<br/> is left unused and expires
+
+</pba-flex>
+
+<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/stopwatch.png" />
 
 ---
 
@@ -61,16 +58,16 @@ Polkadot blockspace is consumed in two ways:
 <pba-cols>
 <pba-col center>
 
-  - Availability cores are the abstraction we use to allocate Polkadot's blockspace.
-  - Allocated via leases and on-demand claims
-  - Cores divide blockspace supply into discrete units, 1 parachain block per relay chain block per core
-  - Why "availability"?
-  - Why "core"?
+- Availability cores are the abstraction we use to allocate Polkadot's blockspace.
+- Allocated via leases and on-demand claims
+- Cores divide blockspace supply into discrete units, 1 parachain block per relay chain block per core
+- Why "availability"?
+- Why "core"?
 
 </pba-col>
 <pba-col center>
 
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Processor_Cores.jpeg" alt="Processor cores image">
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Processor_Cores.jpeg" />
 
 </pba-col>
 </pba-cols>
@@ -84,11 +81,12 @@ Notes:
 
 ## Availability
 
-Though cores gate the entire parachain block pipeline, the availability process alone determines when these cores are considered occupied vs free.
+Though cores gate the entire parachain block pipeline,<br/> the availability process alone determines when these cores are considered occupied vs free.
 
 To recap, the goals of availability are:
+
 1. To ensure that approvers will always be able to recover the PoVs to validate their assigned blocks
-2. To ensure that parachain nodes can recover blocks in the case that a parablock author maliciously refuses to share them
+1. To ensure that parachain nodes can recover blocks in the case that a parablock author maliciously refuses to share them
 
 ---
 
@@ -108,6 +106,7 @@ Core States: Free, Scheduled, Occupied
 </pba-flex>
 
 Notes:
+
 - CoreState: Free -> core has not been assigned a parachain via lease or on-demand claim
 - CoreState: Scheduled -> Core has an assigned parachain and is currently unoccupied
 - CoreState: Occupied -> Core has assignment and is occupied by a parablock pending availability
@@ -116,7 +115,7 @@ Notes:
 
 ## Cores and Blockspace Over Time
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Train.jpeg" alt="Train">
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Train.jpeg" />
 
 Notes:
 
@@ -135,7 +134,7 @@ If you have a lease on core 4, then you have the right to fill train car 4 on ea
 
 ## The Big Picture
 
-<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" />
 
 Notes:
 
@@ -147,11 +146,12 @@ Notes:
 
 ## Backing Group Formation
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/validator-groups.png" alt="Train">
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/validator-groups.png" />
 
 Notes:
 
 To understand how cores divide up parachains protocol work among validators, we first need to understand how those validators are grouped.
+
 - Validators randomly assigned to groups at start of session.
 - Group count is active validator count / max group size rounded up
 
@@ -159,7 +159,7 @@ To understand how cores divide up parachains protocol work among validators, we 
 
 ## Assigning Backing Groups to Cores
 
-<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_backing_groups_with_cores.svg" alt="Train">
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_backing_groups_with_cores.svg" />
 
 Notes:
 
@@ -169,7 +169,7 @@ This prevents a byzantine backing group from interrupting the liveness of any on
 
 ---
 
-<img rounded style="width: 300px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/dice.jpeg" alt="Train">
+<img rounded style="width: 300px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/dice.jpeg" />
 
 ## Assigning Approvers to Cores
 
@@ -190,7 +190,7 @@ Q: Why don't we just have all active validators approve each candidate?
 
 ## Assigning Leases and Claims to Cores
 
-<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" alt="Train">
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" />
 
 Notes:
 
@@ -202,7 +202,7 @@ Notes:
 
 ## Putting the Pieces Together
 
-<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" alt="Train">
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" />
 
 Notes:
 
@@ -210,13 +210,13 @@ Notes:
 
 ## Occupying Assigned Cores: With Lease
 
-<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_with_lease.svg" alt="">
+<img rounded style="width: 1300px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_with_lease.svg" />
 
 ---
 
 ## Occupying Assigned Cores: On Demand
 
-<img rounded style="width: 80%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_on_demand.svg" alt="">
+<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_on_demand.svg" />
 
 ---
 
@@ -330,7 +330,7 @@ Notes:
 
 Each collation contains a `relay_parent` field corresponding to the included relay block on which that collation is based
 
-Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group
+Validators query their core assignment as of `relay_parent` and refuse to second candidates not associated with their backing group
 
 ---
 
@@ -367,6 +367,7 @@ if Some(candidate.descriptor().para_id) != rp_state.assignment {
 </pba-flex>
 
 Notes:
+
 - Mention time-out vs made available
 
 ---
@@ -432,12 +433,12 @@ async fn request_backable_candidates(
 Notes:
 
 - Per core
-    - Discuss core states free, scheduled, occupied
-    - Discuss core freeing criteria
-        - `bitfields_indicate_availability`
-            - next_up_on_available
-        - availability time out
-            - next_up_on_timeout
+  - Discuss core states free, scheduled, occupied
+  - Discuss core freeing criteria
+    - `bitfields_indicate_availability`
+      - next_up_on_available
+    - availability time out
+      - next_up_on_timeout
 
 ---
 
@@ -449,14 +450,14 @@ Approvals, Disputes, and Finality are only provided to included candidates
 
 ---
 
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/advantage.png" alt="Processor cores image">
+<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/advantage.png" alt="Processor cores image" />
 
 ## Advantages Cores Give us Now
 
 <pba-flex center>
 
-1. Improved liveness 
-1. Flexibility of market structure 
+1. Improved liveness
+1. Flexibility of market structure
 1. Flexibility of allocation
 1. Intuitive unit of capacity over time
 
@@ -466,14 +467,14 @@ Notes:
 
 1. Regularly rotating pairings between cores and backing groups
 1. Market structures: common good, lease, on-demand
-1. Cores accomodate huge changes in validation recipients from one block to the next
-1. Train metaphor 
+1. Cores accommodate huge changes in validation recipients from one block to the next
+1. Train metaphor
 
 ---
 
 # Cores and Roadmap Items
 
-<img rounded style="width: 600px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/road.jpeg" alt="">
+<img rounded style="width: 600px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/road.jpeg" />
 
 ---
 
@@ -487,7 +488,7 @@ Notes:
 
 </pba-flex>
 
-<img rounded style="width: 70%" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/exotic_core_scheduling.svg" alt="">
+<img rounded style="width: 700px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/exotic_core_scheduling.svg" />
 
 ---
 
