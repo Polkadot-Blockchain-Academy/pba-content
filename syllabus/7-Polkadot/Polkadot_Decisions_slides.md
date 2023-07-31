@@ -226,7 +226,7 @@ Specialized solutions for problems are more performant than generalized solution
 
 <div>
 
-Individual application chains will inherently lack the ability to provide a full suite of solutions for end users.
+Individual application chains will inherently lack the ability to provide a full suite of optimized solutions for end users.
 
 Interoperability allows parachains to work together to complete, complex end-to-end scenarios.
 
