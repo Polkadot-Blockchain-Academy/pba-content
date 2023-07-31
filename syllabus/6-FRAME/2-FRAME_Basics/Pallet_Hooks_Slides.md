@@ -1,36 +1,77 @@
 ---
-title: Pallet Hooks
-description: Pallet Hooks
+title: FRAME/Pallet Hooks
+description: FRAME/Pallet Hooks
 duration: 1 hour
 ---
 
-# Pallet Hooks
+# 🪝 FRAME/Pallet Hooks 🪝
 
 ---
 
 ## Hooks: All In One
 
-All defined in `trait Hooks`
-([source](https://github.com/paritytech/substrate/blob/33c518ebbe43d38228ac47e793e4d1c76738a56d/frame/support/src/traits/hooks.rs#L214)).
+* Onchain / STF
+  * `on_runtime_upgrade`
+  * `on_initialize`
+  * `poll` (WIP)
+  * `on_finalize`
+  * `on_idle`
+* Offchain:
+  * `genesis_build`
+  * `offchain_worker`
+  * `integrity_test`
+  * `try_state`
 
-1. `on_initialize`
-1. `on_finalize`
-1. `on_idle`
-1. `on_runtime_upgrade`
-1. `offchain_worker`
-1. `integrity_test`
+Notes:
 
-1. Plus, `GenesisConfig`.
+https://paritytech.github.io/substrate/master/frame_support/traits/trait.Hooks.html
+
+---v
+
+### Hooks: All In One
+
+```rust
+#[pallet::hooks]
+impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
+  fn on_runtime_upgrade() -> Weight {}
+  fn on_initialize() -> Weight {}
+  fn on_finalize() {}
+  fn on_idle(remaining_weight: Weight) -> Weight {}
+  fn offchain_worker() {}
+  fn integrity_test() {}
+  #[cfg(feature = "try-runtime")]
+  fn try_state() -> Result<(), &'static str> {}
+}
+
+#[pallet::genesis_build]
+impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
+	fn build(&self) {}
+}
+```
+
+Notes:
+
+Many of these functions receive the block number as an argument, but that can easily be fetched from
+`frame_system::Pallet::<T>::block_number()`
+
+---
+
+## Hooks: `on_runtime_upgrade`
+
+- Called every time the `spec_version`/`spec_name` is bumped.
+- Why would might you be interested in implementing this?
+
+Notes:
+
+Because very often runtime upgrades needs to be accompanied by some kind of state migration.
+Has its own lecture, more over there.
 
 ---
 
 ## Hooks: `on_initialize`
 
 - Useful for any kind of **automatic** operation.
-
 - The weight you return is interpreted as `DispatchClass::Mandatory`.
-
-- Called before any transaction.
 
 ---v
 
@@ -45,30 +86,42 @@ fn on_initialize() -> Weight {
 }
 ```
 
+<!-- .element: class="fragment" -->
+
 ---v
 
 ### Hooks: `On_Initialize`
 
-- Question: If you have 3 pallets, in which order they are called?
+- &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order their `on_initialize` are called?
+- &shy;<!-- .element: class="fragment" --> Question: If your runtime panics `on_initialize`, how can you recover from it?
+- &shy;<!-- .element: class="fragment" --> Question: If your `on_initialize` consumes more than the maximum block weight?
 
-<!-- .element: class="fragment" -->
 
-- Question: If your runtime panics on_initialize, how can you recover from it?
+Notes:
 
-<!-- .element: class="fragment" -->
-
-- Question: If your hook consumes more than the maximum block weight?
-
-<!-- .element: class="fragment" -->
+- The order comes from `construct_runtime!` macro.
+- Panic in mandatory hooks is fatal error. You are pretty much done.
+- Overweight blocks using mandatory hooks, are possible, ONLY in the context of solo-chains. Such a
+  block will take longer to produce, but it eventually will. If you have your eyes set on being a
+  parachain developer, you should treat overweight blocks as fatal as well.
 
 ---
 
 ## Hooks: `on_finalize`
 
-Its weight needs to be known in advance. Therefore, less preferred compared to `on_initialize`.
+- Extension of `on_initialize`, but at the end of the block.
+- Its weight needs to be known in advance. Therefore, less preferred compared to `on_initialize`.
 
-Similar to `on_initialize`, `on_finalize` is also **mandatory**. This is also why its weight is
-registered at the beginning of the block.
+```rust
+fn on_finalize() {} // ✅
+fn on_finalize() -> Weight {} // ❌
+```
+
+<!-- .element: class="fragment" -->
+
+- Nothing to do with *finality* in the consensus context.
+
+<!-- .element: class="fragment" -->
 
 ---v
 
@@ -76,23 +129,169 @@ registered at the beginning of the block.
 
 > Generally, avoid using it unless if something REALLY needs to be happen at the end of the block.
 
+Notes:
+
 Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1"
+
+---
+
+## Hooks: `poll`
+
+- The non-mandatory version of `on_initialize`.
+- In the making 👷
+
+Notes:
+
+See https://github.com/paritytech/substrate/pull/14279 and related PRs
 
 ---
 
 ## Hooks: `on_idle`
 
 - **_Optional_** variant of `on_finalize`, also executed at the end of the block.
+- Small semantical difference: executes one pallet's hook, per block, randomly, rather than all
+  pallets'.
+
+---v
+
+## The Future: Moving Away From Mandatory Hooks
+
+- `on_initialize` -> `poll`
+- `on_finalize` -> `on_idle`
+- New primitives for multi-block migrations
+- New primitives for optional service work via extrinsics.
+
+Notes:
+
+This is all in the agenda of the FRAME team at Parity for 2023.
+
+https://github.com/paritytech/substrate/issues/13530
+https://github.com/paritytech/substrate/issues/13690
 
 ---
 
-## Hooks: `on_runtime_upgrade`
+## Recap: Onchain/STF Hooks
 
-Called once per every time that the runtime version changes, before anything else.
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    subgraph AfterTransactions
+        direction LR
+        OnIdle --> OnFinalize
+    end
 
-Your one and only chance to migrate the state if needed.
+    subgraph OnChain
+        direction LR
+        Optional --> BeforeExtrinsics
+        BeforeExtrinsics --> Inherents
+        Inherents --> Poll
+        Poll --> Transactions
+        Transactions --> AfterTransactions
+    end
 
-Has its own lecture!
+    subgraph Optional
+ 	    OnRuntimeUpgrade
+    end
+
+    subgraph BeforeExtrinsics
+        OnInitialize
+    end
+
+    subgraph Transactions
+        Transaction1 --> UnsignedTransaction2 --> Transaction3
+    end
+
+    subgraph Inherents
+        Inherent1 --> Inherent2
+    end
+</diagram>
+
+
+Notes:
+
+implicit in this:
+
+Inherents are only first, which is being discussed RIGHT NOW: https://github.com/polkadot-fellows/RFCs/pull/13
+
+---
+
+## Hooks: `genesis_build`
+
+- Means for each pallet to specify a $f(input): state$ at genesis.
+- This is called only once, by the client, when you **create a new chain**.
+  - &shy;<!-- .element: class="fragment" --> Is this invoked every time you run `cargo run`?
+- `#[pallet::genesis_build]`.
+
+---v
+
+### Hooks: `genesis_build`
+
+```rust
+#[pallet::genesis_build]
+pub struct GenesisConfig<T: Config> {
+  pub foo: Option<u32>,
+  pub bar: Vec<u8>,
+}
+```
+<!-- .element: class="fragment" -->
+
+```rust
+impl<T: Config> Default for GenesisConfig<T> {
+  fn default() -> Self {
+    // snip
+  }
+}
+```
+<!-- .element: class="fragment" -->
+
+```rust
+#[pallet::genesis_build]
+impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
+  fn build(&self) {
+    // use self.foo, self.bar etc.
+  }
+}
+```
+<!-- .element: class="fragment" -->
+
+---v
+
+### Hooks: `genesis_build`
+
+- `GenesisConfig` is a composite/amalgamated item at the top level runtime.
+
+```rust
+construct_runtime!(
+  pub enum Runtime where {
+    System: frame_system,
+    Balances: pallet_balances,
+  }
+);
+```
+
+```rust
+struct RuntimeGenesisConfig {
+  SystemConfig: pallet_system::GenesisConfig,
+  PalletAConfig: pallet_a::GenesisConfig,
+}
+```
+
+<!-- .element: class="fragment" -->
+
+Notes:
+
+https://paritytech.github.io/substrate/master/node_template_runtime/struct.RuntimeGenesisConfig.html
+
+---v
+
+### Hooks: `genesis_build`
+
+- Recent changes moving `genesis_build` to be used over a runtime API, rather than native runtime.
+- `#[cfg(feature = "std")]` in pallets will go away.
+
+Notes:
+
+https://github.com/paritytech/substrate/issues/13334
 
 ---
 
@@ -105,37 +304,71 @@ Has its own lecture!
 
 **Runtime Offchain Worker**:
 
-- Code lives onchain, upgradable only in synchrony with the whole runtime 👎
-- Ergonomic and fast state access 👍
-- State writes are ignored 🤷
-- Can submit transactions back to the chain as well ✅
+- &shy;<!-- .element: class="fragment" --> Code lives onchain, upgradable only in synchrony with the whole runtime 👎
+- &shy;<!-- .element: class="fragment" --> Ergonomic and fast state access 👍
+- &shy;<!-- .element: class="fragment" --> State writes are ignored 🤷
+- &shy;<!-- .element: class="fragment" --> Can submit transactions back to the chain as well ✅
+- &shy;<!-- .element: class="fragment" --> Source of many confusions!
+
+Notes:
+
+People have often thought that they can do magic with things with OCW, please don't. BIG warning to
+founders to be careful with this!
+
+https://paritytech.github.io/substrate/master/pallet_examples/index.html
+
 
 ---v
 
 ### Hooks: `offchain_worker`
 
-Called per block **IMPORT** (!= _sync_)
+- Execution entirely up to the client.
+- Has a totally separate thread pool than the normal execution.
 
-has a totally separate thread pool than the normal execution.
 
-Threads can **overlap**, each is reading the state of its corresponding block, and you can great
-[`lock`s](https://github.com/paritytech/substrate/blob/49b06901eb65f2c61ff0934d66987fd955d5b8f5/frame/election-provider-multi-phase/src/lib.rs#L789)\_ if needed to make sure there is no overlap.
+```
+--offchain-worker <ENABLED>
+    Possible values:
+    - always:
+    - never:
+    - when-authority
+
+--execution-offchain-worker <STRATEGY>
+    Possible values:
+    - native:
+    - wasm:
+    - both:
+    - native-else-wasm:
+```
 
 ---v
 
 ### Hooks: `offchain_worker`
+
+- Threads can **overlap**, each is reading the state of its corresponding block
 
 <image src="../../../assets/img/6-FRAME/ocw.svg" style="height: 500px">
 
+<!-- .element: class="fragment" -->
+
+Notes:
+
+https://paritytech.github.io/substrate/master/sp_runtime/offchain/storage_lock/index.html
+
 ---v
 
 ### Hooks: `offchain_worker`
 
-Offchain workers have their own **special host functions**: http, dedicated storage, time, etc.
+- &shy;<!-- .element: class="fragment" -->Offchain workers have their own **special host
+  functions**: http, dedicated storage, time, etc.
+- &shy;<!-- .element: class="fragment" -->Offchain workers have the same **execution limits** as
+  Wasm (limited memory, custom allocator).
 
-Offchain workers have the same **execution limits** as Wasm (limited memory, custom allocator).
+- &shy;<!-- .element: class="fragment" -->Source of confusion, why OCWs cannot write to state.
 
 Notes:
+
+These are the source of the confusion.
 
 Word on allocator limit in Substrate Wasm execution (subject to change).
 
@@ -146,128 +379,115 @@ Word on allocator limit in Substrate Wasm execution (subject to change).
 
 ## Hooks: `integrity_test`
 
-Called upon `construct_runtime!` only.
+- Put into a test by `construct_runtime!`.
 
-Best to make sure all the inputs coming into your pallet as `type Foo: Get<u32> = ..` are sensible!
+```rust
+__construct_runtime_integrity_test::runtime_integrity_tests
+```
 
-> Panic, panic all you want in here.
+<!-- .element: class="fragment" -->
 
 ```rust
 fn integrity_test() {
   assert!(
-    T::MaxPointsToBalance::get() > 0,
-    "Minimum points to balance ratio must be greater than 0"
+    T::MyConfig::get() > 0,
+    "Are all of the generic types I have sensible?"
   );
+  // notice that this is for tests, std is available.
+  assert!(std::mem::size_of::<T::Balance>() > 4);
 }
 ```
+
+<!-- .element: class="fragment" -->
+
+Notes:
+
+I am in fan of renaming this. If you are too, please comment here
 
 ---
 
-## Hooks: Others
+## Hooks: `try_state`
 
-These are all the `#[pallet::hooks]` that you can have.
+- A means for you to ensure correctness of your $STF$, after each transition.
+- &shy;<!-- .element: class="fragment" -->Entirely offchain, custom runtime-apis, conditional
+  compilation.
+  - &shy;<!-- .element: class="fragment" -->Called from `try-runtime-cli`, which you will learn about next week, or anyone else
+- &shy;<!-- .element: class="fragment" -->Examples from your assignment?
 
-..but there is one more FRAME topics that is hook-like: `GenesisConfig`
+Notes:
 
-Let's have a quick look.
-
----
-
-## Hooks: `genesis_build`
-
-Each pallet can define a `struct GenesisConfig` --> `<PalletName>Config`.
-
-```rust
-construct_runtime!(
-  pub enum Runtime where
-  Block = Block,
-  NodeBlock = opaque::Block,
-  UncheckedExtrinsic = UncheckedExtrinsic
-  {
-    System: frame_system,
-    PalletA: pallet_a,
-  }
-);
-```
-
-```rust
-struct GenesisConfig {
-  SystemConfig: pallet_system::GenesisConfig,
-  PalletAConfig: pallet_a::GenesisConfig::
-}
-```
-
----v
-
-### Hooks: `genesis_build`
-
-```rust
-// in your pallet
-#[pallet::genesis_config]
-pub struct GenesisConfig<T: Config> {
-  pub max_pools: Option<u32>,
-  pub max_members: Option<u32>,
-}
-
-#[cfg(feature = "std")]
-impl<T: Config> Default for GenesisConfig<T> {
-  fn default() -> Self {
-    Self {
-      max_pools: Some(16),
-      max_members: Some(16 * 32),
-    }
-  }
-}
-
-#[pallet::genesis_build]
-impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
-  fn build(&self) {
-    // self.max_pools, self.max_members
-  }
-}
-
-
-// Somewhere in the client, while building a chain spec:
-NominationPoolsConfig {
-  max_pools: 42,
-  max_members: 24,
-}
-//This will then be put into your JSON/raw chain-spec.
-```
-
----v
-
-### Hooks: `genesis_build`
-
-```rust
-// Somewhere in the client, while building a chain spec:
-// This will then be put into your JSON/raw chain-spec.
-NominationPoolsConfig {
-  max_pools: 42,
-  max_members: 24,
-}
-```
+What is a transition? Either a block, or single extrinsic
 
 ---
 
-### Hooks: Recap
+## Hooks: Recap
 
-<image src="../../../assets/img/6-FRAME/flow.svg" style="height: 550px">
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+graph LR
+    subgraph Offchain
+        OffchainWorker
+        TryState
+    end
 
-Question: Where/when is the offchain worker called?
+    subgraph Genesis
+        GenesisBuild
+    end
 
----v
+    subgraph AfterTransactions
+        direction LR
+        OnIdle --> OnFinalize
+    end
 
-### Hooks: Recap
+    subgraph OnChain
+        direction LR
+        Optional --> BeforeExtrinsics
+        BeforeExtrinsics --> Inherents
+        Inherents --> Poll
+        Poll --> Transactions
+        Transactions --> AfterTransactions
+    end
 
-offchain worker is not really a part of the consensus code in the runtime, client can technically
-call it whenever it wants
+    subgraph Optional
+ 	    OnRuntimeUpgrade
+    end
+
+    subgraph BeforeExtrinsics
+        OnInitialize
+    end
+
+    subgraph Transactions
+        Transaction1 --> UnsignedTransaction2 --> Transaction3
+    end
+
+    subgraph Inherents
+        Inherent1 --> Inherent2
+    end
+</diagram>
+
+- What other hooks can you think of?
+
+Notes:
+
+What other ideas you can think of?
+
+- a hook called once a pallet is first initialized.
+https://github.com/paritytech/substrate/issues/14098
+- Local on Post/Pre dispatch: https://github.com/paritytech/substrate/issues/12047
+- Global on Post/Pre dispatch is in fact a signed extension. It has to live in the runtime, because you have to specify order.
+
 
 ---
 
-## Further Reading, Recap.
+## Additional Resources! 😋
 
-> Hooks are **very powerful** tools to write state transition, but with them it comes a lot of responsibility as well.
+> Check speaker notes (click "s" 😉)
 
-- [OnPostInherents](https://github.com/paritytech/substrate/pull/10128).
-- [Offchain workers talk](https://www.youtube.com/watch?v=rwzvRi1JkWU).
+Notes:
+
+## Post lecture Notes
+
+Regarding this drawback to offchain workers that you can only upgrade in cadence with the network.
+Offchain worker, like tx-pool api, is only called from an offchain context. Node operators can
+easily use the runtime overrides feature to change the behavior of their offchain worker anytime
+they want.
