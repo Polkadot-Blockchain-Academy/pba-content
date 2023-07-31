@@ -36,14 +36,13 @@ Ideally:
 <pba-col>
 
 <pba-flex center>
-<div>
 
+<div>
 Reality:
 
 - It takes a lot of disk, memory, etc
 - It takes some know-how
 - I don't need it _all the time_
-
 </div>
 <!-- .element: class="fragment" -->
 
@@ -135,7 +134,7 @@ There are varying degrees of lightness to suit your needs.
 
 ## Trustless
 
-<img style="width:900px; margin-top:-30px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png" />
+<img rounded style="width:900px; margin-top:-30px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png" />
 
 <pba-flex center>
 
@@ -236,12 +235,12 @@ There is a dedicated lane for each direction.
 
 ## Source Chain Re-Orgs
 
-<img width="900px" alt="What should target chain do when source chain re-orgs" src="./img/bridge-reorg.png" />
+<img rounded width="900px" alt="What should target chain do when source chain re-orgs" src="./img/bridge-reorg.png" />
 
 Notes:
 
 On PoW chains this is truly just a judgement call and a prayer.
-If the source chain has deterministic finality w can do better.
+If the source chain has deterministic finality we can do better.
 We need to wait for finality.
 But even this isn't foolproof.
 More on this after we cover the basic design.
@@ -305,7 +304,7 @@ Notes:
 
 ## BTC Relay
 
-<img width="1000px" src="./img/btc-relay.svg" />
+<img rounded width="1000px" src="./img/btc-relay.svg" />
 
 ---
 
@@ -347,8 +346,8 @@ But even if you don't trust any relayer out there, you can always run your own.
 
 ## Finality and Equivocation
 
-TODO Figure of competing finalized chain
-TODO Seun's achiles heel meme
+<img rounded width="500px" src="./img/bridge-incentives-achiles.jpg" />
+<img rounded width="700px" src="./img/bridge-double-finalized.svg" />
 
 Notes:
 
@@ -403,7 +402,7 @@ Relayers will expect to earn some reward for the opportunity cost of their stake
 
 ## Multichain Apps
 
-TODO Figure of stack with two blockchains on the bottom layer
+<img rounded width="800px" src="./img/bridge-multichain-stack.svg" />
 
 ---v
 
@@ -449,9 +448,3 @@ Your app is only as quality as the lower of the blockspaces.
 Depository - Mint model - Full backing
 
 TODO - complete slide
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Questions
