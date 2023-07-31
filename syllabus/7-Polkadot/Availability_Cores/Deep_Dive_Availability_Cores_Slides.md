@@ -67,7 +67,7 @@ Polkadot blockspace is consumed in two ways:
 </pba-col>
 <pba-col center>
 
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Processor_Cores.jpeg" />
+<img rounded style="width: 500px" src="../assets/Processor_Cores.jpeg" />
 
 </pba-col>
 </pba-cols>
@@ -115,7 +115,7 @@ Notes:
 
 ## Cores and Blockspace Over Time
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Train.jpeg" />
+<img rounded style="width: 1100px" src="../assets/Train.jpeg" />
 
 Notes:
 
@@ -134,7 +134,7 @@ If you have a lease on core 4, then you have the right to fill train car 4 on ea
 
 ## The Big Picture
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" />
+<img rounded style="width: 1100px" src="../assets/cores_big_picture.svg" />
 
 Notes:
 
@@ -146,7 +146,7 @@ Notes:
 
 ## Backing Group Formation
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/validator-groups.png" />
+<img rounded style="width: 1100px" src="../assets/validator-groups.png" />
 
 Notes:
 
@@ -159,7 +159,7 @@ To understand how cores divide up parachains protocol work among validators, we 
 
 ## Assigning Backing Groups to Cores
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_backing_groups_with_cores.svg" />
+<img rounded style="width: 1100px" src="../assets/pairing_backing_groups_with_cores.svg" />
 
 Notes:
 
@@ -169,7 +169,7 @@ This prevents a byzantine backing group from interrupting the liveness of any on
 
 ---
 
-<img rounded style="width: 300px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/dice.jpeg" />
+<img rounded style="width: 300px" src="../assets/dice.jpeg" />
 
 ## Assigning Approvers to Cores
 
@@ -190,7 +190,7 @@ Q: Why don't we just have all active validators approve each candidate?
 
 ## Assigning Leases and Claims to Cores
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/pairing_leases_and_claims_with_cores.svg" />
+<img rounded style="width: 1100px" src="../assets/pairing_leases_and_claims_with_cores.svg" />
 
 Notes:
 
@@ -202,7 +202,7 @@ Notes:
 
 ## Putting the Pieces Together
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/cores_big_picture.svg" />
+<img rounded style="width: 1100px" src="../assets/cores_big_picture.svg" />
 
 Notes:
 
@@ -210,13 +210,13 @@ Notes:
 
 ## Occupying Assigned Cores: With Lease
 
-<img rounded style="width: 1300px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_with_lease.svg" />
+<img rounded style="width: 1300px" src="../assets/occupying_assigned_cores_with_lease.svg" />
 
 ---
 
 ## Occupying Assigned Cores: On Demand
 
-<img rounded style="width: 1100px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/occupying_assigned_cores_on_demand.svg" />
+<img rounded style="width: 1100px" src="../assets/occupying_assigned_cores_on_demand.svg" />
 
 ---
 
@@ -450,7 +450,7 @@ Approvals, Disputes, and Finality are only provided to included candidates
 
 ---
 
-<img rounded style="width: 500px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/advantage.png" alt="Processor cores image" />
+<img rounded style="width: 500px" src="../assets/advantage.png" alt="Processor cores image" />
 
 ## Advantages Cores Give us Now
 
@@ -474,7 +474,7 @@ Notes:
 
 # Cores and Roadmap Items
 
-<img rounded style="width: 600px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/road.jpeg" />
+<img rounded style="width: 600px" src="../assets/road.jpeg" />
 
 ---
 
@@ -488,7 +488,7 @@ Notes:
 
 </pba-flex>
 
-<img rounded style="width: 700px" src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/exotic_core_scheduling.svg" />
+<img rounded style="width: 700px" src="../assets/exotic_core_scheduling.svg" />
 
 ---
 
