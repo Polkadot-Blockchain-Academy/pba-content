@@ -59,7 +59,7 @@ When a candidate is backed on-chain it immediately occupies an availability core
 
 ## Synchronous Backing
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Synchronous_Backing.svg" alt="Synchronous Backing">
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/synchronous_backing_3.svg" alt="Synchronous Backing">
 
 Note:
 
@@ -79,7 +79,7 @@ Can anyone spot a problem with synchronous model?
 
 ## Asynchronous Backing
 
-<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/Asynchronous_Backing.svg" alt="Asynchronous Backing">
+<img rounded style="width: 1500px" src="../../../assets/img/5-Polkadot/Asynchronous_Backing/async_backing_3.svg" alt="Asynchronous Backing">
 
 Notes:
 
@@ -497,7 +497,7 @@ Notes:
 
 <pba-flex center>
 
-- Block authoring hooks
+- Consensus driven block authoring 
 - Parachain consensus refactor
 	- Aura rewrite
 	- Custom sequencing consensus:
@@ -548,7 +548,7 @@ Notes:
 
 Notes:
 
-- Async backing -> unincluded block queuing
+- The unincluded segment is necessary to build 2 or more parablocks in a single relay block
 
 ---
 
