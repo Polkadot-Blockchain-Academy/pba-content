@@ -167,6 +167,26 @@ Developers can purchase this blockspace as fixed-term or on-demand Parachains, *
 
 ---
 
+## Expected Parachain Costs
+
+Back of the napkin math:
+
+- ~1 Billion DOT
+- 30% Locked Up for Parachains = 300 Million
+- ~100 Parachain = 3 Million DOT per Parachain Slot
+
+At equilibrium...
+
+---
+
+## Ongoing Economics Updates
+
+There is a lot of ongoing discussion about updating the economics of Parachains.
+
+Likely, these mechanics will update pretty soon, and continually over time.
+
+---
+
 ## DOT Utility: Staking
 
 <div class="grid grid-cols-3">
@@ -201,8 +221,10 @@ Given the existence of a value bearing token, it can be used to provide security
 
 In the staking system, there are two roles:
 
-1. Validators: Those who run block producing / parachain validating nodes for Polkadot.
-2. Nominators: Users who place their tokens behind validators they think will perform their job well.
+- Validators: Those who run block producing / parachain validating nodes for Polkadot.
+- Nominators: Users who place their tokens behind validators they think will perform their job well.
+
+Validators (and their nominators) are rewarded based on work done for the network. Rewards may vary day to day, but should be consistent over long periods of time.
 
 </div>
 
@@ -215,13 +237,3 @@ In the staking system, there are two roles:
 </div>
 
 ---
-
-## Expected Parachain Costs
-
-Back of the napkin math:
-
-- ~1 Billion DOT
-- 30% Locked Up for Parachains = 300 Million
-- ~100 Parachain = 3 Million DOT per Parachain Slot
-
-At equilibrium...
