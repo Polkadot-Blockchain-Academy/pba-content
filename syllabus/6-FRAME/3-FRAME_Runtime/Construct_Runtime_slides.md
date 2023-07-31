@@ -5,6 +5,11 @@ duration: 1 hour
 instructors: ["Kian Paimani"]
 ---
 
+
+# `construct_runtime!` and Testing 🔨
+
+---
+
 # Part 1: Runtime Construction
 
 ---
@@ -213,6 +218,8 @@ frame_support::construct_runtime!(
 ```
 
 - Omitting them will exclude them from the metadata, or the "outer/runtime types"
+
+<!-- .element: class="fragment" -->
 
 ---v
 
