@@ -1,10 +1,17 @@
 import os
 import subprocess
+import sys
 
 base_directory = "/Users/kianenigma/Desktop/Parity/pba/assignment-3-frame-less-submissions"
+temp = 0
 
 for folder in os.listdir(base_directory):
     if folder.startswith("assignment-3-frame-less"):
+        # if the a command line arg is set, make sure 'folder' contains that arg as a string, otherwise skip to next folder.
+        if len(sys.argv) > 1:
+            if sys.argv[1] not in folder:
+                print(f"⚠️ {sys.argv[1]} not in {folder}, skipping to next folder.")
+                continue
         full_folder_path = os.path.join(base_directory, folder)
 
         # fetch a branch called "wasm", if any.
@@ -44,6 +51,11 @@ for folder in os.listdir(base_directory):
             with open("stderr.txt", "r") as stderr_file:
               stderr_content = stderr_file.read()
               stderr_content = stderr_content.replace("/Users/kianenigma/Desktop/Parity/pba/", "")
+              # If "incorrect extrinsics root in authored" is in stderr_content, increment a counter and print warning
+              if "incorrect extrinsics root in authored block" in stderr_content:
+                print(f"🦷 FOUND incorrect extrinsics root {full_folder_path}")
+                temp += 1
+
               with open("stderr.txt", "w") as stderr_file:
                 stderr_file.write(stderr_content)
 
@@ -52,8 +64,10 @@ for folder in os.listdir(base_directory):
           if os.path.exists("result.xml"):
             os.rename("result.xml", os.path.join(full_folder_path, "result.xml"))
 
-            subprocess.run(["git", "add", "."], cwd=full_folder_path)
-            subprocess.run(["git", "commit", "-m", "Add results"], cwd=full_folder_path)
-            output = subprocess.run(["git", "push"], cwd=full_folder_path)
+            # subprocess.run(["git", "add", "."], cwd=full_folder_path)
+            # subprocess.run(["git", "commit", "-m", "Add results"], cwd=full_folder_path)
+            # output = subprocess.run(["git", "push"], cwd=full_folder_path)
         else:
           print(f"Could not find {wasm_file_path}, skipping to next folder.")
+
+print(temp)

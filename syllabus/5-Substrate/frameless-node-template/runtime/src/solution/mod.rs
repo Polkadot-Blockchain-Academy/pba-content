@@ -215,7 +215,6 @@ impl Runtime {
 	) -> TransactionValidity {
 		let balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
 
-		log::trace!(target: LOG_TARGET, "checking nonce for {:?} with {:?} and {:?}", signer, balance.nonce, ext.function.nonce);
 		let requires = match balance.nonce.cmp(&ext.function.nonce) {
 			sp_std::cmp::Ordering::Equal => {
 				vec![]

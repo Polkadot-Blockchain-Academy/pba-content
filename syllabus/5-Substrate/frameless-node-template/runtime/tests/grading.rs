@@ -21,16 +21,18 @@ use sp_runtime::{
 	ApplyExtrinsicResult,
 };
 
-// TODO: The requirement to leave noted extrinsics in the state is not super clear. This one
+// FOR NEXT TIME:
+// * The requirement to leave noted extrinsics in the state is not super clear. This one
 // tests will check it. Nonetheless, the `import_and_author_equal` will check it. We will only
 // check it here, but not in other tests.
+// * The specification is not super clear about validation of future transactions not being a
+//   failure.
+// * Clear distinction between apply and dispatch.
+// * SudoSet vs. SudoRemark
+// * add sp_tracing boilerplate everywhere.
 
 // TODO: the only way to kill should be TransferAll, not Transfer.
-
-// TODO:The specification is not super clear about validation of future transactions not being a
-// failure.
-
-// TODO: Clear distinction between apply and dispatch.
+// TODO: one block with a variety of tips.
 
 mod shared;
 
@@ -214,10 +216,14 @@ fn author_and_import(
 
 	// now we import the block into a fresh new state.
 	executor_call(import_state, "Core_execute_block", &block.encode())
-		.expect("execute block returned error; invalid block?");
+		.expect("Core_execute_block failed; panic happened in runtime");
 	import_state.commit_all().unwrap();
 
 	import_state.execute_with(|| {
+		// TODO: these checks ensure that even if both block import and authoring are faulty, a
+		// reasonable root was set in storage. Consider what if a student has removed their state
+		// root check from everywhere?
+
 		// check state root.
 		assert_eq!(
 			block.header.state_root,
@@ -226,14 +232,23 @@ fn author_and_import(
 		);
 
 		// check extrinsics root.
-		assert_eq!(
-			block.header.extrinsics_root,
-			BlakeTwo256::ordered_trie_root(
-				block.extrinsics.into_iter().map(|e| e.encode()).collect::<Vec<_>>(),
-				sp_runtime::StateVersion::V0
-			),
-			"incorrect extrinsics root in authored block",
+		let expected_extrinsics_root = BlakeTwo256::ordered_trie_root(
+			block.extrinsics.into_iter().map(|e| e.encode()).collect::<Vec<_>>(),
+			sp_runtime::StateVersion::V0,
 		);
+		if expected_extrinsics_root != block.header.extrinsics_root {
+			panic!(
+				"incorrect extrinsics root in authored block after importing: got {:?}, expected
+			{:?}",
+				block.header.extrinsics_root, expected_extrinsics_root,
+			);
+			// log::error!(
+			// 	target: LOG_TARGET,
+			// 	"incorrect extrinsics root in authored block: got {:?}, expected {:?}",
+			// 	block.header.extrinsics_root,
+			// 	expected_extrinsics_root,
+			// );
+		}
 	});
 
 	log::debug!(target: LOG_TARGET, "all good; running post checks");
@@ -256,6 +271,10 @@ fn executor_call(t: &mut TestExternalities, method: &str, data: &[u8]) -> Result
 	let (res, was_native) =
 		executor.call(&mut t, &runtime_code, method, data, false, CallContext::Onchain);
 	assert!(!was_native);
+	if let Err(e) = &res {
+		log::error!(target: LOG_TARGET, "executor call into runtime API: {} failed, Err:{:?}", method, e);
+	}
+
 	res.map_err(|_| ())
 }
 
@@ -546,7 +565,7 @@ mod currency {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_5_to_bob() {
 		// cannot mint amount less than `MinimumBalance`
 		let exts = vec![signed(
@@ -565,7 +584,7 @@ mod currency {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_9_to_bob() {
 		// still cannot mint amount less than `MinimumBalance`
 		let exts = vec![signed(
@@ -583,7 +602,7 @@ mod currency {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_10_to_bob() {
 		let mut state = new_test_ext();
 		// but 10 is ok.
@@ -627,7 +646,7 @@ mod currency {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_100_to_bob_bob_transfers_91_to_alice() {
 		let mut state = new_test_ext();
 		// min balance is 10.
@@ -843,7 +862,7 @@ mod staking {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_100_to_bob_bob_stakes_90() {
 		let mut state = new_test_ext();
 
@@ -868,7 +887,7 @@ mod staking {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_100_to_bob_bob_stakes_100() {
 		let mut state = new_test_ext();
 
@@ -893,7 +912,7 @@ mod staking {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_100_to_bob_bob_stakes_20_bob_transfers_all() {
 		let mut state = new_test_ext();
 
@@ -913,8 +932,12 @@ mod staking {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(free_of(Bob.public()).unwrap(), 80, "bob's free should be 80");
-			assert_eq!(reserve_of(Bob.public()).unwrap(), 20, "bob's reserve should be 20");
+			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 80, "bob's free should be 80");
+			assert_eq!(
+				reserve_of(Bob.public()).unwrap_or_default(),
+				20,
+				"bob's reserve should be 20"
+			);
 			assert_eq!(balance_of(Charlie.public()), None, "charlie's balance should be none");
 		});
 	}
@@ -939,6 +962,7 @@ mod tipping {
 		];
 
 		author_and_import(&mut state, exts, || {
+			assert_eq!(treasury().unwrap_or_default(), 10, "treasury should be 10");
 			assert_eq!(free_of(Bob.public()).unwrap_or_default(), 40, "bob's free should be 40");
 			assert_eq!(
 				reserve_of(Bob.public()).unwrap_or_default(),
@@ -972,9 +996,21 @@ mod tipping {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(treasury().unwrap(), 10, "treasury account should exist and have 10");
-			assert_eq!(free_of(Alice.public()).unwrap(), 70, "alice's free balance should be 70");
-			assert_eq!(free_of(Bob.public()).unwrap(), 20, "bob's free balance should be 20");
+			assert_eq!(
+				treasury().unwrap_or_default(),
+				10,
+				"treasury account should exist and have 10"
+			);
+			assert_eq!(
+				free_of(Alice.public()).unwrap_or_default(),
+				70,
+				"alice's free balance should be 70"
+			);
+			assert_eq!(
+				free_of(Bob.public()).unwrap_or_default(),
+				20,
+				"bob's free balance should be 20"
+			);
 			assert_eq!(issuance().unwrap_or_default(), 100, "issuance should be 100");
 		});
 	}
@@ -1004,7 +1040,7 @@ mod tipping {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_100_to_bob_bob_stakes_89_and_tip_5() {
 		let mut state = new_test_ext();
 
@@ -1029,7 +1065,7 @@ mod tipping {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_mints_100_to_bob_bob_stakes_90_and_tip_10() {
 		let mut state = new_test_ext();
 
@@ -1054,7 +1090,7 @@ mod tipping {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_with_100_transfers_20_to_bob_with_5_tip() {
 		let mut state = new_test_ext();
 		state.execute_with(|| assert!(treasury().is_none()));
@@ -1077,14 +1113,22 @@ mod tipping {
 
 		author_and_import(&mut state, exts, || {
 			assert!(treasury().is_none(), "treasury account should not exist");
-			assert_eq!(free_of(Alice.public()).unwrap(), 75, "alice's free balance should be 75");
-			assert_eq!(free_of(Bob.public()).unwrap(), 20, "bob's free balance should be 20");
+			assert_eq!(
+				free_of(Alice.public()).unwrap_or_default(),
+				75,
+				"alice's free balance should be 75"
+			);
+			assert_eq!(
+				free_of(Bob.public()).unwrap_or_default(),
+				20,
+				"bob's free balance should be 20"
+			);
 			assert_eq!(issuance().unwrap_or_default(), 95, "issuance should be 95");
 		});
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn bob_with_20_sends_10_to_charlie_and_tip_5() {
 		let mut state = new_test_ext();
 		let exts = vec![
@@ -1108,7 +1152,11 @@ mod tipping {
 
 		author_and_import(&mut state, exts, || {
 			assert!(treasury().is_none(), "treasury account should not exist");
-			assert_eq!(free_of(Bob.public()).unwrap(), 15, "bob's free balance should be 15");
+			assert_eq!(
+				free_of(Bob.public()).unwrap_or_default(),
+				15,
+				"bob's free balance should be 15"
+			);
 			assert_eq!(
 				free_of(Charlie.public()).unwrap_or_default(),
 				0,
@@ -1119,7 +1167,7 @@ mod tipping {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_with_20_transfers_10_to_bob_and_tips_10() {
 		let mut state = new_test_ext();
 		let exts = vec![
@@ -1187,7 +1235,7 @@ mod tipping {
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn alice_with_100_transfers_all_to_bob_and_tips_95() {
 		let mut state = new_test_ext();
 		let exts = vec![
@@ -1333,7 +1381,7 @@ mod tipping {
 		}
 
 		#[test]
-		#[ignore = "IGNORE_PRE_GRADING"]
+		// #[ignore = "IGNORE_PRE_GRADING"]
 		fn alice_with_zero_tips_10() {
 			// an account with no balance at all.
 			let to_validate =
@@ -1346,7 +1394,7 @@ mod tipping {
 		}
 
 		#[test]
-		#[ignore = "IGNORE_PRE_GRADING"]
+		// #[ignore = "IGNORE_PRE_GRADING"]
 		fn alice_with_100_tips_zero() {
 			let mut state = setup_alice();
 
@@ -1372,7 +1420,7 @@ mod tipping {
 		}
 
 		#[test]
-		#[ignore = "IGNORE_PRE_GRADING"]
+		// #[ignore = "IGNORE_PRE_GRADING"]
 		fn priority_overflow() {
 			let mut state = new_test_ext();
 			let exts = vec![signed(
@@ -1418,7 +1466,7 @@ mod nonce {
 		use super::*;
 
 		#[test]
-		#[ignore = "IGNORE_PRE_GRADING"]
+		// #[ignore = "IGNORE_PRE_GRADING"]
 		fn future() {
 			let mut state = setup_alice();
 
@@ -1431,7 +1479,7 @@ mod nonce {
 		}
 
 		#[test]
-		#[ignore = "IGNORE_PRE_GRADING"]
+		// #[ignore = "IGNORE_PRE_GRADING"]
 		fn stale() {
 			let mut state = setup_alice();
 
@@ -1441,7 +1489,7 @@ mod nonce {
 		}
 
 		#[test]
-		#[ignore = "IGNORE_PRE_GRADING"]
+		// #[ignore = "IGNORE_PRE_GRADING"]
 		fn ready() {
 			let mut state = setup_alice();
 
@@ -1495,12 +1543,12 @@ mod nonce {
 			signed(CALL, &Alice, 3),
 		];
 		author_and_import(&mut state, exts, || {
-			assert_eq!(nonce_of(Alice.public()).unwrap(), 4);
+			assert_eq!(nonce_of(Alice.public()).unwrap_or_default(), 4);
 		})
 	}
 
 	#[test]
-	#[ignore = "IGNORE_PRE_GRADING"]
+	// #[ignore = "IGNORE_PRE_GRADING"]
 	fn chain_nonce_failures() {
 		let mut state = new_test_ext();
 		let exts = vec![
@@ -1511,7 +1559,7 @@ mod nonce {
 		];
 
 		author_and_import(&mut state, exts, || {
-			assert_eq!(nonce_of(Alice.public()).unwrap(), 2);
+			assert_eq!(nonce_of(Alice.public()).unwrap_or_default(), 2);
 		})
 	}
 }

@@ -129,8 +129,8 @@
 //! #### Nonce
 //!
 //! You should implement a nonce system, as explained as a part of the tx-pool lecture. In short,
-//! the validation of each transaction should `require` nonce `(sender, n-1)` and provide `(sender,
-//! n)`. See `TaggedTransactionQueue` below for more information.
+//! the validation of each transaction should `require` nonce `(sender, n-1).encode()` and provide
+//! `(sender, n).encode()`. See `TaggedTransactionQueue` below for more information.
 //!
 //! Note that your nonce should be checked as a part of transaction pool api, which means it should
 //! be implemented as efficiently as possibly, next to other checks that need to happen.
@@ -804,6 +804,21 @@ mod tests {
 			Runtime::do_execute_block(block.clone());
 
 			assert_eq!(Runtime::get_state::<u32>(VALUE_KEY), Some(44));
+
+			// double check the extrinsic and state root:
+			assert_eq!(
+				block.header.state_root,
+				H256::decode(&mut &sp_io::storage::root(Default::default())[..][..]).unwrap(),
+				"incorrect state root in authored block after importing"
+			);
+			assert_eq!(
+				block.header.extrinsics_root,
+				BlakeTwo256::ordered_trie_root(
+					block.extrinsics.into_iter().map(|e| e.encode()).collect::<Vec<_>>(),
+					sp_runtime::StateVersion::V0
+				),
+				"incorrect extrinsics root in authored block",
+			);
 		});
 	}
 }

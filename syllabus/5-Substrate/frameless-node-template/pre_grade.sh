@@ -1,4 +1,4 @@
-RUST_LOG=grading=info WASM_FILE=$1 cargo \
+RUST_LOG=grading=info,frameless=trace WASM_FILE=$1 cargo \
   nextest \
   run \
   --release \
