@@ -153,7 +153,7 @@ XCM abstracts away the actual on-chain operation that will be called, which lets
 
 ### No one-to-one mapping
 
-<diagram class="mermaid smaller">
+<diagram class="mermaid limit size-50">
 graph TD
     subgraph Message
         WithdrawAsset(WithdrawAsset)-->DepositAlice("DepositAsset(Alice)")
@@ -341,7 +341,7 @@ Junctions are ways to descend the location hierarchy
 
 ## Universal location
 
-<diagram class="mermaid smaller">
+<diagram class="mermaid limit size-50">
 graph TD;
     UniversalLocation(Universal Location)-->RelayA(Relay A)
     UniversalLocation-->RelayB(Relay B)
@@ -621,7 +621,7 @@ In reality, it's better to use the counted variant of the wildcards, for benchma
 
 How do different locations reference the same asset?
 
-<diagram class="mermaid small">
+<diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)")
@@ -640,7 +640,7 @@ Locations are relative, so they must be updated and rewritten when sent to anoth
 
 `../Here`
 
-<diagram class="mermaid small">
+<diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("📍 Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -667,7 +667,7 @@ Native tokens are referenced by the location to their system.
 
 `../../Here`
 
-<diagram class="mermaid small">
+<diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -692,7 +692,7 @@ graph TD
 
 `GlobalConsensus(Polkadot)`
 
-<diagram class="mermaid smaller">
+<diagram class="mermaid limit size-50">
 graph TD
     Universe("📍 Universal Location")-->Polkadot(Polkadot)
     Polkadot-->AssetHub("Asset Hub (1000)"):::disabled
@@ -714,7 +714,7 @@ graph TD
 
 `PalletInstance(50)/GeneralIndex(1984)`
 
-<diagram class="mermaid small">
+<diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot):::disabled-->AssetHub("📍 Asset Hub (1000)")
     Polkadot-->Collectives("Collectives (1001)"):::disabled
@@ -733,7 +733,7 @@ graph TD
 
 `../Parachain(1000)/PalletInstance(50)/GeneralIndex(1984)`
 
-<diagram class="mermaid small">
+<diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
     Polkadot-->Collectives("📍 Collectives (1001)")
