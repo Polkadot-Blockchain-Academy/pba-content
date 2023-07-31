@@ -118,7 +118,6 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 <image src="../../../assets/img/7-Polkadot/small-market-cap.svg" style="width: 500px">
 
-
 </pba-col>
 <pba-col>
 
@@ -143,7 +142,7 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 ## Different Forms of "Shared Security" Today
 
-- Native: Native shared security is implemented at the protocol level, and is represented as  a Layer 0 blockchain, working underneath Layer 1 chains.
+- Native: Native shared security is implemented at the protocol level, and is represented as a Layer 0 blockchain, working underneath Layer 1 chains.
 - Rollups: Optimistic and Zero-Knowledge Rollups use a settlement layer to provide security and finality to their transactions.
 - Re-Staking: Some protocols allow the use of already staked tokens to secure another network, usually through the creation of a derivative token.
 
@@ -246,7 +245,6 @@ Basic Substrate Client
 <image src="../../../assets/img/7-Polkadot/nintendo-game-moonbeam.png" style="width: 250px">
 <image src="../../../assets/img/7-Polkadot/nintendo-game-polkadot.png" style="width: 250px">
 
-
 Wasm Runtimes
 
 </pba-col>
@@ -274,6 +272,21 @@ Wasm Runtimes
 ---
 
 # Parachain Validation
+
+---
+
+## Maximizing Scaling
+
+A scalable proof of stake system is one where:
+
+- security is as **shared** as possible
+- execution is as **sharded** as possible
+
+Notes:
+
+You should not confuse shared security with sharded security.
+
+a.k.a. cosmos is a sharded security network.
 
 ---
 
@@ -321,9 +334,12 @@ The new state root is then committed to the relay chain so the process can repea
 
 ## How do we stop things from going wrong?
 
-- Data Availability: Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
-- Approval Checking: Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block. If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
-- Disputes Handling: When someone disputes the validity of a parablock, all validators must then check the block and cast a vote. The validators on the losing side of the dispute are slashed.
+- Data Availability
+  - Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
+- Approval Checking
+  - Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block. If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
+- Disputes Handling
+  - When someone disputes the validity of a parablock, all validators must then check the block and cast a vote. The validators on the losing side of the dispute are slashed.
 
 ---
 
@@ -422,7 +438,6 @@ Other protocols say they are providing shared security... but do they have these
 
 </pba-cols>
 
-
 ---
 
 # Comparing Options
@@ -443,7 +458,6 @@ Other protocols say they are providing shared security... but do they have these
 </div>
 
 <div class="col-span-2">
-
 
 ### Cons
 
@@ -490,8 +504,8 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 - Long time to finality due to challenge periods. (could be days)
 - Settlement layers could be attacked, interfering with the optimistic rollup protocols.
 - Suffers from the same problems allocating blockspace as on-chain transactions.
-	- On-chain costs to perform the interactive protocol.
-	- Congestion of the network.
+  - On-chain costs to perform the interactive protocol.
+  - Congestion of the network.
 
 </div>
 
@@ -521,11 +535,11 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 
 - Concerns around centralization of sequencers and provers.
 - Challenging to write ZK Circuits.
-	- Turing complete, but usually computationally complex.
-	- Hard to bound complexity of circuits when building apps.
+  - Turing complete, but usually computationally complex.
+  - Hard to bound complexity of circuits when building apps.
 - Suffers from the same problems allocating blockspace as on-chain transactions.
-	- On-chain costs to submit and execute proofs on settlement layer.
-	- Congestion of the network.
+  - On-chain costs to submit and execute proofs on settlement layer.
+  - Congestion of the network.
 
 </div>
 
@@ -554,9 +568,9 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 ### Cons
 
 - Certain limitations enforced to keep parachains compatible with the parachains protocol.
-	- Wasm STF
-	- No Custom Host Function
-	- Constrained Execution Environment
+  - Wasm STF
+  - No Custom Host Function
+  - Constrained Execution Environment
 - Wasm is unfortunately still 2x slower than native compilation.
 - Requires lot of data being provided and available in PoV.
 
