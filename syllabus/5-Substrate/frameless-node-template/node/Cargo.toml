@@ -1,0 +1,50 @@
+[package]
+name = "node"
+description = "A minimal Substrate node, ready for hacking."
+edition = "2021"
+license = "MIT-0"
+version = "0.3.0"
+publish = false
+repository = "https://github.com/substrate-developer-hub/substrate-node-template/"
+build = "build.rs"
+
+[package.metadata.docs.rs]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[[bin]]
+name = "node"
+
+[dependencies]
+clap = { version = "4.0.9", features = ["derive"] }
+futures = { version = "0.3.21", features = ["thread-pool"] }
+futures-timer = "3.0.1"
+jsonrpsee = { version = "0.16.2", features = ["server"] }
+
+sc-cli = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-executor = {  git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-network = {  git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-service = {  git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-telemetry = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-transaction-pool = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-transaction-pool-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-consensus = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-consensus-manual-seal = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-rpc-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-offchain = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sc-basic-authorship = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+
+sp-timestamp = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-api = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+sp-block-builder = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+substrate-frame-rpc-system = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+
+runtime = { path = "../runtime" }
+
+[build-dependencies]
+substrate-build-script-utils = { git = "https://github.com/paritytech/substrate", branch = "kiz-frame-api" }
+
+[features]
+default = []
