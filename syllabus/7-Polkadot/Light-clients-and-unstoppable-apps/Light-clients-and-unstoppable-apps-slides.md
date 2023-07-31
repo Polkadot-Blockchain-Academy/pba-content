@@ -39,6 +39,7 @@ Now, show of hands:
 #### The Web 3 reality
 
 <img rounded style="width: 80%;" src="./img/web3_reality.png" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
@@ -53,21 +54,77 @@ I will pause there for a few seconds to let this sink in;
 ---v
 
 <h1 style="font-size:7rem; font-weight: bold">Blockchain "decentralized” apps are still centralized</h1>
+Notes:
+I will pause there for a few seconds to let this sink in;
 
 ---v
 
 <img rounded style="width: 30%;" src="./img/learn-student.gif" />
+Notes:
+I will pause there for a few seconds to let this sink in;
 
 ---
+
+# Node types in the network
+
+<p style="text-align: left; padding-bottom: 2rem">The type of each node depends on different characteristics:</p>
+
+<ul>
+  <li>
+    <span class="font-bold underline">Validator:</span> node configured to potentially produce blocks.
+  </li>
+<!-- .element: class="fragment" data-fragment-index="1" -->
+  <li>
+    <span class="font-bold underline">JSON-RPC:</span> node which gives public access to its JSON-RPC endpoint.
+  </li>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+  <li>
+    <span class="font-bold underline">Bootnode:</span> node whose address can be found in the chain specification file (chainspec). Necessary to kick-off the network.
+  </li>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+  <li>
+    <span class="font-bold underline">Archive:</span> stores the entire state of the chain at each block since block #0. Useful to access historical data.
+  </li>
+<!-- .element: class="fragment" data-fragment-index="4" -->
+  <li>
+    <span class="font-bold underline text-[var(--r-heading-color)]">Light client:</span><span class="text-[var(--r-heading-color)]"> doesn’t store the entire state of the chain but requests it on demand.</span>
+  </li>
+<!-- .element: class="fragment" data-fragment-index="5" -->
+</ul>
+
+Notes:
+
+Before anything else – lets remember the node types in the network
+
+Validator Nodes: These nodes are responsible for producing new blocks and validating transactions. They participate in the consensus mechanism and play a crucial role in securing the network. Validators are selected through a NPoS algorithm and are required to stake DOT (Polkadot's native cryptocurrency) as collateral to ensure honest behavior.
+
+JSON-RPC nodes: serve as an interface for developers and applications to interact with the blockchain by sending JSON-formatted requests and receiving JSON-formatted responses.
+
+Bootnodes: Bootnodes are nodes with well-known addresses that serve as entry points for new nodes joining the network. They help new nodes discover and connect to other peers in the network.
+
+Light Nodes: Light nodes are a lightweight version of full nodes that do not store the entire blockchain but rely on full nodes for transaction verification. They are useful for users who want to interact with the network without the need to download the entire blockchain.
+
+(......After the Clicks!....)
+
+Any combination of “validator”, “bootnode” and “JSON-RPC node” is possible, except for “light” and “archive” that are mutually incompatible.
+
+Depending on context, the word “full node” is generally used to designate either the opposite of a light node, or a node that hasn’t any or combination of the characteristics above. At the moment, almost all nodes on the network are either validators or full nodes.
+
+---v
 
 #### The reality of blockchains today
 
 <img rounded style="width: 100%;" src="./img/reality_bc_today.png" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
-Intro to next slide:
 Here is how this is happening in reality at the moment, or how one could possibly connect to the network today
+
+(read slides)
+
+Make a note that: For simplicity reasons from now on I will be using the word "UI" to refer to a client/user/app etc/
+Ask: WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS apps or any custom one) today?
 
 ---v
 
@@ -88,10 +145,6 @@ node client</div>
 </pba-cols>
 
 Notes:
-
-This is the reality of how things really are today
-
-WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS apps or any custom one) today:
 
 (Read slides)
 
@@ -191,56 +244,7 @@ But that was actually true!
 
 ---v
 
-# Node types in the network
-
-<p style="text-align: left; padding-bottom: 2rem">The type of each node depends on different characteristics:</p>
-
-<ul>
-  <li>
-    <span class="font-bold underline">Validator:</span> node configured to potentially produce blocks.
-  </li>
-<!-- .element: class="fragment" data-fragment-index="1" -->
-  <li>
-    <span class="font-bold underline">JSON-RPC:</span> node which gives public access to its JSON-RPC endpoint.
-  </li>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-  <li>
-    <span class="font-bold underline">Bootnode:</span> node whose address can be found in the chain specification file (chainspec). Necessary to kick-off the network.
-  </li>
-<!-- .element: class="fragment" data-fragment-index="3" -->
-  <li>
-    <span class="font-bold underline">Archive:</span> stores the entire state of the chain at each block since block #0. Useful to access historical data.
-  </li>
-<!-- .element: class="fragment" data-fragment-index="4" -->
-  <li>
-    <span class="font-bold underline text-[var(--r-heading-color)]">Light client:</span><span class="text-[var(--r-heading-color)]"> doesn’t store the entire state of the chain but requests it on demand.</span>
-  </li>
-<!-- .element: class="fragment" data-fragment-index="5" -->
-</ul>
-
-Notes:
-
-Before anything else – lets remember the node types in the network
-
-Validator Nodes: These nodes are responsible for producing new blocks and validating transactions. They participate in the consensus mechanism and play a crucial role in securing the network. Validators are selected through a NPoS algorithm and are required to stake DOT (Polkadot's native cryptocurrency) as collateral to ensure honest behavior.
-
-JSON-RPC nodes: serve as an interface for developers and applications to interact with the blockchain by sending JSON-formatted requests and receiving JSON-formatted responses.
-
-Bootnodes: Bootnodes are nodes with well-known addresses that serve as entry points for new nodes joining the network. They help new nodes discover and connect to other peers in the network.
-
-Light Nodes: Light nodes are a lightweight version of full nodes that do not store the entire blockchain but rely on full nodes for transaction verification. They are useful for users who want to interact with the network without the need to download the entire blockchain.
-
-(......After the Clicks!....)
-
-Any combination of “validator”, “archive”, “bootnode” and “JSON-RPC node” is possible, except for “light” and “archive” that are mutually incompatible.
-
-Full Nodes: Full nodes maintain a complete copy of the entire Polkadot blockchain and validate all transactions and blocks. They contribute to the decentralization and security of the network by independently verifying the blockchain's history.
-
-Depending on context, the word “full node” is generally used to designate either the opposite of a light node, or a node that hasn’t any or combination of the characteristics above. At the moment, almost all nodes on the network are either validators or full nodes.
-
----v
-
-# What is a light client/node?
+# What is a light client?
 
 <ul>
   <li>
@@ -267,13 +271,13 @@ Depending on context, the word “full node” is generally used to designate ei
 
 Notes:
 
-"What is a light client" - in a generic manner but also I will add some exatra information around the Polkadot ecosystem solution that is implemented;
+In the next slides we will explain "What is a light client" in a generic manner but also I will add some exatra information around the Polkadot ecosystem solution that is implemented;
 
 Bullet 1) A "light client" is a type of node implementation that allows applications to interact with the network, consuming fewer resources compared to full nodes, making them more suitable for resource-constrained devices like mobile phones, or light enough for running in browsers (see substrate connect);
 
 Bullet 2) Instead of maintaining a complete copy of the blockchain, the node only carries a minimal amount of data necessary for its operations (e.g. chain specs). It relies on full nodes or other network participants to provide the additional information it needs;
 
-Bullet 3) Since there is no specific RPC node that the app connects to but a choice
+Bullet 3) .... based on the request it either provides the response from existing data, if any, or propagates the request to a full node and returns the response;
 
 Bullet 4) Light clients can synchronize with the blockchain more quickly since they only need to fetch recent data, using justifications (we will talk about it in a while), reducing the time needed to get up-to-date with the network (few seconds). They fetch less data from the network and consume less bandwidth. This is especially advantageous for users on limited data plans or slow internet connections
 ---v
@@ -287,7 +291,7 @@ Bullet 4) Light clients can synchronize with the blockchain more quickly since t
 
 Notes:
 
-"Slow internet connections": lets see a real-life example. Time: Polkadot decoded 2002; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using the "questionable internet" which had a very bad day due to way-too-many-connected people;
+"Slow internet connections": lets see a real-life example. Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using the "questionable internet" which had a very bad day due to way-too-many-connected people;
 
 Full video: https://tinyurl.com/decoded-talisman-light-client
 
@@ -297,11 +301,11 @@ Full video: https://tinyurl.com/decoded-talisman-light-client
 
 <pba-cols>
   <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_2.png" />
+    <img rounded style="width: 100%" src="./img/where_to_1.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
   <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_1.png" />
+    <img rounded style="width: 100%" src="./img/where_to_2.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
 </pba-cols>
@@ -310,9 +314,10 @@ Notes:
 
 As you probably already learned a chain specification is a configuration file that defines the parameters and initial settings for a blockchain network.
 
-It serves as a blueprint for launching and running a new blockchain, providing essential information to set up the network's behavior, consensus mechanisms, economic policies, etc etc.
+It serves as a blueprint for launching and running a new blockchain node, providing essential information to set up the network;
 
-Our Substrate nodes can produce what is called a Chain spec which Light client
+Our Substrate nodes can produce what is called a Chain spec which Smoldot then uses in order to spin up a light client node based on that chain-spec;
+(Show the chainspec on screen)
 
 ---v
 
@@ -320,31 +325,6 @@ Our Substrate nodes can produce what is called a Chain spec which Light client
 
 <img rounded style="margin-top: 150px; width: 70%" src="./img/know-who-to-trust.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-
----v
-
-<section>
-  <diagram class="mermaid limit size-80">
-    sequenceDiagram
-        Network->>Justification: Finality and create
-        Network->>Justification: Finality and create
-        App->>LightClient: Wake up and sync!
-        LightClient->>Justification: Hey! I'm here!
-        Justification-->>LightClient: Here you go
-        App->>LightClient: Ready?!
-        LightClient->>App: Not yet! Syncing
-        Justification-->>LightClient: Here you go
-        Justification-->>LightClient: Here you go
-        App->>LightClient: Ready?!
-        LightClient->>App: Not yet! Syncing
-        Justification-->>LightClient: Here you go
-        LightClient-->>App: Verified and synced!
-        App->>LightClient: 'right! Now gimme stuff
-        LightClient->>Network: Lets talk! App wants stuff
-        Network-->>LightClient: Ok then!
-        LightClient-->>App: Here you go!
-  </diagram>
-</section>
 
 Notes:
 
@@ -360,6 +340,29 @@ Justifications address this trust issue for light clients by providing cryptogra
 It is also used by nodes who might not have received all the votes, or for example if they were offline, In order to verify the authenticity of the blocks;
 
 A Light client receives these justifications and this way it verifies the authenticity of a block.
+
+---v
+
+<section>
+  <diagram class="mermaid limit size-80">
+    sequenceDiagram
+        Network->>Justification: Finality and create
+        Network->>Justification: Finality and create
+        App->>LightClient: Wake up and sync!
+        LightClient->>Justification: Hey! I'm here!
+        Justification-->>LightClient: Here you go
+        Justification-->>LightClient: Here you go
+        Justification-->>LightClient: Here you go
+        App->>LightClient: Ready?!
+        LightClient->>App: Not yet! Syncing
+        Justification-->>LightClient: Here you go
+        LightClient-->>App: Verified and synced!
+        App->>LightClient: 'right! Now gimme stuff
+        LightClient->>Network: Lets talk! App wants stuff
+        Network-->>LightClient: Ok then!
+        LightClient-->>App: Here you go!
+  </diagram>
+</section>
 
 ---v
 
@@ -456,16 +459,19 @@ Powered by Pierre (tomaka)
 <div style="font-size:2.5rem; color: #fff">npm package</div>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 
-## javascript/typescript
-
+<div style="font-size:2.5rem; color: #fff">uses smoldot as an implementation detail</div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-<div style="font-size:2rem; color: #fff">Standalone / RPC provider polkadotJS</div>
+## javascript/typescript
+
 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<div style="font-size:2rem; color: #fff">Standalone / RPC provider polkadotJS</div>
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 <p style="margin-top: 5rem"><a href="https://github.com/paritytech/substrate-connect/">https://github.com/paritytech/substrate-connect/</a></p>
 
-<!-- .element: class="fragment" data-fragment-index="4" -->
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---v
 
@@ -489,7 +495,9 @@ Powered by Pierre (tomaka)
 ## Smoldot Light Client
 
 - (As Substrate, it also) supports the new JSON-RPC protocol that has been developed;
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - Light and fast enought so that it can be embeded into a mobile application or an application in general;
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -511,7 +519,10 @@ The dApp (UI) connects to a third-party-owned publicly-accessible node client
 
 ## So what one needs to do
 
-Find the web-socket url of a 3rd party node (JSON-RPC node) that one trusts;
+- Find the web-socket url of a 3rd party node (JSON-RPC node) that one trusts;
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Add it to the code and use it;
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---v
 
