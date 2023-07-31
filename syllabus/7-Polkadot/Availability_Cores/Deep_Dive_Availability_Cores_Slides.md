@@ -224,6 +224,8 @@ Notes:
 
 In file: polkadot/runtime/parachains/src/scheduler.rs
 
+<div style="font-size: 0.82em;">
+
 ```rust
 
 #[pallet::storage]
@@ -248,17 +250,21 @@ pub struct ParathreadEntry {
 
 ```
 
+</div>
+
 Notes:
 
 - Vector of possible core occupant types
 - None -> unoccupied
-- retries tracked for on-demand
+- Retries tracked for on-demand
 
 ---
 
 ## Core Assignments in The Runtime
 
 In file: polkadot/runtime/parachains/src/scheduler.rs
+
+<div style="font-size: 0.82em;">
 
 ```rust
 
@@ -284,6 +290,8 @@ pub enum AssignmentKind {
 
 ```
 
+</div>
+
 Notes:
 
 - Vec of all core assignments
@@ -295,6 +303,8 @@ Notes:
 ## On-Demand Queue in The Runtime
 
 In file: polkadot/runtime/parachains/src/scheduler.rs
+
+<div style="font-size: 0.82em;">
 
 ```rust
 
@@ -314,6 +324,8 @@ pub struct QueuedParathread {
 }
 
 ```
+
+</div>
 
 Notes:
 
@@ -376,6 +388,8 @@ Notes:
 
 Function `request_backable_candidates` from the Provisioner subsystem, simplified for readability
 
+<div style="font-size: 0.82em;">
+
 ```rust
 /// Requests backable candidates based on core states.
 async fn request_backable_candidates(
@@ -430,6 +444,8 @@ async fn request_backable_candidates(
 
 ```
 
+</div>
+
 Notes:
 
 - Per core
@@ -450,8 +466,6 @@ Approvals, Disputes, and Finality are only provided to included candidates
 
 ---
 
-<img rounded style="width: 500px" src="../assets/advantage.png" alt="Processor cores image" />
-
 ## Advantages Cores Give us Now
 
 <pba-flex center>
@@ -462,6 +476,8 @@ Approvals, Disputes, and Finality are only provided to included candidates
 1. Intuitive unit of capacity over time
 
 </pba-flex>
+
+<img rounded style="width: 500px" src="../assets/advantage.png" alt="Processor cores image" />
 
 Notes:
 
