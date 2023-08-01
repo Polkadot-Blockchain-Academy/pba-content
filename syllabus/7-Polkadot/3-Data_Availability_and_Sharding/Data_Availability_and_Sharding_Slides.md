@@ -65,7 +65,7 @@ It means we could finalize an invalid parachain block.
 
 ## Problem
 
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/comic.png" alt="comic">
+<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/comic.png" alt="([^"]*)" />
 
 Notes:
 
@@ -84,7 +84,7 @@ The goal:
 
 </pba-flex>
 
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/erasure-coding-1.png" alt="line">
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/erasure-coding-1.png" />
 
 ---v
 
@@ -112,25 +112,25 @@ pub fn reconstruct(_chunks: impl Iterator<Item = Chunk>) -> Result<Data, Error> 
 
 ### Polynomials
 
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/line.svg" alt="line">
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/line.svg" />
 
 ---v
 
 ### Polynomials: Line
 
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/line-extra.svg" alt="line-extra">
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/line-extra.svg" />
 
 ---v
 
 ### Even More Polynomials
 
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/polynomial-2.png" alt="polynomial-2">
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/polynomial-2.png" />
 
 ---v
 
 ### Polynomial we need
 
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" alt="reed-solomon">
+<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" />
 
 We want to have a polynomial, such that:
 
@@ -204,13 +204,13 @@ With this protocol, we've killed two birds with one stone!
 
 ### CandidateIncluded
 
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/candidate-included.png" alt="candidate-included">
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/candidate-included.png" />
 
 ---
 
 ### Availability Bitfields
 
-<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/availability-bitfields.png" alt="availability-bitfields">
+<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/availability-bitfields.png" />
 
 Notes:
 
@@ -223,13 +223,13 @@ These statements are gossiped off-chain and included in a block in a ParachainsI
 
 How does a validator know if a chunk corresponds to the committed data?
 
-<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/merkel.JPG" alt="merkel">
+<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/merkel.JPG" />
 
 ---v
 
 ### Not that Merkle!
 
-<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/Ralph_Merkle.png" alt="ralph-merkle">
+<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/Ralph_Merkle.png" />
 
 ---
 
@@ -277,7 +277,7 @@ We'll see in the next lesson, how approval-voting can prevent unavailable blocks
 
 ## 2D Reed-Solomon Encoding
 
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/2d-reed-solomon.png" alt="2d-reed-solomon">
+<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/2d-reed-solomon.png" />
 
 Notes:
 

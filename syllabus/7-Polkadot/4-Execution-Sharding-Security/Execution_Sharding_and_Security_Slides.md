@@ -60,7 +60,7 @@ Since Polkadot involves not only on-chain logic but off-chain logic, the runtime
 
 Clients learn about the state by invoking **Runtime APIs** at recent blocks, and the runtime is updated with **new blocks**.
 
-<img rounded width=900, src="../assets/runtime-node-interaction.png" />
+<img rounded style="width: 900px" src="../assets/runtime-node-interaction.png" />
 
 Notes:
 
@@ -112,7 +112,7 @@ Validators and collators run these protocols on every block of the relay chain.
 
 Often they run an instance of the protocol for every parachain block in every block of the relay chain.
 
-<img rounded width=700, src="../assets/BABE-is-forkful.png" />
+<img rounded style="width: 700px" src="../assets/BABE-is-forkful.png" />
 
 Notes:
 
@@ -144,7 +144,7 @@ They distribute their candidates and statements via the P2P layer, and then the 
 
 ## Backing: Networking
 
-<img rounded width=1000, src="../assets/backing-networking.png" />
+<img rounded style="width: 1000px" src="../assets/backing-networking.png" />
 
 ---
 
@@ -170,7 +170,7 @@ Validators sign statements about which data they have and post them to the relay
 
 ---
 
-<img rounded width=1300px src="../assets/availability-inclusion.png" />
+<img rounded style="width: 1300px" src="../assets/availability-inclusion.png" />
 
 Notes:
 
@@ -180,7 +180,7 @@ In practice, we allow more than a single block for availability to be timed out.
 
 ## Parablock Inclusion and Finality
 
-<img rounded width=600, src="../assets/parachain-finality.png" />
+<img rounded style="width: 600px" src="../assets/parachain-finality.png" />
 
 ---
 
@@ -286,7 +286,7 @@ If validators began downloading data before revealing their assignment, an attac
 
 ## Approval Checking: The Hydra
 
-<img rounded width=700, src="../assets/lernaean-hydra.jpg">
+<img rounded style="width: 700px" src="../assets/lernaean-hydra.jpg" />
 
 Notes:
 
@@ -309,7 +309,7 @@ Votes are transmitted by p2p and also collected on-chain.
 
 ## Dispute Resolution
 
-<img rounded width=700, src="../assets/validator-dispute-participation.png" />
+<img rounded style="width: 700px" src="../assets/validator-dispute-participation.png" />
 
 Notes:
 
@@ -329,7 +329,7 @@ The penalty is large when the candidate is deemed invalid by the supermajority a
 
 Instead of voting for the longest chain, validators vote for the longest chain where all unfinalized candidates are a) approved and b) undisputed
 
-<img rounded width=650, src="../assets/grandpa-voting-rule.png" />
+<img rounded style="width: 650px" src="../assets/grandpa-voting-rule.png" />
 
 ---
 
@@ -338,7 +338,7 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 Validators refuse to author relay chain blocks on top of forks containing parablocks which are invalid or have lost disputes.
 This causes a "reorganization" whenever a dispute resolves against a candidate.
 
-<img rounded width=650, src="../assets/babe-chain-selection.png" />
+<img rounded style="width: 650px" src="../assets/babe-chain-selection.png" />
 
 ---
 

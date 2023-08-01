@@ -38,7 +38,7 @@ Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA p
 
 ## Packet Switching
 
-<img src="img/message_packet.svg" alt="Packet Switching" style="width: 600px">
+<img src="img/message_packet.svg" alt="Packet Switching" style="width: 600px" />
 
 Notes:
 Mention that headers contain some addressing, destination information, and ordering typically depending
@@ -47,25 +47,25 @@ Mention that headers contain some addressing, destination information, and order
 
 ## Packet Switching
 
-<img src="img/packet_switching_1.svg" alt="Packet Switching" style="width: 600px">
+<img src="img/packet_switching_1.svg" alt="Packet Switching" style="width: 600px" />
 
 ---
 
 ## Packet Switching
 
-<img src="img/packet_switching_2.svg" alt="Packet Switching" style="width: 600px">
+<img src="img/packet_switching_2.svg" alt="Packet Switching" style="width: 600px" />
 
 ---
 
 ## Packet Switching
 
-<img src="img/packet_switching_3.svg" alt="Packet Switching" style="width: 600px">
+<img src="img/packet_switching_3.svg" alt="Packet Switching" style="width: 600px" />
 
 ---
 
 ## Packet Switching
 
-<img src="img/packet_switching_4.svg" alt="Packet Switching" style="width: 600px">
+<img src="img/packet_switching_4.svg" alt="Packet Switching" style="width: 600px" />
 
 ---
 
@@ -104,25 +104,25 @@ This was a turning point in digital copyright law and played a significant role 
 
 ## Napster Setup
 
-<img src="img/napster_1.svg" alt="Napster Setup" style="width: 600px">
+<img src="img/napster_1.svg" alt="Napster Setup" style="width: 600px" />
 
 ---
 
 ## Napster Setup
 
-<img src="img/napster_2.svg" alt="Napster Setup" style="width: 600px">
+<img src="img/napster_2.svg" alt="Napster Setup" style="width: 600px" />
 
 ---
 
 ## Napster Setup
 
-<img src="img/napster_3.svg" alt="Napster Setup" style="width: 600px">
+<img src="img/napster_3.svg" alt="Napster Setup" style="width: 600px" />
 
 ---
 
 ## Napster Setup
 
-<img src="img/napster_4.svg" alt="Napster Setup" style="width: 600px">
+<img src="img/napster_4.svg" alt="Napster Setup" style="width: 600px" />
 
 ---
 
@@ -151,27 +151,27 @@ Notes:
             </tr>
         </thead>
         <tbody>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Structure</td>
                 <td>Centralized: One or more central servers control the network</td>
                 <td>Decentralized: All nodes (peers) participate equally</td>
             </tr>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Data Flow</td>
                 <td>Server provides data to clients</td>
                 <td>Peers directly share data with each other</td>
             </tr>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Resource Management</td>
                 <td>Servers manage resources and control access</td>
                 <td>Peers contribute resources including bandwidth, storage space, and processing power</td>
             </tr>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Scalability</td>
                 <td>Can be limited by server capacity</td>
                 <td>Highly scalable due to the distribution of resources</td>
             </tr>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Security</td>
                 <td>Centralized security measures, single point of failure</td>
                 <td>Potential for some security issues, malware(Depending on how it is implemented)</td>
@@ -184,7 +184,7 @@ Notes:
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/client_server_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
+<img src="img/client_server_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
 
 Notes:
 
@@ -195,19 +195,19 @@ In p2p, only one node needs to have a full copy in order for the file to be able
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/client_server_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
+<img src="img/client_server_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
 
 ---
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/p2p_topology_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
+<img src="img/p2p_topology_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
 
 ---
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/p2p_topology_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px">
+<img src="img/p2p_topology_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
 
 ---
 
@@ -276,22 +276,22 @@ Talk about advertising vs just blind sending and how that can be inefficient
             </tr>
         </thead>
         <tbody>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Organization</td>
                 <td>Nodes are organized following specific protocols and structures (like Distributed Hash Tables)</td>
                 <td>Nodes are connected in an ad-hoc manner without any particular organization</td>
             </tr>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Search Efficiency</td>
                 <td>Efficient search operations due to structured nature</td>
                 <td>Search operations may be less efficient and can involve flooding the network</td>
             </tr>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Flexibility</td>
                 <td>Less flexible as changes in topology require restructuring</td>
                 <td>Highly flexible as nodes can freely join, leave, and reorganize</td>
             </tr>
-            <tr class="fragment">
+            <tr class="fragment" />
                 <td>Privacy</td>
                 <td>Data location is predictable due to structured organization</td>
                 <td>Greater potential for anonymity</td>

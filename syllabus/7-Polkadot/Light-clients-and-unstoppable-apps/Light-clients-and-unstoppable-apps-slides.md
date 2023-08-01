@@ -10,7 +10,7 @@ duration: 45+ mins
 
 ## Traditional Web 2
 
-<img rounded style="width: 80%;" src="./img/web2.png" />
+<img rounded style="width: 1100px;" src="./img/web2.png" />
 
 <aside class="notes">
   This is web 2. This is where most of applications in the web are at the moment (e.g. don’t want to roast anyone, but Facebook, Twitter, WhatsApp etc etc);
@@ -24,7 +24,7 @@ This is web 2. This is where most of applications in the web are at the moment (
 
 ## The Web 3 vision
 
-<img rounded style="width: 80%;" src="./img/web3.png" />
+<img rounded style="width: 1100px;" src="./img/web3.png" />
 
 Notes:
 
@@ -38,7 +38,7 @@ How many people in here, think that we are far from this at the moment?
 
 ## The Web 3 reality
 
-<img rounded style="width: 80%;" src="./img/web3_reality.png" />
+<img rounded style="width: 1100px;" src="./img/web3_reality.png" />
 
 Notes:
 
@@ -54,7 +54,7 @@ I want to say one thing - and pause there for a few seconds to let it sink in;
 
 ## The reality of blockchains today
 
-<img rounded style="width: 100%;" src="./img/reality_bc_today.png" />
+<img rounded style="width: 1300px;" src="./img/reality_bc_today.png" />
 
 Notes:
 
@@ -140,7 +140,7 @@ Front running is the act of placing a transaction in a queue with the knowledge 
 
 ## The reality of blockchains we want
 
-<img rounded style="width: 100%;" src="./img/reality_we_want.png" />
+<img rounded style="width: 1300px;" src="./img/reality_we_want.png" />
 
 ---v
 
@@ -238,11 +238,11 @@ Read the slides
 
 <pba-cols>
   <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_1.png" />
+    <img rounded style="width: 1300px" src="./img/where_to_1.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
   <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_2.png" />
+    <img rounded style="width: 1300px" src="./img/where_to_2.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
 </pba-cols>
@@ -250,7 +250,7 @@ Read the slides
 ---v
 
 <h2>How does a light client know what/who to trust</h2>
-<img rounded style="width: 100%" src="./img/know-who-to-trust.png" />
+<img rounded style="width: 1300px" src="./img/know-who-to-trust.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -436,7 +436,7 @@ Notes:
 
 ### Each tab opens its own connections
 
-<img style="width: 90%" src="./img/example-tabs.png" />
+<img style="width: 1200px" src="./img/example-tabs.png" />
 
 ---
 
