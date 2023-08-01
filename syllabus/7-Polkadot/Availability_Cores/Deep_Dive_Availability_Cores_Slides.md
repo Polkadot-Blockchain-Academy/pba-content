@@ -351,9 +351,13 @@ Notes:
 
 ## How Core Assignments Mediate Backing
 
-Each parablock candidate is built in the context of a particular `relay_parent`. Important pieces of that context include max PoV size, current parachain runtime code, and backing group assignments.
+Each parablock candidate is built in the context of a particular `relay_parent`. 
 
 Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group.
+
+Notes:
+
+- Relay parent context: max PoV size, current parachain runtime code, and backing group assignments.
 
 ---
 
