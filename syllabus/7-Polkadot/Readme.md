@@ -26,8 +26,8 @@ Draw content from:
 
 **Morning**
 
-9:00  Discussion - Parachains Protocol AMA (.5 hr) @JoshOrndorff<br>
-9:30  Lecture - Blockspace (.5 hr) @rphmeier<br>
+9:00 Discussion - Parachains Protocol AMA (.5 hr) @JoshOrndorff<br>
+9:30 Lecture - Blockspace (.5 hr) @rphmeier<br>
 10:00 Lecture - Deep dive: Execution cores (1 hr) @BradleyOlson64<br>
 11:00 Coffee Break (15 m)<br>
 11:15 Lecture - Deep dive: Cumulus (1.25 hr) @BradleyOlson64<br>
@@ -42,8 +42,8 @@ Draw content from:
 
 **Morning**
 
-9:00  Lecture - Cross-Chain Message Passing (45 m) @rphmeier<br>
-9:45  Lecture + Exercise - Zombienet (1.5 hr) @pepoviola<br>
+9:00 Lecture - Cross-Chain Message Passing (45 m) @rphmeier<br>
+9:45 Lecture + Exercise - Zombienet (1.5 hr) @pepoviola<br>
 11:15 Coffee Break (15 m)<br>
 11:30 Lecture - Shallow Dive: Asynchronous Backing (30 m) @BradleyOlson64<br>
 12:00 Lecture - Light Clients (1 hr) @wirednkod<br>
