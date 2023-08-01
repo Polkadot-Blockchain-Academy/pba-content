@@ -96,10 +96,11 @@ yarn
 ---
 
 **To see what reveal can do, please view the slides and their source for details:**
+[](./faculty_resources/0-how_to_use_reveal_slides.md)
 
-- [How-to use reveal slides](./syllabus/0-Meta_For_Instructional_Staff/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
-- [Lecture template slides](./syllabus/0-Meta_For_Instructional_Staff/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
-- [Copy & paste slide templates](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
+- [How-to use reveal slides](./faculty_resources/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
+- [Lecture template slides](./faculty_resources/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
+- [Copy & paste slide templates](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
 
 ---
 
@@ -111,7 +112,7 @@ Running this command will open a new browser tab and _watch for file changes_ (u
 yarn start
 ```
 
-**There is a [base slide template example](./syllabus/0-Meta_For_Instructional_Staff/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -217,17 +218,53 @@ Once you've followed the set-up instructions and have the repository running loc
 
 </details>
 
+### Formatting Markdown, TOML, JSON
+
+We enforce the use of a few formatters, the primary one being [Prettier](https://prettier.io/) that is included in the dev-dependencies for this repository.
+In [package.json](./package.json) we include a handy tool to format all markdown docs easily:
+
+```sh
+# This will format all `syllabus/*.md` files
+yarn fmt
+```
+
+If (and only if) formatting _breaks_ markdown from rendering correctly, you may use `<!-- prettier-ignore -->` preceding a block in markdown to skip formatting like this:
+
+````markdown
+<!-- prettier-ignore -->
+```html
+<pba-cols>
+<pba-col>
+
+### What's up, yo?
+
+</pba-col>
+<pba-col>
+
+- Yo
+- Yo
+- Yo
+
+</pba-col>
+</pba-cols>
+```
+````
+
+The above ` ```html ` block will not be formatted.
+
 ### Check embedded links
 
 To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:
 
 ```sh
-# This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
-yarn links <Module Number>
-
-# This will check a single file
-
+# Link check a single file (or use regex to match)
 yarn links <relative-link-to/the-top-working-dir/file.md>
+
+# Link check all content files
+yarn links syllabus/**/*.md
+
+# This will check the files that match the pattern `syllabus/${MOD_NUMBER}*.md`.
+yarn mod-links <Module Number>
 ```
 
 The same tool is also run by our CI on all files for all pushes to all branches.
