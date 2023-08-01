@@ -43,19 +43,13 @@ Notes:
 
 ## Async Backing Simplified
 
+<div class="r-stack">
 <img rounded style="width: 1100px" src="../assets/async_backing_simplified_1.svg" />
-[](../assets/)
----v
-
-## Async Backing Simplified
-
 <img rounded style="width: 1100px" src="../assets/async_backing_simplified_2.svg" />
-
----v
-
-## Async Backing Simplified
-
+<!-- .element: class="fragment" data-fragment-index="1" -->
 <img rounded style="width: 1100px" src="../assets/async_backing_simplified_3.svg" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
 
 ---
 
@@ -108,26 +102,20 @@ Notes:
 
 ## Synchronous Backing, Another Look
 
+<div class="r-stack">
 <img rounded style="width: 1500px" src="../assets/synchronous_backing_1.svg" />
-
-Notes:
-
-Now let's take a closer look at when each step of backing and inclusion takes place both with synchronous and asynchronous backing.
-
----v
-
-## Synchronous Backing, Another Look
-
 <img rounded style="width: 1500px" src="../assets/synchronous_backing_2.svg" />
-
----v
-
-## Synchronous Backing, Another Look
-
+<!-- .element: class="fragment" data-fragment-index="1" -->
 <img rounded style="width: 1500px" src="../assets/synchronous_backing_3.svg" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
 
 Notes:
 
+Image version 1: 
+- Now let's take a closer look at when each step of backing and inclusion takes place both with synchronous and asynchronous backing.
+
+Image version 3: 
 - Whole process is a cycle of duration 12 seconds (2 relay blocks).
 - No part of this cycle can be started for a second candidate of the same parachain until the first is included.
 
@@ -135,30 +123,24 @@ Notes:
 
 ## Async Backing, Another Look
 
+<div class="r-stack">
 <img rounded style="width: 1500px" src="../assets/async_backing_1.svg" />
+<img rounded style="width: 1500px" src="../assets/async_backing_2.svg" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img rounded style="width: 1500px" src="../assets/async_backing_3.svg" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
 
 Note:
 
+Image version 1:
 - Collation generation and off-chain backing are outside of the relay block cycle.
 - Number of candidates produced and backed off chain only limited by compute power, network latency, and `max_depth` configured on the relay chain.
 
----v
-
-## Async Backing, Another Look
-
-<img rounded style="width: 1500px" src="../assets/async_backing_2.svg" />
-
-Note:
-
-Now we see our relay block cycle.
-  It is 6 seconds rather than 12.
-  It completes on-chain backing for one candidate and inclusion for another each cycle.
-
----v
-
-## Async Backing, Another Look
-
-<img rounded style="width: 1500px" src="../assets/async_backing_3.svg" />
+Image version 2:
+- Now we see our relay block cycle.
+- It is 6 seconds rather than 12.
+- It completes on-chain backing for one candidate and inclusion for another each cycle.
 
 ---
 
@@ -189,7 +171,7 @@ Notes:
 - Segment shrinks when one of its ancestor blocks becomes included
 - Maximum unincluded segment capacity is set both on the parachain and relay chain
 
----v
+---
 
 ## Unincluded Segment
 
