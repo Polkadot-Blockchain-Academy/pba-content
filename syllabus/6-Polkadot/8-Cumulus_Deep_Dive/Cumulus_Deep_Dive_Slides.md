@@ -340,7 +340,7 @@ Notes:
 
 Notes:
 
-The Candidate Recepeit contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
+The Candidate Receipt contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
 The Candidate Recepeit only represents a PoV, it does not substitute it
 
 ---
