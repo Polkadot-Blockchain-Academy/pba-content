@@ -52,7 +52,7 @@ Notes:
 
 2.
 
-- Polkadot makes uses of Substrate
+- Polkadot makes use of Substrate
 - The concept of Parachains is introduced in Polkadot
 - It implements Parachain Sharding and Validation as node and runtime-side logic
 - Has its own networking protocols built with Substrate/libp2p
@@ -60,8 +60,8 @@ Notes:
 3.
 
 - Cumulus uses the generic types of Substrate
-- These generic types/interfaces are extended to make them work with/for Parachains
-- Polkadot itself is providing APIs that are used by Cumulus to implement the Substrate interfaces/types
+- These generic types/interfaces are extended to work within a Parachain
+- Polkadot provides APIs by which a Cumulus enabled collator communicates with the relay chain
 
 ---
 
