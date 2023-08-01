@@ -172,7 +172,7 @@ pub struct Pvf {
 
 Notes:
 
-The code is hashed and saved in the storage of the relay chain. There is another map in the storage where the paraId is the key and the ValidationCodeHash (the hasho of the PVF) is the value.
+The code is hashed and saved in the storage of the relay chain. There is another map in the storage where the paraId is the key and the ValidationCodeHash (the hash of the PVF) is the value.
 
 ---v
 
