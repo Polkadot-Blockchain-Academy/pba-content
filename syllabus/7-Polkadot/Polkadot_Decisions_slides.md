@@ -67,7 +67,7 @@ Decisions that can be easily changed in the future.
 
 ---
 
-<img style="width: 1000px; filter: invert();"  src="../../assets/img/7-Polkadot/less-trust-more-truth.svg" />
+<img style="width: 1000px; filter: invert();" src="../../assets/img/7-Polkadot/less-trust-more-truth.svg" />
 
 Notes:
 
@@ -229,7 +229,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 <div>
 
-<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-2.svg"  />
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-2.svg" />
 
 A visual of XCMP channels between Parachains.
 

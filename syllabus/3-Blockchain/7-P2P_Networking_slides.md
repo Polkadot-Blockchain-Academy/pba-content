@@ -151,27 +151,27 @@ Notes:
             </tr>
         </thead>
         <tbody>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Structure</td>
                 <td>Centralized: One or more central servers control the network</td>
                 <td>Decentralized: All nodes (peers) participate equally</td>
             </tr>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Data Flow</td>
                 <td>Server provides data to clients</td>
                 <td>Peers directly share data with each other</td>
             </tr>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Resource Management</td>
                 <td>Servers manage resources and control access</td>
                 <td>Peers contribute resources including bandwidth, storage space, and processing power</td>
             </tr>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Scalability</td>
                 <td>Can be limited by server capacity</td>
                 <td>Highly scalable due to the distribution of resources</td>
             </tr>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Security</td>
                 <td>Centralized security measures, single point of failure</td>
                 <td>Potential for some security issues, malware(Depending on how it is implemented)</td>
@@ -276,22 +276,22 @@ Talk about advertising vs just blind sending and how that can be inefficient
             </tr>
         </thead>
         <tbody>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Organization</td>
                 <td>Nodes are organized following specific protocols and structures (like Distributed Hash Tables)</td>
                 <td>Nodes are connected in an ad-hoc manner without any particular organization</td>
             </tr>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Search Efficiency</td>
                 <td>Efficient search operations due to structured nature</td>
                 <td>Search operations may be less efficient and can involve flooding the network</td>
             </tr>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Flexibility</td>
                 <td>Less flexible as changes in topology require restructuring</td>
                 <td>Highly flexible as nodes can freely join, leave, and reorganize</td>
             </tr>
-            <tr class="fragment" />
+            <tr class="fragment">
                 <td>Privacy</td>
                 <td>Data location is predictable due to structured organization</td>
                 <td>Greater potential for anonymity</td>
