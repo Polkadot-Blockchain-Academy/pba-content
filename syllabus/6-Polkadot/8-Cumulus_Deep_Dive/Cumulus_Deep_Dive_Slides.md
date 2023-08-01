@@ -645,7 +645,7 @@ Now almost every change to the client and the runtime of the substrate based-cha
 
 ---v
 
-##### Solutio
+##### Solution
 
 Relay chain needs a fairly hard guarantee that the PVFs can be compiled within a reasonable amount of time
 <!-- .element: class="fragment" data-fragment-index="0" -->
