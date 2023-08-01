@@ -150,7 +150,7 @@ Note:
 
 Note:
 
-- Now we see our relay block cycle.
+Now we see our relay block cycle.
   It is 6 seconds rather than 12.
   It completes on-chain backing for one candidate and inclusion for another each cycle.
 
