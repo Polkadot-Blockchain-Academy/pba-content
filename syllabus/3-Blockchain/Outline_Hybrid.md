@@ -11,7 +11,7 @@ Students learn about expressing agreements as code and are left wondering where 
 
 - 📛 Introduce instructor, TAs - This module is coding heavy, we will spend a lot of time coding in class. - Lauren, Joshy - Founders Required
 - 🗣️ Overview of Smart Contracts Lecture - Lauren - Founders Required
-- 🚧 TODO Some activity. Maybe something like Emre's unstoppable applications from Cambridge, maybe implement a smart contract as an actix_web server. - Joshy / Aaron - Founders NOT Required
+- 🚧 Rocket Cash Activity: Express contracts as code using rocket.rs - Aaron - Founders Required
 - ☕ Break
 - 🗣️ Digital Services and State Machines - I like to think of "state" as a double entendre - Lauren - Founders Required
 - ⌨️ Begin BFS coding activity - specifically state machine part - Joshy, Lauren, Aaron, Andrew - Founders NOT Required
@@ -23,7 +23,7 @@ Students learn about expressing agreements as code and are left wondering where 
 - ☕ Break
 - 🗣️ Platform Agnostic Bytecodes - Lauren - Founders Required
 - ⌨️ Web Assembly exercise - Joshy, Andrew, Lauren, Aaron - Founders Required
-- 🗣️ Closing Discussion - Where would we actually run these contracts? - why the actix_web example sux. - Lauren - Founders Required
+- 🗣️ Closing Discussion - Where would we actually run these contracts? - Joshy - Founders Required
 
 ## Tuesday
 
@@ -32,18 +32,19 @@ We begin discussing consensus, and show how economics and game theory underlie t
 
 ### Morning
 
-- 🗣️ Blockchain Structure - Joshy - Founders Required
+- 🗣️ Blockchain Structure - Joshy - Founders Required - TODO maybe split this into two lessons. One about the data structure, and one about tracking one on a P2P network
 - ⌨️ More BFS
+- 🗣️ Blockchain on a P2P Network - Joshy - Founders Required
 - ☕ Break
 - 🗣️ Consensus Part 1 - Authoring - Agreeing on Possibilities - Joshy - Founders Required
 - 🎲 Manual Consensus Activity (aka BitStory) - Founders Required
 
 ### Afternoon
 
-- 🗣️ Account and UTXO models - Andrew - Founders Required
+- 🗣️ Econ & Game Theory in Blockchain - Maciej - Founders Required
 - ⌨️ More BFS
 - ☕ Break
-- 🗣️ Econ & Game Theory in Blockchain - Maciej - Founders Required
+- - 🗣️ Unstoppable Applications Lecture - Nuke - Founders Required
 - ⌨️ More BFS, or some other activity associated with fees and ordering. Maybe some kind of auction thing.
 
 ## Wednesday
@@ -58,14 +59,15 @@ We also explore light clients and bridges, both of which benefit from determinis
 - 🎲 [Grandpa Board Game Activity](https://github.com/Polkadot-Blockchain-Academy/pba-grandpa-board-game) - Joshy, Andrew, Lauren, Aaron - Founders NOT Required<!-- markdown-link-check-disable-line -->
   - _Note that this repo is private, intended to be shared with the student cohort's github team for read access._
     _This also allows for people to pull up on mobile if logged in to view easier_
-- ⌨🗣️ aBFT and Aleph 0 - Adam Gagol - Founders NOT Required
+- ⌨🗣️ aBFT and Aleph 0 - Piotr Mikolajczyk - Founders NOT Required
 
 ### Afternoon
 
-- 🗣️ Light Clients Bridges - Joshy - Founders Required
+- 🗣️ Account and UTXO models - Andrew - Founders Required
+- 🗣️ Full State Inclusion Proofs in Monero - Guest Content - Founders Not Required
 - ⌨️ Continue Coding on BFS
 - ☕ Break
-- 🧘 Flex time. Opportunity to clarify any missed points or otherwise touch up content. Or just a slot into which things can be pushed back.
+- 🗣️ Account and UTXO models - Andrew - Founders Required
 - ⌨️ BFS
 
 ## Thursday
@@ -98,7 +100,6 @@ Also get a few last short talks
 Then they will use that chain to launch their smart contracts a la the contracts module.
 
 - ⌨️ Start a Blockchain Activity - Joshy - Founders NOT Required
-- 🗣️ Unstoppable Applications Lecture - Nuke - Founders NOT Required (HIGHLY suggested?)
 - ☕ Break
 - 🗣️ Types of Forks - Maciej - Founders NOT Required
 - ⌨️ Forking Exercises - Joshy - Founders NOT Required
