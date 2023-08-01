@@ -1,5 +1,5 @@
 ---
-title: Introduction to Polkadot, Parachains, and Blockspace
+title: Introduction to Polkadot, Parachains, Blockspace, and Coretime
 description: An introduction to the key concepts of Polkadot.
 duration: 1 hour
 ---
@@ -94,9 +94,9 @@ The foundations of Web3 infrastructure must be strong._
 
 ## The Value of Shared Security
 
-Multiple chains are secured by the same underlying resource, PoW (merge-mining) or PoS (tokens at stake).
+Multiple processes are secured by the same underlying resource, PoW (merge-mining) or PoS (tokens at stake).
 
-This allows chains to exist under the same security umbrella.
+This allows processes to exist under the same security umbrella.
 
 ---
 
@@ -104,7 +104,7 @@ This allows chains to exist under the same security umbrella.
 
 Reused resources provide security for multiple chains<br/>provides economic efficiency.
 
-Fewer resources needed to provide the same amount<br/>of security to all chains.
+Fewer resources needed to provide the same amount<br>of security to all processes.
 
 ---
 
@@ -127,8 +127,8 @@ When scaling a consensus system,<br/>there are three core options:
 <pba-flex center>
 
 1. Make execution of blocks more efficient
-1. Reduce the number of total nodes
-1. Reduce the number of nodes checking each block
+1. Reduce the number of total nodes (lower coordination costs)
+1. Reduce the number of nodes checking each block (lower coordination requirements)
 
 </pba-flex>
 
@@ -162,7 +162,7 @@ _This reduces coordination costs while trading off for security._
 
 Same total nodes, split to do work in parallel.
 
-_Challenge of maintaining the same level of security and accountability while reducing node's work._
+_Challenge of maintaining the same level of security and accountability while reducing work per node._
 
 ---
 
@@ -267,6 +267,7 @@ The relay chain is the "hub" of Polkadot, providing:
 - Staking
 - Registration, scheduling,<br/>and advancement of parachains
 - Communication between parachains
+- Consensus Safety
 - Balance Transfers
 
 </pba-flex>
@@ -299,6 +300,14 @@ Simplified Polkadot Architecture (Parachains)
 1. Horizontal Message Passing (HRMP)<br/>&nbsp;&nbsp;_(parachain ➡ parachain)_
 
 </pba-flex>
+
+---
+
+## Consensus
+
+Polkadot combines two algorithms, BABE and GRANDPA to provide consensus.
+
+BABE is the mechanism by which new blocks are built, and GRANDPA finalizes blocks as soon as possible.
 
 ---
 
@@ -344,8 +353,6 @@ Polkadot has on-chain governance by referendum of DOT holders, which empowers DO
 - Configuration of fees
 - Rescue & recovery operations
 - All other mechanisms of control over the platform
-
-We will have a lesson on the mechanics of OpenGov & will not cover in detail here.
 
 </pba-flex>
 
@@ -476,9 +483,9 @@ PVFs are simply Wasm blobs that take in the parameters and provide the outputs i
 
 Substrate Runtimes use **host functions** like storage-reads/writes and signature verifications to perform an `execute_block`.
 With a simple wrapper around `execute_block`, a runtime can be transformed into a PVF.
-Our framework for doing this is known as **Cumulus**.
+The main framework for doing this is **Cumulus**.
 
-It is also possible to create a PVF without using Substrate.
+It is also possible to create a PVF without using Substrate or Cumulus.
 
 ---
 
@@ -502,6 +509,19 @@ There are many possible mechanisms for scheduling parachains onto cores, but her
 - System Parachains (live: Parachain scheduled directly by Governance)
 - Slot Auctions (live: Parachains bid for guaranteed access to a core for long-term duration)
 - Parathreads (in development: on-demand, pay-as-you-go access to cores)
+
+</pba-flex>
+
+---
+
+## What's in a Relay Chain Block?
+
+<pba-flex center>
+
+- Parachain "candidates": descriptions of a new state transition for some parachain
+- Availability bitfields: attestations by validators about data availability to check candidates
+- Dispute statements: used to reconcile disputes over candidate validity, if any
+- User transactions: governance, staking, etc.
 
 </pba-flex>
 
@@ -536,25 +556,36 @@ Collators will then be reimbursed for their cost in transaction fees, the parach
 
 ---
 
-## Blockspace
+## Blockspace / Coretime
 
 > Blockspace is the capacity of a blockchain to finalize and commit operations
 
-Polkadot's primary product is _blockspace_.
+Polkadot's primary product is _blockspace_, measured in _coretime_.
+
+Processes running on Polkadot currently receive huge bulk swathes of coretime through slot auctions.
+Future work is underway to build dynamic coretime marketplaces, akin to cloud models for coretime.
+
+Notes:
+
+The future work mentioned in this slide:
+
+https://github.com/polkadot-fellows/rfcs/pull/1
+https://github.com/polkadot-fellows/rfcs/pull/3
+https://github.com/polkadot-fellows/rfcs/pull/5
 
 ---
 
-## Blockspace
+## Blockspace / Coretime
 
-Polkadot aims to provide the most secure blockspace,<br/> and be the most efficient allocator of blockspace.
+Polkadot aims to provide large quantities of secure blockspace,<br/> and be the most efficient allocator of blockspace.
 
-Blockspace is useful for evaluating the offerings<br/> of different blockchain platforms on 3 properties:
+The blockspace offerings of different blockchain platforms<br/> can be evaluated with 3 properties:
 
 <pba-flex center>
 
-- Quality
-- Availability
-- Flexibility
+- Quality: How high security it is, and how good the network effect is
+- Availability: How easy it is to acquire - a combination of supply & market mechanisms
+- Flexibility: How possible it is to perform complex operations using
 
 </pba-flex>
 

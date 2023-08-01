@@ -398,6 +398,8 @@ There are no fees for XCMP messages, but every channel comes with a `max_capacit
 
 Each channel comes with a corresponding _deposit_ of DOT tokens to pay for the relay chain state utilization.
 
+This deposit is returned when the channel is closed.
+
 ---
 
 ## XCMP-Lite / HRMP Channel Open Protocol

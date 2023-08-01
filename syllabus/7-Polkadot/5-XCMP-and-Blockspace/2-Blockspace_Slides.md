@@ -1,6 +1,6 @@
 ---
 title: "Blockspace: The Product of Polkadot"
-description: Deep Dive into Blockspace and Blockspace Allocation
+description: Deep Dive into Coretime and Blockspace Allocation
 duration: 30-40 minutes
 ---
 
@@ -54,7 +54,7 @@ The blockchain sells blockspace on-demand, and users pay fees in order to utiliz
 
 ## Blockspace Markets
 
-Parachain auctions are another example of a blockspace market.
+Parachain slot auctions are another example of a blockspace market.
 
 Instead of selling blockspace on-demand, blockspace is sold in bulk up-front with an auction mechanism.
 
@@ -177,11 +177,19 @@ Cores, by metaphor, are like CPU cores. Code and data are scheduled onto them by
 
 ## Long-term vs. on-demand
 
-Parathreads are analogous to "spot" instances and slot auctions are analogous to "reserved" instances in cloud computing.
+On-demand are analogous to "spot" instances and slot auctions are analogous to "reserved" instances in cloud computing.
 
 Spot instances may be more expensive if overall demand is high, but help to soothe load.
 
 ---
+
+## Coretime
+
+Within Polkadot, we measure the amount of blockspace that an application can use in _coretime_.
+
+Just like a CPU and OS, there is a scheduler that multiplexes many<br> different processes onto execution cores.
+
+Coretime is acquired through either primary or secondary marketplaces.
 
 ## Elastic Scaling (planned upgrade)
 
@@ -231,7 +239,7 @@ User could be a collator itself, or perhaps just someone fulfilling a market nee
 
 In interoperable blockchain applications, the application is only as good as the weakest chain it relies upon.
 
-It is important not to mix different qualities of blockspace, due to toxicity risks.
+It is important not to mix high-quality blockspace with low-quality, due to toxicity risks.
 
 ---
 
@@ -243,41 +251,21 @@ Why not create blockchains that run for a limited period of time, e.g. to run so
 
 ---
 
-## Blockspace Futures Markets
+## Coretime Futures Markets
 
-With the right core-level primitives, it will be possible to transfer claims on future blockspace.
+With the right core-level primitives, it will be possible to transfer claims on future coretime.
 
-Secondary markets can emerge, perhaps using NFTs, on parachains themselves, to facilitate the market for future blockspace.
+Secondary markets can emerge, perhaps using NFTs, on parachains themselves, to facilitate the market for future coretime.
 
-This will create an efficient market and price discovery for blockspace via blockspace arbitrage.
-
----
-
-## Layer-1 Blockspace Only Scales With Demand
-
-One unfortunate side effect of scaling blockspace production is that supply can greatly exceed demand, leading to very low prices for blockspace.
-
-When demand is a key driver of token economics, this can create an inflationary imbalance.
-
-One responsibility of Governance is to avoid flooding the market with unnecessary blockspace.
+This will create an efficient market and price discovery for coretime via arbitrage.
 
 ---
 
-## Future Blockspace Allocation Mechanisms
+## Future Coretime Allocation Mechanisms
 
-If blockspace is the "product" of Polkadot, then allocation mechanisms are the "packaging".
+If coretime is the "product" of Polkadot, then allocation mechanisms are the "packaging".
 
-Blockspace must be packaged in a way that the market desires.
-
-In between long-term slots and on-demand parachain bids is short-term auctions: purchases of e.g. 1 hour, 1 day, 1 week of execution core time.
-
----
-
-## Future Blockspace Allocation Mechanisms
-
-For chains which want predictable access to blockspace but don't need to author blocks every 6 or 12 seconds, we can introduce execution core sharing.
-
-This would allow parachains to purchase _sparse_ blockspace ahead of time and author blocks every 30 seconds or 1 minute or other interval by sharing slots with other parachains.
+RFC-1 proposes mechanisms for bulk coretime to be sold off, renewed, split up, resold, and transferred.
 
 ---
 
@@ -285,8 +273,9 @@ This would allow parachains to purchase _sparse_ blockspace ahead of time and au
 
 <pba-flex center>
 
-1. Blockspace is an economic formulation of blockchain resources
+1. Blockspace is an conceptual distillation of blockchain resources
 1. Blockspace provides new lenses on the scheduling and lifecycle of blockchains
+1. Polkadot measures blockspace allocation using coretime
 1. Efficient allocation of blockspace will be critical as Web3 systems scale to serve 8 billion people.
 1. Polkadot's architecture is blockspace-centric, not blockchain-centric, and provides many options for builders to use its product.
 
