@@ -638,7 +638,7 @@ Commented Notes
 - What happen if the PVF compilation takes too long?
   <!-- .element: class="fragment" data-fragment-index="1" -->
   - In approval checking, there may be many no-shows, leading to slow finality
-  - In disputes, neither side may reach supermajority. Nobody will get slashed and the chain will not be reverted or finalized.
+  - In disputes, neither side may reach super-majority. Nobody will get slashed and the chain will not be reverted or finalized.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
