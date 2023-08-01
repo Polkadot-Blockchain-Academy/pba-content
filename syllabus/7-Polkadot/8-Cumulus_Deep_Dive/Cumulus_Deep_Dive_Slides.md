@@ -15,7 +15,7 @@ duration: 1 hours
 1. [What is Cumulus?](#what-is-cumulus)
 2. [Cumulus Runtime Validation](#how-cumulus-enables-runtime-validation)
 3. [Cumulus on the Node Side](#how-cumulus-enables-parachain-relay-chain-communication)
-4. [Runtime Upgrades](##runtime-upgrades)
+4. [Runtime Upgrades](#runtime-upgrades)
 5. [Transform Solo to Parachain](#transform-solo-to-parachain)
 6. [References](#references)
 
