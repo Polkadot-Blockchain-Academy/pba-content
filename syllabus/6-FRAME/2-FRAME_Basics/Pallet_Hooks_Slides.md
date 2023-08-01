@@ -10,17 +10,17 @@ duration: 1 hour
 
 ## Hooks: All In One
 
-* Onchain / STF
-  * `on_runtime_upgrade`
-  * `on_initialize`
-  * `poll` (WIP)
-  * `on_finalize`
-  * `on_idle`
-* Offchain:
-  * `genesis_build`
-  * `offchain_worker`
-  * `integrity_test`
-  * `try_state`
+- Onchain / STF
+  - `on_runtime_upgrade`
+  - `on_initialize`
+  - `poll` (WIP)
+  - `on_finalize`
+  - `on_idle`
+- Offchain:
+  - `genesis_build`
+  - `offchain_worker`
+  - `integrity_test`
+  - `try_state`
 
 Notes:
 
@@ -96,7 +96,6 @@ fn on_initialize() -> Weight {
 - &shy;<!-- .element: class="fragment" --> Question: If your runtime panics `on_initialize`, how can you recover from it?
 - &shy;<!-- .element: class="fragment" --> Question: If your `on_initialize` consumes more than the maximum block weight?
 
-
 Notes:
 
 - The order comes from `construct_runtime!` macro.
@@ -119,7 +118,7 @@ fn on_finalize() -> Weight {} // ❌
 
 <!-- .element: class="fragment" -->
 
-- Nothing to do with *finality* in the consensus context.
+- Nothing to do with _finality_ in the consensus context.
 
 <!-- .element: class="fragment" -->
 
@@ -190,8 +189,9 @@ graph LR
     end
 
     subgraph Optional
- 	    OnRuntimeUpgrade
-    end
+
+OnRuntimeUpgrade
+end
 
     subgraph BeforeExtrinsics
         OnInitialize
@@ -204,8 +204,8 @@ graph LR
     subgraph Inherents
         Inherent1 --> Inherent2
     end
-</diagram>
 
+</diagram>
 
 Notes:
 
@@ -233,6 +233,7 @@ pub struct GenesisConfig<T: Config> {
   pub bar: Vec<u8>,
 }
 ```
+
 <!-- .element: class="fragment" -->
 
 ```rust
@@ -242,6 +243,7 @@ impl<T: Config> Default for GenesisConfig<T> {
   }
 }
 ```
+
 <!-- .element: class="fragment" -->
 
 ```rust
@@ -252,6 +254,7 @@ impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
   }
 }
 ```
+
 <!-- .element: class="fragment" -->
 
 ---v
@@ -317,14 +320,12 @@ founders to be careful with this!
 
 https://paritytech.github.io/substrate/master/pallet_examples/index.html
 
-
 ---v
 
 ### Hooks: `offchain_worker`
 
 - Execution entirely up to the client.
 - Has a totally separate thread pool than the normal execution.
-
 
 ```
 --offchain-worker <ENABLED>
@@ -449,8 +450,9 @@ graph LR
     end
 
     subgraph Optional
- 	    OnRuntimeUpgrade
-    end
+
+OnRuntimeUpgrade
+end
 
     subgraph BeforeExtrinsics
         OnInitialize
@@ -463,6 +465,7 @@ graph LR
     subgraph Inherents
         Inherent1 --> Inherent2
     end
+
 </diagram>
 
 - What other hooks can you think of?
@@ -472,10 +475,9 @@ Notes:
 What other ideas you can think of?
 
 - a hook called once a pallet is first initialized.
-https://github.com/paritytech/substrate/issues/14098
+  https://github.com/paritytech/substrate/issues/14098
 - Local on Post/Pre dispatch: https://github.com/paritytech/substrate/issues/12047
 - Global on Post/Pre dispatch is in fact a signed extension. It has to live in the runtime, because you have to specify order.
-
 
 ---
 

@@ -335,22 +335,16 @@ Notes:
   - The upward messages sent
   - Is there a runtime upgrade to schedule?
 
----
-
-### Data Availability Protocol
-
-- The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
-
-- The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Recept** to represent the freshly validated block
-
-- But the PoV must remain available after backing, since it will be used to validate the block during the approvals process.
-
 ---v
 
-#### The Availability Process
+#### Candidate Receipt
 
-- Erasure coding is applied to the PoV
-- At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available
+- The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Receipt** to represent the freshly validated block
+
+Notes:
+
+The Candidate Receipt contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
+The Candidate Receipt only represents a PoV, it does not substitute it
 
 ---
 
@@ -430,7 +424,7 @@ Notes:
 
 - Being part of the relay chain network the collator:
   - is able to pass collations to validators
-  - is informed of new relay chain blocks <!--keeping active the block production and consensus logic-->
+  - is informed of new relay chain blocks
 
 Notes:
 
@@ -470,41 +464,42 @@ It can be run as an in-process full-node or a separate RPC node.
 
 ### Parachain System Pallet
 
-```rust
-//! `cumulus-pallet-parachain-system` handles low-level details
-//! of being a parachain.
-/// It's responsibilities include:
-//!
-//! - ingestion of the parachain validation data
-//! - ingestion of incoming downward and horizontal
-//!   messages and dispatching them
-//! - coordinating upgrades with the relay-chain
-//! - communication of parachain outputs, such as
-//!   sent messages, signalling an upgrade, etc.
-```
+**Handles low-level details of being a parachain**
+
+</br>
+
+- Responsibilities:
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  - ingestion of the parachain validation data
+  - ingestion and dispatch of incoming downward and lateral messages
+  - coordinating upgrades with the Relay Chain
+  - communication of parachain outputs, such as sent messages, signaling an upgrade, etc
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+
+code: https://github.com/paritytech/cumulus/blob/de80e29608c42f6a7b2557eee017eab178ef9c94/pallets/parachain-system/src/lib.rs#L19
 
 ---
 
-### Finality
+### Consensus Mechanism
 
-```rust
-loop {
-    let finalized = finalized_relay_chain_blocks_stream.next().await;
+The parachain node is modified to become a Collator able to:
 
-    let parachain_block = match get_parachain_block_for_relay_chain_block(finalized) {
-        Some(b) => b,
-        None => continue,
-    };
+- achieve sequencing consensus
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- leave finality to the relay chain
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
-    set_finalized_parachain_block(parachain_block);
-}
-```
+---v
 
----
+### Sequencer Consensus
 
-### Triggering Block Authoring
+The Collators need to author new blocks, they do so on new relay chain block import
 
-```rust
+```rust[2|4-8|10]
 loop {
     let imported = import_relay_chain_blocks_stream.next().await;
 
@@ -519,28 +514,86 @@ loop {
 }
 ```
 
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 Notes:
 
 - `parachain_trigger_block_authoring` itself can decide if it wants to build a block.
 - e.g. the parachain having a block time of 30 seconds
 
+---v
+
+### Finality
+
+Being part also of the relay chain network implies to inherit the finality from the inclusion of a block in the relay-chain
+
+</br>
+
+```rust[2|4-8|10]
+loop {
+    let finalized = finalized_relay_chain_blocks_stream.next().await;
+
+    let finalized_parachain_block =
+      match get_parachain_block_from_relay_chain_block(finalized) {
+        Some(b) => b,
+        None => continue,
+    };
+
+    set_finalized_parachain_block(finalized_parachain_block);
+}
+```
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+
+Finality now is not anymore up to the parachain but the collators needs to follow the relay-chain block production to understand which block to use to continue building on
+
 ---
 
 ### Ensuring Block Availability
 
-- On a solo chain a block gets part of the canonical chain by:
-  - Being distributed to other nodes in the network
-  - Being a valid block that can be imported by a majority of the validators
-- On a Parachain a block only needs to be accepted by the relay chain validators to be part of the canonical chain
-- The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
-- So, the relay chain could expect some parent block for the next block that no one is aware of
+- The Availability and Validity (AnV) protocol of Polkadot allows the network to be efficiently sharded among parachains while maintaining strong security guarantees
+
+- Why is needed?
+  - The PoV must remain available after backing, since it will be used to validate the block during the approvals process.
+  - Collator can send a block to the relay chain without distributing it in the Parachain network, if accepted then new blocks should be build on top of an unknown parent
+
+---v
+
+#### Malicious collator example
+
+<div class="r-stack">
+<img src="../assets/malicious_collator_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/malicious_collator_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="../assets/malicious_collator_3.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
 
 Notes:
+
+- On a Parachain a block only needs to be accepted by the relay chain validators to be part of the canonical chain, problem:
+- The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
+- So, the relay chain could expect some parent block for the next block that no one is aware of
 
 - Collators can be malicious and just do not propagate their block in the network
 - Collators could crash after sending the block to the relay chain, but before propagating it in the Parachain network.
 
+---v
+
+#### The Availability Process
+
+- Erasure coding is applied to the PoV
+- At least 2/3 + 1 validators must report that they possess their piece of the code word. Once this threshold of validators has been reached, the network can consider the PoV block of the parachain available
+
+<img src="../assets/malicious_collator_4.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 ---
+
+<!-- Commented temorary, I still need to understand this piece of code properly to insert it in the slides
 
 ### Ensuring Block Availability
 
@@ -566,13 +619,12 @@ loop {
 }
 ```
 
-Notes:
+Commented Notes
 
 - PoV recovery
 - Relay chain stores the PoVs for 24 hours
 - Every node relay chain/parachain can ask the relay chain validators for their piece to restore the PoV
-
----
+-->
 
 ## Runtime Upgrades
 
@@ -610,7 +662,7 @@ Relay chain needs a fairly hard guarantee that the PVFs can be compiled within a
 </br>
 
 - Collators execute a runtime upgrade but it is not applied
-- The relay chain executes the **PVF Pre-Checking Process**
+- The relay chain executes the **PVF Pre-Chekcing Process**
 - The first parachain block that will be included after the end of the process needs to apply the new runtime
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
