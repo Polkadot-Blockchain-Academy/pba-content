@@ -114,6 +114,7 @@ Core States: Free, Scheduled, Occupied
 </pba-flex>
 
 Notes:
+
 - CoreState: Free -> core has not been assigned a parachain via lease or on-demand claim
 - CoreState: Scheduled -> Core has an assigned parachain and is currently unoccupied
 - CoreState: Occupied -> Core has assignment and is occupied by a parablock pending availability
@@ -389,6 +390,7 @@ if Some(candidate.descriptor().para_id) != rp_state.assignment {
 </pba-flex>
 
 Notes:
+
 - Review possible core states
 - Mention time-out vs made available
 
