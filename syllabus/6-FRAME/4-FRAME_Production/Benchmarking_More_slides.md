@@ -310,7 +310,35 @@ turned into...
 
 ---
 
+## Inherited Call Weight Syntax (PR #13932)
+
+```rust
+#[pallet::call(weight(<T as Config>::WeightInfo))]
+impl<T: Config> Pallet<T> {
+
+	pub fn create(
+		...
+```
+
+---
+
 ## Custom Benchmark Returns / Errors (PR #9517)
+
+```rust
+override_benchmark {
+	let b in 1 .. 1000;
+	let caller = account::<T::AccountId>("caller", 0, 0);
+}: {
+	Err(BenchmarkError::Override(
+		BenchmarkResult {
+			extrinsic_time: 1_234_567_890,
+			reads: 1337,
+			writes: 420,
+			..Default::default()
+		}
+	))?;
+}
+```
 
 ---
 
@@ -319,6 +347,21 @@ turned into...
 ---
 
 ## Multi-Dimensional Weight (Issue #12176)
+
+```rust
+#[derive(
+	Encode, Decode, MaxEncodedLen, TypeInfo, Eq, PartialEq, Copy, Clone, RuntimeDebug, Default,
+)]
+#[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+pub struct Weight {
+	#[codec(compact)]
+	/// The weight of computational time used based on some reference hardware.
+	ref_time: u64,
+	#[codec(compact)]
+	/// The weight of storage space used by proof of validity.
+	proof_size: u64,
+}
+```
 
 ---
 
@@ -412,17 +455,6 @@ Example:
 - Example: Balances hook for account creation and account killed.
 - Benchmarking has no idea how to properly set up your state to test for any arbitrary hook.
 - So you must keep hooks constant time, unless specified by the pallet otherwise.
-
----
-
-# What’s next?
-
-How you might be able to contribute!
-
-- Gas / Fuel Metering
-- Full Weight V2 Integration / Migration
-- More Insight into DB / Memory Operations
-- Smart suggestions to developers based on benchmarks
 
 ---
 
