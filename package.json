@@ -9,7 +9,7 @@
     "help-rmd": "reveal-md --help",
     "build": "rm -rf build && reveal-md ./ --static build",
     "build-internal-static-slides": "rm -rf build && reveal-md ./ --static build --absolute-url https://do-not-share-pba-internal.on.fleek.co/",
-    "build-student-static-slides": "rm -rf build && reveal-md ./ --static build --absolute-url https://polkadot-blockchain-academy.on.fleek.co/ --glob 'syllabus/[0-7]*/**/*[Ss]lides.md'",
+    "build-student-static-slides": "rm -rf build && reveal-md ./ --static build --absolute-url https://polkadot-blockchain-academy.on.fleek.co/ --glob 'syllabus/[0-6]*/**/*[Ss]lides.md'",
     "serve": "http-server ./build -p 1949 -s & echo server started http://localhost:1949",
     "fmt": "prettier --config .prettierrc.js --write '**/*.md'",
     "mod-links": "MOD_NUMBER=$0; find syllabus/ -path syllabus/${MOD_NUMBER}\\*.md -print0 | xargs -0 -n1 markdown-link-check -c .github/workflows/mlc_config.json && echo \"\nCheck complete for mod\"",
