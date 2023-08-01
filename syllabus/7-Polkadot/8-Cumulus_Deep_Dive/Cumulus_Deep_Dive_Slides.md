@@ -212,7 +212,7 @@ Notes:
 
 Notes:
 
-orage: values present in the POV
+orange: values present in the POV
 green: hash of the siblings node required for the pov
 white: hash of the nodes that are constructed with orange and green nodes
 red: not required hash
