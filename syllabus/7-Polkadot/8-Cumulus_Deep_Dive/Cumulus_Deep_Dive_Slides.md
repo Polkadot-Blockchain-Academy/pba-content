@@ -649,7 +649,7 @@ Commented Notes
 
 Notes:
 
-Now almost every change to the client and the runtime of the substrate based-chain is explained, is missing only the runtime upgrade managment that is not so easy as in a normal substrate-based solo chain.
+Now almost every change to the client and the runtime of the substrate based-chain is explained, is missing only the runtime upgrade management that is not so easy as in a normal substrate-based solo chain.
 
 ---v
 
