@@ -187,11 +187,12 @@ Notes:
     <div>"The middleman" can decide to ban some end users or some transactions, or can be taken control of by an attacker.</div>
     <!-- .element: class="fragment" data-fragment-index="4" -->
   </pba-col>
-  <!-- .element: class="fragment" data-fragment-index="3" -->
+  <!-- .element: class="fragment" data-fragment-index="3 " -->
    <pba-col left>
      <h4>Frontrunning problem</h4>
      <!-- .element: class="fragment" data-fragment-index="5" -->
      <div>"The middleman" knows all the transactions that are submitted before they are actually applied, and can inject its own transactions ahead of time for its own monetary gains.</div>
+     <!-- .element: class="fragment" data-fragment-index="6" -->
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="5" -->
 </pba-cols>
@@ -404,7 +405,7 @@ Now, let's dive into the Polkadot solution of light clients for all Substrate ch
 
 As we progress through the slide, you might have come across or heard various terms and concepts related to light clients.
 
-At this point, it's crucial to draw a clear distinction between 2 distinct categories;
+At this point, it's crucial to draw a clear distinction;
 Let's proceed with a more focused and detailed exploration of light clients in the Polkadot Ecosystem.
 
 ---v
@@ -443,14 +444,14 @@ Let's proceed with a more focused and detailed exploration of light clients in t
 
 Notes:
 
-Smoldot - is the light client implementation from scratch - meaning, we did not make substrate lighter. It was rewritten from scratch - and it comes with:
+Smoldot - is the light client implementation from scratch - meaning, we did not make substrate lighter. It was rewritten from scratch, in rust - and it comes with:
 
 - smoldot-light-js (/wasm-node): A JavaScript package that can connect to a Substrate-based chains as a light client. Works both in the browser and in NodeJS/Deno. This is the main component of this repository.
 - smoldot (/lib): An unopinionated Rust library of general-purpose primitives that relate to Substrate and Polkadot. Serves as a base for the other components.
 - smoldot-light (/light-base): A platform-agnostic Rust library that can connect to a Substrate-based chain as a light client. Serves as the base for the smoldot-light-js component explained above.
 - smoldot-full-node (/full-node): A work-in-progress prototype of a full node binary that can connect to Substrate-base chains. Doesn't yet support many features that the official client supports.
 
-Powered by Pierre (tomaka)
+Powered by Pierre Krieger (a.k.a. tomaka)
 
 ---v
 
@@ -504,7 +505,7 @@ Notes:
 - new JSON-RPC protocol: https://github.com/paritytech/json-rpc-interface-spec/
 - As showcased in Decoded 2023 by Daan van der Plas: "Smoldot in Mobile Apps" (https://www.youtube.com/watch?v=Z7FiFHgotzE&feature=share)
 
-We'll be using substrate connect's TS/JS code as pseudo-coode for our examples
+We'll be using substrate connect's TS/JS code as pseudo-code for our examples
 
 ---
 
@@ -666,7 +667,7 @@ mainChain.sendJsonRpc(
 
 ### Or with a Custom Chainspec
 
-```javascript[0|2, 4| 6-13| 9 | 15-18]
+```javascript[0|1|2,4|6|7|8,13|9|10-12| 15-18]
 import { createScClient, WellKnownChain } from "@substrate/connect";
 import myLovelyChainspec from './myLovelyChainspecFromSubstrateChain.json';
 
