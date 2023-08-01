@@ -244,15 +244,25 @@ pba-flex[right] {
 	margin: auto;
 }
 
-.mermaid.size-10 { width: 140px; }
-.mermaid.size-20 { width: 280px; }
-.mermaid.size-30 { width: 420px; }
-.mermaid.size-40 { width: 560px; }
-.mermaid.size-50 { width: 700px; }
-.mermaid.size-60 { width: 840px; }
-.mermaid.size-70 { width: 980px; }
-.mermaid.size-80 { width: 1120px; }
-.mermaid.size-90 { width: 1260px; }
+.mermaid.size-10 { width: 10%; }
+.mermaid.size-20 { width: 20%; }
+.mermaid.size-30 { width: 30%; }
+.mermaid.size-40 { width: 40%; }
+.mermaid.size-50 { width: 50%; }
+.mermaid.size-60 { width: 60%; }
+.mermaid.size-70 { width: 70%; }
+.mermaid.size-80 { width: 80%; }
+.mermaid.size-90 { width: 90%; }
+.mermaid.size-110 { width: 110%; }
+.mermaid.size-120 { width: 120%; }
+.mermaid.size-130 { width: 130%; }
+.mermaid.size-140 { width: 140%; }
+.mermaid.size-150 { width: 150%; }
+.mermaid.size-160 { width: 160%; }
+.mermaid.size-170 { width: 170%; }
+.mermaid.size-180 { width: 180%; }
+.mermaid.size-190 { width: 190%; }
+
 
 /* Ensure certain elements are never larger than the slide itself */
 /* Set in ./reveal.json -> "width": 1400, "height": 900, */
