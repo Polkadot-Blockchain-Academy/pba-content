@@ -8,7 +8,11 @@ duration: 30 min
 
 Notes:
 
-This feature delivers shorter parachain block times and an order of magnitude increase in quantity of Polkadot blockspace.
+Hello again everyone
+
+Today I'll be speaking to you about asynchronous backing, the new feature which delivers shorter parachain block times and an order of magnitude increase in quantity of Polkadot blockspace.
+
+Lets get to it
 
 ---
 
