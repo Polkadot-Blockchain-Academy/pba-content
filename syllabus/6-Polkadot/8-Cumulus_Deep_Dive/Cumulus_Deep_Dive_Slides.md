@@ -336,7 +336,7 @@ Notes:
 
 #### Candidate Receipt
 
-- The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Recepeit** to represent the freshly validated block
+- The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Receipt** to represent the freshly validated block
 
 Notes:
 
