@@ -686,7 +686,7 @@ https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgra
 
 ---v
 
-##### PVF Pre-Chekcing Process
+##### PVF Pre-Checking Process
 
 - The relay chain keeps track of all the new PVFs that need to be checked
 - Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
