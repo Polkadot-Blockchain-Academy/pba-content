@@ -60,7 +60,7 @@ Before finality, the relay chain can _fork_, often accidentally due to races.
 
 Tool: deliberately fork away from unfinalized blocks we don't like.
 
-<img rounded width=700, src="../assets/BABE-is-forkful.png" />
+<img rounded style="width: 700px;" src="../assets/BABE-is-forkful.png" />
 
 Notes:
 
@@ -88,7 +88,7 @@ Validators are constantly running many instances of these protocols, for candida
 
 ### Candidate Lifecycle
 
-<img rounded width=1000, src="../assets/candidate_paths.svg" />
+<img rounded style="width: 1000px;" src="../assets/candidate_paths.svg" />
 
 ---
 
@@ -108,7 +108,7 @@ Goal: Have as few checkers as reasonably possible.
 
 #### Validator Group Assignments and Execution Cores
 
-<img rounded width=1100, src="../assets/validator-groups.png" />
+<img rounded style="width: 1100px;" src="../assets/validator-groups.png" />
 
 Notes:
 
@@ -126,7 +126,7 @@ Groups are assigned to specific **Execution Core**s, and these assignments chang
 ## Definition: HeadData
 
 > **Head Data** is an opaque and compact representation of a parachain's current state.
-It can be a hash or a small block header, but must be small.
+> It can be a hash or a small block header, but must be small.
 
 ---
 
@@ -163,7 +163,7 @@ fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
 
 ## Relay Chain Block Contents
 
-<img rounded width=1000, src="../assets/block_contents.svg" />
+<img rounded style="width: 1000px;" src="../assets/block_contents.svg" />
 
 ---
 
@@ -200,7 +200,7 @@ fn simple_collation_loop() {
 
 ---
 
-<img rounded width=1000, src="../assets/pvf_duality.svg" />
+<img rounded style="width: 1000px;" src="../assets/pvf_duality.svg" />
 
 ---
 
@@ -216,7 +216,7 @@ They distribute their candidates and statements via the P2P layer, and then the 
 
 ## Backing: Networking
 
-<img rounded width=1000, src="../assets/backing-networking.png" />
+<img rounded style="width: 1000px;" src="../assets/backing-networking.png" />
 
 ---
 
@@ -250,7 +250,7 @@ If the parablock doesn't get enough statements fast enough, the relay chain runt
 
 <div>
 
-<img style="width: 450px;" src="../assets/erasure_coding.png" />
+<img rounded style="width: 450px;" src="../assets/erasure_coding.png" />
 
 </div>
 
@@ -287,7 +287,7 @@ fn get_availability_chunks() {
 
 ---
 
-<img rounded width=1300px src="../assets/availability-inclusion.png" />
+<img rounded style="width: 1300px;" src="../assets/availability-inclusion.png" />
 
 Notes:
 
@@ -297,7 +297,7 @@ In practice, we allow more than a single block for availability to be timed out.
 
 ## Parablock Inclusion and Finality
 
-<img rounded width=600, src="../assets/parachain-finality.png" />
+<img rounded style="width: 600px;" src="../assets/parachain-finality.png" />
 
 ---
 
@@ -392,12 +392,13 @@ Validators only issue statements about **a few** candidates.
 ---
 
 Validators issue two types of statements:
-  * Assignments: "I intend to check X"
-  * Approvals: "I checked & approved X"
+
+- Assignments: "I intend to check X"
+- Approvals: "I checked & approved X"
 
 ---
 
-<img rounded width=1300px src="../assets/approval_state.svg" />
+<img rounded style="width: 1300px;" src="../assets/approval_state.svg" />
 
 ---
 
@@ -407,7 +408,7 @@ Validators always **generate** their assignments, but keep them secret unless th
 
 ---
 
-<img rounded width=1300px src="../assets/approval_flow.svg" />
+<img rounded style="width: 1300px;" src="../assets/approval_flow.svg" />
 
 ---
 
@@ -415,7 +416,8 @@ Validator assignments are secret until **revealed**.
 
 Validators **distribute** revealed assignments before checking the candidate.
 
-Assignments without following are called **no-shows**. No-shows are suspicious, and cause validators to raise their bar for approval.
+Assignments without following are called **no-shows**.
+No-shows are suspicious, and cause validators to raise their bar for approval.
 
 Notes:
 
@@ -423,11 +425,11 @@ If validators began downloading data before revealing their assignment, an attac
 
 ---
 
-<img rounded width=1300px src="../assets/approval_state.svg" />
+<img rounded style="width: 1300px;" src="../assets/approval_state.svg" />
 
 ---
 
-<img rounded width=700, src="../assets/lernaean-hydra.jpg">
+<img rounded style="width: 700px;" src="../assets/lernaean-hydra.jpg"/>
 
 Notes:
 
@@ -454,7 +456,7 @@ Votes are transmitted by p2p and also collected on-chain.
 
 ## Dispute Resolution
 
-<img rounded width=700, src="../assets/validator-dispute-participation.png" />
+<img rounded style="width: 700px;" src="../assets/validator-dispute-participation.png" />
 
 Notes:
 
@@ -481,7 +483,7 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 
 </pba-flex>
 
-<img rounded width=650, src="../assets/grandpa-voting-rule.png" />
+<img rounded style="width: 650px;" src="../assets/grandpa-voting-rule.png" />
 
 ---
 
@@ -490,7 +492,7 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 Validators refuse to author relay chain blocks on top of forks containing parablocks which are invalid or have lost disputes.
 This causes a "reorganization" whenever a dispute resolves against a candidate.
 
-<img rounded width=650, src="../assets/babe-chain-selection.png" />
+<img rounded style="width: 650px;" src="../assets/babe-chain-selection.png" />
 
 ---
 
@@ -506,7 +508,7 @@ Since Polkadot involves not only on-chain logic but off-chain logic, the runtime
 
 Clients learn about the state by invoking **Runtime APIs** at recent blocks, and the runtime is updated with **new blocks**.
 
-<img rounded width=900, src="../assets/runtime-node-interaction.png" />
+<img rounded style="width: 900px;" src="../assets/runtime-node-interaction.png" />
 
 Notes:
 
@@ -581,8 +583,8 @@ fn handle_active_leaves_update(update: ActiveLeavesUpdate) {
 }
 ```
 
-This works! Orchestra ensures that the message to the other subsystem only arrives
-after it has received the same update about new blocks.
+This works!
+Orchestra ensures that the message to the other subsystem only arrives after it has received the same update about new blocks.
 
 ---
 
