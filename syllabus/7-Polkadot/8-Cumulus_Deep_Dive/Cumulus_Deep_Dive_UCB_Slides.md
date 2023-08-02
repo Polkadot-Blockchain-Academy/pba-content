@@ -126,9 +126,7 @@ Parachain consensus is modified to:
 <pba-flex center>
 
 - Achieve sequencing consensus
-<!-- .element: class="fragment" data-fragment-index="1" -->
 - Leave finality to the relay chain
-<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
@@ -199,6 +197,7 @@ loop {
 ### Ensuring Block Availability
 
 As a part of the parachains protocol, Polkadot makes parachain blocks available for several hours after they are backed.
+<br><br>
 
 <pba-flex center>
 
@@ -321,13 +320,17 @@ Some(CollationResult { collation, result_sender: Some(result_sender) })
 
 ### What is Runtime Validation?
 
+<pba-flex center>
+
 - The relay chain ensures that every parachain block follows the rules defined by that parachain's current code.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Constraint: the relay chain must be able to execute Runtime Validation of a parachain block without access to the entirety of that parachain's state
+- Constraint: The relay chain must be able to execute runtime validation of a parachain block without access to the entirety of that parachain's state
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+</pba-flex>
 
 <div class="r-stack">
 <img src="../assets/runtime_validation_1.svg" style="width: 60%" />
@@ -337,17 +340,19 @@ Some(CollationResult { collation, result_sender: Some(result_sender) })
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
-</br>
+<pba-flex center>
 
 - Building Blocks to make this possible, the PVF and PoV, are delivered within collations
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
+</pba-flex>
+
 ---
 
 #### Parachain Validation Function - PVF
 
-- The STF of the Parachain must be stored on the Relay Chain
+- The current STF of each Parachain is stored on the Relay Chain, wrapped as a PVF
 
 ```rust [6]
 /// A struct that carries code of a parachain validation function and its hash.
@@ -362,40 +367,206 @@ pub struct Pvf {
 
 </br>
 
-- New state transitions that occur on a parachain must be validated against the registered parachain code via the PVF
+- New state transitions that occur on a parachain must be validated against the PVF
 
 Notes:
 
-The code is hashed and saved in the storage of the relay chain. There is another map in the storage where the paraId is the key and the ValidationCodeHash (the hash of the PVF) is the value.
+The code is hashed and saved in the storage of the relay chain.
 
 ---
 
+#### Why PVF Rather than STF?
+
+<pba-cols>
+<pba-col center>
+
+<img src="../assets/cumulus_sketch_4.svg" width = "100%"/>
+
+</pba-col>
+<pba-col center>
+
+- The PVF is not just a copy paste of the parachain Runtime
+
+</br>
+
+- The PVF contains an extra function, `validate_block`
+
+</br>
+
+**WHY!?**
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+PVF not only contains the runtime but also a function `validate_block` needed to interpret all the extra information in a PoV required for validation. This extra information is unique to each parachain and opaque to the relay chain.
+
 ---
 
-## Proof of Validity (PoV)
-
----
-
-## How Cumulus Sets and Updates the PVF
+#### Validation Path Visualized
 
 <div class="r-stack">
-<img src="../assets/cumulus_sketch_1.svg" style="width: 70%" />
-<img src="../assets/cumulus_sketch_2.svg" style="width: 70%" />
+<img src="../assets/collation_path_1.svg" style="width: 70%" />
+<img src="../assets/collation_path_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="../assets/cumulus_sketch_3.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<img src="../assets/cumulus_sketch_4.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="3" -->
 </div>
 
 Notes:
 
-- The parachain validation function is composed of our parachain runtime code and the function validate_block
-- Updates to the parachain validation function
+The input of the runtime validation process is the PoV and the function called in the PVF is 'validate_block', this will use the PoV to be able to call the effective runtime and then create an output representing the state transition, which is called a CandidateReceipt.
+
+---
+
+#### What Does validate_block Actually Do?
+
+<pba-flex center>
+
+- The parachain runtime expects to run in conjucntion with a parachain client
+- But validation is occuring in a relay chain node
+- We need to implement the API the parachain client exposes to the runtime, known as host functions
+- The host functions most importantly allow the runtime to query its state, so we need a light weight replacement for the parachain's state sufficient for the execution of this single block
+- `validate_block` prepares said state and host functions
+
+</pba-flex>
+
+---
+
+#### Validate Block in Code
+
+```rust [2|3-4|6|8-11]
+// Very simplified
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+    replace_host_functions();
+
+    // Run `execute_block` on top of the state
+    with_state(state, || {
+        execute_block(input.block).expect("Block is invalid")
+    })
+
+    // Create the output of the result
+    create_output()
+}
+```
+
+But where does `storage_proof` come from?
+
+Notes:
+
+We construct the sparse in-memory database from the storage proof and
+then ensure that the storage root matches the storage root in the `parent_head`.
+
+---
+
+##### Host Function Replacement Visualized
+
+<div class="r-stack">
+<img src="../assets/replace_host_function_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/replace_host_function_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
+---
+
+### Collation Revisited
+
+```rust[1|2-5|12-15|6-7|8-11]
+pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
+	/// Messages destined to be interpreted by the Relay chain itself.
+	pub upward_messages: UpwardMessages,
+	/// The horizontal messages sent by the parachain.
+	pub horizontal_messages: HorizontalMessages,
+	/// New validation code.
+	pub new_validation_code: Option<ValidationCode>,
+	/// The head-data produced as a result of execution.
+	pub head_data: HeadData,
+	/// Proof to verify the state transition of the parachain.
+	pub proof_of_validity: MaybeCompressedPoV,
+	/// The number of messages processed from the DMQ.
+	pub processed_downward_messages: u32,
+	/// The mark which specifies the block number up to which all inbound HRMP messages are processed.
+	pub hrmp_watermark: BlockNumber,
+}
+```
+
+Notes:
+Code highlighting:
+- Messages passed upwards
+- Downward messages processed
+- New code
+- head_data & PoV (the piece necessary for parachain validation)
+
+---
+
+### Proof of Validity (Witness Data)
+
+- Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
+- It allows the reconstruction of a sparse in-memory merkle trie
+- State root can then be compared to that from parent header
+
+---
+
+### Example of Witness Data Construction
+
+<div class="r-stack">
+<img src="../assets/pov_witness_data_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/pov_witness_data_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
+</br>
+
+- Only includes the data modified in this block along with hashes of the data from the rest of the trie
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- This makes up the majority of the data in a collation (max 5MiB)
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+
+orange: Data values modified in this block
+green: Hash of the siblings node required for the pov
+white: Hash of the nodes that are constructed with orange and green nodes
+red: Unneeded hash
+blue: Head of the trie, hash present in the previous block header
+
+---
+
+#### Parablock Validation in Summary
+
+```rust [2|3-4|6]
+// Very simplified
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+    replace_host_functions();
+
+    // Run `execute_block` on top of the state
+    with_state(state, || {
+        execute_block(input.block).expect("Block is invalid")
+    })
+
+    // Create the output of the result
+    create_output()
+}
+```
+
+- Now we know where the **storage_proof** comes from!
+- **into_state** constructs our storage trie
+- Host functions written to access this new storage
 
 ---
 
 ## Cumulus and Parachain Runtime Upgrades
+
+<pba-flex center>
 
 - Every Substrate blockchain supports runtime upgrades
 <!-- .element: class="fragment" data-fragment-index="0" -->
@@ -406,8 +577,8 @@ Notes:
 
 - What happens if PVF compilation takes too long?
   <!-- .element: class="fragment" data-fragment-index="1" -->
-  - In approval checking there may be many no-shows leading to slow finality
-  - In disputes neither side may reach super-majority. Nobody will get slashed and the chain will not be reverted or finalized.
+  - Approval no-shows
+  - In disputes neither side may reach super-majority
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -416,9 +587,11 @@ Notes:
 - Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
----v
+</pba-flex>
 
-##### Solution
+---
+
+### Solution
 
 The relay chain needs a fairly hard guarantee that PVFs can be compiled within a reasonable amount of time.
 
@@ -427,8 +600,9 @@ The relay chain needs a fairly hard guarantee that PVFs can be compiled within a
 </br>
 
 - Collators execute a runtime upgrade but it is not applied
+- Collators send the new runtime code to the relay chain in a collation
 - The relay chain executes the **PVF Pre-Chekcing Process**
-- The first parachain block to be included after the end of the process needs to apply the new runtime
+- The first parachain block to be included after the end of the process applies the new runtime
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -442,14 +616,14 @@ Notes:
 
 https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade
 
----v
+---
 
 ##### PVF Pre-Checking Process
 
 - The relay chain keeps track of all the new PVFs that need to be checked
 - Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
   - binary vote: accept or reject
-- As soon as a super majority is reached the voting is concluded
+- Super majority concludes the vote
 - The state of the new PVF is updated on the relay chain
 
 Notes:

@@ -190,7 +190,7 @@ Notes:
 ### Witness Data
 
 - Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
-  - It allows the reconstruction of a sparse in-memory merkle trie
+- It allows the reconstruction of a sparse in-memory merkle trie
 
 ---v
 
@@ -205,14 +205,14 @@ Notes:
 
 </br>
 
-- Composed of only the data used in the state transitions of the block being validated
+- Only includes the data modified in this block along with hashes of the data from the rest of the trie
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - This makes up the majority of the data in a collation (max 5MiB)
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
-orange: values present in the POV
+orange: data values modified in this block
 green: hash of the siblings node required for the pov
 white: hash of the nodes that are constructed with orange and green nodes
 red: not required hash
