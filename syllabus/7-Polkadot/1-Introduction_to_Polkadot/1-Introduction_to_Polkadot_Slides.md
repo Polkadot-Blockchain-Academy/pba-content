@@ -28,7 +28,8 @@ Polkadot has many faces, both technical and social.
 
 It is the real-world instantiation of the technology described within this module.
 
-These technologies only define the limits of the environment. Polkadot is everything which happens within it.
+These technologies only define the limits of the environment.
+Polkadot is everything which happens within it.
 
 ---
 
@@ -61,10 +62,10 @@ source: banner image from https://twitter.com/gavofyork
 ## Goals of the Environment
 
 1. Real-time, secure, global consensus on system state
-2. Trustless, censorship-resistant, and permissionless transaction at scale
-3. Explicit network-wide governance and co-evolution
-4. General programmable computation with full security
-5. Secure and trust-minimized interoperability between processes
+1. Trustless, censorship-resistant, and permissionless transaction at scale
+1. Explicit network-wide governance and co-evolution
+1. General programmable computation with full security
+1. Secure and trust-minimized interoperability between processes
 
 ---
 
@@ -171,13 +172,15 @@ Simplified Polkadot Architecture (Parachains)
 
 ## The Relay Chain
 
-The relay chain is the "hub" of Polkadot, providing the main games which validators play. It is built with Substrate.
+The relay chain is the "hub" of Polkadot, providing the main games which validators play.
+It is built with Substrate.
 
 Notably, the functionality of the relay chain is minimized,<br/>with the expectation that more complex functionalities will be pushed to less critical parts of the system.
 
 ---
 
 ## Relay Chain Functionality:
+
 - Governance (moving to parachain)
 - Staking
 - Registration, scheduling,<br/>and advancement of parachains
@@ -188,8 +191,9 @@ Notably, the functionality of the relay chain is minimized,<br/>with the expecta
 ---
 
 The Relay Chain consists of two key games:
-  * Relay Chain Consensus
-  * Parachain Consensus
+
+- Relay Chain Consensus
+- Parachain Consensus
 
 These games are the enablers of all activity within Polkadot.
 
@@ -200,12 +204,13 @@ These games are the enablers of all activity within Polkadot.
 <pba-flex left>Goal: Grow and finalize the relay chain, comprised of only valid blocks</pba-flex>
 
 <pba-flex left>Rules:</pba-flex>
-  - Validators put skin in the game in the form of tokens.
-  - Validators are incentivized to make new relay chain blocks (BABE)
-  - Validators are incentivized to vote to finalize recent relay chain blocks (GRANDPA)
-  - Validators are incentivized to include user transactions in their relay chain blocks.
-  - Validators get nothing for building bad blocks or building on top of them.
-  - Validators are slashed for making blocks out of turn.
+
+- Validators put skin in the game in the form of tokens.
+- Validators are incentivized to make new relay chain blocks (BABE)
+- Validators are incentivized to vote to finalize recent relay chain blocks (GRANDPA)
+- Validators are incentivized to include user transactions in their relay chain blocks.
+- Validators get nothing for building bad blocks or building on top of them.
+- Validators are slashed for making blocks out of turn.
 
 **The game works whenever <1/3 of validators misbehave.**
 
@@ -216,11 +221,12 @@ These games are the enablers of all activity within Polkadot.
 <pba-flex left>Goal: Grow registered parachains and post only valid updates to the Relay Chain</pba-flex>
 
 <pba-flex left>Rules:</pba-flex>
-  - Validators are incentivized to attest to new parachain updates
-  - Whichever Validator makes the next Relay Chain block includes some attested parachain updates
-  - Validators are slashed if they attest to incorrect parachain updates
-    - incorrect means "not according to the parachain's Wasm code"
-  - Validators check each others' work to initiate the slashing procedure
+
+- Validators are incentivized to attest to new parachain updates
+- Whichever Validator makes the next Relay Chain block includes some attested parachain updates
+- Validators are slashed if they attest to incorrect parachain updates
+  - incorrect means "not according to the parachain's Wasm code"
+- Validators check each others' work to initiate the slashing procedure
 
 **The game works whenever <1/3 of validators misbehave.**
 
@@ -234,7 +240,8 @@ All other functionalities of the relay chain (staking, governance, balances, etc
 
 As the Relay Chain progresses, it operates a system for selecting and accruing capital behind validators.
 
-Accounts on Polkadot may issue a "nominate" transaction to select validators they support. Every day, an automated election selects the validators for the next 24 hours.
+Accounts on Polkadot may issue a "nominate" transaction to select validators they support.
+Every day, an automated election selects the validators for the next 24 hours.
 
 Nominators share in both the reward and slashing of their nominees.
 
@@ -313,7 +320,6 @@ They set the technical direction for the network through RFCs.
 
 </pba-cols>
 
-
 ---
 
 <!-- .slide: data-background-color="#000" -->
@@ -324,7 +330,8 @@ They set the technical direction for the network through RFCs.
 
 > (1) Real-time, secure, global consensus on system state
 
-This is provided by the validators participating in **Relay Chain Consensus**. Every block they make and finalize advances the system state.
+This is provided by the validators participating in **Relay Chain Consensus**.
+Every block they make and finalize advances the system state.
 
 ---
 
@@ -412,9 +419,10 @@ Polkadot allocates its resources to parachains through **Execution Cores**.
 
 Just like a decentralized CPU, Polkadot multiplexes many processes onto its cores.
 
-When a parachain is assigned to a core, it can advance. Otherwise, it lies dormant.
+When a parachain is assigned to a core, it can advance.
+Otherwise, it lies dormant.
 
-Execution Cores enable efficient resource allocation through *Coretime* trading.
+Execution Cores enable efficient resource allocation through _Coretime_ trading.
 
 ---
 
@@ -440,7 +448,8 @@ Time -->
 
 ## Coretime: Polkadot's Product
 
-Coretime is what applications buy to build on Polkadot. Goal: be like cloud.
+Coretime is what applications buy to build on Polkadot.
+Goal: be like cloud.
 
 Primary and secondary markets are key enablers.
 
