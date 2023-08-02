@@ -128,7 +128,8 @@ In the slides, we will look at single instances of the protocols, but it should 
 
 ## Definition: HeadData
 
-> **Head Data** is an opaque and compact representation of a parachain's current state. It can be a hash or a small block header, but must be small.
+> **Head Data** is an opaque and compact representation of a parachain's current state.
+It can be a hash or a small block header, but must be small.
 
 ---
 
@@ -153,8 +154,8 @@ fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
 #### Why might `validate_block` fail?
 
 1. `parent` or `PoV` is malformed - the implementation can't transform it from an opaque to specific representation
-2. `parent` and `PoV` decode correctly but don't lead to a valid state transition
-3. `PoV` is a valid block but doesn't follow from the `parent`
+1. `parent` and `PoV` decode correctly but don't lead to a valid state transition
+1. `PoV` is a valid block but doesn't follow from the `parent`
 
 ```rust
 fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
@@ -166,9 +167,9 @@ fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
 ## What goes into a Relay Chain Block?
 
 1. New Candidates (`Vec<Candidate>`)
-2. Availability Statements (`Vec<SignedAvailabilityStatement>`)
-3. Dispute Statements (`Vec<SignedDisputeStatement`)
-4. Transactions (`Vec<Transaction>`, from users)
+1. Availability Statements (`Vec<SignedAvailabilityStatement>`)
+1. Dispute Statements (`Vec<SignedDisputeStatement`)
+1. Transactions (`Vec<Transaction>`, from users)
 
 Any node can be selected as the next Relay Chain block author, so these data must be widely circulated.
 
@@ -185,6 +186,7 @@ The collator sends this to validator group assigned to the parachain over the p2
 ---
 
 Some collator pseudocode:
+
 ```rust
 fn simple_collation_loop() {
   while let Some(relay_hash) = wait_for_next_relay_block() {
@@ -254,7 +256,8 @@ If the parablock doesn't get enough statements fast enough, the relay chain runt
 
 <div class="col-span-2">
 
-Each validator is responsible for one piece of this data. As long as enough of these pieces stay available, the data is recoverable.
+Each validator is responsible for one piece of this data.
+As long as enough of these pieces stay available, the data is recoverable.
 
 The statements validators sign and distribute to all other validators essentially say "I have my piece".
 
@@ -469,7 +472,6 @@ https://github.com/paritytech/orchestra
 **Orchestra** allows us to split up the node's logic into many "Subsystems" which run asynchronously.
 
 These subsystems communicate with message passing and all receive signals which coordinate their activities.
-
 
 ---
 

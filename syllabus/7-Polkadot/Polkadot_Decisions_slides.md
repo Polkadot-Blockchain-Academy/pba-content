@@ -20,7 +20,7 @@ Jeff Bezos outlined in an annual letter to Amazon shareholders how he approaches
 
 Notes:
 
-https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm
+https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm <!-- markdown-link-check-disable-line -->
 
 ---
 
@@ -67,7 +67,7 @@ Decisions that can be easily changed in the future.
 
 ---
 
-<image src="../../../assets/img/7-Polkadot/less-trust-more-truth.svg" style="width: 1000px; filter: invert();">
+<image src="../../assets/img/7-Polkadot/less-trust-more-truth.svg" style="width: 1000px; filter: invert();">
 
 Notes:
 
@@ -105,7 +105,7 @@ This philosophy is a realization that building a blockchain is trying to build a
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/trilemma.svg" style="height: 400px;">
+<image src="../../assets/img/7-Polkadot/trilemma.svg" style="height: 400px;">
 
 </div>
 
@@ -155,7 +155,7 @@ What are the type 1 decisions which make Polkadot... Polkadot?
 
 <div>
 
-<img style="width: 400px;" src="../../../assets/img/0-Shared/logo/webassembly-blue.png" />
+<img style="width: 400px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" />
 
 </div>
 
@@ -185,7 +185,7 @@ These parallel chains (shards) are called Parachains.
 
 <div>
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/sharding.svg" />
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/sharding.svg" />
 
 </div>
 
@@ -199,7 +199,7 @@ These parallel chains (shards) are called Parachains.
 
 <div>
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/app-chain.svg" />
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/app-chain.svg" />
 
 </div>
 
@@ -229,7 +229,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/xcmp-2.svg" style="height: 500px;">
+<image src="../../assets/img/7-Polkadot/xcmp-2.svg" style="height: 500px;">
 
 A visual of XCMP channels between Parachains.
 
@@ -253,7 +253,7 @@ Polkadot is unique in that it provides all connected parachains with the same se
 
 <div>
 
-<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+<image src="../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
 
 </div>
 
@@ -271,7 +271,7 @@ Polkadot introduces a shared security model so that chains can interact with oth
 
 Polkadot's Shared Security is powered through the creation and allocation of execution cores.
 
-<img style="width: 1000px;" src="../../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+<img style="width: 1000px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
 Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
 
@@ -283,7 +283,7 @@ Execution cores provide blockspace-as-a-service, and are designed to work with a
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/xcmp-finalization.svg" style="height: 500px;">
+<image src="../../assets/img/7-Polkadot/xcmp-finalization.svg" style="height: 500px;">
 
 </div>
 
@@ -311,7 +311,7 @@ This is continuing to evolve with the addition of "accords" / SPREE.
 
 ### Block Production
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/babe.svg" />
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/babe.svg" />
 
 Current implementation is BABE, which is forkful with probabilistic finality.
 
@@ -321,7 +321,7 @@ Current implementation is BABE, which is forkful with probabilistic finality.
 
 ### Finality Gadget
 
-<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/grandpa.png" />
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/grandpa.png" />
 
 Current implementation is GRANDPA, which is robust and scalable against network partitions.
 
@@ -363,7 +363,7 @@ This gives the Polkadot Relay Chain and all connected parachains an evolutionary
 
 <div>
 
-<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/runtime-upgrade.png" />
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/runtime-upgrade.png" />
 
 </div>
 
@@ -386,7 +386,7 @@ Polkadot and its parachains need to change over time to stay relevant, and the n
 
 <div>
 
-<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/voting.svg" />
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/voting.svg" />
 
 </div>
 
@@ -408,7 +408,7 @@ It is entirely controlled on-chain by the governance system of Polkadot, which m
 
 <div>
 
-<img style="width: 600px;" src="../../../assets/img/7-Polkadot/decisions/treasury.svg" />
+<img style="width: 600px;" src="../../assets/img/7-Polkadot/decisions/treasury.svg" />
 
 </div>
 
@@ -430,13 +430,13 @@ Polkadot was designed around Parachains, but the exact meaning and manifestation
 
 <div>
 
-<img style="height: 200px;" src="../../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
+<img style="height: 200px;" src="../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
 
 </div>
 
 <div>
 
-<img style="height: 200px;" src="../../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+<img style="height: 200px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
 </div>
 
@@ -463,7 +463,7 @@ Notes:
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/xcm-stack.svg" style="height: 500px;">
+<image src="../../assets/img/7-Polkadot/xcm-stack.svg" style="height: 500px;">
 
 Instructions to teleport an asset between parachains.
 
