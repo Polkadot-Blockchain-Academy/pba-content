@@ -194,3 +194,11 @@ th {
 	vertical-align: middle;
 	line-height: 100px;
 }
+
+.no-bullet-padding ul,
+.no-bullet-padding ul>li::before {
+	padding: 0 !important;
+	/* Remove padding */
+	margin: 0 !important;
+	/* Remove margins */
+}

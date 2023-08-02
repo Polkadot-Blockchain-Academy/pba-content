@@ -122,10 +122,11 @@ cargo install dylint-link
 cargo install cargo-contract --force
 ```
 
-* [binaryen](https://github.com/WebAssembly/binaryen) is a compiler for WebAssembly.
-* [dylint-link](https://github.com/trailofbits/dylint) adds DSL specific lints.
+- [binaryen](https://github.com/WebAssembly/binaryen) is a compiler for WebAssembly.
+- [dylint-link](https://github.com/trailofbits/dylint) adds DSL specific lints.
 
-NOTE:
+Notes:
+
 - Binaryen is a compiler and toolchain infrastructure library for WebAssembly
 - at the moment ink! uses a few unstable Rust features, thus nightly is require
 - rust source code is needed to compile it to wasm
@@ -457,7 +458,8 @@ pub fn non_default() -> Self {
 }
 ```
 
-NOTE:
+Notes:
+
 - lets dissect what a contract code is built like
 - no limit of the number of constructors
 - constructors can call other constructors
@@ -479,7 +481,8 @@ pub fn get(&self) -> bool {
 - `&self` is a reference to the contract's storage
 <!-- #you’re calling this method on  -->
 
-NOTE:
+Notes:
+
 - returns information about the contract state stored on chain
 - reaches to the storage, decodes it and returns the value
 
@@ -500,7 +503,8 @@ pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> {
 - `&mut self` is a mutable reference to the object you’re calling this method on
 - `payable` allows receiving value as part of the call to the ink! message
 
-NOTE:
+Notes:
+
 - constructors are inherently payable
 - ink! message will reject calls with funds if it's not marked as such
 - mutable references allow me to modify the storage.
@@ -543,8 +547,8 @@ pub type Result<T> = core::result::Result<T, MyError>;
 - Use the Err variant to pass your own semantics
 - Type aliases reduce boilerplate & enhance readability
 
+Notes:
 
-NOTE:
 - ink! uses idiomatic Rust error handling
 - ~~messages are the `system boundary`~~
 - returning error variant or panicing reverts the transaction
@@ -569,7 +573,8 @@ pub fn flip(&mut self) {
 
 - what is the state of this contract if the tx is called in an odd block number?
 
-NOTE:
+Notes:
+
 - answer: whatever it was prior to the tx:
   - returning error variant reverts the entire tx on the call stack
 
@@ -593,7 +598,8 @@ pub struct BetPlaced {
 - `#[ink(event)]` is a macro that defines events.
 - Topics mark fields for indexing.
 
-NOTE:
+Notes:
+
 - events are especially important for dapps
 - storage is expensive: reading e.g. aggregate data from chain directly is impossible / impractical
 - dapps the can listen to the event, normalize & store off-chain and answer e.g. complex queries
@@ -624,7 +630,8 @@ pub fn flip(&mut self) {
 - What happens to the events from reverted transactions?
 - Will this event be emitted in an odd block?
 
-NOTE:
+Notes:
+
 - answer: yes, but only because I reverted the condition :)
 
 ---
@@ -662,10 +669,11 @@ impl SimpleDex {
 
 </div>
 
-* Trait Definition: `#[ink::trait_definition]`.
-* Sharing the trait definition to do a cross-contract call.
+- Trait Definition: `#[ink::trait_definition]`.
+- Sharing the trait definition to do a cross-contract call.
 
-NOTE:
+Notes:
+
 - (part of) PSP22 (ERC20 like) contract definition
 - all contracts that respect this definition need to implement it
 - you can now share the trait definition with other contracts
@@ -711,21 +719,23 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
-| Type    | Decoding                              |                     Encoding | Remark                                                                         |
-|---------|---------------------------------------|------------------------------|--------------------------------------------------------------------------------|
-| Boolean | true                                  |                          0x0 | encoded using least significant bit of a single byte                           |
-|         | false                                 |                          0x1 |                                                                                |
-| Unsigned int | 42                                  |  0x2a00                         |                            |
-| Enum    | enum IntOrBool { Int(u8), Bool(bool)} |            0x002a and 0x0101 | first byte encodes the variant index, remaining bytes encode the data          |
-| Tuple   | (3, false)                            |                       0x0c00 | concatenation of each encoded value                                            |
-| Vector  | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
-| Struct  | {x:30u64, y:true}                        | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
+| Type         | Decoding                              | Encoding                     | Remark                                                                         |
+| ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
+| Boolean      | true                                  | 0x0                          | encoded using least significant bit of a single byte                           |
+|              | false                                 | 0x1                          |                                                                                |
+| Unsigned int | 42                                    | 0x2a00                       |                                                                                |
+| Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a and 0x0101            | first byte encodes the variant index, remaining bytes encode the data          |
+| Tuple        | (3, false)                            | 0x0c00                       | concatenation of each encoded value                                            |
+| Vector       | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
+| Struct       | {x:30u64, y:true}                     | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
 
 </div>
 
-NOTE:
+Notes:
+
 - this table is not exhaustive
 - struct example: stored as an vector, names are ignored, only order matters, first four bytes encode the 64-byte integer and then the least significant bit of the last byte encodes the boolean
+
 ---
 
 ## Storage: Packed Layout
@@ -744,7 +754,8 @@ pub struct Token {
 
 - By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
 
-NOTE:
+Notes:
+
 - We talked about the kv database that the storage is, now how is it used precisely
 - Types that can be stored entirely under a single storage cell are called Packed Layout
 - by default ink! stores all storage struct fields under a single storage cell
@@ -802,7 +813,8 @@ pub struct Flipper<KEY: StorageKey = ManualKey<0xcafebabe>> {
 
 </div>
 
-NOTE:
+Notes:
+
 - demonstration of the packed layout - value is stored under the root key
 
 ---
@@ -894,11 +906,12 @@ pub struct Roulette {
 }
 ```
 
-* Every type wrapped in `Lazy` has a separate storage cell.
-* `ManualKey` assignes explicit storage key to it.
-* Why would you want to use a `ManualKey` instead of a generated one?
+- Every type wrapped in `Lazy` has a separate storage cell.
+- `ManualKey` assignes explicit storage key to it.
+- Why would you want to use a `ManualKey` instead of a generated one?
 
-NOTE:
+Notes:
+
 - packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
 - there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
 - lazy provides per-cell access, like a mapping
@@ -912,7 +925,8 @@ NOTE:
 
 <img rounded style="width: 1000px;" src="img/ink/storage-layout.svg" />
 
-NOTE:
+Notes:
+
 - only the pointer (the key) to the lazy type is stored under the root key.
 - only when there is a read of `d` will the pointer be de-referenced and it's value decoded.
 - lazy is a bit of a mis-nomer here, because storage is already initialized.
@@ -934,12 +948,13 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 - Contract's code and it's instance are separated.
 - Contract's address can be updated to point to a different code stored on-chain.
 
-NOTE:
+Notes:
+
 - append only != immutable
 - proxy pattern known from e.g. solidity is still possible
 - within the Substrate framework contract's code is stored on-chain and it's instance is a pointer to that code
- - incentivizes cleaning up after oneself
- - big storage optimization
+- incentivizes cleaning up after oneself
+- big storage optimization
 
 ---
 
@@ -955,7 +970,8 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 
 ```
 
-NOTE:
+Notes:
+
 - you DO NOT want to leave this message un-guarded
 - solutions to `ensure_owner` can range from a very simple ones address checks
 - to a multiple-role database of access controlled accounts stored and maintained in a separate contract
@@ -1056,7 +1072,8 @@ impl MyContract {
 - What is wrong with this contract?
 - How would you fix it?
 
-NOTE:
+Notes:
+
 - we start easy
 - answer: no AC in place
 - parity wallet 150 million `hack`
@@ -1069,9 +1086,8 @@ NOTE:
 
 <div style="font-size: 0.72em;">
 
-* [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit:
-* https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
-
+- [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit:
+- https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
 
 <!-- ```solidity -->
 <!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -->
@@ -1093,7 +1109,8 @@ NOTE:
 
 </div>
 
-NOTE:
+Notes:
+
 - might seem trivial but a very similar hack has happend in the past trapping a lot of funds
 - see: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
 - hacker has "accidentally" called an unprotected `initMultiowned` and proceeded to delete the contract code
@@ -1123,7 +1140,8 @@ NOTE:
 - On-chain domain name registry with a register fee of 100 pico.
 - Why is this a bad idea?
 
-NOTE:
+Notes:
+
 - everything on-chain is public
 - this will be front-run in no time
 - Can you propose a better design?
@@ -1197,7 +1215,8 @@ pub fn swap(
 }
 ```
 
-NOTE:
+Notes:
+
 - slippage protection in place
 
 ---
@@ -1224,7 +1243,8 @@ Notes:
 
 Optional challenge: [github.com/Polkadot-Blockchain-Academy/adder](https://github.com/Polkadot-Blockchain-Academy/adder)
 
-NOTE:
+Notes:
+
 Piotr takes over to talk about making runtime calls from contracts and writing automated tests.
 There is a 15 minute challenge for you in the meantime.
 

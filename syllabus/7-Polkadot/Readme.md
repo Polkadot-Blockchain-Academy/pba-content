@@ -9,66 +9,59 @@ Draw content from:
 
 ## Lessons Overview
 
-### Day 1
+### Day 1 (Partial Day)
 
-- Lesson 1: 1.5 hours
-  instructors: ["Rob", "Andronik"]
-  Introduction to Blockspace and Polkadot.
-  Blockchain scaling history. Rollups and Sharding.
+**Morning**
 
-Break: 30 mins
+11:30 Lecture - Introduction to Polkadot (1 hr) @rphmeier<br>
 
-- Lesson 2: 1.5 hours
-  instructors: ["Rob", "Andronik"]
-  Data sharding: Data availability
-  Execution sharding and security: Approval-voting and Disputes
+**Afternoon**
 
-Lunch break: 1 hour
-
-- Lesson 3: 1.5 hours
-  instructors: ["Rob"]
-  Blockspace + XCMP
-
-Break: 30 mins
-
-- Lesson 4: 1.5 hours
-  instuctors: ["Bradley"]
-  OpenGov (+ workshop if there's time)
+14:00 Lecture - Decisions of Polkadot (1 hr) @shawntabrizi<br>
+15:00 Coffee Break (15 m)<br>
+15:15 Lecture - Simple Shared Security (1 hr) @shawntabrizi<br>
+16:15 Lecture - Execution Sharding in Polkadot (1 hr) @rphmeier<br>
 
 ### Day 2
 
-- Exercise 1: 1.5 hours
-  instructors: ["Andronik"]
-  Building a simple parachain
+**Morning**
 
-Break: 30 mins
+9:00 Discussion - Parachains Protocol AMA (.5 hr) @JoshOrndorff<br>
+9:30 Lecture - Blockspace (.5 hr) @rphmeier<br>
+10:00 Lecture - Deep dive: Execution cores (1 hr) @BradleyOlson64<br>
+11:00 Coffee Break (15 m)<br>
+11:15 Lecture - Deep dive: Cumulus (1.25 hr) @BradleyOlson64<br>
 
-- Lesson 1: 1.5 hour
-  instructors: ["Andronik"]
-  Introduction to Cumulus
+**Afternoon**
 
-Lunch break: 1 hour
+14:00 Lecture - Ecosystem and Economy (1.5 hr) @shawntabrizi<br>
+15:30 Coffee Break (15 m)<br>
+15:45 Exercise - Adder parachain + register parachains (1.5 hr) @JoshOrndorff<br>
 
-- Workshop 1: 30 minutes
-  instructors: ["Bradley"]
-  How to connect a parachain to a relay chain
+### Day 3
 
-- Workshop 2: 1+ hours
-  instructors: ["Bradley"]
-  Parachain auctions
+**Morning**
 
-### Day 3 (Half Day)
+9:00 Lecture - Cross-Chain Message Passing (45 m) @rphmeier<br>
+9:45 Lecture + Exercise - Zombienet (1.5 hr) @pepoviola<br>
+11:15 Coffee Break (15 m)<br>
+11:30 Lecture - Shallow Dive: Asynchronous Backing (30 m) @BradleyOlson64<br>
+12:00 Lecture - Light Clients (1 hr) @wirednkod<br>
 
-- Lesson 1: 1.5 hours
-  instructors: ["Kian"]
-  NPoS
+**Afternoon**
 
-Break: 30 mins
+14:00 Exercise - Upgrade chains to parachains, register through auctions (1.5 hr) @JoshOrndorff<br>
+15:30 Lecture - Polkadot vs Other Security/Scaling Part 1 (1 hr) @Sophia-Gold<br>
+16:30 Coffee Break (15 m)<br>
+16:45 Lecture - Polkadot vs Other Security/Scaling Part 2 (1 hr) @Sophia-Gold<br>
+17:45 Open discussion - Security/Scaling (remainder of day) @Sophia-Gold<br>
 
-- Lesson 2: 45 mins
-  instructors: ["Nikos"]
-  Polkadot light client
+Assumptions:
 
-- Workshop 1: 45 mins
-  instructors: [TODO]
-  XCMP. Opening channels. Sending messages
+- Max instruction window 9:00-6:00 (Lunch from 12:50-2:00)
+
+Lesson Plan Goals:
+
+- Satisfy lesson dependencies (EX: "Deep Dive: Execution Cores" must come after "Introduction to the Parachains Protocol")
+- Place exercise time between lectures wherever possible for student engagement
+- Don't schedule any two lectures back to back from the same presenter unless requested

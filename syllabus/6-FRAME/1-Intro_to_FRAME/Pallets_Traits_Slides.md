@@ -32,15 +32,142 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 
 ---
 
-## Balances Pallet & Currency Trait
+## Held vs Frozen Balance
+
+- Reserved -> Held
+- Locked -> Frozen
+- Both states belong to the user... but cannot be spent / transferred.
+- Held balances stack on top of one another.
+  - Useful for user deposits, or other use cases where there is sybil concerns.
+  - Ex: Deposit for storing data on-chain,
+- Frozen balances can overlap each other.
+  - Useful when you want to use the same tokens for multiple use cases.
+  - Ex: Using the same tokens for both staking and voting in governance.
 
 ---
 
-## Assets Pallet & Fungibles Trait
+## Held Balances
+
+```text
+  Total Balance
+┌─────────────────────────────────────────────────────────┐
+┌────────────────────────────────┼────────────────────────┐
+│┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼                     |ED│
+└────────────────────────────────┼────────────────────────┘
+   Held Balance                      Transferable Balance
+
+┌───────────┐
+│┼┼┼┼┼┼┼┼┼┼┼│  Various Storage Deposits
+└───────────┤
+            ├──────┐
+            │┼┼┼┼┼┼│  Treasury Proposal Deposit
+            └──────┤
+                   ├──────────┐
+                   │┼┼┼┼┼┼┼┼┼┼│  Multisig Deposit
+                   └──────────┤
+                              ├──┐
+                              │┼┼│  Proxy Deposit
+                              └──┘
+```
 
 ---
 
-## NFT Pallet & Non-Fungibles Trait
+## New Holds Example
+
+```text
+  Total Balance
+┌─────────────────────────────────────────────────────────┐
+┌────────────────────────────────┼────────────────────────┐
+│┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼                     |ED│
+└────────────────────────────────┼────────────────────────┘
+   Held Balance                      Transferable Balance
+
+
+                                     ┌────────────────────┐
+              New Hold Successful!   │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼│
+                                     └────────────────────┘
+
+                         ┌────────────────────────────────┐
+    New Hold Failed :(   │┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼│
+                         └────────────────────────────────┘
+```
+
+---
+
+## Frozen Balances
+
+```text
+  Total Balance
+┌─────────────────────────────────────────────────────────┐
+┌────────────────────────────────┼────────────────────────┐
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                     |ED│
+└────────────────────────────────┼────────────────────────┘
+   Frozen Balance                    Transferable Balance
+
+┌───────────────────────┐
+│XXXXXXXXXXXXXXXXXXXXXXX│  Vesting Balance
+└───────────────────────┘
+
+┌────────────────────────────────┐
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  Staking Bond Freeze
+└────────────────────────────────┘
+
+┌─────────────────┐
+│XXXXXXXXXXXXXXXXX│  Governance Vote Freeze
+└─────────────────┘
+```
+
+---
+
+## New Freeze Example
+
+```text
+  Total Balance
+┌─────────────────────────────────────────────────┐
+┌────────────────────────────────┼────────────────┐
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX             |ED│
+└────────────────────────────────┼────────────────┘
+   Frozen Balance                    Transferable Balance
+
+┌───────────────────────┐
+│XXXXXXXXXXXXXXXXXXXXXXX│  New Freeze Successful!
+└───────────────────────┘
+
+┌─────────────────────────────────────────────────┐
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  New Freeze Successful!
+└─────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX│  New Freeze Successful!
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Freeze and Hold Overlap
+
+```text
+  Total Balance
+┌──────────────────────────────────────────────────────────────┐
+   Held Balance
+┌────────────────────────────────┼─────────────────────────────┐
+│┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼                                | E │
+│XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         | D │
+└────────────────────────────────┼─────────────────────────────┘
+   Frozen Balance                    Transferable Balance
+```
+
+---
+
+## Balances Pallet & Fungible Traits
+
+---
+
+## Assets Pallet & Fungibles Traits
+
+---
+
+## NFT Pallet & Non-Fungibles Traits
 
 ---
 
@@ -52,11 +179,15 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 
 ---
 
-## Collectives + Membership Pallet
+## Conviction Voting + Referenda Pallet
+
+(Open Governance)
 
 ---
 
-## Democracy Pallet
+## Ranked Collectives + Whitelist Pallet
+
+(Technical Fellowship)
 
 ---
 
