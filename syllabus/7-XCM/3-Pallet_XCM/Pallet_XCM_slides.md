@@ -35,7 +35,9 @@ Instead, _parachain developers_ write XCVM programs, and package them up into FR
 
 Notes:
 
-We will see an example of this in the XCM pallet, with the teleport_assets and reserve_transfer_assets extrinsics.
+How do wallets wallet providers use XCM ?
+
+We will see examples of XCM being built in the runtime when exploring `teleport_assets` and `reserve_transfer_assets` extrinsics.
 
 ---
 
@@ -100,8 +102,6 @@ Sends a message to the provided destination.
 
 <img rounded style="width: 1200px;" src="../../../assets/img/7-XCM/pallet-xcm-send-paras.svg" alt="pallet-xcm-send" />
 
-_Diagram showcases an HRMP channel_
-
 Notes:
 
 This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
@@ -154,10 +154,12 @@ One version may contain more or different instructions than another, so for part
 
 XCM has a version subscription mechanism, where parties can subscribe to version updates from others.
 
+<pba-flex center>
+
 ```rust
 pub enum VersionedXcm {
-    V2(v2::Xcm),
-	V3(v3::Xcm),
+  V2(v2::Xcm),
+  V3(v3::Xcm),
 }
 ```
 
@@ -172,9 +174,11 @@ Notes:
 But chains need to be aware of the version supported by each other.
 `SubscribeVersion` and `QueryResponse` play a key role here:
 
+<pba-flex center>
+
 ```rust
 enum Instruction {
-  /* snip */
+  // --snip--
   SubscribeVersion {
         query_id: QueryId,
         max_response_weight: u64,
@@ -184,7 +188,7 @@ enum Instruction {
         response: Response,
         max_weight: u64,
   },
-  /* snip */
+  // --snip--
 }
 ```
 
@@ -200,9 +204,11 @@ Notes:
 - `ResponseHandler`: The component in charge of handling response messages from other chains.
 - `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
 
+<pba-flex center>
+
 ```rust
  impl Config for XcmConfig {
-  /* snip */
+  // --snip--
   type ResponseHandler = PalletXcm;
   type SubscriptionService = PalletXcm;
  }
@@ -261,20 +267,21 @@ XCM version negotiation:
 
 ## Response Handler
 
-TODO: XCM doesn't care about responses, FRAME does.
-We could trap them with a question.
-
 Version negotiation is just one example among many kinds of queries one chain can make to another. Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
 
-The XCVM expects a `ResponseHandler` type implementing the `OnResponse`trait, which defines actions to be performed when receiving a `QueryResponse` instructions back from a query.
+---v
 
-A default implementation is provided by `pallet-xcm`. It checks that the response ID is expected, and processes the response accordingly when receiving it. It rejects any response that it did not query beforehand.
+## Reponse Handler
+
+We have talked about XCM being asymmetric, so why are there responses ?
 
 ---v
 
 ## Information Reporting
 
 Every instruction used for information reporting contains `QueryResponseInfo`.
+
+<pba-flex center>
 
 ```rust
 pub struct QueryResponseInfo {
@@ -291,13 +298,22 @@ The dispatchable call function is an optional operation that XCM author can spec
 
 ---v
 
-## Information
+## Information retrieval
+<pba-flex center>
 
 ```rust
 enum Instruction {
-    QueryResponse { query_id: QueryId, response: Response, max_weight: Weight, querier: Option<MultiLocation> },
+    // --snip--
+    QueryResponse {
+        query_id: QueryId,
+        response: Response,
+        max_weight: Weight,
+        querier: Option<MultiLocation>,
+    },
+    // --snip--
 }
 ```
+Notes:
 
 The above instruction is the one used for offering some requested information that the local system is expecting.
 `querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
