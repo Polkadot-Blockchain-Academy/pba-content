@@ -24,6 +24,10 @@ The interoperation of people and systems<br/>creates superadditive economic valu
 
 > The whole is greater than the sum of the parts.
 
+Notes:
+
+https://en.wikipedia.org/wiki/Superadditivity
+
 ---
 
 ## Interoperability & Specialization
@@ -448,7 +452,7 @@ Parachains include an `hrmp_watermark` in their `ValidationResult` indicating a 
 
 This block number tells the relay chain state that the parachain has processed all messages from all inbound channels with `sent_at <= hrmp_watermark`
 
-Legal values for `hrmp_watermark` are either the relay-parent number from the `ValidatiomParams` _or_ a block number where a message was enqueued into an inbound MQC.
+Legal values for `hrmp_watermark` are either the relay-parent number from the `ValidationParams` _or_ a block number where a message was enqueued into an inbound MQC.
 
 ---
 

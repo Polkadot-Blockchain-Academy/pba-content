@@ -138,8 +138,8 @@ Polkadot tries to accomplish that mission by solving three problems:
 <pba-flex center>
 
 1. Computational Scalability
-2. Shared Security
-3. Interoperability
+1. Shared Security
+1. Interoperability
 
 ## </pba-flex>
 
