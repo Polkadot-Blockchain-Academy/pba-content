@@ -365,6 +365,18 @@ The Relay Chain maintains message queues between chains to provide interoperabil
 
 ---
 
+## From This
+
+<img rounded width="600px" src="../assets/terrarium_bottle.jpg" />
+
+---
+
+## To This
+
+<img rounded width="800px" src="../assets/amazon_terrarium.jpg" />
+
+---
+
 ## Blockchain Scalability Trilemma
 
 <pba-cols>
