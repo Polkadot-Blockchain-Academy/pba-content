@@ -164,12 +164,11 @@ fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
 
 ---
 
-## What goes into a Relay Chain Block?
+## Relay Chain Block Contents
 
-1. New Candidates (`Vec<Candidate>`)
-1. Availability Statements (`Vec<SignedAvailabilityStatement>`)
-1. Dispute Statements (`Vec<SignedDisputeStatement`)
-1. Transactions (`Vec<Transaction>`, from users)
+<img rounded width=1000, src="../assets/block_contents.svg" />
+
+---
 
 Any node can be selected as the next Relay Chain block author, so these data must be widely circulated.
 
