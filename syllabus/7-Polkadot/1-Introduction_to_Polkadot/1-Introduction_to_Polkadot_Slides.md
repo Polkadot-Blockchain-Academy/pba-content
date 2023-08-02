@@ -149,7 +149,7 @@ A high level look into the architecture of Polkadot and the actors which maintai
 
 ---
 
-Validators made to provide accurate execution for processes deployed on top of Polkadot.
+Validators are made to provide accurate execution for processes deployed on top of Polkadot.
 
 These processes, defined as WebAssembly Code, are colloquially known as **parachains**.
 
