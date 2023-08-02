@@ -73,11 +73,11 @@ This must be accounted for in the protocol: we cannot assume that the runtime is
 
 <pba-flex center>
 
-1. Collation
-1. Backing
-1. Availability
-1. Approval Checking
-1. Disputes
+1. **Collation**: Making parachain blocks
+1. **Backing**: Validator initial checks & sign-off of blocks
+1. **Availability**: Distributing data needed for checking
+1. **Approval Checking**: Checking blocks
+1. **Disputes**: Settling differences
 
 </pba-flex>
 
@@ -126,7 +126,57 @@ In the slides, we will look at single instances of the protocols, but it should 
 
 ---
 
+## Definition: HeadData
+
+> **Head Data** is an opaque and compact representation of a parachain's current state. It can be a hash or a small block header, but must be small.
+
+---
+
+## Definition: Parachain Validation Function (PVF)
+
+From a Validator's perspective, a parachain is a WebAssembly blob which exposes the following (simplified) function:
+
+```rust
+type HeadData = Vec<u8>;
+struct ValidationResult {
+  /// New head data that should be included in the relay chain state.
+  pub head_data: HeadData,
+  // more fields, like outgoing messages, updated code, etc.
+}
+
+fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
+  -> Result<ValidationResult, ValidationFailed>;
+```
+
+---
+
+#### Why might `validate_block` fail?
+
+1. `parent` or `PoV` is malformed - the implementation can't transform it from an opaque to specific representation
+2. `parent` and `PoV` decode correctly but don't lead to a valid state transition
+3. `PoV` is a valid block but doesn't follow from the `parent`
+
+```rust
+fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
+  -> Result<ValidationResult, ValidationFailed>;
+```
+
+---
+
+## What goes into a Relay Chain Block?
+
+1. New Candidates (`Vec<Candidate>`)
+2. Availability Statements (`Vec<SignedAvailabilityStatement>`)
+3. Dispute Statements (`Vec<SignedDisputeStatement`)
+4. Transactions (`Vec<Transaction>`, from users)
+
+Any node can be selected as the next Relay Chain block author, so these data must be widely circulated.
+
+---
+
 ## Collation
+
+The collator's job is to build something which passes `validate_block`.
 
 In the Collation phase, a collator for a scheduled parachain builds a parachain block and produces a candidate.
 
@@ -134,9 +184,29 @@ The collator sends this to validator group assigned to the parachain over the p2
 
 ---
 
+Some collator pseudocode:
+```rust
+fn simple_collation_loop() {
+  while let Some(relay_hash) = wait_for_next_relay_block() {
+    let our_core = match find_scheduled_core(our_para_id, relay_hash) {
+      None => continue,
+      Some(c) => c,
+    };
+
+    let parent = choose_best_parent_at(relay_hash);
+    let (pov, candidate) = make_collation(relay_hash, parent);
+    send_collation_to_core_validators(our_core, pov, candidate);
+  }
+}
+```
+
+---
+
 ## Backing
 
-In the backing phase, the validators of the assigned group share the candidates they've received, validate them, and sign statements attesting to their validity.
+In the backing phase, the validators of the assigned group share the candidates they've received from collators, validate them, and sign statements attesting to their validity.
+
+Validate means roughly this: execute `validate_block` and check the result.
 
 They distribute their candidates and statements via the P2P layer, and then the next relay chain block author bundles candidates and statements into the relay chain block.
 
@@ -158,7 +228,7 @@ Backing on its own does not provide security, only accountability.
 
 Notes:
 
-The current minimum validator bond as of Jan 27, 2022 is ~1.5 Million DOT.
+The current minimum validator bond as of Aug 1, 2023 is ~1.7 Million DOT.
 
 ---
 
@@ -167,6 +237,50 @@ The current minimum validator bond as of Jan 27, 2022 is ~1.5 Million DOT.
 At this point, the backers are responsible for making the data needed to check the parablock available to the entire network.
 
 Validators sign statements about which data they have and post them to the relay chain.
+
+If the parablock doesn't get enough statements fast enough, the relay chain runtime just throws it out.
+
+---
+
+#### Erasure Coding
+
+<div class="grid grid-cols-3">
+
+<div>
+
+<img style="width: 450px;" src="../assets/erasure_coding.png" />
+
+</div>
+
+<div class="col-span-2">
+
+Each validator is responsible for one piece of this data. As long as enough of these pieces stay available, the data is recoverable.
+
+The statements validators sign and distribute to all other validators essentially say "I have my piece".
+
+Once 2/3 or more such statements land on-chain, the candidate is ready to be checked and is **included**.
+
+</div>
+
+</div>
+
+---
+
+Some pseudocode for availability:
+
+```rust
+fn get_availability_chunks() {
+  while let Some(backed_candidate, backing_group) = next_backed_candidate() {
+    let my_chunk = fetch_chunk(
+      my_validator_index,
+      backed_candidate.hash(),
+      backing_group,
+    );
+    let signed_statement = sign_availability_statement(backed_candidate.hash());
+    broadcast_availability_statement(signed_statement);
+  }
+}
+```
 
 ---
 
@@ -213,7 +327,7 @@ Checking involves three operations:
 
 <pba-flex center>
 
-1. Recovering the data from the network
+1. Recovering the data from the network (by fetching chunks)
 1. Executing the parablock, checking success
 1. Check that outputs match the ones posted<br/>to the relay chain by backers
 
@@ -350,9 +464,12 @@ This causes a "reorganization" whenever a dispute resolves against a candidate.
 
 ## Orchestra
 
-[Orchestra](https://github.com/paritytech/orchestra) allows us to declare "Subsystems" which run asynchronously.
+https://github.com/paritytech/orchestra
+
+**Orchestra** allows us to split up the node's logic into many "Subsystems" which run asynchronously.
 
 These subsystems communicate with message passing and all receive signals which coordinate their activities.
+
 
 ---
 
@@ -389,15 +506,31 @@ The instantiation of Orchestra in Polkadot is called "Overseer".
 ## Without Orchestra:
 
 ```rust
-fn on_new_block(hash: Hash) {
-  let work_result = do_some_work(hash);
-  inform_other_subsystem(work_result);
+fn on_new_block(block_hash: Hash) {
+  let work_result = do_some_work(block_hash);
+  inform_other_code(work_result);
 }
 ```
 
 Problem: There is a race condition!
 
-The other subsystem may receive `work_result` before learning about the new block.
+The other code may receive `work_result` before learning about the new block.
+
+---
+
+## With Orchestra:
+
+```rust
+fn handle_active_leaves_update(update: ActiveLeavesUpdate) {
+  if let Some(block_hash) = update.activated() {
+    let work_result = do_some_work(block_hash);
+    inform_other_subsystem(work_result);
+  }
+}
+```
+
+This works! Orchestra ensures that the message to the other subsystem only arrives
+after it has received the same update about new blocks.
 
 ---
 

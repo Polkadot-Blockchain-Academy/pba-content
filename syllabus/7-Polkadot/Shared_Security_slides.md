@@ -183,8 +183,8 @@ This is native to the protocol, and one of its core functionalities.
 <pba-col>
 
 1. Execution Meta-Protocol
-2. Coordination / Validation
-3. Security Hub / Settlement Layer
+1. Coordination / Validation
+1. Security Hub / Settlement Layer
 
 </pba-col>
 
@@ -425,8 +425,8 @@ So, shared security not only secures the individual chains, but the interactions
 <pba-col>
 
 1. Execution Meta-Protocol
-2. Coordination / Validation
-3. Security Hub / Settlement Layer
+1. Coordination / Validation
+1. Security Hub / Settlement Layer
 
 </pba-col>
 
