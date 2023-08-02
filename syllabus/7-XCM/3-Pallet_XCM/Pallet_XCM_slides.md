@@ -229,6 +229,8 @@ Any system can be notified of when another system changes its latest supported X
 
 The `SubscriptionService` type defines what action to take when processing a `SubscribeVersion` instruction.
 
+Notes:
+
 `pallet-xcm` provides a default implementaiton of this trait. When receiving a `SubscribeVersion`, the chain sends back an XCM with the `QueryResponse` instruction containing its current version.
 
 ---
