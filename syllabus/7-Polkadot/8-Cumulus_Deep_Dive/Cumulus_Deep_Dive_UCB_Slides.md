@@ -135,7 +135,7 @@ Notes:
 
 ### Sequencer Consensus
 
-Collators are responsible for authoring new blocks, and they do so when importing. Honest Collators will choose to author blocks descending from the best head.
+Collators are responsible for authoring new blocks, and they do so when importing relay blocks. Honest Collators will choose to author blocks descending from the best head.
 
 ```rust[2|4-8|10]
 loop {
