@@ -176,7 +176,7 @@ The code is hashed and saved in the storage of the relay chain. There is another
 
 ---v
 
-#### Proof Of Validity - POV
+### Proof Of Validity - POV
 
 - Polkadot requires that a Parachain block is transmitted to the relay chain in a fixed format: **Collation**
 
@@ -187,14 +187,14 @@ Notes:
 
 ---v
 
-##### Witness Data
+### Witness Data
 
 - Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
   - It allows the reconstruction of a sparse in-memory merkle trie
 
 ---v
 
-###### Example of Witness Data Construction
+### Example of Witness Data Construction
 
 <div class="r-stack">
 <img src="../assets/pov_witness_data_1.svg" style="width: 70%" />
