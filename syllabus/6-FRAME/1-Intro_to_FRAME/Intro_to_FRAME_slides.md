@@ -6,7 +6,7 @@ duration: 1 hour
 
 ## Lesson Plan
 
-<table>
+<table class="no-bullet-padding">
 <tr>
   <td>Monday</td>
   <td>Tuesday</td>
@@ -18,33 +18,50 @@ duration: 1 hour
 <tr class="text-small">
 <td>
 
-- Introduction To FRAME
-- Exercise: Proof of Existence Runtime
-- Pallet Coupling
-- FRAME Tips and Tricks
-- FRAME Common Knowledge (Pallets & Traits)
-- FRAME Assignment (whole week!)
+- Substrate Lectures
 
 </td>
 <td>
 
-- Storage
+- Substrate Lectures
+
+</td>
+<td>
+
+- Introduction to FRAME
+- 👩‍💻 Exercise: Proof of Existence Runtime
+- Announce FRAME Assignment
+
+</td>
+<td>
+
+- Pallet Coupling
+- FRAME Common Knowledge (Pallets & Traits)
+- FRAME Storage
+
+</td>
+<td>
+
 - Events & Errors
 - Calls
+- Origins
+- Outer Enum
 - Hooks
 
 </td>
 <td>
 
-- Construct Runtime + Tests
-- Origins
-- Outer Enum
+- Complete FRAMEless Exercise
 
 </td>
+</tr>
+<tr class="text-small">
 <td>
 
+- Construct Runtime + Tests
+- 👨‍💻 Exercise: Tests
 - FRAME Benchmarking
-- Exercise: Benchmarking Example
+- 👨🏾‍💻 Exercise: Benchmarking
 
 </td>
 <td>
@@ -52,14 +69,30 @@ duration: 1 hour
 - FRAME Under the Hood
   - Deep Dive
   - Executive
-- Migration & Try Runtime
 - Signed Extensions
+- Migrations & Try Runtime
 
 </td>
 <td>
 
-- Live Coding + Q/A Sessions (12pm-ish)
-- Complete FRAME Assignment
+- Spill Over + Live Coding
+- Polkadot Lectures
+
+</td>
+
+<td>
+
+- Polkadot Lectures
+
+</td>
+<td>
+
+- Polkadot Lectures
+
+</td>
+<td>
+
+- Complete FRAME Exercise
 
 </td>
 </tr>
@@ -217,9 +250,9 @@ It contains all the most basic functions and types needed for a blockchain syste
 </div>
 <div class="right text-small">
 
-- `T::BlockNumber`
+- `BlockNumberFor<T>`
 - `frame_system::Pallet::<T>::block_number()`
-- `T::AcccountId`
+- `T::AccountId`
 - `T::Hash`
 - `T::Hashing::hash(&bytes)`
 
@@ -254,12 +287,7 @@ Your final runtime is composed of Pallets, which are brought together with the `
 ```rust
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
-	pub struct Runtime
-	where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic,
-	{
+	pub struct Runtime {
 		System: frame_system,
 		RandomnessCollectiveFlip: pallet_randomness_collective_flip,
 		Timestamp: pallet_timestamp,

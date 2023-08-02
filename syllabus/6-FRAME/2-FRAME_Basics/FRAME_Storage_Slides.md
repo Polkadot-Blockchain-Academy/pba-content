@@ -501,13 +501,13 @@ Transactional layers can be used to attack your chain:
 We follow a simple pattern:
 
 ```
-hash(name) + hash(name2) + hash(name3) + hash(name4) ...
+hash(name) ++ hash(name2) ++ hash(name3) ++ hash(name4) ...
 ```
 
 For example:
 
 ```
-twox128(pallet_name) + twox128(storage_name) + ...
+twox128(pallet_name) ++ twox128(storage_name) ++ ...
 ```
 
 We will get into more details as we look at the specific storage primitives.
@@ -521,11 +521,7 @@ The pallet name comes from the `construct_runtime!`.
 ```rust
 // Configure a mock runtime to test the pallet.
 frame_support::construct_runtime!(
-	pub enum Test where
-		Block = Block,
-		NodeBlock = Block,
-		UncheckedExtrinsic = UncheckedExtrinsic,
-	{
+	pub enum Test {
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
 		Example: pallet_template,
 	}
@@ -622,7 +618,7 @@ e375d60f814d02157aaaa18f3639a254c64445c290236a18189385ed9853fb1e
 ```
 
 ```sh
-e375d60f814d02157aaaa18f3639a254 + c64445c290236a18189385ed9853fb1e
+e375d60f814d02157aaaa18f3639a254 ++ c64445c290236a18189385ed9853fb1e
 ```
 
 ```sh
@@ -646,7 +642,7 @@ impl StorageInstance for Prefix {
 	};
 
 	fn prefix() -> Vec<u8> {
-		twox_128(Self::pallet_prefix()) + twox_128(STORAGE_PREFIX)
+		twox_128(Self::pallet_prefix()) ++ twox_128(STORAGE_PREFIX)
 	}
 }
 
@@ -1192,7 +1188,7 @@ impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 
 - Iterate all storage on the blockchain using prefix `&[]`
 - Iterate all storage for a pallet using prefix `hash(pallet_name)`
-- Iterate all balances of users using prefix `hash(balances) + hash(accounts)`
+- Iterate all balances of users using prefix `hash("Balances") ++ hash("Accounts")`
 
 This is not an inherit property!
 
@@ -1225,7 +1221,7 @@ For this, we need **transparent storage keys**.
 Basically:
 
 ```sh
-final_hash = hash(preimage) + preimage
+final_hash = hash(preimage) ++ preimage
 ```
 
 From this kind of hash, we can always extract the preimage:
@@ -1297,7 +1293,7 @@ Now that we know that transparent hashers are extremely useful, there are really
 <div class="flex-container">
 <div class="left">
 
-<img src="../../assets/img/5-Substrate/unbalanced-tree.svg" />
+<img src="../../../assets/img/5-Substrate/unbalanced-tree.svg" />
 
 </div>
 <div class="right">

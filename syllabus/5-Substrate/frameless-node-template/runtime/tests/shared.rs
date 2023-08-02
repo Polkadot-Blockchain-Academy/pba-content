@@ -16,15 +16,16 @@ pub type Signature = sp_core::sr25519::Signature;
 /// be aware of using the right crypto type when using `sp-keyring` crate.
 pub type AccountId = sp_core::sr25519::Public;
 
-/// The account id who's allowed to mint. This is the sr25519 representation of `Alice` in
-/// `sp-keyring`.
-pub const MINTER: [u8; 32] =
+/// The account id who's allowed to mint, and call `SudoRemark`. This is the sr25519 representation
+/// of `Alice` in `sp-keyring`.
+pub const SUDO: [u8; 32] =
 	hex_literal::hex!["d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"];
 /// The treasury account to which tips should be deposited.
 pub const TREASURY: [u8; 32] =
 	hex_literal::hex!["ff3593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d"];
 /// Minimum account balanced. No account balance should fall below this, unless if the account is
-/// being destroyed.
+/// being destroyed. In other words, the `free` balance of each account must at all times be greater
+/// than or equal to this, or equal to zero.
 pub const MINIMUM_BALANCE: Balance = 10;
 /// The key to which [`SystemCall::Set`] will write the value.
 ///
@@ -34,8 +35,9 @@ pub const VALUE_KEY: &[u8] = b"value";
 ///
 /// Hex: 0x686561646572
 pub const HEADER_KEY: &[u8] = b"header";
-/// Key used to store all extrinsics in a block. Should always remain at the end of the block, and
-/// be cleared at the beginning of the next block.
+/// Key used to store all extrinsics in a block.
+///
+/// Should always remain at the end of the block, and be cleared at the beginning of the next block.
 pub const EXTRINSICS_KEY: &[u8] = b"extrinsics";
 
 #[cfg_attr(feature = "std", derive(serde::Serialize, serde::Deserialize))]
@@ -55,9 +57,13 @@ pub enum SystemCall {
 	///
 	/// This will only ensure that `data` is remarked as the block data.
 	Remark { data: sp_std::prelude::Vec<u8> },
+	/// Same as `Remark`, but can only be called by [`SUDO`].
+	SudoRemark { data: sp_std::prelude::Vec<u8> },
 	/// Set the value under [`VALUE_KEY`] to `value`.
 	Set { value: u32 },
 	/// Upgrade the runtime to the given code.
+	///
+	/// This is only for you to play around with, and no graded test will use it.
 	Upgrade { code: sp_std::prelude::Vec<u8> },
 }
 
@@ -72,7 +78,7 @@ pub enum CurrencyCall {
 	///
 	/// * If any type of arithmetic operation overflows.
 	/// * If the `dest`'s free balance will not be enough to pass the bar of [`MINIMUM_BALANCE`].
-	/// * If the sender is not [`MINTER`].
+	/// * If the sender is not [`SUDO`].
 	Mint { dest: AccountId, amount: Balance },
 	/// Transfer `amount` to `dest`.
 	///
@@ -143,7 +149,7 @@ pub type Block = generic::Block<Header, Extrinsic>;
 ///
 /// Conversely, the reserved part of an account is a subset that CANNOT be transferred out,
 /// unless if explicitly unreserved.
-#[derive(Debug, Clone, Encode, Decode, PartialEq, Eq)]
+#[derive(Debug, Clone, Encode, Decode, PartialEq, Eq, Default)]
 pub struct AccountBalance {
 	/// The free balance that they have. This can be transferred.
 	pub free: Balance,
