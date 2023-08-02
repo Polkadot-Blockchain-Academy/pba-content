@@ -322,7 +322,7 @@ In the future: this will be done on a more granular / ad-hoc basis
 
 ## OpenGov
 
-Polkadot has on-chain governance, which empowers stakeholders to coordinate the platform by opening or voting on things like:
+Polkadot has on-chain governance by stakeholder referendum, voting on subjects such as:
 
 <pba-flex center>
 
@@ -474,7 +474,7 @@ Polkadot allocates its resources to parachains through **Execution Cores**.
 
 ## Execution Cores
 
-Just like a decentralized CPU, Polkadot multiplexes many processes.
+Just like a decentralized CPU, Polkadot multiplexes many processes across cores.
 
 When a parachain is assigned to a core, it can advance.<br/>
 Otherwise, it lies dormant.
