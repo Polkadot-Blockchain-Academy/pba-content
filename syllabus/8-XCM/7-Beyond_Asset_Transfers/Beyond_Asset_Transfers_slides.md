@@ -109,6 +109,7 @@ state Polkadot {
         bmxs --> bacc
         bacc --> [*]: Transact
     }
+
 }
 </diagram>
 
@@ -196,11 +197,12 @@ MultiLocation {
 }
 
 ```
+
 ---v
 
 ### XCM Converters
 
-Now that we understand the origin and message structure, let's take a look at those **XCM Converters*!
+Now that we understand the origin and message structure, let's take a look at those _XCM Converters_!
 
 <diagram class="mermaid">
 stateDiagram-v2
@@ -239,12 +241,15 @@ The combination of these checks and the hasher makes up the converters that retu
 ### What happens if we map AccountId origins to the exact accounts within?
 
 ## Account Impersonation!
+
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
 Hey Chain B, I'm sending you a balance transfer request from one of my users, their address is "Chain B's treasury" ;)
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 # TRUST!
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
@@ -320,7 +325,7 @@ stateDiagram-v2
 
 MultiAsset {
   // Where to find the NFT (contract or collection in an NFT pallet)
-  id: Assetld::Concrete (
+  id: AssetId::Concrete (
     Multilocation {
       parents: 0,
       interior: Junctions::X3(
@@ -335,7 +340,7 @@ MultiAsset {
     }
   ),
   // The NFT itself
-  fun: Fungibilitv::NonFungible(
+  fun: Fungibility::NonFungible(
     // Specific NFT instance inside the collection selected by it's id
     AssetInstance::Instance(nft_id)
   )
@@ -432,7 +437,7 @@ Junctions::X3(Parachain(para_id), PalletInstance(evm_pallet_id), AccountKey20(ev
 // WASM or EVM contracts
 Junctions::X3(
   Parachain(para_id),
-  PalletInstance(constracts_pallet_id || evm_pallet_id),
+  PalletInstance(contracts_pallet_id || evm_pallet_id),
   AccountId32(wasm_contract_account) || AccountKey20(evm_contract_account),
 );
 
@@ -444,6 +449,7 @@ MultiAsset {
   fun: Fungibility::NonFungible(AssetInstance::Index(nft_id))
 };
 ```
+
 ---v
 
 ### Message Instructions
@@ -473,7 +479,7 @@ Xcm(vec![
   },
 ]);
 
-// XCM assertations
+// XCM assertions
 
 // Errors is described pallet does not exist in the runtime.
 ExpectPallet {
