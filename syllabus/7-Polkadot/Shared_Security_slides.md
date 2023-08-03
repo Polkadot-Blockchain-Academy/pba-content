@@ -17,8 +17,7 @@ Shared Security is an Economic Scaling Solution for Blockchains.
 <div class="grid grid-cols-2">
 <div>
 
-But that is just an answer that sits at the surface.
-The topic goes much deeper than that.
+But that is just an answer that sits at the surface. The topic goes much deeper than that.
 
 Let’s explore…
 
@@ -338,11 +337,9 @@ The new state root is then committed to the relay chain so the process can repea
 - Data Availability
   - Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
 - Approval Checking
-  - Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block.
-    If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
+  - Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block. If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
 - Disputes Handling
-  - When someone disputes the validity of a parablock, all validators must then check the block and cast a vote.
-    The validators on the losing side of the dispute are slashed.
+  - When someone disputes the validity of a parablock, all validators must then check the block and cast a vote. The validators on the losing side of the dispute are slashed.
 
 ---
 
@@ -478,15 +475,9 @@ See the section on "Key Risks and Vulnerabilities" here:
 
 https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primitive/
 
-> Generally there are two main attack vectors of EigenLayer.
-> One is that many validators collude to attack a set of middleware services simultaneously.
-> The other is that the protocols that leverage EigenLayer and are built through it may have unintended slashing vulnerabilities and there is a risk of honest nodes getting slashed.
+> Generally there are two main attack vectors of EigenLayer. One is that many validators collude to attack a set of middleware services simultaneously. The other is that the protocols that leverage EigenLayer and are built through it may have unintended slashing vulnerabilities and there is a risk of honest nodes getting slashed.
 >
-> Much of the EigenLayer mechanism relies upon a rebalancing algorithm that takes into account the different validators and their accompanying stake and security capacity and usage.
-> This underpins the success of the protocol.
-> If this rebalancing mechanism fails (e.g. slow to adjust, latency, incorrect parameters) then EigenLayer opens itself up to different attack vectors, particularly around cryptoeconomic security.
-> It essentially replicates the same vulnerabilities that it sought to solve with merge-mining.
-> So attention must be paid to ensuring that the system is accurately updating any outstanding restaked $ETH and that it remains fully collateralized.
+> Much of the EigenLayer mechanism relies upon a rebalancing algorithm that takes into account the different validators and their accompanying stake and security capacity and usage. This underpins the success of the protocol. If this rebalancing mechanism fails (e.g. slow to adjust, latency, incorrect parameters) then EigenLayer opens itself up to different attack vectors, particularly around cryptoeconomic security. It essentially replicates the same vulnerabilities that it sought to solve with merge-mining. So attention must be paid to ensuring that the system is accurately updating any outstanding restaked $ETH and that it remains fully collateralized.
 
 ---
 
@@ -510,8 +501,7 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 ### Cons
 
 - Concerns around centralization and censorship of sequencers.
-- Long time to finality due to challenge periods.
-  (could be days)
+- Long time to finality due to challenge periods. (could be days)
 - Settlement layers could be attacked, interfering with the optimistic rollup protocols.
 - Suffers from the same problems allocating blockspace as on-chain transactions.
   - On-chain costs to perform the interactive protocol.
