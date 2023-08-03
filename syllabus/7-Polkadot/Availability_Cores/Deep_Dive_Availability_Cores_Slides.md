@@ -24,6 +24,17 @@ Lets get to it
 
 ---
 
+## Addressing the Dual Naming
+
+<pba-flex center>
+
+- In the code: Availability core
+- Outside the code: Execution core
+
+</pba-flex>
+
+---
+
 ## Overview
 
 <pba-flex center>
@@ -102,6 +113,7 @@ Notes:
 Though cores gate the entire parachain block pipeline,<br/> the availability process alone determines when these cores are considered occupied vs free.
 
 To recap, the goals of availability are:
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 1. To ensure that approvers will always be able to recover the PoVs to validate their assigned blocks
@@ -177,7 +189,7 @@ Notes:
 - Metaphor: Freight trains
 - Relay chain: Train loading bay
 - Relay block: Train leaving station every 6 seconds
-- Potential Parablock: Car space in scheduled train
+- Parachain block: One train car worth of cargo
 - Availability core: Car index within all trains
 
 If you have a lease on core 4, then you have the right to fill train car 4 on each train with whatever you want to ship.
@@ -347,47 +359,16 @@ Notes:
 
 ---
 
-## On-Demand Queue in The Runtime
-
-In file: polkadot/runtime/parachains/src/scheduler.rs
-
-<div style="font-size: 0.82em;">
-
-```rust[1|3-7|4,9-13]
-pub(crate) type ParathreadQueue<T> = StorageValue<_, ParathreadClaimQueue, ValueQuery>;
-
-pub struct ParathreadClaimQueue {
-    queue: Vec<QueuedParathread>,
-    // this value is between 0 and config.parathread_cores
-    next_core_offset: u32,
-}
-
-/// A queued parathread (on-demand parachain) entry, pre-assigned to a core.
-pub struct QueuedParathread {
-	claim: ParathreadEntry,
-	core_offset: u32,
-}
-```
-
-</div>
-
-Notes:
-
-- Why ParathreadClaimQueue in the code? (Naming change)
-- Vec of queued parathreads
-- `next_core_offset` determines the parathread core which will be pre-assigned the next claim to enter the queue
-
----
-
 ## How Cores Gate Each Step of the Parachains Protocol
 
 ---
 
 ## How Core Assignments Mediate Backing
 
-Each parablock candidate is built in the context of a particular `relay_parent`. 
+Each parablock candidate is built in the context of a particular `relay_parent`.
 
 Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group.
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -419,8 +400,8 @@ if Some(candidate.descriptor().para_id) != rp_state.assignment {
 
 <pba-flex center>
 
-- For each scheduled (un-occupied) core, a candidate is retrieved from the off-chain backing process
-- Candidates are provided to block author according to core assignment
+- For each core that is either unoccupied or is about to be a new candidate is found
+- A candidate for the parachain scheduled next on that core is provided to the block author
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Backed on-chain -> immediately occupies core
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -479,9 +460,9 @@ Notes:
 
 - Discuss core freeing criteria
 - `bitfields_indicate_availability`
-	- next_up_on_available
+  - next_up_on_available
 - availability time out
-	- next_up_on_timeout
+  - next_up_on_timeout
 
 ---
 
@@ -497,13 +478,9 @@ Approvals, Disputes, and Finality are only provided to included candidates
 
 <pba-flex center>
 
-1. Improved liveness
-1. Flexibility of market structure
+1. Predictability of parachain execution
+1. Predictability of allocation
 <!-- .element: class="fragment" data-fragment-index="1" -->
-1. Flexibility of allocation
-<!-- .element: class="fragment" data-fragment-index="2" -->
-1. Intuitive unit of capacity over time
-<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -511,10 +488,9 @@ Approvals, Disputes, and Finality are only provided to included candidates
 
 Notes:
 
-1. Regularly rotating pairings between cores and backing groups
-1. Market structures: common good, lease, on-demand
-1. Cores accommodate huge changes in validation recipients from one block to the next
-1. Train metaphor
+- Regularly rotating pairings between cores and backing groups lessen the impact of potential bad validator subsets
+- Cores accommodate advance allocation making costs for parachains predictable
+- Core time can be resold or split for precise allocation
 
 ---
 
@@ -541,6 +517,10 @@ Notes:
 Notes:
 
 - Each color represents a parachain
+  Metaphor:
+- Multiple cars on the same train
+- Overlapping time spans of rights to fill different train cars
+- Long term rights to one car and buy rights to others for just one train
 
 ---
 
@@ -564,12 +544,15 @@ Notes:
 ## Framing Shift: Blockspace vs Core Time
 
 Blockspace is a universal term for the product of blockchains, while core time is Polkadot's particular abstraction for allocating blockspace or other computation.
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Cores can secure computation other than blocks. For example, a smart contract could be deployed on a core directly.
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Allocating cores by time rather than for a fixed block size could allow for smaller or larger parachain blocks to be handled seamlessly.
+
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
