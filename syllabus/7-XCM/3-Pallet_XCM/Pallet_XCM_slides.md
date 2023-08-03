@@ -152,7 +152,7 @@ XCM is a **versioned message format**.
 
 One version may contain more or different instructions than another, so for parties to communicate via XCM, it is important to know which version the other party is using.
 
-XCM has a version subscription mechanism, where parties can subscribe to version updates from others.
+The version subscription mechanism allows parties to subscribe to version updates from others.
 
 <pba-flex center>
 
@@ -352,7 +352,6 @@ Notes:
 ---
 
 ## Extrinsic breakdown
-
 
 Let's jump into the code and have a look at `limited_reserve_transfer_assets` extrinsic.
 
