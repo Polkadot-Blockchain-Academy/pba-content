@@ -15,25 +15,61 @@ topics to cover
 	- Bonding
 	- Free Balances
 	- Governance
+- token value
+	-
 - Council (skip?)
 - Open Governance
 - Treasury
 - Fellowship
+	- rfc
+	- payroll
 - Society (skip?)
 
+- ecosystem
+	- system chains vs market parachains
+		- scaling polkadot through system chains
+	- ecosystem verticals
+	- blockexplorer
+	- polkassembly
+	- alternative clients
+
 ---
 
-# The DOT Token
+# Ecosystem and Economy
 
 ---
 
-## Token State
+## Ecosystem and Economy
+
+This presentation will give you a high level overview of the ecosystem and economy of the Polkadot Network.
+
+---
+
+# Economy
+
+---
+
+## The DOT Token
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<image src="../../../assets/img/7-Polkadot/eco/token.avif" style="width: 400px;">
+
+</div>
+
+<div class="text-left">
 
 The DOT token can be in one of the following states:
 
 1. Transferable
 2. Locked (Frozen)
 2. Reserved (Held)
+
+</div>
+
+</div>
 
 ---
 
@@ -88,6 +124,16 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 ## DOT is a Utility Token
 
+<div class="grid grid-cols-3">
+
+<div>
+
+<image src="../../../assets/img/7-Polkadot/eco/utility.avif" style="width: 500px;">
+
+</div>
+
+<div class="text-left col-span-2">
+
 The DOT token serves multiple purposes to help the Polkadot network function:
 
 - Staking
@@ -95,12 +141,16 @@ The DOT token serves multiple purposes to help the Polkadot network function:
 - On-Chain Decision Making
 - Value Bearing for Trading / Using
 
+</div>
+</div>
+
 ---
 
 ## Ideal Usage of DOT Tokens
 
 <image src="../../../assets/img/7-Polkadot/ideal-token-distribution.svg" style="width: 1000px;">
 
+Approximately...
 
 Notes:
 
@@ -120,7 +170,7 @@ Notes:
 
 </div>
 
-<div>
+<div class="text-left">
 
 DOT is currently configured to have a fixed inflation rate of 10% per year.
 
@@ -145,7 +195,6 @@ Token holders are financially incentivized to maximize their staking returns, an
 ## DOT Inflation vs Staking
 
 <image src="../../../assets/img/7-Polkadot/staking-rate.png" style="width: 900px;">
-
 
 > Blue: Inflation vs Staking Rate
 >
@@ -179,7 +228,7 @@ At equilibrium...
 
 ---
 
-## Ongoing Economics Updates
+## Parachain Economics Updates
 
 There is a lot of ongoing discussion about updating the economics of Parachains.
 
@@ -199,7 +248,9 @@ Given the existence of a value bearing token, it can be used to provide security
 
 - Stakers are rewarded for good behavior, and punished for bad behavior.
 
-- It is assumed that punishments are aggressive enough that rational actors would never act maliciously.
+- Punishments are aggressive enough that rational actors would never act maliciously.
+
+https://polkadot.network/features/staking/
 
 </div>
 
@@ -237,3 +288,190 @@ Validators (and their nominators) are rewarded based on work done for the networ
 </div>
 
 ---
+
+## DOT Utility: Governance
+
+<div class="grid grid-cols-3">
+
+<div class="col-span-2 text-left">
+
+The future of Polkadot is decided by token holders.
+
+Polkadot has an on-chain governance system called OpenGov which is used to:
+
+- Spend Treasury Funds
+- Upgrade the Network
+- Manage the Fellowship
+- Support Parachain Teams
+- etc...
+
+https://polkadot.network/features/opengov/
+
+</div>
+
+<div>
+
+<image src="../../../assets/img/7-Polkadot/eco/governance.avif" style="width: 500px;">
+
+</div>
+
+</div>
+
+
+---
+
+## Conviction Voting
+
+Polkadot utilizes an idea called voluntary locking / conviction voting.
+
+This allows token holders to increase their voting power by locking up their tokens for a longer period of time.
+
+```text
+votes = tokens * conviction_multiplier
+```
+
+The conviction multiplier increases the vote multiplier by one every time the number of lock periods double.
+
+<div class="text-small">
+
+| Lock Periods | Vote Multiplier | Length in Days |
+| ------------ | --------------- | -------------- |
+| 0 | 0.1 | 0 |
+| 1 | 1 | 28 |
+| 2 | 2 | 56 |
+| 4 | 3 | 112 |
+| 8 | 4 | 224 |
+| 16 | 5 | 448 |
+| 32 | 6 | 896 |
+
+</div>
+
+---
+
+## Tracks
+
+The OpenGov system has different voting tracks which have different levels of power, and proportionally different level of difficulty to pass.
+
+Here are just some of the currently 15 tracks:
+
+| ID |       Origin       | Decision Deposit | Prepare Period | Decision Period | Confirm Period | Min Enactment Period |
+|:--:|:------------------:|:----------------:|:--------------:|:---------------:|:--------------:|:--------------------:|
+|  0 |        Root        |    100000 DOT    |     2 Hours    |     28 Days     |      1 Day     |         1 Day        |
+|  1 | Whitelisted Caller |     10000 DOT    |   30 Minutes   |     28 Days     |   10 Minutes   |      10 Minutes      |
+| 10 |    Staking Admin   |     5000 DOT     |     2 Hours    |     28 Days     |     3 Hours    |      10 Minutes      |
+| 11 |      Treasurer     |     1000 DOT     |     2 Hours    |     28 Days     |     3 Hours    |         1 Day        |
+| 12 |     Lease Admin    |     5000 DOT     |     2 Hours    |     28 Days     |     3 Hours    |      10 Minutes      |
+
+---
+
+## Approval and Support Curves
+
+Each track has their own set of curves which determine if the proposal has passed or failed.
+
+All votes will eventually resolve one way or another.
+
+<image src="../../../assets/img/7-Polkadot/eco/pjs-curves.png" style="width: 1000px;">
+
+You can find these curves on the Polkadot JS Developer Console.
+
+---
+
+## Example: Root
+
+The origin with the highest level of privileges. Requires extremely high levels of approval and support for early passing. The prepare and enactment periods are also large.
+
+<image src="../../../assets/img/7-Polkadot/eco/root-curve.png" style="width: 800px;">
+
+For instance, a referendum proposed in this track needs to amass 48.2% support (total network issuance) by the end of the first day with over 93.5% approval to be considered to be part of the confirm period.
+
+---
+
+## Governance Token Mechanics
+
+- DOT tokens are locked when you vote on a proposal.
+- You can reuse your locked tokens across multiple proposals.
+	- Voting for one proposal does not affect your ability to vote on another proposal.
+- You can also reuse staked tokens (which are also just locked).
+- You can update your vote while the proposal is ongoing.
+- If you used conviction voting, your tokens might be locked for long periods of time passed the end of a proposal.
+
+---
+
+## Other DOT Utilities
+
+- Basic Identity System, used mostly for Governance and Validators.
+- Multisigs
+- NFT or Asset creation on Statemint
+-
+
+---
+
+# Ecosystem
+
+---
+
+## Alternative Polkadot Clients
+
+The main Polkadot Client is built using Rust in Substrate.
+
+However, other clients for Polkadot are under development:
+
+- Kagome (C++17): https://github.com/soramitsu/kagome
+- Gossamer (Go): https://github.com/ChainSafe/gossamer
+
+Over time, this can help provide additional resilience to the network from software bugs.
+
+---
+
+## Types of Parachains
+
+- Polkadot System Chains
+- Market Bought Parachains
+
+---
+
+## System Chains
+
+- System parachains contain core Polkadot protocol features, on a parachain rather than the Relay Chain.
+- Polkadot uses its own parallel execution scaling technology scale itself.
+- System parachains remove transactions from the Relay Chain, allowing more Relay Chain blockspace to be used for Polkadot's primary purpose: validating parachains.
+- System Chains are allocated by governance.
+
+---
+
+## Current and Future System Chains
+
+Current:
+
+- Asset Hub: Allows creation and registration of tokens (FT & NFTs).
+- Collectives: Acts as a place for coordination of the Polkadot DAOs.
+- Bridge Hub: A chain for managing bridges to other networks.
+- Encointer: A third-party built chain providing Proof of Personhood.
+
+Future:
+
+- Staking: Manage all the validator and nominator logic, rewards, etc...
+- Governance: Manage all the various proposals and tracks.
+- Eventually everything...
+
+---
+
+## Market Bought Parachains
+
+<div class="grid grid-cols-2">
+
+<div>
+
+Anyone with a great idea, and access to DOT token, can launch a parachain on Polkadot.
+
+Dozens of teams from around the world have already done that, and are taking advantage of the features that Polkadot provides.
+
+</div>
+
+<div>
+
+<image src="../../../assets/img/7-Polkadot/eco/polkadot-parachains.svg" style="width: 500px;">
+
+</div>
+
+</div>
