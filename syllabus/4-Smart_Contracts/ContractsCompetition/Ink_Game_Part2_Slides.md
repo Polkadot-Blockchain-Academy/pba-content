@@ -4,7 +4,7 @@ description: An continuation of the ink! workshop.
 duration: 20 min
 ---
 
-<img rounded style="width: 1400px; padding-top:15px;" src="../img/ink/advanced-workshop.jpg" alt="ink!" />
+<img rounded style="width: 1400px; padding-top:15px;" src="../img/ink/advanced-workshop.jpg" />
 
 ---
 

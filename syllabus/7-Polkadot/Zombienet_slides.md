@@ -418,7 +418,7 @@ default_command = "polkadot"
 
 ## Make the network config dynamic
 
-<img rounded style="" src="../../assets/img/7-Polkadot/zombienet/zombienet-env-vars.png" />
+<img rounded style="width: 1200px" src="../../assets/img/7-Polkadot/zombienet/zombienet-env-vars.png" />
 
 ---
 
