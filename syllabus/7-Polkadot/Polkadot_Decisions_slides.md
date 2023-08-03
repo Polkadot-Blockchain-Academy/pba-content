@@ -471,7 +471,7 @@ Instructions to teleport an asset between parachains.
 
 <div>
 
-While cross-chain interoperability (XCMP) is a type 1 decision, exactly the language that chains speak to eachother is not.
+While cross-chain interoperability (XCMP) is a type 1 decision, exactly the language that chains speak to each other is not.
 
 XCM is Parity's current flavor of a cross-consensus message format, but we already see other teams try out their own ideas, or push updates to the XCM format specification.
 
