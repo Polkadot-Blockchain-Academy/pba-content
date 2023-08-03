@@ -167,16 +167,6 @@ curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.63/zombie
 chmod +x zombienet
 ```
 
----v
-
-<!-- .slide: data-visibility="hidden" -->
-
-### Examples
-
-<img rounded style="" src="../../assets/img/7-Polkadot/zombienet/examples-qr.png" />
-
-[zombienet presentation examples](https://github.com/pepoviola/zombienet-presentation-examples)
-
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -195,6 +185,7 @@ chmod +x zombienet
 parachain-template-node build-spec --chain local \
 --disable-default-bootnode > /tmp/para.json
 ```
+
 </div>
 <!-- .element: class="fragment" -->
 <br/>
@@ -205,6 +196,7 @@ parachain-template-node build-spec --chain local \
 polkadot build-spec --chain rococo-local \
  --disable-default-bootnode > /tmp/relay.json
 ```
+
 </div>
 <!-- .element: class="fragment" -->
 
@@ -637,6 +629,7 @@ const launchConfig = readNetworkConfig("../examples/0001-small-network.toml");
     // write your own test, `network` will have all the network info
 })();
 ```
+
 ---
 
 ## The road ahead...
@@ -648,6 +641,7 @@ The [SDK](https://github.com/paritytech/zombienet-sdk) will provide a set of bui
 Notes:
 
 SDK repo: https://github.com/paritytech/zombienet-sdk
+
 ---
 
 ## Acknowledgement & Contributions
