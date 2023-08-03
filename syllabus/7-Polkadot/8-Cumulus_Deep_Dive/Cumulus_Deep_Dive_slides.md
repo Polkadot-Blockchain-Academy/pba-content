@@ -446,7 +446,7 @@ fn validate_block(input: InputParams) -> Output {
 
     replace_host_functions();
 
-    // Run `execute_block` on top of the state
+    // Run Substrate's `execute_block` on top of the state
     with_state(state, || {
         execute_block(input.block).expect("Block is invalid")
     })
