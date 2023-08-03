@@ -611,8 +611,6 @@ https://forum.polkadot.network/
 
 The Polkadot Fellowship is a decentralized technical collective on the Polkadot network designed to recognize, nurture, and incentivize contributors to the core Polkadot protocol.
 
-
-
 ---
 
 ## Fellowship Manifesto
@@ -636,6 +634,8 @@ https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama-rpc.polkadot.io#/fellowship
 ---
 
 ## RFCs
+
+<image src="../../../assets/img/7-Polkadot/eco/rfcs.png" style="width: 1200px;">
 
 ---
 
