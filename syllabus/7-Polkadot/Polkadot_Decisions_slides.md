@@ -67,7 +67,7 @@ Decisions that can be easily changed in the future.
 
 ---
 
-<image src="../../assets/img/7-Polkadot/less-trust-more-truth.svg" style="width: 1000px; filter: invert();">
+<img style="width: 1000px; filter: invert();" src="../../assets/img/7-Polkadot/less-trust-more-truth.svg" />
 
 Notes:
 
@@ -105,7 +105,7 @@ This philosophy is a realization that building a blockchain is trying to build a
 
 <div>
 
-<image src="../../assets/img/7-Polkadot/trilemma.svg" style="height: 400px;">
+<img style="height: 400px;" src="../../assets/img/7-Polkadot/trilemma.svg" />
 
 </div>
 
@@ -229,7 +229,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 <div>
 
-<image src="../../assets/img/7-Polkadot/xcmp-2.svg" style="height: 500px;">
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-2.svg" />
 
 A visual of XCMP channels between Parachains.
 
@@ -253,7 +253,7 @@ Polkadot is unique in that it provides all connected parachains with the same se
 
 <div>
 
-<image src="../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/0-Shared/parachains/parachains-transparent.png" />
 
 </div>
 
@@ -283,7 +283,7 @@ Execution cores provide blockspace-as-a-service, and are designed to work with a
 
 <div>
 
-<image src="../../assets/img/7-Polkadot/xcmp-finalization.svg" style="height: 500px;">
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-finalization.svg" />
 
 </div>
 
@@ -463,7 +463,7 @@ Notes:
 
 <div>
 
-<image src="../../assets/img/7-Polkadot/xcm-stack.svg" style="height: 500px;">
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcm-stack.svg" />
 
 Instructions to teleport an asset between parachains.
 

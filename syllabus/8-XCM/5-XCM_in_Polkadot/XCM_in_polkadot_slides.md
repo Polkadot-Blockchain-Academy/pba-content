@@ -202,6 +202,8 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 
+</div>
+
 ---v
 
 ## 🪙 `asset-transactors` in Rococo

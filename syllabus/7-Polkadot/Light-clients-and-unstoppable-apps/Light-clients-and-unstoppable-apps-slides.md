@@ -302,11 +302,11 @@ Full video: https://tinyurl.com/decoded-talisman-light-client
 
 <pba-cols>
   <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_1.png" />
+    <img rounded style="width: 1300px" src="./img/where_to_1.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
   <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_2.png" />
+    <img rounded style="width: 1300px" src="./img/where_to_2.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
 </pba-cols>
