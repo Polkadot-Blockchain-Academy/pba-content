@@ -8,9 +8,7 @@ duration: 1 hours
 
 Notes:
 
-Hi again everyone. 
-
-Now it's my privelege to walk you through the basics of Cumulus. It is the glue which attaches substrate based chains to Polkadot, converting them into parachains.
+Cumulus is the glue which attaches substrate based chains to Polkadot, converting them into parachains.
 
 ---
 
@@ -25,7 +23,7 @@ Now it's my privelege to walk you through the basics of Cumulus. It is the glue 
 1. How Cumulus Collations Enable Parablock Validation
 1. How Cumulus Enables Runtime Upgrades
 
-</pba-flex> 
+</pba-flex>
 
 ---
 
@@ -62,18 +60,18 @@ Notes:
 > What is a collation?
 
 > What is the PoV?
-<!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-flex>
 
 Notes:
 
-- Collator: 
-  - Part of consensus authority set 
+- Collator:
+  - Part of consensus authority set
   - Author and submit collations
 - Collation: Info necessary for validators to process and validate a parachain block.
 - Collations include: upward and horizontal messages, new validation code, resulting head data, proof of validity, processed downward messages, and hrmp_watermark (relay block up to which all hrmp messages have been processed)
-- PoV: The smallest bundle of information sufficient to validate a block. Will revisit in more detail.
+- PoV: The smallest bundle of information sufficient to validate a block.
+  Will revisit in more detail.
 
 ---
 
@@ -106,13 +104,15 @@ Notes:
 
 ## Handling Incoming Relay Information
 
-Before addressing collation generation let's first address the other three key Cumulus processes. These drive parachain consensus and ensure the availability of parachain blocks.
+Before addressing collation generation let's first address the other three key Cumulus processes.
+These drive parachain consensus and ensure the availability of parachain blocks.
 
 <br>
 Together they keep parachain nodes up to date such that collating is possible.
 
 Notes:
 To recap, these key processes are:
+
 - Follow relay "new best head" to update para "new best head"
 - Follow relay finalized block to update para finalized block
 - Request parablocks not shared by peers from relay (data recovery)
@@ -133,7 +133,8 @@ Parachain consensus is modified to:
 Notes:
 
 - Sequencing consensus: Decide on an accepted ordering of blocks and of transactions within a block
-- Sequencing consensus requires that we update our knowledge of the new best head of the parachain. That way nodes are in agreement about which block to build on top of.
+- Sequencing consensus requires that we update our knowledge of the new best head of the parachain.
+  That way nodes are in agreement about which block to build on top of.
 - Sequencing options: Aura consensus, tendermint style consensus
 - When a parablock is included in a relay block that becomes finalized, that parablock is finalized by extension.
 
@@ -141,9 +142,10 @@ Notes:
 
 ### Import Driven Block Authoring
 
-Collators are responsible for authoring new blocks, and they do so when importing relay blocks. Honest Collators will choose to author blocks descending from the best head.
+Collators are responsible for authoring new blocks, and they do so when importing relay blocks.
+Honest Collators will choose to author blocks descending from the best head.
 
-```rust[2|4-8|10]
+```rust[|4-8]
 // Greatly simplified
 loop {
     let imported = import_relay_chain_blocks_stream.next().await;
@@ -171,11 +173,11 @@ Notes:
 
 ### Finality
 
-To facilitate shared security, parachains inherit their finality from the relay chain. 
+To facilitate shared security, parachains inherit their finality from the relay chain.
 
-</br>
+<br/>
 
-```rust[2|4-8|10]
+```rust[|4-8]
 // Greatly simplified
 loop {
     let finalized = finalized_relay_chain_blocks_stream.next().await;
@@ -189,8 +191,6 @@ loop {
     set_finalized_parachain_block(finalized_parachain_block);
 }
 ```
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
@@ -230,17 +230,17 @@ The Candidate Receipt only represents a PoV, it does not substitute it
 ### Malicious collator example
 
 <div class="r-stack">
-<img src="../assets/malicious_collator_1.svg" style="width: 70%" />
+<img src="../assets/malicious_collator_1.svg" style="width: 900px" />
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="../assets/malicious_collator_2.svg" style="width: 70%" />
+<img src="../assets/malicious_collator_2.svg" style="width: 900px" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="../assets/malicious_collator_3.svg" style="width: 70%" />
+<img src="../assets/malicious_collator_3.svg" style="width: 900px" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
 Notes:
 
-- On a Parachain, a block only needs to be accepted by the relay chain validators to be part of the canonical chain, 
+- On a Parachain, a block only needs to be accepted by the relay chain validators to be part of the canonical chain,
 - The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
 - So, the relay chain could expect some parent block for the next block that no one is aware of
 
@@ -269,13 +269,13 @@ Notes:
 
 ---
 
-## Collation Generation 
+## Collation Generation
 
 The last of our key processes
 
 <pba-flex center>
 
-1. Relay node imports block in which this parachain's availability core was vacated
+1. Relay node imports block in which parachain's avail. core was vacated
 1. `CollationGeneration` requests a collation from the collator
 1. Parachain consensus decides whether this collator can author
 1. Collator proposes, seals, and imports a new block
@@ -284,6 +284,7 @@ The last of our key processes
 </pba-flex>
 
 Notes:
+
 - Aura is current default parachain consensus, but this consensus is modular and changeable
 
 ---
@@ -302,7 +303,7 @@ A subset of Para-Relay communication
 
 - Sent from Collator, which owns both `CollatorService` and `ParachainConsensus`
 - Sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to validators
-- Sent to parachain node import queues 
+- Sent to parachain node import queues
 
 ```rust
 let result_sender = self.service.announce_with_barrier(block_hash);
@@ -365,7 +366,7 @@ pub struct Pvf {
 }
 ```
 
-</br>
+<br/>
 
 - New state transitions that occur on a parachain must be validated against the PVF
 
@@ -387,11 +388,11 @@ The code is hashed and saved in the storage of the relay chain.
 
 - The PVF is not just a copy paste of the parachain Runtime
 
-</br>
+<br/>
 
 - The PVF contains an extra function, `validate_block`
 
-</br>
+<br/>
 
 **WHY!?**
 
@@ -402,7 +403,8 @@ The code is hashed and saved in the storage of the relay chain.
 
 Notes:
 
-PVF not only contains the runtime but also a function `validate_block` needed to interpret all the extra information in a PoV required for validation. This extra information is unique to each parachain and opaque to the relay chain.
+PVF not only contains the runtime but also a function `validate_block` needed to interpret all the extra information in a PoV required for validation.
+This extra information is unique to each parachain and opaque to the relay chain.
 
 ---
 
@@ -424,8 +426,8 @@ The input of the runtime validation process is the PoV and the function called i
 
 <pba-flex center>
 
-- The parachain runtime expects to run in conjucntion with a parachain client
-- But validation is occuring in a relay chain node
+- The parachain runtime expects to run in conjunction with a parachain client
+- But validation is occurring in a relay chain node
 - We need to implement the API the parachain client exposes to the runtime, known as host functions
 - The host functions most importantly allow the runtime to query its state, so we need a light weight replacement for the parachain's state sufficient for the execution of this single block
 - `validate_block` prepares said state and host functions
@@ -454,7 +456,9 @@ fn validate_block(input: InputParams) -> Output {
 }
 ```
 
-But where does `storage_proof` come from?
+<br/>
+
+> But where does `storage_proof` come from?
 
 Notes:
 
@@ -497,6 +501,7 @@ pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
 
 Notes:
 Code highlighting:
+
 - Messages passed upwards
 - Downward messages processed
 - New code
@@ -521,7 +526,7 @@ Code highlighting:
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
-</br>
+<br/>
 
 - Only includes the data modified in this block along with hashes of the data from the rest of the trie
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -582,9 +587,8 @@ fn validate_block(input: InputParams) -> Output {
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-</br>
-  
-- Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
+> Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
@@ -597,18 +601,16 @@ The relay chain needs a fairly hard guarantee that PVFs can be compiled within a
 
 <!-- .element: class="fragment" data-fragment-index="0" -->
 
-</br>
+<br/>
 
 - Collators execute a runtime upgrade but it is not applied
 - Collators send the new runtime code to the relay chain in a collation
-- The relay chain executes the **PVF Pre-Chekcing Process**
+- The relay chain executes the **PVF Pre-Checking Process**
 - The first parachain block to be included after the end of the process applies the new runtime
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-</br>
-
-Cumulus follows the relay chain, waiting for a go ahead signal to apply the runtime change
+> Cumulus follows the relay chain, waiting for a go ahead signal to apply the runtime change
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -634,11 +636,11 @@ reference: https://paritytech.github.io/polkadot/book/pvf-prechecking.html
 
 ## References
 
-1. Gabriele Miotti, who was a huge help putting together these slides
+1. 🦸 [Gabriele Miotti](https://github.com/gabriele-0201), who was a huge help putting together these slides
 1. https://github.com/paritytech/cumulus/blob/master/docs/overview.md
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-## Questions
+# Questions
