@@ -156,11 +156,11 @@ Notes:
 
 ```sh
 # macOS
-curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.29/zombienet-macos
+curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.63/zombienet-macos
 -o ./zombienet
 
 # linux
-curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.29/zombienet-linux
+curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.63/zombienet-linux
 -o ./zombienet
 
 # make executable
@@ -188,22 +188,25 @@ chmod +x zombienet
 ## But first, try manually…
 
 <br/>
-
-- Create chain-spec (parachain)
+<div>
+<ul><li>Create chain-spec (parachain)</li></ul>
 
 ```sh
 parachain-template-node build-spec --chain local \
 --disable-default-bootnode > /tmp/para.json
 ```
-
+</div>
+<!-- .element: class="fragment" -->
 <br/>
-
-- Create chain-spec (relay chain)
+<div>
+<ul><li>Create chain-spec (relay chain)</li></ul>
 
 ```sh
 polkadot build-spec --chain rococo-local \
  --disable-default-bootnode > /tmp/relay.json
 ```
+</div>
+<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -634,7 +637,17 @@ const launchConfig = readNetworkConfig("../examples/0001-small-network.toml");
     // write your own test, `network` will have all the network info
 })();
 ```
+---
 
+## The road ahead...
+
+🚧 🚧 <span class="colored"><b>Zombienet v2</b> (a.k.a [SDK](https://github.com/paritytech/zombienet-sdk))</span> is currently under construction 🚧 🚧
+
+The [SDK](https://github.com/paritytech/zombienet-sdk) will provide a set of building blocks that users can combine to spawn and interact with the network and also a fluent API for crafting different topologies and assertions for the running network.
+
+Notes:
+
+SDK repo: https://github.com/paritytech/zombienet-sdk
 ---
 
 ## Acknowledgement & Contributions
