@@ -80,6 +80,14 @@ XCMP is the medium, like sound or writing, rather than the language.
 
 ---
 
+## Using Messaging in Practice
+
+This lesson is meant to communicate the underlying protocols and mechanics by which messages are sent and received.
+
+In practice, these mechanisms are abstracted by the libraries you work with.
+
+---
+
 ## Revisiting PVFs and Outputs
 
 <img rounded width="800px" src="../assets/PVF.svg" />
@@ -576,20 +584,15 @@ Note that channels are one-way. Each channel comes with storage requirements, so
 
 ```rust
 pub struct HostConfiguration {
-	/// Maximum outbound channels
 	pub hrmp_max_parachain_outbound_channels: u32,
-	pub hrmp_max_parathread_outbound_channels: u32,
-	/// Required deposits from each side of the channel
+
 	pub hrmp_sender_deposit: Balance,
 	pub hrmp_recipient_deposit: Balance,
-	/// Maximum capacity per channel, measured in messages.
+
 	pub hrmp_channel_max_capacity: u32,
-	/// Maximum capacity per channel, measured in bytes.
 	pub hrmp_channel_max_total_size: u32,
-	/// Maximum inbound channels allowed
+
 	pub hrmp_max_parachain_inbound_channels: u32,
-	pub hrmp_max_parathread_inbound_channels: u32,
-	/// Maximum size per message in the channel, in bytes.
 	pub hrmp_channel_max_message_size: u32,
 
   // more fields...
@@ -603,14 +606,6 @@ pub struct HostConfiguration {
 Parachains include an `hrmp_watermark` in their `ValidationResult` indicating a relay-chain block number.
 
 This tells the relay chain state that the parachain has processed all messages from all inbound channels with `sent_at <= hrmp_watermark`.
-
----
-
-## Using Messaging in Practice
-
-This lesson is meant to communicate the underlying protocols and mechanics by which messages are sent and received.
-
-In practice, using these mechanisms in a parachain with Cumulus is simple and is abstracted by Cumulus pallets & XCM utilities, covered in the next lessons.
 
 ---
 
