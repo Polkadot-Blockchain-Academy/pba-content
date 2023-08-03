@@ -20,7 +20,7 @@ Jeff Bezos outlined in an annual letter to Amazon shareholders how he approaches
 
 Notes:
 
-https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm
+https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm <!-- markdown-link-check-disable-line -->
 
 ---
 
@@ -138,8 +138,8 @@ Polkadot tries to accomplish that mission by solving three problems:
 <pba-flex center>
 
 1. Computational Scalability
-2. Shared Security
-3. Interoperability
+1. Shared Security
+1. Interoperability
 
 ## </pba-flex>
 
