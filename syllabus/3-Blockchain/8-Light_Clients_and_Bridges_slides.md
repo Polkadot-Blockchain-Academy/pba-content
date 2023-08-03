@@ -69,7 +69,7 @@ AKA, trust somebody else's node.
 <pba-flex center>
 
 <ul>
-<li>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update" />like infura</a>).</li> <!-- .element: class="fragment" -->
+<li>🕵️ Spy on you (<a href="https://decrypt.co/115486/infura-collect-metamask-users-ip-ethereum-addresses-after-privacy-policy-update">like infura</a>).</li> <!-- .element: class="fragment" -->
  
 <li>🔞 Censor you <!-- .element: class="fragment" -->
 <li>🤥 Lie to you <!-- .element: class="fragment" -->
