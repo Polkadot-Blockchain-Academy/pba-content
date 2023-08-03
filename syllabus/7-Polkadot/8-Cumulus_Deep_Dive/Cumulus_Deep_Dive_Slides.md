@@ -13,11 +13,11 @@ duration: 1 hours
 <pba-flex center>
 
 1. [What is Cumulus?](#what-is-cumulus)
-2. [Cumulus Runtime Validation](#how-cumulus-enables-runtime-validation)
-3. [Cumulus on the Node Side](#how-cumulus-enables-parachain-relay-chain-communication)
-4. [Runtime Upgrades](#runtime-upgrades)
-5. [Transform Solo to Parachain](#transform-solo-to-parachain)
-6. [References](#references)
+1. [Cumulus Runtime Validation](#how-cumulus-enables-runtime-validation)
+1. [Cumulus on the Node Side](#how-cumulus-enables-parachain-relay-chain-communication)
+1. [Runtime Upgrades](#runtime-upgrades)
+1. [Transform Solo to Parachain](#transform-solo-to-parachain)
+1. [References](#references)
 
 </pba-flex>
 
