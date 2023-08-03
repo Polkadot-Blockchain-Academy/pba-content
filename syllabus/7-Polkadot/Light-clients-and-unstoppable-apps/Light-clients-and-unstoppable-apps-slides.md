@@ -302,11 +302,11 @@ Full video: https://tinyurl.com/decoded-talisman-light-client
 
 <pba-cols>
   <pba-col left>
-    <img rounded style="width: 1300px" src="./img/where_to_1.png" />
+    <img rounded style="width: 100%" src="./img/where_to_1.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
   <pba-col left>
-    <img rounded style="width: 1300px" src="./img/where_to_2.png" />
+    <img rounded style="width: 100%" src="./img/where_to_2.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
 </pba-cols>
@@ -392,8 +392,6 @@ ready</div>
   </pba-col>
 </pba-cols>
 
-<p style="font-size: 1.5rem; padding-top: 100px;">“Full”: not really a type - depends on context - a node that does not fulfill any of the characteristics below.</p>
-
 ---
 
 <img src="./img/words.png" />
@@ -455,24 +453,24 @@ Powered by Pierre Krieger (a.k.a. tomaka)
 
 ---v
 
-<h1>Substrate Connect<h1>
+## Substrate Connect
 
-<div style="font-size:2.5rem; color: #fff">npm package</div>
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-
-<div style="font-size:2.5rem; color: #fff">uses smoldot as an implementation detail</div>
+<div style="font-size:1.75rem; color: #fff">uses smoldot as an implementation detail</div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-## javascript/typescript
-
+<div style="font-size:1.5rem; color: #d92f78; margin: 0.5rem 0">javascript/typescript</div>
 <!-- .element: class="fragment" data-fragment-index="3" -->
-
-<div style="font-size:2rem; color: #fff">Standalone / RPC provider polkadotJS</div>
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
-<p style="margin-top: 5rem"><a href="https://github.com/paritytech/substrate-connect/">https://github.com/paritytech/substrate-connect/</a></p>
-
+  <img width="900" src="./img/wellknown.png"  style="margin: 1rem 15%" />
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+<p style="font-size:1.5rem; margin-top: 1rem"><a href="https://github.com/paritytech/substrate-connect/">https://github.com/paritytech/substrate-connect/</a></p>
 <!-- .element: class="fragment" data-fragment-index="5" -->
+
+Notes:
+
+- npm package
+- rpc provider from polkadotJS
+- Chrome and Mozilla extension
+- Comes with 4 integrated "Well Known" chains (Kusama, Polkadot, Westend, Rococo) - which means these chains can be used without the need of providing chainspecs;
 
 ---v
 
@@ -665,9 +663,11 @@ mainChain.sendJsonRpc(
 
 ---v
 
-### Or with a Custom Chainspec
+### Or even without PolkadotJS API
 
-```javascript[0|1|2,4|6|7|8,13|9|10-12| 15-18]
+### and with a Custom Chainspec
+
+```javascript[0|1|2,4|7|8,13|9|10-12| 15-18]
 import { createScClient, WellKnownChain } from "@substrate/connect";
 import myLovelyChainspec from './myLovelyChainspecFromSubstrateChain.json';
 
@@ -686,6 +686,34 @@ const mainChain = await scClient.addChain(
 mainChain.sendJsonRpc(
   '{"jsonrpc":"2.0","id":"1","method":"chainHead_unstable_follow","params":[true]}',
 );
+```
+
+---v
+
+### Or even only with smoldot
+
+```javascript[0|1|3|5,13|6-12|15|17|18|20|21]
+import * as smoldot from "smoldot";
+
+const chainSpec = new TextDecoder("utf-8").decode(fs.readFileSync('./westend-chain-specs.json'));
+
+const client = smoldot.start({
+    maxLogLevel: 3,  // Can be increased for more verbosity
+    forbidTcp: false,
+    forbidWs: false,
+    forbidNonLocalWs: false,
+    forbidWss: false,
+    cpuRateLimit: 0.5,
+    logCallback: (_level, target, message) => console.log(_level, target, message)
+});
+
+client.addChain({ chainSpec, disableJsonRpc: true });
+
+console.log('JSON-RPC server now listening on port 9944');
+console.log('Please visit: https://cloudflare-ipfs.com/ipns/dotapps.io/?rpc=ws%3A%2F%2F127.0.0.1%3A9944');
+
+// Now spawn a WebSocket server in order to handle JSON-RPC clients.
+// See JSON-RPC protocol: https://github.com/paritytech/json-rpc-interface-spec/
 ```
 
 ---
