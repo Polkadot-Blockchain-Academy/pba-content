@@ -1,7 +1,7 @@
 ---
 title: Cumulus Deep Dive
 description: Cumulus, architecture and function
-duration: 1 hours
+duration: 1.25 hours
 ---
 
 # Cumulus Deep Dive
@@ -223,7 +223,7 @@ The PoV is too big to be included on-chain when a parablock is backed, so valida
 Notes:
 
 The Candidate Receipt contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
-The Candidate Receipt only represents a PoV, it does not substitute it
+The Candidate Receipt only references a PoV, it does not substitute it
 
 ---
 
