@@ -38,11 +38,11 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 - Locked -> Frozen
 - Both states belong to the user... but cannot be spent / transferred.
 - Held balances stack on top of one another.
-	- Useful for user deposits, or other use cases where there is sybil concerns.
-	- Ex: Deposit for storing data on-chain,
+  - Useful for user deposits, or other use cases where there is sybil concerns.
+  - Ex: Deposit for storing data on-chain,
 - Frozen balances can overlap each other.
-	- Useful when you want to use the same tokens for multiple use cases.
-	- Ex: Using the same tokens for both staking and voting in governance.
+  - Useful when you want to use the same tokens for multiple use cases.
+  - Ex: Using the same tokens for both staking and voting in governance.
 
 ---
 
@@ -157,7 +157,6 @@ The goal is to learn by example, and show how you can use the Substrate codebase
    Frozen Balance                    Transferable Balance
 ```
 
-
 ---
 
 ## Balances Pallet & Fungible Traits
@@ -198,7 +197,7 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 
 ## Polkadot Deep Dives
 
-<image src="../../../assets/img/6-FRAME/polkadot-deep-dive.png" style="height: 500px">
+<img style="height: 500px" src="../../../assets/img/6-FRAME/polkadot-deep-dive.png" />
 
 https://www.youtube.com/watch?v=_FwqB4FwWXk&list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG
 

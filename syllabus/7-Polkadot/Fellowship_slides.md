@@ -67,7 +67,7 @@ https://moxie.org/2022/01/07/web3-first-impressions.html
 Notes:
 
 1. the cathedral and bazaar
-2. the papal model
+1. the papal model
 
 https://en.wikipedia.org/wiki/The_Cathedral_and_the_Bazaar
 
@@ -132,13 +132,13 @@ around it and letting it be as-is, but it might be sub-optimal.
 
 1. Initial seed
 <!-- .element: class="fragment" -->
-2. Entry
+1. Entry
 <!-- .element: class="fragment" -->
-3. Promotion
+1. Promotion
 <!-- .element: class="fragment" -->
-4. Continuation
+1. Continuation
 <!-- .element: class="fragment" -->
-5. Gradual demote every 3-6 months.
+1. Gradual demote every 3-6 months.
 <!-- .element: class="fragment" -->
 
 ---v
@@ -150,9 +150,9 @@ around it and letting it be as-is, but it might be sub-optimal.
 The manifesto provides one such example
 
 1. Api and code design.
-2. Code contribution.
-3. Social interactions.
-4. Voting.
+1. Code contribution.
+1. Social interactions.
+1. Voting.
 
 - Activity
 - Agreement.
