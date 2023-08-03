@@ -4,20 +4,6 @@ description: A review of the parts of Polkadot which develop its ecosystem and e
 duration: 1 hour
 ---
 
-topics to cover
-
-
-- Fellowship
-	- rfc
-	- payroll
-
-- ecosystem
-	- ecosystem verticals
-	- blockexplorer
-	- polkassembly
-
----
-
 # Ecosystem and Economy
 
 ---
@@ -25,6 +11,8 @@ topics to cover
 ## Ecosystem and Economy
 
 This presentation will give you a high level overview of the ecosystem and economy of the Polkadot Network.
+
+Unfortunately this presentation could never be fully exhaustive, but perhaps it will shed light on areas previously unknown.
 
 ---
 
@@ -400,15 +388,6 @@ The Polkadot Treasury currently has over 45,000,000 DOT.
 
 ---
 
-## Other DOT Utilities
-
-- Basic Identity System, used mostly for Governance and Validators.
-- Multisigs
-- NFT or Asset creation on Statemint
--
-
----
-
 # Ecosystem
 
 ---
@@ -444,6 +423,10 @@ Perhaps this list will grow once more agile core allocation systems are implemen
 - System parachains remove transactions from the Relay Chain, allowing more Relay Chain blockspace to be used for Polkadot's primary purpose: validating parachains.
 - System Chains are allocated by governance.
 
+Notes:
+
+https://wiki.polkadot.network/docs/learn-system-chains
+
 ---
 
 ## Current and Future System Chains
@@ -460,6 +443,10 @@ Future:
 - Staking: Manage all the validator and nominator logic, rewards, etc...
 - Governance: Manage all the various proposals and tracks.
 - Eventually everything...
+
+Notes:
+
+https://wiki.polkadot.network/docs/learn-system-chains
 
 ---
 
@@ -482,3 +469,178 @@ Dozens of teams from around the world have already done that, and are taking adv
 </div>
 
 </div>
+
+Notes:
+
+https://polkadot.subscan.io/parachain
+
+---
+
+## Ecosystem Verticals
+
+While this list is not exhaustive, some of the verticals we have seen appear in Polkadot are:
+
+<div class="grid grid-cols-5">
+
+<div class="col-span-3">
+
+- Smart Contract Chains
+- Decentralized Finance (DeFi)
+- Decentralized Social (DeSo)
+- Decentralized Identity (DID) Services
+- Tokenization (Real World Assets)
+
+</div>
+
+<div class="col-span-2">
+
+- Gaming
+- NFTs (Music, Art, etc...)
+- Bridges
+- File Storage
+- Privacy
+
+</div>
+
+</div>
+
+Notes:
+
+https://substrate.io/ecosystem/projects/
+
+---
+
+## Wallets
+
+Thanks to the treasury and Polkadot community, a number of different wallets have been developed across the ecosystem.
+
+<div class="text-small">
+
+|      Wallet     |                   Platforms                  | Staking and Nomination Pools | NFTs | Crowdloans | Ledger support | Governance |
+|:---------------:|:-------------------------------------------:|:----------------------------:|:----:|:----------:|:--------------:|:----------:|
+| Enkrypt         | Brave, Chrome, Edge, Firefox, Opera, Safari | No, No                       | Yes  | No         | Yes            | No         |
+| PolkaGate       | Brave, Chrome, Firefox, Edge                | Yes, Yes                     | No   | Yes        | Yes            | Yes        |
+| SubWallet       | Brave, Chrome, Edge, Firefox, iOs, Android  | Yes, Yes                     | Yes  | Yes        | Yes            | No         |
+| Talisman        | Brave, Chrome, Edge, Firefox                | Yes, Yes                     | Yes  | Yes        | Yes            | No         |
+| Fearless Wallet | Brave, Chrome, iOS, Android                 | Yes, Yes                     | No   | No         | No             | No         |
+| Nova Wallet | iOS, Android                                | Yes, Yes                     | Yes  | Yes        | Yes            | Yes        |
+| Polkawallet | iOS, Android                                | Yes, Yes                     | No   | Yes        | No             | Yes        |
+
+</div>
+
+Notes:
+
+TODO make more pretty with icons or other images
+
+---
+
+## Ledger Support w/ Metadata
+
+<div class="grid grid-cols-3">
+
+<div class="col-span-2">
+
+Polkadot has been working with Ledger to provide rich support for the Polkadot network.
+
+Users can get clear visibility into the transactions they are signing, and perform complicated tasks such as batching, multisigs, staking, governance, and more.
+
+</div>
+
+<div>
+
+<image src="../../../assets/img/7-Polkadot/eco/ledger.webp" style="width: 500px;">
+
+</div>
+
+</div>
+
+---
+
+## Block Explorers
+
+- Polkadot-JS Apps Explorer - Polkadot dashboard block explorer. Supports dozens of other networks, including Kusama, Westend, and other remote or local endpoints.
+- Polkascan - Blockchain explorer for Polkadot, Kusama, and other related chains.
+- Subscan - Blockchain explorer for Substrate chains.
+- DotScanner - Polkadot & Kusama Blockchain explorer.
+- 3xpl.com - Fastest ad-free universal block explorer and JSON API with Polkadot support.
+- Blockchair.com - Universal blockchain explorer and search engine with Polkadot support.
+- Polkaholic.io - Polkadot & Kusama Blockchain explorer with API and DeFi support across 40+ parachains.
+
+Notes:
+
+https://wiki.polkadot.network/docs/build-tools-index#block-explorers
+
+---
+
+## Governance Dashboards
+
+The most popular ones at the moment:
+
+<div class="grid grid-cols-2">
+
+<div>
+
+### Polkassembly
+
+<image src="../../../assets/img/7-Polkadot/eco/polkassembly.png" style="width: 600px;">
+
+</div>
+
+<div>
+
+### Subsquare
+
+<image src="../../../assets/img/7-Polkadot/eco/subsquare.png" style="width: 600px;">
+
+</div>
+
+</div>
+
+---
+## Polkadot Forum
+
+<image src="../../../assets/img/7-Polkadot/eco/forum.png" style="width: 1200px;">
+
+Notes:
+
+https://forum.polkadot.network/
+
+---
+
+## Fellowship
+
+The Polkadot Fellowship is a decentralized technical collective on the Polkadot network designed to recognize, nurture, and incentivize contributors to the core Polkadot protocol.
+
+
+
+---
+
+## Fellowship Manifesto
+
+<image src="../../../assets/img/7-Polkadot/eco/fellowship-manifesto.png" style="width: 1200px;">
+
+Notes:
+
+https://github.com/polkadot-fellows
+
+---
+
+## Fellowship Members
+
+<image src="../../../assets/img/7-Polkadot/eco/fellowship-members.png" style="width: 1200px;">
+
+Notes:
+
+https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama-rpc.polkadot.io#/fellowship
+
+---
+
+## RFCs
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+
+Did I miss anything?
