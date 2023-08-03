@@ -214,7 +214,7 @@ UpwardMessages: StorageMap<ParaId, Deque<Message>>;
 DownwardMessages: StorageMap<ParaId, Deque<Message>>;
 
 // (sender, receiver)
-// Sender posts, parachain drains
+// Sender posts, receiver drains
 HrmpChannels: StorageMap<(ParaId, ParaId), Deque<Message>>;
 
 ```
