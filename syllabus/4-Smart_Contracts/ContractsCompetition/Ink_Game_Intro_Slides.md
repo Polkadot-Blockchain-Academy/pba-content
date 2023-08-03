@@ -4,7 +4,7 @@ description: An introduction to the ink! workshop.
 duration: 20 min
 ---
 
-<img rounded style="width: 1200px; padding-top:15px;" src="../img/ink/beginners-workshop.jpg" alt="ink!" />
+<img rounded style="width: 1200px; padding-top:15px;" src="../img/ink/beginners-workshop.jpg" />
 
 ---
 

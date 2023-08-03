@@ -49,7 +49,7 @@ Stuff you should remember to say
 ## Pictures
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic" />
+<img style="width: 800px" src="../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" />
 
 #### _Leave a note on why this one matters_
 
@@ -689,7 +689,7 @@ A plugin for Reveal.js allowing to easily add charts using Chart.js.
 <section style="margin-top: 100px">
   <h5>Bar chart with CSV data</h5>
   <div style="height:480px">
-  <canvas data-chart="bar" >
+  <canvas data-chart="bar">
     January, February, March, April, May, June, July
     My first dataset, 65, 59, 80, 81, 56, 55, 40
     My second dataset, 28, 48, 40, 19, 86, 27, 90

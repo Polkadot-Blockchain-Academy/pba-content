@@ -167,16 +167,6 @@ curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.29/zombie
 chmod +x zombienet
 ```
 
----v
-
-<!-- .slide: data-visibility="hidden" -->
-
-### Examples
-
-<img rounded style="" src="../../assets/img/7-Polkadot/zombienet/examples-qr.png" />
-
-[zombienet presentation examples](https://github.com/pepoviola/zombienet-presentation-examples)
-
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -423,7 +413,7 @@ default_command = "polkadot"
 
 ## Make the network config dynamic
 
-<img rounded style="" src="../../assets/img/7-Polkadot/zombienet/zombienet-env-vars.png" />
+<img rounded style="width: 1200px" src="../../assets/img/7-Polkadot/zombienet/zombienet-env-vars.png" />
 
 ---
 
