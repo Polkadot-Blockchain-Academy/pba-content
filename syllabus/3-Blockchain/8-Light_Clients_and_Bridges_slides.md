@@ -346,8 +346,10 @@ But even if you don't trust any relayer out there, you can always run your own.
 
 ## Finality and Equivocation
 
-<img rounded width="500px" src="./img/bridge-incentives-achiles.jpg" />
-<img rounded width="700px" src="./img/bridge-double-finalized.svg" />
+<section class="!flex">
+  <img rounded width="500px" src="./img/bridge-incentives-achiles.jpg" />
+  <img rounded width="700px" src="./img/bridge-double-finalized.svg" />
+</section>
 
 Notes:
 
