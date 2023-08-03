@@ -11,4 +11,4 @@
 
 ### Learning Outcome
 
-<!-- TODO: Write learning outcome -->
+Concluding this lecture, students should come out with better understanding of the capabilities of XCM in the real world beyond simple asset transfers, with the ultimate goal of giving them some inspiration to get started building projects or protocols powered by XCM.
