@@ -7,31 +7,14 @@ duration: 1 hour
 topics to cover
 
 
-- Token Functionality
-	- Reserved Tokens
-	- Locked Tokens
-- Token Utility
-	- Staking
-	- Bonding
-	- Free Balances
-	- Governance
-- token value
-	-
-- Council (skip?)
-- Open Governance
-- Treasury
 - Fellowship
 	- rfc
 	- payroll
-- Society (skip?)
 
 - ecosystem
-	- system chains vs market parachains
-		- scaling polkadot through system chains
 	- ecosystem verticals
 	- blockexplorer
 	- polkassembly
-	- alternative clients
 
 ---
 
@@ -397,6 +380,26 @@ For instance, a referendum proposed in this track needs to amass 48.2% support (
 
 ---
 
+## Treasury
+
+Polkadot has an on-chain treasury which is used to support permissionless and decentralized development of the network.
+
+Treasury gets its funds through inefficiencies in the inflation curve, slashing, and by taking 80% transaction fees.
+
+Treasury will automatically burn a 1% of its funds every spending period (24 hours), placing pressure on spending the tokens.
+
+---
+
+## Treasury Outlets
+
+- Proposals: Instant payments to individuals approved by governance.
+- Bounties: Multi-stage payments to individuals managed by governance and an appointed bounty curator.
+- Tips: Small payments to individuals that can be made more easily through specific governance tracks.
+
+The Polkadot Treasury currently has over 45,000,000 DOT.
+
+---
+
 ## Other DOT Utilities
 
 - Basic Identity System, used mostly for Governance and Validators.
@@ -427,6 +430,10 @@ Over time, this can help provide additional resilience to the network from softw
 
 - Polkadot System Chains
 - Market Bought Parachains
+
+<br />
+
+Perhaps this list will grow once more agile core allocation systems are implemented.
 
 ---
 
