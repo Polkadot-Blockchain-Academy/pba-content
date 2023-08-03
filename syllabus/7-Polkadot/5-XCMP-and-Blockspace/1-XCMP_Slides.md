@@ -157,6 +157,7 @@ Candidates are posted to the relay chain in their entirety - everything except f
 ---
 
 What goes into a candidate?
+
 1. Descriptor: defines inputs to the validation function
 1. Commitments: expected outputs from the validation function
 
@@ -284,9 +285,10 @@ Challenge: Read the `activeConfig()` of the `configuration` pallet in Polkadot-J
 ---
 
 The host configuration specifies things like:
-  * How many messages can be in the upward, downward, or HRMP queues for a parachain
-  * How many bytes can be in the upward, downward, or HRMP queues for a parachain
-  * How large a single message can be in the upward, downward, or HRMP queues.
+
+- How many messages can be in the upward, downward, or HRMP queues for a parachain
+- How many bytes can be in the upward, downward, or HRMP queues for a parachain
+- How large a single message can be in the upward, downward, or HRMP queues.
 
 ---
 
