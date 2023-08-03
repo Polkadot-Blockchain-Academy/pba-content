@@ -308,12 +308,12 @@ The conviction multiplier increases the vote multiplier by one every time the nu
 | Lock Periods | Vote Multiplier | Length in Days |
 | ------------ | --------------- | -------------- |
 | 0 | 0.1 | 0 |
-| 1 | 1 | 28 |
-| 2 | 2 | 56 |
-| 4 | 3 | 112 |
-| 8 | 4 | 224 |
-| 16 | 5 | 448 |
-| 32 | 6 | 896 |
+| 1 | 1 | 7 |
+| 2 | 2 | 14 |
+| 4 | 3 | 28 |
+| 8 | 4 | 56 |
+| 16 | 5 | 112 |
+| 32 | 6 | 224 |
 
 </div>
 
@@ -374,7 +374,7 @@ Polkadot has an on-chain treasury which is used to support permissionless and de
 
 Treasury gets its funds through inefficiencies in the inflation curve, slashing, and by taking 80% transaction fees.
 
-Treasury will automatically burn a 1% of its funds every spending period (24 hours), placing pressure on spending the tokens.
+Treasury will automatically burn a 1% of its funds every spending period (24 days), placing pressure on spending the tokens.
 
 ---
 
