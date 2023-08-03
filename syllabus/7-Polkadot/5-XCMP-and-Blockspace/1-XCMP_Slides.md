@@ -8,25 +8,11 @@ duration: 45 minutes
 
 ---
 
-## Revisiting Interoperability
+Previous lectures discussed how Polkadot provides a secure environment for general code execution, and how it scales.
 
 ---
 
-## Interoperability
-
-> Interoperability is the ability for consensus systems to share data and value.
-
----
-
-## Superadditive Value
-
-The interoperation of people and systems<br/>creates superadditive economic value.
-
-> The whole is greater than the sum of the parts.
-
-Notes:
-
-https://en.wikipedia.org/wiki/Superadditivity
+This lecture is about how processes communicate within that environment.
 
 ---
 
@@ -46,11 +32,13 @@ https://en.wikipedia.org/wiki/Superadditivity
 
 ---
 
-## Interoperability & Specialization
+The Relay Chain Runtime maintains messaging queues for parachains.
 
-Efficient economic systems create niches for specialization.
+It acts as a bridge for parachains to each other and to itself.
 
-Different systems can exercise _comparative advantage_<br/>with others and focus on a single service or problem.
+---
+
+To do this, it adds additional limitations to candidates to ensure messaging rules are respected.
 
 ---
 
@@ -74,9 +62,17 @@ XCMP is the medium, like sound or writing, rather than the language.
 
 ---
 
-## Messaging Kinds
+<img rounded width="1300px" src="../assets/messaging-kinds.svg" />
 
-<img rounded width="950px" src="../assets/messaging-kinds.svg" />
+---
+
+Downward and Upward channels are implicitly available.
+
+XCMP Channels must be explicitly opened.
+
+---
+
+XCMP Channels are one-way, and for two-way communication two channels must be opened.
 
 ---
 
@@ -124,7 +120,7 @@ Here, note that the `relay_parent_storage_root` allows us to handle **Merkle Pro
 /// Outputs of _successful_ validation of a parachain block.
 pub struct ValidationResult {
 	/// The head-data produced as a result of execution.
-  pub head_data: HeadData,
+	pub head_data: HeadData,
 	/// Upward messages sent by the Parachain.
 	pub upward_messages: Vec<UpwardMessage>,
 	/// Outbound horizontal messages sent by the parachain.
@@ -156,10 +152,14 @@ Candidates are posted to the relay chain in their entirety - everything except f
 
 ---
 
-What goes into a candidate?
+## Candidate Breakdown
+
+<pba-flex center>
 
 1. Descriptor: defines inputs to the validation function
 1. Commitments: expected outputs from the validation function
+
+</pba-flex>
 
 ---
 
@@ -182,16 +182,16 @@ pub struct CandidateDescriptor {
 
 ```rust
 pub struct CandidateCommitments {
-	/// Messages destined to be interpreted by the Relay chain itself.
-	pub upward_messages: UpwardMessages,
-	/// Horizontal messages sent by the parachain.
-	pub horizontal_messages: HorizontalMessages,
-	/// The head-data produced as a result of execution.
-	pub head_data: HeadData,
-	/// The number of messages processed from the DMQ.
-	pub processed_downward_messages: u32,
-	/// The mark which specifies the block number up to which all inbound HRMP messages are processed.
-	pub hrmp_watermark: RelayChainBlockNumber,
+  /// Messages destined to be interpreted by the Relay chain itself.
+  pub upward_messages: UpwardMessages,
+  /// Horizontal messages sent by the parachain.
+  pub horizontal_messages: HorizontalMessages,
+  /// The head-data produced as a result of execution.
+  pub head_data: HeadData,
+  /// The number of messages processed from the DMQ.
+  pub processed_downward_messages: u32,
+  /// The mark which specifies the block number up to which all inbound HRMP messages are processed.
+  pub hrmp_watermark: RelayChainBlockNumber,
 }
 ```
 
@@ -222,7 +222,7 @@ HrmpChannels: StorageMap<(ParaId, ParaId), Deque<Message>>;
 
 ---
 
-(in Polkadot runtime, inclusion pallet)
+(in Polkadot runtime, simplified, inclusion pallet)
 
 ```rust
 fn process_backed_candidate(CandidateDescriptor, CandidateCommitments) {
@@ -280,10 +280,6 @@ These variables are updated by governance.
 
 ---
 
-Challenge: Read the `activeConfig()` of the `configuration` pallet in Polkadot-JS Apps.
-
----
-
 The host configuration specifies things like:
 
 - How many messages can be in the upward, downward, or HRMP queues for a parachain
@@ -302,7 +298,7 @@ Messages are just `Vec<u8>` byte strings.
 
 ---
 
-The Relay Chain interprets messages as XCM.
+The Relay Chain interprets upward messages as XCM.
 
 The main takeaway for now is that it allows parachains to execute `Call`s on the Relay Chain.
 
@@ -335,11 +331,11 @@ Parachains are free to interpret their incoming downward or HRMP messages howeve
 
 ---
 
-Problem: Parachain candidates can't be backed unless they respect the constraints on sending & receiving messages
+Problem: Parachain candidates can't be backed unless they respect the constraints on sending & receiving messages. How do they ensure this?
 
 ---
 
-Solution: Parachain runtimes can _read relay chain state_ to find out these limits. They include these proofs in the PoV.
+Solution: PVFs can _read relay chain state_ to find out these limits. They include these proofs in the PoV.
 
 ---
 
@@ -352,18 +348,77 @@ pub struct ValidationParams {
 
 	// ...
 }
+```
 
+---
+
+```rust
 fn validate_block(ValidationParams) -> Result<ValidationResult, ValidationFailed> {
   // simplified
   let storage_proof = extract_storage_proof(pov);
-  let current_messaging_proof = check_storage_proof(
+
+  // state of queues, and subset of `HostConfiguration`.
+  let (message_queues, current_config) = check_storage_proof(
     relay_parent_storage_proof,
     storage_proof,
   )?;
 
-  // use this to ensure that `ValidationResult` respects limits.
+  // process incoming messages and send outgoing while respecting limits in config.
 }
 ```
+
+---
+
+<!-- .slide: data-background-color="#000" -->
+
+## Opening Channels
+
+---
+
+The protocol for opening an HRMP channel is as follows:
+
+<pba-flex center>
+
+1. Chain A sends an upward message requesting a channel to Chain B
+1. Chain B receives a downward message notifying of the channel request
+1. Chain B sends an upward message accepting or rejecting the channel
+1. The channel is either opened or rejected in the Relay Chain as a result
+
+</pba-flex>
+
+---
+
+There are no fees for XCMP messages, but every channel comes with a `max_capacity` and `max_message_size`.
+
+Each channel comes with a corresponding _deposit_ of DOT tokens to pay for the relay chain state utilization.
+
+This deposit is returned when the channel is closed.
+
+---
+
+<img rounded width="1000px" src="../assets/hrmp-channel.svg" />
+
+---
+
+## Message Queue Chains (MQC)
+
+Let's take a small detour into a data structure used in DMP and XCMP.
+
+**Problem**: Parachains should be able to cheaply determine the state of the entire message queue.
+
+**Problem**: Relay Chain state proofs are expensive and should be minimized.
+
+Solution: Message Queue Chains (MQC)
+
+---
+
+## MQC Architecture
+
+<img rounded width="700px" src="../assets/mqc.svg" />
+
+---
+
+With MQCs, learning about all incoming messages for a single queue requires only one storage proof and one MQC entry (70 bytes) per incoming message.
 
 ---
 
@@ -404,67 +459,6 @@ pub struct ValidationResult {
 
 ---
 
-## Message Queue Chains (MQC)
-
-Let's take a small detour into a data structure used in DMP and XCMP.
-
-**Problem**: Parachains should be able to cheaply determine the state of the entire message queue.
-
-**Problem**: Relay Chain state proofs are expensive and should be minimized.
-
-Solution: Message Queue Chains (MQC)
-
----
-
-## MQC Architecture
-
-<img rounded width="700px" src="../assets/mqc.svg" />
-
----
-
-## Benefits of MQCs
-
-<pba-flex center>
-
-1. Parachains only need to learn the most recent MQC Head to implicitly learn about all messages before it
-1. MQC entries are small (~70 bytes)
-1. MQCs can be backfilled and then processed forward with no further relay chain interaction
-
-</pba-flex>
-
----
-
-## Downward Message Passing (DMP)
-
-DMP at a high level is Relay Chain to Parachain messaging.
-
-The Relay Chain manages a queue of messages to each parachain, which are processed as the parachain produces blocks.
-
----
-
-## DMP Pallet
-
-The Relay Chain Runtime has a DMP pallet which manages
-
-```rust
-	/// The downward messages addressed for a certain para.
-	#[pallet::storage]
-	pub(crate) type DownwardMessageQueues<T: Config> = StorageMap<
-		_,
-		Twox64Concat,
-		ParaId,
-		Vec<InboundDownwardMessage<BlockNumberFor<T>>>,
-		ValueQuery,
-	>;
-
-	/// A mapping that stores the downward message queue MQC head for each para.
-	#[pallet::storage]
-	pub(crate) type DownwardMessageQueueHeads<T: Config> =
-		StorageMap<_, Twox64Concat, ParaId, Hash, ValueQuery>;
-```
-
----
-
 ## DMP Configuration
 
 ```rust
@@ -497,16 +491,7 @@ They can just be thrown out.
 
 ---
 
-## XCMP-Lite / HRMP: Horizontal Message Passing
-
-XCMP is the family of protocols by which parachains can transmit messages to each other.
-
-In the planned Full XCMP, only the hashes of messages are posted to the Relay Chain.
-In XCMP-Lite, the full messages are posted to the Relay Chain.
-
----
-
-## Validation Outputs for XCMP-Lite
+## Validation Outputs for HRMP
 
 ```rust
 /// Outputs of _successful_ validation of a parachain block.
@@ -531,58 +516,7 @@ pub struct OutboundHrmpMessage {
 
 ---
 
-<!-- .slide: data-background-color="#000" -->
-
-## Opening Channels
-
----
-
-Downward and Upward channels are implicitly available.
-
-XCMP Channels must be explicitly opened.
-
----
-
-XCMP Channels are one-way, and for two-way communication two channels must be opened.
-
----
-
-The protocol for opening a channel is as follows:
-
-<pba-flex center>
-
-1. Chain A sends an upward message requesting a channel to Chain B
-1. Chain B receives a downward message notifying of the channel request
-1. Chain B sends an upward message accepting or rejecting the channel
-1. The channel is either opened or rejected in the Relay Chain as a result
-
-</pba-flex>
-
----
-
-There are no fees for XCMP messages, but every channel comes with a `max_capacity` and `max_message_size`.
-
-Each channel comes with a corresponding _deposit_ of DOT tokens to pay for the relay chain state utilization.
-
-This deposit is returned when the channel is closed.
-
----
-
-## XCMP-Lite / HRMP Channel Open Protocol
-
-<img rounded width="1000px" src="../assets/hrmp-channel.svg" />
-
----
-
-## HRMP Pallet: MQCs
-
-Every open channel causes the HRMP pallet in the Relay Chain Runtime to manage an MQC for messages from the sender to the receiver.
-
-Note that channels are one-way. Each channel comes with storage requirements, so a deposit is required from each side to collateralize the storage.
-
----
-
-## XCMP Configuration by Governance
+## HRMP Configuration
 
 ```rust
 pub struct HostConfiguration {
@@ -600,14 +534,6 @@ pub struct HostConfiguration {
   // more fields...
 }
 ```
-
----
-
-## The `hrmp_watermark` field
-
-Parachains include an `hrmp_watermark` in their `ValidationResult` indicating a relay-chain block number.
-
-This tells the relay chain state that the parachain has processed all messages from all inbound channels with `sent_at <= hrmp_watermark`.
 
 ---
 
