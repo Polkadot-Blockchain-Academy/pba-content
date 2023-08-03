@@ -4,7 +4,7 @@ description: An introduction on what ink! is and how it ties into Substrate.
 duration: 1 hour
 ---
 
-<img rounded style="width: 800px;" src="../img/ink/ink-logo-with-squid-white.svg" alt="ink!" />
+<img rounded style="width: 800px" src="../img/ink/ink-logo-with-squid-white.svg" />
 
 ---
 

@@ -53,11 +53,11 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 ###### High Level Languages
 
-<img style="width: 30%" src="img/pab/rust_logo.png" alt="Rust logo" />
+<img style="width: 30%" src="img/pab/rust_logo.png" />
 
-<img style="width: 30%" src="img/pab/c_logo.png" alt="C logo" />
+<img style="width: 30%" src="img/pab/c_logo.png" />
 
-<img style="width: 30%" src="img/pab/c++_logo.png" alt="C++ logo" />
+<img style="width: 30%" src="img/pab/c++_logo.png" />
 
 </pba-flex>
 </pba-col>
@@ -68,10 +68,10 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 ###### PABs
 
-<img style="width: 30%" src="img/pab/jvm_logo.png" alt="jvm logo" />
-<img style="width: 30%" src="img/pab/wasm_logo.png" alt="wasm logo" />
-<img style="width: 20%" src="img/pab/eth_logo.png" alt="evm logo" />
-<img style="width: 30%" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
+<img style="width: 30%" src="img/pab/jvm_logo.png" />
+<img style="width: 30%" src="img/pab/wasm_logo.png" />
+<img style="width: 20%" src="img/pab/eth_logo.png" />
+<img style="width: 30%" src="img/pab/risc-v_logo.png" />
 
 </pba-flex>
 </pba-col>
@@ -82,9 +82,9 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 ###### Architecture's bytecode
 
-<img style="width: 30%" src="img/pab/intel_logo.png" alt="intel logo" />
-<img style="width: 30%" src="img/pab/arm_logo.png" alt="arm logo" />
-<img style="width: 30%" src="img/pab/risc-v_logo.png" alt="RISC-V logo" />
+<img style="width: 30%" src="img/pab/intel_logo.png" />
+<img style="width: 30%" src="img/pab/arm_logo.png" />
+<img style="width: 30%" src="img/pab/risc-v_logo.png" />
 
 </pba-flex>
 </pba-col>
@@ -248,7 +248,7 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 </pba-col>
 <pba-col center>
 
-<img style="width: 70%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/WebAssembly_Logo.svg/1200px-WebAssembly_Logo.svg.png" alt="wasm logo" />
+<img style="width: 70%" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/WebAssembly_Logo.svg/1200px-WebAssembly_Logo.svg.png" />
 
 </pba-col>
 </pba-cols>
@@ -533,7 +533,7 @@ There are also light clients, where both Runtime and Client are implemented in w
     - the node's runtime as embedder for the SmartContract
 
 
-<img style="height: 30vh" src="img/pab/mind-blown-explosion.gif" alt="mind blow explosion" />
+<img style="height: 30vh" src="img/pab/mind-blown-explosion.gif" />
 
 We have a double recursion of a PAB that embed itself
 

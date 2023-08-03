@@ -466,7 +466,7 @@ But pointers are independent from the data they reference,<br/>so the data can b
 
 That is, pointer-based linked lists are not tamper evident.
 
-<img src="../../../assets/img/1-Cryptography/Hash-Chains.png" alt="Linked List" />
+<img src="../../../assets/img/1-Cryptography/Hash-Chains.png" />
 
 ---
 

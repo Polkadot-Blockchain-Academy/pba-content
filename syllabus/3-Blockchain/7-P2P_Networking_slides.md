@@ -38,7 +38,7 @@ Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA p
 
 ## Packet Switching
 
-<img src="img/message_packet.svg" alt="Packet Switching" style="width: 600px" />
+<img style="width: 600px" src="img/message_packet.svg" />
 
 Notes:
 Mention that headers contain some addressing, destination information, and ordering typically depending
@@ -47,25 +47,25 @@ Mention that headers contain some addressing, destination information, and order
 
 ## Packet Switching
 
-<img src="img/packet_switching_1.svg" alt="Packet Switching" style="width: 600px" />
+<img style="width: 600px" src="img/packet_switching_1.svg"  />
 
 ---
 
 ## Packet Switching
 
-<img src="img/packet_switching_2.svg" alt="Packet Switching" style="width: 600px" />
+<img  style="width: 600px" src="img/packet_switching_2.svg" />
 
 ---
 
 ## Packet Switching
 
-<img src="img/packet_switching_3.svg" alt="Packet Switching" style="width: 600px" />
+<img style="width: 600px" src="img/packet_switching_3.svg" />
 
 ---
 
 ## Packet Switching
 
-<img src="img/packet_switching_4.svg" alt="Packet Switching" style="width: 600px" />
+<img style="width: 600px" src="img/packet_switching_4.svg" />
 
 ---
 
@@ -104,25 +104,25 @@ This was a turning point in digital copyright law and played a significant role 
 
 ## Napster Setup
 
-<img src="img/napster_1.svg" alt="Napster Setup" style="width: 600px" />
+<img style="width: 600px" src="img/napster_1.svg" />
 
 ---
 
 ## Napster Setup
 
-<img src="img/napster_2.svg" alt="Napster Setup" style="width: 600px" />
+<img style="width: 600px" src="img/napster_2.svg" />
 
 ---
 
 ## Napster Setup
 
-<img src="img/napster_3.svg" alt="Napster Setup" style="width: 600px" />
+<img style="width: 600px" src="img/napster_3.svg" />
 
 ---
 
 ## Napster Setup
 
-<img src="img/napster_4.svg" alt="Napster Setup" style="width: 600px" />
+<img style="width: 600px" src="img/napster_4.svg" />
 
 ---
 
@@ -184,7 +184,7 @@ Notes:
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/client_server_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
+<img style="width: 600px" src="img/client_server_1.svg" />
 
 Notes:
 
@@ -195,19 +195,19 @@ In p2p, only one node needs to have a full copy in order for the file to be able
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/client_server_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
+<img style="width: 600px" src="img/client_server_2.svg" />
 
 ---
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/p2p_topology_1.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
+<img style="width: 600px" src="img/p2p_topology_1.svg" />
 
 ---
 
 ## Centralized vs Decentralized Networks
 
-<img src="img/p2p_topology_2.svg" alt="Centralized vs Decentralized Networks" style="width: 600px" />
+<img style="width: 600px" src="img/p2p_topology_2.svg" />
 
 ---
 

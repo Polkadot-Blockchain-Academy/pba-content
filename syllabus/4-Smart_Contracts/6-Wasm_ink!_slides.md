@@ -3,7 +3,7 @@ title: WASM Smart Contracts in Ink!
 description: A working programmer’s guide to the crypto industry
 ---
 
-<img rounded style="width: 600px;" src="img/ink/ink-logo-with-squid-white.svg" alt="ink!" />
+<img rounded style="width: 600px;" src="img/ink/ink-logo-with-squid-white.svg" />
 
 # WASM Smart Contracts in Ink!
 
@@ -1082,7 +1082,7 @@ Notes:
 
 ## Common Vulnerabilities: blast from the past
 
-<img rounded style="width: 900px;" src="img/ink/anyone_can_kill_it.jpg" alt="ink!" />
+<img rounded style="width: 900px;" src="img/ink/anyone_can_kill_it.jpg" />
 
 <div style="font-size: 0.72em;">
 

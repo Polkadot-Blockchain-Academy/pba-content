@@ -49,7 +49,7 @@ Stuff you should remember to say
 ## Pictures
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img style="width: 800px" src="../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic" />
+<img style="width: 800px" src="../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" />
 
 #### _Leave a note on why this one matters_
 
