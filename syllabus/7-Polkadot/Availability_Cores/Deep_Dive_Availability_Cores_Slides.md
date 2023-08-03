@@ -111,9 +111,43 @@ To recap, the goals of availability are:
 
 ---
 
-## The Availability Process
+## Core States
 
-Core States: Free, Scheduled, Occupied
+<pba-cols>
+<pba-col center>
+
+Free
+
+<img rounded style="height: 300px" src="../assets/free.png" />
+
+</pba-col>
+<pba-col center>
+
+Scheduled
+
+<img rounded style="height: 300px" src="../assets/scheduled.png" />
+
+</pba-col>
+
+<pba-col center>
+
+Occupied
+
+<img rounded style="height: 300px" src="../assets/occupied.png" />
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+- Before going any farther we need to talk about core states
+- CoreState: Free -> core has not been assigned a parachain via lease or on-demand claim
+- CoreState: Scheduled -> Core has an assigned parachain and is currently unoccupied
+- CoreState: Occupied -> Core has assignment and is occupied by a parablock pending availability
+
+---
+
+## The Availability Process
 
 <pba-flex center>
 
@@ -132,12 +166,6 @@ Core States: Free, Scheduled, Occupied
 
 </pba-flex>
 
-Notes:
-
-- CoreState: Free -> core has not been assigned a parachain via lease or on-demand claim
-- CoreState: Scheduled -> Core has an assigned parachain and is currently unoccupied
-- CoreState: Occupied -> Core has assignment and is occupied by a parablock pending availability
-
 ---
 
 ## Cores and Blockspace Over Time
@@ -146,8 +174,8 @@ Notes:
 
 Notes:
 
-- Metaphor: Freight train
-- Relay chain: Train station
+- Metaphor: Freight trains
+- Relay chain: Train loading bay
 - Relay block: Train leaving station every 6 seconds
 - Potential Parablock: Car space in scheduled train
 - Availability core: Car index within all trains
@@ -206,6 +234,7 @@ Notes:
 
 - Validators randomly assigned to groups at start of session.
 - Group count is active validator count / max group size rounded up
+- Groups are partitioned such that the largest group and smallest group have a size difference of 1
 
 ---
 
@@ -216,9 +245,12 @@ Notes:
 <pba-flex center>
 
 - Randomness via schnorrkel::vrf
-- Delay tranches add approvers until threshold met
-- Results in 30-40 assigned approvers per core
+- Approver assignments activated with delay tranches until threshold met
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Results in 30-40 approvers checking each block
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - Different assignments each block prevent DOS
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
