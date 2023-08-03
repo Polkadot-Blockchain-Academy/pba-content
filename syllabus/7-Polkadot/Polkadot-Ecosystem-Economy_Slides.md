@@ -147,12 +147,12 @@ Token holders are financially incentivized to maximize their staking returns, an
 <image src="../../../assets/img/7-Polkadot/staking-rate.png" style="width: 900px;">
 
 
+> Blue: Inflation vs Staking Rate
+>
+> Green: APY of Stakers vs Staking Rate
+>
+> Black: Total Inflation vs Staking Rate
 
-> Blue: Inflation to Stakers
->
-> Green: APY of Stakers
->
-> Black: Total Inflation
 ---
 
 ## DOT Utility: Parachains
