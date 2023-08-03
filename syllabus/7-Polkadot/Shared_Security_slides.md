@@ -24,7 +24,7 @@ Let’s explore…
 </div>
 <div>
 
-<image src="../../../assets/img/7-Polkadot/iceburg.jpg" style="width: 500px">
+<image src="../../assets/img/7-Polkadot/iceburg.jpg" style="width: 500px">
 
 </div>
 </div>
@@ -44,7 +44,7 @@ We will focus on Economic Security.
 
 Economic Security is represented by the economic cost to change the canonical history of a blockchain.
 
-<image src="../../../assets/img/7-Polkadot/chain-fork.svg" style="width: 1000px">
+<image src="../../assets/img/7-Polkadot/chain-fork.svg" style="width: 1000px">
 
 Chains with higher security are more resilient to malicious activity, like a double spend attack.
 
@@ -62,7 +62,7 @@ It is up to the blockchain to come to consensus as to which of these two transac
 </pba-col>
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/double-spend.svg" style="width: 500px">
+<image src="../../assets/img/7-Polkadot/double-spend.svg" style="width: 500px">
 
 </pba-col>
 </pba-cols>
@@ -73,7 +73,7 @@ It is up to the blockchain to come to consensus as to which of these two transac
 
 In this example, someone is explicitly taking advantage of fragmentation in the network to try and create two different canonical chains.
 
-<image src="../../../assets/img/7-Polkadot/network-attack.svg" style="width: 900px">
+<image src="../../assets/img/7-Polkadot/network-attack.svg" style="width: 900px">
 
 ---
 
@@ -81,7 +81,7 @@ In this example, someone is explicitly taking advantage of fragmentation in the 
 
 Eventually, the network fragmentation will resolve, and consensus messages will allow us to prove that the malicious nodes **equivocated**.
 
-<image src="../../../assets/img/7-Polkadot/network-attack-2.svg" style="width: 900px">
+<image src="../../assets/img/7-Polkadot/network-attack-2.svg" style="width: 900px">
 
 That is, they signed messages that validated two conflicting chains.
 
@@ -95,7 +95,7 @@ This will result in **slashing** the malicious nodes, which should be economical
 
 So Economics and Security are tightly coupled in Blockchians.
 
-<image src="../../../assets/img/7-Polkadot/economics-security.svg" style="width: 900px">
+<image src="../../assets/img/7-Polkadot/economics-security.svg" style="width: 900px">
 
 ---
 
@@ -116,14 +116,14 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 ## New Chains Have Small Market Cap
 
-<image src="../../../assets/img/7-Polkadot/small-market-cap.svg" style="width: 500px">
+<image src="../../assets/img/7-Polkadot/small-market-cap.svg" style="width: 500px">
 
 </pba-col>
 <pba-col>
 
 ## New Chains Are More Speculative
 
-<image src="../../../assets/img/7-Polkadot/speculative-graph.svg" style="width: 500px">
+<image src="../../assets/img/7-Polkadot/speculative-graph.svg" style="width: 500px">
 
 </pba-col>
 </pba-cols>
@@ -136,7 +136,7 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 # Shared Security
 
-<image src="../../../assets/img/7-Polkadot/spongebob.jpg" style="width: 900px">
+<image src="../../assets/img/7-Polkadot/spongebob.jpg" style="width: 900px">
 
 ---
 
@@ -160,7 +160,7 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 <pba-col>
 
-<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+<image src="../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
 
 </pba-col>
 
@@ -183,8 +183,8 @@ This is native to the protocol, and one of its core functionalities.
 <pba-col>
 
 1. Execution Meta-Protocol
-2. Coordination / Validation
-3. Security Hub / Settlement Layer
+1. Coordination / Validation
+1. Security Hub / Settlement Layer
 
 </pba-col>
 
@@ -210,7 +210,7 @@ This is native to the protocol, and one of its core functionalities.
 
 <pba-col>
 
-<image src="../../../assets/img/6-FRAME/wasm-in-storage.png" style="width: 700px">
+<image src="../../assets/img/6-FRAME/wasm-in-storage.png" style="width: 700px">
 
 </pba-col>
 
@@ -232,7 +232,7 @@ This has many implications, which we have covered, but the key point in this con
 
 <pba-col>
 
-<image src="../../../assets/img/5-Substrate/nintendo-console-2.png" style="width: 500px">
+<image src="../../assets/img/5-Substrate/nintendo-console-2.png" style="width: 500px">
 
 Basic Substrate Client
 
@@ -240,10 +240,10 @@ Basic Substrate Client
 
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/nintendo-game-acala.png" style="width: 250px">
-<image src="../../../assets/img/7-Polkadot/nintendo-game-astar.png" style="width: 250px">
-<image src="../../../assets/img/7-Polkadot/nintendo-game-moonbeam.png" style="width: 250px">
-<image src="../../../assets/img/7-Polkadot/nintendo-game-polkadot.png" style="width: 250px">
+<image src="../../assets/img/7-Polkadot/nintendo-game-acala.png" style="width: 250px">
+<image src="../../assets/img/7-Polkadot/nintendo-game-astar.png" style="width: 250px">
+<image src="../../assets/img/7-Polkadot/nintendo-game-moonbeam.png" style="width: 250px">
+<image src="../../assets/img/7-Polkadot/nintendo-game-polkadot.png" style="width: 250px">
 
 Wasm Runtimes
 
@@ -255,7 +255,7 @@ Wasm Runtimes
 
 ## A Polkadot Validator Node
 
-<image src="../../../assets/img/7-Polkadot/nintendo-console-extreme.png" style="width: 1000px">
+<image src="../../assets/img/7-Polkadot/nintendo-console-extreme.png" style="width: 1000px">
 
 ---
 
@@ -302,7 +302,7 @@ This enables Polkadot to scale.
 
 ## How to validate a block?
 
-<image src="../../../assets/img/7-Polkadot/parachain-validation.svg" style="width: 1200px">
+<image src="../../assets/img/7-Polkadot/parachain-validation.svg" style="width: 1200px">
 
 ---
 
@@ -310,7 +310,7 @@ This enables Polkadot to scale.
 
 Parachains submit new blocks with a proof-of-validity to the network.
 
-<image src="../../../assets/img/7-Polkadot/parachain-validation-multiple.svg" style="width: 900px">
+<image src="../../assets/img/7-Polkadot/parachain-validation-multiple.svg" style="width: 900px">
 
 Wasm Runtime and latest state root for Parachains already stored on the relay chain.
 
@@ -318,7 +318,7 @@ Wasm Runtime and latest state root for Parachains already stored on the relay ch
 
 Parachains Protocol has new blocks that it needs to validate and include.
 
-<image src="../../../assets/img/7-Polkadot/parachain-validators.svg" style="width: 600px">
+<image src="../../assets/img/7-Polkadot/parachain-validators.svg" style="width: 600px">
 
 ## Polkadot Validators
 
@@ -326,7 +326,7 @@ Parachains Protocol has new blocks that it needs to validate and include.
 
 A random subset of validators are assigned to execute the parachain blocks.
 
-<image src="../../../assets/img/7-Polkadot/parachain-validators-colored.svg" style="width: 600px">
+<image src="../../assets/img/7-Polkadot/parachain-validators-colored.svg" style="width: 600px">
 
 The new state root is then committed to the relay chain so the process can repeat.
 
@@ -353,7 +353,7 @@ The new state root is then committed to the relay chain so the process can repea
 
 <pba-col>
 
-<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+<image src="../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
 
 </pba-col>
 
@@ -378,7 +378,7 @@ The Relay Chain is the anchor for the Polkadot Network.
 
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/parachain-finalization.svg" style="width: 500px">
+<image src="../../assets/img/7-Polkadot/parachain-finalization.svg" style="width: 500px">
 
 </pba-col>
 
@@ -402,7 +402,7 @@ The Parachain state committed on Polkadot is the **canonical chain**.
 
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/xcmp-finalization.svg" style="width: 500px">
+<image src="../../assets/img/7-Polkadot/xcmp-finalization.svg" style="width: 500px">
 
 </pba-col>
 
@@ -425,8 +425,8 @@ So, shared security not only secures the individual chains, but the interactions
 <pba-col>
 
 1. Execution Meta-Protocol
-2. Coordination / Validation
-3. Security Hub / Settlement Layer
+1. Coordination / Validation
+1. Security Hub / Settlement Layer
 
 </pba-col>
 
