@@ -36,7 +36,7 @@ The DOT token can be in one of the following states:
 
 1. Transferable
 2. Locked (Frozen)
-2. Reserved (Held)
+3. Reserved (Held)
 
 </div>
 
@@ -49,11 +49,11 @@ The DOT token can be in one of the following states:
 - New terms "Frozen" and "Held" are not quite used in Polkadot yet...
 - Both states belong to the user... but cannot be spent / transferred.
 - Reserved balances stack on top of one another.
-	- Useful for user deposits, or other use cases where there is sybil concerns.
-	- Ex: Deposit for storing data on-chain,
+  - Useful for user deposits, or other use cases where there is sybil concerns.
+  - Ex: Deposit for storing data on-chain,
 - Locked balances can overlap each other.
-	- Useful when you want to use the same tokens for multiple use cases.
-	- Ex: Using the same tokens for both staking and voting in governance.
+  - Useful when you want to use the same tokens for multiple use cases.
+  - Ex: Using the same tokens for both staking and voting in governance.
 
 ---
 
@@ -288,7 +288,6 @@ https://polkadot.network/features/opengov/
 
 </div>
 
-
 ---
 
 ## Conviction Voting
@@ -307,13 +306,13 @@ The conviction multiplier increases the vote multiplier by one every time the nu
 
 | Lock Periods | Vote Multiplier | Length in Days |
 | ------------ | --------------- | -------------- |
-| 0 | 0.1 | 0 |
-| 1 | 1 | 7 |
-| 2 | 2 | 14 |
-| 4 | 3 | 28 |
-| 8 | 4 | 56 |
-| 16 | 5 | 112 |
-| 32 | 6 | 224 |
+| 0            | 0.1             | 0              |
+| 1            | 1               | 7              |
+| 2            | 2               | 14             |
+| 4            | 3               | 28             |
+| 8            | 4               | 56             |
+| 16           | 5               | 112            |
+| 32           | 6               | 224            |
 
 </div>
 
@@ -325,13 +324,13 @@ The OpenGov system has different voting tracks which have different levels of po
 
 Here are just some of the currently 15 tracks:
 
-| ID |       Origin       | Decision Deposit | Prepare Period | Decision Period | Confirm Period | Min Enactment Period |
-|:--:|:------------------:|:----------------:|:--------------:|:---------------:|:--------------:|:--------------------:|
-|  0 |        Root        |    100000 DOT    |     2 Hours    |     28 Days     |      1 Day     |         1 Day        |
-|  1 | Whitelisted Caller |     10000 DOT    |   30 Minutes   |     28 Days     |   10 Minutes   |      10 Minutes      |
-| 10 |    Staking Admin   |     5000 DOT     |     2 Hours    |     28 Days     |     3 Hours    |      10 Minutes      |
-| 11 |      Treasurer     |     1000 DOT     |     2 Hours    |     28 Days     |     3 Hours    |         1 Day        |
-| 12 |     Lease Admin    |     5000 DOT     |     2 Hours    |     28 Days     |     3 Hours    |      10 Minutes      |
+| ID  |       Origin       | Decision Deposit | Prepare Period | Decision Period | Confirm Period | Min Enactment Period |
+| :-: | :----------------: | :--------------: | :------------: | :-------------: | :------------: | :------------------: |
+|  0  |        Root        |    100000 DOT    |    2 Hours     |     28 Days     |     1 Day      |        1 Day         |
+|  1  | Whitelisted Caller |    10000 DOT     |   30 Minutes   |     28 Days     |   10 Minutes   |      10 Minutes      |
+| 10  |   Staking Admin    |     5000 DOT     |    2 Hours     |     28 Days     |    3 Hours     |      10 Minutes      |
+| 11  |     Treasurer      |     1000 DOT     |    2 Hours     |     28 Days     |    3 Hours     |        1 Day         |
+| 12  |    Lease Admin     |     5000 DOT     |    2 Hours     |     28 Days     |    3 Hours     |      10 Minutes      |
 
 ---
 
@@ -361,7 +360,7 @@ For instance, a referendum proposed in this track needs to amass 48.2% support (
 
 - DOT tokens are locked when you vote on a proposal.
 - You can reuse your locked tokens across multiple proposals.
-	- Voting for one proposal does not affect your ability to vote on another proposal.
+  - Voting for one proposal does not affect your ability to vote on another proposal.
 - You can also reuse staked tokens (which are also just locked).
 - You can update your vote while the proposal is ongoing.
 - If you used conviction voting, your tokens might be locked for long periods of time passed the end of a proposal.
@@ -516,15 +515,15 @@ Thanks to the treasury and Polkadot community, a number of different wallets hav
 
 <div class="text-small">
 
-|      Wallet     |                   Platforms                  | Staking and Nomination Pools | NFTs | Crowdloans | Ledger support | Governance |
-|:---------------:|:-------------------------------------------:|:----------------------------:|:----:|:----------:|:--------------:|:----------:|
-| Enkrypt         | Brave, Chrome, Edge, Firefox, Opera, Safari | No, No                       | Yes  | No         | Yes            | No         |
-| PolkaGate       | Brave, Chrome, Firefox, Edge                | Yes, Yes                     | No   | Yes        | Yes            | Yes        |
-| SubWallet       | Brave, Chrome, Edge, Firefox, iOs, Android  | Yes, Yes                     | Yes  | Yes        | Yes            | No         |
-| Talisman        | Brave, Chrome, Edge, Firefox                | Yes, Yes                     | Yes  | Yes        | Yes            | No         |
-| Fearless Wallet | Brave, Chrome, iOS, Android                 | Yes, Yes                     | No   | No         | No             | No         |
-| Nova Wallet | iOS, Android                                | Yes, Yes                     | Yes  | Yes        | Yes            | Yes        |
-| Polkawallet | iOS, Android                                | Yes, Yes                     | No   | Yes        | No             | Yes        |
+|     Wallet      |                  Platforms                  | Staking and Nomination Pools | NFTs | Crowdloans | Ledger support | Governance |
+| :-------------: | :-----------------------------------------: | :--------------------------: | :--: | :--------: | :------------: | :--------: |
+|     Enkrypt     | Brave, Chrome, Edge, Firefox, Opera, Safari |            No, No            | Yes  |     No     |      Yes       |     No     |
+|    PolkaGate    |        Brave, Chrome, Firefox, Edge         |           Yes, Yes           |  No  |    Yes     |      Yes       |    Yes     |
+|    SubWallet    | Brave, Chrome, Edge, Firefox, iOs, Android  |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
+|    Talisman     |        Brave, Chrome, Edge, Firefox         |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
+| Fearless Wallet |         Brave, Chrome, iOS, Android         |           Yes, Yes           |  No  |     No     |       No       |     No     |
+|   Nova Wallet   |                iOS, Android                 |           Yes, Yes           | Yes  |    Yes     |      Yes       |    Yes     |
+|   Polkawallet   |                iOS, Android                 |           Yes, Yes           |  No  |    Yes     |       No       |    Yes     |
 
 </div>
 
@@ -597,6 +596,7 @@ The most popular ones at the moment:
 </div>
 
 ---
+
 ## Polkadot Forum
 
 <image src="../../../assets/img/7-Polkadot/eco/forum.png" style="width: 1200px;">
