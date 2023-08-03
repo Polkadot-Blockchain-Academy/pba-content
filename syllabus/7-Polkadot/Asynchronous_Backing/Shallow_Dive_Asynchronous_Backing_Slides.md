@@ -22,9 +22,13 @@ Lets get to it
 
 - Synchronous vs asynchronous
 - Why is asynchronous backing desirable?
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - High Level Mechanisms of Async Backing
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - The Unincluded Segment, and Prospective Parachains
+<!-- .element: class="fragment" data-fragment-index="3" -->
 - Async Backing and other roadmap items
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
 
@@ -59,6 +63,7 @@ Notes:
 
 1. "The best existing parablock I'm aware of will eventually be included in the relay chain."
 1. "There won't be a chain reversion impacting that best parablock."
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-flex>
 
@@ -66,6 +71,7 @@ Notes:
 <br />
 
 > The Stakes Are Low
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -80,8 +86,11 @@ Brief BABE fork choice rule review
 
 1. 5-10x more extrinsics per block
 1. Shorter parachain block times 6s vs 12s
+<!-- .element: class="fragment" data-fragment-index="1" -->
 1. Resulting 10-20x boost in quantity of blockspace
+<!-- .element: class="fragment" data-fragment-index="2" -->
 1. Fewer wasted parachain blocks
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -103,10 +112,10 @@ Notes:
 ## Synchronous Backing, Another Look
 
 <div class="r-stack">
-<img rounded style="width: 1500px" src="../assets/synchronous_backing_1.svg" />
-<img rounded style="width: 1500px" src="../assets/synchronous_backing_2.svg" />
+<img rounded style="width: 1100px" src="../assets/synchronous_backing_1.svg" />
+<img rounded style="width: 1100px" src="../assets/synchronous_backing_2.svg" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img rounded style="width: 1500px" src="../assets/synchronous_backing_3.svg" />
+<img rounded style="width: 1100px" src="../assets/synchronous_backing_3.svg" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -134,13 +143,17 @@ Image version 3:
 Note:
 
 Image version 1:
-- Collation generation and off-chain backing are outside of the relay block cycle.
-- Number of candidates produced and backed off chain only limited by compute power, network latency, and `max_depth` configured on the relay chain.
+- Candidates stored in prospective parachains (detail on that later)
 
 Image version 2:
 - Now we see our relay block cycle.
 - It is 6 seconds rather than 12.
 - It completes on-chain backing for one candidate and inclusion for another each cycle.
+
+Image version 3:
+- Collation generation and off-chain backing are outside of the relay block cycle.
+- Number of candidates produced and backed off chain only limited by compute power, network latency, and `max_depth` configured on the relay chain.
+- Notice that a part of the collation generation context, the unincluded segment, comes from the collator itself.
 
 ---
 
@@ -150,8 +163,11 @@ Image version 2:
 
 - A parachain's record of all parablocks on a particular chain fork produced but not yet included
 - Used to apply limitations when constructing future blocks
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - Lives in the parachain runtime
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - Viewed from the perspective of a new parablock under construction
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -192,8 +208,11 @@ pub hrmp_outgoing: BTreeMap\<ParaId, HrmpChannelUpdate\>,
 
 - The relay chain's record of all candidates on all chain forks from all parachains
 - As if you folded all unincluded segments into one huge structure
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - Used to store candidates and later provide them to the on-chain backing process
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - Lives in the relay client (off chain)
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -210,6 +229,20 @@ Notes:
 - Fragment trees built per scheduled parachain at each leaf
 - Fragment trees may have 0 or more fragments representing potential parablocks making up possible futures for a parachain's state.
 - Collation generation, passing, and seconding work has already been completed for each fragment.
+
+---
+
+## Async Backing Simplified
+
+<div class="r-stack">
+<img rounded style="width: 1100px" src="../assets/async_backing_simplified_3.svg" />
+</div>
+
+Notes:
+
+Returning to our most basic diagram
+Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram? 
+Q: Which did I omit entirely?
 
 ---
 
