@@ -74,7 +74,7 @@ Can anyone spot a problem with synchronous model?
 
 - Problem 2
   - Minimal time to submit collation for 12 second total block time
-  - < 3 seconds
+  - About .5 seconds
   - Not enough to fill block fully
 
 ---
@@ -264,7 +264,7 @@ When and where can a candidate be included in a fragment tree?
 - Required parent is in tree
   - Included as child of required parent, if at all
 - `Fragment::validate_against_constraints()` passes
-- Valid relay parent
+- Relay parent in scope
 
 </pba-flex>
 
@@ -527,9 +527,9 @@ Notes:
 
 <pba-flex center>
 
-1. 5-10x more extrinsics per block
+1. 3-5x more extrinsics per block
 1. Shorter parachain block times 6s vs 12s
-1. Resulting 10-20x boost in quantity of blockspace
+1. Resulting 6-10x boost in quantity of blockspace
 1. Fewer wasted parachain blocks
 
 </pba-flex>

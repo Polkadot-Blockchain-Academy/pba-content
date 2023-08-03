@@ -57,7 +57,7 @@ Notes:
 
 ---
 
-## The Async Backing Reasonable Collator Assumptions
+## The Async Backing Optimistic Collator Assumptions
 
 <pba-flex center>
 
@@ -85,10 +85,10 @@ Brief BABE fork choice rule review
 
 <pba-flex center>
 
-1. 5-10x more extrinsics per block
+1. 3-5x more extrinsics per block
 1. Shorter parachain block times 6s vs 12s
 <!-- .element: class="fragment" data-fragment-index="1" -->
-1. Resulting 10-20x boost in quantity of blockspace
+1. Resulting 6-10x boost in quantity of blockspace
 <!-- .element: class="fragment" data-fragment-index="2" -->
 1. Fewer wasted parachain blocks
 <!-- .element: class="fragment" data-fragment-index="3" -->
