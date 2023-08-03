@@ -71,6 +71,7 @@ Notes:
 <br />
 
 > The Stakes Are Low
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
@@ -121,10 +122,12 @@ Notes:
 
 Notes:
 
-Image version 1: 
+Image version 1:
+
 - Now let's take a closer look at when each step of backing and inclusion takes place both with synchronous and asynchronous backing.
 
-Image version 3: 
+Image version 3:
+
 - Whole process is a cycle of duration 12 seconds (2 relay blocks).
 - No part of this cycle can be started for a second candidate of the same parachain until the first is included.
 
@@ -143,14 +146,17 @@ Image version 3:
 Note:
 
 Image version 1:
+
 - Candidates stored in prospective parachains (detail on that later)
 
 Image version 2:
+
 - Now we see our relay block cycle.
 - It is 6 seconds rather than 12.
 - It completes on-chain backing for one candidate and inclusion for another each cycle.
 
 Image version 3:
+
 - Collation generation and off-chain backing are outside of the relay block cycle.
 - Number of candidates produced and backed off chain only limited by compute power, network latency, and `max_depth` configured on the relay chain.
 - Notice that a part of the collation generation context, the unincluded segment, comes from the collator itself.
@@ -241,7 +247,7 @@ Notes:
 Notes:
 
 Returning to our most basic diagram
-Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram? 
+Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram?
 Q: Which did I omit entirely?
 
 ---
