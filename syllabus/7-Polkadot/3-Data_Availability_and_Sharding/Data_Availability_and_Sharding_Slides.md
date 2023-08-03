@@ -65,7 +65,7 @@ It means we could finalize an invalid parachain block.
 
 ## Problem
 
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/comic.png" alt="([^"]*)" />
+<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/comic.png" />
 
 Notes:
 
