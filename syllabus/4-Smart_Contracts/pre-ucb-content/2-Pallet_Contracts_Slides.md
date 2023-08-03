@@ -22,7 +22,7 @@ Notes:
 
 ## WebAssembly
 
-<img src="../img/pallet/wasm_logo.svg" style="width: 400px" />
+<img style="width: 400px" src="../img/pallet/wasm_logo.svg" />
 
 Notes:
 
@@ -143,7 +143,7 @@ Notes:
 
 ## Embedding Wasm
 
-<img rounded src="../img/pallet/wasm_embed.png" style="width: 1400px" />
+<img rounded style="width: 1400px" src="../img/pallet/wasm_embed.png" />
 
 Notes:
 
@@ -219,13 +219,13 @@ Notes:
 
 ## Architecture of pallet-contracts
 
-<img rounded src="../img/pallet/arch.png" style="width: 800px" />
+<img rounded style="width: 800px" src="../img/pallet/arch.png" />
 
 ---
 
 ## Dispatchables
 
-<img rounded src="../img/pallet/arch_dispatchable.png" style="width: 1200px" />
+<img rounded style="width: 1200px" src="../img/pallet/arch_dispatchable.png" />
 
 Notes:
 
@@ -258,7 +258,7 @@ Notes:
 
 ## RPCs
 
-<img rounded src="../img/pallet/arch_rpc.png" style="width: 1000px" />
+<img rounded style="width: 1000px" src="../img/pallet/arch_rpc.png" />
 
 Notes:
 
@@ -337,7 +337,7 @@ Notes:
 
 [`API docs`](https://docs.rs/pallet-contracts/latest/pallet_contracts/api_doc/index.html)
 
-<img src="../img/pallet/api.png" style="width: 1100px" />
+<img style="width: 1100px" src="../img/pallet/api.png" />
 
 ---
 
@@ -550,7 +550,7 @@ Notes:
 
 ## Execution Engine
 
-<img src="../img/pallet/exec.png" style="width: 800px" />
+<img style="width: 800px" src="../img/pallet/exec.png" />
 
 > What could be problematic about putting the execution engine into the client?
 
@@ -589,7 +589,7 @@ Notes:
 
 ## pallet-contracts uses `wasmi` for now
 
-<img rounded src="../img/pallet/wasmi.png" style="width: 1200px" />
+<img rounded style="width: 1200px" src="../img/pallet/wasmi.png" />
 
 Notes:
 
@@ -605,7 +605,7 @@ Notes:
 
 ## Making gas metering<br/>independent of the executor (1)
 
-<img rounded src="../img/pallet/gas.png" style="width: 200px;" />
+<img rounded style="width: 200px" src="../img/pallet/gas.png" />
 
 Notes:
 
@@ -621,7 +621,7 @@ Notes:
 
 ## Making gas metering<br/>independent of the executor (2)
 
-<div style="font-size: 0.77em;">
+<div style="font-size: 0.77em">
 
 ```WebAssembly
 (module
@@ -719,7 +719,7 @@ Image source: https://www.investopedia.com/articles/personal-finance/041515/buyi
 
 ## What we have now:<br/>Automatic storage deposits
 
-<img rounded src="../img/pallet/deposit.jpg" style="width: 700px;" />
+<img rounded style="width: 700px" src="../img/pallet/deposit.jpg" />
 
 Notes:
 
@@ -742,13 +742,13 @@ Notes:
     `pallet-contracts` takes
     care of this.
 
-Image source: https://m.bankingexchange.com/news-feed/item/7869-bank-deposits-the-most-important-number-on-the-balance-sheet
+Image source: https://m.bankingexchange.com/news-feed/item/7869-bank-deposits-the-most-important-number-on-the-balance-sheet <!-- markdown-link-check-disable-line -->
 
 ---
 
 ## Contracts on parachains
 
-<img rounded src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" style="width: 700px;" />
+<img rounded style="width: 700px" src="../../../assets/img/0-Shared/parachains/relay-network-diagram.png" />
 
 Notes:
 
@@ -762,8 +762,8 @@ Notes:
 ## Execution Engine
 
 <div class="r-stack">
-  <img class="fragment current-visible" src="../img/pallet/parachains0.png" style="width: 900px;" />
-  <img class="fragment current-visible" src="../img/pallet/parachains1.png" style="width: 900px;" />
+  <img style="width: 900px" class="fragment current-visible" src="../img/pallet/parachains0.png" />
+  <img style="width: 900px" class="fragment current-visible" src="../img/pallet/parachains1.png" />
 </div>
 
 Notes:
@@ -781,7 +781,7 @@ Notes:
 
 ## Code sizes matter!
 
-<img rounded src="../img/pallet/val.png" style="width: 1200px;" />
+<img rounded style="width: 1200px" src="../img/pallet/val.png" />
 
 Notes:
 
@@ -813,7 +813,7 @@ Notes:
 
 ## Shrink contract sizes
 
-<img rounded src="../img/pallet/mapping.png" style="width: 1200px;" />
+<img rounded style="width: 1200px" src="../img/pallet/mapping.png" />
 
 Notes:
 
@@ -838,7 +838,7 @@ Notes:
 
 ## Prevent size regressions
 
-<img rounded src="../img/pallet/sizes.png" style="width: 900px;" />
+<img rounded style="width: 900px" src="../img/pallet/sizes.png" />
 
 Notes:
 
@@ -850,13 +850,13 @@ Notes:
 <h2 style="margin-bottom:0"> Code merkelization </h2>
 
 <div class="r-stack" style="margin-top:0">
-  <img data-fragment-index="1" class="fragment current-visible" src="../img/pallet/merkle0.png" style="width:500px; margin-top:1em" />
-  <img data-fragment-index="2" class="fragment current-visible" src="../img/pallet/merkle0.png" style="width:500px; margin-top:1em" />
-  <img data-fragment-index="3" class="fragment current-visible" src="../img/pallet/merkle1.png" style="width:1100px" />
-  <img data-fragment-index="4" class="fragment current-visible" src="../img/pallet/merkle2.png" style="width:1100px" />
-  <img data-fragment-index="5" class="fragment current-visible" src="../img/pallet/merkle3.png" style="width:1100px" />
-  <img data-fragment-index="6" class="fragment current-visible" src="../img/pallet/merkle4.png" style="width:1100px" />
-  <img data-fragment-index="7" class="fragment current-visible" src="../img/pallet/merkle5.png" style="width:1100px" />
+  <img data-fragment-index="1" class="fragment current-visible" style="width:500px; margin-top:1em" src="../img/pallet/merkle0.png" />
+  <img data-fragment-index="2" class="fragment current-visible" style="width:500px; margin-top:1em" src="../img/pallet/merkle0.png" />
+  <img data-fragment-index="3" class="fragment current-visible" style="width:1100px" src="../img/pallet/merkle1.png" />
+  <img data-fragment-index="4" class="fragment current-visible" style="width:1100px" src="../img/pallet/merkle2.png" />
+  <img data-fragment-index="5" class="fragment current-visible" style="width:1100px" src="../img/pallet/merkle3.png" />
+  <img data-fragment-index="6" class="fragment current-visible" style="width:1100px" src="../img/pallet/merkle4.png" />
+  <img data-fragment-index="7" class="fragment current-visible" style="width:1100px" src="../img/pallet/merkle5.png" />
 </div>
 
 <div class="r-stack">
