@@ -81,10 +81,10 @@ So lets get to it
 <pba-col center>
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 300px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Bitcoin.png" alt="btc pic">
+<img rounded style="width: 300px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Bitcoin.png" />
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 200px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Ethereum.png" alt="eth pic">
+<img rounded style="width: 200px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Ethereum.png" />
 
 </pba-col>
 </pba-cols>
@@ -113,7 +113,7 @@ So lets get to it
 <pba-col center>
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 300px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Polkadot.png" alt="btc pic">
+<img rounded style="width: 300px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Polkadot.png" />
 
 </pba-col>
 <pba-col center style="font-size:smaller">
@@ -155,7 +155,7 @@ The bad:
 <pba-col center>
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Snail.jpeg" alt="btc pic">
+<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/Snail.jpeg" />
 
 </pba-col>
 </pba-cols>
@@ -178,7 +178,7 @@ The bad:
 <pba-col center>
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/overview.png" alt="proposals per day pic">
+<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/overview.png" />
 
 </pba-col>
 </pba-cols>
@@ -201,7 +201,7 @@ The bad:
 ---
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 300px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/rail_road_tracks.jpeg" alt="tracks pic">
+<img rounded style="width: 300px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/rail_road_tracks.jpeg" />
 
 ## Origins and Tracks
 
@@ -247,7 +247,7 @@ The security needs of the Tipper track are very different than those of the Root
 </pba-col>
 <pba-col>
 
-<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/TracksTable.webp" alt="btc pic">
+<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/TracksTable.webp" />
 
 </pba-col>
 </pba-cols>
@@ -279,7 +279,7 @@ Highlight difference between parameters of WhiteListedCaller and Root tracks
 ## Lifecycle of A Referendum
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/lifecycle_of_a_referendum.png" alt="lifecycle pic">
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/lifecycle_of_a_referendum.png" />
 
 Notes:
 
@@ -309,7 +309,7 @@ Steps in order: **Proposing, Lead In, Deciding, Confirming, Enactment**
 
 ## Example Support and Approval Curves
 
-<img rounded style="width: 1400px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/support_and_approval_curves.png" alt="proposals per day pic">
+<img rounded style="width: 1400px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/support_and_approval_curves.png" />
 
 Notes:
 
@@ -330,14 +330,14 @@ From PolkaWorld Article in Resources
 </pba-col>
 <pba-col center>
 
-<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/vote.jpeg" alt="proposals per day pic">
+<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/vote.jpeg" />
 
 </pba-col>
 </pba-cols>
 
 ---
 
-<img rounded style="width: 400px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/stopwatch.png" alt="proposals per day pic">
+<img rounded style="width: 400px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/stopwatch.png" />
 
 ## OpenGov Acting Under Pressure
 
@@ -445,7 +445,7 @@ Stress that as an oracle, the Fellowship can't take any action on its own. Any w
 ## Governance Activity
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 900px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/proposals_per_day.png" alt="proposals per day pic">
+<img rounded style="width: 900px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/proposals_per_day.png" />
 
 > 5.5x more daily governance activity
 
@@ -454,7 +454,7 @@ Stress that as an oracle, the Fellowship can't take any action on its own. Any w
 ## Proposal Origins
 
 <!-- set height*width in px, where full screen is 1920*1080 -->
-<img rounded style="width: 900px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/proposals_from_democracy.png" alt="Proposal origins pic">
+<img rounded style="width: 900px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/proposals_from_democracy.png" />
 
 > Proposals now primarily authored via democracy
 
@@ -462,7 +462,7 @@ Stress that as an oracle, the Fellowship can't take any action on its own. Any w
 
 ## Treasury Usage
 
-<img rounded style="width: 900px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/treasury_waste_since_opengov.png" alt="treasury usage pic">
+<img rounded style="width: 900px" src="../../../assets/img/7-Polkadot/OpenGov-PBA2/treasury_waste_since_opengov.png" />
 
 > Treasury funds used more efficiently
 
@@ -487,7 +487,7 @@ Stress that as an oracle, the Fellowship can't take any action on its own. Any w
 
 1. [PolkaWorld Hands-On OpenGov](https://polkaworld.medium.com/a-hands-on-guide-for-kusamas-open-gov-governance-system-98277629b0c5)
 1. [OpenGov Article from Moonbeam Team](https://moonbeam.network/blog/opengov/)
-1. [Gavin’s Polkadot Decoded 2022 talk](https://www.youtube.com/watch?v=EF93ZM_P_Oc)
+1. [Gavin’s Polkadot Decoded 2022 talk](https://www.youtube.com/watch?v=EF93ZM_P_Oc) <!-- markdown-link-check-disable-line -->
 1. [Gov V1 tracking](https://polkadot.polkassembly.io/)
 1. [OpenGov tracking](https://kusama.subsquare.io/)
 

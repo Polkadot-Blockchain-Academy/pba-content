@@ -29,7 +29,7 @@ duration: 60 minutes
 
 ### _Ariane 5 Rocket - Flight 501_
 
-<img rounded style="width: 400px" src="./img/ariane.jpg" >
+<img rounded style="width: 400px" src="./img/ariane.jpg" />
 
 - in **1996**, the launcher rocket disintegrated 39 secs after take-off.
 - **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point

@@ -55,7 +55,9 @@ Polkadot fulfills its goals with a combination of mechanisms and games which pro
 
 <img rounded width="1200px" src="../assets/gav_header_photo.jpg" />
 
-source: banner image from https://twitter.com/gavofyork
+Notes:
+
+source: banner image from https://twitter.com/gavofyork <!-- markdown-link-check-disable-line -->
 
 ---
 

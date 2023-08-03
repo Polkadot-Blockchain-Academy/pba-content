@@ -668,7 +668,7 @@ Notes:
 
 ## Storage Bloat
 
-<img rounded src="../img/pallet/bloat.jpg" alt="Source: https://www.coindesk.com/markets/2018/01/18/blockchain-bloat-how-ethereum-is-tackling-storage-issues/" style="width: 1000px;" />
+<img rounded style="width: 1000px" src="../img/pallet/bloat.jpg" />
 
 Notes:
 
@@ -677,11 +677,13 @@ Notes:
 - Contract authors if not properly incentivized have no reason to save storage
 - This is a problem: Increases the cost to run a node for every network participant
 
+Image sourece: https://www.coindesk.com/markets/2018/01/18/blockchain-bloat-how-ethereum-is-tackling-storage-issues/
+
 ---
 
 ## Storage on Ethereum
 
-<img rounded src="../img/pallet/eth_state.png" alt="Source: https://ycharts.com/indicators/ethereum_chain_full_sync_data_size" style="width: 1000px;" />
+<img rounded style="width: 1000px" src="../img/pallet/eth_state.png" />
 
 Notes:
 
@@ -690,11 +692,13 @@ Notes:
 - Hard to retrofit a solution
 - We want to do better when starting fresh
 
+Image source: https://ycharts.com/indicators/ethereum_chain_full_sync_data_size
+
 ---
 
 ## First try: Storage rent
 
-<img rounded src="../img/pallet/rent.jpg" alt="Source: https://www.investopedia.com/articles/personal-finance/041515/buying-second-home-rent-dos-and-donts.asp" style="width: 800px;" />
+<img rounded style="width: 800px" src="../img/pallet/rent.jpg" />
 
 Notes:
 
@@ -709,11 +713,13 @@ Notes:
   the actual logic of the contract.
   Hence we switched to a more opinionated model.
 
+Image source: https://www.investopedia.com/articles/personal-finance/041515/buying-second-home-rent-dos-and-donts.asp
+
 ---
 
 ## What we have now:<br/>Automatic storage deposits
 
-<img rounded src="../img/pallet/deposit.jpg" alt="Source: https://m.bankingexchange.com/news-feed/item/7869-bank-deposits-the-most-important-number-on-the-balance-sheet" style="width: 700px;" />
+<img rounded src="../img/pallet/deposit.jpg" style="width: 700px;" />
 
 Notes:
 
@@ -735,6 +741,8 @@ Notes:
     A contract cannot change this.
     `pallet-contracts` takes
     care of this.
+
+Image source: https://m.bankingexchange.com/news-feed/item/7869-bank-deposits-the-most-important-number-on-the-balance-sheet
 
 ---
 
