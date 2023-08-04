@@ -516,7 +516,7 @@ Notes:
 
 - (As Substrate, it also) supports the new JSON-RPC protocol that has been developed;
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- Light and fast enought so that it can be embeded into a mobile application or an application in general;
+- Light and fast enough so that it can be embedded into a mobile application or an application in general;
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
@@ -783,7 +783,7 @@ Stay with me - the next is the last but not the easiest part:
   A block is authentic if it has been authored by a legitimate validator, at a time when it was authorized to author a block.
   A validator could author a block that smoldot considers as authentic, but that contains completely arbitrary data.
 
-  Invalid blocks aren't propagated by honest full nodes on the gossiping network, but it is possible for the validator to send the block to the smoldot instance(s) that are directly connected to it or its complicits.
+  Invalid blocks aren't propagated by honest full nodes on the gossiping network, but it is possible for the validator to send the block to the smoldot instance(s) that are directly connected to it or its complicit.
   While this attack requires a validator to be malicious and that it doesn't offer any direct reward it is unlikely to happen, but it is still a realistic threat.
   For this reason, when using a light client, do not assume any storage data coming from a best, that hasn't been finalized yet to be accurate.
 
