@@ -4,6 +4,7 @@ duration: 45 mins
 ---
 
 # Blockchain Scaling 2:
+
 # Modular and Heterogeneous
 
 ---
@@ -36,7 +37,7 @@ https://l2beat.com/scaling/summary
 - Sidechains
   - Inherit ordering from L1
   - Honest majority bridge (e.g. 5-of-8 multisig)
-  
+
 ---
 
 ## Taxonomy of L2s
@@ -44,8 +45,8 @@ https://l2beat.com/scaling/summary
 - Smart Contract Rollups
   - Inherit ordering and availability from L1
   - "Trust-minimized" bridge:
-	- STF correctness with validity or fraud proofs
-	- Inbox: option for transactions proposed through base layer to avoid sequencer/proposer censorship
+  - STF correctness with validity or fraud proofs
+  - Inbox: option for transactions proposed through base layer to avoid sequencer/proposer censorship
 
 ---
 
@@ -158,7 +159,7 @@ https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/
   - Also provide proof of encoding
   - KZG requires trusted setup, ceremony done earlier this year
 - Distributed construction: no nodes need build all rows and columns
-- Distributed reconstruction: 
+- Distributed reconstruction:
   - Chunking and sharding similar to Polkadot
   - Higher threshold due to 2D encoding
 - Allows light client consensus through sampling
@@ -182,7 +183,7 @@ https://www.youtube.com/watch?v=4L30t_6JBAg
   - Transactional (private or public): e.g. Aztec
   - Application-specific: e.g. STARKDex, Loopring
   - Smart contract: e.g. ZEXE (Aleo), zkEVM (Polygon, ZKSync, Scroll)
- 
+
 Notes:
 https://medium.com/hackernoon/scaling-tezo-8de241dd91bd
 https://eprint.iacr.org/2020/352.pdf
@@ -218,10 +219,10 @@ https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-kalodner.p
 - Stage 2
   - Security override only in case of bugs (discrepancy between two prover implementations)
   - Upgrades must have delay greater than 30 days
- 
+
 Notes:
 https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571
- 
+
 ---
 
 ## Rollup Sequencers
@@ -240,10 +241,10 @@ https://ethereum.org/nl/roadmap/pbs/
 ## Optimistic Rollups: Permissionless?
 
 - Spam state roots stall the chain
-   - Arbitrum allows multiple to be posted (fork and prune) similar to Nakamoto consensus
+  - Arbitrum allows multiple to be posted (fork and prune) similar to Nakamoto consensus
 - Spam challenges can delay confirmation
-   - They typically must be executed separately and sequentially to prevent collusion
-   - Arbitrum BOLD allows challenges to be executed together, bounds time at 7 days
+  - They typically must be executed separately and sequentially to prevent collusion
+  - Arbitrum BOLD allows challenges to be executed together, bounds time at 7 days
 - Spam necessitates permissioned proposer/verifier sets
 
 Notes:

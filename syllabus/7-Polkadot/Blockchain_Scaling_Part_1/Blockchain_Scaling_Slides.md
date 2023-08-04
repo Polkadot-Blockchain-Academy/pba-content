@@ -4,6 +4,7 @@ duration: 45 mins
 ---
 
 # Blockchain Scaling 1:
+
 # Monolithic and Homogeneous
 
 ---
@@ -26,9 +27,9 @@ duration: 45 mins
 - TPS:
   - Widely stated
   - Often gamed
-	- Individually signed user transactions (no inherents)
-	- Peak vs. sustained load
-	- sTPS used in Polkadot (no db caching)
+  - Individually signed user transactions (no inherents)
+  - Peak vs. sustained load
+  - sTPS used in Polkadot (no db caching)
   - Not currently the driver of throughput needs (DeFi + NFT drops)
 
 ---
@@ -48,6 +49,7 @@ duration: 45 mins
 
 - Why do we care about horizontal scaling for blockchains?
   - Lower barrier of entry -> more decentralization
+
 ---
 
 ## Vertical scaling approaches
@@ -61,7 +63,7 @@ duration: 45 mins
   - UTXOs
   - Move Language: STM with linear types
   - For Polkadot: elastic scaling
- 
+
 Notes:
 https://dahliamalkhi.files.wordpress.com/2018/03/hot-stuff-arxiv2018.pdf
 https://arxiv.org/pdf/2305.13556.pdf
@@ -112,11 +114,11 @@ https://vitalik.ca/general/2021/04/07/sharding.html
 - Typically can't assume f holds within committees
   - Unless they're statistically representative
   - Alternatively we rely on 1-of-n assumptions
- 
+
 ---
 
 ## Problem Space: Adaptive Corruption
- 
+
 - Easier to corrupt (DOS, bribe, etc.) small committees than entire validator set
 - Must be sorted with strong on-chain randomness (e.g. VRFs not PoW hashes)
 - Must be frequently rotated
@@ -148,6 +150,7 @@ https://near.org/papers/nightshade
 ---
 
 ## Solutions:
+
 ## Statistically Representative Committees
 
 <img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Omniledger.png"  width="40%" />
@@ -165,7 +168,7 @@ https://eprint.iacr.org/2017/406.pdf
 ---
 
 ## Solutions: Validity proofs (zk-rollups)
- 
+
 - Cryptographic proofs of execution
 - Asymmetry between proving and verifying times
   - Proving is slow
@@ -202,7 +205,7 @@ https://lightning.network/lightning-network-paper.pdf
   - Someone must be regularly online to submit later ones
   - This can be outsourced to watchtower networks
   - Typically challenge period after closing channel
- 
+
 ---
 
 ## State Channels
@@ -225,7 +228,7 @@ https://lightning.network/lightning-network-paper.pdf
   - State transitions still need "owner"
   - Still not ideal for account-based systems
   - Mass exit problem in case of data unavailability
- 
+
 Notes:
 https://plasma.io/plasma-deprecated.pdf
 
