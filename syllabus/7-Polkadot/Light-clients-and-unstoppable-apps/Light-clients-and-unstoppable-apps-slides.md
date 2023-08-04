@@ -96,7 +96,7 @@ Notes:
 
 Before anything else – lets remember the node types in the network
 
-Validator Nodes: These nodes are responsible for producing new blocks and validating transactions. They participate in the consensus mechanism and play a crucial role in securing the network. Validators are selected through a NPoS algorithm and are required to stake DOT (Polkadot's native cryptocurrency) as collateral to ensure honest behavior.
+Validator Nodes: These nodes are responsible for producing new blocks and validating transactions. They participate in the consensus mechanism and play a crucial role in securing the network.
 
 JSON-RPC nodes: serve as an interface for developers and applications to interact with the blockchain by sending JSON-formatted requests and receiving JSON-formatted responses.
 
@@ -107,8 +107,6 @@ Light Nodes: Light nodes are a lightweight version of full nodes that do not sto
 (......After the Clicks!....)
 
 Any combination of “validator”, “bootnode” and “JSON-RPC node” is possible, except for “light” and “archive” that are mutually incompatible.
-
-Depending on context, the word “full node” is generally used to designate either the opposite of a light node, or a node that hasn’t any or combination of the characteristics above. At the moment, almost all nodes on the network are either validators or full nodes.
 
 ---v
 
@@ -128,6 +126,27 @@ Ask: WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS
 
 ---v
 
+#### USER-CONTROLLED NODE
+
+<pba-cols>
+  <pba-col left>
+    <div>App connects to a node client that the user has installed on their machine</div>
+    <div class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Secure</span><br />Trustless: connects to multiple nodes, verifies everything</div>
+    <div class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</div>
+  </pba-col>
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+   <pba-col left>
+      <img rounded src="./img/USER-CONTROLLED-NODE.png" />
+  </pba-col>
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+</pba-cols>
+
+Notes:
+
+(Read slides)
+
+---v
+
 #### PUBLICLY-ACCESSIBLE NODE
 
 <pba-cols>
@@ -140,27 +159,6 @@ node client</div>
   <!-- .element: class="fragment" data-fragment-index="2" -->
   <pba-col left>
     <img rounded src="./img/PUBLICLY-ACCESSIBLE-NODE.png" />
-  </pba-col>
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-</pba-cols>
-
-Notes:
-
-(Read slides)
-
----v
-
-#### USER-CONTROLLED NODE
-
-<pba-cols>
-  <pba-col left>
-    <div>App connects to a node client that the user has installed on their machine</div>
-    <div class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Secure</span><br />Trustless: connects to multiple nodes, verifies everything</div>
-    <div class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</div>
-  </pba-col>
-  <!-- .element: class="fragment" data-fragment-index="2" -->
-   <pba-col left>
-      <img rounded src="./img/USER-CONTROLLED-NODE.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
@@ -228,7 +226,7 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 # What is a light client?
 
-<p style="font-size:4rem">It's a client/node...</p>
+<p style="font-size:4rem">It's a client (a node)...</p>
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -257,17 +255,8 @@ But that was actually true!
 <!-- .element: class="fragment" data-fragment-index="3" -->
   <li> It connects and interacts with the network in a fully trust-less way with it;</li>
 <!-- .element: class="fragment" data-fragment-index="4" -->
-  <li>
-    <span>It</span>
-    <!-- .element: class="fragment" data-fragment-index="5" -->
-    <span>is</span>
-    <!-- .element: class="fragment" data-fragment-index="6" -->
-    <span>... wait for it ...</span>
-    <!-- .element: class="fragment" data-fragment-index="7" -->
-    <span>fast!</span>
-    <!-- .element: class="fragment" data-fragment-index="8" -->
   </li>
-  <!-- .element: class="fragment" data-fragment-index="5" -->
+  <!-- .element: class="fragment" data-fragment-index="4" -->
 </ul>
 
 Notes:
@@ -292,7 +281,8 @@ Bullet 4) Light clients can synchronize with the blockchain more quickly since t
 
 Notes:
 
-"Slow internet connections": lets see a real-life example. Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using the "questionable internet" which had a very bad day due to way-too-many-connected people;
+"Slow internet connections": lets see a real-life example. Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using a very "questionable internet connection" which had a very bad day due to way-too-many-connected people;
+Once the talismann wallet loads up, pay attention to the spinners - Polkadot is loading with a light client while Kusama with the usual JSON-RPC method
 
 Full video: https://tinyurl.com/decoded-talisman-light-client
 
@@ -615,9 +605,7 @@ The uApp (UI) connects to an _integrated_ light client
 
 <pba-flex center>
 
-1. Install and use [Substrate Connect](https://github.com/paritytech/substrate-connect)<br/>
-   dependencies in the uApp
-1. Write/Replace 2-3 lines of code
+1. Install and configure the light client inside the dApp
 
 </pba-flex>
 
@@ -738,19 +726,21 @@ console.log('Please visit: https://cloudflare-ipfs.com/ipns/dotapps.io/?rpc=ws%3
 
 Notes:
 
-- **Eclipse attacks (full nodes and light clients both affected)**. P2P network - Smoldot tries to connect to a variety of nodes of this network - if all nodes were to refuse sending data that would isolate smoldot from the network - learns which nodes exist is from the nodes themselves (bootnodes) If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes - if the list of bootnodes only contains malicious nodes, smoldot will never be able to reach any non-malicious node. If the list of bootnodes contains a single honest node, then smoldot will be able to reach the whole network. !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the chain!!!
+Stay with me - the next is the last but not the easiest part:
 
-- **Long-range attacks (full nodes and light clients both affected)**. If more than 2/3rds of the validators collaborate they can fork a chain starting from a block where they were validator, even if they are no longer part of the active validators at the head of the chain. If some validators were to fork a chain, the equivocation system would punish them by stealing their staked tokens. However, they cannot be punished if they unstake their tokens (which takes 7 days for Kusama or 28 days for Polkadot) before creating the fork.
+- **Eclipse attacks (full nodes and light clients both affected)**. Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network (from the bootnodes). Imagine if all these nodes were to refuse sending data back, that would isolate smoldot from the network - The way that smoldot learns which nodes exist, is from the nodes themselves (bootnodes). If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes - if the list of bootnodes only contains malicious nodes, smoldot will never be able to reach any non-malicious node. If the list of bootnodes contains a single honest node, then smoldot will be able to reach the whole network. !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the blockchain!
 
-  If smoldot hasn't been online since the starting point of the fork, it can be tricked (through an eclipse attack) into following the illegitimate fork. In order to not be vulnerable, smoldot shouldn't stay offline for more than the unstaking delay (7 days for Kusama or 28 days for Polkadot) in a row. Alternatively, smoldot isn't vulnerable if the checkpoint provided in the chain specification is not older than the unstaking delay.
+- **Long-range attacks (full nodes and light clients both affected)**. If more than 2/3rds of the validators collaborate, they can fork a chain, starting from a block where they were validator, even if they are no longer part of the active validators at the head of the chain. If some validators were to fork a chain, the equivocation system would punish them by stealing their staked tokens. However, they cannot be punished if they unstake their tokens (which takes 7 days for Kusama or 28 days for Polkadot) before creating the fork.
 
-  Given that this attack requires the collaboration of many validators, is "all-in", detectable ahead of time, requires being combined with an eclipse attack, and that it doesn't offer any direct reward, it is considered not a realistic threat.
+  If smoldot hasn't been online since the starting point of the fork, it can be tricked (through an eclipse attack) into following the false fork. In order to not be vulnerable, smoldot shouldn't stay offline for more than the unstaking delay time (as said 7 days for Kusama or 28 days for Polkadot) in a row. Alternatively, smoldot isn't vulnerable if the checkpoint provided in the chain specification, is not older than the unstaking delay.
+
+  Given that this attack -> requires the collaboration of many validators, -> is "all-in", -> is detectable ahead of time, -> it requires being combined with an eclipse attack, and that it doesn't offer any direct reward, it is considered not a realistic threat.
 
 - **Invalid best block (light clients only)**. Light clients don't verify validity but only authenticity of blocks.
 
-  A block is authentic if it has been authored by a legitimate validator at a time when it was authorized to author a block. A validator could author a block that smoldot considers as authentic, but that contains completely arbitrary data.
+  A block is authentic if it has been authored by a legitimate validator, at a time when it was authorized to author a block. A validator could author a block that smoldot considers as authentic, but that contains completely arbitrary data.
 
-  Invalid blocks aren't propagated by honest full nodes on the gossiping network, but it is possible for the validator to send the block to the smoldot instance(s) that are directly connected to it or its complicits. While this attack requires a validator to be malicious and that it doesn't offer any direct reward it is unlikely to happen, but it is still a realistic threat. For this reason, when using a light client, do not assume any storage data coming from a best that hasn't been finalized yet to be accurate.
+  Invalid blocks aren't propagated by honest full nodes on the gossiping network, but it is possible for the validator to send the block to the smoldot instance(s) that are directly connected to it or its complicits. While this attack requires a validator to be malicious and that it doesn't offer any direct reward it is unlikely to happen, but it is still a realistic threat. For this reason, when using a light client, do not assume any storage data coming from a best, that hasn't been finalized yet to be accurate.
 
   Once a block has been finalized, it means that at least 2/3rds of the validators consider the block valid. While it is still possible for a finalized block to be invalid, this would require the collaboration of 2/3rds of the validators. If that happens, then the chain has basically been taken over, and whether smoldot shows inaccurate data **doesn't really matter anymore**.
 
