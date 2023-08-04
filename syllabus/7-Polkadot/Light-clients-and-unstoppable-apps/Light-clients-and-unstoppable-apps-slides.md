@@ -14,9 +14,11 @@ duration: 45+ mins
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
+
 Before I proceed with anything, let's take a moment to see the current state of the majority of the World Wide Web as we know it.
 
-Welcome to the realm of Web 2.0, where the majority of web applications currently reside. While I won't be roasting anyone, it's essential to recognize that platforms like Facebook, Twitter, WhatsApp, and many others fall under this category; (Decribe image)
+Welcome to the realm of Web 2.0, where the majority of web applications currently reside.
+While I won't be roasting anyone, it's essential to recognize that platforms like Facebook, Twitter, WhatsApp, and many others fall under this category; (Describe image)
 
 ---v
 
@@ -24,6 +26,7 @@ Welcome to the realm of Web 2.0, where the majority of web applications currentl
 
 <img rounded style="width: 80%;" src="./img/web3.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
 Notes:
 
 This represents the vision of what Web3 should aspire to become:
@@ -44,7 +47,8 @@ Now, show of hands:
 Notes:
 
 Let's take a closer look at the reality of the situation.
-As it stands, our entry into the blockchain network is channeled through a central access point, represented by a JSON-RPC node. This node serves as the gateway to access the entire blockchain network.
+As it stands, our entry into the blockchain network is channeled through a central access point, represented by a JSON-RPC node.
+This node serves as the gateway to access the entire blockchain network.
 
 While many applications claim to be decentralized, we must ask ourselves, how truly decentralized are they?
 
@@ -54,13 +58,17 @@ I will pause there for a few seconds to let this sink in;
 ---v
 
 <h1 style="font-size:7rem; font-weight: bold">Blockchain "decentralized” apps are still centralized</h1>
+
 Notes:
+
 I will pause there for a few seconds to let this sink in;
 
 ---v
 
 <img rounded style="width: 30%;" src="./img/learn-student.gif" />
+
 Notes:
+
 I will pause there for a few seconds to let this sink in;
 
 ---
@@ -79,11 +87,13 @@ I will pause there for a few seconds to let this sink in;
   </li>
 <!-- .element: class="fragment" data-fragment-index="2" -->
   <li>
-    <span class="font-bold underline">Bootnode:</span> node whose address can be found in the chain specification file (chainspec). Necessary to kick-off the network.
+    <span class="font-bold underline">Bootnode:</span> node whose address can be found in the chain specification file (chainspec).
+      Necessary to kick-off the network.
   </li>
 <!-- .element: class="fragment" data-fragment-index="3" -->
   <li>
-    <span class="font-bold underline">Archive:</span> stores the entire state of the chain at each block since block #0. Useful to access historical data.
+    <span class="font-bold underline">Archive:</span> stores the entire state of the chain at each block since block #0.
+      Useful to access historical data.
   </li>
 <!-- .element: class="fragment" data-fragment-index="4" -->
   <li>
@@ -96,13 +106,16 @@ Notes:
 
 Before anything else – lets remember the node types in the network
 
-Validator Nodes: These nodes are responsible for producing new blocks and validating transactions. They participate in the consensus mechanism and play a crucial role in securing the network.
+Validator Nodes: These nodes are responsible for producing new blocks and validating transactions.
+They participate in the consensus mechanism and play a crucial role in securing the network.
 
 JSON-RPC nodes: serve as an interface for developers and applications to interact with the blockchain by sending JSON-formatted requests and receiving JSON-formatted responses.
 
-Bootnodes: Bootnodes are nodes with well-known addresses that serve as entry points for new nodes joining the network. They help new nodes discover and connect to other peers in the network.
+Bootnodes: Bootnodes are nodes with well-known addresses that serve as entry points for new nodes joining the network.
+They help new nodes discover and connect to other peers in the network.
 
-Light Nodes: Light nodes are a lightweight version of full nodes that do not store the entire blockchain but rely on full nodes for transaction verification. They are useful for users who want to interact with the network without the need to download the entire blockchain.
+Light Nodes: Light nodes are a lightweight version of full nodes that do not store the entire blockchain but rely on full nodes for transaction verification.
+They are useful for users who want to interact with the network without the need to download the entire blockchain.
 
 (......After the Clicks!....)
 
@@ -198,7 +211,8 @@ Notes:
 Notes:
 
 In the 3rd party case the user relies on the 3rd party node to connect to, in order to communicate with the network.
-(audience) With a show of hands Why this needs fixing? (pause and wait for possible answer)
+(audience) With a show of hands Why this needs fixing?
+(pause and wait for possible answer)
 
 - (we need) Reliability
 - (there is a) Possibility of censorship or hijacking
@@ -236,7 +250,8 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 Notes:
 
-When I joined the team of substrate connect, I asked this same question.. And the response I got was…. (\*)
+When I joined the team of substrate connect, I asked this same question.
+And the response I got was…. (\*)
 Back then I was like… “Yeah – thanks I guess”
 
 But that was actually true!
@@ -261,15 +276,19 @@ But that was actually true!
 
 Notes:
 
-In the next slides we will explain "What is a light client" in a generic manner but also I will add some exatra information around the Polkadot ecosystem solution that is implemented;
+In the next slides we will explain "What is a light client" in a generic manner but also I will add some extra information around the Polkadot ecosystem solution that is implemented;
 
 Bullet 1) A "light client" is a type of node implementation that allows applications to interact with the network, consuming fewer resources compared to full nodes, making them more suitable for resource-constrained devices like mobile phones, or light enough for running in browsers (see substrate connect);
 
-Bullet 2) Instead of maintaining a complete copy of the blockchain, the node only carries a minimal amount of data necessary for its operations (e.g. chain specs). It relies on full nodes or other network participants to provide the additional information it needs;
+Bullet 2) Instead of maintaining a complete copy of the blockchain, the node only carries a minimal amount of data necessary for its operations (e.g.chain specs).
+It relies on full nodes or other network participants to provide the additional information it needs;
 
-Bullet 3) .... based on the request it either provides the response from existing data, if any, or propagates the request to a full node and returns the response;
+Bullet 3) ....
+based on the request it either provides the response from existing data, if any, or propagates the request to a full node and returns the response;
 
-Bullet 4) Light clients can synchronize with the blockchain more quickly since they only need to fetch recent data, using justifications (we will talk about it in a while), reducing the time needed to get up-to-date with the network (few seconds). They fetch less data from the network and consume less bandwidth. This is especially advantageous for users on limited data plans or slow internet connections
+Bullet 4) Light clients can synchronize with the blockchain more quickly since they only need to fetch recent data, using justifications (we will talk about it in a while), reducing the time needed to get up-to-date with the network (few seconds).
+They fetch less data from the network and consume less bandwidth.
+This is especially advantageous for users on limited data plans or slow internet connections
 ---v
 
 ### Real-life example
@@ -281,8 +300,9 @@ Bullet 4) Light clients can synchronize with the blockchain more quickly since t
 
 Notes:
 
-"Slow internet connections": lets see a real-life example. Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using a very "questionable internet connection" which had a very bad day due to way-too-many-connected people;
-Once the talismann wallet loads up, pay attention to the spinners - Polkadot is loading with a light client while Kusama with the usual JSON-RPC method
+"Slow internet connections": lets see a real-life example.
+Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using a very "questionable internet connection" which had a very bad day due to way-too-many-connected people;
+Once the [talisman wallet](https://www.talisman.xyz/) loads up, pay attention to the spinners - Polkadot is loading with a light client while Kusama with the usual JSON-RPC method
 
 Full video: https://tinyurl.com/decoded-talisman-light-client
 
@@ -320,13 +340,18 @@ Our Substrate nodes can produce what is called a Chain spec which Smoldot then u
 Notes:
 
 As we know Substrate chains provides the concept of FINALITY which is VERY important for the light clients!
-Once a block has been finalized, it is guaranteed to always be part of the best chain. By extension, the parent of a finalized block is always finalized as well etc etc
-For finality Substrate/Polkadot nodes use the GrandPa algorithm. Authorized nodes, emit votes on the network, when 2/3rds or more have voted for a specific block, it effectively becomes finalized.
+Once a block has been finalized, it is guaranteed to always be part of the best chain.
+By extension, the parent of a finalized block is always finalized as well etc etc
+For finality Substrate/Polkadot nodes use the GrandPa algorithm.
+Authorized nodes, emit votes on the network, when 2/3rds or more have voted for a specific block, it effectively becomes finalized.
 These votes are been collected in what is called a **justification**
 
-**Justifications** play a crucial role in providing security and validity guarantees for light clients. As said before, light clients are nodes that do not store blockchain's data but rely on other full nodes or the network to verify the blockchain's state and transactions. While light clients offer reduced resource requirements and faster synchronization, they face the challenge of trusting the information they receive from other nodes.
+**Justifications** play a crucial role in providing security and validity guarantees for light clients.
+As said before, light clients are nodes that do not store blockchain's data but rely on other full nodes or the network to verify the blockchain's state and transactions.
+While light clients offer reduced resource requirements and faster synchronization, they face the challenge of trusting the information they receive from other nodes.
 
-Justifications address this trust issue for light clients by providing cryptographic proofs of the finality and validity of blocks. When a block is justified, it means that it has been confirmed and agreed upon by a supermajority of validators, making it part of the finalized state of the blockchain.
+Justifications address this trust issue for light clients by providing cryptographic proofs of the finality and validity of blocks.
+When a block is justified, it means that it has been confirmed and agreed upon by a supermajority of validators, making it part of the finalized state of the blockchain.
 
 It is also used by nodes who might not have received all the votes, or for example if they were offline, In order to verify the authenticity of the blocks;
 
@@ -432,12 +457,18 @@ Let's proceed with a more focused and detailed exploration of light clients in t
 
 Notes:
 
-Smoldot - is the light client implementation from scratch - meaning, we did not make substrate lighter. It was rewritten from scratch, in rust - and it comes with:
+Smoldot - is the light client implementation from scratch - meaning, we did not make substrate lighter.
+It was rewritten from scratch, in rust - and it comes with:
 
-- smoldot-light-js (/wasm-node): A JavaScript package that can connect to a Substrate-based chains as a light client. Works both in the browser and in NodeJS/Deno. This is the main component of this repository.
-- smoldot (/lib): An unopinionated Rust library of general-purpose primitives that relate to Substrate and Polkadot. Serves as a base for the other components.
-- smoldot-light (/light-base): A platform-agnostic Rust library that can connect to a Substrate-based chain as a light client. Serves as the base for the smoldot-light-js component explained above.
-- smoldot-full-node (/full-node): A work-in-progress prototype of a full node binary that can connect to Substrate-base chains. Doesn't yet support many features that the official client supports.
+- smoldot-light-js (/wasm-node): A JavaScript package that can connect to a Substrate-based chains as a light client.
+  Works both in the browser and in NodeJS/Deno.
+  This is the main component of this repository.
+- smoldot (/lib): An unopinionated Rust library of general-purpose primitives that relate to Substrate and Polkadot.
+  Serves as a base for the other components.
+- smoldot-light (/light-base): A platform-agnostic Rust library that can connect to a Substrate-based chain as a light client.
+  Serves as the base for the smoldot-light-js component explained above.
+- smoldot-full-node (/full-node): A work-in-progress prototype of a full node binary that can connect to Substrate-base chains.
+  Doesn't yet support many features that the official client supports.
 
 Powered by Pierre Krieger (a.k.a. tomaka)
 
@@ -728,23 +759,45 @@ Notes:
 
 Stay with me - the next is the last but not the easiest part:
 
-- **Eclipse attacks (full nodes and light clients both affected)**. Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network (from the bootnodes). Imagine if all these nodes were to refuse sending data back, that would isolate smoldot from the network - The way that smoldot learns which nodes exist, is from the nodes themselves (bootnodes). If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes - if the list of bootnodes only contains malicious nodes, smoldot will never be able to reach any non-malicious node. If the list of bootnodes contains a single honest node, then smoldot will be able to reach the whole network. !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the blockchain!
+- **Eclipse attacks (full nodes and light clients both affected)**.
+  Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network (from the bootnodes).
+  Imagine if all these nodes were to refuse sending data back, that would isolate smoldot from the network - The way that smoldot learns which nodes exist, is from the nodes themselves (bootnodes).
+  If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes - if the list of bootnodes only contains malicious nodes, smoldot will never be able to reach any non-malicious node.
+  If the list of bootnodes contains a single honest node, then smoldot will be able to reach the whole network.
+  !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the blockchain!
 
-- **Long-range attacks (full nodes and light clients both affected)**. If more than 2/3rds of the validators collaborate, they can fork a chain, starting from a block where they were validator, even if they are no longer part of the active validators at the head of the chain. If some validators were to fork a chain, the equivocation system would punish them by stealing their staked tokens. However, they cannot be punished if they unstake their tokens (which takes 7 days for Kusama or 28 days for Polkadot) before creating the fork.
+- **Long-range attacks (full nodes and light clients both affected)**.
+  If more than 2/3rds of the validators collaborate, they can fork a chain, starting from a block where they were validator, even if they are no longer part of the active validators at the head of the chain.
+  If some validators were to fork a chain, the equivocation system would punish them by stealing their staked tokens.
+  However, they cannot be punished if they unstake their tokens (which takes 7 days for Kusama or 28 days for Polkadot) before creating the fork.
 
-  If smoldot hasn't been online since the starting point of the fork, it can be tricked (through an eclipse attack) into following the false fork. In order to not be vulnerable, smoldot shouldn't stay offline for more than the unstaking delay time (as said 7 days for Kusama or 28 days for Polkadot) in a row. Alternatively, smoldot isn't vulnerable if the checkpoint provided in the chain specification, is not older than the unstaking delay.
+  If smoldot hasn't been online since the starting point of the fork, it can be tricked (through an eclipse attack) into following the false fork.
+  In order to not be vulnerable, smoldot shouldn't stay offline for more than the unstaking delay time (as said 7 days for Kusama or 28 days for Polkadot) in a row.
+  Alternatively, smoldot isn't vulnerable if the checkpoint provided in the chain specification, is not older than the unstaking delay.
 
   Given that this attack -> requires the collaboration of many validators, -> is "all-in", -> is detectable ahead of time, -> it requires being combined with an eclipse attack, and that it doesn't offer any direct reward, it is considered not a realistic threat.
 
-- **Invalid best block (light clients only)**. Light clients don't verify validity but only authenticity of blocks.
+- **Invalid best block (light clients only)**.
+  Light clients don't verify validity but only authenticity of blocks.
 
-  A block is authentic if it has been authored by a legitimate validator, at a time when it was authorized to author a block. A validator could author a block that smoldot considers as authentic, but that contains completely arbitrary data.
+  A block is authentic if it has been authored by a legitimate validator, at a time when it was authorized to author a block.
+  A validator could author a block that smoldot considers as authentic, but that contains completely arbitrary data.
 
-  Invalid blocks aren't propagated by honest full nodes on the gossiping network, but it is possible for the validator to send the block to the smoldot instance(s) that are directly connected to it or its complicits. While this attack requires a validator to be malicious and that it doesn't offer any direct reward it is unlikely to happen, but it is still a realistic threat. For this reason, when using a light client, do not assume any storage data coming from a best, that hasn't been finalized yet to be accurate.
+  Invalid blocks aren't propagated by honest full nodes on the gossiping network, but it is possible for the validator to send the block to the smoldot instance(s) that are directly connected to it or its complicits.
+  While this attack requires a validator to be malicious and that it doesn't offer any direct reward it is unlikely to happen, but it is still a realistic threat.
+  For this reason, when using a light client, do not assume any storage data coming from a best, that hasn't been finalized yet to be accurate.
 
-  Once a block has been finalized, it means that at least 2/3rds of the validators consider the block valid. While it is still possible for a finalized block to be invalid, this would require the collaboration of 2/3rds of the validators. If that happens, then the chain has basically been taken over, and whether smoldot shows inaccurate data **doesn't really matter anymore**.
+  Once a block has been finalized, it means that at least 2/3rds of the validators consider the block valid.
+  While it is still possible for a finalized block to be invalid, this would require the collaboration of 2/3rds of the validators.
+  If that happens, then the chain has basically been taken over, and whether smoldot shows inaccurate data **doesn't really matter anymore**.
 
-- **Finality stalls (mostly light clients)**. Because any block that hasn't been finalized yet can become part of the canonical chain in the future, a node, in order to function properly, needs to keep track of all the valid (for full nodes) or authentic (for light clients) non-finalized blocks that it has learned the existence of. Under normal circumstances, the number of such blocks is rather low (typically 3 blocks). If, however, blocks cease to be finalized but new blocks are still being authored, then the memory consumption of the node will slowly increase over time for each newly-authored block until there is no more memory available and the node is forced to stop. Substrate mitigates this problem by forcing blocks authors to gradually slow down the blocks production when the latest known finalized block is too far in the past. Since it is normally not possible for finality to stall unless there is a bug or the chain is misconfigured, this is not really an attack but rather the consequences of an attack. Full nodes are less affected by this problem because they typically have more memory available than a light client, and have the possibility to store blocks on the disk.
+- **Finality stalls (mostly light clients)**.
+  Because any block that hasn't been finalized yet can become part of the canonical chain in the future, a node, in order to function properly, needs to keep track of all the valid (for full nodes) or authentic (for light clients) non-finalized blocks that it has learned the existence of.
+  Under normal circumstances, the number of such blocks is rather low (typically 3 blocks).
+  If, however, blocks cease to be finalized but new blocks are still being authored, then the memory consumption of the node will slowly increase over time for each newly-authored block until there is no more memory available and the node is forced to stop.
+  Substrate mitigates this problem by forcing blocks authors to gradually slow down the blocks production when the latest known finalized block is too far in the past.
+  Since it is normally not possible for finality to stall unless there is a bug or the chain is misconfigured, this is not really an attack but rather the consequences of an attack.
+  Full nodes are less affected by this problem because they typically have more memory available than a light client, and have the possibility to store blocks on the disk.
 
 ---
 
