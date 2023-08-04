@@ -29,7 +29,7 @@ duration: 60 minutes
 
 ### _Ariane 5 Rocket - Flight 501_
 
-<img rounded style="width: 400px" src="./img/ariane.jpg" >
+<img rounded style="width: 400px" src="./img/ariane.jpg" />
 
 - in **1996**, the launcher rocket disintegrated 39 secs after take-off.
 - **Failure**: An _overflow_, caused by a conversion from 64-bit to 16-bit floating point
@@ -143,7 +143,7 @@ Note:
 
 Notes:
 
-- [Great blog](https://web.archive.org/web/20230209000724/www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/) that explains the trade-offs between soundness and tractability 
+- [Great blog](https://web.archive.org/web/20230209000724/www.pl-enthusiast.net/2017/10/23/what-is-soundness-in-static-analysis/) that explains the trade-offs between soundness and tractability
 
 ---
 

@@ -44,9 +44,9 @@ duration: 1 hour
 
 - Events & Errors
 - Calls
-- Hooks
 - Origins
 - Outer Enum
+- Hooks
 
 </td>
 <td>
@@ -151,7 +151,7 @@ With FRAME: 310 lines of code.
 
 FRAME takes the opinion that the blockchain runtime should be composed of individual modules. We call these Pallets.
 
-<image src="../../../assets/img/6-FRAME/frame1.svg" style="height: 600px">
+<img style="height: 600px" src="../../../assets/img/6-FRAME/frame1.svg" />
 
 ---
 
@@ -250,7 +250,7 @@ It contains all the most basic functions and types needed for a blockchain syste
 </div>
 <div class="right text-small">
 
-- `T::BlockNumber`
+- `BlockNumberFor<T>`
 - `frame_system::Pallet::<T>::block_number()`
 - `T::AccountId`
 - `T::Hash`
@@ -287,12 +287,7 @@ Your final runtime is composed of Pallets, which are brought together with the `
 ```rust
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
-	pub struct Runtime
-	where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic,
-	{
+	pub struct Runtime {
 		System: frame_system,
 		RandomnessCollectiveFlip: pallet_randomness_collective_flip,
 		Timestamp: pallet_timestamp,

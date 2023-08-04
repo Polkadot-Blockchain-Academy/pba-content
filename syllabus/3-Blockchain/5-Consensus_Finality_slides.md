@@ -203,11 +203,13 @@ Human coordinate at global scale reduced to this one cute, carefully stated prob
 
 ## Byzantine Generals: Solved
 
-<img height="600px" alt="Cover page: Practical Byzantine Fault Tolerance" src="./img/pbft-cover.png" />
+<img height="600px" src="./img/pbft-cover.png" />
 
 _Miguel Castro and Barbara Liskov, 1999_
 
 Notes:
+
+_Image = Cover page: Practical Byzantine Fault Tolerance_
 
 And great news.
 The problem is solved!

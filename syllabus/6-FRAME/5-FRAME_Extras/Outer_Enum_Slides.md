@@ -141,31 +141,31 @@ mod runtime {
 	}
 
 	#[derive(Encode)]
-	pub enum Call {
+	pub enum RuntimeCall {
 		BalancesCall(balances::Call),
 		DemocracyCall(democracy::Call),
 		StakingCall(staking::Call),
 	}
 
 	#[derive(Encode)]
-	pub enum Event {
+	pub enum RuntimeEvent {
 		BalancesEvent(balances::Event),
 		DemocracyEvent(democracy::Event),
 		// No staking events... not even in the enum.
 	}
 
 	// Imagine this for all of the possible types above...
-	impl Into<Event> for balances::Event {
-		fn into(self) -> Event {
-			Event::BalancesEvent(self)
+	impl Into<RuntimeEvent> for balances::Event {
+		fn into(self) -> RuntimeEvent {
+			RuntimeEvent::BalancesEvent(self)
 		}
 	}
 
 	// Imagine this for all of the possible types above...
-	impl TryFrom<Event> for balances::Event {
+	impl TryFrom<RuntimeEvent> for balances::Event {
 		type Error = ();
 
-		fn try_from(outer: Event) -> Result<Self, ()> {
+		fn try_from(outer: RuntimeEvent) -> Result<Self, ()> {
 			match outer {
 				Event::BalancesEvent(event) => Ok(event),
 				_ => Err(())
@@ -179,7 +179,7 @@ use runtime_primitives::*;
 fn main() {
 	let democracy_call = democracy::Call::propose { proposal_hash: [7u8; 32] };
 	println!("Pallet Call:   {:?}", democracy_call.encode());
-	let runtime_call = runtime::Call::Democracy(democracy_call);
+	let runtime_call = runtime::RuntimeCall::Democracy(democracy_call);
 	println!("Runtime Call:  {:?}", runtime_call.encode());
 	let staking_error = staking::Error::AlreadyBonded;
 	println!("Pallet Error:  {:?}", staking_error.encode());
@@ -187,7 +187,7 @@ fn main() {
 	println!("Runtime Error: {:?}", runtime_error.encode());
 	let balances_event = balances::Event::Transfer { from: 1, to: 2, amount: 3 };
 	println!("Pallet Event:  {:?}", balances_event.encode());
-	let runtime_event: runtime::Event = balances_event.into();
+	let runtime_event: runtime::RuntimeEvent = balances_event.into();
 	println!("Runtime Event: {:?}", runtime_event.encode());
 }
 ```
@@ -202,7 +202,7 @@ This now explains how all the different runtime types are generally encoded!
 fn main() {
 	let democracy_call = democracy::Call::propose { proposal_hash: [7u8; 32] };
 	println!("Pallet Call:   {:?}", democracy_call.encode());
-	let runtime_call = runtime::Call::Democracy(democracy_call);
+	let runtime_call = runtime::RuntimeCall::Democracy(democracy_call);
 	println!("Runtime Call:  {:?}", runtime_call.encode());
 	let staking_error = staking::Error::AlreadyBonded;
 	println!("Pallet Error:  {:?}", staking_error.encode());
@@ -210,7 +210,7 @@ fn main() {
 	println!("Runtime Error: {:?}", runtime_error.encode());
 	let balances_event = balances::Event::Transfer { from: 1, to: 2, amount: 3 };
 	println!("Pallet Event:  {:?}", balances_event.encode());
-	let runtime_event: runtime::Event = balances_event.into();
+	let runtime_event: runtime::RuntimeEvent = balances_event.into();
 	println!("Runtime Event: {:?}", runtime_event.encode());
 }
 ```
@@ -239,7 +239,7 @@ fn outer_enum_tests() {
 
 	let balances_call = pallet_balances::Call::<Runtime>::transfer { dest: MultiAddress::Address32([1u8; 32]), value: 12345 };
 	println!("Pallet Call:   {:?}", balances_call.encode());
-	let runtime_call = crate::Call::Balances(balances_call);
+	let runtime_call = crate::RuntimeCall::Balances(balances_call);
 	println!("Runtime Call:  {:?}", runtime_call.encode());
 	let balances_error = pallet_balances::Error::<Runtime>::InsufficientBalance;
 	println!("Pallet Error:  {:?}", balances_error.encode());
@@ -247,7 +247,7 @@ fn outer_enum_tests() {
 	println!("Runtime Error: {:?}", runtime_error.encode());
 	let balances_event = pallet_balances::Event::<Runtime>::Transfer { from: AccountId32::new([2u8; 32]), to: AccountId32::new([3u8; 32]), amount: 12345 };
 	println!("Pallet Event:  {:?}", balances_event.encode());
-	let runtime_event: crate::Event = balances_event.into();
+	let runtime_event: crate::RuntimeEvent = balances_event.into();
 	println!("Runtime Event: {:?}", runtime_event.encode());
 }
 ```

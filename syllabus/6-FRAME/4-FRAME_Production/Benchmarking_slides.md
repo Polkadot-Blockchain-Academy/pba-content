@@ -137,22 +137,26 @@ This was already expanded once, and could be expanded in the future.
 
 ---
 
-## The `benchmarks!` Macro
+## The `#[benchmarks]` Macro
 
 ```rust
-benchmarks! {
-   extrinsic_name {
-       /* setup initial state */
-   }: _{ /* execute extrinsic or function */ }
-   verify {
-       /* verify final state */
-   }
+#[benchmarks]
+mod benchmarks {
+	use super::*;
+
+	#[benchmark]
+	fn benchmark_name() {
+		/* setup initial state */
+
+		/* execute extrinsic or function */
+		#[extrinsic_call]
+		extrinsic_name();
+
+		/* verify final state */
+		assert!(true)
+	}
 }
 ```
-
-This is getting updated to the attribute macro format soon!
-
-https://github.com/paritytech/substrate/pull/12924
 
 ---
 
@@ -282,7 +286,7 @@ For each component and repeat:
 #[pallet::storage]
 #[pallet::whitelist_storage]
 #[pallet::getter(fn block_number)]
-pub(super) type Number<T: Config> = StorageValue<_, T::BlockNumber, ValueQuery>;
+pub(super) type Number<T: Config> = StorageValue<_, BlockNumberFor<T>, ValueQuery>;
 ```
 
 - Some keys are accessed every block:
@@ -448,10 +452,13 @@ Self::deposit_event(Event::IdentityKilled { who: target, deposit });
 ## Kill Identity Benchmark
 
 ```rust
-kill_identity {
-	let r in 1 .. T::MaxRegistrars::get() => add_registrars::<T>(r)?;
-	let s in 0 .. T::MaxSubAccounts::get();
-	let x in 0 .. T::MaxAdditionalFields::get();
+#[benchmark]
+fn kill_identity(
+	r: Linear<1, T::MaxRegistrars::get()>,
+	s: Linear<0, T::MaxSubAccounts::get()>,
+	x: Linear<0, T::MaxAdditionalFields::get()>,
+) -> Result<(), BenchmarkError> {
+	add_registrars::<T>(r)?;
 
 	let target: T::AccountId = account("target", 0, SEED);
 	let target_origin: <T as frame_system::Config>::RuntimeOrigin = RawOrigin::Signed(target.clone()).into();
@@ -474,9 +481,12 @@ kill_identity {
 	}
 	ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
 	let origin = T::ForceOrigin::successful_origin();
-}: _<T::RuntimeOrigin>(origin, target_lookup)
-verify {
+
+	#[extrinsic_call]
+	kill_identity<T::RuntimeOrigin>(origin, target_lookup)
+
 	ensure!(!IdentityOf::<T>::contains_key(&target), "Identity not removed");
+	Ok(())
 }
 ```
 
@@ -485,9 +495,11 @@ verify {
 ## Benchmarking Components
 
 ```rust
-let r in 1 .. T::MaxRegistrars::get() => add_registrars::<T>(r)?;
-let s in 0 .. T::MaxSubAccounts::get();
-let x in 0 .. T::MaxAdditionalFields::get();
+fn kill_identity(
+	r: Linear<1, T::MaxRegistrars::get()>,
+	s: Linear<0, T::MaxSubAccounts::get()>,
+	x: Linear<0, T::MaxAdditionalFields::get()>,
+) -> Result<(), BenchmarkError> { ... }
 ```
 
 - Our components.
@@ -503,12 +515,15 @@ let x in 0 .. T::MaxAdditionalFields::get();
 ## Set Up Logic
 
 ```rust
+add_registrars::<T>(r)?;
+
 let target: T::AccountId = account("target", 0, SEED);
 let target_origin: <T as frame_system::Config>::RuntimeOrigin = RawOrigin::Signed(target.clone()).into();
 let target_lookup = T::Lookup::unlookup(target.clone());
 let _ = T::Currency::make_free_balance_be(&target, BalanceOf::<T>::max_value());
 ```
 
+- Adds registrars to the runtime storage.
 - Set up an account with the appropriate funds.
 - Note this is just like writing runtime tests!
 
@@ -551,15 +566,14 @@ for i in 0..r {
 ## Execute and Verify the Benchmark:
 
 ```rust
-kill_identity {
-	// -- snip --
+ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
+let origin = T::ForceOrigin::successful_origin();
 
-	ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
-	let origin = T::ForceOrigin::successful_origin();
-}: _<T::RuntimeOrigin>(origin, target_lookup)
-verify {
-	ensure!(!IdentityOf::<T>::contains_key(&target), "Identity not removed");
-}
+#[extrinsic_call]
+kill_identity<T::RuntimeOrigin>(origin, target_lookup)
+
+ensure!(!IdentityOf::<T>::contains_key(&target), "Identity not removed");
+Ok(())
 ```
 
 - First ensure statement verifies the “before” state is as we expect.
@@ -577,7 +591,6 @@ verify {
 	--repeat=20 \				# Number of times we repeat a benchmark
 	--pallet=pallet_identity \	# Select the pallet
 	--extrinsic=* \				# Select the extrinsic(s)
-	--execution=wasm \			# Always run with Wasm
 	--wasm-execution=compiled \ # Always used `wasm-time`
 	--heap-pages=4096 \			# Not really needed, adjusts memory
 	--output=./frame/identity/src/weights.rs \	# Output results into a Rust file
@@ -595,11 +608,19 @@ verify {
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.png" />
 
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
+
 ---
 
 ## Results: Extrinsic Time vs. # of Sub-Accounts
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-sub.png" />
+
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 
 ---
 
@@ -607,11 +628,19 @@ verify {
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-fields.png" />
 
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
+
 ---
 
 ## Result: DB Operations vs. Sub Accounts
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-db-sub.png" />
+
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 
 ---
 
