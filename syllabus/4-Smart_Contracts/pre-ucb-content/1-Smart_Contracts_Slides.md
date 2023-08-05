@@ -55,7 +55,7 @@ Substrate provides different Smart Contracts' options.
 - Pallet Contracts - Wasm execution environment
 - Frontier - EVM execution environment
 
-<img rounded style="width: 600px; margin-top:-7f0px;" src="../img/frontier/contracts-runtime.png" alt="Contracts runtime" />
+<img rounded style="width: 600px; margin-top:-7f0px;" src="../img/frontier/contracts-runtime.png" />
 
 Notes:
 
@@ -72,8 +72,8 @@ Smart contracts on [Frontier](https://github.com/paritytech/frontier) can be imp
 <br/>
 
 <div class="right">
-<img rounded style="width: 200px; margin-right: 70px" src="../img/frontier/solidity.png" alt="Solidity Logo" />
-<img rounded style="width: 200px;" src="../img/frontier/vyper.png" alt="Solidity Logo" />
+<img rounded style="width: 200px; margin-right: 70px" src="../img/frontier/solidity.png" />
+<img rounded style="width: 200px;" src="../img/frontier/vyper.png" />
 </div>
 
 <pba-flex center>
@@ -97,7 +97,7 @@ Frontier aims to provide a low-friction and secure environment for the developme
 Frontier provides an Ethereum compatibility layer for Substrate.<br/>
 It has two components that can be activated separately.
 
-<img rounded style="width: 600px;" src="../img/frontier/Frontier.png" alt="Frontier Logo" />
+<img rounded style="width: 600px;" src="../img/frontier/Frontier.png" />
 
 Notes:
 
@@ -315,7 +315,7 @@ impl pallet_evm::Config for Runtime {
 </pba-col>
 <pba-col>
 
-<img rounded style="width: 800px;" src="../img/frontier/EVM-accounts.png" alt="JS-Events" />
+<img rounded style="width: 800px;" src="../img/frontier/EVM-accounts.png" />
 
 </pba-col>
 </pba-cols>
@@ -338,7 +338,7 @@ So for example, through normal ways, you cannot sign an EVM transaction with a n
 
 ## Pallet EVM - AddressMapping
 
-<img rounded style="width: 600px;" src="../img/frontier/Polkadot-JS-EVM-Events.png" alt="JS-Events" />
+<img rounded style="width: 600px;" src="../img/frontier/Polkadot-JS-EVM-Events.png" />
 
 Notes:
 

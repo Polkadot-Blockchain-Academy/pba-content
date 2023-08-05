@@ -1,14 +1,14 @@
 ---
-title: Pallet-XCM
-description: Introducing pallet-xcm, its interface and features implemented here.
+title: XCM Pallet
+description: Introduction to `pallet-xcm``, its interface and features implemented here.
 duration: 1 hour
 ---
 
-# pallet-xcm
+# XCM Pallet
 
 ---
 
-## _At the end of this lecture, you will be able to:_
+#### Lesson goals:
 
 - Understand what the interface of the pallet is and its implementation.
 - How versioning discovery works.
@@ -35,7 +35,9 @@ Instead, _parachain developers_ write XCVM programs, and package them up into FR
 
 Notes:
 
-We will see an example of this in the XCM pallet, with the teleport_assets and reserve_transfer_assets extrinsics.
+How do wallets wallet providers use XCM ?
+
+We will see examples of XCM being built in the runtime when exploring `teleport_assets` and `reserve_transfer_assets` extrinsics.
 
 ---
 
@@ -61,8 +63,6 @@ Notes:
 
 ---
 
-<!-- Following slides are a quick overview of the pallet interface, focusing on the calls it exposes -->
-
 ## pallet-xcm
 
 `pallet-xcm` provides default implementations for many traits required by `XcmConfig`.
@@ -77,42 +77,91 @@ Notes:
 
 ## `pallet-xcm` Primitive extrinsics
 
-TODO: Split and diagrams
-
 - `execute`
-  Direct access to the XCM executor. It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution. Then it executes the message **locally** and returns the outcome as an event. It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
+
+  Direct access to the XCM executor.
+
+  It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
+
+<img style="width: 500px;" src="../../../assets/img/8-XCM/pallet-xcm-execute.svg" />
+
+Notes:
+
+It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution.
+It executes the message **locally** and returns the outcome as an event.
+
+---v
+
+## `pallet-xcm` Primitive extrinsics
 
 - `send`
-  This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
+
+Sends a message to the provided destination.
+
+<img style="width: 1200px;" src="../../../assets/img/8-XCM/pallet-xcm-send-paras.svg" />
+
+Notes:
+
+This extrinsic is a function to send a message to a destination.
+It checks the origin, the destination and the message.
+Then it lets the `XcmRouter` handle the forwarding of the message.
 
 ---
 
 ## `pallet-xcm` Asset Transfer extrinsics
 
-TODO: Split and diagrams.
+<pba-cols>
+<pba-col>
+<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/teleport.png" />
+</pba-col>
+
+<pba-col>
+<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/reserve-tx.png" />
+</pba-col>
+</pba-cols>
+
+Notes:
+
+We have already seen what teleports and reserve transfers mean in lesson 7.1; A quick reminder.
+
+---v
+
+## `pallet-xcm` Asset Transfer extrinsics
 
 `teleport_assets` & `limited_teleport_assets`
 
-Allow the user to perform an asset teleport. The limited version takes an extra argument (`Option<WeightLimit>`).
+These extrinsics allow the user to perform an asset teleport.
+The limited version takes an extra argument (`Option<WeightLimit>`).
+
+<img style="width: 1000px;" src="../../../assets/img/8-XCM/pallet-xcm-teleport.svg" />
+
+---v
+
+## `pallet-xcm` Asset Transfer extrinsics
 
 `reserve_transfer_assets` & `limited_reserve_transfer_assets`
 
-Allow the user to perform a reserve-backed transfer. Its limited version takes an extra argument as well (`Option<WeightLimit>`).
+Allow the user to perform a reserve-backed transfer.
+Its limited version takes an extra argument as well (`Option<WeightLimit>`).
+
+<img style="width: 900px;" src="../../../assets/img/8-XCM/pallet-xcm-reserve-transfer.svg" />
 
 ---
 
 ## 🗣️ version negotiation with `pallet-xcm`
 
-TODO: Tell the versioning story.
+XCM is a **versioned message format**.
 
-XCM is an **extensible message format**.
+One version may contain more or different instructions than another, so for parties to communicate via XCM, it is important to know which version the other party is using.
 
-Versioning allows chains to communicate as XCM evolves.
+The version subscription mechanism allows parties to subscribe to version updates from others.
+
+<pba-flex center>
 
 ```rust
 pub enum VersionedXcm {
-    V2(v2::Xcm),
-	V3(v3::Xcm),
+  V2(v2::Xcm),
+  V3(v3::Xcm),
 }
 ```
 
@@ -127,9 +176,11 @@ Notes:
 But chains need to be aware of the version supported by each other.
 `SubscribeVersion` and `QueryResponse` play a key role here:
 
+<pba-flex center>
+
 ```rust
 enum Instruction {
-  /* snip */
+  // --snip--
   SubscribeVersion {
         query_id: QueryId,
         max_response_weight: u64,
@@ -139,7 +190,7 @@ enum Instruction {
         response: Response,
         max_weight: u64,
   },
-  /* snip */
+  // --snip--
 }
 ```
 
@@ -155,9 +206,11 @@ Notes:
 - `ResponseHandler`: The component in charge of handling response messages from other chains.
 - `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
 
+<pba-flex center>
+
 ```rust
  impl Config for XcmConfig {
-  /* snip */
+  // --snip--
   type ResponseHandler = PalletXcm;
   type SubscriptionService = PalletXcm;
  }
@@ -170,18 +223,17 @@ Notes:
 
 ---
 
-<!-- Subscrption service and version negotiation -->
-
 ## Subscription Service
 
-TODO: Remove implementation details.
-
-Any system can be notified of when another system changes its latest supported XCM version. This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
+Any system can be notified of when another system changes its latest supported XCM version.
+This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
 
 The `SubscriptionService` type defines what action to take when processing a `SubscribeVersion` instruction.
-This type expects an implementation of the `VersionChangeNotifier` trait, which has a `start` and a `stop` function, along with `is_subscribed`.
 
-`pallet-xcm` provides a default implementaiton of this trait. When receiving a `SubscribeVersion`, the chain sends back an XCM with the `QueryResponse` instruction containing its current version.
+Notes:
+
+`pallet-xcm` provides a default implementation of this trait.
+When receiving a `SubscribeVersion`, the chain sends back an XCM with the `QueryResponse` instruction containing its current version.
 
 ---
 
@@ -189,7 +241,8 @@ This type expects an implementation of the `VersionChangeNotifier` trait, which 
 
 The subscription service leverages any kind of exchange of XCMs between two systems to begin the process of version negotiation.
 
-Each time a system needs to send a message to a destination with an unknown supported XCM version, its location will be stored in the `VersionDiscoveryQueue`. This queue will then be checked in the next block and `SubscribeVersion` instructions will be sent out to those locations present in the queue.
+Each time a system needs to send a message to a destination with an unknown supported XCM version, its location will be stored in the `VersionDiscoveryQueue`.
+This queue will then be checked in the next block and `SubscribeVersion` instructions will be sent out to those locations present in the queue.
 
 Notes:
 
@@ -213,26 +266,28 @@ XCM version negotiation:
 
 ## 🗣️ XCM Version Negotiation
 
-<img style="width: 900px;" src="../../../assets/img/8-XCM/xcm-versioning.png" alt="Xcm Versioning" />
+<img rounded style="width: 900px;" src="../../../assets/img/8-XCM/xcm-versioning.png" />
 
 ---
 
 ## Response Handler
 
-TODO: XCM doesn't care about responses, FRAME does.
-We could trap them with a question.
+Version negotiation is just one example among many kinds of queries one chain can make to another.
+Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
 
-Version negotiation is just one example among many kinds of queries one chain can make to another. Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
+---v
 
-The `ResponseHandler` type requires an implementation of the `OnResponse`trait, which defines actions to be performed when receiving `QueryResponse` instructions back from a query.
+## Response Handler
 
-A default implementation is provided by the `pallet-xcm`. It checks that the response ID is expected, and processes the response accordingly when receiving it. It rejects any response that it did not query beforehand.
+We have talked about XCM being asymmetric, so why are there responses ?
 
 ---v
 
 ## Information Reporting
 
 Every instruction used for information reporting contains `QueryResponseInfo`.
+
+<pba-flex center>
 
 ```rust
 pub struct QueryResponseInfo {
@@ -249,32 +304,40 @@ The dispatchable call function is an optional operation that XCM author can spec
 
 ---v
 
-## Information
+## Information retrieval
+
+<pba-flex center>
 
 ```rust
 enum Instruction {
-    QueryResponse { query_id: QueryId, response: Response, max_weight: Weight, querier: Option<MultiLocation> },
+    // --snip--
+    QueryResponse {
+        query_id: QueryId,
+        response: Response,
+        max_weight: Weight,
+        querier: Option<MultiLocation>,
+    },
+    // --snip--
 }
 ```
+
+Notes:
 
 The above instruction is the one used for offering some requested information that the local system is expecting.
 `querier` parameter should be checked to ensure that the system that requested the information matches with what is expected.
 
 ---
 
-TODO: Less implementation details. Describe the scenario and why it's important.
-Why are these traits implemented here? Because they need storage, FRAME gives us that.
-
 ## Asset Trap/Claims with `pallet-xcm`
 
 What happens when there are still funds in the holding register after the execution of every instruction is done?
 
-- `AssetTrap` determines what to do with assets that remain; any type that implements `DropAssets` can be an `AssetTrap`.
-- `AssetClaim` determines how to reclaim assets that were trapped; any type that implements `AssetClaims` can be an `AssetClaim`.
+Any situation in which the holding register contains assets after the execution of the XCM message would lead to asset trapping.
+
+These traps need to be **stored** to allow for future claiming of these trapped assets, FRAME provide us with means for this.
 
 Notes:
 
-- Any situation in which the holding register contains assets after the execution of the XCM message would lead to asset trapping.
 - This is handled in the `post_execute` function of the xcm-executor.
 
 ---v
@@ -296,156 +359,34 @@ Notes:
 
 ## Extrinsic breakdown
 
-TODO: Open VS Code. That's better.
+Let's jump into the code and have a look at `limited_reserve_transfer_assets` extrinsic.
 
-```rust [1-4|4-11|1-100]
-/// Transfer some assets from the local chain to the sovereign account of a destination
-/// chain and forward a notification XCM.
-/// -- snip
-pub fn limited_reserve_transfer_assets(
-			origin: OriginFor<T>, // Must be capable of withdrawing the `assets` and executing XCM.
-			dest: Box<VersionedMultiLocation>, // Destination context for the assets.
-			beneficiary: Box<VersionedMultiLocation>, // A beneficiary location for the assets in the context of `dest`.
-			assets: Box<VersionedMultiAssets>, // The assets to be withdrawn. This should include the assets used to pay the fee on the `dest` side.
-			fee_asset_item: u32, // The index into `assets` of the item which should be used to pay fees.
-			weight_limit: WeightLimit, // The remote-side weight limit, if any, for the XCM fee purchase.
-		) -> DispatchResult {
-			Self::do_reserve_transfer_assets(
-				origin,
-				dest,
-				beneficiary,
-				assets,
-				fee_asset_item,
-				Some(weight_limit),
-			)
-		}
-```
+[source 🔍](https://github.com/paritytech/polkadot/blob/02905341f7f7d1b3aa1944ccbe3a86072fbf4b06/xcm/pallet-xcm/src/lib.rs#L1042)
 
----v
+Notes:
 
-### Extrinsic breakdown
+One way of walking through the implementation of `limited_reserve_transfer_assets` could be:
 
-`do_reserve_transfer_assets` beguins with:
-
+- Function interface
 - Checking wether runtime origin has execution permissions
 - Decoding destination and assets
-
-```rust
-let origin_location = T::ExecuteXcmOrigin::ensure_origin(origin)?;
-let dest = (*dest).try_into().map_err(|()| Error::<T>::BadVersion)?;
-let beneficiary: MultiLocation =
-	(*beneficiary).try_into().map_err(|()| Error::<T>::BadVersion)?;
-let assets: MultiAssets = (*assets).try_into().map_err(|()| Error::<T>::BadVersion)?;
-```
-
----v
-
-### Extrinsic breakdown
-
-Other safety checks
-
-```rust
-ensure!(assets.len() <= MAX_ASSETS_FOR_TRANSFER, Error::<T>::TooManyAssets);
-let value = (origin_location, assets.into_inner());
-ensure!(T::XcmReserveTransferFilter::contains(&value), Error::<T>::Filtered);
-```
-
----v
-
-### Extrinsic breakdown
-
-Figure out what is the asset to use for paying fees
-
-```rust
-let fees = assets
-	.get(fee_asset_item as usize)
-	.ok_or(Error::<T>::Empty)?
-	.clone()
-	.reanchored(&dest, context)
-	.map_err(|_| Error::<T>::CannotReanchor)?;
-```
-
----v
-
-### Extrinsic breakdown
-
-What does reanchor mean ?
-
-```rust [5]
-let fees = assets
-	.get(fee_asset_item as usize)
-	.ok_or(Error::<T>::Empty)?
-	.clone()
-	.reanchored(&dest, context)
-	.map_err(|_| Error::<T>::CannotReanchor)?;
-```
-
----v
-
-### Extrinsic breakdown
-
-Set weight_limit if defined or estimate what the weight would be at destination
-
-```rust [1-100|2|3-100]
-let weight_limit = match maybe_weight_limit {
-	Some(weight_limit) => weight_limit,
-	None => {
-		let fees = fees.clone();
-		let mut remote_message = Xcm(vec![
-			ReserveAssetDeposited(assets.clone()),
-			ClearOrigin,
-			BuyExecution { fees, weight_limit: Limited(Weight::zero()) },
-			DepositAsset { assets: Wild(AllCounted(max_assets)), beneficiary },
-		]);
-		// use local weight for remote message and hope for the best.
-		let remote_weight = T::Weigher::weight(&mut remote_message)
-			.map_err(|()| Error::<T>::UnweighableMessage)?;
-		Limited(remote_weight)
-	},
-};
-```
-
----v
-
-### Extrinsic breakdown
-
-Build the actual XCM to be sent
-
-```rust
-let xcm = Xcm(vec![
-	BuyExecution { fees, weight_limit },
-	DepositAsset { assets: Wild(AllCounted(max_assets)), beneficiary },
-]);
-let mut message = Xcm(vec![
-	SetFeesMode { jit_withdraw: true },
-	TransferReserveAsset { assets, dest, xcm },
-]);
-```
-
----v
-
-### Extrinsic breakdown
-
-Weight the message locally and finally request for its execution to `XcmExecutor`
-
-```rust
-let weight =
-	T::Weigher::weight(&mut message).map_err(|()| Error::<T>::UnweighableMessage)?;
-let hash = message.using_encoded(sp_io::hashing::blake2_256);
-let outcome =
-	T::XcmExecutor::execute_xcm_in_credit(origin_location, message, hash, weight, weight);
-Self::deposit_event(Event::Attempted { outcome });
-```
-
-[Source](https://github.com/paritytech/polkadot/blob/b1cc6fa14330261a305d56be36c04e9c99518993/xcm/pallet-xcm/src/lib.rs#L1190).
+- Other safety checks
+- Figure out what is the asset to use for paying fees --> Maybe stop for double clicking on reanchoring
+- Set weight_limit if defined or estimate what the weight would be at destination
+- Build the actual XCM to be sent
+- Weight the message locally and finally request for its execution to `XcmExecutor`
 
 ---
 
-## Proposed Exercise
+## Exercise
 
 1. Code an extrinsic that creates an XCM which traps some funds.
 1. Code an extrinsic that creates an XCM to claim back trapped funds.
 
 ---
 
-Usually trapping funds is not a desired outcome. In the first XCM, what modification is needed to avoid such scenario ?
+## Exercise
+
+Usually trapping funds is not a desired outcome.
+
+In the first XCM, what modification is needed to avoid such scenario?

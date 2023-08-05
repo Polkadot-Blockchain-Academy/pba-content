@@ -185,12 +185,14 @@ These are for discussion today, but there are _many more_ thank those listed her
 
 ## Attacking Web3
 
-<img rounded style="width: 1000px" src="img/3.4-xkcd-security.png" alt="https://xkcd.com/538/" />
+<img rounded style="width: 1000px" src="img/3.4-xkcd-security.png" />
 
 Notes:
 
 Key point: your "perfect" system in is likely weak to things outside of the "rules"!
 especially
+
+Image Source: https://xkcd.com/538/
 
 ---v
 
@@ -297,7 +299,7 @@ Explain example of luna or other system collapse.
 <pba-cols>
 <pba-col>
 
-<img rounded style="height: 700px;" src="img/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" alt="https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" />
+<img rounded style="height: 700px;" src="img/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" />
 
 </pba-col>
 <pba-col>
@@ -323,7 +325,7 @@ Example: irrational actors can be represented in a very simple model as a comple
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px" src="img/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/" />
+<img rounded style="width: 500px" src="img/3.4-xkcd-dependency.png" />
 
 </pba-col>
 <pba-col>
@@ -342,6 +344,8 @@ Notes:
   Dependabot is not sufficient.
 - Also in dependance on specific operational contexts.
   For example that it is legal to operate the software for nodes.
+
+Image source: https://xkcd.com/2347/
 
 ---v
 
@@ -855,7 +859,7 @@ From before, but here point out how this is getting more fine grained as well, a
 
 ## Diversity
 
-<img style="width: 1200px" src="img/eth-client-diversity.png" alt="https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA" />
+<img style="width: 1200px" src="img/eth-client-diversity.png" />
 
 Notes:
 
