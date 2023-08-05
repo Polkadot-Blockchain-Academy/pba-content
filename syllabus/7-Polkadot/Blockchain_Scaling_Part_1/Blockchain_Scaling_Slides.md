@@ -1,10 +1,11 @@
 ---
-title: "Blockchain Scaling : Monolithic and Homogeneous"
+title: "Blockchain Scaling 1: Monolithic and Homogeneous"
 duration: 45 mins
 ---
 
-# Blockchain Scaling 1:
-# Monolithic and Homogeneous
+# Blockchain Scaling
+
+## Monolithic and Homogeneous
 
 ---
 
@@ -20,22 +21,22 @@ duration: 45 mins
 
 ## What do we mean by scaling?
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/VisaScale.png" width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/VisaScale.png" />
 
 - Increasing throughput: data executed through state transitions
 - TPS:
   - Widely stated
   - Often gamed
-	- Individually signed user transactions (no inherents)
-	- Peak vs. sustained load
-	- sTPS used in Polkadot (no db caching)
+    - Individually signed user transactions (no inherents)
+    - Peak vs. sustained load
+    - sTPS used in Polkadot (no db caching)
   - Not currently the driver of throughput needs (DeFi + NFT drops)
 
 ---
 
 ## Horizontal vs. Vertical Scaling
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/horizontal-vs-vertical-scaling-diagram.png" width="40%" />
+<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/horizontal-vs-vertical-scaling-diagram.png" />
 
 - Vertical scaling: adding more resources per machine
 - Horizontal scaling: adding more machines
@@ -44,10 +45,11 @@ duration: 45 mins
 
 ## Scalability Trilemma
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/trilemma.png" width="40%" />
+<img style="width: 400px" rounded src="../../../assets/img/7-Polkadot/Blockchain_Scaling/trilemma.png" />
 
 - Why do we care about horizontal scaling for blockchains?
   - Lower barrier of entry -> more decentralization
+
 ---
 
 ## Vertical scaling approaches
@@ -61,19 +63,20 @@ duration: 45 mins
   - UTXOs
   - Move Language: STM with linear types
   - For Polkadot: elastic scaling
- 
+
 Notes:
-https://dahliamalkhi.files.wordpress.com/2018/03/hot-stuff-arxiv2018.pdf
-https://arxiv.org/pdf/2305.13556.pdf
-https://arxiv.org/pdf/2105.11827.pdf
-https://eprint.iacr.org/2023/031.pdf
-https://move-book.com/
+
+- https://dahliamalkhi.files.wordpress.com/2018/03/hot-stuff-arxiv2018.pdf
+- https://arxiv.org/pdf/2305.13556.pdf
+- https://arxiv.org/pdf/2105.11827.pdf
+- https://eprint.iacr.org/2023/031.pdf
+- https://move-book.com/
 
 ---
 
 ## Restaking
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Eigenlayer.webp" width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Eigenlayer.webp" />
 
 - Existing validator sets (Cosmos Hub, Ethereum with Eigenlayer) can opt-in to validating other protocols using same bond
 - Capital scaling, not throughput scaling
@@ -96,14 +99,15 @@ https://move-book.com/
 
 ## Sharding
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/committees.png" width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/committees.png" />
 
 - Term from traditional databases
 - Definition: distributing over subsets of machines (committees)
 - Execution vs. data sharding
 
 Notes:
-https://vitalik.ca/general/2021/04/07/sharding.html
+
+- https://vitalik.ca/general/2021/04/07/sharding.html
 
 ---
 
@@ -112,11 +116,11 @@ https://vitalik.ca/general/2021/04/07/sharding.html
 - Typically can't assume f holds within committees
   - Unless they're statistically representative
   - Alternatively we rely on 1-of-n assumptions
- 
+
 ---
 
 ## Problem Space: Adaptive Corruption
- 
+
 - Easier to corrupt (DOS, bribe, etc.) small committees than entire validator set
 - Must be sorted with strong on-chain randomness (e.g. VRFs not PoW hashes)
 - Must be frequently rotated
@@ -143,14 +147,16 @@ https://vitalik.ca/general/2021/04/07/sharding.html
   - Availability protocol based on Polkadot's
 
 Notes:
-https://near.org/papers/nightshade
+
+- https://near.org/papers/nightshade
 
 ---
 
 ## Solutions:
+
 ## Statistically Representative Committees
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Omniledger.png"  width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Omniledger.png" />
 
 - Statistically representative committees (Omniledger, Polkadot with multiple relay chains)
 - Very large validator sets (thousands)
@@ -160,12 +166,13 @@ https://near.org/papers/nightshade
 - Separate "beacon" chain for Sybil resistance
 
 Notes:
-https://eprint.iacr.org/2017/406.pdf
+
+- https://eprint.iacr.org/2017/406.pdf
 
 ---
 
 ## Solutions: Validity proofs (zk-rollups)
- 
+
 - Cryptographic proofs of execution
 - Asymmetry between proving and verifying times
   - Proving is slow
@@ -181,7 +188,7 @@ https://eprint.iacr.org/2017/406.pdf
 
 ## State Channels
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Lightning-layers.png"  width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Lightning-layers.png" />
 
 - Part of state is locked, updated off-chain between closed set of participants, then unlocked and committed to chain
 - Payment channels, e.g. Lightning network, are a special case
@@ -189,9 +196,10 @@ https://eprint.iacr.org/2017/406.pdf
 - Can be application-specific or generalized (e.g. Counterfactual)
 
 Notes:
-https://vitalik.ca/general/2021/01/05/rollup.html
-https://www.jeffcoleman.ca/state-channels/
-https://lightning.network/lightning-network-paper.pdf
+
+- https://vitalik.ca/general/2021/01/05/rollup.html
+- https://www.jeffcoleman.ca/state-channels/
+- https://lightning.network/lightning-network-paper.pdf
 
 ---
 
@@ -202,7 +210,7 @@ https://lightning.network/lightning-network-paper.pdf
   - Someone must be regularly online to submit later ones
   - This can be outsourced to watchtower networks
   - Typically challenge period after closing channel
- 
+
 ---
 
 ## State Channels
@@ -216,7 +224,9 @@ https://lightning.network/lightning-network-paper.pdf
 
 ## Plasma
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Plasma.jpg"  width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/Plasma.jpg" />
+
+<div style="font-size: 0.82em;">
 
 - "Ether + Lightning"
 - Like state channels, but hashes published to L1 at regular checkpoints
@@ -225,30 +235,40 @@ https://lightning.network/lightning-network-paper.pdf
   - State transitions still need "owner"
   - Still not ideal for account-based systems
   - Mass exit problem in case of data unavailability
- 
+
+</div>
+
 Notes:
-https://plasma.io/plasma-deprecated.pdf
+
+- https://plasma.io/plasma-deprecated.pdf
 
 ---
 
 ## Flavors of Plasma
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/plasma_world_map.png"  width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/plasma_world_map.png" />
 
 - Plasma MVP: UTXO-based
 - Plasma Cash: NFT-based -> only prove ownership of own coins
 - Polygon: Plasma and PoS bridges
 
 Notes:
-https://ethresear.ch/t/plasma-world-map-the-hitchhiker-s-guide-to-the-plasma/4333
-https://ethresear.ch/t/plasma-cash-plasma-with-much-less-per-user-data-checking/1298
-https://ethresear.ch/t/minimal-viable-plasma/426
+
+- https://ethresear.ch/t/plasma-world-map-the-hitchhiker-s-guide-to-the-plasma/4333
+- https://ethresear.ch/t/plasma-cash-plasma-with-much-less-per-user-data-checking/1298
+- https://ethresear.ch/t/minimal-viable-plasma/426
 
 ---
 
 ## The Life and Death of Plasma
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/L2Evolution.png"  width="30%" />
+<pba-cols>
+<pba-col>
+
+<img rounded style="width: 500px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/L2Evolution.png" />
+
+</pba-col>
+<pba-col>
 
 - 2017-2019: Plasma paper to the emergence of rollups
   - zk-rollups
@@ -256,6 +276,10 @@ https://ethresear.ch/t/minimal-viable-plasma/426
   - Generalized fraud proofs
 - Plasma Group becomes Optimism
 
+</pba-col>
+</pba-cols>
+
 Notes:
-https://medium.com/dragonfly-research/the-life-and-death-of-plasma-b72c6a59c5ad
-https://ethresear.ch/t/minimal-viable-merged-consensus/5617
+
+- https://medium.com/dragonfly-research/the-life-and-death-of-plasma-b72c6a59c5ad
+- https://ethresear.ch/t/minimal-viable-merged-consensus/5617

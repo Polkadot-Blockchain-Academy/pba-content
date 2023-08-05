@@ -3,8 +3,9 @@ title: "Blockchains Scaling 2: Modular and Heterogeneous"
 duration: 45 mins
 ---
 
-# Blockchain Scaling 2:
-# Modular and Heterogeneous
+# Blockchain Scaling
+
+## Modular and Heterogeneous
 
 ---
 
@@ -24,10 +25,11 @@ duration: 45 mins
 
 ## Taxonomy of L2s
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/L2Beat.png"  width="40%" />
+<img rounded style="width: 550px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/L2Beat.png" />
 
 Notes:
-https://l2beat.com/scaling/summary
+
+- https://l2beat.com/scaling/summary
 
 ---
 
@@ -36,7 +38,7 @@ https://l2beat.com/scaling/summary
 - Sidechains
   - Inherit ordering from L1
   - Honest majority bridge (e.g. 5-of-8 multisig)
-  
+
 ---
 
 ## Taxonomy of L2s
@@ -44,8 +46,8 @@ https://l2beat.com/scaling/summary
 - Smart Contract Rollups
   - Inherit ordering and availability from L1
   - "Trust-minimized" bridge:
-	- STF correctness with validity or fraud proofs
-	- Inbox: option for transactions proposed through base layer to avoid sequencer/proposer censorship
+    - STF correctness with validity or fraud proofs
+    - Inbox: option for transactions proposed through base layer to avoid sequencer/proposer censorship
 
 ---
 
@@ -57,6 +59,7 @@ https://l2beat.com/scaling/summary
   - Off-chain DA
 
 Notes:
+
 https://www.starknet.io/en/posts/developers/rollup-validium-volition-where-is-your-data-stored
 
 ---
@@ -68,8 +71,9 @@ https://www.starknet.io/en/posts/developers/rollup-validium-volition-where-is-yo
   - No trust-minimized bridge: correctness and censorship-resistance entirely off-chain
 
 Notes:
-https://celestia.org/learn/sovereign-rollups/an-introduction/
-https://rollkit.dev/blog/sovereign-rollups-on-bitcoin/
+
+- https://celestia.org/learn/sovereign-rollups/an-introduction/
+- https://rollkit.dev/blog/sovereign-rollups-on-bitcoin/
 
 ---
 
@@ -83,7 +87,8 @@ https://rollkit.dev/blog/sovereign-rollups-on-bitcoin/
 - Some modular consensus layers don't allow settlement: Polkadot and Celestia
 
 Notes:
-https://dba.mirror.xyz/LYUb_Y2huJhNUw_z8ltqui2d6KY8Fc3t_cnSE9rDL_o
+
+- https://dba.mirror.xyz/LYUb_Y2huJhNUw_z8ltqui2d6KY8Fc3t_cnSE9rDL_o
 
 ---
 
@@ -118,8 +123,9 @@ https://dba.mirror.xyz/LYUb_Y2huJhNUw_z8ltqui2d6KY8Fc3t_cnSE9rDL_o
 - e.g. Celestia (standalone DA layer), Danksharding (Ethereum roadmap), Polygon Avail (built on Substrate), ZKPorter, Eigenlayer
 
 Notes:
-https://arxiv.org/abs/1809.09044
-https://github.com/availproject/data-availability/blob/master/reference%20document/Data%20Availability%20-%20Reference%20Document.pdf
+
+- https://arxiv.org/abs/1809.09044
+- https://github.com/availproject/data-availability/blob/master/reference%20document/Data%20Availability%20-%20Reference%20Document.pdf
 
 ---
 
@@ -133,11 +139,20 @@ https://github.com/availproject/data-availability/blob/master/reference%20docume
 
 ## 2D Reed Solomon
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/2dReedSolomon.png" width="20%" />
+<pba-cols>
+<pba-col>
+
+<img rounded style="width: 400px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/2dReedSolomon.png" />
+
+</pba-col>
+<pba-col>
 
 - Computes Merkle roots for rows and columns
 - Requires storing 2$\sqrt{n}$ state roots instead of one
 - Allows O($\sqrt{n}$) fraud proofs of encoding
+
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -148,7 +163,8 @@ https://github.com/availproject/data-availability/blob/master/reference%20docume
 - Possible incentive problem: easier to scale data than execution so standalone DA layers can more easily be undercut
 
 Notes:
-https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/
+
+- https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/
 
 ---
 
@@ -158,16 +174,17 @@ https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/
   - Also provide proof of encoding
   - KZG requires trusted setup, ceremony done earlier this year
 - Distributed construction: no nodes need build all rows and columns
-- Distributed reconstruction: 
+- Distributed reconstruction:
   - Chunking and sharding similar to Polkadot
   - Higher threshold due to 2D encoding
 - Allows light client consensus through sampling
 - Data removed after 30 days
 
 Notes:
-https://notes.ethereum.org/@vbuterin/proto_danksharding_faq
-https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html
-https://www.youtube.com/watch?v=4L30t_6JBAg
+
+- https://notes.ethereum.org/@vbuterin/proto_danksharding_faq
+- https://dankradfeist.de/ethereum/2020/06/16/kate-polynomial-commitments.html
+- https://www.youtube.com/watch?v=4L30t_6JBAg
 
 ---
 
@@ -182,12 +199,13 @@ https://www.youtube.com/watch?v=4L30t_6JBAg
   - Transactional (private or public): e.g. Aztec
   - Application-specific: e.g. STARKDex, Loopring
   - Smart contract: e.g. ZEXE (Aleo), zkEVM (Polygon, ZKSync, Scroll)
- 
+
 Notes:
-https://medium.com/hackernoon/scaling-tezo-8de241dd91bd
-https://eprint.iacr.org/2020/352.pdf
-https://github.com/barryWhiteHat/roll_up
-https://zkhack.dev/whiteboard/
+
+- https://medium.com/hackernoon/scaling-tezo-8de241dd91bd
+- https://eprint.iacr.org/2020/352.pdf
+- https://github.com/barryWhiteHat/roll_up
+- https://zkhack.dev/whiteboard/
 
 ---
 
@@ -201,11 +219,14 @@ https://zkhack.dev/whiteboard/
 - Fraud proofs can be interactive (Arbitrum) or noninteractive (Optimism)
 
 Notes:
-https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-kalodner.pdf
+
+- https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-kalodner.pdf
 
 ---
 
 ## Rollup Training Wheels
+
+<div style="font-size: 0.82em;">
 
 - Stage 0
   - On-chain DA
@@ -218,10 +239,13 @@ https://www.usenix.org/system/files/conference/usenixsecurity18/sec18-kalodner.p
 - Stage 2
   - Security override only in case of bugs (discrepancy between two prover implementations)
   - Upgrades must have delay greater than 30 days
- 
+
+</div>
+
 Notes:
-https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571
- 
+
+- https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-training-wheels/11571
+
 ---
 
 ## Rollup Sequencers
@@ -231,24 +255,26 @@ https://ethereum-magicians.org/t/proposed-milestones-for-rollups-taking-off-trai
 - Proposer-builder separation
 
 Notes:
-https://docs.espressosys.com/sequencer/espresso-sequencer-architecture/readme
-https://stack.optimism.io/docs/understand/explainer/
-https://ethereum.org/nl/roadmap/pbs/
+
+- https://docs.espressosys.com/sequencer/espresso-sequencer-architecture/readme
+- https://stack.optimism.io/docs/understand/explainer/
+- https://ethereum.org/nl/roadmap/pbs/
 
 ---
 
 ## Optimistic Rollups: Permissionless?
 
 - Spam state roots stall the chain
-   - Arbitrum allows multiple to be posted (fork and prune) similar to Nakamoto consensus
+  - Arbitrum allows multiple to be posted (fork and prune) similar to Nakamoto consensus
 - Spam challenges can delay confirmation
-   - They typically must be executed separately and sequentially to prevent collusion
-   - Arbitrum BOLD allows challenges to be executed together, bounds time at 7 days
+  - They typically must be executed separately and sequentially to prevent collusion
+  - Arbitrum BOLD allows challenges to be executed together, bounds time at 7 days
 - Spam necessitates permissioned proposer/verifier sets
 
 Notes:
-https://github.com/OffchainLabs/bold/blob/main/docs/research-specs/BOLDChallengeProtocol.pdf
-https://offchain.medium.com/solutions-to-delay-attacks-on-rollups-434f9d05a07a
+
+- https://github.com/OffchainLabs/bold/blob/main/docs/research-specs/BOLDChallengeProtocol.pdf
+- https://offchain.medium.com/solutions-to-delay-attacks-on-rollups-434f9d05a07a
 
 ---
 
@@ -260,8 +286,9 @@ https://offchain.medium.com/solutions-to-delay-attacks-on-rollups-434f9d05a07a
 - Attention challenges
 
 Notes:
-https://medium.com/offchainlabs/the-cheater-checking-problem-why-the-verifiers-dilemma-is-harder-than-you-think-9c7156505ca1
-https://medium.com/offchainlabs/cheater-checking-how-attention-challenges-solve-the-verifiers-dilemma-681a92d9948e
+
+- https://medium.com/offchainlabs/the-cheater-checking-problem-why-the-verifiers-dilemma-is-harder-than-you-think-9c7156505ca1
+- https://medium.com/offchainlabs/cheater-checking-how-attention-challenges-solve-the-verifiers-dilemma-681a92d9948e
 
 ---
 
@@ -279,7 +306,7 @@ https://medium.com/offchainlabs/cheater-checking-how-attention-challenges-solve-
 
 ## How Does Polkadot Compare to Other Rollup Protocols?
 
-<img src="../../../assets/img/7-Polkadot/Blockchain_Scaling/polkadotrollup.png"  width="40%" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/polkadotrollup.png" />
 
 - Approval checking is a decentralized shared watchtower network
 - The value proposition of Polkadot is making consistent security assumptions across the modular stack
