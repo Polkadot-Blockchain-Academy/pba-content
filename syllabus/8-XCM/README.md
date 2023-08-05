@@ -28,6 +28,6 @@ Exercise - Configuring XCM (1.5 hr) @keith
 
 ### Day 3 (Half Day)
 
-Lecture - XCM 4, Advanced Use Case (1.5 hr) @chris
+Lecture - XCM 5, Beyond Asset Transfers (1.5 hr) @arrudagates
 Coffee Break (15 min)
 Exercise - Writing an RFC (1.5 hr) @keith & @cisco
