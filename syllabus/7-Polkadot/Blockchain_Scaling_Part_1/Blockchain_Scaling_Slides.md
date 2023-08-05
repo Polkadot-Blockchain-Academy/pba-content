@@ -38,7 +38,6 @@ duration: 45 mins
 
 <img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/horizontal-vs-vertical-scaling-diagram.png" />
 
-
 - Vertical scaling: adding more resources per machine
 - Horizontal scaling: adding more machines
 
@@ -108,7 +107,7 @@ Notes:
 
 Notes:
 
-https://vitalik.ca/general/2021/04/07/sharding.html
+- https://vitalik.ca/general/2021/04/07/sharding.html
 
 ---
 
@@ -149,7 +148,7 @@ https://vitalik.ca/general/2021/04/07/sharding.html
 
 Notes:
 
-https://near.org/papers/nightshade
+- https://near.org/papers/nightshade
 
 ---
 
@@ -168,7 +167,7 @@ https://near.org/papers/nightshade
 
 Notes:
 
-https://eprint.iacr.org/2017/406.pdf
+- https://eprint.iacr.org/2017/406.pdf
 
 ---
 
@@ -241,7 +240,7 @@ Notes:
 
 Notes:
 
-https://plasma.io/plasma-deprecated.pdf
+- https://plasma.io/plasma-deprecated.pdf
 
 ---
 
@@ -255,10 +254,9 @@ https://plasma.io/plasma-deprecated.pdf
 
 Notes:
 
-
-https://ethresear.ch/t/plasma-world-map-the-hitchhiker-s-guide-to-the-plasma/4333
-https://ethresear.ch/t/plasma-cash-plasma-with-much-less-per-user-data-checking/1298
-https://ethresear.ch/t/minimal-viable-plasma/426
+- https://ethresear.ch/t/plasma-world-map-the-hitchhiker-s-guide-to-the-plasma/4333
+- https://ethresear.ch/t/plasma-cash-plasma-with-much-less-per-user-data-checking/1298
+- https://ethresear.ch/t/minimal-viable-plasma/426
 
 ---
 
@@ -283,5 +281,5 @@ https://ethresear.ch/t/minimal-viable-plasma/426
 
 Notes:
 
-https://medium.com/dragonfly-research/the-life-and-death-of-plasma-b72c6a59c5ad
-https://ethresear.ch/t/minimal-viable-merged-consensus/5617
+- https://medium.com/dragonfly-research/the-life-and-death-of-plasma-b72c6a59c5ad
+- https://ethresear.ch/t/minimal-viable-merged-consensus/5617
