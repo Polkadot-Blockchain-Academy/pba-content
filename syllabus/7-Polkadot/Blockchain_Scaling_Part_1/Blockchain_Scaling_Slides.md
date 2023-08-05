@@ -27,9 +27,9 @@ duration: 45 mins
 - TPS:
   - Widely stated
   - Often gamed
-  - Individually signed user transactions (no inherents)
-  - Peak vs. sustained load
-  - sTPS used in Polkadot (no db caching)
+    - Individually signed user transactions (no inherents)
+    - Peak vs. sustained load
+    - sTPS used in Polkadot (no db caching)
   - Not currently the driver of throughput needs (DeFi + NFT drops)
 
 ---
@@ -37,6 +37,7 @@ duration: 45 mins
 ## Horizontal vs. Vertical Scaling
 
 <img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/horizontal-vs-vertical-scaling-diagram.png" />
+
 
 - Vertical scaling: adding more resources per machine
 - Horizontal scaling: adding more machines
@@ -197,9 +198,9 @@ https://eprint.iacr.org/2017/406.pdf
 
 Notes:
 
-https://vitalik.ca/general/2021/01/05/rollup.html
-https://www.jeffcoleman.ca/state-channels/
-https://lightning.network/lightning-network-paper.pdf
+- https://vitalik.ca/general/2021/01/05/rollup.html
+- https://www.jeffcoleman.ca/state-channels/
+- https://lightning.network/lightning-network-paper.pdf
 
 ---
 
@@ -253,6 +254,7 @@ https://plasma.io/plasma-deprecated.pdf
 - Polygon: Plasma and PoS bridges
 
 Notes:
+
 
 https://ethresear.ch/t/plasma-world-map-the-hitchhiker-s-guide-to-the-plasma/4333
 https://ethresear.ch/t/plasma-cash-plasma-with-much-less-per-user-data-checking/1298

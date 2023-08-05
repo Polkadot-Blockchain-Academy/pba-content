@@ -46,8 +46,8 @@ https://l2beat.com/scaling/summary
 - Smart Contract Rollups
   - Inherit ordering and availability from L1
   - "Trust-minimized" bridge:
-  - STF correctness with validity or fraud proofs
-  - Inbox: option for transactions proposed through base layer to avoid sequencer/proposer censorship
+    - STF correctness with validity or fraud proofs
+    - Inbox: option for transactions proposed through base layer to avoid sequencer/proposer censorship
 
 ---
 
