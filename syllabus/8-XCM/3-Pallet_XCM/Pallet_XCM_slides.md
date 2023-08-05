@@ -98,11 +98,13 @@ It executes the message **locally** and returns the outcome as an event.
 
 Sends a message to the provided destination.
 
-<img style="width: 1200px;" src="../../../assets/img/7-XCM/pallet-xcm-send-paras.svg" />
+<img style="width: 1200px;" src="../../../assets/img/8-XCM/pallet-xcm-send-paras.svg" />
 
 Notes:
 
-This extrinsic is a function to send a message to a destination. It checks the origin, the destination and the message. Then it lets the `XcmRouter` handle the forwarding of the message.
+This extrinsic is a function to send a message to a destination.
+It checks the origin, the destination and the message.
+Then it lets the `XcmRouter` handle the forwarding of the message.
 
 ---
 
@@ -110,11 +112,11 @@ This extrinsic is a function to send a message to a destination. It checks the o
 
 <pba-cols>
 <pba-col>
-<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/teleport.png" />
+<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/teleport.png" />
 </pba-col>
 
 <pba-col>
-<img rounded style="width: 400px;" src="../../../assets/img/7-XCM/reserve-tx.png" />
+<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/reserve-tx.png" />
 </pba-col>
 </pba-cols>
 
@@ -128,9 +130,10 @@ We have already seen what teleports and reserve transfers mean in lesson 7.1; A 
 
 `teleport_assets` & `limited_teleport_assets`
 
-These extrinsics allow the user to perform an asset teleport. The limited version takes an extra argument (`Option<WeightLimit>`).
+These extrinsics allow the user to perform an asset teleport.
+The limited version takes an extra argument (`Option<WeightLimit>`).
 
-<img style="width: 1000px;" src="../../../assets/img/7-XCM/pallet-xcm-teleport.svg" />
+<img style="width: 1000px;" src="../../../assets/img/8-XCM/pallet-xcm-teleport.svg" />
 
 ---v
 
@@ -138,9 +141,10 @@ These extrinsics allow the user to perform an asset teleport. The limited versio
 
 `reserve_transfer_assets` & `limited_reserve_transfer_assets`
 
-Allow the user to perform a reserve-backed transfer. Its limited version takes an extra argument as well (`Option<WeightLimit>`).
+Allow the user to perform a reserve-backed transfer.
+Its limited version takes an extra argument as well (`Option<WeightLimit>`).
 
-<img style="width: 900px;" src="../../../assets/img/7-XCM/pallet-xcm-reserve-transfer.svg" />
+<img style="width: 900px;" src="../../../assets/img/8-XCM/pallet-xcm-reserve-transfer.svg" />
 
 ---
 
@@ -221,13 +225,15 @@ Notes:
 
 ## Subscription Service
 
-Any system can be notified of when another system changes its latest supported XCM version. This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
+Any system can be notified of when another system changes its latest supported XCM version.
+This is done via the `SubscribeVersion` and `UnsubscribeVersion` instructions.
 
 The `SubscriptionService` type defines what action to take when processing a `SubscribeVersion` instruction.
 
 Notes:
 
-`pallet-xcm` provides a default implementation of this trait. When receiving a `SubscribeVersion`, the chain sends back an XCM with the `QueryResponse` instruction containing its current version.
+`pallet-xcm` provides a default implementation of this trait.
+When receiving a `SubscribeVersion`, the chain sends back an XCM with the `QueryResponse` instruction containing its current version.
 
 ---
 
@@ -235,7 +241,8 @@ Notes:
 
 The subscription service leverages any kind of exchange of XCMs between two systems to begin the process of version negotiation.
 
-Each time a system needs to send a message to a destination with an unknown supported XCM version, its location will be stored in the `VersionDiscoveryQueue`. This queue will then be checked in the next block and `SubscribeVersion` instructions will be sent out to those locations present in the queue.
+Each time a system needs to send a message to a destination with an unknown supported XCM version, its location will be stored in the `VersionDiscoveryQueue`.
+This queue will then be checked in the next block and `SubscribeVersion` instructions will be sent out to those locations present in the queue.
 
 Notes:
 
@@ -259,13 +266,14 @@ XCM version negotiation:
 
 ## 🗣️ XCM Version Negotiation
 
-<img style="width: 900px;" src="../../../assets/img/7-XCM/xcm-versioning.png" />
+<img rounded style="width: 900px;" src="../../../assets/img/8-XCM/xcm-versioning.png" />
 
 ---
 
 ## Response Handler
 
-Version negotiation is just one example among many kinds of queries one chain can make to another. Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
+Version negotiation is just one example among many kinds of queries one chain can make to another.
+Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
 
 ---v
 
@@ -370,13 +378,15 @@ One way of walking through the implementation of `limited_reserve_transfer_asset
 
 ---
 
-## Proposed Exercise
+## Exercise
 
 1. Code an extrinsic that creates an XCM which traps some funds.
 1. Code an extrinsic that creates an XCM to claim back trapped funds.
 
 ---
 
-## Proposed Exercise
+## Exercise
 
-Usually trapping funds is not a desired outcome. In the first XCM, what modification is needed to avoid such scenario ?
+Usually trapping funds is not a desired outcome.
+
+In the first XCM, what modification is needed to avoid such scenario?
