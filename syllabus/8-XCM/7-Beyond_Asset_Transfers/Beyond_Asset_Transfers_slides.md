@@ -252,7 +252,9 @@ Hey Chain B, I'm sending you a balance transfer request from one of my users, th
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
+
 Notes:
+
 Emphatically explain this!
 
 ---
