@@ -211,6 +211,121 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
+- `HashedDescription`: Hashes the description of a MultiLocation and converts that into an AccountId. 
+
+```rust
+
+pub struct HashedDescription<AccountId, Describe>(PhantomData<(AccountId, Describe)>);
+impl<AccountId: From<[u8; 32]> + Clone, Describe: DescribeLocation> ConvertLocation<AccountId>
+	for HashedDescription<AccountId, Describe>
+{
+	fn convert_location(value: &MultiLocation) -> Option<AccountId> {
+		Some(blake2_256(&Describe::describe_location(value)?).into())
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `HashedDescription`. An example of a converter definition:
+
+<pba-flex center>
+
+```rust
+pub type LocationToAccount = HashedDescription<
+  // Legacy conversion - MUST BE FIRST!
+  LegacyDescribeForeignChainAccount,
+  // Other conversions
+  DescribeTerminus,
+  DescribePalletTerminal,
+>;
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeLocation`: Means of converting a location into a stable and unique descriptive identifier.
+
+```rust
+pub trait DescribeLocation {
+	/// Create a description of the given `location` if possible. No two locations should have the
+	/// same descriptor.
+	fn describe_location(location: &MultiLocation) -> Option<Vec<u8>>;
+}
+```
+
+Notes:
+
+[Impl for Tuple](https://github.com/paritytech/polkadot/blob/c7f58c17f906467634a5b236d7b3c1df24057419/xcm/xcm-builder/src/location_conversion.rs#L34)
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeAccountId32Terminal`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, X1(AccountId32 { id, .. })) => Some((b"AccountId32", id).encode()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeTerminus`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, Here) => Some(Vec::new()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribePalletTerminal`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, X1(PalletInstance(i))) =>
+			Some((b"Pallet", Compact::<u32>::from(*i as u32)).encode()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeAccountKey20Terminal`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, X1(AccountKey20 { key, .. })) => Some((b"AccountKey20", key).encode()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
 - `Account32Hash`: Hashes the multilocation and takes the lowest 32 bytes as account.
 
 ```rust
