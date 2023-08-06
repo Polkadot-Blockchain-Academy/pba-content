@@ -1,6 +1,6 @@
 ---
 title: XCM Beyond Asset Transfers
-description: Describe your slides here
+description: Deep dive on advanced XCM use cases beyond asset transfers and bridging
 duration: 1 hour
 ---
 
@@ -39,11 +39,13 @@ The following are expected:
 
 ## XCMultisig
 
-At InvArch Network we have the concept of XCMultisigs, these are entities that exist on the InvArch Network runtime and provide advanced multisig capabilities to users.
-
-The reason for the name comes from their XCM functionality, more specifically from the idea that these entities have their logic defined in the InvArch Network runtime, but exist in all other connected chains with the same exact account address, thus allowing them to transact in these chains through XCM.
+InvArch Network has the concept of XCMultisigs, these are entities that exist on the InvArch Network runtime and provide advanced multisig capabilities to users across many other blockchains.
 
 Let's go over how that works!
+
+Notes:
+
+The reason for the name comes from their XCM functionality, more specifically from the idea that these entities have their logic defined in the InvArch Network runtime, but exist in all other connected chains with the same exact account address, thus allowing them to transact in these chains through XCM.
 
 ---v
 
