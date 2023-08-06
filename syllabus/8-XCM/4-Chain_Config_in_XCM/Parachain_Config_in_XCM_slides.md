@@ -72,8 +72,8 @@ impl Config for XcmConfig {
 
 Notes:
 
-- Means of converting a multilocation into an accountId
-  Used later for: OriginConverter , `AssetTransactor`
+- Means of converting a `MultiLocation` into an account ID
+  Used later for: `OriginConverter` , `AssetTransactor`
 
 - `xcm-builder` and `xcm-pallet` are your friends!
 
@@ -196,26 +196,26 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- Defines how we convert a multilocation into a local accountId.
-- Useful when we want to withdraw/deposit tokens from a multilocation defined origin
-- Useful when we want to dispatch as signed origins from a multilocation defined origin.
+- Defines how we convert a `MultiLocation` into a local account ID.
+- Useful when we want to withdraw/deposit tokens from a `MultiLocation` defined origin
+- Useful when we want to dispatch as signed origins from a `MultiLocation` defined origin.
 
 <img style="width: 900px;" src="../../../assets/img/8-XCM/location_to_account_id_withdraw.svg" />
 
 Notes:
 
-- This will define how we convert a multilocation into a local accountId.
-- This is useful when we want to withdraw/deposit tokens from a multilocation defined origin or when we want to dispatch as signed origins from a multilocation defined origin.
+- This will define how we convert a `MultiLocation` into a local account ID.
+- This is useful when we want to withdraw/deposit tokens from a `MultiLocation` defined origin or when we want to dispatch as signed origins from a `MultiLocation` defined origin.
 
 ---v
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `Account32Hash`: Hashes the multilocation and takes the lowest 32 bytes as account.
+- `Account32Hash`: Hashes the `MultiLocation` and takes the lowest 32 bytes as account.
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
-  // Blake2(b"multiloc"+ multilocation)
+  // Blake2(b"multiloc"+ MultiLocation)
   Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
 }
 ```
@@ -224,15 +224,15 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 
 Notes:
 
-- This is the most generic form of converting a multilocation to an accountId.
-- There are no restrictions in the multilocation input.
+- This is the most generic form of converting a `MultiLocation` to an account ID.
+- There are no restrictions in the `MultiLocation` input.
   If you use this with other converters, make sure this will be the last option, as otherwise the more restrictive ones will not apply.
 
 ---v
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `ParentIsPreset`: Converts the parent multilocation into an account of the form `b'Parent' + trailing 0s`
+- `ParentIsPreset`: Converts the parent `MultiLocation` into an account of the form `b'Parent' + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
@@ -254,7 +254,7 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `ChildParachainConvertsVia`: Converts the **child** parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+- `ChildParachainConvertsVia`: Converts the **child** parachain `MultiLocation` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
 
 Notes:
 
@@ -266,7 +266,7 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `SiblingParachainConvertsVia`: Convert the **sibling** parachain multilocation into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+- `SiblingParachainConvertsVia`: Convert the **sibling** parachain `MultiLocation` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
@@ -287,7 +287,7 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `AccountId32Aliases`: Converts a local `AccountId32` multilocation into a `AccountID` of 32 bytes.
+- `AccountId32Aliases`: Converts a local `AccountId32` `MultiLocation` into an account ID of 32 bytes.
 
 <div style="font-size:smaller">
 
@@ -318,7 +318,7 @@ impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone
 
 Notes:
 
-- Typically used for chains that want to enable local xcm execution, and which have 32 byte accounts.
+- Typically used for chains that want to enable local XCM execution, and which have 32 byte accounts.
 - We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
   **This structure fulfills one of our requirements**
 
@@ -373,7 +373,7 @@ impl
 Notes:
 
 - **Matcher**: Matches the multiAsset against some filters and returns the amount to be deposited/withdrawn
-- **AccountIdConverter**: Means of converting a multilocation into an account
+- **AccountIdConverter**: Means of converting a `MultiLocation` into an account
 
 ---v
 
@@ -390,27 +390,27 @@ Notes:
 
 ### 📍 `origin-converter` via `xcm-builder`
 
-- Defines how to convert an XCM origin, defined by a MultiLocation, into a frame dispatch origin.
+- Defines how to convert an XCM origin, defined by a `MultiLocation`, into a frame dispatch origin.
 - Used mainly in the `Transact` instruction.
 
 Notes:
 
 - `Transact` needs to dispatch from a frame dispatch origin.
-  However the xcm-executor works with xcm-origins which are defined by MultiLocations.
+  However the `xcm-executor` works with XCM origins which are defined by `MultiLocation`s.
 - `origin-converter` is the component that converts one into the other
 
 ---v
 
 ### 📍 `origin-converter` via `xcm-builder`
 
-- `SovereignSignedViaLocation`: Converts the multilocation origin (typically, a parachain origin) into a signed origin.
+- `SovereignSignedViaLocation`: Converts the `MultiLocation` origin (typically, a parachain origin) into a signed origin.
 
 ```rust [0|6|18|20|22]
 pub struct SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>(
   PhantomData<(LocationConverter, RuntimeOrigin)>,
 );
 impl<
-    // Converts a multilocation into account
+    // Converts a MultiLocation into account
     LocationConverter: Convert<MultiLocation, RuntimeOrigin::AccountId>,
     RuntimeOrigin: OriginTrait,
   > ConvertOrigin<RuntimeOrigin>
@@ -437,14 +437,14 @@ where
 
 Notes:
 
-- `LocationConverter ` once again defines how to convert a multilocation into an accountId.
+- `LocationConverter ` once again defines how to convert a `MultiLocation` into an account ID.
 - It basically grants access to dispatch as Signed origin after the conversion.
 
 ---v
 
 ### 📍 `origin-converter` via `xcm-builder`
 
-- `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
+- `SignedAccountId32AsNative`: Converts a local 32 byte account `MultiLocation` into a signed origin using the same 32 byte account.
 
 ```rust [0|18|19-22|24]
 pub struct SignedAccountId32AsNative<
@@ -479,7 +479,7 @@ where
 
 Notes:
 
-- Matches a local accountId32 multilocation to a signed origin.
+- Matches a local `AccountId32` `MultiLocation` to a signed origin.
 - Note the difference `OriginKind` filter: this is not an account controlled by another consensus system, but rather a Native dispatch.
 - **This structure fulfills one of our requirements**
 
@@ -489,7 +489,7 @@ Notes:
 
 - `ParentAsSuperuser`: Converts the parent origin into the root origin.
 
-- `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
+- `SignedAccountKey20AsNative`: Converts a local 20 byte account `MultiLocation` into a signed origin using the same 20 byte account.
 
 Notes:
 
@@ -500,7 +500,7 @@ Notes:
 ### 🚧 `Barrier` via `xcm-builder`
 
 - Barriers specify whether or not an XCM is allowed to be executed on the local consensus system.
-- They are checked before the actual xcm instruction execution
+- They are checked before the actual XCM instruction execution
 
 Notes:
 
@@ -634,7 +634,7 @@ Note that the benchmarks need to reflect what your runtime is doing, so fetching
 
 ### 🔧 `WeightTrader` via `xcm-builder`
 
-- Specifies how to charge for weight inside the xcm execution.
+- Specifies how to charge for weight inside the XCM execution.
 - Used in the `BuyExecution` instruction
 - Used in the `RefundSurplus` instruction
 
@@ -715,7 +715,7 @@ Involves knowledge of the chain XCM configuration!
 Common steps to debug:
 
 1. Identify what the error means which will help you identify the context in which the error happened.
-1. Look in the xcm codebase to check where this error might have been thrown.
+1. Look in the XCM codebase to check where this error might have been thrown.
    Was it thrown in the barrier?
    Or in any specific instruction?
 1. Retrieve the failed received XCM.
@@ -736,13 +736,13 @@ Look at the `ump.ExecutedUpward` event:
 - `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve.
 - `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
 - `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
-  Usually happens when the multilocation representing an asset does not match to those handled by the chain.
+  Usually happens when the `MultiLocation` representing an asset does not match to those handled by the chain.
 
 ---v
 
 ## 🕵️‍♂️ Identifying the error kind
 
-- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
+- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the `MultiLocation` to an account.
 - `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
 - `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
 - `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
@@ -776,7 +776,7 @@ Look at the `ump.ExecutedUpward` event:
 But all we see is a **SCALE-encoded message** which does not give us much information.
 To solve this:
 
-- We build a SCALE-decoder to retrieve the xcm message (the hard way).
+- We build a SCALE-decoder to retrieve the XCM message (the hard way).
 - We rely on subscan/polkaholic to see the XCM message received.
 
 ---v
