@@ -26,9 +26,8 @@ Draw content from:
 
 **Morning**
 
-9:00 Discussion - Parachains Protocol AMA (.5 hr) @JoshOrndorff<br>
-9:30 Lecture - Blockspace (.5 hr) @rphmeier<br>
-10:00 Lecture - Deep dive: Execution cores (1 hr) @BradleyOlson64<br>
+9:00 Discussion - Parachains Protocol AMA (.75 hr) @JoshOrndorff<br>
+9:45 Lecture - Deep dive: Execution cores (1.25 hr) @BradleyOlson64<br>
 11:00 Coffee Break (15 m)<br>
 11:15 Lecture - Deep dive: Cumulus (1.25 hr) @BradleyOlson64<br>
 
@@ -36,7 +35,7 @@ Draw content from:
 
 14:00 Lecture - Ecosystem and Economy (1.5 hr) @shawntabrizi<br>
 15:30 Coffee Break (15 m)<br>
-15:45 Exercise - Adder parachain + register parachains (1.5 hr) @JoshOrndorff<br>
+15:45 Exercise - Register Parachains + Adder parachain (1.5 hr) @NukeManDan and @JoshOrndorff <br>
 
 ### Day 3
 
@@ -50,11 +49,10 @@ Draw content from:
 
 **Afternoon**
 
-14:00 Exercise - Upgrade chains to parachains, register through auctions (1.5 hr) @JoshOrndorff<br>
-15:30 Lecture - Polkadot vs Other Security/Scaling Part 1 (1 hr) @Sophia-Gold<br>
-16:30 Coffee Break (15 m)<br>
-16:45 Lecture - Polkadot vs Other Security/Scaling Part 2 (1 hr) @Sophia-Gold<br>
-17:45 Open discussion - Security/Scaling (remainder of day) @Sophia-Gold<br>
+14:00 Lecture - Polkadot vs Other Security/Scaling Part 1 (1.5 hr) @Sophia-Gold<br>
+15:30 Coffee Break (15 m)<br>
+15:45 Lecture - Polkadot vs Other Security/Scaling Part 2 (1.5 hr) @Sophia-Gold<br>
+17:15 Open discussion - Security/Scaling (remainder of day) @Sophia-Gold<br>
 
 Assumptions:
 

@@ -23,11 +23,11 @@ Lets get to it
 - Synchronous vs asynchronous
 - Why is asynchronous backing desirable?
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- High Level Mechanisms of Async Backing
+- High level mechanisms of async backing
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- The Unincluded Segment, and Prospective Parachains
+- The unincluded segment, and prospective parachains
 <!-- .element: class="fragment" data-fragment-index="3" -->
-- Async Backing and other roadmap items
+- Async backing enabling other roadmap items
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
@@ -40,6 +40,7 @@ Lets get to it
 
 Notes:
 
+- The dividing line between the left and right is when a candidate is backed on chain
 - Approvals, disputes, and finality don't immediately gate the production of farther candidates.
   So we don't need to represent those steps in this model.
 
@@ -54,6 +55,10 @@ Notes:
 <img rounded style="width: 1100px" src="../assets/async_backing_simplified_3.svg" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
+
+Notes:
+
+Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing
 
 ---
 
@@ -158,7 +163,7 @@ Image version 2:
 Image version 3:
 
 - Collation generation and off-chain backing are outside of the relay block cycle.
-- Number of candidates produced and backed off chain only limited by compute power, network latency, and `max_depth` configured on the relay chain.
+- Because of this, collators have the freedom to work several blocks in advance. In practice, even working 2-3 blocks in advance gives a collator ample time to fully fill blocks (PoV size 5MiB)
 - Notice that a part of the collation generation context, the unincluded segment, comes from the collator itself.
 
 ---
@@ -189,7 +194,7 @@ Limitation example, upward messages remaining before the relay chain would have 
 
 Notes:
 
-- Segment added to as each new block is imported on chain
+- Segment added to as each new block is imported into the parachain runtime
 - Segment shrinks when one of its ancestor blocks becomes included
 - Maximum unincluded segment capacity is set both on the parachain and relay chain
 
@@ -202,9 +207,9 @@ Notes:
 Notes:
 
 UsedBandwidth:
-pub ump_msg_count: u32,
-pub ump_total_bytes: u32,
-pub hrmp_outgoing: BTreeMap\<ParaId, HrmpChannelUpdate\>,
+- pub ump_msg_count: u32,
+- pub ump_total_bytes: u32,
+- pub hrmp_outgoing: BTreeMap\<ParaId, HrmpChannelUpdate\>,
 
 ---
 
@@ -230,7 +235,6 @@ pub hrmp_outgoing: BTreeMap\<ParaId, HrmpChannelUpdate\>,
 
 Notes:
 
-- Prospective parachains represents all unincluded segments in one subsystem of the polkadot client
 - Fragment trees only built for active leaves
 - Fragment trees built per scheduled parachain at each leaf
 - Fragment trees may have 0 or more fragments representing potential parablocks making up possible futures for a parachain's state.
@@ -247,8 +251,8 @@ Notes:
 Notes:
 
 Returning to our most basic diagram
-Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram?
-Q: Which did I omit entirely?
+- Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram?
+- Q: Which did I omit entirely?
 
 ---
 
