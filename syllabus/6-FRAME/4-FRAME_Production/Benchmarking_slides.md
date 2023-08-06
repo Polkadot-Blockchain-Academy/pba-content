@@ -608,11 +608,19 @@ Ok(())
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.png" />
 
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
+
 ---
 
 ## Results: Extrinsic Time vs. # of Sub-Accounts
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-sub.png" />
+
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 
 ---
 
@@ -620,11 +628,19 @@ Ok(())
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-fields.png" />
 
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
+
 ---
 
 ## Result: DB Operations vs. Sub Accounts
 
 <img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-db-sub.png" />
+
+Notes:
+
+Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 
 ---
 

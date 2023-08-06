@@ -141,7 +141,9 @@ Polkadot tries to accomplish that mission by solving three problems:
 1. Shared Security
 1. Interoperability
 
-## </pba-flex>
+</pba-flex>
+
+---
 
 ## The Decisions
 

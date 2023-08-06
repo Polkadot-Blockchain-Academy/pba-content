@@ -12,9 +12,9 @@ Hello!
 
 I'm Bradley Olson
 
-Was student at first Academy in Cambridge
+Was student at first Academy
 
-Currently on Parachains Core Team at Parity
+Currently on Parachains Core Team
 
 Will present 3 lectures providing a window into Polkadot core, a slice of where we're at and where we're headed.
 
@@ -186,7 +186,8 @@ Notes:
 
 Notes:
 
-- Metaphor: Freight trains
+Metaphor:
+
 - Relay chain: Train loading bay
 - Relay block: Train leaving station every 6 seconds
 - Parachain block: One train car worth of cargo
@@ -321,6 +322,8 @@ Notes:
 
 Q: When Option is None, what does that indicate?
 
+- Which para occupies a core is stored separately in the following structure
+
 ---
 
 ## Core Assignments in The Runtime
@@ -367,7 +370,7 @@ Notes:
 
 Each parablock candidate is built in the context of a particular `relay_parent`.
 
-Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group.
+Validators query their core assignment as of `relay_parent` and refuse to second candidates not associated with their backing group.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -423,7 +426,7 @@ Q: What does "immediately occupies core" imply?
 
 Code determining whether to back a candidate and which, greatly simplified
 
-```rust[1|25|2-4|5-13|13-23|1,28-29]
+```rust[1|24|2-4|5-13|13-23|28-29]
 	let (para_id) = match core {
 		CoreState::Scheduled(scheduled_core) => {
 			scheduled_core.para_id
@@ -479,7 +482,7 @@ Approvals, Disputes, and Finality are only provided to included candidates
 <pba-flex center>
 
 1. Predictability of parachain execution
-1. Predictability of allocation
+1. Predictability of allocation for execution sharding
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-flex>
