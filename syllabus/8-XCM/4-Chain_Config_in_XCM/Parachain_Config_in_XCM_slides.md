@@ -169,7 +169,6 @@ Notes:
 1. Parachain that does not charge for relay incoming messages.
 1. Parachain that trusts the relay as the reserve chain for the relay chain tokens.
 1. Parachain that mints in `pallet-balances` when it receives relay chain tokens.
-1. Parachain that uses 32 byte accounts.
 1. Users can execute XCMs locally.
 
 ---
@@ -717,6 +716,98 @@ Notes:
 
 - `TransactionPayment` pallet already defines how to convert weight to fee.
   We do not need to define a rate in this case.
+
+---
+
+## Example XCM configuration
+
+Let's put everything together and see how it looks like!
+
+---v
+
+### Setup requirements
+
+1. Parachain that does not charge for relay incoming messages.
+1. Parachain that trusts the relay as the reserve chain for the relay chain tokens.
+1. Parachain that mints in `pallet-balances` when it receives relay chain tokens.
+1. Users can execute XCMs locally.
+
+---v
+
+### Do not charge relay for any XCM-related fees
+
+```rust
+match_types! {
+	pub type ParentLocation: impl Contains<MultiLocation> = {
+		MultiLocation { parents: 1, interior: Here }
+	};
+}
+impl xcm_executor::Config for XcmConfig {
+  // ...
+  type Barrier = AllowExplicitUnpaidExecutionFrom<ParentLocation>;
+  // ...
+}
+```
+
+---v
+
+### Trust the relay as the reserve chain for relay chain tokens
+
+```rust
+parameter_types! {
+  pub const RelayLocation: MultiLocation = (1, Here).into_location();
+	pub const RelayToken: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(RelayLocation::get()) });
+	pub const RelayTokenFromRelay: (MultiAssetFilter, MultiLocation) = (RelayToken::get(), RelayLocation::get());
+}
+pub type TrustedReserves = xcm_builder::Case<RelayTokenFromRelay>;
+impl xcm_executor::Config for XcmConfig {
+  // ...
+  type IsReserve = TrustedReserves;
+  // ...
+}
+```
+
+---v
+
+### Mint tokens in balances pallet when relay tokens are received
+
+```rust
+parameter_types! {
+  pub const RelayLocation: MultiLocation = (1, Here).into_location();
+}
+
+pub type LocalAssetTransactor = XcmCurrencyAdapter<
+	Balances,
+	IsConcrete<RelayLocation>,
+	ParentIsPreset<AccountId>,
+	AccountId,
+	(),
+>;
+impl xcm_executor::Config for XcmConfig {
+  // ...
+  type AssetTransactors = LocalAssetTransactor;
+  // ...
+}
+```
+
+---v
+
+### Users can execute XCM locally
+
+```rust
+parameter_types! {
+  pub const ThisNetwork: NetworkId = /* ... */;
+}
+
+type LocalOriginToLocation = SignedToAccountId32<RuntimeOrigin, AccountId, ThisNetwork>;
+
+impl pallet_xcm::Config for Runtime {
+  // ...
+	type ExecuteXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type XcmExecuteFilter = Everything;
+  // ...
+}
+```
 
 ---
 
