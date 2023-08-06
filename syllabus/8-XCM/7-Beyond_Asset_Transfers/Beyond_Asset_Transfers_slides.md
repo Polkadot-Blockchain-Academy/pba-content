@@ -233,6 +233,9 @@ stateDiagram-v2
 
 </diagram>
 
+
+Notes:
+
 The reason for the custom hasher is to replicate the account generation in the origin chain.
 The combination of these checks and the hasher makes up the converters that return AccountIds and native Origins for our MultiLocation.
 
