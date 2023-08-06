@@ -209,9 +209,23 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 List of `LocationToAccountId` converters
 
 - `Account32Hash`: Hashes the multilocation and takes the lowest 32 bytes as account.
+
+- `ParentIsPreset`: Converts the parent `MultiLocation` into an account of the form `b'Parent' + trailing 0s`
+
+- `ChildParachainConvertsVia`: Converts the **child** parachain `MultiLocation` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+
+- `SiblingParachainConvertsVia`: Convert the **sibling** parachain `MultiLocation` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+
+- `AccountId32Aliases`: Converts a local `AccountId32` `MultiLocation` into an account ID of 32 bytes.
+
+---v
+
+### 📁 `Account32Hash`
+
+Hashes the `MultiLocation` and takes the lowest 32 bytes as account.
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
@@ -230,9 +244,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `ParentIsPresent`
 
-- `ParentIsPreset`: Converts the parent multilocation into an account of the form `b'Parent' + trailing 0s`
+Converts the parent `MultiLocation` into an account of the form `b'Parent' + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
@@ -252,9 +266,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `ChildParachainConvertsVia`
 
-- `ChildParachainConvertsVia`: Converts the **child** parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+Converts the **child** parachain `MultiLocation` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
 
 Notes:
 
@@ -264,9 +278,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SiblingParachainConvertsVia`
 
-- `SiblingParachainConvertsVia`: Convert the **sibling** parachain multilocation into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+Convert the **sibling** parachain `MultiLocation` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
@@ -285,9 +299,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `AccountId32Aliases`
 
-- `AccountId32Aliases`: Converts a local `AccountId32` multilocation into a `AccountID` of 32 bytes.
+Converts a local `AccountId32` `MultiLocation` into an account ID of 32 bytes.
 
 <div style="font-size:smaller">
 
@@ -401,9 +415,25 @@ Notes:
 
 ---v
 
-### 📍 `origin-converter` via `xcm-builder`
+### 📍 List of origin converters
 
 - `SovereignSignedViaLocation`: Converts the multilocation origin (typically, a parachain origin) into a signed origin.
+
+- `SignedAccountId32AsNative`: Converts a local 32 byte account `MultiLocation` into a signed origin using the same 32 byte account.
+
+- `ParentAsSuperuser`: Converts the parent origin into the root origin.
+
+- `SignedAccountKey20AsNative`: Converts a local 20 byte account `MultiLocation` into a signed origin using the same 20 byte account.
+
+Notes:
+
+- `ParentAsSuperuser` can be used in common-good chains as they do not have a local root origin and instead allow the relay chain root origin to act as the root origin.
+
+---v
+
+### 📍 `SovereignSignedViaLocation`
+
+Converts the `MultiLocation` origin (typically, a parachain origin) into a signed origin.
 
 ```rust [0|6|18|20|22]
 pub struct SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>(
@@ -442,9 +472,9 @@ Notes:
 
 ---v
 
-### 📍 `origin-converter` via `xcm-builder`
+### 📍 `SignedAccountId32AsNative`
 
-- `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
+Converts a local 32 byte account `MultiLocation` into a signed origin using the same 32 byte account.
 
 ```rust [0|18|19-22|24]
 pub struct SignedAccountId32AsNative<
@@ -482,18 +512,6 @@ Notes:
 - Matches a local accountId32 multilocation to a signed origin.
 - Note the difference `OriginKind` filter: this is not an account controlled by another consensus system, but rather a Native dispatch.
 - **This structure fulfills one of our requirements**
-
----v
-
-### 📍 `origin-converter` via `xcm-builder`
-
-- `ParentAsSuperuser`: Converts the parent origin into the root origin.
-
-- `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
-
-Notes:
-
-- `ParentAsSuperuser` can be used in common-good chains as they do not have a local root origin and instead allow the relay chain root origin to act as the root origin.
 
 ---
 
