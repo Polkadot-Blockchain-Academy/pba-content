@@ -645,7 +645,7 @@ https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgra
 
 - The relay chain keeps track of all the new PVFs that need to be checked
 - Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
-<!-- .element: class="fragment" data-fragment-index="1" -->
+  <!-- .element: class="fragment" data-fragment-index="1" -->
   - binary vote: accept or reject
   <!-- .element: class="fragment" data-fragment-index="1" -->
 - Super majority concludes the vote

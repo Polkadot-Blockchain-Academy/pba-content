@@ -187,6 +187,7 @@ Notes:
 Notes:
 
 Metaphor:
+
 - Relay chain: Train loading bay
 - Relay block: Train leaving station every 6 seconds
 - Parachain block: One train car worth of cargo
@@ -320,6 +321,7 @@ pub struct ParathreadEntry {
 Notes:
 
 Q: When Option is None, what does that indicate?
+
 - Which para occupies a core is stored separately in the following structure
 
 ---
@@ -368,7 +370,7 @@ Notes:
 
 Each parablock candidate is built in the context of a particular `relay_parent`.
 
-Validators query their core assignment as of `relay_parent` and refuse to second candidates not assiciated with their backing group.
+Validators query their core assignment as of `relay_parent` and refuse to second candidates not associated with their backing group.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 

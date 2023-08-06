@@ -207,6 +207,7 @@ Notes:
 Notes:
 
 UsedBandwidth:
+
 - pub ump_msg_count: u32,
 - pub ump_total_bytes: u32,
 - pub hrmp_outgoing: BTreeMap\<ParaId, HrmpChannelUpdate\>,
@@ -251,6 +252,7 @@ Notes:
 Notes:
 
 Returning to our most basic diagram
+
 - Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram?
 - Q: Which did I omit entirely?
 
