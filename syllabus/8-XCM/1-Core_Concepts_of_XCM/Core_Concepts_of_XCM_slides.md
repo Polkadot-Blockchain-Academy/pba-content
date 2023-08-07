@@ -303,9 +303,7 @@ Locations form a hierarchy.
 
 ## Location Representation
 
-<pba-cols>
-
-<pba-col>
+<pba-flex center>
 
 ```rust
 struct Location {
@@ -314,18 +312,37 @@ struct Location {
 }
 ```
 
-</pba-col>
-
-<pba-col>
+<div style="margin-bottom: 2rem;"></div>
 
 ```rust
 enum Junction {
-    Parachain,
-    AccountId32,
-    PalletInstance,
-    GeneralIndex,
-    GlobalConsensus,
+    Parachain(u32),
+    AccountId32 { id: [u8; 32], network: Option<NetworkId> },
+    PalletInstance(u8),
+    GeneralIndex(u128),
+    GlobalConsensus(NetworkId),
     ...
+}
+```
+
+---v
+
+### Network Id
+
+<pba-flex center>
+
+```rust
+enum NetworkId {
+    ByGenesis([u8; 32]),
+    ByFork { block_number: u64, block_hash: [u8; 32] },
+    Polkadot,
+    Kusama,
+    Westend,
+    Rococo,
+    Wococo,
+    Ethereum { chain_id: u64 },
+    BitcoinCore,
+    BitcoinCash,
 }
 ```
 

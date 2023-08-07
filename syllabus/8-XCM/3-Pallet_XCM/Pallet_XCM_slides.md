@@ -1,6 +1,6 @@
 ---
 title: XCM Pallet
-description: Introduction to `pallet-xcm``, its interface and features implemented here.
+description: Introduction to `pallet-xcm`, its interface and features implemented here.
 duration: 1 hour
 ---
 
@@ -58,12 +58,12 @@ We will see examples of XCM being built in the runtime when exploring `teleport_
 
 Notes:
 
-- Even when `palletXcm` allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls.
+- Even when the XCM pallet allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls.
   In the case of the latter, it appends the `DescendOrigin` instruction to make sure non-root origins cannot act on behalf of the parachain.
 
 ---
 
-## pallet-xcm
+## The XCM Pallet
 
 `pallet-xcm` provides default implementations for many traits required by `XcmConfig`.
 
