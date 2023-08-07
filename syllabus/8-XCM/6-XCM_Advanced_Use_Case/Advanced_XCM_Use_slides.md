@@ -7,12 +7,14 @@ duration: 2 hours
 # XCM Advanced Use Case
 
 ### Chris Li, founder of OAK Network
+
 <br>
 Build dApps with XCM leveraging polkadot.js.org/apps and node.js
 
 Note: As we learned in Chapter 3, the XCM pallet serves as a bridge between the XCVM subsystem and the FRAME subsystem. It enables us to send and execute XCM and interact with the XCM executor. In this chapter, I, as the founder of OAK Network and a parachain developer, will demonstrate how to build products using XCM and dispatch them from both polkadot.js apps and Javascript code.
 
 ---
+
 ### _At the end of this lecture, you will be able to:_
 
 <pba-flex center>
@@ -21,11 +23,12 @@ Note: As we learned in Chapter 3, the XCM pallet serves as a bridge between the 
 2. Understand the construction and execution of XCM messages.
 3. Perform HRMP transactions between parachains using templates.
 4. Develop proficiency in debugging XCM using xcm-tools.
-</pba-flex>
+   </pba-flex>
 
 ---
 
 # Overview
+
 <pba-flex center>
 In this presentation, we will walk through the lifecycle of building an application using XCM. The following steps will guide us through the process:<br><br>
 
@@ -34,7 +37,7 @@ In this presentation, we will walk through the lifecycle of building an applicat
 3. Compose XCM message
 4. Build client code
 5. Debug live
-</pba-flex>
+   </pba-flex>
 
 Note: In this session, I will guide you through the process of building a real use case of XCM, specifically from the perspective of a parachain developer. Our main focus will be on developing for a parachain, not a relay chain like Polkadot. Consequently, we will primarily concentrate on HRMP messages, enabling horizontal communication between two parachains.
 
@@ -47,7 +50,9 @@ Note: In this session, I will guide you through the process of building a real u
 By the end of this presentation, you'll have a comprehensive understanding of the XCM framework and be well-equipped to build your own applications effectively. Let's get started!
 
 ---
+
 # Define the product
+
 Objective: establish a seamless monthly recurring payment of MOVR on the Moonriver parachain.
 
 Note: In this demo, our main objective is to establish a seamless monthly recurring payment of MOVR on the Moonriver parachain. To accomplish this, we will utilize a powerful extrinsic call, automationTime.scheduleXcmpTask, executed remotely on the Turing Network. This will trigger a payment at the end of each month, ensuring a smooth and automated payment process.
@@ -55,6 +60,7 @@ Note: In this demo, our main objective is to establish a seamless monthly recurr
 ---v
 
 ## What we need to do
+
 We need to perform one essential operation, which is to remotely execute automationTime.scheduleXcmpTask on the Turing Network.
 
 To execute this operation, we will interact with the following components:
@@ -86,16 +92,18 @@ Note: explanation - The XCM call sets up a recurring task, that will auto-transf
 
 To kickstart our journey, we will begin by interacting with Moonriver's `xcmTransactor` pallet, which is similar to Polkadot/Kusama's `xcmPallet`. Before diving into the actual XCM message, it is essential to ensure that we meet certain prerequisites:
 
-Note: For this demo, we are using the existing xcmPallet built in Polkadot and Kusama. This pallet provides common extrinsic interfaces that developers can use to easily compose an XCM message. Moonriver has further encapsulated the function to make their own xcmTransactor. 
+Note: For this demo, we are using the existing xcmPallet built in Polkadot and Kusama. This pallet provides common extrinsic interfaces that developers can use to easily compose an XCM message. Moonriver has further encapsulated the function to make their own xcmTransactor.
 
 ---v
 
-1. Ensure Barriers on the recipient chain<br><br>In this case, an Allow Barrier** `WithComputedOrigin<Everything>`, needs to be configured in the XCM config of Turing Network. This Barrier will allow the DescendOrigin instruction in XCM, which will reassign the origination of the transaction on Turing from Moonriver's sovereign account to the user's proxy account.<br><br>
-2. Configure user’s remote wallet on the recipient chain<br><br>The remote wallet, or proxy wallet acts as an account abstraction, allowing the blockchain to execute specific code on behalf of the user. 
+1. Ensure Barriers on the recipient chain<br><br>In this case, an Allow Barrier\*\* `WithComputedOrigin<Everything>`, needs to be configured in the XCM config of Turing Network. This Barrier will allow the DescendOrigin instruction in XCM, which will reassign the origination of the transaction on Turing from Moonriver's sovereign account to the user's proxy account.<br><br>
+2. Configure user’s remote wallet on the recipient chain<br><br>The remote wallet, or proxy wallet acts as an account abstraction, allowing the blockchain to execute specific code on behalf of the user.
 
-Note: 
-1. We covered the Barrier topic in the previous chapter. Barriers are responsible for creating Allow or Deny rules for incoming messages.  By adding this Barrier, we allow the DescendOrigin instruction in XCM, which will reassign the origination of the transaction on Turing from Moonriver's sovereign account to the user's proxy account.
+Note:
+
+1. We covered the Barrier topic in the previous chapter. Barriers are responsible for creating Allow or Deny rules for incoming messages. By adding this Barrier, we allow the DescendOrigin instruction in XCM, which will reassign the origination of the transaction on Turing from Moonriver's sovereign account to the user's proxy account.
 2. This remote wallet acts as an account abstraction, empowering the blockchain to execute specific code on behalf of the user. By utilizing a user's sub-wallet for a specific extrinsic call, we create granular control, allowing the user's wallet to perform the necessary actions efficiently and securely.
+
 ---
 
 # Compose XCM message
@@ -115,7 +123,7 @@ The following are the parameters you need to decide before sending an XCM messag
 
 Note: In section #4 of the Chain Config in XCM document, we have reviewed various chain configurations. In this section, we will illustrate their usage through our demo. Although there are several variables to be decided, once you become familiar with them and establish a few templates, you can continue to use them.
 
-1. For example, V3 is backward compatible with V2 but the its config requires safeXcmVersion set. 
+1. For example, V3 is backward compatible with V2 but the its config requires safeXcmVersion set.
 2. The weight of an XCM instruction is defined with a different value on each chain. It specifies how much computational power as well as storage (PoV size), are required for the execution of each instruction and determines the gas, or fee, for the XCM execution.
 3. In addition to the weight, if we use an asset other than the native token of the recipient chain, TUR in this case, to pay for the fee, the value of the asset must be converted in relation to the recipient chain's native token. The Fee per Second defines the conversion rate between MOVR and TUR, assuming we want to use MOVR to pay for all the fees in this transaction.
 
@@ -159,7 +167,6 @@ Once all the parameters are set, we can proceed by submitting and signing the tr
 ---v
 DescendOrigin (descend_location): The first instruction in the XCM array is DescendOrigin, transferring authority to the user's proxy account on the destination chain.
 
-
 <figure>
   <img src="../../../assets/img/8-XCM/xcm-send-2.png"/>
   <figcaption>XCM message - Descend Origin</figcaption>
@@ -168,13 +175,13 @@ DescendOrigin (descend_location): The first instruction in the XCM array is Desc
 ---v
 WithdrawAsset and BuyExecution: These two instructions work together to deduct XCM fees from the user's proxy wallet and reserve them for execution.
 
-
 <figure>
   <img src="../../../assets/img/8-XCM/xcm-send-3.png"/>
   <figcaption>XCM message - Withdraw Asset</figcaption>
 </figure>
 
 ---v
+
 <figure>
   <img src="../../../assets/img/8-XCM/xcm-send-4.png"/>
   <figcaption>XCM message - Buy Execution</figcaption>
@@ -183,7 +190,6 @@ WithdrawAsset and BuyExecution: These two instructions work together to deduct X
 ---v
 Transact (origin_type, require_weight_at_most, call): The Transact instruction executes the encoded innerCall on the target chain. We ensured that the gas cost does not exceed the specified limit by setting requireWeightAtMost during the call.
 
-
 <figure>
   <img src="../../../assets/img/8-XCM/xcm-send-5.png"/>
   <figcaption>XCM message - Transact</figcaption>
@@ -191,7 +197,6 @@ Transact (origin_type, require_weight_at_most, call): The Transact instruction e
 
 ---v
 RefundSurplus and DepositAsset: In case there is any remaining fee token after Transact execution, these instructions ensure that they are refunded and transferred to the specified location, typically the user's wallet.
-
 
 <figure>
   <img src="../../../assets/img/8-XCM/xcm-send-5.png"/>
@@ -225,14 +230,13 @@ The output of the script reflects the sequence of instructions we constructed fo
 
 </pba-flex>
 
-
 ---
 
 # Client code (node.js)
 
 After proving that the XCM message above executes correctly, we can replicate the procedure from the client of a dApp. Below is a node.js code snippet we created for this particular demo.
 
-URL: 
+URL:
 
 [xcm-demo Github Repo](https://github.com/OAK-Foundation/xcm-demo/blob/master/src/moonbeam/moonbase-alpha.js)
 
@@ -282,6 +286,7 @@ When working with XCM messages, potential issues can arise in two areas: during 
 ---v
 
 **Message Formatting Issues**: If the XCM message is malformed, the recipient chain may not process it correctly. To interpret XCM messages on-chain, we can use the xcm-tool covered in Chapter 5. Some common problems and solutions include:
+
 - Incorrect Fee and Weight Inputs: Ensure that the maximum weight specified in the XCM call is accurate. If the actual weight slightly exceeds the limit, the recipient chain might deny the call. In this case, increase the maximum weight parameter and retry.
 - Version Mismatch: A VersionMismatch error occurs when the recipient chain does not accept the Multi-location version specified in Destination or FeeAsset. Check the recipient XCM version and adjust the multi-location version to V2 or V3 accordingly.
 
@@ -289,8 +294,8 @@ When working with XCM messages, potential issues can arise in two areas: during 
 
 **Transact Encoded Call Issues**: To examine encoded call hash in the Transact instruction, locate the specific transaction on the recipient chain, which will be an event occurring after `XcmMessageQueue.success`. Unfortunately, there is no automated tool to directly correlate `XcmMessageQueue.success` with the event of the encoded call. However, we can manually analyze it by matching the message hash with the source chain.
 
-Note: does anybody have a great tool to correlate the XcmMessageQueue.success with the Transact hash?
----
+## Note: does anybody have a great tool to correlate the XcmMessageQueue.success with the Transact hash?
+
 ## Summary
 
 In this section, we explained the backbone of a recurring payment dApp leveraging XCM.
@@ -313,8 +318,8 @@ After preparing these elements, assemble them to form the XCM message and carefu
 
 Alternatively, you can write a wrapper in the parachain's Rust code, such as the commonly used `xTokens.transferMultiasset` or Moonriver’s `xcmTransactor.transactThroughSigned`.
 
-
 ---
-# Thank you!
-Chris Li, founder of OAK Network
 
+# Thank you!
+
+Chris Li, founder of OAK Network
