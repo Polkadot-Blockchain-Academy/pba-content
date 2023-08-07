@@ -197,7 +197,7 @@ The goal is to learn by example, and show how you can use the Substrate codebase
 
 ## Polkadot Deep Dives
 
-<image src="../../../assets/img/6-FRAME/polkadot-deep-dive.png" style="height: 500px">
+<img style="height: 500px" src="../../../assets/img/6-FRAME/polkadot-deep-dive.png" />
 
 https://www.youtube.com/watch?v=_FwqB4FwWXk&list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6ZztG
 

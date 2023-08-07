@@ -151,7 +151,7 @@ With FRAME: 310 lines of code.
 
 FRAME takes the opinion that the blockchain runtime should be composed of individual modules. We call these Pallets.
 
-<image src="../../../assets/img/6-FRAME/frame1.svg" style="height: 600px">
+<img style="height: 600px" src="../../../assets/img/6-FRAME/frame1.svg" />
 
 ---
 
