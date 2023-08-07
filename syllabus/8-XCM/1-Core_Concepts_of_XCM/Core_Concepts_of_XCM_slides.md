@@ -796,6 +796,8 @@ graph TD
     Polkadot(Polkadot)-->AssetHub(Asset Hub) & Collectives(Collectives)
     AssetHub-->Alice(Alice)
     Collectives-->AliceSA("Alice's sovereign account")
+    Collectives-->AssetHubSA("Asset Hub's sovereign account")
+    AssetHub-->CollectivesSA("Collective's sovereign account")
 </diagram>
 
 Notes:
