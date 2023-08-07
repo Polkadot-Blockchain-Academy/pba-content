@@ -39,7 +39,7 @@ The following are expected:
 
 ## XCMultisig
 
-InvArch Network has the concept of XCMultisigs, these are entities that exist on the InvArch Network runtime and provide advanced multisig capabilities to users across many other blockchains.
+[InvArch Network](https://invarch.network/) has the concept of XCMultisigs, these are entities that exist on the InvArch Network runtime and provide advanced multisig capabilities to users across many other blockchains.
 
 Let's go over how that works!
 
@@ -235,7 +235,6 @@ stateDiagram-v2
 
 </diagram>
 
-
 Notes:
 
 The reason for the custom hasher is to replicate the account generation in the origin chain.
@@ -256,7 +255,6 @@ Hey Chain B, I'm sending you a balance transfer request from one of my users, th
 # TRUST!
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
-
 
 Notes:
 
