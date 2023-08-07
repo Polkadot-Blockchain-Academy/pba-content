@@ -31,7 +31,7 @@ The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
 
 XCM is not intended to be written by end-users.
 
-Instead, _parachain developers_ write XCVM programs, and package them up into FRAME extrinsics.
+Instead, _developers_ write XCVM programs, and package them up into FRAME extrinsics.
 
 Notes:
 
@@ -47,12 +47,13 @@ We will see examples of XCM being built in the runtime when exploring `teleport_
 
 1. Allows to interact with the `xcm-executor` by executing xcm messages.
    These can be filtered through the `XcmExecuteFilter`.
+1. Allows sending arbitrary messages to other chains for certain origins.
+   The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
 1. Provides an easier interface to do reserve based transfers and teleports.
    The origins capable of doing these actions can be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`.
 1. Handles XCM version negotiation duties.
 1. Handles asset-trap/claim duties.
-1. Allows sending arbitrary messages to other chains for certain origins.
-   The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
+1. And other state based requirements of the XCVM.
 
 </pba-flex>
 
@@ -128,10 +129,9 @@ We have already seen what teleports and reserve transfers mean in lesson 7.1; A 
 
 ## `pallet-xcm` Asset Transfer extrinsics
 
-`teleport_assets` & `limited_teleport_assets`
+`limited_teleport_assets`
 
-These extrinsics allow the user to perform an asset teleport.
-The limited version takes an extra argument (`Option<WeightLimit>`).
+This extrinsic allows the user to perform an asset teleport.
 
 <img style="width: 1000px;" src="../../../assets/img/8-XCM/pallet-xcm-teleport.svg" />
 
@@ -139,10 +139,9 @@ The limited version takes an extra argument (`Option<WeightLimit>`).
 
 ## `pallet-xcm` Asset Transfer extrinsics
 
-`reserve_transfer_assets` & `limited_reserve_transfer_assets`
+`limited_reserve_transfer_assets`
 
 Allow the user to perform a reserve-backed transfer.
-Its limited version takes an extra argument as well (`Option<WeightLimit>`).
 
 <img style="width: 900px;" src="../../../assets/img/8-XCM/pallet-xcm-reserve-transfer.svg" />
 
@@ -204,7 +203,7 @@ Notes:
 ## 🗣️ version negotiation with `pallet-xcm`
 
 - `ResponseHandler`: The component in charge of handling response messages from other chains.
-- `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
+- `SubscriptionService`: The component in charge of handling version subscription notifications to other chains
 
 <pba-flex center>
 
@@ -344,7 +343,7 @@ Notes:
 
 ## Asset Trap/Claims with `pallet-xcm`
 
-- **`pallet-xcm` asset trapper**: Trapped assets are stored in the `AssetTraps` storage item and indexed by `BlakeTwo256((origin, assets))`
+- **`pallet-xcm` asset trapper**: Trapped assets are stored in the `AssetTraps` storage item and indexed by origin and assets
 
 - **`pallet-xcm` asset claimer**: `pallet-xcm` also allows for claiming trapped assets, providing that:
   - the origin claiming the assets is identical to the one that trapped them.
@@ -359,34 +358,12 @@ Notes:
 
 ## Extrinsic breakdown
 
-Let's jump into the code and have a look at `limited_reserve_transfer_assets` extrinsic.
+Let's jump into the code and have a look at `limited_teleport_assets` extrinsic.
 
-[source 🔍](https://github.com/paritytech/polkadot/blob/02905341f7f7d1b3aa1944ccbe3a86072fbf4b06/xcm/pallet-xcm/src/lib.rs#L1042)
-
-Notes:
-
-One way of walking through the implementation of `limited_reserve_transfer_assets` could be:
-
-- Function interface
-- Checking wether runtime origin has execution permissions
-- Decoding destination and assets
-- Other safety checks
-- Figure out what is the asset to use for paying fees --> Maybe stop for double clicking on reanchoring
-- Set weight_limit if defined or estimate what the weight would be at destination
-- Build the actual XCM to be sent
-- Weight the message locally and finally request for its execution to `XcmExecutor`
+[source 🔍](https://github.com/paritytech/polkadot/blob/70d80aa7441de1494bd422024236d59fd25e7252/xcm/pallet-xcm/src/lib.rs#L1093)
 
 ---
 
-## Exercise
+<!-- .slide: data-background-color="#4A2439" -->
 
-1. Code an extrinsic that creates an XCM which traps some funds.
-1. Code an extrinsic that creates an XCM to claim back trapped funds.
-
----
-
-## Exercise
-
-Usually trapping funds is not a desired outcome.
-
-In the first XCM, what modification is needed to avoid such scenario?
+# Questions ?
