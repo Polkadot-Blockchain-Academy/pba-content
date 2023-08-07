@@ -327,6 +327,8 @@ enum Junction {
 
 ---v
 
+### Network Id
+
 <pba-flex center>
 
 ```rust
