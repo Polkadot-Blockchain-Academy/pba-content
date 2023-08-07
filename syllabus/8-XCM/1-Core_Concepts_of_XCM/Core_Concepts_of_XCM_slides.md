@@ -641,7 +641,7 @@ How do different locations reference the same asset?
 <diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
-    Polkadot-->Collectives("Bridge Hub (1002)")
+    Polkadot-->BridgeHub("Bridge Hub (1002)")
     AssetHub-->Alice(Alice)
     AssetHub-->AssetsPallet(Pallet Assets)
     AssetsPallet-->Asset(USDT)
@@ -660,7 +660,7 @@ Locations are relative, so they must be updated and rewritten when sent to anoth
 <diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("📍 Asset Hub (1000)")
-    Polkadot-->Collectives("Bridge Hub (1002)"):::disabled
+    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
     AssetHub-->Alice(Alice):::disabled
     AssetHub-->AssetsPallet(Pallet Assets):::disabled
     AssetsPallet-->Asset(USDT):::disabled
@@ -687,7 +687,7 @@ Native tokens are referenced by the location to their system.
 <diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
-    Polkadot-->Collectives("Bridge Hub (1002)"):::disabled
+    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
     AssetHub-->Alice("📍 Alice")
     AssetHub-->AssetsPallet(Pallet Assets):::disabled
     AssetsPallet-->Asset(USDT):::disabled
@@ -713,7 +713,7 @@ graph TD
 graph TD
     Universe("📍 Universal Location")-->Polkadot(Polkadot)
     Polkadot-->AssetHub("Asset Hub (1000)"):::disabled
-    Polkadot-->Collectives("Bridge Hub (1002)"):::disabled
+    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
     AssetHub-->Alice(Alice):::disabled
     AssetHub-->AssetsPallet(Pallet Assets):::disabled
     AssetsPallet-->Asset(USDT):::disabled
@@ -734,7 +734,7 @@ graph TD
 <diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot):::disabled-->AssetHub("📍 Asset Hub (1000)")
-    Polkadot-->Collectives("Bridge Hub (1002)"):::disabled
+    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
     AssetHub-->Alice(Alice):::disabled
     AssetHub-->AssetsPallet(Pallet Assets)
     AssetsPallet-->Asset(USDT)
@@ -753,11 +753,11 @@ graph TD
 <diagram class="mermaid limit size-70">
 graph TD
     Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
-    Polkadot-->Collectives("📍 Bridge Hub (1002)")
+    Polkadot-->BridgeHub("📍 Bridge Hub (1002)")
     AssetHub-->Alice(Alice):::disabled
     AssetHub-->AssetsPallet(Pallet Assets)
     AssetsPallet-->Asset(USDT)
-    Collectives-->Polkadot
+    BridgeHub-->Polkadot
     linkStyle 1 opacity:0.3
     linkStyle 2 opacity:0.3
     linkStyle 5 stroke-dasharray:5
@@ -770,10 +770,10 @@ graph TD
 
 <diagram class="mermaid">
 graph LR
-    subgraph OutgoingMessage[Outgoing message from Collectives]
-        USDTCollectives(USDT from Collectives' perspective)
+    subgraph OutgoingMessage[Outgoing message from Bridge Hub]
+        USDTBridgeHub(USDT from Bridge Hub's perspective)
     end
-    USDTCollectives--Reanchoring-->USDTAssetHub
+    USDTBridgeHub--Reanchoring-->USDTAssetHub
     subgraph IncomingMessage[Incoming message in Asset Hub]
         USDTAssetHub(USDT from Asset Hub's perspective)
     end
