@@ -26,7 +26,7 @@ Unfortunately this presentation could never be fully exhaustive, but perhaps it 
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/token.avif" style="width: 400px;">
+<image src="../../assets/img/7-Polkadot/eco/token.avif" style="width: 400px;">
 
 </div>
 
@@ -99,7 +99,7 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/utility.avif" style="width: 500px;">
+<image src="../../assets/img/7-Polkadot/eco/utility.avif" style="width: 500px;">
 
 </div>
 
@@ -119,7 +119,7 @@ The DOT token serves multiple purposes to help the Polkadot network function:
 
 ## Ideal Usage of DOT Tokens
 
-<image src="../../../assets/img/7-Polkadot/ideal-token-distribution.svg" style="width: 1000px;">
+<image src="../../assets/img/7-Polkadot/ideal-token-distribution.svg" style="width: 1000px;">
 
 Approximately...
 
@@ -137,7 +137,7 @@ Notes:
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/inflation.svg" style="width: 500px;">
+<image src="../../assets/img/7-Polkadot/eco/inflation.svg" style="width: 500px;">
 
 </div>
 
@@ -165,7 +165,7 @@ Token holders are financially incentivized to maximize their staking returns, an
 
 ## DOT Inflation vs Staking
 
-<image src="../../../assets/img/7-Polkadot/staking-rate.png" style="width: 900px;">
+<image src="../../assets/img/7-Polkadot/staking-rate.png" style="width: 900px;">
 
 > Blue: Inflation vs Staking Rate
 >
@@ -227,7 +227,7 @@ https://polkadot.network/features/staking/
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/staking.svg" style="width: 400px;">
+<image src="../../assets/img/7-Polkadot/eco/staking.svg" style="width: 400px;">
 
 </div>
 
@@ -252,7 +252,7 @@ Validators (and their nominators) are rewarded based on work done for the networ
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/collab.svg" style="width: 400px;">
+<image src="../../assets/img/7-Polkadot/eco/collab.svg" style="width: 400px;">
 
 </div>
 
@@ -282,7 +282,7 @@ https://polkadot.network/features/opengov/
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/governance.avif" style="width: 500px;">
+<image src="../../assets/img/7-Polkadot/eco/governance.avif" style="width: 500px;">
 
 </div>
 
@@ -340,7 +340,7 @@ Each track has their own set of curves which determine if the proposal has passe
 
 All votes will eventually resolve one way or another.
 
-<image src="../../../assets/img/7-Polkadot/eco/pjs-curves.png" style="width: 1000px;">
+<image src="../../assets/img/7-Polkadot/eco/pjs-curves.png" style="width: 1000px;">
 
 You can find these curves on the Polkadot JS Developer Console.
 
@@ -350,7 +350,7 @@ You can find these curves on the Polkadot JS Developer Console.
 
 The origin with the highest level of privileges. Requires extremely high levels of approval and support for early passing. The prepare and enactment periods are also large.
 
-<image src="../../../assets/img/7-Polkadot/eco/root-curve.png" style="width: 800px;">
+<image src="../../assets/img/7-Polkadot/eco/root-curve.png" style="width: 800px;">
 
 For instance, a referendum proposed in this track needs to amass 48.2% support (total network issuance) by the end of the first day with over 93.5% approval to be considered to be part of the confirm period.
 
@@ -463,7 +463,7 @@ Dozens of teams from around the world have already done that, and are taking adv
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/polkadot-parachains.svg" style="width: 500px;">
+<image src="../../assets/img/7-Polkadot/eco/polkadot-parachains.svg" style="width: 500px;">
 
 </div>
 
@@ -547,7 +547,7 @@ Users can get clear visibility into the transactions they are signing, and perfo
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/eco/ledger.webp" style="width: 500px;">
+<image src="../../assets/img/7-Polkadot/eco/ledger.webp" style="width: 500px;">
 
 </div>
 
@@ -581,7 +581,7 @@ The most popular ones at the moment:
 
 ### Polkassembly
 
-<image src="../../../assets/img/7-Polkadot/eco/polkassembly.png" style="width: 600px;">
+<image src="../../assets/img/7-Polkadot/eco/polkassembly.png" style="width: 600px;">
 
 </div>
 
@@ -589,7 +589,7 @@ The most popular ones at the moment:
 
 ### Subsquare
 
-<image src="../../../assets/img/7-Polkadot/eco/subsquare.png" style="width: 600px;">
+<image src="../../assets/img/7-Polkadot/eco/subsquare.png" style="width: 600px;">
 
 </div>
 
@@ -599,7 +599,7 @@ The most popular ones at the moment:
 
 ## Polkadot Forum
 
-<image src="../../../assets/img/7-Polkadot/eco/forum.png" style="width: 1200px;">
+<image src="../../assets/img/7-Polkadot/eco/forum.png" style="width: 1200px;">
 
 Notes:
 
@@ -615,7 +615,7 @@ The Polkadot Fellowship is a decentralized technical collective on the Polkadot 
 
 ## Fellowship Manifesto
 
-<image src="../../../assets/img/7-Polkadot/eco/fellowship-manifesto.png" style="width: 1200px;">
+<image src="../../assets/img/7-Polkadot/eco/fellowship-manifesto.png" style="width: 1200px;">
 
 Notes:
 
@@ -625,7 +625,7 @@ https://github.com/polkadot-fellows
 
 ## Fellowship Members
 
-<image src="../../../assets/img/7-Polkadot/eco/fellowship-members.png" style="width: 1200px;">
+<image src="../../assets/img/7-Polkadot/eco/fellowship-members.png" style="width: 1200px;">
 
 Notes:
 
@@ -635,7 +635,7 @@ https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama-rpc.polkadot.io#/fellowship
 
 ## RFCs
 
-<image src="../../../assets/img/7-Polkadot/eco/rfcs.png" style="width: 1200px;">
+<image src="../../assets/img/7-Polkadot/eco/rfcs.png" style="width: 1200px;">
 
 ---
 
