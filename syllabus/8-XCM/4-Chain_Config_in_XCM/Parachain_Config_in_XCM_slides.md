@@ -72,7 +72,7 @@ impl Config for XcmConfig {
 
 Notes:
 
-- Means of converting a `MultiLocation` into an account ID
+- Means of converting a `Location` into an account ID
   Used later for: `OriginConverter` , `AssetTransactor`
 
 - `xcm-builder` and `xcm-pallet` are your friends!
@@ -100,9 +100,9 @@ pub type XcmRouter = (
 
 Notes:
 
-- If the destination location matches the form of `Multilocation { parents: 1, interior: Here }`, the message will be routed through UMP.
+- If the destination location matches the form of `Location { parents: 1, interior: Here }`, the message will be routed through UMP.
   The UMP channel is available by default.
-- If the destination matches the form of `Multilocation { parents: 1, interior: X1(Parachain(para_id)) }`, the message will be routed through XCMP.
+- If the destination matches the form of `Location { parents: 1, interior: X1(Parachain(para_id)) }`, the message will be routed through XCMP.
   As of today, an HRMP channel should be established before the message can be routed.
 
 ---v
@@ -117,7 +117,7 @@ Notes:
 ```rust [6|9|12]
 pub struct ParentAsUmp<T, W>(PhantomData<(T, W)>);
 impl<T: UpwardMessageSender, W: WrapVersion> SendXcm for ParentAsUmp<T, W> {
-	fn send_xcm(dest: impl Into<MultiLocation>, msg: Xcm<()>) -> Result<(), SendError> {
+	fn send_xcm(dest: impl Into<Location>, msg: Xcm<()>) -> Result<(), SendError> {
 		let dest = dest.into();
 
 		if dest.contains_parents_only(1) {
@@ -177,14 +177,14 @@ Notes:
 ### 🤝 `IsReserve` and `IsTeleporter`
 
 - They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
-- Filters are applied for specific `MultiAsset-MultiLocation` pairs.
+- Filters are applied for specific `Asset-Location` pairs.
 
 ```rust
 /// Combinations of (Asset, Location) pairs which we trust as reserves.
-type IsReserve: ContainsPair<MultiAsset, MultiLocation>;
+type IsReserve: ContainsPair<Asset, Location>;
 
 /// Combinations of (Asset, Location) pairs which we trust as teleporters.
-type IsTeleporter: ContainsPair<MultiAsset, MultiLocation>;
+type IsTeleporter: ContainsPair<Asset, Location>;
 ```
 
 Notes:
@@ -196,26 +196,26 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- Defines how we convert a `MultiLocation` into a local account ID.
-- Useful when we want to withdraw/deposit tokens from a `MultiLocation` defined origin
-- Useful when we want to dispatch as signed origins from a `MultiLocation` defined origin.
+- Defines how we convert a `Location` into a local account ID.
+- Useful when we want to withdraw/deposit tokens from a `Location` defined origin
+- Useful when we want to dispatch as signed origins from a `Location` defined origin.
 
 <img style="width: 900px;" src="../../../assets/img/8-XCM/location_to_account_id_withdraw.svg" />
 
 Notes:
 
-- This will define how we convert a `MultiLocation` into a local account ID.
-- This is useful when we want to withdraw/deposit tokens from a `MultiLocation` defined origin or when we want to dispatch as signed origins from a `MultiLocation` defined origin.
+- This will define how we convert a `Location` into a local account ID.
+- This is useful when we want to withdraw/deposit tokens from a `Location` defined origin or when we want to dispatch as signed origins from a `Location` defined origin.
 
 ---v
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `Account32Hash`: Hashes the `MultiLocation` and takes the lowest 32 bytes as account.
+- `Account32Hash`: Hashes the `Location` and takes the lowest 32 bytes as account.
 
 ```rust
-fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
-  // Blake2(b"multiloc"+ MultiLocation)
+fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
+  // Blake2(b"multiloc"+ Location)
   Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
 }
 ```
@@ -224,18 +224,18 @@ fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
 
 Notes:
 
-- This is the most generic form of converting a `MultiLocation` to an account ID.
-- There are no restrictions in the `MultiLocation` input.
+- This is the most generic form of converting a `Location` to an account ID.
+- There are no restrictions in the `Location` input.
   If you use this with other converters, make sure this will be the last option, as otherwise the more restrictive ones will not apply.
 
 ---v
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `ParentIsPreset`: Converts the parent `MultiLocation` into an account of the form `b'Parent' + trailing 0s`
+- `ParentIsPreset`: Converts the parent `Location` into an account of the form `b'Parent' + trailing 0s`
 
 ```rust
-fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
   if location.borrow().contains_parents_only(1) {
     Ok(b"Parent"
       .using_encoded(|b| AccountId::decode(&mut TrailingZeroInput::new(b)))
@@ -254,7 +254,7 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `ChildParachainConvertsVia`: Converts the **child** parachain `MultiLocation` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+- `ChildParachainConvertsVia`: Converts the **child** parachain `Location` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
 
 Notes:
 
@@ -266,12 +266,12 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `SiblingParachainConvertsVia`: Convert the **sibling** parachain `MultiLocation` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+- `SiblingParachainConvertsVia`: Convert the **sibling** parachain `Location` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
 
 ```rust
-fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
   match location.borrow() {
-    MultiLocation { parents: 1, interior: X1(Parachain(id)) } =>
+    Location { parents: 1, interior: X1(Parachain(id)) } =>
       Ok(ParaId::from(*id).into_account_truncating()),
     _ => Err(()),
   }
@@ -287,23 +287,23 @@ Notes:
 
 ### 📁 `LocationToAccountId` via `xcm-builder`
 
-- `AccountId32Aliases`: Converts a local `AccountId32` `MultiLocation` into an account ID of 32 bytes.
+- `AccountId32Aliases`: Converts a local `AccountId32` `Location` into an account ID of 32 bytes.
 
 <div style="font-size:smaller">
 
 ```rust
 pub struct AccountId32Aliases<Network, AccountId>(PhantomData<(Network, AccountId)>);
 impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone>
-  Convert<MultiLocation, AccountId> for AccountId32Aliases<Network, AccountId>
+  Convert<Location, AccountId> for AccountId32Aliases<Network, AccountId>
 {
-  fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
+  fn convert(location: Location) -> Result<AccountId, Location> {
     // Converts if networkId matches Any or <Network>
     let id = match location {
-      MultiLocation {
+      Location {
         parents: 0,
         interior: X1(AccountId32 { id, network: NetworkId::Any }),
       } => id,
-      MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
+      Location { parents: 0, interior: X1(AccountId32 { id, network }) }
         if network == Network::get() =>
         id,
       _ => return Err(location),
@@ -351,11 +351,11 @@ impl
   for CurrencyAdapter<Currency, Matcher, AccountIdConverter, AccountId, CheckedAccount>
 {
   /* snip */
-  fn deposit_asset(what: &MultiAsset, who: &MultiLocation) -> Result {
+  fn deposit_asset(what: &Asset, who: &Location) -> Result {
     // Check we handle this asset.
     let amount: u128 =
       Matcher::matches_fungible(&what).ok_or(Error::AssetNotFound)?.saturated_into();
-    // Convert multilocation to accountId
+    // Convert Location to accountId
     let who =
       AccountIdConverter::convert_ref(who).map_err(|()| Error::AccountIdConversionFailed)?;
     // Convert amount to balance
@@ -372,8 +372,8 @@ impl
 
 Notes:
 
-- **Matcher**: Matches the multiAsset against some filters and returns the amount to be deposited/withdrawn
-- **AccountIdConverter**: Means of converting a `MultiLocation` into an account
+- **Matcher**: Matches the `Asset` against some filters and returns the amount to be deposited/withdrawn
+- **AccountIdConverter**: Means of converting a `Location` into an account
 
 ---v
 
@@ -390,28 +390,28 @@ Notes:
 
 ### 📍 `origin-converter` via `xcm-builder`
 
-- Defines how to convert an XCM origin, defined by a `MultiLocation`, into a frame dispatch origin.
+- Defines how to convert an XCM origin, defined by a `Location`, into a frame dispatch origin.
 - Used mainly in the `Transact` instruction.
 
 Notes:
 
 - `Transact` needs to dispatch from a frame dispatch origin.
-  However the `xcm-executor` works with XCM origins which are defined by `MultiLocation`s.
+  However the `xcm-executor` works with XCM origins which are defined by `Location`s.
 - `origin-converter` is the component that converts one into the other
 
 ---v
 
 ### 📍 `origin-converter` via `xcm-builder`
 
-- `SovereignSignedViaLocation`: Converts the `MultiLocation` origin (typically, a parachain origin) into a signed origin.
+- `SovereignSignedViaLocation`: Converts the `Location` origin (typically, a parachain origin) into a signed origin.
 
 ```rust [0|6|18|20|22]
 pub struct SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>(
   PhantomData<(LocationConverter, RuntimeOrigin)>,
 );
 impl<
-    // Converts a MultiLocation into account
-    LocationConverter: Convert<MultiLocation, RuntimeOrigin::AccountId>,
+    // Converts a Location into account
+    LocationConverter: Convert<Location, RuntimeOrigin::AccountId>,
     RuntimeOrigin: OriginTrait,
   > ConvertOrigin<RuntimeOrigin>
   for SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>
@@ -419,12 +419,12 @@ where
   RuntimeOrigin::AccountId: Clone,
 {
   fn convert_origin(
-    origin: impl Into<MultiLocation>,
+    origin: impl Into<Location>,
     kind: OriginKind,
-  ) -> Result<RuntimeOrigin, MultiLocation> {
+  ) -> Result<RuntimeOrigin, Location> {
     let origin = origin.into();
     if let OriginKind::SovereignAccount = kind {
-      // Convert multilocation to account
+      // Convert Location to account
       let location = LocationConverter::convert(origin)?;
       // Return signed origin using the account
       Ok(RuntimeOrigin::signed(location).into())
@@ -437,14 +437,14 @@ where
 
 Notes:
 
-- `LocationConverter ` once again defines how to convert a `MultiLocation` into an account ID.
+- `LocationConverter ` once again defines how to convert a `Location` into an account ID.
 - It basically grants access to dispatch as Signed origin after the conversion.
 
 ---v
 
 ### 📍 `origin-converter` via `xcm-builder`
 
-- `SignedAccountId32AsNative`: Converts a local 32 byte account `MultiLocation` into a signed origin using the same 32 byte account.
+- `SignedAccountId32AsNative`: Converts a local 32 byte account `Location` into a signed origin using the same 32 byte account.
 
 ```rust [0|18|19-22|24]
 pub struct SignedAccountId32AsNative<
@@ -458,14 +458,14 @@ where
   RuntimeOrigin::AccountId: From<[u8; 32]>,
 {
   fn convert_origin(
-    origin: impl Into<MultiLocation>,
+    origin: impl Into<Location>,
     kind: OriginKind,
-  ) -> Result<RuntimeOrigin, MultiLocation> {
+  ) -> Result<RuntimeOrigin, Location> {
     let origin = origin.into();
     match (kind, origin) {
       (
         OriginKind::Native,
-        MultiLocation {
+        Location {
 		  parents: 0,
 		  interior: X1(Junction::AccountId32 { id, network })
 		},
@@ -479,7 +479,7 @@ where
 
 Notes:
 
-- Matches a local `AccountId32` `MultiLocation` to a signed origin.
+- Matches a local `AccountId32` `Location` to a signed origin.
 - Note the difference `OriginKind` filter: this is not an account controlled by another consensus system, but rather a Native dispatch.
 - **This structure fulfills one of our requirements**
 
@@ -489,7 +489,7 @@ Notes:
 
 - `ParentAsSuperuser`: Converts the parent origin into the root origin.
 
-- `SignedAccountKey20AsNative`: Converts a local 20 byte account `MultiLocation` into a signed origin using the same 20 byte account.
+- `SignedAccountKey20AsNative`: Converts a local 20 byte account `Location` into a signed origin using the same 20 byte account.
 
 Notes:
 
@@ -563,9 +563,9 @@ Notes:
 /// (i.e. `T::Contains(origin)`) without any payments.
 /// Use only for executions from trusted origin groups.
 pub struct AllowUnpaidExecutionFrom<T>(PhantomData<T>);
-impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
+impl<T: Contains<Location>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
   fn should_execute<RuntimeCall>(
-    origin: &MultiLocation,
+    origin: &Location,
     _message: &mut Xcm<RuntimeCall>,
     _max_weight: Weight,
     _weight_credit: &mut Weight,
@@ -736,13 +736,13 @@ Look at the `ump.ExecutedUpward` event:
 - `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve.
 - `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
 - `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
-  Usually happens when the `MultiLocation` representing an asset does not match to those handled by the chain.
+  Usually happens when the `Location` representing an asset does not match to those handled by the chain.
 
 ---v
 
 ## 🕵️‍♂️ Identifying the error kind
 
-- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the `MultiLocation` to an account.
+- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the `Location` to an account.
 - `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
 - `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
 - `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
