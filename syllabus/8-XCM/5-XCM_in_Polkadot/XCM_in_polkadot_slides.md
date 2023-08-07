@@ -1,5 +1,5 @@
 ---
-title: XCM in the Polkadot # Also update the h1 header on the first slide to the same name
+title: XCM in Polkadot # Also update the h1 header on the first slide to the same name
 description: XCM in the Polkadot Context for web3 Engineers
 duration: 1 hour
 ---
