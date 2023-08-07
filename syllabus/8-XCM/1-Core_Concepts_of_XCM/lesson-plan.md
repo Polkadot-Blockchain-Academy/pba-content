@@ -1,38 +1,30 @@
-## Lesson 1: Core Concepts, Terms, and Logic of XCM
+# Lesson 1: Core Concepts, Terms, and Logic of XCM
 
-> {Likely}
-
-### Why is this topic Important?
+## Why is this topic Important?
 
 - Fundamental to all aspects here, the syntax and concepts must be well understood.
 
-### Prerequisite Knowledge or Skills
+## Prerequisite Knowledge or Skills
 
 - FRAME (Storage Items, Dispatchables, Event, Errors, etc.)
 - Parachains in general
 
-### Learning Outcome
+## Learning Outcome
 
 - Define the terms and concepts that XCM relies on, and know where the sources of truth are when in doubt to reference.
--
 
-### Learning Objectives
+## Learning Objectives
 
-### Core Ideas to Convey
+## Core Ideas to Convey
 
 - Cover all of https://github.com/paritytech/xcm-format
-
-  - Walk though of document... maybe too verbose?
-    Needs to be parsed into slides.
-    Likely V3 as we will deliver in July 2022.
-
 - Instancing
 - Aggregation
   - What does this mean?
 - Weight (in XCM)
 - Exotic Stuff: e.g., Genesis, Logs, Signed Extensions
 
-### Activities and Exercises
+## Activities and Exercises
 
 # Dan Notes
 
@@ -78,7 +70,7 @@
 - slide 12:
   - might have the over-constricted/missing nuance/detail model vs this answer: Stack Exchange example: https://substrate.stackexchange.com/questions/37/how-can-i-transfer-assets-using-xcm/38#38
 
-### TODO
+## TODO
 
 - Wiki updates, VMP could replace XCMP, this is false
 - meeting with Rob and other impl people to about XCMP and actual things in the works now and planned

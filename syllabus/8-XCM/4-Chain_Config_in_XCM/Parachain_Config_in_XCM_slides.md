@@ -169,7 +169,6 @@ Notes:
 1. Parachain that does not charge for relay incoming messages.
 1. Parachain that trusts the relay as the reserve chain for the relay chain tokens.
 1. Parachain that mints in `pallet-balances` when it receives relay chain tokens.
-1. Parachain that uses 32 byte accounts.
 1. Users can execute XCMs locally.
 
 ---
@@ -189,7 +188,7 @@ type IsTeleporter: ContainsPair<Asset, Location>;
 
 Notes:
 
-- For our test excercise, it is sufficient to set this `IsReserve` to `Everything`.
+- For our test exercise, it is sufficient to set this `IsReserve` to `Everything`.
 - In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
 
 ---
@@ -209,9 +208,23 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 List of `LocationToAccountId` converters
 
 - `Account32Hash`: Hashes the `Location` and takes the lowest 32 bytes as account.
+
+- `ParentIsPreset`: Converts the parent `MultiLocation` into an account of the form `b'Parent' + trailing 0s`
+
+- `ChildParachainConvertsVia`: Converts the **child** parachain `MultiLocation` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+
+- `SiblingParachainConvertsVia`: Convert the **sibling** parachain `MultiLocation` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+
+- `AccountId32Aliases`: Converts a local `AccountId32` `MultiLocation` into an account ID of 32 bytes.
+
+---v
+
+### 📁 `Account32Hash`
+
+Hashes the `MultiLocation` and takes the lowest 32 bytes as account.
 
 ```rust
 fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
@@ -230,9 +243,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `ParentIsPresent`
 
-- `ParentIsPreset`: Converts the parent `Location` into an account of the form `b'Parent' + trailing 0s`
+Converts the parent `Location` into an account of the form `b'Parent' + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
@@ -252,9 +265,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `ChildParachainConvertsVia`
 
-- `ChildParachainConvertsVia`: Converts the **child** parachain `Location` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+Converts the **child** parachain `Location` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
 
 Notes:
 
@@ -264,9 +277,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SiblingParachainConvertsVia`
 
-- `SiblingParachainConvertsVia`: Convert the **sibling** parachain `Location` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+Convert the **sibling** parachain `Location` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
 
 ```rust
 fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
@@ -285,9 +298,9 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `AccountId32Aliases`
 
-- `AccountId32Aliases`: Converts a local `AccountId32` `Location` into an account ID of 32 bytes.
+Converts a local `AccountId32` `Location` into an account ID of 32 bytes.
 
 <div style="font-size:smaller">
 
@@ -334,7 +347,7 @@ Notes:
 Notes:
 
 - The relay chain is a clear example of a chain that handles a **single token**.
-- Statemine on the contrary acts as an asset-reserve chain, and it needs to handle **several assets**
+- AssetHub on the contrary acts as an asset-reserve chain, and it needs to handle **several assets**
 
 ---v
 
@@ -401,9 +414,25 @@ Notes:
 
 ---v
 
-### 📍 `origin-converter` via `xcm-builder`
+### 📍 List of origin converters
 
 - `SovereignSignedViaLocation`: Converts the `Location` origin (typically, a parachain origin) into a signed origin.
+
+- `SignedAccountId32AsNative`: Converts a local 32 byte account `MultiLocation` into a signed origin using the same 32 byte account.
+
+- `ParentAsSuperuser`: Converts the parent origin into the root origin.
+
+- `SignedAccountKey20AsNative`: Converts a local 20 byte account `MultiLocation` into a signed origin using the same 20 byte account.
+
+Notes:
+
+- `ParentAsSuperuser` can be used in common-good chains as they do not have a local root origin and instead allow the relay chain root origin to act as the root origin.
+
+---v
+
+### 📍 `SovereignSignedViaLocation`
+
+Converts the `MultiLocation` origin (typically, a parachain origin) into a signed origin.
 
 ```rust [0|6|18|20|22]
 pub struct SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>(
@@ -442,9 +471,9 @@ Notes:
 
 ---v
 
-### 📍 `origin-converter` via `xcm-builder`
+### 📍 `SignedAccountId32AsNative`
 
-- `SignedAccountId32AsNative`: Converts a local 32 byte account `Location` into a signed origin using the same 32 byte account.
+Converts a local 32 byte account `Location` into a signed origin using the same 32 byte account.
 
 ```rust [0|18|19-22|24]
 pub struct SignedAccountId32AsNative<
@@ -482,18 +511,6 @@ Notes:
 - Matches a local `AccountId32` `Location` to a signed origin.
 - Note the difference `OriginKind` filter: this is not an account controlled by another consensus system, but rather a Native dispatch.
 - **This structure fulfills one of our requirements**
-
----v
-
-### 📍 `origin-converter` via `xcm-builder`
-
-- `ParentAsSuperuser`: Converts the parent origin into the root origin.
-
-- `SignedAccountKey20AsNative`: Converts a local 20 byte account `Location` into a signed origin using the same 20 byte account.
-
-Notes:
-
-- `ParentAsSuperuser` can be used in common-good chains as they do not have a local root origin and instead allow the relay chain root origin to act as the root origin.
 
 ---
 
@@ -556,7 +573,7 @@ Notes:
 ### 🚧 `Barrier` via `xcm-builder`
 
 - `AllowUnpaidExecutionFrom<T>`: Allows free execution if `origin` is contained in `T`.
-  Useful for chains that "trust" each other (e.g., Statemine or any system parachain with the relay)
+  Useful for chains that "trust" each other (e.g., AssetHub or any system parachain with the relay)
 
 ```rust
 /// Allows execution from any origin that is contained in `T`
@@ -699,6 +716,98 @@ Notes:
 
 - `TransactionPayment` pallet already defines how to convert weight to fee.
   We do not need to define a rate in this case.
+
+---
+
+## Example XCM configuration
+
+Let's put everything together and see how it looks like!
+
+---v
+
+### Setup requirements
+
+1. Parachain that does not charge for relay incoming messages.
+1. Parachain that trusts the relay as the reserve chain for the relay chain tokens.
+1. Parachain that mints in `pallet-balances` when it receives relay chain tokens.
+1. Users can execute XCMs locally.
+
+---v
+
+### Do not charge relay for any XCM-related fees
+
+```rust
+match_types! {
+	pub type ParentLocation: impl Contains<MultiLocation> = {
+		MultiLocation { parents: 1, interior: Here }
+	};
+}
+impl xcm_executor::Config for XcmConfig {
+  // ...
+  type Barrier = AllowExplicitUnpaidExecutionFrom<ParentLocation>;
+  // ...
+}
+```
+
+---v
+
+### Trust the relay as the reserve chain for relay chain tokens
+
+```rust
+parameter_types! {
+  pub const RelayLocation: MultiLocation = (1, Here).into_location();
+	pub const RelayToken: MultiAssetFilter = Wild(AllOf { fun: WildFungible, id: Concrete(RelayLocation::get()) });
+	pub const RelayTokenFromRelay: (MultiAssetFilter, MultiLocation) = (RelayToken::get(), RelayLocation::get());
+}
+pub type TrustedReserves = xcm_builder::Case<RelayTokenFromRelay>;
+impl xcm_executor::Config for XcmConfig {
+  // ...
+  type IsReserve = TrustedReserves;
+  // ...
+}
+```
+
+---v
+
+### Mint tokens in balances pallet when relay tokens are received
+
+```rust
+parameter_types! {
+  pub const RelayLocation: MultiLocation = (1, Here).into_location();
+}
+
+pub type LocalAssetTransactor = XcmCurrencyAdapter<
+	Balances,
+	IsConcrete<RelayLocation>,
+	ParentIsPreset<AccountId>,
+	AccountId,
+	(),
+>;
+impl xcm_executor::Config for XcmConfig {
+  // ...
+  type AssetTransactors = LocalAssetTransactor;
+  // ...
+}
+```
+
+---v
+
+### Users can execute XCM locally
+
+```rust
+parameter_types! {
+  pub const ThisNetwork: NetworkId = /* ... */;
+}
+
+type LocalOriginToLocation = SignedToAccountId32<RuntimeOrigin, AccountId, ThisNetwork>;
+
+impl pallet_xcm::Config for Runtime {
+  // ...
+	type ExecuteXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+	type XcmExecuteFilter = Everything;
+  // ...
+}
+```
 
 ---
 
