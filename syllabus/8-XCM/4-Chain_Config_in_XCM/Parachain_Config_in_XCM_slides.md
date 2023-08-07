@@ -188,7 +188,7 @@ type IsTeleporter: ContainsPair<MultiAsset, MultiLocation>;
 
 Notes:
 
-- For our test excercise, it is sufficient to set this `IsReserve` to `Everything`.
+- For our test exercise, it is sufficient to set this `IsReserve` to `Everything`.
 - In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
 
 ---
@@ -347,7 +347,7 @@ Notes:
 Notes:
 
 - The relay chain is a clear example of a chain that handles a **single token**.
-- Statemine on the contrary acts as an asset-reserve chain, and it needs to handle **several assets**
+- AssetHub on the contrary acts as an asset-reserve chain, and it needs to handle **several assets**
 
 ---v
 
@@ -573,7 +573,7 @@ Notes:
 ### 🚧 `Barrier` via `xcm-builder`
 
 - `AllowUnpaidExecutionFrom<T>`: Allows free execution if `origin` is contained in `T`.
-  Useful for chains that "trust" each other (e.g., Statemine or any system parachain with the relay)
+  Useful for chains that "trust" each other (e.g., AssetHub or any system parachain with the relay)
 
 ```rust
 /// Allows execution from any origin that is contained in `T`
