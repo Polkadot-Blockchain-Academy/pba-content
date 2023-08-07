@@ -1,5 +1,7 @@
 # Cross Consensus Messaging (XCM)
 
+Activities in [pba xcm activities repo](https://github.com/Polkadot-Blockchain-Academy/pba-xcm-activities--master/).
+
 ## Lessons Overview
 
 ### Day 1
