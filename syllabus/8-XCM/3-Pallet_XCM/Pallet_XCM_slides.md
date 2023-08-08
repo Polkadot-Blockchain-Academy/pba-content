@@ -493,7 +493,7 @@ Let's jump into the code and have a look at `limited_teleport_assets` extrinsic.
 
 ## Summary
 
-In this lecture, we learned:
+In this lecture, we learnt:
 
 - What the XCM pallet is and what it's used for.
 - How XCM is intended to be used, both by wallet and runtime developers.
