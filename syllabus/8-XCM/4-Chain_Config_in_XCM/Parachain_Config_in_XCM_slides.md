@@ -29,11 +29,12 @@ EXERCISE: ask the class to raise hands and postulate on what they think should b
 
 ## 🛠️ Configurables in `XcmConfig`
 
-```rust [3-4|5-6|7-8|9-10|11-12|13-14|15-31]
+```rust [1-2|6-7|8-9|10-11|12-13|14-15|16-31]
+// How we convert locations into account ids
+type SovereignAccountOf = SovereignAccountOf;
+
 pub struct XcmConfig;
 impl Config for XcmConfig {
-  // How we convert locations into account ids
-  type SovereignAccountOf = SovereignAccountOf;
   // The absolute Location of the current system
   type UniversalLocation = UniversalLocation;
   // Pre-execution filters
@@ -302,7 +303,7 @@ Physical vs Computed origin
 <diagram class="mermaid">
 graph LR;
   subgraph ComputedOrigin
-    Alice("Computed Origin (Alice)")
+    Alice(Alice on Parachain)
   end
   ComputedOrigin-->PhysicalOrigin
   subgraph PhysicalOrigin
@@ -314,18 +315,15 @@ graph LR;
 
 ### 🚧 `Barrier` via `xcm-builder`
 
-Barriers that operate upon **computed origins** must be put inside of `WithComputedOrigin`:
+Barriers that operate upon **computed origins** must be put inside of `WithComputedOrigin`.
+
+Allows for origin altering instructions at the start.
 
 <pba-flex center>
 
 ```rust
 pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>;
 ```
-
-<diagram class="mermaid">
-graph TD
-  DescendOrigin(DescendOrigin)-->Rest(...)
-</diagram>
 
 ---v
 
@@ -350,7 +348,7 @@ graph TD
     ReserveAssetDeposited(ReserveAssetDeposited)
   end
   FundAccount-->BuyExecution
-  BuyExecution(BuyExecution)-->Rest(...)
+  BuyExecution(BuyExecution)-->Rest(...rest of the message...)
 </diagram>
 
 Notes:
@@ -366,11 +364,6 @@ Notes:
 
 - `AllowExplicitUnpaidExecutionFrom<T>`: Allows free execution if `origin` is contained in `T` and the first instruction is `UnpaidExecution`.
 
-<diagram class="mermaid limit size-30">
-graph TD
-  UnpaidExecution(UnpaidExecution)-->Rest(...)
-</diagram>
-
 Notes:
 
 - **This fulfills our requirements**
@@ -381,11 +374,6 @@ Notes:
 ### 🚧 `Barrier` via `xcm-builder`
 
 - `AllowKnownQueryResponses`: Allows the execution of the message if it contains only an expected `QueryResponse`
-
----v
-
-### 🚧 `Barrier` via `xcm-builder`
-
 - `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it contains only a `SubscribeVersion` or `UnsubscribeVersion` instruction
 
 ---
@@ -397,7 +385,7 @@ Notes:
 
 <diagram class="mermaid">
 graph LR
-  Withdraw("WithdrawAsset(Here, 100u128).into()")-->DOT(100 tokens)
+  Withdraw("WithdrawAsset(Here, 100u128).into()")-->DOT(100 tokens from e.g. pallet-balances)
 </diagram>
 
 Notes:
@@ -434,11 +422,6 @@ fn withdraw_asset(
 	who: &Location,
 	_maybe_context: Option<&XcmContext>,
 ) -> result::Result<xcm_executor::Assets, XcmError> {
-	log::trace!(
-		target: "xcm::fungibles_adapter",
-		"withdraw_asset what: {:?}, who: {:?}",
-		what, who,
-	);
 	let (asset_id, amount) = Matcher::matches_fungibles(what)?;
 	let who = AccountIdConverter::convert_location(who)
 		.ok_or(MatchError::AccountIdConversionFailed)?;
@@ -460,11 +443,6 @@ fn deposit_asset(
   who: &Location,
   _context: &XcmContext
 ) -> XcmResult {
-	log::trace!(
-		target: "xcm::fungibles_adapter",
-		"deposit_asset what: {:?}, who: {:?}",
-		what, who,
-	);
 	let (asset_id, amount) = Matcher::matches_fungibles(what)?;
 	let who = AccountIdConverter::convert_location(who)
 		.ok_or(MatchError::AccountIdConversionFailed)?;
@@ -550,23 +528,6 @@ Note that the benchmarks need to reflect what your runtime is doing, so fetching
 - `Transact` weight is defined by `require_weight_at_most` value.
 - `SetErrorHandler` and `SetAppendix`, besides their own weight, need to account for the XCM instructions they will execute.
 
-<div style="font-size:smaller">
-
-```rust [0|6|7
-  fn instr_weight_with_limit(
-		instruction: &Instruction<C>,
-		instrs_limit: &mut u32,
-	) -> Result<Weight, ()> {
-		use xcm::GetWeight;
-		let instr_weight = match instruction {
-			Transact { require_weight_at_most, .. } => *require_weight_at_most,
-			SetErrorHandler(xcm) | SetAppendix(xcm) => Self::weight_with_limit(xcm, instrs_limit)?,
-			_ => Weight::zero(),
-		};
-		instruction.weight().checked_add(&instr_weight).ok_or(())
-	}
-```
-
 <div>
 
 ---
@@ -575,6 +536,8 @@ Note that the benchmarks need to reflect what your runtime is doing, so fetching
 
 - They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
 - Filters are applied for specific `Asset-Location` pairs.
+
+<pba-flex center>
 
 ```rust
 /// Combinations of (Asset, Location) pairs which we trust as reserves.
