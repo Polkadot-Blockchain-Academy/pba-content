@@ -1,35 +1,43 @@
 # Cross Consensus Messaging (XCM)
 
-Activities in [pba xcm activities repo](https://github.com/Polkadot-Blockchain-Academy/pba-xcm-activities--master/).
-
 ## Lessons Overview
+
+### Exercises
+
+All referenced below are stored in a [master copy](https://github.com/Polkadot-Blockchain-Academy/pba-xcm-activities--master) monorepo.
+Each cohort should have a new template derived from that repo, and the new one shared to the cohort specific github team to them using this master copy.
 
 ### Day 1
 
-**Morning** (Founder friendly)
-Lecture - XCM 1, Core concepts (1.5 hr) @gav
-Coffee break (15 min)
-Exercise - Usage of XCM locations (1.5 hr) @keith & @cisco
+**Morning** (Founder Friendly)
 
-**Afternoon**
-Lecture - XCM 2, XCVM (1.5 hr) @gav
-Coffee break (15 min)
+Lecture - 1-Core_Concepts_of_XCM (2.5 hr) @gav
+Coffee break (30 min)
+Lecture - 2-XCVM (1 hr) @gav
+
+**Afternoon** (Engineers Only)
+
+Exercise - Usage of XCM locations (1.5 hr) @keith & @cisco
 Exercise - Using XCM simulator (1.5 hr) @keith & @cisco
 
 ### Day 2
 
-**Morning**
-Lecture - XCM 3, Pallet XCM (1.5 hr) @gav
-Coffee break (15 min)
-Exercise - More simulator (1.5 hr) @keith
+**Morning** (Engineers Only)
 
-**Afternoon**
-Lecture - XCM 4, How to configure the XCVM (1.5 hr) @gav
+Lecture - 3-XCM Pallet XCM (2.5 hr) @gav
+Coffee break (20 min)
+Lecture - 4-Chain_Config_in_XCM (1.5 hr) @gav
+
+**Afternoon** (Engineers Only)
+
+Exercise - More XCM simulator (1.5 hr) @keith
 Coffee break (15 min)
 Exercise - Configuring XCM (1.5 hr) @keith
 
-### Day 3 (Half Day)
+### Additional content
 
-Lecture - XCM 5, Beyond Asset Transfers (1.5 hr) @arrudagates
-Coffee Break (15 min)
-Exercise - Writing an RFC (1.5 hr) @keith & @cisco
+Things that did not fit into this sequence but can be used to extend:
+
+Lecture - XCM 5, Beyond Asset Transfers (1.5 hr) @arrudagates (Beyond Asset Transfers)
+Lecture and Workshop - XCM in Use (2 hr) @chrisli30 (XCM in Use)
+Exercise - Writing an RFC (1.5 hr) @keith & @cisco (_not yet created_)
