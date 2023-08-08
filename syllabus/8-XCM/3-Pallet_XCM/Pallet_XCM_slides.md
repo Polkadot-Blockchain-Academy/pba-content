@@ -154,7 +154,7 @@ We have already seen what teleports and reserve transfers mean in lesson 7.1; A 
 
 This extrinsic allows the user to perform an asset teleport.
 
-<diagram class="mermaid">
+<diagram class="mermaid limit size-150" style="display: flex; justify-content: center; transform: translateX(-17%);">
   flowchart LR
   subgraph paraA[Parachain A]
     palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
@@ -189,7 +189,7 @@ Xcm(vec![
 ])
 ```
 
-<li>Parachain A then sends the following mesasge to the trusted destination</li>
+<li>Parachain A then sends the following message to the trusted destination</li>
 
 ```rust
 Xcm(vec![
@@ -210,7 +210,7 @@ Xcm(vec![
 
 Allow the user to perform a reserve-backed transfer from the reserve chain to the destination.
 
-<diagram class="mermaid">
+<diagram class="mermaid limit size-150" style="display: flex; justify-content: center; transform: translateX(-17%);">
   flowchart LR
   subgraph reserve[Reserve Chain]
     palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
@@ -491,6 +491,13 @@ Let's jump into the code and have a look at `limited_teleport_assets` extrinsic.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## Summary
 
-# Questions ?
+In this lecture, we learnt:
+
+- What the XCM pallet is and what it's used for.
+- How XCM is intended to be used, both by wallet and runtime developers.
+- The useful extrinsics in the XCM pallet.
+- How XCM versioning works.
+- How the XCM pallet is used to receive responses.
+- How assets might be trapped and how to use the XCM pallet to claim them.
