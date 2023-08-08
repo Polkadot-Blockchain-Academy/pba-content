@@ -189,7 +189,7 @@ Xcm(vec![
 ])
 ```
 
-<li>Parachain A then sends the following mesasge to the trusted destination</li>
+<li>Parachain A then sends the following message to the trusted destination</li>
 
 ```rust
 Xcm(vec![
@@ -491,6 +491,13 @@ Let's jump into the code and have a look at `limited_teleport_assets` extrinsic.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## Summary
 
-# Questions ?
+In this lecture, we learned:
+
+- What the XCM pallet is and what it's used for.
+- How XCM is intended to be used, both by wallet and runtime developers.
+- The useful extrinsics in the XCM pallet.
+- How XCM versioning works.
+- How the XCM pallet is used to receive responses.
+- How assets might be trapped and how to use the XCM pallet to claim them.
