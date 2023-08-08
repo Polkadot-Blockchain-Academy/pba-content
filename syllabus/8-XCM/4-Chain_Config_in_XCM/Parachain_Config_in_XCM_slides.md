@@ -702,3 +702,13 @@ impl pallet_xcm::Config for Runtime {
   // ...
 }
 ```
+
+---
+
+## Summary
+
+In this lecture, we learnt:
+- How chains interpret locations and turn them to accounts and FRAME origins
+- How to set a barrier to protect our chain from undesired messages
+- How to handle assets in XCM
+- Other configuration items relevant for XCM
