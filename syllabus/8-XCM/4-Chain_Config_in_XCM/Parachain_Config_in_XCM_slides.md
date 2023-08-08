@@ -210,6 +210,121 @@ Notes:
 
 ### 📁 List of `LocationToAccountId` converters
 
+- `HashedDescription`: Hashes the description of a MultiLocation and converts that into an AccountId. 
+
+```rust
+
+pub struct HashedDescription<AccountId, Describe>(PhantomData<(AccountId, Describe)>);
+impl<AccountId: From<[u8; 32]> + Clone, Describe: DescribeLocation> ConvertLocation<AccountId>
+	for HashedDescription<AccountId, Describe>
+{
+	fn convert_location(value: &MultiLocation) -> Option<AccountId> {
+		Some(blake2_256(&Describe::describe_location(value)?).into())
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `HashedDescription`. An example of a converter definition:
+
+<pba-flex center>
+
+```rust
+pub type LocationToAccount = HashedDescription<
+  // Legacy conversion - MUST BE FIRST!
+  LegacyDescribeForeignChainAccount,
+  // Other conversions
+  DescribeTerminus,
+  DescribePalletTerminal,
+>;
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeLocation`: Means of converting a location into a stable and unique descriptive identifier.
+
+```rust
+pub trait DescribeLocation {
+	/// Create a description of the given `location` if possible. No two locations should have the
+	/// same descriptor.
+	fn describe_location(location: &MultiLocation) -> Option<Vec<u8>>;
+}
+```
+
+Notes:
+
+[Impl for Tuple](https://github.com/paritytech/polkadot/blob/c7f58c17f906467634a5b236d7b3c1df24057419/xcm/xcm-builder/src/location_conversion.rs#L34)
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeAccountId32Terminal`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, X1(AccountId32 { id, .. })) => Some((b"AccountId32", id).encode()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeTerminus`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, Here) => Some(Vec::new()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribePalletTerminal`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, X1(PalletInstance(i))) =>
+			Some((b"Pallet", Compact::<u32>::from(*i as u32)).encode()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `DescribeAccountKey20Terminal`
+
+```rust
+fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
+	match (l.parents, &l.interior) {
+		(0, X1(AccountKey20 { key, .. })) => Some((b"AccountKey20", key).encode()),
+		_ => return None,
+	}
+}
+```
+
+---v
+
+### 📁 `LocationToAccountId` via `xcm-builder`
+
 - `Account32Hash`: Hashes the `Location` and takes the lowest 32 bytes as account.
 
 - `ParentIsPreset`: Converts the parent `MultiLocation` into an account of the form `b'Parent' + trailing 0s`
@@ -219,121 +334,6 @@ Notes:
 - `SiblingParachainConvertsVia`: Convert the **sibling** parachain `MultiLocation` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
 
 - `AccountId32Aliases`: Converts a local `AccountId32` `MultiLocation` into an account ID of 32 bytes.
-
----v
-
-### 📁 `Account32Hash`
-
-Hashes the `MultiLocation` and takes the lowest 32 bytes as account.
-
-```rust
-fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
-  // Blake2(b"multiloc"+ Location)
-  Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
-}
-```
-
-<div>
-
-Notes:
-
-- This is the most generic form of converting a `Location` to an account ID.
-- There are no restrictions in the `Location` input.
-  If you use this with other converters, make sure this will be the last option, as otherwise the more restrictive ones will not apply.
-
----v
-
-### 📁 `ParentIsPresent`
-
-Converts the parent `Location` into an account of the form `b'Parent' + trailing 0s`
-
-```rust
-fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
-  if location.borrow().contains_parents_only(1) {
-    Ok(b"Parent"
-      .using_encoded(|b| AccountId::decode(&mut TrailingZeroInput::new(b)))
-      .expect("infinite length input; no invalid inputs for type; qed"))
-  } else {
-    Err(())
-  }
-}
-```
-
-Notes:
-
-- This converter is typically used in parachains to make sure the parent origin has an associated account.
-
----v
-
-### 📁 `ChildParachainConvertsVia`
-
-Converts the **child** parachain `Location` into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
-
-Notes:
-
-- Here child means a parachain from the relay's perspective
-
-- This converter is **typically used in the relay chain** to make sure the child parachain origins have an associated account.
-
----v
-
-### 📁 `SiblingParachainConvertsVia`
-
-Convert the **sibling** parachain `Location` into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
-
-```rust
-fn convert_ref(location: impl Borrow<Location>) -> Result<AccountId, ()> {
-  match location.borrow() {
-    Location { parents: 1, interior: X1(Parachain(id)) } =>
-      Ok(ParaId::from(*id).into_account_truncating()),
-    _ => Err(()),
-  }
-}
-```
-
-Notes:
-
-- Here sibling means a parachain from another parachain's perspective
-- This converter is **typically used in parachains** to make sure the sibling parachain origins have an associated account.
-
----v
-
-### 📁 `AccountId32Aliases`
-
-Converts a local `AccountId32` `Location` into an account ID of 32 bytes.
-
-<div style="font-size:smaller">
-
-```rust
-pub struct AccountId32Aliases<Network, AccountId>(PhantomData<(Network, AccountId)>);
-impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone>
-  Convert<Location, AccountId> for AccountId32Aliases<Network, AccountId>
-{
-  fn convert(location: Location) -> Result<AccountId, Location> {
-    // Converts if networkId matches Any or <Network>
-    let id = match location {
-      Location {
-        parents: 0,
-        interior: X1(AccountId32 { id, network: NetworkId::Any }),
-      } => id,
-      Location { parents: 0, interior: X1(AccountId32 { id, network }) }
-        if network == Network::get() =>
-        id,
-      _ => return Err(location),
-    };
-    Ok(id.into())
-  }
-  /* snip */
-}
-```
-
-<div>
-
-Notes:
-
-- Typically used for chains that want to enable local XCM execution, and which have 32 byte accounts.
-- We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
-  **This structure fulfills one of our requirements**
 
 ---
 
