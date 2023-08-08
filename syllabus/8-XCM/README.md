@@ -20,8 +20,8 @@ https://github.com/Polkadot-Blockchain-Academy/pba-xcm-activities--master
 ### Day 2
 
 **Morning**
-Lecture - XCM 3, Pallet XCM (1.5 hr) @gav
-Coffee break (15 min)
+Lecture - 3-XCM Pallet XCM (2.5 hr) @gav
+Coffee break (20 min)
 Lecture - 4-Chain_Config_in_XCM (1.5 hr) @gav
 
 **Afternoon**
