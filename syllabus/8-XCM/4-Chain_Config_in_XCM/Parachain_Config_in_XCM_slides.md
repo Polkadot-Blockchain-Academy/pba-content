@@ -34,110 +34,44 @@ EXERCISE: ask the class to raise hands and postulate on what they think should b
 
 ## 🛠️ Configurables in `XcmConfig`
 
-```rust [0|1|9|11|17|19|21|23|25|27|29|31]
-pub type LocationToAccountId = ?;
+```rust [0|1|5-6|7-8|9-10|11-12|13-14]
+pub type SovereignAccountOf = ?;
 
 pub struct XcmConfig;
 impl Config for XcmConfig {
-  type RuntimeCall = RuntimeCall;
   // How we route the XCM outside this chain
   type XcmSender = XcmRouter;
   // How we withdraw/deposit assets
-  type AssetTransactor = ?;
+  type AssetTransactor = LocalAssetTransactor;
   // How we convert a ML to a FRAME dispatch origin
-  type OriginConverter = ?;
+  type OriginConverter = LocalOriginConverter;
+  // The absolute Location of the current system
+  type UniversalLocation = UniversalLocation;
+  // Pre-execution filters
+  type Barrier = Barrier;
   // Who we trust as reserve chains
   type IsReserve = ?;
   // Who do we trust as teleporters
   type IsTeleporter = ?;
-  // How we invert locations
-  type UniversalLocation = ?;
-  // Pre-execution filters
-  type Barrier = ?;
-  // How we weigh a message
-  type Weigher = ?;
-  // How we charge for fees
-  type Trader = ?;
-  // How we handle responses
-  type ResponseHandler = ?;
-  // How we handle asset traps
-  type AssetTrap = ?;
-  // How we handle asset claims
-  type AssetClaims = ?;
-  // How we handle version subscriptions
-  type SubscriptionService = ?;
+  // ...
 }
 
 ```
 
 Notes:
 
-- Means of converting a `Location` into an account ID
+- `SovereignAccountOf`: Means of converting a `Location` into an account ID
   Used later for: `OriginConverter` , `AssetTransactor`
-
-- `xcm-builder` and `xcm-pallet` are your friends!
-
-- `xcm-builder` is a polkadot module that contains a set of pre-defined structures to be set in some of the configurable sides of XCM.
 
 - `xcm-pallet` is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.
 
 ---
 
-## 🛠️ XcmRouter in `XcmConfig`
+## 🛠️ Introducing `xcm-builder`
 
-- `XcmRouter` defines the means of routing a XCM to a destination.
-- `ParentAsUmp` routes XCM to relay chain through UMP.
-- `XcmpQueue` routes XCM to other parachains through XCMP.
+`xcm-builder` is a crate containing common configuration shims to faciliate XCM configuration.
 
-```rust
-pub type XcmRouter = (
-	// Two routers - use UMP to communicate with the relay chain:
-	cumulus_primitives_utility::ParentAsUmp<ParachainSystem, PolkadotXcm>,
-	// ..and XCMP to communicate with the sibling chains.
-	XcmpQueue,
-);
-```
-
-Notes:
-
-- If the destination location matches the form of `Location { parents: 1, interior: Here }`, the message will be routed through UMP.
-  The UMP channel is available by default.
-- If the destination matches the form of `Location { parents: 1, interior: X1(Parachain(para_id)) }`, the message will be routed through XCMP.
-  As of today, an HRMP channel should be established before the message can be routed.
-
----v
-
-## 🛠️ XcmRouter in `XcmConfig`
-
-- `XcmRouter` will ask for implementations of the `SendXcm` trait.
-- `wrap_version`, in this case, adds versioning to the message.
-
-<div style="font-size:smaller">
-
-```rust [6|9|12]
-pub struct ParentAsUmp<T, W>(PhantomData<(T, W)>);
-impl<T: UpwardMessageSender, W: WrapVersion> SendXcm for ParentAsUmp<T, W> {
-	fn send_xcm(dest: impl Into<Location>, msg: Xcm<()>) -> Result<(), SendError> {
-		let dest = dest.into();
-
-		if dest.contains_parents_only(1) {
-			// An upward message for the relay chain.
-			let versioned_xcm =
-				W::wrap_version(&dest, msg).map_err(|()| SendError::DestinationUnsupported)?;
-			let data = versioned_xcm.encode();
-
-			T::send_upward_message(data).map_err(|e| SendError::Transport(e.into()))?;
-
-			Ok(())
-		} else {
-			// Anything else is unhandled. This includes a message this is meant for us.
-			Err(SendError::CannotReachDestination(dest, msg))
-		}
-	}
-}
-```
-
-<div>
+Most pre-built configuration items can be found in `xcm-builder`.
 
 ---
 
@@ -173,27 +107,31 @@ Notes:
 
 ---
 
-### 🤝 `IsReserve` and `IsTeleporter`
+## 🛠️ XcmRouter in `XcmConfig`
 
-- They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
-- Filters are applied for specific `Asset-Location` pairs.
+- `ParentAsUmp` routes XCM to relay chain through UMP.
+- `XcmpQueue` routes XCM to other parachains through XCMP.
 
 ```rust
-/// Combinations of (Asset, Location) pairs which we trust as reserves.
-type IsReserve: ContainsPair<Asset, Location>;
-
-/// Combinations of (Asset, Location) pairs which we trust as teleporters.
-type IsTeleporter: ContainsPair<Asset, Location>;
+pub type XcmRouter = (
+	// Two routers - use UMP to communicate with the relay chain:
+	cumulus_primitives_utility::ParentAsUmp<ParachainSystem, PolkadotXcm>,
+	// ..and XCMP to communicate with the sibling chains.
+	XcmpQueue,
+);
 ```
 
 Notes:
 
-- For our test exercise, it is sufficient to set this `IsReserve` to `Everything`.
-- In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
+- `ParachainSystem` is a pallet in cumulus that handles incoming DMP messages and queues, among other miscellaneous parachain-related matters.
+- If the destination location matches the form of `Location { parents: 1, interior: Here }`, the message will be routed through UMP.
+  The UMP channel is available by default.
+- If the destination matches the form of `Location { parents: 1, interior: X1(Parachain(para_id)) }`, the message will be routed through XCMP.
+  As of today, an HRMP channel should be established before the message can be routed.
 
 ---
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - Defines how we convert a `Location` into a local account ID.
 - Useful when we want to withdraw/deposit tokens from a `Location` defined origin
@@ -208,7 +146,7 @@ Notes:
 
 ---v
 
-### 📁 List of `LocationToAccountId` converters
+### 📁 List of `SovereignAccountOf` converters
 
 - `HashedDescription`: Hashes the description of a MultiLocation and converts that into an AccountId. 
 
@@ -226,7 +164,7 @@ impl<AccountId: From<[u8; 32]> + Clone, Describe: DescribeLocation> ConvertLocat
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - `HashedDescription`. An example of a converter definition:
 
@@ -244,7 +182,7 @@ pub type LocationToAccount = HashedDescription<
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - `DescribeLocation`: Means of converting a location into a stable and unique descriptive identifier.
 
@@ -262,7 +200,7 @@ Notes:
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - `DescribeAccountId32Terminal`
 
@@ -277,7 +215,7 @@ fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - `DescribeTerminus`
 
@@ -292,7 +230,7 @@ fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - `DescribePalletTerminal`
 
@@ -308,7 +246,7 @@ fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - `DescribeAccountKey20Terminal`
 
@@ -323,7 +261,7 @@ fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
 
 ---v
 
-### 📁 `LocationToAccountId` via `xcm-builder`
+### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - `Account32Hash`: Hashes the `Location` and takes the lowest 32 bytes as account.
 
@@ -337,7 +275,7 @@ fn describe_location(l: &MultiLocation) -> Option<Vec<u8>> {
 
 ---
 
-### 🪙 `asset-transactors` via `xcm-builder`
+### 🪙 `AssetTransactor` via `xcm-builder`
 
 - Define how we are going to withdraw and deposit assets
 - Heavily dependant on the assets we want our chain to transfer
@@ -351,7 +289,7 @@ Notes:
 
 ---v
 
-### 🪙 `asset-transactors` via `xcm-builder`
+### 🪙 `AssetTransactor` via `xcm-builder`
 
 - `CurrencyAdapter`: Single currency `asset-transactor`.
   Used for withdrawing/depositing the native token of the chain.
@@ -390,7 +328,7 @@ Notes:
 
 ---v
 
-### 🪙 `asset-transactors` via `xcm-builder`
+### 🪙 `AssetTransactor` via `xcm-builder`
 
 - `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens.
   An example of these would be `pallet-assets` tokens.
@@ -401,7 +339,7 @@ Notes:
 
 ---
 
-### 📍 `origin-converter` via `xcm-builder`
+### 📍 `OriginConverter` via `xcm-builder`
 
 - Defines how to convert an XCM origin, defined by a `Location`, into a frame dispatch origin.
 - Used mainly in the `Transact` instruction.
@@ -410,7 +348,7 @@ Notes:
 
 - `Transact` needs to dispatch from a frame dispatch origin.
   However the `xcm-executor` works with XCM origins which are defined by `Location`s.
-- `origin-converter` is the component that converts one into the other
+- `OriginConverter` is the component that converts one into the other
 
 ---v
 
@@ -514,14 +452,44 @@ Notes:
 
 ---
 
+### `UniversalLocation`
+
+The absolute location of the consensus system being configured.
+
+```rust
+pub enum NetworkId {
+  /// Network specified by the first 32 bytes of its genesis block.
+  ByGenesis([u8; 32]),
+  /// Network defined by the first 32-bytes of the hash and number of some block it contains.
+  ByFork { block_number: u64, block_hash: [u8; 32] },
+  /// The Polkadot mainnet Relay-chain.
+  Polkadot,
+  /// An Ethereum network specified by its chain ID.
+  Ethereum {
+    /// The EIP-155 chain ID.
+    #[codec(compact)]
+    chain_id: u64,
+  },
+  /// The Bitcoin network, including hard-forks supported by Bitcoin Core development team.
+  BitcoinCore,
+  // ...
+}
+
+type InteriorLocation = Junction;
+parameter_types! {
+  pub const UniversalLocation: InteriorLocation = GlobalConsensus(NetworkId::Polkadot);
+}
+```
+
+---
+
 ### 🚧 `Barrier` via `xcm-builder`
 
 - Barriers specify whether or not an XCM is allowed to be executed on the local consensus system.
-- They are checked before the actual XCM instruction execution
+- They are checked before the actual XCM instruction execution.
+- **Barriers should not involve any heavy computation.**
 
 Notes:
-
-- Barriers should not involve any heavy computation.
   **At the point at which barriers are checked nothing has yet been paid for its execution**.
 
 ---v
@@ -646,6 +614,26 @@ Note that the benchmarks need to reflect what your runtime is doing, so fetching
 ```
 
 <div>
+
+---
+
+### 🤝 `IsReserve` and `IsTeleporter`
+
+- They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
+- Filters are applied for specific `Asset-Location` pairs.
+
+```rust
+/// Combinations of (Asset, Location) pairs which we trust as reserves.
+type IsReserve: ContainsPair<Asset, Location>;
+
+/// Combinations of (Asset, Location) pairs which we trust as teleporters.
+type IsTeleporter: ContainsPair<Asset, Location>;
+```
+
+Notes:
+
+- For our test exercise, it is sufficient to set this `IsReserve` to `Everything`.
+- In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
 
 ---
 
