@@ -7,9 +7,9 @@ Activities in [pba xcm activities repo](https://github.com/Polkadot-Blockchain-A
 ### Day 1
 
 **Morning** (Founder friendly)
-Lecture - XCM 1, Core concepts (2.5 hr) @gav
+Lecture - 1-Core_Concepts_of_XCM (2.5 hr) @gav
 Coffee break (30 min)
-Lecture - XCM 2, XCVM (1 hr) @gav
+Lecture - 2-XCVM (1 hr) @gav
 
 **Afternoon**
 Exercise - Usage of XCM locations (1.5 hr) @keith & @cisco
@@ -20,7 +20,7 @@ Exercise - Using XCM simulator (1.5 hr) @keith & @cisco
 **Morning**
 Lecture - XCM 3, Pallet XCM (1.5 hr) @gav
 Coffee break (15 min)
-Lecture - XCM 4, XCM configurables (1.5 hr) @gav
+Lecture - 4-Chain_Config_in_XCM (1.5 hr) @gav
 
 **Afternoon**
 Exercise - More simulator (1.5 hr) @keith
