@@ -40,7 +40,7 @@ impl Config for XcmConfig {
   type Barrier = Barrier;
   // How we withdraw/deposit assets
   type AssetTransactor = LocalAssetTransactor;
-  // How we convert a ML to a FRAME dispatch origin
+  // How we convert a Location to a FRAME dispatch origin
   type OriginConverter = LocalOriginConverter;
   // How we route the XCM outside this chain
   type XcmSender = XcmRouter;
