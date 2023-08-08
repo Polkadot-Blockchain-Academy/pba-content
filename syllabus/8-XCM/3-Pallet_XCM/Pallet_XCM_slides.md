@@ -81,10 +81,17 @@ Notes:
 - `execute`
 
   Direct access to the XCM executor.
+  Executed on behalf of FRAME's signed origin.
 
-  It is necessarily executed on behalf of the account that signed the extrinsic (i.e. the origin).
+<diagram class="mermaid limit size-40">
+  flowchart TD
+  subgraph paraA[Parachain A              .]
+    executor --"success?"--> palletxcm
+    palletxcm("pallet-xcm") --"execute"--> executor("xcm-executor")
+  end
+  execute("execute(xcm)") --> palletxcm
 
-<img style="width: 500px;" src="../../../assets/img/8-XCM/pallet-xcm-execute.svg" />
+</diagram>
 
 Notes:
 
@@ -99,7 +106,21 @@ It executes the message **locally** and returns the outcome as an event.
 
 Sends a message to the provided destination.
 
-<img style="width: 1200px;" src="../../../assets/img/8-XCM/pallet-xcm-send-paras.svg" />
+<diagram class="mermaid limit size-150" style="display: flex; justify-content: center; transform: translateX(-17%);">
+  flowchart LR
+  subgraph paraA[Parachain A]
+    palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
+    routera --> mqueuea("message queue")
+  end
+
+  subgraph paraB[Parachain B]
+    mqueueb("message queue") --> executorb("xcm-executor") 
+  end
+
+  send("send(xcm)") --> palletxcma
+  mqueuea --> mqueueb
+
+</diagram>
 
 Notes:
 
@@ -133,7 +154,53 @@ We have already seen what teleports and reserve transfers mean in lesson 7.1; A 
 
 This extrinsic allows the user to perform an asset teleport.
 
-<img style="width: 1000px;" src="../../../assets/img/8-XCM/pallet-xcm-teleport.svg" />
+<diagram class="mermaid">
+  flowchart LR
+  subgraph paraA[Parachain A]
+    palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
+    executora --"send"--> sendera("xcm-sender")
+  end
+
+  subgraph tdestination[Trusted Destination]
+  end
+  lteleport("limited_teleport_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+
+  sendera --"2."--> tdestination
+
+  classDef left text-align:left
+
+</diagram>
+
+<!--<div style="margin-bottom: 2rem;"></div>-->
+
+---v
+
+### `limited_teleport_assets`
+
+<ol>
+
+<li> <code>pallet-xcm</code> composes the following XCM and passes it to <code>xcm&#8209;executor</code></li>
+
+```rust
+Xcm(vec![
+  WithdrawAsset(assets),
+  SetFeesMode {jit_withdraw: true},
+  InitiateTeleport {assets: Wild(AllCounted(max_assets)), dest, xcm},
+])
+```
+
+<li>Parachain A then sends the following message to the trusted destination</li>
+
+```rust
+Xcm(vec![
+  ReceiveTeleportedAsset(assets),
+  ClearOrigin,
+  BuyExecution { fees, weight_limit },
+  DepositAsset { assets: Wild(AllCounted(max_assets)), beneficiary },
+])
+```
+
+</ol>
 
 ---v
 
@@ -141,9 +208,52 @@ This extrinsic allows the user to perform an asset teleport.
 
 `limited_reserve_transfer_assets`
 
-Allow the user to perform a reserve-backed transfer.
+Allow the user to perform a reserve-backed transfer from the reserve chain to the destination.
 
-<img style="width: 900px;" src="../../../assets/img/8-XCM/pallet-xcm-reserve-transfer.svg" />
+<diagram class="mermaid">
+  flowchart LR
+  subgraph reserve[Reserve Chain]
+    palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
+    executora --"send"--> sendera("xcm-sender")
+  end
+
+  subgraph destination[Destination]
+  end
+  lteleport("limited_reserve_transfer_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+
+  sendera --"2."--> destination
+
+  classDef left text-align:left
+
+</diagram>
+
+---v
+
+### `limited_reserve_transfer_assets`
+
+<ol>
+
+<li> <code>pallet-xcm</code> composes the following XCM and passes it to <code>xcm&#8209;executor</code></li>
+
+```rust
+Xcm(vec![
+  SetFeesMode { jit_withdraw: true },
+  TransferReserveAsset { assets, dest, xcm },
+])
+```
+
+<li>Reserve Chain then sends the following mesasge to the destination</li>
+
+```rust
+Xcm(vec![
+  ReserveAssetDeposited(assets),
+  ClearOrigin,
+  BuyExecution { fees, weight_limit },
+  DepositAsset { assets: Wild(AllCounted(max_assets)), beneficiary },
+])
+```
+
+</ol>
 
 ---
 
@@ -265,7 +375,24 @@ XCM version negotiation:
 
 ## 🗣️ XCM Version Negotiation
 
-<img rounded style="width: 900px;" src="../../../assets/img/8-XCM/xcm-versioning.png" />
+In the following scenario Chain A is using XCM v2
+
+<diagram class="mermaid limit size-80">
+  flowchart BT
+  subgraph registryA[Chain A's Registry]
+    chainB("Chain B \n\n v2")
+    chainC("Chain C \n\n v3")
+    chainD("Chain D \n\n v1")
+    chainE("Chain E \n\n v3")
+  end
+</diagram>
+
+<diagram class="mermaid limit size-70">
+  flowchart LR
+  
+  chainARequest("Chain A") --"Chain E ? \n\n v2"--> chainERequest("Chain E")
+
+</diagram>
 
 ---
 
@@ -364,6 +491,13 @@ Let's jump into the code and have a look at `limited_teleport_assets` extrinsic.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## Summary
 
-# Questions ?
+In this lecture, we learned:
+
+- What the XCM pallet is and what it's used for.
+- How XCM is intended to be used, both by wallet and runtime developers.
+- The useful extrinsics in the XCM pallet.
+- How XCM versioning works.
+- How the XCM pallet is used to receive responses.
+- How assets might be trapped and how to use the XCM pallet to claim them.
