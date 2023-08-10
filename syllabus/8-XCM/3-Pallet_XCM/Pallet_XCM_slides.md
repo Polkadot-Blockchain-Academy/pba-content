@@ -154,7 +154,7 @@ We have already seen what teleports and reserve transfers mean in lesson 7.1; A 
 
 This extrinsic allows the user to perform an asset teleport.
 
-<diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
+<diagram class="mermaid">
   flowchart LR
   subgraph paraA[Parachain A]
     palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
