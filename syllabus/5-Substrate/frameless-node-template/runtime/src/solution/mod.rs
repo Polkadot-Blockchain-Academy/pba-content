@@ -1,5 +1,5 @@
 use self::{
-	currency::BalancesMap,
+	currency::{BalancesMap, TotalIssuance},
 	storage::{StorageMap, StorageValue},
 };
 use crate::{
@@ -111,6 +111,7 @@ impl Runtime {
 		};
 
 		log::debug!(target: LOG_TARGET, "dispatched {:?}, outcome = {:?}", ext, dispatch_outcome);
+		Self::consolidate_treasury();
 		// note the extrinsic
 		Self::mutate_state::<Vec<Vec<u8>>>(EXTRINSICS_KEY, |current| {
 			current.push(ext.encode());
@@ -154,11 +155,10 @@ impl Runtime {
 		ext: &<Block as BlockT>::Extrinsic,
 		signer: AccountId,
 	) -> Result<(), TransactionValidityError> {
-		let allow_death = false; // The tip in itself is never capable of killing an account.
-		let mut balance = currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
-
-		// then, check that they can pay for the fee.
 		if let Some(tip) = ext.function.tip {
+			let allow_death = false; // The tip in itself is never capable of killing an account.
+			let mut balance =
+				currency::BalancesMap::<Self>::get(signer.clone()).unwrap_or_default();
 			balance
 				.withdraw(tip, allow_death)
 				.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::Payment))?;
@@ -166,29 +166,32 @@ impl Runtime {
 			// The writes in this code are redundant in `validate_transaction`, but we write it like
 			// this so we can reuse it. FRAME does the same in certain places as well.
 
+			let treasury_acc = AccountId::unchecked_from(TREASURY);
 			let mut treasury =
-				currency::BalancesMap::<Self>::get(AccountId::unchecked_from(TREASURY))
-					.unwrap_or_default();
-			match treasury.receive(tip) {
-				Ok(_) => {
-					currency::BalancesMap::<Self>::set(
-						AccountId::unchecked_from(TREASURY),
-						treasury,
-					);
-				},
-				Err(_) => {
-					let mut issuance = currency::TotalIssuance::<Self>::get().unwrap_or_default();
-					issuance = issuance.checked_sub(tip).expect(
-						"issuance cannot be less; we already check sender must have this amount; qed",
-					);
-					currency::TotalIssuance::<Self>::set(issuance);
-				},
-			}
+				currency::BalancesMap::<Self>::get(treasury_acc.clone()).unwrap_or_default();
+			treasury
+				.unchecked_receive(tip)
+				.map_err(|_| TransactionValidityError::Invalid(InvalidTransaction::Payment))?;
+			currency::BalancesMap::<Self>::set(treasury_acc, treasury);
+
+			currency::BalancesMap::<Self>::set(signer.clone(), balance);
 		}
 
-		currency::BalancesMap::<Self>::set(signer.clone(), balance);
-
 		Ok(())
+	}
+
+	fn consolidate_treasury() {
+		let mut treasury =
+			BalancesMap::<Self>::get(AccountId::unchecked_from(TREASURY)).unwrap_or_default();
+		log::debug!(target: LOG_TARGET, "treasury: {:?}", treasury);
+		if treasury.free < MINIMUM_BALANCE && treasury.free != 0 {
+			let mut issuance = TotalIssuance::<Self>::get().unwrap_or_default();
+			issuance -= treasury.free;
+			log::warn!(target: LOG_TARGET, "burning {}", treasury.free);
+			TotalIssuance::<Self>::set(issuance);
+			drop(treasury);
+			BalancesMap::<Self>::clear(AccountId::unchecked_from(TREASURY));
+		}
 	}
 
 	fn check_nonce_pre_dispatch(
@@ -241,7 +244,7 @@ impl Runtime {
 		Self::check_nonce_pre_dispatch(ext, signer)?;
 		Self::collect_tip(ext, signer)?;
 
-		let mut balance = BalancesMap::<Runtime>::get(signer).expect("account must exist; qed");
+		let mut balance = BalancesMap::<Runtime>::get(signer).unwrap_or_default();
 		balance.nonce += 1;
 		BalancesMap::<Runtime>::set(signer.clone(), balance);
 

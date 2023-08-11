@@ -174,6 +174,11 @@ impl<T: Config> AccountBalance<T> {
 		}
 		Ok(())
 	}
+
+	pub(crate) fn unchecked_receive(&mut self, amount: T::Balance) -> DispatchOutcome {
+		self.free = self.free.checked_add(&amount).ok_or(Error::<T>::Overflow)?;
+		Ok(())
+	}
 }
 
 pub struct BalancesMap<T: Config>(sp_std::marker::PhantomData<T>);
