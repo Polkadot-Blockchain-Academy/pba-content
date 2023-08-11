@@ -198,7 +198,7 @@ There are a lot more variants here, but this is by far the most common one.
 
 Hierarchical Deterministic Key Derivation
 
-<img style="width: 1100px;" src="../../../assets/img/1-Cryptography/HD-Deterministic-Wallet.png" />
+<img style="width: 1100px;" src="./img/HD-Deterministic-Wallet.png" />
 
 ---
 
@@ -212,7 +212,7 @@ Derivations can either be "hard" or "soft".
 
 ## Hard vs. Soft
 
-<img style="width: 1200px;" src="../../../assets/img/1-Cryptography/soft-vs-hard-derivation.png" />
+<img style="width: 1200px;" src="./img/soft-vs-hard-derivation.png" />
 
 ---
 
@@ -230,7 +230,7 @@ Always do hard paths first, then conclude in soft paths.
 
 Wallets can derive keys for use in different consensus systems while only needing to back up one secret plus a pattern for child derivation.
 
-<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png" />
+<img style="width: 1000px;" src="./img/Hard-Derivation-in-Wallets.png" />
 
 ---
 
@@ -238,7 +238,7 @@ Wallets can derive keys for use in different consensus systems while only needin
 
 Let's imagine we want to use this key on multiple networks, but we don't want the public keys to be connected to each other.
 
-<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/Hard-Derivation-in-Wallets.png" />
+<img style="width: 1000px;" src="./img/Hard-Derivation-in-Wallets.png" />
 
 ---
 

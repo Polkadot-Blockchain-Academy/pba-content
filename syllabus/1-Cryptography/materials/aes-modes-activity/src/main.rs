@@ -108,7 +108,7 @@ fn un_pad(data: Vec<u8>) -> Vec<u8> {
 ///
 /// This is probably the first thing you think of when considering how to encrypt
 /// large data. In this mode we simply encrypt each block of data under the same key.
-/// One good thing about this mode is that it is parallelizable. But to see why it is
+/// One good thing about this mode is that it is parallelize-able. But to see why it is
 /// insecure look at: https://www.ubiqsecurity.com/wp-content/uploads/2022/02/ECB2.png
 fn ecb_encrypt(plain_text: Vec<u8>, key: [u8; 16]) -> Vec<u8> {
 	todo!()

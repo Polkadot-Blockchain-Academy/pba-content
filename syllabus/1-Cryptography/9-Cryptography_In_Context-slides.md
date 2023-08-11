@@ -361,7 +361,7 @@ Mitigation looks like:
 
 ## Physical Security
 
-<img style="width: 900px;" src="../../../assets/img/1-Cryptography/xkcd-physical-security.png" />
+<img style="width: 900px;" src="./img/xkcd-physical-security.png" />
 
 Notes:
 
