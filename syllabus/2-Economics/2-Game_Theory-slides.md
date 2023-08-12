@@ -362,7 +362,7 @@ They are interrogated in different rooms, apart from each other.
 - **Cooperate** ($C$) with each other and not say anything
 - **Defect** ($D$) and confess their crime
 
-<img style="width: 650px; margin-right: 150px;" src="../../../assets/img/2-Economics/Bonnie-clyde-1.png" />
+<img style="width: 650px; margin-right: 150px;" src="./img/Bonnie-clyde-1.png" />
 
 Notes:
 
@@ -373,7 +373,7 @@ Notes:
 
 ## Bonnie and Clyde
 
-<img style="width: 800px; margin-right: 250px;" src="../../../assets/img/2-Economics/Bonnie-clyde-2.png" />
+<img style="width: 800px; margin-right: 250px;" src="./img/Bonnie-clyde-2.png" />
 
 Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a strategy that is always optimal for a player, regardless of what the other players do.
 
@@ -477,7 +477,7 @@ Notes:
 </pba-col>
 <pba-col>
 
-<img style="width: 550px;" src="../../../assets/img/2-Economics/Players.png" />
+<img style="width: 550px;" src="./img/Players.png" />
 
 </pba-col>
 </pba-cols>
@@ -504,7 +504,7 @@ Examples:
 </pba-col>
 <pba-col>
 
-<img style="width: 550px;" src="../../../assets/img/2-Economics/Players.png" />
+<img style="width: 550px;" src="./img/Players.png" />
 
 </pba-col>
 </pba-cols>
@@ -529,7 +529,7 @@ Notes:
 </pba-col>
 <pba-col>
 
-<img style="width: 550px;" src="../../../assets/img/2-Economics/Players.png" />
+<img style="width: 550px;" src="./img/Players.png" />
 
 </pba-col>
 </pba-cols>
@@ -550,7 +550,7 @@ However, a Nash equilibrium is a weaker notion than a dominant strategy, because
     <li class="fragment">Sometimes people switch between equilibria (if they are made to)...</li>
 </ul>
 <div class="fragment">
-    <img rounded style="width: 550px;" src="../../../assets/img/2-Economics/2.2-sweden-1967.jpg" /><br/>
+    <img rounded style="width: 550px;" src="./img/2.2-sweden-1967.jpg" /><br/>
     <p>Sweden, 1967.</p>
 </div>
 
@@ -896,25 +896,25 @@ Link will be distributed!
 
 ## Game 3: Instructions
 
-<img style="width: 1000px;" src="../../../assets/img/2-Economics/2.2-pgg-instructions.png" />
+<img style="width: 1000px;" src="./img/2.2-pgg-instructions.png" />
 
 ---
 
 ## Game 3: Contribution
 
-<img style="width: 1000px;" src="../../../assets/img/2-Economics/2.2-pgg-contribution.png" />
+<img style="width: 1000px;" src="./img/2.2-pgg-contribution.png" />
 
 ---
 
 ## Game 3: Punishment
 
-<img style="width: 900px;" src="../../../assets/img/2-Economics/2.2-pgg-punishment.png" />
+<img style="width: 900px;" src="./img/2.2-pgg-punishment.png" />
 
 ---
 
 ## Game 3: Payout
 
-<img style="width: 1000px;" src="../../../assets/img/2-Economics/2.2-pgg-result.png" />
+<img style="width: 1000px;" src="./img/2.2-pgg-result.png" />
 
 ---
 

@@ -185,7 +185,7 @@ Notes:
 
 ## Democracy
 
-<img rounded style="width: 900px;" src="../../../assets/img/2-Economics/democracy-meme.png" />
+<img rounded style="width: 900px;" src="./img/democracy-meme.png" />
 
 Notes:
 
@@ -216,7 +216,7 @@ Notes:
 
 ## Simple Direct democracy
 
-<img rounded style="width: 900px;" src="../../../assets/img/2-Economics/direct-democracy.png" />
+<img rounded style="width: 900px;" src="./img/direct-democracy.png" />
 
 Compare to a two-party system
 
@@ -616,7 +616,7 @@ Notes:
 
 ## Vote splitting
 
-<img style="width: 900px;" src="../../../assets/img/2-Economics/vote-splitting.png" />
+<img style="width: 900px;" src="./img/vote-splitting.png" />
 
 Notes:
 

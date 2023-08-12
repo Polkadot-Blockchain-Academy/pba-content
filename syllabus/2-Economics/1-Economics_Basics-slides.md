@@ -340,7 +340,7 @@ Notes:
 
 ## Visualizing Demand: The Demand Curve
 
-<img style="width:900px" src="../../../assets/img/2-Economics/2.1-market-demand.png" />
+<img style="width:900px" src="./img/2.1-market-demand.png" />
 
 Notes:
 
@@ -374,7 +374,7 @@ Notes:
 
 ## Moving the demand curve
 
-<img style="width:1100px" src="../../../assets/img/2-Economics/2.1-demand-curve.png" />
+<img style="width:1100px" src="./img/2.1-demand-curve.png" />
 
 ---
 
@@ -394,7 +394,7 @@ Notes:
 
 ## Demand and Supply Interplay: Market Equilibrium
 
-<img style="width: 600px;" src="../../../assets/img/2-Economics/2.1-supply-and-demand.png" />
+<img style="width: 600px;" src="./img/2.1-supply-and-demand.png" />
 
 - What happens when Price is higher than the Eq. Price?
 - What if the Quantity is lower than the Eq. Quantity?
@@ -953,7 +953,7 @@ Notes:
     <li class="fragment">On 18 June 2023, Titan, a submersible operated by American tourism company OceanGate, imploded during an expedition to the Titanic wreck.</li>
 </ul>
 <span style="display:flex; justify-content:center; align-items:center;">
-<img style="width:600px" class="fragment" src="../../../assets/img/2-Economics/2.1-oceangate.png" />
+<img style="width:600px" class="fragment" src="./img/2.1-oceangate.png" />
 </span>
 
 ---
@@ -976,7 +976,7 @@ Notes:
     <li class="fragment">They published the following blog post to give reasoning:</li>
 </ul>
 <span style="display:flex; justify-content:center; align-items:center;">
-<img style="width:600px" src="../../../assets/img/2-Economics/2.1-ocean-gate-blog-post.png" class="fragment" />
+<img style="width:600px" src="./img/2.1-ocean-gate-blog-post.png" class="fragment" />
 </span>
 
 Notes:
@@ -1158,8 +1158,8 @@ Notes:
 
 ## Game 2: Rules
 
-<img style="width:1200px" src="../../../assets/img/2-Economics/2.1-cournot-1-instructions.png" />
-
+<img style="width:1200px" src="./img/2.1-cournot-1-instructions.png" />
+[](./img/2.1-cournot-1-instructions.png)
 Notes:
 
 - 10 rounds not 2.
