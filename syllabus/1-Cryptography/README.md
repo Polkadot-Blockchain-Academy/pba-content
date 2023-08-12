@@ -2,7 +2,7 @@
 
 > “Cryptography rearranges power: it configures who can do what, from what”
 >
-> Phillip Rogaway, [The Moral Character of Cryptographic Work](FIXME)
+> Phillip Rogaway, [The Moral Character of Cryptographic Work](https://eprint.iacr.org/2015/1162.pdf)
 
 ## Lessons Plan
 
