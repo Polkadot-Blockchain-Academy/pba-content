@@ -189,6 +189,6 @@ Simply search the trait in the rust-docs, and find the implementors!
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="./img/thats_all_folks.png" />
 
 Notes:

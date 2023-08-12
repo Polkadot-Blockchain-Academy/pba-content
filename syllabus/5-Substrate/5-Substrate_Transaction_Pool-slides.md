@@ -1,6 +1,6 @@
 ---
 title: Substrate's Transaction Pool and its Runtime API
-duration: 30 minutes
+duration: 30mins
 ---
 
 # Substrate's Transaction Pool
