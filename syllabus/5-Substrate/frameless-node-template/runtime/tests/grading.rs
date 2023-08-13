@@ -297,6 +297,7 @@ mod basics {
 
 	mod fundamentals {
 		use super::*;
+
 		#[test]
 		fn empty_block() {
 			let mut state = new_test_ext();
