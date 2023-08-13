@@ -20,7 +20,7 @@ Jeff Bezos outlined in an annual letter to Amazon shareholders how he approaches
 
 Notes:
 
-https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm
+https://www.sec.gov/Archives/edgar/data/1018724/000119312516530910/d168744dex991.htm <!-- markdown-link-check-disable-line -->
 
 ---
 
@@ -48,7 +48,6 @@ Decisions that cannot easily be changed in the future.
 - Must be a part of the original protocol design.
 - Changes might as well be considered a new protocol.
 
-
 </pba-col>
 <pba-col>
 
@@ -68,7 +67,7 @@ Decisions that can be easily changed in the future.
 
 ---
 
-<image src="../../../assets/img/7-Polkadot/less-trust-more-truth.svg" style="width: 1000px; filter: invert();">
+<img style="width: 1000px; filter: invert();" src="../../assets/img/7-Polkadot/less-trust-more-truth.svg" />
 
 Notes:
 
@@ -106,8 +105,7 @@ This philosophy is a realization that building a blockchain is trying to build a
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/trilemma.svg" style="height: 400px;">
-
+<img style="height: 400px;" src="../../assets/img/7-Polkadot/trilemma.svg" />
 
 </div>
 
@@ -122,7 +120,6 @@ This philosophy is a realization that building a blockchain is trying to build a
 </div>
 
 </div>
-
 
 ---
 
@@ -141,10 +138,11 @@ Polkadot tries to accomplish that mission by solving three problems:
 <pba-flex center>
 
 1. Computational Scalability
-2. Shared Security
-3. Interoperability
+1. Shared Security
+1. Interoperability
 
 </pba-flex>
+
 ---
 
 ## The Decisions
@@ -159,7 +157,7 @@ What are the type 1 decisions which make Polkadot... Polkadot?
 
 <div>
 
-<img style="width: 400px;" src="../../../assets/img/0-Shared/logo/webassembly-blue.png" />
+<img style="width: 400px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" />
 
 </div>
 
@@ -189,7 +187,7 @@ These parallel chains (shards) are called Parachains.
 
 <div>
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/sharding.svg" />
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/sharding.svg" />
 
 </div>
 
@@ -203,7 +201,7 @@ These parallel chains (shards) are called Parachains.
 
 <div>
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/app-chain.svg" />
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/app-chain.svg" />
 
 </div>
 
@@ -216,7 +214,6 @@ Specialized solutions for problems are more performant than generalized solution
 </div>
 
 </div>
-
 
 ---
 
@@ -234,7 +231,7 @@ Interoperability allows parachains to work together to complete, complex end-to-
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/xcmp-2.svg" style="height: 500px;">
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-2.svg" />
 
 A visual of XCMP channels between Parachains.
 
@@ -245,7 +242,6 @@ A visual of XCMP channels between Parachains.
 ---
 
 ## Shared Security
-
 
 <div class="grid grid-cols-2">
 
@@ -259,7 +255,7 @@ Polkadot is unique in that it provides all connected parachains with the same se
 
 <div>
 
-<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/0-Shared/parachains/parachains-transparent.png" />
 
 </div>
 
@@ -269,7 +265,7 @@ Notes:
 
 Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
 
-Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender.  Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
+Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender. Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
 
 ---
 
@@ -277,7 +273,7 @@ Polkadot introduces a shared security model so that chains can interact with oth
 
 Polkadot's Shared Security is powered through the creation and allocation of execution cores.
 
-<img style="width: 1000px;" src="../../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+<img style="width: 1000px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
 Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
 
@@ -289,7 +285,7 @@ Execution cores provide blockspace-as-a-service, and are designed to work with a
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/xcmp-finalization.svg" style="height: 500px;">
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-finalization.svg" />
 
 </div>
 
@@ -317,7 +313,7 @@ This is continuing to evolve with the addition of "accords" / SPREE.
 
 ### Block Production
 
-<img style="width: 500px;" src="../../../assets/img/7-Polkadot/decisions/babe.svg" />
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/babe.svg" />
 
 Current implementation is BABE, which is forkful with probabilistic finality.
 
@@ -327,7 +323,7 @@ Current implementation is BABE, which is forkful with probabilistic finality.
 
 ### Finality Gadget
 
-<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/grandpa.png" />
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/grandpa.png" />
 
 Current implementation is GRANDPA, which is robust and scalable against network partitions.
 
@@ -344,7 +340,7 @@ Current implementation is GRANDPA, which is robust and scalable against network 
 Polkadot has a strong belief that light clients are a necessary component for a Web3 future. It has been uncompromising in enabling first class light client support as a primary part of its development process:
 
 - In-Browser Wasm Client (Substrate Connect)
-	- Wasm state transition function too!
+  - Wasm state transition function too!
 - Consensus data integrated into block headers
 - Merkle Tries and other LC compatible data structures
 - Maximizing statically known metadata to offset reliance on full nodes.
@@ -369,7 +365,7 @@ This gives the Polkadot Relay Chain and all connected parachains an evolutionary
 
 <div>
 
-<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/runtime-upgrade.png" />
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/runtime-upgrade.png" />
 
 </div>
 
@@ -392,7 +388,7 @@ Polkadot and its parachains need to change over time to stay relevant, and the n
 
 <div>
 
-<img style="width: 400px;" src="../../../assets/img/7-Polkadot/decisions/voting.svg" />
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/voting.svg" />
 
 </div>
 
@@ -414,7 +410,7 @@ It is entirely controlled on-chain by the governance system of Polkadot, which m
 
 <div>
 
-<img style="width: 600px;" src="../../../assets/img/7-Polkadot/decisions/treasury.svg" />
+<img style="width: 600px;" src="../../assets/img/7-Polkadot/decisions/treasury.svg" />
 
 </div>
 
@@ -436,13 +432,13 @@ Polkadot was designed around Parachains, but the exact meaning and manifestation
 
 <div>
 
-<img style="height: 200px;" src="../../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
+<img style="height: 200px;" src="../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
 
 </div>
 
 <div>
 
-<img style="height: 200px;" src="../../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+<img style="height: 200px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
 </div>
 
@@ -469,16 +465,15 @@ Notes:
 
 <div>
 
-<image src="../../../assets/img/7-Polkadot/xcm-stack.svg" style="height: 500px;">
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcm-stack.svg" />
 
 Instructions to teleport an asset between parachains.
-
 
 </div>
 
 <div>
 
-While cross-chain interoperability (XCMP) is a type 1 decision, exactly the language that chains speak to eachother is not.
+While cross-chain interoperability (XCMP) is a type 1 decision, exactly the language that chains speak to each other is not.
 
 XCM is Parity's current flavor of a cross-consensus message format, but we already see other teams try out their own ideas, or push updates to the XCM format specification.
 
@@ -506,8 +501,8 @@ The staking system is a critical focus of the network, and we have one of the mo
 <div class="col-span-2">
 
 - NPoS over DPoS to better allocate stake.
-	- We see ~25% more stake behind the elected set on NPoS compared with DPoS.
-	- At the cost of complexity and scaling.
+  - We see ~25% more stake behind the elected set on NPoS compared with DPoS.
+  - At the cost of complexity and scaling.
 - Economic incentives to distribute funds evenly across validators.
 - Super-linear slashing system to discourage validator centralization.
 - Actual value being generated by staking, justifying rewards.
@@ -568,11 +563,11 @@ What questions should you ask when learning about the decisions of a Protocol?
 
 - What is (the decision)?
 - What do we need to consider when making (the decision)?
-	- Is it a Type 1 or Type 2 decision?
+  - Is it a Type 1 or Type 2 decision?
 - What decisions has (chain) decided to make and why?
-	- What tradeoffs have they chosen?
+  - What tradeoffs have they chosen?
 - What decisions have others decided to make?
-	- How might those decisions be better or worse?
+  - How might those decisions be better or worse?
 - Where can the blockchain community still improve on (the decision)?
 
 ---

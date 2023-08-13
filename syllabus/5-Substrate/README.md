@@ -1,47 +1,47 @@
-## Day 1 (Monday)
+# Substrate
 
-### Morning (~4 hours max)
+Total time required 2.5 days.
 
-- Introduction ✅ (60m)
-- Wasm Meta Protocol (90m)
-- Activity: Finding Runtime APIs and Host Functions in Substrate
+## Graded assignment
 
-### Afternoon (~4 hours max)
+FIXME move [included](./frameless-node-template/) into solo repo
 
-- Show Me The Code (60m)
-- Substrate Interactions (60m)
-- FRAME-Less Activity (60m)
+## Activites
 
-> Graded assignments announced.
+FIXME move out [wasm demo](./wasm-crate/) into solo repo and reference where to use it. OR delete it.
 
-## Day 2 (Tuesday)
+## Schedule
 
-### Morning (~4 hours max)
+### Day 1
 
-- Transaction Pool (60m)
-- SCALE (60m)
-- Substrate/FRAME Tips and Tricks
+#### Morning
 
-### Afternoon (~4 hours max)
+1. [Introduction](1-Intro_to_Substrate-slides.md) (60m)
+1. [WASM Meta Protocol](2-Substrate_WASM_Meta-slides.md) (90m)
+<!-- FIXME where is this? -->
+1. Activity: Finding Runtime APIs and Host Functions in Substrate
 
-- FRAME-Less Activity
+#### Afternoon
 
-## Day 3 (Wednesday)
+1. [Show Me The Code](3-Substrate_Code-slides.md) (60m)
+1. [Substrate Interactions](4-Substrate-Interactions-slides.md) (60m)
+1. FRAME-Less Assignment (60m)
 
-### Morning (~4 hours max)
+### Day 2
 
-- Substrate Storage (90m)
-- FRAME-Less Activity
+#### Morning
 
-### Afternoon (~4 hours max)
+1. [Transaction Pool](5-Substrate_Transaction_Pool-slides.md) (60m)
+1. [SCALE](6-SCALE-slides.md) (60m)
+1. [Substrate and FRAME Tips and Tricks](7-Substrate_FRAME_Tips_Tricks-slides.md)
 
-> Move to FRAME module
+#### Afternoon
 
-## Reserve Ideas:
+1. FRAME-Less Assignment
 
-1. Activity: Substrate folder structure
-1. Activity: Wasm crate activity
-1. Lecture: Polkadot.js-API library
-1. Activity: Build a `sub-du`
-1. Activity: consensus by Joshy
-1. sub-xt
+### Day 3
+
+#### Morning
+
+1. [Substrate Storage](8-Substrate_Merklized_Storage-slides.md) (90m)
+1. FRAME-Less Assignment

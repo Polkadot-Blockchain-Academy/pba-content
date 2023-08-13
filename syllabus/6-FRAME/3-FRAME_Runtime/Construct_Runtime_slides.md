@@ -5,7 +5,6 @@ duration: 1 hour
 instructors: ["Kian Paimani"]
 ---
 
-
 # `construct_runtime!` and Testing 🔨
 
 ---
@@ -14,7 +13,7 @@ instructors: ["Kian Paimani"]
 
 ---
 
-<image src="../../../assets/img/6-FRAME/frame1.svg" style="height: 600px">
+<img style="height: 600px" src="../../../assets/img/6-FRAME/frame1.svg" />
 
 ---
 
@@ -72,7 +71,6 @@ impl pallet_dpos::Config for Runtime { .. }
 ### `<T: Config>` ==> `Runtime`
 
 > Anywhere in your pallet code that you have `<T: Config>` can now be replaced with `Runtime`.
-
 
 ```rust[1-2|3-4|5-6]
 // a normal pub function defined in
@@ -294,10 +292,10 @@ A test requires a mock runtime, so we need to do a full `construct_runtime` 😱
 
 ### Testing and Mocks
 
-* `u32` account id.
-* `u128` balance.
-* `u32` block number.
-* ...
+- `u32` account id.
+- `u128` balance.
+- `u32` block number.
+- ...
 
 ---
 
@@ -321,7 +319,6 @@ parameter_types! {
   pub const MyMaxVoters: u32 = 16;
 }
 ```
-
 
 ```rust
 impl pallet_template::Config for Runtime {
@@ -517,7 +514,7 @@ pub fn next_block() {
 
 ### Progressing Blocks
 
-```rust
+````rust
 ```rust
 #[test]
 fn test() {
@@ -537,7 +534,8 @@ fn test() {
     // repeat..
   });
 }
-```
+````
+
 ```
 
 ---
@@ -584,3 +582,4 @@ The `construct_runtime!` itself does a few things under the hood:
 
 - Ordering in `construct_runtime` matters.
 - Pallet parts can be optional in `construct_runtime!`.
+```
