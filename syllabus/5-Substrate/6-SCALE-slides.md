@@ -31,13 +31,13 @@ Wasm is a little endian system, which makes SCALE very performant.
 <pba-cols>
 <pba-col center>
 
-<img src="../../assets/img/5-Substrate/Big-Endian.svg" style="background-color: white; border-radius: 10%; border: 5px solid red;" />
+<img src="./img/Big-Endian.svg" style="background-color: white; border-radius: 10%; border: 5px solid red;" />
 
 </pba-col>
 
 <pba-col center>
 
-<img src="../../assets/img/5-Substrate/Little-Endian.svg" style="background-color: white; border-radius: 10%; border: 5px solid green;" />
+<img src="./img/Little-Endian.svg" style="background-color: white; border-radius: 10%; border: 5px solid green;" />
 
 </pba-col>
 </pba-cols>
@@ -667,6 +667,6 @@ HINT: We do.
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="./img/thats_all_folks.png" />
 
 Notes:
