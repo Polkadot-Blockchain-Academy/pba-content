@@ -1414,8 +1414,6 @@ SomeExternalities.execute_with(|| {
 
 ### Post Lecture Notes
 
-- Resource management (block length, weight) is dictated by the runtime.
-
 ---
 
 ## Appendix

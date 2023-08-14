@@ -348,6 +348,11 @@ _The way to make a protocol truly upgradeable is to design a meta-protocol that 
 
 <img src="../../assets/img/5-Substrate/dev-4-1-substrate-meta.svg" />
 
+Note:
+
+In this figure, the meta-protocol, the substrate client, is not forklessly upgrade-able. It can only
+be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
+
 ---v
 
 ### 🏦 Governance + Upgradeability
@@ -996,11 +1001,9 @@ exception](https://www.gnu.org/software/classpath/license.html).
 
 - Currently, the Wasm binary spec v1 is used, read more about the new version here: https://webassembly.github.io/spec/core/binary/index.html
 
-### Post Lecture Notes
+### Post Lecture Feedback
 
 - a takeaway after each section, more clear path (shawn).
-- people confuse that the client is not upgradeable AT ALL. Mention more that it is, just with forks.
-- Make the arrow bidirectional in communication paths.
 
 ---
 
