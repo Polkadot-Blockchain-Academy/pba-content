@@ -185,8 +185,6 @@ note:
 imagine that you have a crate that has some additional features that are not always needed. You put
 that behind a feature flag called `additional-features`.
 
-TODO: feature flags should be part of the rust entrance exam.
-
 ---v
 
 ### Cargo Features: Substrate Wasm Crates
@@ -843,8 +841,6 @@ Notes:
 
 often times, in examples above, you have to use this syntax: https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name
 
-TODO: we should explicitly add this to the exam as well.
-
 ---
 
 ## Implementing Traits For Tuples
@@ -1157,7 +1153,7 @@ Notes:
 - Update on defensive ops: https://github.com/paritytech/substrate/pull/12967
 - Next time, talk about making a storage struct be `<T: Config>`.
 - Cargo format
-
-TODO:
-
-- SignedExtension should technically be part of the substrate module. Integrate it in the assignment, perhaps.
+- SignedExtension should technically be part of the substrate module. Integrate it in the
+  assignment, perhaps.
+- A section about `XXXNoBound` traits.
+- A section about reading your compiler errors top to bottom, especially with an example in FRAME.
