@@ -593,8 +593,6 @@ bug in it, everyone is affected.
 ## Consensus <> Runtime 🤔
 
 - Yes, consensus is not a core part of a blockchain runtime. Why?
-- Not often customized.
-<!-- .element: class="fragment" -->
 - Not part of your STF!
 <!-- .element: class="fragment" -->
 - The consensus protocol is to your runtime what HTTP is to Facebook.
