@@ -1155,3 +1155,5 @@ Notes:
 - Cargo format
 - SignedExtension should technically be part of the substrate module. Integrate it in the
   assignment, perhaps.
+- A section about `XXXNoBound` traits.
+- A section about reading your compiler errors top to bottom, especially with an example in FRAME.
