@@ -106,19 +106,19 @@ It executes the message **locally** and returns the outcome as an event.
 
 Sends a message to the provided destination.
 
-<diagram class="mermaid limit size-150" style="display: flex; justify-content: center; transform: translateX(-17%);">
-  flowchart LR
-  subgraph paraA[Parachain A]
-    palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
-    routera --> mqueuea("message queue")
-  end
+<diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
+flowchart LR
+subgraph paraA[Parachain A]
+palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
+routera --> mqueuea("message queue")
+end
 
-  subgraph paraB[Parachain B]
-    mqueueb("message queue") --> executorb("xcm-executor") 
-  end
+subgraph paraB[Parachain B]
+mqueueb("message queue") --> executorb("xcm-executor")
+end
 
-  send("send(xcm)") --> palletxcma
-  mqueuea --> mqueueb
+send("send(xcm)") --> palletxcma
+mqueuea --> mqueueb
 
 </diagram>
 
@@ -161,13 +161,13 @@ This extrinsic allows the user to perform an asset teleport.
     executora --"send"--> sendera("xcm-sender")
   end
 
-  subgraph tdestination[Trusted Destination]
-  end
-  lteleport("limited_teleport_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+subgraph tdestination[Trusted Destination]
+end
+lteleport("limited_teleport_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
 
-  sendera --"2."--> tdestination
+sendera --"2."--> tdestination
 
-  classDef left text-align:left
+classDef left text-align:left
 
 </diagram>
 
@@ -210,20 +210,20 @@ Xcm(vec![
 
 Allow the user to perform a reserve-backed transfer from the reserve chain to the destination.
 
-<diagram class="mermaid">
+<diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
   flowchart LR
   subgraph reserve[Reserve Chain]
     palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
     executora --"send"--> sendera("xcm-sender")
   end
 
-  subgraph destination[Destination]
-  end
-  lteleport("limited_reserve_transfer_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+subgraph destination[Destination]
+end
+lteleport("limited_reserve_transfer_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
 
-  sendera --"2."--> destination
+sendera --"2."--> destination
 
-  classDef left text-align:left
+classDef left text-align:left
 
 </diagram>
 
