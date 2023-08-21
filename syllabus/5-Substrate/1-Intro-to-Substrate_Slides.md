@@ -154,7 +154,7 @@ int main() {
 }
 ```
 
-<br>
+<br/>
 
 ```rust
 fn main() {
@@ -183,7 +183,7 @@ int main() {
 
 ```
 
-<br>
+<br/>
 
 ```rust
 fn foo() -> &'static i32 {
@@ -214,7 +214,7 @@ https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/3215760/nsa-relea
 - 🏎️ Most Rust abstractions are **zero-cost**.
 - ⏰ Rust has (almost) no "runtime".
 
-<br>
+<br/>
 
 <img rounded width="900px" src="../../assets/img/5-Substrate/dev-4-1-speed.png" />
 

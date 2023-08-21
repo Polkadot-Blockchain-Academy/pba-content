@@ -246,7 +246,7 @@ Namely:
 - Substrate does in fact use a key-value based database under the hood..
 - In order to store trie nodes, not direct storage keys!
 
-<br>
+<br/>
 
 <div>
 
