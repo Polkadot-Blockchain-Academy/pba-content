@@ -17,7 +17,7 @@ duration: 1 hour
 
 ## Supply / demand for BIG markets
 
-<img rounded style="width: 800px; margin-right: 200px;" src="../../../assets/img/2-Economics/2.1-supply-and-demand.png" />
+<img rounded style="width: 800px; margin-right: 200px;" src="./img/2.1-supply-and-demand.png" />
 
 Notes:
 
@@ -44,7 +44,7 @@ Notes:
 
 ## What about _difficult_ markets?
 
-<img rounded style="width: 900px;" src="../../../assets/img/2-Economics/2.3-auction-platform.png" />
+<img rounded style="width: 900px;" src="./img/2.3-auction-platform.png" />
 
 Notes:
 
@@ -155,7 +155,7 @@ Notes:
 
 <pba-col>
 
-<img rounded style="width: 600px; margin-right: 10px;" src="../../../assets/img/2-Economics/2.3-price-posting.png" />
+<img rounded style="width: 600px; margin-right: 10px;" src="./img/2.3-price-posting.png" />
 
 </pba-col>
 </pba-cols>
@@ -172,7 +172,7 @@ Notes:
 
 ## Auctions
 
-<img rounded style="width: 500px;" src="../../../assets/img/2-Economics/2.3-auctioneer.gif" />
+<img rounded style="width: 500px;" src="./img/2.3-auctioneer.gif" />
 
 ---
 
@@ -294,7 +294,7 @@ Notes:
 - **Truthful equilibrium**: a _dominant strategy_ to bid truthfully.
 - **Dominant strategy**: outcome is at least as good as the outcome of any other strategy, _no matter what the other bidder bids_.
 
-<img rounded style="width: 1300px;" src="../../../assets/img/2-Economics/second-price-auction.svg" />
+<img rounded style="width: 1300px;" src="./img/second-price-auction.svg" />
 
 Notes:
 
@@ -350,7 +350,7 @@ Notes:
 
 ## Reserve price
 
-<img rounded style="width: 1400px;" src="../../../assets/img/2-Economics/reserve-price.svg" />
+<img rounded style="width: 1400px;" src="./img/reserve-price.svg" />
 
 Notes:
 
@@ -756,7 +756,7 @@ Notes:
 _Answer:_ **candle auctions.**<br/>
 Dynamic first-price auction with _random ending time._
 
-<img rounded style="width: 600px;" src="../../../assets/img/2-Economics/2.3-candle-auction-photo.jpg" />
+<img rounded style="width: 600px;" src="./img/2.3-candle-auction-photo.jpg" />
 
 ---
 
@@ -808,7 +808,7 @@ Notes:
 
 ---
 
-<img rounded style="width:600px" src="../../../assets/img/2-Economics/2.3-collection-preview.jpg" />
+<img rounded style="width:600px" src="./img/2.3-collection-preview.jpg" />
 
 ---
 
