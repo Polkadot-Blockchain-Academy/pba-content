@@ -100,10 +100,10 @@ Generally, from a high level language you need two compilation step if you want 
 Other examples of PABs used right now:
 
 - Inside the Linux Kernel -> eBPF
-- Inside browsers -> WASM
-- Inside Blockchains -> WASM
+- Inside browsers -> Wasm
+- Inside Blockchains -> Wasm
   - Full nodes
-  - Light nodes (WASM inside WASM)
+  - Light nodes (Wasm inside Wasm)
 - LLVM Toolchain -> LLVM IR
 
 ---v
@@ -278,7 +278,7 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 Notes:
 
-WASM seems to respect every rating points we defined before
+Wasm seems to respect every rating points we defined before
 
 ---
 
@@ -436,7 +436,7 @@ Buffer overflow? Wasm uses 32 bit, this makes impossible to have an offset bigge
 
 ---
 
-## How WASM is executed
+## How Wasm is executed
 
 <pba-flex left>
 
@@ -497,8 +497,8 @@ Cranelift is a fast, secure, relatively simple and innovative compiler backend. 
 - It is a wasm environment with support for embedded environment such as WebAssembly itself
 - Focus on simple, correct and deterministic WebAssembly execution
 - The technique of execution is interpretation but:
-  - The wasm code is transpiled to WASMI IR, another stack-based bytecode
-  - The WASMI IR is then interpreted by a Virtual Machine
+  - The wasm code is transpiled to WasmI IR, another stack-based bytecode
+  - The WasmI IR is then interpreted by a Virtual Machine
 
 <!--TODO: graphics-->
 

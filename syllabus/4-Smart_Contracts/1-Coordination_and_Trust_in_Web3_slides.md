@@ -3,9 +3,7 @@ title: Coordination and Trust in Web3
 description: Principles of coordination, contracts, smart contracts, and comparison with traditional legal infrastructure adn web3 infrastructure.
 ---
 
-# Smart Contracts
-
-## Coordination and Trust in Web3
+# Coordination and Trust in Web3
 
 Notes:
 

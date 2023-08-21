@@ -433,13 +433,13 @@ Junctions::X3(Parachain(para_id), PalletInstance(tokens_pallet_id), GeneralIndex
 // Runtime protocols (i.e. Treasury or it's account)
 Junctions::X2(Parachain(para_id), PalletInstance(treasury_pallet_id));
 
-// WASM smart contracts
+// Wasm smart contracts
 Junctions::X3(Parachain(para_id), PalletInstance(contracts_pallet_id), AccountId32(wasm_contract_account));
 
 // EVM smart contracts
 Junctions::X3(Parachain(para_id), PalletInstance(evm_pallet_id), AccountKey20(evm_contract_account));
 
-// WASM or EVM contracts
+// Wasm or EVM contracts
 Junctions::X3(
   Parachain(para_id),
   PalletInstance(contracts_pallet_id || evm_pallet_id),
