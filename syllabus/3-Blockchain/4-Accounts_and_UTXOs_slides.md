@@ -36,7 +36,7 @@ title: Accounting Models & User Abstractions in Blockchains
 
 </pba-col>
 
-<img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="img/3.2-thinking-cartoon.png" />
+<img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="./img/3.2-thinking-cartoon.png" />
 
 ---
 

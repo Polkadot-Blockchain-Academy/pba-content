@@ -100,7 +100,7 @@ It will cover most of the common terms and hopefully will not be as self-contrad
 <br/>
 BABE (sometimes):
 <br/><br/>
-<img style="width: 800px" src="../../assets/img/3-Blockchain/forks/transitory_fork_unresolved.drawio.svg" />
+<img style="width: 800px" src="./img/forks/transitory_fork_unresolved.drawio.svg" />
 
 Notes:
 
@@ -649,14 +649,14 @@ So if there is a major change that most people accept but not everyone it will a
 
 <pba-cols>
     <pba-col>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_s50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/soft_forks_s50.drawio.svg" />
 		<br/>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_g50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/soft_forks_g50.drawio.svg" />
     </pba-col>
 	<pba-col>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_s50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/hard_forks_s50.drawio.svg" />
 		<br/>
-		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_g50.drawio.svg" />
+		<img style="width: 400px" src="./img/forks/hard_forks_g50.drawio.svg" />
     </pba-col>
 </pba-cols>
 

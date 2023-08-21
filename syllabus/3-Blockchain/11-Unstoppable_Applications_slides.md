@@ -85,7 +85,7 @@ In reality we strive for Absolute Unstoppability, but likely cannot grantee it i
 
 </pba-col>
 <pba-col>
-<img rounded style="width: 550px" src="img/hydra-Gustave_Moreau.jpg" />
+<img rounded style="width: 550px" src="./img/hydra-Gustave_Moreau.jpg" />
 </pba-col>
 </pba-cols>
 
@@ -105,10 +105,10 @@ We must make trade-offs out of all N properties<br/>that a _absolutely_ Unstoppa
 
 <pba-cols>
 <pba-col>
-<img rounded style="width: 600px" src="img/trilemma.svg" />
+<img rounded style="width: 600px" src="./img/trilemma.svg" />
 </pba-col>
 <pba-col>
-<img rounded style="width: 600px" src="img/scalability-trilemma.svg" />
+<img rounded style="width: 600px" src="./img/scalability-trilemma.svg" />
 </pba-col>
 </pba-cols>
 
@@ -128,7 +128,7 @@ More relevant trilemma:
 
 ## Web3 Tech Stack
 
-<img style="width: 1200px" src="img/3.4-web3-stack.png" />
+<img style="width: 1200px" src="./img/3.4-web3-stack.png" />
 
 Notes:
 
@@ -185,7 +185,7 @@ These are for discussion today, but there are _many more_ thank those listed her
 
 ## Attacking Web3
 
-<img rounded style="width: 1000px" src="img/3.4-xkcd-security.png" />
+<img rounded style="width: 1000px" src="./img/3.4-xkcd-security.png" />
 
 Notes:
 
@@ -299,7 +299,7 @@ Explain example of luna or other system collapse.
 <pba-cols>
 <pba-col>
 
-<img rounded style="height: 700px;" src="img/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" />
+<img rounded style="height: 700px;" src="./img/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" />
 
 </pba-col>
 <pba-col>
@@ -325,7 +325,7 @@ Example: irrational actors can be represented in a very simple model as a comple
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px" src="img/3.4-xkcd-dependency.png" />
+<img rounded style="width: 500px" src="./img/3.4-xkcd-dependency.png" />
 
 </pba-col>
 <pba-col>
@@ -354,7 +354,7 @@ Image source: https://xkcd.com/2347/
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px" src="img/dependency-polkadot-js.png" />
+<img rounded style="width: 500px" src="./img/dependency-polkadot-js.png" />
 
 </pba-col>
 <pba-col>
@@ -373,7 +373,7 @@ Notes:
 
 ## 🙈 Unknown unknowns
 
-<img rounded style="width: 800px" src="img/DiveEdge.gif" />
+<img rounded style="width: 800px" src="./img/DiveEdge.gif" />
 
 Notes:
 
@@ -392,7 +392,7 @@ Assumptions about context must be rigorously evaluated (i.e. - what does finalit
 
 ## 🕸️ Peer-to-Peer Networks
 
-<img style="width: 1000px" src="img/3.4-network-topologies.png" />
+<img style="width: 1000px" src="./img/3.4-network-topologies.png" />
 
 ---v
 
@@ -426,7 +426,7 @@ Hard to hide! Most p2p traffic is easy to identify vs. web2 traffic.
 
 Running a node is hard, most people outsource.
 
-<img style="width: 1000px" src="img/3.4-node-queries.png" />
+<img style="width: 1000px" src="./img/3.4-node-queries.png" />
 
 These service have power to deceive, censor, and surveil.
 
@@ -436,7 +436,7 @@ These service have power to deceive, censor, and surveil.
 
 If running _one_ node is burdensome, try multiple.
 
-<img style="width: 700px" src="img/3.4-multi-chain-apps.png" />
+<img style="width: 700px" src="./img/3.4-multi-chain-apps.png" />
 
 ---v
 
@@ -494,7 +494,7 @@ Similar issues, but in a more bounded set.
 
 ## Mining Pools
 
-<img rounded style="width: 1000px" src="img/mining-pools.png" />
+<img rounded style="width: 1000px" src="./img/mining-pools.png" />
 
 Notes:
 
@@ -538,7 +538,7 @@ Notes:
 
 ## ⚔ Proof of Work Battles
 
-<img rounded style="width: 1300px;" src="img/3.4-51-percent-cost.png" />
+<img rounded style="width: 1300px;" src="./img/3.4-51-percent-cost.png" />
 
 > What might it cost to successfully attack?
 
@@ -612,7 +612,7 @@ Notes:
 
 ## ⚔ PoS Economic Security Battles
 
-<img rounded style="width: 1150px;" src="img/market-cap-pos.png" />
+<img rounded style="width: 1150px;" src="./img/market-cap-pos.png" />
 
 Notes:
 
@@ -624,7 +624,7 @@ What about an system of value _within_ consensus?
 
 ## DApp PoS Economic Security
 
-<img rounded style="width: 1200px;" src="img/market-cap-polkadot-chains.png" />
+<img rounded style="width: 1200px;" src="./img/market-cap-polkadot-chains.png" />
 
 Notes:
 
@@ -811,7 +811,7 @@ Notes:
 
 ## Compliance
 
-<img rounded style="width: 1000px" src="img/tornado-ofac.png" />
+<img rounded style="width: 1000px" src="./img/tornado-ofac.png" />
 
 Notes:
 
@@ -840,7 +840,7 @@ Notes:
 
 ## Unbundling
 
-<img style="width: 1200px" src="img/3.4-web3-stack.png" />
+<img style="width: 1200px" src="./img/3.4-web3-stack.png" />
 
 Notes:
 
@@ -859,7 +859,7 @@ From before, but here point out how this is getting more fine grained as well, a
 
 ## Diversity
 
-<img style="width: 1200px" src="img/eth-client-diversity.png" />
+<img style="width: 1200px" src="./img/eth-client-diversity.png" />
 
 Notes:
 
@@ -892,7 +892,7 @@ Notes:
 
 ## 🤝 Together, into the Deep
 
-<img rounded style="width: 800px" src="img/DiveEdge.gif" />
+<img rounded style="width: 800px" src="./img/DiveEdge.gif" />
 
 ---
 

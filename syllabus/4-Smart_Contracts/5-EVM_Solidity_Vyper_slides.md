@@ -111,7 +111,7 @@ Since gas is limited, this ensures that no EVM execution will run forever and th
 
 ## Gasometer
 
-<img style="width: 1200px" src="img/frontier/GasometerDiagram.png" />
+<img style="width: 1200px" src="./img/frontier/GasometerDiagram.png" />
 
 - Checks before each opcode to make sure gas can be paid
 - Safe: prevents unpaid work from being done
@@ -847,7 +847,7 @@ Remix supports Vyper through a plugin, which can be easily enabled from within
 the IDE.
 First, search for "Vyper" in the plugins tab:
 
-<img rounded style="width: 500px;" src="img/frontier/RemixInstallVyper1.png" />
+<img rounded style="width: 500px;" src="./img/frontier/RemixInstallVyper1.png" />
 
 ---v
 
@@ -855,7 +855,7 @@ First, search for "Vyper" in the plugins tab:
 
 Use Vyper through the new Vyper tab and use "Remote Compiler"
 
-<img rounded style="width: 500px" src="img/frontier/RemixInstallVyper2.png" />
+<img rounded style="width: 500px" src="./img/frontier/RemixInstallVyper2.png" />
 
 ---
 
