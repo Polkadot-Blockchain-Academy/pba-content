@@ -201,7 +201,7 @@ Keep your guard up when in transit or a public place, all it takes is a momentar
 
 #### I Pickpocketed a Pickpocket
 
-<img rounded style="width: 1100px" data-src="./img/2-security_awareness/pickpocket.gif" />
+<img rounded style="width: 1100px" src="./img/2-security_awareness/pickpocket.gif" />
 
 Notes:
 
@@ -274,7 +274,7 @@ Lost or stolen keys and ID documents pose an increased physical threat: the leak
 
 #### Tampering
 
-<iframe width="1440" height="646" data-src="https://www.youtube-nocookie.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
+<iframe width="1440" height="646" src="https://www.youtube-nocookie.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
 
 Notes:
 
@@ -288,7 +288,7 @@ These can put your devices - be it phone, laptop, or hardware wallet - at risk o
 
 #### Tampering: Mitigations
 
-<img rounded style="width: 500px" data-src="./img/2-security_awareness/cables.png" />
+<img rounded style="width: 500px" src="./img/2-security_awareness/cables.png" />
 
 Notes:
 
@@ -339,7 +339,7 @@ Privacy screens are a mitigation, but they're not infallible - they reduce the v
 
 ### Shoulder Surfing
 
-<img rounded style="width: 350px" data-src="./img/2-security_awareness/com-truise.png" />
+<img rounded style="width: 350px" src="./img/2-security_awareness/com-truise.png" />
 
 Notes:
 
@@ -349,7 +349,7 @@ Besides, we know that Mr Tom Cruise runs at a 22° angle, rendering privacy scre
 
 ### Shoulder Surfing
 
-<img rounded style="width: 700px" data-src="./img/2-security_awareness/shoulder-pads.jpg" />
+<img rounded style="width: 700px" src="./img/2-security_awareness/shoulder-pads.jpg" />
 
 Notes:
 
@@ -359,7 +359,7 @@ It's unrealistic that you can wear shoulder pads all the time to block the view 
 
 ### Shoulder Surfing
 
-<img rounded style="width: 700px" data-src="./img/2-security_awareness/scousers.jpg" />
+<img rounded style="width: 700px" src="./img/2-security_awareness/scousers.jpg" />
 
 Notes:
 
@@ -369,7 +369,7 @@ Nor are you going to be able to rapidly grow out your hair
 
 ### Shoulder Surfing
 
-<img rounded style="width: 700px" data-src="./img/2-security_awareness/shouldersurf.jpg" />
+<img rounded style="width: 700px" src="./img/2-security_awareness/shouldersurf.jpg" />
 
 Notes:
 
@@ -420,7 +420,7 @@ Cover in transit - benefit of protected device
     Call it what you will, but it can be a source of information disclosure
   </pba-col>
   <pba-col center>
-    <img rounded style="width: 500px" data-src="./img/2-security_awareness/btc-coat.png" />
+    <img rounded style="width: 500px" src="./img/2-security_awareness/btc-coat.png" />
   </pba-col>
 </pba-cols>
 
@@ -490,7 +490,7 @@ Actions and decisions are circumstantial
 
 Phishing is easier than ever, just ask ChatGPT:
 
-<img rounded style="width: 1000px" data-src="./img/2-security_awareness/gpt-github-email.png" />
+<img rounded style="width: 1000px" src="./img/2-security_awareness/gpt-github-email.png" />
 
 Notes:
 
@@ -503,7 +503,7 @@ Existing trusted email infrastructure and its exploitation leads to more and mor
 
 Phishers are getting smarter, and your digital footprint is on their radar.
 
-<img rounded style="width: 800px" data-src="./img/2-security_awareness/gpt-travel-email.png" />
+<img rounded style="width: 800px" src="./img/2-security_awareness/gpt-travel-email.png" />
 
 Notes:
 
