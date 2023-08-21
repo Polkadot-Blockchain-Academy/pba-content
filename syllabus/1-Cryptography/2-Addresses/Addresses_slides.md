@@ -212,7 +212,7 @@ Derivations can either be "hard" or "soft".
 
 ## Hard vs. Soft
 
-<img style="width: 1200px;" src="../../../assets/img/1-Cryptography/soft-vs-hard-derivation.png">
+<img style="width: 1200px;" src="../../../assets/img/1-Cryptography/soft-vs-hard-derivation.png" />
 
 ---
 

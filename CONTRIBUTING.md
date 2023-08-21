@@ -96,10 +96,11 @@ yarn
 ---
 
 **To see what reveal can do, please view the slides and their source for details:**
+[](./faculty_resources/0-how_to_use_reveal_slides.md)
 
-- [How-to use reveal slides](./syllabus/0-Internal_Faculty_Resources/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
-- [Lecture template slides](./syllabus/0-Internal_Faculty_Resources/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
-- [Copy & paste slide templates](./syllabus/0-Internal_Faculty_Resources/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
+- [How-to use reveal slides](./faculty_resources/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
+- [Lecture template slides](./faculty_resources/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
+- [Copy & paste slide templates](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
 
 ---
 
@@ -111,7 +112,7 @@ Running this command will open a new browser tab and _watch for file changes_ (u
 yarn start
 ```
 
-**There is a [base slide template example](./syllabus/0-Internal_Faculty_Resources/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
+**There is a [base slide template example](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
 This template can be used just copy and change slide by slide the content, and not worry with styling.
 If you do need custom style, please just comment in the slides with a code comment that says as much:
 
@@ -220,7 +221,6 @@ Once you've followed the set-up instructions and have the repository running loc
 ### Formatting Markdown, TOML, JSON
 
 We enforce the use of a few formatters, the primary one being [Prettier](https://prettier.io/) that is included in the dev-dependencies for this repository.
-The [.vscode/settings.json](.vscode/settings.json) config file details these including extensions to use that are compatible with the CI that checks compliance.
 In [package.json](./package.json) we include a handy tool to format all markdown docs easily:
 
 ```sh

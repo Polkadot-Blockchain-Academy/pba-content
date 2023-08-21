@@ -8,7 +8,7 @@ Understanding fundamental concepts in economics is crucial not only for the upco
 
 ### Prerequisites
 
-None. This session is designed as an introduction to economics and assumes no prior knowledge. 
+None. This session is designed as an introduction to economics and assumes no prior knowledge.
 
 ### Learning Outcomes
 
@@ -20,7 +20,7 @@ Upon completing this session, participants...
 
 - Can explain the context and meaning of some of the most fundamental economic concepts, such as supply and demand, opportunity cost, marginal utility, the influence of time on value, and comparative advantage.
 - Can correctly apply these concepts when analyzing economic scenarios or designing incentives.
-Understand how these concepts form the foundation of more complex economic theories and models.
+- Understand how these concepts form the foundation of more complex economic theories and models.
 
 ## Lecture (~1.5 hours)
 

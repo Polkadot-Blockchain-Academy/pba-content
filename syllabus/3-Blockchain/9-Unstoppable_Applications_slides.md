@@ -126,17 +126,6 @@ More relevant trilemma:
 
 ---
 
-## Attacking Web3
-
-<img rounded style="width: 1000px" src="img/3.4-xkcd-security.png" alt="https://xkcd.com/538/" />
-
-Notes:
-
-Key point: your "perfect" system in is likely weak to things outside of the "rules"!
-especilly
-
----
-
 ## Web3 Tech Stack
 
 <img style="width: 1200px" src="img/3.4-web3-stack.png" />
@@ -148,15 +137,15 @@ representation.
 
 Observation and clarification: DApps canonically refer to smart contract applications.
 These exist _within the context_ of consensus systems that themselves inherit properties of unstoppability from.
-The academy (to date) is almost exclusively focused on _consensus system engineering_ - we reason about blockchains themselves, and "DApp"s use these as platforms to operate in.
-Smart contracts module _may_ include detains on unstoppable dapps design considerations.
+The academy is more focused on _consensus system engineering_ - we reason about blockchains themselves - rather than "DApp"s that _use_ those as platforms to operate in or on.
+The Smart contracts lessons _may_ include detains on unstoppable dapps design considerations.
 
-<!-- TODO: update this graphic, rather stale (Joe mentioned in Cambridge) -->
-<!-- TODO: clarify based on smart contract content - does it inform on system design considerations for unstoppable dapps? -->
+<!-- FIXME TODO: update this graphic, rather stale (Joe mentioned in Cambridge) -->
+<!-- FIXME TODO: clarify based on smart contract content - does it inform on system design considerations for unstoppable dapps? -->
 
 ---
 
-## A Lot More Than Blockchain
+## Much More Than Blockchain Architecture...
 
 <pba-cols>
 <pba-col>
@@ -175,6 +164,8 @@ Web3 applications must prevent attacks at all layers.
 - Node access
 - Validator power
 - Inter-consensus trust
+- _Human factors_
+- _Extrinsic factors_
 
 </pba-flex>
 </pba-col>
@@ -185,6 +176,25 @@ Notes:
 These are for discussion today, but there are _many more_ thank those listed here!
 
 ---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Human Level
+
+---
+
+## Attacking Web3
+
+<img rounded style="width: 1000px" src="img/3.4-xkcd-security.png" />
+
+Notes:
+
+Key point: your "perfect" system in is likely weak to things outside of the "rules"!
+especially
+
+Image Source: https://xkcd.com/538/
+
+---v
 
 ## Web3 Criticisms
 
@@ -215,6 +225,8 @@ https://moxie.org/2022/01/07/web3-first-impressions.html great critique on the s
 Not all hope is lost!
 This is valid mostly in the present, we will discuss these and what we're building to realize a better stack.
 
+<!-- TODO FIXME: more slides on this section! -->
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -239,6 +251,8 @@ Notes:
 
 The one so far not covered is Provable Correctness - where we can use maths to _prove_ that our logic cannot do unexpected behavior.
 An interesting example is [Cardano's design value proposition](https://docs.cardano.org/explore-cardano/cardano-design-rationale) using haskell and provably correct most parts of their platform.
+
+> We have a lesson and exercise on formal verification methods latter on - this is how we can approach Provable Correctness in the context of Rust and thus Substrate.
 
 BUT this property assumes a complete system model!
 Nuke proposes that when considering factors outside the consensus system, there cannot be a rigorous proof of correctness as we cannot model the universe.
@@ -266,7 +280,7 @@ Notes:
 
 <pba-flex center>
 
-- known bounds of operation _assumed_ impossible
+- known bounds of operation</br>_assumed_ impossible
 - death spirals
 
 </pba-flex>
@@ -285,7 +299,7 @@ Explain example of luna or other system collapse.
 <pba-cols>
 <pba-col>
 
-<img rounded style="height: 700px;" src="img/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" alt="https://en.wikipedia.org/wiki/Nassim_Nicholas_Taleb#/media/File:Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" />
+<img rounded style="height: 700px;" src="img/Genealogy_map_of_topics_treated_by_Nassim_Taleb.jpg" />
 
 </pba-col>
 <pba-col>
@@ -311,7 +325,7 @@ Example: irrational actors can be represented in a very simple model as a comple
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px; margin-right: -5em" src="img/3.4-xkcd-dependency.png" alt="https://xkcd.com/2347/" />
+<img rounded style="width: 500px" src="img/3.4-xkcd-dependency.png" />
 
 </pba-col>
 <pba-col>
@@ -331,6 +345,8 @@ Notes:
 - Also in dependance on specific operational contexts.
   For example that it is legal to operate the software for nodes.
 
+Image source: https://xkcd.com/2347/
+
 ---v
 
 ## 🦸 Dependency in Polkadot
@@ -338,7 +354,7 @@ Notes:
 <pba-cols>
 <pba-col>
 
-<img rounded style="width: 500px; margin-right: -5em" src="img/dependency-polkadot-js.png" />
+<img rounded style="width: 500px" src="img/dependency-polkadot-js.png" />
 
 </pba-col>
 <pba-col>
@@ -451,8 +467,8 @@ i.e., be members of the same consensus system.
 
 Notes:
 
-- Quantitative: nodes needed (for what), incentives, ... TODO
-- Qualitative: social norms, ... TODO
+- Quantitative: nodes needed (for what), incentives, ... FIXME TODO
+- Qualitative: social norms, ... FIXME TODO
 
 ---
 
@@ -667,7 +683,7 @@ Others rely on challenge-response games and dispute resolution.
 
 Notes:
 
-Nothing at stake solution, with the possible caveot of long range attacks. [Weak subjectivity](https://blog.ethereum.org/2014/11/25/proof-stake-learned-love-weak-subjectivity) can still potentially cause the same behavior in a much harder to orchestra way, with bad actors having already have their stake released to produce a valid, finalized fork.
+Nothing at stake solution, with the possible caveat of long range attacks. [Weak subjectivity](https://blog.ethereum.org/2014/11/25/proof-stake-learned-love-weak-subjectivity) can still potentially cause the same behavior in a much harder to orchestra way, with bad actors having already have their stake released to produce a valid, finalized fork.
 
 ---v
 
@@ -747,7 +763,7 @@ Tell the story of this article, basically a white hat engineered obfuscation to 
 
 This is now the norm on Ethereum at least, and further _it's becoming institutionalized_.
 
-<!-- TODO Dark Forest game on Ethereum testnet... or other zk game? -->
+<!-- FIXME TODO Dark Forest game on Ethereum testnet... or other zk game? -->
 
 ---v
 
@@ -813,7 +829,7 @@ Social systems and norms can help _cover up_ weaknesses in protocols.
 
 Notes:
 
-- Pressure from peers through breaking norms, perhaps even lossing of authority in consensus due to this.
+- Pressure from peers through breaking norms, perhaps even losing of authority in consensus due to this.
   Peer reputation in computer networks, and here also in human ones.
 - Sometimes social pressures are healthy for the system, sometimes toxic depending on point of view and who benefits!
 - In monero "run your own node" culture helps keep it decentralized.<br/>
@@ -835,9 +851,15 @@ From before, but here point out how this is getting more fine grained as well, a
 
 ---v
 
+## Unbundling
+
+### _The vision of "blockspace" leads</br>more and more to this end_
+
+---v
+
 ## Diversity
 
-<img style="width: 1200px" src="img/eth-client-diversity.png" alt="https://mirror.xyz/jmcook.eth/S7ONEka_0RgtKTZ3-dakPmAHQNPvuj15nh0YGKPFriA" />
+<img style="width: 1200px" src="img/eth-client-diversity.png" />
 
 Notes:
 

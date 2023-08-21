@@ -14,6 +14,8 @@ duration: 1 hour
 
 1. [Verifiable Random Functions (VRFs)](#verifiable-random-functionsvrfs)
 1. [Erasure coding](#erasure-coding)
+1. [Shamir Secret Sharing](#shamir-secret-sharing)
+1. [Proxy Re-Encryption](#proxy-reencryption)
 1. [ZK Proofs](#zk-proofs)
 
 </pba-flex>
@@ -196,6 +198,58 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
 ---
 
+## Shamir Secret Sharing
+
+_Redundancy for your secrets_
+
+- Turn data (typically a secret) into pieces so it can be reconstructed from some subset of the pieces.
+
+- A secret is turned into $n$ shares, and be recovered by any $k$ of the shares. $k-1$ shares together reveals nothing about the secret.
+
+---
+
+## Shamir Secret Sharing
+
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/shamir-secret-sharing.png" />
+
+Notes:
+
+Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033
+
+---
+
+## Pros and Cons
+
+- Can reconstruct a secret if you lose it.
+- So can other people who collect enough shares.
+
+---
+
+## Proxy Reencryption
+
+Generate keys to allow a third party to transform encrypted data so someone else can read it, without revealing the data to the third party.
+
+---
+
+## Proxy Reencryption
+
+<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/proxy-reencryption.png" />
+
+Notes:
+
+[img source](https://scrapbox.io/layerx/Proxy_Re-Encryption%28PRE%29%E3%81%A8NuCypher)
+
+---
+
+## Proxy Reencryption API
+
+- `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes your public key and a message; returns ciphertext.
+- `fn decrypt(sk, ciphertext) -> msg;` <br/> Takes your private key and a ciphertext; returns the message.
+- `fn get_reencryption_key(sk, pk) -> rk;` <br/> Takes your private key, and the recipient's public key; returns a reencryption key.
+- `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;` <br/> Take a reencryption key, and transform ciphertext to be decrypted by new party.
+
+---
+
 ## ZK Proofs
 
 How do we do private operations on a public blockchain<br/>and have everyone know that they were done correctly?
@@ -366,6 +420,8 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 - VRF: Private randomness that is later publicly verifiable
 - Erasure Coding: Making data robust against losses with redundancy
+- Shamir Secret Sharing: Redundancy for your secrets.
+- Proxy Re-encryption: Allow access to your data _with cryptography_.
 - ZK Proofs: Just magic, but expensive magic
 
 ---
