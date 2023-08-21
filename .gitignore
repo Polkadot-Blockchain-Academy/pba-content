@@ -41,3 +41,5 @@ _static/
 ## Draw,io
 *.bkp
 *.dtmp
+
+syllabus/4-Smart_Contracts/*.html

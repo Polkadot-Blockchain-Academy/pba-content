@@ -8,7 +8,7 @@ description: Light clients principles and application in bridges
 <pba-cols>
 <pba-col>
 
-<img rounded style="width:400px" alt="Pierre Krieger aka Tomaka" src="./img/tomaka.png" />
+<img rounded style="width:400px" src="./img/tomaka.png" />
 
 </pba-col>
 <pba-col>
@@ -36,7 +36,6 @@ Ideally:
 <pba-col>
 
 <pba-flex center>
-<div>
 
 <div>
 Reality:
@@ -44,9 +43,6 @@ Reality:
 - It takes a lot of disk, memory, etc
 - It takes some know-how
 - I don't need it _all the time_
-</div>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
 </div>
 <!-- .element: class="fragment" -->
 
@@ -138,7 +134,7 @@ There are varying degrees of lightness to suit your needs.
 
 ## Trustless
 
-<img style="width:900px; margin-top:-30px" alt="Bitcoin SPV diagram checking Merkle root" src="./img/bitcoin-spv.png" />
+<img rounded style="width:900px; margin-top:-30px" src="./img/bitcoin-spv.png" />
 
 <pba-flex center>
 
@@ -194,7 +190,7 @@ But this is still only even N blocks instead of every block.
 
 Stay in the gossip protocol or you might get got.
 
-<img rounded width="500px" alt="You get nothing! You Lose! Good day sir!" src="./img/wanka.jpg" />
+<img rounded width="500px" src="./img/wanka.jpg" />
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -210,7 +206,7 @@ So it is important to communicate with many different full nodes.
 
 Transport layers between independent consensus systems
 
-<img rounded width="700px" alt="Bridge spanning space between blockchains" src="./img/basic-bridge.svg" />
+<img rounded width="700px" src="./img/basic-bridge.svg" />
 
 Notes:
 
@@ -239,7 +235,7 @@ There is a dedicated lane for each direction.
 
 ## Source Chain Re-Orgs
 
-<img width="900px" alt="What should target chain do when source chain re-orgs" src="./img/bridge-reorg.png" />
+<img rounded width="900px" src="./img/bridge-reorg.png" />
 
 Notes:
 
@@ -308,13 +304,13 @@ Notes:
 
 ## BTC Relay
 
-<img width="1000px" src="./img/btc-relay.svg" />
+<img rounded width="1000px" src="./img/btc-relay.svg" />
 
 ---
 
 ## Bridge Design Challenges
 
-<img rounded width="1100px" src="./img/bridge-collapse.webp">
+<img rounded width="1100px" src="./img/bridge-collapse.webp" />
 
 Notes:
 
@@ -350,8 +346,10 @@ But even if you don't trust any relayer out there, you can always run your own.
 
 ## Finality and Equivocation
 
-<img width="500px" src="./img/bridge-incentives-achiles.jpg" />
-<img width="700px" src="./img/bridge-double-finalized.svg" />
+<section class="!flex">
+  <img rounded width="500px" src="./img/bridge-incentives-achiles.jpg" />
+  <img rounded width="700px" src="./img/bridge-double-finalized.svg" />
+</section>
 
 Notes:
 
@@ -406,7 +404,7 @@ Relayers will expect to earn some reward for the opportunity cost of their stake
 
 ## Multichain Apps
 
-<img width="800px" src="./img/bridge-multichain-stack.svg" />
+<img rounded width="800px" src="./img/bridge-multichain-stack.svg" />
 
 ---v
 
