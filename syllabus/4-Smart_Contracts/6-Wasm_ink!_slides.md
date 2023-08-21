@@ -1,11 +1,11 @@
 ---
-title: WASM Smart Contracts in Ink!
+title: Wasm Smart Contracts in Ink!
 description: A working programmer’s guide to the crypto industry
 ---
 
 <img rounded style="width: 600px;" src="img/ink/ink-logo-with-squid-white.svg" />
 
-# WASM Smart Contracts in Ink!
+# Wasm Smart Contracts in Ink!
 
 A working programmer’s guide
 
@@ -32,7 +32,7 @@ Notes:
 Notes:
 
 - students are freshly of an EVM lecture so might be wondering why another SC language
-- Virtual Machine: any WASM VM: yes in theory, in practice bound pretty close to the platform it runs on (Substrate & the contracts pallet)
+- Virtual Machine: any Wasm VM: yes in theory, in practice bound pretty close to the platform it runs on (Substrate & the contracts pallet)
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
 - The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
 
@@ -44,7 +44,7 @@ Notes:
 - Inherits all the benefits of Rust
   - Modern functional language
   - Type & Memory safety
-- Compiled to WASM
+- Compiled to Wasm
   - Ubiquitous
   - Fast
 
@@ -52,7 +52,7 @@ Notes:
 
 - ink! is not a separate language
 - enjoys access to a vast collection of libraries developed for other purposes
-- WASM is targeting the browsers and quickly becoming the "assembly" od the web in lieu of JS
+- Wasm is targeting the browsers and quickly becoming the "assembly" od the web in lieu of JS
 
 ---
 
@@ -62,7 +62,7 @@ Notes:
 
 Notes:
 
-- Technically you could take a SC written in ink! and deploy it to any WASM-powered blockchain.
+- Technically you could take a SC written in ink! and deploy it to any Wasm-powered blockchain.
   - in practice not that straight-forward.
 - ink! is closely tied to the larger Substrate framework.
 - Substrate is a framework for developing customized blockchain runtimes from composable pallets.
@@ -75,7 +75,7 @@ Notes:
 
 Notes:
 
-- contracts written in ink! are compiled to WASM bytecode
+- contracts written in ink! are compiled to Wasm bytecode
 - pallet contracts provides
   - instrumentation
   - execution engine
@@ -88,7 +88,7 @@ Notes:
 Notes:
 
 - pallet contracts is oblivious to the programming language
-- it accepts WASM bytecode and executes it's instructions
+- it accepts Wasm bytecode and executes it's instructions
 
 ---
 
@@ -104,7 +104,7 @@ Notes:
 
 Notes:
 
-- But also any other language that compilers to WASM
+- But also any other language that compilers to Wasm
   - Solang
   - or ask!
 
@@ -190,7 +190,7 @@ std = [
 Notes:
 
 - who knows why is the std library not included by default?
-- Answer: contracts are compiled to WASM (executed ib a sandboxed environment with no system interfaces, no IO, no networking)
+- Answer: contracts are compiled to Wasm (executed ib a sandboxed environment with no system interfaces, no IO, no networking)
 
 ---
 
@@ -269,7 +269,7 @@ Your contract artifacts are ready. You can find them in:
 
 Notes:
 
-- produces WASM bytecode and some additional artifacts:
+- produces Wasm bytecode and some additional artifacts:
 - .wasm is the contract compiled bytecode
 - .json is contract ABI aka metadata (for use with e.g. dapps)
   - definitions of events, storage, transactions

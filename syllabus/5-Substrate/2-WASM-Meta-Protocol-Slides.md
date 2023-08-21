@@ -63,7 +63,7 @@ Recall that the boundary for this division is the **state transition**
 
 Notes:
 
-Building a WASM module's activity was building something akin to runtime-apis
+Building a Wasm module's activity was building something akin to runtime-apis
 
 ---v
 

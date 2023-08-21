@@ -1,10 +1,10 @@
 ---
-title: Cross Consensus Messaging (XCM)
+title: Introduction to Cross Consensus Messaging (XCM)
 description: XCM Core Concepts, Terms, and Logic for Web3 Engineers
 duration: 1 hour
 ---
 
-# Cross-Consensus Messaging (XCM)
+# Introduction to Cross-Consensus Messaging (XCM)
 
 ## _Core Concepts, Terms, and Logic_
 

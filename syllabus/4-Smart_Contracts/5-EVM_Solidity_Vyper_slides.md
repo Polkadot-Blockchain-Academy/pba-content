@@ -4,6 +4,10 @@ description: Overview and history of the EVM and languages that compile to it.
   Focus on architecting real-world smart contracts.
 ---
 
+# EVM, Solidity, and Vyper
+
+---
+
 ## EVM
 
 **Ethereum Virtual Machine**
