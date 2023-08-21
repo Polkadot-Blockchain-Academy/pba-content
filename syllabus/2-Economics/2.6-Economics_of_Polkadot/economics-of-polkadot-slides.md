@@ -20,7 +20,7 @@ duration: 2 hour
 
 ---
 
-<img style="width: 1200px; margin-right: 50px;" src="../../../assets/img/2-Economics/2.6-polkadot_pieces.svg" />
+<img rounded style="width: 1200px; margin-right: 50px;" src="../../../assets/img/2-Economics/2.6-polkadot_pieces.svg" />
 
 ---
 
@@ -99,7 +99,7 @@ duration: 2 hour
 
 <div style="display: flex; justify-content: center; align-items: center;">
     <div style="flex: 1; text-align: center;">
-        <img style="width: 650px; margin-right: 50px;" src="../../../assets/img/2-Economics/2.6-current_inflation_model_polkadot.png" />
+        <img rounded style="width: 650px; margin-right: 50px;" src="../../../assets/img/2-Economics/2.6-current_inflation_model_polkadot.png" />
     </div>
     <div style="flex: 1;">
         <ul>
@@ -193,7 +193,7 @@ Question: What do you think about Inflation?
 <pba-col>
 <pba-flex center>
 
-<img style="width: 700px;" src="../../../assets/img/2-Economics/2.6-rewards_flow.png" />
+<img rounded style="width: 700px;" src="../../../assets/img/2-Economics/2.6-rewards_flow.png" />
 
 </pba-flex>
 </pba-col>
@@ -406,7 +406,7 @@ Question: What do you think about Inflation?
 ---
 
 <div style="display: flex; justify-content: center; align-items: center;">
-    <img src="../../../assets/img/2-Economics/Polkadot-Economics-Cycle.svg" style="width: 1200px;" />
+    <img rounded style="width: 1200px;" src="../../../assets/img/2-Economics/Polkadot-Economics-Cycle.svg" />
 </div>
 
 ---
