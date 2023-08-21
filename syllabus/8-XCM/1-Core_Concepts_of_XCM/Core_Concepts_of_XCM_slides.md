@@ -101,6 +101,28 @@ A post card relies on the postal service to get itself sent towards its receiver
 The transport layer concerns itself with sending arbitrary blobs, it doesn't care about the format.
 A common format has its benefits though, as we'll see next.
 
+---v
+
+### Versioning
+
+XCM is a **versioned** language.
+
+It's currently in version 3.
+
+What goes in each version is defined via an RFC process.
+
+---v
+
+### Terminology: XCMs
+
+**XCM**, Cross-Consensus Messaging, is the format.
+
+**An XCM** is a Cross-Consensus Message.
+
+It's not called an XCM message,
+
+the same way it's not called an ATM machine.
+
 ---
 
 ## 😬 Why not _native_ messages?
@@ -259,26 +281,39 @@ Analogies can often hurt more than they help.
 
 ## 📍 Locations in XCM
 
-How does one consensus system address another?
-
-We need a concept of locations.
-
-A location might be the whole system or an isolatable part in the system.
-
 <pba-flex center>
 
-Examples:
+Before sending a message to another system, we need a way to address it.
 
-- Accounts
-- Smart contracts
-- Pallets
-- Blockchains
+<diagram class="mermaid">
+graph LR
+    Message(Message)
+    Alice(Alice)--"?"-->Bob(Bob)
+    Alice--"?"-->AssetHub(Asset Hub)
+    Alice--"?"-->Pallet(Pallet)
+    Alice--"?"-->SmartContract(Smart Contract)
+</diagram>
 
 Notes:
 
+XCM defines a `Location` type that acts as a URL for consensus systems.
+
 The `Location` type identifies any single _location_ that exists within the world of consensus.
 Representing a scalable multi-shard blockchain such as Polkadot, an ERC-20 asset account on a parachain, a smart contract on some chain, etc.
-It is always represented as a location _relative_ to the current consensus system, and never as an absolute path, due to the fact that the network structure can always change, and so absolute paths can quickly go out of date.
+It is usually represented as a location _relative_ to the current consensus system.
+Relative locations are easier to handle due to the fact that the network structure can change.
+
+Locations don't define the actual path to get there, just a way of addressing.
+
+---v
+
+## Interior locations
+
+> Given two consensus systems, A and B. A is **interior** to B if a state change in A implies a state change in B.
+
+Notes:
+
+An example, a smart contract in Ethereum would be interior to Ethereum itself.
 
 ---v
 
@@ -297,7 +332,7 @@ graph TD;
 
 Notes:
 
-Locations form a hierarchy.
+Locations form a hierarchy using the interior relation.
 
 ---v
 
@@ -324,6 +359,13 @@ enum Junction {
     ...
 }
 ```
+
+Notes:
+
+Right now Junctions are limited to 8 because of stack space.
+We also don't expect Junctions being more than 8 levels deep.
+
+It's perfectly possible to create locations that don't point anywhere.
 
 ---v
 
@@ -356,14 +398,53 @@ Junctions are ways to descend the location hierarchy
 
 ---v
 
-## Universal location
+## Text notation
+
+<pba-flex center>
+
+<pba-cols>
+
+<pba-col>
+
+```rust
+Location {
+    parents: 1,
+    interior: Parachain(50)
+}
+```
+
+</pba-col>
+<pba-col>
+
+-->
+
+</pba-col>
+<pba-col>
+
+`../Parachain(50)`
+
+</pba-col>
+
+Notes:
+
+This notation comes from an analogy to a file system.
+
+---v
+
+## Universal Location
+
+> The Universal Location is a **theoretical** location. It's the parent of all locations which generate their own consensus. It itself has no parents.
+
+---v
+
+## Universal Location
 
 <diagram class="mermaid limit size-50">
 graph TD;
-    UniversalLocation(Universal Location)-->RelayA(Relay A)
-    UniversalLocation-->RelayB(Relay B)
-    RelayA-->BranchA(...)
-    RelayB-->BranchB(...)
+    UniversalLocation(Universal Location)-->Polkadot(Polkadot)
+    UniversalLocation-->Kusama(Kusama)
+    UniversalLocation-->Ethereum(Ethereum)
+    UniversalLocation-->Bitcoin(Bitcoin)
 </diagram>
 
 Notes:
@@ -372,26 +453,43 @@ We can imagine a hypothetical location that contains all top-level consensus sys
 
 ---v
 
-## Relative vs absolute
+## Absolute locations
 
-We can express locations in two ways, relative or absolute.
+<pba-flex center>
 
-In general, relative locations are better.
+```rust
+pub type InteriorLocation = Junctions;
+```
 
-In the case of bridges, absolute locations are needed.
+Sometimes, absolute locations are necessary, e.g. for bridges.
+
+They don't have parents.
+
+The first junction has to be a `GlobalConsensus`.
 
 Notes:
 
-We need relative locations because some consensus systems might change their location.
-If a system moves, relative is better.
+To write an absolute location, we need to know our location relative to the Universal Location.
 
 ---v
 
-## Cross-Consensus Origins
+## What are `Location`s used for?
 
-`Location`s are used to denote where an XCM originated from
+<pba-flex center>
 
-_Relative_ to the current location
+- Addressing
+- Origins
+- Assets
+- Fees
+- Bridging
+
+---v
+
+## Cross-Chain Origins
+
+When a receiver gets an XCM, a `Location` specifies the sender.
+
+This `Location` is _relative_ to the receiver.
 
 Can be converted into a pallet origin in a FRAME runtime
 
@@ -400,6 +498,7 @@ Used for determining privileges during XCM execution.
 Notes:
 
 Reanchoring:
+
 Since `Location`s are relative, when an XCM gets sent over to another chain, the origin location needs to be rewritten from the perspective of the receiver, before the XCM is sent to it.
 
 ---
@@ -435,41 +534,6 @@ graph TD
     AssetHub-->Polkadot
     linkStyle 0 opacity:0.3
     linkStyle 2 stroke-dasharray:5
-</diagram>
-
----v
-
-### Relay account
-
-`../AccountId32(0x1234...cdef)`
-
-<diagram class="mermaid">
-graph TD
-    Polkadot-->AssetHub("📍 AssetHub (1000)")
-    Polkadot-->Collectives("Collectives (1001)")
-    Polkadot-->Account("AccountId32 (0x1234...cdef)")
-</diagram>
-
-Notes:
-
-What does the location resolve to if evaluated on Parachain(1000)?
-
----v
-
-### Relay account
-
-`../AccountId32(0x1234...cdef)`
-
-<diagram class="mermaid">
-graph TD
-    Polkadot(Polkadot)-->AssetHub("📍 AssetHub (1000)")
-    Polkadot-->Collectives("Collectives (1001)"):::disabled
-    Polkadot-->Account("AccountId32 (0x1234...cdef)")
-    AssetHub-->Polkadot
-    linkStyle 0 opacity:0.3
-    linkStyle 1 opacity:0.3
-    linkStyle 3 stroke-dasharray:5
-    classDef disabled opacity:0.3
 </diagram>
 
 ---v
@@ -565,6 +629,78 @@ Even with Bridge Hubs, the relative location is what you'd expect.
 Bridge Hubs are just a way for routing messages.
 They are an implementation detail of the transport layer.
 
+---v
+
+### Bridge (actual routing)
+
+<diagram class="mermaid">
+graph TD
+    Universe(Universal Location):::disabled-->Polkadot(Polkadot):::disabled
+    Universe-->Kusama(Kusama)
+    Polkadot-->PolkaA("📍 Asset Hub (1000)")
+    Polkadot-->PolkaB(Bridge Hub)
+    PolkaA-->Alice(Alice):::disabled
+    PolkaA-->AssetsPallet(Pallet Assets):::disabled
+    AssetsPallet-->Asset(USDT):::disabled
+    Kusama-->KusamB(Bridge Hub)
+    Kusama-->KusamA("Asset Hub (1000)")
+    PolkaA-->PolkaB
+    PolkaB--"Bridge"-->KusamB
+    KusamB-->Kusama
+    linkStyle 0 opacity:0.3
+    linkStyle 1 opacity:0.3
+    linkStyle 2 opacity:0.3
+    linkStyle 3 opacity:0.3
+    linkStyle 4 opacity:0.3
+    linkStyle 5 opacity:0.3
+    linkStyle 6 opacity:0.3
+    linkStyle 7 opacity:0.3
+    linkStyle 11 stroke-dasharray:5
+    classDef disabled opacity:0.3
+</diagram>
+
+Notes:
+
+The actual message is routed through Bridge Hub.
+
+---
+
+## Sovereign Accounts
+
+Locations external to the local system can be represented by a local account.
+
+We call this the **sovereign account** of that location.
+
+They are a mapping from a `Location` to an account id.
+
+<diagram class="mermaid">
+graph TD
+    Polkadot(Polkadot)-->A(A) & B(B)
+    A-->Alice(Alice)
+    B-->AliceSA("Alice's sovereign account")
+</diagram>
+
+Notes:
+
+A sovereign account is an account on one system that is controlled by another on a different system.
+A single account on a system can have multiple sovereign accounts on many other systems.
+In this example, Alice is an account on AssetHub, and it controls a sovereign account on Collectives.
+
+When transferring between consensus systems, the sovereign account is the one that gets the funds on the destination system.
+
+---v
+
+## Sovereign Accounts again
+
+<diagram class="mermaid">
+graph TD
+    Polkadot(Polkadot)-->A(A) & B(B)
+    A-->Alice(Alice)
+    B-->AliceSA("Alice's sovereign account")
+    B-->ASA("Asset Hub's sovereign account")
+    A-->BSA("Collective's sovereign account")
+</diagram>
+
 ---
 
 <pba-col>
@@ -649,81 +785,10 @@ graph TD
 
 Notes:
 
-Locations are relative, so they must be updated and rewritten when sent to another chain.
+Locations are relative, so they must be updated and rewritten when sent to another chain, for them to be interpreted correctly.
 
----v
-
-### DOT from Asset Hub
-
-`../Here`
-
-<diagram class="mermaid limit size-70">
-graph TD
-    Polkadot(Polkadot)-->AssetHub("📍 Asset Hub (1000)")
-    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
-    AssetHub-->Alice(Alice):::disabled
-    AssetHub-->AssetsPallet(Pallet Assets):::disabled
-    AssetsPallet-->Asset(USDT):::disabled
-    AssetHub-->Polkadot
-    linkStyle 0 opacity:0.3
-    linkStyle 1 opacity:0.3
-    linkStyle 2 opacity:0.3
-    linkStyle 3 opacity:0.3
-    linkStyle 4 opacity:0.3
-    linkStyle 5 stroke-dasharray:5
-    classDef disabled opacity:0.3
-</diagram>
-
-Notes:
-
+TODO: Move elsewhere.
 Native tokens are referenced by the location to their system.
-
----v
-
-### DOT from Alice
-
-`../../Here`
-
-<diagram class="mermaid limit size-70">
-graph TD
-    Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
-    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
-    AssetHub-->Alice("📍 Alice")
-    AssetHub-->AssetsPallet(Pallet Assets):::disabled
-    AssetsPallet-->Asset(USDT):::disabled
-    Alice-->AssetHub
-    AssetHub-->Polkadot
-    linkStyle 0 opacity:0.3
-    linkStyle 1 opacity:0.3
-    linkStyle 2 opacity:0.3
-    linkStyle 3 opacity:0.3
-    linkStyle 4 opacity:0.3
-    linkStyle 5 stroke-dasharray:5
-    linkStyle 6 stroke-dasharray:5
-    classDef disabled opacity:0.3
-</diagram>
-
----v
-
-### Universal Location of DOT
-
-`GlobalConsensus(Polkadot)`
-
-<diagram class="mermaid limit size-50">
-graph TD
-    Universe("📍 Universal Location")-->Polkadot(Polkadot)
-    Polkadot-->AssetHub("Asset Hub (1000)"):::disabled
-    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
-    AssetHub-->Alice(Alice):::disabled
-    AssetHub-->AssetsPallet(Pallet Assets):::disabled
-    AssetsPallet-->Asset(USDT):::disabled
-    linkStyle 1 opacity:0.3
-    linkStyle 2 opacity:0.3
-    linkStyle 3 opacity:0.3
-    linkStyle 4 opacity:0.3
-    linkStyle 5 opacity:0.3
-    classDef disabled opacity:0.3
-</diagram>
 
 ---v
 
@@ -789,27 +854,6 @@ The two ways of transferring assets between consensus systems are teleports and 
 
 ---v
 
-### Sovereign Accounts
-
-<diagram class="mermaid">
-graph TD
-    Polkadot(Polkadot)-->AssetHub(Asset Hub) & Collectives(Collectives)
-    AssetHub-->Alice(Alice)
-    Collectives-->AliceSA("Alice's sovereign account")
-    Collectives-->AssetHubSA("Asset Hub's sovereign account")
-    AssetHub-->CollectivesSA("Collective's sovereign account")
-</diagram>
-
-Notes:
-
-A sovereign account is an account on one system that is controlled by another on a different system.
-A single account on a system can have multiple sovereign accounts on many other systems.
-In this example, Alice is an account on AssetHub, and it controls a sovereign account on Collectives.
-
-When transferring between consensus systems, the sovereign account is the one that gets the funds on the destination system.
-
----v
-
 ### 1. Asset teleportation
 
 <img rounded style="width: 500px;" src="../../../assets/img/8-XCM/teleport.png" />
@@ -818,6 +862,24 @@ Notes:
 
 Teleportation works by burning the assets on the source chain and minting them on the destination chain.
 This method is the simplest one, but requires a lot of trust, since failure to burn or mint on either side will affect the total issuance.
+
+---v
+
+### 1.1. Example: System parachains?
+
+<diagram class="mermaid">
+graph LR
+    BridgeHub(Bridge Hub)--"Trust"-->AssetHub(Asset Hub)
+</diagram>
+
+---v
+
+### 1.2. Example: Polkadot and Kusama?
+
+<diagram class="mermaid">
+graph LR
+    Polkadot(Polkadot)--"No trust"-->Kusama(Kusama)
+</diagram>
 
 ---v
 
@@ -835,6 +897,60 @@ The transfer is made by burning derivatives from A, moving them from A's SA to B
 In some cases, the sender, A, can also be the reserve for a particular asset, in which case the process is simplified, there's no burning of derivatives.
 This usually happens with parachains' native tokens.
 
+You always trust the issuer of the token to not mint infinite tokens.
+
+---v
+
+### 2.1. Example: Parachain native tokens
+
+<diagram class="mermaid">
+graph LR
+    subgraph A [A = R]
+        Sender(Sender account)--"Move X real asset"-->BSovereignAccount(B's Sovereign Account)
+    end
+    A--"Mint X derivatives"-->B(B)
+</diagram>
+
+Notes:
+
+Most parachains act as the reserve for their own token.
+To transfer their token to other chains, they move the real assets to a sovereign account and then tell the chain to mint equivalent derivatives.
+
+---v
+
+### 2.2. Example: Polkadot to Kusama
+
+<diagram class="mermaid">
+graph LR
+    Polkadot(Polkadot)-->AssetHubP
+    subgraph AssetHubP [Asset Hub Polkadot]
+        Sender(Sender account)--"Move X real DOT"-->KusamaSovereignAccount("Kusama's sovereign account")
+    end
+    AssetHubP--"Mint X DOT derivatives"-->Kusama(Kusama)
+</diagram>
+
+Notes:
+
+AssetHub Kusama acts as the reserve for KSM.
+Kusama doesn't trust Polkadot to teleport KSM to it, but it does trust its own reserve, the AssetHub.
+Polkadot has a sovereign account in Kusama's AssetHub with some amount of KSM.
+Whenever some user in Polkadot wants to get KSM on Kusama, they just give the DOT to Polkadot and the KSM are moved from one sovereign account to another.
+No new trust relationships are added.
+
+---
+
+## Summary
+
+- XCM
+- XCM vs XCMP
+- Locations
+- Sovereign Accounts
+- Assets
+- Reanchoring
+- Cross-consensus transfers
+    - Teleports
+    - Reserve asset transfers
+
 ---v
 
 ## Next steps
@@ -845,7 +961,7 @@ This usually happens with parachains' native tokens.
 2. XCM Format [repository](https://github.com/paritytech/xcm-format)
 3. XCM [Docs](https://paritytech.github.io/xcm-docs/)
 
----
+---v
 
 <figure>
     <img rounded style="width: 50%;" src="../../../assets/img/8-XCM/subscan-xcm-dashboard.png" />

@@ -124,7 +124,7 @@ Notes:
 
 <diagram class="mermaid">
 graph TD;
-  Location("AccountId32 { id: [18, 34, ..., 205, 239], network: Some(Rococo) }")-- SovereignAccountOf -->Account("0x123..def (Alice)")
+  Location("AccountId32 { id: [18, 52, ..., 205, 239], network: Some(Rococo) }")-- SovereignAccountOf -->Account("0x123..def (Alice)")
 </diagram>
 
 Notes:
@@ -161,12 +161,12 @@ impl<
 <pba-flex center>
 
 ```rust
-pub type LocationToAccount = (
-  // Legacy conversion - MUST BE FIRST!
-  HashedDescription<AccountId, LegacyDescribeForeignChainAccount>,
-  HashedDescription<AccountId, DescribeTerminus>,
-  HashedDescription<AccountId, DescribePalletTerminal>,
-);
+pub type LocationToAccount =
+  HashedDescription<AccountId, (
+    LegacyDescribeForeignChainAccount, // Legacy conversion - MUST BE FIRST!
+    DescribeTerminus,
+    DescribePalletTerminal
+  )>;
 ```
 
 ---v
@@ -252,9 +252,9 @@ fn describe_location(l: &Location) -> Option<Vec<u8>> {
 
 ### 📁 `SovereignAccountOf` via `xcm-builder`
 
-- `Account32Hash`: Hashes the `Location` and takes the lowest 32 bytes as account.
-
 - `AccountId32Aliases`: Converts a local `AccountId32` `Location` into an account ID of 32 bytes.
+
+- `Account32Hash`: Hashes the `Location` and takes the lowest 32 bytes as account.
 
 - `ParentIsPreset`: Converts the parent `Location` into an account of the form `b'Parent' + trailing 0s`
 
@@ -300,16 +300,9 @@ Physical vs Computed origin
 - Physical origin: the consensus system that built this particular XCM and sent it to the recipient
 - Computed origin: the entity that ultimately instructed the consensus system to build the XCM
 
-<diagram class="mermaid">
-graph LR;
-  subgraph ComputedOrigin
-    Alice(Alice on Parachain)
-  end
-  ComputedOrigin-->PhysicalOrigin
-  subgraph PhysicalOrigin
-    Parachain(Parachain)
-  end
-</diagram>
+Notes:
+
+If an EOA transfers some funds via XCM, then the computed origin would be its account, but the physical origin would be the platform that was used (e.g. parachain).
 
 ---v
 
@@ -338,18 +331,6 @@ pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>;
 
 - `AllowTopLevelPaidExecutionFrom<T>`: For origins contained in `T`, it makes sure the first instruction puts asset into the holding register, followed by a `BuyExecution` instruction capable of buying sufficient weight.
   **Critical to avoid free DOS**.
-
-<diagram class="mermaid">
-graph TD
-  subgraph FundAccount[ ]
-    ReceiveTeleportedAsset(ReceiveTeleportedAsset)
-    WithdrawAsset(WithdrawAsset)
-    ClaimAsset(ClaimAsset)
-    ReserveAssetDeposited(ReserveAssetDeposited)
-  end
-  FundAccount-->BuyExecution
-  BuyExecution(BuyExecution)-->Rest(...rest of the message...)
-</diagram>
 
 Notes:
 
@@ -385,7 +366,7 @@ Notes:
 
 <diagram class="mermaid">
 graph LR
-  Withdraw("WithdrawAsset(Here, 100u128).into()")-->DOT(100 tokens from e.g. pallet-balances)
+  Withdraw("WithdrawAsset((Here, 100u128).into())")-->DOT(100 tokens from e.g. pallet-balances)
 </diagram>
 
 Notes:
@@ -397,8 +378,6 @@ Notes:
 
 ### 🪙 `AssetTransactor` via `xcm-builder`
 
-- `CurrencyAdapter`: Single currency `asset-transactor`.
-  Used for withdrawing/depositing the native token of the chain.
 - `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens.
   An example of these would be `pallet-assets` tokens.
 - `NonFungiblesAdapter`: Used for depositing/withdrowing NFTs. For example `pallet-nfts`.
@@ -508,163 +487,27 @@ Notes:
   As of today, an HRMP channel should be established before the message can be routed.
 - The tuple implementation of this item means the executor will try using the items in order.
 
----
-
-### 🏋️ `Weigher` via `xcm-builder`
-
-- Specifies how instructions are weighed
-- `FixedWeightInfoBounds`: Apply a constant weight value to all instructions except for `Transact`, `SetErrorHandler` and `SetAppendix`.
-- `WeightInfoBounds`: Apply instruction-specific weight (ideally, benchmarked values) except for `Transact`, `SetErrorHandler` and `SetAppendix`.
-
-Notes:
-
-Benchmarking can easily be done with the `pallet-xcm-benchmarks` module.
-Note that the benchmarks need to reflect what your runtime is doing, so fetching the weights done for another runtime can potentially turn into users abusing your system.
-
 ---v
 
-### 🏋️ `Weigher` via `xcm-builder`
-
-- `Transact` weight is defined by `require_weight_at_most` value.
-- `SetErrorHandler` and `SetAppendix`, besides their own weight, need to account for the XCM instructions they will execute.
-
-<div>
-
----
-
-### 🤝 `IsReserve` and `IsTeleporter`
-
-- They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
-- Filters are applied for specific `Asset-Location` pairs.
-
-<pba-flex center>
+## Router
 
 ```rust
-/// Combinations of (Asset, Location) pairs which we trust as reserves.
-type IsReserve: ContainsPair<Asset, Location>;
+pub trait SendXcm {
+  type Ticket;
 
-/// Combinations of (Asset, Location) pairs which we trust as teleporters.
-type IsTeleporter: ContainsPair<Asset, Location>;
+  fn validate(
+    destination: &mut Option<Location>,
+    message: &mut Option<Xcm<()>>,
+  ) -> SendResult<Self::Ticket>;
+
+  fn deliver(ticket: Self::Ticket) -> Result<XcmHash, SendError>;
+}
 ```
 
 Notes:
 
-- For our test exercise, it is sufficient to set this `IsReserve` to `Everything`.
-- In your production network, you will need to match these values to your reserve/teleporting trust assumptions.
-
----
-
-### 🔧 `WeightTrader`
-
-- Specifies how to charge for weight inside the XCM execution.
-- Used in the `BuyExecution` instruction
-- Used in the `RefundSurplus` instruction
-- `UsingComponents`: uses `TransactionPayment` pallet to set the right price for weight.
-
-Notes:
-
-- `TransactionPayment` pallet already defines how to convert weight to fee.
-  We do not need to define a rate in this case.
-
----
-
-## Example XCM configuration
-
-Let's put everything together and see how it looks like!
-
----v
-
-### Setup requirements
-
-Setup a parachain so that:
-
-1. Incoming relay chain messages don't need to pay for fees.
-2. The relay chain is trusted as the reserve for the relay chain native tokens.
-3. When relay chain tokens are received via a reserve asset transfer, derivative tokens are minted in `pallet-assets`.
-4. Users can execute XCMs locally.
-
----v
-
-### Do not charge relay for any XCM-related fees
-
-```rust
-match_types! {
-	pub type ParentLocation: impl Contains<Location> = {
-		Location { parents: 1, interior: Here }
-	};
-}
-impl xcm_executor::Config for XcmConfig {
-  // ...
-  type Barrier = AllowExplicitUnpaidExecutionFrom<ParentLocation>;
-  // ...
-}
-```
-
----v
-
-### Trust the relay as the reserve chain for relay chain tokens
-
-```rust
-parameter_types! {
-  pub const RelayLocation: Location = (1, Here).into();
-  pub const RelayToken: AssetFilter = Wild(AllOf {
-    fun: WildFungible,
-    id: Concrete(RelayLocation::get())
-  });
-  pub const RelayTokenFromRelay: (AssetFilter, Location) = (
-    RelayToken::get(),
-    RelayLocation::get()
-  );
-}
-pub type TrustedReserves = xcm_builder::Case<RelayTokenFromRelay>;
-impl xcm_executor::Config for XcmConfig {
-  // ...
-  type IsReserve = TrustedReserves;
-  // ...
-}
-```
-
----v
-
-### Mint tokens in balances pallet when relay tokens are received
-
-```rust
-parameter_types! {
-  pub const RelayLocation: Location = (1, Here).into_location();
-}
-
-pub type LocalAssetTransactor = XcmCurrencyAdapter<
-	Balances,
-	IsConcrete<RelayLocation>,
-	ParentIsPreset<AccountId>,
-	AccountId,
-	(),
->;
-impl xcm_executor::Config for XcmConfig {
-  // ...
-  type AssetTransactors = LocalAssetTransactor;
-  // ...
-}
-```
-
----v
-
-### Users can execute XCM locally
-
-```rust
-parameter_types! {
-  pub const ThisNetwork: NetworkId = /* ... */;
-}
-
-type LocalOriginToLocation = SignedToAccountId32<RuntimeOrigin, AccountId, ThisNetwork>;
-
-impl pallet_xcm::Config for Runtime {
-  // ...
-	type ExecuteXcmOrigin = xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
-	type XcmExecuteFilter = Everything;
-  // ...
-}
-```
+It's important to validate that the message can indeed be sent before sending it.
+This ensures you pay for sending fees and you actually do send it.
 
 ---
 

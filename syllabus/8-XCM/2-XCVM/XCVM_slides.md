@@ -83,11 +83,13 @@ We'll talk about are the `holding` and `origin` registers, but there are more.
 
 ## 📍 The Origin Register
 
-Contains the `Location` of the cross-consensus origin where the XCM originated from.
+Contains an `Option<Location>` of the cross-consensus origin where the message originated from.
 
 Notes:
 
 This `Location` can change over the course of program execution.
+
+It might be `None` because some instructions clear the origin register.
 
 ---v
 
@@ -131,18 +133,15 @@ The XCVM fetches instruction from the program and executes them one by one.
 
 <pba-flex center>
 
-1. Error register
-2. Error _handler_ register
-3. Appendix register
+1. Error _handler_ register
+2. Appendix register
 
 Notes:
 
-1. The error register is _not_ cleared when an XCM program completes successfully.
-   This allows the code in the Appendix register to use its value.
-2. Code that is run in the case where the XCM program fails or errors.
+1. Code that is run in the case where the XCM program fails or errors.
    Regardless of the result, when the program completes, the error handler register is cleared.
    This ensures that error handling logic from a previous program does not affect any appended code (i.e. the code in the error handler register does not loop infinitely, the code in the Appendix register cannot access the result of the code execution in the error handler).
-3. Code that is run regardless of the execution result of the XCM program.
+2. Code that is run regardless of the execution result of the XCM program.
 
 ---v
 
@@ -227,6 +226,10 @@ Notes:
 This instruction uses the specified assets in the Holding register to buy weight for the execution of the following instructions.
 It's used in systems that pay fees.
 
+`weight_limit` is a sanity check, to make sure that the execution errors if you would buy more than that weight.
+The estimate for the weight has to come from using the recipient's weigher, not the sender's.
+The recipient is the one who actually executes the message.
+
 ---v
 
 ## The `DepositAsset` instruction
@@ -258,7 +261,150 @@ Typically an instruction that places assets into the holding register would have
 ```rust
 Xcm(vec![
     WithdrawAsset((Here, amount).into()),
-    BuyExecution { fees: (Here, amount).into(), weight_limit: Unlimited },
+    BuyExecution {
+        fees: (Here, amount).into(),
+        weight_limit: Limited(sanity_check_weight_limit)
+    },
     DepositAsset { assets: All.into(), beneficiary: AccountId32 { ... }.into() },
 ])
 ```
+
+Notes:
+
+All examples in these slides use the latest xcm version.
+
+---v
+
+## Good pattern
+
+<pba-flex center>
+
+```rust
+Xcm(vec![
+    WithdrawAsset((Here, amount).into()),
+    BuyExecution {
+        fees: (Here, amount).into(),
+        weight_limit: Limited(sanity_check_weight_limit)
+    },
+    DepositAsset { assets: All.into(), beneficiary: AccountId32 { ... }.into() },
+    RefundSurplus,
+    DepositAsset { assets: All.into(), beneficiary: sender }
+])
+```
+
+---
+
+# Reserve asset transfer
+
+<pba-flex center>
+
+```rust
+Xcm(vec![
+    WithdrawAsset(asset),
+    InitiateReserveWithdraw {
+        assets: All.into(),
+        reserve: reserve_location,
+        xcm: /* ...what to do with the funds in the reserve... */,
+    },
+])
+```
+
+Notes:
+
+This message is executed locally.
+Then, a message is sent to the `reserve` location.
+That message contains the custom `xcm` provided along with other instructions.
+
+---v
+
+## Message received in reserve
+
+<pba-flex center>
+
+```rust
+Xcm(vec![
+    WithdrawAsset(reanchored_asset),
+    ClearOrigin, // <- Why is this needed?
+    /* ...custom instructions... */
+])
+```
+
+Notes:
+
+This is the message the reserve receives.
+
+The `ClearOrigin` instruction deletes the content of the origin register.
+This is needed because we don't trust the origin to do anything other than move its own assets.
+
+---v
+
+## Custom XCM
+
+<pba-flex center>
+
+```rust
+let xcm_for_reserve = Xcm(vec![
+    DepositReserveAsset {
+        assets: All.into(),
+        dest: location,
+        xcm: Xcm(vec![
+            DepositAsset {
+                assets: All.into(),
+                beneficiary: AccountId32 { ... }.into(),
+            },
+        ]),
+    },
+]);
+```
+
+Notes:
+
+For a simple reserve asset transfer, this message will work.
+
+---v
+
+## Message received in destination
+
+<pba-flex center>
+
+```rust
+Xcm(vec![
+    ReserveAssetDeposited(reanchored_asset),
+    ClearOrigin, // <- Why is this needed?
+    /* ...custom instructions... */
+])
+```
+
+Notes:
+
+A very clear exploit in not having `ClearOrigin` here is syphoning all funds from
+the reserve's sovereign account in the destination.
+The destination can't trust the reserve to totally speak for the source, only for the assets.
+
+---
+
+# Summary
+
+<pba-flex center>
+
+- XCVM
+- Kinds of instructions
+- Registers
+    - Origin
+    - Holding
+    - Error handler
+    - Appendix
+- Instructions
+    - WithdrawAsset, BuyExecution, DepositAsset
+    - RefundSurplus
+    - InitiateReserveWithdraw, ReserveAssetDeposited
+
+---v
+
+## Next steps
+
+<pba-flex center>
+
+1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
+2. XCM Format [repository](https://github.com/paritytech/xcm-format)
+3. XCM [Docs](https://paritytech.github.io/xcm-docs/)
