@@ -126,6 +126,7 @@ fn verify_password(actual: &[u8], entered: &[u8]) -> bool {
 Is this safe?
 
 Notes:
+
 Now, we don't see any difference in the amount of lines of code or loops, right?
 
 ---
@@ -456,7 +457,9 @@ What do you do?
 
 ### Hide it somewhere secure
 
-Notes: Like a bank vault, box buried in the woods, etc
+Notes:
+
+Like a bank vault, box buried in the woods, etc
 
 ---
 

@@ -41,6 +41,7 @@ Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA p
 <img style="width: 600px" src="img/message_packet.svg" />
 
 Notes:
+
 Mention that headers contain some addressing, destination information, and ordering typically depending
 
 ---

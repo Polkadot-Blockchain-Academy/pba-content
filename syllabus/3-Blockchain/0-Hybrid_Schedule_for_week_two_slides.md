@@ -114,6 +114,7 @@ After lunch it will be the same: lecture, activity, break, lecture, and activity
 ## Blockchain Team
 
 Notes:
+
 Then tomorrow Josh, Andrew, and Maciej will go from Smart Contracts to Blockchain things. Remember we're bouncing back and forth during the week, continuously building on the content and our definitions.
 But we'll continue to follow that same format of lecture then activity, lecture and activity and so on.
 I should caveat and share that Joshy and I both prior teachers, so we're big fans of hands on activities. We feel it's the opportunity to put your learning into practice. We don't want to be up here the entire time talking at you. We want you to be able to get your hands dirty and get into the code.

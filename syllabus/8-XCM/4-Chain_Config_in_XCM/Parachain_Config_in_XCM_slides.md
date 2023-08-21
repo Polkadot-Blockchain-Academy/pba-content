@@ -115,7 +115,6 @@ Notes:
 
 ---
 
-
 ### 📁 `SovereignAccountOf` via `xcm-builder`
 
 - Defines how we convert a `Location` into a local account ID.
@@ -136,7 +135,7 @@ Notes:
 
 ### 📁 `SovereignAccountOf` via `xcm-builder`
 
-- `HashedDescription`: Hashes the description of a `Location` and converts that into an `AccountId`. 
+- `HashedDescription`: Hashes the description of a `Location` and converts that into an `AccountId`.
 
 ```rust
 
@@ -289,7 +288,8 @@ parameter_types! {
 - **Barriers should not involve any heavy computation.**
 
 Notes:
-  **At the point at which barriers are checked nothing has yet been paid for its execution**.
+
+**At the point at which barriers are checked nothing has yet been paid for its execution**.
 
 ---v
 
@@ -671,6 +671,7 @@ impl pallet_xcm::Config for Runtime {
 ## Summary
 
 In this lecture, we learnt:
+
 - How chains interpret locations and turn them to accounts and FRAME origins
 - How to set a barrier to protect our chain from undesired messages
 - How to handle assets in XCM

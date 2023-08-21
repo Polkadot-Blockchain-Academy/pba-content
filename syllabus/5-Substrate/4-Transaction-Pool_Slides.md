@@ -27,6 +27,7 @@ duration: 30 minutes
 </pba-cols>
 
 Notes:
+
 The blockchain produces blockspace, and users buy that blockspace.
 Why do they buy it?
 So they can contribute to the shared story.
@@ -53,6 +54,7 @@ Let's take a closer look.
 <img style="width: 900px;" src="./img/tx-pool/blockchain_p2p.svg" />
 
 Notes:
+
 Previously, in the blockchain module, we saw this figure.
 It points out that each node has its own view of the blockchain.
 Now I'll show you another layer of detail which is that each node also has its own transaction pool
@@ -65,6 +67,7 @@ CLICK
 <img style="width: 900px;" src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
 
 Notes:
+
 There are many paths a transaction can take from the user who signed it to a finalized block.
 Let's talk through some.
 Directly to user's authoring node and into chain is simplest.
@@ -80,6 +83,7 @@ Could even go in a block, get orphaned off, back to tx pool, and then in a new b
 - Make sure state is ready for application
 
 Notes:
+
 When a node gets a transaction, it does some light pre-validation sometimes known as pool validation.
 This checking determines whether the transactions is {valid now, valid in some potential future, invalid}.
 There is periodic re-validation if transactions have been in the pool for a long time.
@@ -133,6 +137,7 @@ So let's talk about that for a little bit.
 <img style="width: 1100px;" src="./img/tx-pool/peter-parker-glasses-off.png" />
 
 Notes:
+
 It is commonly said that the runtime is basically your STF.
 This is a good first order approximation.
 It is nearly true.
@@ -203,6 +208,7 @@ pub struct ValidTransaction {
 [`ValidTransaction` Rustdocs](https://paritytech.github.io/substrate/master/sp_runtime/transaction_validity/struct.ValidTransaction.html)
 
 Notes:
+
 We indicate that the transaction passes the prechecks at all by returning this valid transaction struct.
 If it weren't even valid, we would return a different, `InvalidTransaction` struct.
 You learned yesterday how to navigate the rustdocs to find the docs on that one.
@@ -236,6 +242,7 @@ Only in special edge cases would this be false.
 <img src="./img/tx-pool/utxo.svg" />
 
 Notes:
+
 Prioritize by implicit tip (difference of inputs and outputs)
 Requires all missing input transactions
 provides this input
@@ -247,6 +254,7 @@ provides this input
 <img src="./img/tx-pool/accounts.svg" />
 
 Notes:
+
 Prioritize by explicit tip
 Requires all previous nonces for this account
 provides this nonce for this account

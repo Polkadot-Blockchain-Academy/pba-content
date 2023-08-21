@@ -4,7 +4,6 @@
 
 This topic is important because it introduces and explores HRMP transactions between Turing Staging and Mangata. HRMP messaging plays a crucial role in cross-chain communication, enabling the transfer of assets and executing actions between different parachains in the Polkadot ecosystem. Understanding and practicing HRMP transactions allows developers to leverage the power of Polkadot's interoperability and build complex cross-chain applications.
 
-
 ### Prerequisite Knowledge or Skills
 
 To fully engage with the activities outlined in this material, it is recommended to have the following prerequisite knowledge or skills:

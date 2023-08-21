@@ -256,6 +256,7 @@ struct RuntimeBlock {
 </pba-cols>
 
 Notes:
+
 this slide is intentionally using the keyword transaction instead of extrinsic.
 
 ---v

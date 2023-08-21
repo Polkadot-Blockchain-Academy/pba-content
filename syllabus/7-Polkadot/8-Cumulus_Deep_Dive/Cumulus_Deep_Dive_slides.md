@@ -119,6 +119,7 @@ These drive parachain consensus and ensure the availability of parachain blocks.
 Together they keep parachain nodes up to date such that collating is possible.
 
 Notes:
+
 To recap, these key processes are:
 
 - Follow relay "new best head" to update para "new best head"
@@ -519,6 +520,7 @@ pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
 ```
 
 Notes:
+
 Code highlighting:
 
 - CandidateCommitments: Messages passed upwards, Downward messages processed, New code (checked against validation outputs)

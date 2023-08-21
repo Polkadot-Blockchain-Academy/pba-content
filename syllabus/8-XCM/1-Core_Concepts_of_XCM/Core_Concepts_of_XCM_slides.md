@@ -524,6 +524,7 @@ graph TD
 </diagram>
 
 Notes:
+
 Speak to an example of non-parachain multi-location that would use a bridge
 XCM reasons about addressing (as in a postal address) that must include understanding where you are, not just where you are going!
 This will be very powerful later on (Origins)

@@ -264,6 +264,7 @@ UserID -> Data (encrypted), UserID (additional data)
 ```
 
 Notes:
+
 By using this scheme, the data is always associated with the userID. An attacker could not put that entry into another user's entry.
 
 ---
