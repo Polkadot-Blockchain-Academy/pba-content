@@ -184,6 +184,7 @@ base58Encode( context | public key | checksum )
 ```
 
 Notes:
+
 `|` here stands for concatenation.
 
 For ECDSA, the public key is 33 bytes, so we use the hash of it in place of the public key.

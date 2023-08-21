@@ -135,6 +135,7 @@ Since Polkadot provides highly flexible blockspace, it can be transformed into a
 </pba-flex>
 
 Notes:
+
 By (3) I mean that the amount of demand for (2) should inform the amount to which the application does (1).
 
 ---

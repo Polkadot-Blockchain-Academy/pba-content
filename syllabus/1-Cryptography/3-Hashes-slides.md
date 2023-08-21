@@ -454,6 +454,7 @@ The hash of the information can succinctly represent the information and commit 
 This is the focus of a later lesson.
 
 Notes:
+
 For now, just a brief introduction.
 
 ---

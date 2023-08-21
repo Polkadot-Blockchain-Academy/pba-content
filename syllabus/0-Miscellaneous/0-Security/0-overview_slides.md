@@ -153,6 +153,7 @@ Starting from the inherent risk is foundational as the threat landscape will evo
 <img rounded style="height: 700px" src="./img/0-overview/10-attack.png" />
 
 Notes:
+
 Usually an attacker is not attacking directly the target but :
 
 1. Collect information leveraging the digital footprint available (linkedin profile, dns records, website, repositories, 3rd parties, anything publicly available)

@@ -91,6 +91,7 @@ pub fn dimensions(&self) -> (u32, u32)
 <!-- .element: class="fragment" -->
 
 Notes:
+
 worst thing you can do is hard code the dimensions, because then you have to cross-contract call to get the dimensions. Best thing you can do is have a const width and height during the forming rounds, or have a new function that takes the width and height as arguments.
 
 ---
@@ -108,6 +109,7 @@ worst thing you can do is hard code the dimensions, because then you have to cro
 <!-- .element: class="fragment" -->
 
 Notes:
+
 in debug mode, rust has to pull in string libraries, which is very expensive. So make sure you compile in release mode. Also, iterating over a datastructure in your contract is very expensive, so try to avoid it. It's an anti-pattern. The user has to pay for everything. So if you have a datastructure that you want to iterate over, you should do it off-chain.
 
 ---
@@ -146,6 +148,7 @@ fn pay_winner(
 </pba-cols>
 
 Notes:
+
 Strings in general should be avoided in smart contracts.
 
 ---

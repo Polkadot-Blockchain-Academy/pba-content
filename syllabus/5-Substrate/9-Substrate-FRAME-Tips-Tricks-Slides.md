@@ -20,7 +20,7 @@ Notes:
 
 - The single most useful Rust syntactic detail that you _MUST_ know.
 
-note:
+Notes:
 
 what is a type? A struct is a type. An unum is a type. all primitives are type. A lot of things are
 types.
@@ -48,7 +48,7 @@ trait HeaderT {
 pub type NumberFor<C> = <<C as Config>::Header as HeaderT>::Number;
 ```
 
-note:
+Notes:
 
 turbo fish
 fully qualified syntax.
@@ -180,7 +180,7 @@ default = [""]
 additional-features = ["other-stuff/on-steroids"]
 ```
 
-note:
+Notes:
 
 imagine that you have a crate that has some additional features that are not always needed. You put
 that behind a feature flag called `additional-features`.
@@ -202,7 +202,7 @@ std = [
 ]
 ```
 
-note:
+Notes:
 
 every crate will have a feature "std". This is a flag that you are compiling with the standard
 library. This is the default.
@@ -246,11 +246,15 @@ no_std => wasm
 error: duplicate lang item in crate sp_io (which frame_support depends on): panic_impl.
   |
   = Notes:
+
+
  the lang item is first defined in crate std (which serde depends on)
 
 error: duplicate lang item in crate sp_io (which frame_support depends on): oom.
   |
   = Notes:
+
+
  the lang item is first defined in crate std (which serde depends on)
 ```
 
@@ -324,7 +328,7 @@ will add a lot of string literals to your wasm blob.
 
 `sp_std::fmt::Debug` vs `sp_debug_derive::RuntimeDebug`
 
-note:
+Notes:
 
 https://paritytech.github.io/substrate/master/sp_debug_derive/index.html
 
@@ -389,7 +393,7 @@ log::debug!(target: "bar", "hello world! ({})", 10u32);
 1. `// $ RUST_LOG=foo=debug,bar=trace cargo run`
 2. `sp_tracing::try_init_simple()`
 
-note:
+Notes:
 
 https://paritytech.github.io/substrate/master/sp_tracing/index.html
 
@@ -594,7 +598,7 @@ fn main() {
 }
 ```
 
-note:
+Notes:
 
 conversion of primitive number types is also a common point of error. Avoid `as`.
 
@@ -798,6 +802,7 @@ impl<T> Convert<T, T> for Identity {
 <!-- .element: class="fragment" -->
 
 Notes:
+
 this one's much simpler, but good excuse to teach them blanket implementations.
 
 ---v

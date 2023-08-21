@@ -566,6 +566,7 @@ We have a double recursion of a PAB that embed itself
 - The Embedder is rBFP, a virtual machine for eBPF programs
 
 Notes:
+
 https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
 
 ---v
@@ -582,6 +583,7 @@ https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
 Being so simple and "Hardware-Independent" there are work in progress experiments to test if it is suitable to become the new polkadot smart contract language
 
 Notes:
+
 Discussion about using RISC-V as smart contract language: https://forum.polkadot.network/t/exploring-alternatives-to-wasm-for-smart-contracts/2434
 
 RISC-V Instruction Set Manual, Unprivileged ISA: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf

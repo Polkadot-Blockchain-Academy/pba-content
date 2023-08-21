@@ -522,6 +522,7 @@ Tendermint is often touted as "instant finality". It is instant in the sense tha
 <img style="width: 650px;" src="./img/reorgs-2.svg" />
 
 Notes:
+
 Previously we talked about how a node's view of the best block can change, and that is called a re-org.
 
 ---v
@@ -534,6 +535,7 @@ Previously we talked about how a node's view of the best block can change, and t
 
 Only extend best finalized chain
 Notes:
+
 Once you have a finality gadget installed, you have to make sure you only ever author on top of finalized blocks. Even if another chain is longer.
 
 ---
@@ -556,6 +558,7 @@ Once you have a finality gadget installed, you have to make sure you only ever a
 <img style="width: 1000px" src="./img/grandpa-round/4.6-validators-vote-on-chain.png"/>
 
 Notes:
+
 BFT finality with $n$ authorities is in $O(n^2)$.
 Tendermint does this at **every block**.
 This bounds the size of the authority set.

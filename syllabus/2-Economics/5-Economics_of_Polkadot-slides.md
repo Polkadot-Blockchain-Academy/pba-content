@@ -128,6 +128,7 @@ duration: 2 hour
 </ul>
 
 Notes:
+
 Question: What do you think about Inflation?
 
 ---
