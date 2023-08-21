@@ -246,7 +246,7 @@ Namely:
 - Substrate does in fact use a key-value based database under the hood..
 - In order to store trie nodes, not direct storage keys!
 
-<br>
+<br/>
 
 <div>
 
@@ -419,6 +419,16 @@ For example, with binary, with 3 IO, we can reach only 8 items, but with radix-8
 So why should not chose a very wide tree? because the wider you make the tree, the bigger each node
 gets, because it has to store more hashes. At some point, this start to screw with both the proof
 size and the cost of reading/writing/encoding/decoding all these nodes.
+
+---v
+
+### Base 2, Base 16, Base-26?
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-16-with-size.svg" />
+
+Note:
+
+Here's a different way to represent it; the nodes are bigger on the base-16 trie.
 
 ---v
 
@@ -614,8 +624,6 @@ with_storage_layer(|| {
 Notes:
 
 - implement with zero-copy. So, the size of values is not so important, it is more about the number.
-- TODO: This `with_storage_layer` is currently in FRAME, but it could technically be in primitives,
-  as there is nothing frame specific about it.
 
 ---v
 
@@ -847,7 +855,9 @@ Notes:
   about what a state transition is. The runtime is the state transition function. Recall the formula
   of that, and then you will know why this is not allowed.
 
-## Post Lecture
+### Post Lecture Feedback
 
-From Shawn: my narrative of big_stuff still seems incorrect; 100% double check it before going any
-further.
+Double check the narrative and example of the `BIG_STUFF` node. An example/exercise of some sort
+would be great, where students call a bunch of `sp_io` functions, visualize the trie, and invoke
+proof recorder, and see which pars of the trie is exactly part of the proof.
+

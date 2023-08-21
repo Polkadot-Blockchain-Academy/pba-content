@@ -39,7 +39,7 @@ almost all external communication happens over JSPN-RPC, so let's take a closer 
 }
 ```
 
-<br>
+<br/>
 
 ```json
 { "jsonrpc": "2.0", "result": 19, "id": 3 }
@@ -71,8 +71,6 @@ almost all external communication happens over JSPN-RPC, so let's take a closer 
 - &shy;<!-- .element: class="fragment" --> `rpc`: information about the RPC endpoints.
 
 Notes:
-
-TODO: @NukeManDan a proper solution for list with fragments would be good, see: https://github.com/hakimel/reveal.js/issues/1848
 
 recall:
 
@@ -158,7 +156,7 @@ In Kusama:
 - The block number is stored under `twox128("System") ++ twox128("Number")`.
   - Find it now, and at block 10,000,000.
 
-<br>
+<br/>
 
 - Refer to the "Substrate; Show Me The Code" lecture to find the right RPC endpoints.
 - You have 15 minutes!
@@ -251,19 +249,6 @@ https://polkadot.js.org/docs/substrate/rpc#getstoragekey-storagekey-at-blockhash
 await api.rpc.state.getStorageSize("0x3A636F6465"),
 ```
 
-light client:
-
-TODO: needs fixing
-
-```ts
-import { ScProvider } from "@polkadot/rpc-provider/substrate-connect";
-import * as Sc from "@substrate/connect";
-
-const lightProvider = new ScProvider(Sc, Sc.WellKnownChain.polkadot);
-await lightProvider.connect();
-const lightApi = await ApiPromise.create({ lightProvider });
-```
-
 A few random other things:
 
 ```ts
@@ -294,14 +279,3 @@ Notes:
 - see "Client Libraries" here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
 - https://paritytech.github.io/json-rpc-interface-spec/introduction.html
 - Full subxt guide: https://docs.rs/subxt/latest/subxt/book/index.html
-
-TODO: further assignment idea:
-
-- build a custom chain spec, then run it
-
-- Use `curl` and such to interact.
-- Connect PJS apps.
-- Write a few simple lines of TS to interact.
-- Write a few lines of Rust with SubXT to interact.
-
-Tricky, as we would be using a FRAME based runtime in order to get some metadata out of it.
