@@ -288,6 +288,7 @@ parameter_types! {
 - **Barriers should not involve any heavy computation.**
 
 Notes:
+
 **At the point at which barriers are checked nothing has yet been paid for its execution**.
 
 ---v

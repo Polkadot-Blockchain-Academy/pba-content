@@ -1,5 +1,7 @@
 # Economics and Game Theory
 
+2 days total time required for the entire module.
+
 ## Learning Outcomes
 
 Completing this module will enable participants to:
@@ -9,48 +11,42 @@ Completing this module will enable participants to:
 - Understand and apply the concepts of price discovery mechanisms and their implications in various market settings.
 - Understand the principles of collective decision-making, including voting systems, group decision-making processes, and the role of consensus in collective decisions.
 
-## Schedule
+### Academy Games
 
-2 days total time required for the entire module.
+The Web3 Foundation is needed to run their proprietary Academy Games that provide a fun and interactive way to play with auctions and more in real time as a class.
+These are played with **real money on the line** and ends in an auction with those funds for NFTs specially generated per-cohort that typically feature a local to the area NFT artist with art inspired by the region.
+
+## Schedule
 
 ### Day 1
 
-- [Economics Basics](./2.1-Economics_Basics) (~1.5 hrs)
+#### Morning
 
-- Workshop (~1.5hr)
+1. [Economics Basics](1-Economics_Basics-slides.md) (1.5hr)
+1. Classroom discussions (0.5hr)
+1. Academy Games (1.5hr)
+   - Ultimatum Game
+   - Cournot Competition
 
-  - Classroom discussions
-  - Academy Games Part 1
-    - Ultimatum Game
-    - Cournot Competition
+#### Afternoon
 
-- Lunch break (1 hr)
-
-- [Game Theory](./2.2-Game_Theory) (~1.5 hr)
-- Workshop (~2 hr)
-  - Classroom discussions
-  - Academy Games Part 2
-    - Guessing Game
-    - Prisoner's Dilemma
-    - Public Goods Game
+1. [Game Theory](2-Game_Theory-slides.md) (1.5hr)
+1. Classroom discussions (0.5hr)
+1. Academy Games 2 (1.5hr)
+   - Guessing Game
+   - Prisoner's Dilemma
+   - Public Goods Game
 
 ### Day 2
 
-- [Price Finding Mechanisms](./2.3-Price_Finding_Mechanisms) - @AlfonsoCev (?? hr)
-- Workshop (?? hr)
+#### Morning
 
-  - Classroom discussions
-  - Academy Games NFT Auction
+- [Price Finding Mechanisms](3-Price_Finding_Mechanisms-slides.md) (1.5hr)
+- Classroom discussions (1hr)
+- Academy Games NFT Auction (0.5hr)
 
-- Lunch (1 hr)
+#### Afternoon
 
-- [Collective Decision Making](./2.4-Collective_Decision_Making) - @AlfonsoCev (?? hr)
-- Workshop
-  - Classroom discussions
-
-### (Extended)
-
-_Not yet implemented, but eventual content could include:_
-
-- Founders track tokenomics lesson ~2 hours - @jonasW3F
-- [Game*Theory_Exploits*&\_Prediction_Markets](./2.5-Lesson_Plan_Game_Theory_Exploits_&_Prediction_Markets.md) - @AlfonsoCev ?
+- [Collective Decision Making](4-Collective_Decision_Making-slides.md) (1.5hr)
+  - Classroom discussions (0.5hr)
+- [Economics of Polkadot](5-Economics_of_Polkadot-slides.md) (2hr)

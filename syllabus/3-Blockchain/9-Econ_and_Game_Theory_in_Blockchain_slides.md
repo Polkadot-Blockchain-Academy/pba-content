@@ -36,7 +36,7 @@ What's the goal of this lecture?
 
 <pba-cols>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/Econ_Box_Open.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/Econ_Box_Open.svg" alt="Econ Box Open" />
     </pba-col>
     <pba-col>
         <ul>
@@ -59,11 +59,11 @@ By now you all should be familiar with all the terms and techniques from the Eco
 
 <pba-cols>
     <pba-col>
-        <img style="width: 280px; margin-top: 190px" src="../../assets/img/3-Blockchain/Econ_Box_Closed.svg"
-            />
+        <img style="width: 280px; margin-top: 190px" src="./img/econ-game-theory/Econ_Box_Closed.svg"
+            alt="Econ Box" />
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/Blockchain_Box_Open.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/Blockchain_Box_Open.svg" alt="Blockchain Box Open" />
     </pba-col>
     <pba-col>
         <ul>
@@ -84,8 +84,8 @@ And you also just finished covering the basics of Blockchains so you all should 
 
 ## What's the goal?
 
-<img style="width: 800px; margin-top: 130px" src="../../assets/img/3-Blockchain/Econ_Handshake_Blockchain.svg"
-    />
+<img style="width: 800px; margin-top: 130px" src="./img/econ-game-theory/Econ_Handshake_Blockchain.svg"
+    alt="Econ and Blockchain Handshake" />
 
 Notes:
 
@@ -111,7 +111,7 @@ But first let's start with a quick summary of how we'll be approaching to bridge
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/game.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/game.svg" alt="Game Pad" />
     </pba-col>
 
 Notes:
@@ -130,7 +130,7 @@ Firstly, we'll be looking at various blockchain systems as isolated games.
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/player.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/player.svg" alt="Laptop user cheering" />
     </pba-col>
 
 Notes:
@@ -150,7 +150,7 @@ Participants in those games will be for instance the miners, like in the Bitcoin
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 300px" src="../../assets/img/3-Blockchain/assumptions.drawio.svg" />
+        <img style="width: 300px" src="./img/econ-game-theory/assumptions.drawio.svg" alt="Checklist with points" />
     </pba-col>
 
 Notes:
@@ -172,7 +172,7 @@ The one we will be analyzing.
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 400px" src="../../assets/img/3-Blockchain/bitcoin.svg" />
+        <img style="width: 400px" src="./img/econ-game-theory/bitcoin.svg" alt="BTC symbol" />
     </pba-col>
 
 Notes:
@@ -194,7 +194,7 @@ And to properly analyze those games we need to have some value representation, w
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/gavel.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/gavel.svg" alt="Gavel Hammer" />
     </pba-col>
 
 Notes:
@@ -233,8 +233,8 @@ Now let's look at something that might also be pretty familiar to many...
 
 #### _Fee Market_
 
-<img style="width: 1200px" src="../../assets/img/3-Blockchain/fees.png"
-    />
+<img style="width: 1200px" src="./img/econ-game-theory/fees.png"
+    alt="Chart of Bitcoin fees over time" />
 
 Notes:
 
@@ -257,7 +257,7 @@ As you can see the price is constantly fluctuating.
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/scales.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/scales.svg" alt="Scales Icon" />
     </pba-col>
 </pba-cols>
 
@@ -279,7 +279,7 @@ But wait...?
         <strong> What is the product? </strong>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/blockspace.drawio.png" />
+        <img style="width: 500px" src="./img/econ-game-theory/blockspace.drawio.png" alt="Blockspace in Polkadot" />
     </pba-col>
 </pba-cols>
 
@@ -306,7 +306,7 @@ Anyone has an idea what it might be?
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/blockspace.drawio.png" />
+        <img style="width: 500px" src="./img/econ-game-theory/blockspace.drawio.png" alt="Blockspace in Polkadot" />
     </pba-col>
 </pba-cols>
 
@@ -332,7 +332,7 @@ Blockspace as a product is actually a pretty new way of thinking about blockchai
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/market_eq.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/market_eq.drawio.svg" alt="Chart showing a market equilibrium" />
     </pba-col>
 </pba-cols>
 
@@ -356,7 +356,7 @@ Transactions that are actually included represent the current equilibrium.
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/rising.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/rising.svg" alt="Rising graph icon" />
     </pba-col>
 </pba-cols>
 
@@ -381,7 +381,7 @@ And what we see is the price equilibrium following suit.
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 300px" src="../../assets/img/3-Blockchain/goods.svg" />
+        <img style="width: 300px" src="./img/econ-game-theory/goods.svg" alt="Stack of goods on a conveyor belt" />
     </pba-col>
 </pba-cols>
 
@@ -411,7 +411,7 @@ This is often the cause for the very volatile fee market.
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/kitty.png" />
+        <img style="width: 500px" src="./img/econ-game-theory/kitty.png" alt="CryptoKitties Logo" />
     </pba-col>
 </pba-cols>
 
@@ -451,7 +451,7 @@ Pretty simple but what's the strategy for BTC mining? How can we leverage that k
 
 ## Nash Equilibrium
 
-<img style="width: 500px" src="../../assets/img/3-Blockchain/honest_mining_meme.jpg" />
+<img style="width: 500px" src="./img/econ-game-theory/honest_mining_meme.jpg" alt="Honest Mining Meme"/>
 
 Notes:
 
@@ -464,7 +464,7 @@ being honestly is the answer, right?
 
 #### _Bitcoin Mining_
 
-<img style="width: 400px" src="../../assets/img/3-Blockchain/bitcoin.svg" />
+<img style="width: 400px" src="./img/econ-game-theory/bitcoin.svg" alt="Bitcoin Logo" />
 
 Notes:
 
@@ -487,7 +487,7 @@ What's the Nash Equilibrium of Bitcoin mining? Is it being honest or dishonest?
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/nash.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/nash.drawio.svg" alt="Payoff Table" />
     </pba-col>
 </pba-cols>
 
@@ -505,7 +505,7 @@ Let's figure out how many bitcoins each one of them will mine on average.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (1).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (1).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -518,7 +518,7 @@ So the reward is 0 for both.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (2).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (2).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -529,7 +529,7 @@ Rest of the nodes will accept those blocks but the two miners compete for the sa
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (3).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (3).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -543,7 +543,7 @@ Things like Twitter, Facebook or Bitcoin are often deemed as valuable because of
 
 ## Nash Equilibrium
 
-<br>
+<br/>
 
 #### _Network Effect_
 
@@ -561,11 +561,11 @@ In blockchains if more people use your chain it's more valuable.
 
 ## Nash Equilibrium
 
-<br>
+<br/>
 
 #### _Network Effect_
 
-<br>
+<br/>
 <strong>Assumptions revisited:</strong>
 <ul>
     <li style="color: grey;"> Only 2 miners </li>
@@ -591,7 +591,7 @@ We will be investigating small systems so it is a good enough approximation.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (4).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (4).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -601,7 +601,7 @@ We can apply the changes by changing the evaluations of the miners coins.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (4b).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (4b).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -611,7 +611,7 @@ If both miners honestly secure the network the coin price is 4 and in case of si
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (5).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (5).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -622,7 +622,7 @@ so let's used the simplest method.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (6).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (6).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -632,7 +632,7 @@ Assuming Miner B is honest the Miner A needs to choose between a payoff of 4 or 
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (7).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (7).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -643,7 +643,7 @@ We temporarily mark it with the red circle.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (8).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (8).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -653,7 +653,7 @@ Same reasoning for B being dishonest and A chooses 2 over 0.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (9).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (9).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -663,7 +663,7 @@ Now we reverse the assumptions and assume A is honest and then B chooses between
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (10).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (10).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -673,7 +673,7 @@ Similarly as before he should choose 4 as it's higher.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (10b).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (10b).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -683,7 +683,7 @@ And the last remaining options will result in the circled 2.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (12).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (12).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -694,7 +694,7 @@ In our case it seems to be being honest.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (13).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (13).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -705,10 +705,10 @@ But what if we change the assumptions a bit?
 
 ## Nash Equilibrium
 
-<br>
+<br/>
 What does it mean exactly to be <strong>dishonest</strong>?
-<br>
-<br>
+<br/>
+<br/>
 
 <div>
     There are some mainstream rules (the protocol) and if an individual miner breaks them it seems like an isolated
@@ -716,8 +716,8 @@ What does it mean exactly to be <strong>dishonest</strong>?
 </div>
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<br>
-<br>
+<br/>
+<br/>
 
 If multiple miners break the protocol <strong>in the same way</strong>, it can be seen as a new protocol deviating from
 the main one.
@@ -756,7 +756,7 @@ The dishonest miners are cooperating.
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/nash.drawio (14).svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/nash.drawio (14).svg" alt="Payoff Table" />
     </pba-col>
 </pba-cols>
 
@@ -772,7 +772,7 @@ Now miners choose to mine for the bitcoin BTC protocol or the bitcoin cash BCH p
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (15).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (15).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -783,7 +783,7 @@ Only this time of both miners follow BCH they ofc get the rewards in the BCH tok
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (16).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (16).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -794,7 +794,7 @@ If both miners secure the network price is 4 and if only 1 the price is 1.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (17).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (17).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -804,7 +804,7 @@ Here we have all the prices adjusted.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (18).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (18).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -816,7 +816,7 @@ So they are both mining the same thing.
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (19).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (19).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -826,7 +826,7 @@ On the other hand if miner B mines BCH then it seems that Miner A prefers to min
 
 ## Nash Equilibrium
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/nash.drawio (20).svg" />
+<img style="width: 700px" src="./img/econ-game-theory/nash.drawio (20).svg" alt="Payoff Table" />
 
 Notes:
 
@@ -838,8 +838,8 @@ And in fact what we have in here is two distinct Nash Equilibria!
 
 So is being honest the best strategy?
 
-<br>
-<br>
+<br/>
+<br/>
 
 Not always.
 If the majority of people are honest then honesty pays off.
@@ -848,8 +848,8 @@ same way then be _dishonest_ with them.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<br>
-<br>
+<br/>
+<br/>
 <div>
     In fact it was proven that in PoW following the majority is the true Nash Equilibrium no matter what
     strategy/protocol they are using as long as it's consistent.
@@ -916,7 +916,7 @@ But how in the world is it useful to us in Blockchain?
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 700px" src="../../assets/img/3-Blockchain/detective.drawio.png" />
+        <img style="width: 700px" src="./img/econ-game-theory/detective.drawio.png" alt="Detective and 2 robbers" />
     </pba-col>
 </pba-cols>
 
@@ -935,7 +935,7 @@ The detective interrogates he robbers and tries to make them confess or catch th
 
 #### _Detective game_
 
-<img style="width: 550px" src="../../assets/img/3-Blockchain/interrogation_small.drawio.svg" />
+<img style="width: 550px" src="./img/econ-game-theory/interrogation_small.drawio.svg" alt="Interrogation Game Payoff Table" />
 
 Notes:
 
@@ -951,7 +951,7 @@ Seems like a safe strategy, right? But remember than both of them witnessed the 
 
 #### _Detective game_
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/interrogation_large.drawio.svg" />
+<img style="width: 700px" src="./img/econ-game-theory/interrogation_large.drawio.svg" alt="Interrogation Game Large Payoff Table" />
 
 Notes:
 
@@ -986,7 +986,7 @@ And this concept is vital to something in blockchain called...
 Oracles are blockchain entities that provide information from the outside world to the blockchain.
 <br>
 <br>
-<img style="width: 700px" src="../../assets/img/3-Blockchain/oracles.drawio.svg" />
+<img style="width: 700px" src="./img/econ-game-theory/oracles.drawio.svg" alt="Oracle getting information from real world" />
 
 Notes:
 
@@ -1002,8 +1002,8 @@ And that's a very very hard task.
 #### _Oracles_
 
 Oracles are blockchain entities that provide information from the outside world to the blockchain.
-<br>
-<br>
+<br/>
+<br/>
 
 <div>
     <strong>External Information Examples:</strong>
@@ -1028,7 +1028,7 @@ Let's actually see how they might work is a slightly simplified version with the
 
 <br>
 <br>
-<img style="width: 900px" src="../../assets/img/3-Blockchain/temp1.drawio.svg" />
+<img style="width: 900px" src="./img/econ-game-theory/temp1.drawio.svg" alt="Temperature Line" />
 
 Notes:
 
@@ -1046,7 +1046,7 @@ But what it is exactly?
 
 <br>
 <br>
-<img style="width: 900px" src="../../assets/img/3-Blockchain/temp2.drawio.svg" />
+<img style="width: 900px" src="./img/econ-game-theory/temp2.drawio.svg" alt="Temperature Line with Some Measurements" />
 
 Notes:
 
@@ -1059,7 +1059,7 @@ Some of them will check it themselves, some will use weather apps and some will 
 
 #### _Oracles_
 
-<img style="width: 900px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" />
+<img style="width: 900px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
 
 Notes:
 
@@ -1081,7 +1081,7 @@ And why is that?
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
     </pba-col>
 </pba-cols>
 
@@ -1107,7 +1107,7 @@ Submitting the truth is the Schelling Point in here and it makes it easy to be h
         What to do with attackers? 
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
     </pba-col>
 </pba-cols>
 
@@ -1124,11 +1124,11 @@ But what if there are some attackers? What can we do about them?
 <pba-cols>
     <pba-col>
         What to do with attackers? 
-        <br><br>
+        <br/><br/>
         If they go unpunished they can repeat the attack until successful
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
     </pba-col>
 </pba-cols>
 
@@ -1146,13 +1146,13 @@ And that's not good.
 <pba-cols>
     <pba-col>
         What to do with attackers? 
-        <br><br>
+        <br/><br/>
         If they go unpunished they can repeat the attack until successful
-        <br><br>
+        <br/><br/>
         Or even worse, they can make a million fake identities and spam incorrect votes 
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
     </pba-col>
 </pba-cols>
 
@@ -1180,7 +1180,7 @@ And they are vital to the blockchain space.
 ## Incentives
 
 _"Something that encourages a person to do something."_
-<br><br>
+<br/><br/>
 
 <div>In our case we want to shape incentives that motivate the users to submit honest values.</div>
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -1203,13 +1203,13 @@ We need to build out incentives in a way that shapes the expected behavior of th
 <pba-cols>
     <pba-col>
         What to do with attackers? 
-        <br><br>
+        <br/><br/>
         If they go unpunished they can repeat the attack until successful
-        <br><br>
+        <br/><br/>
         Or even worse, they can make a million fake identities and spam incorrect votes 
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/temp3.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
     </pba-col>
 </pba-cols>
 
@@ -1226,13 +1226,13 @@ So going back to our oracle problem how can we deal with attackers?
 <pba-cols>
     <pba-col>
         <div style="color: grey;">What to do with attackers? 
-        <br><br>
+        <br/><br/>
         If they go unpunished they can repeat the attack until successful
-        <br><br></div>
+        <br/><br/></div>
         <strong>Or even worse, they can make a million fake identities and spam incorrect votes</strong>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/mask.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/mask.svg" alt="Mask" />
     </pba-col>
 </pba-cols>
 
@@ -1250,14 +1250,14 @@ How can we prevent that?
 <pba-cols>
     <pba-col>
         <strong> Sybil Attacks </strong>
-        <br><br>
+        <br/><br/>
         Common problem in blockchain.
-        <br><br>
+        <br/><br/>
         <div>If deploying on a chain, an easy solution is to make users lock some funds.</div>
         <!-- .element: class="fragment" data-fragment-index="1" -->
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/mask.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/mask.svg" alt="Mask" />
     </pba-col>
 </pba-cols>
 
@@ -1283,13 +1283,13 @@ This is a very simple solution but it's not always applicable.
 <pba-cols>
     <pba-col>
         <div style="color: grey;">What to do with attackers? </div>
-        <br>
+        <br/>
         <strong>If they go unpunished they can repeat the attack until successful</strong>
-        <br><br>
+        <br/><br/>
         <div style="color: grey;">Or even worse, they can make a million fake identities and spam incorrect votes </div>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/gavel.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/gavel.svg" alt="Gavel Hammer" />
     </pba-col>
 </pba-cols>
 
@@ -1307,17 +1307,17 @@ How can we deal with them so they don't continue attacking us?
 <pba-cols>
     <pba-col>
         <strong> Punishments </strong>
-        <br><br>
+        <br/><br/>
         We already laid out the foundation for punishments.
-        <br><br>
+        <br/><br/>
         <div> Our solution for de-sybiling users makes them lock funds.
-        <br><br>
+        <br/><br/>
         If such a user would vote incorrectly, we can slash their funds.
         </div>
         <!-- .element: class="fragment" data-fragment-index="1" -->
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/gavel.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/gavel.svg" alt="Gavel Hammer" />
     </pba-col>
 </pba-cols>
 
@@ -1340,10 +1340,10 @@ We have designed some protective incentives and now the system seems safe.
 
 #### _Oracles_
 
-<br>
+<br/>
 Did we forget about something?
 
-<br><br>
+<br/><br/>
 
 **Why would anyone participate in this system?**
 
@@ -1366,13 +1366,13 @@ Why would anyone participate in this system? Why would anyone vote? Why would an
 <pba-cols>
     <pba-col>
         <strong> Ghost Town </strong>
-        <br><br>
+        <br/><br/>
         No user wants to participate
-        <br><br>
+        <br/><br/>
         Getting information from the real world is an effort and they voters are doing the protocol a service
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/ghost.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/ghost.svg" alt="Ghost" />
     </pba-col>
 </pba-cols>
 
@@ -1391,17 +1391,17 @@ We need a rewards scheme or otherwise the network will be a ghost town.
 <pba-cols>
     <pba-col>
         <strong> Reward Scheme </strong>
-        <br><br>
+        <br/><br/>
         If users are doing the protocol a service they need to be rewarded
-        <br><br>
+        <br/><br/>
         <div> One way to do it is to mint some token rewards for well-behaved voters </div>
         <!-- .element: class="fragment" data-fragment-index="1" -->
-        <br>
+        <br/>
         <div> Or distribute them from a previously acquired pool of rewards </div>
         <!-- .element: class="fragment" data-fragment-index="2" -->
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/rewards.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/rewards.svg" alt="Hand receiving some money" />
     </pba-col>
 </pba-cols>
 
@@ -1431,10 +1431,10 @@ Low-stakes oracles don't need to have super aggressive incentives.
 <pba-cols>
     <pba-col>
         <strong> Reward Scheme Question</strong>
-        <br><br>
+        <br/><br/>
         Can we distribute fixed value rewards for correct votes?
-        <br>Correct vote = 10$ </div>
-        <br><br>
+        <br/>Correct vote = 10$ </div>
+        <br/><br/>
         <div>
          No.
          We should base rewards on the size of the voter's stake.
@@ -1442,7 +1442,7 @@ Low-stakes oracles don't need to have super aggressive incentives.
         <!-- .element: class="fragment" data-fragment-index="1" -->
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/questions.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/questions.svg" alt="Raised Hands" />
     </pba-col>
 </pba-cols>
 
@@ -1516,7 +1516,7 @@ When they promote some behavior that is not good for the network.
 
 #### _Ethereum State Storage Issue_
 
-<img style="width: 200px" src="../../assets/img/3-Blockchain/eth.svg" />
+<img style="width: 200px" src="./img/econ-game-theory/eth.svg" alt="Ethereum Logo" />
 
 Notes:
 
@@ -1534,15 +1534,15 @@ For them to work a bunch of code needs to be deployed on the chain.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> State Storage Replication </strong>
-        <br><br>
+        <br/><br/>
         Whenever we store something on chain (like a smart contract) it needs to be at least partially replicated among the nodes.
-        <br><br>
+        <br/><br/>
         <div> Multiple nodes store the same data.</div>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/replication.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/replication.drawio.svg" alt="Data Replication Diagram" />
     </pba-col>
 </pba-cols>
 
@@ -1559,15 +1559,15 @@ Thousands of nodes store the same data which is not super efficient.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> State Storage Replication Costs </strong>
-        <br><br>
+        <br/><br/>
         Ethereum deals with the burden of replication by charging more gas for submitting bulky data.
-        <br><br>
+        <br/><br/>
         All of that is ON TOP OF any computation gas costs.
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/storage_costs.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/storage_costs.drawio.svg" alt="Stacks of coins next to data blobs" />
     </pba-col>
 </pba-cols>
 
@@ -1585,15 +1585,15 @@ And that's on top of any computation costs.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> State Storage Duration</strong>
-        <br><br>
+        <br/><br/>
         This particular part of the state might be relevant for future state transitions so nodes cannot simply discard it.
-        <br><br>
+        <br/><br/>
         <div> Full nodes need to keep ALL the data.</div>
     </pba-col>
     <pba-col>
-        <img style="width: 500px" src="../../assets/img/3-Blockchain/data_no_changes.drawio.svg" />
+        <img style="width: 500px" src="./img/econ-game-theory/data_no_changes.drawio.svg" alt="Data same over time" />
     </pba-col>
 </pba-cols>
 
@@ -1613,15 +1613,15 @@ Now let's explore an example.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> Meet Bob </strong>
-        <br><br>
+        <br/><br/>
         Bob happily deploys his awesome smart contract in Ethereum.
         He paid a hefty gas fee but so be it.
-        <br><br>
+        <br/><br/>
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract.drawio.svg" />
+        <img style="width: 600px" src="./img/econ-game-theory/smart_contract.drawio.svg" alt="Deploying a smart contract on chain" />
     </pba-col>
 </pba-cols>
 
@@ -1640,15 +1640,15 @@ His code was added to the state and now many nodes hold a copy of it.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> The Problem </strong>
-        <br><br>
+        <br/><br/>
         Bob decided to become a musician or just no longer likes programming.
-        <br><br>
+        <br/><br/>
         He doesn't care about his smart contract anymore.
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract_deployed.drawio.svg" />
+        <img style="width: 600px" src="./img/econ-game-theory/smart_contract_deployed.drawio.svg" alt="Smart contract deployed on chain" />
     </pba-col>
 </pba-cols>
 
@@ -1667,15 +1667,15 @@ His code still lives in the state and has to be continuously replicated and main
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> The Problem Made Worse </strong>
-        <br><br>
+        <br/><br/>
         Many others like Bob follow suit.
-        <br><br>
+        <br/><br/>
         Some of them continue developing but, <strong>why bother</strong> removing old data? They already paid for it.
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract_many.drawio.svg" />
+        <img style="width: 600px" src="./img/econ-game-theory/smart_contract_many.drawio.svg" alt="Many smart contracts deployed on chain" />
     </pba-col>
 </pba-cols>
 
@@ -1693,15 +1693,15 @@ And some of them just don't care anymore.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> "Why Bother?" </strong>
-        <br><br>
+        <br/><br/>
         Getting data on chain is expensive, but there is no incentive to clean it up.
-        <br><br>
+        <br/><br/>
         This is a core misalignment of incentives that lead to Ethereum state size growing out of control.
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract_many.drawio.svg" />
+        <img style="width: 600px" src="./img/econ-game-theory/smart_contract_many.drawio.svg" alt="Many smart contracts deployed on chain" />
     </pba-col>
 </pba-cols>
 
@@ -1722,13 +1722,13 @@ So the chain was getting overwhelmed in junk.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> The Goal </strong>
-        <br><br>
+        <br/><br/>
         Design new protocol rules that shape the behavior of the users in a way that they start cleaning up the state.
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract_clean.drawio.svg" />
+        <img style="width: 600px" src="./img/econ-game-theory/smart_contract_clean.drawio.svg" alt="Cleaned smart contracts on chain" />
     </pba-col>
 </pba-cols>
 
@@ -1745,15 +1745,15 @@ Hopefully without any side effects.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> The Solution </strong>
-        <br><br>
+        <br/><br/>
         State Storage Gas Refunds
-        <br><br>
+        <br/><br/>
         Pay a hefty fee when deploying data to state, but get some of it refunded when removing it.
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/smart_contract_burn.drawio.svg" />
+        <img style="width: 600px" src="./img/econ-game-theory/smart_contract_burn.drawio.svg" alt="Burning a smart contract" />
     </pba-col>
 </pba-cols>
 
@@ -1769,10 +1769,10 @@ So now there is an incentive to clean up the state.
 
 #### _Ethereum State Storage Issue_
 
-<br><br>
+<br/><br/>
 <strong>behavior Before</strong>
 
-<img style="width: 900px" src="../../assets/img/3-Blockchain/developer_musician.drawio.svg" />
+<img style="width: 900px" src="./img/econ-game-theory/developer_musician.drawio.svg" alt="Developer becoming a musician" />
 
 Notes:
 
@@ -1784,10 +1784,10 @@ So what we had originally is Bob paid for his smart contract and then simply wen
 
 #### _Ethereum State Storage Issue_
 
-<br><br>
+<br/><br/>
 <strong>behavior After</strong>
 
-<img style="width: 900px" src="../../assets/img/3-Blockchain/developer_musician2.drawio.svg" />
+<img style="width: 900px" src="./img/econ-game-theory/developer_musician2.drawio.svg" alt="Developer removing his contract and becoming a musician" />
 
 Notes:
 
@@ -1813,7 +1813,7 @@ It's a very important concept in economics and it's also crucial in blockchain.
 
 _"The loss of other alternatives when one option is chosen."_
 
-<img style="width: 400px" src="../../assets/img/3-Blockchain/opp_cost.drawio.svg" />
+<img style="width: 400px" src="./img/econ-game-theory/opp_cost.drawio.svg" alt="Multiple alternatives with opportunity cost" />
 
 Notes:
 
@@ -1829,15 +1829,15 @@ When choosing between 10 and 30$ the opportunity cost of picking 30 is 10, the o
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> The Real Cost </strong>
-        <br><br>
+        <br/><br/>
         Instead of having the funds locked in the storage deposit/refund scheme, Bob could have invested them somewhere else and gain some profit.
-        <br><br>
+        <br/><br/>
         <div>Just locking your funds is sort of a punishment by itself.</div><!-- .element: class="fragment" data-fragment-index="1" -->
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/opp_cost_locking.drawio.svg" />
+        <img style="width: 600px" src="./img/econ-game-theory/opp_cost_locking.drawio.svg" alt="Locking Funds vs Investing" />
     </pba-col>
 </pba-cols>
 
@@ -1928,13 +1928,13 @@ As protocol engineers or system designers you need to identify those externality
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> Negative Externality Cost </strong>
-        <br><br>
+        <br/><br/>
         In the Ethereum State Storage problem we priced in the negative externality as the opportunity cost of locking your funds.
     </pba-col>
     <pba-col>
-        <img style="width: 700px" src="../../assets/img/3-Blockchain/opp_cost_locking.drawio.svg" />
+        <img style="width: 700px" src="./img/econ-game-theory/opp_cost_locking.drawio.svg" alt="Lucking Funds vs Investing" />
     </pba-col>
 </pba-cols>
 
@@ -1952,15 +1952,15 @@ We aligned his incentives with the incentives of the chain.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> Positive Externality </strong>
-        <br><br>
+        <br/><br/>
         Providing the voting services in the Oracle scheme can be seen as a positive externality for the network that can further use this extra information.
-        <br><br>
+        <br/><br/>
         The voters are providing a valuable service to the protocol.
     </pba-col>
     <pba-col>
-        <img style="width: 700px" src="../../assets/img/3-Blockchain/oracles.drawio.svg" />
+        <img style="width: 700px" src="./img/econ-game-theory/oracles.drawio.svg" alt="Information from the external world entering Blockchain" />
     </pba-col>
 </pba-cols>
 
@@ -1997,15 +1997,15 @@ So having that mind should they pay any transaction fees when submitting votes?
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> Beneficial Transactions </strong>
-        <br><br>
+        <br/><br/>
         Such a transaction can be totally free.
-        <br><br>
+        <br/><br/>
         <div>But make sure it cannot be spammed!</div><!-- .element: class="fragment" data-fragment-index="1" -->
     </pba-col>
     <pba-col>
-        <img style="width: 300px" src="../../assets/img/3-Blockchain/free.svg" />
+        <img style="width: 300px" src="./img/econ-game-theory/free.svg" alt="Sticker with Free on it" />
     </pba-col>
 </pba-cols>
 
@@ -2025,9 +2025,9 @@ This way we remain safe and can make the transaction free to further incentivize
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         There are other free transactions that are not necessarily positive externalities.
-        <br><br>
+        <br/><br/>
         <strong> Inherent Transactions </strong>
         <ul>
             <li> Block rewards in BTC </li>
@@ -2035,7 +2035,7 @@ This way we remain safe and can make the transaction free to further incentivize
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 300px" src="../../assets/img/3-Blockchain/free.svg" />
+        <img style="width: 300px" src="./img/econ-game-theory/free.svg" alt="Sticker with Free on it" />
     </pba-col>
 </pba-cols>
 
@@ -2074,7 +2074,7 @@ We'll be looking at questions like do players know everything about the game sta
 
 #### _Polkadot Approval Voting (Simplified)_
 
-<img style="width: 900px" src="../../assets/img/3-Blockchain/Approval_checkers.drawio.svg" />
+<img style="width: 900px" src="./img/econ-game-theory/Approval_checkers.drawio.svg" alt="Five validators and three approval checkers among them" />
 
 Notes:
 
@@ -2092,14 +2092,14 @@ They as they name suggests validate if the new blocks in the network are valid a
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> Approval Checkers </strong>
-        <br><br>
+        <br/><br/>
         In Polkadot when new blocks are validated, not everyone does the work.
         Only some randomly chosen validators - called <strong>Approval Checkers</strong> - are selected to validate candidate blocks.
     </pba-col>
     <pba-col>
-        <img style="width: 700px" src="../../assets/img/3-Blockchain/Approval_checkers.drawio.svg" />
+        <img style="width: 700px" src="./img/econ-game-theory/Approval_checkers.drawio.svg" alt="Five validators and three approval checkers among them" />
     </pba-col>
 </pba-cols>
 
@@ -2117,15 +2117,15 @@ They are called Approval Checkers.
 
 <pba-cols>
     <pba-col>
-        <br>
+        <br/>
         <strong> Attackers </strong>
-        <br><br>
+        <br/><br/>
         We assume that attackers can DDoS some but not ALL Validators.
-        <br><br>
+        <br/><br/>
         Being DDoS'ed makes them unable to vote in time.
     </pba-col>
     <pba-col>
-        <img style="width: 700px" src="../../assets/img/3-Blockchain/validators_attack.drawio.svg" />
+        <img style="width: 700px" src="./img/econ-game-theory/validators_attack.drawio.svg" alt="Attackers eliminated some validators" />
     </pba-col>
 </pba-cols>
 
@@ -2147,7 +2147,7 @@ Being DDoS'ed makes them unable to vote in time.
 - Approval Checkers publish votes if they are selected
 - If all the votes received confirm the block is fine it passes
 
-<img style="width: 600px" src="../../assets/img/3-Blockchain/Approval_checkers.drawio.svg" />
+<img style="width: 600px" src="./img/econ-game-theory/Approval_checkers.drawio.svg" alt="Five validators and three approval checkers among them" />
 
 Notes:
 
@@ -2171,7 +2171,7 @@ But there is a problem with it? Does anyone know what it is?
 - **Attackers use the information and DDoS the selected before they publish the vote** (except their insider)
 - If all the votes received confirm the block is fine it passes
 
-<img style="width: 600px" src="../../assets/img/3-Blockchain/validators_target_attack.drawio.svg" />
+<img style="width: 600px" src="./img/econ-game-theory/validators_target_attack.drawio.svg" alt="Eliminated approval checkers" />
 
 Notes:
 
@@ -2218,7 +2218,7 @@ We need to make this a game of incomplete information, where some things are hid
 - Approval Checkers reveal themselves by showing their low numbers and publish a vote at the same time <!-- .element: class="fragment" data-fragment-index="2" -->
 - If all the votes received confirm the block is fine it passes <!-- .element: class="fragment" data-fragment-index="2" -->
 
-<br>
+<br/>
 
 Notes:
 
@@ -2245,7 +2245,7 @@ So they cannot plan ahead.
 - They no longer know who the Approval Checkers are so they have to guess
 - If they don't guess correctly they get heavily slashed
 
-<img style="width: 700px" src="../../assets/img/3-Blockchain/validators_random_attack.drawio.svg" />
+<img style="width: 700px" src="./img/econ-game-theory/validators_random_attack.drawio.svg" alt="Some validators are eliminated" />
 
 Notes:
 
@@ -2292,7 +2292,7 @@ By now you might have noticed a pattern that usually we have a list of assumptio
         </ul>
     </pba-col>
     <pba-col>
-        <img style="width: 200px" src="../../assets/img/3-Blockchain/assumptions.drawio.svg" />
+        <img style="width: 200px" src="./img/econ-game-theory/assumptions.drawio.svg" alt="Board with assumptions" />
     </pba-col>
 </pba-cols>
 
@@ -2311,7 +2311,7 @@ And they are usually pretty stable.
         Old incentives that were previously sensible may now motivate a vastly different behavior.
     </pba-col>
     <pba-col>
-        <img style="width: 300px" src="../../assets/img/3-Blockchain/assumptions_change.drawio.svg" />
+        <img style="width: 300px" src="./img/econ-game-theory/assumptions_change.drawio.svg" alt="Some of the assumptions on the board change" />
     </pba-col>
 </pba-cols>
 
@@ -2330,11 +2330,11 @@ Old incentives that were previously sensible may now motivate a vastly different
 <pba-cols>
     <pba-col>
         Restaking through EigenLayer incentives Ethereum stakers to stake the same funds for multiple apps at the same time.
-        <br><br>
+        <br/><br/>
         The incentive game will be vastly different and the capital will effectively be leveraged (double risk and double rewards).
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/eigen.drawio.png" />
+        <img style="width: 600px" src="./img/econ-game-theory/eigen.drawio.png" alt="EigenLayer Logo" />
     </pba-col>
 </pba-cols>
 
@@ -2356,13 +2356,13 @@ This is not something natively available in Ethereum and it wasn't taken into co
 <pba-cols>
     <pba-col>
         <strong> Consequences </strong>
-        <br><br>
+        <br/><br/>
         Restaking consequences are still not fully understood and the research is ongoing.
-        <br><br>
+        <br/><br/>
         Speaker Notes ("S") for further reading.
     </pba-col>
     <pba-col>
-        <img style="width: 600px" src="../../assets/img/3-Blockchain/eigen.drawio.png" />
+        <img style="width: 600px" src="./img/econ-game-theory/eigen.drawio.png" alt="EigenLayer Logo" />
     </pba-col>
 </pba-cols>
 

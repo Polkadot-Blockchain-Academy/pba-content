@@ -253,15 +253,6 @@ pba-flex[right] {
 .mermaid.size-70 { width: 70%; }
 .mermaid.size-80 { width: 80%; }
 .mermaid.size-90 { width: 90%; }
-.mermaid.size-110 { width: 110%; }
-.mermaid.size-120 { width: 120%; }
-.mermaid.size-130 { width: 130%; }
-.mermaid.size-140 { width: 140%; }
-.mermaid.size-150 { width: 150%; }
-.mermaid.size-160 { width: 160%; }
-.mermaid.size-170 { width: 170%; }
-.mermaid.size-180 { width: 180%; }
-.mermaid.size-190 { width: 190%; }
 
 
 /* Ensure certain elements are never larger than the slide itself */

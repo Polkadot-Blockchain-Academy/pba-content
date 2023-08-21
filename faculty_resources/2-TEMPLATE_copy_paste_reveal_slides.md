@@ -33,6 +33,7 @@ revealOptions:
 - To make a few points
 
 Notes:
+
 Speaker view ONLY notes
 
 ---
@@ -42,6 +43,7 @@ Speaker view ONLY notes
 #### _Make it clear_
 
 Notes:
+
 Stuff you should remember to say
 
 ---

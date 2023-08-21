@@ -154,7 +154,7 @@ int main() {
 }
 ```
 
-<br>
+<br/>
 
 ```rust
 fn main() {
@@ -183,7 +183,7 @@ int main() {
 
 ```
 
-<br>
+<br/>
 
 ```rust
 fn foo() -> &'static i32 {
@@ -214,7 +214,7 @@ https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/3215760/nsa-relea
 - 🏎️ Most Rust abstractions are **zero-cost**.
 - ⏰ Rust has (almost) no "runtime".
 
-<br>
+<br/>
 
 <img rounded width="900px" src="../../assets/img/5-Substrate/dev-4-1-speed.png" />
 
@@ -809,6 +809,7 @@ Question: How many nested Wasm blobs are executing one another?
 - So when should you write with a smart contract (Ink!) and when a Runtime (FRAME)?
 
 Notes:
+
 I was asked this yesterday as well. My latest answer is: if you don't need any of the customizations
 that a blockchain client/runtime gives to you, and the performance of a shared platform is okay for
 you, then go with a smart contract. If you need more, you need a "runtime" (some kind of chian,
@@ -1040,6 +1041,7 @@ exception](https://www.gnu.org/software/classpath/license.html).
 </pba-cols>
 
 Notes:
+
 People actually tried sticking things like JVM into the browser (_Java Applets_), but it didn't work.
 
 ---v

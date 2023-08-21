@@ -115,10 +115,11 @@ Notes:
 Before addressing collation generation let's first address the other three key Cumulus processes.
 These drive parachain consensus and ensure the availability of parachain blocks.
 
-<br>
+<br/>
 Together they keep parachain nodes up to date such that collating is possible.
 
 Notes:
+
 To recap, these key processes are:
 
 - Follow relay "new best head" to update para "new best head"
@@ -205,7 +206,7 @@ loop {
 ### Ensuring Block Availability
 
 As a part of the parachains protocol, Polkadot makes parachain blocks available for several hours after they are backed.
-<br><br>
+<br/><br/>
 
 <pba-flex center>
 
@@ -519,6 +520,7 @@ pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
 ```
 
 Notes:
+
 Code highlighting:
 
 - CandidateCommitments: Messages passed upwards, Downward messages processed, New code (checked against validation outputs)

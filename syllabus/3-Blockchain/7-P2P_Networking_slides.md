@@ -38,34 +38,35 @@ Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA p
 
 ## Packet Switching
 
-<img style="width: 600px" src="img/message_packet.svg" />
+<img style="width: 600px" src="./img/message_packet.svg" />
 
 Notes:
+
 Mention that headers contain some addressing, destination information, and ordering typically depending
 
 ---
 
 ## Packet Switching
 
-<img style="width: 600px" src="img/packet_switching_1.svg"  />
+<img style="width: 600px" src="./img/packet_switching_1.svg"  />
 
 ---
 
 ## Packet Switching
 
-<img  style="width: 600px" src="img/packet_switching_2.svg" />
+<img  style="width: 600px" src="./img/packet_switching_2.svg" />
 
 ---
 
 ## Packet Switching
 
-<img style="width: 600px" src="img/packet_switching_3.svg" />
+<img style="width: 600px" src="./img/packet_switching_3.svg" />
 
 ---
 
 ## Packet Switching
 
-<img style="width: 600px" src="img/packet_switching_4.svg" />
+<img style="width: 600px" src="./img/packet_switching_4.svg" />
 
 ---
 
@@ -104,25 +105,25 @@ This was a turning point in digital copyright law and played a significant role 
 
 ## Napster Setup
 
-<img style="width: 600px" src="img/napster_1.svg" />
+<img style="width: 600px" src="./img/napster_1.svg" />
 
 ---
 
 ## Napster Setup
 
-<img style="width: 600px" src="img/napster_2.svg" />
+<img style="width: 600px" src="./img/napster_2.svg" />
 
 ---
 
 ## Napster Setup
 
-<img style="width: 600px" src="img/napster_3.svg" />
+<img style="width: 600px" src="./img/napster_3.svg" />
 
 ---
 
 ## Napster Setup
 
-<img style="width: 600px" src="img/napster_4.svg" />
+<img style="width: 600px" src="./img/napster_4.svg" />
 
 ---
 
@@ -184,7 +185,7 @@ Notes:
 
 ## Centralized vs Decentralized Networks
 
-<img style="width: 600px" src="img/client_server_1.svg" />
+<img style="width: 600px" src="./img/client_server_1.svg" />
 
 Notes:
 
@@ -195,19 +196,19 @@ In p2p, only one node needs to have a full copy in order for the file to be able
 
 ## Centralized vs Decentralized Networks
 
-<img style="width: 600px" src="img/client_server_2.svg" />
+<img style="width: 600px" src="./img/client_server_2.svg" />
 
 ---
 
 ## Centralized vs Decentralized Networks
 
-<img style="width: 600px" src="img/p2p_topology_1.svg" />
+<img style="width: 600px" src="./img/p2p_topology_1.svg" />
 
 ---
 
 ## Centralized vs Decentralized Networks
 
-<img style="width: 600px" src="img/p2p_topology_2.svg" />
+<img style="width: 600px" src="./img/p2p_topology_2.svg" />
 
 ---
 
@@ -247,7 +248,7 @@ Notes:
 
 ## Gossip Protocol
 
-<img style="width: 500px" src="img/3.7-p2p-gossip-1.svg" />
+<img style="width: 500px" src="./img/3.7-p2p-gossip-1.svg" />
 
 Notes:
 
@@ -257,7 +258,7 @@ Notes:
 
 ## Gossip Protocol
 
-<img style="width: 85s0px" src="img/3.7-p2p-gossip-2.svg" />
+<img style="width: 85s0px" src="./img/3.7-p2p-gossip-2.svg" />
 
 Notes:
 
@@ -342,7 +343,7 @@ Notes:
 
 ## Attacks
 
-<img style="width: 600px" src="img/eclipse_attack_1.svg"/>
+<img style="width: 600px" src="./img/eclipse_attack_1.svg"/>
 
 Notes:
 
@@ -353,7 +354,7 @@ Notes:
 
 ## Attacks
 
-<img style="width: 600px" src="img/eclipse_attack_2.svg"/>
+<img style="width: 600px" src="./img/eclipse_attack_2.svg"/>
 
 ---
 

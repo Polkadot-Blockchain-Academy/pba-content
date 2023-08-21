@@ -85,12 +85,12 @@ Notes:
 
 <diagram class="mermaid limit size-40">
 <!-- prettier-ignore-start -->
-  flowchart T
-  subgraph paraA[Parachain A              .]
-    executor --"success?"--> palletxcm
-    palletxcm("pallet-xcm") --"execute"--> executor("xcm-executor")
-  end
-  execute("execute(xcm)") --> palletxcm
+flowchart TD
+subgraph paraA[Parachain A              .]
+  executor --"success?"--> palletxcm
+  palletxcm("pallet-xcm") --"execute"--> executor("xcm-executor")
+end
+execute("execute(xcm)") --> palletxcm
 <!-- prettier-ignore-end -->
 </diagram>
 
@@ -99,7 +99,7 @@ Notes:
 It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution.
 It executes the message **locally** and returns the outcome as an event.
 
----
+---v
 
 ## `pallet-xcm` Primitive extrinsics
 
@@ -107,13 +107,13 @@ It executes the message **locally** and returns the outcome as an event.
 
 Sends a message to the provided destination.
 
-<diagram class="mermaid limit size-150" style="display: flex; justify-content: center; transform: translateX(-17%);">
+<diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
 <!-- prettier-ignore-start -->
-  flowchart L
-  subgraph paraA[Parachain A]
-    palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
-    routera --> mqueuea("message queue")
-  end
+flowchart LR
+subgraph paraA[Parachain A]
+palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
+routera --> mqueuea("message queue")
+end
 
 subgraph paraB[Parachain B]
 mqueueb("message queue") --> executorb("xcm-executor")
@@ -124,6 +124,7 @@ mqueuea --> mqueueb
 
 <!-- prettier-ignore-end -->
 </diagram>
+
 Notes:
 
 This extrinsic is a function to send a message to a destination.
@@ -158,11 +159,11 @@ This extrinsic allows the user to perform an asset teleport.
 
 <diagram class="mermaid">
 <!-- prettier-ignore-start -->
-  flowchart LR
-  subgraph paraA[Parachain A]
-    palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
-    executora --"send"--> sendera("xcm-sender")
-  end
+flowchart LR
+subgraph paraA[Parachain A]
+  palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
+  executora --"send"--> sendera("xcm-sender")
+end
 
 subgraph tdestination[Trusted Destination]
 end
@@ -212,13 +213,13 @@ Xcm(vec![
 
 Allow the user to perform a reserve-backed transfer from the reserve chain to the destination.
 
-<diagram class="mermaid">
+<diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
 <!-- prettier-ignore-start -->
-  flowchart LR
-  subgraph reserve[Reserve Chain]
-    palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
-    executora --"send"--> sendera("xcm-sender")
-  end
+flowchart LR
+subgraph reserve[Reserve Chain]
+  palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
+  executora --"send"--> sendera("xcm-sender")
+end
 
 subgraph destination[Destination]
 end
@@ -228,7 +229,7 @@ sendera --"2."--> destination
 
 classDef left text-align:left
 
-<!-- prettier-ignore-end -->
+<!-- prettier-ignore-end-->
 </diagram>
 
 ---v
@@ -383,23 +384,23 @@ In the following scenario Chain A is using XCM v2
 
 <diagram class="mermaid limit size-80">
 <!-- prettier-ignore-start -->
-  flowchart BT
-  subgraph registryA[Chain A's Registry]
-    chainB("Chain B \n\n v2")
-    chainC("Chain C \n\n v3")
-    chainD("Chain D \n\n v1")
-    chainE("Chain E \n\n v3")
-  end
-<!-- prettier-ignore-end -->
+flowchart BT
+subgraph registryA[Chain A's Registry]
+  chainB("Chain B \n\n v2")
+  chainC("Chain C \n\n v3")
+  chainD("Chain D \n\n v1")
+  chainE("Chain E \n\n v3")
+end
+<!-- prettier-ignore-end-->
 </diagram>
 
 <diagram class="mermaid limit size-70">
 <!-- prettier-ignore-start -->
-  flowchart L
+flowchart LR
 
-chainARequest("Chain A") --Chain E ? \n\n v2"--> chainERequest("Chain E")
+chainARequest("Chain A") --"Chain E ? \n\n v2"--> chainERequest("Chain E")
 
-<!-- prettier-ignore-end -->
+<!-- prettier-ignore-end-->
 </diagram>
 
 ---
@@ -409,7 +410,7 @@ chainARequest("Chain A") --Chain E ? \n\n v2"--> chainERequest("Chain E")
 Version negotiation is just one example among many kinds of queries one chain can make to another.
 Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
 
----
+---v
 
 ## Response Handler
 

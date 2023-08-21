@@ -135,6 +135,7 @@ Since Polkadot provides highly flexible blockspace, it can be transformed into a
 </pba-flex>
 
 Notes:
+
 By (3) I mean that the amount of demand for (2) should inform the amount to which the application does (1).
 
 ---
@@ -187,7 +188,7 @@ Spot instances may be more expensive if overall demand is high, but help to soot
 
 Within Polkadot, we measure the amount of blockspace that an application can use in _coretime_.
 
-Just like a CPU and OS, there is a scheduler that multiplexes many<br> different processes onto execution cores.
+Just like a CPU and OS, there is a scheduler that multiplexes many<br/> different processes onto execution cores.
 
 Coretime is acquired through either primary or secondary marketplaces.
 

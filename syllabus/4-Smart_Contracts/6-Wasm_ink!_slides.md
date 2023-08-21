@@ -3,7 +3,7 @@ title: Wasm Smart Contracts in Ink!
 description: A working programmer’s guide to the crypto industry
 ---
 
-<img rounded style="width: 600px;" src="img/ink/ink-logo-with-squid-white.svg" />
+<img rounded style="width: 600px;" src="./img/ink/ink-logo-with-squid-white.svg" />
 
 # Wasm Smart Contracts in Ink!
 
@@ -58,7 +58,7 @@ Notes:
 
 ## Intro: ink! & Substrate
 
-<img rounded style="width: 900px;" src="img/ink/lego0.png" />
+<img rounded style="width: 900px;" src="./img/ink/lego0.png" />
 
 Notes:
 
@@ -71,7 +71,7 @@ Notes:
 
 ## Intro: ink! & Substrate
 
-<img rounded style="width: 900px;" src="img/ink/lego1.png" />
+<img rounded style="width: 900px;" src="./img/ink/lego1.png" />
 
 Notes:
 
@@ -83,7 +83,7 @@ Notes:
 
 ---
 
-<img rounded style="width: 800px;" src="img/ink/schema1.png" />
+<img rounded style="width: 800px;" src="./img/ink/schema1.png" />
 
 Notes:
 
@@ -92,7 +92,7 @@ Notes:
 
 ---
 
-<img rounded style="width: 800px;" src="img/ink/schema2.png" />
+<img rounded style="width: 800px;" src="./img/ink/schema2.png" />
 
 Notes:
 
@@ -100,7 +100,7 @@ Notes:
 
 ---
 
-<img rounded style="width: 800px;" src="img/ink/schema3.png" />
+<img rounded style="width: 800px;" src="./img/ink/schema3.png" />
 
 Notes:
 
@@ -405,7 +405,7 @@ Notes:
 
 ## Dev environment: Contracts UI
 
-<img rounded style="width: 1400px;" src="img/ink/contracts_ui_1.jpg" />
+<img rounded style="width: 1400px;" src="./img/ink/contracts_ui_1.jpg" />
 
 Notes:
 
@@ -416,7 +416,7 @@ Notes:
 
 ## Dev environment: Contracts UI
 
-<img rounded style="width: 1400px;" src="img/ink/contracts_ui_2.jpg" />
+<img rounded style="width: 1400px;" src="./img/ink/contracts_ui_2.jpg" />
 
 Notes:
 
@@ -426,7 +426,7 @@ Notes:
 
 ## Dev environment: Contracts UI
 
-<img rounded style="width: 1400px;" src="img/ink/contracts_ui_3.jpg" />
+<img rounded style="width: 1400px;" src="./img/ink/contracts_ui_3.jpg" />
 
 Notes:
 
@@ -703,7 +703,7 @@ Notes:
 
 ---
 
-<img rounded style="width: 1000px;" src="img/ink/storage.svg" />
+<img rounded style="width: 1000px;" src="./img/ink/storage.svg" />
 
 <font color="#8d3aed">SCALE</font> (_<font color="#8d3aed">S</font>imple <font color="#8d3aed">C</font>oncatenated <font color="#8d3aed">A</font>ggregate <font color="#8d3aed">L</font>ittle <font color="#8d3aed">E</font>ndian_)
 
@@ -923,7 +923,7 @@ Notes:
 
 ## Storage: Lazy
 
-<img rounded style="width: 1000px;" src="img/ink/storage-layout.svg" />
+<img rounded style="width: 1000px;" src="./img/ink/storage-layout.svg" />
 
 Notes:
 
@@ -1082,7 +1082,7 @@ Notes:
 
 ## Common Vulnerabilities: blast from the past
 
-<img rounded style="width: 900px;" src="img/ink/anyone_can_kill_it.jpg" />
+<img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" />
 
 <div style="font-size: 0.72em;">
 
@@ -1274,13 +1274,13 @@ impl MyContract {
 
 <br/>
 
-<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="img/ink/onions.png" />
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/onions.png" />
 
 ---
 
 ## Blockchain node onion
 
-<img style="margin-top: 10px" width="600" src="img/ink/blockchain-onion-1.svg" />
+<img style="margin-top: 10px" width="600" src="./img/ink/blockchain-onion-1.svg" />
 
 - networking
 - block production, dissemination, finalization
@@ -1291,7 +1291,7 @@ impl MyContract {
 
 ## Blockchain node onion
 
-<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="img/ink/blockchain-onion-2.svg" />
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-2.svg" />
 
 - computing new state based on the previous one and a single transaction
 
@@ -1299,7 +1299,7 @@ impl MyContract {
 
 ## Blockchain node onion
 
-<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/blockchain-onion-3.svg" />
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-3.svg" />
 
 - executing contract calls
 
@@ -1599,7 +1599,7 @@ impl ChainExtension<Runtime> for HeavyCryptoOutsourcingExtension {
 
 ## Chain extension: reaching even further
 
-<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/chain-extension-reach.svg" />
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/chain-extension-reach.svg" />
 
 ---
 
@@ -1611,13 +1611,13 @@ impl ChainExtension<Runtime> for HeavyCryptoOutsourcingExtension {
 
 <br/>
 
-<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/blockchain-onion-3.svg" />
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-3.svg" />
 
 ---
 
 ## Testing contracts
 
-<img style="margin-top: 100px;margin-bottom: 50px" width="1000" src="img/ink/testing-contract-stack.svg" />
+<img style="margin-top: 100px;margin-bottom: 50px" width="1000" src="./img/ink/testing-contract-stack.svg" />
 
 ---
 
@@ -1814,7 +1814,7 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
 
 ## E2E pipeline: traps, traps everywhere
 
-<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="img/ink/trap.gif" />
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/trap.gif" />
 
 ---
 
