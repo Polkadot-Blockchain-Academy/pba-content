@@ -18,7 +18,7 @@ duration: 1 hour
 
 ## Hash Chains
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Hash-Chains.png" />
+<img style="width: 800px" src="./img/Hash-Chains.png" />
 
 A hash chain is a linked list using hashes to connect nodes.
 
@@ -30,7 +30,7 @@ Each block has the hash of the previous one.
 
 ## Merkle Trees
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-tree-all-purple.png" />
+<img style="width: 800px" src="./img/Merkle-tree-all-purple.png" />
 
 A binary Merkle tree is a binary tree using hashes to connect nodes.
 
@@ -51,7 +51,7 @@ _Crucial for the trustless nature of decentralised cryptographic data systems!_
 
 ## Proofs: Merkle Copaths
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Merkle-Copaths.png" />
+<img style="width: 800px" src="./img/Merkle-Copaths.png" />
 
 Notes:
 
@@ -125,7 +125,7 @@ Just a selection we'll cover in this course.
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/Trie.png" />
+<img style="width: 800px" src="./img/Trie.png" />
 
 Each node splits on the next digit in base $r$
 
@@ -139,7 +139,7 @@ In this image, $r$ is 52 (26 lowercase + 26 uppercase).
 
 _Words:_ to, tea, ted, ten, inn, A.
 
-<img style="width: 700px" src="../../../assets/img/1-Cryptography/Patricia-Trie.png" />
+<img style="width: 700px" src="./img/Patricia-Trie.png" />
 
 If only one option for a sequence we merge them.
 
@@ -206,7 +206,7 @@ What radix $r$ is best?
 
 ## Merkle Mountain Ranges
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-13.png" />
+<img style="width: 800px" src="./img/U-MMR-13.png" />
 
 Notes:
 
@@ -217,13 +217,13 @@ The trees that are here correspond to the binary digits of 13 that are 1.
 
 ## Merkle Mountain Ranges
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/U-MMR-14.png" />
+<img style="width: 800px" src="./img/U-MMR-14.png" />
 
 ---
 
 ## Merkle Mountain Ranges
 
-<img style="width: 800px" src="../../../assets/img/1-Cryptography/MMR-13.png" />
+<img style="width: 800px" src="./img/MMR-13.png" />
 
 Notes:
 

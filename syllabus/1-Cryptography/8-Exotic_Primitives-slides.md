@@ -175,7 +175,7 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
 ## Erasure Coding
 
-<img style="width: 1000px;" src="../../../assets/img/1-Cryptography/erasure-code.svg" />
+<img style="width: 1000px;" src="./img/erasure-code.svg" />
 
 ---
 
@@ -210,7 +210,7 @@ _Redundancy for your secrets_
 
 ## Shamir Secret Sharing
 
-<img style="height: 600px" src="../../../assets/img/1-Cryptography/shamir-secret-sharing.png" />
+<img style="height: 600px" src="./img/shamir-secret-sharing.png" />
 
 Notes:
 
@@ -233,7 +233,7 @@ Generate keys to allow a third party to transform encrypted data so someone else
 
 ## Proxy Reencryption
 
-<img rounded style="height: 600px" src="../../../assets/img/1-Cryptography/proxy-reencryption.png" />
+<img rounded style="height: 600px" src="./img/proxy-reencryption.png" />
 
 Notes:
 
