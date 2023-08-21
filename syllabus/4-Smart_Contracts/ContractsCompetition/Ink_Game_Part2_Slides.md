@@ -110,7 +110,6 @@ worst thing you can do is hard code the dimensions, because then you have to cro
 Notes:
 in debug mode, rust has to pull in string libraries, which is very expensive. So make sure you compile in release mode. Also, iterating over a datastructure in your contract is very expensive, so try to avoid it. It's an anti-pattern. The user has to pay for everything. So if you have a datastructure that you want to iterate over, you should do it off-chain.
 
-
 ---
 
 ## Avoid iteration
@@ -147,7 +146,7 @@ fn pay_winner(
 </pba-cols>
 
 Notes:
-Strings in general should be avoided in smart contracts.  
+Strings in general should be avoided in smart contracts.
 
 ---
 

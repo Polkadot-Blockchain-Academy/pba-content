@@ -14,7 +14,7 @@ This workshop was an idea that came from first wave of PBA in Cambridge. The fir
 <img rounded style="margin-top: 25px; width: 1200px;" src="../img/ink/beamer.png" />
 
 Notes:
-This is us playing in BA earlier this year. 
+This is us playing in BA earlier this year.
 
 ---
 
@@ -48,11 +48,12 @@ This is us playing in BA earlier this year.
 </div>
 </div>
 
-Notes: 
+Notes:
 The game has three components:  
 **click** the first is a game contract, which is something that we have taken care of. I will deploy it and run it on Rococo. The game contract runs the game loop. It invokes each player contract and it determines the score.  
 **click** And the player.contract, that's your job. so we we have a template for a very basic player and you can basically modify it in any way you like. I will explain the scoring function in a moment.  
-**click** Lastly, we have a front-end that we will put on the big screen here, but it's online, you can open it up on your laptop and follow the game locally. 
+**click** Lastly, we have a front-end that we will put on the big screen here, but it's online, you can open it up on your laptop and follow the game locally.
+
 ---
 
 ## The Process
@@ -68,9 +69,9 @@ So the process is as follows:
 **click** - you brainstorm and create a contract that plays on your behalf ideally in a better way than the other contracts  
 **click** - you deploy the contract to the Rococo testnet  
 **click** - you register your contract as a player with the game contract. We will publish the addresses and it's it's not complicated you can just use contracts UI. I will also show it in a second  
-**click** -  then we start the game. We have a script that calls the game contract regularly and the front end will display the changes  
+**click** - then we start the game. We have a script that calls the game contract regularly and the front end will display the changes  
 **click** - so the game will run for some minutes. Your contract will already be uploaded at this point - so you can't do anything. The contract will play on your behalf. Meaning it's hands off. I mean you can also change it with upgradable contract patterns and stuff, but in general, you won't have to. So you can just watch the game play out.  
-If you're familiar with AI agents, that's also a similar idea, where you have an agent that plays a game on your behalf.  
+If you're familiar with AI agents, that's also a similar idea, where you have an agent that plays a game on your behalf.
 
 ---
 
@@ -79,8 +80,8 @@ If you're familiar with AI agents, that's also a similar idea, where you have an
 <img rounded src="../img/ink/splash-2.png" />
 
 Notes:
-This is what the game board itself looks like. 
-You can see, it's a it's a coordinate grid. 
+This is what the game board itself looks like.
+You can see, it's a it's a coordinate grid.
 
 ---
 
@@ -91,7 +92,6 @@ You can see, it's a it's a coordinate grid.
 Notes:
 this is X1 y0  
 And the idea is for you, as a contract developer, to paint as many fields of this canvas of the script as possible. There's an API function for how to paint. I'll show it in a minute, but the idea is that in the end the contract that painted the most Fields wins.
-
 
 ---
 
@@ -154,7 +154,8 @@ mod player {
     }
 }
 ```
-Notes: 
+
+Notes:
 So this is a very basic player contract.  
 We have a repository app set up with the template for this - I will share the link in a second. How it looks is - it's a contract that defines the player module,  
 **click** - a super simple player doesn't have to contain any storage whatsoever.  
@@ -164,7 +165,7 @@ What your player needs to do is to have one message, that has a defined selector
 So if in this case you return an option some(1,2), this would mean you paint the pixel at X1 Y2.  
 In that case, it would be a very boring play.  
 Who can tell me what would happen here?  
-*(a player that only makes one turn - it always tries to paint the same field. And if someone else also chose the same magic numbers then it wouldn't even make a turn at all.)*  
+_(a player that only makes one turn - it always tries to paint the same field. And if someone else also chose the same magic numbers then it wouldn't even make a turn at all.)_  
 **click** - So there's a couple things of how you can improve on that and I will show some hints later, but for now what we're gonna do is look at the repository and see how we can get started with this.
 
 ---
@@ -174,7 +175,7 @@ Who can tell me what would happen here?
 <img rounded src="../img/ink/github.png" />
 
 Notes:
-This is the Squink-Splash-beginner Repository - it contains a couple of things. 
+This is the Squink-Splash-beginner Repository - it contains a couple of things.
 
 ---
 
@@ -182,7 +183,7 @@ This is the Squink-Splash-beginner Repository - it contains a couple of things.
 
 <img rounded src="../img/ink/github1.png" />
 Notes:
-It contains the  cargo.toml file and the lib.rs, which is the player that I just showed.  
+It contains the  cargo.toml file and the lib.rs, which is the player that I just showed.
 
 ---
 
@@ -190,8 +191,8 @@ It contains the  cargo.toml file and the lib.rs, which is the player that I just
 
 <img rounded src="../img/ink/github2.png" />
 
-Notes: 
-It contains the game metadata. You will need this in order to interact with the game itself, to register your player and so on.  but yeah we will show that. 
+Notes:
+It contains the game metadata. You will need this in order to interact with the game itself, to register your player and so on. but yeah we will show that.
 
 ---
 
@@ -200,7 +201,7 @@ It contains the game metadata. You will need this in order to interact with the 
 <img rounded src="../img/ink/github3.png" />
 
 Notes:
-And it has 2 todo files. The first is some instructions on General setup and the second one is in order to build your player. 
+And it has 2 todo files. The first is some instructions on General setup and the second one is in order to build your player.
 
 ---
 
@@ -220,7 +221,7 @@ We will go around and help whoever has an issue. I think you might even have alr
 
 Notes:
 For this stage, you will need the address of the game. We'll post it in the chat.
-This is a simple example - we're just giving you exposure to the flow of uploading your player contract.  
+This is a simple example - we're just giving you exposure to the flow of uploading your player contract.
 
 ---
 
@@ -256,10 +257,10 @@ The next slides go over strategy. (maybe wait to to go through until you've play
 Notes:
 When you deployed it you already saw that there's different functions that you can call.  
 There are a lot of functions that are ineresting.  
-**click** - the game runner calls this - if you're interested, you can take a look how it works and there might be some hints for for the game.   
-**click**  - then there's a function to to query the board in order to find out if certain fields are already occupied or if they are still free.  
+**click** - the game runner calls this - if you're interested, you can take a look how it works and there might be some hints for for the game.  
+**click** - then there's a function to to query the board in order to find out if certain fields are already occupied or if they are still free.  
 **click** - there's a function for the gas budget so you can find out how much gas your player is allowed to use per one round. Because worst thing is if you are above this gas budget, then you just won't execute any turn during that round.
-**click** -  there's also function to query the game dimensions. same thing there, if you paint outside the bounds, then also you just missed one turn.  
+**click** - there's also function to query the game dimensions. same thing there, if you paint outside the bounds, then also you just missed one turn.
 
 ---
 
@@ -279,7 +280,7 @@ There are a lot of functions that are ineresting.
 [paritytech/squink-splash-advanced](https://github.com/paritytech/squink-splash-advanced)
 
 Notes:
-There's details in here. You could deploy locally to test things out. there's also commands you can use to deploy not using the UI. 
+There's details in here. You could deploy locally to test things out. there's also commands you can use to deploy not using the UI.
 
 ---
 
@@ -307,9 +308,9 @@ There's details in here. You could deploy locally to test things out. there's al
 <!-- .element: class="fragment" -->
 
 Notes:
-**click**  Lastly, some ideas for for your agent in the game you can you yourself can call your contract. as often as you want and this won't contribute to the gas used during the game. You can during the game you could also call a set of function of your contract if you want to adapt something.   
-**click**  You could also Generate random numbers. There are a couple of libraries out there, if you want to go along those lines you have to pay attention that it's a no standard Library. typically a random number generator libraries they typically have a feature that you need to enable in order to make them no standard compatible
-**click** A clever strategy would be a query which fields are free. that's a bit more complex  with the with the code snippet that we have in this Advanced repository, this would give you a hint.
+**click** Lastly, some ideas for for your agent in the game you can you yourself can call your contract. as often as you want and this won't contribute to the gas used during the game. You can during the game you could also call a set of function of your contract if you want to adapt something.  
+**click** You could also Generate random numbers. There are a couple of libraries out there, if you want to go along those lines you have to pay attention that it's a no standard Library. typically a random number generator libraries they typically have a feature that you need to enable in order to make them no standard compatible
+**click** A clever strategy would be a query which fields are free. that's a bit more complex with the with the code snippet that we have in this Advanced repository, this would give you a hint.
 
 ---
 

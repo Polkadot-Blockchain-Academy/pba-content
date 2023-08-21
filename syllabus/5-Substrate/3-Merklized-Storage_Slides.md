@@ -860,4 +860,3 @@ Notes:
 Double check the narrative and example of the `BIG_STUFF` node. An example/exercise of some sort
 would be great, where students call a bunch of `sp_io` functions, visualize the trie, and invoke
 proof recorder, and see which pars of the trie is exactly part of the proof.
-
