@@ -954,7 +954,7 @@ Notes:
     <li class="fragment">On 18 June 2023, Titan, a submersible operated by American tourism company OceanGate, imploded during an expedition to the Titanic wreck.</li>
 </ul>
 <span style="display:flex; justify-content:center; align-items:center;">
-<img rounded style="width:600px" class="fragment" src="./img/2.1-oceangate.png" />
+<img rounded style="width:600px" class="fragment" src="./img/2.1-ocean-gate.png" />
 </span>
 
 ---
