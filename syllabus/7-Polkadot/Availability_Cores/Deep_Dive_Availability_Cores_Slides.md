@@ -529,7 +529,7 @@ Notes:
 
 ## Divisible and Marketable Blockspace
 
-We want Parachains to buy, sell, and split blockspace such that they are allocated exactly as much as fits their needs.<br><br>
+We want Parachains to buy, sell, and split blockspace such that they are allocated exactly as much as fits their needs.<br/><br/>
 
 <pba-flex center>
 

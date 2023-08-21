@@ -66,7 +66,7 @@ A side channel attack is when a cryptographic system is attacked, and the attack
 
 ## Timing Attacks
 
-A timing attack can be possible if any of the following<br> depend on the contents of a secret:
+A timing attack can be possible if any of the following<br/> depend on the contents of a secret:
 
 <pba-flex center>
 

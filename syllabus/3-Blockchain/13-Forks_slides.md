@@ -28,7 +28,7 @@ revealOptions:
 #### Ideal World
 
 In an ideal world blockchains would look like this:
-<br><br>
+<br/><br/>
 
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/no_fork.drawio.svg" />
 
@@ -40,7 +40,7 @@ In an ideal world blockchains would look like this:
 
 Things don't always go according to plan:
 
-<br>
+<br/>
 
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_small.drawio.svg" />
 
@@ -52,7 +52,7 @@ Things don't always go according to plan:
 
 And sometimes they get extra messy:
 
-<br>
+<br/>
 
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_chaos.drawio.svg" />
 
@@ -97,9 +97,9 @@ It will cover most of the common terms and hopefully will not be as self-contrad
 
 #### _Fork Confusion_
 
-<br>
+<br/>
 BABE (sometimes):
-<br><br>
+<br/><br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/transitory_fork_unresolved.drawio.svg" />
 
 Notes:
@@ -119,7 +119,7 @@ Some of you might have heard about soft forks and hard forks, any idea which one
 
 #### _Forks Family Tree_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family.drawio.svg" />
 
 Notes:
@@ -142,7 +142,7 @@ For that we'll talk about transitory forks.
 
 #### _Transitory Forks_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_transitory.drawio.svg" />
 
 Notes:
@@ -154,7 +154,7 @@ They are often also called short-lived forks or temporary forks.
 
 ## Transitory Forks
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/transitory_forks.drawio.svg" />
 
 Notes:
@@ -180,7 +180,7 @@ Consensus forks.
 
 #### _Consensus Forks_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_consensus.drawio.svg" />
 
 Notes:
@@ -204,7 +204,7 @@ But first before we understand the intricacies of consensus forks we need to und
 
 #### _Validity Set_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/BTC_block.drawio.svg" />
 
 Notes:
@@ -221,7 +221,7 @@ For instance the hash of a previous block or even the merkle root.
 
 #### _Validity Set_
 
-<br>
+<br/>
 <img style="width: 400px" src="../../assets/img/3-Blockchain/forks/BTC_header.drawio.svg" />
 
 Notes:
@@ -235,7 +235,7 @@ They generally have to adhere to some rules or constraints.
 
 #### _Validity Set_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/BTC_header_constraints.drawio.svg" />
 
 Notes:
@@ -254,7 +254,7 @@ And we put those block into the validity set.
 
 #### _Validity Set_
 
-<br>
+<br/>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set.drawio.svg" />
 
 Notes:
@@ -270,7 +270,7 @@ So if there is a block D that for instance is too big, it's blocksize is bigger 
 
 #### _Validity Set_
 
-<br>
+<br/>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/universal_set.drawio.svg" />
 
 Notes:
@@ -284,7 +284,7 @@ Only some of those data blobs are valid blocks.
 
 #### _Validity Set_
 
-<br>
+<br/>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set_old.drawio.svg" />
 
 Notes:
@@ -302,7 +302,7 @@ They only like when it's even so they band together and change the protocol to o
 
 #### _Validity Set_
 
-<br>
+<br/>
 <img style="width: 500px" src="../../assets/img/3-Blockchain/forks/validity_set_new.drawio.svg" />
 
 Notes:
@@ -347,7 +347,7 @@ To understand the example from a second ago we'll dive into soft forks.
 
 #### _Soft Forks_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_soft.drawio.svg" />
 
 Notes:
@@ -396,7 +396,7 @@ Before we jump into demonstration is decreasing or increasing blocksize a soft f
     </pba-col>
     <pba-col>
 		<strong>Examples:</strong>
-		<br><br>
+		<br/><br/>
 		<ul>
 			<li>Decreasing blocksize</li>
 			<li>Accepting only even/odd hashes</li>
@@ -477,7 +477,7 @@ Hidden forks.
 
 #### _Hidden Forks_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_hidden.drawio.svg" />
 
 Notes:
@@ -528,7 +528,7 @@ TL;DR the stuff we removed from the validity set wasn't even used despite being 
     </pba-col>
     <pba-col>
 		<strong>Examples:</strong>
-		<br><br>
+		<br/><br/>
 		<ul>
 			<li>Assigning non-conflicting uses to empty opcodes.</li>
 			<li>BTC Ordinals using empty opcodes to implement BTC NFTs.</li>
@@ -573,7 +573,7 @@ Notes:
 
 #### _Hard Forks_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_hard.drawio.svg" />
 
 ---v
@@ -610,7 +610,7 @@ Notes:
     </pba-col>
     <pba-col>
 		<strong>Examples:</strong>
-		<br><br>
+		<br/><br/>
 		<ul>
 			<li>Increasing blocksize</li>
 			<li>BTC Cash fork at first*</li>
@@ -672,12 +672,12 @@ So if there is a major change that most people accept but not everyone it will a
 <pba-cols>
     <pba-col>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_s50.drawio.svg" />
-		<br>
+		<br/>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_g50.drawio.svg" />
     </pba-col>
 	<pba-col>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_s50.drawio.svg" />
-		<br>
+		<br/>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_g50.drawio.svg" />
     </pba-col>
 </pba-cols>
@@ -701,7 +701,7 @@ We only have permanent forks in soft forks with under 50% support and in hard fo
 
 #### _Full Forks_
 
-<br>
+<br/>
 <img style="width: 800px" src="../../assets/img/3-Blockchain/forks/fork_family_full.drawio.svg" />
 
 ---v
@@ -738,7 +738,7 @@ We only have permanent forks in soft forks with under 50% support and in hard fo
     </pba-col>
     <pba-col>
 		<strong>Examples:</strong>
-		<br><br>
+		<br/><br/>
 		<ul>
 			<li>Changing the hashing function</li>
 			<li>Changing the signature scheme</li>
@@ -771,12 +771,12 @@ We only have permanent forks in soft forks with under 50% support and in hard fo
 <pba-cols>
     <pba-col>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_s50.drawio.svg" />
-		<br>
+		<br/>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/soft_forks_g50.drawio.svg" />
     </pba-col>
 	<pba-col>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_s50.drawio.svg" />
-		<br>
+		<br/>
 		<img style="width: 400px" src="../../assets/img/3-Blockchain/forks/hard_forks_g50.drawio.svg" />
     </pba-col>
     <pba-col>
