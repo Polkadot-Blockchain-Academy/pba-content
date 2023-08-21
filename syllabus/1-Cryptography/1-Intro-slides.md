@@ -131,7 +131,7 @@ Do note the assumptions and monitor their validity over time (like quantum tech)
 
 </pba-flex>
 
-<br>
+<br/>
 
 Cryptography alone cannot make strong guarantees that data is available to people when they want to access it.
 

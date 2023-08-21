@@ -191,4 +191,7 @@ Simply search the trait in the rust-docs, and find the implementors!
 
 <img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 
-Notes:
+Note:
+
+One important concept that is important to substrate-based chains, but is somewhat missing here is
+`chain-spec`. Make sure to read up about it in the substrate docs.

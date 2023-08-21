@@ -20,7 +20,7 @@ Upon completing this session, participants...
 
 - Can explain the context and meaning of some of the most fundamental economic concepts, such as supply and demand, opportunity cost, marginal utility, the influence of time on value, and comparative advantage.
 - Can correctly apply these concepts when analyzing economic scenarios or designing incentives.
-  Understand how these concepts form the foundation of more complex economic theories and models.
+- Understand how these concepts form the foundation of more complex economic theories and models.
 
 ## Lecture (~1.5 hours)
 
