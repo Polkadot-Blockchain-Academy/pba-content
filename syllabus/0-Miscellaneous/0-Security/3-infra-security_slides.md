@@ -391,7 +391,7 @@ git commit -a -m "wallet update"
 git push origin master
 ```
 
-**What stops the appocalypse**: an attacker needs write permissions to push, which is defined by credentials from the code storage.
+**What stops the app-ocalypse**: an attacker needs write permissions to push, which is defined by credentials from the code storage.
 
 But the attacker still can play around Pull Requests, mix forged/non-forged commits, etc.
 
@@ -454,7 +454,7 @@ Polkadot-specific.
 - Use password manager (preferable with API), don't re-use passwords
 - NEVER place any secrets in the code or files, even for testing, use environment variables instead
 - Advanced: connect your code with the API of your password manager
-- (lifehack only for Bash users) one space before `export VAR=SECRET_VALUE` command will not place this command in the Bash history
+- (life hack only for Bash users) one space before `export VAR=SECRET_VALUE` command will not place this command in the Bash history
 
 ---
 
