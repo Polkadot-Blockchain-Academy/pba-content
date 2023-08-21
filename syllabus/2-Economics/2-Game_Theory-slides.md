@@ -41,13 +41,12 @@ Hence, it's a good idea to learn game theoretical principles and keep them in th
 
 ## What is Game Theory?
 
-> Show me the incentives and I will show you the outcome.<br/>-- Charlie Munger --
+> Game theory studies strategic situations where the outcome for each participant or 'player' depends on the actions of all others. It formulates models to represent these scenarios and predicts the most likely or optimal outcomes.
 
 Notes:
 
 - Game theory is all about the power of incentives.
-- Incentives drive behavior, and behavior determines the outcome in a particular strategic situation.
-- Knowing or being able to predict how incentives determine outcomes is very important when designing systems, which is what you will all do at some point, or already do.
+- Helps you understand and design systems and guide behavior of participants.
 
 ---
 
@@ -104,6 +103,9 @@ Notes:
 - Spanish conqueror Cortez, when landing in Mexico with a small force who had good reason to fear their capacity to repel attack from the far more numerous Aztecs, removed the risk that his troops might think their way into a retreat by burning the ships on which they had landed
 - Antoine Augustin Cournot, a french mathematician, already described a duopoly game with respective solution in 1844.
   - We will see this later.
+- Examples:
+  - Biology: Animals fight for resources or are peaceful, why cooperation evolved
+  - Political science: Art of conflict, escalation and de-escalation between nations.
 
 ---
 
@@ -151,8 +153,7 @@ Notes:
 <li class="fragment">everyone knows $X$,</li>
 <li class="fragment">everyone knows that everyone knows $X$,</li>
 <li class="fragment">everyone knows that everyone knows that everyone knows $X$,</li>
-<li class="fragment">...
-and so on ad infinitum.</li>
+<li class="fragment">... and so on ad infinitum.</li>
 </ul>
 </ul>
 
@@ -202,32 +203,23 @@ Game theory distinguishes between:
 | ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | Definition       | All players take their actions at the same time | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
 | Simple Example   | Rock-Paper-Scissors                             | Tic-Tac-Toe                                                                                            |
-| Economic Example | Sealed-bid auction.                             |
-
-All bidders submit their bids simultaneously (in a sealed envelope).
-| English auction.
-Auctioneer publicly raises price if at least one bidder accepts the price.
-|
-| Representation | Payoff Matrix | Decision Tree |
+| Economic Example | Sealed-bid auction.                             | All bidders submit their bids simultaneously (in a sealed envelope).                                   |
+|                  | English auction.                                | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
+| Representation   | Payoff Matrix                                   | Decision Tree                                                                                          |
 
 Notes:
 
-- Also referred to as simultanous or sequential games
+- Also referred to as simultaneous or sequential games
 
 ---
 
 ## Completeness of Information in Games
 
-|                       | Game of Complete Information                                         | Game of Incomplete Information |
-| --------------------- | -------------------------------------------------------------------- | ------------------------------ |
-| Information available | All information relevant to decision-making is known to all players. |
-
-| Not all information relevant to decision-making is known to all players.
-|
-| Simple Example | Chess | Poker |
-| Economic Example | Sealed auction for seized Bitcoin.
-| Used-car market: the resale value of a used car is opaque.
-|
+|                       | Game of Complete Information                          | Game of Incomplete Information                             |
+| --------------------- | ----------------------------------------------------- | ---------------------------------------------------------- |
+| Information available | All information relevant to decision-making is known. | Not all information relevant to decision-making is known.  |
+| Simple Example        | Chess                                                 | Poker                                                      |
+| Economic Example      | Sealed auction for seized Bitcoin.                    | Used-car market: the resale value of a used car is opaque. |
 
 Notes:
 
@@ -362,7 +354,7 @@ They are interrogated in different rooms, apart from each other.
 - **Cooperate** ($C$) with each other and not say anything
 - **Defect** ($D$) and confess their crime
 
-<img style="width: 650px; margin-right: 150px;" src="./img/Bonnie-clyde-1.png" />
+<img rounded style="width: 650px; margin-right: 150px;" src="./img/Bonnie-clyde-1.png" />
 
 Notes:
 
@@ -373,7 +365,7 @@ Notes:
 
 ## Bonnie and Clyde
 
-<img style="width: 800px; margin-right: 250px;" src="./img/Bonnie-clyde-2.png" />
+<img rounded style="width: 800px; margin-right: 250px;" src="./img/Bonnie-clyde-2.png" />
 
 Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a strategy that is always optimal for a player, regardless of what the other players do.
 
@@ -393,7 +385,7 @@ So, they end up in a situation where they not only fare worse _individually_ (4 
 <ul>
 <li class="fragment">Fundamental concept in Game Theory</li>
 <li class="fragment">A NE is a set of strategies, one for each player, such that no player can unilaterally improve their outcome by changing their strategy, assuming that the other player's strategy remains the same.</li>
-<li class="fragment">In the Prisonner's Dilemma, D/D is the only NE.</li>
+<li class="fragment">In the Prisoner's Dilemma, D/D is the only NE.</li>
 </ul>
 
 ---
@@ -401,10 +393,8 @@ So, they end up in a situation where they not only fare worse _individually_ (4 
 ## Prisoners' Dilemma IRL
 
 <ul>
-<li class="fragment"><strong>Nuclear Arms Race:</strong> <a href="https://www.history.com/topics/cold-war/arms-race">NATO and Russia</a> prefer no arms race to an arms race.
-Yet, having some arms is preferable to having no arms, irrespective of whether the other one is armed.</li>
-<li class="fragment"><strong>OPEC:</strong> <a href="https://www.opec.org/opec_web/en/">Limiting oil supply</a> is in the best interest of all.
-However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
+<li class="fragment"><strong>Nuclear Arms Race:</strong> <a href="https://www.history.com/topics/cold-war/arms-race">NATO and Russia</a> prefer no arms race to an arms race. Yet, having some arms is preferable to having no arms, irrespective of whether the other one is armed.</li>
+<li class="fragment"><strong>OPEC:</strong> <a href="https://www.opec.org/opec_web/en/">Limiting oil supply</a> is in the best interest of all. However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
 </ul>
 
 ---
@@ -477,7 +467,7 @@ Notes:
 </pba-col>
 <pba-col>
 
-<img style="width: 550px;" src="./img/Players.png" />
+<img rounded style="width: 550px;" src="./img/Players.png" />
 
 </pba-col>
 </pba-cols>
@@ -504,7 +494,7 @@ Examples:
 </pba-col>
 <pba-col>
 
-<img style="width: 550px;" src="./img/Players.png" />
+<img rounded style="width: 550px;" src="./img/Players.png" />
 
 </pba-col>
 </pba-cols>
@@ -529,7 +519,7 @@ Notes:
 </pba-col>
 <pba-col>
 
-<img style="width: 550px;" src="./img/Players.png" />
+<img rounded style="width: 550px;" src="./img/Players.png" />
 
 </pba-col>
 </pba-cols>
@@ -547,6 +537,9 @@ However, a Nash equilibrium is a weaker notion than a dominant strategy, because
 
 <ul>
     <li class="fragment">So, which outcome does the theory of Nash equilibrium predict in the coordination game?</li>
+      <ul>
+      <li class="fragment">None? Both?</li>
+      </ul>
     <li class="fragment">Sometimes people switch between equilibria (if they are made to)...</li>
 </ul>
 <div class="fragment">
@@ -564,8 +557,7 @@ Notes:
 ## Schelling Points
 
 <ul>
-<li class="fragment">Nash equilibrium <span style="font-style: italic;">does not</span> predict which strategies the players actually take.
-</li>
+<li class="fragment">Nash equilibrium <span style="font-style: italic;">does not</span> predict which strategies the players actually take.</li>
 <li class="fragment">This is especially pronounced in games with multiple equilibria (e.g., coordination games).</li>
 <li class="fragment">There are theories that offer insights into which strategies players actually take.</li>
 </ul>
@@ -590,10 +582,11 @@ Notes:
 
 Notes:
 
-- Imagine you are held in prison with your significant other in a separate room.
-- You will be let free if you both guess the same number.
+- Imagine you are held in prison.
+- You and your significant other is asked to guess a number.
+- If you both guess the same number, you are set free.
 - You have the following options: 0.231, 1, or 0.823
-- Guessing both the same number is a NE everytime.
+- Guessing both the same number is a NE every time.
 - It's highly likely you will walk free.
 
 ---
@@ -655,13 +648,10 @@ Examples:
 
 ## Public vs.
 
-Common good
-
 <ul>
 <li class="fragment">Main difference is that in a <span style="font-style: italic;">common good</span> your consumption reduces the value of the good to others.</li>
 <li class="fragment">This is called a <span style="font-style: italic;">consumption externality</span> that you impose on others (and others impose on you.)</li>
-<li class="fragment"> The <span style="font-style: italic;">tragedy of the commons</span> is that, because you do not take this externality into account, consumption is higher than would be socially optimal.
-</li>
+<li class="fragment"> The <span style="font-style: italic;">tragedy of the commons</span> is that, because you do not take this externality into account, consumption is higher than would be socially optimal. </li>
 </ul>
 
 ---
@@ -682,10 +672,8 @@ Common good
 Notes:
 
 - As long as $\alpha>1$, it's best for the collective to contribute as much money as possible, because the money in the project increases magically, so we end up with more money that we started with.
-- However, the problem is that everyone benefits from the project funds regardless of their individual contribution (it is a common good).
-  If a player decreases their initial contribution by one dollar, their individual payoff decreases by $\alpha/N$ dollars, so as long as $\alpha<N$, it is best for each individual to contribute zero.
-- As a result, we can expect that no one will contribute anything, and the money-multiplying powers of the project will be unused.
-  This opportunity cost is a tragedy of the commons.
+- However, the problem is that everyone benefits from the project funds regardless of their individual contribution (it is a common good). If a player decreases their initial contribution by one dollar, their individual payoff decreases by $\alpha/N$ dollars, so as long as $\alpha<N$, it is best for each individual to contribute zero.
+- As a result, we can expect that no one will contribute anything, and the money-multiplying powers of the project will be unused. This opportunity cost is a tragedy of the commons.
 - Finally, if $\alpha\geq N$ then it would be individually better to contribute everything, and we would not have a tragedy of the commons.
 
 ---
@@ -743,7 +731,7 @@ Notes:
 - Why it might not fail:
   - Other incentives:
     - Intrinsic motivation
-    - Reputation (concerns (your github history is part of your CV)
+    - Reputation concerns (your github history is part of your CV)
     - Reciprocity
     - Direct benefit: Some contributors also use the software and benefit from improvements.
 
@@ -780,7 +768,7 @@ Notes:
 Notes:
 
 - Game of chicken or Hawk-Dove Game
-- "Anti-Coordination Game" with the tension between tension and mutual benefit of compromise.
+- "Anti-Coordination Game" with the tension between competition and mutual benefit of compromise.
 - Real-world situations of conflict, where both would prefer not to fight but would actually like to intimidate, leading to a real conflict.
 - Two businesses would be better off not to engage in price war, but it would be good to be the only one to reduce the price to grab some market share.
 
@@ -831,8 +819,7 @@ Notes:
 
 - A number above 2/3\*100 does not make sense
 - If everybody believes that, choosing a number above 2/3\*2/3\*100 does not make sense
-- ...
-  it goes to 0
+- ... it goes to 0
 - But does 0 Win? No!
 - **Question: Who made these considerations?**
 - Empirical results:
@@ -860,11 +847,11 @@ Notes:
 
 ## Game 2: Payoffs
 
-|           |               | **_The other participant_** |                        |
-| --------- | ------------- | --------------------------- | ---------------------- |
-|           |               | **Cooperate**               | **Defect**             |
-| **_You_** | **Cooperate** | 200 points, 200 points      | 0 points, 300 points   |
-|           | **Defect**    | 300 points, 0 points        | 100 points, 100 points |
+|           |             | **_The other participant_** |                        |
+| --------- | ----------- | --------------------------- | ---------------------- |
+|           |             | _Cooperate_                 | _Defect_               |
+| **_You_** | _Cooperate_ | 200 points, 200 points      | 0 points, 300 points   |
+|           | _Defect_    | 300 points, 0 points        | 100 points, 100 points |
 
 ---
 
@@ -896,25 +883,25 @@ Link will be distributed!
 
 ## Game 3: Instructions
 
-<img style="width: 1000px;" src="./img/2.2-pgg-instructions.png" />
+<img rounded style="width: 1000px;" src="./img/2.2-pgg-instructions.png" />
 
 ---
 
 ## Game 3: Contribution
 
-<img style="width: 1000px;" src="./img/2.2-pgg-contribution.png" />
+<img rounded style="width: 1000px;" src="./img/2.2-pgg-contribution.png" />
 
 ---
 
 ## Game 3: Punishment
 
-<img style="width: 900px;" src="./img/2.2-pgg-punishment.png" />
+<img rounded style="width: 900px;" src="./img/2.2-pgg-punishment.png" />
 
 ---
 
 ## Game 3: Payout
 
-<img style="width: 1000px;" src="./img/2.2-pgg-result.png" />
+<img rounded style="width: 1000px;" src="./img/2.2-pgg-result.png" />
 
 ---
 
@@ -934,8 +921,8 @@ Link will be distributed!
 
 - What was your strategy?
 - Were your groups able to sustain cooperation?
-- Why do people cooperate?
-- Why do people punish?
+- Did you cooperate?
+- Did you punish?
 
 Notes:
 
@@ -962,14 +949,10 @@ Notes:
         </ul>
     <li class="fragment">What do you think happens when playing this ...
         <ul>
-            <li class="fragment">...
-for one round?</li>
-            <li class="fragment">...
-for many rounds?</li>
-            <li class="fragment">...
-when allowing for communication?</li>
-            <li class="fragment">...
-with different group sizes?</li>
+            <li class="fragment">... for one round?</li>
+            <li class="fragment">... for many rounds?</li>
+            <li class="fragment">... when allowing for communication?</li>
+            <li class="fragment">... with different group sizes?</li>
         </ul>
     </li>
 </ul>

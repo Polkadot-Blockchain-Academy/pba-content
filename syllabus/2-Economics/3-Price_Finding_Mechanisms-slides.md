@@ -294,7 +294,7 @@ Notes:
 - **Truthful equilibrium**: a _dominant strategy_ to bid truthfully.
 - **Dominant strategy**: outcome is at least as good as the outcome of any other strategy, _no matter what the other bidder bids_.
 
-<img style="width: 1300px;" src="./img/second-price-auction.svg" />
+<img rounded style="width: 1300px;" src="./img/second-price-auction.svg" />
 
 Notes:
 
@@ -350,7 +350,7 @@ Notes:
 
 ## Reserve price
 
-<img style="width: 1400px;" src="./img/reserve-price.svg" />
+<img rounded style="width: 1400px;" src="./img/reserve-price.svg" />
 
 Notes:
 
@@ -808,7 +808,7 @@ Notes:
 
 ---
 
-<img style="width:600px" src="./img/2.3-collection-preview.jpg" />
+<img rounded style="width:600px" src="./img/2.3-collection-preview.jpg" />
 
 ---
 
