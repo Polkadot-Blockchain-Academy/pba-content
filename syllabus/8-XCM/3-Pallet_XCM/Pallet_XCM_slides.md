@@ -84,13 +84,14 @@ Notes:
   Executed on behalf of FRAME's signed origin.
 
 <diagram class="mermaid limit size-40">
-  flowchart TD
+<!-- prettier-ignore-start -->
+  flowchart T
   subgraph paraA[Parachain A              .]
     executor --"success?"--> palletxcm
     palletxcm("pallet-xcm") --"execute"--> executor("xcm-executor")
   end
   execute("execute(xcm)") --> palletxcm
-
+<!-- prettier-ignore-end -->
 </diagram>
 
 Notes:
@@ -98,7 +99,7 @@ Notes:
 It checks the origin to ensure that the configured `SendXcmOrigin` filter is not blocking the execution.
 It executes the message **locally** and returns the outcome as an event.
 
----v
+---
 
 ## `pallet-xcm` Primitive extrinsics
 
@@ -107,21 +108,22 @@ It executes the message **locally** and returns the outcome as an event.
 Sends a message to the provided destination.
 
 <diagram class="mermaid limit size-150" style="display: flex; justify-content: center; transform: translateX(-17%);">
-  flowchart LR
+<!-- prettier-ignore-start -->
+  flowchart L
   subgraph paraA[Parachain A]
     palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
     routera --> mqueuea("message queue")
   end
 
-  subgraph paraB[Parachain B]
-    mqueueb("message queue") --> executorb("xcm-executor") 
-  end
+subgraph paraB[Parachain B]
+mqueueb("message queue") --> executorb("xcm-executor")
+end
 
-  send("send(xcm)") --> palletxcma
-  mqueuea --> mqueueb
+send("send(xcm)") --> palletxcma
+mqueuea --> mqueueb
 
+<!-- prettier-ignore-end -->
 </diagram>
-
 Notes:
 
 This extrinsic is a function to send a message to a destination.
@@ -155,23 +157,23 @@ We have already seen what teleports and reserve transfers mean in lesson 7.1; A 
 This extrinsic allows the user to perform an asset teleport.
 
 <diagram class="mermaid">
+<!-- prettier-ignore-start -->
   flowchart LR
   subgraph paraA[Parachain A]
     palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
     executora --"send"--> sendera("xcm-sender")
   end
 
-  subgraph tdestination[Trusted Destination]
-  end
-  lteleport("limited_teleport_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+subgraph tdestination[Trusted Destination]
+end
+lteleport("limited_teleport_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
 
-  sendera --"2."--> tdestination
+sendera --"2."--> tdestination
 
-  classDef left text-align:left
+classDef left text-align:left
 
+<!-- prettier-ignore-end -->
 </diagram>
-
-<!--<div style="margin-bottom: 2rem;"></div>-->
 
 ---v
 
@@ -211,20 +213,22 @@ Xcm(vec![
 Allow the user to perform a reserve-backed transfer from the reserve chain to the destination.
 
 <diagram class="mermaid">
+<!-- prettier-ignore-start -->
   flowchart LR
   subgraph reserve[Reserve Chain]
     palletxcma("pallet-xcm") --"1. execute"--> executora("xcm-executor")
     executora --"send"--> sendera("xcm-sender")
   end
 
-  subgraph destination[Destination]
-  end
-  lteleport("limited_reserve_transfer_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
+subgraph destination[Destination]
+end
+lteleport("limited_reserve_transfer_assets(\n  dest,\n  beneficiary,\n  assets,\n  fee_asset_item,\n  weight_limit\n)"):::left --> palletxcma
 
-  sendera --"2."--> destination
+sendera --"2."--> destination
 
-  classDef left text-align:left
+classDef left text-align:left
 
+<!-- prettier-ignore-end -->
 </diagram>
 
 ---v
@@ -378,6 +382,7 @@ XCM version negotiation:
 In the following scenario Chain A is using XCM v2
 
 <diagram class="mermaid limit size-80">
+<!-- prettier-ignore-start -->
   flowchart BT
   subgraph registryA[Chain A's Registry]
     chainB("Chain B \n\n v2")
@@ -385,13 +390,16 @@ In the following scenario Chain A is using XCM v2
     chainD("Chain D \n\n v1")
     chainE("Chain E \n\n v3")
   end
+<!-- prettier-ignore-end -->
 </diagram>
 
 <diagram class="mermaid limit size-70">
-  flowchart LR
-  
-  chainARequest("Chain A") --"Chain E ? \n\n v2"--> chainERequest("Chain E")
+<!-- prettier-ignore-start -->
+  flowchart L
 
+chainARequest("Chain A") --Chain E ? \n\n v2"--> chainERequest("Chain E")
+
+<!-- prettier-ignore-end -->
 </diagram>
 
 ---
@@ -401,7 +409,7 @@ In the following scenario Chain A is using XCM v2
 Version negotiation is just one example among many kinds of queries one chain can make to another.
 Regardless of which kind of query was made, the response usually takes the form of a `QueryResponse` instruction.
 
----v
+---
 
 ## Response Handler
 

@@ -406,7 +406,9 @@ let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
 ```rust
 for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
 ```
+
 enchmarkinghere you store balances!
+
 - What happens with slashed funds is configurable too!
 
 ---
