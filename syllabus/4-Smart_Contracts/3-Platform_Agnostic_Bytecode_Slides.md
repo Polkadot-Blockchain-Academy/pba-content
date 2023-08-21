@@ -53,11 +53,11 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 ###### High Level Languages
 
-<img style="width: 30%" src="img/pab/rust_logo.png" />
+<img style="width: 30%" src="./img/pab/rust_logo.png" />
 
-<img style="width: 30%" src="img/pab/c_logo.png" />
+<img style="width: 30%" src="./img/pab/c_logo.png" />
 
-<img style="width: 30%" src="img/pab/c++_logo.png" />
+<img style="width: 30%" src="./img/pab/c++_logo.png" />
 
 </pba-flex>
 </pba-col>
@@ -68,10 +68,10 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 ###### PABs
 
-<img style="width: 30%" src="img/pab/jvm_logo.png" />
-<img style="width: 30%" src="img/pab/wasm_logo.png" />
-<img style="width: 20%" src="img/pab/eth_logo.png" />
-<img style="width: 30%" src="img/pab/risc-v_logo.png" />
+<img style="width: 30%" src="./img/pab/jvm_logo.png" />
+<img style="width: 30%" src="./img/pab/wasm_logo.png" />
+<img style="width: 20%" src="./img/pab/eth_logo.png" />
+<img style="width: 30%" src="./img/pab/risc-v_logo.png" />
 
 </pba-flex>
 </pba-col>
@@ -82,9 +82,9 @@ Ideally a bytecode like this is designed to be executed on a virtual machine tha
 
 ###### Architecture's bytecode
 
-<img style="width: 30%" src="img/pab/intel_logo.png" />
-<img style="width: 30%" src="img/pab/arm_logo.png" />
-<img style="width: 30%" src="img/pab/risc-v_logo.png" />
+<img style="width: 30%" src="./img/pab/intel_logo.png" />
+<img style="width: 30%" src="./img/pab/arm_logo.png" />
+<img style="width: 30%" src="./img/pab/risc-v_logo.png" />
 
 </pba-flex>
 </pba-col>
@@ -217,16 +217,16 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 ## PAB's lifecycle example
 
 <div class="r-stack">
-<img style="width: 70%" src="img/pab/pab_path_1.svg" />
-<img style="width: 70%" src="img/pab/pab_path_2.svg"/>
+<img style="width: 70%" src="./img/pab/pab_path_1.svg" />
+<img style="width: 70%" src="./img/pab/pab_path_2.svg"/>
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img style="width: 70%" src="img/pab/pab_path_3.svg"/>
+<img style="width: 70%" src="./img/pab/pab_path_3.svg"/>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img style="width: 70%" src="img/pab/pab_path_4.svg"/>
+<img style="width: 70%" src="./img/pab/pab_path_4.svg"/>
 <!-- .element: class="fragment" data-fragment-index="3" -->
-<img style="width: 70%" src="img/pab/pab_path_5.svg"/>
+<img style="width: 70%" src="./img/pab/pab_path_5.svg"/>
 <!-- .element: class="fragment" data-fragment-index="4" -->
-<img style="width: 70%" src="img/pab/pab_path_6.svg"/>
+<img style="width: 70%" src="./img/pab/pab_path_6.svg"/>
 <!-- .element: class="fragment" data-fragment-index="5" -->
 </div>
 
@@ -234,7 +234,7 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 <!-- .slide: data-background-color="#4A2439" -->
 
-<img rounded style="width: 300px" src="img/ink/question-mark.svg" />
+<img rounded style="width: 300px" src="./img/ink/question-mark.svg" />
 
 ---
 
@@ -312,17 +312,17 @@ Adding two number in wasm text representation (.wat)
 <pba-col center>
 
 <div class="r-stack">
-<img src="img/pab/stack_1.svg" style="width: 100%">
+<img src="./img/pab/stack_1.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="img/pab/stack_2.svg" style="width: 100%">
+<img src="./img/pab/stack_2.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img src="img/pab/stack_3.svg" style="width: 100%">
+<img src="./img/pab/stack_3.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="3" -->
-<img src="img/pab/stack_4.svg" style="width: 100%">
+<img src="./img/pab/stack_4.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="4" -->
-<img src="img/pab/stack_5.svg" style="width: 100%">
+<img src="./img/pab/stack_5.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="5" -->
-<img src="img/pab/stack_6.svg" style="width: 100%">
+<img src="./img/pab/stack_6.svg" style="width: 100%">
 <!-- .element: class="fragment" data-fragment-index="6" -->
 </div>
 
@@ -387,7 +387,7 @@ Let's call **Embedder** the program that will take the wasm blob as input and ex
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-<img src="img/pab/env_communication.svg" style="width: 70%">
+<img src="./img/pab/env_communication.svg" style="width: 70%">
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -422,9 +422,9 @@ The Rust compiler uses for dynamic/heap memory and to pass non primitives values
 ### Example
 
 <div class="r-stack">
-<img src="img/pab/linear_memory_1.svg" style ="width: 70%">
+<img src="./img/pab/linear_memory_1.svg" style ="width: 70%">
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="img/pab/linear_memory_2.svg" style ="width: 70%">
+<img src="./img/pab/linear_memory_2.svg" style ="width: 70%">
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
@@ -481,12 +481,12 @@ Cranelift is a fast, secure, relatively simple and innovative compiler backend. 
 #### Wasm lifecycle in Wasmtime
 
 <div class="r-stack">
-<img style="width: 70%" src="img/pab/wasmtime_exec_1.svg" />
-<img style="width: 70%" src="img/pab/wasmtime_exec_2.svg"/>
+<img style="width: 70%" src="./img/pab/wasmtime_exec_1.svg" />
+<img style="width: 70%" src="./img/pab/wasmtime_exec_2.svg"/>
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img style="width: 70%" src="img/pab/wasmtime_exec_3.svg"/>
+<img style="width: 70%" src="./img/pab/wasmtime_exec_3.svg"/>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img style="width: 70%" src="img/pab/wasmtime_exec_4.svg"/>
+<img style="width: 70%" src="./img/pab/wasmtime_exec_4.svg"/>
 <!-- .element: class="fragment" data-fragment-index="3" -->
 </div>
 
@@ -515,12 +515,12 @@ Due to it's characteristics it is mainly used to execute SmartContracts on chain
 #### Wasm lifecycle in Wasmi
 
 <div class="r-stack">
-<img style="width: 70%" src="img/pab/wasmi_exec_1.svg" />
-<img style="width: 70%" src="img/pab/wasmi_exec_2.svg"/>
+<img style="width: 70%" src="./img/pab/wasmi_exec_1.svg" />
+<img style="width: 70%" src="./img/pab/wasmi_exec_2.svg"/>
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img style="width: 70%" src="img/pab/wasmi_exec_3.svg"/>
+<img style="width: 70%" src="./img/pab/wasmi_exec_3.svg"/>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img style="width: 70%" src="img/pab/wasmi_exec_4.svg"/>
+<img style="width: 70%" src="./img/pab/wasmi_exec_4.svg"/>
 <!-- .element: class="fragment" data-fragment-index="3" -->
 </div>
 
@@ -533,7 +533,7 @@ There are also light clients, where both Runtime and Client are implemented in w
     - the node's runtime as embedder for the SmartContract
 
 
-<img style="height: 30vh" src="img/pab/mind-blown-explosion.gif" />
+<img style="height: 30vh" src="./img/pab/mind-blown-explosion.gif" />
 
 We have a double recursion of a PAB that embed itself
 
@@ -566,6 +566,7 @@ We have a double recursion of a PAB that embed itself
 - The Embedder is rBFP, a virtual machine for eBPF programs
 
 Notes:
+
 https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
 
 ---v
@@ -582,6 +583,7 @@ https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
 Being so simple and "Hardware-Independent" there are work in progress experiments to test if it is suitable to become the new polkadot smart contract language
 
 Notes:
+
 Discussion about using RISC-V as smart contract language: https://forum.polkadot.network/t/exploring-alternatives-to-wasm-for-smart-contracts/2434
 
 RISC-V Instruction Set Manual, Unprivileged ISA: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf

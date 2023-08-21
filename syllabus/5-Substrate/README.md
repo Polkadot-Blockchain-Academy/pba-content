@@ -12,7 +12,7 @@ As there is a large amount of variance in student experience around Substrate, w
 > **All graded assignments and solutions must remain private to the Academy staff, faculty, and enrolled students!**
 
 There is a private to the Academy graded exercise, in a _template repository_ titled `frameless-node-template--master` that should be introduced after the first lectures are complete.
-Instructors should \_create a per cohort, **private**, derived from the master copy, make it a template repo, and configure the cohort Github Classroom to use this new repo as an assignment.
+Instructors should create a per cohort, **private**, derived from the master copy, make it a template repo, and configure the cohort Github Classroom to use this new repo as an assignment.
 
 The "`px...` assignment problem" sections indicates that students are now capable of completing them with the content so far covered.
 They should be encouraged to start working on them as time allows _outside of class time!_
@@ -21,8 +21,8 @@ They should not zone-out of class to complete this during class time, they shoul
 ### Extercises and Activites
 
 There is a private to the Academy graded exercise, in a _template repository_ titled `pba-wasm-executor--master` that should be introduced after the first lectures are complete.
-Instructors should \_create a per cohort, **write-access granted to the cohort team**, derived from the master copy, make it a template repo, instruct students to use the `<github username/*` branch namespace for any of their work, with `<github username>` acting as their `main` branch.
-Ensure the `main` branch is _write procted, by required a PR first` - no one should be able to push to `main`!
+Instructors should create a per cohort, **write-access granted to the cohort team**, derived from the master copy, make it a template repo, instruct students to use the `<github username/*` branch namespace for any of their work, with `<github username>` acting as their `main` branch.
+Ensure the `main` branch is write procted, by required a PR first`- no one should be able to push to`main`!
 
 ## Lesson Schedule
 
