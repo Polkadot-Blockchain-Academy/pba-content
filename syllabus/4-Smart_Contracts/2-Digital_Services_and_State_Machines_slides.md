@@ -3,6 +3,10 @@ title: Digital Services as State Machines
 description: Digital Services approximate smart contracts; both are modeled as state machines.
 ---
 
+# Digital Services as State Machines
+
+---
+
 ## Web0
 
 Telegraph, Telephone

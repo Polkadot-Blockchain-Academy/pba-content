@@ -1,11 +1,11 @@
 ---
-title: Runtime Migrations Try Runtime
+title: Migrations and Try Runtime
 description: Runtime upgrades and how to survive them
 instructors: ["Kian Paimani"]
 teaching-assistants: [".."]
 ---
 
-# Runtime Migrations and Try Runtime
+# Migrations and Try Runtime
 
 ---
 

@@ -774,7 +774,7 @@ fn main() {
 
 > A Substrate-Connect extension is syncing a chain who's runtime is executing wasm contracts.
 
-Question: How many nested WASM blobs are executing one another?
+Question: How many nested Wasm blobs are executing one another?
 
 ---v
 

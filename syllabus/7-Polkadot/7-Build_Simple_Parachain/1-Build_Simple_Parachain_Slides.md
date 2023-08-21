@@ -1,10 +1,14 @@
 ---
-title: Build Simple Parachain
+title: Build a Parachain
 description: Build a simple parachain without Cumulus
 duration: 1.5 hours
 ---
 
-# Agenda for Today
+# Build a Parachain
+
+---
+
+## Agenda
 
 - Build a simple collator without Cumulus
 - Introduction to Cumulus and how to build a Parachain
@@ -84,9 +88,9 @@ Talking to the relay chain means speaking the networking protocol of Polkadot to
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
 #[cfg(feature = "std")]
-/// Wasm binary unwrapped. If built with `BUILD_DUMMY_WASM_BINARY`, the function panics.
+/// Wasm binary unwrapped. If built with `BUILD_DUMMY_Wasm_BINARY`, the function panics.
 pub fn wasm_binary_unwrap() -> &'static [u8] {
-	WASM_BINARY.expect(
+	Wasm_BINARY.expect(
 		"Development wasm binary is not available. Testing is only \
 						supported with the flag disabled.",
 	)
