@@ -17,14 +17,15 @@ Shared Security is an Economic Scaling Solution for Blockchains.
 <div class="grid grid-cols-2">
 <div>
 
-But that is just an answer that sits at the surface. The topic goes much deeper than that.
+But that is just an answer that sits at the surface.
+The topic goes much deeper than that.
 
 Let’s explore…
 
 </div>
 <div>
 
-<image src="../../../assets/img/7-Polkadot/iceburg.jpg" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/7-Polkadot/iceburg.jpg" />
 
 </div>
 </div>
@@ -44,7 +45,7 @@ We will focus on Economic Security.
 
 Economic Security is represented by the economic cost to change the canonical history of a blockchain.
 
-<image src="../../../assets/img/7-Polkadot/chain-fork.svg" style="width: 1000px">
+<img style="width: 1000px" src="../../assets/img/7-Polkadot/chain-fork.svg" />
 
 Chains with higher security are more resilient to malicious activity, like a double spend attack.
 
@@ -62,7 +63,7 @@ It is up to the blockchain to come to consensus as to which of these two transac
 </pba-col>
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/double-spend.svg" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/7-Polkadot/double-spend.svg" />
 
 </pba-col>
 </pba-cols>
@@ -73,7 +74,7 @@ It is up to the blockchain to come to consensus as to which of these two transac
 
 In this example, someone is explicitly taking advantage of fragmentation in the network to try and create two different canonical chains.
 
-<image src="../../../assets/img/7-Polkadot/network-attack.svg" style="width: 900px">
+<img style="width: 900px" src="../../assets/img/7-Polkadot/network-attack.svg" />
 
 ---
 
@@ -81,7 +82,7 @@ In this example, someone is explicitly taking advantage of fragmentation in the 
 
 Eventually, the network fragmentation will resolve, and consensus messages will allow us to prove that the malicious nodes **equivocated**.
 
-<image src="../../../assets/img/7-Polkadot/network-attack-2.svg" style="width: 900px">
+<img style="width: 900px" src="../../assets/img/7-Polkadot/network-attack-2.svg" />
 
 That is, they signed messages that validated two conflicting chains.
 
@@ -93,9 +94,9 @@ This will result in **slashing** the malicious nodes, which should be economical
 
 ---
 
-So Economics and Security are tightly coupled in Blockchians.
+So Economics and Security are tightly coupled in Blockchains.
 
-<image src="../../../assets/img/7-Polkadot/economics-security.svg" style="width: 900px">
+<img style="width: 900px" src="../../assets/img/7-Polkadot/economics-security.svg" />
 
 ---
 
@@ -116,15 +117,14 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 ## New Chains Have Small Market Cap
 
-<image src="../../../assets/img/7-Polkadot/small-market-cap.svg" style="width: 500px">
-
+<img style="width: 500px" src="../../assets/img/7-Polkadot/small-market-cap.svg" />
 
 </pba-col>
 <pba-col>
 
 ## New Chains Are More Speculative
 
-<image src="../../../assets/img/7-Polkadot/speculative-graph.svg" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/7-Polkadot/speculative-graph.svg" />
 
 </pba-col>
 </pba-cols>
@@ -137,13 +137,13 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 # Shared Security
 
-<image src="../../../assets/img/7-Polkadot/spongebob.jpg" style="width: 900px">
+<img style="width: 900px" src="../../assets/img/7-Polkadot/spongebob.jpg" />
 
 ---
 
 ## Different Forms of "Shared Security" Today
 
-- Native: Native shared security is implemented at the protocol level, and is represented as  a Layer 0 blockchain, working underneath Layer 1 chains.
+- Native: Native shared security is implemented at the protocol level, and is represented as a Layer 0 blockchain, working underneath Layer 1 chains.
 - Rollups: Optimistic and Zero-Knowledge Rollups use a settlement layer to provide security and finality to their transactions.
 - Re-Staking: Some protocols allow the use of already staked tokens to secure another network, usually through the creation of a derivative token.
 
@@ -161,7 +161,7 @@ Arguably, the scarcest resource in blockchain is economic security - there simpl
 
 <pba-col>
 
-<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/0-Shared/parachains/parachains-transparent.png" />
 
 </pba-col>
 
@@ -184,8 +184,8 @@ This is native to the protocol, and one of its core functionalities.
 <pba-col>
 
 1. Execution Meta-Protocol
-2. Coordination / Validation
-3. Security Hub / Settlement Layer
+1. Coordination / Validation
+1. Security Hub / Settlement Layer
 
 </pba-col>
 
@@ -211,7 +211,7 @@ This is native to the protocol, and one of its core functionalities.
 
 <pba-col>
 
-<image src="../../../assets/img/6-FRAME/wasm-in-storage.png" style="width: 700px">
+<img style="width: 700px" src="../../assets/img/6-FRAME/wasm-in-storage.png" />
 
 </pba-col>
 
@@ -233,7 +233,7 @@ This has many implications, which we have covered, but the key point in this con
 
 <pba-col>
 
-<image src="../../../assets/img/5-Substrate/nintendo-console-2.png" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/5-Substrate/nintendo-console-2.png" />
 
 Basic Substrate Client
 
@@ -241,11 +241,10 @@ Basic Substrate Client
 
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/nintendo-game-acala.png" style="width: 250px">
-<image src="../../../assets/img/7-Polkadot/nintendo-game-astar.png" style="width: 250px">
-<image src="../../../assets/img/7-Polkadot/nintendo-game-moonbeam.png" style="width: 250px">
-<image src="../../../assets/img/7-Polkadot/nintendo-game-polkadot.png" style="width: 250px">
-
+<img style="width: 250px" src="../../assets/img/7-Polkadot/nintendo-game-acala.png" />
+<img style="width: 250px" src="../../assets/img/7-Polkadot/nintendo-game-astar.png" />
+<img style="width: 250px" src="../../assets/img/7-Polkadot/nintendo-game-moonbeam.png" />
+<img style="width: 250px" src="../../assets/img/7-Polkadot/nintendo-game-polkadot.png" />
 
 Wasm Runtimes
 
@@ -257,7 +256,7 @@ Wasm Runtimes
 
 ## A Polkadot Validator Node
 
-<image src="../../../assets/img/7-Polkadot/nintendo-console-extreme.png" style="width: 1000px">
+<img style="width: 1000px" src="../../assets/img/7-Polkadot/nintendo-console-extreme.png" />
 
 ---
 
@@ -277,6 +276,21 @@ Wasm Runtimes
 
 ---
 
+## Maximizing Scaling
+
+A scalable proof of stake system is one where:
+
+- security is as **shared** as possible
+- execution is as **sharded** as possible
+
+Notes:
+
+You should not confuse shared security with sharded security.
+
+a.k.a. cosmos is a sharded security network.
+
+---
+
 ## Execution Sharding
 
 Execution Sharding is the process of distributing blockchain execution responsibilities across a validator set.
@@ -289,7 +303,7 @@ This enables Polkadot to scale.
 
 ## How to validate a block?
 
-<image src="../../../assets/img/7-Polkadot/parachain-validation.svg" style="width: 1200px">
+<img style="width: 1200px" src="../../assets/img/7-Polkadot/parachain-validation.svg" />
 
 ---
 
@@ -297,7 +311,7 @@ This enables Polkadot to scale.
 
 Parachains submit new blocks with a proof-of-validity to the network.
 
-<image src="../../../assets/img/7-Polkadot/parachain-validation-multiple.svg" style="width: 900px">
+<img style="width: 900px" src="../../assets/img/7-Polkadot/parachain-validation-multiple.svg" />
 
 Wasm Runtime and latest state root for Parachains already stored on the relay chain.
 
@@ -305,7 +319,7 @@ Wasm Runtime and latest state root for Parachains already stored on the relay ch
 
 Parachains Protocol has new blocks that it needs to validate and include.
 
-<image src="../../../assets/img/7-Polkadot/parachain-validators.svg" style="width: 600px">
+<img style="width: 600px" src="../../assets/img/7-Polkadot/parachain-validators.svg" />
 
 ## Polkadot Validators
 
@@ -313,7 +327,7 @@ Parachains Protocol has new blocks that it needs to validate and include.
 
 A random subset of validators are assigned to execute the parachain blocks.
 
-<image src="../../../assets/img/7-Polkadot/parachain-validators-colored.svg" style="width: 600px">
+<img style="width: 600px" src="../../assets/img/7-Polkadot/parachain-validators-colored.svg" />
 
 The new state root is then committed to the relay chain so the process can repeat.
 
@@ -321,9 +335,14 @@ The new state root is then committed to the relay chain so the process can repea
 
 ## How do we stop things from going wrong?
 
-- Data Availability: Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
-- Approval Checking: Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block. If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
-- Disputes Handling: When someone disputes the validity of a parablock, all validators must then check the block and cast a vote. The validators on the losing side of the dispute are slashed.
+- Data Availability
+  - Polkadot uses erasure encoding across the validators assigned to a parachain to make sure the data needed to validate a block stays available.
+- Approval Checking
+  - Every validator node is running approval checking processes for a random subset of parachain blocks in every relay chain block.
+    If the initially assigned approvers for a parablock "no-show", then we assume an attack and in the worst case escalate to have the entire validator set check the block.
+- Disputes Handling
+  - When someone disputes the validity of a parablock, all validators must then check the block and cast a vote.
+    The validators on the losing side of the dispute are slashed.
 
 ---
 
@@ -337,7 +356,7 @@ The new state root is then committed to the relay chain so the process can repea
 
 <pba-col>
 
-<image src="../../../assets/img/0-Shared/parachains/parachains-transparent.png" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/0-Shared/parachains/parachains-transparent.png" />
 
 </pba-col>
 
@@ -362,7 +381,7 @@ The Relay Chain is the anchor for the Polkadot Network.
 
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/parachain-finalization.svg" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/7-Polkadot/parachain-finalization.svg" />
 
 </pba-col>
 
@@ -386,7 +405,7 @@ The Parachain state committed on Polkadot is the **canonical chain**.
 
 <pba-col>
 
-<image src="../../../assets/img/7-Polkadot/xcmp-finalization.svg" style="width: 500px">
+<img style="width: 500px" src="../../assets/img/7-Polkadot/xcmp-finalization.svg" />
 
 </pba-col>
 
@@ -409,8 +428,8 @@ So, shared security not only secures the individual chains, but the interactions
 <pba-col>
 
 1. Execution Meta-Protocol
-2. Coordination / Validation
-3. Security Hub / Settlement Layer
+1. Coordination / Validation
+1. Security Hub / Settlement Layer
 
 </pba-col>
 
@@ -421,7 +440,6 @@ Other protocols say they are providing shared security... but do they have these
 </pba-col>
 
 </pba-cols>
-
 
 ---
 
@@ -444,7 +462,6 @@ Other protocols say they are providing shared security... but do they have these
 
 <div class="col-span-2">
 
-
 ### Cons
 
 - As tokens are continually re-staked, the economic “costs” needed to attack secured chains decreases.
@@ -461,9 +478,15 @@ See the section on "Key Risks and Vulnerabilities" here:
 
 https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primitive/
 
-> Generally there are two main attack vectors of EigenLayer. One is that many validators collude to attack a set of middleware services simultaneously. The other is that the protocols that leverage EigenLayer and are built through it may have unintended slashing vulnerabilities and there is a risk of honest nodes getting slashed.
+> Generally there are two main attack vectors of EigenLayer.
+> One is that many validators collude to attack a set of middleware services simultaneously.
+> The other is that the protocols that leverage EigenLayer and are built through it may have unintended slashing vulnerabilities and there is a risk of honest nodes getting slashed.
 >
-> Much of the EigenLayer mechanism relies upon a rebalancing algorithm that takes into account the different validators and their accompanying stake and security capacity and usage. This underpins the success of the protocol. If this rebalancing mechanism fails (e.g. slow to adjust, latency, incorrect parameters) then EigeinLayer opens itself up to different attack vectors, particularly around cryptoeconomic security. It essentially replicates the same vulnerabilities that it sought to solve with merge-mining. So attention must be paid to ensuring that the system is accurately updating any outstanding restaked $ETH and that it remains fully collateralized.
+> Much of the EigenLayer mechanism relies upon a rebalancing algorithm that takes into account the different validators and their accompanying stake and security capacity and usage.
+> This underpins the success of the protocol.
+> If this rebalancing mechanism fails (e.g. slow to adjust, latency, incorrect parameters) then EigenLayer opens itself up to different attack vectors, particularly around cryptoeconomic security.
+> It essentially replicates the same vulnerabilities that it sought to solve with merge-mining.
+> So attention must be paid to ensuring that the system is accurately updating any outstanding restaked $ETH and that it remains fully collateralized.
 
 ---
 
@@ -487,11 +510,12 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 ### Cons
 
 - Concerns around centralization and censorship of sequencers.
-- Long time to finality due to challenge periods. (could be days)
+- Long time to finality due to challenge periods.
+  (could be days)
 - Settlement layers could be attacked, interfering with the optimistic rollup protocols.
 - Suffers from the same problems allocating blockspace as on-chain transactions.
-	- On-chain costs to perform the interactive protocol.
-	- Congestion of the network.
+  - On-chain costs to perform the interactive protocol.
+  - Congestion of the network.
 
 </div>
 
@@ -521,11 +545,11 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 
 - Concerns around centralization of sequencers and provers.
 - Challenging to write ZK Circuits.
-	- Turing complete, but usually computationally complex.
-	- Hard to bound complexity of circuits when building apps.
+  - Turing complete, but usually computationally complex.
+  - Hard to bound complexity of circuits when building apps.
 - Suffers from the same problems allocating blockspace as on-chain transactions.
-	- On-chain costs to submit and execute proofs on settlement layer.
-	- Congestion of the network.
+  - On-chain costs to submit and execute proofs on settlement layer.
+  - Congestion of the network.
 
 </div>
 
@@ -554,9 +578,9 @@ https://consensys.net/blog/cryptoeconomic-research/eigenlayer-a-restaking-primit
 ### Cons
 
 - Certain limitations enforced to keep parachains compatible with the parachains protocol.
-	- Wasm STF
-	- No Custom Host Function
-	- Constrained Execution Environment
+  - Wasm STF
+  - No Custom Host Function
+  - Constrained Execution Environment
 - Wasm is unfortunately still 2x slower than native compilation.
 - Requires lot of data being provided and available in PoV.
 

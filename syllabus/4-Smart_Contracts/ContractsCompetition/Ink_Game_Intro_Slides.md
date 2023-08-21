@@ -4,7 +4,7 @@ description: An introduction to the ink! workshop.
 duration: 20 min
 ---
 
-<img rounded style="width: 1200px; padding-top:15px;" src="../img/ink/beginners-workshop.jpg" alt="ink!" />
+<img rounded style="width: 1200px; padding-top:15px;" src="../img/ink/beginners-workshop.jpg" />
 
 Notes:
 This workshop was an idea that came from first wave of PBA in Cambridge. The first time it was ever played was back in Buenos Aires. It's very much a PBA right of passage, so it's exciting to be able to play today.

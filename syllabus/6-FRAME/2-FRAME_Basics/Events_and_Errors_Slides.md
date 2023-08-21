@@ -250,11 +250,7 @@ Encoding based on configuration:
 ```rust
 // Configure a mock runtime to test the pallet.
 frame_support::construct_runtime!(
-	pub struct Test where
-		Block = Block,
-		NodeBlock = Block,
-		UncheckedExtrinsic = UncheckedExtrinsic,
-	{
+	pub struct Test {
 		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
 		TemplateModule: pallet_template,
 	}
@@ -547,7 +543,7 @@ Some tools in FRAME System for you:
 /// Set the block number to something in particular. Can be used as an alternative to
 /// `initialize` for tests that don't need to bother with the other environment entries.
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
-pub fn set_block_number(n: T::BlockNumber) {
+pub fn set_block_number(n: BlockNumberFor<T>) {
 	<Number<T>>::put(n);
 }
 
