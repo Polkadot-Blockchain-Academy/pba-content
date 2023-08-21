@@ -1,10 +1,14 @@
 ---
-title: Build Simple Parachain
+title: Build a Parachain
 description: Build a simple parachain without Cumulus
 duration: 1.5 hours
 ---
 
-# Agenda for Today
+# Build a Parachain
+
+---
+
+## Agenda
 
 - Build a simple collator without Cumulus
 - Introduction to Cumulus and how to build a Parachain
