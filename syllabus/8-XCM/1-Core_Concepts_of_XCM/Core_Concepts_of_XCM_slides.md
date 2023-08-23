@@ -949,8 +949,8 @@ No new trust relationships are added.
 - Assets
 - Reanchoring
 - Cross-consensus transfers
-    - Teleports
-    - Reserve asset transfers
+  - Teleports
+  - Reserve asset transfers
 
 ---v
 

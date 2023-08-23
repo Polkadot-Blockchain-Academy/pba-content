@@ -390,14 +390,14 @@ The destination can't trust the reserve to totally speak for the source, only fo
 - XCVM
 - Kinds of instructions
 - Registers
-    - Origin
-    - Holding
-    - Error handler
-    - Appendix
+  - Origin
+  - Holding
+  - Error handler
+  - Appendix
 - Instructions
-    - WithdrawAsset, BuyExecution, DepositAsset
-    - RefundSurplus
-    - InitiateReserveWithdraw, ReserveAssetDeposited
+  - WithdrawAsset, BuyExecution, DepositAsset
+  - RefundSurplus
+  - InitiateReserveWithdraw, ReserveAssetDeposited
 
 ---v
 

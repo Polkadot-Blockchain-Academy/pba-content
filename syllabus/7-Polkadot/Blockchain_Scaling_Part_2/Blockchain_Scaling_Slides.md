@@ -72,8 +72,8 @@ https://www.starknet.io/en/posts/developers/rollup-validium-volition-where-is-yo
 
 Notes:
 
-- https://celestia.org/learn/sovereign-rollups/an-introduction/
-- https://rollkit.dev/blog/sovereign-rollups-on-bitcoin/
+- https://celestia.org/learn/sovereign-rollups/an-introduction/ <!-- markdown-link-check-disable-line -->
+- https://rollkit.dev/blog/sovereign-rollups-on-bitcoin-with-rollkit
 
 ---
 
@@ -164,7 +164,7 @@ Notes:
 
 Notes:
 
-- https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/
+- https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/ <!-- markdown-link-check-disable-line -->
 
 ---
 
@@ -216,7 +216,7 @@ Notes:
 - Proposers post a state root to L1 with deposit
 - Challengers can submit fraud proofs within period (typically 7 days)
   - If successful, rewarded portion of deposit
-- Fraud proofs can be interactive (Arbitrum) or noninteractive (Optimism)
+- Fraud proofs can be interactive (Arbitrum) or non-interactive (Optimism)
 
 Notes:
 
@@ -306,7 +306,7 @@ Notes:
 
 ## How Does Polkadot Compare to Other Rollup Protocols?
 
-<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/polkadotrollup.png" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/polkadot-rollup.png" />
 
 - Approval checking is a decentralized shared watchtower network
 - The value proposition of Polkadot is making consistent security assumptions across the modular stack

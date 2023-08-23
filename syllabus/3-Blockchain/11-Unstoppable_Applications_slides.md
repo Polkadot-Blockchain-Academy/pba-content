@@ -566,7 +566,7 @@ Notes:
 - Unlike PoW where voting on a chain costs something _extrinsic_ to the system, PoS has only _intrinsic_ measures to do accounting of consensus rules.
 - **Critical:** This was a problem with early naive implementations of PoS.
   Modern PoS schemes avoid this specific problem by having the security deposit and slashing for equivocation (in a few slides)
-- Good explainer, source of image: https://golden.com/wiki/Nothing-at-stake_problem-639PVZA
+- Good explainer, source of image: https://golden.com/wiki/Nothing-at-stake_problem-639PVZA <!-- markdown-link-check-disable-line -->
 
 ---v
 
@@ -649,7 +649,7 @@ Nuke argue this is the same for the sum of all contracts valuations on something
   - Finality: Voting for mutually<br/>exclusive chains to be final
 - Invalidity
 - Lack of availability
-- **Intentional protocol abuse** ([selfish mining](https://golden.com/wiki/Selfish_mining_attack-39PMNNA))
+- **Intentional protocol abuse** ([selfish mining](https://golden.com/wiki/Selfish_mining_attack-39PMNNA)) <!-- markdown-link-check-disable-line -->
 
 </pba-flex>
 
