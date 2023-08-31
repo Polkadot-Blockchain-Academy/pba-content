@@ -381,7 +381,7 @@ If that is not possible, draw a partial LTS.
 
 ## Garage Door Lock
 
-TODO figure of garage door opener
+![Keypad lock for electric garage door](./img/digital_services_state_machines/garage-door-keypad.jpg)
 
 Notes:
 
