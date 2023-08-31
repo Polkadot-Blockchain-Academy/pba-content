@@ -394,8 +394,6 @@ As you sketch your states, be sure to handle that correctly.
 
 This example is drawn from https://eng.libretexts.org/Under_Construction/Book%3A_Discrete_Structures/09%3A_Finite-State_Automata/9.02%3A_State_Transition_Diagrams which has many other excellent examples
 
-TODO add this example to blockchain from scratch.
-
 ---
 
 ## Build Some State Machines
