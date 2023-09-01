@@ -1,3 +1,11 @@
+# 🪦 Deprecated
+
+## PBA content lives on in the [Book](https://github.com/Polkadot-Blockchain-Academy/pba-book)
+
+This archive now serves as a reference for faculty facing content only.
+
+---
+
 # Polkadot Blockchain Academy
 
 The Polkadot Blockchain Academy is an intensive academic program teaching Blockchain, Substrate and Polkadot to talented developers.
