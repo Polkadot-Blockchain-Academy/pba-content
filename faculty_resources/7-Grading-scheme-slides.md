@@ -46,7 +46,7 @@ Notes:
 
 ## 🤙 1on1 checking pre-UCB
 
-- Modules to meet with Nuke to cover their [key milestones](https://hackmd.io/aE6i_ZQpSwaOSfHVpApOcg?both)
+- Modules to meet with Nuke to cover their key milestones (???)
 
 ---v
 
