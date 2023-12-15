@@ -73,7 +73,7 @@ https://www.starknet.io/en/posts/developers/rollup-validium-volition-where-is-yo
 Notes:
 
 - https://celestia.org/learn/sovereign-rollups/an-introduction/
-- https://rollkit.dev/blog/sovereign-rollups-on-bitcoin/
+- https://rollkit.dev/blog/sovereign-rollups-on-bitcoin#sovereign-rollups-on-bitcoin-with-rollkit
 
 ---
 
