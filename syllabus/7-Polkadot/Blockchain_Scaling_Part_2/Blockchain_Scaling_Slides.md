@@ -306,7 +306,7 @@ Notes:
 
 ## How Does Polkadot Compare to Other Rollup Protocols?
 
-<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/polkadotrollup.png" />
+<img rounded style="width: 700px" src="../../../assets/img/7-Polkadot/Blockchain_Scaling/polkadot-rollup.png" />
 
 - Approval checking is a decentralized shared watchtower network
 - The value proposition of Polkadot is making consistent security assumptions across the modular stack
