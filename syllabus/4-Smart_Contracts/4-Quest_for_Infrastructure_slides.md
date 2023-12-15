@@ -123,7 +123,7 @@ Tomorrow and Thursday will dig in on how the blockchain and its P2P network work
 
 ## Blockchain Data structure
 
-todo figure FIXME
+![Blockchain data structure](./img/forks.svg)
 
 Notes:
 
@@ -135,7 +135,7 @@ This one is forked which is when things get really interesting, and when you nee
 
 ## Blockchain Consensus
 
-todo FIXME
+![Byzantine Generals Problem](./img/byzantine-generals.png)
 
 Notes:
 

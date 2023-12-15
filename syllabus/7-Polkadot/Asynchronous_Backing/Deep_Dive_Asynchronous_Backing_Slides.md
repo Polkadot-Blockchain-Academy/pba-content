@@ -41,7 +41,7 @@ Lets get to it
 <pba-flex center>
 
 - Backable candidate:
-  - Output of the offchain backing process
+  - Output of the off-chain backing process
   - Received a quorum of "valid" votes from its backing group
 - Backed candidate:
   - A backable candidate that has been placed on-chain
@@ -586,8 +586,8 @@ Notes:
 
 <pba-col center>
 
-1. [Async Backing Feature Branch](https://github.com/paritytech/polkadot/tree/rh-async-backing-feature)
-1. [Implementers Guide: Prospective Parachains](https://github.com/paritytech/polkadot/blob/rh-async-backing-feature-while-frozen/roadmap/implementers-guide/src/node/backing/prospective-parachains.md)
+1. [Polkadot Async Backing PR](https://github.com/paritytech/polkadot/pull/5022)
+1. [Implementers Guide: Prospective Parachains](https://github.com/paritytech/polkadot/blob/631b66d5daa642fad7ed0a9712194c5b85b96563/roadmap/implementers-guide/src/node/backing/prospective-parachains.md)
 
 </pba-col>
 

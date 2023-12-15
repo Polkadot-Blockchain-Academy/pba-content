@@ -2,7 +2,7 @@
 
 Total time required 2.5 days.
 
-## Lesson Preperation
+## Lesson Preparation
 
 This module consists of a combination of lectures, activities, and sections of the accompanying exercises to to students at what time.
 As there is a large amount of variance in student experience around Substrate, we want to make sure that we have a variety of content for students of different experience levels.
@@ -18,11 +18,11 @@ The "`px...` assignment problem" sections indicates that students are now capabl
 They should be encouraged to start working on them as time allows _outside of class time!_
 They should not zone-out of class to complete this during class time, they should prioritize in-class activities and exercises over working on the assignment!
 
-### Extercises and Activites
+### Exercises and Activities
 
 There is a private to the Academy graded exercise, in a _template repository_ titled `pba-wasm-executor--master` that should be introduced after the first lectures are complete.
 Instructors should create a per cohort, **write-access granted to the cohort team**, derived from the master copy, make it a template repo, instruct students to use the `<github username/*` branch namespace for any of their work, with `<github username>` acting as their `main` branch.
-Ensure the `main` branch is write procted, by required a PR first`- no one should be able to push to`main`!
+Ensure the `main` branch is write protected, by required a PR first`- no one should be able to push to`main`!
 
 ## Lesson Schedule
 
@@ -30,32 +30,32 @@ Ensure the `main` branch is write procted, by required a PR first`- no one shoul
 
 #### Morning
 
-1. [Introduction](1-Intro_to_Substrate-slides.md) (60m)
-1. [WASM Meta Protocol](2-Substrate_WASM_Meta-slides.md) (90m)
+1. [Introduction](./1-Intro-to-Substrate_Slides.md) (60m)
+1. [WASM Meta Protocol](./2-WASM-Meta-Protocol-Slides.md) (90m)
 <!-- FIXME where is this? -->
 1. Activity: Finding Runtime APIs and Host Functions in Substrate
 
 #### Afternoon
 
-1. [Show Me The Code](3-Substrate_Code-slides.md) (60m)
-1. [Substrate Interactions](4-Substrate-Interactions-slides.md) (60m)
-1. FRAME-Less Assignment (60m)
+1. [Show Me The Code](./9-Substrate-In-The-Code_Slides.md) (60m)
+1. [Substrate Interactions](./9-Substrate-Interactions_Slides.md) (60m)
+1. FRAMELess Assignment (60m)
 
 ### Day 2
 
 #### Morning
 
-1. [Transaction Pool](5-Substrate_Transaction_Pool-slides.md) (60m)
-1. [SCALE](6-SCALE-slides.md) (60m)
-1. [Substrate and FRAME Tips and Tricks](7-Substrate_FRAME_Tips_Tricks-slides.md)
+1. [Transaction Pool](./4-Transaction-Pool_Slides.md) (60m)
+1. [SCALE](./9-SCALE_Slides.md) (60m)
+1. [Substrate and FRAME Tips and Tricks](./9-Substrate-FRAME-Tips-Tricks-Slides.md)
 
 #### Afternoon
 
-1. FRAME-Less Assignment
+1. FRAMELess Assignment
 
 ### Day 3
 
 #### Morning
 
-1. [Substrate Storage](8-Substrate_Merklized_Storage-slides.md) (90m)
-1. FRAME-Less Assignment
+1. [Substrate Storage](./3-Merklized-Storage_Slides.md) (90m)
+1. FRAMELess Assignment

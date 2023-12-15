@@ -38,7 +38,8 @@ They should not zone-out of class to complete this during class time, they shoul
 1. `p3_encryption` assignment problem
 1. `p8_aes_modes` assignment problem for advanced students
    ☕ Break
-1. [Many time pad assignment problem](FIXME)
+   <!-- FIXME move to separate MONO repo for crypto or embed into book-->
+1. Many time pad assignment problem
 
 ### Day 2
 

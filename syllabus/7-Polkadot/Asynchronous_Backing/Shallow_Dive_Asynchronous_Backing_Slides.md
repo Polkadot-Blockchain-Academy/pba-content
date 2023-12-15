@@ -277,9 +277,9 @@ Notes:
 
 <pba-col center>
 
-1. [Polkadot Async Backing Feature Branch](https://github.com/paritytech/polkadot/tree/rh-async-backing-feature)
-1. [Cumulus Async Backing Feature Branch](https://github.com/paritytech/cumulus/tree/slumber-async-backing-feature)
-1. [Implementers Guide: Prospective Parachains](https://github.com/paritytech/polkadot/blob/rh-async-backing-feature-while-frozen/roadmap/implementers-guide/src/node/backing/prospective-parachains.md)
+1. [Polkadot Async Backing PR](https://github.com/paritytech/polkadot/pull/5022)
+1. [Cumulus Async Backing PR](https://github.com/paritytech/cumulus/pull/2300)
+1. [Implementers Guide: Prospective Parachains](https://github.com/paritytech/polkadot/blob/631b66d5daa642fad7ed0a9712194c5b85b96563/roadmap/implementers-guide/src/node/backing/prospective-parachains.md)
 
 </pba-col>
 
