@@ -30,7 +30,7 @@
 
 - [Moonbuilders Workshop: A Technical Introduction to XCM on Moonbeam](https://www.youtube.com/watch?v=5HD5rFBqvQ4)
 
-  - [their docs on xcm](https://docs.moonbeam.network/builders/xcm/overview/)
+  - [their docs on xcm](https://docs.moonbeam.network/builders/interoperability/xcm/overview/)
   - Great overall intro, [slides are great](https://docs.google.com/presentation/d/1dKZiP1LUltfjJ4cHiB1XtJAGla3sngXSc7sFj84zRKk/)...
     might want to ask to use?
     Copy content perhaps
