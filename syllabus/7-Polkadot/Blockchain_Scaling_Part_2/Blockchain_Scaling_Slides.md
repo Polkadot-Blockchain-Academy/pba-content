@@ -164,7 +164,7 @@ Notes:
 
 Notes:
 
-- https://docs.celestia.org/learn/how-celestia-works/data-availability-layer
+- https://docs.celestia.org/learn/how-celestia-works/data-availability-layer <!-- markdown-link-check-disable-line -->
 
 ---
 
