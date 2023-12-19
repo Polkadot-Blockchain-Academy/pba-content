@@ -16,7 +16,8 @@ duration: 3.5 hour
 2. [Example](#simple-zk-example)
 3. [zk-SNARKS](#zk-snarks)
 4. [Application of zk-proofs](#zk-application)
-5. [How to generate a zk-proof][#zk-practice]
+5. [Under the hood of zk-proof](#zk-practice)
+6. [Generating ZK-proofs using circom and snarkjs](#circom-snarkjs)
 
 </pba-flex>
 
@@ -70,17 +71,16 @@ _Example:_ Schnorr signatures are ZK Proofs
 
 ---
 
-## Our ZK Proof Example
+## Our ZK Proof Example we study in this module
 
--_Example:_ Prover knows a non-trivial factorization of N.
+_Example:_ Prover knows a non-trivial factorization of N.
 
 - Prover wants to prove that they know $N = r \times s$  without revealing $r$ or $s$.
 
-- The Prover should convince us they know the two non-trivial integer $r$ and $s$ that is $r,s \neq 1$ where such that:
-- $r\times s = N$ 
+- The Prover should convince us they know the two non-trivial integer $r$ and $s$ that is $r,s \neq 1$ such that:
+- $r\times s = N$ in $\mathbb{Z}$
 - without revealing any other information about $r$ or $s$.
 
----
 
 ---
 ## ZK Proof properties.
@@ -123,6 +123,7 @@ _Example:_ Schnorr signatures are ZK Proofs
 - A small amount of data, a ZK proof, and execution time can be used to show properties of a much larger dataset which the verifier doesn't need to know. 
 
 - "doesn't want to" know as opposed to "is not supposed to" know.
+
 ---
 
 ## Scaling via ZK Proofs in Blockchain
@@ -168,7 +169,6 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 ---
 
----
 ## Making a SNARK out of our factorization problem
 - The trick  is to transform our problem of proving the knowledge of factors (witnesses) into
 - A problem of knowledge of a certain polynomials.
@@ -176,8 +176,8 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 - The verifier could be fairly confidant that the prover knows that polynomial hence also the witness.
 
 ---
+
 ## Making an SNARK for our problem
----
 - A routine way of to turning our problem into a polynomials is:
 - To represents our problem into an arithmetic circuit.
 - Mathematically This is a n-variate polynomials, with some of the variables are public and some are not.
@@ -185,154 +185,152 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 ---
 
 ## The arithmetic circuit of our example
----
 - $x_1*x_2 = N$
 - We also need to make sure that prover doesn't fool us with trivial factors.
-- $(x_1-1)*1/(x_1 - 1) = 1$
-- $(x_2-1)*(x_2 - 1)^(-1) = 1$
+- $(x_1-1)*\frac{1}{x_1 - 1} = 1$
+- $(x_2-1)*\frac{1}{x_2 - 1} = 1$
 - We also prevent the prover from fooling us with a factorization like 
-- $N/r * r = N$ 
-- Because we are in a field and everything is invertable. We use binary decomposition for that.
-- $x_1 = x_{10} + 2*x_{11} + 4*x_{12}$ where $x_{ij}$'s are 0 or 1 which we need to prove with:
+- $(N/r) \times r = N$ where $(N/r)$ is not an integer but a modular integer.
+- This happens Because we are in a field and everything is invertable. 
+- We use binary decomposition to prevent that:
+- $x_1 = x_{10} + 2x_{11} + 4x_{12}$ where 
+- $x_{ij}$'s are 0 or 1 which we need to prove with:
 - $x_{ij} \times (x_{ij} - 1) = 0$
----
 
 ---
+
 ## The circuit
 
- circuit's image
----
+ To be: circuit's image
 
 ---
+
 ## Writing our circuit in Circom
-Circom demo.
----
-
+ Circom demo.
 
 ---
-## Strategy
-- Represent the circuit as a univariate polynomial called the "Trace Polynomial".
-- The trace polynomial has a root for each gate of the circuit if the gate relationship hold for the prover solution..
-- Then the verifier should be able to test if the polynomial actually has a root for every gate (without knowing the polynomial). This is done using polynomial commitment.
----
+
+## Circuit to SNARK Strategy
+- To represent the circuit as a univariate polynomial called the "Trace Polynomial".
+- The trace polynomial has a root for each gate of the circuit if the solution satisfies the gate relation.
+- Then the verifier should be able to test if the polynomial actually has a root for every gate ...
+- ... without knowing the polynomial: This is done using polynomial commitment.
 
 ---
+
 ## Universal PLONK Gate
 
 - Supppose we have a left input $a$ and a right input $b$ and we are doing some addition and multiplication with them and the output is $c$. Then we could encode all of these operations as:
 
-$Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
+$Q_l\times a + Q_r \times b + Q_o \times c + Q_m \times a\times b + Q_c = 0$
 
 - for some constant $Q_l$ $Q_r$ $Q_o$ $Q_m$ and $Q_c$
 - in fact all the operation we discussed can be written using one of these gates.
----
 
 ---
+
 ## Gate table for factorization
- $Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
+ $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
+ <img style="height: 200px; padding-left:100px" src="./img/gate-table-factorization.png" />
 
 ---
 
----
 ## Gate table for left input to be integer and not 1
- $Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
-
+ $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
+ <img style="height: 500px; padding-left:100px" src="./img/gate-table-left-input-less-than-8-and-not-1.png" />
 
 ---
 
 ## Gate table for right input to be integer and not 1
- $Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
-
-
----
+ $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
+ <img style="height: 500px; padding-left:100px" src="./img/gate-table-right-input-less-than-8-and-not-1.png" />
 
 ---
+
 ## Encode the trace as a polynomial T
 - You can always encode a column of a table into a polynomial.
-- $Q_l(x) such that $Q_l(1) = 0, Q_l(2) = 1, Q_l(3) = 3,...$
-- When you have one polynomial for each column then you can turn the whole table could be turned into a polynomial.
-- $Q_l(x)*a(x) + Q_r(x)*b(x) + Q_o(x)* c(x) + Q_m(x)*a(x)*b(x) + Q_c(x) = 0$
----
+- $Q_l(x)$ such that $Q_l(1) = 0, Q_l(2) = 1, Q_l(3) = 1, Q_l(4) = -1 ,...$
+- When you have one polynomial for each column then you can turn the whole table into a polynomial:
+- $Q_l(x)\times a(x) + Q_r(x)\times b(x) + Q_o(x)\times  c(x) + Q_m(x)\times a(x)\times b(x) + Q_c(x) = 0$
 
 ---
+
 ## Compute the trace polynomial from the gate table
- Sage demo
+ SAGE demo
+
 ---
 
 ## Prove that Validity of T
-- T encode every gate is evaluated correctly.
-- The wiring is correct.
----
+- T encode every gate is evaluated correctly: Zero test.
+- The wiring is correct: Permutation test (we are not discussing it in this course). 
 
 ---
+
 # Zero test
----
--if f(x) = 0 for x = 1,..,13 then
-- $f(x) = q(x) * (x-1)*...*(x-13)$
-- $f(x) = 0 for x = 1 ... 13$ if there is $q(x)$ such that
+- if f(x) = 0 for x = 1,..,13 then
+- $f(x) = q(x) \times  (x-1)\times ...\times (x-13)$
 - $f(x)/q(x) = (x-1)...(x-13)$
 - How to verifier this.
----
 
 ---
+
 ## Zero test on the resulting polynomial.
  SAGE demo
----
 
 ---
+
 # Zero test without knowing the polynomial: Polynomial commitment
-- Is a tool that let the prover compute the value of a polynomial at some point and convince the verifier which it has done so honestly.
-- The prove first commit to the polynomial so later on when they answer the verifier's quiz they can't back off and cheat and use another polynomial.
+- Polynomial commitment is a tool that let the prover announce the value of a polynomial $f(x)$ at some point $u$.
+- convince the verifier which it has done so honestly.
+- The prover first commit to the polynomial $f(x)$ so later on, they can't back off and cheat (and use another polynomial).
 - Then the verifier is going to ask the prover to evaluate the polynomials in random point $u$.
-- The verifier is able to be confident that $f(u) = v$ where $f$ is the same polynomial that the prover committed to.
+- The verifier is able to be confident that $f(u) = v$.
+
 ---
 
 # Zero test using polynomial commitment.
----
 - The prover claims it has $f(x)$ satisfying the circuit.
 - The prover is also able to compute $q(x)$ such that 
-- $f(x) = q(x)* prod(x-1)..(x-13)
-- The prover commit to f and q
-- The verifier ask the prover to provide them with $f(r)$ and $q(r)$ for some random point $r$
-- The verifier computes $\prod(r-1)...(r-13)$
-- The verifier verifies that $f(r) = q(r)*\prod(r-1)...(r-13)$ and if so believes that the prover has a solution.
+- $f(x) = q(x) \times  \prod(x-1)..(x-13)$
+- The prover commit to $f$ and $q$.
+- The verifier ask the prover to provide them with $f(u)$ and $q(u)$ for some random point $u$
+- The verifier computes $\prod(u-1)...(u-13)$
+- The verifier verifies that $f(u) = q(u)\times \prod(u-1)...(u-13)$ and if so believes that the prover has a solution.
+
 ---
 
 # KZG Polynomial-commitment
----
 - Is the most space efficient polynomial commitment.
 - Uses elliptic curve cryptography.
 - It requires trusted setup: a pre-computation with toxic waste which needs to be discarded to keep the scheme secure.
----
 
 ---
+
 ## Making ZK non-interactive
-- The only interactive step is when verifier quizzing prover with a random value $r$.
-- We replace that with asking the prover to apply a secure  hash function to his commitment to generate $r$
+- The only interactive step is when verifier is quizzing prover with a random value $r$.
+- We replace that with asking the prover to apply a secure hash function to his commitment to generate $r$.
 - That way if the prover changes his commitment his point also changes without his control. 
----
 
 ---
+
 ## Use Circom to generate trace polynomials.
----
  Circom demo
----
 
 ---
 ## Use snarkjs to generate the KZG parameters.
  Power of $\tau$ ceremony demo with snarkjs
 ---
----
+
 ## Use snarkjs to generate proofs
-Generate proof demo with snarkjs
----
+ Generate proof demo with snarkjs
 
 ---
+
 ## Use snarkjs to verify the proofs
 Verify the proof snarkjs
----
 
 ---
+
 ## Practical Considerations
 
 - Very powerful primitive
