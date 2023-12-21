@@ -21,6 +21,7 @@
     "reveal-md": "^5.5.2"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.0",
     "http-server": "^14.1.1",
     "markdown-link-check": "^3.10.3",
     "prettier": "^2.6.2"
