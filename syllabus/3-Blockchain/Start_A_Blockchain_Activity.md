@@ -57,16 +57,6 @@ Finally, there is a contentious fork. Some of the community are keccak maxis, ot
 
 There could be three chains after step seven. But we want a relatively stable chain for the contracts work in the afternoon, so we try to guide the class toward agreeing on a single chain if it is not happening naturally.
 
-### Light Clients
-
-Would be nice to have a light client, but unlike the early days of Substrate, it is no longer included.
-Last I heard from Nikos, Substrate connect / smoldot / etrc does not support PoW chains, so this will have to come later or be removed.
-
-### Other Infrastructure
-
-Like block explorer or indexer?
-
 ### Smart Contracts
 
-The Smart Contracts module has an activity about launching smart contracts on a running chain.
-When these modules are run back-to-back, it makes an excellent learning experience to use this same chain we just launched to also launch the smart contracts.
+The Smart Contracts module is run immediately after, it makes an excellent learning experience to use this same chain they just launched to also launch the smart contracts.
