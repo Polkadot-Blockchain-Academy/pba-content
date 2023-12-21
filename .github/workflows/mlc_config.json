@@ -1,8 +1,0 @@
-{
-  "ignorePatterns": [
-    {
-      "pattern": "^https://crates.io",
-      "pattern": "^https://github.com/Polkadot-Blockchain-Academy"
-    }
-  ]
-}
