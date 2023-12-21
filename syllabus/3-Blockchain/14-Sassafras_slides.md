@@ -1,0 +1,163 @@
+---
+title: Sassafras Authoring 
+description: Latest Module for Block Authoring on Polkadot 
+duration: 35min
+---
+## Sassafras and Semi-Anonymous Single Leader Election
+---
+
+# But.. 
+
+- Wait dont we have BABE? <!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
+
+# Why replace BABE?
+
+- Forks are legitimate. <!-- .element: class="fragment" data-fragment-index="1" -->
+- Why is forking an issue? <!-- .element: class="fragment" data-fragment-index="2" -->
+- Fun Fact Babe only uses random slot assignment 25% of the time <!-- .element: class="fragment" data-fragment-index="3" -->
+- Why is this an issue? <!-- .element: class="fragment" data-fragment-index="4" --> 
+
+Notes:
+    Is an issue because falling back on a known ahead of time schedule is vunerable to attacks
+
+---
+
+# Can we do better?
+
+<pba-cols>
+<pba-col>
+<img style="width: 700px" src="./img/Sassafras-albidum.jpg" />
+</pba-col>
+<pba-col>
+Yes!! Sassafras!!
+
+---
+
+# So what are our goals again?
+ 
+- Reduce to no forks(Almost) <!-- .element: class="fragment" data-fragment-index="1" -->
+- Make slots annonymous(Not known ahead of time) <!-- .element: class="fragment" data-fragment-index="2" -->
+- Go fast be secure etc.. <!-- .element: class="fragment" data-fragment-index="3" -->
+
+---
+
+# Re-visit
+
+- Ring Signatures <!-- .element: class="fragment" data-fragment-index="1" -->
+- VRF <!-- .element: class="fragment" data-fragment-index="2" -->
+- Intro RingVRF <!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+    VRF value is like a pubkey (Publicly known) and can provide
+    a signature or proof that you produced that random value
+
+---
+
+# Ring Signatures
+
+---
+
+# VRF
+
+---
+
+# RingVRF
+
+---
+
+# Why is a RingVRF useful? 
+
+- Answer: Allows us to know someone we know(sort of) has produced a VRFOutput but to not know who. <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+    Sort of because we know that the person is in the Ring
+
+---
+
+# Who will the participants be in the Ring?
+
+
+<pba-cols>
+<pba-col>
+<img style="width: 500px" src="./img/blockchain_network.png" /> <!-- .element: class="fragment" data-fragment-index="0" -->
+</pba-col>
+<pba-col>
+Answer: Active consensus participants (Validators) <!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+# Tickets
+
+<pba-cols>
+<pba-col>
+<img style="width: 500px" src="./img/party_tickets.png" /> <!-- .element: class="fragment" data-fragment-index="0" -->
+</pba-col>
+<pba-col>
+
+- A Ticket for the lottery <!-- .element: class="fragment" data-fragment-index="1" -->
+- Each participant creates a ticket (RingVRFOutput) <!-- .element: class="fragment" data-fragment-index="2" -->
+- When should we create a ticket? <!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+    - Lottery being participation in consensus!
+    - Tickets should be created and submitted One epoch before the Party begins
+---
+
+# Submission of tickets
+
+<pba-cols>
+<pba-col>
+<img style="width: 500px" src="./img/ticket_submission.png" /> <!-- .element: class="fragment" data-fragment-index="1" -->
+</pba-col>
+<pba-col>
+
+- Each Participant computes and submits their ticket on-chain <!-- .element: class="fragment" data-fragment-index="0" -->
+
+---
+
+## Is there a problem? 
+
+- Question: is there any issue with submitting your own ticket? <!-- .element: class="fragment" data-fragment-index="0" -->
+- Answer: Annonymity broken!! <!-- .element: class="fragment" data-fragment-index="1" -->
+
+---
+
+### Assigning Tickets to slots
+
+- We want to prevent someone from finding ways to manipulating randomness <!-- .element: class="fragment" data-fragment-index="0" -->
+- What can happen if a bad actor can get a majority of the slots for an epoch? <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+    - Consecutive slots can lead to more biasability in the randomness later down the line
+    - Consecutive slots can cause problems for the network like outages or maliciious long forks
+---
+
+# Outside in assignment
+
+1. `[tick0, tick1, tick2, tick3,.. tickN]` <!-- .element: class="fragment" data-fragment-index="0" -->
+1. `[tick1, tick3, .., tick2, tick0]` <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+- How does this help?
+---
+
+## Claim a slot
+
+- Question: Now that slot x is up for grabs how do we prove that it is ours? <!-- .element: class="fragment" data-fragment-index="0" -->
+- Answer: Submit our unique VRF Signature/Proof <!-- .element: class="fragment" data-fragment-index="1" -->
+- Produce the block!! <!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
+
+# Summary
+
+1. Produce RingVRFoutput(Ticket) one epoch before
+1. Send to a friend
+1. They post on chain
+1. Outputs get assigned to slots randomly(psuedo)
+1. When it is your turn submit VRF signature(proof)
+1. Build your block and get rewards!
+
+---

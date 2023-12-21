@@ -161,6 +161,14 @@ Examples:
 <li class="fragment">Non-Deterministic</li>
 </ul>
 
+Notes:
+
+inverted nonce to get from all signing parties
+is difficult
+
+Setup is difficult secret sharing and setup
+
+Show image of ECDSA vs schnorr to demonstrate this
 ---
 
 ## Ed25519
@@ -176,6 +184,10 @@ Examples:
 ## Sr25519
 
 Sr25519 addresses several small risk factors that emerged<br />from Ed25519 usage by blockchains.
+
+Notes:
+
+Can be Deterministic but in Substrate is implemented as non-deterministic
 
 ---
 
