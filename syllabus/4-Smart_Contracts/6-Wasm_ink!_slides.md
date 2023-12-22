@@ -1181,7 +1181,6 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 
     Ok(())
 }
-
 ```
 
 Notes:
@@ -1224,7 +1223,7 @@ pub fn receive(&mut self) -> Result<(), DaoError> {
 
 Notes:
 - attacker deploys an SC that acts as an investor
-- it begins by depositing and this contract deposits some ETH into The DAO. 
+- it begins by depositing and this contract deposits some ETH into The DAO.
 - This entitles the attacker to later call the `withdraw` function of the DAO to get his deposits back.
 - When the `withdraw` is called, the DAO sends back the funds by calling the payable `receive` function.
 - but this function is crafted by the attacker to maliciously call the DAOs `withdraw` again.
@@ -1234,7 +1233,65 @@ Notes:
 
 ---
 
+## Reentrancy: fixing the vulnerabilities
 
+```rust[6,16]
+#[ink(message)]
+pub fn withdraw(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+    let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?;
+
+    self.balances.remove(caller);
+
+    build_call::<DefaultEnvironment>()
+        .call(caller)
+        .call_flags(CallFlags::default())
+        .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
+        .transferred_value(balance)
+        .returns::<()>()
+        .invoke();
+
+    // self.balances.remove(caller);
+
+    Ok(())
+}
+```
+
+Note:
+- simplest fix is to just change the order of operations in the `withdraw` fn
+- This way when the function calls into the attacker contract’s receive() function, and it tries to re-enter the `withdraw` the entry is removed from the balance's map and the whole transaction reverts.
+- Checks-Effects-Interactions pattern
+
+---
+## Reentrancy: fixing the vulnerabilities
+
+```rust[5]
+#[ink(message)]
+pub fn withdraw(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+    let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?;
+
+    build_call::<DefaultEnvironment>()
+        .call(caller)
+        .call_flags(CallFlags::default().set_allow_reentry(false))
+        .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
+        .transferred_value(balance)
+        .returns::<()>()
+        .invoke();
+
+    self.balances.remove(caller);
+
+    Ok(())
+}
+```
+
+Note:
+- Another fix id to contract to explicitely dissallow re-entering the `receive` function while the `withdraw` it is still executing.
+- this way any re-entry is blocked
+- ink! has built-in syntax for this, that works on the calls stack level
+- mutex (mutually exclusive) pattern
+
+---
 
 
 
