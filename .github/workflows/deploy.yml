@@ -16,7 +16,7 @@ jobs:
       - run: yarn install
       - name: Build
         working-directory: "."
-        run: yarn build:pages
+        run: yarn run build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
