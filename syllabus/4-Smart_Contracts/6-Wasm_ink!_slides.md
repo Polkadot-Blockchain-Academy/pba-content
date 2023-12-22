@@ -681,6 +681,10 @@ Notes:
 
 ---
 
+# Deeper dive
+
+---
+
 ## Deeper dive: Storage
 
 ```rust
@@ -1054,190 +1058,318 @@ Notes:
 
 ---
 
-## Common Vulnerabilities
-
-```rust
-impl MyContract {
-
-  #[ink(message)]
-  pub fn terminate(&mut self) -> Result<()> {
-      let caller = self.env().caller();
-      self.env().terminate_contract(caller)
-  }
-
-  ...
-}
-```
-
-- What is wrong with this contract?
-- How would you fix it?
-
-Notes:
-
-- we start easy
-- answer: no AC in place
-- parity wallet 150 million `hack`
+# Common Vulnerabilities
 
 ---
 
-## Common Vulnerabilities: blast from the past
+## Past exploits: The DAO hack (2016)
+- The DAO (Decentralized Autonomous Organization) was a crowdfunding project on the Ethereum network.
+- In June 2016 an attacker drained funds worth ~$50 million at that time.
+- The funds were moved into an account subject to a 28-day holding period under the terms of the DAO smart contract
 
-<img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" />
+NOTES:
+- DAO was a form of a decentralized investor - directed venture capital (VC) fund.
+- At a pinnacle of it's popularity The DAO attracted nearly 15% of all the ETH in circulation back then.
+- the funds were actually not gone (but they would be soon).
 
-<div style="font-size: 0.72em;">
+---
 
-- [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit:
-- https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+## Past exploits: The DAO hack (2016)
 
-<!-- ```solidity -->
-<!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -->
-<!--   suicide(_to); -->
-<!-- } -->
+- The core Ethereum faced a difficult decision:
+- On one hand the blockchain promised to be decentralized and tamper-resistat
+- On the other hand the public's confidence and optimism about then young blockchain technology demanded an intervention
 
-<!-- function initMultiowned(address[] _owners, uint _required) only_uninitialized { -->
-<!--   m_numOwners = _owners.length + 1; -->
-<!--   m_owners[1] = uint(msg.sender); -->
-<!--   m_ownerIndex[uint(msg.sender)] = 1; -->
-<!--   for (uint i = 0; i < _owners.length; ++i) -->
-<!--   { -->
-<!--     m_owners[2 + i] = uint(_owners[i]); -->
-<!--     m_ownerIndex[uint(_owners[i])] = 2 + i; -->
+Notes:
+
+- the hacker was slowly draining the funds from the DAO, in front of everyone
+- DAO SC was sending an amount of ETH equivalent to the hacker’s deposit
+- an ethical obligation to prevent theft
+
+---
+
+## Past exploits: The DAO hack (2016)
+
+- Eventually a vote in favour of forking the Ethereum history won out with 85% of the votes.
+- Some miners decided to keep mining on the old history, and this sesulted in the creation of Ethereum (ETH) and _Ethereum Classic_ (ETC) which operates to this day.
+
+Notes:
+
+- forking mean that the new chain would operate as though the hack never happened
+- basically re-writing history
+- the fork happened becasue of ideological differences
+
+---
+
+## Reentrancy attacks
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/reentrancy.png" />
+
+- The DAO hacker used what became knows as a _reentrancy_ attack.
+- Attacker exploited a _fallback_ function in Solidity to create a loop that syphoned funds out of the DAO contract.
+- Fallback functions are special constructs in Solidity that are triggered in specific situations.
+
+Notes:
+
+- fallback function is a special function that is executed when a contract receives Ether without any data
+- or when it receives a message that does not match any of its function signatures.
+
+---
+
+## Reentrancy attacks: the fallback function
+
+<!-- <img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/reentrancy.png" /> -->
+
+```solidity[]
+pragma solidity ^0.8.0;
+
+contract FallbackExample {
+    event Received(address sender, uint value);
+
+    // Payable fallback function
+    receive() external payable {
+        emit Received(msg.sender, msg.value);
+    }
+}
+
+```
+
+- The fallback function does not take any arguments and has no return values.
+- It can be marked as **payable** to allow the contract to receive funds.
+- It is triggered if ETH is sent to the contract and there is no accompanying _calldata_ (a data location like memory or storage)
+
+Notes:
+- Fallback functions can include arbitrary logic in them, in this attack example it called back into withdraw function
+- It's worth noting that as of Solidity version 0.6.0, you can also use the fallback keyword instead of receive to define the fallback function.
+- However, it's a good practice to use receive for the fallback function related to Ether reception, and fallback for fallback functions without the ability to receive Ether.
+
+---
+
+## Reentrancy attacks: an example
+
+```rust[2-9|13-25]
+#[ink(message, payable, selector = 0x4445504F)]
+pub fn deposit(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+
+    let current_balance = self.balances.get(caller).unwrap_or_default();
+    let updated_balance = current_balance + self.env().transferred_value();
+
+    self.balances.insert(caller, &updated_balance);
+    Ok(())
+}
+
+#[ink(message)]
+pub fn withdraw(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+    let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?;
+
+    build_call::<DefaultEnvironment>()
+        .call(caller)
+        .call_flags(CallFlags::default().set_allow_reentry(true))
+        .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
+        .transferred_value(balance)
+        .returns::<()>()
+        .invoke();
+
+    self.balances.insert(caller, &0);
+
+    Ok(())
+}
+
+```
+
+Notes:
+- ink! does not have fallback functions, but it is not immune from reentrancy attacks either
+- this contract mimics the DAO - it has a deposit function for sending the funds and a 
+- can anyone spot what the problem is?
+
+---
+
+<!-- ## Common Vulnerabilities -->
+
+<!-- ```rust -->
+<!-- impl MyContract { -->
+
+<!--   #[ink(message)] -->
+<!--   pub fn terminate(&mut self) -> Result<()> { -->
+<!--       let caller = self.env().caller(); -->
+<!--       self.env().terminate_contract(caller) -->
 <!--   } -->
-<!--   m_required = _required; -->
+
+<!--   ... -->
 <!-- } -->
 <!-- ``` -->
 
-</div>
+<!-- - What is wrong with this contract? -->
+<!-- - How would you fix it? -->
 
-Notes:
+<!-- Notes: -->
 
-- might seem trivial but a very similar hack has happend in the past trapping a lot of funds
-- see: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
-- hacker has "accidentally" called an unprotected `initMultiowned` and proceeded to delete the contract code
+<!-- - we start easy -->
+<!-- - answer: no AC in place -->
+<!-- - parity wallet 150 million `hack` -->
 
----
+<!-- --- -->
 
-## Common Vulnerabilities
+<!-- ## Common Vulnerabilities: blast from the past -->
 
-```rust [3,8,12-14]
-    #[ink(storage)]
-    pub struct SubstrateNameSystem {
-        registry: Mapping<AccountId, Vec<u8>>,
-    }
+<!-- <img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" /> -->
 
-    impl SubstrateNameSystem {
-        #[ink(message, payable)]
-        pub fn register(&mut self, name: Vec<u8>) {
-            let owner = self.env().caller();
-            let fee = self.env().transferred_value();
+<!-- <div style="font-size: 0.72em;"> -->
 
-            if !self.registry.contains(owner) && fee >= 100 {
-                self.registry.insert(owner, &name);
-            }
-        }
-```
+<!-- - [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit: -->
+<!-- - https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code -->
 
-- On-chain domain name registry with a register fee of 100 pico.
-- Why is this a bad idea?
+<!-- <\!-- ```solidity -\-> -->
+<!-- <\!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -\-> -->
+<!-- <\!--   suicide(_to); -\-> -->
+<!-- <\!-- } -\-> -->
 
-Notes:
+<!-- <\!-- function initMultiowned(address[] _owners, uint _required) only_uninitialized { -\-> -->
+<!-- <\!--   m_numOwners = _owners.length + 1; -\-> -->
+<!-- <\!--   m_owners[1] = uint(msg.sender); -\-> -->
+<!-- <\!--   m_ownerIndex[uint(msg.sender)] = 1; -\-> -->
+<!-- <\!--   for (uint i = 0; i < _owners.length; ++i) -\-> -->
+<!-- <\!--   { -\-> -->
+<!-- <\!--     m_owners[2 + i] = uint(_owners[i]); -\-> -->
+<!-- <\!--     m_ownerIndex[uint(_owners[i])] = 2 + i; -\-> -->
+<!-- <\!--   } -\-> -->
+<!-- <\!--   m_required = _required; -\-> -->
+<!-- <\!-- } -\-> -->
+<!-- <\!-- ``` -\-> -->
 
-- everything on-chain is public
-- this will be front-run in no time
-- Can you propose a better design?
-- Answer: commit / reveal or an auction
+<!-- </div> -->
 
----
+<!-- Notes: -->
 
-## Common Vulnerabilities
+<!-- - might seem trivial but a very similar hack has happend in the past trapping a lot of funds -->
+<!-- - see: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code -->
+<!-- - hacker has "accidentally" called an unprotected `initMultiowned` and proceeded to delete the contract code -->
 
-<div style="font-size: 0.72em;">
+<!-- --- -->
 
-```rust [3-7,12,18]
+<!-- ## Common Vulnerabilities -->
 
-#[ink(message)]
-pub fn swap(
-    &mut self,
-    token_in: AccountId,
-    token_out: AccountId,
-    amount_token_in: Balance,
-) -> Result<(), DexError> {
-    let this = self.env().account_id();
-    let caller = self.env().caller();
+<!-- ```rust [3,8,12-14] -->
+<!--     #[ink(storage)] -->
+<!--     pub struct SubstrateNameSystem { -->
+<!--         registry: Mapping<AccountId, Vec<u8>>, -->
+<!--     } -->
 
-    let amount_token_out = self.out_given_in(token_in, token_out, amount_token_in)?;
+<!--     impl SubstrateNameSystem { -->
+<!--         #[ink(message, payable)] -->
+<!--         pub fn register(&mut self, name: Vec<u8>) { -->
+<!--             let owner = self.env().caller(); -->
+<!--             let fee = self.env().transferred_value(); -->
 
-    // transfer token_in from user to the contract
-    self.transfer_from_tx(token_in, caller, this, amount_token_in)?;
+<!--             if !self.registry.contains(owner) && fee >= 100 { -->
+<!--                 self.registry.insert(owner, &name); -->
+<!--             } -->
+<!--         } -->
+<!-- ``` -->
 
-    // transfer token_out from contract to user
-    self.transfer_tx(token_out, caller, amount_token_out)?;
-    ...
-}
-```
+<!-- - On-chain domain name registry with a register fee of 100 pico. -->
+<!-- - Why is this a bad idea? -->
 
-</div>
+<!-- Notes: -->
 
-- Contract is a <font color="#8d3aed">DEX</font> <font color="#8d3aed">D</font>ecentralized <font color="#8d3aed">EX</font>change, follows the popular <font color="#8d3aed">AMM</font> (<font color="#8d3aed">A</font>utomated <font color="#8d3aed">M</font>arket <font color="#8d3aed">M</font>aker) design.
-- Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price.
-- What can go wrong here?
+<!-- - everything on-chain is public -->
+<!-- - this will be front-run in no time -->
+<!-- - Can you propose a better design? -->
+<!-- - Answer: commit / reveal or an auction -->
 
-Notes:
+<!-- --- -->
 
-Answer:
+<!-- ## Common Vulnerabilities -->
 
-- no slippage protection in place.
-- bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
-- this purchase will raise the price of the asset for the victim trader and increases his slippage
-- if the bot sells right after the victims tx (back runs the victim) this is a sandwich attack
+<!-- <div style="font-size: 0.72em;"> -->
 
----
+<!-- ```rust [3-7,12,18] -->
 
-## Common Vulnerabilities
+<!-- #[ink(message)] -->
+<!-- pub fn swap( -->
+<!--     &mut self, -->
+<!--     token_in: AccountId, -->
+<!--     token_out: AccountId, -->
+<!--     amount_token_in: Balance, -->
+<!-- ) -> Result<(), DexError> { -->
+<!--     let this = self.env().account_id(); -->
+<!--     let caller = self.env().caller(); -->
 
-```rust [7,12-14]
-#[ink(message)]
-pub fn swap(
-    &mut self,
-    token_in: AccountId,
-    token_out: AccountId,
-    amount_token_in: Balance,
-    min_amount_token_out: Balance,
-) -> Result<(), DexError> {
+<!--     let amount_token_out = self.out_given_in(token_in, token_out, amount_token_in)?; -->
 
-    ...
+<!--     // transfer token_in from user to the contract -->
+<!--     self.transfer_from_tx(token_in, caller, this, amount_token_in)?; -->
 
-    if amount_token_out < min_amount_token_out {
-        return Err(DexError::TooMuchSlippage);
-    }
+<!--     // transfer token_out from contract to user -->
+<!--     self.transfer_tx(token_out, caller, amount_token_out)?; -->
+<!--     ... -->
+<!-- } -->
+<!-- ``` -->
 
-...
-}
-```
+<!-- </div> -->
 
-Notes:
+<!-- - Contract is a <font color="#8d3aed">DEX</font> <font color="#8d3aed">D</font>ecentralized <font color="#8d3aed">EX</font>change, follows the popular <font color="#8d3aed">AMM</font> (<font color="#8d3aed">A</font>utomated <font color="#8d3aed">M</font>arket <font color="#8d3aed">M</font>aker) design. -->
+<!-- - Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price. -->
+<!-- - What can go wrong here? -->
 
-- slippage protection in place
+<!-- Notes: -->
 
----
+<!-- Answer: -->
 
-## Common Vulnerabilities
+<!-- - no slippage protection in place. -->
+<!-- - bot will frontrun the victim's tx by purchasing token_out before the trade is executed. -->
+<!-- - this purchase will raise the price of the asset for the victim trader and increases his slippage -->
+<!-- - if the bot sells right after the victims tx (back runs the victim) this is a sandwich attack -->
 
-- Integer overflows
-- Re-entrancy vulnerabilities
-- Sybil attacks
-- ...
-- Regulatory attacks 😅
-- ...
+<!-- --- -->
 
-Notes:
+<!-- ## Common Vulnerabilities -->
 
-- long list of possible attacks
-- too long to fit into one lecture
-- baseline: get an audit from a respectable firm
-- publish your source code (security by obscurity is not security)
+<!-- ```rust [7,12-14] -->
+<!-- #[ink(message)] -->
+<!-- pub fn swap( -->
+<!--     &mut self, -->
+<!--     token_in: AccountId, -->
+<!--     token_out: AccountId, -->
+<!--     amount_token_in: Balance, -->
+<!--     min_amount_token_out: Balance, -->
+<!-- ) -> Result<(), DexError> { -->
 
----
+<!--     ... -->
+
+<!--     if amount_token_out < min_amount_token_out { -->
+<!--         return Err(DexError::TooMuchSlippage); -->
+<!--     } -->
+
+<!-- ... -->
+<!-- } -->
+<!-- ``` -->
+
+<!-- Notes: -->
+
+<!-- - slippage protection in place -->
+
+<!-- --- -->
+
+<!-- ## Common Vulnerabilities -->
+
+<!-- - Integer overflows -->
+<!-- - Re-entrancy vulnerabilities -->
+<!-- - Sybil attacks -->
+<!-- - ... -->
+<!-- - Regulatory attacks 😅 -->
+<!-- - ... -->
+
+<!-- Notes: -->
+
+<!-- - long list of possible attacks -->
+<!-- - too long to fit into one lecture -->
+<!-- - baseline: get an audit from a respectable firm -->
+<!-- - publish your source code (security by obscurity is not security) -->
+
+<!-- --- -->
 
 ## Pause
 
