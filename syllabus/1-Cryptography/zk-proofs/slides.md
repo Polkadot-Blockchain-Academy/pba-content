@@ -13,11 +13,11 @@ duration: 3.5 hour
 <pba-flex center>
 
 1. [ZK Proofs overview](#zk-proofs)
-2. [Example](#simple-zk-example)
-3. [zk-SNARKS](#zk-snarks)
-4. [Application of zk-proofs](#zk-application)
-5. [Under the hood of zk-proof](#zk-practice)
-6. [Generating ZK-proofs using circom and snarkjs](#circom-snarkjs)
+2. [Examples](#simple-zk-example)
+3. [zk-SNARKs](#zk-snarks)
+4. [Applications of zk-SNARKs](#zk-application)
+5. [Under the hood of zk-SNARKs](#zk-practice)
+6. [Generating ZK-proofs using Circom and snarkjs](#circom-snarkjs)
 
 </pba-flex>
 
@@ -62,32 +62,47 @@ Notes:
 
 ---
 
+## Examples
+---
+
 ## ZK Proof Example
 
 _Example:_ Schnorr signatures are ZK Proofs
-
+- $(s, e)$ such that $s = (\textrm{Random blinding factor }r) - \\ \textrm{Private Key} \times e$
 - They show that the prover knows the private key (the discrete log of the public key) without revealing anything about it.
 - The statement is the public key and the witness the private key.
 
 ---
 
-## Our ZK Proof Example we study in this module
+## The ZK Proof Example we study in this module
 
 _Example:_ Prover knows a non-trivial factorization of N.
 
 - Prover wants to prove that they know $N = r \times s$  without revealing $r$ or $s$.
 
 - The Prover should convince us they know the two non-trivial integer $r$ and $s$ that is $r,s \neq 1$ such that:
-- $r\times s = N$ in $\mathbb{Z}$
-- without revealing any other information about $r$ or $s$.
+
+ $r\times s = N$ 
+
+- Without revealing any other information about $r$ or $s$.
+
+- The statement is $N$ and the witnesses are $r$ and $s$.
 
 
 ---
 ## ZK Proof properties.
  - Completeness: If the claim is true, then it *must* pass `verify(statement, proof) == true`
- - Statistical Soundness: If the claim is false (that is if $s\times r \neq N$ or $r  = 1$ or $s = 1$) then `verify(statement, proof) == false` with high probability.
- - Zero Knowledge: The verifier could fool an external party who was not part of the interaction that they have got a proof form the prover. 
- - The common way of implementing zero knowledge protocol is by means of zk-SNARK
+ - Statistical Knowledge Soundness: If the prover does not know the witness then `verify(statement, proof) == false` with high probability.
+ - Zero Knowledge: the proof reveals nothing about the witness that was not revealed by the statement itself.
+ - The common way of implementing zero knowledge protocol is by means of zk-SNARK.
+
+Notes:
+ 
+ - We prove Zero knowldege by showing a party without any knowledge of the witness, could fool an external party who was not been part of the interaction that they interacted with the prover and got a valid proof form the prover. 
+---
+
+## zk-SNARKs
+
 ---
 
 ## zk-SNARK
@@ -96,6 +111,7 @@ _Example:_ Prover knows a non-trivial factorization of N.
 
 - **Zero knowledge** - the proof reveals nothing about the witness that was not revealed by the statement itself.
 - **Succinct** - the proof is small
+- **Non-interactie** - Does not  require live interaction between prover and the verifier.
 - **Proof of knowledge** - if you can compute correct proofs of a statement, you should be able to compute a witness for it.
 
 ---
@@ -115,6 +131,10 @@ _Example:_ Prover knows a non-trivial factorization of N.
 ## What can we show?
 
 - There are many SNARK schemes to produce succinct ZK proofs of knowledge (_ZK-SNARKs_) for every NP relation. We concentrate on PLONK in this course.
+
+---
+
+## Applications of zk-SNARKs
 
 ---
 
@@ -169,39 +189,87 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 ---
 
-## Making a SNARK out of our factorization problem
-- The trick  is to transform our problem of proving the knowledge of factors (witnesses) into
+## Under the hood of zk-SNARKs
+
+Notes:
+
+ - We are going to talk about the elementary math behind zk-SNARKs.
+ - The goal is to familiarize you with the magic behind the zk-SNARKs.
+ - Don't worry if you are not able to follow. Not essential.
+---
+
+## Making a SNARK out of the factorization problem
+- The trick  is to transform our problem of proving the knowledge of factors (witnesses) into:
 - A problem of knowledge of a certain polynomials.
-- Then verifier could ask me questions about those polynomials, and if the prover answer correctly,
+- Then verifier could ask me questions about those polynomials, and if the prover answers correctly,
 - The verifier could be fairly confidant that the prover knows that polynomial hence also the witness.
 
 ---
 
-## Making an SNARK for our problem
-- A routine way of to turning our problem into a polynomials is:
-- To represents our problem into an arithmetic circuit.
-- Mathematically This is a n-variate polynomials, with some of the variables are public and some are not.
-- Then are algorithms such as PLONK for representing the circuit as few uni-variate polynomials.
+## Making an SNARK for knowledge of factors problem
+- A routine way of to turning the problem into a polynomial is:
+1. To represents our problem into an arithmetic circuit.
+2. Then are algorithms such as PLONK for representing the circuit as few univariate polynomials.
+
+Notes: 
+ - Mathematically circuit is a n-variate polynomials, with some of the variables are public and some are not.
 ---
 
-## The arithmetic circuit of our example
-- $x_1*x_2 = N$
+
+## The conditions the prover's solution must satisfy
+- $r \times s = N$
 - We also need to make sure that prover doesn't fool us with trivial factors.
-- $(x_1-1)*\frac{1}{x_1 - 1} = 1$
-- $(x_2-1)*\frac{1}{x_2 - 1} = 1$
-- We also prevent the prover from fooling us with a factorization like 
-- $(N/r) \times r = N$ where $(N/r)$ is not an integer but a modular integer.
-- This happens Because we are in a field and everything is invertable. 
-- We use binary decomposition to prevent that:
-- $x_1 = x_{10} + 2x_{11} + 4x_{12}$ where 
-- $x_{ij}$'s are 0 or 1 which we need to prove with:
-- $x_{ij} \times (x_{ij} - 1) = 0$
+- To prevent them from using $r = 1$ or $s = 1$ we ask them to invert $r - 1$ and $s-1$:
+  - $(r-1)*\frac{1}{r - 1} = 1$
+  - $(s-1)*\frac{1}{s - 1} = 1$
 
 ---
 
-## The circuit
+## Overflow prevention
+- Our polynomials are all defined modulo some prime $p$
+- We need to prevent the prover from fooling us with a factorization like 
 
- To be: circuit's image
+    $r \times s = N + q\times p$ where $q \neq 0$.
+
+- This happens if $r$ and $s$ are two big and $r \times s$ overflows over $p$
+- We should make sure that $r$ and $s$ are small.
+- We use binary decomposition for that.
+- $r = r_{0} + 2r_{1} + 4r_{2}$ where 
+- We should only allow them use 0 or1 for $r_{i}$'s so they need to satisfies:
+- $r_{i} \times (r_{i} - 1) = 0$
+
+---
+
+## Factorization Circuit
+
+  $r \times s = N$
+
+<img style="height: 500px; padding-left:100px" src="./img/factorization-circuit.png" />
+
+---
+
+## Prevent Factor 1 Circuit
+ $(r-1)(\frac{1}{r - 1}) = 1$
+ 
+<img style="height: 500px; padding-left:100px" src="./img/inhibit-1-circuit.png" />
+
+---
+
+## Prevent Big Factors: Binary decompostion circuit
+$r = r_{0} + 2r_{1} + 4r_{2} \Rightarrow$
+
+$r_{01} = r_{0} + 2r_{1}$
+
+$r = r_{01} + 4r_{2}$
+
+<img style="height: 500px; padding-left:100px" src="./img/binary-decomposition-circuit.png" />
+
+---
+
+## Prevent Big Factors: only allow 0 or 1 in binary decomposition
+$r_{i} \times (r_{i} - 1) = 0$
+
+<img style="height: 500px; padding-left:100px" src="./img/enforce-0-or-1-circuit.png" />
 
 ---
 
@@ -214,7 +282,7 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 - To represent the circuit as a univariate polynomial called the "Trace Polynomial".
 - The trace polynomial has a root for each gate of the circuit if the solution satisfies the gate relation.
 - Then the verifier should be able to test if the polynomial actually has a root for every gate ...
-- ... without knowing the polynomial: This is done using polynomial commitment.
+- ... without knowing the polynomial: This is done using *polynomial commitment*.
 
 ---
 
@@ -230,20 +298,34 @@ $Q_l\times a + Q_r \times b + Q_o \times c + Q_m \times a\times b + Q_c = 0$
 ---
 
 ## Gate table for factorization
+ $r \times s = N$
+
  $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
+
+ 
  <img style="height: 200px; padding-left:100px" src="./img/gate-table-factorization.png" />
 
 ---
 
-## Gate table for left input to be integer and not 1
- $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
- <img style="height: 500px; padding-left:100px" src="./img/gate-table-left-input-less-than-8-and-not-1.png" />
+## Gate table for left input to be small and not 1
+  
+ $r_{01} = r_{0} + 2r_{1}$
+ 
+ $r = r_{01} + 4r_{2}$ 
+
+ $r_{i} \times (r_{i} - 1) = 0 \Rightarrow r_{i}^2 - r_{i} = 0$
+ 
+ $(r-1)*\frac{1}{r - 1} = 1 \Rightarrow r\frac{1}{r - 1} - \frac{1}{r - 1} = 1$
+ 
+ $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$ 
+
+<img style="height: 500px; padding-left:100px" src="./img/gate-table-left-input-less-than-8-and-not-1.png" />
 
 ---
 
 ## Gate table for right input to be integer and not 1
  $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
- <img style="height: 500px; padding-left:100px" src="./img/gate-table-right-input-less-than-8-and-not-1.png" />
+<img style="height: 500px; padding-left:100px" src="./img/gate-table-right-input-less-than-8-and-not-1.png" />
 
 ---
 
@@ -251,7 +333,10 @@ $Q_l\times a + Q_r \times b + Q_o \times c + Q_m \times a\times b + Q_c = 0$
 - You can always encode a column of a table into a polynomial.
 - $Q_l(x)$ such that $Q_l(1) = 0, Q_l(2) = 1, Q_l(3) = 1, Q_l(4) = -1 ,...$
 - When you have one polynomial for each column then you can turn the whole table into a polynomial:
-- $Q_l(x)\times a(x) + Q_r(x)\times b(x) + Q_o(x)\times  c(x) + Q_m(x)\times a(x)\times b(x) + Q_c(x) = 0$
+
+$Q_l(x)\times a(x) + Q_r(x)\times b(x) + Q_o(x)\times  c(x) + Q_m(x)\times a(x)\times b(x) + Q_c(x)$
+
+$= 0$
 
 ---
 
@@ -317,9 +402,6 @@ $Q_l\times a + Q_r \times b + Q_o \times c + Q_m \times a\times b + Q_c = 0$
  Circom demo
 
 ---
-## Use snarkjs to generate the KZG parameters.
- Power of $\tau$ ceremony demo with snarkjs
----
 
 ## Use snarkjs to generate proofs
  Generate proof demo with snarkjs
@@ -348,6 +430,8 @@ Verify the proof snarkjs
 - Very weird computation model:<br />
   Non-deterministic arithmetic circuits
 
+ Notes: Weird as in binary arithmetic is hard, condition is hard. 
+ taking square-root of an element mod p is easy
 ---
 
 ## Summary
