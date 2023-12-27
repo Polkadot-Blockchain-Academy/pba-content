@@ -37,7 +37,7 @@ Notes:
 
 - A prover wants to convince a verifier that something is true without revealing why it is true.
 
-- They are mostly interactive protocols, but mostly we'll turn them  non-interactive and deal with their non-interactive variety. 
+- They are mostly interactive protocols, but mostly we'll turn them non-interactive and deal with their non-interactive variety. 
 ---
 
 ## What can we show?
@@ -111,7 +111,7 @@ Notes:
 
 - **Zero knowledge** - the proof reveals nothing about the witness that was not revealed by the statement itself.
 - **Succinct** - the proof is small
-- **Non-interactie** - Does not  require live interaction between prover and the verifier.
+- **Non-interactive** - Does not require live interaction between the prover and verifier.
 - **Proof of knowledge** - if you can compute correct proofs of a statement, you should be able to compute a witness for it.
 
 ---
@@ -200,9 +200,9 @@ Notes:
 
 ## Making a SNARK out of the factorization problem
 - The trick  is to transform our problem of proving the knowledge of factors (witnesses) into:
-- A problem of knowledge of a certain polynomials.
+- A problem of knowledge of certain polynomials.
 - Then verifier could ask me questions about those polynomials, and if the prover answers correctly,
-- The verifier could be fairly confidant that the prover knows that polynomial hence also the witness.
+- The verifier could be fairly confident that the prover knows that polynomial hence also the witness.
 
 ---
 
@@ -231,11 +231,11 @@ Notes:
 
     $r \times s = N + q\times p$ where $q \neq 0$.
 
-- This happens if $r$ and $s$ are two big and $r \times s$ overflows over $p$
+- This happens if $r$ and $s$ are too big and $r \times s$ overflows over $p$
 - We should make sure that $r$ and $s$ are small.
 - We use binary decomposition for that.
 - $r = r_{0} + 2r_{1} + 4r_{2}$ where 
-- We should only allow them use 0 or1 for $r_{i}$'s so they need to satisfies:
+- We should only allow them to use 0 or 1 for $r_{i}$'s so they need to satisfy:
 - $r_{i} \times (r_{i} - 1) = 0$
 
 ---
@@ -323,7 +323,7 @@ $Q_l\times a + Q_r \times b + Q_o \times c + Q_m \times a\times b + Q_c = 0$
 
 ---
 
-## Gate table for right input to be integer and not 1
+## Gate table for the right input to be an integer and not 1
  $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
 <img style="height: 500px; padding-left:100px" src="./img/gate-table-right-input-less-than-8-and-not-1.png" />
 
