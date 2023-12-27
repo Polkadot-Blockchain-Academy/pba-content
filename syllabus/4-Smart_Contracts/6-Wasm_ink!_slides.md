@@ -1103,7 +1103,7 @@ Notes:
 
 ## Reentrancy attacks
 
-<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/reentrancy.png" />
+<img style="margin-top: 50px;margin-bottom: 50px" width="600" src="./img/ink/reentrancy.png" />
 
 - The DAO hacker used what became knows as a _reentrancy_ attack.
 - Attacker exploited a _fallback_ function in Solidity to create a loop that syphoned funds out of the DAO contract.
@@ -1118,9 +1118,7 @@ Notes:
 
 ## Reentrancy: the fallback function
 
-<!-- <img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/reentrancy.png" /> -->
-
-```solidity[]
+```solidity []
 pragma solidity ^0.8.0;
 
 contract FallbackExample {
@@ -1147,7 +1145,7 @@ Notes:
 
 ## Reentrancy: an example
 
-```rust[1-4|6-15|17-33]
+```rust [1-4|6-15|17-33]
 #[ink(storage)]
 pub struct Dao {
     balances: Mapping<AccountId, Balance>,
@@ -1293,7 +1291,126 @@ Note:
 
 ---
 
+## Past exploits: The Parity Wallet Hack (July 2017)
 
+<img style="margin-top: 10px;margin-bottom: 10px" width="1200" src="./img/ink/multisig_exploit_1.png" />
+
+- Vulnerability on the Parity Multisig Wallet allowed an attacker to steal > 150,000 ETH.
+- Three high-profile multisig wallet contracts used to store funds from token sales were affected.
+- The attacker sent 2 transactions to each of the affected contracts: the first to obtain ownership of the MultiSig, the second to move all of its funds.
+
+Notes:
+- worth some ~30M USD back then.
+- the exploit was silly by todays standards
+- but we have to remember this is a blast from the past
+
+---
+
+## The Parity Wallet Hack: proxy pattern
+
+```solidity []
+address constant _walletLibrary = 0xcafecafecafecafecafecafecafecafecafecafe;
+
+...
+
+function isOwner(address _addr) constant returns (bool) {
+  return _walletLibrary.delegatecall(msg.data);
+}
+```
+
+- **Proxy pattern** is a way to reduce costs by sharing code between contracts.
+- All logic is stored in a stateless library contract deployed once, and a lightweight contract proper is deployed as many times as neccesary.
+- `DELEGATECALL` EVM instruction does the following: for whatever method that calls it, it will delegate that call to another contract, but using the context of the current contract
+
+Notes:
+- ethereum's EVM does not have the separation between code and the SC instance like substrate does.
+- think `super` call in Java.
+- context = state, stat eof library is not altered when delgating a call.
+- all perfectly innocent and used ot this day, problem lies elsewhere.
+
+---
+
+## The Parity Wallet Hack: `initWallet` library function
+
+``` [1-4|6-16]
+function initWallet(address[] _owners, uint _required, uint _daylimit) {
+  initDaylimit(_daylimit);
+  initMultiowned(_owners, _required);
+}
+
+function initMultiowned(address[] _owners, uint _required) {
+  m_numOwners = _owners.length + 1;
+  m_owners[1] = uint(msg.sender);
+  m_ownerIndex[uint(msg.sender)] = 1;
+  for (uint i = 0; i < _owners.length; ++i)
+  {
+    m_owners[2 + i] = uint(_owners[i]);
+    m_ownerIndex[uint(_owners[i])] = 2 + i;
+  }
+  m_required = _required;
+}
+```
+
+- wallet library contained `initWallet` function that was called from the wallets constructor.
+- and _i.e._ it called this logic.
+
+
+Notes:
+- it writes the owners of this contract to the contracts storage (state)
+- still nothing technically nothing wrong here
+
+---
+
+## The Parity Wallet Hack: the critical mistake
+
+```solidity []
+function() payable {
+  // just being sent some cash?
+  if (msg.value > 0)
+    Deposit(msg.sender, msg.value);
+  else if (msg.data.length > 0)
+    _walletLibrary.delegatecall(msg.data);
+}
+```
+
+- This exact code was defined in the wallet itself.
+<!-- - This is the **exact** code that got attacked. -->
+- Do you see what happens here?
+
+Notes:
+- reckognize this? yes, this is a fallback function
+- who can tell me what happens here?
+- If a method with this name is not defined in this contract
+- and if no ETH is being sent in the transaction
+- and if there is some data in the message payload
+- Then call the exact same method as it is defined in _walletLibrary (but using `delegatecall` that is in the context of this contract)
+- the hacker effectivele re-initialized th ewallet, made himself as the sole owner and stole the funds.
+
+---
+
+## The Parity Wallet Hack: the aftermath
+
+- what was at fault here?
+- The `initWallet` and `initMultiowned` should have been defined as `internal` (aka private)
+- They did not check whether
+
+Notes:
+- you could argue there were two vulnerabilities
+- fixing either of them would have prevented the exploit from happening
+
+
+
+
+---
+
+<!-- TODO -->
+<!-- In July 2017, a vulnerability was discovered in the Parity multi-signature wallet smart contract, leading to the loss of approximately 150,000 ETH. This incident followed a previous Parity wallet exploit in 2016. The affected funds were frozen due to efforts to fix the vulnerabilities, but recovery attempts led to a contentious debate within the Ethereum community. -\-> -->
+
+<!-- TODO-->
+
+<!-- eth is a dark forest -->
+
+---
 
 <!-- ## Common Vulnerabilities -->
 
