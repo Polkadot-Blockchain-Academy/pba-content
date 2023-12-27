@@ -1354,7 +1354,6 @@ function initMultiowned(address[] _owners, uint _required) {
 - wallet library contained `initWallet` function that was called from the wallets constructor.
 - and _i.e._ it called this logic.
 
-
 Notes:
 - it writes the owners of this contract to the contracts storage (state)
 - still nothing technically nothing wrong here
@@ -1384,27 +1383,106 @@ Notes:
 - and if no ETH is being sent in the transaction
 - and if there is some data in the message payload
 - Then call the exact same method as it is defined in _walletLibrary (but using `delegatecall` that is in the context of this contract)
-- the hacker effectivele re-initialized th ewallet, made himself as the sole owner and stole the funds.
+- the hacker effectivele re-initialized the wallet, overwrote the owners making himself the sole owner and stole the funds.
 
 ---
 
 ## The Parity Wallet Hack: the aftermath
 
-- what was at fault here?
-- The `initWallet` and `initMultiowned` should have been defined as `internal` (aka private)
-- They did not check whether
+- The `initWallet` and `initMultiowned` should have been defined as `internal` (aka private).
+- There was no check in place for whether the wallet was already initialized.
+- The raw `DELEGATECALL` should haven been replaced with a whitelist of calls that can be delegated.
 
 Notes:
-- you could argue there were two vulnerabilities
-- fixing either of them would have prevented the exploit from happening
-
-
-
+- so what was at fault here?
+- you could argue there were at least three vulnerabilities
+- fixing either of them would have prevented the exploit
+- akin to e.g. running unsanitized SQL (sql injections).
 
 ---
 
-<!-- TODO -->
-<!-- In July 2017, a vulnerability was discovered in the Parity multi-signature wallet smart contract, leading to the loss of approximately 150,000 ETH. This incident followed a previous Parity wallet exploit in 2016. The affected funds were frozen due to efforts to fix the vulnerabilities, but recovery attempts led to a contentious debate within the Ethereum community. -\-> -->
+## The Parity Wallet Hack: reloaded (November 2017)
+
+<img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" />
+
+- Following the fix for the original multisig vulnerability exploited in July a new version of the library contract was deployed.
+- Unfortunately it contained another vulnerability ...
+- Estimated losses totalled over 500,000 ETH
+
+Notes:
+
+- USD 150 million USD back then
+- including over 300,000 ETH from the Web3 Foundation team.
+
+---
+
+## The Parity Wallet Hack reloaded: the what?
+
+```solidity []
+function kill(address _to) onlymanyowners(sha3(msg.data)) external {
+  suicide(_to);
+}
+```
+
+- `suicide` (now `selfdestruct`) opcode was added to the EVM after the DAO hack.
+- It removes a contract from the blockchain and sends its ETH balance to a designated recipient.
+- Hacker was able to call this function on the _library_ contract itself, remove it and rendered all of the proxy contracts broken.
+- `kill` is protected with a `onlymanyowners` modifier so how was he able to call it?
+
+Notes:
+
+- The DAO attack continued for days due to the immutability of Solidity contracts
+- remmeber how whitehat hackers tried to syphon the funds only faster than the blackhat?
+- This is why it was intorduced - as a safety feature in case of security threats
+
+---
+
+## The Parity Wallet Hack reloaded: the how?
+
+```solidity [3|5|10]
+uint public m_numOwners;
+
+modifier only_uninitialized { if (m_numOwners > 0) throw; _; }
+
+function initWallet(address[] _owners, uint _required, uint _daylimit) only_uninitialized
+  initDaylimit(_daylimit);
+  initMultiowned(_owners, _required);
+}
+
+function initMultiowned(address[] _owners, uint _required) internal {
+  ...
+}
+```
+
+- in the aftermath of the July attack the above changes were added to the library.
+- So how was this possible?
+
+Notes:
+- that does seems to fix the problem: if the attacker attempts to invoke `initWallet` on an already deployed contract it is rejected
+- can anyone say what has happened?
+
+---
+
+## The Parity Wallet Hack reloaded: the how?
+
+<div style="font-size: 0.72em;">
+
+- `initWallet` was public in the library itsef.
+- By calling it hacker has made himself the owner of the library (since `m_numOwners == 0` in an un-initialized contract) and than called `kill`, passing his own address.
+- [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+
+</div>
+
+Notes:
+- it had to be, all the library functions have to be public to be callable from the outside
+- this time around hacker walked with no funds (as the lib had none)
+
+---
+
+
+
+
+
 
 <!-- TODO-->
 
@@ -1436,44 +1514,7 @@ Notes:
 <!-- - answer: no AC in place -->
 <!-- - parity wallet 150 million `hack` -->
 
-<!-- --- -->
 
-<!-- ## Common Vulnerabilities: blast from the past -->
-
-<!-- <img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" /> -->
-
-<!-- <div style="font-size: 0.72em;"> -->
-
-<!-- - [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit: -->
-<!-- - https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code -->
-
-<!-- <\!-- ```solidity -\-> -->
-<!-- <\!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -\-> -->
-<!-- <\!--   suicide(_to); -\-> -->
-<!-- <\!-- } -\-> -->
-
-<!-- <\!-- function initMultiowned(address[] _owners, uint _required) only_uninitialized { -\-> -->
-<!-- <\!--   m_numOwners = _owners.length + 1; -\-> -->
-<!-- <\!--   m_owners[1] = uint(msg.sender); -\-> -->
-<!-- <\!--   m_ownerIndex[uint(msg.sender)] = 1; -\-> -->
-<!-- <\!--   for (uint i = 0; i < _owners.length; ++i) -\-> -->
-<!-- <\!--   { -\-> -->
-<!-- <\!--     m_owners[2 + i] = uint(_owners[i]); -\-> -->
-<!-- <\!--     m_ownerIndex[uint(_owners[i])] = 2 + i; -\-> -->
-<!-- <\!--   } -\-> -->
-<!-- <\!--   m_required = _required; -\-> -->
-<!-- <\!-- } -\-> -->
-<!-- <\!-- ``` -\-> -->
-
-<!-- </div> -->
-
-<!-- Notes: -->
-
-<!-- - might seem trivial but a very similar hack has happend in the past trapping a lot of funds -->
-<!-- - see: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code -->
-<!-- - hacker has "accidentally" called an unprotected `initMultiowned` and proceeded to delete the contract code -->
-
-<!-- --- -->
 
 <!-- ## Common Vulnerabilities -->
 
