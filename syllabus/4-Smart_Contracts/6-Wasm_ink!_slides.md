@@ -1479,41 +1479,58 @@ Notes:
 
 ---
 
+## The Parity Wallet Hack reloaded: lessons for ink! development
+
+```rust
+impl MyContract {
+
+  #[ink(message)]
+  pub fn terminate(&mut self) -> Result<()> {
+      let caller = self.env().caller();
+      self.env().terminate_contract(caller)
+  }
+
+  ...
+}
+```
 
 
+Notes:
+- substate /ink! usually has no need for a proxy pattern but similar concepts do apply
+- what is wrong with this code?
+- how would you fix it?
 
+---
 
+## The Parity Wallet Hack reloaded: lessons for ink! development
+
+```rust [4,8-14]
+#[ink(message)]
+pub fn terminate(&mut self) -> Result<()> {
+    let caller = self.env().caller();
+    self.ensure_owner()?;
+    self.env().terminate_contract(caller)
+}
+
+fn ensure_owner(&self) -> Result<(), GovernanceError> {
+    let caller = self.env().caller();
+    match caller.eq(&self.owner) {
+        true => Ok(()),
+        false => Err(Error::NotOwner),
+    }
+}
+```
+
+Notes:
+- making sure only designated account(s) can call `terminate`
+
+---
 
 <!-- TODO-->
 
 <!-- eth is a dark forest -->
 
 ---
-
-<!-- ## Common Vulnerabilities -->
-
-<!-- ```rust -->
-<!-- impl MyContract { -->
-
-<!--   #[ink(message)] -->
-<!--   pub fn terminate(&mut self) -> Result<()> { -->
-<!--       let caller = self.env().caller(); -->
-<!--       self.env().terminate_contract(caller) -->
-<!--   } -->
-
-<!--   ... -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- - What is wrong with this contract? -->
-<!-- - How would you fix it? -->
-
-<!-- Notes: -->
-
-<!-- - we start easy -->
-<!-- - answer: no AC in place -->
-<!-- - parity wallet 150 million `hack` -->
-
 
 
 <!-- ## Common Vulnerabilities -->
