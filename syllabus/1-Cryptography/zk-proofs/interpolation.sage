@@ -14,8 +14,6 @@ s = 3
 
 
 def compute_input_output_poly_values(secret_factor):
-   #import pdb
-   #pdb.set_trace()
    r0 = secret_factor % 2
    r1 = (secret_factor // 2) % 2
    r2 = (secret_factor // 4) % 2
@@ -58,7 +56,6 @@ print(trace_poly % zero_test_poly)
 
 qx = trace_poly / zero_test_poly
 print(qx)
-# y^2 = x^3 + 8*x + 10 embeding degree 8 on 101 order 89
 
-trace_poly / 
-(trace_poly(r) - trace_poly(tau)) / (r - tau)
+# y^2 = x^3 + 8*x + 10 embeding degree 8 on 101 order 89
+# (trace_poly(r) - trace_poly(tau)) / (r - tau)

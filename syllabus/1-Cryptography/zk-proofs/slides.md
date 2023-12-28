@@ -38,6 +38,11 @@ Notes:
 - A prover wants to convince a verifier that something is true without revealing why it is true.
 
 - They are mostly interactive protocols, but mostly we'll turn them non-interactive and deal with their non-interactive variety. 
+
+Notes:
+ - Interactive means multiple back and forthes between parties. It requires that the parties to be online at the same time.
+ - Non-interactive means one party post their contribution and the other party could use the data at the time of their convinience. 
+   This does not require the praties to be online at the same time.
 ---
 
 ## What can we show?
@@ -69,7 +74,7 @@ Notes:
 
 _Example:_ Schnorr signatures are ZK Proofs
 - $(s, e)$ such that $s = (\textrm{Random blinding factor }r) - \\ \textrm{Private Key} \times e$
-- They show that the prover knows the private key (the discrete log of the public key) without revealing anything about it.
+- They show that the prover knows the private key such that $\textrm{private key} \times G = \textrm{Public Key}$ without revealing anything about it.
 - The statement is the public key and the witness the private key.
 
 ---
@@ -209,7 +214,7 @@ Notes:
 ## Making an SNARK for knowledge of factors problem
 - A routine way of to turning the problem into a polynomial is:
 1. To represents our problem into an arithmetic circuit.
-2. Then are algorithms such as PLONK for representing the circuit as few univariate polynomials.
+2. Then there are algorithms such as PLONK for representing the circuit as few univariate polynomials.
 
 Notes: 
  - Mathematically circuit is a n-variate polynomials, with some of the variables are public and some are not.
