@@ -144,6 +144,12 @@ The secret encodes the threshold behavior, and signing demands some threshold of
 
 This DKG protocol breaks other useful things, like hard key derivation.
 
+<img style="height: 600px" src="./img/11-simplex_graph.png" />
+
+Notes:
+
+DKG requires MPC which adds a lot of communication overhead.
+
 ---
 
 ### Schnorr Multi-Sigs
@@ -216,6 +222,8 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introd
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
 - Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
 - Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
+
+<img style="height: 600px" src="./img/Ring-signature.png" />
 
 Notes:
 
