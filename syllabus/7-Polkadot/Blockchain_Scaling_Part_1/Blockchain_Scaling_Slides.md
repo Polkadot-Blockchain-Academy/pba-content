@@ -105,9 +105,10 @@ Notes:
 - Definition: distributing over subsets of machines (committees)
 - Execution vs. data sharding
 
+<!-- This link is broken and needs replacement
 Notes:
-
 - https://vitalik.ca/general/2021/04/07/sharding.html
+-->
 
 ---
 
@@ -196,8 +197,9 @@ Notes:
 - Can be application-specific or generalized (e.g. Counterfactual)
 
 Notes:
-
+<!-- This link is broken and needs replacement
 - https://vitalik.ca/general/2021/01/05/rollup.html
+-->
 - https://www.jeffcoleman.ca/state-channels/
 - https://lightning.network/lightning-network-paper.pdf
 
