@@ -1,6 +1,3 @@
-
-![tests](https://github.com/iden3/snarkjs/workflows/tests/badge.svg)![Check%20snarkjs%20tutorial](https://github.com/iden3/snarkjs/workflows/Check%20snarkjs%20tutorial/badge.svg)
-
 # snarkjs
 
 This is a **JavaScript and Pure Web Assembly implementation of zkSNARK and PLONK schemes.** It uses the Groth16 Protocol (3 point only and 3 pairings), PLONK and FFLONK.
@@ -203,10 +200,6 @@ And it's blake2b hash is:
 55c77ce8562366c91e7cda394cf7b7c15a06c12d8c905e8b36ba9cf5e13eb37d1a429c589e8eaba4c591bc4b88a0e2828745a53e170eac300236f5c1a326f41a
 
 You can find more information about the ceremony [here](https://github.com/weijiekoh/perpetualpowersoftau)
-
-The last ptau file was generated using this procedure:
-
-https://www.reddit.com/r/ethereum/comments/iftos6/powers_of_tau_selection_for_hermez_rollup/
 
 ---
 
