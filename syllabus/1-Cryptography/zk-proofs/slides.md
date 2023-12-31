@@ -55,6 +55,9 @@ Notes:
 
   - ... Without revealing anything about the witness (_ZK_)
 
+Notes:
+    NP problems are problems that might be hard to solve but are relatively  easy to verify. Easy as in "polynomial time".
+
 ---
 
 ## ZK Proof Interface
