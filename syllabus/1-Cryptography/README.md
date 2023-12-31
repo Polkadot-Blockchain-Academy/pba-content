@@ -69,7 +69,9 @@ They should not zone-out of class to complete this during class time, they shoul
 ### Day 3 (0.5 day)
 
 #### Morning
+1. [9-ZK_Proofs](9-ZK_Proofs-slides.md)
 
+#### Afternoon
 1. [8-Exotic_Primitives](8-Exotic_Primitives-slides.md)
-1. [9-Cryptography_In_Context](9-Cryptography_In_Context-slides.md)
+1. [10-Cryptography_In_Context](10-Cryptography_In_Context-slides.md)
 1. `p9_attacks::timing_attacks` assignment problem
