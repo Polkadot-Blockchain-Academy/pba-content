@@ -37,9 +37,7 @@ Certificate transparency: [explanation](https://certificate.transparency.dev/how
 ### Certificates in Web3
 
 We are building systems that do not have a centralized "Certificate Authority".<br/>
-But we can still use certificates:
- - Certified by a distributed authority.
- - To transfer some power from one key to another.
+But we can still use certificates to transfer some power from one key to another.
 
 Notes:
 
@@ -71,7 +69,7 @@ We often want signatures that must be signed<br/>by multiple parties to become v
 
 <pba-flex center>
 
-- Trivial: union of individual signatures.
+- Trivial: Sending all individual signatures together.
 - Cryptographically Aggregated.
 - Cryptographically Threshold.
 
