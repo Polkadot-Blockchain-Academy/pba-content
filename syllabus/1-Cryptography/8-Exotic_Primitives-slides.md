@@ -16,7 +16,6 @@ duration: 1 hour
 1. [Erasure coding](#erasure-coding)
 1. [Shamir Secret Sharing](#shamir-secret-sharing)
 1. [Proxy Re-Encryption](#proxy-reencryption)
-1. [ZK Proofs](#zk-proofs)
 
 </pba-flex>
 
