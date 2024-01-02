@@ -237,11 +237,17 @@ Authenticated encryption adds a **M**essage **A**uthentication **C**ode to addit
 
 A reader can check the MAC to ensure the message was constructed by someone knowing the secret.
 
+<img style="height: 500px" src="./img/Authenticated_Encryption_EtM.png" />
+
 Notes:
 
 Specifically, this authenticity says that _anyone who does not know the sender's secret_ could not construct the message.
 
 Generally, this adds ~16-32 bytes of overhead per encrypted message.
+
+The image only shows only of of many possible constructions of authenticated encryption.
+
+Explain that the Key2 in the image, could be derived from Key1.
 
 ---
 
