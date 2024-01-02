@@ -251,6 +251,15 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
 ---
 
+
+## Use in Decentralized Systems
+
+
+
+<img style="width: 600px;" src="./img/EEC2.png" /> 
+
+---
+
 ## Use in Decentralized Systems
 
 - We have data we want to keep publicly available
@@ -337,10 +346,28 @@ Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-sec
 - So can other people who collect enough shares.
 
 ---
+## Recall Asymmetric (Public Key) Encryption
+
+- `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
+- `fn public_key(sk) -> pk;` <br/> Generate a `pk` (public key) from the private key `sk`.
+- `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes the public key and a message; returns the ciphertext.
+- `fn decrypt(sk, ciphertext) -> msg;` <br/> For the inputs `sk` and a ciphertext; returns the original message.
+
+---
+## Proxy Reencryption Intuition
+
+<img rounded style="height: 400px" src="./img/proxy1.png" />
+
+- Directly give Email Server $sk_A$? 
+- $A$ encrypt the email using $pk_B$ by itself and send the ciphertext to server?
+
+---
 
 ## Proxy Reencryption
 
-Generate keys to allow a third party to transform encrypted data so someone else can read it, without revealing the data to the third party.
+- A varient of asymmetric encrytion schemes
+- Generate keys to allow a third party to transform encrypted data so someone else can read it
+- Keep the data secret to the third party
 
 ---
 
