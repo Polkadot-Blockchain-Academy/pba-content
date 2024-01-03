@@ -41,10 +41,10 @@
 
 <pba-flex center>
 
-- Understand the goals of cryptography
-- Understand some network and contextual assumptions
-- Learn what expectations cryptography upholds
-- Learn the primitives
+- Understand the goals of cryptography<!-- .element: class="fragment" data-fragment-index="0" -->
+- Understand some network and contextual assumptions<!-- .element: class="fragment" data-fragment-index="1" -->
+- Learn what expectations cryptography upholds<!-- .element: class="fragment" data-fragment-index="2" -->
+- Learn the primitives<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -66,17 +66,17 @@ Adversaries may want to:
 
 <pba-flex center>
 
-- Read messages not intended for them
-- Impersonate others
-- Tamper with messages
+- Read messages not intended for them<!-- .element: class="fragment" data-fragment-index="0" -->
+- Impersonate others<!-- .element: class="fragment" data-fragment-index="1" -->
+- Tamper with messages<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
 <aside class="notes"><p>Use e-mail as an example of an flawed system.</p>
 <p>Some examples include:</p>
 <ul>
-<li>An attacker may impersonate your boss, trying to get you to send them money</li>
-<li>An attacker may change a message sent over a network, e.g. an instruction to transfer 100 EUR to 10000 EUR</li>
+<li>An attacker may impersonate your boss, trying to get you to send them money<!-- .element: class="fragment" data-fragment-index="0" --></li>
+<li>An attacker may change a message sent over a network, e.g. an instruction to transfer 100 EUR to 10000 EUR<!-- .element: class="fragment" data-fragment-index="1" --></li>
 </ul>
 <p>Probably best for the teacher to ask students to participate with examples of application messages,
 not just person-to-person messages.</p>
@@ -106,10 +106,10 @@ For example, CSS protection for DVDs.</li>
 
 <pba-flex center>
 
-- Data confidentiality
-- Data authenticity
-- Data integrity
-- Non-repudiation
+- Data confidentiality<!-- .element: class="fragment" data-fragm ent-index="0" -->
+- Data authenticity<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Data integrity<!-- .element: class="fragment" data-fragm ent-index="2" -->
+- Non-repudiation<!-- .element: class="fragment" data-fragm ent-index="3" -->
 
 </pba-flex>
 
@@ -162,7 +162,7 @@ Users can have the **credible** expectation that the stated origin of a message 
 
 <br/>
 
-Authenticity ensures that a third party cannot pretend I created some data.
+Authenticity ensures that a third party cannot pretend I created some data.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 
 <aside class="notes"><ul>
 <li>Digital signatures should be difficult (practically speaking: impossible) to forge.</li>
@@ -175,8 +175,7 @@ If data is tampered with, it is detectable. In other words, it possible to check
 
 <br/>
 
-Integrity ensures that if data I create is corrupted, it can be detected.
-</script></section><section data-markdown><script type="text/template">
+Integrity ensures that if data I create is corrupted, it can be detected.<!-- .element: class="fragment" data-fragm ent-index="1" --></script></section><section data-markdown><script type="text/template">
 ## Physical Signatures
 
 Physical signatures provide weak authenticity guarantees<br/>(i.e. they are quite easy to forge), and no integrity guarantees.
@@ -194,14 +193,14 @@ The sender of a message cannot deny that they sent it.
 
 <br/>
 
-Non-repudiation ensures if Bob sends me some data, I can prove to a third party that they sent it.
+Non-repudiation ensures if Bob sends me some data, I can prove to a third party that they sent it.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 </script></section><section  data-markdown><script type="text/template">
 ## One-Way Functions
 
 One-way functions form the basis of both<br/>**(cryptographic) hashing** and **asymmetric cryptography**. A function $f$ is one way if:
 
-- it is reasonably fast to compute
-- it is very, very slow to undo
+- it is reasonably fast to compute<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- it is very, very slow to undo<!-- .element: class="fragment" data-fragm ent-index="2" -->
 
 <aside class="notes"><p>There are a lot of assumptions about why these functions are hard to invert, but we cannot rigorously prove it.
 We often express inversion problems in terms of mathematical games or oracles.</p>
@@ -212,7 +211,7 @@ We often express inversion problems in terms of mathematical games or oracles.</
 
 </br>
 
-A fingerprint, which is much smaller than a person, yet uniquely identifies an individual.
+A fingerprint, which is much smaller than a person, yet uniquely identifies an individual.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 
 <aside class="notes"><p>The following slides serve as an intro.
 Many terms may be glossed over, and covered in detail later.
@@ -224,19 +223,24 @@ Hashes can be useful for many applications:
 
 <pba-flex center>
 
-- Representation of larger data object<br/>(history, commitment, file)
-- Keys in a database
-- Digital signatures
-- Key derivation
-- Pseudorandom functions
+- Representation of larger data object<br/>(history, commitment, file)<!-- .element: class="fragment" data-fragm ent-index="0" -->
+- Keys in a database<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Digital signatures<!-- .element: class="fragment" data-fragm ent-index="2" -->
+- Key derivation<!-- .element: class="fragment" data-fragm ent-index="3" -->
+- Pseudorandom functions<!-- .element: class="fragment" data-fragm ent-index="4" -->
 
 </pba-flex>
 </script></section></section><section  data-markdown><script type="text/template">
 ## Symmetric Cryptography
 
-Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br/>The shared secret can then be used to protect further communications from others who do not know this secret.
+<pba-flex center>
 
-In essence, it gives a way of _extending_ a shared secret over time.
+- Symmetric encryption assumes all parties begin with some shared secret information.
+- This is a potentially very difficult requirement.<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- The shared secret can then be used to protect further communications from others who do not know this secret.<!-- .element: class="fragment" data-fragm ent-index="2" -->
+- In essence, it gives a way of "extending" a shared secret over time.<!-- .element: class="fragment" data-fragm ent-index="3" -->
+
+</pba-flex>
 
 <aside class="notes"><p>Remember that these communications are over an <em>open channel</em>, as we assumed that all channels can be monitored.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -244,17 +248,15 @@ In essence, it gives a way of _extending_ a shared secret over time.
 
 For example, the Enigma cipher in WW2. A _channel_ was initiated by sharing a secret ("key") between two participants. Using the cipher, those participants could then exchange information securely.
 
-However, since the key contained only limited _entropy_ ("information"), enough usage of it eventually compromised the secret and allowed the allies to decode messages. Even altering it once per day was not enough.
+However, since the key contained only limited "entropy" ("information"), enough usage of it eventually compromised the secret and allowed the allies to decode messages. Even altering it once per day was not enough.<!-- .element: class="fragment" data-fragm ent-index="0" -->
 
 <aside class="notes"><p>When communicating over a channel that is protected with only a certain amount of entropy, it is still possible to extend messages basically indefinitely by introducing <em>new entropy</em> that is used to protect the channel sufficiently often.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Asymmetric Cryptography
 
 - In asymmetric cryptography, we devise a means to transform one value (the "secret") into some corresponding counterpart (the "public" key), preserving certain properties.
-
-- We believe that this is a one-way function (that there is no easy/fast inverse of this function).
-
-- Aside from preserving certain properties, we believe this counterpart (the "public key") reveals no information about the secret.
+- We believe that this is a one-way function (that there is no easy/fast inverse of this function).<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Aside from preserving certain properties, we believe this counterpart (the "public key") reveals no information about the secret.<!-- .element: class="fragment" data-fragm ent-index="2" -->
 </script></section><section  data-markdown><script type="text/template">
 ## Asymmetric Encryption
 
@@ -263,10 +265,8 @@ _Using only the public key_, information can be transformed ("encrypted") such t
 ## Digital Signatures
 
 - _Using the secret key_, information can be transformed ("signed") such that anyone with knowledge of the information and the counterpart public key is able to affirm the operation.
-
-- Digital signatures provide message authenticity and integrity guarantees.
-
-- _There are two lessons are dedicated to digital signatures,<br/>this is strictly an intro._
+- Digital signatures provide message authenticity and integrity guarantees.<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- There are two lessons are dedicated to digital signatures,<br/>this is strictly an intro.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 </script></section><section  data-markdown><script type="text/template">
 ## Digital Signatures
 
@@ -274,7 +274,7 @@ _Using only the public key_, information can be transformed ("encrypted") such t
 
 A **signature** _proves_ that the signer had knowledge of the secret,<br/>without revealing the secret itself.
 
-The signature cannot be used to create other signatures, and is unique to the message.
+The signature cannot be used to create other signatures, and is unique to the message.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 
 <aside class="notes"><p>A <strong>signing function</strong> is a pure function which operates on some <em>message data</em> (which may or may not be small, depending on the function) and some <em>secret</em> (a small piece of information known only to the operator).
 The result of this function is a small piece of data called a <em>signature</em>.</p>
@@ -287,7 +287,7 @@ There is cryptographic proof that the secret was known to the producer of the si
 
 <br/>
 
-The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br/>
+The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br/><!-- .element: class="fragment" data-fragm ent-index="1" -->
 </script></section><section  data-markdown><script type="text/template">
 ## Practical Considerations
 
@@ -301,9 +301,9 @@ Hybrid cryptography composes new mechanisms from different cryptographic primiti
 
 For example:
 
-- Symmetric encryption can provide speed, and often confidentiality,
-- Hash functions can reduce the size of data while preserving identity,
-- Asymmetric cryptography can dictate relations among the participants.
+- Symmetric encryption can provide speed, and often confidentiality,<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Hash functions can reduce the size of data while preserving identity,<!-- .element: class="fragment" data-fragm ent-index="2" -->
+- Asymmetric cryptography can dictate relations among the participants.<!-- .element: class="fragment" data-fragm ent-index="3" -->
 </script></section><section  data-markdown><script type="text/template">
 ## Certifications
 
@@ -312,8 +312,8 @@ Certifications are used to make attestations about public key relationships.
 Typically in the form of a _signature_ on:
 
 - One or more cryptographically strong identifiers (e.g. public keys, hashes).
-- Information about its ownership, its use and any other properties that the signer is capable of attesting/authorizing/witnessing.
-- _(Meta-)information_ about this information itself, such as how long it is valid for and external considerations which would invalidate it.
+- Information about its ownership, its use and any other properties that the signer is capable of attesting/authorizing/witnessing.<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- "(Meta-)information" about this information itself, such as how long it is valid for and external considerations which would invalidate it.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 
 <aside class="notes"><ul>
 <li>Real application is the hierarchy of SSL certs.<ul>
@@ -327,9 +327,9 @@ Typically in the form of a _signature_ on:
 ## Entropy, Randomness, and Key Size
 
 - Entropy: Amount of non-redundant information contained within some data.
-- Randomness: Unpredictability of some information. Less random implies lower entropy.
-- Key size: Upper limit of possible entropy contained in a key. Keys with less random (more predictable) data have less entropy than this upper bound.
-- One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.
+- Randomness: Unpredictability of some information. Less random implies lower entropy.<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Key size: Upper limit of possible entropy contained in a key. Keys with less random (more predictable) data have less entropy than this upper bound.<!-- .element: class="fragment" data-fragm ent-index="2" -->
+- One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.<!-- .element: class="fragment" data-fragm ent-index="3" -->
 
 <aside class="notes"><p>Mention the upcoming &quot;many time pad&quot; activity, that exploits using a one time pad multiple times.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -342,9 +342,9 @@ fn roll_die() -> u32 {
 }
 ```
 
-- Pseudo-random sequences
-- Physical data collection (e.g. cursor movement, LSB of microphone)
-- Specialised hardware (e.g. low-level noise on silicon gates, quantum-amplifiers)
+- Pseudo-random sequences<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Physical data collection (e.g. cursor movement, LSB of microphone)<!-- .element: class="fragment" data-fragm ent-index="2" -->
+- Specialised hardware (e.g. low-level noise on silicon gates, quantum-amplifiers)<!-- .element: class="fragment" data-fragm ent-index="3" -->
 
 <aside class="notes"><p>LSB := Least Significant Bit</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -354,11 +354,11 @@ Cryptography is much more than encryption.
 
 <pba-flex center>
 
-- Communicate on public networks, in the open
-- Access information
-- Have expectations about a message's authenticity and integrity
-- Prove knowledge of some secret information
-- Represent large amounts of data succinctly
+- Communicate on public networks, in the open<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Access information<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Have expectations about a message's authenticity and integrity<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Prove knowledge of some secret information<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- Represent large amounts of data succinctly<!-- .element: class="fragment" data-fragm ent-index="1" -->
 
 </pba-flex>
 </script></section><section  data-markdown><script type="text/template">
