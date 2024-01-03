@@ -5,13 +5,22 @@ Multiple tools are provided for contributors to make slideshows, leader-guided w
 
 ## Table of contents
 
-- [Content organization](#content-organization)
-- [Lesson slides with Reveal.js](#lesson-slides-with-revealjs)
-  - [Developing slides](#developing-slides)
-  - [Check embedded links](#check-embedded-links)
-- [Exercises, workshops and activities](#exercises-workshops-and-activities)
-  - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
-  - [Conceptual workshops and exercises](#conceptual-workshops-and-activities)
+- [Polkadot Blockchain Academy Contributors Guide](#polkadot-blockchain-academy-contributors-guide)
+  - [Table of contents](#table-of-contents)
+  - [Content organization](#content-organization)
+  - [Lesson slides with Reveal.js](#lesson-slides-with-revealjs)
+    - [_Quick start_](#quick-start)
+    - [Node.js](#nodejs)
+    - [Yarn](#yarn)
+      - [Using speaker notes](#using-speaker-notes)
+      - [Presenting](#presenting)
+    - [Formatting Markdown, TOML, JSON](#formatting-markdown-toml-json)
+    - [Check embedded links](#check-embedded-links)
+  - [Exercises, workshops and activities](#exercises-workshops-and-activities)
+    - [Stand-alone Rust workshops and activities](#stand-alone-rust-workshops-and-activities)
+      - [Local IDE](#local-ide)
+      - [Online IDE](#online-ide)
+    - [Conceptual workshops and activities](#conceptual-workshops-and-activities)
 
 ## Content organization
 
@@ -95,42 +104,6 @@ yarn
 
 ---
 
-**To see what reveal can do, please view the slides and their source for details:**
-[](./faculty_resources/0-how_to_use_reveal_slides.md)
-
-- [How-to use reveal slides](./faculty_resources/0-how_to_use_reveal_slides.md) for an overview reveal's _powerful_ features.
-- [Lecture template slides](./faculty_resources/1-TEMPLATE_lecture_slides.md) that gives the structure most lessons should use to start with.
-- [Copy & paste slide templates](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that are styled to use in your content.
-
----
-
-### Developing slides
-
-Running this command will open a new browser tab and _watch for file changes_ (update on every time you save a file in this repo):
-
-```sh
-yarn start
-```
-
-**There is a [base slide template example](./faculty_resources/2-TEMPLATE_copy_paste_reveal_slides.md) that is highly suggested to use as a base to start all lesson slides.**
-This template can be used just copy and change slide by slide the content, and not worry with styling.
-If you do need custom style, please just comment in the slides with a code comment that says as much:
-
-```md
-<img src="./assets/img/<module or shared>/some-tilted-thing.png" alt="tilted!" />
-
-<!-- TODO: I need this image to be rotated 45deg left -->
-```
-
-<details>
-<summary>If you need more of an explanation on how to use `reveal-md`'s features, see below (click to toggle) </summary>
-
-When writing slides, separate each one using `---`.
-
-Optionally, you can separate slides vertically using `---v` between slides.
-
-For distinct parts of the lecture, with some core topic being presented as the, it may be a good idea to stack those slides vertically for easier navigation.
-
 #### Using speaker notes
 
 It's sometimes useful to have speaker notes for your slides.
@@ -144,67 +117,6 @@ Notes:
 
 This is a note just for you.
 All these lines are just seen in speaker view only.
-```
-
-#### Transitions
-
-To add transitions in a slide:
-
-```md
-_This will render only once the right or down arrow is pressed by presenter._
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-```
-
-TODO: update this once we're more familiar with the css stuff.
-
-#### Code highlighting
-
-You can add code snippets to your slides with line highlighting.
-You can also animate to step through each highlight with `|` delimited sections of lines as a _fragment_:
-
-````md
-<!-- first fragment is line 0, meaning NO highlight -->
-<!-- second fragment highlights lines 1 and 13 -->
-<!-- last highlight is the block of lines from 4 to 8 -->
-
-```rust [0|1,13|4-8]
-fn largest_i32(list: &[i32]) -> i32 {
-    let mut largest = list[0];
-
-    for &item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn largest_char(list: &[char]) -> char {
-    let mut largest = list[0];
-
-    for &item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-```
-````
-
-#### Custom theme and CSS
-
-The templates can be used just copy and change slide by slide the content, and not worry with styling.
-
-If you do need custom style, please just comment in the slides with a code comment that says as much:
-
-```md
-<img src="../assets/img/place-holder/some-image-tilted.png" alt="tilted!" />
-
-<!-- TODO: I need this image to be rotated 45deg left -->
 ```
 
 #### Presenting

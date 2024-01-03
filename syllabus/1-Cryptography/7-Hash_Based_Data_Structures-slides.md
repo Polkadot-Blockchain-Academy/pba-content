@@ -8,7 +8,7 @@ duration: 1 hour
 
 ---
 
-## Comparison to<br/>Pointer Based Data Structures
+## Comparison to<br />Pointer Based Data Structures
 
 - A hash references the _content_ of some data;
 - A pointer tells you where to find it;
@@ -34,18 +34,15 @@ Each block has the hash of the previous one.
 
 A binary Merkle tree is a binary tree using hashes to connect nodes.
 
-Notes:
-
-Ralph Merkle is a Berkeley alum!
-
 ---
 
 ## Proofs
 
-- The root or head hash is a commitment to the entire data structure.
-- Generate a proof by expanding some but not all hashes.
-
-_Crucial for the trustless nature of decentralised cryptographic data systems!_
+<ul>
+<li class="fragment">The root or head hash is a commitment to the entire data structure.</li>
+<li class="fragment">Generate a proof by expanding some but not all hashes.</li>
+<li class="fragment"><i>Crucial for the trustless nature of decentralised cryptographic data systems!</i></li>
+</ul>
 
 ---
 
@@ -63,7 +60,7 @@ If we compute the correct root, this proves that the leaf was in the tree
 
 ## Security
 
-Collision resistance: we reasonably assume only one preimage for each hash,<br/>therefore making the data structure's linkage persistent and enduring (until the cryptography becomes compromised 😥).
+Collision resistance: we reasonably assume only one preimage for each hash,<br />therefore making the data structure's linkage persistent and enduring (until the cryptography becomes compromised 😥).
 
 Notes:
 
@@ -73,7 +70,7 @@ Explain what could happen when this fails.
 
 ## Proof Sizes
 
-Proof of a leaf has size $O(\log n)$<br/>and so do proofs of updates of a leaf
+Proof of a leaf has size $O(\log n)$<br />and so do proofs of updates of a leaf
 
 ---
 
@@ -83,7 +80,7 @@ Proof of a leaf has size $O(\log n)$<br/>and so do proofs of updates of a leaf
 
 ## Key-value database
 
-The data structure stores a map `key -> value`.<br/>
+The data structure stores a map `key -> value`.<br />
 We should be able to:
 
 <pba-flex center>
@@ -182,7 +179,7 @@ Additionally, if the size of a value is particularly large, it is replaced with 
 
 ---
 
-## Computational and Storage <br/>Trade-offs
+## Computational and Storage <br />Trade-offs
 
 What radix $r$ is best?
 

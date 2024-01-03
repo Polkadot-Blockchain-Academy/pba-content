@@ -87,7 +87,7 @@ Notes:
 - https://bravenewcoin.com/insights/cryptopia-exchange-liquidator-releases-third-report
 - https://elementus.io/blog/cryptopia-hack-transparency/
 - https://blog.merklescience.com/hacktrack/hack-track-eterbase-cryptocurrency-exchange
-- https://www.reuters.com/investigates/special-report/fintech-crypto-binance-dirtymoney/
+- https://www.reuters.com/investigates/special-report/fintech-crypto-binance-dirtymoney/ <!-- markdown-link-check-disable-line -->
 
 ---
 

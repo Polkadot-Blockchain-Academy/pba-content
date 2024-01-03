@@ -1,0 +1,127 @@
+% Created 2023-12-19 Tue 10:19
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.1 (Org mode 9.6.6)}, 
+ pdflang={English}}
+\begin{document}
+
+
+\section{Gate constrains:}
+\label{sec:org3f61f29}
+
+\subsection{Multiplication constrain:}
+\label{sec:orgf218bc2}
+
+\begin{itemize}
+\item \(r * s = n\)
+\end{itemize}
+
+\subsection{constraining \(r \neq 1\)}
+\label{sec:org6d50148}
+\begin{itemize}
+\item Making sure that the prover doesn't fool the verifier by using 1 as a factor.
+\item We force them to use r-1's inverse.
+\item \((r-1)(r-1)^{-1} = 1 \Rightarrow  r * (r-1)^{-1} - (r-1)^{-1} = 1\)
+\end{itemize}
+
+\subsection{constraining \(0< r < 8\):}
+\label{sec:org5d55729}
+We need to make sure r \% p = r
+otherwise prover can cheat because everything has an inverse in \(FF_p\)
+We use Binary decomposition:
+\begin{itemize}
+\item \(r0 + 2 * r1 = r01\)
+\item \(r01 + 4 * r2 = r\)
+\item \(r0 * r0 - r0 = 0\)
+\item \(r1 * r1 - r1 = 0\)
+\item \(r2 * r2 - r2 = 0\)
+\end{itemize}
+
+\subsection{similarly constraining \(b\):}
+\label{sec:orga5c2f3e}
+
+\begin{itemize}
+\item \(s0 + 2 * s1 = s01\)
+\item \(s01 + 4 * s2 = s\)
+\item \(s0 * s0 - s0 = 0\)
+\item \(s1 * s1 - s1 = 0\)
+\item \(s2 * s2 - s2 = 0\)
+\item \(s * (s-1)^{-1} - (s-1)^{-1} = 1\)
+\end{itemize}
+
+\section{Universal way of summerizing constrains:}
+\label{sec:orgef1d037}
+\(Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0\)
+
+\section{Constrain for factorization:}
+\label{sec:orgdababe0}
+\(Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0\)
+
+\begin{center}
+\begin{tabular}{rrrrrlllr}
+Gate No & Q\textsubscript{l} & Q\textsubscript{r} & Q\textsubscript{o} & Q\textsubscript{m} & Q\textsubscript{c} & a & b & c\\[0pt]
+\hline
+1 & 0 & 0 & 0 & 1 & -n & r & s & 0\\[0pt]
+\end{tabular}
+\end{center}
+
+\section{Constrain table \(a\)}
+\label{sec:orga0851f0}
+\(Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0\)
+
+\begin{center}
+\begin{tabular}{rrrrrrllr}
+Gate No & Q\textsubscript{l} & Q\textsubscript{r} & Q\textsubscript{o} & Q\textsubscript{m} & Q\textsubscript{c} & a & b & c\\[0pt]
+\hline
+2 & 1 & 2 & -1 & 0 & 0 & r0 & r1 & r01\\[0pt]
+3 & 1 & 4 & -1 & 0 & 0 & r01 & r2 & r\\[0pt]
+4 & -1 & 0 & 0 & 1 & 0 & r0 & r0 & 0\\[0pt]
+5 & -1 & 0 & 0 & 1 & 0 & r1 & r1 & 0\\[0pt]
+6 & -1 & 0 & 0 & 1 & 0 & r2 & r2 & 0\\[0pt]
+7 & 0 & -1 & 0 & 1 & -1 & r & (r-1)\textsuperscript{-1} & 0\\[0pt]
+\hline
+\end{tabular}
+\end{center}
+
+\section{Constrain table  \(b\)}
+\label{sec:orgbae5eb4}
+\(Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0\)
+
+\begin{center}
+\begin{tabular}{rrrrrrllr}
+Gate No & Q\textsubscript{l} & Q\textsubscript{r} & Q\textsubscript{o} & Q\textsubscript{m} & Q\textsubscript{c} & a & b & c\\[0pt]
+\hline
+8 & 1 & 2 & -1 & 0 & 0 & s0 & s1 & s01\\[0pt]
+9 & 1 & 4 & -1 & 0 & 0 & s01 & s2 & s\\[0pt]
+10 & -1 & 0 & 0 & 1 & 0 & s0 & s0 & 0\\[0pt]
+11 & -1 & 0 & 0 & 1 & 0 & s1 & s1 & 0\\[0pt]
+12 & -1 & 0 & 0 & 1 & 0 & s2 & s2 & 0\\[0pt]
+13 & 0 & -1 & 0 & 1 & -1 & s & (s-1)\textsuperscript{-1} & 0\\[0pt]
+\hline
+\end{tabular}
+\end{center}
+
+\section{Trace Polynomial}
+\label{sec:orgf389178}
+Summerizing all of our constrains in one polynomial:
+
+\(Q_l(x)*a(x) + Q_r(x)*b(x) + Q_o(x)* c(x) + Q_m(x)*a(x)*b(x) + Q_c(x) = 0\)
+\end{document}
