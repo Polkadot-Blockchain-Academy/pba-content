@@ -3,7 +3,18 @@ title: Introduction to Cryptography
 description: Cryptographic primitives for Web3 engineers
 duration: 1 hour
 ---
+# Cryptography Day I
 
+<pba-flex center>
+
+- Introduction to cryptography.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Addresses and Keys<!-- .element: class="fragment" data-fragment-index="1" -->
+- Hash functions<!-- .element: class="fragment" data-fragment-index="2" -->
+- Many time pad activity<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-flex>
+
+---
 # Introduction to Cryptography
 
 ---
