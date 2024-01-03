@@ -4,6 +4,19 @@ description: A lesson on symmetric and asymmetric encryption.
 duration: 1 hour
 ---
 
+# Cryptography Day II
+
+<pba-flex center>
+
+- Encryption<!-- .element: class="fragment" data-fragment-index="0" -->
+- Basic Digital Signatures<!-- .element: class="fragment" data-fragment-index="1" -->
+- Advanced Digital Signatures<!-- .element: class="fragment" data-fragment-index="2" -->
+- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-flex>
+
+---
+
 # Encryption
 
 ---
@@ -30,7 +43,7 @@ In essence, it gives a way of _extending_ a shared secret over time.
 
 <img style="width: 1100px" src="./img/Symmetric-Cryptography.png" />
 
-Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES
+Examples: ChaCha20, Twofish, Serpent, Blowfish, XOR, DES, AES<!-- .element: class="fragment" data-fragment-index="0" -->
 
 ---
 
@@ -75,7 +88,7 @@ There is cryptographic proof that the secret was known to the producer of the en
 
 <br/>
 
-_However_, knowledge of the secret is not restricted to one party: Both (or all) parties in a symmetrically encrypted communication know the secret. Additionally, in order to prove this to anyone, they must _also_ gain knowledge of the secret.
+However, knowledge of the secret is not restricted to one party: Both (or all) parties in a symmetrically encrypted communication know the secret. Additionally, in order to prove this to anyone, they must also gain knowledge of the secret.<!-- .element: class="fragment" data-fragment-index="0" -->
 
 Notes:
 
@@ -161,10 +174,10 @@ Image sources: <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux
 ## Asymmetric Encryption
 
 - Assumes the sender does not know the recipient's secret "key" 🎉😎
-- Sender only knows a special identifier of this secret
-- Messages encrypted with the special identifier can only be decrypted with knowledge of the secret.
-- Knowledge of this identifier does not imply knowledge of the secret, and thus cannot be used to decrypt messages encrypted with it.
-- For this reason, the identifier may be shared publicly and is known as the _public key_.
+- Sender only knows a special identifier of this secret<!-- .element: class="fragment" data-fragment-index="0" -->
+- Messages encrypted with the special identifier can only be decrypted with knowledge of the secret.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Knowledge of this identifier does not imply knowledge of the secret, and thus cannot be used to decrypt messages encrypted with it.<!-- .element: class="fragment" data-fragment-index="2" -->
+- For this reason, the identifier may be shared publicly and is known as the "public key".<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
@@ -251,7 +264,7 @@ Explain that the Key2 in the image, could be derived from Key1.
 
 ---
 
-## AEAD (**A**uthenticated **E**ncryption **A**dditional **D**ata)
+## AEAD (**A**uthenticated **E**ncryption **A**ssociated **D**ata)
 
 AEAD is authenticated with some extra data which is unencrypted, but does have integrity and authenticity guarantees.
 
@@ -266,7 +279,7 @@ Authenticated encryption and AEAD can work with both symmetric and asymmetric cr
 Imagine a table with encrypted medical records stored in a table, where the data is stored using AEAD. What are the advantages of such a scheme?
 
 ```text
-UserID -> Data (encrypted), UserID (additional data)
+UserID -> Data (encrypted), UserID (associated data)
 ```
 
 Notes:

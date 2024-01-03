@@ -3,6 +3,18 @@ title: Advanced Digital Signatures
 description: More exotic digital signature methods
 duration: 1 hour
 ---
+# Cryptography Day II
+
+<pba-flex center>
+
+- Encryption<!-- .element: class="fragment" data-fragment-index="0" -->
+- Basic Digital Signatures<!-- .element: class="fragment" data-fragment-index="1" -->
+- Advanced Digital Signatures<!-- .element: class="fragment" data-fragment-index="2" -->
+- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-flex>
+
+---
 
 # Advanced Digital Signatures
 
@@ -24,7 +36,7 @@ We must already trust the issuing key to give this attestation any significance,
 
 A certification system specified conventions on who is allowed to issue certificates, the rules over their issuance (e.g. time limits and revocation) as well as their format and semantics.
 
-For example, the certificate transparency protocol for TLS certificates helps protect against compromised Certificate Authorities.
+For example, the certificate transparency protocol for TLS certificates helps protect against compromised Certificate Authorities.<!-- .element: class="fragment" data-fragment-index="0" -->
 
 Notes:
 
@@ -58,8 +70,8 @@ We often want signatures that must be signed<br/>by multiple parties to become v
 
 <pba-flex center>
 
-- Require some threshold of members to<br/>agree to a message
-- Protect against key loss
+- Require some threshold of members to<br/>agree to a message<!-- .element: class="fragment" data-fragment-index="0" -->
+- Protect against key loss<!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-flex>
 
@@ -69,18 +81,17 @@ We often want signatures that must be signed<br/>by multiple parties to become v
 
 <pba-flex center>
 
-- Trivial: Sending all individual signatures together.
-- Cryptographically Aggregated.
-- Cryptographically Threshold.
+- Trivial: Sending all individual signatures together.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Cryptographically Aggregated.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Cryptographically Threshold.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
 ### Trivial Multiple Signatures
 
-We assume that there is some verifier, who can check that some threshold of individual keys have provided valid signatures.
-
-This could be a trusted company or third party.
-For our purposes, _it's a blockchain_.
+- We assume that there is some verifier, who can check that some threshold of individual keys have provided valid signatures.
+- This could be a trusted company or third party.<!-- .element: class="fragment" data-fragment-index="1" -->
+- For our purposes, "it's a blockchain."<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -108,9 +119,10 @@ _Example: "The five key holders have signed this message."_
 
 ### Key Generation for Multi-Sigs
 
-In regular multi-signatures,<br/>signatures from individual public keys are aggregated.
+In cryptographic multi-signatures,<br/>signatures from individual public keys are aggregated.
+.
 
-Each participant can choose their own key to use for the multi-signature.
+Each participant can choose their own key to use for the multi-signature.<!-- .element: class="fragment" data-fragment-index="0" -->
 
 Notes:
 
@@ -120,13 +132,15 @@ In some cases, a security requirement of these systems is that every participant
 
 ### Cryptographic Threshold Multi-Sigs
 
-This makes more compact signatures compatible with legacy systems. Unlike a regular multi-sig, the public key is associated with a _threshold_ number of signing parties, so not all parties are needed to take part in the signing process to create a valid signature.
-
-This requires MPC protocols and may need multiple rounds of interaction to generate the final signature. They may be vulnerable to DoS from a malfunctioning (or malicious) key-holder.
+- Makes more compact signatures compatible with legacy systems.
+- The public key is associated with a "threshold" number of signing parties.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Not all parties are needed to take part in the signing process to create a valid signature.<!-- .element: class="fragment" data-fragment-index="1" -->
+- This requires MPC protocols and may need multiple rounds of interaction to generate the final signature.<!-- .element: class="fragment" data-fragment-index="2" -->
+- They may be vulnerable to DoS from a malfunctioning (or malicious) key-holder.<!-- .element: class="fragment" data-fragment-index="3" -->
 
 <pba-flex center>
 
-_Example: "5 of 7 key holders have signed this message."_
+Example: "5 of 7 key holders have signed this message.".<!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 
@@ -136,13 +150,10 @@ These require multi-party computation (MPC) protocols, which add some complexity
 
 ### Key Generation - Threshold
 
-Threshold multi-signature schemes require that all signers run a _distributed key generation_ (DKG) protocol that constructs key _shares_.
-
-The secret encodes the threshold behavior, and signing demands some threshold of signature _fragments_.
-
-This DKG protocol breaks other useful things, like hard key derivation.
-
-<img style="height: 600px" src="./img/11-simplex_graph.png" />
+- Threshold multi-signature schemes require that all signers run a distributed key generation (DKG) protocol that constructs key "shares".
+<img style="height: 500px" src="./img/11-simplex_graph.png" /><!-- .element: class="fragment" data-fragment-index="0" -->
+- The secret encodes the threshold behavior, and signing demands some threshold of signature "fragments".<!-- .element: class="fragment" data-fragment-index="1" -->
+-  This DKG protocol breaks other useful things, like hard key derivation.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -154,29 +165,26 @@ DKG requires MPC which adds a lot of communication overhead.
 
 Schnorr signatures are primarily used for threshold multi-sig.
 
-- Fit legacy systems nicely, and can reduce fees on blockchains.
-- Reduce verifier costs in bandwidth & CPU time, so great for certificates.
-- Could support soft key derivations.
+- Fit legacy systems nicely, and can reduce fees on blockchains.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Reduce verifier costs in bandwidth & CPU time, so great for certificates.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Could support soft key derivations.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
-### Schnorr Multi-Sigs
+### Schnorr Multi-Sigs - Downside
 
-However, automation becomes tricky.
-
-We need agreement upon the final signer list and two random nonce contributions from each prospective signer, before constructing the signature fragments.
+- However, automation becomes tricky.
+- We need agreement upon the final signer list and two random nonce contributions from each prospective signer, before constructing the signature fragments.<!-- .element: class="fragment" data-fragment-index="0" -->
 
 ---
 
 ### BLS Signatures
 
-BLS signatures are especially useful for aggregated multi-signatures (but can be used for threshold as well).
-
-Signatures can be aggregated without advance agreement upon the signer list, which simplifies automation and makes them useful in consensus.
-
-Verifying individual signatures is _slow_, but verifying aggregated ones is relatively fast.
-
-(Coming to Substrate soonish.)
+- BLS signatures are especially useful for aggregated multi-signatures (but can be used for threshold as well).<!-- .element: class="fragment" data-fragment-index="0" -->
+- Signatures can be aggregated without advance agreement upon the signer list.<!-- .element: class="fragment" data-fragment-index="1" -->
+- This simplifies automation and makes them useful in consensus.<!-- .element: class="fragment" data-fragment-index="2" -->
+- Verifying individual signatures is slow, but verifying aggregated ones is relatively fast.<!-- .element: class="fragment" data-fragment-index="3" -->
+- (Coming to Substrate soonish.)<!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
@@ -186,21 +194,19 @@ Allows multiple signatures generated under multiple public keys for multiple mes
 
 <pba-flex center>
 
-- Uses heavier pairing friendly elliptic curves than ECDSA/Schnorr.
-- Very popular for consensus.
+- Uses heavier pairing friendly elliptic curves than ECDSA/Schnorr.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Very popular for consensus.<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <pba-flex>
 
 ---
 
-### BLS Signatures
+### BLS Signatures - Downside
 
-However...
-
-- DKGs remain tricky (for threshold).
-- Soft key derivations are typically insecure for BLS.
-- Verifiers are significantly slower than Schnorr, due to using pairings, for a single signature.
-- But for hundreds or thousands of signatures on the same message, aggregated signature verification can be much faster than Schnorr.
+- DKGs remain tricky (for threshold).<!-- .element: class="fragment" data-fragment-index="0" -->
+- Soft key derivations are typically insecure for BLS.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Verifiers are significantly slower than Schnorr, due to using pairings, for a single signature.<!-- .element: class="fragment" data-fragment-index="2" -->
+- But for hundreds or thousands of signatures on the same message, aggregated signature verification can be much faster than Schnorr.<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
@@ -208,20 +214,20 @@ However...
 
 Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introduce user experience costs such as:
 
-- DKG protocols
-- Reduced key derivation ability
-- Verification speed
-- Proof of possession verification.
+- DKG protocols<!-- .element: class="fragment" data-fragment-index="0" -->
+- Reduced key derivation ability<!-- .element: class="fragment" data-fragment-index="1" -->
+- Verification speed<!-- .element: class="fragment" data-fragment-index="2" -->
+- Proof of possession verification.<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
 ### Ring Signatures
 
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
-- Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
-- Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
+<img style="height: 300px" src="./img/Ring-signature.png" /><!-- .element: class="fragment" data-fragment-index="1" -->
+- Ring signatures come in many sizes, with many ways of presenting their anonymity sets.<!-- .element: class="fragment" data-fragment-index="2" -->
+- Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).<!-- .element: class="fragment" data-fragment-index="3" -->
 
-<img style="height: 600px" src="./img/Ring-signature.png" />
 
 Notes:
 
