@@ -51,14 +51,16 @@ For example, the certificate transparency protocol for TLS certificates helps pr
 </aside></script></section><section  data-markdown><script type="text/template">
 ### Certificates in Web3
 
-We are building systems that don't have a "Certificate Authority".<br/>
-But we can still use certificates in some niche instances.
+We are building systems that do not have a centralized "Certificate Authority".<br/>
+But we can still use certificates to transfer some power from one key to another.
 
 <aside class="notes"><p>Potential example to give verbally:</p>
 <ul>
 <li>Session keys are a set of keys that generally run in online infrastructure.
 An account, whose keys are protected, can sign a transaction to certify all the keys in the set.</li>
 <li>Session keys are used to sign operational messages, but also in challenge-response type games to prove availability by signing a message.</li>
+<li>Registrar.</li>
+<li>Identity chains.</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ### Multi-Signatures
@@ -76,27 +78,27 @@ We often want signatures that must be signed<br/>by multiple parties to become v
 
 <pba-flex center>
 
-- Verifier enforced
-- Cryptographic threshold
-- Cryptographic non-threshold<br/>(a.k.a. signature aggregation)
+- Trivial: Sending all individual signatures together.
+- Cryptographically Aggregated.
+- Cryptographically Threshold.
 </script></section><section  data-markdown><script type="text/template">
-### Verifier Enforced Multiple Signatures
+### Trivial Multiple Signatures
 
 We assume that there is some verifier, who can check that some threshold of individual keys have provided valid signatures.
 
 This could be a trusted company or third party.
 For our purposes, _it's a blockchain_.
 </script></section><section  data-markdown><script type="text/template">
-### Verifier Enforced Multiple Signatures
+### Trivial Multiple Signatures
 
-Multiple signatures enforced by a verifier generally provide a good user experience, as no interaction is required from the participants.
+Trivial multiple signatures generally provide a good user experience, as no interaction is required from the participants.
 
 <aside class="notes"><p>This good experience comes at the cost of using state and more user interactions with the system, but is generally low.</p>
 <p>Even in a web3 system, the verifier can be <em>distinct</em> from the blockchain. 5 people can entrust a verifier with the identity of &quot;all 5 signed this&quot; associated to a verifier-owned private key.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 ### Cryptographic Multi-Sigs
 
-We want a succinct way to demonstrate that everyone from some set of parties have signed a message. This is achieved purely on the signer side (without support from the verifier).
+We want a succinct way to demonstrate that everyone from some set of parties have signed a message. This could be achieved purely on the signer side (without support from the verifier).
 
 <pba-flex center>
 
@@ -129,7 +131,11 @@ Threshold multi-signature schemes require that all signers run a _distributed ke
 The secret encodes the threshold behavior, and signing demands some threshold of signature _fragments_.
 
 This DKG protocol breaks other useful things, like hard key derivation.
-</script></section><section  data-markdown><script type="text/template">
+
+<img style="height: 600px" src="./img/11-simplex_graph.png" />
+
+<aside class="notes"><p>DKG requires MPC which adds a lot of communication overhead.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Schnorr Multi-Sigs
 
 Schnorr signatures are primarily used for threshold multi-sig.
@@ -146,7 +152,7 @@ We need agreement upon the final signer list and two random nonce contributions 
 </script></section><section  data-markdown><script type="text/template">
 ### BLS Signatures
 
-BLS signatures are especially useful for aggregated (non-threshold) multi-signatures (but can be used for threshold as well).
+BLS signatures are especially useful for aggregated multi-signatures (but can be used for threshold as well).
 
 Signatures can be aggregated without advance agreement upon the signer list, which simplifies automation and makes them useful in consensus.
 
@@ -171,7 +177,7 @@ However...
 
 - DKGs remain tricky (for threshold).
 - Soft key derivations are typically insecure for BLS.
-- Verifiers are hundreds of times slower than Schnorr, due to using pairings, for a single signature.
+- Verifiers are significantly slower than Schnorr, due to using pairings, for a single signature.
 - But for hundreds or thousands of signatures on the same message, aggregated signature verification can be much faster than Schnorr.
 </script></section><section  data-markdown><script type="text/template">
 ### Schnorr and BLS Summary
@@ -181,12 +187,15 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introd
 - DKG protocols
 - Reduced key derivation ability
 - Verification speed
+- Proof of possession verification.
 </script></section><section  data-markdown><script type="text/template">
 ### Ring Signatures
 
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
 - Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
 - Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
+
+<img style="height: 600px" src="./img/Ring-signature.png" />
 
 <aside class="notes"><ul>
 <li>ZCash uses a ring signature based upon Groth16 zkSNARKs which makes the entire chain history be the anonymity set.</li>
