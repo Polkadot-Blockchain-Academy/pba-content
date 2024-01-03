@@ -971,7 +971,7 @@ Notes:
 - An interesting question on JVM/Wasm: https://stackoverflow.com/questions/58131892/why-the-jvm-cannot-be-used-in-place-of-webassembly
 
 - Rust safety: https://stanford-cs242.github.io/f18/lectures/05-1-rust-memory-safety.html
-- https://www.reddit.com/r/rust/comments/5y3cxb/how_many_security_exploits_would_rust_prevent/
+- https://www.reddit.com/r/rust/comments/5y3cxb/how_many_security_exploits_would_rust_prevent/ <!-- markdown-link-check-disable-line -->
 
 - The substrate clients should still have some level of _determinism in their performance_. If
   authority nodes have extremely varied performances, they could start finalizing different forks.

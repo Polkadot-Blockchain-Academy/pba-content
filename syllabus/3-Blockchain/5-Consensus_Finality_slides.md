@@ -105,8 +105,6 @@ Kenny and Cartman propose Casa Bonita.
 
 In the end Kenny may not agree that Whistlin' Willie's is the best option for dinner, but he will agree that it is the legitimate group decision.
 
-Image source: https://southparkstudios.mtvnimages.com/images/shows/south-park/clip-thumbnails/season-14/1402/south-park-s14e02c03-ill-show-them-f-obscene-16x9.jpg
-
 ---v
 
 ## Mistakes vs Malice
@@ -274,7 +272,7 @@ A system is one of:
 
 <img style="padding: 0 200px 0 0" src="./img/FLP-impossible.png" />
 
-[Excellent Podcast with Ethan Buchman](https://open.spotify.com/episode/7z7qnOrLTVGa5T0s0MquJd)
+[Excellent Podcast with Ethan Buchman](https://www.youtube.com/watch?v=t0T-5QOXvrQ)
 
 Notes:
 

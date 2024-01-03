@@ -12,10 +12,12 @@ duration: 1 hour
 
 Signature libraries should generally all expose some basic functions:
 
-- `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
-- `fn public_key(sk) -> pk;` <br/> Return the `pk` (public key) from a `sk`.
-- `fn sign(sk, msg) -> signature;` <br/> Takes `sk` and a message; returns a digital signature.
-- `fn verify(pk, msg, signature) -> bool;` <br/> For the inputs `pk`, a message, and a signature; returns whether the signature is valid.
+<ul>
+<li class="fragment"><code>fn generate_key(r) -> sk;</code> <br />Generate a <code>sk</code> (secret key) from some input <code>r</code>.</li>
+<li class="fragment"><code>fn public_key(sk) -> pk;</code> <br /> Return the <code>pk</code> (public key) from a <code>sk</code>.</li>
+<li class="fragment"><code>fn sign(sk, msg) -> signature;</code> <br /> Takes <code>sk</code> and a message; returns a digital signature.</li>
+<li class="fragment"><code>fn verify(pk, msg, signature) -> bool;</code> <br /> For the inputs <code>pk</code>, a message, and a signature; returns whether the signature is valid.</li>
+</ul>
 
 Notes:
 
@@ -44,7 +46,7 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ## Hash Functions
 
-There are two lessons dedicated to hash functions.<br/>But they are used as part of all signing processes.
+There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.
 
 For now, we only concern ourselves with using Blake2.
 
@@ -52,7 +54,7 @@ For now, we only concern ourselves with using Blake2.
 
 ## Hashed Messages
 
-As mentioned in the introduction,<br/>it's often more practical to sign the hash of a message.
+As mentioned in the introduction,<br />it's often more practical to sign the hash of a message.
 
 Therefore, the sign/verify API may be _used_ like:
 
@@ -63,7 +65,7 @@ Therefore, the sign/verify API may be _used_ like:
 
 </pba-flex>
 
-Where `H` is a hash function (for our purposes, Blake2).<br/>
+Where `H` is a hash function (for our purposes, Blake2).<br />
 This means the verifier will need to run the correct hash function on the message.
 
 ---
@@ -72,10 +74,12 @@ This means the verifier will need to run the correct hash function on the messag
 
 Signatures provide many useful properties:
 
-- Confidentiality: Weak, the same as a hash
-- Authenticity: Yes
-- Integrity: Yes
-- Non-repudiation: Yes
+<ul>
+<li class="fragment"><strong>Confidentiality: </strong> Weak, the same as a hash</li>
+<li class="fragment"><strong>Authenticity: </strong> Yes</li>
+<li class="fragment"><strong>Integrity: </strong> Yes</li>
+<li class="fragment"><strong>Non-repudiation: </strong> Yes</li>
+</ul>
 
 Notes:
 
@@ -85,10 +89,11 @@ If a hash is signed, you can prove a signature is valid _without_ telling anyone
 
 ## Signing Payloads
 
-Signing payloads are an important part of system design.<br/>
-Users should have credible expectations about how their messages are used.
-
-For example, when a user authorizes a transfer,<br/>they almost always mean just one time.
+<ul>
+<li class="fragment">Signing payloads are an important part of system design.</li>
+<li class="fragment">Users should have credible expectations about how their messages are used.</li>
+<li class="fragment">For example, when a user authorizes a transfer, they almost always mean just one time.</li>
+</ul>
 
 Notes:
 
@@ -110,7 +115,7 @@ Note that signing and encryption are _not_ inverses.
 
 ## Replay Attacks
 
-Replay attacks occur when someone intercepts and resends a valid message.<br/>
+Replay attacks occur when someone intercepts and resends a valid message.<br />
 The receiver will carry out the instructions since the message contains a valid signature.
 
 <pba-flex center>
@@ -130,14 +135,16 @@ Tell the story of Ethereum Classic replays.
 
 ## Replay Attack Prevention
 
-Signing payloads should be designed so that they can<br/>only be used _one time_ and in _one context_.<br/>
+Signing payloads should be designed so that they can<br />only be used _one time_ and in _one context_.<br />
 Examples:
 
 <pba-flex center>
 
-- Monotonically increasing account nonces
-- Timestamps (or previous blocks)
-- Context identifiers like genesis hash and spec versions
+<ul>
+<li class="fragment">Monotonically increasing account nonces</li>
+<li class="fragment">Timestamps (or previous blocks)</li>
+<li class="fragment">Context identifiers like genesis hash and spec versions</li>
+</ul>
 
 ---
 
@@ -147,24 +154,28 @@ Examples:
 
 ## ECDSA
 
-- Uses Secp256k1 elliptic curve.
-- ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.
-- ECDSA complicates more advanced cryptographic techniques, like threshold signatures.
-- Nondeterministic
+<ul>
+<li class="fragment">Commonly uses Secp256k1 elliptic curve.</li>
+<li class="fragment">ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.</li>
+<li class="fragment">ECDSA complicates more advanced cryptographic techniques, like threshold signatures.</li>
+<li class="fragment">Non-Deterministic</li>
+</ul>
 
 ---
 
 ## Ed25519
 
-- Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
-- Signing is 20-30x faster than ECDSA signatures.
-- Deterministic
+<ul>
+<li class="fragment">Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.</li>
+<li class="fragment">Signing is 20-30x faster than ECDSA signatures.</li>
+<li class="fragment">Deterministic</li>
+</ul>
 
 ---
 
 ## Sr25519
 
-Sr25519 addresses several small risk factors that emerged<br/>from Ed25519 usage by blockchains.
+Sr25519 addresses several small risk factors that emerged<br />from Ed25519 usage by blockchains.
 
 ---
 

@@ -73,7 +73,7 @@ https://www.starknet.io/en/posts/developers/rollup-validium-volition-where-is-yo
 Notes:
 
 - https://celestia.org/learn/sovereign-rollups/an-introduction/ <!-- markdown-link-check-disable-line -->
-- https://rollkit.dev/blog/sovereign-rollups-on-bitcoin-with-rollkit
+- https://rollkit.dev/blog/sovereign-rollups-on-bitcoin/
 
 ---
 
@@ -164,7 +164,7 @@ Notes:
 
 Notes:
 
-- https://docs.celestia.org/concepts/how-celestia-works/data-availability-layer/ <!-- markdown-link-check-disable-line -->
+- https://docs.celestia.org/learn/how-celestia-works/data-availability-layer <!-- markdown-link-check-disable-line -->
 
 ---
 
@@ -216,7 +216,7 @@ Notes:
 - Proposers post a state root to L1 with deposit
 - Challengers can submit fraud proofs within period (typically 7 days)
   - If successful, rewarded portion of deposit
-- Fraud proofs can be interactive (Arbitrum) or non-interactive (Optimism)
+- Fraud proofs can be interactive (Arbitrum) or noninteractive (Optimism)
 
 Notes:
 
