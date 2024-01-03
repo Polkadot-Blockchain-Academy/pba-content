@@ -36,8 +36,8 @@ Certificate transparency: [explanation](https://certificate.transparency.dev/how
 
 ### Certificates in Web3
 
-We are building systems that don't have a "Certificate Authority".<br/>
-But we can still use certificates in some niche instances.
+We are building systems that do not have a centralized "Certificate Authority".<br/>
+But we can still use certificates to transfer some power from one key to another.
 
 Notes:
 
@@ -46,6 +46,9 @@ Potential example to give verbally:
 - Session keys are a set of keys that generally run in online infrastructure.
   An account, whose keys are protected, can sign a transaction to certify all the keys in the set.
 - Session keys are used to sign operational messages, but also in challenge-response type games to prove availability by signing a message.
+- Registrar.
+- Identity chains.
+
 
 ---
 
@@ -66,13 +69,13 @@ We often want signatures that must be signed<br/>by multiple parties to become v
 
 <pba-flex center>
 
-- Verifier enforced
-- Cryptographic threshold
-- Cryptographic non-threshold<br/>(a.k.a. signature aggregation)
+- Trivial: Sending all individual signatures together.
+- Cryptographically Aggregated.
+- Cryptographically Threshold.
 
 ---
 
-### Verifier Enforced Multiple Signatures
+### Trivial Multiple Signatures
 
 We assume that there is some verifier, who can check that some threshold of individual keys have provided valid signatures.
 
@@ -81,9 +84,9 @@ For our purposes, _it's a blockchain_.
 
 ---
 
-### Verifier Enforced Multiple Signatures
+### Trivial Multiple Signatures
 
-Multiple signatures enforced by a verifier generally provide a good user experience, as no interaction is required from the participants.
+Trivial multiple signatures generally provide a good user experience, as no interaction is required from the participants.
 
 Notes:
 
@@ -95,7 +98,7 @@ Even in a web3 system, the verifier can be _distinct_ from the blockchain. 5 peo
 
 ### Cryptographic Multi-Sigs
 
-We want a succinct way to demonstrate that everyone from some set of parties have signed a message. This is achieved purely on the signer side (without support from the verifier).
+We want a succinct way to demonstrate that everyone from some set of parties have signed a message. This could be achieved purely on the signer side (without support from the verifier).
 
 <pba-flex center>
 
@@ -139,6 +142,12 @@ The secret encodes the threshold behavior, and signing demands some threshold of
 
 This DKG protocol breaks other useful things, like hard key derivation.
 
+<img style="height: 600px" src="./img/11-simplex_graph.png" />
+
+Notes:
+
+DKG requires MPC which adds a lot of communication overhead.
+
 ---
 
 ### Schnorr Multi-Sigs
@@ -161,7 +170,7 @@ We need agreement upon the final signer list and two random nonce contributions 
 
 ### BLS Signatures
 
-BLS signatures are especially useful for aggregated (non-threshold) multi-signatures (but can be used for threshold as well).
+BLS signatures are especially useful for aggregated multi-signatures (but can be used for threshold as well).
 
 Signatures can be aggregated without advance agreement upon the signer list, which simplifies automation and makes them useful in consensus.
 
@@ -190,7 +199,7 @@ However...
 
 - DKGs remain tricky (for threshold).
 - Soft key derivations are typically insecure for BLS.
-- Verifiers are hundreds of times slower than Schnorr, due to using pairings, for a single signature.
+- Verifiers are significantly slower than Schnorr, due to using pairings, for a single signature.
 - But for hundreds or thousands of signatures on the same message, aggregated signature verification can be much faster than Schnorr.
 
 ---
@@ -202,6 +211,7 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introd
 - DKG protocols
 - Reduced key derivation ability
 - Verification speed
+- Proof of possession verification.
 
 ---
 
@@ -210,6 +220,8 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introd
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
 - Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
 - Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
+
+<img style="height: 600px" src="./img/Ring-signature.png" />
 
 Notes:
 
