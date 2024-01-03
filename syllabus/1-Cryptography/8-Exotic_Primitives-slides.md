@@ -37,7 +37,7 @@ duration: 1 hour
 
 - `sign(sk, input) -> signature`
 
-- `verify(pk, signature) -> option output`
+- `verify(pk, input, signature) -> option output`
 
 - `eval(sk,input) -> output`
 
@@ -56,7 +56,25 @@ The output of verification being an option represents the possibility of an inva
 - Revealing output does not leak secret key
 
 ---
+ ## Recall Signature Interface
 
+- `sign(sk, msg) -> signature;` 
+
+- `verify(pk, msg, signature) -> bool;` 
+
+
+---
+## BLS-based VRF
+
+- In some cases,`output = Hash(signature)` (RSA-FDH-VRF, BLS-based VRF)
+
+- `sign(sk, input) `: run `BLS.sign(sk, input)->signature`, return `signature` 
+
+- `eval(sk,input)`： return `Hash (signature)`
+
+- `verify(pk,input, signature)`: `BLS.verify(pk, input, signature)?=1`, if holds, output `hash (signature)`
+
+---
 ## VRF Usage
 
 - Choose input after key, then the key holder cannot influence the output
@@ -79,6 +97,22 @@ The signature proves that this is the output associated to their input and publi
 
 ---
 
+## VRF Example
+_Lottery_ 
+- Lottery organizer generate $pk$,$sk$ for VRF;
+- Each participants choose their own tickets $t_i$;
+
+<img style="width: 500px;" src="./img/vrf1.png" /> 
+
+---
+ ## VRF Example
+  _Lottery_ 
+  - Lottery organizer computes `eval(sk,$t_i$)-> $y_i$` for each participants;
+  - $y_i$ determines wining or not;
+  - `sign(sk, $t_i$) -> $\sigma_i$` published for verification. 
+<img style="width: 500px;" src="./img/vrf1.png" />
+
+---
 ## VRF Extensions
 
 - Threshold VRFs / Common coin
@@ -96,6 +130,23 @@ Dfinity based their consensus on this.
 But this needs a DKG, and it's unclear if a decentralized protocol can do those easily.
 
 A participant in a RingVRF could still only reveal _one_ random number.
+--- 
+
+## Threshold VRFs
+
+- Also called Distributed VRFs;
+- Each of the $n$ users get their public/secret key $(pk_i,sk_i)$;
+- $t$ participants generate `output_i`, `signature_i` using their key on the same `input`;
+- Combine $t$ `output_i`, `signature_i` to get `output`, `signature`.
+
+---
+## Ring Signature and Ring VRFs
+
+- Ring Signature: Sign on behalf of a group people without revealing the true identity of the signer;
+
+- Ring VRFs: generate `output` and `signature` on behalf of a group of people without revealing the true identity of the signer.
+
+<img style="height: 300px" src="./img/ring.png" />
 
 ---
 
@@ -103,10 +154,12 @@ A participant in a RingVRF could still only reveal _one_ random number.
 
 _Magical data expansion_
 
-- Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
+- A type of Forward Error Correction Code </br>Detect and correct errors occur in data transmission without the need for retransmission
+
+- Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing
 
 - A message of $k$ symbols is turned into a coded message of $n$ symbols and can be recovered from any $k$ of these $n$ symbols
-
+ 
 ---
 
 ## Erasure Coding Intuition
@@ -178,11 +231,32 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
 ---
 
+ ## Example for 1 Bit Erasuring
+  Parity Check: $n=k+1$
+
+- Codeword length $(x_1,\cdots,x_k)$: $k$ 
+- Add a sum of the codeword
+
+<img style="width: 1000px;" src="./img/ECC1.png" /> 
+
+- What if one element gets erasured during transmission?
+
+---
+
 ## Erasure Coding Classical use
 
 - Used for noisy channels
 - If a few bits of the coded data are randomly flipped,<br/> we can still recover the original data
 - Typically $n$ is not much bigger than $k$
+
+---
+
+
+## Use in Decentralized Systems
+
+
+
+<img style="width: 600px;" src="./img/EEC2.png" /> 
 
 ---
 
@@ -216,6 +290,55 @@ Notes:
 Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033
 
 ---
+ ## How to Share Secrets?
+
+  - With $t+1$ distinct points, a unique polynomial with degree $t$ is determined. 
+  - We can reconstruct the $t$ polynomial from any of its $t+1$ points (use Lagrange interpolation).
+  - With point less than $t+1$, the polynomial cannot be uncovered.
+  - $y=x^3+4x^2+2$
+  <img style="width:500px " src="./img/secshare1.png" />
+
+---
+ ## How to Share Secrets?
+  - Assume we want to share a secret value $a$ among $n$ people
+  - We expect that with any $k$ secret shares we are able to reconstruct $a$;
+
+---
+  ## Share Secret Value $a$
+- Construct polynomial $f(X)=a_0+a_1X+a_2X^2+\cdots+a_{k-1}X^{k-1}$ with degree $k-1$; 
+
+- **$a_0=a$**;
+- $a_1$,$\cdots$, $a_{k-1}$ are all randomly picked;
+ 
+- The $n$ secret shares are $f(1)$, $f(2)$,$\cdots$, $f(n)$;
+
+- With any $k$ of the $n$ secret shares, we are able to recover $f(x)$.
+
+---
+## Example:$a=12, n=5, k=4$ 
+
+- Construct a polynomial $f(x)=12-13x-7x^2+2x^3$
+
+<img style="width:600px " src="./img/secshare2.png" />
+
+---
+## Example:$a=12, n=5, k=4$ 
+  
+  - Evaluate on $f(1)$, $f(2)$, $f(3)$, $f(4)$, $f(5)$
+  
+  <img style="width:600px " src="./img/secshare3.png" />
+
+---
+
+## Distributed Private Key Storage
+
+- The management and protection of private keys is important; 
+
+- There are wallet introduced Shamir secret sharing to help share private key into multiple pieces;
+
+- Shares are stored in different locations.
+
+---
 
 ## Pros and Cons
 
@@ -223,10 +346,28 @@ Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-sec
 - So can other people who collect enough shares.
 
 ---
+## Recall Asymmetric (Public Key) Encryption
+
+- `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
+- `fn public_key(sk) -> pk;` <br/> Generate a `pk` (public key) from the private key `sk`.
+- `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes the public key and a message; returns the ciphertext.
+- `fn decrypt(sk, ciphertext) -> msg;` <br/> For the inputs `sk` and a ciphertext; returns the original message.
+
+---
+## Proxy Reencryption Intuition
+
+<img rounded style="height: 400px" src="./img/proxy1.png" />
+
+- Directly give Email Server $sk_A$? 
+- $A$ encrypt the email using $pk_B$ by itself and send the ciphertext to server?
+
+---
 
 ## Proxy Reencryption
 
-Generate keys to allow a third party to transform encrypted data so someone else can read it, without revealing the data to the third party.
+- A varient of asymmetric encrytion schemes
+- Generate keys to allow a third party to transform encrypted data so someone else can read it
+- Keep the data secret to the third party
 
 ---
 
@@ -246,6 +387,15 @@ Notes:
 - `fn decrypt(sk, ciphertext) -> msg;` <br/> Takes your private key and a ciphertext; returns the message.
 - `fn get_reencryption_key(sk, pk) -> rk;` <br/> Takes your private key, and the recipient's public key; returns a reencryption key.
 - `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;` <br/> Take a reencryption key, and transform ciphertext to be decrypted by new party.
+
+---
+
+## Requirements for Proxy Reencryption
+- Bob (delegatee) should be able to correctly decrypt new ciphertext with $rk$;
+
+- With $rk$, Proxy can not get Alice's (delegator) secret key.
+
+- The ciphertext is secure even $rk$ leaked;
 
 ---
 
