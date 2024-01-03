@@ -46,9 +46,9 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ## Hash Functions
 
-There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.
+There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.<!-- .element: class="fragment" data-fragment-index="0" -->
 
-For now, we only concern ourselves with using Blake2.
+For now, we only concern ourselves with using Blake2.<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
@@ -60,8 +60,8 @@ Therefore, the sign/verify API may be _used_ like:
 
 <pba-flex center>
 
-- `fn sign(sk, H(msg)) -> signature;`
-- `fn verify(pk, H(msg), signature) -> bool;`
+- `fn sign(sk, H(msg)) -> signature;` <!-- .element: class="fragment" data-fragment-index="0" -->
+- `fn verify(pk, H(msg), signature) -> bool;` <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-flex>
 
