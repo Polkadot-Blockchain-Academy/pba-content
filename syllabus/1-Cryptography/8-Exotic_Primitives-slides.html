@@ -56,7 +56,7 @@
 
 - `sign(sk, input) -> signature`
 
-- `verify(pk, signature) -> option output`
+- `verify(pk, input, signature) -> option output`
 
 - `eval(sk,input) -> output`
 
@@ -69,8 +69,22 @@
 - It should be pseudo-random
 - But until the VRF is revealed, only the holder<br/>of the secret key knows the output
 - Revealing output does not leak secret key
-</script></section><section  data-markdown><script type="text/template">
-## VRF Usage
+</script></section><section  data-markdown><script type="text/template"> ## Recall Signature Interface
+
+- `sign(sk, msg) -> signature;` 
+
+- `verify(pk, msg, signature) -> bool;` 
+
+</script></section><section  data-markdown><script type="text/template">## BLS-based VRF
+
+- In some cases,`output = Hash(signature)` (RSA-FDH-VRF, BLS-based VRF)
+
+- `sign(sk, input) `: run `BLS.sign(sk, input)->signature`, return `signature` 
+
+- `eval(sk,input)`： return `Hash (signature)`
+
+- `verify(pk,input, signature)`: `BLS.verify(pk, input, signature)?=1`, if holds, output `hash (signature)`
+</script></section><section  data-markdown><script type="text/template">## VRF Usage
 
 - Choose input after key, then the key holder cannot influence the output
 - The output then is effectively a random number known only to the key holder
@@ -86,7 +100,19 @@
   `eval(sk_A,x) mod 52`
 - To play the card, A publishes the signature
 </script></section><section  data-markdown><script type="text/template">
-## VRF Extensions
+## VRF Example
+_Lottery_ 
+- Lottery organizer generate $pk$,$sk$ for VRF;
+- Each participants choose their own tickets $t_i$;
+
+<img style="width: 500px;" src="./img/vrf1.png" /> 
+</script></section><section  data-markdown><script type="text/template"> ## VRF Example
+  _Lottery_ 
+  - Lottery organizer computes `eval(sk,$t_i$)-> $y_i$` for each participants;
+  - $y_i$ determines wining or not;
+  - `sign(sk, $t_i$) -> $\sigma_i$` published for verification. 
+<img style="width: 500px;" src="./img/vrf1.png" />
+</script></section><section  data-markdown><script type="text/template">## VRF Extensions
 
 - Threshold VRFs / Common coin
 
@@ -99,16 +125,32 @@
 <aside class="notes"><p>Common coins were used in consensus before blockchains were a thing.
 Dfinity based their consensus on this.
 But this needs a DKG, and it&#39;s unclear if a decentralized protocol can do those easily.</p>
-<p>A participant in a RingVRF could still only reveal <em>one</em> random number.</p>
-</aside></script></section><section  data-markdown><script type="text/template">
+<h2 id="a-participant-in-a-ringvrf-could-still-only-reveal-one-random-number">A participant in a RingVRF could still only reveal <em>one</em> random number.</h2>
+<h2 id="threshold-vrfs">Threshold VRFs</h2>
+<ul>
+<li>Also called Distributed VRFs;</li>
+<li>Each of the $n$ users get their public/secret key $(pk_i,sk_i)$;</li>
+<li>$t$ participants generate <code>output_i</code>, <code>signature_i</code> using their key on the same <code>input</code>;</li>
+<li>Combine $t$ <code>output_i</code>, <code>signature_i</code> to get <code>output</code>, <code>signature</code>.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">## Ring Signature and Ring VRFs
+
+- Ring Signature: Sign on behalf of a group people without revealing the true identity of the signer;
+
+- Ring VRFs: generate `output` and `signature` on behalf of a group of people without revealing the true identity of the signer.
+
+<img style="height: 300px" src="./img/ring.png" />
+</script></section><section  data-markdown><script type="text/template">
 ## Erasure Coding
 
 _Magical data expansion_
 
-- Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
+- A type of Forward Error Correction Code </br>Detect and correct errors occur in data transmission without the need for retransmission
+
+- Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing
 
 - A message of $k$ symbols is turned into a coded message of $n$ symbols and can be recovered from any $k$ of these $n$ symbols
-</script></section><section ><section data-markdown><script type="text/template">
+ </script></section><section ><section data-markdown><script type="text/template">
 ## Erasure Coding Intuition
 
 Erasure coding relies on both parties sharing an understanding of what possible messages are valid. This lets mistakes be noticed and corrected.
@@ -156,11 +198,28 @@ With erasure coding, we extend each message magically so they are different enou
 
 <img style="width: 1000px;" src="./img/erasure-code.svg" />
 </script></section><section  data-markdown><script type="text/template">
+ ## Example for 1 Bit Erasuring
+  Parity Check: $n=k+1$
+
+- Codeword length $(x_1,\cdots,x_k)$: $k$ 
+- Add a sum of the codeword
+
+<img style="width: 1000px;" src="./img/ECC1.png" /> 
+
+- What if one element gets erasured during transmission?
+</script></section><section  data-markdown><script type="text/template">
 ## Erasure Coding Classical use
 
 - Used for noisy channels
 - If a few bits of the coded data are randomly flipped,<br/> we can still recover the original data
 - Typically $n$ is not much bigger than $k$
+</script></section><section  data-markdown><script type="text/template">
+
+## Use in Decentralized Systems
+
+
+
+<img style="width: 600px;" src="./img/EEC2.png" /> 
 </script></section><section  data-markdown><script type="text/template">
 ## Use in Decentralized Systems
 
@@ -184,15 +243,66 @@ _Redundancy for your secrets_
 <img style="height: 600px" src="./img/shamir-secret-sharing.png" />
 
 <aside class="notes"><p>Image credit here: <a href="https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033">https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033</a></p>
-</aside></script></section><section  data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template"> ## How to Share Secrets?
+
+  - With $t+1$ distinct points, a unique polynomial with degree $t$ is determined. 
+  - We can reconstruct the $t$ polynomial from any of its $t+1$ points (use Lagrange interpolation).
+  - With point less than $t+1$, the polynomial cannot be uncovered.
+  - $y=x^3+4x^2+2$
+  <img style="width:500px " src="./img/secshare1.png" />
+</script></section><section  data-markdown><script type="text/template"> ## How to Share Secrets?
+  - Assume we want to share a secret value $a$ among $n$ people
+  - We expect that with any $k$ secret shares we are able to reconstruct $a$;
+</script></section><section  data-markdown><script type="text/template">  ## Share Secret Value $a$
+- Construct polynomial $f(X)=a_0+a_1X+a_2X^2+\cdots+a_{k-1}X^{k-1}$ with degree $k-1$; 
+
+- **$a_0=a$**;
+- $a_1$,$\cdots$, $a_{k-1}$ are all randomly picked;
+ 
+- The $n$ secret shares are $f(1)$, $f(2)$,$\cdots$, $f(n)$;
+
+- With any $k$ of the $n$ secret shares, we are able to recover $f(x)$.
+</script></section><section  data-markdown><script type="text/template">## Example:$a=12, n=5, k=4$ 
+
+- Construct a polynomial $f(x)=12-13x-7x^2+2x^3$
+
+<img style="width:600px " src="./img/secshare2.png" />
+</script></section><section  data-markdown><script type="text/template">## Example:$a=12, n=5, k=4$ 
+  
+  - Evaluate on $f(1)$, $f(2)$, $f(3)$, $f(4)$, $f(5)$
+  
+  <img style="width:600px " src="./img/secshare3.png" />
+</script></section><section  data-markdown><script type="text/template">
+## Distributed Private Key Storage
+
+- The management and protection of private keys is important; 
+
+- There are wallet introduced Shamir secret sharing to help share private key into multiple pieces;
+
+- Shares are stored in different locations.
+</script></section><section  data-markdown><script type="text/template">
 ## Pros and Cons
 
 - Can reconstruct a secret if you lose it.
 - So can other people who collect enough shares.
+</script></section><section  data-markdown><script type="text/template">## Recall Asymmetric (Public Key) Encryption
+
+- `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
+- `fn public_key(sk) -> pk;` <br/> Generate a `pk` (public key) from the private key `sk`.
+- `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes the public key and a message; returns the ciphertext.
+- `fn decrypt(sk, ciphertext) -> msg;` <br/> For the inputs `sk` and a ciphertext; returns the original message.
+</script></section><section  data-markdown><script type="text/template">## Proxy Reencryption Intuition
+
+<img rounded style="height: 400px" src="./img/proxy1.png" />
+
+- Directly give Email Server $sk_A$? 
+- $A$ encrypt the email using $pk_B$ by itself and send the ciphertext to server?
 </script></section><section  data-markdown><script type="text/template">
 ## Proxy Reencryption
 
-Generate keys to allow a third party to transform encrypted data so someone else can read it, without revealing the data to the third party.
+- A varient of asymmetric encrytion schemes
+- Generate keys to allow a third party to transform encrypted data so someone else can read it
+- Keep the data secret to the third party
 </script></section><section  data-markdown><script type="text/template">
 ## Proxy Reencryption
 
@@ -206,6 +316,13 @@ Generate keys to allow a third party to transform encrypted data so someone else
 - `fn decrypt(sk, ciphertext) -> msg;` <br/> Takes your private key and a ciphertext; returns the message.
 - `fn get_reencryption_key(sk, pk) -> rk;` <br/> Takes your private key, and the recipient's public key; returns a reencryption key.
 - `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;` <br/> Take a reencryption key, and transform ciphertext to be decrypted by new party.
+</script></section><section  data-markdown><script type="text/template">
+## Requirements for Proxy Reencryption
+- Bob (delegatee) should be able to correctly decrypt new ciphertext with $rk$;
+
+- With $rk$, Proxy can not get Alice's (delegator) secret key.
+
+- The ciphertext is secure even $rk$ leaked;
 </script></section><section  data-markdown><script type="text/template">
 ## Summary
 
