@@ -112,13 +112,21 @@ _The first 5 words of the [BIP39 English dictionary](https://github.com/bitcoin/
 </pba-col>
 </pba-cols>
 
+
+Notes:
+
+Question to ask:
+Does anyone know what a BIP is?
+
 ---
 
 ## Mnemonic to Secret Key
 
-The secret key is a scalar value from the scalar field of the base field which the elliptic curve is defined over. Not a phrase.
+For the Math peoples, what is a secret key?<!-- .element: class="fragment" data-fragment-index="0" -->
 
-BIP39 applies 2,048 rounds of the SHA-512 hash function<br /> to the mnemonic to derive a 64 byte key.
+The secret key is a scalar value from the scalar field of the base field from which an elliptic curve is defined over. Not a phrase! <!-- .element: class="fragment" data-fragment-index="1" -->
+
+BIP39 applies 2,048 rounds of the SHA-512 hash function<br /> to the mnemonic to derive a 64 byte key.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -183,6 +191,9 @@ Notes:
 
 It hasn't been covered yet, but some addresses even go _extra fancy_ and include an error correcting code in the address.
 
+Question for class:
+What is a checksum?
+
 ---
 
 ## SS58 Address Format
@@ -231,12 +242,16 @@ Derivations can either be "hard" or "soft".
 
 ## Hard Derivation
 
-Hard derivation requires the secret key and derives new child secret keys.
 
-Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
+Hard derivation requires the secret key and derives new child secret keys.<!-- .element: class="fragment" data-fragment-index="0" -->
 
-Always do hard paths first, then conclude in soft paths.
+Always do hard paths first, then conclude in soft paths.<!-- .element: class="fragment" data-fragment-index="1" -->
 
+Notes:
+    Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
+
+    DONT MENTION THIS BUT FOR NOTES!!
+    - Because you cannot derive a parent key from a child key with hard derivation but with soft you can
 ---
 
 ## Hard Derivation in Wallets
@@ -266,6 +281,9 @@ Notes:
 Hard keys: Take a _path_ (data like a name/index), concatenate with the original key, and hash it for a new key.
 They reveal nothing about keys above them, and only with the _path_ between it and children could they be recovered.
 
+- use `sha3sum -N 256` for a 32byte output and hash type in two things and press ctrl D
+- use inspect on the two private keys see that they are completely different public keys non-linkable
+
 ---
 
 ## Soft Derivation
@@ -283,7 +301,6 @@ Notes:
 ## Soft Derivation
 
 - Note that these generate new addresses, but use the same secret seed.
-- We can also use the same paths, but only using the Account ID from `//polkadot`. It generates the same addresses!
 
 ---
 
