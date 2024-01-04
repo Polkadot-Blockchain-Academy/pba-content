@@ -6,6 +6,9 @@ duration: 1 hour
 
 # Fees, Ordering
 
+TODO Determine if any of this can / should be re-used.
+If so, find it a home, probably in the econ and game theory lecture.
+
 ---
 
 ## Overview

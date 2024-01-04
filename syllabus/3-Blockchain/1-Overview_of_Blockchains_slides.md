@@ -6,6 +6,15 @@ duration: 30 - 45 minutes
 
 # Overview of Blockchains
 
+TODO Joshy
+
+Braindump for the structure of this lesson for HK:
+
+- Shared Story Telling
+- Digital Services
+- Broad def of smart contract
+- State Machines
+
 ---
 
 ## Upholding Expectations
