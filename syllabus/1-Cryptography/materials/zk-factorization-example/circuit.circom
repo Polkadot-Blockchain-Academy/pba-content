@@ -41,7 +41,6 @@ template CheckFactorization () {
    // Declaration of signals.  
    signal input r;  
    signal input s;  
-   //signal output c;
    
    component r_is_not_1;
    component s_is_not_1;
