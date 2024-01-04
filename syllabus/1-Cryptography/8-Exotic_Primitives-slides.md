@@ -154,7 +154,7 @@ A participant in a RingVRF could still only reveal _one_ random number.
 
 _Magical data expansion_
 
-- A type of Forward Error Correction Code </br>Detect and correct errors occur in data transmission without the need for retransmission
+- A type of Error Correction Code </br>Detect and correct errors occur in data transmission without the need for retransmission
 
 - Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing
 
@@ -256,7 +256,7 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
 
 
-<img style="width: 600px;" src="./img/EEC2.png" /> 
+<img style="width: 600px;" src="./img/ECC2.png" /> 
 
 ---
 
@@ -267,7 +267,6 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
   - but not have everyone store
   - but we don't trust everyone who is storing pieces
 
-- Typically we use $n$ much bigger than $k$
 
 ---
 
