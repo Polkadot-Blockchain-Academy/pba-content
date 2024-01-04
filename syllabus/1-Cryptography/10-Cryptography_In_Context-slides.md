@@ -22,7 +22,6 @@ duration: 1 hour
 ## Secrets
 
 - What is a secret in cryptography?
-
 - Data that you know, that nobody else knows.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
@@ -245,18 +244,20 @@ This is an excerpt from the [ed25519](https://ed25519.cr.yp.to/) description.
 
 ---
 
-## Takeway
+## Takeway: DO NOT ROLL YOUR OWN CRYPTO
 
 Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even harder!
 
-### DO NOT ROLL YOUR OWN CRYPTO
-<img style="width: 900px;" src="./img/we_rolled_our_own_crypto.png" />
+<img style="width: 800px;" src="./img/we_rolled_our_own_crypto.png" />
 
+### 
 Notes:
 
 Be very, very careful whenever you do _anything_ that touches a secret. That includes any operation involving the secret, or reading/writing it somewhere.
 
 When necessary, talk to a security expert or cryptographer.
+
+
 
 ---
 
@@ -265,8 +266,8 @@ When necessary, talk to a security expert or cryptographer.
 - Stay "above" the abstraction barrier<!-- .element: class="fragment" data-fragment-index="0" -->
 - Validate each primitive's assumptions when combining primitives<!-- .element: class="fragment" data-fragment-index="1" -->
 - Use the most reputable library you can<!-- .element: class="fragment" data-fragment-index="2" -->
-- Realize when things need serious consideration<!-- .element: class="fragment" data-fragment-index="2" -->
-- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamalb<!-- .element: class="fragment" data-fragment-index="3" -->
+- Realize when things need serious consideration<!-- .element: class="fragment" data-fragment-index="3" -->
+- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamalb<!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 
