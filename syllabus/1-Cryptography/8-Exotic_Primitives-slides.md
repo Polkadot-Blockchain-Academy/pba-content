@@ -128,8 +128,8 @@ Notes:
 Common coins were used in consensus before blockchains were a thing.
 Dfinity based their consensus on this.
 But this needs a DKG, and it's unclear if a decentralized protocol can do those easily.
-
 A participant in a RingVRF could still only reveal _one_ random number.
+
 --- 
 
 ## Threshold VRFs
@@ -291,7 +291,7 @@ Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-sec
 ---
  ## How to Share Secrets?
 
-  - With $t+1$ distinct points, a unique polynomial with degree $t$ is determined. 
+  - A polynomial of degree $t$ is completely determined by $t+1$ points.  
   - We can reconstruct the $t$ polynomial from any of its $t+1$ points (use Lagrange interpolation).
   - With point less than $t+1$, the polynomial cannot be uncovered.
   - $y=x^3+4x^2+2$
