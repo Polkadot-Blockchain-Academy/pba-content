@@ -42,22 +42,21 @@
 </script></section><section  data-markdown><script type="text/template">
 ## Secrets
 
-What _is_ a secret in cryptography?
-
-Data that you know, that nobody else knows.
+- What is a secret in cryptography?
+- Data that you know, that nobody else knows.<!-- .element: class="fragment" data-fragment-index="2" -->
 </script></section><section  data-markdown><script type="text/template">
 ## How Secrets Stay Secret
 
 In order for a cryptographic secret to stay secret, the _only_ thing about it that can be revealed is the output of known, secured cryptographic operations.
 
-- A (sufficiently random) secret can be hashed, and the hash revealed.
-- A private key can be used to generate a public key, and the public key revealed.
-- A private key can be used to generate a signature, and the signature revealed.
+- A (sufficiently random) secret can be hashed, and the hash revealed.<!-- .element: class="fragment" data-fragment-index="0" -->
+- A private key can be used to generate a public key, and the public key revealed.<!-- .element: class="fragment" data-fragment-index="1" -->
+- A private key can be used to generate a signature, and the signature revealed.<!-- .element: class="fragment" data-fragment-index="3" -->
 </script></section><section  data-markdown><script type="text/template">
 ## How Secrets Get Leaked
 
-1. Inadvertently leaking information about the secret during normal operation.
-1. Compromised digital or physical security leading to private key loss.
+1. Inadvertently leaking information about the secret during normal operation.<!-- .element: class="fragment" data-fragment-index="0" -->
+1. Compromised digital or physical security leading to private key loss.<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <aside class="notes"><p>Let&#39;s go over each of these in order.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -77,9 +76,9 @@ A timing attack can be possible if any of the following<br/> depend on the conte
 
 <pba-flex center>
 
-- Which instructions execute
-- Branching (if statements)
-- Memory access patterns
+- Which instructions execute<!-- .element: class="fragment" data-fragment-index="0" -->
+- Branching (if statements)<!-- .element: class="fragment" data-fragment-index="1" -->
+- Memory access patterns<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
@@ -224,22 +223,23 @@ This is an excerpt from the [ed25519](https://ed25519.cr.yp.to/) description.
 - **No secret array indices**. The software never reads or writes data from secret addresses in RAM; the pattern of addresses is completely predictable. The software is therefore immune to cache-timing attacks, hyperthreading attacks, and other side-channel attacks that rely on leakage of addresses through the CPU cache.
 - **No secret branch conditions**. The software never performs conditional branches based on secret data; the pattern of jumps is completely predictable. The software is therefore immune to side-channel attacks that rely on leakage of information through the branch-prediction unit.
 </script></section><section  data-markdown><script type="text/template">
-## Takeway
+## Takeway: DO NOT ROLL YOUR OWN CRYPTO
 
 Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even harder!
 
-### DO NOT ROLL YOUR OWN CRYPTO
+<img style="width: 800px;" src="./img/we_rolled_our_own_crypto.png" />
 
+### 
 <aside class="notes"><p>Be very, very careful whenever you do <em>anything</em> that touches a secret. That includes any operation involving the secret, or reading/writing it somewhere.</p>
 <p>When necessary, talk to a security expert or cryptographer.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Using Cryptographic Libraries Safely
 
-- Stay _above_ the abstraction barrier
-- Validate each primitive's assumptions when combining primitives
-- Use the most reputable library you can
-- Realize when things need serious consideration
-  - Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamal
+- Stay "above" the abstraction barrier<!-- .element: class="fragment" data-fragment-index="0" -->
+- Validate each primitive's assumptions when combining primitives<!-- .element: class="fragment" data-fragment-index="1" -->
+- Use the most reputable library you can<!-- .element: class="fragment" data-fragment-index="2" -->
+- Realize when things need serious consideration<!-- .element: class="fragment" data-fragment-index="3" -->
+- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamalb<!-- .element: class="fragment" data-fragment-index="4" -->
 
 <aside class="notes"><p>Reputableness of a library is some combination of:</p>
 <ul>
