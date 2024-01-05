@@ -21,9 +21,8 @@ duration: 1 hour
 
 ## Secrets
 
-What _is_ a secret in cryptography?
-
-Data that you know, that nobody else knows.
+- What is a secret in cryptography?
+- Data that you know, that nobody else knows.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -31,16 +30,16 @@ Data that you know, that nobody else knows.
 
 In order for a cryptographic secret to stay secret, the _only_ thing about it that can be revealed is the output of known, secured cryptographic operations.
 
-- A (sufficiently random) secret can be hashed, and the hash revealed.
-- A private key can be used to generate a public key, and the public key revealed.
-- A private key can be used to generate a signature, and the signature revealed.
+- A (sufficiently random) secret can be hashed, and the hash revealed.<!-- .element: class="fragment" data-fragment-index="0" -->
+- A private key can be used to generate a public key, and the public key revealed.<!-- .element: class="fragment" data-fragment-index="1" -->
+- A private key can be used to generate a signature, and the signature revealed.<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
 ## How Secrets Get Leaked
 
-1. Inadvertently leaking information about the secret during normal operation.
-1. Compromised digital or physical security leading to private key loss.
+1. Inadvertently leaking information about the secret during normal operation.<!-- .element: class="fragment" data-fragment-index="0" -->
+1. Compromised digital or physical security leading to private key loss.<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
@@ -70,9 +69,9 @@ A timing attack can be possible if any of the following<br/> depend on the conte
 
 <pba-flex center>
 
-- Which instructions execute
-- Branching (if statements)
-- Memory access patterns
+- Which instructions execute<!-- .element: class="fragment" data-fragment-index="0" -->
+- Branching (if statements)<!-- .element: class="fragment" data-fragment-index="1" -->
+- Memory access patterns<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
@@ -245,27 +244,30 @@ This is an excerpt from the [ed25519](https://ed25519.cr.yp.to/) description.
 
 ---
 
-## Takeway
+## Takeway: DO NOT ROLL YOUR OWN CRYPTO
 
 Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even harder!
 
-### DO NOT ROLL YOUR OWN CRYPTO
+<img style="width: 800px;" src="./img/we_rolled_our_own_crypto.png" />
 
+### 
 Notes:
 
 Be very, very careful whenever you do _anything_ that touches a secret. That includes any operation involving the secret, or reading/writing it somewhere.
 
 When necessary, talk to a security expert or cryptographer.
 
+
+
 ---
 
 ## Using Cryptographic Libraries Safely
 
-- Stay _above_ the abstraction barrier
-- Validate each primitive's assumptions when combining primitives
-- Use the most reputable library you can
-- Realize when things need serious consideration
-  - Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamal
+- Stay "above" the abstraction barrier<!-- .element: class="fragment" data-fragment-index="0" -->
+- Validate each primitive's assumptions when combining primitives<!-- .element: class="fragment" data-fragment-index="1" -->
+- Use the most reputable library you can<!-- .element: class="fragment" data-fragment-index="2" -->
+- Realize when things need serious consideration<!-- .element: class="fragment" data-fragment-index="3" -->
+- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamalb<!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 

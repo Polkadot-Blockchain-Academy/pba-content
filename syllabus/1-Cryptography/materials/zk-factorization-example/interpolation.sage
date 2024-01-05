@@ -1,4 +1,6 @@
-ZKField = FiniteField(89)
+circom_p = 21888242871839275222246405745257275088548364400416034343698204186575808495617
+our_p = 89
+ZKField = FiniteField(our_p)
 #59 | 71^10-1
 
 n = 21
@@ -26,8 +28,8 @@ def compute_input_output_poly_values(secret_factor):
 
 r_input_output_values = compute_input_output_poly_values(r)
 s_input_output_values = compute_input_output_poly_values(s)
-left_input_output_values = [r] + r_input_output_values[0] + s_input_output_values[0]
-right_input_output_values = [s] + r_input_output_values[1] + s_input_values[1]
+left_input_values = [r] + r_input_output_values[0] + s_input_output_values[0]
+right_input_values = [s] + r_input_output_values[1] + s_input_output_values[1]
 
 c_output_values = [0] + r_input_output_values[2] + s_input_output_values[2]
 
@@ -50,12 +52,12 @@ trace_poly =  Qlx * ax + Qrx*bx+ Qox * cx + Qmx*ax*bx + Qcx
 
 zero_test_poly = prod(list(map(lambda x_val: x - x_val,x_values)))
 
-print(trace_poly)
-print(zero_test_poly)
-print(trace_poly % zero_test_poly)
+print("Trace polynomial: ", trace_poly)
+print("Zero test polynomial:", zero_test_poly)
+print("The remainder of trace/zerotest: ",trace_poly % zero_test_poly)
 
 qx = trace_poly / zero_test_poly
-print(qx)
+print("q(x):",qx)
 
 # y^2 = x^3 + 8*x + 10 embeding degree 8 on 101 order 89
 # (trace_poly(r) - trace_poly(tau)) / (r - tau)
