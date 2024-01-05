@@ -390,7 +390,7 @@ Notes:
 ---
 
 ## Requirements for Proxy Reencryption
-- Bob (delegatee) should be able to correctly decrypt new ciphertext with $rk$;
+- Bob (delegatee) should be able to correctly decrypt new ciphertext with his $pk$;
 
 - With $rk$, Proxy can not get Alice's (delegator) secret key.
 
