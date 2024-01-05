@@ -318,7 +318,7 @@ _Redundancy for your secrets_
 - `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;` <br/> Take a reencryption key, and transform ciphertext to be decrypted by new party.
 </script></section><section  data-markdown><script type="text/template">
 ## Requirements for Proxy Reencryption
-- Bob (delegatee) should be able to correctly decrypt new ciphertext with $rk$;
+- Bob (delegatee) should be able to correctly decrypt new ciphertext with his $pk$;
 
 - With $rk$, Proxy can not get Alice's (delegator) secret key.
 
