@@ -124,8 +124,9 @@ _Lottery_
 
 <aside class="notes"><p>Common coins were used in consensus before blockchains were a thing.
 Dfinity based their consensus on this.
-But this needs a DKG, and it&#39;s unclear if a decentralized protocol can do those easily.</p>
-<h2 id="a-participant-in-a-ringvrf-could-still-only-reveal-one-random-number">A participant in a RingVRF could still only reveal <em>one</em> random number.</h2>
+But this needs a DKG, and it&#39;s unclear if a decentralized protocol can do those easily.
+A participant in a RingVRF could still only reveal <em>one</em> random number.</p>
+<hr>
 <h2 id="threshold-vrfs">Threshold VRFs</h2>
 <ul>
 <li>Also called Distributed VRFs;</li>
@@ -244,7 +245,7 @@ _Redundancy for your secrets_
 <aside class="notes"><p>Image credit here: <a href="https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033">https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033</a></p>
 </aside></script></section><section  data-markdown><script type="text/template"> ## How to Share Secrets?
 
-  - With $t+1$ distinct points, a unique polynomial with degree $t$ is determined. 
+  - A polynomial of degree $t$ is completely determined by $t+1$ points.  
   - We can reconstruct the $t$ polynomial from any of its $t+1$ points (use Lagrange interpolation).
   - With point less than $t+1$, the polynomial cannot be uncovered.
   - $y=x^3+4x^2+2$
