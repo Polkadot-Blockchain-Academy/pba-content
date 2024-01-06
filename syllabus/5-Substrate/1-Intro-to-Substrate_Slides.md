@@ -351,7 +351,7 @@ _The way to make a protocol truly upgradeable is to design a meta-protocol that 
 Note:
 
 In this figure, the meta-protocol, the substrate client, is not forklessly upgrade-able. It can only
-be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
+be upgraded with a fork. The Wasm protocol, though, can be upgraded forklessly.
 
 ---v
 
