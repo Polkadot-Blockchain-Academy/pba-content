@@ -66,11 +66,10 @@ Notes:
 🤖$~~~$ 🤝 $~~~$👪
 
 Notes:
-
 - Cryptography would be meaningless without humans using it.
-- Crypto & Econ pair well! Together they are the toolbox to design unstoppable systems.
 - They have a great symphony: where cryptography's has boundaries, economics offers solutions and vice versa.
-- Example from before: In the VRF we need a third-party input and the question is how do we make sure they don't collude?
+- For example, in a commit-reveal scheme, cryptographically the process is bulletproof, the original choices can be revealed and not be tempered with. But, in reality, questions arise to why people should reveal, maybe its better to run off and not reveal.
+- Together they are the toolbox to design unstoppable systems.
 
 ---
 
@@ -189,7 +188,6 @@ Notes:
 </pba-flex>
 
 Notes:
-- For example: should you do a vacation at the beach in Spain for two weeks or travel through France for two weeks?
 - A rational agent would compile all the factors into a single dimension (utility or value) and maximizes for payout.
 
 ---
@@ -259,6 +257,14 @@ Notes:
 
 - **Question: Why did that happen?**
 - Gneezy & Rustichini (2000): A fine is a price.
+- Additional study: Gneezy & Rustichini (2000): Pay enough or don't pay at all
+  - Again in Israel
+  - Highschool kids go door to door for fundraising
+  - They separated them into three groups.
+    - Control: No change
+    - Low Pay: Some small commission for each sold card.
+    - High Pay: Higher commission for each sold card.
+  - Outcome: Low pay performance was lower than no pay. High pay was higher though.  
 
 ---
 
@@ -409,9 +415,15 @@ Notes:
 Notes:
 
 - Where the curves meet we obtain a point of equilibrium, which establishes a market quantity and a market price.
-- If price is higher than equilibrium price, there is more supply than demand, so some goods remain unsold, and sellers will be forced to reduce the price to get rid of their stock.
-  Similarly if the price is lower than equilibrium price, there is more demand than supply, which leads to shortages of the good; sellers will notice this and increase the price.
-  Hence, we always converge to the equilibrium price.
+- If price is higher than equilibrium price:
+  - more supply than demand 
+  - some goods remain unsold 
+  - sellers will be forced to reduce the price to get rid of their stock.
+- if price is lower:
+  - there is more demand than supply.
+  - this leads to shortages of the good
+  - sellers will notice this and increase the price.
+- Hence, we always converge to the equilibrium price.
 - Similarly, if the quantity supplied is too low, there is a business opportunity to supply more unit of the good and make a profit, so eventually someone will increase the supply quantity.
 
 ---
