@@ -1528,9 +1528,173 @@ Notes:
 
 <!-- TODO-->
 
-<!-- eth is a dark forest -->
+<!-- BatchOverflow and ProxyOverflow Exploits  -->
+
+## The BatchOverflow exploit (April 2018)
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/batch_overflow.png" />
+
+- In just two transaction an attacker was able to withdraw **~115e57 (115 octodecillion)** BEC (Beauty Coin).
+- BEC was trading at USD 0.32 per token, which makes the total value of that exploit a staggering **USD 3.7e60 (3.7 novemdecillion)**.
+- It was followed by a number of similar exploits, all targeting ERC20 tokens, prompting many exchanges to halt all ERC20 trading.
+
+Notes:
+- off course there was nowhere near that liquidity so no, there is not a person richer than Earths GDP
+- OKEx, Poloniex, Changelly, Huobi...
 
 ---
+
+## The BatchOverflow exploit: integer overflow
+
+```rust
+        128u8 + 128u8 == 0;
+```
+
+- Integer overflow and underflow often occur when user supplied data controls the value of an unsigned integer.
+- The user supplied data either adds to or subtracts beyond the limits of what the variable type can hold, causing it to wrap around.
+
+Notes:
+- Primitive integer types supported by CPUs are finite approximations to the infinite set of integers known form mathematics
+- and underflow for that matter
+- as in back to a number it understands
+---
+
+## The BatchOverflow exploit: example
+
+```rust [1|3-32]
+type MyBalance = u8;
+
+#[ink(message)]
+pub fn batch_transfer(
+    &mut self,
+    receivers: Vec<AccountId>,
+    value: MyBalance,
+) -> Result<(), Error> {
+    let count = receivers.len();
+
+    if (count == 0 || count > 20 || value == 0) {
+        return Err(Error::CannotTransfer);
+    }
+
+    let caller = self.env().caller();
+    let amount = count as MyBalance * value;
+    let caller_balance = self.get_balance(caller);
+
+    if caller_balance < amount {
+        return Err(Error::SenderBalanceTooLow);
+    }
+
+    self.balances.insert(caller, &(caller_balance - amount));
+
+    for i in 0..cnt {
+        let receiver = receivers.get(i).unwrap();
+        let receiver_balance = self.get_balance(*receiver);
+        self.balances.insert(receiver, &(receiver_balance + value));
+    }
+
+    Ok(())
+}
+```
+
+Notes:
+- can you spot the problem?
+- actually Rust is pretty good at catching runtime overflows, so this will panic, unless
+```toml
+[profile.dev]
+overflow-checks = false
+[profile.release]
+overflow-checks = false
+```
+---
+
+
+## The BatchOverflow exploit: example
+
+```rust
+let sender = default_accounts::<DefaultEnvironment>().alice;
+let receiver = default_accounts::<DefaultEnvironment>().bob;
+
+set_caller::<DefaultEnvironment>(sender);
+
+let mut token = Overflows::new();
+
+assert_eq!(0, token.get_balance(sender));
+assert_eq!(0, token.get_balance(receiver_one));
+
+token
+    .batch_transfer(vec![receiver, default_accounts::<DefaultEnvironment>().charlie], 128)
+    .expect("Can transfer");
+
+let receiver_balance_after = token.get_balance(receiver_one);
+
+assert_eq!(128, receiver_balance_after);
+```
+
+Notes:
+- money out of thin air
+
+---
+
+
+## The BatchOverflow exploit: fixit
+
+```rust [1|3-14]
+let amount = Self::safe_multiply(count as MyBalance, value)?;
+
+fn safe_multiply(a: MyBalance, b: MyBalance) -> Result<MyBalance, MyError> {
+    if a == 0 || b == 0 {
+        return Ok(0);
+    }
+
+    let c = a * b;
+    if c / a == b {
+        return Ok(c);
+    }
+
+    Err(MyError::Arithmetic)
+}
+
+```
+
+* We perform a reverse operation (division) 
+* Value *c* is divided by *a* and we check whether this is equal to the value of *b*
+* If this was an overflow and wrapped around back to 0 then this check fails incorrect.
+
+---
+
+## The BatchOverflow exploit: fixit
+
+* runtime checks in Rust are performed only in *debug* mode, as they hinder performance
+```toml
+[profile.release]
+overflow-checks = false
+```
+
+* This prints 0 in *release* mode and panics in *debug*:
+```rust
+let x: u8 = "128".parse().unwrap();
+let val: u8 = x + 128;
+println!("{}", val);
+```
+
+* it's best to be explicit:
+```rust
+let amount = (count as MyBalance).checked_mul(value)
+              .ok_or(MyError::Arithmetic)?;
+```
+
+Notes:
+* in Rust there is no need to roll your own code 
+* in Solidity take a look at the SafeMath library
+* explicit to the compiler about what you want to do
+
+---
+
+<!-- TODOs-->
+
+<!-- TODO MEVs - defi sandwitch and frontunning atacks -->
+
+<!-- TODO eth is a dark forest -->
 
 
 <!-- ## Common Vulnerabilities -->
