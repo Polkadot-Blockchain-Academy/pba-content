@@ -595,8 +595,8 @@ duration: 2 hour
 <ul>
     <li class="fragment">Consider the following example:
         <ul>
-            <li class="fragment">Suppose Alice can produce 10kg of meat and 20kg of potatoes per hour.</li>
-            <li class="fragment">Suppose Bob can produce 2kg of meat and 10kg of potatoes per hour.</li>
+            <li class="fragment">Suppose Alice can produce 10kg of meat or 20kg of potatoes per hour.</li>
+            <li class="fragment">Suppose Bob can produce 2kg of meat or 10kg of potatoes per hour.</li>
         </ul>
     </li>
     <li class="fragment">Alice has an <em>absolute</em> advantage over Bob at producing both goods.
