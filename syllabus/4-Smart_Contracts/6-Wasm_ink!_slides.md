@@ -1526,10 +1526,6 @@ Notes:
 
 ---
 
-<!-- TODO-->
-
-<!-- BatchOverflow and ProxyOverflow Exploits  -->
-
 ## The BatchOverflow exploit (April 2018)
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/batch_overflow.png" />
@@ -1689,6 +1685,60 @@ Notes:
 * explicit to the compiler about what you want to do
 
 ---
+
+# MAXIMAL EXTRACTABLE VALUE (MEV)
+
+Notes:
+
+* MEV was first applied in the context of proof-of-work, and referred to as the Miner Extractable Value. 
+* This is because in POW miners hold most of the power, controlling the transaction inclusion / exclusion and ordering. 
+* However in the proof-of-stake the validators are been responsible for these roles. 
+* The value extraction methods still exist though, so the term "Maximal extractable value" is now used instead.
+
+---
+
+## MEV: The Dark Forest
+
+* We have now seen a number of smart contract exploits.
+* Blockchain is a higly **competetive and adversarial** environment.
+* But the dangers pale in comparison to the mempool.
+
+Notes:
+* if a smart contract can be exploited for profit it's just a matter of time when it will be.
+* there is a lot af smart ppl spending a lot of time examining contracts for vulnerabilities.
+* mempool is the set of pending, unconfirmed transactions.
+
+---
+
+## MEV: The Dark Forest
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="400" src="./img/ink/dark_forest.jpg" />
+
+* Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predatorial civilizations.
+* **Generalized Frontrunners** are bots looking for *any* profitable transactions submitted to the mempool. 
+* *Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos* **[August 2020]**
+
+Notes:
+* Cixin Liu [Si-Szin Lju]
+* The Dark Forest is a 2-nd book in the sci-fi series Remembrance of the Earth's Past
+* Publicly identifying someone else’s location is as good as directly destroying them
+* These Frontrunners work by copying it and replacing the address with their own
+  * They can even execute the transaction in a sandbox and submit just the profitable internal transactions as their own.
+  * One encounter with such a bot was described by these two researchers.
+* The Dark Forest theory is (one of) a solution to the Fermi's paradox
+
+
+---
+
+## MEV: The Dark Forest
+
+* Someone had asked on the *#support* channel of Uniswap whether it is possible to recover liquidity tokens that were erronously sent 
+
+Notes:
+* For details I refer you to the original article
+
+---
+
 
 <!-- TODOs-->
 
