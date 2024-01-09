@@ -1652,7 +1652,7 @@ fn safe_multiply(a: MyBalance, b: MyBalance) -> Result<MyBalance, MyError> {
 
 ```
 
-* We perform a reverse operation (division) 
+* We perform a reverse operation (division)
 * Value *c* is divided by *a* and we check whether this is equal to the value of *b*
 * If this was an overflow and wrapped around back to 0 then this check fails incorrect.
 
@@ -1680,7 +1680,7 @@ let amount = (count as MyBalance).checked_mul(value)
 ```
 
 Notes:
-* in Rust there is no need to roll your own code 
+* in Rust there is no need to roll your own code
 * in Solidity take a look at the SafeMath library
 * explicit to the compiler about what you want to do
 
@@ -1690,9 +1690,20 @@ Notes:
 
 Notes:
 
-* MEV was first applied in the context of proof-of-work, and referred to as the Miner Extractable Value. 
-* This is because in POW miners hold most of the power, controlling the transaction inclusion / exclusion and ordering. 
-* However in the proof-of-stake the validators are been responsible for these roles. 
+* we will now talk about MEV (Maximal extractable value)
+
+---
+
+# MEV
+
+* The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work.
+* It was referred to as the *invisible tax*, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network.
+* After the Merge (Ethereum's move to POS consensus) *Miner Extractable Value* became *Maximal extractable value*.
+
+Notes:
+* MEV was first applied in the context of proof-of-work, and referred to as the Miner Extractable Value.
+* This is because in POW miners hold most of the power, controlling the transaction inclusion / exclusion and ordering.
+* However in the proof-of-stake the validators are been responsible for these roles.
 * The value extraction methods still exist though, so the term "Maximal extractable value" is now used instead.
 
 ---
@@ -1701,7 +1712,7 @@ Notes:
 
 * We have now seen a number of smart contract exploits.
 * Blockchain is a higly **competetive and adversarial** environment.
-* But the dangers pale in comparison to the mempool.
+* But the dangers pale in comparison to the **mempool**.
 
 Notes:
 * if a smart contract can be exploited for profit it's just a matter of time when it will be.
@@ -1715,159 +1726,356 @@ Notes:
 <img style="margin-top: 10px;margin-bottom: 10px" width="400" src="./img/ink/dark_forest.jpg" />
 
 * Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predatorial civilizations.
-* **Generalized Frontrunners** are bots looking for *any* profitable transactions submitted to the mempool. 
+* **Generalized Frontrunners** are bots looking for *any* profitable transactions submitted to the mempool.
 * *Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos* **[August 2020]**
 
 Notes:
 * Cixin Liu [Si-Szin Lju]
+* who's familiar with these novels?
 * The Dark Forest is a 2-nd book in the sci-fi series Remembrance of the Earth's Past
 * Publicly identifying someone else’s location is as good as directly destroying them
 * These Frontrunners work by copying it and replacing the address with their own
   * They can even execute the transaction in a sandbox and submit just the profitable internal transactions as their own.
   * One encounter with such a bot was described by these two researchers.
-* The Dark Forest theory is (one of) a solution to the Fermi's paradox
 
+---
+
+## Sindenote: The Dark Forest
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/kurzgesagt.jpg" />
+
+* **Kurzgesagt** : *Why We Should NOT Look For Aliens - The Dark Forest*
+
+Notes:
+* Sidenote for the curious
+* Kurzgesagt : Why We Should NOT Look For Aliens - The Dark Forest
+* The Dark Forest theory is (one of) a solution to the Fermi's paradox
 
 ---
 
 ## MEV: The Dark Forest
 
-* Someone had asked on the *#support* channel of Uniswap whether it is possible to recover liquidity tokens that were erronously sent 
+* Someone had asked on the *#support* channel of Uniswap whether it was possible to recover liquidity tokens that were erronously sent to the <font color="#8d3aed">[liquidity token base contract](https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L140)</font>.
+* This meant *anyone* who calls *burn* on the Uniswap contract, passing own address, would receive the extra tokens (worth *USD 12K*).
+* **Dan Robinson**, a researcher and a white-hat hacker offered to help.
 
 Notes:
+* Not even a bug, jusy a by-product of how UniswapV2 is designed
 * For details I refer you to the original article
+* Only that he knew this wouldn't be as easy as calling burn and returning the tokens to the owner
+* ... because of the monsters in the forest
+
+---
+
+## MEV: The Dark Forest
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/flashboys.png" />
+
+* In another article, *Phil Daian et al* talked about how one particular species frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitabe transactions.
+* If someone just submitted a *burn* transaction to the mempool the Dark Forest bots would be imediately alerted.
+
+Notes:
+* Dan was well aware this would not be easy
+* it was a ticking time bomb
+* They had to desing an obfuscated rescue method to try and not alert the bots about the free money.
+
+---
+
+## The Dark Forest: To The Rescure
+
+* Dan Robinson recruited the help of fellow engineers (i.e. [Georgios Konstantopoulos]() and [Alberto Cuesta Canada]() and a few others) and they came up with the following solution:
+
+<div style="font-size: 0.62em;">
+
+```Solidity [1-7 | 9-33 | 35-47]
+interface IGetter {
+  function set(bool) external;
+}
+
+interface IPool {
+  function burn(address to) external returns (uint amount0, uint amount1);
+}
+
+Contract Getter is IGetter {
+  IPool private pool;
+  address private setter;
+  address private getter;
+  address private dest;
+  bool private on;
+
+  constructor(address pool_, address setter_, address getter_, address dest_) public {
+    pool = IPool(pool_);
+    setter = setter_;
+    getter = getter_;
+    dest = dest_;
+  }
+
+  function set(bool on_) public override {
+    require(msg.sender == setter, "no-setter");
+    on = on_;
+  }
+
+  function get() public {
+    require(msg.sender == getter "no-getter");
+    require(on == true, "no-break");
+    pool.burn(dest);
+  }
+}
+
+contract Setter {
+
+  address private owner;
+
+  constructor () public {
+    owner = msg.sender;
+  }
+
+  function set(address getter, bool on) public {
+    require(msg.sender == owner, "no-owner");
+    IGetter(getter).set(on);
+  }
+}
+```
+</div>
+
+Notes:
+* the call to *burn* is hidden inside a larger *get* tx
+* the tx is split into two, among two contracts:
+  * *Getter* when called by its owner, would make the burn call ONLY if activated else it reverts.
+  * *Setter* contract which, when called by its owner, would activate the Getter contract.
+* Can you see the problem (or the challenge here?)
+
+---
+
+## The Dark Forest: the Monsters are real
+
+* During the rescue attempts the *get transaction would get rejected by the Infura node
+* Due to the time pressure and late night time, the *get* tx slipped into a later block.
+* When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meanig a bot had already executed the internal *burn* call and took the funds.
+
+Notes:
+* If the attacker only tried executing the get transaction, it would revert without calling the burn function.
+* The hope was that by the time the attacker executed both the *set* and *get* txs in a sequence, to spot the internal call to *pool.burn* and frontrun the rescue attempt, the get transaction would already be included in a mined block
+* BUT : this means the *set* and *get* txs **have** to be included in the same block.
+* Do you see what could have been done better?
+
+---
+
+## The Dark Forest:
+
+* Avoid public infrastructure.
+* Some examples of a private pool transactions offerings:
+  * <font color="#8d3aed">[blocxroute](https://bloxroute.com/products/)</font>
+  * <font color="#8d3aed">[taichi network](https://taichi.network/)</font>
+  * <font color="#8d3aed">[1inch network](https://1inch.io/)</font>
+
+Notes:
+* maybe a better obfuscation (e..g get could be a no-op instea dof reverting if called without set)
+  * causing a bot to miss the internal tx
+* contact a miner to manually include your tx in a block, skipping the mempool
+* or sync your own node
+
+---
+
+## Common Vulnerabilities
+
+```rust []
+#[ink(storage)]
+pub struct NameServer {
+    registry: Mapping<Vec<u8>, AccountId>,
+}
+
+#[ink(message, payable)]
+pub fn register(&mut self, name: Vec<u8>) {
+    let owner = self.env().caller();
+    let fee = self.env().transferred_value();
+
+    if !self.registry.contains(&name) && fee >= ONE_AZERO {
+        self.registry.insert(name, &owner);
+    }
+}
+```
+
+- On-chain domain name registry with a register fee of 1 Azero.
+- Why is this a bad idea?
+
+Notes:
+
+- Can you propose a better design?
+- everything on-chain is public
+- this will be front-run in no time
+
+---
+
+## Common Vulnerabilities: frontrunning
+
+<div style="font-size: 0.62em;">
+
+```rust [1-6|8-24|26-49]
+#[ink(storage)]
+pub struct BetterNameServer {
+    commitments: Mapping<Keccak256HashOutput, Commitment>,
+    registry: Mapping<Vec<u8>, AccountId>,
+    duration: u32,
+}
+
+#[ink(message, payable)]
+pub fn commit(&mut self, commitment: Keccak256HashOutput) {
+    let owner = self.env().caller();
+    let fee = self.env().transferred_value();
+    let timestamp = self.env().block_number();
+
+    if fee < ONE_AZERO {
+        panic!("Fee too low");
+    }
+
+    if self.commitments.get(commitment).is_some() {
+        panic!("Name already committed");
+    }
+
+    self.commitments
+        .insert(commitment, &Commitment { owner, timestamp });
+}
+
+#[ink(message)]
+pub fn reveal(&mut self, name: Vec<u8>) {
+    let caller = self.env().caller();
+    let now = self.env().block_number();
+    let commitment_hash = keccak256(&name);
+
+    if self.registry.contains(&name) {
+        panic!("Commitment already revealed");
+    }
+
+    match self.commitments.get(commitment_hash) {
+        None => panic!("No such name committed"),
+        Some(commitment) => {
+            if commitment.owner != caller {
+                panic!("Caller did not commit to this name");
+            }
+
+            if commitment.timestamp + self.duration < now {
+                panic!("Not in reveal period");
+            }
+            self.registry.insert(name, &caller);
+        }
+    }
+}
+```
+</div>
+
+- Previous design had a fatal flaw: it was opened to a frontrunning attack.
+- Anyone could read the name from the tx and replace the address with his own.
+- A much better design is a commit - reveal scheme.
+
+Notes:
+* think *Nike*or *CocaCola*
+* or an auction with users bidding for names
+
+---
+
+## Common Vulnerabilities
+
+<div style="font-size: 0.72em;">
+
+```rust [3-7,12,18]
+
+#[ink(message)]
+pub fn swap(
+    &mut self,
+    token_in: AccountId,
+    token_out: AccountId,
+    amount_token_in: Balance,
+) -> Result<(), DexError> {
+    let this = self.env().account_id();
+    let caller = self.env().caller();
+
+    let amount_token_out = self.out_given_in(token_in, token_out, amount_token_in)?;
+
+    // transfer token_in from user to the contract
+    self.transfer_from_tx(token_in, caller, this, amount_token_in)?;
+
+    // transfer token_out from contract to user
+    self.transfer_tx(token_out, caller, amount_token_out)?;
+    ...
+}
+```
+
+</div>
+
+- Contract is a <font color="#8d3aed">DEX</font> <font color="#8d3aed">D</font>ecentralized <font color="#8d3aed">EX</font>change, follows the popular <font color="#8d3aed">AMM</font> (<font color="#8d3aed">A</font>utomated <font color="#8d3aed">M</font>arket <font color="#8d3aed">M</font>aker) design.
+- Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price.
+- What can go wrong here?
+
+Notes:
+- no slippage protection in place.
+- bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
+- this purchase will raise the price of the asset for the victim trader and increases his slippage
+- if the bot sells right after the victims tx (back runs the victim) this is a sandwich attack
+
+---
+
+## Common Vulnerabilities
+
+```rust [7,10-12]
+ #[ink(message)]
+ pub fn swap(
+     &mut self,
+     token_in: AccountId,
+     token_out: AccountId,
+     amount_token_in: Balance,
+     min_amount_token_out: Balance,
+ ) -> Result<(), DexError> {
+     ...
+     if amount_token_out < min_amount_token_out {
+         return Err(DexError::TooMuchSlippage);
+     }
+ ...
+ }
+ ```
+
+- Contract was vulnerable to a *sandwitch* attack:
+  - A bot could purchase some amount of *token_out* just before the trade is executed, raising the price.
+  - After victims tx is executed the bot sells, back running the trade.
+- Much better design is one that protects the victim from excessive slippage.
+
+Notes:
+- slippage protection in place
 
 ---
 
 
-<!-- TODOs-->
+
+## MEV: Why is it a problem?
+
+* ... and how big of a problem it is?
+
+Notes:
+* we end this section with
+
+---
+
+<!-- TODO: is all mev bad? -->
 
 <!-- TODO MEVs - defi sandwitch and frontunning atacks -->
 
-<!-- TODO eth is a dark forest -->
+## Fin
 
+- Integer overflows
+- Re-entrancy vulnerabilities
+- Sybil attacks
+- ...
+- Regulatory attacks 😅
+- ...
 
-<!-- ## Common Vulnerabilities -->
+Notes:
 
-<!-- ```rust [3,8,12-14] -->
-<!--     #[ink(storage)] -->
-<!--     pub struct SubstrateNameSystem { -->
-<!--         registry: Mapping<AccountId, Vec<u8>>, -->
-<!--     } -->
-
-<!--     impl SubstrateNameSystem { -->
-<!--         #[ink(message, payable)] -->
-<!--         pub fn register(&mut self, name: Vec<u8>) { -->
-<!--             let owner = self.env().caller(); -->
-<!--             let fee = self.env().transferred_value(); -->
-
-<!--             if !self.registry.contains(owner) && fee >= 100 { -->
-<!--                 self.registry.insert(owner, &name); -->
-<!--             } -->
-<!--         } -->
-<!-- ``` -->
-
-<!-- - On-chain domain name registry with a register fee of 100 pico. -->
-<!-- - Why is this a bad idea? -->
-
-<!-- Notes: -->
-
-<!-- - everything on-chain is public -->
-<!-- - this will be front-run in no time -->
-<!-- - Can you propose a better design? -->
-<!-- - Answer: commit / reveal or an auction -->
-
-<!-- --- -->
-
-<!-- ## Common Vulnerabilities -->
-
-<!-- <div style="font-size: 0.72em;"> -->
-
-<!-- ```rust [3-7,12,18] -->
-
-<!-- #[ink(message)] -->
-<!-- pub fn swap( -->
-<!--     &mut self, -->
-<!--     token_in: AccountId, -->
-<!--     token_out: AccountId, -->
-<!--     amount_token_in: Balance, -->
-<!-- ) -> Result<(), DexError> { -->
-<!--     let this = self.env().account_id(); -->
-<!--     let caller = self.env().caller(); -->
-
-<!--     let amount_token_out = self.out_given_in(token_in, token_out, amount_token_in)?; -->
-
-<!--     // transfer token_in from user to the contract -->
-<!--     self.transfer_from_tx(token_in, caller, this, amount_token_in)?; -->
-
-<!--     // transfer token_out from contract to user -->
-<!--     self.transfer_tx(token_out, caller, amount_token_out)?; -->
-<!--     ... -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- </div> -->
-
-<!-- - Contract is a <font color="#8d3aed">DEX</font> <font color="#8d3aed">D</font>ecentralized <font color="#8d3aed">EX</font>change, follows the popular <font color="#8d3aed">AMM</font> (<font color="#8d3aed">A</font>utomated <font color="#8d3aed">M</font>arket <font color="#8d3aed">M</font>aker) design. -->
-<!-- - Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price. -->
-<!-- - What can go wrong here? -->
-
-<!-- Notes: -->
-
-<!-- Answer: -->
-
-<!-- - no slippage protection in place. -->
-<!-- - bot will frontrun the victim's tx by purchasing token_out before the trade is executed. -->
-<!-- - this purchase will raise the price of the asset for the victim trader and increases his slippage -->
-<!-- - if the bot sells right after the victims tx (back runs the victim) this is a sandwich attack -->
-
-<!-- --- -->
-
-<!-- ## Common Vulnerabilities -->
-
-<!-- ```rust [7,12-14] -->
-<!-- #[ink(message)] -->
-<!-- pub fn swap( -->
-<!--     &mut self, -->
-<!--     token_in: AccountId, -->
-<!--     token_out: AccountId, -->
-<!--     amount_token_in: Balance, -->
-<!--     min_amount_token_out: Balance, -->
-<!-- ) -> Result<(), DexError> { -->
-
-<!--     ... -->
-
-<!--     if amount_token_out < min_amount_token_out { -->
-<!--         return Err(DexError::TooMuchSlippage); -->
-<!--     } -->
-
-<!-- ... -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- Notes: -->
-
-<!-- - slippage protection in place -->
-
-<!-- --- -->
-
-<!-- ## Common Vulnerabilities -->
-
-<!-- - Integer overflows -->
-<!-- - Re-entrancy vulnerabilities -->
-<!-- - Sybil attacks -->
-<!-- - ... -->
-<!-- - Regulatory attacks 😅 -->
-<!-- - ... -->
-
-<!-- Notes: -->
-
-<!-- - long list of possible attacks -->
-<!-- - too long to fit into one lecture -->
-<!-- - baseline: get an audit from a respectable firm -->
-<!-- - publish your source code (security by obscurity is not security) -->
-
-<!-- --- -->
+- long list of possible attacks
+- too long to fit into one lecture
+- baseline: get an audit from a respectable firm
+- publish your source code (security by obscurity is not security)
+- take MEV into account when designing your protocols.
+---
 
 ## Pause
 
