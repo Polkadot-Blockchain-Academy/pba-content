@@ -103,7 +103,8 @@ duration: 2 hour
     </div>
     <div style="flex: 1;">
         <ul>
-            <li class="fragment"><strong>Central variable</strong>: Ideal staking rate (currently ~53.5%).</li>
+            <li class="fragment"><strong>Green</strong>: Yearly interest rate in staking, <strong>Blue</strong>: Inflation stakers</li>
+            <li class="fragment"><strong>Central variable</strong>: Ideal staking rate (currently ~59.3%).</li>
             <li class="fragment">Highest staking rewards at the ideal staking rate.</li>
             <li class="fragment">Incentives to (increase) decrease the staking rate it is (below) above the optimal.</li>
             <li class="fragment">Staking inefficiencies -> Treasury.</li>
@@ -379,8 +380,8 @@ Question: What do you think about Inflation?
         <li class="fragment">Staking inefficiencies (deviations from optimal staking rate)</li>
     </ul>
     <li class="fragment">Through governance, everybody can submit proposals to initiate treasury spending.</li>
-    <li class="fragment">It currently holds around 46M DOT.</li>
-    <li class="fragment">Spending is incentivized by a burn mechanism (1% every 26 days).</li>
+    <li class="fragment">It currently holds around 43M DOT.</li>
+    <li class="fragment">Spending is incentivized by a burn mechanism (1% every 24 days).</li>
 </ul>
 
 ---
