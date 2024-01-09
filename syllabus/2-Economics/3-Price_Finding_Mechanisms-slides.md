@@ -300,8 +300,8 @@ Notes:
 
 - We can immediately say that you should never overbid (i.e., bid above your valuation), because in that case your profit can only be zero (if you lose) or negative (if you win).
   So the key question is whether you should ever underbid.
-- In the case that Bob's bid is higher than your valuation, bidding truthfully or underbidding both lead to losing and having a revenue of zero.
-- But if Bob's bid is lower than your valuation, any bid between these two values leads to you winning and having the same profit (namely the difference of these values), hence there is no gain in underbidding.
+- Look at Situation 1: In the case that Bob's bid is higher than your valuation, bidding truthfully or underbidding both lead to losing and having a revenue of zero.
+- Look at Situation 2: But if Bob's bid is lower than your valuation, any bid between these two values leads to you winning and having the same profit (namely the difference of these values), hence there is no gain in underbidding.
   However if you underbid too much, you run the risk of losing and having zero profit.
 - Hence in both cases we see that underbidding does not increase your profit, and can only decrease your chance of winning.
   So it is better to bid exactly your valuation.
@@ -340,6 +340,9 @@ Notes:
   - If one bid is above $r$, the payment is $r$.
   - If both bids are above $r$, the payment is the second-highest bid.
 
+Notes:
+- Selena is basically participating as a bidder bidding r
+
 ---
 
 ## Reserve price
@@ -353,7 +356,7 @@ Notes:
 <img rounded style="width: 1400px;" src="./img/reserve-price.svg" />
 
 Notes:
-
+- Basically there are four cases equally likely. In one case she makes a loss, the other doesn't matter but in two cases she makes a gain.
 - The proof idea is that if $r=0.5$, half of the time one valuation is above it and the other is below it, and the reserve price increases the paying price.
   On the other hand, if both valuations are below $r$ then there is no sale, which decreases Selena's revenue, but this case only happens one quarter of the time.
   Finally, if both valuations are above $r$, the presence of a reserve price does no affect the result.
@@ -379,7 +382,7 @@ Notes:
 
 ---
 
-## English auction
+## English clock auction
 
 Recall the rules:
 
@@ -395,15 +398,15 @@ Recall the rules:
 
 Notes:
 
-- Next we move to English auctions, which have a very similar analysis.
+- Next we move to English clock auctions, which have a very similar analysis.
 - Notice it has a flavor of a second-price auction: the price you pay is decided by another bidder, not you.
 - In a sense, these two auction formats are strategically equivalent!
 
 ---
 
-## English auction
+## English clock auction
 
-- English auction is **strategically equivalent** to static second-price auction.
+- English clock auction is **strategically equivalent** to static second-price auction.
 - It is a dominant strategy to stay until the price reaches one's valuation.
 - The expected revenue for Selena is the also the same!
 - Consequently, these two formats are also **revenue equivalent**.
@@ -424,6 +427,7 @@ Notes:
 
 Notes:
 
+- You could argue its similar like a reserve price, but the difference is that the other bidders don't know the value.
 - Both second-price auctions and English auctions have the truthful bidding property, which is very satisfactory for theorists.
   However, as you can probably tell, they are not so popular in practice.
 - A shill bidder has no intention of winning, but just increasing the price that the winner must pay.
@@ -594,7 +598,7 @@ Recall the rules:
 
 - Static first-price auction.
 - Static second-price auction.
-- English auction.
+- English clock auction.
 - Dutch auction.
 
 </pba-col>
@@ -603,7 +607,7 @@ Recall the rules:
 **Learned under standard assumptions:**
 
 - First-price and Dutch auctions are strategy equivalent.
-- Second-price and English auctions are strategy equivalent.
+- Second-price and English clock auctions are strategy equivalent.
 - All four auctions are revenue equivalent.
 - Having a reserve price increases the expected revenue,
   and it beats posting a price.
@@ -787,8 +791,8 @@ Notes:
 
 ## NFT Auction
 
-- You have the chance to bid on one of 39 NFTs that are created by a professional artist.
-- There are 13 unique NFTs which are minted each three times.
+- You have the chance to bid on one professionally created NFTs by an experienced artist.
+- There are 13 unique NFTs which are minted up to each three times (random process).
 - Use your budget that you accumulated during the last Academy Games.
 - Everything that you will not use for bidding (or if your bid was lower than your budget), you will receive at the end of the Academy.
 - **100% of the revenue of the auctions goes to the artist.**
