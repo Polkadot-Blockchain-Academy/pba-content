@@ -54,7 +54,7 @@ Users transmit information peer-to-peer.
 
 Crypto not typically used except by military, but upheld guarantees when used.
 
-<img src="./img/Web0.png" />
+<img src="./img/overview/Web0.png" />
 
 ---
 
@@ -66,7 +66,7 @@ Still mostly peer-to-peer.
 
 Cryptography more often, but still not ubiquitous.
 
-<img style="width: 300px;" src="./img/Web1.png" />
+<img style="width: 300px;" src="./img/overview/Web1.png" />
 
 ---
 
@@ -80,7 +80,7 @@ However, users must place faith in the service provider.
 
 Cryptographic guarantees are about interactions with the service provider, not peers.
 
-<img style="width: 300px;" src="./img/Web2.png" />
+<img style="width: 300px;" src="./img/overview/Web2.png" />
 
 ---v
 
@@ -214,7 +214,7 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ## A Shared History
 
-<img style="height: 500px;" src="./img/sapiens.jpg" />
+<img style="height: 500px;" src="./img/overview/sapiens.jpg" />
 
 Notes:
 
@@ -238,7 +238,7 @@ _-- Yuval Noah Harari, Sapiens --_
 
 We can formalize this notion of shared story with state machine model.
 
-<img width="800px" src="./img/state-machine-general.svg" />
+<img width="800px" src="./img/overview/state-machine-general.svg" />
 
 Notes:
 
@@ -252,7 +252,7 @@ Sometimes you can map the entire state space as an LTS.
 
 Other times it is too big.
 
-<img src="./img/state-machine-arbitrary-history.png" />
+<img src="./img/overview/state-machine-arbitrary-history.png" />
 
 Notes:
 
@@ -273,11 +273,11 @@ Simple Switch: 2 States, 1 Transition
 
 **Labelled Transition System** <!-- .element: class="fragment" data-fragment-index="2" -->
 
-<img src="./img/light-switch-lts.svg" /> <!-- .element: class="fragment" data-fragment-index="2" -->
+<img src="./img/overview/light-switch-lts.svg" /> <!-- .element: class="fragment" data-fragment-index="2" -->
 
 **History** <!-- .element: class="fragment" data-fragment-index="3" -->
 
-<img src="./img/light-switch-history.svg" /> <!-- .element: class="fragment" data-fragment-index="3" -->
+<img src="./img/overview/light-switch-history.svg" /> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---v
 
@@ -286,7 +286,7 @@ Simple Switch: 2 States, 1 Transition
 Each state is a set of bank notes. Where a bank note has an amount and an owner.
 A transition involves a user consuming (spending) some bank notes and creating new ones.
 
-<img width="800px" src="./img/state-machine-cash.svg" />
+<img width="800px" src="./img/overview/state-machine-cash.svg" />
 
 Notes:
 
@@ -299,7 +299,7 @@ Not all conceivable transitions are valid. Imagine a user consuming a bank note 
 Each state is a set of posts and their associated comments and emoji reaction counts.
 A transition involves, making a new post, or reacting to someone elses, or commenting
 
-<img src="./img/state-machine-social.svg" />
+<img src="./img/overview/state-machine-social.svg" />
 
 Notes:
 
@@ -417,7 +417,7 @@ Finally, is a consensus mechanism. Defining a state machine alone does not uniqu
 
 ## Bitcoin
 
-<img rounded style="width: 500px;" src="./img/bitcoin-transaction.png" />
+<img rounded style="width: 500px;" src="./img/overview/bitcoin-transaction.png" />
 
 Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus. <!-- .element: class="fragment" -->
 
@@ -440,7 +440,7 @@ Figure source: [Bitcoin white paper](https://bitcoin.org/en/bitcoin-paper)
 
 ## Litecoin, Monero, Dogecoin
 
-<img src="./img/altcoins.png" />
+<img src="./img/overview/altcoins.png" />
 
 Notes:
 
@@ -468,4 +468,6 @@ Let the market decide.
 
 ## Polkadot, Cosmos, Avalanche, Near, ...
 
-- Iterations on Ethereum's general computing platform.
+Notes:
+
+Iterations on Ethereum's general computing platform. Strive for scalability interoperability etc. Experiment with different consensus models.
