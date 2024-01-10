@@ -6,6 +6,11 @@ duration: 2 hour
 
 # The Economics of Polkadot
 
+Notes:
+- We shift gears a bit and focus on the Economics of Polkadot here
+- If you are less familiar with Polkadot, don't worry if you don't understand all concepts. They will be explained in more detail during the other Modules and you can always revisit the slides.
+- If you have questions ask.
+
 ---
 
 ## Overview
@@ -432,3 +437,5 @@ Question: What do you think about Inflation?
 - [Discussion on Changing Inflation Model](https://forum.polkadot.network/t/adjusting-the-current-inflation-model-to-sustain-treasury-inflow/3301)
 - [Talk about Agile Polkadot](https://www.youtube.com/watch?v=GIB1WeVuJD0)
 - [Nominating and Validator Selection On Polkadot](https://polkadot.network/blog/nominating-and-validator-selection-on-polkadot/)
+- [(Journal Version) Paper on Validator Selection](https://www.sciencedirect.com/science/article/abs/pii/S0305048323000336)
+- [(Open Source Version) Paper on Validator Selection)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4253515)
