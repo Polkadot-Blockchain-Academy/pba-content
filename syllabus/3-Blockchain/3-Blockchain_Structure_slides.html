@@ -42,19 +42,19 @@ This allows interested parties to have a **shared history**.
 </aside></script></section><section ><section data-markdown><script type="text/template">
 ## Hash Linked List
 
-![Blockchain with payload shown](./img/hash-linked-1.svg)
+<img src="./img/hash-linked-1.svg" width="1000px" />
 
 <aside class="notes"><p>This is a simplified blockchain. Each block has a pointer to the parent block as well as a payload.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Hash Linked List
 
-![Blockchain with payload shown and parent hash calculated](./img/hash-linked-2.svg)
+<img src="./img/hash-linked-2.svg" width="1000px" />
 
 <aside class="notes"><p>The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Hash Linked List
 
-![Blockchain with payload and parent hash included](./img/hash-linked-3.svg)
+<img src="./img/hash-linked-3.svg" width="1000px" />
 
 <aside class="notes"><p>This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.</p>
 </aside></script></section><section data-markdown><script type="text/template">
@@ -172,10 +172,10 @@ Headers are the _actual_ hash-linked list, not entire blocks.
 
 </pba-flex>
 
-- Version
 - Previous Hash
-- Tx Merkle Root
 - Time
+- Version
+- Tx Merkle Root
 - N_Bits
 - Nonce
 
@@ -184,18 +184,18 @@ Headers are the _actual_ hash-linked list, not entire blocks.
 
 <pba-flex center>
 
-**Ethereum**
+**Ethereum (PoW)**
 
 </pba-flex>
 
+- Parent Hash
 - Time
 - Block Number
-- Base Fee
-- Difficulty
-- Mix Hash
-- Parent Hash
+- Transactions root
 - State Root
+- Difficulty
 - Nonce
+- ... even more
 
 </pba-col>
 </pba-cols>
@@ -203,7 +203,7 @@ Headers are the _actual_ hash-linked list, not entire blocks.
 ## Substrate Header
 
 - Parent hash
-- Number
+- Block Number (aka height)
 - State root
 - Extrinsics root
 - Consensus Digest
