@@ -10,7 +10,7 @@ description: Peer-to-Peer (P2P) networking for Web3 engineers
 ## Introduction/Agenda
 
 - History of p2p networks <!-- .element: class="fragment" data-fragment-index="1" -->
-- Discuss the network layer and network conditions that blockchains operate on(Mostly) <!-- .element: class="fragment" data-fragment-index="2" -->
+- Discuss the network layer and network conditions that blockchains operate on (Mostly) <!-- .element: class="fragment" data-fragment-index="2" -->
 - Talk about traditional web2 network overlays pros vs cons with web3 network overlays <!-- .element: class="fragment" data-fragment-index="3" -->
 - Discuss attacks and how to address along with the underlying threat model <!-- .element: class="fragment" data-fragment-index="4" -->
 
@@ -19,7 +19,7 @@ description: Peer-to-Peer (P2P) networking for Web3 engineers
 ## ARPANET
 
 - First operational packet-switching network <!-- .element: class="fragment" data-fragment-index="2" -->
-- Developed in the late 1960s by DARPA(The Defense Advanced Research Projects Agency) <!-- .element: class="fragment" data-fragment-index="3" -->
+- Developed in the late 1960s by DARPA (The Defense Advanced Research Projects Agency) <!-- .element: class="fragment" data-fragment-index="3" -->
 - Laid the foundation for the modern internet <!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
@@ -30,7 +30,7 @@ Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA p
 
 ## Packet Switching
 
-- Mode of data transmission in which a message is broken into a number of parts that are sent independently(Packets) <!-- .element: class="fragment" data-fragment-index="2" -->
+- Mode of data transmission in which a message is broken into a number of parts that are sent independently (Packets) <!-- .element: class="fragment" data-fragment-index="2" -->
 - Packets are sent over whatever route is optimal <!-- .element: class="fragment" data-fragment-index="3" -->
 - Packets are reassembled at the destination <!-- .element: class="fragment" data-fragment-index="4" -->
 
@@ -42,7 +42,7 @@ Total Information Awareness (TIA): In the early 2000s, DARPA initiated the TIA p
 
 Notes:
 
-Mention that headers contain some addressing, destination information, and ordering typically depending
+Mention that headers contain some addressing and destination information
 
 ---
 
@@ -127,7 +127,7 @@ This was a turning point in digital copyright law and played a significant role 
 
 ---
 
-## Gnutella(Limewire)
+## Gnutella (Limewire)
 
 - Each node serves as both a client and a server no central server <!-- .element: class="fragment" data-fragment-index="2" -->
 - Query all connected nodes for files <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -175,7 +175,7 @@ Notes:
             <tr class="fragment">
                 <td>Security</td>
                 <td>Centralized security measures, single point of failure</td>
-                <td>Potential for some security issues, malware(Depending on how it is implemented)</td>
+                <td>Potential for some security issues, malware (Depending on how it is implemented)</td>
             </tr>
         </tbody>
     </table>
@@ -317,7 +317,7 @@ Talk about advertising vs just blind sending and how that can be inefficient
 Notes:
 
 1. What are some of the types of applications that lend themselves to this kind of network topology? Can anyone think of any?
-1. File sharing(Music)?
+1. File sharing (Music)?
 1. Messaging and communication?
 
 ---
@@ -328,7 +328,7 @@ Notes:
 
 Notes:
 
-1. Must know someone who is participating in the network initially(Bootnode)
+1. Must know someone who is participating in the network initially (Bootnode)
 
 ---
 
