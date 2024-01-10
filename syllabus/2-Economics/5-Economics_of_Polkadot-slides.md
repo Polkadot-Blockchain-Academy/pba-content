@@ -154,7 +154,7 @@ Question: What do you think about Inflation?
         <li class="fragment">Good behavior is rewarded with staking rewards.</li>
         <li class="fragment">Malicious / Neglecting behavior is punished (slashed).</li>
     </ul>
-    <li class="fragment">Currently, minimum total stake is ~1.6M DOTs.</li>
+    <li class="fragment">Currently, minimum total stake is ~2.1M DOTs.</li>
     <li class="fragment">The total stake in the system directly translates to the <strong>economic security</strong> that it provides.</li>
     <li class="fragment">Total stake is pooled from validators (self-stake) and their nominators (nominated stake)</li>
     <ul>
@@ -421,7 +421,7 @@ Question: What do you think about Inflation?
     <li class="fragment">The DOT token captures the utility that the parachains provide and converts it to security.</li>
     <li class="fragment">The slot mechanics (renewal, auctions) creates a market where parachains need to outcompete opportunity costs to be sustainable (i.e., they need to be useful).</li>
     <li class="fragment">Polkadot is a DAO that will be able to fund its own preservation and evolution.</li>
-    <li class="fragment">There are many changes to come with Polkadot 2.0 creating a much more agile system.</li>
+    <li class="fragment">There are many changes to come to Polkadot creating a much more agile system.</li>
 </ul>
 
 ---
@@ -430,5 +430,5 @@ Question: What do you think about Inflation?
 
 - [Agile Coretime RFC](https://github.com/polkadot-fellows/RFCs/pull/1)
 - [Discussion on Changing Inflation Model](https://forum.polkadot.network/t/adjusting-the-current-inflation-model-to-sustain-treasury-inflow/3301)
-- [Talk about Polkadot 2.0](https://www.youtube.com/watch?v=GIB1WeVuJD0)
+- [Talk about Agile Polkadot](https://www.youtube.com/watch?v=GIB1WeVuJD0)
 - [Nominating and Validator Selection On Polkadot](https://polkadot.network/blog/nominating-and-validator-selection-on-polkadot/)
