@@ -1740,16 +1740,17 @@ Notes:
 
 ---
 
-## Sindenote: The Dark Forest
+## Sidenote: The Dark Forest
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/kurzgesagt.jpg" />
 
-* **Kurzgesagt** : *Why We Should NOT Look For Aliens - The Dark Forest*
+credit: **Kurzgesagt** : *Why We Should NOT Look For Aliens - The Dark Forest*
+
+* The Dark Forest theory is (one of) a solution to the Fermi's paradox
+* Great explanation in this episode of the Kurzgesagt
 
 Notes:
 * Sidenote for the curious
-* Kurzgesagt : Why We Should NOT Look For Aliens - The Dark Forest
-* The Dark Forest theory is (one of) a solution to the Fermi's paradox
 
 ---
 
@@ -2044,20 +2045,168 @@ Notes:
 
 ---
 
-
-
-## MEV: Why is it a problem?
+## Why is MEV a problem?
 
 * ... and how big of a problem it is?
 
 Notes:
-* we end this section with
+* we end this section with a general discussion of repercussion of MEV
+
+---
+
+## Gas price inflation
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="400" src="./img/ink/infllation.png" />
+
+* Users engage in bid wars to include their txs in a block.
+* This drivers gas prices higher and higher.
+* The *normal/honest* users are the ones hurt the most.
+
+Notes:
+* The competition among users to get their transactions included in a block with higher priority leads to increased demand for block space.
+* Users will bid higher gas prices to outcompete others, driving up gas prices across the network.
+* This results in inflated transaction costs for users.
+ - miners make profit
+ - arbitrageurs and MEV traders still make profit (albeit less)
+
+---
+
+## Network congestion
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/congestion.jpg" />
+
+* Miners/validators have the power to order or censors include transactions in a block.
+* They will naturaly lean towards processing the txs with higher gas fees, or even to insert their own txs.
+* Other txs will be stuck in the mempool, leading to congestion.
+
+Notes:
+
+- Transaction Ordering: Miners have the discretion to choose the order in which they include transactions in a block.
+- They can prioritize transactions that offer higher fees or provide more favorable conditions for their own profit-maximizing strategies.
+- This can result in certain transactions being delayed or stuck in the mempool, leading to congestion.
+
+---
+
+## Zero-sum game
+
+- Total extracted MEV before the merge: *283'962 ETH* (**$ 675,623,114** December 2019 - September 2022)
+- Total extracted MEV since the merge: *407'804 ETH* (**$ 970'275'823** in Jan 2024)
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="1200" src="./img/ink/cumulative_MEV.jpg" />
+
+credit: https://transparency.flashbots.net/
+
+Notes:
+- almost a billion dollars after the merge
+- defi is a zero sum game, if someone won 1 bill someon else lost 1 bill, who did?
+- answer: you, I, he, she
+
+---
+
+## Consensus instability (longest chain)
+
+- MEV can cause instabilities in the consensus layer (at least with the longest chain rule).
+
+<img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability0.png" />
+
+credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+Notes:
+- Assume we are in the longest chain rule scenario (this can be POW or POS chain).
+- How? Imagine a block with three juicy MEV opportunities. These txs are already validated and part of the chain.
+ - validator sees this opportunity and instead proposes his own block, but leaves some of the opportunities out of it.
+ - now other validators are incentivized to take these MEV opportunities and start building on his proposed block, thus causing a re-org.
+
+---
+
+## Consensus instability (longest chain)
+
+- If block rewards are smaller than the MEV opportunities, rational miners / validators will destabilize consensus by reordering or censoring the transactions.
+
+<img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability1.png" />
+
+credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+- What could the searcher / arbitrageurs do to not have their MEV stolen from them?
+
+Notes:
+- Because of MEV we cannot assume 51% honest majority
+- all actors are rational actors, so they will go for maximal profit
+- imagine you are the searcher and you found this MEV opportunity. What can you do to be sure t have it included?
+
+---
+
+## Private mempools
+
+* MEV actors can contract with miners / validators.
+* They do it for a substantial fee, but at leat this way they still profit.
+* Why does this lead to a horrible outcome for a blockchain?
+
+Notes:
+- they send their tx directly to the miner, skipping the mempool
+ - when its the validator turn to propose a block they include this tx in it (for a fee)
+- can you see any problems with this?
+
+---
+
+## Private mempools
+
+- Soon Everbody is sending their txs to a handfull of validator that they trust.
+- It is very hard to become a new trusted validator.
+- Massive centralization.
+
+Notes:
+- centralization of power
+- rich get richer type of a problem
 
 ---
 
 <!-- TODO: is all mev bad? -->
+<!-- TODO: mev is a source of security -->
 
-<!-- TODO MEVs - defi sandwitch and frontunning atacks -->
+
+## What to do: Proposer-builder separation (PBS)
+
+[MEV-boost](https://boost.flashbots.net/) is an implementation of PBS for post-merge Ethereum
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/pbs.svg" />
+
+<div style="font-size: 0.5em">
+
+* **Block Builders**
+Responsible for collecting the txs, assembling the blocks, including validating the txs and creating the block header.
+They also include the MEV offer to validators (fee).
+
+* **Relayers:**
+Collect blocks, choosing the ones with biggest MEV offer.
+Send block headers (**NOT** blocks) to the validators (block proposers).
+
+* **Block Proposers:**
+Validators who are chosen to propose blocks are known as "block proposers." 
+They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network.
+</div>
+
+Notes:
+- PBS is basically an open market of block builders and validators (block proposers)
+- searchers and users send their txs to block builders
+  - builders are just ppl they have a business relation with
+  - they might send them to multiple ones that they trust
+  - if they happen to steal their tx they will just never come back to them again
+- now builders take bundles from the searchers and txs from the end users and they construct blocks out of them
+  - they order them 
+ - they send the to relayers that they trust in turn
+  - can relayers cheat here?
+  - they could technically steal the txs from the builders
+- relayers talk to the validators 
+ - they don't send blocks, because if they did the rational validators would steal the MEV
+ - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
+ - rent for block space type of arrangment
+- validators sign the headers and send the signatures back to the relayers
+- relayers send the blocks to the network 
+ - why can't it be stolen at this point? Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
+ - relayer technically can - but just once
+ 
+---
 
 ## Fin
 
@@ -2067,6 +2216,7 @@ Notes:
 - ...
 - Regulatory attacks 😅
 - ...
+- Take MEV into account
 
 Notes:
 
@@ -2075,6 +2225,9 @@ Notes:
 - baseline: get an audit from a respectable firm
 - publish your source code (security by obscurity is not security)
 - take MEV into account when designing your protocols.
+- MEV-resistant design patterns in your smart contracts.
+  - timelocks
+  - encryption
 ---
 
 ## Pause
