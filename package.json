@@ -14,7 +14,7 @@
     "prepare-deployment": "yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:current && mkdir build && yarn run move-tags && yarn run move-frontpage",
     "clean": "rm -rf build",
     "build": "yarn run clean && reveal-md ./ --static build",
-    "deploy": "yarn run prepare-deployment && gh-pages -d build",
+    "deploy": "gh-pages -d build",
     "serve": "http-server ./build -p 1949 -s & echo server started http://localhost:1949",
     "fmt": "prettier --config .prettierrc.js --write '**/*.md'",
     "fmt-book": "prettier --config .prettierrc.js --write '../src/**/*.md'",
