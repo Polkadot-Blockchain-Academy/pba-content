@@ -340,7 +340,7 @@ Notes:
 ## Traversing the Trie
 
 // TODO(ank4n) fix link
-<img src="../../assets/img/5-Substrate/dev-4-8-qr-radix-tree-visualization-cs.usfca.edu.png" />
+<img src="../../assets/img/5-Substrate/dev-4-8-qr-radix-tree-visualization.png" />
 
 Try inserting (and deleting) bunch of keys and see how you fill up the trie in
 the [radix tree visualization](https://www.cs.usfca.edu/~galles/visualization/RadixTree.html).
@@ -868,7 +868,7 @@ Anyone interested in blockchain and research stuff should look into this.
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../scale/img/thats_all_folks.png" />
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Notes:
 
