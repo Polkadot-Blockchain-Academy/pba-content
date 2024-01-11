@@ -17,7 +17,7 @@ Many of these interactions land in a wasm blob.
 
 So what question you need to ask yourself there? which runtime blob.
 
-almost all external communication happens over JSPN-RPC, so let's take a closer look.
+almost all external communication happens over JSON-RPC, so let's take a closer look.
 
 ---
 
@@ -54,6 +54,7 @@ almost all external communication happens over JSPN-RPC, so let's take a closer 
 - Entirely transport agnostic.
 - Substrate based chains expose both `websocket` and `http` (or `wss` and `https`, if desired).
 
+// TODO(ank4n): Is this correct? I think both are now same port.
 > with `--ws-port` and `--rpc-port`, 9944 and 9934 respectively.
 
 ---v
@@ -120,7 +121,7 @@ wscat \
 
 ### JSON-RPC: Safety
 
-- Some PRC methods are unsafe 😱.
+- Some RPC methods are unsafe 😱.
 
 ---v
 

@@ -20,6 +20,10 @@ Simple Concatenated Aggregate Little-Endian
 
 SCALE is a light-weight format which allows encoding (and decoding) which makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power, low-memory devices.
 
+Notes:
+- It is a encoding format used to communicate over the wire. Similar to json, protobuf.
+- Extremely light weight, we will see how.
+
 ---
 
 ### Little-Endian
@@ -42,6 +46,11 @@ Wasm is a little endian system, which makes SCALE very performant.
 </pba-col>
 </pba-cols>
 
+Notes:
+- Endianness is the order of bytes.
+- Big Endian => Most significant byte at the smallest address. Similar to English. Generally used in network protocols.
+- Little Endian => Least significant byte at the smallest address.
+
 ---
 
 ### Why SCALE? Why not X?
@@ -54,6 +63,11 @@ Wasm is a little endian system, which makes SCALE very performant.
 - Consensus critical / bijective; one value will always encode to one blob and that blob will only decode to that value.
 - Supports a copy-free decode for basic types on LE architectures.
 - It is about as thin and lightweight as can be.
+
+Notes:
+- MaxEncodedLen: Maximum encoded size to make some runtime guarantees about computation.
+- TypeInfo: Used to generate metadata.
+- Bijective exception later.
 
 ---
 
@@ -155,14 +169,14 @@ The order of bytes in the vector follow endianness, but the hex and binary repre
 ```rust
 fn main() {
 	println!("{:b}", 69i8);
-	println!("{:02x?}", 69i8.to_le_bytes());
-	println!("{:02x?}", 69i8.to_be_bytes());
+  println!("{:02x?}", 69i8.to_be_bytes());
+  println!("{:02x?}", 69i8.to_le_bytes());
 	println!("{:b}", 42u16);
-	println!("{:02x?}", 42u16.to_le_bytes());
-	println!("{:02x?}", 42u16.to_be_bytes());
+  println!("{:02x?}", 42u16.to_be_bytes());
+  println!("{:02x?}", 42u16.to_le_bytes());
 	println!("{:b}", 16777215u32);
-	println!("{:02x?}", 16777215u32.to_le_bytes());
-	println!("{:02x?}", 16777215u32.to_be_bytes());
+  println!("{:02x?}", 16777215u32.to_be_bytes());
+  println!("{:02x?}", 16777215u32.to_le_bytes());
 }
 ```
 
@@ -176,11 +190,11 @@ fn main() {
 [45]
 [45]
 101010
-[2a, 00]
 [00, 2a]
+[2a, 00]
 111111111111111111111111
-[ff, ff, ff, 00]
 [00, ff, ff, ff]
+[ff, ff, ff, 00]
 
 
 ```
