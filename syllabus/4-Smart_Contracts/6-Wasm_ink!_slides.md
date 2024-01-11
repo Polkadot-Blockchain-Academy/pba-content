@@ -636,6 +636,8 @@ Notes:
 
 ---
 
+<!-- TODO: indexers and importance of events -->
+
 ## Contracts: Defining shared behaviour
 
 <div style="font-size: 0.5em;">
@@ -1782,7 +1784,7 @@ Notes:
 
 ---
 
-## The Dark Forest: To The Rescure
+## The Dark Forest: To The Rescue
 
 * Dan Robinson recruited the help of fellow engineers (i.e. [Georgios Konstantopoulos]() and [Alberto Cuesta Canada]() and a few others) and they came up with the following solution:
 
@@ -2016,7 +2018,7 @@ Notes:
 
 ---
 
-## Common Vulnerabilities
+## Common Vulnerabilities: sandwitch attacks
 
 ```rust [7,10-12]
  #[ink(message)]
@@ -2130,6 +2132,7 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 - What could the searcher / arbitrageurs do to not have their MEV stolen from them?
 
 Notes:
+- Time bandit attack
 - Because of MEV we cannot assume 51% honest majority
 - all actors are rational actors, so they will go for maximal profit
 - imagine you are the searcher and you found this MEV opportunity. What can you do to be sure t have it included?
@@ -2151,7 +2154,7 @@ Notes:
 
 ## Private mempools
 
-- Soon Everbody is sending their txs to a handfull of validator that they trust.
+- Pretty soon everbody is sending their txs to a handfull of validator that they trust.
 - It is very hard to become a new trusted validator.
 - Massive centralization.
 
@@ -2161,9 +2164,34 @@ Notes:
 
 ---
 
-<!-- TODO: is all mev bad? -->
-<!-- TODO: mev is a source of security -->
 
+## Flashbots (MEV-geth)
+
+* flashbots: democratizing MEV Extraction.
+* [MEV-geth](https://github.com/flashbots/mev-geth)
+
+Notes:
+- flashbots is a sealed-bid block space auction mechanism for bidding on transaction order preference.
+
+---
+
+## MEV: the good, the bad and the ugly
+
+* is all MEV inherently bad for the network?
+ - arbitrage
+ - liquidations
+* MEV as a security budget?
+* MEV is unavoidable.
+
+Notes:
+- MEV is wrong and it has to be stopped
+- arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy
+- liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly.
+- from the economic security perspective: MEV could be an additional source of revenue for the validators.
+ - but it HAS to be distributed equally, else it is an almost existential threat to the network.
+- MEV is a fact of life.
+
+---
 
 ## What to do: Proposer-builder separation (PBS)
 
@@ -2182,7 +2210,7 @@ Collect blocks, choosing the ones with biggest MEV offer.
 Send block headers (**NOT** blocks) to the validators (block proposers).
 
 * **Block Proposers:**
-Validators who are chosen to propose blocks are known as "block proposers." 
+Validators who are chosen to propose blocks are known as "block proposers."
 They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network.
 </div>
 
@@ -2193,19 +2221,27 @@ Notes:
   - they might send them to multiple ones that they trust
   - if they happen to steal their tx they will just never come back to them again
 - now builders take bundles from the searchers and txs from the end users and they construct blocks out of them
-  - they order them 
+  - they order them
  - they send the to relayers that they trust in turn
   - can relayers cheat here?
   - they could technically steal the txs from the builders
-- relayers talk to the validators 
+- relayers talk to the validators
  - they don't send blocks, because if they did the rational validators would steal the MEV
  - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
  - rent for block space type of arrangment
 - validators sign the headers and send the signatures back to the relayers
-- relayers send the blocks to the network 
+- relayers send the blocks to the network
  - why can't it be stolen at this point? Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
  - relayer technically can - but just once
- 
+
+---
+
+## MEV: tip of the iceberg
+
+* <font color="#8d3aed">[DeFi MOOC](https://defi-learning.org/f22)</font>, especially lectures by [Arthur Gervais](https://arthurgervais.com/).
+* **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with *Phil Daian, Georgios Konstantopoulos, Charlie Noyes*
+* <font color="#8d3aed">[Flashbots](https://www.flashbots.net/)</font> R&D organization focused on MEV research.
+
 ---
 
 ## Fin
@@ -2232,12 +2268,11 @@ Notes:
 
 ## Pause
 
-Optional challenge: [github.com/Polkadot-Blockchain-Academy/adder](https://github.com/Polkadot-Blockchain-Academy/adder)
+<!-- Optional challenge: [github.com/Polkadot-Blockchain-Academy/adder](https://github.com/Polkadot-Blockchain-Academy/adder) -->
 
 Notes:
 
 Piotr takes over to talk about making runtime calls from contracts and writing automated tests.
-There is a 15 minute challenge for you in the meantime.
 
 ---
 
