@@ -288,26 +288,17 @@ cargo contract instantiate --constructor default --suri //Alice
 
 Output:
 
-<div style="font-size: 0.82em;">
+<!-- <div style="font-size: 0.82em;"> -->
 
-```sh [13-14]
- Dry-running default (skip with --skip-dry-run)
-    Success! Gas required estimated at Weight(ref_time: 138893374, proof_size: 16689)
-...
+```sh [1-2|3-5]
   Event Contracts ➜ CodeStored
          code_hash: 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad
        Event Contracts ➜ Instantiated
          deployer: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
          contract: 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
-...
-       Event System ➜ ExtrinsicSuccess
-         dispatch_info: DispatchInfo { weight: Weight { ref_time: 2142580978, proof_size: 9009 }, class: Normal, pays_fee: Yes }
-
-   Code hash 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad
-    Contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
 ```
 
-</div>
+<!-- </div> -->
 
 Notes:
 
@@ -433,6 +424,12 @@ Notes:
 - query state
 
 ---
+
+<!-- ## typechain-compiler -->
+
+<!-- <\!-- TODO: typechain-compiler -\-> -->
+
+<!-- --- -->
 
 ## Developing contracts: Constructors
 
@@ -580,6 +577,51 @@ Notes:
 
 ---
 
+## Contracts: Defining shared behaviour
+
+<div style="font-size: 0.5em;">
+
+```rust [1-14|17,22]
+#[ink::trait_definition]
+pub trait PSP22 {
+    #[ink(message)]
+    fn total_supply(&self) -> Balance;
+
+    #[ink(message)]
+    fn balance_of(&self, owner: AccountId) -> Balance;
+
+    #[ink(message)]
+    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
+
+    #[ink(message)]
+    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
+    ...
+
+impl SimpleDex {
+    use psp22_trait::{PSP22Error, PSP22};
+
+    /// Returns balance of a PSP22 token for an account
+    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
+        let psp22: ink::contract_ref!(PSP22) = token.into();
+        psp22.balance_of(account)
+    }
+    ...
+```
+
+</div>
+
+- Trait Definition: `#[ink::trait_definition]`.
+- Sharing the trait definition to do a cross-contract call.
+
+Notes:
+
+- (part of) PSP22 (ERC20 like) contract definition
+- all contracts that respect this definition need to implement it
+- you can now share the trait definition with other contracts
+- while getting a typed reference to an instance
+
+---
+
 ## Contracts: Events
 
 ```rust
@@ -636,50 +678,57 @@ Notes:
 
 ---
 
-<!-- TODO: indexers and importance of events -->
+## Importance of events
 
-## Contracts: Defining shared behaviour
-
-<div style="font-size: 0.5em;">
-
-```rust [1-14|17,22]
-#[ink::trait_definition]
-pub trait PSP22 {
-    #[ink(message)]
-    fn total_supply(&self) -> Balance;
-
-    #[ink(message)]
-    fn balance_of(&self, owner: AccountId) -> Balance;
-
-    #[ink(message)]
-    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
-
-    #[ink(message)]
-    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
-    ...
-
-impl SimpleDex {
-    use psp22_trait::{PSP22Error, PSP22};
-
-    /// Returns balance of a PSP22 token for an account
-    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
-        let psp22: ink::contract_ref!(PSP22) = token.into();
-        psp22.balance_of(account)
-    }
-    ...
-```
-
-</div>
-
-- Trait Definition: `#[ink::trait_definition]`.
-- Sharing the trait definition to do a cross-contract call.
+* **Events** are information that is emitted by transactions taking place on a blockchain.
+* **Events** are way for a smart contracts to communicate that a specific action or state change has occurred.
 
 Notes:
+- we talked about the technical aspects of events but what are they exactly and what are they usefull for
+- what happens when a tx is submitted?
+  - it goes to mempool where it is picked up by a block producer and eventually included in the blockchain.
+- so transactions do not immediately return a value. Enter events
 
-- (part of) PSP22 (ERC20 like) contract definition
-- all contracts that respect this definition need to implement it
-- you can now share the trait definition with other contracts
-- while getting a typed reference to an instance
+---
+
+## Importance of events
+
+<img rounded style="width: 300px;" src="./img/ink/transacting.svg" />
+
+* The most important use of events is to pass along return values from contracts to a dapp's UI.
+* How to access historical data?
+
+Notes:
+- ppl are transacting among each other e.g. an PSP22 token
+- head of the contract state stores just their cumulative balance
+- what if you want to display a history of transactions?
+ - e.g. DEX may want to show to a user all the deposits they have made
+ - replaying txs is slow and expensive
+ - enter indexers
+ 
+---
+
+## Event indexers
+
+* blockchain = append-only database
+* events = logs
+* indexers = log processors 
+
+An **indexer** is a process that listens to the events, processes them and stores normalized data in a persistent, queryable storage.
+Typically some sort of API is then server over that data, that can be easily queried by the frontend applications.
+
+**Examples:**
+
+* [Subsquid: https://subsquid.io/](https://subsquid.io/)
+* [TheGraph: https://thegraph.com/](https://thegraph.com/) 
+
+<!-- TODO A cheaper form of storage -->
+
+Notes:
+- using terminology from event driven design architectures
+- in a classical relational database for example
+- examples of indexers
+- logs are also a cheaper form of storage: evm logs cost 8 gas per byte, whereas contract storage costs 20,000 gas per 32 bytes.
 
 ---
 
