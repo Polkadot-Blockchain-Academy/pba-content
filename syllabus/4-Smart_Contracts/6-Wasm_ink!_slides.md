@@ -194,9 +194,7 @@ Notes:
 
 ---
 
-## Developing contracts
-
-contract code
+## Development: contract code
 
 <div style="font-size: 0.62em;">
 
@@ -243,7 +241,7 @@ Notes:
 
 ---
 
-## Developing contracts: Compilation & artifacts
+## Development: Compilation & artifacts
 
 Compile:
 
@@ -277,7 +275,7 @@ Notes:
 
 ---
 
-## Developing contracts: instantiate
+## Contracts code and instance
 
 Deploy:
 
@@ -577,6 +575,44 @@ Notes:
 
 ---
 
+
+## Error handling: cross-contract calls
+
+<div style="font-size: 0.7em;">
+
+```rust [13-19]
+#[ink(storage)]
+pub struct TransferCount {
+    counter: u32,
+}
+
+#[ink(message)]
+pub fn transfer(
+    &mut self,
+    token: AccountId,
+    to: AccountId,
+    amount: u128,
+) -> Result<(), MostError> {
+    let mut psp22: ink::contract_ref!(PSP22) = token.into();
+    if psp22.transfer(to, amount, vec![]).is_ok() {
+        self.counter = self.counter + 1;
+    }
+    
+    Ok(())
+}
+```
+</div>
+
+- What is the state of this contract if the transfer fails?
+
+Notes:
+- this is a contract that adds 1 for every successfull PSP22 transfer
+- uses a cross cotract all to initate that transfer
+- no-op
+
+---
+
+
 ## Contracts: Defining shared behaviour
 
 <div style="font-size: 0.5em;">
@@ -705,14 +741,14 @@ Notes:
  - e.g. DEX may want to show to a user all the deposits they have made
  - replaying txs is slow and expensive
  - enter indexers
- 
+
 ---
 
 ## Event indexers
 
 * blockchain = append-only database
 * events = logs
-* indexers = log processors 
+* indexers = log processors
 
 An **indexer** is a process that listens to the events, processes them and stores normalized data in a persistent, queryable storage.
 Typically some sort of API is then server over that data, that can be easily queried by the frontend applications.
@@ -720,7 +756,7 @@ Typically some sort of API is then server over that data, that can be easily que
 **Examples:**
 
 * [Subsquid: https://subsquid.io/](https://subsquid.io/)
-* [TheGraph: https://thegraph.com/](https://thegraph.com/) 
+* [TheGraph: https://thegraph.com/](https://thegraph.com/)
 
 <!-- TODO A cheaper form of storage -->
 
@@ -985,6 +1021,10 @@ Notes:
 - only the pointer (the key) to the lazy type is stored under the root key.
 - only when there is a read of `d` will the pointer be de-referenced and it's value decoded.
 - lazy is a bit of a mis-nomer here, because storage is already initialized.
+
+---
+
+# Upgradeable contracts
 
 ---
 
