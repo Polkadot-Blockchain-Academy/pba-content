@@ -595,9 +595,9 @@ pub fn transfer(
 ) -> Result<(), MostError> {
     let mut psp22: ink::contract_ref!(PSP22) = token.into();
     if psp22.transfer(to, amount, vec![]).is_ok() {
-        self.counter = self.counter + 1;
+        self.counter += 1;
     }
-    
+
     Ok(())
 }
 ```
