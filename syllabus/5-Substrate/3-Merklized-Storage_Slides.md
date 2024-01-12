@@ -367,7 +367,7 @@ Notes:
 
 Give 30 seconds to students to make sense of the image by themselves.
 
-// TODO(ankan) clarify
+// TODO(ank4n) clarify
 The important point is that for example the whole data under `_system` is not hidden away behind one hash.
 
 Receiver will hash the root node, and check it against a publicly known storage root.

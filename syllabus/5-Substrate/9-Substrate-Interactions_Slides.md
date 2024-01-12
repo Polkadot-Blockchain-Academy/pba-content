@@ -54,7 +54,7 @@ almost all external communication happens over JSON-RPC, so let's take a closer 
 - Entirely transport agnostic.
 - Substrate based chains expose both `websocket` and `http` (or `wss` and `https`, if desired).
 
-// TODO(ank4n): Is this correct? I think both are now same port.
+// TODO(ank4n): Verify if this is correct.
 > with `--ws-port` and `--rpc-port`, 9944 and 9934 respectively.
 
 ---v
