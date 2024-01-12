@@ -100,6 +100,7 @@ Okay that's it! We close the company! Bag making clearly cannot be scaled. NO. W
 - **Most** make hand-crafted bags
 - **Some check for defects**
 
+Notes:
 Maybe people working in this company really dislike checking for defects and would rather make bags. So bag makers simply take turns checking for defects. If a bag checker spots a defect they can escalate the issue and the bag maker will be held accountable. And here we encountered the first absolutely core principle of sharding - **Issue Escalation**.
 
 ---
@@ -179,7 +180,16 @@ A validator can receive collations for one parachain, while managing availabilit
 
 ---
 
-# 1. Collation
+## Parachains Protocols
+<pba-flex center>
+
+1. **Collation: Collect transactions.**
+1. Backing: Assign responsibility.
+1. Availability: Distribute data.
+1. Approval Checking: Verify correctness.
+1. Disputes: Resolve escalations.
+
+</pba-flex>
 
 Notes:
 Okay so let's look at the first thing. We're starting from bottom up. Collation.
@@ -189,7 +199,7 @@ Okay so let's look at the first thing. We're starting from bottom up. Collation.
 # 0. Assignment
 
 Notes:
-Okay, actually there's a bit of a hidden step before collation, one where we need to prepare the environment for al the other steps. And that's something I call assignment. 
+Or so you thought. There's actually a bit of a hidden step before collation that is not on the path of each parablock but it sets the stage for the other steps. And that's something I call assignment. To achieve that we'll be working with the set of...
 
 
 ---
@@ -200,7 +210,7 @@ Okay, actually there's a bit of a hidden step before collation, one where we nee
 **Active validators** are given to the parachain protocol by the NPoS election subsystem.
 
 Notes:
-**Active validators** are given to the parachain protocol by the NPoS election subsystem. Currently there are 300 validators in the active set in Polkadot and a new active set get's elected every era which is 24h in Polkadot. For those 24h those validators are the core players of the Polkadot game. Others are temporarily sitting on the bench.
+**Active validators**. They are given to the parachain protocol by the NPoS election subsystem. Currently there are 300 validators in the active set in Polkadot and a new active set get's elected every era which is 24h in Polkadot. For those 24h those validators are the core players of the Polkadot game. Others are temporarily sitting on the bench.
 
 ---
 
@@ -219,7 +229,7 @@ Backing groups are mapping 1 to 1 to specific **Execution Core**s, and these ass
 
 ## 0. Assignment - Execution Cores
 
-<img rounded style="width: 1100px" src="../assets/polkadot-architecture-simple.png" />
+<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple.png" />
 
 Each backing group is assigned to an **Execution Core**.
 
@@ -230,24 +240,25 @@ In that map the white ovals are the validators. They are grouped into backing gr
 
 ## 0. Assignment - Rotations
 
-<img rounded style="width: 1100px" src="../assets/pairing_backing_groups_with_cores.svg" />
+<img rounded style="width: 900px" src="../assets/pairing_backing_groups_with_cores.svg" />
 
 Once every few blocks the backing groups **rotate**.
 
 Notes: 
 Once every few blocks the backing groups **rotate** around and they change the execution core they are serving. This makes it so even if a backing group is full of malicious they cannot wholly block a specific execution core for too long.
 
-TODO add rotation image
-
 ---
 
 # 1. Collation
+
+Notes:
+Now we can move to the first official step of the parachains protocol. Collation
 
 ---
 
 ## 1. Collation - Collator Nodes
 
-<img rounded style="width: 1100px" src="../assets/polkadot-architecture-simple.png" />
+<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple.png" />
 
 Collators are **not** validators. They are parachain-specific nodes which produce parachain blocks by collecting (collating) transactions together.
 
@@ -274,7 +285,7 @@ Now we are at the next step. We just sent some collations to the validators in o
 
 ## 2. Backing - Backers
 
-<img rounded style="width: 1100px" src="../assets/polkadot-architecture-simple.png" />
+<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple.png" />
 
 Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators.
 
@@ -294,7 +305,7 @@ The backers receiving collations need to perform some initial checks to ensure t
 
 ## 2. Backing - PVF definition
 
-<img rounded style="width: 1100px" src="../assets/runtime_validation_2.svg" />
+<img rounded style="width: 1000px" src="../assets/runtime_validation_2.svg" />
 
 > **Parachain Validation Function** (PVF) is a function which takes in the current parachain state, the promised parachain state, and the parachain state transition arguments. It re-executes the parachain logic using the arguments on the current state and checks if it matches the promised state. If it does, the parachain block is valid.
 
@@ -482,6 +493,9 @@ In Polkadot instead of a line we have the data needed to verify the parablock bu
 
 Once a validator receives it's availability chunk it signs an availability statement essentially saying "I have my piece". Those will be embedded into the relay chain.
 
+Notes:
+Validators that receive their chunks put some signed statements on chain to essentially say "I have my piece". Those are used to track the progress of the data distribution step.
+
 ---
 
 ## 3. Availability - Inclusion
@@ -489,7 +503,7 @@ Once a validator receives it's availability chunk it signs an availability state
 Once 2/3rds of the validators have signed availability statements and those land on chain, the parablock is considered **Included**.
 
 Notes:
-Inclusion happens on an individual core so we can have a single candidate included per core per relay-chain block. If something is included in a relay-chain block it means that this transaction happens in that block. That does not yet mean that the block it final. It's just included and not only mentioned as it was in backing. Before we reachfinality there's one core property we need to ensure.
+Inclusion happens on an individual core so we can have a single candidate included per core per relay-chain block. If something is included in a relay-chain block it means that this transaction happens in that block. That does not yet mean that the block it final. It's just included and not only mentioned as it was in backing. Before we reach finality there's one core property we need to ensure.
 
 ---
 
@@ -536,6 +550,7 @@ When a relaychain block is authored it includes a list of included parablocks ch
 For each of those included parablocks a separate approval checking process is started.
 
 Notes:
+The whole approval checking process is simply started whenever we spot some included blocks. We then move on to the tranche assignment of approval checkers. And remember that a relay chain block includes a bunch of parablocks so we repeat the same process for all of them at the same time.
 
 ---
 
@@ -750,6 +765,9 @@ This causes a "reorganization" whenever a dispute resolves against a candidate.
 
 <img rounded style="width: 650px" src="../assets/babe-chain-selection.png" />
 
+Notes:
+The authoring mechanism is also paired with a chain selection logic. This logic helps us leverage forks to our advantage by tactically ignoring relay blocks with invalid parablocks so the chain can easily reorg those out.
+
 ---
 
 # Block Finalization
@@ -780,6 +798,9 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 </pba-flex>
 
 <img rounded style="width: 650px" src="../assets/grandpa-voting-rule.png" />
+
+Notes:
+Similarly to the fork choice rules here grandpa will also ignore voting on invalid/disputed blocks.
 
 ---
 
