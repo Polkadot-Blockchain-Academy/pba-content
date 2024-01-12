@@ -2976,3 +2976,16 @@ fn flipping() -> Result<(), Box<dyn Error>> {
 ---
 
 ## Local playing with contracts using `drink-cli`
+
+---
+
+## Hands-on
+
+[github.com/Polkadot-Blockchain-Academy/ink-adder](https://github.com/Polkadot-Blockchain-Academy/ink-adder)
+
+Notes:
+
+Clone the above repository and follow instructions
+Instructors here to help
+
+---
