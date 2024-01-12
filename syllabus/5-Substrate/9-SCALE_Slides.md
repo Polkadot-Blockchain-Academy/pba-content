@@ -168,15 +168,15 @@ The order of bytes in the vector follow endianness, but the hex and binary repre
 
 ```rust
 fn main() {
-	println!("{:b}", 69i8);
-    println!("{:02x?}", 69i8.to_be_bytes());
-    println!("{:02x?}", 69i8.to_le_bytes());
-	println!("{:b}", 42u16);
-    println!("{:02x?}", 42u16.to_be_bytes());
-    println!("{:02x?}", 42u16.to_le_bytes());
-	println!("{:b}", 16777215u32);
-    println!("{:02x?}", 16777215u32.to_be_bytes());
-    println!("{:02x?}", 16777215u32.to_le_bytes());
+  println!("{:b}", 69i8);
+  println!("{:02x?}", 69i8.to_le_bytes());
+  println!("{:02x?}", 69i8.to_be_bytes());
+  println!("{:b}", 42u16);
+  println!("{:02x?}", 42u16.to_le_bytes());
+  println!("{:02x?}", 42u16.to_be_bytes());
+  println!("{:b}", 16777215u32);
+  println!("{:02x?}", 16777215u32.to_le_bytes());
+  println!("{:02x?}", 16777215u32.to_be_bytes());
 }
 ```
 
