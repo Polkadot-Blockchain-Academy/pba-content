@@ -11,13 +11,16 @@ duration: 60mins
 
 <img style="width: 900px;" src="../../assets/img/5-Substrate/dev-storage-1.svg" />
 
+Notes:
+
+- Runtime interacts with Client/Host using Host functions.
+- sp_io::storage helps with saving runtime state in the client using these host functions.
+
 ---v
 
-#### What We Know So Far
+#### Externalities
 
-**Externalities**
-
-> Environment providing host functions, namely storage ones: "`Externalities` Environment".
+> Externalities: An environment in which the runtime can access host functions, namely storage ones.
 
 Notes:
 
@@ -58,6 +61,7 @@ Notes:
 ```
 
 Notes:
+
 - TestExternalities mimic a client.
 
 ---
@@ -83,6 +87,7 @@ Notes:
 <!-- .element: class="fragment" -->
 
 Notes:
+
 - "_Storage keys_" (whatever you pass to `sp_io::storage`) directly maps to "_database keys_".
 - Probably don't wanna introduce storage key and db key right now.
   Good time to hammer down what you mean by storage key and what you mean by database key.
@@ -119,6 +124,7 @@ Alice is representing a light client, I represent a full node.
 > Substrate uses a base-16, (patricia) radix merkle tree.
 
 Notes:
+
 - Find the code at [paritytech/trie](https://github.com/paritytech/trie).
 
 ---v
@@ -131,7 +137,7 @@ Notes:
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
 flowchart TD
-  A["A \n value: Hash(B|C)"] --> B["B \n value: Hash(B|E)"]
+  A["A \n value: Hash(B|C)"] --> B["B \n value: Hash(D|E)"]
   A --> C["C \n value: Hash(F) \n"]
   B --> D["D \n value: 0x12"]
   B --> E["E \n value: 0x23"]
@@ -157,7 +163,7 @@ flowchart TD
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
 flowchart TD
-  A["A \n value: Hash(B|C)"] -- v --> B["B \n value: Hash(B|E)"]
+  A["A \n value: Hash(B|C)"] -- v --> B["B \n value: Hash(D|E)"]
   A --w--> C["C \n Hash(F) \n"]
   B --"x"--> D["D \n value: 0x12"]
   B --y--> E["E \n value: 0x23"]
@@ -200,7 +206,7 @@ Notes:
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
 flowchart TD
-  A["A \n Hash(B|C)"] -- v --> B["B \n Hash(B|E)"]
+  A["A \n Hash(B|C)"] -- v --> B["B \n Hash(D|E)"]
   A --wz--> F["F \n value: 0x34"]
   B --"x"--> D["D \n value: 0x12"]
   B --y--> E["E \n value: 0x23"]
@@ -283,9 +289,9 @@ Namely:
 
 Notes:
 
-imagine:
+- imagine: `sp_io::storage::get(b"ad")`
+- We will traverse the path later.
 
-sp_io::storage::get(b"ad")
 
 ---v
 
@@ -303,8 +309,8 @@ simplification.
 ## Traversing the Trie
 
 - We know the state-root at a given block `n`.
-- Assume this is a base-26, patricia trie.
-  English alphabet is the key-scope.
+- Assume this is a base-27, patricia trie.
+  English alphabet along with '_' is the key-scope.
 - Let's see the steps needed to read `balances_alice` from the storage.
 
 ---v
@@ -312,6 +318,7 @@ simplification.
 <img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-m1.svg" />
 
 Notes:
+
 - We start with the state root node.
 - Read its children.
 
@@ -320,6 +327,7 @@ Notes:
 <img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-0.svg" />
 
 Notes:
+
 - We are interested in "balances_" so we read that node from database.
 - Did you notice the mistake in the slide? "_" technically would not be allowed in base-26, so it really is base-27.
 
@@ -337,9 +345,8 @@ Notes:
 
 ---v
 
-## Traversing the Trie
+## Q/A Break
 
-// TODO(ank4n) fix link
 <img src="../../assets/img/5-Substrate/dev-4-8-qr-radix-tree-visualization.png" />
 
 Try inserting (and deleting) bunch of keys and see how you fill up the trie in
@@ -358,9 +365,10 @@ Back to our question
 
 Notes:
 
-The important point is that for example the whole data under `_system` is not hidden away behind one hash.
+Give 30 seconds to students to make sense of the image by themselves.
 
-Dark blue are the proof, light blue's hashes are present.
+// TODO(ankan) clarify
+The important point is that for example the whole data under `_system` is not hidden away behind one hash.
 
 Receiver will hash the root node, and check it against a publicly known storage root.
 
@@ -666,11 +674,7 @@ Notes:
 
 ### Substrate Storage: Final Figure
 
-// TODO(ankan): Fix link
 <img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-storage-externalities-full.svg" />
-
-Notes:
-Should be Runtime on the top..
 
 ---v
 
@@ -779,6 +783,76 @@ Meaning, if another client wants to sync polkadot, it should know the details of
 
 ---
 
+#### Lecture Summary/Recap:
+
+<pba-cols>
+
+<pba-col>
+
+- KV-Based storage
+- Merklized storage, and proofs
+- Large nodes
+- Radix order consequences
+- Unbalanced tree
+- State pruning
+
+</pba-col>
+
+<pba-col>
+<img src="../../assets/img/5-Substrate/dev-storage-full.svg" />
+</pba-col>
+
+</pba-cols>
+
+---
+
+## Additional Resources! 😋
+
+- Check speaker notes (click "s" 😉).
+- Follows some additional content that is not covered.
+
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+
+Notes:
+
+- Shawn's deep dive: <https://www.shawntabrizi.com/substrate/substrate-storage-deep-dive/>
+
+- Basti's talk on Trie caching: <https://www.youtube.com/watch?v=OoMPlJKUULY>
+
+- About state version:
+
+    - <https://github.com/paritytech/substrate/pull/9732>
+    - <https://github.com/paritytech/substrate/discussions/11824>
+
+- An "old but gold" read about trie in
+  Ethereum: <https://medium.com/shyft-network/understanding-trie-databases-in-ethereum-9f03d2c3325d>
+
+- On optimizing substrate storage proofs: <https://github.com/paritytech/substrate/issues/3782>
+- Underlying trie library maintained by Parity: <https://github.com/paritytech/trie>
+
+- <https://github.com/paritytech/trie/>
+
+- <https://spec.polkadot.network/chap-state#sect-state-storage>
+
+- <https://research.polytope.technology/state-(machine)-proofs>
+
+- An interesting, but heretical idea: can the runtime of block N, access state of block N-1?
+  HELL.
+  NO.
+  It might sound like a "but why nooooot" type of situation, but it breaks down all assumptions
+  about what a state transition is.
+  The runtime is the state transition function.
+  Recall the formula of that, and then you will know why this is not allowed.
+
+### Post Lecture Feedback
+
+Double check the narrative and example of the `BIG_STUFF` node.
+An example/exercise of some sort
+would be great, where students call a bunch of `sp_io` functions, visualize the trie, and invoke
+proof recorder, and see which parts of the trie is exactly part of the proof.
+
+---
+
 ## Base 2, Base 16, Base-26?
 
 - Instead of alphabet, we use the base-16 representation of everything.
@@ -836,74 +910,4 @@ Here's a different way to represent it; the nodes are bigger on the base-8 trie.
 ✅ 16 has been benchmarked and studies years ago as a good middle-ground.
 
 Notes:
-
 Anyone interested in blockchain and research stuff should look into this.
-
----
-
-#### Lecture Summary/Recap:
-
-<pba-cols>
-
-<pba-col>
-
-- KV-Based storage
-- Merklized storage, and proofs
-- Large nodes
-- Radix order consequences
-- Unbalanced tree
-- State pruning
-
-</pba-col>
-
-<pba-col>
-<img src="../../assets/img/5-Substrate/dev-storage-full.svg" />
-</pba-col>
-
-</pba-cols>
-
----
-
-## Additional Resources! 😋
-
-> Check speaker notes (click "s" 😉)
-
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
-
-Notes:
-
-- Shawn's deep dive: <https://www.shawntabrizi.com/substrate/substrate-storage-deep-dive/>
-
-- Basti's talk on Trie caching: <https://www.youtube.com/watch?v=OoMPlJKUULY>
-
-- About state version:
-
-    - <https://github.com/paritytech/substrate/pull/9732>
-    - <https://github.com/paritytech/substrate/discussions/11824>
-
-- An "old but gold" read about trie in
-  Ethereum: <https://medium.com/shyft-network/understanding-trie-databases-in-ethereum-9f03d2c3325d>
-
-- On optimizing substrate storage proofs: <https://github.com/paritytech/substrate/issues/3782>
-- Underlying trie library maintained by Parity: <https://github.com/paritytech/trie>
-
-- <https://github.com/paritytech/trie/>
-
-- <https://spec.polkadot.network/chap-state#sect-state-storage>
-
-- <https://research.polytope.technology/state-(machine)-proofs>
-
-- An interesting, but heretical idea: can the runtime of block N, access state of block N-1?
-  HELL.
-  NO.
-  It might sound like a "but why nooooot" type of situation, but it breaks down all assumptions
-  about what a state transition is.
-  The runtime is the state transition function.
-  Recall the formula of that, and then you will know why this is not allowed.
-
-### Post Lecture Feedback
-
-Double check the narrative and example of the `BIG_STUFF` node.
-An example/exercise of some sort
-would be great, where students call a bunch of `sp_io` functions, visualize the trie, and invoke
-proof recorder, and see which parts of the trie is exactly part of the proof.
