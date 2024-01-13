@@ -1,0 +1,73 @@
+#+OPTIONS: toc:nil
+
+* Gate constrains:
+
+** Multiplication constrain:
+
+  - $r * s = n$
+
+** constraining $r \neq 1$
+  - Making sure that the prover doesn't fool the verifier by using 1 as a factor.
+  - We force them to use r-1's inverse. 
+  - $(r-1)(r-1)^{-1} = 1 \Rightarrow  r * (r-1)^{-1} - (r-1)^{-1} = 1$
+
+** constraining $0< r < 8$:
+ We need to make sure r % p = r
+ otherwise prover can cheat because everything has an inverse in $FF_p$
+ We use Binary decomposition:
+  - $r0 + 2 * r1 = r01$
+  - $r01 + 4 * r2 = r$ 
+  - $r0 * r0 - r0 = 0$
+  - $r1 * r1 - r1 = 0$
+  - $r2 * r2 - r2 = 0$
+
+** similarly constraining $b$:
+
+  - $s0 + 2 * s1 = s01$
+  - $s01 + 4 * s2 = s$ 
+  - $s0 * s0 - s0 = 0$
+  - $s1 * s1 - s1 = 0$
+  - $s2 * s2 - s2 = 0$
+  - $s * (s-1)^{-1} - (s-1)^{-1} = 1$
+
+* Universal way of summerizing constrains:
+ $Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
+
+* Constrain for factorization:
+ $Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
+ 
+ | Gate No | Q_l | Q_r | Q_o | Q_m | Q_c | a | b | c |
+ |---------+-----+-----+-----+-----+-----+---+---+---|
+ |       1 |   0 |   0 |   0 |   1 | -n  | r | s | 0 |
+
+* Constrain table $a$
+ $Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
+
+ | Gate No | Q_l | Q_r | Q_o | Q_m | Q_c | a   | b        |   c |
+ |---------+-----+-----+-----+-----+-----+-----+----------+-----|
+ |       2 |   1 |   2 |  -1 |   0 |   0 | r0  | r1       | r01 |
+ |       3 |   1 |   4 |  -1 |   0 |   0 | r01 | r2       |   r |
+ |       4 |  -1 |   0 |   0 |   1 |   0 | r0  | r0       |   0 |
+ |       5 |  -1 |   0 |   0 |   1 |   0 | r1  | r1       |   0 |
+ |       6 |  -1 |   0 |   0 |   1 |   0 | r2  | r2       |   0 |
+ |       7 |   0 |  -1 |   0 |   1 |  -1 | r   | (r-1)^-1 |   0 |
+ |---------+-----+-----+-----+-----+-----+-----+----------+-----|
+
+* Constrain table  $b$
+ $Q_l*a + Q_r*b + Q_o*c + Q_m*a*b + Q_c = 0$
+
+ | Gate No | Q_l | Q_r | Q_o | Q_m | Q_c | a   | b        |   c |
+ |---------+-----+-----+-----+-----+-----+-----+----------+-----|
+ |       8 |   1 |   2 |  -1 |   0 |   0 | s0  | s1       | s01 |
+ |       9 |   1 |   4 |  -1 |   0 |   0 | s01 | s2       |   s |
+ |      10 |  -1 |   0 |   0 |   1 |   0 | s0  | s0       |   0 |
+ |      11 |  -1 |   0 |   0 |   1 |   0 | s1  | s1       |   0 |
+ |      12 |  -1 |   0 |   0 |   1 |   0 | s2  | s2       |   0 |
+ |      13 |   0 |  -1 |   0 |   1 |  -1 | s   | (s-1)^-1 |   0 |
+ |---------+-----+-----+-----+-----+-----+-----+----------+-----|
+
+* Trace Polynomial
+Summerizing all of our constrains in one polynomial:
+
+$Q_l(x)*a(x) + Q_r(x)*b(x) + Q_o(x)* c(x) + Q_m(x)*a(x)*b(x) + Q_c(x) = 0$
+

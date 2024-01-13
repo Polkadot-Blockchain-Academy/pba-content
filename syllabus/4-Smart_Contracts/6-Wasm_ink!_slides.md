@@ -2344,7 +2344,6 @@ Notes:
 - Take MEV into account
 
 Notes:
-
 - long list of possible attacks
 - too long to fit into one lecture
 - baseline: get an audit from a respectable firm
