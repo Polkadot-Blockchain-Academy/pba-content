@@ -8,20 +8,15 @@ duration: 60 minutes
 
 ---
 
-## Before Going Any Further 🛑
-
-While I speak, please clone `substrate`, and run `cargo build && cargo build --release`.
-
-> https://github.com/paritytech/substrate
-
----
-
 ## About These Lectures and Lecturer
 
 - Ground-up, low-level, but hands-on.
 - Intentionally avoiding FRAME, but giving you the tools to be successful at it.
-- Narratives above facts all.
 - Interrupts and questions are always welcome.
+- Narratives above facts all.
+
+
+Your feedback on all of this is highly appreciated!
 
 ---
 
@@ -43,25 +38,23 @@ Highlight the multi-chain part.
 
 ### Why Substrate?
 
-<img rounded width="1000px" src="../../assets/img/5-Substrate/dev-4.1-maximalism.png" />
-
-Notes:
-
-Polkadot is the biggest bet in this ecosystem against chain maximalism, and Substrate plays a big
-role in this scenario.
-
----v
-
-### Why Substrate?
-
 - ⛓️ Future is multi-chain.
 <!-- .element: class="fragment" -->
 - 😭 Building a blockchain is hard. Upgrading it even harder.
 <!-- .element: class="fragment" -->
 - 💡 Framework!
 <!-- .element: class="fragment" -->
-- 🧐 But which attitude to take?
-<!-- .element: class="fragment" -->
+
+---v
+
+### Why Substrate?
+
+<img rounded width="1000px" src="../../assets/img/5-Substrate/dev-4.1-maximalism.png" />
+
+Notes:
+
+Polkadot is the biggest bet in this ecosystem against chain maximalism, and Substrate plays a big
+role in this scenario.
 
 ---
 
@@ -96,6 +89,9 @@ meet the demands of today.
 
 https://en.wikipedia.org/wiki/Bitcoin_scalability_problem
 https://ycharts.com/indicators/ethereum_average_gas_price
+
+It is interesting to checkout some projects that are now trying to be "Substrate for L2s":
+https://github.com/Sovereign-Labs/sovereign-sdk
 
 ---v
 
@@ -291,7 +287,7 @@ particular implementation.
 <!-- .element: class="fragment" -->
 - What use is governance, if the upgrade cannot be enacted?
 <!-- .element: class="fragment" -->
-- (trustlessly) Upgradeability!
+- (trustless and forkless) Upgradeability!
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -340,7 +336,7 @@ whole thing to be updated.
 
 ### 🏦 Governance + Upgradeability
 
-_The way to make a protocol truly upgradeable is to design a meta-protocol that is not upgradeable._
+_The way to make a protocol truly upgradeable is to design a meta-protocol._
 
 ---v
 
@@ -350,8 +346,8 @@ _The way to make a protocol truly upgradeable is to design a meta-protocol that 
 
 Note:
 
-In this figure, the meta-protocol, the substrate client, is not forklessly upgrade-able. It can only
-be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
+In this figure, the meta-protocol, the substrate node, is not forklessly upgrade-able. It can only
+be upgraded with a fork.
 
 ---v
 
@@ -359,12 +355,16 @@ be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
 
 <img src="../../assets/img/5-Substrate/dev-4-1-substrate-meta-substrate.svg" />
 
+Note:
+
+This is very similar to treating your own runtime as a smart contract.
+
 ---v
 
 ### 🏦 Governance + Upgradeability
 
-- Fixed meta-protocol?
-- &shy;<!-- .element: class="fragment" --> "_State machine as stored Wasm_" in the Substrate client.
+- Meta-protocol?
+- &shy;<!-- .element: class="fragment" --> "_State machine as stored Wasm_" in the Substrate node.
 - <!-- .element: class="fragment" --> inherently upgradeable protocol?
 - <!-- .element: class="fragment" --> Substrate Wasm Runtime
 
@@ -391,12 +391,12 @@ be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
 </pba-col>
 
 <pba-col center>
-<h3 style="color: var(--substrate-host); top: 0"> Client (Meta-protocol) </h3>
+<h3 style="color: var(--substrate-host); top: 0"> Node (Meta-protocol) </h3>
 
 - Native Binary
 - Executes the Wasm runtime
 - Everything else: Database, Networking, Mempool, Consensus..
-- Also known as: Host
+- Also known as: Host, Client
 
 </pba-col>
 
@@ -404,35 +404,11 @@ be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
 
 ---
 
-## The Runtime
+## State Transition Function
 
-<div>
+Let's explore this definition of the runtime a bit more.
 
-- Runtime -> **Application Logic**.
-
-</div>
-<!-- .element: class="fragment" -->
-<div>
-
-- A _fancy_ term: Runtime -> **State Transition Function**.
-
-</div>
-<!-- .element: class="fragment" -->
-<div>
-
-- A _technical_ term: Runtime -> **how to execute blocks**.
-
-</div>
-<!-- .element: class="fragment" -->
-
-Notes:
-
-- I would personally call the runtime STF to avoid confusion with the "runtime" that is the general
-  programming runtime, but kinda too late for that now.
-- Among the definitions of the Wasm runtime, let's recap what the state transition is.
-- The block execution definition will be described more in the Wasm-meta lecture.
-
----
+---v
 
 ## State Transition Function
 
@@ -458,7 +434,7 @@ associated with each block.
 
 ### State Transition Function
 
-$$STF = F(block_{N}, state_{N}, code_{N}): state_{N+1}$$
+$$STF = F(block_{N+1}, state_{N}, code_{N}): state_{N+1}$$
 
 ---v
 
@@ -496,6 +472,37 @@ block `[0, .., N-1]`.
 
 ofc, changing the Wasm code cannot be done by anyone. That's up to governance.
 
+---v
+
+## The Runtime
+
+<div>
+
+- Runtime -> **Application Logic**.
+
+</div>
+<!-- .element: class="fragment" -->
+<div>
+
+- A _fancy_ term: Runtime -> **State Transition Function**.
+
+</div>
+<!-- .element: class="fragment" -->
+<div>
+
+- A _technical_ term: Runtime -> **how to execute blocks**.
+
+</div>
+<!-- .element: class="fragment" -->
+
+Notes:
+
+- I would personally call the runtime STF to avoid confusion with the "runtime" that is the general
+  programming runtime, but kinda too late for that now.
+- Among the definitions of the Wasm runtime, let's recap what the state transition is.
+- The block execution definition will be described more in the Wasm-meta lecture.
+
+
 ---
 
 ## Full Substrate Architecture
@@ -527,16 +534,16 @@ Wasm's instruction set is deterministic, so all good.
 
 Notes:
 
-howe can we guarantee that neither enter an infinite loop, or try to access the filesystem?
+how can we guarantee that neither enter an infinite loop, or try to access the filesystem?
 
 ---v
 
-### 🌈 Easier (light)Client Development
+ ### 🌈 Easier (light)Client Development
 
 Notes:
 
-for the case of client, your client only needs to implement a set of host environments, and NOT
-re-implement the business logic.
+for the case of client, your client only needs to implement the host/node, and NOT re-implement the
+business logic.
 
 Simply compare the process to create an alternative client for Ethereum, where you need to
 re-implement the EVM.
@@ -576,7 +583,7 @@ This is what the meta-protocol achieves.
 ## Negative Consequences of _Wasm_ Runtime
 
 - 😩 Constrained resources (memory, speed, host access).
-- 🌈 Client diversification != state-transition diversification
+- 🌈 Client diversification != runtime diversification
 
 Notes:
 
@@ -758,12 +765,6 @@ fn main() {
 
 ---
 
-## Substrate and Polkadot
-
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
-
----
-
 ## Substrate and Smart Contracts
 
 <img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-contracts.svg" />
@@ -772,7 +773,7 @@ fn main() {
 
 ### Substrate and Smart Contracts
 
-> A Substrate-Connect extension is syncing a chain who's runtime is executing wasm contracts.
+> SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
 
 Question: How many nested Wasm blobs are executing one another?
 
@@ -810,6 +811,8 @@ Question: How many nested Wasm blobs are executing one another?
 
 Notes:
 
+https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/runtime_vs_smart_contract/index.html
+
 I was asked this yesterday as well. My latest answer is: if you don't need any of the customizations
 that a blockchain client/runtime gives to you, and the performance of a shared platform is okay for
 you, then go with a smart contract. If you need more, you need a "runtime" (some kind of chian,
@@ -827,6 +830,34 @@ fee-less.
 ## Technical Freedom vs Ease
 
 <img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-4-1-freedom.svg" />
+
+
+---
+
+## Substrate and Polkadot
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
+
+---v
+
+### Repository Structure
+
+#### [`polkadot-sdk`](https://github.com/paritytech/polkadot-sdk)
+
+- Substrate + FRAME + XCM
+- Cumulus
+- Bridges
+- Polkadot Node
+
+<br/>
+
+#### [`polkadot-fellowship/runtime`](https://github.com/polkadot-fellows/runtimes)
+
+- Polkadot Runtimes
+
+Notes:
+
+https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html
 
 ---
 
@@ -898,19 +929,17 @@ hardcoded, but the protocol itself is flexible.
 
 #### Track: Main Lectures
 
-- Wasm Meta Protocol
-- Substrate Storage
+- Wasm Meta Protocol (Kian)
+- Substrate Storage (Ankan)
 
 #### Track: Aux Lecture
 
-- TX-Pool
-- Substrate: Show Me The Code
-- Substrate Interactions
-- SCALE
+- Interacting with Substrate (Ankan)
+- SCALE Codec (Ankan)
 
 #### Track: Graded Activity
 
-- FRAME-Less
+- FRAMELess Runtime
 
 ---v
 
@@ -918,18 +947,9 @@ hardcoded, but the protocol itself is flexible.
 
 #### Day 0
 
-- Introduction ✅ (60m)
-- Wasm Meta Protocol (120+m)
-  - Activity: Finding Runtime APIs and Host Functions in Substrate
-- 🌭 _Lunch Break_
-- Show Me The Code (60m)
-- Substrate Interactions (60m)
-- FRAME-Less Activity (60m)
-
-Notes:
-
-We are aware that the module is highly skewed in terms of lecture time, but is is intentional and we
-want to see how it works. This allows you to kickstart with your assignment earlier.
+- ✅ Introduction
+- Wasm Meta Protocol Part 1
+- 📚 Introduction to FRAMELess Assignment
 
 ---v
 
@@ -937,11 +957,10 @@ want to see how it works. This allows you to kickstart with your assignment earl
 
 #### Day 1
 
-- Transaction Pool (60m)
-- SCALE (60m)
-- Substrate/FRAME Tips and Tricks
-- 🌭 _Lunch Break_
-- FRAME-Less Activity
+- Wasm Meta Protocol Part 2
+- SCALE Codec
+- Interacting with Substrate
+- 📚 FRAMELess Activity
 
 ---v
 
@@ -949,10 +968,9 @@ want to see how it works. This allows you to kickstart with your assignment earl
 
 #### Day 2
 
-- Substrate Storage (90m)
-- FRAME-Less Activity
-- 🌭 _Lunch Break_
-- End of Module 🎉
+- Substrate Storage
+- (Substrate/FRAME Tips and Tricks)
+- 📚 FRAMELess Activity
 
 ---
 
