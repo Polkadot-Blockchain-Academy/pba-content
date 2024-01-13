@@ -37,7 +37,7 @@ This is a simplified blockchain. Each block has a pointer to the parent block as
 
 Notes:
 
-The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
+The pointer is a cryptographic hash of the parent block.
 
 ---v
 
