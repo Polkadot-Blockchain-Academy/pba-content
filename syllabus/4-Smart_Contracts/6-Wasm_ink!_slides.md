@@ -194,9 +194,7 @@ Notes:
 
 ---
 
-## Developing contracts
-
-contract code
+## Development: contract code
 
 <div style="font-size: 0.62em;">
 
@@ -243,7 +241,7 @@ Notes:
 
 ---
 
-## Developing contracts: Compilation & artifacts
+## Development: Compilation & artifacts
 
 Compile:
 
@@ -277,7 +275,7 @@ Notes:
 
 ---
 
-## Developing contracts: instantiate
+## Contracts code and instance
 
 Deploy:
 
@@ -288,26 +286,13 @@ cargo contract instantiate --constructor default --suri //Alice
 
 Output:
 
-<div style="font-size: 0.82em;">
-
-```sh [13-14]
- Dry-running default (skip with --skip-dry-run)
-    Success! Gas required estimated at Weight(ref_time: 138893374, proof_size: 16689)
-...
+```sh [1-2|3-5]
   Event Contracts ➜ CodeStored
          code_hash: 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad
        Event Contracts ➜ Instantiated
          deployer: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
          contract: 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
-...
-       Event System ➜ ExtrinsicSuccess
-         dispatch_info: DispatchInfo { weight: Weight { ref_time: 2142580978, proof_size: 9009 }, class: Normal, pays_fee: Yes }
-
-   Code hash 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad
-    Contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
 ```
-
-</div>
 
 Notes:
 
@@ -580,6 +565,89 @@ Notes:
 
 ---
 
+
+## Error handling: cross-contract calls
+
+<div style="font-size: 0.7em;">
+
+```rust [13-19]
+#[ink(storage)]
+pub struct TransferCount {
+    counter: u32,
+}
+
+#[ink(message)]
+pub fn transfer(
+    &mut self,
+    token: AccountId,
+    to: AccountId,
+    amount: u128,
+) -> Result<(), MostError> {
+    let mut psp22: ink::contract_ref!(PSP22) = token.into();
+    if psp22.transfer(to, amount, vec![]).is_ok() {
+        self.counter += 1;
+    }
+
+    Ok(())
+}
+```
+</div>
+
+- What is the state of this contract if the transfer fails?
+
+Notes:
+- this is a contract that adds 1 for every successfull PSP22 transfer
+- uses a cross cotract all to initate that transfer
+- no-op
+
+---
+
+
+## Contracts: Defining shared behaviour
+
+<div style="font-size: 0.5em;">
+
+```rust [1-14|17,22]
+#[ink::trait_definition]
+pub trait PSP22 {
+    #[ink(message)]
+    fn total_supply(&self) -> Balance;
+
+    #[ink(message)]
+    fn balance_of(&self, owner: AccountId) -> Balance;
+
+    #[ink(message)]
+    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
+
+    #[ink(message)]
+    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
+    ...
+
+impl SimpleDex {
+    use psp22_trait::{PSP22Error, PSP22};
+
+    /// Returns balance of a PSP22 token for an account
+    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
+        let psp22: ink::contract_ref!(PSP22) = token.into();
+        psp22.balance_of(account)
+    }
+    ...
+```
+
+</div>
+
+- Trait Definition: `#[ink::trait_definition]`.
+- Sharing the trait definition to do a cross-contract call.
+
+Notes:
+
+- (part of) PSP22 (ERC20 like) contract definition
+- all contracts that respect this definition need to implement it
+- you can now share the trait definition with other contracts
+- while getting a typed reference to an instance
+
+---
+
 ## Contracts: Events
 
 ```rust
@@ -636,48 +704,70 @@ Notes:
 
 ---
 
-## Contracts: Defining shared behaviour
+## Importance of events
 
-<div style="font-size: 0.5em;">
-
-```rust [1-14|17,22]
-#[ink::trait_definition]
-pub trait PSP22 {
-    #[ink(message)]
-    fn total_supply(&self) -> Balance;
-
-    #[ink(message)]
-    fn balance_of(&self, owner: AccountId) -> Balance;
-
-    #[ink(message)]
-    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
-
-    #[ink(message)]
-    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
-    ...
-
-impl SimpleDex {
-    use psp22_trait::{PSP22Error, PSP22};
-
-    /// Returns balance of a PSP22 token for an account
-    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
-        let psp22: ink::contract_ref!(PSP22) = token.into();
-        psp22.balance_of(account)
-    }
-    ...
-```
-
-</div>
-
-- Trait Definition: `#[ink::trait_definition]`.
-- Sharing the trait definition to do a cross-contract call.
+* **Events** are information that is emitted by transactions taking place on a blockchain.
+* **Events** are way for a smart contracts to communicate that a specific action or state change has occurred.
 
 Notes:
+- we talked about the technical aspects of events but what are they exactly and what are they usefull for
+- what happens when a tx is submitted?
+  - it goes to mempool where it is picked up by a block producer and eventually included in the blockchain.
+- so transactions do not immediately return a value. Enter events
 
-- (part of) PSP22 (ERC20 like) contract definition
-- all contracts that respect this definition need to implement it
-- you can now share the trait definition with other contracts
-- while getting a typed reference to an instance
+---
+
+## Importance of events
+
+<img rounded style="width: 250px;" src="./img/ink/transacting.svg" />
+
+* The most important use of events is to pass along return values from contracts to a dapp's UI.
+* How to access historical data?
+
+Notes:
+- ppl are transacting among each other e.g. an PSP22 token
+- head of the contract state stores just their cumulative balance
+- what if you want to display a history of transactions?
+ - e.g. DEX may want to show to a user all the deposits they have made
+ - replaying txs is slow and expensive
+ - enter indexers
+
+---
+
+## Event indexers
+
+* blockchain = append-only database
+* events = logs
+* indexers = log processors
+
+An **indexer** is a process that listens to the events, processes them and stores normalized data in a persistent, queryable storage.
+Typically some sort of API is then server over that data, that can be easily queried by the frontend applications.
+
+**Examples:**
+
+* [Subsquid: https://subsquid.io/](https://subsquid.io/)
+* [TheGraph: https://thegraph.com/](https://thegraph.com/)
+
+Notes:
+- using terminology from event driven design architectures
+- in a classical relational database for example
+- examples of indexers
+- logs are also a cheaper form of storage: evm logs cost 8 gas per byte, whereas contract storage costs 20,000 gas per 32 bytes.
+
+---
+
+## Events as storage
+
+- Events can be used as a cheaper form of storage.
+- EVM logs cost 8 gas per byte, whereas contract storage costs 20,000 gas per 32 bytes.
+
+Notes:
+- as the last more esoteric usage of logs
+- logs are also a cheaper form of storage: 
+
+---
+
+# Deeper dive
 
 ---
 
@@ -933,6 +1023,10 @@ Notes:
 
 ---
 
+# Upgradeable contracts
+
+---
+
 ## Contracts upgradeability: `set_code_hash`
 
 ```rust [3]
@@ -1054,7 +1148,452 @@ Notes:
 
 ---
 
-## Common Vulnerabilities
+# Common Vulnerabilities
+
+---
+
+## Past exploits: The DAO hack (2016)
+- The DAO (Decentralized Autonomous Organization) was a crowdfunding project on the Ethereum network.
+- In June 2016 an attacker drained funds worth ~$50 million at that time.
+- The funds were moved into an account subject to a 28-day holding period under the terms of the DAO smart contract
+
+NOTES:
+- DAO was a form of a decentralized investor - directed venture capital (VC) fund.
+- At a pinnacle of it's popularity The DAO attracted nearly 15% of all the ETH in circulation back then.
+- the funds were actually not gone (but they would be soon).
+
+---
+
+## Past exploits: The DAO hack (2016)
+
+- The core Ethereum faced a difficult decision:
+- On one hand the blockchain promised to be decentralized and tamper-resistat
+- On the other hand the public's confidence and optimism about then young blockchain technology demanded an intervention
+
+Notes:
+
+- the hacker was slowly draining the funds from the DAO, in front of everyone
+- DAO SC was sending an amount of ETH equivalent to the hacker’s deposit
+- an ethical obligation to prevent theft
+
+---
+
+## Past exploits: The DAO hack (2016)
+
+- Eventually a vote in favour of forking the Ethereum history won out with 85% of the votes.
+- Some miners decided to keep mining on the old history, and this sesulted in the creation of Ethereum (ETH) and _Ethereum Classic_ (ETC) which operates to this day.
+
+Notes:
+
+- forking mean that the new chain would operate as though the hack never happened
+- basically re-writing history
+- the fork happened becasue of ideological differences
+
+---
+
+## Reentrancy attacks
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="600" src="./img/ink/reentrancy.png" />
+
+- The DAO hacker used what became knows as a _reentrancy_ attack.
+- Attacker exploited a _fallback_ function in Solidity to create a loop that syphoned funds out of the DAO contract.
+- Fallback functions are special constructs in Solidity that are triggered in specific situations.
+
+Notes:
+
+- fallback function is a special function that is executed when a contract receives Ether without any data
+- or when it receives a message that does not match any of its function signatures.
+
+---
+
+## Reentrancy: the fallback function
+
+```solidity []
+pragma solidity ^0.8.0;
+
+contract FallbackExample {
+    event Received(address sender, uint value);
+
+    // Payable fallback function
+    receive() external payable {
+        emit Received(msg.sender, msg.value);
+    }
+}
+
+```
+
+- The fallback function does not take any arguments and has no return values.
+- It can be marked as **payable** to allow the contract to receive funds.
+- It is triggered if ETH is sent to the contract and there is no accompanying _calldata_ (a data location like memory or storage)
+
+Notes:
+- Fallback functions can include arbitrary logic in them, in this attack example it called back into withdraw function
+- It's worth noting that as of Solidity version 0.6.0, you can also use the fallback keyword instead of receive to define the fallback function.
+- However, it's a good practice to use receive for the fallback function related to Ether reception, and fallback for fallback functions without the ability to receive Ether.
+
+---
+
+## Reentrancy: an example
+
+<div style="font-size: 0.70em;">
+
+```rust [1-4|6-15|17-33]
+#[ink(storage)]
+pub struct Dao {
+    balances: Mapping<AccountId, Balance>,
+}
+
+#[ink(message, payable, selector = 0x4445504F)]
+pub fn deposit(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+
+    let current_balance = self.balances.get(caller).unwrap_or_default();
+    let updated_balance = current_balance + self.env().transferred_value();
+
+    self.balances.insert(caller, &updated_balance);
+    Ok(())
+}
+
+#[ink(message)]
+pub fn withdraw(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+    let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?;
+
+    build_call::<DefaultEnvironment>()
+        .call(caller)
+        .call_flags(CallFlags::default())
+        .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
+        .transferred_value(balance)
+        .returns::<()>()
+        .invoke();
+
+    self.balances.remove(caller);
+
+    Ok(())
+}
+```
+
+</div>
+
+Notes:
+- ink! does not have fallback functions, but it is not immune from reentrancy attacks either
+- this contract mimics the DAO
+- it has a mapping for maintaing balances
+- it has a deposit function for sending the funds and a withdraw for getting them all back at once
+- withdrawals calls the `callers` contract and sends the funds to a function with this 4 byte signature.
+- can anyone spot what the problem is?
+- how would you use it to craft an attack?
+
+---
+
+## Reentrancy: attacker's code example
+
+<div style="font-size: 0.70em;">
+
+```rust[3-9|11-12|17-22]
+#[ink(message)]
+pub fn attack(&mut self) -> Result<(), AttackerError> {
+    build_call::<DefaultEnvironment>()
+        .call(self.dao_address)
+        .call_flags(CallFlags::default().set_allow_reentry(true))
+        .exec_input(ExecutionInput::new(Selector::new([0x44, 0x45, 0x50, 0x4F])))
+        .transferred_value(ONE_AZERO)
+        .returns::<Result<(), DaoError>>()
+        .invoke()?;
+
+    let mut dao = DaoRef::from_account_id(self.dao_address);
+    dao.withdraw()?;
+
+    Ok(())
+}
+
+#[ink(message, payable, selector = 0x52454356)]
+pub fn receive(&mut self) -> Result<(), DaoError> {
+    let mut dao = DaoRef::from_account_id(self.dao_address);
+    dao.withdraw()?;
+    Ok(())
+}
+```
+
+</div>
+
+Notes:
+- attacker deploys an SC that acts as an investor
+- it begins by depositing and this contract deposits some ETH into The DAO.
+- This entitles the attacker to later call the `withdraw` function of the DAO to get his deposits back.
+- When the `withdraw` is called, the DAO sends back the funds by calling the payable `receive` function.
+- but this function is crafted by the attacker to maliciously call the DAOs `withdraw` again.
+- since the state is not yet updated the call does not revert and withdraw send the funds yet again.
+- this effectively creates an evil feedback loop which drains all the funds.
+- how would you fix this?
+
+---
+
+## Reentrancy: fixing the vulnerabilities
+
+<div style="font-size: 0.70em;">
+
+```rust[6,16]
+#[ink(message)]
+pub fn withdraw(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+    let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?;
+
+    self.balances.remove(caller);
+
+    build_call::<DefaultEnvironment>()
+        .call(caller)
+        .call_flags(CallFlags::default())
+        .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
+        .transferred_value(balance)
+        .returns::<()>()
+        .invoke();
+
+    // self.balances.remove(caller);
+
+    Ok(())
+}
+```
+
+</div>
+
+Note:
+- simplest fix is to just change the order of operations in the `withdraw` fn
+- This way when the function calls into the attacker contract’s receive() function, and it tries to re-enter the `withdraw` the entry is removed from the balance's map and the whole transaction reverts.
+- Checks-Effects-Interactions pattern
+
+---
+
+## Reentrancy: fixing the vulnerabilities
+
+<div style="font-size: 0.70em;">
+
+```rust [8]
+#[ink(message)]
+pub fn withdraw(&mut self) -> Result<(), DaoError> {
+    let caller = self.env().caller();
+    let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?;
+
+    build_call::<DefaultEnvironment>()
+        .call(caller)
+        .call_flags(CallFlags::default().set_allow_reentry(false))
+        .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
+        .transferred_value(balance)
+        .returns::<()>()
+        .invoke();
+
+    self.balances.remove(caller);
+
+    Ok(())
+}
+```
+
+</div>
+
+Note:
+- Another fix id to contract to explicitely dissallow re-entering the `receive` function while the `withdraw` it is still executing.
+- this way any re-entry is blocked
+- ink! has built-in syntax for this, that works on the calls stack level
+- mutex (mutually exclusive) pattern
+
+---
+
+## Past exploits: The Parity Wallet Hack (July 2017)
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/multisig_exploit_1.png" />
+
+- Vulnerability on the Parity Multisig Wallet allowed an attacker to steal > 150,000 ETH.
+- Three high-profile multisig wallet contracts used to store funds from token sales were affected.
+- The attacker sent 2 transactions to each of the affected contracts: the first to obtain ownership of the MultiSig, the second to move all of its funds.
+
+Notes:
+- worth some ~30M USD back then.
+- the exploit was silly by todays standards
+- but we have to remember this is a blast from the past
+
+---
+
+## The Parity Wallet Hack: proxy pattern
+
+```solidity []
+address constant _walletLibrary = 0xcafecafecafecafecafecafecafecafecafecafe;
+
+...
+
+function isOwner(address _addr) constant returns (bool) {
+  return _walletLibrary.delegatecall(msg.data);
+}
+```
+
+- **Proxy pattern** is a way to reduce costs by sharing code between contracts.
+- All logic is stored in a stateless library contract deployed once, and a lightweight contract proper is deployed as many times as neccesary.
+- `DELEGATECALL` EVM instruction does the following: for whatever method that calls it, it will delegate that call to another contract, but using the context of the current contract
+
+Notes:
+- ethereum's EVM does not have the separation between code and the SC instance like substrate does.
+- think `super` call in Java.
+- context = state, state of a library is not altered when delgating a call.
+- all perfectly innocent and used ot this day, problem lies elsewhere.
+
+---
+
+## The Parity Wallet Hack: `initWallet` library function
+
+<div style="font-size: 0.70em;">
+
+``` [1-4|6-16]
+function initWallet(address[] _owners, uint _required, uint _daylimit) {
+  initDaylimit(_daylimit);
+  initMultiowned(_owners, _required);
+}
+
+function initMultiowned(address[] _owners, uint _required) {
+  m_numOwners = _owners.length + 1;
+  m_owners[1] = uint(msg.sender);
+  m_ownerIndex[uint(msg.sender)] = 1;
+  for (uint i = 0; i < _owners.length; ++i)
+  {
+    m_owners[2 + i] = uint(_owners[i]);
+    m_ownerIndex[uint(_owners[i])] = 2 + i;
+  }
+  m_required = _required;
+}
+```
+
+</div>
+
+- wallet library contained `initWallet` function that was called from the wallets constructor.
+- and _i.e._ it called this logic.
+
+Notes:
+- it writes the owners of this contract to the contracts storage (state)
+- still nothing technically nothing wrong here
+
+---
+
+## The Parity Wallet Hack: the critical mistake
+
+```solidity []
+function() payable {
+  // just being sent some cash?
+  if (msg.value > 0)
+    Deposit(msg.sender, msg.value);
+  else if (msg.data.length > 0)
+    _walletLibrary.delegatecall(msg.data);
+}
+```
+
+- This exact code was defined in the wallet itself.
+- Do you see what happens here?
+
+Notes:
+- reckognize this? yes, this is a fallback function
+- who can tell me what happens here?
+- If a method with this name is not defined in this contract
+- and if no ETH is being sent in the transaction
+- and if there is some data in the message payload
+- Then call the exact same method as it is defined in _walletLibrary (but using `delegatecall` that is in the context of this contract)
+- the hacker effectively re-initialized the wallet, overwrote the owners making himself the sole owner and stole the funds.
+
+---
+
+## The Parity Wallet Hack: the aftermath
+
+- The `initWallet` and `initMultiowned` should have been defined as `internal` (aka private).
+- There was no check in place for whether the wallet was already initialized.
+- The raw `DELEGATECALL` should haven been replaced with a whitelist of calls that can be delegated.
+
+Notes:
+- so what was at fault here?
+- you could argue there were at least three vulnerabilities
+- fixing either of them would have prevented the exploit
+- akin to e.g. running unsanitized SQL (sql injections).
+
+---
+
+## The Parity Wallet Hack: reloaded (November 2017)
+
+<img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" />
+
+- Following the fix for the original multisig vulnerability exploited in July a new version of the library contract was deployed.
+- Unfortunately it contained another vulnerability ...
+- Estimated losses totalled over 500,000 ETH
+
+Notes:
+
+- USD 150 million USD back then
+- including over 300,000 ETH from the Web3 Foundation team.
+
+---
+
+## The Parity Wallet Hack reloaded: the what?
+
+```solidity []
+function kill(address _to) onlymanyowners(sha3(msg.data)) external {
+  suicide(_to);
+}
+```
+
+- `suicide` (now `selfdestruct`) opcode was added to the EVM after the DAO hack.
+- It removes a contract from the blockchain and sends its ETH balance to a designated recipient.
+- Hacker was able to call this function on the _library_ contract itself, remove it and rendered all of the proxy contracts broken.
+- `kill` is protected with a `onlymanyowners` modifier so how was he able to call it?
+
+Notes:
+
+- The DAO attack continued for days due to the immutability of Solidity contracts
+- remmeber how whitehat hackers tried to syphon the funds only faster than the blackhat?
+- This is why it was intorduced - as a safety feature in case of security threats
+
+---
+
+## The Parity Wallet Hack reloaded: the how?
+
+<div style="font-size: 0.72em;">
+
+```solidity [3|5|10]
+uint public m_numOwners;
+
+modifier only_uninitialized { if (m_numOwners > 0) throw; _; }
+
+function initWallet(address[] _owners, uint _required, uint _daylimit) only_uninitialized
+  initDaylimit(_daylimit);
+  initMultiowned(_owners, _required);
+}
+
+function initMultiowned(address[] _owners, uint _required) internal {
+  ...
+}
+```
+
+</div>
+
+- in the aftermath of the July attack the above changes were added to the library.
+- So how was this possible?
+
+Notes:
+- that does seems to fix the problem: if the attacker attempts to invoke `initWallet` on an already deployed contract it is rejected
+- can anyone say what has happened?
+
+---
+
+## The Parity Wallet Hack reloaded: the how?
+
+<div style="font-size: 0.72em;">
+
+- `initWallet` was public in the library itsef.
+- By calling it hacker has made himself the owner of the library (since `m_numOwners == 0` in an un-initialized contract) and than called `kill`, passing his own address.
+- [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+
+</div>
+
+Notes:
+- it had to be, all the library functions have to be public to be callable from the outside
+- this time around hacker walked with no funds (as the lib had none)
+
+---
+
+## The Parity Wallet Hack reloaded: lessons for ink! development
 
 ```rust
 impl MyContract {
@@ -1069,83 +1608,501 @@ impl MyContract {
 }
 ```
 
-- What is wrong with this contract?
-- How would you fix it?
 
 Notes:
-
-- we start easy
-- answer: no AC in place
-- parity wallet 150 million `hack`
+- substate /ink! usually has no need for a proxy pattern but similar concepts do apply
+- what is wrong with this code?
+- how would you fix it?
 
 ---
 
-## Common Vulnerabilities: blast from the past
+## The Parity Wallet Hack reloaded: lessons for ink! development
 
-<img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" />
+```rust [4,8-14]
+#[ink(message)]
+pub fn terminate(&mut self) -> Result<()> {
+    let caller = self.env().caller();
+    self.ensure_owner()?;
+    self.env().terminate_contract(caller)
+}
+
+fn ensure_owner(&self) -> Result<(), GovernanceError> {
+    let caller = self.env().caller();
+    match caller.eq(&self.owner) {
+        true => Ok(()),
+        false => Err(Error::NotOwner),
+    }
+}
+```
+
+Notes:
+- making sure only designated account(s) can call `terminate`
+
+---
+
+## The BatchOverflow exploit (April 2018)
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/batch_overflow.png" />
+
+- In just two transaction an attacker was able to withdraw **~115e57 (115 octodecillion)** BEC (Beauty Coin).
+- BEC was trading at USD 0.32 per token, which makes the total value of that exploit a staggering **USD 3.7e60 (3.7 novemdecillion)**.
+- It was followed by a number of similar exploits, all targeting ERC20 tokens, prompting many exchanges to halt all ERC20 trading.
+
+Notes:
+- off course there was nowhere near that liquidity so no, there is not a person richer than Earths GDP
+- OKEx, Poloniex, Changelly, Huobi...
+
+---
+
+## The BatchOverflow exploit: integer overflow
+
+```rust
+        128u8 + 128u8 == 0;
+```
+
+- Integer overflow and underflow often occur when user supplied data controls the value of an unsigned integer.
+- The user supplied data either adds to or subtracts beyond the limits of what the variable type can hold, causing it to wrap around.
+
+Notes:
+- Primitive integer types supported by CPUs are finite approximations to the infinite set of integers known form mathematics
+- and underflow for that matter
+- as in back to a number it understands
+---
+
+## The BatchOverflow exploit: example
 
 <div style="font-size: 0.72em;">
 
-- [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit:
-- https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+```rust [1|3-32]
+type MyBalance = u8;
 
-<!-- ```solidity -->
-<!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -->
-<!--   suicide(_to); -->
-<!-- } -->
+#[ink(message)]
+pub fn batch_transfer(
+    &mut self,
+    receivers: Vec<AccountId>,
+    value: MyBalance,
+) -> Result<(), Error> {
+    let count = receivers.len();
 
-<!-- function initMultiowned(address[] _owners, uint _required) only_uninitialized { -->
-<!--   m_numOwners = _owners.length + 1; -->
-<!--   m_owners[1] = uint(msg.sender); -->
-<!--   m_ownerIndex[uint(msg.sender)] = 1; -->
-<!--   for (uint i = 0; i < _owners.length; ++i) -->
-<!--   { -->
-<!--     m_owners[2 + i] = uint(_owners[i]); -->
-<!--     m_ownerIndex[uint(_owners[i])] = 2 + i; -->
-<!--   } -->
-<!--   m_required = _required; -->
-<!-- } -->
-<!-- ``` -->
+    if (count == 0 || count > 20 || value == 0) {
+        return Err(Error::CannotTransfer);
+    }
+
+    let caller = self.env().caller();
+    let amount = count as MyBalance * value;
+    let caller_balance = self.get_balance(caller);
+
+    if caller_balance < amount {
+        return Err(Error::SenderBalanceTooLow);
+    }
+
+    self.balances.insert(caller, &(caller_balance - amount));
+
+    for i in 0..cnt {
+        let receiver = receivers.get(i).unwrap();
+        let receiver_balance = self.get_balance(*receiver);
+        self.balances.insert(receiver, &(receiver_balance + value));
+    }
+
+    Ok(())
+}
+```
 
 </div>
 
 Notes:
+- can you spot the problem?
+- actually Rust is pretty good at catching runtime overflows, so this will panic, unless
+```toml
+[profile.dev]
+overflow-checks = false
+[profile.release]
+overflow-checks = false
+```
+---
 
-- might seem trivial but a very similar hack has happend in the past trapping a lot of funds
-- see: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
-- hacker has "accidentally" called an unprotected `initMultiowned` and proceeded to delete the contract code
+
+## The BatchOverflow exploit: example
+
+<div style="font-size: 0.70em;">
+
+```rust []
+let sender = default_accounts::<DefaultEnvironment>().alice;
+let receiver = default_accounts::<DefaultEnvironment>().bob;
+
+set_caller::<DefaultEnvironment>(sender);
+
+let mut token = Overflows::new();
+
+assert_eq!(0, token.get_balance(sender));
+assert_eq!(0, token.get_balance(receiver_one));
+
+token
+    .batch_transfer(vec![receiver, default_accounts::<DefaultEnvironment>().charlie], 128)
+    .expect("Can transfer");
+
+let receiver_balance_after = token.get_balance(receiver_one);
+
+assert_eq!(128, receiver_balance_after);
+```
+
+</div>
+
+Notes:
+- money out of thin air
+
+---
+
+
+## The BatchOverflow exploit: fixit
+
+```rust [1|3-14]
+let amount = Self::safe_multiply(count as MyBalance, value)?;
+
+fn safe_multiply(a: MyBalance, b: MyBalance) -> Result<MyBalance, MyError> {
+    if a == 0 || b == 0 {
+        return Ok(0);
+    }
+
+    let c = a * b;
+    if c / a == b {
+        return Ok(c);
+    }
+
+    Err(MyError::Arithmetic)
+}
+
+```
+
+* We perform a reverse operation (division)
+* Value *c* is divided by *a* and we check whether this is equal to the value of *b*
+* If this was an overflow and wrapped around back to 0 then this check fails incorrect.
+
+---
+
+## The BatchOverflow exploit: fixit
+
+* runtime checks in Rust are performed only in *debug* mode, as they hinder performance
+```toml
+[profile.release]
+overflow-checks = false
+```
+
+* This prints 0 in *release* mode and panics in *debug*:
+```rust
+let x: u8 = "128".parse().unwrap();
+let val: u8 = x + 128;
+println!("{}", val);
+```
+
+* it's best to be explicit:
+```rust
+let amount = (count as MyBalance).checked_mul(value)
+              .ok_or(MyError::Arithmetic)?;
+```
+
+Notes:
+* in Rust there is no need to roll your own code
+* in Solidity take a look at the SafeMath library
+* explicit to the compiler about what you want to do
+
+---
+
+# Maximal Extractable Value (MEV)
+
+Notes:
+
+* we will now talk about MEV (Maximal extractable value)
+
+---
+
+# MEV
+
+* The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work.
+* It was referred to as the *invisible tax*, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network.
+* After the Merge (Ethereum's move to POS consensus) *Miner Extractable Value* became *Maximal extractable value*.
+
+Notes:
+* MEV was first applied in the context of proof-of-work, and referred to as the Miner Extractable Value.
+* This is because in POW miners hold most of the power, controlling the transaction inclusion / exclusion and ordering.
+* However in the proof-of-stake the validators are been responsible for these roles.
+* The value extraction methods still exist though, so the term "Maximal extractable value" is now used instead.
+
+---
+
+## MEV: The Dark Forest
+
+* We have now seen a number of smart contract exploits.
+* Blockchain is a higly **competetive and adversarial** environment.
+* But the dangers pale in comparison to the **mempool**.
+
+Notes:
+* if a smart contract can be exploited for profit it's just a matter of time when it will be.
+* there is a lot af smart ppl spending a lot of time examining contracts for vulnerabilities.
+* mempool is the set of pending, unconfirmed transactions.
+
+---
+
+## MEV: The Dark Forest
+
+<img style="margin-top: 10px;margin-bottom: 10px" height="400" src="./img/ink/dark_forest.jpg" />
+
+<div style="font-size: 0.72em;">
+
+* Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predatorial civilizations.
+* **Generalized Frontrunners** are bots looking for *any* profitable transactions submitted to the mempool.
+* *Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos* **[August 2020]**
+
+Notes:
+* Cixin Liu [Si-Szin Lju]
+* who's familiar with these novels?
+* The Dark Forest is a 2-nd book in the sci-fi series Remembrance of the Earth's Past
+* Publicly identifying someone else’s location is as good as directly destroying them
+* These Frontrunners work by copying it and replacing the address with their own
+  * They can even execute the transaction in a sandbox and submit just the profitable internal transactions as their own.
+  * One encounter with such a bot was described by these two researchers.
+
+</div>
+
+---
+
+## Sidenote: The Dark Forest
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/kurzgesagt.jpg" />
+
+<div style="font-size: 0.70em;">
+
+credit: **Kurzgesagt** , *Why We Should NOT Look For Aliens - The Dark Forest*
+
+</div>
+
+* The Dark Forest theory is (one of) a solution to the Fermi's paradox
+* Great explanation in this episode of the Kurzgesagt
+
+<!-- Notes: -->
+<!-- - Sidenote for the curious -->
+
+---
+
+## MEV: The Dark Forest
+
+* Someone had asked on the *#support* channel of Uniswap whether it was possible to recover liquidity tokens that were erronously sent to the <font color="#8d3aed">[liquidity token base contract](https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L140)</font>.
+* This meant *anyone* who calls *burn* on the Uniswap contract, passing own address, would receive the extra tokens (worth *USD 12K*).
+* **Dan Robinson**, a researcher and a white-hat hacker offered to help.
+
+Notes:
+* Not even a bug, jusy a by-product of how UniswapV2 is designed
+* For details I refer you to the original article
+* Only that he knew this wouldn't be as easy as calling burn and returning the tokens to the owner
+* ... because of the monsters in the forest
+
+---
+
+## MEV: The Dark Forest
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/flashboys.png" />
+
+* In another article, *Phil Daian et al* talked about how one particular species frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitabe transactions.
+* If someone just submitted a *burn* transaction to the mempool the Dark Forest bots would be imediately alerted.
+
+Notes:
+* Dan was well aware this would not be easy
+* it was a ticking time bomb
+* They had to desing an obfuscated rescue method to try and not alert the bots about the free money.
+
+---
+
+## The Dark Forest: To The Rescue
+
+* Dan Robinson recruited the help of fellow engineers (i.e. [Georgios Konstantopoulos]() and [Alberto Cuesta Canada]() and a few others) and they came up with the following solution:
+
+<div style="font-size: 0.62em;">
+
+```Solidity [1-7 | 9-33 | 35-47]
+interface IGetter {
+  function set(bool) external;
+}
+
+interface IPool {
+  function burn(address to) external returns (uint amount0, uint amount1);
+}
+
+Contract Getter is IGetter {
+  IPool private pool;
+  address private setter;
+  address private getter;
+  address private dest;
+  bool private on;
+
+  constructor(address pool_, address setter_, address getter_, address dest_) public {
+    pool = IPool(pool_);
+    setter = setter_;
+    getter = getter_;
+    dest = dest_;
+  }
+
+  function set(bool on_) public override {
+    require(msg.sender == setter, "no-setter");
+    on = on_;
+  }
+
+  function get() public {
+    require(msg.sender == getter "no-getter");
+    require(on == true, "no-break");
+    pool.burn(dest);
+  }
+}
+
+contract Setter {
+
+  address private owner;
+
+  constructor () public {
+    owner = msg.sender;
+  }
+
+  function set(address getter, bool on) public {
+    require(msg.sender == owner, "no-owner");
+    IGetter(getter).set(on);
+  }
+}
+```
+</div>
+
+Notes:
+* the call to *burn* is hidden inside a larger *get* tx
+* the tx is split into two, among two contracts:
+  * *Getter* when called by its owner, would make the burn call ONLY if activated else it reverts.
+  * *Setter* contract which, when called by its owner, would activate the Getter contract.
+* Can you see the problem (or the challenge here?)
+
+---
+
+## The Dark Forest: the Monsters are real
+
+* During the rescue attempts the **get** transaction would get rejected by the Infura node.
+* Due to the time pressure and late night time, the *get* tx slipped into a later block.
+* When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meanig a bot had already executed the internal *burn* call and took the funds.
+
+Notes:
+* If the attacker only tried executing the get transaction, it would revert without calling the burn function.
+* The hope was that by the time the attacker executed both the *set* and *get* txs in a sequence, to spot the internal call to *pool.burn* and frontrun the rescue attempt, the get transaction would already be included in a mined block
+* BUT : this means the *set* and *get* txs **have** to be included in the same block.
+* Do you see what could have been done better?
+
+---
+
+## The Dark Forest:
+
+* Avoid public infrastructure.
+* Some examples of a private pool transactions offerings:
+  * <font color="#8d3aed">[blocxroute](https://bloxroute.com/products/)</font>
+  * <font color="#8d3aed">[taichi network](https://taichi.network/)</font>
+  * <font color="#8d3aed">[1inch network](https://1inch.io/)</font>
+
+Notes:
+* maybe a better obfuscation (e..g get could be a no-op instea dof reverting if called without set)
+  * causing a bot to miss the internal tx
+* contact a miner to manually include your tx in a block, skipping the mempool
+* or sync your own node
 
 ---
 
 ## Common Vulnerabilities
 
-```rust [3,8,12-14]
-    #[ink(storage)]
-    pub struct SubstrateNameSystem {
-        registry: Mapping<AccountId, Vec<u8>>,
+```rust []
+#[ink(storage)]
+pub struct NameServer {
+    registry: Mapping<Vec<u8>, AccountId>,
+}
+
+#[ink(message, payable)]
+pub fn register(&mut self, name: Vec<u8>) {
+    let owner = self.env().caller();
+    let fee = self.env().transferred_value();
+
+    if !self.registry.contains(&name) && fee >= ONE_AZERO {
+        self.registry.insert(name, &owner);
     }
-
-    impl SubstrateNameSystem {
-        #[ink(message, payable)]
-        pub fn register(&mut self, name: Vec<u8>) {
-            let owner = self.env().caller();
-            let fee = self.env().transferred_value();
-
-            if !self.registry.contains(owner) && fee >= 100 {
-                self.registry.insert(owner, &name);
-            }
-        }
+}
 ```
 
-- On-chain domain name registry with a register fee of 100 pico.
+- On-chain domain name registry with a register fee of 1 Azero.
 - Why is this a bad idea?
 
 Notes:
 
+- Can you propose a better design?
 - everything on-chain is public
 - this will be front-run in no time
-- Can you propose a better design?
-- Answer: commit / reveal or an auction
+
+---
+
+## Common Vulnerabilities: frontrunning
+
+<div style="font-size: 0.62em;">
+
+```rust [1-6|8-24|26-49]
+#[ink(storage)]
+pub struct BetterNameServer {
+    commitments: Mapping<Keccak256HashOutput, Commitment>,
+    registry: Mapping<Vec<u8>, AccountId>,
+    duration: u32,
+}
+
+#[ink(message, payable)]
+pub fn commit(&mut self, commitment: Keccak256HashOutput) {
+    let owner = self.env().caller();
+    let fee = self.env().transferred_value();
+    let timestamp = self.env().block_number();
+
+    if fee < ONE_AZERO {
+        panic!("Fee too low");
+    }
+
+    if self.commitments.get(commitment).is_some() {
+        panic!("Name already committed");
+    }
+
+    self.commitments
+        .insert(commitment, &Commitment { owner, timestamp });
+}
+
+#[ink(message)]
+pub fn reveal(&mut self, name: Vec<u8>) {
+    let caller = self.env().caller();
+    let now = self.env().block_number();
+    let commitment_hash = keccak256(&name);
+
+    if self.registry.contains(&name) {
+        panic!("Commitment already revealed");
+    }
+
+    match self.commitments.get(commitment_hash) {
+        None => panic!("No such name committed"),
+        Some(commitment) => {
+            if commitment.owner != caller {
+                panic!("Caller did not commit to this name");
+            }
+
+            if commitment.timestamp + self.duration < now {
+                panic!("Not in reveal period");
+            }
+            self.registry.insert(name, &caller);
+        }
+    }
+}
+```
+
+- Previous design had a fatal flaw: it was opened to a frontrunning attack.
+- Anyone could read the name from the tx and replace the address with his own.
+- A much better design is a commit - reveal scheme.
+
+</div>
+
+Notes:
+* think *Nike*or *CocaCola*
+* or an auction with users bidding for names
 
 ---
 
@@ -1183,9 +2140,6 @@ pub fn swap(
 - What can go wrong here?
 
 Notes:
-
-Answer:
-
 - no slippage protection in place.
 - bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
 - this purchase will raise the price of the asset for the victim trader and increases his slippage
@@ -1193,35 +2147,238 @@ Answer:
 
 ---
 
-## Common Vulnerabilities
+## Common Vulnerabilities: sandwitch attacks
 
-```rust [7,12-14]
-#[ink(message)]
-pub fn swap(
-    &mut self,
-    token_in: AccountId,
-    token_out: AccountId,
-    amount_token_in: Balance,
-    min_amount_token_out: Balance,
-) -> Result<(), DexError> {
+<div style="font-size: 0.70em;">
 
-    ...
+```rust [7,10-12]
+ #[ink(message)]
+ pub fn swap(
+     &mut self,
+     token_in: AccountId,
+     token_out: AccountId,
+     amount_token_in: Balance,
+     min_amount_token_out: Balance,
+ ) -> Result<(), DexError> {
+     ...
+     if amount_token_out < min_amount_token_out {
+         return Err(DexError::TooMuchSlippage);
+     }
+ ...
+ }
+ ```
 
-    if amount_token_out < min_amount_token_out {
-        return Err(DexError::TooMuchSlippage);
-    }
+</div>
 
-...
-}
-```
+- Contract was vulnerable to a *sandwitch* attack:
+  - A bot could purchase some amount of *token_out* just before the trade is executed, raising the price.
+  - After victims tx is executed the bot sells, back running the trade.
+- Much better design is one that protects the victim from excessive slippage.
 
 Notes:
-
 - slippage protection in place
 
 ---
 
-## Common Vulnerabilities
+## Why is MEV a problem?
+
+* ... and how big of a problem it is?
+
+Notes:
+* we end this section with a general discussion of repercussion of MEV
+
+---
+
+## Gas price inflation
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="400" src="./img/ink/infllation.png" />
+
+* Users engage in bid wars to include their txs in a block.
+* This drivers gas prices higher and higher.
+* The *normal/honest* users are the ones hurt the most.
+
+Notes:
+* The competition among users to get their transactions included in a block with higher priority leads to increased demand for block space.
+* Users will bid higher gas prices to outcompete others, driving up gas prices across the network.
+* This results in inflated transaction costs for users.
+ - miners make profit
+ - arbitrageurs and MEV traders still make profit (albeit less)
+
+---
+
+## Network congestion
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="600" src="./img/ink/congestion.jpg" />
+
+* Miners/validators have the power to order or censors include transactions in a block.
+* They will naturaly lean towards processing the txs with higher gas fees, or even to insert their own txs.
+* Other txs will be stuck in the mempool, leading to congestion.
+
+Notes:
+
+- Transaction Ordering: Miners have the discretion to choose the order in which they include transactions in a block.
+- They can prioritize transactions that offer higher fees or provide more favorable conditions for their own profit-maximizing strategies.
+- This can result in certain transactions being delayed or stuck in the mempool, leading to congestion.
+
+---
+
+## Zero-sum game
+
+- Total extracted MEV before the merge: *283'962 ETH* (**$ 675,623,114** December 2019 - September 2022)
+- Total extracted MEV since the merge: *407'804 ETH* (**$ 970'275'823** in Jan 2024)
+
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/cumulative_MEV.jpg" />
+
+credit: https://transparency.flashbots.net/
+
+Notes:
+- almost a billion dollars after the merge
+- defi is a zero sum game, if someone won 1 bill someon else lost 1 bill, who did?
+- answer: you, I, he, she
+
+---
+
+## Consensus instability (longest chain)
+
+- MEV can cause instabilities in the consensus layer (at least with the longest chain rule).
+
+<img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability0.png" />
+
+credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+Notes:
+- Assume we are in the longest chain rule scenario (this can be POW or POS chain).
+- How? Imagine a block with three juicy MEV opportunities. These txs are already validated and part of the chain.
+ - validator sees this opportunity and instead proposes his own block, but leaves some of the opportunities out of it.
+ - now other validators are incentivized to take these MEV opportunities and start building on his proposed block, thus causing a re-org.
+
+---
+
+## Consensus instability (longest chain)
+
+- If block rewards are smaller than the MEV opportunities, rational miners / validators will destabilize consensus by reordering or censoring the transactions.
+
+<img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability1.png" />
+
+credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+- What could the searcher / arbitrageurs do to not have their MEV stolen from them?
+
+Notes:
+- Time bandit attack
+- Because of MEV we cannot assume 51% honest majority
+- all actors are rational actors, so they will go for maximal profit
+- imagine you are the searcher and you found this MEV opportunity. What can you do to be sure t have it included?
+
+---
+
+## Private mempools
+
+* MEV actors can contract with miners / validators.
+* They do it for a substantial fee, but at leat this way they still profit.
+* Why does this lead to a horrible outcome for a blockchain?
+
+Notes:
+- they send their tx directly to the miner, skipping the mempool
+ - when its the validator turn to propose a block they include this tx in it (for a fee)
+- can you see any problems with this?
+
+---
+
+## Private mempools
+
+- Pretty soon everbody is sending their txs to a handfull of validators that they trust.
+- It is very hard to become a new trusted validator.
+- Massive centralization.
+
+Notes:
+- centralization of power
+- rich get richer type of a problem
+
+---
+
+
+## Flashbots (MEV-geth)
+
+* flashbots: democratizing MEV Extraction.
+* [MEV-geth](https://github.com/flashbots/mev-geth)
+
+Notes:
+- flashbots is a sealed-bid block space auction mechanism for bidding on transaction order preference.
+
+---
+
+## MEV: the good, the bad and the ugly
+
+* is all MEV inherently bad for the network?
+ - arbitrage
+ - liquidations
+* MEV as a security budget?
+* MEV is unavoidable.
+
+Notes:
+- MEV is wrong and it has to be stopped
+- arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy
+- liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly.
+- from the economic security perspective: MEV could be an additional source of revenue for the validators.
+ - but it HAS to be distributed equally, else it is an almost existential threat to the network.
+- MEV is a fact of life.
+
+---
+
+## What to do: Proposer-builder separation (PBS)
+
+[MEV-boost](https://boost.flashbots.net/) is an implementation of PBS for post-merge Ethereum
+
+<img style="margin-top: 10px;margin-bottom: 10px" height="800" src="./img/ink/pbs.svg" />
+
+<div style="font-size: 0.45em">
+
+* **Block Builders**
+Responsible for collecting the txs, assembling the blocks, including validating the txs and creating the block header.
+They also include the MEV offer to validators (fee).
+
+* **Relayers:**
+Collect blocks, choosing the ones with biggest MEV offer.
+Send block headers (**NOT** blocks) to the validators (block proposers).
+
+* **Block Proposers:**
+Validators who are chosen to propose blocks are known as "block proposers."
+They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network.
+
+</div>
+
+Notes:
+- PBS is basically an open market of block builders and validators (block proposers)
+- searchers and users send their txs to block builders
+  - builders are just ppl they have a business relation with
+  - they might send them to multiple ones that they trust
+  - if they happen to steal their tx they will just never come back to them again
+- now builders take bundles from the searchers and txs from the end users and they construct blocks out of them
+  - they order them
+ - they send the to relayers that they trust in turn
+  - can relayers cheat here?
+  - they could technically steal the txs from the builders
+- relayers talk to the validators
+ - they don't send blocks, because if they did the rational validators would steal the MEV
+ - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
+ - rent for block space type of arrangment
+- validators sign the headers and send the signatures back to the relayers
+- relayers send the blocks to the network
+ - why can't it be stolen at this point? Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
+ - relayer technically can - but just once
+
+---
+
+## MEV: tip of the iceberg
+
+* <font color="#8d3aed">[DeFi MOOC](https://defi-learning.org/f22)</font>, especially lectures by [Arthur Gervais](https://arthurgervais.com/).
+* **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with *Phil Daian, Georgios Konstantopoulos, Charlie Noyes*
+* <font color="#8d3aed">[Flashbots](https://www.flashbots.net/)</font> R&D organization focused on MEV research.
+
+---
+
+## Fin
 
 - Integer overflows
 - Re-entrancy vulnerabilities
@@ -1229,10 +2386,650 @@ Notes:
 - ...
 - Regulatory attacks 😅
 - ...
+- Take MEV into account
 
 Notes:
-
 - long list of possible attacks
 - too long to fit into one lecture
 - baseline: get an audit from a respectable firm
 - publish your source code (security by obscurity is not security)
+- take MEV into account when designing your protocols.
+- MEV-resistant design patterns in your smart contracts.
+  - timelocks
+  - encryption
+---
+
+## Pause
+
+<!-- Optional challenge: [github.com/Polkadot-Blockchain-Academy/adder](https://github.com/Polkadot-Blockchain-Academy/adder) -->
+
+Notes:
+
+Piotr takes over to talk about making runtime calls from contracts and writing automated tests.
+
+---
+
+## Interacting with the execution environment
+
+```rust [5-6]
+impl MyContract {
+  ...
+  #[ink(message)]
+  pub fn terminate(&mut self) -> Result<()> {
+      let caller = self.env().caller();
+      self.env().terminate_contract(caller)
+  }
+  ...
+}
+```
+
+---
+
+## Blockchain node onion
+
+---
+
+## Blockchain node onion
+
+<br/>
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/onions.png" />
+
+---
+
+## Blockchain node onion
+
+<img style="margin-top: 10px" width="600" src="./img/ink/blockchain-onion-1.svg" />
+
+- networking
+- block production, dissemination, finalization
+- storage management
+- off-chain maintenance, querying, indexing
+
+---
+
+## Blockchain node onion
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-2.svg" />
+
+- computing new state based on the previous one and a single transaction
+
+---
+
+## Blockchain node onion
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-3.svg" />
+
+- executing contract calls
+
+---
+
+## Standard API
+
+- `caller()`
+- `account_id()`
+- `balance()`
+- `block_number()`
+- `emit_event(event: Event)`
+- `transfer(dest: AccountId, value: Balance)`
+- `hash_bytes(input: &[u8], output: &mut [u8])`
+- `debug_message(msg: &str)`
+- [_and many more_](https://docs.rs/ink_env/4.2.1/ink_env/index.html#functions)
+
+---
+
+## Standard API
+
+```rust
+impl MyContract {
+  ...
+  #[ink(message)]
+  pub fn terminate(&mut self) -> Result<()> {
+      let caller = self.env().caller();
+      self.env().terminate_contract(caller)
+  }
+  ...
+}
+```
+
+---
+
+## Interacting with the state transition function
+
+<br/>
+
+<div class="flex-container fragment">
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> User API </pre></h2></center> </div>
+
+<ul>
+<li>token transfer</li>
+<li>staking</li>
+<li>voting</li>
+<li>contract call</li>
+<li>...</li>
+</ul>
+</div>
+
+<div class="left fragment">
+<div style="text-align: center"> <center><h2><pre> Contract API </pre></h2></center> </div>
+
+<ul>
+<li>advanced cryptography</li>
+<li>bypassing standard restrictions</li>
+<li>outsourcing computation</li>
+<li>...</li>
+</ul>
+</div>
+</div>
+
+---
+
+## Interacting with the state transition function
+
+<br/>
+
+<div class="flex-container">
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> User API </pre></h2></center> </div>
+<div style="text-align: center"> <center><h2><pre> (usually for humans) </pre></h2></center> </div>
+
+<ul>
+<li>token transfer</li>
+<li>staking</li>
+<li>voting</li>
+<li>contract call</li>
+<li>...</li>
+
+**_runtime call_**
+
+</ul>
+</div>
+
+<div class="left">
+<div style="text-align: center"> <center><h2><pre> Contract API </pre></h2></center> </div>
+<div style="text-align: center"> <center><h2><pre> (only for contracts) </pre></h2></center> </div>
+
+<ul>
+<li>advanced cryptography</li>
+<li>bypassing standard restrictions</li>
+<li>outsourcing computation</li>
+<li>...</li>
+
+<br/>
+
+**_chain extension_**
+
+</ul>
+</div>
+</div>
+
+---
+
+## Runtime
+
+<br/>
+
+In Polkadot ecosystem _state transition function_ is called **_runtime_**
+
+---
+
+## Calling runtime
+
+<br/>
+
+```rust [7-10]
+#[ink(message)]
+pub fn transfer_through_runtime(
+    &mut self,
+    receiver: AccountId,
+    value: Balance,
+) -> Result<(), RuntimeError> {
+    let call_object = RuntimeCall::Balances(BalancesCall::Transfer {
+        receiver,
+        value,
+    });
+
+    self.env().call_runtime(&call_object)
+}
+```
+
+---
+
+## Calling runtime
+
+<br/>
+
+```rust [12]
+#[ink(message)]
+pub fn transfer_through_runtime(
+    &mut self,
+    receiver: AccountId,
+    value: Balance,
+) -> Result<(), RuntimeError> {
+    let call_object = RuntimeCall::Balances(BalancesCall::Transfer {
+        receiver,
+        value,
+    });
+
+    self.env().call_runtime(&call_object)
+}
+```
+
+---
+
+## Chain extensions
+
+<br/>
+
+Chain extension is a way to extend the runtime with custom functionalities _dedicated to contracts_.
+
+---
+
+## Chain extensions
+
+<br/>
+
+**ink! side:**
+
+- provide `ChainExtension` trait
+- include extension in the `Environment` trait instantiation
+
+<br/>
+
+**runtime side:**
+
+- handling extension calls
+- extension logic itself
+
+---
+
+## Provide `ChainExtension` trait
+
+```rust [1-7]
+#[ink::chain_extension]
+pub trait OutsourceHeavyCrypto {
+  type ErrorCode = OutsourcingErr;
+
+  #[ink(extension = 41)]
+  fn outsource(input: Vec<u8>) -> [u8; 32];
+}
+
+pub enum OutsourcingErr {
+  IncorrectData,
+}
+
+impl ink::env::chain_extension::FromStatusCode for OutsourcingErr {
+  fn from_status_code(status_code: u32) -> Result<(), Self> {
+    match status_code {
+      0 => Ok(()),
+      1 => Err(Self::IncorrectData),
+      _ => panic!("encountered unknown status code"),
+    }
+  }
+}
+```
+
+---
+
+## Provide `ChainExtension` trait
+
+```rust [9-21]
+#[ink::chain_extension]
+pub trait OutsourceHeavyCrypto {
+  type ErrorCode = OutsourcingErr;
+
+  #[ink(extension = 41)]
+  fn outsource(input: Vec<u8>) -> [u8; 32];
+}
+
+pub enum OutsourcingErr {
+  IncorrectData,
+}
+
+impl ink::env::chain_extension::FromStatusCode for OutsourcingErr {
+  fn from_status_code(status_code: u32) -> Result<(), Self> {
+    match status_code {
+      0 => Ok(()),
+      1 => Err(Self::IncorrectData),
+      _ => panic!("encountered unknown status code"),
+    }
+  }
+}
+```
+
+---
+
+## Include extension in the `Environment` trait instantiation
+
+<br/>
+
+```rust
+pub enum EnvironmentWithOutsourcing {}
+impl Environment for EnvironmentWithOutsourcing {
+    ... // use defaults from `DefaultEnvironment`
+    type ChainExtension = OutsourceHeavyCrypto;
+}
+
+#[ink::contract(env = crate::EnvironmentWithOutsourcing)]
+mod my_contract {
+  ...
+}
+```
+
+---
+
+## Include extension in the `Environment` trait instantiation
+
+<br/>
+
+```rust
+#[ink::contract(env = crate::EnvironmentWithOutsourcing)]
+mod my_contract {
+  fn process_data(&mut self, input: Vec<u8>) -> Result<(), OutsourcingErr> {
+    self.env().extension().outsource(subject)
+  }
+}
+```
+
+---
+
+## Handling extension calls
+
+<br/>
+
+```rust [5-11]
+pub struct HeavyCryptoOutsourcingExtension;
+
+impl ChainExtension<Runtime> for HeavyCryptoOutsourcingExtension {
+  fn call<E: Ext>(&mut self, env: Env) -> Result<RetVal, DispatchError> {
+    match env.func_id() {
+      41 => internal_logic(),
+      _ => {
+        error!("Called an unregistered `func_id`: {func_id}");
+        return Err(DispatchError::Other("Unimplemented func_id"))
+      }
+    }
+    Ok(RetVal::Converging(0))
+}
+```
+
+---
+
+## Chain extension: reaching even further
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/chain-extension-reach.svg" />
+
+---
+
+## Testing contracts
+
+---
+
+## Testing contracts
+
+<br/>
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-3.svg" />
+
+---
+
+## Testing contracts
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="1000" src="./img/ink/testing-contract-stack.svg" />
+
+---
+
+## Unit tests
+
+<br/>
+
+```rust [1-3]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+
+---
+
+## Unit tests
+
+<br/>
+
+```rust [5-9]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+
+---
+
+## Unit tests
+
+<br/>
+
+```rust [11-22]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+
+---
+
+## E2E tests
+
+<br/>
+
+```rust [1-7]
+#[ink_e2e::test]
+async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+  let constructor = Erc20Ref::new(total_supply);
+  let erc20 = client
+          .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
+          .await
+          .expect("instantiate failed");
+
+  let mut call = erc20.call::<Erc20>();
+  let total_supply_msg = call.total_supply();
+  let total_supply_res = client
+          .call_dry_run(&ink_e2e::bob(), &total_supply_msg, 0, None)
+          .await;
+  ...
+}
+```
+
+---
+
+## E2E tests
+
+<br/>
+
+```rust [9-13]
+#[ink_e2e::test]
+async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+  let constructor = Erc20Ref::new(total_supply);
+  let erc20 = client
+          .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
+          .await
+          .expect("instantiate failed");
+
+  let mut call = erc20.call::<Erc20>();
+  let total_supply_msg = call.total_supply();
+  let total_supply_res = client
+          .call_dry_run(&ink_e2e::bob(), &total_supply_msg, 0, None)
+          .await;
+  ...
+}
+```
+
+---
+
+## E2E tests
+
+<br/>
+
+```rust [14]
+#[ink_e2e::test]
+async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
+  let constructor = Erc20Ref::new(total_supply);
+  let erc20 = client
+          .instantiate("erc20", &ink_e2e::alice(), constructor, 0, None)
+          .await
+          .expect("instantiate failed");
+
+  let mut call = erc20.call::<Erc20>();
+  let total_supply_msg = call.total_supply();
+  let total_supply_res = client
+          .call_dry_run(&ink_e2e::bob(), &total_supply_msg, 0, None)
+          .await;
+  ...
+}
+```
+
+---
+
+## E2E pipeline: traps, traps everywhere
+
+<div style="font-size: 0.6em">
+
+1. Preparing and encoding transaction data (_client side_)
+1. Signing the transaction (_client side_)
+1. Sending transaction to a node (_client side_)
+1. Block and event subscribing (_client side_)
+1. Transaction pool processing (_node side_)
+1. Block building (_node side_)
+1. Block dissemination (_node side_)
+1. Import queue processing (_node side_)
+1. Block finalizing (_node side_)
+1. Block execution (_node side_)
+1. Transaction execution (_runtime side_)
+1. Event emitting (_node side_)
+1. Event capturing (_client side_)
+1. Event processing (_client side_)
+1. State fetching via RPC calling (_client side_)
+1. State report (_node side_)
+1. State validation (_client side_)
+
+</div>
+
+---
+
+## E2E pipeline: traps, traps everywhere
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/trap.gif" />
+
+---
+
+## Test core
+
+<br/>
+
+1. Preparing and encoding transaction data (_given_)
+1. Transaction execution (_when_)
+1. State validation (_then_)
+
+---
+
+## quasi-E2E tests
+
+<br/>
+
+Interact directly with runtime, skipping node layer.
+
+---
+
+## quasi-E2E tests
+
+<br/>
+
+```rust
+#[test]
+fn flipping() -> Result<(), Box<dyn Error>> {
+  let init_value = Session::<MinimalRuntime>::new(transcoder())?
+      .deploy_and(bytes(), "new", &["true".to_string()], vec![])?
+      .call_and("flip", &[])?
+      .call_and("flip", &[])?
+      .call_and("flip", &[])?
+      .call_and("get", &[])?
+      .last_call_return()
+      .expect("Call was successful");
+
+  assert_eq!(init_value, ok(Value::Bool(false)));
+
+  Ok(())
+}
+```
+
+---
+
+## Local playing with contracts using `drink-cli`
+
+---
+
+## Hands-on
+
+[github.com/Polkadot-Blockchain-Academy/ink-adder](https://github.com/Polkadot-Blockchain-Academy/ink-adder)
+
+Notes:
+
+Clone the above repository and follow instructions
+Instructors here to help
+
+---
