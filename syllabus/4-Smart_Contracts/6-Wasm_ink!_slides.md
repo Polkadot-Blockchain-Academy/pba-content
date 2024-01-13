@@ -286,8 +286,6 @@ cargo contract instantiate --constructor default --suri //Alice
 
 Output:
 
-<!-- <div style="font-size: 0.82em;"> -->
-
 ```sh [1-2|3-5]
   Event Contracts ➜ CodeStored
          code_hash: 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad
@@ -295,8 +293,6 @@ Output:
          deployer: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
          contract: 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8
 ```
-
-<!-- </div> -->
 
 Notes:
 
@@ -422,12 +418,6 @@ Notes:
 - query state
 
 ---
-
-<!-- ## typechain-compiler -->
-
-<!-- <\!-- TODO: typechain-compiler -\-> -->
-
-<!-- --- -->
 
 ## Developing contracts: Constructors
 
@@ -729,7 +719,7 @@ Notes:
 
 ## Importance of events
 
-<img rounded style="width: 300px;" src="./img/ink/transacting.svg" />
+<img rounded style="width: 250px;" src="./img/ink/transacting.svg" />
 
 * The most important use of events is to pass along return values from contracts to a dapp's UI.
 * How to access historical data?
@@ -758,13 +748,22 @@ Typically some sort of API is then server over that data, that can be easily que
 * [Subsquid: https://subsquid.io/](https://subsquid.io/)
 * [TheGraph: https://thegraph.com/](https://thegraph.com/)
 
-<!-- TODO A cheaper form of storage -->
-
 Notes:
 - using terminology from event driven design architectures
 - in a classical relational database for example
 - examples of indexers
 - logs are also a cheaper form of storage: evm logs cost 8 gas per byte, whereas contract storage costs 20,000 gas per 32 bytes.
+
+---
+
+## Events as storage
+
+- Events can be used as a cheaper form of storage.
+- EVM logs cost 8 gas per byte, whereas contract storage costs 20,000 gas per 32 bytes.
+
+Notes:
+- as the last more esoteric usage of logs
+- logs are also a cheaper form of storage: 
 
 ---
 
@@ -1236,6 +1235,8 @@ Notes:
 
 ## Reentrancy: an example
 
+<div style="font-size: 0.70em;">
+
 ```rust [1-4|6-15|17-33]
 #[ink(storage)]
 pub struct Dao {
@@ -1272,6 +1273,8 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 }
 ```
 
+</div>
+
 Notes:
 - ink! does not have fallback functions, but it is not immune from reentrancy attacks either
 - this contract mimics the DAO
@@ -1284,6 +1287,8 @@ Notes:
 ---
 
 ## Reentrancy: attacker's code example
+
+<div style="font-size: 0.70em;">
 
 ```rust[3-9|11-12|17-22]
 #[ink(message)]
@@ -1310,6 +1315,8 @@ pub fn receive(&mut self) -> Result<(), DaoError> {
 }
 ```
 
+</div>
+
 Notes:
 - attacker deploys an SC that acts as an investor
 - it begins by depositing and this contract deposits some ETH into The DAO.
@@ -1323,6 +1330,8 @@ Notes:
 ---
 
 ## Reentrancy: fixing the vulnerabilities
+
+<div style="font-size: 0.70em;">
 
 ```rust[6,16]
 #[ink(message)]
@@ -1346,15 +1355,20 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 }
 ```
 
+</div>
+
 Note:
 - simplest fix is to just change the order of operations in the `withdraw` fn
 - This way when the function calls into the attacker contract’s receive() function, and it tries to re-enter the `withdraw` the entry is removed from the balance's map and the whole transaction reverts.
 - Checks-Effects-Interactions pattern
 
 ---
+
 ## Reentrancy: fixing the vulnerabilities
 
-```rust[5]
+<div style="font-size: 0.70em;">
+
+```rust [8]
 #[ink(message)]
 pub fn withdraw(&mut self) -> Result<(), DaoError> {
     let caller = self.env().caller();
@@ -1374,6 +1388,8 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 }
 ```
 
+</div>
+
 Note:
 - Another fix id to contract to explicitely dissallow re-entering the `receive` function while the `withdraw` it is still executing.
 - this way any re-entry is blocked
@@ -1384,7 +1400,7 @@ Note:
 
 ## Past exploits: The Parity Wallet Hack (July 2017)
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="1200" src="./img/ink/multisig_exploit_1.png" />
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/multisig_exploit_1.png" />
 
 - Vulnerability on the Parity Multisig Wallet allowed an attacker to steal > 150,000 ETH.
 - Three high-profile multisig wallet contracts used to store funds from token sales were affected.
@@ -1416,12 +1432,14 @@ function isOwner(address _addr) constant returns (bool) {
 Notes:
 - ethereum's EVM does not have the separation between code and the SC instance like substrate does.
 - think `super` call in Java.
-- context = state, stat eof library is not altered when delgating a call.
+- context = state, state of a library is not altered when delgating a call.
 - all perfectly innocent and used ot this day, problem lies elsewhere.
 
 ---
 
 ## The Parity Wallet Hack: `initWallet` library function
+
+<div style="font-size: 0.70em;">
 
 ``` [1-4|6-16]
 function initWallet(address[] _owners, uint _required, uint _daylimit) {
@@ -1441,6 +1459,8 @@ function initMultiowned(address[] _owners, uint _required) {
   m_required = _required;
 }
 ```
+
+</div>
 
 - wallet library contained `initWallet` function that was called from the wallets constructor.
 - and _i.e._ it called this logic.
@@ -1464,7 +1484,6 @@ function() payable {
 ```
 
 - This exact code was defined in the wallet itself.
-<!-- - This is the **exact** code that got attacked. -->
 - Do you see what happens here?
 
 Notes:
@@ -1474,7 +1493,7 @@ Notes:
 - and if no ETH is being sent in the transaction
 - and if there is some data in the message payload
 - Then call the exact same method as it is defined in _walletLibrary (but using `delegatecall` that is in the context of this contract)
-- the hacker effectivele re-initialized the wallet, overwrote the owners making himself the sole owner and stole the funds.
+- the hacker effectively re-initialized the wallet, overwrote the owners making himself the sole owner and stole the funds.
 
 ---
 
@@ -1530,6 +1549,8 @@ Notes:
 
 ## The Parity Wallet Hack reloaded: the how?
 
+<div style="font-size: 0.72em;">
+
 ```solidity [3|5|10]
 uint public m_numOwners;
 
@@ -1544,6 +1565,8 @@ function initMultiowned(address[] _owners, uint _required) internal {
   ...
 }
 ```
+
+</div>
 
 - in the aftermath of the July attack the above changes were added to the library.
 - So how was this possible?
@@ -1648,6 +1671,8 @@ Notes:
 
 ## The BatchOverflow exploit: example
 
+<div style="font-size: 0.72em;">
+
 ```rust [1|3-32]
 type MyBalance = u8;
 
@@ -1683,6 +1708,8 @@ pub fn batch_transfer(
 }
 ```
 
+</div>
+
 Notes:
 - can you spot the problem?
 - actually Rust is pretty good at catching runtime overflows, so this will panic, unless
@@ -1697,7 +1724,9 @@ overflow-checks = false
 
 ## The BatchOverflow exploit: example
 
-```rust
+<div style="font-size: 0.70em;">
+
+```rust []
 let sender = default_accounts::<DefaultEnvironment>().alice;
 let receiver = default_accounts::<DefaultEnvironment>().bob;
 
@@ -1716,6 +1745,8 @@ let receiver_balance_after = token.get_balance(receiver_one);
 
 assert_eq!(128, receiver_balance_after);
 ```
+
+</div>
 
 Notes:
 - money out of thin air
@@ -1777,7 +1808,7 @@ Notes:
 
 ---
 
-# MAXIMAL EXTRACTABLE VALUE (MEV)
+# Maximal Extractable Value (MEV)
 
 Notes:
 
@@ -1814,7 +1845,9 @@ Notes:
 
 ## MEV: The Dark Forest
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="400" src="./img/ink/dark_forest.jpg" />
+<img style="margin-top: 10px;margin-bottom: 10px" height="400" src="./img/ink/dark_forest.jpg" />
+
+<div style="font-size: 0.72em;">
 
 * Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predatorial civilizations.
 * **Generalized Frontrunners** are bots looking for *any* profitable transactions submitted to the mempool.
@@ -1829,19 +1862,25 @@ Notes:
   * They can even execute the transaction in a sandbox and submit just the profitable internal transactions as their own.
   * One encounter with such a bot was described by these two researchers.
 
+</div>
+
 ---
 
 ## Sidenote: The Dark Forest
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/kurzgesagt.jpg" />
+<img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/kurzgesagt.jpg" />
 
-credit: **Kurzgesagt** : *Why We Should NOT Look For Aliens - The Dark Forest*
+<div style="font-size: 0.70em;">
+
+credit: **Kurzgesagt** , *Why We Should NOT Look For Aliens - The Dark Forest*
+
+</div>
 
 * The Dark Forest theory is (one of) a solution to the Fermi's paradox
 * Great explanation in this episode of the Kurzgesagt
 
-Notes:
-* Sidenote for the curious
+<!-- Notes: -->
+<!-- - Sidenote for the curious -->
 
 ---
 
@@ -1941,7 +1980,7 @@ Notes:
 
 ## The Dark Forest: the Monsters are real
 
-* During the rescue attempts the *get transaction would get rejected by the Infura node
+* During the rescue attempts the **get** transaction would get rejected by the Infura node.
 * Due to the time pressure and late night time, the *get* tx slipped into a later block.
 * When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meanig a bot had already executed the internal *burn* call and took the funds.
 
@@ -2054,11 +2093,12 @@ pub fn reveal(&mut self, name: Vec<u8>) {
     }
 }
 ```
-</div>
 
 - Previous design had a fatal flaw: it was opened to a frontrunning attack.
 - Anyone could read the name from the tx and replace the address with his own.
 - A much better design is a commit - reveal scheme.
+
+</div>
 
 Notes:
 * think *Nike*or *CocaCola*
@@ -2109,6 +2149,8 @@ Notes:
 
 ## Common Vulnerabilities: sandwitch attacks
 
+<div style="font-size: 0.70em;">
+
 ```rust [7,10-12]
  #[ink(message)]
  pub fn swap(
@@ -2125,6 +2167,8 @@ Notes:
  ...
  }
  ```
+
+</div>
 
 - Contract was vulnerable to a *sandwitch* attack:
   - A bot could purchase some amount of *token_out* just before the trade is executed, raising the price.
@@ -2164,7 +2208,7 @@ Notes:
 
 ## Network congestion
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/congestion.jpg" />
+<img style="margin-top: 10px;margin-bottom: 10px" width="600" src="./img/ink/congestion.jpg" />
 
 * Miners/validators have the power to order or censors include transactions in a block.
 * They will naturaly lean towards processing the txs with higher gas fees, or even to insert their own txs.
@@ -2183,7 +2227,7 @@ Notes:
 - Total extracted MEV before the merge: *283'962 ETH* (**$ 675,623,114** December 2019 - September 2022)
 - Total extracted MEV since the merge: *407'804 ETH* (**$ 970'275'823** in Jan 2024)
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="1200" src="./img/ink/cumulative_MEV.jpg" />
+<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/cumulative_MEV.jpg" />
 
 credit: https://transparency.flashbots.net/
 
@@ -2243,7 +2287,7 @@ Notes:
 
 ## Private mempools
 
-- Pretty soon everbody is sending their txs to a handfull of validator that they trust.
+- Pretty soon everbody is sending their txs to a handfull of validators that they trust.
 - It is very hard to become a new trusted validator.
 - Massive centralization.
 
@@ -2286,9 +2330,9 @@ Notes:
 
 [MEV-boost](https://boost.flashbots.net/) is an implementation of PBS for post-merge Ethereum
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/pbs.svg" />
+<img style="margin-top: 10px;margin-bottom: 10px" height="800" src="./img/ink/pbs.svg" />
 
-<div style="font-size: 0.5em">
+<div style="font-size: 0.45em">
 
 * **Block Builders**
 Responsible for collecting the txs, assembling the blocks, including validating the txs and creating the block header.
@@ -2301,6 +2345,7 @@ Send block headers (**NOT** blocks) to the validators (block proposers).
 * **Block Proposers:**
 Validators who are chosen to propose blocks are known as "block proposers."
 They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network.
+
 </div>
 
 Notes:
