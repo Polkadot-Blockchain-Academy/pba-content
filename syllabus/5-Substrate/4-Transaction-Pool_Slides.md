@@ -5,25 +5,6 @@ duration: 30 minutes
 
 # Substrate's Transaction Pool
 
-
-Notes:
-
-Script:
-
-- Blockspace market, we need a way to deal with congestion.
-- Context:
-  - Gossip and network
-  - Offchain and local-only runtime API call
-  - Main tasks:
-    - Validate (valid and invalid)
-    - Order (split valid into ready and future)
-      - provides and requires.s
-      - Fee/tip
-- Each node's pool is a local wild west.
-- Because it is wild west, the transaction pool must only check static and cheap things.
-- The block author won't trust the pool validation, and re-execute all checks.
-- Shower Thought: Transaction queue validation is part of the runtime, but not part of the STF.
-
 ---
 
 ## Why Transaction Pool?
@@ -107,26 +88,18 @@ graph LR
 
 ### 1. Transaction Validation
 
-> Transaction validity is exclusively outside of the transaction pool, and is **100% determined by
-> the Runtime**.
-
-> Transaction validation should be cheap to perform.
-
-<!-- .element: class="fragment" -->
-
-This is done, as you guessed it, through the runtime API.
-
-<!-- .element: class="fragment" -->
+* Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+* Transaction validation should be **cheap** to perform.
+* Transaction pool is entirely an **offchain operation**.
+  * No state change
 
 Notes:
 
 Important, must pause and ask!
 
-- Why is it from the runtime? because the transaction format is opaque and the node doesn't even know what to do with
-  it.
+- Why is it from the runtime? because the transaction format is opaque and the node doesn't even know what to do with it.
 - Why does it have to be cheap? wild west, unpaid, DoS!
-- Pesky question: but be aware that from the runtime's perspective, the node could be malicious. The runtime cannot
-  trust the node to obey.
+- Pesky question: but be aware that from the runtime's perspective, the node could be malicious. The runtime cannot trust the node to obey.
 
 ---v
 
@@ -436,18 +409,56 @@ match the current state of the account.
 
 ---
 
-### Bonus: A Page In History
+## Shower Thought: Runtime vs STF
 
-> https://github.com/paritytech/substrate/issues/728
+> Transaction pool is entirely an **offchain operation**
 
-> Work towards a flexible transaction queue that relies **only on runtime logic to provide comprehensive dependency and queuing management**... should not be aware of the concepts of accounts, signatures, indexes or nonces.
+Note:
 
-> Returns `Valid` if the transaction can be **statically** validated; ... the u64 is the priority used to determine which of a mutually exclusive set of transactions are better to include... Any transactions that do get included in a block should be instantly discarded (and banned) if they result in a panic execution.
+what we said before. What does this imply?
 
+---v
+
+### Shower Thought: Runtime vs STF
+
+<img style="width: 1100px;" src="./img/tx-pool/peter-parker-glasses-off.png" />
+
+Notes:
+
+It is commonly said that the runtime is basically your STF.
+This is a good first order approximation.
+It is nearly true.
+---v
+
+### Shower Thought: Runtime vs STF
+
+<img style="width: 1100px;" src="./img/tx-pool/peter-parker-glasses-on.png" />
+
+Notes:
+
+But as we can see here, when we put our glasses on, actually only some of the apis are part of the stf. the non-stf
+parts are runtime APIs that are called and use, but don't really contribute to the STF. typically the runtime cannot
+make assumptions about these. From the PoV of the runtime, when doing the main consensus critical work (authoring,
+importing) these did not happen.
 
 ---
 
 ## Lecture Recap
+
+- Blockspace Market, Competition.
+- Main tasks:
+  - Validate (valid and invalid)
+  - Order (split valid into "Ready" and "Future")
+    - provides and requires
+    - priority: Fee/tip
+- By Runtime, but not in STF
+
+Notes:
+
+- Each node's pool is a local wild west.
+- Because it is wild west, the transaction pool must only check static and cheap things.
+- The block author won't trust the pool validation, and re-execute all checks.
+- Shower Thought: Transaction queue validation is part of the runtime, but not part of the STF.
 
 ---
 
@@ -460,6 +471,12 @@ match the current state of the account.
 Notes:
 
 https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L149
+
+Original pool PR from ages ago, old but gold: https://github.com/paritytech/substrate/issues/728
+
+> Work towards a flexible transaction queue that relies **only on runtime logic to provide comprehensive dependency and queuing management**... should not be aware of the concepts of accounts, signatures, indexes or nonces.
+
+> Returns `Valid` if the transaction can be **statically** validated; ... the u64 is the priority used to determine which of a mutually exclusive set of transactions are better to include... Any transactions that do get included in a block should be instantly discarded (and banned) if they result in a panic execution.
 
 ---
 
