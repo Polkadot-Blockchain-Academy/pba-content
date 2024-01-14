@@ -18,16 +18,6 @@ duration: 1 hour
 <tr class="text-small">
 <td>
 
-- Substrate Lectures
-
-</td>
-<td>
-
-- Substrate Lectures
-
-</td>
-<td>
-
 - Introduction to FRAME
 - 👩‍💻 Exercise: Proof of Existence Runtime
 - Announce FRAME Assignment
@@ -51,13 +41,6 @@ duration: 1 hour
 </td>
 <td>
 
-- Complete FRAMEless Exercise
-
-</td>
-</tr>
-<tr class="text-small">
-<td>
-
 - Construct Runtime + Tests
 - 👨‍💻 Exercise: Tests
 - FRAME Benchmarking
@@ -71,23 +54,6 @@ duration: 1 hour
   - Executive
 - Signed Extensions
 - Migrations & Try Runtime
-
-</td>
-<td>
-
-- Spill Over + Live Coding
-- Polkadot Lectures
-
-</td>
-
-<td>
-
-- Polkadot Lectures
-
-</td>
-<td>
-
-- Polkadot Lectures
 
 </td>
 <td>
