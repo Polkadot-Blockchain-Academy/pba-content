@@ -1,30 +1,7 @@
 ---
 title: Fees, Ordering
-description: Fees and ordering in blockchains
-duration: 1 hour
----
-
-# Fees, Ordering
-
-TODO Determine if any of this can / should be re-used.
-If so, find it a home, probably in the econ and game theory lecture.
-
----
-
-## Overview
-
-<pba-flex center>
-
-1. [Fees and ordering](#fees--ordering)
-1. [Execution models](#execution-models)
-
-</pba-flex>
-
-Notes:
-
-- This lecture is a bit all over the place.
-- A bunch of stuff worth covering, but not all directly related.
-
+description: (Optional Lesson) More details about Fees and ordering in blockchains
+duration: < 1 hour
 ---
 
 # Fees & Ordering
@@ -308,64 +285,3 @@ But, many small transactions might result in a higher fee for greedy block autho
 So there could exist a set of transactions that is more profitable than just the top `N`.
 
 Even some that could be considered attacks.
-
----
-
-# Execution Models
-
----
-
-## Transactional Execution
-
-Most blockchains have a "transactional" execution model.
-
-That is, they need to be woken up.
-
-A smart contract, for example, won't execute any code unless someone submits a signed, fee-paying transaction to the system.
-
----
-
-## Brief Interruption #3
-
-All of the "packets from the outside world" in these systems are signed.
-
-Some key holder signs an instruction that authorises a call and is willing to pay for its execution.
-
-Now is the time to enter the world of unsigned packets.
-
----
-
-## Free Execution
-
-State machines can have autonomous functions in their state transition function.
-
-System designers can make these functions execute as part of the STF.
-
-In this model, block authors _must_ execute some logic.
-
----
-
-## Free Execution
-
-These added function calls are powerful, but some care must be taken:
-
-- They still consume execution resources (e.g., weight)
-- They need some method of verification (other nodes should be able to accept/reject them)
-
----
-
-## Hooks
-
-The Substrate lectures will get into these, but for now just a look at some APIs:
-
-```rust
-pub trait Hooks<BlockNumber> {
-	fn on_finalize(_n: BlockNumber) {}
-	fn on_initialize(_n: BlockNumber) -> Weight {}
-	fn on_idle(_n: BlockNumber, _remaining_weight: Weight) -> Weight {}
-	fn on_runtime_upgrade() -> Weight {}
-	fn offchain_worker(_n: BlockNumber) {}
-}
-```
-
-[Source: `/frame/support/src/traits/hooks.rs`](https://github.com/paritytech/substrate/blob/33c518e/frame/support/src/traits/hooks.rs)
