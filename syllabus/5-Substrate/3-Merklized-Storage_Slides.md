@@ -1,6 +1,6 @@
 ---
 title: Substrate Merklized Storage
-duration: 60mins
+duration: 90mins  
 ---
 
 # Substrate Storage
@@ -367,8 +367,7 @@ Notes:
 
 Give 30 seconds to students to make sense of the image by themselves.
 
-// TODO(ank4n) clarify
-The important point is that for example the whole data under `_system` is not hidden away behind one hash.
+The important point is that for example the whole data under `_system` is  hidden away behind one hash.
 
 Receiver will hash the root node, and check it against a publicly known storage root.
 
@@ -381,7 +380,7 @@ compact proof").
 
 ### Merklized: Proofs
 
-- 🏆 Small proof size is a big win for light clients, _and_ **Polkadot**.
+- 🏆 Small proof size is a big win for light clients.
 
 ---
 
@@ -620,32 +619,6 @@ Notes:
 
 ### Overlay
 
-- There is a limit to how many nested layers you can spawn
-- It is not free, thus it is attack-able.
-
-```rust
-with_storage_layer(|| {
-    let foo = sp_io::storage::read(b"foo");
-    with_storage_layer(|| {
-        sp_io::storage::set(b"foo", b"foo");
-        with_storage_layer(|| {
-            sp_io::storage::set(b"bar", foo);
-            with_storage_layer(|| {
-                sp_io::storage::set(b"foo", "damn");
-                Err("damn")
-            })
-            Ok("what")
-        })
-        Err("the")
-    });
-    Ok("hell")
-})
-```
-
----v
-
-### Overlay
-
 - What if I call `sp_io::storage::root()` in the middle of the block?
 - Can the overlay respond to this?
 
@@ -770,16 +743,62 @@ Notes:
 
 ---
 
-## Trie Format Matters!
+## Base 2, Base 16, Base-26?
 
-- Recall that in our "trie walking", we took the state root, and got the root node from the DB.
-- The state root of any substrate-based chain, including Polkadot, is the hash of the "Trie Node".
+- Instead of alphabet, we use the base-16 representation of everything.
 
-> Trie format matters! and therefore it is part of [the polkadot spec](https://spec.polkadot.network).
+> Base-16 (Patricia) Merkle Trie.
+
+- `System` -> `73797374656d`
+- `:code` -> `3a636f646500`
+
+---v
+
+### Base 2, Base 16, Base-26?
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-16.svg" />
+<!-- TODO: update figure to represent node size. -->
+
+Tradeoff: "_IO count vs. Node size_"
+
+<!-- .element: class="fragment" -->
+
+Between a light client and a full node, who cares more about which?
+
+<!-- .element: class="fragment" -->
 
 Notes:
 
-Meaning, if another client wants to sync polkadot, it should know the details of the trie format.
+Light client cares about node size.
+When proof is being sent, there is no IO.
+
+First glance, the radix-8 seems better: you will typically have less DB access to reach a key.
+For example, with binary, with 3 IO, we can reach only 8 items, but with radix-8 512.
+
+So why should not choose a very wide tree?
+Because the wider you make the tree, the bigger each node gets, because it has to store more hashes.
+At some point, this start to screw with both the proof size and the cost of reading/writing/encoding/decoding all these
+nodes.
+
+---v
+
+### Base 2, Base 16, Base-26?
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-16-with-size.svg" />
+
+Note:
+
+Here's a different way to represent it; the nodes are bigger on the base-8 trie.
+
+---v
+
+### Base 2, Base 16, Base-26?
+
+- base-2: Small proofs, more nodes.
+- base-26: Bigger proofs, less nodes.
+
+Notes:
+Anyone interested in blockchain and research stuff should look into this.
 
 ---
 
@@ -853,61 +872,39 @@ proof recorder, and see which parts of the trie is exactly part of the proof.
 
 ---
 
-## Base 2, Base 16, Base-26?
+### Overlay
 
-- Instead of alphabet, we use the base-16 representation of everything.
+- There is a limit to how many nested layers you can spawn
+- It is not free, thus it is attack-able.
 
-> Base-16 (Patricia) Merkle Trie.
+```rust
+with_storage_layer(|| {
+    let foo = sp_io::storage::read(b"foo");
+    with_storage_layer(|| {
+        sp_io::storage::set(b"foo", b"foo");
+        with_storage_layer(|| {
+            sp_io::storage::set(b"bar", foo);
+            with_storage_layer(|| {
+                sp_io::storage::set(b"foo", "damn");
+                Err("damn")
+            })
+            Ok("what")
+        })
+        Err("the")
+    });
+    Ok("hell")
+})
+```
 
-- `System` -> `73797374656d`
-- `:code` -> `3a636f646500`
+---
 
----v
+## Trie Format Matters!
 
-### Base 2, Base 16, Base-26?
+- Recall that in our "trie walking", we took the state root, and got the root node from the DB.
+- The state root of any substrate-based chain, including Polkadot, is the hash of the "Trie Node".
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-16.svg" />
-<!-- TODO: update figure to represent node size. -->
-
-Tradeoff: "_IO count vs. Node size_"
-
-<!-- .element: class="fragment" -->
-
-Between a light client and a full node, who cares more about which?
-
-<!-- .element: class="fragment" -->
-
-Notes:
-
-Light client cares about node size.
-When proof is being sent, there is no IO.
-
-First glance, the radix-8 seems better: you will typically have less DB access to reach a key.
-For example, with binary, with 3 IO, we can reach only 8 items, but with radix-8 512.
-
-So why should not choose a very wide tree?
-Because the wider you make the tree, the bigger each node gets, because it has to store more hashes.
-At some point, this start to screw with both the proof size and the cost of reading/writing/encoding/decoding all these
-nodes.
-
----v
-
-### Base 2, Base 16, Base-26?
-
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-16-with-size.svg" />
-
-Note:
-
-Here's a different way to represent it; the nodes are bigger on the base-8 trie.
-
----v
-
-### Base 2, Base 16, Base-26?
-
-- base-2: Small proofs, more nodes.
-- base-26: Bigger proofs, less nodes.
-
-✅ 16 has been benchmarked and studies years ago as a good middle-ground.
+> Trie format matters! and therefore it is part of [the polkadot spec](https://spec.polkadot.network).
 
 Notes:
-Anyone interested in blockchain and research stuff should look into this.
+
+Meaning, if another client wants to sync polkadot, it should know the details of the trie format.
