@@ -924,6 +924,7 @@ hardcoded, but the protocol itself is flexible.
 
 #### Track: Aux Lecture
 
+- Tx Pool (Kian)
 - Interacting with Substrate (Ankan)
 - SCALE Codec (Ankan)
 
@@ -949,6 +950,7 @@ hardcoded, but the protocol itself is flexible.
 #### Day 1
 
 - Wasm Meta Protocol
+- Tx Pool
 - 📚 FRAMELess Activity
 
 ---v
@@ -963,13 +965,17 @@ hardcoded, but the protocol itself is flexible.
 
 ---
 
+## Homework 📚
+
+Highly suggested reading to ingest this lecture better:
+  - [`polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html)
+---
+
 ## Additional Resources! 😋
 
 > Check speaker notes (click "s" 😉)
 
 <img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
-
-TODO: suggested reading!
 
 Notes:
 

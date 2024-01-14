@@ -156,7 +156,8 @@ pub struct ValidTransaction {
 Notes:
 
 - See: https://github.com/paritytech/substrate/pull/11786
-TODO we probably also ban the peer who sent us that transaction? but have to learn.
+
+NOTE: we probably also ban the peer who sent us that transaction? but have to learn.
 
 ---
 
