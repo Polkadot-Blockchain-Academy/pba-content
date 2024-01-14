@@ -13,7 +13,7 @@ duration: 60 minutes
 - Ground-up, low-level, but hands-on.
 - Intentionally avoiding FRAME, but giving you the tools to be successful at it.
 - Interrupts and questions are always welcome.
-- Narratives above facts all.
+- Narratives > facts.
 
 
 Your feedback on all of this is highly appreciated!
@@ -91,7 +91,7 @@ https://en.wikipedia.org/wiki/Bitcoin_scalability_problem
 https://ycharts.com/indicators/ethereum_average_gas_price
 
 It is interesting to checkout some projects that are now trying to be "Substrate for L2s":
-https://github.com/Sovereign-Labs/sovereign-sdk
+https://github.com/Sovereign-Labs/sovereign-sdk / https://arbitrum.io/orbit
 
 ---v
 
@@ -478,22 +478,10 @@ ofc, changing the Wasm code cannot be done by anyone. That's up to governance.
 
 <div>
 
-- Runtime -> **Application Logic**.
-
-</div>
-<!-- .element: class="fragment" -->
-<div>
-
-- A _fancy_ term: Runtime -> **State Transition Function**.
-
-</div>
-<!-- .element: class="fragment" -->
-<div>
-
-- A _technical_ term: Runtime -> **how to execute blocks**.
-
-</div>
-<!-- .element: class="fragment" -->
+- Blockchain -> **State Machine**
+- Runtime -> **State Transition Function**
+  - &shy;<!-- .element: class="fragment" -->Or, **application logic**.
+  - &shy;<!-- .element: class="fragment" -->Or, **how to execute blocks**
 
 Notes:
 
@@ -573,8 +561,8 @@ This update was:
 
 Notes:
 
-take a moment to establish that this upgrade is forkless. The runtime is upgraded, but the client is
-not. In fact, the client didn't need to know about this at all.
+take a moment to establish that this upgrade is forkless. The runtime is upgraded, but the node is
+not. In fact, the node didn't need to know about this at all.
 
 This is what the meta-protocol achieves.
 
