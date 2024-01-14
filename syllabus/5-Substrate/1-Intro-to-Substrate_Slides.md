@@ -849,6 +849,8 @@ fee-less.
 - Bridges
 - Polkadot Node
 
+**This is a big repo, please clone and run `cargo build` on it after this lecture**
+
 <br/>
 
 #### [`polkadot-fellowship/runtime`](https://github.com/polkadot-fellows/runtimes)
@@ -948,8 +950,9 @@ hardcoded, but the protocol itself is flexible.
 #### Day 0
 
 - ✅ Introduction
-- Wasm Meta Protocol Part 1
-- 📚 Introduction to FRAMELess Assignment
+- SCALE Codec
+- Interacting with Substrate
+- 📚 FRAMELess Assignment
 
 ---v
 
@@ -957,9 +960,7 @@ hardcoded, but the protocol itself is flexible.
 
 #### Day 1
 
-- Wasm Meta Protocol Part 2
-- SCALE Codec
-- Interacting with Substrate
+- Wasm Meta Protocol
 - 📚 FRAMELess Activity
 
 ---v
@@ -979,6 +980,8 @@ hardcoded, but the protocol itself is flexible.
 > Check speaker notes (click "s" 😉)
 
 <img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+
+TODO: suggested reading!
 
 Notes:
 

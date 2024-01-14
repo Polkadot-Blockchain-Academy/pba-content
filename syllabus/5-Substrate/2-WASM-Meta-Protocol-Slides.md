@@ -35,7 +35,7 @@ Notes:
 
 ## It All Began With a Runtime..
 
-- The Client / Runtime division is one of the most important design decisions in Substrate.
+- The Node / Runtime division is one of the most important design decisions in Substrate.
   - 👿 Bad: Fixed opinion. <!-- .element: class="fragment" -->
   - 😇 Good: Enables countless other things to not be fixed. <!-- .element: class="fragment" -->
 
@@ -53,7 +53,7 @@ Recall that the boundary for this division is the **state transition**
 
 ### Substrate: a short recap
 
-- **Host Functions**: Means of a runtime communicating with its host environment, i.e. the Substrate client.
+- **Host Functions**: Means of a runtime communicating with its host environment, i.e. the Substrate node.
 
 ---v
 
@@ -69,13 +69,13 @@ Building a Wasm module's activity was building something akin to runtime-apis
 
 ### Substrate: a short recap
 
-- Database is on the client side, storing an opaque key-value state per block.
+- **Database** is on the node side, storing an opaque key-value state per block.
 
 ---v
 
 ### Substrate: a short recap
 
-- Communication language of client/runtime is SCALE:
+- Communication language of node/runtime is **SCALE**:
 
 <diagram class="mermaid">
 flowchart LR
@@ -136,14 +136,14 @@ fn set(key: Vec<u8>, value: Vec<u8>);
 
 Notes:
 
-ofc the IO to these functions is all opaque bytes, because the client does not know the state
+ofc the IO to these functions is all opaque bytes, because the node does not know the state
 layout.
 
 ---v
 
 ### Example #1: State
 
-- could we have communicated with the client like this?
+- could we have communicated with the node like this?
 
 ```rust
 fn set_balance(who: AccountId, amount: u128)
@@ -151,17 +151,17 @@ fn set_balance(who: AccountId, amount: u128)
 
 Notes:
 
-This would imply that the client would have to know, indefinitely, the types needed for account id
+This would imply that the node would have to know, indefinitely, the types needed for account id
 and balance. Also, it would have to know the final key for someone's balance.
 
 ---v
 
 ### Example #1: State
 
-- Exceptions:
+- [Exceptions](https://paritytech.github.io/polkadot-sdk/master/sp_storage/well_known_keys/index.html):
 
 ```rust
-/// The keys known to the client.
+/// The keys known to the node.
 mod well_known_keys {
   const CODE: &[u8] = b":code";
 }
@@ -185,29 +185,30 @@ See https://paritytech.github.io/substrate/master/sp_storage/well_known_keys/ind
 
 ### Example #2: Block Import
 
-- Client's view of the state -> Opaque.
-- Client's view of the transactions? 🤔
+- Node's view of the state -> Opaque.
+- Node's view of the transactions? 🤔
 <!-- .element: class="fragment" -->
 
 Notes:
 
-Short answer is: anything that is part of the STF definition must be opaque to the client, and is
+Short answer is: anything that is part of the STF definition must be opaque to the node, and is
 upgradeable, but we will learn this later.
 
 ---v
 
 ### Example #2: Block Import
 
-- Transactions format is by definition part of the state transition function as well.
-- What about header, and other fields in a typical block?
+- Transactions format is by definition part of the state transition function as well -> Opaque
 
 Notes:
+
+What about header, and other fields in a typical block?
 
 as in, do we want to able to update our transactions format as well in a forkless manner?
 we want the runtime to be able to change its transactions format as well, in a forkless manner.
 
 The answer to the latter is more involved. The short answer is that these fields like header must be
-known and established between client and runtime. If you want to alter the header format, that's a
+known and established between node and runtime. If you want to alter the header format, that's a
 hard fork.
 
 The concept of `digest` is a means through which additional data can be put in the header without
@@ -234,7 +235,7 @@ https://paritytech.github.io/substrate/master/sp_runtime/generic/index.html
 <pba-col>
 
 ```rust
-struct ClientBlock {
+struct NodeBlock {
   header: Header,
   transactions: Vec<Vec<u8>>
 }
@@ -265,7 +266,7 @@ this slide is intentionally using the keyword transaction instead of extrinsic.
 
 ```rust [1-100|1-2|4-6|8-9|1-100]
 // fetch the block from the outer world.
-let opaque_block: ClientBlock = networking::import_queue::next_block();
+let opaque_block: NodeBlock = import_queue::next_block();
 
 // initialize a wasm runtime.
 let code = database::get(well_known_keys::CODE);
@@ -279,10 +280,10 @@ runtime.execute_block(opaque_block);
 
 ### Example #2: Block Import
 
-- 💡 The client needs a runtime API to ask the runtime to execute the block.
+- 💡 The node needs a runtime API to ask the runtime to execute the block.
 
 ```rust
-fn execute_block(opaque_block: ClientBlock) -> Result<_, _> { .. }
+fn execute_block(opaque_block: NodeBlock) -> Result<_, _> { .. }
 ```
 
 Notes:
@@ -315,7 +316,7 @@ Notes:
 
 ```rust [1-100|1-2|4-6|8-10|12-15|17-100]
 // fetch the block from the outer world.
-let block: ClientBlock = networking::import_queue::next_block();
+let block: NodeBlock = import_queue::next_block();
 
 // get the parent block's state.
 let parent = block.header.parent_hash;
@@ -343,10 +344,10 @@ Notes:
 
 ### Example #2: Block Import
 
-- A state key is only meaningful at a given block.
-- A :code is only meaningful at at given block.
+- *A state key is only meaningful at a given block*
+- &shy;*A `:code` is only meaningful at at given block*
 <!-- .element: class="fragment" -->
-- 💡 A runtime (API) is only meaningful when executed at a give block.
+- &shy;*A runtime (API) is only meaningful when executed at a give block*
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -371,31 +372,15 @@ Notes:
 
 ### Example #2: Block Import
 
-```rust [14-20]
-// fetch the block from the outer world.
-let block: ClientBlock = networking::import_queue::next_block();
-
-// get the parent hash. Note that `sp_runtime::traits::Header` provides this.
-let parent = block.header.parent_hash;
-let mut state = database::state_at(parent);
-
-// initialize a wasm runtime FROM THE PARENT `state`!
-let code = state::get(well_known_keys::CODE);
-let runtime = wasm::Executor::new(code);
-
-// call into this runtime, update `state`.
+```rust
 state.execute(|| {
-  // within this, we probably call into `host_functions::set` a lot.
+  // What is the most important check that a runtime must do
+  // inside `execute_block` 🤔?
   runtime.execute_block(block);
-
-  let new_state_root = host_functions::state_root();
-  let claimed_state_root = block.header.state_root;
-  assert_eq!(new_state_root, claimed_state_root);
 });
-
-// create the state of the next_block
-database::store_state(block.header.hash, state)
 ```
+
+Note: make sure roots in the header match!
 
 ---v
 
@@ -436,12 +421,15 @@ Notes:
 extrinsics are just blobs of data which can be included in a block. inherents are types of extrinsic
 which are crafted by the block builder itself in the production process. they are unsigned because
 the assertion is that they are "inherently true" by virtue of getting past all validators.
+
 notionally the origin can be said to be a plurality of validators. take for example the timestamp
 set inherent. if the data were sufficiently incorrect (i.e. the wrong time), then the block would
 not be accepted by enough validators and would not become canonicalised. so the "nobody" origin is
-actually the tacit approval of the validators. transactions are generally statements of opinion
-which are valuable to the chain to have included (because fees are paid or some other good is done).
-the transaction pool filters out which of these are indeed valuable and nodes share them.
+actually the tacit approval of the validators.
+
+transactions are generally statements of opinion which are valuable to the chain to have included
+(because fees are paid or some other good is done). the transaction pool filters out which of these
+are indeed valuable and nodes share them.
 
 ---
 
@@ -512,8 +500,8 @@ let mut state = database::state_at(best_hash);
 let code = state::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// get an empty client block.
-let mut block: ClientBlock = Default::default();
+// get an empty node block.
+let mut block: NodeBlock = Default::default();
 
 // repeatedly apply transactions.
 while let Some(next_transaction) = transaction_pool_iter::next() {
@@ -529,14 +517,15 @@ block.header.state_root = state.root();
 
 Notes:
 
-- What is the type of `next_ext`? `Vec<u8>`
+- What is the type of `next_transaction`? `Vec<u8>`
 - Do we actually loop forever until the tx-pool is empty? probably not!
 
 ---v
 
 ### Example #3: Block Authoring
 
-- Substrate based runtimes are allowed to perform some operations at the beginning and end of each block.
+- Substrate based runtimes are allowed to perform some operations at the beginning and end of each
+  block.
 - ✋🏻 And recall that a smart contract could not do this.
 
 ---v
@@ -554,56 +543,11 @@ let mut state = database::state_at(best_hash);
 let code = state::get(well_known_keys::CODE);
 let runtime = wasm::Executor::new(code);
 
-// get an empty client block.
-let mut block: ClientBlock = Default::default();
+// get an empty node block.
+let mut block: NodeBlock = Default::default();
 
-// tell this runtime that you wish to start a new block.
-runtime.initialize_block();
-
-// repeatedly apply transactions.
-while let Some(next_ext) = transaction_pool_iter::next() {
-  state.execute(|| {
-    runtime.apply_extrinsic(next_ext);
-  });
-  block.extrinsics.push(next_ext);
-}
-
-// tell the runtime that we are done.
-runtime.finalize_block();
-
-// set the new state root.
-block.header.state_root = state.root();
-```
-
----v
-
-### Example #3: Block Authoring
-
-- What about Inherents?
-
----v
-
-### Example #3: Block Authoring
-
-```rust [14-26]
-// get the best-block, based on whatever consensus rule we have.
-let (best_number, best_hash) = consensus::best_block();
-
-// get the latest state.
-let mut state = database::state_at(best_hash);
-
-// initialize a wasm runtime.
-let code = state::get(well_known_keys::CODE);
-let runtime = wasm::Executor::new(code);
-
-// get an empty client block.
-let mut block: ClientBlock = Default::default();
-
-// tell this runtime that you wish to start a new block.
-runtime.initialize_block();
-
-let inherents: Vec<Vec<u8>> = block_builder::inherents();
-block.extrinsics = inherents;
+// tell this runtime that you wish to start a new block, and pass in a raw header.
+runtime.initialize_block(&block.header);
 
 // repeatedly apply transactions.
 while let Some(next_ext) = transaction_pool_iter::next() {
@@ -613,35 +557,27 @@ while let Some(next_ext) = transaction_pool_iter::next() {
   block.extrinsics.push(next_ext);
 }
 
-// tell the runtime that we are done.
-runtime.finalize_block();
-
-// set the new state root.
-block.header.state_root = state.root();
+// finalize and set the final header.
+block.header = runtime.finalize_block();
 ```
 
 Notes:
 
-while inherents can in principle come at any point in the block, since FRAME restricts them to
-come first, we also keep our example aligned.
+The header interactions here are a substrate implementation detail, not a golden rule. I guess it
+could have been done otherwise. I am mainly covering it because it is relevant to the assignment.
 
-Should you wish to see the real version of this, check this crate:
-https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
+Good question to ask: what about inherents? see appendix slides.
 
 ---v
 
 ### Example #3: Block Authoring
 
 ```rust
-fn initialize_block(..) { ... }
+fn initialize_block(raw_header: Header) { ... }
 // note the opaque extrinsic type.
 fn apply_extrinsic(extrinsic: Vec<u8>) { ... }
-fn finalize_block(..) { ... }
+fn finalize_block(..) -> Header { ... }
 ```
-
-Notes:
-
-in fact, the client also builds its inherent list with the help of the runtime.
 
 ---
 
@@ -673,7 +609,7 @@ In order the address the mentioned issue, metadata must be a runtime API.
 <hr>
 
 - Metadata contains all the basic information to know about all storage items, all extrinsics, and so
-  on. It will also help a client/app decode them into the right type.
+  on. It will also help a node/app decode them into the right type.
 - Substrate itself doesn't impose what the metadata should be. It is `Vec<u8>`.
 - FRAME based runtime expose a certain format, which is extensively adopted in the ecosystem.
 
@@ -691,7 +627,7 @@ In order the address the mentioned issue, metadata must be a runtime API.
 
 Notes:
 
-By Applications/Clients I really mean anyone/anything. Substrate client doesn't really use metadata
+By Applications I really mean anyone/anything. Substrate node doesn't really use metadata
 because it is dynamically typed, but if needed, it could.
 
 ---
@@ -705,7 +641,7 @@ Notes:
 I wish you could have both, but not so easy.
 
 Some personal rant: radical upgrade-ability is the biggest advantage, and arguably one of the main
-develop-ability problems of the substrate ecosystem. Writing clients, such as block explorers,
+develop-ability problems of the substrate ecosystem. Writing nodes, such as block explorers,
 scanners, and even exchange integration are orders of magnitude harder than a blockchain that has a
 fixed format and only changes every 18 months at most. That being said, this is a battle that is to
 me obvious: we simply HAVE to win. When ethereum first introduced smart contracts, everyone
@@ -715,18 +651,20 @@ also, as noted in an earlier slide, once you make it work for one chain, it work
 
 ---
 
-## Oblivious Client 🙈🙉
+## Oblivious Node 🙈🙉
 
-- The underlying reason why the client is "**kept in the dark**" is so that it wouldn't need to care
+- The underlying reason why the node is "**kept in the dark**" is so that it wouldn't need to care
   about the runtime upgrading from one block to the other.
+
+
 
 ---v
 
-## Oblivious Client 🙈🙉
+## Oblivious Node 🙈🙉
 
-$$STF = F(blockBody_{N}, state_{N}) > state_{N+1}$$
+$$STF = F(blockBody_{N+1}, state_{N}) > state_{N+1}$$
 
-_Anything that is part of the STF is opaque to the client, but it can change forklessly!_
+_Anything that is part of the STF is opaque to the node, but it can change forklessly!_
 
 - <!-- .element: class="fragment" --> The `F` itself (your Wasm blob)? It can change!
 - <!-- .element: class="fragment" --> Extrinsic format? It can change!
@@ -734,16 +672,16 @@ _Anything that is part of the STF is opaque to the client, but it can change for
 
 Notes:
 
-In essence, all components of the STF must be opaque to the client. `Vec<u8>`.
+In essence, all components of the STF must be opaque to the node. `Vec<u8>`.
 Metadata is there to assist where needed.
 This is why forkless upgrades are possible in substrate.
 
 ---v
 
-## Oblivious Client 🙈🙉
+## Oblivious Node 🙈🙉
 
 - What about new host functions?
-- <!-- .element: class="fragment" --> What about a new header filed*?
+- <!-- .element: class="fragment" --> What about a new header field*?
 - <!-- .element: class="fragment" --> What about a new Hashing primitive?
 
 🥺 No longer forkless.
@@ -778,9 +716,69 @@ time to ask any missing questions.
 ### Finding APIs and Host Functions
 
 - look for `impl_runtime_apis! {...}` and `decl_runtime_apis! {...}` macro calls.
-  - Try and find the corresponding the client code calling a given api as well.
+  - Try and find the corresponding the node code calling a given api as well.
 - Look for `#[runtime_interface]` macro, and try and find usage of the host functions!
 - You have 15 minutes!
+
+---v
+
+## Defining a Runtime API
+
+```rust [1-7|9-15|17-100|1-100]
+// somewhere in common between node/runtime => substrate-primitive.
+decl_runtime_apis! {
+	pub trait Core {
+		fn version() -> RuntimeVersion;
+		fn execute_block(block: Block) -> bool;
+	}
+}
+
+// somewhere in the runtime code.
+impl_runtime_apis! {
+  impl sp_api::Core<Block> for Runtime {
+    fn version() -> RuntimeVersion { /* stuff */ }
+    fn execute_block(block: Block) -> bool { /* stuff */ }
+  }
+}
+
+// somewhere in the node code..
+let block_hash = "0xffff...";
+let block = Block { ... };
+let outcome: Vec<u8> = api.execute_block(block, block_hash).unwrap();
+```
+
+Notes:
+
+- All runtime APIs are generic over a `<Block>` by default.
+- All runtime APIs are executed on top of a **specific block**. This is the implicit _at_ parameter.
+- Going over the API, everything is SCALE encoded both ways, but abstractions like
+  `impl_runtime_apis` hide that away from you.
+
+---v
+
+## Defining a Host Function
+
+```rust
+// somewhere in substrate primitives, almost always `sp_io`.
+#[runtime_interface]
+pub trait Storage {
+  fn get(&self, key: &[u8]) -> Option<Vec<u8>> {...}
+  fn get(&self, key: &[u8], value: &[u8]) -> Option<Vec<u8>> {...}
+  fn root() -> Vec<u8> {...}
+}
+
+#[runtime_interface]
+pub trait Hashing {
+	fn blake2_128(data: &[u8]) -> [u8; 16] {
+		sp_core::hashing::blake2_128(data)
+	}
+}
+
+// somewhere in substrate runtime
+let hashed_value = sp_io::storage::get(b"key")
+  .and_then(sp_io::hashing::blake2_128)
+  .unwrap();
+```
 
 ---v
 
@@ -843,78 +841,19 @@ sp_io::storage::set(..);
 sp_io::storage::root();
 ```
 
+
 ---
 
 ## Lecture Recap (Part 1)
 
 - Revise "**Runtime API**" and "**Host Function**" concepts.
 - Deep look at block import and authoring.
-- Oblivious client.
-- Metadata
+- Oblivious node. STF has to be opaque, but can be forklessly upgraded.
+- Metadata to the rescue!
 
 ---
 
 # Part 2
-
----
-
-## Defining a Runtime API
-
-```rust [1-7|9-15|17-100|1-100]
-// somewhere in common between client/runtime => substrate-primitive.
-decl_runtime_apis! {
-	pub trait Core {
-		fn version() -> RuntimeVersion;
-		fn execute_block(block: Block) -> bool;
-	}
-}
-
-// somewhere in the runtime code.
-impl_runtime_apis! {
-  impl sp_api::Core<Block> for Runtime {
-    fn version() -> RuntimeVersion { /* stuff */ }
-    fn execute_block(block: Block) -> bool { /* stuff */ }
-  }
-}
-
-// somewhere in the client code..
-let block_hash = "0xffff...";
-let block = Block { ... };
-let outcome: Vec<u8> = api.execute_block(block, block_hash).unwrap();
-```
-
-Notes:
-
-- All runtime APIs are generic over a `<Block>` by default.
-- All runtime APIs are executed on top of a **specific block**. This is the implicit _at_ parameter.
-- Going over the API, everything is SCALE encoded both ways, but abstractions like
-  `impl_runtime_apis` hide that away from you.
-
----
-
-## Defining a Host Function
-
-```rust
-// somewhere in substrate primitives, almost always `sp_io`.
-#[runtime_interface]
-pub trait Storage {
-  fn get(&self, key: &[u8]) -> Option<Vec<u8>> {...}
-  fn get(&self, key: &[u8], value: &[u8]) -> Option<Vec<u8>> {...}
-  fn root() -> Vec<u8> {...}
-}
-
-#[runtime_interface]
-pub trait Hashing {
-	fn blake2_128(data: &[u8]) -> [u8; 16] {
-		sp_core::hashing::blake2_128(data)
-	}
-}
-
-// somewhere in substrate runtime
-let hashed_value = sp_io::storage::get(b"key")
-  .and_then(sp_io::hashing::blake2_128)
-  .unwrap();
-```
 
 ---
 
@@ -1043,7 +982,7 @@ But, if some are executing native, then you will have a consensus error.
 ## Speaking of Versions..
 
 - Make sure you understand the difference! 👍
-  - Client Version
+  - Node Version
   - Runtime Version
 
 ---v
@@ -1068,7 +1007,7 @@ But, if some are executing native, then you will have a consensus error.
 
 ### Speaking of Versions..
 
-- What happens when Parity release a new `parity-polkadot` client binary?
+- What happens when Parity release a new `parity-polkadot` node binary?
 - What happens when the Polkadot fellowship wants to update the runtime?
 
 ---
@@ -1163,7 +1102,7 @@ See the documentation of `ApplyExtrinsicResult` in Substrate for more info about
 
 <div>
 
-- Clients need to upgrade first. No more fully forkless upgrade 😢
+- Nodes need to upgrade first. No more fully forkless upgrade 😢
 
 </div>
 
@@ -1185,7 +1124,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 
 <div>
 
-- For some period of time, the client needs to support both..🤔
+- For some period of time, the node needs to support both..🤔
 
 </div>
 
@@ -1369,16 +1308,24 @@ graph LR
     TransactionPool --"😈"--> Authoring --"😇"--> Import
 </diagram>
 
+Note:
+
+you should for example find that a real FRAME-based runtime, in `execute_block`, we certainly do
+panic if any transaction fails to apply.
+
 ---
 
 ## Lecture Recap (Part 2)
 
-- Recap the syntax of host functions and runtime APIs.
 - Considerations:
   - Speed
   - Native Execution and Versioning
   - Panics
   - Altering Host Functions
+
+- Activity:
+  - Inspecting a wasm blob for import and export
+  - Finding panics in `FRAME` runtimes.
 
 ---
 
@@ -1390,13 +1337,14 @@ graph LR
 
 Notes:
 
+TODO: update links, most are outdated.
 - Some very recent change the the block building API set: https://github.com/paritytech/substrate/pull/14414
 
 - New runtime API for building genesis config: https://github.com/paritytech/substrate/pull/14310
 
 - All Substrate PRs that have added new host functions: https://github.com/paritytech/substrate/issues?q=label%3AE4-newhostfunctions+is%3Aclosed
 
-- All substrate PRs that have required the client to be update first: https://github.com/paritytech/substrate/issues?q=is%3Aclosed+label%3A%22E10-client-update-first+%F0%9F%91%80%22
+- All substrate PRs that have required the node to be update first: https://github.com/paritytech/substrate/issues?q=is%3Aclosed+label%3A%22E10-client-update-first+%F0%9F%91%80%22
 
 - New metadata version, including types for the runtime API: https://github.com/paritytech/substrate/issues/12939
 
@@ -1421,7 +1369,7 @@ SomeExternalities.execute_with(|| {
 
 Content that is not covered, but is relevant.
 
----v
+---
 
 ### Consideration: Runtime API Versioning
 
@@ -1431,7 +1379,7 @@ Content that is not covered, but is relevant.
 
 Notes:
 
-Also, it is arguable to say that the runtime is the boss here. The client must serve the runtime
+Also, it is arguable to say that the runtime is the boss here. The node must serve the runtime
 fully, but the runtime may or may not want to support certain APIs for certain applications.
 
 Recall from another slide:
@@ -1442,7 +1390,7 @@ Recall from another slide:
 
 ### Consideration: Runtime API Versioning
 
-- The Rust code (which is **statically** typed) in substrate client does care if the change _is breaking_.
+- The Rust code (which is **statically** typed) in substrate node does care if the change _is breaking_.
   - For example, input/output types change. Rust code cannot deal with that!
 
 ---v
@@ -1481,6 +1429,61 @@ But what you have to do is dependent on the scenario.
 ### Activity: API Versioning
 
 - Look into substrate and find all instances of `#[changed_in(_)]` macro to detect runtime api version.
-- Then see if/how this is being used in the client code.
+- Then see if/how this is being used in the node code.
 
 - Find all the `#[version]` macros in `sp-io` to find all the versioned host functions.
+
+
+---
+
+### Inherents and Block Authoring
+
+- What about Inherents?
+
+---v
+
+### Inherents and Block Authoring
+
+```rust [14-26]
+// get the best-block, based on whatever consensus rule we have.
+let (best_number, best_hash) = consensus::best_block();
+
+// get the latest state.
+let mut state = database::state_at(best_hash);
+
+// initialize a wasm runtime.
+let code = state::get(well_known_keys::CODE);
+let runtime = wasm::Executor::new(code);
+
+
+// get an empty node block.
+let mut block: NodeBlock = Default::default();
+
+// tell this runtime that you wish to start a new block, and pass in a raw header.
+runtime.initialize_block(&block.header);
+
+let inherents: Vec<Vec<u8>> = block_builder::inherents();
+block.extrinsics = inherents;
+
+// repeatedly apply transactions.
+while let Some(next_ext) = transaction_pool_iter::next() {
+  state.execute(|| {
+    runtime.apply_extrinsic(next_ext);
+  });
+  block.extrinsics.push(next_ext);
+}
+
+// finalize and set the final header.
+block.header = runtime.finalize_block();
+```
+
+Notes:
+
+In reality, the node can either get the inherents itself or ask the runtime about them. There is
+actually a runtime API for this too, but we won't cover it.
+
+while inherents can in principle come at any point in the block, since FRAME restricts them to
+come first, we also keep our example aligned.
+
+Should you wish to see the real version of this, check this crate:
+https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
