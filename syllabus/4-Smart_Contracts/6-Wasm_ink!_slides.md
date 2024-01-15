@@ -14,6 +14,7 @@ Notes:
 - ask questions during the lecture, don't wait until the end
 - practical, but we go deeper where needed
 - some complexity is omitted in the examples (examples are not a production code)
+  - not built to scale or painted
 
 ---
 
@@ -35,6 +36,7 @@ Notes:
 - Virtual Machine: any Wasm VM: yes in theory, in practice bound pretty close to the platform it runs on (Substrate & the contracts pallet)
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
 - The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
+  - prefixed with all 0s
 
 ---
 
@@ -169,9 +171,9 @@ authors = ["fbielejec"]
 edition = "2021"
 
 [dependencies]
-ink = { version = "=4.2.1", default-features = false }
+ink = { version = "=4.3.0", default-features = false }
 scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] }
-scale-info = { version = "2.6", default-features = false, features = ["derive"], optional = true }
+scale-info = { version = "2.5", default-features = false, features = ["derive"], optional = true }
 
 [lib]
 path = "lib.rs"
@@ -421,7 +423,7 @@ Notes:
 
 ## Developing contracts: Constructors
 
-```rust [7,12,17|13,18,7-9|2-4,8]
+```rust [7,12,17|13,18,7-9|2-4,8|21-23]
 #[ink(storage)]
 pub struct Flipper {
     value: bool,
@@ -441,6 +443,12 @@ pub fn default() -> Self {
 pub fn non_default() -> Self {
     Self::new(false)
 }
+
+#[ink(constructor)]
+pub fn fallible_constructor() -> Result<Self,Error> {
+    fallible_function()?;
+    Ok(Self::new(false))
+}
 ```
 
 Notes:
@@ -449,6 +457,7 @@ Notes:
 - no limit of the number of constructors
 - constructors can call other constructors
 - constructors return the initial storage
+- constructors can return Result
 - a lot of complexity conveniently hidden behind macros
 
 ---
@@ -763,7 +772,7 @@ Notes:
 
 Notes:
 - as the last more esoteric usage of logs
-- logs are also a cheaper form of storage: 
+- logs are also a cheaper form of storage:
 
 ---
 
@@ -809,12 +818,12 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
-| Type         | Decoding                              | Encoding                     | Remark                                                                         |
+| Type         | Decoding                              | Encoding example                     | Remark                                                                         |
 | ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
 | Boolean      | true                                  | 0x0                          | encoded using least significant bit of a single byte                           |
 |              | false                                 | 0x1                          |                                                                                |
 | Unsigned int | 42                                    | 0x2a00                       |                                                                                |
-| Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a and 0x0101            | first byte encodes the variant index, remaining bytes encode the data          |
+| Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a or 0x0101            | first byte encodes the variant index, remaining bytes encode the data          |
 | Tuple        | (3, false)                            | 0x0c00                       | concatenation of each encoded value                                            |
 | Vector       | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
 | Struct       | {x:30u64, y:true}                     | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
@@ -825,6 +834,7 @@ Notes:
 
 - this table is not exhaustive
 - struct example: stored as an vector, names are ignored, only order matters, first four bytes encode the 64-byte integer and then the least significant bit of the last byte encodes the boolean
+- can you decode the enum example? 42 and false
 
 ---
 
@@ -850,7 +860,7 @@ Notes:
 - Types that can be stored entirely under a single storage cell are called Packed Layout
 - by default ink! stores all storage struct fields under a single storage cell
 - as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
-- .. which may be what you want or not
+- .. which may be what you want or not, depending on access patterns
 
 ---
 
@@ -1052,26 +1062,6 @@ Notes:
 
 ---
 
-## Contracts upgradeability: access control
-
-```rust [3]
-#[ink(message)]
-pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
-    ensure_owner(self.env().caller())?;
-    ink::env::set_code_hash(&code_hash)?;
-    Ok(())
-}
-
-```
-
-Notes:
-
-- you DO NOT want to leave this message un-guarded
-- solutions to `ensure_owner` can range from a very simple ones address checks
-- to a multiple-role database of access controlled accounts stored and maintained in a separate contract
-
----
-
 ## Upgradeability: storage
 
 <div style="font-size: 0.72em;">
@@ -1113,11 +1103,38 @@ Notes:
 
 ## Upgradeability: storage migrations
 
-<div style="font-size: 0.82em;">
+<div style="font-size: 0.70em;">
 
-```rust [1-13|15-17]
-// new contract code
+```rust []
+pub struct OldState {
+    pub field_1: u32,
+    pub field_2: bool,
+}
+
+#[ink(storage)]
+pub struct OldA {
+    old_state: Lazy<OldState, ManualKey<123>>,
+}
+
 #[ink(message)]
+pub fn set_code(&mut self, code_hash: [u8; 32], callback: Option<Selector>) {
+  set_code_hash(&code_hash)?;
+  call_migrate()?; // delegates a `migrate` call to the new contract code, but using callers context
+}
+```
+
+```rust []
+pub struct UpdatedOldState {
+    pub field_1: bool,
+    pub field_2: u32,
+}
+
+#[ink(storage)]
+pub struct NewA {
+    updated_old_state: Lazy<UpdatedOldState, ManualKey<123>>,
+}
+
+#[ink(message, selector = 0x4D475254)]
 pub fn migrate(&mut self) -> Result<()> {
     if let Some(OldContractState { field_1, field_2 }) = get_contract_storage(&123)? {
         self.updated_old_state.set(&UpdatedOldState {
@@ -1126,13 +1143,8 @@ pub fn migrate(&mut self) -> Result<()> {
         });
         return Ok(());
     }
-
     return Err(Error::MigrationFailed);
 }
-
-// old contract code
-#[ink(message)]
-pub fn set_code(&mut self, code_hash: [u8; 32], callback: Option<Selector>)
 ```
 
 </div>
@@ -1148,16 +1160,37 @@ Notes:
 
 ---
 
+## Contracts upgradeability: access control
+
+```rust [3]
+#[ink(message)]
+pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
+    ensure_owner(self.env().caller())?;
+    ink::env::set_code_hash(&code_hash)?;
+    Ok(())
+}
+
+```
+
+Notes:
+
+- you DO NOT want to leave this message un-guarded
+- solutions to `ensure_owner` can range from a very simple ones address checks
+- to a multiple-role database of access controlled accounts stored and maintained in a separate contract
+
+---
+
 # Common Vulnerabilities
 
 ---
 
 ## Past exploits: The DAO hack (2016)
 - The DAO (Decentralized Autonomous Organization) was a crowdfunding project on the Ethereum network.
-- In June 2016 an attacker drained funds worth ~$50 million at that time.
-- The funds were moved into an account subject to a 28-day holding period under the terms of the DAO smart contract
+- In June 2016 an attacker drained funds (worth ~$50 million at that time) and was about to drain even more.
+- The funds were moved into an account subject to a 28-day holding period under the terms of the DAO smart contract.
 
 NOTES:
+- Ethereum was searching for its killer app, dao's were supposed to be it
 - DAO was a form of a decentralized investor - directed venture capital (VC) fund.
 - At a pinnacle of it's popularity The DAO attracted nearly 15% of all the ETH in circulation back then.
 - the funds were actually not gone (but they would be soon).
@@ -1167,8 +1200,8 @@ NOTES:
 ## Past exploits: The DAO hack (2016)
 
 - The core Ethereum faced a difficult decision:
-- On one hand the blockchain promised to be decentralized and tamper-resistat
-- On the other hand the public's confidence and optimism about then young blockchain technology demanded an intervention
+  - On one hand the blockchain promised to be decentralized and tamper-resistant.
+  - On the other hand the public's confidence and optimism about the then young blockchain technology demanded an intervention.
 
 Notes:
 
@@ -1180,8 +1213,8 @@ Notes:
 
 ## Past exploits: The DAO hack (2016)
 
-- Eventually a vote in favour of forking the Ethereum history won out with 85% of the votes.
-- Some miners decided to keep mining on the old history, and this sesulted in the creation of Ethereum (ETH) and _Ethereum Classic_ (ETC) which operates to this day.
+- Eventually a vote in favour of **forking** the Ethereum history won out with 85% of the votes.
+- Some miners decided to keep mining on the old history, and this sesulted in the creation of _Ethereum_ (ETH) and _Ethereum Classic_ (ETC) which operates to this day.
 
 Notes:
 
@@ -1195,14 +1228,14 @@ Notes:
 
 <img style="margin-top: 50px;margin-bottom: 50px" width="600" src="./img/ink/reentrancy.png" />
 
-- The DAO hacker used what became knows as a _reentrancy_ attack.
-- Attacker exploited a _fallback_ function in Solidity to create a loop that syphoned funds out of the DAO contract.
+- The DAO hacker used what became known as a _reentrancy_ attack.
+- Attacker exploited a _fallback_ function in Solidity to create a loop that slowly syphoned funds out of the DAO contract.
 - Fallback functions are special constructs in Solidity that are triggered in specific situations.
 
 Notes:
 
 - fallback function is a special function that is executed when a contract receives Ether without any data
-- or when it receives a message that does not match any of its function signatures.
+- ... or when it receives a message that does not match any of its function signatures.
 
 ---
 
@@ -1224,7 +1257,7 @@ contract FallbackExample {
 
 - The fallback function does not take any arguments and has no return values.
 - It can be marked as **payable** to allow the contract to receive funds.
-- It is triggered if ETH is sent to the contract and there is no accompanying _calldata_ (a data location like memory or storage)
+- It is triggered if ETH is sent to the contract and there is no accompanying _calldata_ (a data location like memory or storage).
 
 Notes:
 - Fallback functions can include arbitrary logic in them, in this attack example it called back into withdraw function
@@ -1265,7 +1298,7 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
         .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
         .transferred_value(balance)
         .returns::<()>()
-        .invoke();
+        .try_invoke()??;
 
     self.balances.remove(caller);
 
@@ -1404,7 +1437,9 @@ Note:
 
 - Vulnerability on the Parity Multisig Wallet allowed an attacker to steal > 150,000 ETH.
 - Three high-profile multisig wallet contracts used to store funds from token sales were affected.
-- The attacker sent 2 transactions to each of the affected contracts: the first to obtain ownership of the MultiSig, the second to move all of its funds.
+- The attacker sent 2 transactions to each of the affected contracts:
+  - the first to obtain ownership of the MultiSig.
+  - the second to move all of its funds.
 
 Notes:
 - worth some ~30M USD back then.
@@ -1427,7 +1462,8 @@ function isOwner(address _addr) constant returns (bool) {
 
 - **Proxy pattern** is a way to reduce costs by sharing code between contracts.
 - All logic is stored in a stateless library contract deployed once, and a lightweight contract proper is deployed as many times as neccesary.
-- `DELEGATECALL` EVM instruction does the following: for whatever method that calls it, it will delegate that call to another contract, but using the context of the current contract
+- `DELEGATECALL` EVM instruction does the following:
+  - for whatever method that calls it, it will delegate that call to another contract, but using the context of the current contract.
 
 Notes:
 - ethereum's EVM does not have the separation between code and the SC instance like substrate does.
@@ -1485,6 +1521,7 @@ function() payable {
 
 - This exact code was defined in the wallet itself.
 - Do you see what happens here?
+- How would you fix this?
 
 Notes:
 - reckognize this? yes, this is a fallback function
@@ -1517,13 +1554,13 @@ Notes:
 
 - Following the fix for the original multisig vulnerability exploited in July a new version of the library contract was deployed.
 - Unfortunately it contained another vulnerability ...
-- Estimated losses totalled over 500,000 ETH
+- Estimated losses totalled over 500,000 ETH.
 
 Notes:
 
 - USD 150 million USD back then
 - including over 300,000 ETH from the Web3 Foundation team.
-
+- hacker did not walk with funds this itme, rather locked them forever
 ---
 
 ## The Parity Wallet Hack reloaded: the what?
@@ -1534,6 +1571,7 @@ function kill(address _to) onlymanyowners(sha3(msg.data)) external {
 }
 ```
 
+- library contract contained this function.
 - `suicide` (now `selfdestruct`) opcode was added to the EVM after the DAO hack.
 - It removes a contract from the blockchain and sends its ETH balance to a designated recipient.
 - Hacker was able to call this function on the _library_ contract itself, remove it and rendered all of the proxy contracts broken.
@@ -1543,7 +1581,7 @@ Notes:
 
 - The DAO attack continued for days due to the immutability of Solidity contracts
 - remmeber how whitehat hackers tried to syphon the funds only faster than the blackhat?
-- This is why it was intorduced - as a safety feature in case of security threats
+- This is why it was introduced - as a safety feature in case of security threats
 
 ---
 
@@ -1551,7 +1589,7 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
-```solidity [3|5|10]
+```solidity []
 uint public m_numOwners;
 
 modifier only_uninitialized { if (m_numOwners > 0) throw; _; }
@@ -1568,8 +1606,10 @@ function initMultiowned(address[] _owners, uint _required) internal {
 
 </div>
 
-- in the aftermath of the July attack the above changes were added to the library.
-- So how was this possible?
+- in the aftermath of the July attack the above changes were added to the library:
+  - `initMultiowned` was given _internal_ visibility.
+  - `only_uninitialized` check was added.
+- So what happened?
 
 Notes:
 - that does seems to fix the problem: if the attacker attempts to invoke `initWallet` on an already deployed contract it is rejected
@@ -1581,6 +1621,26 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
+```solidity []
+uint public m_numOwners;
+
+modifier only_uninitialized { if (m_numOwners > 0) throw; _; }
+
+function initWallet(address[] _owners, uint _required, uint _daylimit) only_uninitialized
+  initDaylimit(_daylimit);
+  initMultiowned(_owners, _required);
+}
+
+function initMultiowned(address[] _owners, uint _required) internal {
+  ...
+}
+
+function kill(address _to) onlymanyowners(sha3(msg.data)) external {
+  suicide(_to);
+}
+```
+
+- by default, Solidity functions have _public_ visibility.
 - `initWallet` was public in the library itsef.
 - By calling it hacker has made himself the owner of the library (since `m_numOwners == 0` in an un-initialized contract) and than called `kill`, passing his own address.
 - [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
@@ -1660,13 +1720,14 @@ Notes:
         128u8 + 128u8 == 0;
 ```
 
-- Integer overflow and underflow often occur when user supplied data controls the value of an unsigned integer.
-- The user supplied data either adds to or subtracts beyond the limits of what the variable type can hold, causing it to wrap around.
+- Integer _overflow_ and _underflow_ occur when user supplied data **controls the value of an unsigned integer.**
+- The user supplied data either adds to or subtracts beyond the limits of what the variable type can hold, causing it to **wrap around**.
 
 Notes:
 - Primitive integer types supported by CPUs are finite approximations to the infinite set of integers known form mathematics
 - and underflow for that matter
 - as in back to a number it understands
+- u8 holds 8 bits and (128+128) mod 256 = 0
 ---
 
 ## The BatchOverflow exploit: example
@@ -1711,7 +1772,7 @@ pub fn batch_transfer(
 </div>
 
 Notes:
-- can you spot the problem?
+- can you spot the problem? Which line exactly is problematic?
 - actually Rust is pretty good at catching runtime overflows, so this will panic, unless
 ```toml
 [profile.dev]
@@ -1727,18 +1788,21 @@ overflow-checks = false
 <div style="font-size: 0.70em;">
 
 ```rust []
-let sender = default_accounts::<DefaultEnvironment>().alice;
-let receiver = default_accounts::<DefaultEnvironment>().bob;
-
-set_caller::<DefaultEnvironment>(sender);
+let caller = default_accounts::<DefaultEnvironment>().alice;
+set_caller::<DefaultEnvironment>(caller);
 
 let mut token = Overflows::new();
+let receiver_one = default_accounts::<DefaultEnvironment>().bob;
+let receiver_two = default_accounts::<DefaultEnvironment>().charlie;
 
-assert_eq!(0, token.get_balance(sender));
-assert_eq!(0, token.get_balance(receiver_one));
+let sender_balance_before = token.get_balance(caller);
+assert_eq!(0, sender_balance_before);
+
+let receiver_balance_before = token.get_balance(receiver_one);
+assert_eq!(0, receiver_balance_before);
 
 token
-    .batch_transfer(vec![receiver, default_accounts::<DefaultEnvironment>().charlie], 128)
+    .batch_transfer(vec![receiver_one, receiver_two], 128)
     .expect("Can transfer");
 
 let receiver_balance_after = token.get_balance(receiver_one);
@@ -1749,10 +1813,23 @@ assert_eq!(128, receiver_balance_after);
 </div>
 
 Notes:
-- money out of thin air
-
+- neither sender nor receivers had any funds
+- yet 128 tokens were created out of thin air
 ---
 
+## The BatchOverflow exploit: example
+
+<img style="margin-top: 10px;margin-bottom: 10px" height="400" src="./img/ink/printer.gif" />
+
+* money printer goes brrr...
+* How would you fix it?
+
+</div>
+
+Notes:
+- money out of thin air
+- see a fix?
+---
 
 ## The BatchOverflow exploit: fixit
 
@@ -1820,9 +1897,10 @@ Notes:
 
 * The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work.
 * It was referred to as the *invisible tax*, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network.
-* After the Merge (Ethereum's move to POS consensus) *Miner Extractable Value* became *Maximal extractable value*.
+* After the Merge (Ethereum's move to POS consensus) **Miner Extractable Value** became **Maximal extractable value**.
 
 Notes:
+* MEV skyrocketed during the 2021 DeFi summer.
 * MEV was first applied in the context of proof-of-work, and referred to as the Miner Extractable Value.
 * This is because in POW miners hold most of the power, controlling the transaction inclusion / exclusion and ordering.
 * However in the proof-of-stake the validators are been responsible for these roles.
@@ -1833,7 +1911,7 @@ Notes:
 ## MEV: The Dark Forest
 
 * We have now seen a number of smart contract exploits.
-* Blockchain is a higly **competetive and adversarial** environment.
+* Blockchain is a highly **competetive and adversarial** environment.
 * But the dangers pale in comparison to the **mempool**.
 
 Notes:
@@ -1849,9 +1927,9 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
-* Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predatorial civilizations.
+* Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predators.
 * **Generalized Frontrunners** are bots looking for *any* profitable transactions submitted to the mempool.
-* *Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos* **[August 2020]**
+* *Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos* **[August 2020]**.
 
 Notes:
 * Cixin Liu [Si-Szin Lju]
@@ -1866,7 +1944,8 @@ Notes:
 
 ---
 
-## Sidenote: The Dark Forest
+
+## The Dark Forest
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/kurzgesagt.jpg" />
 
@@ -1876,11 +1955,12 @@ credit: **Kurzgesagt** , *Why We Should NOT Look For Aliens - The Dark Forest*
 
 </div>
 
-* The Dark Forest theory is (one of) a solution to the Fermi's paradox
-* Great explanation in this episode of the Kurzgesagt
+* The Dark Forest theory is (one of) a solution to the Fermi's paradox.
+* Great explanation in this episode of the Kurzgesagt.
 
-<!-- Notes: -->
-<!-- - Sidenote for the curious -->
+Notes:
+- also Stanislaw Lem in (_The New Cosmogony_, A Perfect Vacuum, 1971)
+- David Brin (astronomer and author)
 
 ---
 
@@ -1902,7 +1982,7 @@ Notes:
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/flashboys.png" />
 
-* In another article, *Phil Daian et al* talked about how one particular species frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitabe transactions.
+* In another article, *Phil Daian et al, 2019* talked about how one particular species of frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitable transactions.
 * If someone just submitted a *burn* transaction to the mempool the Dark Forest bots would be imediately alerted.
 
 Notes:
@@ -1918,13 +1998,27 @@ Notes:
 
 <div style="font-size: 0.62em;">
 
-```Solidity [1-7 | 9-33 | 35-47]
+```Solidity [1-7 | 9-21 | 23-47]
 interface IGetter {
   function set(bool) external;
 }
 
 interface IPool {
   function burn(address to) external returns (uint amount0, uint amount1);
+}
+
+contract Setter {
+
+  address private owner;
+
+  constructor () public {
+    owner = msg.sender;
+  }
+
+  function set(address getter, bool on) public {
+    require(msg.sender == owner, "no-owner");
+    IGetter(getter).set(on);
+  }
 }
 
 Contract Getter is IGetter {
@@ -1952,28 +2046,14 @@ Contract Getter is IGetter {
     pool.burn(dest);
   }
 }
-
-contract Setter {
-
-  address private owner;
-
-  constructor () public {
-    owner = msg.sender;
-  }
-
-  function set(address getter, bool on) public {
-    require(msg.sender == owner, "no-owner");
-    IGetter(getter).set(on);
-  }
-}
 ```
 </div>
 
 Notes:
 * the call to *burn* is hidden inside a larger *get* tx
 * the tx is split into two, among two contracts:
-  * *Getter* when called by its owner, would make the burn call ONLY if activated else it reverts.
   * *Setter* contract which, when called by its owner, would activate the Getter contract.
+  * *Getter* when called by its owner, would make the burn call ONLY if activated else it reverts.
 * Can you see the problem (or the challenge here?)
 
 ---
@@ -1981,8 +2061,8 @@ Notes:
 ## The Dark Forest: the Monsters are real
 
 * During the rescue attempts the **get** transaction would get rejected by the Infura node.
-* Due to the time pressure and late night time, the *get* tx slipped into a later block.
-* When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meanig a bot had already executed the internal *burn* call and took the funds.
+* Due to the time pressure and late night time, the ginal **get** tx slipped into a later block.
+* When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meaning a bot had already executed the internal *burn* call and took the funds.
 
 Notes:
 * If the attacker only tried executing the get transaction, it would revert without calling the burn function.
@@ -1992,7 +2072,7 @@ Notes:
 
 ---
 
-## The Dark Forest:
+## The Dark Forest: the Monsters are real
 
 * Avoid public infrastructure.
 * Some examples of a private pool transactions offerings:
@@ -2094,11 +2174,11 @@ pub fn reveal(&mut self, name: Vec<u8>) {
 }
 ```
 
+</div>
+
 - Previous design had a fatal flaw: it was opened to a frontrunning attack.
 - Anyone could read the name from the tx and replace the address with his own.
 - A much better design is a commit - reveal scheme.
-
-</div>
 
 Notes:
 * think *Nike*or *CocaCola*
@@ -2173,7 +2253,7 @@ Notes:
 - Contract was vulnerable to a *sandwitch* attack:
   - A bot could purchase some amount of *token_out* just before the trade is executed, raising the price.
   - After victims tx is executed the bot sells, back running the trade.
-- Much better design is one that protects the victim from excessive slippage.
+- Design should protect the user from excessive slippage.
 
 Notes:
 - slippage protection in place
@@ -2195,12 +2275,12 @@ Notes:
 
 * Users engage in bid wars to include their txs in a block.
 * This drivers gas prices higher and higher.
-* The *normal/honest* users are the ones hurt the most.
+* The *regular / honest* users are the ones hurt the most.
 
 Notes:
 * The competition among users to get their transactions included in a block with higher priority leads to increased demand for block space.
 * Users will bid higher gas prices to outcompete others, driving up gas prices across the network.
-* This results in inflated transaction costs for users.
+* This results in inflated transaction costs for users
  - miners make profit
  - arbitrageurs and MEV traders still make profit (albeit less)
 
@@ -2244,7 +2324,11 @@ Notes:
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability0.png" />
 
+<div style="font-size: 0.62em;">
+
 credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+</div>
 
 Notes:
 - Assume we are in the longest chain rule scenario (this can be POW or POS chain).
@@ -2256,11 +2340,15 @@ Notes:
 
 ## Consensus instability (longest chain)
 
-- If block rewards are smaller than the MEV opportunities, rational miners / validators will destabilize consensus by reordering or censoring the transactions.
+- If block rewards are smaller than the MEV opportunities, rational miners / validators will destabilize consensus by reordering or censoring the transactions all the time.
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability1.png" />
 
+<div style="font-size: 0.62em;">
+
 credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+</div>
 
 - What could the searcher / arbitrageurs do to not have their MEV stolen from them?
 
@@ -2268,7 +2356,8 @@ Notes:
 - Time bandit attack
 - Because of MEV we cannot assume 51% honest majority
 - all actors are rational actors, so they will go for maximal profit
-- imagine you are the searcher and you found this MEV opportunity. What can you do to be sure t have it included?
+- imagine you are the searcher and you found this MEV opportunity.
+  - What can you do to be sure to have it included?
 
 ---
 
@@ -2287,7 +2376,7 @@ Notes:
 
 ## Private mempools
 
-- Pretty soon everbody is sending their txs to a handfull of validators that they trust.
+- Pretty soon everbody is sending their txs to a handful of validators that they trust.
 - It is very hard to become a new trusted validator.
 - Massive centralization.
 
@@ -2297,7 +2386,6 @@ Notes:
 
 ---
 
-
 ## Flashbots (MEV-geth)
 
 * flashbots: democratizing MEV Extraction.
@@ -2305,24 +2393,25 @@ Notes:
 
 Notes:
 - flashbots is a sealed-bid block space auction mechanism for bidding on transaction order preference.
+- auctions happen off-chain
 
 ---
 
 ## MEV: the good, the bad and the ugly
 
-* is all MEV inherently bad for the network?
- - arbitrage
- - liquidations
-* MEV as a security budget?
+* Is all MEV inherently bad for the network?
+  - arbitrage
+  - liquidations
 * MEV is unavoidable.
+* MEV as a security budget?
 
 Notes:
-- MEV is wrong and it has to be stopped
-- arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy
-- liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly.
+- MEV is wrong and it has to be stopped?
+  - arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy
+  - liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly.
+- MEV is a fact of life.
 - from the economic security perspective: MEV could be an additional source of revenue for the validators.
  - but it HAS to be distributed equally, else it is an almost existential threat to the network.
-- MEV is a fact of life.
 
 ---
 
@@ -2331,6 +2420,12 @@ Notes:
 [MEV-boost](https://boost.flashbots.net/) is an implementation of PBS for post-merge Ethereum
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="800" src="./img/ink/pbs.svg" />
+
+<div style="font-size: 0.62em;">
+
+credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+</div>
 
 <div style="font-size: 0.45em">
 
@@ -2357,23 +2452,24 @@ Notes:
 - now builders take bundles from the searchers and txs from the end users and they construct blocks out of them
   - they order them
  - they send the to relayers that they trust in turn
-  - can relayers cheat here?
-  - they could technically steal the txs from the builders
+   - can relayers cheat here?
+   - they could technically steal the txs from the builders
+   - but just once
 - relayers talk to the validators
- - they don't send blocks, because if they did the rational validators would steal the MEV
- - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
- - rent for block space type of arrangment
+  - they don't send blocks, because if they did the rational validators would steal the MEV
+  - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
 - validators sign the headers and send the signatures back to the relayers
 - relayers send the blocks to the network
- - why can't it be stolen at this point? Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
- - relayer technically can - but just once
+  - Q: why can't it be stolen at this point? 
+  - Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
+- rent for block space type of arrangment
 
 ---
 
 ## MEV: tip of the iceberg
 
 * <font color="#8d3aed">[DeFi MOOC](https://defi-learning.org/f22)</font>, especially lectures by [Arthur Gervais](https://arthurgervais.com/).
-* **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with *Phil Daian, Georgios Konstantopoulos, Charlie Noyes*
+* **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with *Phil Daian, Georgios Konstantopoulos, Charlie Noyes*.
 * <font color="#8d3aed">[Flashbots](https://www.flashbots.net/)</font> R&D organization focused on MEV research.
 
 ---
