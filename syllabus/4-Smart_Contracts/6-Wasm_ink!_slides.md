@@ -2059,7 +2059,7 @@ Notes:
 ## The Dark Forest: the Monsters are real
 
 * During the rescue attempts the **get** transaction would get rejected by the Infura node.
-* Due to the time pressure and late night time, the *get* tx slipped into a later block.
+* Due to the time pressure and late night time, the ginal **get** tx slipped into a later block.
 * When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meaning a bot had already executed the internal *burn* call and took the funds.
 
 Notes:
@@ -2070,7 +2070,7 @@ Notes:
 
 ---
 
-## The Dark Forest:
+## The Dark Forest: the Monsters are real
 
 * Avoid public infrastructure.
 * Some examples of a private pool transactions offerings:
@@ -2172,11 +2172,11 @@ pub fn reveal(&mut self, name: Vec<u8>) {
 }
 ```
 
+</div>
+
 - Previous design had a fatal flaw: it was opened to a frontrunning attack.
 - Anyone could read the name from the tx and replace the address with his own.
 - A much better design is a commit - reveal scheme.
-
-</div>
 
 Notes:
 * think *Nike*or *CocaCola*
@@ -2251,7 +2251,7 @@ Notes:
 - Contract was vulnerable to a *sandwitch* attack:
   - A bot could purchase some amount of *token_out* just before the trade is executed, raising the price.
   - After victims tx is executed the bot sells, back running the trade.
-- Much better design is one that protects the victim from excessive slippage.
+- Design should protect the user from excessive slippage.
 
 Notes:
 - slippage protection in place
@@ -2273,12 +2273,12 @@ Notes:
 
 * Users engage in bid wars to include their txs in a block.
 * This drivers gas prices higher and higher.
-* The *normal/honest* users are the ones hurt the most.
+* The *regular / honest* users are the ones hurt the most.
 
 Notes:
 * The competition among users to get their transactions included in a block with higher priority leads to increased demand for block space.
 * Users will bid higher gas prices to outcompete others, driving up gas prices across the network.
-* This results in inflated transaction costs for users.
+* This results in inflated transaction costs for users
  - miners make profit
  - arbitrageurs and MEV traders still make profit (albeit less)
 
@@ -2322,7 +2322,11 @@ Notes:
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability0.png" />
 
+<div style="font-size: 0.62em;">
+
 credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+</div>
 
 Notes:
 - Assume we are in the longest chain rule scenario (this can be POW or POS chain).
@@ -2334,11 +2338,15 @@ Notes:
 
 ## Consensus instability (longest chain)
 
-- If block rewards are smaller than the MEV opportunities, rational miners / validators will destabilize consensus by reordering or censoring the transactions.
+- If block rewards are smaller than the MEV opportunities, rational miners / validators will destabilize consensus by reordering or censoring the transactions all the time.
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability1.png" />
 
+<div style="font-size: 0.62em;">
+
 credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+</div>
 
 - What could the searcher / arbitrageurs do to not have their MEV stolen from them?
 
@@ -2346,7 +2354,8 @@ Notes:
 - Time bandit attack
 - Because of MEV we cannot assume 51% honest majority
 - all actors are rational actors, so they will go for maximal profit
-- imagine you are the searcher and you found this MEV opportunity. What can you do to be sure t have it included?
+- imagine you are the searcher and you found this MEV opportunity.
+  - What can you do to be sure to have it included?
 
 ---
 
@@ -2365,7 +2374,7 @@ Notes:
 
 ## Private mempools
 
-- Pretty soon everbody is sending their txs to a handfull of validators that they trust.
+- Pretty soon everbody is sending their txs to a handful of validators that they trust.
 - It is very hard to become a new trusted validator.
 - Massive centralization.
 
@@ -2375,7 +2384,6 @@ Notes:
 
 ---
 
-
 ## Flashbots (MEV-geth)
 
 * flashbots: democratizing MEV Extraction.
@@ -2383,24 +2391,25 @@ Notes:
 
 Notes:
 - flashbots is a sealed-bid block space auction mechanism for bidding on transaction order preference.
+- auctions happen off-chain
 
 ---
 
 ## MEV: the good, the bad and the ugly
 
-* is all MEV inherently bad for the network?
- - arbitrage
- - liquidations
-* MEV as a security budget?
+* Is all MEV inherently bad for the network?
+  - arbitrage
+  - liquidations
 * MEV is unavoidable.
+* MEV as a security budget?
 
 Notes:
-- MEV is wrong and it has to be stopped
-- arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy
-- liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly.
+- MEV is wrong and it has to be stopped?
+  - arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy
+  - liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly.
+- MEV is a fact of life.
 - from the economic security perspective: MEV could be an additional source of revenue for the validators.
  - but it HAS to be distributed equally, else it is an almost existential threat to the network.
-- MEV is a fact of life.
 
 ---
 
@@ -2409,6 +2418,12 @@ Notes:
 [MEV-boost](https://boost.flashbots.net/) is an implementation of PBS for post-merge Ethereum
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="800" src="./img/ink/pbs.svg" />
+
+<div style="font-size: 0.62em;">
+
+credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+
+</div>
 
 <div style="font-size: 0.45em">
 
@@ -2435,23 +2450,24 @@ Notes:
 - now builders take bundles from the searchers and txs from the end users and they construct blocks out of them
   - they order them
  - they send the to relayers that they trust in turn
-  - can relayers cheat here?
-  - they could technically steal the txs from the builders
+   - can relayers cheat here?
+   - they could technically steal the txs from the builders
+   - but just once
 - relayers talk to the validators
- - they don't send blocks, because if they did the rational validators would steal the MEV
- - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
- - rent for block space type of arrangment
+  - they don't send blocks, because if they did the rational validators would steal the MEV
+  - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
 - validators sign the headers and send the signatures back to the relayers
 - relayers send the blocks to the network
- - why can't it be stolen at this point? Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
- - relayer technically can - but just once
+  - Q: why can't it be stolen at this point? 
+  - Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
+- rent for block space type of arrangment
 
 ---
 
 ## MEV: tip of the iceberg
 
 * <font color="#8d3aed">[DeFi MOOC](https://defi-learning.org/f22)</font>, especially lectures by [Arthur Gervais](https://arthurgervais.com/).
-* **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with *Phil Daian, Georgios Konstantopoulos, Charlie Noyes*
+* **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with *Phil Daian, Georgios Konstantopoulos, Charlie Noyes*.
 * <font color="#8d3aed">[Flashbots](https://www.flashbots.net/)</font> R&D organization focused on MEV research.
 
 ---
