@@ -237,9 +237,9 @@ Notes:
 
 More resources:
 
-- <https://en.wikipedia.org/wiki/Merkle_tree>
-- <https://en.wikipedia.org/wiki/Radix_tree>
-- <https://en.wikipedia.org/wiki/Trie>
+- https://en.wikipedia.org/wiki/Merkle_tree
+- https://en.wikipedia.org/wiki/Radix_tree
+- https://en.wikipedia.org/wiki/Trie
 
 Namely:
 
@@ -641,7 +641,7 @@ the trie layer and pull a whole lot of data back from the disk and build all the
 
 Notes:
 
-<https://www.youtube.com/embed/OoMPlJKUULY>
+https://www.youtube.com/embed/OoMPlJKUULY
 
 ---
 
@@ -834,26 +834,26 @@ Anyone interested in blockchain and research stuff should look into this.
 
 Notes:
 
-- Shawn's deep dive: <https://www.shawntabrizi.com/substrate/substrate-storage-deep-dive/>
+- Shawn's deep dive: https://www.shawntabrizi.com/blog/substrate/substrate-storage-deep-dive/
 
-- Basti's talk on Trie caching: <https://www.youtube.com/watch?v=OoMPlJKUULY>
+- Basti's talk on Trie caching: https://www.youtube.com/watch?v=OoMPlJKUULY
 
 - About state version:
 
-    - <https://github.com/paritytech/substrate/pull/9732>
-    - <https://github.com/paritytech/substrate/discussions/11824>
+    - https://github.com/paritytech/substrate/pull/9732
+    - https://github.com/paritytech/substrate/discussions/11824
 
 - An "old but gold" read about trie in
-  Ethereum: <https://medium.com/shyft-network/understanding-trie-databases-in-ethereum-9f03d2c3325d>
+  Ethereum: https://medium.com/shyft-network/understanding-trie-databases-in-ethereum-9f03d2c3325d
 
-- On optimizing substrate storage proofs: <https://github.com/paritytech/substrate/issues/3782>
-- Underlying trie library maintained by Parity: <https://github.com/paritytech/trie>
+- On optimizing substrate storage proofs: https://github.com/paritytech/substrate/issues/3782
+- Underlying trie library maintained by Parity: https://github.com/paritytech/trie
 
-- <https://github.com/paritytech/trie/>
+- https://github.com/paritytech/trie/
 
-- <https://spec.polkadot.network/chap-state#sect-state-storage>
+- https://spec.polkadot.network/chap-state#sect-state-storage
 
-- <https://research.polytope.technology/state-(machine)-proofs>
+- https://research.polytope.technology/state-(machine)-proofs
 
 - An interesting, but heretical idea: can the runtime of block N, access state of block N-1?
   HELL.
