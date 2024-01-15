@@ -11,7 +11,7 @@
     "tag:current": "git checkout main && yarn && yarn run build && mv build current",
     "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv current build",
     "move-frontpage": "cp -r ./frontpage/* ./build/.",
-    "prepare-deployment": "yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:current && mkdir build && yarn run move-tags && yarn run move-frontpage",
+    "prepare-deployment": "git fetch --tags && yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:current && mkdir build && yarn run move-tags && yarn run move-frontpage",
     "clean": "rm -rf build",
     "build": "yarn run clean && reveal-md ./ --static build",
     "deploy": "gh-pages -d build",
