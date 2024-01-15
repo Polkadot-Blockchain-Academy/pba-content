@@ -14,6 +14,7 @@ Notes:
 - ask questions during the lecture, don't wait until the end
 - practical, but we go deeper where needed
 - some complexity is omitted in the examples (examples are not a production code)
+  - not built to scale or painted
 
 ---
 
@@ -35,6 +36,7 @@ Notes:
 - Virtual Machine: any Wasm VM: yes in theory, in practice bound pretty close to the platform it runs on (Substrate & the contracts pallet)
 - Tooling: Solidity has been around for years, enjoys the first-to-market advantage (but ink! is a strong contender)
 - The EVM operates on 256 bit words (meaning anything less than 32 bytes will be treated by the EVM as having leading zeros)
+  - prefixed with all 0s
 
 ---
 
