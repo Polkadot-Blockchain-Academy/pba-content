@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Substrate CLI</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Substrate CLI
+</script></section><section  data-markdown><script type="text/template">
+## Substrate CLI
+
+In this section, we will quickly go over some of the common CLI commands you should be familiar with when working with Substrate.
+</script></section><section  data-markdown><script type="text/template">
+## Build
+
+Least Time to Execute
+
+```bash
+cargo check
+```
+
+```bash
+cargo build
+```
+
+```bash
+cargo build --release
+```
+
+```bash
+cargo build --profile=production
+```
+
+Most Time to Execute / Fastest Binary
+</script></section><section  data-markdown><script type="text/template">
+## Profile Production
+
+The production profile applies various compiler optimizations.
+These optimizations slow down the compilation process _a lot_.
+
+From: `polkadot/Cargo.toml`
+
+```toml
+[profile.release]
+# Polkadot runtime requires unwinding.
+panic = "unwind"
+opt-level = 3
+
+[profile.production]
+inherits = "release"
+lto = true
+codegen-units = 1
+```
+</script></section><section  data-markdown><script type="text/template">
+## Building Specific Binaries
+
+From: `substrate/bin/node-template/node/Cargo.toml`
+
+```toml
+[package]
+name = "node-template"
+build = "build.rs"
+
+[[bin]]
+name = "node-template"
+```
+
+```bash
+cargo build --release -p node-template
+```
+
+This will generate only the `node-template` binary. Much faster than building everything.
+</script></section><section  data-markdown><script type="text/template">
+## Testing Specific Packages
+
+From: `substrate/bin/node-template/runtime/Cargo.toml`
+
+```toml
+[package]
+name = "node-template-runtime"
+```
+
+```bash
+cargo test -p node-template-runtime
+```
+
+This will run the tests just in the `node-template-runtime` library.
+</script></section><section  data-markdown><script type="text/template">
+## Wasm Builder Environment Variables
+
+Some useful environment variables from the Wasm builder:
+
+- `SKIP_WASM_BUILD` - Skips building any Wasm binary. This is useful when only native should be recompiled.
+- `FORCE_WASM_BUILD` - Can be set to force a Wasm build.
+
+For example, an even faster way to build just the client:
+
+```bash
+SKIP_WASM_BUILD=1 cargo build --release
+```
+</script></section><section  data-markdown><script type="text/template">
+## Substrate Master Doesn't Compile?
+
+Probably just need to:
+
+```bash
+rustup update
+```
+
+Generally, we ensure that Substrate master always works with the latest Rust compiler.
+</script></section><section  data-markdown><script type="text/template">
+## CLI Output
+
+```bash
+./target/release/substrate --help
+```
+
+```bash
+substrate 3.0.0-dev-fe3437e7ffd
+Parity Technologies <admin@parity.io>
+Generic Substrate node implementation in Rust.
+
+USAGE:
+    substrate [OPTIONS]
+    substrate <SUBCOMMAND>
+
+OPTIONS:
+        --alice
+            Shortcut for `--name Alice --validator` with session keys for `Alice` added to keystore
+
+        --allow-private-ipv4
+            Always accept connecting to private IPv4 addresses (as specified in
+            [RFC1918](https://tools.ietf.org/html/rfc1918)). Enabled by default for chains marked as
+            "local" in their chain specifications, or when `--dev` is passed
+
+        --bob
+            Shortcut for `--name Bob --validator` with session keys for `Bob` added to keystore
+
+        --bootnodes <ADDR>...
+            Specify a list of bootnodes
+
+        --chain <CHAIN_SPEC>
+            Specify the chain specification.
+
+            It can be one of the predefined ones (dev, local, or staging) or it can be a path to a
+            file with the chainspec (such as one exported by the `build-spec` subcommand).
+
+        --charlie
+            Shortcut for `--name Charlie --validator` with session keys for `Charlie` added to
+            keystore
+
+    -d, --base-path <PATH>
+            Specify custom base path
+
+        --database <DB>
+            Select database backend to use
+
+            [possible values: rocksdb, paritydb, paritydb-experimental, auto]
+
+        --dave
+            Shortcut for `--name Dave --validator` with session keys for `Dave` added to keystore
+
+        --db-cache <MiB>
+            Limit the memory the database cache can use
+
+        --detailed-log-output
+            Enable detailed log output.
+
+            This includes displaying the log target, log level and thread name.
+
+            This is automatically enabled when something is logged with any higher level than
+            `info`.
+
+        --dev
+            Specify the development chain.
+
+            This flag sets `--chain=dev`, `--force-authoring`, `--rpc-cors=all`, `--alice`, and
+            `--tmp` flags, unless explicitly overridden.
+
+        --disable-log-color
+            Disable log color output
+
+        --discover-local
+            Enable peer discovery on local networks.
+
+            By default this option is `true` for `--dev` or when the chain type is
+            `Local`/`Development` and false otherwise.
+
+        --enable-log-reloading
+            Enable feature to dynamically update and reload the log filter.
+
+            Be aware that enabling this feature can lead to a performance decrease up to factor six
+            or more. Depending on the global logging level the performance decrease changes.
+
+            The `system_addLogFilter` and `system_resetLogFilter` RPCs will have no effect with this
+            option not being set.
+
+        --enable-offchain-indexing <ENABLE_OFFCHAIN_INDEXING>
+            Enable Offchain Indexing API, which allows block import to write to Offchain DB.
+
+            Enables a runtime to write directly to a offchain workers DB during block import.
+
+        --eve
+            Shortcut for `--name Eve --validator` with session keys for `Eve` added to keystore
+
+        --execution <STRATEGY>
+            The execution strategy that should be used by all execution contexts
+
+            [possible values: native, wasm, both, native-else-wasm]
+
+        --execution-block-construction <STRATEGY>
+            The means of execution used when calling into the runtime while constructing blocks
+
+            [possible values: native, wasm, both, native-else-wasm]
+
+        --execution-import-block <STRATEGY>
+            The means of execution used when calling into the runtime for general block import
+            (including locally authored blocks)
+
+            [possible values: native, wasm, both, native-else-wasm]
+
+        --execution-offchain-worker <STRATEGY>
+            The means of execution used when calling into the runtime while using an off-chain
+            worker
+
+            [possible values: native, wasm, both, native-else-wasm]
+
+        --execution-other <STRATEGY>
+            The means of execution used when calling into the runtime while not syncing, importing
+            or constructing blocks
+
+            [possible values: native, wasm, both, native-else-wasm]
+
+        --execution-syncing <STRATEGY>
+            The means of execution used when calling into the runtime for importing blocks as part
+            of an initial sync
+
+            [possible values: native, wasm, both, native-else-wasm]
+
+        --ferdie
+            Shortcut for `--name Ferdie --validator` with session keys for `Ferdie` added to
+            keystore
+
+        --force-authoring
+            Enable authoring even when offline
+
+    -h, --help
+            Print help information
+
+        --in-peers <COUNT>
+            Maximum number of inbound full nodes peers
+
+            [default: 25]
+
+        --in-peers-light <COUNT>
+            Maximum number of inbound light nodes peers
+
+            [default: 100]
+
+        --ipc-path <PATH>
+            DEPRECATED, IPC support has been removed
+
+        --ipfs-server
+            Join the IPFS network and serve transactions over bitswap protocol
+
+        --kademlia-disjoint-query-paths
+            Require iterative Kademlia DHT queries to use disjoint paths for increased resiliency in
+            the presence of potentially adversarial nodes.
+
+            See the S/Kademlia paper for more information on the high level design as well as its
+            security improvements.
+
+        --keep-blocks <COUNT>
+            Specify the number of finalized blocks to keep in the database.
+
+            Default is to keep all blocks.
+
+            NOTE: only finalized blocks are subject for removal!
+
+        --keystore-path <PATH>
+            Specify custom keystore path
+
+        --keystore-uri <KEYSTORE_URI>
+            Specify custom URIs to connect to for keystore-services
+
+    -l, --log <LOG_PATTERN>...
+            Sets a custom logging filter. Syntax is <target>=<level>, e.g. -lsync=debug.
+
+            Log levels (least to most verbose) are error, warn, info, debug, and trace. By default,
+            all targets log `info`. The global log level can be set with -l<level>.
+
+        --listen-addr <LISTEN_ADDR>...
+            Listen on this multiaddress.
+
+            By default: If `--validator` is passed: `/ip4/0.0.0.0/tcp/<port>` and
+            `/ip6/[::]/tcp/<port>`. Otherwise: `/ip4/0.0.0.0/tcp/<port>/ws` and
+            `/ip6/[::]/tcp/<port>/ws`.
+
+        --max-parallel-downloads <COUNT>
+            Maximum number of peers from which to ask for the same blocks in parallel.
+
+            This allows downloading announced blocks from multiple peers. Decrease to save traffic
+            and risk increased latency.
+
+            [default: 5]
+
+        --max-runtime-instances <MAX_RUNTIME_INSTANCES>
+            The size of the instances cache for each runtime.
+
+            The default value is 8 and the values higher than 256 are ignored.
+
+        --name <NAME>
+            The human-readable name for this node.
+
+            The node name will be reported to the telemetry server, if enabled.
+
+        --no-grandpa
+            Disable GRANDPA voter when running in validator mode, otherwise disable the GRANDPA
+            observer
+
+        --no-hardware-benchmarks
+            Disable automatic hardware benchmarks.
+
+            By default these benchmarks are automatically ran at startup and measure the CPU speed,
+            the memory bandwidth and the disk speed.
+
+            The results are then printed out in the logs, and also sent as part of telemetry, if
+            telemetry is enabled.
+
+        --no-mdns
+            Disable mDNS discovery.
+
+            By default, the network will use mDNS to discover other nodes on the local network. This
+            disables it. Automatically implied when using --dev.
+
+        --no-private-ipv4
+            Always forbid connecting to private IPv4 addresses (as specified in
+            [RFC1918](https://tools.ietf.org/html/rfc1918)), unless the address was passed with
+            `--reserved-nodes` or `--bootnodes`. Enabled by default for chains marked as "live" in
+            their chain specifications
+
+        --no-prometheus
+            Do not expose a Prometheus exporter endpoint.
+
+            Prometheus metric endpoint is enabled by default.
+
+        --no-telemetry
+            Disable connecting to the Substrate telemetry server.
+
+            Telemetry is on by default on global chains.
+
+        --node-key <KEY>
+            The secret key to use for libp2p networking.
+
+            The value is a string that is parsed according to the choice of `--node-key-type` as
+            follows:
+
+            `ed25519`: The value is parsed as a hex-encoded Ed25519 32 byte secret key, i.e. 64 hex
+            characters.
+
+            The value of this option takes precedence over `--node-key-file`.
+
+            WARNING: Secrets provided as command-line arguments are easily exposed. Use of this
+            option should be limited to development and testing. To use an externally managed secret
+            key, use `--node-key-file` instead.
+
+        --node-key-file <FILE>
+            The file from which to read the node's secret key to use for libp2p networking.
+
+            The contents of the file are parsed according to the choice of `--node-key-type` as
+            follows:
+
+            `ed25519`: The file must contain an unencoded 32 byte or hex encoded Ed25519 secret key.
+
+            If the file does not exist, it is created with a newly generated secret key of the
+            chosen type.
+
+        --node-key-type <TYPE>
+            The type of secret key to use for libp2p networking.
+
+            The secret key of the node is obtained as follows:
+
+            * If the `--node-key` option is given, the value is parsed as a secret key according to
+            the type. See the documentation for `--node-key`.
+
+            * If the `--node-key-file` option is given, the secret key is read from the specified
+            file. See the documentation for `--node-key-file`.
+
+            * Otherwise, the secret key is read from a file with a predetermined, type-specific name
+            from the chain-specific network config directory inside the base directory specified by
+            `--base-dir`. If this file does not exist, it is created with a newly generated secret
+            key of the chosen type.
+
+            The node's secret key determines the corresponding public key and hence the node's peer
+            ID in the context of libp2p.
+
+            [default: ed25519]
+            [possible values: ed25519]
+
+        --offchain-worker <ENABLED>
+            Should execute offchain workers on every block.
+
+            By default it's only enabled for nodes that are authoring new blocks.
+
+            [default: when-validating]
+            [possible values: always, never, when-validating]
+
+        --one
+            Shortcut for `--name One --validator` with session keys for `One` added to keystore
+
+        --out-peers <COUNT>
+            Specify the number of outgoing connections we're trying to maintain
+
+            [default: 25]
+
+        --password <PASSWORD>
+            Password used by the keystore. This allows appending an extra user-defined secret to the
+            seed
+
+        --password-filename <PATH>
+            File that contains the password used by the keystore
+
+        --password-interactive
+            Use interactive shell for entering the password used by the keystore
+
+        --pool-kbytes <COUNT>
+            Maximum number of kilobytes of all transactions stored in the pool
+
+            [default: 20480]
+
+        --pool-limit <COUNT>
+            Maximum number of transactions in the transaction pool
+
+            [default: 8192]
+
+        --port <PORT>
+            Specify p2p protocol TCP port
+
+        --prometheus-external
+            Expose Prometheus exporter on all interfaces.
+
+            Default is local.
+
+        --prometheus-port <PORT>
+            Specify Prometheus exporter TCP Port
+
+        --pruning <PRUNING_MODE>
+            Specify the state pruning mode, a number of blocks to keep or 'archive'.
+
+            Default is to keep only the last 256 blocks, otherwise, the state can be kept for all of
+            the blocks (i.e 'archive'), or for all of the canonical blocks (i.e
+            'archive-canonical').
+
+        --public-addr <PUBLIC_ADDR>...
+            The public address that other nodes will use to connect to it. This can be used if
+            there's a proxy in front of this node
+
+        --reserved-nodes <ADDR>...
+            Specify a list of reserved node addresses
+
+        --reserved-only
+            Whether to only synchronize the chain with reserved nodes.
+
+            Also disables automatic peer discovery.
+
+            TCP connections might still be established with non-reserved nodes. In particular, if
+            you are a validator your node might still connect to other validator nodes and collator
+            nodes regardless of whether they are defined as reserved nodes.
+
+        --rpc-cors <ORIGINS>
+            Specify browser Origins allowed to access the HTTP & WS RPC servers.
+
+            A comma-separated list of origins (protocol://domain or special `null` value). Value of
+            `all` will disable origin validation. Default is to allow localhost and
+            <https://polkadot.js.org> origins. When running in --dev mode the default is to allow
+            all origins.
+
+        --rpc-external
+            Listen to all RPC interfaces.
+
+            Default is local. Note: not all RPC methods are safe to be exposed publicly. Use an RPC
+            proxy server to filter out dangerous methods. More details:
+            <https://docs.substrate.io/v3/runtime/custom-rpcs/#public-rpcs>. Use
+            `--unsafe-rpc-external` to suppress the warning if you understand the risks.
+
+        --rpc-max-payload <RPC_MAX_PAYLOAD>
+            DEPRECATED, this has no affect anymore. Use `rpc_max_request_size` or
+            `rpc_max_response_size` instead
+
+        --rpc-max-request-size <RPC_MAX_REQUEST_SIZE>
+            Set the the maximum RPC request payload size for both HTTP and WS in megabytes. Default
+            is 15MiB
+
+        --rpc-max-response-size <RPC_MAX_RESPONSE_SIZE>
+            Set the the maximum RPC response payload size for both HTTP and WS in megabytes. Default
+            is 15MiB
+
+        --rpc-max-subscriptions-per-connection <RPC_MAX_SUBSCRIPTIONS_PER_CONNECTION>
+            Set the the maximum concurrent subscriptions per connection. Default is 1024
+
+        --rpc-methods <METHOD SET>
+            RPC methods to expose.
+
+            - `unsafe`: Exposes every RPC method.
+            - `safe`: Exposes only a safe subset of RPC methods, denying unsafe RPC methods.
+            - `auto`: Acts as `safe` if RPC is served externally, e.g. when `--{rpc,ws}-external` is
+              passed, otherwise acts as `unsafe`.
+
+            [default: auto]
+            [possible values: auto, safe, unsafe]
+
+        --rpc-port <PORT>
+            Specify HTTP RPC server TCP port
+
+        --runtime-cache-size <RUNTIME_CACHE_SIZE>
+            Maximum number of different runtimes that can be cached
+
+            [default: 2]
+
+        --state-cache-size <Bytes>
+            Specify the state cache size
+
+            [default: 67108864]
+
+        --sync <SYNC_MODE>
+            Blockchain syncing mode.
+
+            - `full`: Download and validate full blockchain history.
+            - `fast`: Download blocks and the latest state only.
+            - `fast-unsafe`: Same as `fast`, but skip downloading state proofs.
+            - `warp`: Download the latest state and proof.
+
+            [default: full]
+            [possible values: full, fast, fast-unsafe, warp]
+
+        --telemetry-url <URL VERBOSITY>
+            The URL of the telemetry server to connect to.
+
+            This flag can be passed multiple times as a means to specify multiple telemetry
+            endpoints. Verbosity levels range from 0-9, with 0 denoting the least verbosity.
+            Expected format is 'URL VERBOSITY', e.g. `--telemetry-url 'wss://foo/bar 0'`.
+
+        --tmp
+            Run a temporary node.
+
+            A temporary directory will be created to store the configuration and will be deleted at
+            the end of the process.
+
+            Note: the directory is random per process execution. This directory is used as base path
+            which includes: database, node key and keystore.
+
+            When `--dev` is given and no explicit `--base-path`, this option is implied.
+
+        --tracing-receiver <RECEIVER>
+            Receiver to process tracing messages
+
+            [default: log]
+            [possible values: log]
+
+        --tracing-targets <TARGETS>
+            Sets a custom profiling filter. Syntax is the same as for logging: <target>=<level>
+
+        --two
+            Shortcut for `--name Two --validator` with session keys for `Two` added to keystore
+
+        --tx-ban-seconds <SECONDS>
+            How long a transaction is banned for, if it is considered invalid. Defaults to 1800s
+
+        --unsafe-pruning
+            THIS IS A DEPRECATED CLI-ARGUMENT.
+
+            It has been preserved in order to not break the compatibility with the existing scripts.
+            Enabling this option will lead to a runtime warning. In future this option will be
+            removed completely, thus specifying it will lead to a start up error.
+
+            Details: <https://github.com/paritytech/substrate/issues/8103>
+
+        --unsafe-rpc-external
+            Listen to all RPC interfaces.
+
+            Same as `--rpc-external`.
+
+        --unsafe-ws-external
+            Listen to all Websocket interfaces.
+
+            Same as `--ws-external` but doesn't warn you about it.
+
+    -V, --version
+            Print version information
+
+        --validator
+            Enable validator mode.
+
+            The node will be started with the authority role and actively participate in any
+            consensus task that it can (e.g. depending on availability of local keys).
+
+        --wasm-execution <METHOD>
+            Method for executing Wasm runtime code
+
+            [default: compiled]
+            [possible values: interpreted-i-know-what-i-do, compiled]
+
+        --wasm-runtime-overrides <PATH>
+            Specify the path where local WASM runtimes are stored.
+
+            These runtimes will override on-chain runtimes when the version matches.
+
+        --wasmtime-instantiation-strategy <STRATEGY>
+            The WASM instantiation method to use.
+
+            Only has an effect when `wasm-execution` is set to `compiled`.
+
+            The copy-on-write strategies are only supported on Linux. If the copy-on-write variant
+            of a strategy is unsupported the executor will fall back to the non-CoW equivalent.
+
+            The fastest (and the default) strategy available is `pooling-copy-on-write`.
+
+            The `legacy-instance-reuse` strategy is deprecated and will be removed in the future. It
+            should only be used in case of issues with the default instantiation strategy.
+
+            [default: pooling-copy-on-write]
+            [possible values: pooling-copy-on-write, recreate-instance-copy-on-write, pooling,
+            recreate-instance, legacy-instance-reuse]
+
+        --ws-external
+            Listen to all Websocket interfaces.
+
+            Default is local. Note: not all RPC methods are safe to be exposed publicly. Use an RPC
+            proxy server to filter out dangerous methods. More details:
+            <https://docs.substrate.io/v3/runtime/custom-rpcs/#public-rpcs>. Use
+            `--unsafe-ws-external` to suppress the warning if you understand the risks.
+
+        --ws-max-connections <COUNT>
+            Maximum number of WS RPC server connections
+
+        --ws-max-out-buffer-capacity <WS_MAX_OUT_BUFFER_CAPACITY>
+            DEPRECATED, this has no affect anymore. Use `rpc_max_response_size` instead
+
+        --ws-port <PORT>
+            Specify WebSockets RPC server TCP port
+
+SUBCOMMANDS:
+    benchmark
+            Sub-commands concerned with benchmarking. The pallet benchmarking moved to the `pallet`
+            sub-command
+    build-spec
+            Build a chain specification
+    chain-info
+            Db meta columns information
+    check-block
+            Validate blocks
+    export-blocks
+            Export blocks
+    export-state
+            Export the state of a given block into a chain spec
+    help
+            Print this message or the help of the given subcommand(s)
+    import-blocks
+            Import blocks
+    inspect
+            Decode given block or extrinsic using current native runtime.
+    key
+            Key management cli utilities
+    purge-chain
+            Remove the whole chain
+    revert
+            Revert the chain to a previous state
+    sign
+            Sign a message, with a given (secret) key
+    try-runtime
+            Try some command against runtime state. Note: `try-runtime` feature must be enabled
+    vanity
+            Generate a seed that provides a vanity address
+    verify
+            Verify a signature for a message, provided on STDIN, with a given (public or secret) key
+```
+</script></section><section  data-markdown><script type="text/template">
+## Chain Specification
+
+A JSON object which uniquely defines a blockchain.
+
+Contains various metadata and the genesis state.
+</script></section><section  data-markdown><script type="text/template">
+## Opinionated FRAME based JSON
+
+```bash
+./target/release/substrate build-spec --chain=dev > spec.json
+```
+
+```json
+{
+  "name": "Development",
+  "id": "dev",
+  "chainType": "Development",
+  "bootNodes": ["/ip4/127.0.0.1/tcp/30333/p2p/12D3KooWNsFq6B97vcYvjtx9RTQrptYqVFN8Nvtg7Nr2fD3jBUMz"],
+  "telemetryEndpoints": null,
+  "protocolId": null,
+  "properties": null,
+  "forkBlocks": null,
+  "badBlocks": null,
+  "lightSyncState": null,
+  "codeSubstitutes": {},
+  "genesis": {
+    "runtime": {
+      "system": {
+        "code": "<REALLY BIG WASM BLOB>"
+      },
+      "babe": {
+        "authorities": [],
+        "epochConfig": {
+          "c": [1, 4],
+          "allowed_slots": "PrimaryAndSecondaryPlainSlots"
+        }
+      },
+      "indices": {
+        "indices": []
+      },
+      "balances": {
+        "balances": [
+          ["5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 1000000000000000000000],
+          ["5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty", 1000000000000000000000],
+          ["5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y", 1000000000000000000000],
+          ["5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy", 1000000000000000000000],
+          ["5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw", 1000000000000000000000],
+          ["5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL", 1000000000000000000000],
+          ["5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY", 1000000000000000000000],
+          ["5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc", 1000000000000000000000],
+          ["5Ck5SLSHYac6WFt5UZRSsdJjwmpSZq85fd5TRNAdZQVzEAPT", 1000000000000000000000],
+          ["5HKPmK9GYtE1PSLsS1qiYU9xQ9Si1NcEhdeCq9sw5bqu4ns8", 1000000000000000000000],
+          ["5FCfAonRZgTFrTd9HREEyeJjDpT397KMzizE6T3DvebLFE7n", 1000000000000000000000],
+          ["5CRmqmsiNFExV6VbdmPJViVxrWmkaXXvBrSX8oqBT8R9vmWk", 1000000000000000000000]
+        ]
+      },
+      "transactionPayment": null,
+      "staking": {
+        "historyDepth": 84,
+        "validatorCount": 1,
+        "minimumValidatorCount": 1,
+        "invulnerables": ["5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY"],
+        "forceEra": "NotForcing",
+        "slashRewardFraction": 100000000,
+        "canceledPayout": 0,
+        "stakers": [
+          [
+            "5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY",
+            "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            1000000000000000000,
+            "Validator"
+          ]
+        ],
+        "minNominatorBond": 0,
+        "minValidatorBond": 0,
+        "maxValidatorCount": null,
+        "maxNominatorCount": null
+      },
+      "session": {
+        "keys": [
+          [
+            "5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY",
+            "5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY",
+            {
+              "grandpa": "5FA9nQDVg267DEd8m1ZypXLBnvN7SFxYwV7ndqSYGiN9TTpu",
+              "babe": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "im_online": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "authority_discovery": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+            }
+          ]
+        ]
+      },
+      "democracy": {
+        "phantom": null
+      },
+      "council": {
+        "phantom": null,
+        "members": []
+      },
+      "technicalCommittee": {
+        "phantom": null,
+        "members": [
+          "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+          "5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy",
+          "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
+          "5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL"
+        ]
+      },
+      "elections": {
+        "members": [
+          ["5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 1000000000000000000],
+          ["5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty", 1000000000000000000],
+          ["5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y", 1000000000000000000],
+          ["5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy", 1000000000000000000],
+          ["5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw", 1000000000000000000],
+          ["5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL", 1000000000000000000]
+        ]
+      },
+      "technicalMembership": {
+        "members": [],
+        "phantom": null
+      },
+      "grandpa": {
+        "authorities": []
+      },
+      "treasury": null,
+      "sudo": {
+        "key": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+      },
+      "imOnline": {
+        "keys": []
+      },
+      "authorityDiscovery": {
+        "keys": []
+      },
+      "society": {
+        "pot": 0,
+        "members": [
+          "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+          "5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy",
+          "5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw",
+          "5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL"
+        ],
+        "maxMembers": 999
+      },
+      "vesting": {
+        "vesting": []
+      },
+      "assets": {
+        "assets": [],
+        "metadata": [],
+        "accounts": []
+      },
+      "gilt": null,
+      "transactionStorage": {
+        "byteFee": 10,
+        "entryFee": 1000,
+        "storagePeriod": 100800
+      },
+      "allianceMotion": {
+        "phantom": null,
+        "members": []
+      },
+      "alliance": {
+        "founders": [],
+        "fellows": [],
+        "allies": [],
+        "phantom": null
+      },
+      "nominationPools": {
+        "minJoinBond": 100000000000000,
+        "minCreateBond": 1000000000000000,
+        "maxPools": 16,
+        "maxMembersPerPool": 32,
+        "maxMembers": 512
+      }
+    }
+  }
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Raw Chain Spec
+
+Totally un-opinionated. Just raw key-value pairs.
+
+```bash
+./target/release/substrate build-spec --chain=dev --raw > spec.json
+```
+
+```json
+{
+  "name": "Development",
+  "id": "dev",
+  "chainType": "Development",
+  "bootNodes": ["/ip4/127.0.0.1/tcp/30333/p2p/12D3KooWNsFq6B97vcYvjtx9RTQrptYqVFN8Nvtg7Nr2fD3jBUMz"],
+  "telemetryEndpoints": null,
+  "protocolId": null,
+  "properties": null,
+  "forkBlocks": null,
+  "badBlocks": null,
+  "lightSyncState": null,
+  "codeSubstitutes": {},
+  "genesis": {
+    "raw": {
+      "top": {
+        "0x074b65e262fcd5bd9c785caf7f42e00a4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x0e7b504e5df47062be129a8958a7a1271689c014e0a5b9a8ca8aafdff753c41c": "0xe8030000000000000000000000000000",
+        "0x0e7b504e5df47062be129a8958a7a1274e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x0e7b504e5df47062be129a8958a7a127ecf0c2087a354172a7b5a9a7735fe2ff": "0xc0890100",
+        "0x0e7b504e5df47062be129a8958a7a127fb88d072992a4a52ce055d9181748f1f": "0x0a000000000000000000000000000000",
+        "0x0f6738a0ee80c8e74cd2c7417c1e25564e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x1809d78346727a0ef58c0fa03bafa3234e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x1a736d37504c2e3fb73dad160c55b2914e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x1cb6f36e027abb2091cfb5110ab5087f4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x1cb6f36e027abb2091cfb5110ab5087f5e0621c4869aa60c02be9adcc98a0d1d": "0x04d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d0100000000000000",
+        "0x1cb6f36e027abb2091cfb5110ab5087f66e8f035c8adbe7f1547b43c51e6f8a4": "0x00000000",
+        "0x1cb6f36e027abb2091cfb5110ab5087faacf00b9b41fda7a9268821c2a2b3e4c": "0x04d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d0100000000000000",
+        "0x1cb6f36e027abb2091cfb5110ab5087fdc6b171b77304263c292cc3ea5ed31ef": "0x0100000000000000040000000000000001",
+        "0x2099d7f109d6e535fb000bba623fd4404c014e6bf8b8c2c011e7290b85696bb3": "0x04d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0x2099d7f109d6e535fb000bba623fd4404e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x2099d7f109d6e535fb000bba623fd4409f99a2ce711f3a31b2fc05604c93f179": "0x04d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0x267ada16405529c2f7ef2727d71edbde4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x26aa394eea5630e07c48ae0c9558cef734abf5cb34d6244378cddbf18e849d96": "0x00000000000000000000000000000000088d190f0b000000",
+        "0x26aa394eea5630e07c48ae0c9558cef74e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x26aa394eea5630e07c48ae0c9558cef75684a022a34dd8bfa2baaf44f172b710": "0x01",
+        "0x26aa394eea5630e07c48ae0c9558cef78a42f33323cb5ced3b44dd825fda9fcc": "0x4545454545454545454545454545454545454545454545454545454545454545",
+        "0x26aa394eea5630e07c48ae0c9558cef7a44704b568d21667356a5a050c118746b4def25cfda6ef3a00000000": "0x4545454545454545454545454545454545454545454545454545454545454545",
+        "0x26aa394eea5630e07c48ae0c9558cef7a7fd6c28836b9a28522dc924110cf439": "0x01",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9007cbc1270b5b091758f9c42f5915b3e8ac59e11963af19174d0b94d5d78041c233f55d2e19324665bafdfb62925af2d": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da923a05cabf6d3bde7ca3ef0d11596b5611cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da932a5935f6edc617ae178fef9eb1e211fbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x000000000300000001000000000000000000a0dec5adc935360000000000000000000000000000000000000000000000000064a7b3b6e00d0000000000000000000064a7b3b6e00d0000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da94f9aea1afa791265fae359272badc1cf8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da95ecffd7b6c0f78751baa9d281e0bfa3a6d6f646c70792f74727372790000000000000000000000000000000000000000": "0x0000000000000000010000000000000000407a10f35a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da96f2e33376834a63c86a195bcf685aebbfe65717dad0447d715f660a0a58411de509b42e6efb8375f562f58a554d5860e": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da98578796c363c105114787203e4d93ca6101191192fc877c24d725b337120fa3edc63d227bbc92705db1e2cb65f56981a": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9b0edae20838083f2cde1c4080db8cf8090b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9b321d16960ce1d9190b61e2421cc60131e07379407fecc4b89eb7dbd287c2c781cfb1907a96947a3eb18e4f8e7198625": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9de1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9e5e802737cce3a54b0bc9e3d3e6be26e306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc20": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9edeaa42c2163f68084a988529a0e2ec5e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9f3f619a1c2956443880db9cc9a13d058e860f1b1c7227f7c22602f53f15af80747814dffd839719731ee3bba6edc126c": "0x000000000000000001000000000000000000a0dec5adc9353600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x26aa394eea5630e07c48ae0c9558cef7f9cce9c888469bb1a0dceaa129672ef8": "0x3104106e6f6465",
+        "0x2aeddc77fe58c98d50bd37f1b90840f94e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x2b06af9719ac64d755623cda8ddd9b944e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x2b06af9719ac64d755623cda8ddd9b949f99a2ce711f3a31b2fc05604c93f179": "0x04d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0x2c5de123c468aef7f3ac2ab3a76f87ce4e7b9012096b41c4eb3aaf947f6ea429": "0x0400",
+        "0x2f85f1e1378cb2d7b83adbaf0b5869c24e7b9012096b41c4eb3aaf947f6ea429": "0x0100",
+        "0x2f85f1e1378cb2d7b83adbaf0b5869c298ef7dc060436e4ed803af07632b89b65153cb1f00942ff401000000": "0xa64dec98fd84389760354b55b3a1e3a439ae3ad226f41e5296fe65cf6c30e2a501000000",
+        "0x2f85f1e1378cb2d7b83adbaf0b5869c298ef7dc060436e4ed803af07632b89b6b4def25cfda6ef3a00000000": "0xa64dec98fd84389760354b55b3a1e3a439ae3ad226f41e5296fe65cf6c30e2a501000000",
+        "0x2f85f1e1378cb2d7b83adbaf0b5869c2ff3ae12770bea2e48d9bde7385e7a25f": "0x0000000002000000",
+        "0x3a2d6c9353500637d8f8e3e0fa0bb1c54e7b9012096b41c4eb3aaf947f6ea429": "0x0400",
+        "0x3a2d6c9353500637d8f8e3e0fa0bb1c5ba7fb8745735dc3be2a2c61a72c39e78": "0x00",
+        "0x3a636f6465": "<REALLY BIG WASM BLOB>",
+        "0x3a65787472696e7369635f696e646578": "0x00000000",
+        "0x3a6772616e6470615f617574686f726974696573": "0x010488dc3417d5058ec4b4503e0c12ea1a0a89be200fe98922423d4334014fa6b0ee0100000000000000",
+        "0x3db7a24cfdc9de785974746c14a99df94e7b9012096b41c4eb3aaf947f6ea429": "0x0300",
+        "0x3f1467a096bcd71a5b6a0c8155e20810308ce9615de0775a82f8a94dc3d285a1": "0x01",
+        "0x3f1467a096bcd71a5b6a0c8155e208104e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x426e15054d267946093858132eb537f105fe52c2045750c3c492ccdcf62e2b9c": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0x426e15054d267946093858132eb537f14e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x426e15054d267946093858132eb537f195999521c6c89cd80b677e53ce20f98c": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0x426e15054d267946093858132eb537f1a47a9ff5cd5bf4d848a80a0b1a947dc3": "0x00000000000000000000000000000000",
+        "0x426e15054d267946093858132eb537f1ba7fb8745735dc3be2a2c61a72c39e78": "0x181cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc208eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4890b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27de659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e",
+        "0x426e15054d267946093858132eb537f1d0b4a3f7631f0c0e761898fe198211de": "0xe7030000",
+        "0x4342193e496fab7ec59d615ed0dc55304e7b9012096b41c4eb3aaf947f6ea429": "0x0700",
+        "0x4a83351006488ef6369cb758091f878c4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x4ff3897794d496d78686afcfe760a1144e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x5c0d1176a568c1f92944340dbfed9e9c4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x5c0d1176a568c1f92944340dbfed9e9c530ebca703c85910e7164cb7d1c9e47b": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0x5e8a19e3cd1b7c148b33880c479c02814e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x5f27b51b5ec208ee9cb25b55d8728243308ce9615de0775a82f8a94dc3d285a1": "0x01",
+        "0x5f27b51b5ec208ee9cb25b55d87282434e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x5f3e4907f716ac89b6347d15ececedca0b6a45321efae92aea15e0740ec7afe7": "0x00000000",
+        "0x5f3e4907f716ac89b6347d15ececedca138e71612491192d68deab7e6f563fe1": "0x01000000",
+        "0x5f3e4907f716ac89b6347d15ececedca28dccb559b95c40168a1b2696581b5a7": "0x00000000000000000000000000000000",
+        "0x5f3e4907f716ac89b6347d15ececedca308ce9615de0775a82f8a94dc3d285a1": "0x06",
+        "0x5f3e4907f716ac89b6347d15ececedca3ed14b45ed20d054f05e37e2542cfe70e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0x5f3e4907f716ac89b6347d15ececedca422adb579f1dbf4f3886c5cfa3bb8cc4de1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d": "0xbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f13000064a7b3b6e00d13000064a7b3b6e00d0000",
+        "0x5f3e4907f716ac89b6347d15ececedca42982b9d6c7acc99faa9094c912372c2b4def25cfda6ef3a00000000e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x13d4fe63a7b3b6e00d13d4fe63a7b3b6e00d00",
+        "0x5f3e4907f716ac89b6347d15ececedca487df464e44a534ba6b0cbb32407b587": "0x0000000000",
+        "0x5f3e4907f716ac89b6347d15ececedca4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x5f3e4907f716ac89b6347d15ececedca5579297f4dfb9609e7e4c2ebab9ce40a": "0x04be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f",
+        "0x5f3e4907f716ac89b6347d15ececedca666fdcbb473985b3ac933d13f4acff8d": "0x00000000000000000000000000000000",
+        "0x5f3e4907f716ac89b6347d15ececedca682db92dde20a10d96d00ff0e9e221c0b4def25cfda6ef3a00000000e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x0000",
+        "0x5f3e4907f716ac89b6347d15ececedca6ddc7809c6da9bb6093ee22e0fda4ba8": "0x01000000",
+        "0x5f3e4907f716ac89b6347d15ececedca88dcde934c658227ee1dfafcd6e16903e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x0000",
+        "0x5f3e4907f716ac89b6347d15ececedca8bde0a0ea8864605e3b68ed9cb2da01bb4def25cfda6ef3a00000000e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x13d4fe63a7b3b6e00d13d4fe63a7b3b6e00d00",
+        "0x5f3e4907f716ac89b6347d15ececedca9220e172bed316605f73f1ff7b4ade98e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x00",
+        "0x5f3e4907f716ac89b6347d15ececedcaa141c4fe67c2d11f4a10c6aca7a79a04b4def25cfda6ef3a00000000": "0xd4fe63a7b3b6e00d0000000000000000",
+        "0x5f3e4907f716ac89b6347d15ececedcaac0a2cbf8e355f5ea6cb2de8727bfb0c": "0x54000000",
+        "0x5f3e4907f716ac89b6347d15ececedcaad811cd65a470ddc5f1d628ff0550982b4def25cfda6ef3a00000000": "0x00000000",
+        "0x5f3e4907f716ac89b6347d15ececedcab49a2738eeb30896aacb8b3fb46471bd": "0x01000000",
+        "0x5f3e4907f716ac89b6347d15ececedcac0d39ff577af2cc6b67ac3641fa9c4e7": "0x01000000",
+        "0x5f3e4907f716ac89b6347d15ececedcac29a0310e1bb45d20cace77ccb62c97d": "0x00e1f505",
+        "0x5f3e4907f716ac89b6347d15ececedcaea07de2b8f010516dca3f7ef52f7ac5a": "0x040000000000000000",
+        "0x5f3e4907f716ac89b6347d15ececedcaed441ceb81326c56263efbb60c95c2e4": "0x00000000000000000000000000000000",
+        "0x5f3e4907f716ac89b6347d15ececedcaf7dad0317324aecae8744b87fc95f2f3": "0x00",
+        "0x5f9cc45b7a00c5899361e1c6099678dc4e7b9012096b41c4eb3aaf947f6ea429": "0x0400",
+        "0x5f9cc45b7a00c5899361e1c6099678dc8a2d09463effcc78a22d75b9cb87dffc": "0x0000000000000000",
+        "0x5f9cc45b7a00c5899361e1c6099678dcd47cb8f5328af743ddfb361e7180e7fcbb1bdbcacd6ac9340000000000000000": "0x00000000",
+        "0x6441fb391296410bd2f14381bb7494334e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x6786c4cec8d628b6598d7a70ace7acd44e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x682a59d51ab9e48a8c8cc418ff9708d24e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x6c63e84bfc5a0d62149aaab70897685c4ba24bcd9ac206424105f255ae95a355": "0xb104000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "0x6c63e84bfc5a0d62149aaab70897685c4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x7474449cca95dc5d0c00e71735a6d17d4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x7a6d38deaa01cb6e76ee69889f1696272be9a4e88368a2188d2b9100a9f3cd43": "0x00407a10f35a00000000000000000000",
+        "0x7a6d38deaa01cb6e76ee69889f16962730256ea2c545a3e5e3744665ffb2ed28": "0x00020000",
+        "0x7a6d38deaa01cb6e76ee69889f1696273f0d64e1907361c689834a9c1cb0fbe0": "0x20000000",
+        "0x7a6d38deaa01cb6e76ee69889f16962749d67997de33812a1cc37310f765b82e": "0x0080c6a47e8d03000000000000000000",
+        "0x7a6d38deaa01cb6e76ee69889f1696274e7b9012096b41c4eb3aaf947f6ea429": "0x0200",
+        "0x7a6d38deaa01cb6e76ee69889f169627ba93302f3b868c50785e6ade45c6a1d8": "0x10000000",
+        "0x7cda3cfa86b349fdafce4979b197118f4e7b9012096b41c4eb3aaf947f6ea429": "0x0400",
+        "0x7cda3cfa86b349fdafce4979b197118f71cd3068e6118bfb392b798317f63a8910c174c55fd2c633e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e": "0x04e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e000064a7b3b6e00d000000000000000000000000000000000000000000000000",
+        "0x7cda3cfa86b349fdafce4979b197118f71cd3068e6118bfb392b798317f63a893e73123ebcdee9161cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c": "0x041cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c000064a7b3b6e00d000000000000000000000000000000000000000000000000",
+        "0x7cda3cfa86b349fdafce4979b197118f71cd3068e6118bfb392b798317f63a894f58b588ac077bd5306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc20": "0x04306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc20000064a7b3b6e00d000000000000000000000000000000000000000000000000",
+        "0x7cda3cfa86b349fdafce4979b197118f71cd3068e6118bfb392b798317f63a89518366b5b1bc7c99d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d": "0x04d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d000064a7b3b6e00d000000000000000000000000000000000000000000000000",
+        "0x7cda3cfa86b349fdafce4979b197118f71cd3068e6118bfb392b798317f63a89a647e755c30521d38eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48": "0x048eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48000064a7b3b6e00d000000000000000000000000000000000000000000000000",
+        "0x7cda3cfa86b349fdafce4979b197118f71cd3068e6118bfb392b798317f63a89dd4e3f25f5378a6d90b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22": "0x0490b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22000064a7b3b6e00d000000000000000000000000000000000000000000000000",
+        "0x7cda3cfa86b349fdafce4979b197118fba7fb8745735dc3be2a2c61a72c39e78": "0x181cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c000064a7b3b6e00d000000000000000000000000000000000000000000000000306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc20000064a7b3b6e00d0000000000000000000000000000000000000000000000008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48000064a7b3b6e00d00000000000000000000000000000000000000000000000090b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22000064a7b3b6e00d000000000000000000000000000000000000000000000000d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d000064a7b3b6e00d000000000000000000000000000000000000000000000000e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e000064a7b3b6e00d000000000000000000000000000000000000000000000000",
+        "0x89d139e01a5eb2256f222e5fc5dbe6b34e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0x913b40454eb582a66ab74c86f6137db94e7b9012096b41c4eb3aaf947f6ea429": "0x0400",
+        "0xa0eb495036d368196a2b6c51d9d788814e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xa2ce73642c549ae79c14f0a671cf45f94e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xa37f719efab16103103a0c8c2c784ce14e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xa42f90c8b47838c3a5332d85ee9aa5c34e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xa8c65209d47ee80f56b0011e8fd91f504e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xaebd463ed9925c488c112434d61debc04e7b9012096b41c4eb3aaf947f6ea429": "0x0400",
+        "0xaebd463ed9925c488c112434d61debc0ba7fb8745735dc3be2a2c61a72c39e78": "0x18d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4890b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc20e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e1cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c",
+        "0xbd2a529379475088d3e29a918cd478724e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xc2261276cc9d1f8598ea4b6a74b15c2f218f26c73add634897550b4003b26bc632a5935f6edc617ae178fef9eb1e211fbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x047374616b696e6720000064a7b3b6e00d000000000000000002",
+        "0xc2261276cc9d1f8598ea4b6a74b15c2f308ce9615de0775a82f8a94dc3d285a1": "0x01",
+        "0xc2261276cc9d1f8598ea4b6a74b15c2f4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xc2261276cc9d1f8598ea4b6a74b15c2f57c875e4cff74148e4628f264b974c80": "0x0040fa7f398074858a02000000000000",
+        "0xcec5070d609dd3497f72bde07fc96ba04c014e6bf8b8c2c011e7290b85696bb3e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0x88dc3417d5058ec4b4503e0c12ea1a0a89be200fe98922423d4334014fa6b0eed43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27dd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27dd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0xcec5070d609dd3497f72bde07fc96ba04e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xcec5070d609dd3497f72bde07fc96ba0726380404683fc89e8233450c8aa195066b8d48da86b869b6261626580d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d": "0xbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f",
+        "0xcec5070d609dd3497f72bde07fc96ba0726380404683fc89e8233450c8aa1950c9b0c13125732d276175646980d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d": "0xbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f",
+        "0xcec5070d609dd3497f72bde07fc96ba0726380404683fc89e8233450c8aa1950ed43a85541921049696d6f6e80d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d": "0xbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f",
+        "0xcec5070d609dd3497f72bde07fc96ba0726380404683fc89e8233450c8aa1950f5537bdb2a1f626b6772616e8088dc3417d5058ec4b4503e0c12ea1a0a89be200fe98922423d4334014fa6b0ee": "0xbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f",
+        "0xcec5070d609dd3497f72bde07fc96ba088dcde934c658227ee1dfafcd6e16903": "0x04be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f",
+        "0xcec5070d609dd3497f72bde07fc96ba0e0cdd062e6eaf24295ad4ccfc41d4609": "0x04be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f88dc3417d5058ec4b4503e0c12ea1a0a89be200fe98922423d4334014fa6b0eed43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27dd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27dd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d",
+        "0xd57bce545fb382c34570e5dfbf338f5e4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xd5c41b52a371aa36c9254ce34324f2a54e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xd5e1a2fa16732ce6906189438c0a82c64e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xd8f314b7f4e6b095f0f8ee4656a448254e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xdf66cf37cde77d2a63889732a23c685e4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xdf66cf37cde77d2a63889732a23c685e62556a85fcb7c61b2c6c750924846b15e535263148daaf49be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f": "0xbe5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f0000b304f91831830500622780fd38770500",
+        "0xdf66cf37cde77d2a63889732a23c685e7a6dc62e324093ba1331bf49fdb2f24a": "0x01000000",
+        "0xdf66cf37cde77d2a63889732a23c685ee5c03730c8f59f00941607850b6633d81fad1867486365c5b304f91831830500": "0x01be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f01be5ddb1579b72e84524fc29e78609e3caf42e85aa118ebfe0b0ad404b5bdd25f",
+        "0xed25f63942de25ac5253ba64b5eb64d14e7b9012096b41c4eb3aaf947f6ea429": "0x0400",
+        "0xed25f63942de25ac5253ba64b5eb64d1ba7fb8745735dc3be2a2c61a72c39e78": "0x18d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a4890b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22306721211d5404bd9da88e0204360a1a9ab8b87c66c1bc2fcdd37f3c2222cc20e659a7a1628cdd93febc04a4e0646ea20e9f5f0ce097d9a05290d4a9e054df4e1cbd2d43530a44705ad088af313e18f80b53ef16b36177cd4b77b846f2a5f07c",
+        "0xede8e4fdc3c8b556f0ce2f77fc2575e34e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xedfb05b766f199ce00df85317e33050e4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xf0c365c3cf59d671eb72da0e7a4113c44e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xf2794c22e353e9a839f12faab03a911b308ce9615de0775a82f8a94dc3d285a1": "0x00",
+        "0xf2794c22e353e9a839f12faab03a911b4e7b9012096b41c4eb3aaf947f6ea429": "0x0000",
+        "0xf2794c22e353e9a839f12faab03a911b7f17cdfbfa73331856cca0acddd7842e": "0x00000000",
+        "0xf2794c22e353e9a839f12faab03a911bbdcb0c5143a8617ed38ae3810dd45bc6": "0x00000000",
+        "0xf2794c22e353e9a839f12faab03a911be2f6cb0456905c189bcb0458f9440f13": "0x00000000",
+        "0xfbc9f53700f75f681f234e70fb7241eb4e7b9012096b41c4eb3aaf947f6ea429": "0x0000"
+      },
+      "childrenDefault": {}
+    }
+  }
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Loading Chain Spec
+
+```bash
+./target/release/substrate --chain=spec.json
+```
+
+Some specs are included in the client binary:
+
+From: `substrate/bin/node/cli/src/command.rs`
+
+```rust
+fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
+	let spec = match id {
+		"" =>
+			return Err(
+				"Please specify which chain you want to run, e.g. --dev or --chain=local"
+					.into(),
+			),
+		"dev" => Box::new(chain_spec::development_config()),
+		"local" => Box::new(chain_spec::local_testnet_config()),
+		"fir" | "flaming-fir" => Box::new(chain_spec::flaming_fir_config()?),
+		"staging" => Box::new(chain_spec::staging_testnet_config()),
+		path =>
+			Box::new(chain_spec::ChainSpec::from_json_file(std::path::PathBuf::from(path))?),
+	};
+	Ok(spec)
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Storage Trie Keys
+
+We will learn how specifically keys are generated in the FRAME section.
+
+But you can use tools like:
+
+https://github.com/shawntabrizi/substrate-known-keys/blob/master/known-keys.json
+
+Some simple ones:
+
+```js
+// The Wasm Blob.
+// Just hex representation of UTF-8 String.
+":code" = 0x3a636f6465
+
+// System Accounts
+0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9
+
+// Block Number
+0x26aa394eea5630e07c48ae0c9558cef702a5c1b19ab7a04f536c519aca4983ac
+```
+</script></section><section  data-markdown><script type="text/template">
+## Development Node
+
+```bash
+--dev
+	Specify the development chain.
+
+	This flag sets `--chain=dev`, `--force-authoring`, `--rpc-cors=all`, `--alice`, and
+	`--tmp` flags, unless explicitly overridden.
+```
+
+The most common way to quickly launch a test network:
+
+```bash
+./target/release/substrate --dev
+```
+</script></section><section  data-markdown><script type="text/template">
+## `--dev` Implications
+
+- `--chain=dev`: Use the dev chain specification.
+- `--force-authoring`: Make blocks even if you are offline. (when you are not connected to any peers)
+- `--rpc-cors=all`: Allow any browser Origin to access the HTTP & WS RPC servers.
+- `--alice`: Shortcut for `--name Alice --validator` with session keys for `Alice` added to keystore.
+- `--tmp`: Run a temporary node where blockchain data is stored in a temporary directory.
+</script></section><section  data-markdown><script type="text/template">
+## Development Accounts
+
+- `--alice`
+- `--bob`
+- `--charlie`
+- `--dave`
+- `--eve`
+- `--ferdie`
+
+On a `--dev` node, these accounts are configured as validators and also given funds.
+
+```bash
+--validator
+	Enable validator mode.
+
+	The node will be started with the authority role and actively participate in any
+	consensus task that it can (e.g. depending on availability of local keys).
+```
+</script></section><section  data-markdown><script type="text/template">
+## Control Where Data is Stored
+
+```bash
+./target/release/substrate --dev --base-path=./tmp/
+```
+
+This will result in:
+
+```
+tmp/
+├─ chains/
+│  ├─ dev/
+│  │  ├─ db/
+│  │  ├─ network/
+│  │  ├─ keystore/
+```
+</script></section><section  data-markdown><script type="text/template">
+## Purging Chain Data
+
+Without specifying a `--base-path`, you may not know where the blockchain data is being stored.
+
+`purge-chain` sub-command can help with that.
+
+```bash
+./target/release/substrate purge-chain --dev
+
+Are you sure to remove "/Users/shawntabrizi/Library/Application Support/substrate/chains/dev/db/full"? [y/N]:
+
+y
+
+"/Users/shawntabrizi/Library/Application Support/substrate/chains/dev/db/full" removed.
+```
+</script></section><section  data-markdown><script type="text/template">
+## Database Stuff
+
+```bash
+--database <DB>
+	Select database backend to use
+
+	[possible values: rocksdb, paritydb, paritydb-experimental, auto]
+
+--db-cache <MiB>
+	Limit the memory the database cache can use
+```
+</script></section><section  data-markdown><script type="text/template">
+## Execute as Native
+
+```bash
+--execution <STRATEGY>
+	The execution strategy that should be used by all execution contexts
+
+	[possible values: native, wasm, both, native-else-wasm]
+```
+
+```bash
+./target/release/substrate --dev --execution=native
+```
+</script></section><section  data-markdown><script type="text/template">
+## Block Pruning
+
+You can control how many finalizes blocks to keep and the underlying block state.
+
+```
+--keep-blocks <COUNT>
+	Specify the number of finalized blocks to keep in the database.
+
+	Default is to keep all blocks.
+
+	N O T E: only finalized blocks are subject for removal!
+
+--pruning <PRUNING_MODE>
+	Specify the state pruning mode, a number of blocks to keep or 'archive'.
+
+	Default is to keep only the last 256 blocks, otherwise, the state can be kept for all of
+	the blocks (i.e 'archive'), or for all of the canonical blocks (i.e
+	'archive-canonical').
+```
+</script></section><section  data-markdown><script type="text/template">
+## RPC and WS
+
+You probably want to control RPC and WS ports if you are launching multiple nodes on the same machine.
+
+```bash
+--rpc-port <PORT>
+	Specify HTTP RPC server TCP port
+
+--ws-port <PORT>
+	Specify WebSockets RPC server TCP port
+```
+
+Bandwidth configurations:
+
+```bash
+--rpc-max-request-size <RPC_MAX_REQUEST_SIZE>
+	Set the the maximum RPC request payload size for both HTTP and WS in megabytes. Default
+	is 15MiB
+
+--rpc-max-response-size <RPC_MAX_RESPONSE_SIZE>
+	Set the the maximum RPC response payload size for both HTTP and WS in megabytes. Default
+	is 15MiB
+
+--rpc-max-subscriptions-per-connection <RPC_MAX_SUBSCRIPTIONS_PER_CONNECTION>
+	Set the the maximum concurrent subscriptions per connection. Default is 1024
+```
+</script></section><section  data-markdown><script type="text/template">
+## "Unsafe" RPC and WS Stuff
+
+```bash
+--rpc-methods <METHOD SET>
+	RPC methods to expose.
+
+	- `unsafe`: Exposes every RPC method.
+	- `safe`: Exposes only a safe subset of RPC methods, denying unsafe RPC methods.
+	- `auto`: Acts as `safe` if RPC is served externally, e.g. when `--{rpc,ws}-external` is
+		passed, otherwise acts as `unsafe`.
+
+	[default: auto]
+	[possible values: auto, safe, unsafe]
+
+--rpc-external
+	Listen to all RPC interfaces.
+
+	Default is local. Note: not all RPC methods are safe to be exposed publicly. Use an RPC
+	proxy server to filter out dangerous methods. More details:
+	<https://docs.substrate.io/v3/runtime/custom-rpcs/#public-rpcs>. Use
+	`--unsafe-rpc-external` to suppress the warning if you understand the risks.
+
+--ws-external
+	Listen to all Websocket interfaces.
+
+	Default is local. Note: not all RPC methods are safe to be exposed publicly. Use an RPC
+	proxy server to filter out dangerous methods. More details:
+	<https://docs.substrate.io/v3/runtime/custom-rpcs/#public-rpcs>. Use
+	`--unsafe-ws-external` to suppress the warning if you understand the risks.
+```
+</script></section><section  data-markdown><script type="text/template">
+## Enabling Logs
+
+```rust
+-l, --log <LOG_PATTERN>...
+		Sets a custom logging filter. Syntax is <target>=<level>, e.g. -lsync=debug.
+
+		Log levels (least to most verbose) are error, warn, info, debug, and trace. By default,
+		all targets log `info`. The global log level can be set with -l<level>.
+```
+
+Same as `RUST_LOG` environment variable.
+
+All `runtime` prefixed logs:
+
+```bash
+RUST_LOG=runtime=debug ./target/release/substrate --dev
+./target/release/substrate --dev --log=runtime=debug
+```
+
+All `runtime::staking` prefixed logs:
+
+```bash
+./target/release/substrate --dev --log=runtime::staking=debug
+```
+</script></section><section  data-markdown><script type="text/template">
+## Logs in the Code
+
+Just an example of how you can add logs to your code:
+
+```rust
+pub(crate) const LOG_TARGET: &str = "runtime::staking";
+
+// syntactic sugar for logging.
+#[macro_export]
+macro_rules! log {
+	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
+		log::$level!(
+			target: crate::LOG_TARGET,
+			concat!("[{:?}] 💸 ", $patter), <frame_system::Pallet<T>>::block_number() $(, $values)*
+		)
+	};
+}
+```
+
+Then to log:
+
+```rust
+log!(warn, "genesis election provider failed due to {:?}", e);
+```
+</script></section><section  data-markdown><script type="text/template">
+## Sync Flags
+
+You can control how you sync your node.
+
+```bash
+--sync <SYNC_MODE>
+	Blockchain syncing mode.
+
+	- `full`: Download and validate full blockchain history.
+	- `fast`: Download blocks and the latest state only.
+	- `fast-unsafe`: Same as `fast`, but skip downloading state proofs.
+	- `warp`: Download the latest state and proof.
+
+	[default: full]
+	[possible values: full, fast, fast-unsafe, warp]
+```
+</script></section><section  data-markdown><script type="text/template">
+## Transaction Pool Size
+
+```rust
+--pool-kbytes <COUNT>
+	Maximum number of kilobytes of all transactions stored in the pool
+
+	[default: 20480]
+
+--pool-limit <COUNT>
+	Maximum number of transactions in the transaction pool
+
+	[default: 8192]
+```
+</script></section><section  data-markdown><script type="text/template">
+## Cool IPFS Stuff
+
+Both Substrate and IPFS use LibP2P.
+
+It is pretty easy to turn a Substrate node into a IPFS client.
+
+```bash
+--ipfs-server
+	Join the IPFS network and serve transactions over bitswap protocol
+```
+</script></section><section  data-markdown><script type="text/template">
+## Sub Commands
+
+```bash
+SUBCOMMANDS:
+	benchmark
+			Sub-commands concerned with benchmarking. The pallet benchmarking moved to the `pallet`
+			sub-command
+	build-spec
+			Build a chain specification
+	chain-info
+			Db meta columns information
+	check-block
+			Validate blocks
+	export-blocks
+			Export blocks
+	export-state
+			Export the state of a given block into a chain spec
+	help
+			Print this message or the help of the given subcommand(s)
+	import-blocks
+			Import blocks
+	inspect
+			Decode given block or extrinsic using current native runtime.
+	key
+			Key management cli utilities
+	purge-chain
+			Remove the whole chain
+	revert
+			Revert the chain to a previous state
+	sign
+			Sign a message, with a given (secret) key
+	try-runtime
+			Try some command against runtime state. N o t e: `try-runtime` feature must be enabled
+	vanity
+			Generate a seed that provides a vanity address
+	verify
+			Verify a signature for a message, provided on STDIN, with a given (public or secret) key
+```
+</script></section><section  data-markdown><script type="text/template">
+<img src="../../../assets/img/4-Substrate/thats_all_folks.png">
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

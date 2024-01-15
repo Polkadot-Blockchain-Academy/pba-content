@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Substrate Folder Structure</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Substrate Folder Structure
+</script></section><section  data-markdown><script type="text/template">
+## Substrate Folder Structure
+
+- How to look at substrate from **_within_**.
+  - Mostly relevant when wanting to work on substrate itself.
+- How to look at substrate from **_without_**.
+  - Mostly relevant when wanting to build on top of substrate.
+</script></section><section ><section data-markdown><script type="text/template">
+## Substrate Internally
+
+Substrate is roughly composed of 3 parts:
+
+- Client: `./client`: `sc-*`
+- FRAME: `./frame`: `frame-*`, `pallet-*`
+- Primitives: `./primitives`: `sp-*`
+
+Primitives is the glue between the other two.
+</script></section><section data-markdown><script type="text/template">
+### Substrate Internally: `./client`
+
+- database
+- consensus
+  - finality
+  - block-builder
+- networking
+- import-queue / tx-queue / mempool
+</script></section><section data-markdown><script type="text/template">
+### Substrate Internally: `./primitives`
+
+- crypto primitives
+- runtime-api/host-functions
+- ...
+</script></section><section data-markdown><script type="text/template">
+### Substrate Internally: `./frame`
+
+- modules that compose the runtime.
+  - balances/currency (bitcoin)
+  - Wasm/Solidity smart contracts (Ethereum)
+  - transaction-payment
+  - staking
+  - identity
+  - proxy / (onchain) multisig
+  - ...
+</script></section><section data-markdown><script type="text/template">
+### Workshop
+
+- Go search for some crates based on these prefixes in https://paritytech.github.io/substrate/.
+- Look into the codebase as well.
+</script></section><section data-markdown><script type="text/template">
+### Substrate Internally
+
+- So what's the point in all of this? 🤨
+
+- When looking for the code related to a given topic, this information should help you find it.
+<hr>
+- Networking? only on `sc-*`
+- Database/Storage? Probably in `sc-*` and `sp-*`
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Substrate Externally
+
+- How substrate is seen once used by a developer.
+- Substrate can be used as a set of _libraries_ in a binary package.
+</script></section><section data-markdown><script type="text/template">
+### Substrate Externally
+
+<img style="width: 1200px" src="../../assets/img/4-Substrate/dev-4-2-external.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Substrate Externally
+
+- Remember this? This is the node-template or FRAME layer:
+
+<img style="width: 800px;" src="../../assets/img/4-Substrate/dev-4-1-freedom.svg" />
+
+<aside class="notes"><p>A bit of code to build the CI, etc.
+A bit of code to build the runtime, with maybe some custom modules.</p>
+<p>And the rest is... MAGIC</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Substrate Externally: Examples
+
+- `bin/kitchensink-node`.
+- `bin/node-template`.
+- low and behold, the entire `polkadot` repo.
+- Tomorrow, you will receive a template for your activity, which is a substrate node without FRAME.
+</script></section></section><section  data-markdown><script type="text/template">
+## Activity: Exploring Substrate Node Template
+
+- This is your de-facto "substrate starter pack".
+  Clone it, and try and find all the main components of it,<br/>based on the material you have learned so far.
+
+<hr>
+
+- Which set of functions the runtime is exposing (remember the thing called "**Runtime API**"? 😉)?
+- Which modules from `frame` are used in the runtime?
+- What is the version of the runtime? spec-name/version (you have not learned about this).
+- Which RPC endpoints does this node have?
+- Which consensus algorithm(s) is it using?
+- You have 15 minutes!
+
+<aside class="notes"><p>I can rephrase this exercise as: reading-alien-code challenge. You have not been taught most of
+these.</p>
+<p>In the runtime the answer is the top level amalgamator file. In the cli side, look for a
+<code>service.rs</code> file.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## Activity: Compiling Rust to Wasm
+
+- Let's make a simple rust crate that compiles to Wasm!
+</script></section><section data-markdown><script type="text/template">
+### Activity: Compiling Rust to Wasm
+
+- A target triple consists of three strings separated by a hyphen, with a possible fourth string at the end preceded by a hyphen.
+- The first is the **architecture**, the second is the **"vendor"**, the third is the **OS type**, and the optional fourth is environment type.
+
+* `wasm32-unknown-emscripten`: Legacy, provides some kind of `std`-like environment
+* `wasm32-unknown-unknown` ✓ WebAssembly: Can compile anywhere, can run anywhere, no `std`
+* `wasm32-wasi` ✓ WebAssembly with WASI
+</script></section><section data-markdown><script type="text/template">
+### Rust -> Wasm Details
+
+```rust
+#[no_mangle] // don't re-name symbols while linking
+pub extern "C" fn add_one() { // use C-style ABI
+  ...
+}
+```
+
+and if a library:
+
+```
+[lib]
+crate-type = ["cdylib"]
+```
+</script></section><section data-markdown><script type="text/template">
+### Activity: Compiling Rust to Wasm
+
+- you can use `wasmtime-cli` to execute, and `wasm-gc` to trim your Wasm files.
+- For each step, try both `wasm32-unknown-unknown` and `wasm32-wasi`.
+</script></section><section data-markdown><script type="text/template">
+### Activity: Compiling Rust to Wasm
+
+- First, write a Wasm function that multiplies a number by 2.
+- Then, write a Wasm function that prints 42.
+- Then, write a Wasm function that prints or returns the current time.
+- Then, write a Wasm function that writes the result of the multiplication into a file called `output`.
+- Finally, write a Wasm function that multiplies two `f32` numbers.
+- Then, really finally, make a Wasm function that divides a number by 0.
+
+> For this last one, you might want to transform your `wasm-library` crate into a `wasm` "bin" crate.
+</script></section></section><section  data-markdown><script type="text/template">
+## Extra Activity: Wasm Execution
+
+- Substrate supports two types of Wasm execution.
+- Find the right crate in substrate repo to find the executors, then look them up online.
+- Argue which type of executor should be used for runtimes, and which for smart contracts.
+- You have less than 30 minutes!
+
+<aside class="notes"><p>We want students to discover <code>wasmi</code> and Wasmtime, and research their differences.</p>
+<p>So the key difference here is that the compilation of the code is unsafe because you can attack an
+optimizing compiler.
+You can input some code for compilation that just takes forever to compile
+(compiler bombs).
+There is no difference on safety in the actual execution apart from interpreters
+being more simple and hence less likely to have bugs.</p>
+<p>So compilation can be safe.
+But only if you can do it in linear time.
+And that prevents most optimizations which makes the produced code slow.
+And it is questionable and surely depend on the contract in question whether the compilation time can be recuperated if you need to compile it every time it is run.
+When we have fuel metering we could port the code generation of Wasmtime to the runtime and cache the produced native code on-chain.
+Cause with fuel metering we are immune against compiler bombs.</p>
+<p>Then we could have near native speed for contracts.</p>
+<p>Of course we could port the code generation of a linear time compiler to the runtime and have the same without fuel metering.
+However, there is none except Wasmer.
+And they were acquired by NEAR.
+It was always a shady project but now I don&#39;t want to rely on it at all.
+Everything except Wasmtime is a huge liability.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Additional Resources! 😋
+
+> Check speaker notes (click "s" 😉)
+
+<aside class="notes"><ul>
+<li><p>More on Rust target spec:</p>
+<ul>
+<li><a href="https://rust-lang.github.io/rfcs/0131-target-specification.html">https://rust-lang.github.io/rfcs/0131-target-specification.html</a></li>
+</ul>
+</li>
+<li><p>Lin Clark&#39;s awesome talks on WASI (not super relevant to our work though):</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=fh9WXPu0hw8">https://www.youtube.com/watch?v=fh9WXPu0hw8</a></li>
+<li><a href="https://www.youtube.com/watch?v=HktWin_LPf4">https://www.youtube.com/watch?v=HktWin_LPf4</a></li>
+</ul>
+</li>
+<li><p><code>wasm-unknown</code> vs <code>wasm-wasi</code>:</p>
+<ul>
+<li><a href="https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5">https://users.rust-lang.org/t/wasm32-unknown-unknown-vs-wasm32-wasi/78325/5</a></li>
+</ul>
+</li>
+<li><p><code>extern &quot;C&quot;</code>:</p>
+<ul>
+<li><a href="https://doc.rust-lang.org/std/keyword.extern.html">https://doc.rust-lang.org/std/keyword.extern.html</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code">https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#using-extern-functions-to-call-external-code</a></li>
+</ul>
+</li>
+<li><p>Chapter 11 of this book is a great read: <a href="https://nostarch.com/rust-rustaceans">https://nostarch.com/rust-rustaceans</a></p>
+</li>
+</ul>
+<h2 id="activity-hints-post-lecture">Activity Hints (Post Lecture)</h2>
+<pre><code>rustup target add wasm32-wasi
+rustup target add wasm32-unknown-unknown
+
+cargo init --lib
+apply stuff (`cdylib`, `#[no_mangle]`)
+
+cargo build --target wasm32-unknown-unknown --release
+</code></pre>
+<p>Install <code>wasmtime-cli</code>, maybe <code>cargo install wasmtime-cli</code>? Figure it out based on the <code>wasmtime-cli</code>
+docs!</p>
+<pre><code>wasmtime ./target/wasm32-unknown-unknown/release/wasm-crate.wasm --invoke &lt;func_name&gt; &lt;arg1&gt; &lt;arg2&gt; ...
+</code></pre>
+<p>DON&#39;T USE <code>bindgen</code>! That&#39;s for compiling wasm to browser!</p>
+<p>A rust <code>lib</code> crate can be executed via <code>wasmtime</code>, a rust <code>bin</code> crate can be executed itself with
+<code>cargo run</code>, but there are caveats. USE LIB CRATE for now.</p>
+<p>If you want to play with the de-compiled WAM file:</p>
+<pre><code>wasm-gc target/wasm32-unknown-unknown/release/wasm_crate.wasm out.wasm
+wasm2wat out.wasm | grep export
+</code></pre>
+<p>Even with <code>wasi</code>, in order to create a file you need permission.</p>
+<p>Note that functions like <code>std::time::now()</code> and such are available in <code>wam32-unknown-unknown</code>, but
+simply panic. The point is that you probably won&#39;t get a compile error, but it won&#39;t work either.</p>
+<p>the point of <code>f32</code> is to show that you we can use float, but float are un-deterministic, so YOU
+SHOULD NOT USE THEM IN YOUR RUNTIME.</p>
+<p>Try and use <code>Vec&lt;_&gt;</code> or other types that are dynamically allocated. Recall that <code>wasm32-unknown-unknown</code> does not have an allocator!</p>
+<p>Further ideas:</p>
+<ul>
+<li>make print work in wasm32-unknown-unknown using &quot;host functions&quot; (<a href="https://docs.wasmtime.dev/wasm-rust.html#importing-host-functionality">https://docs.wasmtime.dev/wasm-rust.html#importing-host-functionality</a>).</li>
+<li>try and bring an external dependency in your crate. You will probably run into <code>feature = std</code>.</li>
+</ul>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

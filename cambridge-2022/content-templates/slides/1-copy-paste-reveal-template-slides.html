@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Copy and Paste Slide Templates</title>
+    <link rel="shortcut icon" href="./../../favicon.ico" />
+    <link rel="stylesheet" href="./../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Copy and Paste Slide Templates
+
+### _Use the `---` delineated slides here in your content!_
+</script></section><section  data-markdown><script type="text/template">
+<div class="flex-container">
+<div class="left text-right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+<!-- TODO: add a good circularly cropped head-shot of ou to the `assets/profile` folder  -->
+<img style="width: 550px; float:right; margin-right:30px" src="../../assets/img/0-Shared/placeholder/profile.png"/>
+
+</div>
+<div style="margin-top:130px" class="right text-left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Instructor Name
+
+<!-- .element: style="margin-bottom: -30px;" -->
+
+#### _Position or Title_
+
+<!-- .element: style="margin-left: 20px;" -->
+
+- I am a Subject matter in X
+- A bit about me
+
+_[Twitter](https://twitter.com) // [LinkedIn](https://linkedin.com) // [Email](mailto:)_
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+### _At the end of this lecture, you will be able to:_
+
+- Describe ... <!-- TODO: fill this in  -->
+- Navigate ... <!-- TODO: fill this in  -->
+- Justify ... <!-- TODO: fill this in  -->
+</script></section><section  data-markdown><script type="text/template">
+## Here is a topic
+
+- Use some bullets
+- To make a few points
+
+<aside class="notes"><p>Speaker view ONLY notes</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Here is an important point
+
+#### _Make it clear_
+
+<aside class="notes"><p>Stuff you should remember to say</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Pictures
+
+<!-- set height*width in px, where full screen is 1920*1080 -->
+<img style="width: 800px" src="../../assets/img/0-Shared/placeholder/Landscape_mountain.jpg" alt="Some Pic">
+
+#### _Leave a note on why this one matters_
+</script></section><section  data-markdown><script type="text/template">
+## Code Highlight & Transitions
+
+Syntax for many langs is possible, and very easy to style.
+You can _and should_ use highlighting of lines in a large snippets of code.
+
+You an also add comments to make "fragments" for specific components
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+_They can ordered how you see fit!_
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+See the source for syntax
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</script></section><section  data-markdown><script type="text/template">
+## Rust Example
+
+```rust [0|1,6|15-25|30-31]
+#![cfg_attr(not(feature = "std"), no_std)]
+// `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
+#![recursion_limit = "256"]
+
+// Make the WASM binary available.
+#[cfg(feature = "std")]
+include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
+
+mod weights;
+pub mod xcm_config;
+
+/// BlockId type as expected by this runtime.
+pub type BlockId = generic::BlockId<Block>;
+
+/// The SignedExtension to the basic transaction logic.
+pub type SignedExtra = (
+	frame_system::CheckNonZeroSender<Runtime>,
+	frame_system::CheckSpecVersion<Runtime>,
+	frame_system::CheckTxVersion<Runtime>,
+	frame_system::CheckGenesis<Runtime>,
+	frame_system::CheckEra<Runtime>,
+	frame_system::CheckNonce<Runtime>,
+	frame_system::CheckWeight<Runtime>,
+	pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
+);
+
+/// Unchecked extrinsic type as expected by this runtime.
+pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, SignedExtra>;
+
+/// Extrinsic type that has already been checked.
+pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, Call, SignedExtra>;
+
+/// Executive: handles dispatch to the various modules.
+pub type Executive = frame_executive::Executive<
+	Runtime,
+	Block,
+	frame_system::ChainContext<Runtime>,
+	Runtime,
+	AllPalletsWithSystem,
+>;
+```
+</script></section><section  data-markdown><script type="text/template">
+## Columns
+
+<div class="flex-container">
+<div class="left centered"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Left side (centered)
+
+- Some really important things to say
+- Lots of great stuff
+- Points here too
+
+center justified text
+
+This is the default for all but bullets
+
+</div>
+<div class="right"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Right side (non-centered)
+
+- some
+- more
+- points
+- you
+- make
+
+Left justified text with line brake <br>
+use `<br>` <br>
+(MarkDown comment below)
+
+<!-- .element: style="text-align: left;" -->
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+<div class="flex-container">
+<div class="left"> <!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+### Column + Code
+
+- Some
+- Observations
+- Others
+
+</div>
+
+<!-- Put no content here -->
+
+<div class="right">
+<!-- Gotcha: You Need an empty line to render MD inside <div> -->
+
+```rust [0|1,13|4-8]
+fn largest_i32(list: &[i32]) -> i32 {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn largest_char(list: &[char]) -> char {
+    let mut largest = list[0];
+
+    for &item in list {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
+
+fn main() {
+    let number_list = vec![34, 50, 25, 100, 65];
+
+    let result = largest_i32(&number_list);
+    println!("The largest number is {}", result);
+    assert_eq!(result, 100);
+
+    let char_list = vec!['y', 'm', 'a', 'q'];
+
+    let result = largest_char(&char_list);
+    println!("The largest char is {}", result);
+    assert_eq!(result, 'y');
+}
+```
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+## Tables
+
+| Tables              |         Are         |                    Cool |
+| ------------------- | :-----------------: | ----------------------: |
+| col 1 is            |    left-aligned     |                   $1600 |
+| col 2 is            |      centered       |                     $12 |
+| col 3 is            |    right-aligned    |                      $1 |
+| This row sure has a | _lot_ of text so it | spaces the columns outs |
+</script></section><section  data-markdown><script type="text/template">
+## Math
+
+KaTeX/LaTeX rendered within blocks with "`$$`" delimiters
+
+$$J(\theta_0,\theta_1) = \sum_{i=0}$$
+
+In line uses "`\\(`" and "`\\)`" to render: \\(\alpha\beta\gamma\\)
+.
+
+More info: https://revealjs.com/math/
+</script></section><section  data-markdown><script type="text/template">
+# More help needed?
+
+_Please reach out to the academy content & docs team on element for support!_
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../dist/reveal.js"></script>
+    <script src="./../../plugin/markdown/markdown.js"></script>
+    <script src="./../../plugin/highlight/highlight.js"></script>
+    <script src="./../../plugin/zoom/zoom.js"></script>
+    <script src="./../../plugin/notes/notes.js"></script>
+    <script src="./../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"transition":"slide","width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

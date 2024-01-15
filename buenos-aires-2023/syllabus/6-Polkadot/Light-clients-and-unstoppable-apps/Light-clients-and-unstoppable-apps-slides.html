@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Light Clients and Unstoppable Apps</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+<style type="text/css">
+.bordered-box {
+  background-color: green;
+  border-radius: 35px;
+  padding: 40px;
+  margin-top: 50px !important;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+</style>
+
+# Light clients<br/>and<br/>Unstoppable Apps
+</script></section><section ><section data-markdown><script type="text/template">
+## Publicly Accessible Node
+
+The dApp (UI) connects to a third-party-owned publicly-accessible node client
+
+<p class="red bordered-box"><span class="font-weight-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</p>
+<p class="green bordered-box"><span class="font-weight-bold">Convenient:</span> Works transparently</p>
+</script></section><section data-markdown><script type="text/template">
+## So what one needs to do
+
+Find the web-socket url of a 3rd party node that you trust;
+</script></section><section data-markdown><script type="text/template">
+## In your dApp
+
+```javascript[0|1|3-5|7-9]
+import { ApiPromise, WsProvider } from "@polkadot/api";
+
+// Maybe some more code that does some magic here
+const provider = new WsProvider("wss://westend-rpc.polkadot.io");
+const api = await ApiPromise.create({ provider });
+
+// Interact using polkadotJS API
+const header = await api.rpc.chain.getHeader();
+const chainName = await api.rpc.system.chain();
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+## User-Controlled Node
+
+The dApp (UI) connects to a node client that the user has installed on their machine
+
+<p class="green bordered-box"><span class="font-weight-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
+<p class="red bordered-box"><span class="font-weight-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</p>
+</script></section><section data-markdown><script type="text/template">
+## So what one needs to do
+
+<pba-flex center>
+
+1. Install dependencies<br/>
+   (e.g. rust, openssl, cmake, llvm etc);
+1. Clone from github the `polkadot` repo;
+1. Build the node locally;
+1. Start the node locally;
+1. Wait for node to synchronize;
+
+<pba-flex>
+</script></section><section data-markdown><script type="text/template">
+## In your dApp
+
+```javascript[|1|3-5|7-9]
+import { ApiPromise, WsProvider } from "@polkadot/api";
+
+// Maybe some more code that does some magic here
+const provider = new WsProvider("wss://127.0.0.1:9944");
+const api = await ApiPromise.create({ provider });
+
+// Interact using polkadotJS API
+const header = await api.rpc.chain.getHeader();
+const chainName = await api.rpc.system.chain();
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Light Client in the Browser
+
+The uApp (UI) connects to an _integrated_ light client
+
+<p class="green bordered-box"><span class="font-weight-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
+<p class="green bordered-box"><span class="font-weight-bold">Convenient:</span> Works transparently</p>
+</script></section><section data-markdown><script type="text/template">
+## So what one needs to do
+
+<pba-flex center>
+
+1. Install and use [Substrate Connect](https://github.com/paritytech/substrate-connect)<br/>
+   dependencies in the uApp
+1. Write/Replace 2-3 lines of code
+
+</pba-flex>
+</script></section><section data-markdown><script type="text/template">
+## With PolkadotJS API
+
+```javascript[0|1-2|4-7|9-11]
+import { ScProvider } from "@polkadot/rpc-provider/substrate-connect";
+import * as Sc from '@substrate/connect';
+
+// Maybe some more code that does some magic here
+const provider = new ScProvider(Sc, Sc.WellKnownChain.westend2);
+await provider.connect();
+const api = await ApiPromise.create({ provider });
+
+// Interact using polkadotJS API
+const header = await api.rpc.chain.getHeader();
+const chainName = await api.rpc.system.chain();
+```
+</script></section><section data-markdown><script type="text/template">
+### Or even without PolkadotJS API
+
+```javascript[0|1|4|5-10|12-15]
+import { createScClient, WellKnownChain } from "@substrate/connect";
+
+// Maybe some more code that does some magic here
+const scClient = createScClient();
+const mainChain = await scClient.addWellKnownChain(
+  WellKnownChain.polkadot,
+  jsonRpcCallback = (response) {
+    console.log(response);
+  }
+);
+
+// Communicate with the network
+mainChain.sendJsonRpc(
+  '{"jsonrpc":"2.0","id":"1","method":"chainHead_unstable_follow","params":[true]}',
+);
+```
+</script></section><section data-markdown><script type="text/template">
+### Or with a Custom Chainspec
+
+```javascript[0|2, 4| 6-13| 9 | 15-18]
+import { createScClient, WellKnownChain } from "@substrate/connect";
+import myLovelyChainspec from './myLovelyChainspecFromSubstrateChain.json';
+
+const myLovelyChainspecStringified = JSON.stringify(myLovelyChainspec);
+
+// Maybe some more code that does some magic here
+const scClient = createScClient();
+const mainChain = await scClient.addChain(
+  myLovelyChainspecStringified,
+  jsonRpcCallback = (response) {
+    console.log(response);
+  }
+);
+
+// Communicate with the network
+mainChain.sendJsonRpc(
+  '{"jsonrpc":"2.0","id":"1","method":"chainHead_unstable_follow","params":[true]}',
+);
+```
+</script></section></section><section  data-markdown><script type="text/template">
+<img rounded style="width: 800px" src="../assets/BATMAN3.jpg" alt="Back to the other slides, Batman!" />
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

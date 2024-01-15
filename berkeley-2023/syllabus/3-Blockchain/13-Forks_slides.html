@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Blockchain Forks</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Blockchain Forks
+</script></section><section ><section data-markdown><script type="text/template">
+# Landscape
+</script></section><section data-markdown><script type="text/template">
+## Landscape
+
+#### Ideal World
+
+In an ideal world blockchains would look like this:
+<br/><br/>
+
+<img style="width: 800px" src="./img/forks/no_fork.drawio.svg" />
+</script></section><section data-markdown><script type="text/template">
+## Landscape
+
+#### Real World
+
+Things don't always go according to plan:
+
+<br/>
+
+<img style="width: 800px" src="./img/forks/fork_small.drawio.svg" />
+</script></section><section data-markdown><script type="text/template">
+## Landscape
+
+#### Chaotic Real World
+
+And sometimes they get extra messy:
+
+<br/>
+
+<img style="width: 800px" src="./img/forks/fork_chaos.drawio.svg" />
+</script></section></section><section ><section data-markdown><script type="text/template">
+# What's the goal?
+</script></section><section data-markdown><script type="text/template">
+## What's the goal?
+
+#### _Fork Identification_
+
+<img style="width: 500px" src="./img/forks/forks_and_boxes.drawio.svg" />
+
+<aside class="notes"><p>There are different forks, they can have different shapes and reasons.
+We&#39;ll try to identify some examples.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## What's the goal?
+
+#### _Fork Categorization_
+
+<img style="width: 800px" src="./img/forks/forks_in_boxes.drawio.svg" />
+
+<aside class="notes"><p>Why?
+Forks in the same category will exhibit similar behavior and will require similar handling.
+Then when making changes we can easily figure out to which box the change belongs and react accordingly.</p>
+<p>It&#39;s also worth pointing out that the whole web3 space is still very young and we are still figuring out how to name things appropriately.
+There is definitely still a lot of confusion about the fork types and the convention I will be using here today is based on the naming proposed by the MIT Digital Currencies Initiative.
+It will cover most of the common terms and hopefully will not be as self-contradictory as some of the terms used within the community.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## What's the goal?
+
+#### _Fork Confusion_
+
+<br/>
+BABE (sometimes):
+<br/><br/>
+<img style="width: 800px" src="./img/forks/transitory_fork_unresolved.drawio.svg" />
+
+<aside class="notes"><p>To demonstrate the confusion think of BABE.
+BABE can have multiple block authors create blocks at the same time and then the chain forks.
+What type of a fork is it?
+Some of you might have heard about soft forks and hard forks, any idea which one it is?</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Fork Categorization
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Forks Family Tree_
+
+<br>
+<img style="width: 800px" src="./img/forks/fork_family.drawio.svg" />
+
+<aside class="notes"><p>This is the core categorization of forks we&#39;ll be waking you through today.
+You don&#39;t need to understand the whole tree as we&#39;ll be going step by step.
+For now let&#39;s actually go back to the example from BABE and let&#39;s place it on the map.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Transitory Forks
+
+<aside class="notes"><p>For that we&#39;ll talk about transitory forks.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Transitory Forks_
+
+<br>
+<img style="width: 800px" src="./img/forks/fork_family_transitory.drawio.svg" />
+
+<aside class="notes"><p>One of the simplest forks that is rarely talked about so the name might not sound familiar.
+They are often also called short-lived forks or temporary forks.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Transitory Forks
+
+<br>
+<img style="width: 800px" src="./img/forks/transitory_forks.drawio.svg" />
+
+<aside class="notes"><p>They usually arise from the fundamental protocol uncertainty or networking lag, but luckily they are usually resolved quickly by the network itself.
+For instance in BABE even if all the nodes are running the same software those forks can still happen when two nodes roll low enough numbers.
+In Bitcoin two miners might mine a block at roughly the same time.
+Over time one of the blocks wins due to some heuristics like the longest chain.
+Those forks are generally not a problem and only live on short timescales.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Consensus Forks
+
+<aside class="notes"><p>So now let&#39;s move to something more interesting.
+Consensus forks.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Consensus Forks_
+
+<br>
+<img style="width: 800px" src="./img/forks/fork_family_consensus.drawio.svg" />
+
+<aside class="notes"><p>Usually when you hear about forks you hear about those guys.
+They are the other branch and they also come in many flavours we&#39;ll discuss in a minute.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+# Consensus Forks
+
+## _Validity Set_
+
+<aside class="notes"><p>But first before we understand the intricacies of consensus forks we need to understand the concept of the validity set and how it connects to the protocol.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Consensus Forks
+
+#### _Validity Set_
+
+<br>
+<img style="width: 800px" src="./img/forks/BTC_block.drawio.svg" />
+
+<aside class="notes"><p>It&#39;s best to see it through an example so let&#39;s look at the BTC block.
+You don&#39;t need to understand all the fields that are in it but for now take a look at the blocksize field as well as the block header itself.</p>
+<h4 id="validity-set"><em>Validity Set</em></h4>
+<br>
+<img style="width: 300px" src="./img/forks/BTC_header.drawio.svg" /></aside></script></section><section data-markdown><script type="text/template">
+## Consensus Forks
+
+#### _Validity Set_
+
+<br>
+<img style="width: 500px" src="./img/forks/BTC_header_constraints.drawio.svg" />
+</script></section><section data-markdown><script type="text/template">
+## Consensus Forks
+
+#### _Validity Set_
+
+<br>
+<img style="width: 500px" src="./img/forks/validity_set.drawio.svg" />
+
+<aside class="notes"><p>So the validity set is a set of all hypothetical blocks that could be produced by the protocol.
+It&#39;s a set of all valid blocks under those rules.</p>
+<p>So if there is a block D that for instance is too big, it&#39;s blocksize is bigger than the allowed one...</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Consensus Forks
+
+#### _Validity Set_
+
+<br>
+<img style="width: 500px" src="./img/forks/universal_set.drawio.svg" />
+
+<aside class="notes"><p>Then it falls out of the validity set into the universal set of all possible data blobs.
+Only some of those data blobs are valid blocks.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Consensus Forks
+
+#### _Validity Set_
+
+<br>
+<img style="width: 500px" src="./img/forks/validity_set_old.drawio.svg" />
+
+<aside class="notes"><p>Let&#39;s actually look at an example.
+Imagine this is Bitcoins validity set and here we see a few blocks from it.
+The numbers at the top are initial few digits from the hashes representing those blocks.</p>
+<p>Imagine all the Bitcoin nodes suddenly decide they really dislike when the first hash digit is odd.
+They only like when it&#39;s even so they band together and change the protocol to only accept hashes with an even first digit.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Consensus Forks
+
+#### _Validity Set_
+
+<br>
+<img style="width: 500px" src="./img/forks/validity_set_new.drawio.svg" />
+
+<aside class="notes"><p>This change in the protocol would reduce the validity set.
+It would be more constrained then before.
+Some of the previously valid blocks would no longer be valid under the new rules.
+What happens in that case?
+Can we predict that?</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Consensus Forks
+
+#### _Validity Set_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 500px" src="./img/forks/validity_set_new.drawio.svg" />
+    </pba-col>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>To generally represent the same idea we&#39;ll be using the simpler representation on the right.
+Where the new set N is contained within the old set O.
+The fancy notion at the bottom says the same N is contained in O.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Soft Forks
+
+To understand the example from a second ago we'll dive into soft forks.
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Soft Forks_
+
+<br>
+<img style="width: 800px" src="./img/forks/fork_family_soft.drawio.svg" />
+
+<aside class="notes"><p>Firstly soft forks are a type of a consensus fork and they are results of a change in the protocol and thus the validity set.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Soft Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+    <pba-col>
+		<ul>
+			<li>Backwards Compatible</li>
+			<li>By making the consensus rules more restrictive the set of valid blocks gets smaller.</li>
+			<li>Not every (and often none) of the blocks produced under old rules will get accepted by new nodes.</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>So based on the venn diagram we have on the side we can see that the new consensus rules are more restrictive as the validity set shrinks.</p>
+<p>New nodes produce blocks that are always accepted by old nodes.
+Old nodes generally don&#39;t produce blocks accepted by the new nodes.</p>
+<p>Before we jump into demonstration is decreasing or increasing blocksize a soft fork?</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Soft Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+    <pba-col>
+		<strong>Examples:</strong>
+		<br/><br/>
+		<ul>
+			<li>Decreasing blocksize</li>
+			<li>Accepting only even/odd hashes</li>
+			<li>Disallowing some transaction types</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>Decreasing the block size restricts how many different blocks can be constructed so it makes the set smaller.
+It is a soft fork.
+The example we had a moment ago with the even hashes is also a soft fork as it adds another constraint on the previous protocol rules restricting them even further.
+Another good example would be banning some transaction types from use.</p>
+<p>Now let&#39;s take a look at how forks work in practice and how they vary based on the hash power or staking power in favour of the protocol change.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Soft Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+    <pba-col>
+		<img style="width: 800px" src="./img/forks/soft_forks_s50.drawio.svg" />
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>So in this scenario we&#39;ll be looking at what happens if nodes with less than 50% hash power or stake want to soft fork.
+Remember that soft forking is simply making the consensus stricter.</p>
+<p>In that case the blocks produced by new nodes are marked with N and they are accepted by the old chain but the old chain mines faster so they don&#39;t care about the new nodes.
+Blocks produced by old nodes are NOT accepted by the new nodes so the longest chain for new nodes is the short chain with only the N blocks.
+This is effectively a permanent fork.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Soft Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_soft.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+    <pba-col>
+		<img style="width: 800px" src="./img/forks/soft_forks_g50.drawio.svg" />
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>In the similar example when the new nodes control more than 50% power the situation changes drastically.
+The new nodes mine faster and are the longest chain.
+But remember that old nodes accept the new blocks so if they new nodes mine faster the old nodes blocks get constantly reorged out.
+They are forced to update the software if they want their blocks to get accepted at all otherwise they loose all the rewards.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Hidden Forks
+
+<aside class="notes"><p>Now let&#39;s take a look at something a bit less known.
+Hidden forks.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hidden Forks_
+
+<br>
+<img style="width: 800px" src="./img/forks/fork_family_hidden.drawio.svg" />
+
+<aside class="notes"><p>An edge case of soft forks.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hidden Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_hidden.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+    <pba-col>
+		<ul>
+			<li>Conflict-less</li>
+			<li>The old, now excluded blocks were allowed but never used in practice.</li>
+			<li>New nodes are theoretically stricter but practically accept all old blocks.</li>
+			<li>Old nodes accept new blocks.</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>So the venn diagram is exactly the same as in the normal soft fork case.
+But imagine that the the orange crescent, this is the part we&#39;re excluding from the old protocol when shifting to the new one... was never actually used.
+So for instance the block had an empty field that could have some arbitrary data inside, but everyone left it empty and never checked what was inside.
+The new protocol puts something meaningful in the empty field but doesn&#39;t require it.
+Because old nodes never used this field pretty much all old blocks will be accepted under the new rules.</p>
+<p>TL;DR the stuff we removed from the validity set wasn&#39;t even used despite being technically valid.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hidden Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_hidden.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+    <pba-col>
+		<strong>Examples:</strong>
+		<br/><br/>
+		<ul>
+			<li>Assigning non-conflicting uses to empty opcodes.</li>
+			<li>BTC Ordinals using empty opcodes to implement BTC NFTs.</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>A good example of that assigning new optional use-cases for previously unused opcodes as with the example of the recent Bitcoin Ordinals update.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hidden Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_hidden.drawio.svg" />
+		<div style="font-size: 50px;">N ⊆ O</div>
+    </pba-col>
+    <pba-col>
+		<img style="width: 800px" src="./img/forks/soft_forks_hidden.drawio.svg" />
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>And the reason why they are hidden... is they are not even manifesting as forks despite the consensus change.
+All nodes effectively accept each others blocks so there is no conflict.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Hard Forks
+
+<aside class="notes"></aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hard Forks_
+
+<br>
+<img style="width: 800px" src="./img/forks/fork_family_hard.drawio.svg" />
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hard Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
+		<div style="font-size: 50px;">O ⊆ N</div>
+    </pba-col>
+    <pba-col>
+		<ul>
+			<li>Forwards Compatible</li>
+			<li>By making the consensus rules less restrictive the set of valid blocks gets bigger.</li>
+			<li>Not every (and often none) of the blocks produced under new rules will be accepted by the old nodes.</li>
+			<li>Every block produced under old rules will get accepted by new nodes.</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hard Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
+		<div style="font-size: 50px;">O ⊆ N</div>
+    </pba-col>
+    <pba-col>
+		<strong>Examples:</strong>
+		<br/><br/>
+		<ul>
+			<li>Increasing blocksize</li>
+			<li>BTC Cash fork at first*</li>
+			<li>Adding new transaction types</li>
+			<li>Increasing max nonce value</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hard Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
+		<div style="font-size: 50px;">O ⊆ N</div>
+    </pba-col>
+    <pba-col>
+			<img style="width: 800px" src="./img/forks/hard_forks_s50.drawio.svg" />
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>First let&#39;s go through the scenario of a hard fork with less than 50% support.
+Remember that the rules were loosened this time.
+If new guys accept old blocks so because they have less than 50% power they get constantly reorged out.
+There is no permanent fork in this scenario and the change will not go through if if it has this limited support.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Hard Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 300px" src="./img/forks/venn_hard.drawio.svg" />
+		<div style="font-size: 50px;">O ⊆ N</div>
+    </pba-col>
+    <pba-col>
+			<img style="width: 800px" src="./img/forks/hard_forks_g50.drawio.svg" />
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>In the case of more than 50% support the new guys miner faster but they are no accepted by the old nodes so they go ahead.
+Old nodes maintain the old chain and the community is split.
+So if there is a major change that most people accept but not everyone it will always fork the chain.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Small Summary
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 400px" src="./img/forks/soft_forks_s50.drawio.svg" />
+		<br/>
+		<img style="width: 400px" src="./img/forks/soft_forks_g50.drawio.svg" />
+    </pba-col>
+	<pba-col>
+		<img style="width: 400px" src="./img/forks/hard_forks_s50.drawio.svg" />
+		<br/>
+		<img style="width: 400px" src="./img/forks/hard_forks_g50.drawio.svg" />
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>Now that we&#39;ve seen both soft and hard forks...
+If we&#39;d manually increase the difficulty of mining in the BTC network would that be a soft or hard fork?
+Hard.</p>
+<p>Also let&#39;s reiterate.
+We only have permanent forks in soft forks with under 50% support and in hard forks with over 50% support.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+# Full Forks
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Full Forks_
+
+<br>
+<img style="width: 800px" src="./img/forks/fork_family_full.drawio.svg" />
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Full Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 200px" src="./img/forks/venn_full.drawio.svg" />
+		<div style="font-size: 50px;">O ∩ N = ∅</div>
+    </pba-col>
+    <pba-col>
+		<ul>
+			<li>Fully Incompatible</li>
+			<li>Soft + Hard</li>
+			<li>By changing the consensus rules the sets can become disjoint or overlapping.</li>
+			<li>Most (and often all) blocks produced under one ruleset are not accepted under the other.</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Full Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 200px" src="./img/forks/venn_full.drawio.svg" />
+		<div style="font-size: 50px;">O ∩ N = ∅</div>
+    </pba-col>
+    <pba-col>
+		<strong>Examples:</strong>
+		<br/><br/>
+		<ul>
+			<li>Changing the hashing function</li>
+			<li>Changing the signature scheme</li>
+			<li>Specific combinations of soft and hard forks</li>
+			<li>BTC Cash fork in the end*</li>
+		</ul>
+    </pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+## Fork Categorization
+
+#### _Full Forks_
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 200px" src="./img/forks/venn_full.drawio.svg" />
+		<div style="font-size: 50px;">O ∩ N = ∅</div>
+    </pba-col>
+    <pba-col>
+		<img style="width: 600px" src="./img/forks/full_forks__&_50.drawio.svg" />
+    </pba-col>
+</pba-cols>
+</script></section></section><section  data-markdown><script type="text/template">
+## Summary
+
+<pba-cols>
+    <pba-col>
+		<img style="width: 400px" src="./img/forks/soft_forks_s50.drawio.svg" />
+		<br>
+		<img style="width: 400px" src="./img/forks/soft_forks_g50.drawio.svg" />
+    </pba-col>
+	<pba-col>
+		<img style="width: 400px" src="./img/forks/hard_forks_s50.drawio.svg" />
+		<br>
+		<img style="width: 400px" src="./img/forks/hard_forks_g50.drawio.svg" />
+    </pba-col>
+    <pba-col>
+		<img style="width: 400px" src="./img/forks/full_forks__&_50.drawio.svg" />
+    </pba-col>
+</pba-cols>
+
+<aside class="notes"><ul>
+<li>Bitcoin cash pivot from hard to full because they didn&#39;t have enough HP.</li>
+<li>Soft are often preferred for changes because with &gt;50%HP they do not fracture the community (BTC community logic)</li>
+<li>Hard can be preferred as they seem to better represent minorities.
+If some people don&#39;t agree with the majority they naturally fork off and are not peer pressured to follow (ETH community logic)</li>
+<li><hr>
+</li>
+</ul>
+<h1 id="thank-you">Thank you!</h1>
+</aside></script></section><section  data-markdown><script type="text/template">
+<img style="width: 1800px" src="./img/forks/forks.drawio.svg" />
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"transition":"none","width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

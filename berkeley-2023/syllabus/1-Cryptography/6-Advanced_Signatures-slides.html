@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Advanced Digital Signatures</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Advanced Digital Signatures
+</script></section><section  data-markdown><script type="text/template">
+### Certificates
+
+A certificate is essentially a witness statement concerning one or more public keys. It is a common usage of digital signatures, but _it is not a cryptographic primitive_!
+
+<aside class="notes"><p>A certificate is one issuing key signing a message containing another certified key, which attests to some properties or relationship about the certified key.</p>
+<p>We must already trust the issuing key to give this attestation any significance, traditionally provided under &quot;Certificate Authority&quot; or &quot;Web of Trust&quot; schemes.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Certificates
+
+A certification system specified conventions on who is allowed to issue certificates, the rules over their issuance (e.g. time limits and revocation) as well as their format and semantics.
+
+For example, the certificate transparency protocol for TLS certificates helps protect against compromised Certificate Authorities.
+
+<aside class="notes"><p>Certificate transparency: <a href="https://certificate.transparency.dev/howctworks/">explanation</a> and <a href="https://ct.cloudflare.com/">dashboard</a></p>
+<ul>
+<li>Maybe mention PGP web-of-trust style schemes</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Certificates in Web3
+
+We are building systems that don't have a "Certificate Authority".<br/>
+But we can still use certificates in some niche instances.
+
+<aside class="notes"><p>Potential example to give verbally:</p>
+<ul>
+<li>Session keys are a set of keys that generally run in online infrastructure.
+An account, whose keys are protected, can sign a transaction to certify all the keys in the set.</li>
+<li>Session keys are used to sign operational messages, but also in challenge-response type games to prove availability by signing a message.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Multi-Signatures
+
+We often want signatures that must be signed<br/>by multiple parties to become valid.
+
+<pba-flex center>
+
+- Require some threshold of members to<br/>agree to a message
+- Protect against key loss
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+### Types of Multi-Signature
+
+<pba-flex center>
+
+- Verifier enforced
+- Cryptographic threshold
+- Cryptographic non-threshold<br/>(a.k.a. signature aggregation)
+</script></section><section  data-markdown><script type="text/template">
+### Verifier Enforced Multiple Signatures
+
+We assume that there is some verifier, who can check that some threshold of individual keys have provided valid signatures.
+
+This could be a trusted company or third party.
+For our purposes, _it's a blockchain_.
+</script></section><section  data-markdown><script type="text/template">
+### Verifier Enforced Multiple Signatures
+
+Multiple signatures enforced by a verifier generally provide a good user experience, as no interaction is required from the participants.
+
+<aside class="notes"><p>This good experience comes at the cost of using state and more user interactions with the system, but is generally low.</p>
+<p>Even in a web3 system, the verifier can be <em>distinct</em> from the blockchain. 5 people can entrust a verifier with the identity of &quot;all 5 signed this&quot; associated to a verifier-owned private key.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Cryptographic Multi-Sigs
+
+We want a succinct way to demonstrate that everyone from some set of parties have signed a message. This is achieved purely on the signer side (without support from the verifier).
+
+<pba-flex center>
+
+_Example: "The five key holders have signed this message."_
+</script></section><section  data-markdown><script type="text/template">
+### Key Generation for Multi-Sigs
+
+In regular multi-signatures,<br/>signatures from individual public keys are aggregated.
+
+Each participant can choose their own key to use for the multi-signature.
+
+<aside class="notes"><p>In some cases, a security requirement of these systems is that every participant demonstrates ownership of the public key submitted for the multi-signature, otherwise security can be compromised.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Cryptographic Threshold Multi-Sigs
+
+This makes more compact signatures compatible with legacy systems. Unlike a regular multi-sig, the public key is associated with a _threshold_ number of signing parties, so not all parties are needed to take part in the signing process to create a valid signature.
+
+This requires MPC protocols and may need multiple rounds of interaction to generate the final signature. They may be vulnerable to DoS from a malfunctioning (or malicious) key-holder.
+
+<pba-flex center>
+
+_Example: "5 of 7 key holders have signed this message."_
+
+<aside class="notes"><p>These require multi-party computation (MPC) protocols, which add some complexity for the signing users.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Key Generation - Threshold
+
+Threshold multi-signature schemes require that all signers run a _distributed key generation_ (DKG) protocol that constructs key _shares_.
+
+The secret encodes the threshold behavior, and signing demands some threshold of signature _fragments_.
+
+This DKG protocol breaks other useful things, like hard key derivation.
+</script></section><section  data-markdown><script type="text/template">
+### Schnorr Multi-Sigs
+
+Schnorr signatures are primarily used for threshold multi-sig.
+
+- Fit legacy systems nicely, and can reduce fees on blockchains.
+- Reduce verifier costs in bandwidth & CPU time, so great for certificates.
+- Could support soft key derivations.
+</script></section><section  data-markdown><script type="text/template">
+### Schnorr Multi-Sigs
+
+However, automation becomes tricky.
+
+We need agreement upon the final signer list and two random nonce contributions from each prospective signer, before constructing the signature fragments.
+</script></section><section  data-markdown><script type="text/template">
+### BLS Signatures
+
+BLS signatures are especially useful for aggregated (non-threshold) multi-signatures (but can be used for threshold as well).
+
+Signatures can be aggregated without advance agreement upon the signer list, which simplifies automation and makes them useful in consensus.
+
+Verifying individual signatures is _slow_, but verifying aggregated ones is relatively fast.
+
+(Coming to Substrate soonish.)
+</script></section><section  data-markdown><script type="text/template">
+### BLS Signatures
+
+Allows multiple signatures generated under multiple public keys for multiple messages to be aggregated into a single signature.
+
+<pba-flex center>
+
+- Uses heavier pairing friendly elliptic curves than ECDSA/Schnorr.
+- Very popular for consensus.
+
+<pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+### BLS Signatures
+
+However...
+
+- DKGs remain tricky (for threshold).
+- Soft key derivations are typically insecure for BLS.
+- Verifiers are hundreds of times slower than Schnorr, due to using pairings, for a single signature.
+- But for hundreds or thousands of signatures on the same message, aggregated signature verification can be much faster than Schnorr.
+</script></section><section  data-markdown><script type="text/template">
+### Schnorr and BLS Summary
+
+Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introduce user experience costs such as:
+
+- DKG protocols
+- Reduced key derivation ability
+- Verification speed
+</script></section><section  data-markdown><script type="text/template">
+### Ring Signatures
+
+- Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
+- Ring signatures come in many sizes, with many ways of presenting their anonymity sets.
+- Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).
+
+<aside class="notes"><ul>
+<li>ZCash uses a ring signature based upon Groth16 zkSNARKs which makes the entire chain history be the anonymity set.</li>
+<li>Monero uses ring signatures with smaller signer sets.</li>
+<li>Ring signatures trade some <em>non-repudation</em> for <em>privacy</em>.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

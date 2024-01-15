@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Game Theory Basics</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Game Theory Basics
+</script></section><section  data-markdown><script type="text/template">
+<widget-speaker name="Jonas Gehrlein" position="Research Scientist at Web3 Foundation" image="../../../assets/img/0-Shared/people/jonas.png" github="jonasW3F" twitter="GehrleinJonas" linkedin="jonas-gehrlein" matrix="jonas:web3.foundation"></widget-speaker>
+</script></section><section  data-markdown><script type="text/template">
+# Outline
+
+- Lecture (60 minutes)
+  - [What is Game Theory?](#what-is-game-theory)
+  - [What is a Game?](#what-is-a-game)
+  - [Types of Games](#types-of-games)
+  - [Public Goods and the Tragedy of the Commons](#public-good-game)
+- Workshop & Activities (120 minutes)
+  - Discussions & more games
+</script></section><section  data-markdown><script type="text/template">
+## What is Game Theory?
+
+> Game theory is the study of mathematical models of conflict and cooperation between intelligent and rational decision makers.
+> Rational means that each individual’s decision-making behavior is consistent with the maximization of subjective expected utility.
+> Intelligent means that each individual understands everything about the structure of the situation, including the fact that others are intelligent rational decision makers.
+
+_Roger Myerson, 1986_
+
+<aside class="notes"><ul>
+<li>This sets the stage for this lecture</li>
+<li>Some important keywords:<ul>
+<li>conflict and cooperation: Depending on the situation, there might be cooperation or conflict between the players, sometimes both.</li>
+<li>Rationality is a big assumption here, mainly to maximize utility.</li>
+<li>Often (as we saw in 2.1) this solely means to maximize monetary payouts, but the utility functions could depend on more factors.</li>
+<li>We (generally) assume that all players know about the rules of the game and that they have enough processing power to compute everything necessary.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Game Theory in Web3
+
+In the context of blockchains, game theoretic reasoning is used for:
+
+- **Tokenomics**: The specific design of how people interact in the ecosystem.
+- **Consensus**: Do the nodes in the network have the right incentives to follow the consensus protocol?
+
+<aside class="notes"><p>You wont recognize these terms just yet, but next module we will dive deep into them.
+Keep them in mind as we move forward: this is <em>why</em> we study Economics in this academy.</p>
+<ul>
+<li>Blockchain economics/tokenomics is all about understanding how people will act in situations where information and rules are transparent.</li>
+<li>We’ll cover the basics of game theory today, but let’s look through some of the core moments in this field so that you can go as deep as you’d like.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## History of Game Theory
+
+- Early “game theoretic” research early 19th century, still relevant.
+- The systematic study of games started in the 20th century.
+- Modern game theory is used in economics, biology, sociology, political science, psychology, among others.
+
+In economics, game theory is used to analyze many different strategic situations like auctions, industrial economics, and business administration.
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p><strong>History of Game Theory</strong></p>
+<ul>
+<li><p>Early “game theoretic” research that still resonates today goes way back into the early 19th century:</p>
+<ul>
+<li>1838, Antoine Augustin Cournot: Cournot competition, uses an early, simplified version of Nash equilibrium.</li>
+<li>1881: Francis Edgeworth: trade with two consumers and two goods.</li>
+<li>1913, Ernst Zermelo: chess, first formal application of backward induction.</li>
+</ul>
+</li>
+<li><p>The systematic study of games started in the 40/50s of the 20th century:</p>
+<ul>
+<li>1944: John von Neumann and Oscar Morgenstern publish <em>Theory of Games and Economic Behavior</em>.</li>
+<li>1949: John Nash writes his dissertation.
+His best known contribution is on the general existence of a solution (the Nash equilibrium) for the important class of finite games.</li>
+<li>1963: Douglas Gale and Lloyd Shapley publish seminal work on matching.</li>
+<li>1973: John Harsanyi provides important insights into mixed strategies.</li>
+<li>1976: Robert Aumann publishes seminal work on common knowledge of rationality.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Game theory is _abstract_
+
+Game theoretic models aim to get at the essence of a given strategic problem.
+This often requires that many facets of the problem are assumed away.
+
+- Pro: _Abstraction_ makes the problem amenable to analysis and helps to identify the key incentives at work.
+- Con: A certain lack of realism.
+- In any case: Modeling a strategic situation always entails a tradeoff between tractability and realism.
+
+<aside class="notes"><ul>
+<li>Need to explain what we mean by lack of realism:<ul>
+<li>Often people have more choices than we model.</li>
+<li>Often people take other things into consideration when making choices than the model allows.</li>
+<li>Often people know more/less than we assume.</li>
+</ul>
+</li>
+<li>How to resolve the tradeoff between tractability and realism is often subjective and depends on the taste of the modeler.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+# What is a Game?
+</script></section><section  data-markdown><script type="text/template">
+## Definition: (Economic) Game
+
+A game is a strategic interaction between several players, where _common knowledge_ among all the players of the game includes:
+
+1. all the possible _actions_ of the players
+1. all the possible _outcomes_
+1. how each combination of actions affects the outcome
+</script></section><section  data-markdown><script type="text/template">
+## Definition: Common Knowledge
+
+An event $X$ is common knowledge if (1) everyone knows $X$, (2) everyone knows that everyone knows $X$, (3) everyone knows that everyone knows that everyone knows $X$, and so on ad infinitum.
+</script></section><section  data-markdown><script type="text/template">
+## Examples: Common Knowledge
+
+Auctions
+
+- Actions: Bids. <!-- .element: class="fragment" -->
+- Outcome: Winner and Payment. <!-- .element: class="fragment" -->
+
+Price-competition between firms <!-- .element: class="fragment" -->
+
+- Actions: Price charged. <!-- .element: class="fragment" -->
+- Outcome: Demand for each firm, profit of each firm. <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Crucial feature of a game: outcome not only depends on own actions but also on the actions of the other players.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Types of games
+
+Game theory distinguishes between:
+
+- static and dynamic games <!-- .element: class="fragment" -->
+- games of complete information and games of incomplete information. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Types of games
+
+|                  | Static Game                                                                              | Dynamic Game                                                                                           |
+| ---------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Definition       | All players take their actions at the same time                                          | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
+| Simple Example   | Rock-Paper-Scissors.                                                                     | Tic-Tac-Toe                                                                                            |
+| Economic Example | Sealed-bid auction. All bidders submit their bids simultaneously (in a sealed envelope). | English auction. Auctioneer publicly raises price if at least one bidder accepts the price.            |
+</script></section><section  data-markdown><script type="text/template">
+## Types of games
+
+|                  | Game of Complete Information                                                 | Game of Incomplete Information                                                                       |
+| ---------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Definition       | Preferences and types of the players are common knowledge.                   | Preferences and types are not common knowledge.                                                      |
+| Simple Example   | Tic-Tac-Toe. Both players prefer winning over losing.                        | Cluedo/Among us.                                                                                     |
+| Economic Example | Competition between firms (assuming that all firms know other firms' costs). | Most art auctions. People tend to have highly subjective preferences that they only know themselves. |
+
+<aside class="notes"><ul>
+<li>There is also the notion of perfect and imperfect information which we should skip here.
+More info: <a href="https://economics.stackexchange.com/questions/13292/imperfect-vs-incomplete-information">https://economics.stackexchange.com/questions/13292/imperfect-vs-incomplete-information</a></li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Quiz
+</script></section><section  data-markdown><script type="text/template">
+### Three firms want to hire an engineer...
+
+<widget-columns>
+<widget-column>
+
+- The engineer brings added value to each firm of $300,000$ USD per year.
+- The payoff of the firm is $300,000$ USD minus the salary.
+- The payoff to the engineer is salary minus cost of working, which is known to everyone.
+- All firms make a salary offer at the same time.
+
+</widget-column>
+<widget-column>
+
+<center>
+
+### Quiz Questions:
+
+</center>
+
+1. Is this game static or dynamic?
+   What would need to change in the description of the game such that it would fall in the other category?
+1. Is this game of complete or incomplete information?
+   What would need to change in the description of the game such that it would fall in the other category?
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ol>
+<li>The game is static.
+For it to be dynamic, firms would need to make offers sequentially, <em>knowing what the firms before had offered</em>.</li>
+</ol>
+<ul>
+<li>This lecture focuses on static games of complete information.</li>
+</ul>
+<ol>
+<li>The game is of complete information.
+To make information incomplete, we would need to have that the value of hiring the engineer differs between firms and is unknown between firms.
+Or that the cost of working for the engineer is not known to the firms.
+The point is that we need to have uncertainty over payoffs.</li>
+</ol>
+<ul>
+<li>When we look at auctions in Session 3.3, we will also consider games of incomplete information, both dynamic and static.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Well-known Games
+</script></section><section  data-markdown><script type="text/template">
+## Prisoners' Dilemma
+
+A fundamental problem:
+
+> Even though everyone knows that there is a socially optimal course of actions, no one will take it because they are rational utility maximizers.
+
+It's a static game of complete information.
+
+<aside class="notes"><p>One of the most famous games studied in game theory.</p>
+<ul>
+<li>Static because both players take their action at the same time.</li>
+<li>Complete because everybody is aware of all the payouts.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Bonnie and Clyde
+
+Bonnie and Clyde are accused of robbing two banks: <!-- .element: class="fragment" -->
+
+- The evidence for the first robbery is overwhelming and will certainly lead to a conviction with two years of jail. <!-- .element: class="fragment" -->
+- The evidence for the second robbery is not sufficient and the two will only be be convicted for that robbery in case of a confession by either or both. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Bonnie and Clyde
+
+In the interrogation they both are offered the following: <!-- .element: class="fragment" -->
+
+- If you both confess you will both go to jail for four years. <!-- .element: class="fragment" -->
+- If you do not confess while your partner does, you will go to jail for five years (one additional year for obstruction of justice). <!-- .element: class="fragment" -->
+- However, if you confess but your partner does not, then we reduce your jail time to one year. <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>They are interrogated in different rooms, apart from each other.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Bonnie and Clyde
+
+- **Cooperate** ($C$) with each other and not tell anything
+- **Defect** ($D$) and confess their crime
+
+<center>
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/Bonnie-clyde-1.png"/>
+
+</center>
+
+<aside class="notes"><p>They can either cooperate or defect
+First payoff is Clyde, second is Bonnie</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Bonnie and Clyde
+
+<center>
+
+<img style="width: 800px; margin-right: 250px;" src="../../../assets/img/2-Economics/Bonnie-clyde-2.png"/>
+
+Choosing D is a _dominant strategy_.
+
+</center>
+
+<aside class="notes"><p>No matter what Clyde does, it is always the best choice.
+So, they end up both defecting, resulting in 4 years each.
+It would be in their best interest to cooperate and not to say anything.
+This would minimize the total jail time for the two.
+However, both Bonnie and Clyde are rational utility maximizers.
+So, they end up in a situation where they not only fare worse <em>individually</em> (4 instead of 2) but also <em>jointly</em> (the total jail time is 8 years rather than 4 years).</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Prisoners' Dilemma IRL
+
+**[Nuclear Arms Race](https://www.history.com/topics/cold-war/arms-race)**
+
+NATO and Russia prefer no arms race to an arms race.
+Yet, having some arms is preferable to having no arms, irrespective whether the other one is armed.
+
+**[OPEC](https://www.opec.org/opec_web/en/)**
+
+Limiting oil supply is in the best interest of all.
+However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.
+
+<aside class="notes"><p>OPEC and Cartels generally seems to overcome the Prisoners&#39; Dilemma...
+More on that later.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Coordination Game
+
+The prediction of play in the Prisoner's Dilemma was easy: both will defect. <!-- .element: class="fragment" -->
+This is the optimal thing to do no matter what the other player does. <!-- .element: class="fragment" -->
+
+In other games, predictions of play are not so clear. <!-- .element: class="fragment" -->
+One instance is the coordination game. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Coordination Game
+
+> A coordination game is a type of simultaneous game in which a player will earn a higher payoff when they select the same course of action as another player.
+</script></section><section  data-markdown><script type="text/template">
+## Coordination Game Example
+
+<widget-columns>
+<widget-column>
+
+- Choose $L$ or $R$. <!-- .element: class="fragment" -->
+- The numbers represent the payoffs a player receives. <!-- .element: class="fragment" -->
+- The players only obtain utility if they coordinate their actions. <!-- .element: class="fragment" -->
+
+</widget-column>
+<widget-column>
+
+<img style="width: 550px;" src="../../../assets/img/2-Economics/Players.png"/>
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><p>Examples:</p>
+<ul>
+<li>Driving on the right/left side of the road.</li>
+<li>Money adoption.</li>
+<li>Standard adoption.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Coordination Game Example
+
+<widget-columns>
+<widget-column>
+
+- The coordination game has two outcomes $(L,L)$ and $(R,R)$ that stand out. <!-- .element: class="fragment" -->
+- Clearly, if the other player chooses $L$ ($R$), then it is optimal for the other to do so also. <!-- .element: class="fragment" -->
+- So, in the outcomes $(L,L)$ and $(R,R)$ the players choose mutually optimal actions. <!-- .element: class="fragment" -->
+
+</widget-column>
+<widget-column>
+
+<img style="width: 550px;" src="../../../assets/img/2-Economics/Players.png"/>
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>That is, for both players it holds:<ul>
+<li>Playing $L$ is a <em>best response</em> to the other player playing $L$.</li>
+<li>Playing $R$ is a <em>best response</em> to the other player playing $R$.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Coordination Game Example
+
+<widget-columns>
+<widget-column>
+
+- Both $(L,L)$ and $(R,R)$ are instances of Nash equilibrium. <!-- .element: class="fragment" -->
+- By their very nature, coordination games always have multiple equilibria. <!-- .element: class="fragment" -->
+- The outcome $(D,D)$ in the Prisoner's dilemma is the unique Nash equilibrium. <!-- .element: class="fragment" -->
+
+</widget-column>
+<widget-column>
+
+<img style="width: 550px;" src="../../../assets/img/2-Economics/Players.png"/>
+
+</widget-column>
+</widget-columns>
+
+Nash Equilibrium: A combination of actions such that all players choose optimally given the actions of the other players. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Equilibrium selection
+
+- So, which outcome does the theory of Nash equilibrium predict in the coordination game? <!-- .element: class="fragment" -->
+- Sometimes people switch between equilibria (if they are made to)... <!-- .element: class="fragment" -->
+
+<center>
+<img style="width: 550px;" src="../../../assets/img/2-Economics/2.2-sweden-1967.jpg"/><!-- .element: class="fragment" -->
+
+_Sweden, 1967._ <!-- .element: class="fragment" -->
+
+</center>
+
+<aside class="notes"><ul>
+<li>Outcome? Answer: neither.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Schelling Points
+
+- Nash equilibrium _does not_ predict which strategies the players actually take.
+- This is especially pronounced in games with multiple equilibria (e.g., coordination games).
+- There are theories that offer insights into which strategies players actually take.
+</script></section><section  data-markdown><script type="text/template">
+## Schelling Points
+
+> If you are to meet a stranger in New York City, but you cannot communicate with the person, then when and where will you choose to meet?
+
+Literally _any_ point and time is a Nash equilibrium...
+However, most people responded: noon at (the information booth at) Grand Central Terminal.
+
+Basic idea: in case of multiple equilibria, **social norms may help to choose one.**
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Schelling ran a couple of informal experiments in which he asked his students (quote on slide)</p>
+<p>This is a coordination game.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Summary (so far...)
+
+<aside class="notes"><ul>
+<li>Typology of games: static/dynamic and complete/incomplete information.</li>
+<li>Two canonical games: Prisoner&#39;s Dilemma and Coordination game.</li>
+<li>The Prisoner&#39;s Dilemma has a unique Nash equilibrium whereas the Coordination game has two Nash equilibria.</li>
+<li>To select among multiple equilibria, the notion of a <em>Schelling</em> point is sometimes invoked.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Why are theories of equilibrium important?
+
+<aside class="notes"><ul>
+<li>Nash Equilibria are used to predict the behavior of others in a closed system, like a blockchain.</li>
+<li>If you can identify the unique Nash Equilibrium or the Schelling point in a system, you have a strong prediction of user behavior.</li>
+<li>So, you can begin to drive user behavior by designing incentives accordingly.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Public-Good Game
+
+What is a public good?
+
+- Non-rivalrous: My consumption does not affect yours. <!-- .element: class="fragment" -->
+- Non-excludable: No-one can be excluded from consumption. <!-- .element: class="fragment" -->
+
+e.g., Fireworks, Polkadot's Public Good Parachains <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Public-Good Game
+
+- All players have some endowment, e.g., 10 US Dollars.
+- Each player $i$ can choose how much to contribute, $c_i$, to the public good.
+- The consumption value of the public good is $\alpha (c_1+c_2+c_3)$ with $\alpha < 1$.
+  - The value of the public good increases with the amount of contributions.
+  - Every player (regardless of the contribution) will consume the public good.
+</script></section><section  data-markdown><script type="text/template">
+## Public-Good Game
+
+The payoffs of the players:
+
+- Each player $i$ contributes an amount $c_i \in [0,10]$.
+- The payoff function of each player $i$ is
+  $$10 - c_i + \alpha (c_1+c_2+c_3)$$
+
+<hr>
+
+<div>
+
+- How would you interpret $\alpha$ ?
+- How would you interpret $3\alpha$?
+- What would be the best for the collective?
+
+</div>
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li>$\alpha$ is the private marginal benefit of contributing to the public good.</li>
+<li>$3\alpha$ is the social marginal benefit (there are three players!).</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Public-Good Optimization
+
+The optimum for the collective maximizes total welfare:
+
+<!-- prettier-ignore -->
+\begin{gathered}
+&3\cdot 10 - (c_1-c_2-c_3) + 3\alpha (c_1-c_2-c_3) \\\\ 
+&= \\\\
+&30 - (1-3\alpha)(c_1-c_2-c_3)
+\end{gathered}
+
+Clearly, if $3\alpha > 1$, then it is socially optimal if everyone contributes, $c_i = 10$.
+
+<aside class="notes"><p>Observe: $3\alpha&gt;1$ means that the marginal social benefit of the joint contributions is higher than the marginal social cost of the contributions.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Public-Good Optimization
+
+Is the socially optimal behavior an individually optimal strategy here?
+
+No.
+We have $\alpha<1$.
+
+<!-- .element: class="fragment" -->
+
+<div>
+So, the individual payoff $$10 - c_i + \alpha (c_1+c_2+c_3)$$ is always maximized when not contributing at all.
+
+Observe: Not contributing is a _dominant strategy_.
+
+</div>
+<!-- .element: class="fragment" -->
+
+<center>
+
+**Question:** What if $\alpha>1$? $\alpha < 1/3$.
+
+</center>
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li>So, if $1/3 &lt; \alpha &lt; 1$, then our public good game really is a prisoner&#39;s dilemma with more than two players: it is socially optimal for everyone to contribute but not contributing is a dominant strategy for everyone.</li>
+<li>If $\alpha &gt; 1$, then the individual marginal benefit is always higher than the individual marginal cost, and it becomes a dominant strategy for all players to fully invest in the public good.
+Then, there would be no public goods problem...</li>
+<li>If $\alpha &lt; 1/3$, there is no public good problem, either.
+It is socially and individually optimal not to contribute.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Public-Goods in the laboratory
+
+What do you think happens when playing this with real humans:
+
+- for one round?
+- for many rounds?
+- when allowing for communication?
+- with different sizes of the groups?
+
+<aside class="notes"><p>What about empirical evidence?</p>
+<ul>
+<li>Little contribution when played for one round.</li>
+<li>Some little contribution but quickly to 0.</li>
+<li>Some longer and stronger contribution but eventually going to 0 quickly</li>
+<li>The more people the higher the perceived possibility to free ride.</li>
+<li>Question: How to find out if people only freeride because they believe others freeride or if they actually want to freeride?</li>
+<li>Answer: Conditional Cooperation table where you can specify your contribution conditional on the other&#39;s (average) contribution.</li>
+<li>Draw pictures of CC, freeriders,</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Public-Good in Polkadot
+
+Polkadot solves the under provision of a public good with a subsidy.
+
+- Parachains that offer functionality / utility to all users but struggle to find a business case can receive a slot for free and are subsidized by grants.
+- These are parachains that would be too expensive to develop individually but that provide large benefit for the overall ecosystem.
+</script></section><section  data-markdown><script type="text/template">
+## Public-Good in Polkadot
+
+How do parachains fit our simple model?
+
+- $\alpha$: benefit to you for every US dollar that you invest into the development of the parachain. <!-- .element: class="fragment" -->
+- $\alpha < 1$: you make a loss of $(1-\alpha)$ for every US Dollar invested. <!-- .element: class="fragment" -->
+- If you get a grant, then Polkadot covers a large proportion of your costs. <!-- .element: class="fragment" -->
+- Now that most of your investment gets refunded, you make a benefit $\alpha$ per USD invested. <!-- .element: class="fragment" -->
+- So, it is optimal for you to invest (even though no one else does). <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Tragedy of the Commons
+
+Tragedy of the commons is related to public good provision.
+
+A Common good is:
+
+- **Rivalrous**: My consumption reduces your possibility to consume.
+- **Non-excludable**: No one can be excluded from consuming the good.
+
+i.e., a public park, an office coffee machine
+
+<aside class="notes"><ul>
+<li>Recall: Public good was <em>non</em>-rivalrous.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>Public park: anyone can go; too many people spoil the experience.</li>
+<li>Coffee machine in the office: anyone can use it; too many users may cause congestion.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Public vs. Common good
+
+The main difference to a public good is that in a common good your consumption reduces the value of the good to others.
+This is called a _consumption externality_ that you impose on others (and others impose on you.)
+
+The _tragedy of the commons_ is that, because you do not take this externality into account, consumption is higher than would be socially optimal.
+</script></section><section  data-markdown><script type="text/template">
+## Overfishing
+
+- Fishing gives private benefit but might destroy the broader ecosystem, which has its own value for everyone (due to, e.g., tourism). <!-- .element: class="fragment" -->
+- Because individual fishermen do not have to pay for the damage they cause to the broader ecosystem, they will individually fish too much. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Air pollution
+
+- Producing a good yields private profit but reduces air quality for everyone. <!-- .element: class="fragment" -->
+- Because there is no price attached to air quality, the firms do not have to pay for its reduction and, hence, will produce too much. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Bitcoin
+
+- Mining gives private benefit in the form of mining rewards but hampers environment for everyone. <!-- .element: class="fragment" -->
+- Again, because there is no price attached to damaging the environment, the miners do not take this into consideration and, hence, will mine too much. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## But...
+
+- There should be fishing/production/mining! <!-- .element: class="fragment" -->
+  After all there are always benefits to these activities. <!-- .element: class="fragment" -->
+- The tragedy of the commons is that the externality is not priced into these activities, driving them to inefficiently high levels. <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Tragedy of Commons Model
+
+There is a resource of size $K$ and two players:
+
+- Each player enjoys consuming $k_i$ but both also enjoy the remaining resource $K-k_1-k_2$.
+- Utility of player $1$: $u_1(k_1,k_2) = \ln(k_1)+\ln(K-k_1-k_2).$
+- Utility of player $2$: $u_2(k_1,k_2) = \ln(k_2)+\ln(K-k_1-k_2).$
+
+Each player derives utility from consumption, but gets hurt by the consumption of the other player.
+
+<aside class="notes"><ul>
+<li><p>We analyze the tragedy of the commons in a simple model.</p>
+</li>
+<li><p>You don&#39;t need to be able to solve this game on your onw, but we want you to have at least seen such a model once.</p>
+</li>
+<li><p>The specific form of the utility function; i.e., the ln, is not necessary but will make the computations easy.</p>
+</li>
+<li><p>We could replace the natural log with any increasing and concave function; but we then almost certainly won&#39;t be able to fully solve the model.</p>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tragedy of Commons Model
+
+In this game a Nash equilibrium is a vector of consumption choices, $(k_1^*,k_2^*)$, such that $k_1^*$ is optimal given $k_2^*$ and vice versa.
+
+Nash equilibrium solution:
+
+1. Fix consumption of player $2$, $k_2$, and try to characterize the optimal choice of player $1$.
+1. Fix the consumption of player $1$, $k_1$, and try to characterize the best response of player $2$.
+1. Find $(k_1,k_2)$ such that both players play a best response to each other.
+</script></section><section  data-markdown><script type="text/template">
+## Tragedy of Commons Model
+
+<widget-columns>
+<widget-column>
+
+Fix consumption of player $2$, $k_2$, and find player $1$'s best response $BR_1(k_2)$.
+
+<!-- prettier-ignore -->
+\begin{gathered}
+\frac{\partial u_1(k_1,k_2)}{\partial k_1} = 0 \\\\
+\iff \\\\
+\frac{1}{k_1} =\frac{1}{K-k_1-k_2} \\\\
+\iff \\\\
+k_1 = \frac{1}{2}[K-k_2] \equiv BR_1(k_2).
+\end{gathered}
+
+</widget-column>
+<widget-column>
+
+Fix consumption of player $1$, $k_1$, and find player $2$'s best response $BR_2(k_1)$.
+
+<!-- prettier-ignore -->
+\begin{gathered}
+\frac{\partial u_2(k_1,k_2)}{\partial k_2} = 0 \\\\
+\iff \\\\
+\frac{1}{k_2} =\frac{1}{K-k_1-k_2} \\\\
+\iff \\\\
+k_2 = \frac{1}{2}[K-k_1] \equiv BR_2(k_1).
+\end{gathered}
+
+</widget-column>
+</widget-columns></script></section><section  data-markdown><script type="text/template">
+## Tragedy of Commons Model
+
+So, a Nash equilibrium $(k_1^*,k_2^*)$ consists of mutual best responses,
+
+<!-- prettier-ignore -->
+\begin{align}
+k_1^* &= BR_1(k_2^*) \\\\
+k_2^* &= BR_2(k_1^*)
+\end{align}
+
+In other words, we seek to find $(k_1^*,k_2^*)$ that solve
+
+<!-- prettier-ignore -->
+\begin{align}
+k_1^* &= \frac{1}{2}[K-k_2^*] \\\\
+k_2^* &= \frac{1}{2}[K-k_1^*]
+\end{align}
+
+<center>
+Solution: $k_1^*=k_2^*= K/3.$
+</center>
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li><p>What is the tragedy here? Players consume more than the socially optimal amount.</p>
+</li>
+<li><p>How do we compute the socially optimal amount?</p>
+</li>
+<li><p>k*1_star = 1/2 * [K - 1/2 _ (K - k_1_star)]</p>
+</li>
+<li><p>k*1_star = 1/2 * K - 1/4 _ K + 1/4 * k_1_star</p>
+</li>
+<li><p>k*1_star = 1/4 * K + 1/4 _ k_1_star</p>
+</li>
+<li><p>3/4 _ k_1_star = 1/4 _ K</p>
+</li>
+<li><p>k_1_star = K/3</p>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tragedy of Commons Model
+
+We maximize total welfare $W(k_1,k_2)=u_1(k_1,k_2)+u_2(k_1,k_2)$ by choosing $k_1$ and $k_2$.
+The optimality conditions to this problem are as follows:
+
+<widget-columns>
+<widget-column>
+
+<!-- prettier-ignore -->
+\begin{gather}
+\frac{\partial W(k_1,k_2)}{\partial k_1} = 0 \\\\
+\iff \\\\
+\frac{1}{k_1} =\frac{2}{K-k_1-k_2} \\\\
+\iff \\\\
+k_1 = \frac{1}{3}[K-k_2] \\\\
+\end{gather}
+
+</widget-column>
+<widget-column>
+
+<!-- prettier-ignore -->
+\begin{gather}
+\frac{\partial W(k_1,k_2)}{\partial k_2} = 0 \\\\
+\iff \\\\
+\frac{1}{k_2} =\frac{2}{K-k_1-k_2} \\\\
+\iff \\\\
+k_1 = \frac{1}{3}[K-k_2]
+\end{gather}
+
+</widget-column>
+</widget-columns>
+
+<center>
+Solution: $\hat k_1 = \hat k_2 = K/4$.
+</center>
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li>1/3*[K - 1/3*(K - k_1_hat)] = k_1_hat</li>
+<li>1/3<em>K - 1/9</em>K + 1/9 k_1_hat = k_1_hat</li>
+<li>2/9*K = 8/9 * k_1_hat</li>
+<li>k_1_hat = K/4</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tragedy of Commons Model
+
+The socially optimal consumption level is _lower_ than the mutually optimal one...
+Why?
+
+Consumption externality: each player inflicts harm on the other player when consuming but does not take this into account for the individually optimal decision.
+
+What about utilities?
+
+<!-- prettier-ignore -->
+\begin{align}
+u_1(k_1^*,k_2^*) &= \ln(K/3)+\ln(K/3) = \ln(K^2/9) \\\\
+u_1(\hat k_1,\hat k_2) &= \ln(K/4) + \ln(K/2) = \ln(K^2/8)
+\end{align}
+
+<aside class="notes"><p>Both players would be better off in the social optimum.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tragedy of Commons Model
+
+Traditional solutions to the tragedy of the commons:
+
+- Taxes: The government requires both players to pay a tax $\tau\cdot k_i$, where $\tau > 0$ is the tax rate.
+  This way, consumption becomes more expensive, leading to a reduction.
+- Licenses: The government might charge a fee $F> 0$ to consume in the first place and then redistributes the proceeds again among the affected parties.
+</script></section><section  data-markdown><script type="text/template">
+## Summary (so far...)
+
+<aside class="notes"><p>What have we done in this section?</p>
+<ul>
+<li>Compared public and common goods and their respective problems.</li>
+<li>Both feature non-excludable consumption.</li>
+<li>Public good features non-rivalrous consumption whereas the common good features rivalrous consumption.</li>
+<li>Both the public good and the common good are characterized by a distinct externality.</li>
+<li>The public good features a (positive) production externality: I profit from your production (and you do so from mine).<ul>
+<li>This might lead to underproduction, because individual marginal benefits from the good are lower than the social marginal benefits.</li>
+</ul>
+</li>
+<li>The common good features a (negative) consumption externality: I impose a loss on you through my consumption (and vice versa).<ul>
+<li>This might lead to a tragedy of the commons, which is characterized by inefficiently high consumption.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Discussion
+
+<aside class="notes"><ul>
+<li>roughly 15 minutes</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Open-source
+
+> Providing open-source software is like contributing to a public good and the community will therefore sooner or later collapse.
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Discussion
+
+<aside class="notes"><ul>
+<li>roughly 15 minutes</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Prisoner's Dilemma
+
+- Read this article: https://bitcoinmagazine.com/culture/the-bitcoin-dilemma.
+- Discuss why the "Bitcoin Dilemma" is probably not a Prisoner's' Dilemma (as claimed).
+
+<aside class="notes"><ul>
+<li>Why the task?<ul>
+<li>It reinforces the concepts of cooperative and non-cooperative games as well as concepts of complete and incomplete information (does it? Or do we need to make it more explicit).</li>
+<li>It reinforces the concept of the prisoner&#39;s dilemma</li>
+<li>It challenges students to apply their knowledge to the blockchain space.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Design a 2x2 game
+
+> Jack and Christine are rivals and keep taunting each other in front of others.
+> At one time, Jack challenges Christine to a game of chicken.
+> He proposes that they both get in their cars and drive towards each other on a road.
+> In the middle of the distance between each other, there is a small bridge with a single lane.
+> Whoever swerves away before the bridge _chickened out_.
+> If both keep straight, there is no way to avoid a strong collision between the two cars.
+> All friends will be present to see the result.
+</script></section><section  data-markdown><script type="text/template">
+## Task
+
+- Design this game in a 2x2 matrix
+- Assign payoffs to the different outcomes
+- What is/are the Nash Equilibrium/Equilibria here?
+- Which type of games does this remind you of?
+- How would you translate this game to real scenarios?
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Workshop: Games
+
+<aside class="notes"><ul>
+<li>roughly 70 minutes</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Game 1: Guessing Game
+
+- We divide the classroom into three groups and play a guessing game.
+- The budget for this game is: $200.
+- The game is simple: The player who guessed closest to the 2/3 of the average guesses wins.
+- If multiple people win, the payoff is split equally.
+- The game is repeated for ten rounds.
+- Three different group sizes: 10, 20 and 30 students.
+</script></section><section  data-markdown><script type="text/template">
+## Game 1: Guessing Game
+
+<center>
+<img style="width: 550px;" src="../../../assets/img/2-Economics/2.2-qr-academy_guess.png"/>
+</center>
+
+#### https://otree.w3f.tech/room/academy_guess
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+## Questions?
+</script></section><section  data-markdown><script type="text/template">
+## Game 1: Discussion
+
+- What number did you choose / what was your strategy? (which group were you in?)
+- Did your strategy change over time?
+
+<aside class="notes"><ul>
+<li>A number above 2/3*100 does not make sense</li>
+<li>If everybody believes that, choosing a number above 2/3<em>2/3</em>100 does not make sense</li>
+<li>... it goes to 0</li>
+<li>But does 0 Win? No!</li>
+<li>FT asked their readers to submit their solution: Winning number was 13 (~1500 participants)</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Game 1: Results!
+</script></section><section  data-markdown><script type="text/template">
+## Game 2: Prisoner's Dilemma
+
+- You play a Prisoner's Dilemma (groups of 2) over 10 rounds.
+- You will be randomly matched to another student in the class.
+- Budget for this game: $400
+- You have the option to chat between rounds.
+- Important: Keep the chat civil and do not reveal any identifying information about yourself.
+</script></section><section  data-markdown><script type="text/template">
+## Game 2: Payoffs
+
+<br>
+
+|           |               | **_The other participant_** |                        |
+| --------- | ------------- | --------------------------- | ---------------------- |
+|           |               | **Cooperate**               | **Defect**             |
+| **_You_** | **Cooperate** | 200 points, 200 points      | 0 points, 300 points   |
+|           | **Defect**    | 300 points, 0 points        | 100 points, 100 points |
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+## Questions?
+</script></section><section  data-markdown><script type="text/template">
+## Game 2: Let's go!
+
+<center>
+<img style="width: 550px;" src="../../../assets/img/2-Economics/2.2-qr-academy_prisoner.png"/>
+</center>
+
+#### https://otree.w3f.tech/room/academy_prisoner
+</script></section><section  data-markdown><script type="text/template">
+## Game 2: Results!
+</script></section><section  data-markdown><script type="text/template">
+## Game 3: Public Good Game
+
+- We will play a public good game as presented in the lecture.
+- Budget for this game: $400
+- Groups of 4 over 10 periods.
+- The efficiency factor is 1.6 - (that is 4 \* 0.4, which is the social marginal benefit as we discussed before).
+- With one additional mechanism: After each round each player sees the contributions of the other players and can decide to deduct points from them (at own costs).
+</script></section><section  data-markdown><script type="text/template">
+## Game 3: Instructions
+
+<center>
+<img style="width: 1000px;" src="../../../assets/img/2-Economics/2.2-pgg-instructions.png">
+</center>
+
+<!-- TODO CONTENT replace above with text & table (if needed) -->
+
+<aside class="notes"><ul>
+<li>We play it for 10 rounds not only 2</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Game 3: Contribution
+
+<center>
+<img style="width: 1000px;" src="../../../assets/img/2-Economics/2.2-pgg-contribution.png">
+</center>
+</script></section><section  data-markdown><script type="text/template">
+## Game 3: Punishment
+
+<center>
+<img style="width: 900px;" src="../../../assets/img/2-Economics/2.2-pgg-punishment.png">
+</center>
+</script></section><section  data-markdown><script type="text/template">
+## Game 3: Payout
+
+<center>
+<img style="width: 1000px;" src="../../../assets/img/2-Economics/2.2-pgg-result.png">
+</center>
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+## Questions?
+</script></section><section  data-markdown><script type="text/template">
+## Game 3: Let's go!
+
+<center>
+<img style="width: 550px;" src="../../../assets/img/2-Economics/2.2-qr-academy_academy_publicgood.png">
+</center>
+
+#### https://otree.w3f.tech/room/academy_publicgood
+</script></section><section  data-markdown><script type="text/template">
+## Game 3: Discussion
+
+- What was your strategy?
+- Were your group able to sustain cooperation?
+- Why do people cooperate?
+- Why do people punish?
+
+<aside class="notes"><ul>
+<li>Additional free rider problem: Punishment was fixed to 100% of the other&#39;s points.
+That means, it was better to hope for other players to punish a player.</li>
+<li>They cooperate maybe because they did not understand the game.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+## Game 3: Results!
+</script></section><section  data-markdown><script type="text/template">
+## Summary
+
+<aside class="notes"><ul>
+<li>the basics of game theoretic concepts.</li>
+<li>different types of games.</li>
+<li>how games can be modeled.</li>
+<li>how to apply game theoretic thinking in our decision making in certain games.</li>
+</ul>
+</aside></script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

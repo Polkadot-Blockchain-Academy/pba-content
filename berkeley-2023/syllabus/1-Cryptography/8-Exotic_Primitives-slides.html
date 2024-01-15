@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Exotic Primitives</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Exotic Primitives
+</script></section><section  data-markdown><script type="text/template">
+# Outline
+
+<pba-flex center>
+
+1. [Verifiable Random Functions (VRFs)](#verifiable-random-functionsvrfs)
+1. [Erasure coding](#erasure-coding)
+1. [Shamir Secret Sharing](#shamir-secret-sharing)
+1. [Proxy Re-Encryption](#proxy-reencryption)
+1. [ZK Proofs](#zk-proofs)
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Verifiable Random Functions<br/>(VRFs)
+
+<widget-center>
+
+- Used to obtain <ins>private randomness</ins>, that is <ins>publicly verifiable</ins>
+
+- A variation on a signature scheme:
+  - still have private/public key pairs, input as message
+  - in addition to signature, we get an output
+</script></section><section  data-markdown><script type="text/template">
+## VRF Interface
+
+- `sign(sk, input) -> signature`
+
+- `verify(pk, signature) -> option output`
+
+- `eval(sk,input) -> output`
+
+<aside class="notes"><p>The output of verification being an option represents the possibility of an invalid signature</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## VRF Output properties
+
+- Output is a deterministic function of _key_ and _input_
+  - i.e. eval should be deterministic
+- It should be pseudo-random
+- But until the VRF is revealed, only the holder<br/>of the secret key knows the output
+- Revealing output does not leak secret key
+</script></section><section  data-markdown><script type="text/template">
+## VRF Usage
+
+- Choose input after key, then the key holder cannot influence the output
+- The output then is effectively a random number known only to the key holder
+- But they can later reveal it, by publishing the VRF proof (signature)
+
+<aside class="notes"><p>The signature proves that this is the output associated to their input and public key.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## VRF Example
+
+- Playing a card game in a distributed and trustless way
+- For player A to draw a card, the players agree on a new random number x
+- A's card is determined by
+  `eval(sk_A,x) mod 52`
+- To play the card, A publishes the signature
+</script></section><section  data-markdown><script type="text/template">
+## VRF Extensions
+
+- Threshold VRFs / Common coin
+
+  - Generate the same random number if $t$ out of $n$ people participate
+
+- RingVRFs
+
+  - The VRF output could be from any one of a group of public keys.
+
+<aside class="notes"><p>Common coins were used in consensus before blockchains were a thing.
+Dfinity based their consensus on this.
+But this needs a DKG, and it&#39;s unclear if a decentralized protocol can do those easily.</p>
+<p>A participant in a RingVRF could still only reveal <em>one</em> random number.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Erasure Coding
+
+_Magical data expansion_
+
+- Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
+
+- A message of $k$ symbols is turned into a coded message of $n$ symbols and can be recovered from any $k$ of these $n$ symbols
+</script></section><section ><section data-markdown><script type="text/template">
+## Erasure Coding Intuition
+
+Erasure coding relies on both parties sharing an understanding of what possible messages are valid. This lets mistakes be noticed and corrected.
+
+Imagine you are receiving a message, and you know ahead of time that the only two possible messages you would receive are `file` and `ruin`.
+
+<aside class="notes"><p>This concept of a subset of messages being valid is super common in real life, and occurs all over the place.
+At a restaurant, when they ask you if you want soup or salad, even if you mumble they will probably understand you.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Erasure Coding Intuition
+
+How would you classify each of the following words?
+
+<span style="color: red;">file</span> pile pale tale tall rule tail rail rain <span style="color: blue;">ruin</span>
+</script></section><section data-markdown><script type="text/template">
+## Erasure Coding Intuition
+
+How would you classify each of the following words?
+
+<span style="color: red;">file pile pale tale tall</span> <span style="color: purple;">rule</span> <span style="color: blue;"> tail rail rain ruin</span>
+
+You can classify them based on how close they are to a valid input. This also means we can find the errors in these messages.
+
+<aside class="notes"><p>There is no perfect way to separate these, but one very reasonable one is to do it based on the edit distance of the received word with any valid messsage you could receive.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Erasure Coding Intuition
+
+Now, you are receiving messages that could be `msg1` or `msg2`. Can you apply the same technique? Is it as easy to separate received messages?
+
+What if you receive `msg3`?
+
+<aside class="notes"><p>If the messages are not far apart, it is impossible to distinguish in many cases. There is not enough &quot;distance&quot; between the two possibilities.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Erasure Coding Intuition
+
+With erasure coding, we extend each message magically so they are different enough. The sender and receiver know the same encoding procedure. These extensions will be very different, even if the messages are similar.
+
+`msg1`<span style="color: red;">`jdf`</span> and `msg2`<span style="color: red;">`ajk`</span>
+
+<aside class="notes"><p>It is actually always possible to make the extra magic only appended to the message. This is called a <em>systematic encoding</em>.</p>
+<p>For those curious about how the &quot;magic&quot; works:</p>
+<p>The magic here is polynomials, and the fact that a polynomial of degree $n$ is completely determined by $n+1$ points. There are many good explanations online.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Erasure Coding
+
+<img style="width: 1000px;" src="./img/erasure-code.svg" />
+</script></section><section  data-markdown><script type="text/template">
+## Erasure Coding Classical use
+
+- Used for noisy channels
+- If a few bits of the coded data are randomly flipped,<br/> we can still recover the original data
+- Typically $n$ is not much bigger than $k$
+</script></section><section  data-markdown><script type="text/template">
+## Use in Decentralized Systems
+
+- We have data we want to keep publicly available
+
+  - but not have everyone store
+  - but we don't trust everyone who is storing pieces
+
+- Typically we use $n$ much bigger than $k$
+</script></section><section  data-markdown><script type="text/template">
+## Shamir Secret Sharing
+
+_Redundancy for your secrets_
+
+- Turn data (typically a secret) into pieces so it can be reconstructed from some subset of the pieces.
+
+- A secret is turned into $n$ shares, and be recovered by any $k$ of the shares. $k-1$ shares together reveals nothing about the secret.
+</script></section><section  data-markdown><script type="text/template">
+## Shamir Secret Sharing
+
+<img style="height: 600px" src="./img/shamir-secret-sharing.png" />
+
+<aside class="notes"><p>Image credit here: <a href="https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033">https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Pros and Cons
+
+- Can reconstruct a secret if you lose it.
+- So can other people who collect enough shares.
+</script></section><section  data-markdown><script type="text/template">
+## Proxy Reencryption
+
+Generate keys to allow a third party to transform encrypted data so someone else can read it, without revealing the data to the third party.
+</script></section><section  data-markdown><script type="text/template">
+## Proxy Reencryption
+
+<img rounded style="height: 600px" src="./img/proxy-reencryption.png" />
+
+<aside class="notes"><p><a href="https://scrapbox.io/layerx/Proxy_Re-Encryption%28PRE%29%E3%81%A8NuCypher">img source</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Proxy Reencryption API
+
+- `fn encrypt(pk, msg) -> ciphertext;` <br/> Takes your public key and a message; returns ciphertext.
+- `fn decrypt(sk, ciphertext) -> msg;` <br/> Takes your private key and a ciphertext; returns the message.
+- `fn get_reencryption_key(sk, pk) -> rk;` <br/> Takes your private key, and the recipient's public key; returns a reencryption key.
+- `fn reencrypt(rk, old_ciphertext) -> new_ciphertext;` <br/> Take a reencryption key, and transform ciphertext to be decrypted by new party.
+</script></section><section  data-markdown><script type="text/template">
+## ZK Proofs
+
+How do we do private operations on a public blockchain<br/>and have everyone know that they were done correctly?
+
+<aside class="notes"><p>(we are working on substrate support for these and will use them for protocols)</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## What is a ZK Proof?
+
+- A prover wants to convince a verifier that something is true without revealing why it is true.
+
+- They can be interactive protocols, but mostly we'll be dealing with the non-interactive variety.
+</script></section><section  data-markdown><script type="text/template">
+## What can we show?
+
+- NP relation: `function(statement, witness) -> bool`
+
+- Prover knows a witness for a statement:
+
+  - They want to show that they know it (_a proof of knowledge_)
+
+  - ... Without revealing anything about the witness (_ZK_)
+</script></section><section  data-markdown><script type="text/template">
+## ZK Proof Interface
+
+- NP relation: `function(statement, witness) -> bool`
+
+- `prove(statement, witness) -> proof`
+
+- `verify(statement, proof) -> bool`
+</script></section><section  data-markdown><script type="text/template">
+## ZK Proof Example
+
+_Example:_ Schnorr signatures are ZK Proofs
+
+- They show that the prover knows the private key (the discrete log of the public key) without revealing anything about it.
+- The statement is the public key and the witness the private key.
+</script></section><section  data-markdown><script type="text/template">
+## zk-SNARK
+
+**Z**ero-**K**nowledge **S**uccinct **N**on-interactive **Ar**gument of **K**nowledge
+
+- **Zero knowledge** - the proof reveals nothing about the witness that was not revealed by the statement itself.
+- **Succinct** - the proof is small
+- **Proof of knowledge** - if you can compute correct proofs of a statement, you should be able to compute a witness for it.
+</script></section><section  data-markdown><script type="text/template">
+## What can we show?
+
+- NP relation: `function(statement, witness) -> bool`
+
+  - They want to show that they know it (_a proof of knowledge_)
+
+  - ... Without revealing anything about the witness (_ZK_)
+
+- With a small proof even if the witness is large (_succinctness_)
+</script></section><section  data-markdown><script type="text/template">
+## What can we show?
+
+- There are many schemes to produce succinct ZK proofs of knowledge (_ZK-SNARKs_) for every NP relation.
+</script></section><section  data-markdown><script type="text/template">
+## ZK Proof Scaling
+
+A small amount of data, a ZK proof, and execution time can be used to show properties of a much larger dataset which the verifier doesn't need to know.
+</script></section><section  data-markdown><script type="text/template">
+## Scaling via ZK Proofs in Blockchain
+
+- Large amount of data - a blockchain
+- Verifier is e.g. an app on a mobile phone
+
+<aside class="notes"><p>e.g. Mina do a blockchain with a constant size proof (of correctness of execution and consensus) using recursive SNARKs.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Scaling via ZK Proofs in Blockchain
+
+- The verifier is a blockchain: very expensive data and computation costs.
+
+- Layer 2s using ZK rollups
+
+<aside class="notes"><p>Of which Ethereum has many, ZKsync, ZKEVM etc.
+Polkadot already scales better!</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Privacy
+
+<pba-flex center>
+
+A user has private data, but we can show<br/>publicly that this private data is correctly used.<br/>
+An example would a private cryptocurrency:
+
+- Keep who pays who secret
+- Keep amounts secret, <br/> _But show they are positive!_
+
+</pba-flex>
+
+<aside class="notes"><p>You can do some of keeping amounts secret without ZK-SNARKs, but the positive part is difficult.
+To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivatives e.g. Manta.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Practical Considerations
+
+- Very powerful primitive
+
+- Useful for both scaling and privacy
+
+- One can design many protocols with ZK Proofs that wouldn't otherwise be possible
+</script></section><section  data-markdown><script type="text/template">
+## Downside
+
+- Slow prover time for general computation
+- To be fast, need to hand optimize
+- Very weird computation model:<br/>
+  Non-deterministic arithmetic circuits
+</script></section><section  data-markdown><script type="text/template">
+## Downsides Conclusion?
+
+- So if you want to use this for a component,<br/>expect a team of skilled people to work for at least a year on it...
+- But if you are watching this 5 years later,<br/>people have built tools to make it less painful.
+</script></section><section  data-markdown><script type="text/template">
+## Succinct Proving<br/>with Cryptography?
+
+<pba-flex center>
+
+- ZK friendly hashes
+- Non-hashed based data structures
+  - RSA accumulators
+  - Polynomial commitment based<br/>
+    (Verkle trees)
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Summary
+
+- VRF: Private randomness that is later publicly verifiable
+- Erasure Coding: Making data robust against losses with redundancy
+- Shamir Secret Sharing: Redundancy for your secrets.
+- Proxy Re-encryption: Allow access to your data _with cryptography_.
+- ZK Proofs: Just magic, but expensive magic
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

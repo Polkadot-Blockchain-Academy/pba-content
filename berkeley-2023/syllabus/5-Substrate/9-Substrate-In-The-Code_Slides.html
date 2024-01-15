@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Substrate; Show Me The Code</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Substrate; Show Me The Code 👨‍💻
+</script></section><section  data-markdown><script type="text/template">
+## Substrate; Show Me The Code 👨‍💻
+
+Previous lecture was all abut high level information; now we want to bridge that to real code.
+</script></section><section ><section data-markdown><script type="text/template">
+## A Word on Previous Versions
+
+- This is a brand new lecture replacing two old ones, with more focus on rust-docs.
+- Since this is the first time, I have kept the old versions around for you to look into
+
+> Cambridge-y (adj) - Overall good quality, but with rough edges or imperfections. Especially when related to PBA content.
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### A Word on the Rust Exam
+
+Two main takeaways from the previous cohort:
+
+- Write more rust-docs, expect them to be read.
+- Extensive use of type-system, to prepare you better for FRAME.
+
+<aside class="notes"><p>Personally doing my best to make it hard, but reasonable, such that it prepares you best for
+in-depth development of Substrate.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Interactive
+
+- This lecture will be interactive.
+- Try and learn the technique, not the specific topic. <!-- .element: class="fragment" -->
+- Try and repeat the process later. <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>what I am trying to do here is to teach you how to plant a tree rather than giving you the apple.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Documentation Resources
+
+Core
+
+- paritytech.github.io
+  - `substrate` crate
+  - WIP: `frame`, `cumulus` and `polkadot` crate.
+- Github
+- Substrate/Polkadot StackExchange
+
+High level
+
+- `substrate.io`\*
+- Discord, Telegram, etc.
+</script></section><section ><section data-markdown><script type="text/template">
+## Exploring the `substrate` crate.
+
+https://paritytech.github.io/substrate/master/substrate/index.html
+</script></section><section data-markdown><script type="text/template">
+### Substrate From Within
+
+Division of substrate when seen from inside:
+
+1. `sp`
+2. `sc`
+3. `frame/pallet/runtime`
+
+<aside class="notes"><p>this should be covered</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Substrate Binaries
+
+<aside class="notes"><p>alternative way is to search for <code>[[bin]]</code> in all toml files.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Structure of a Binary Crate
+
+Division of a typical substrate-based project:
+
+1. `node`
+   1. Contains a `main.rs`
+   2. `service.rs`
+   3. and more!
+2. `runtime`
+   1. Contains a `/src/lib.rs` ("_runtime amalgamator_")
+3. more!
+
+<aside class="notes"><p>node is client side entry point, <code>runtime amalgamator for the runtime</code>.</p>
+<ul>
+<li>looking at node-template, it only has the two.</li>
+<li>node has even more</li>
+<li>polkadot has even more.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### Substrate CLI
+
+Study in the docs:
+
+- `--dev`
+- `--chain`
+- `--tmp`, `--base-path`, `purge-chain`.
+
+<aside class="notes"><p>all commands: <a href="https://paritytech.github.io/substrate/master/sc_cli/commands/index.html">https://paritytech.github.io/substrate/master/sc_cli/commands/index.html</a>
+all args to a typical run command <a href="https://paritytech.github.io/substrate/master/sc_cli/commands/struct.RunCmd.html">https://paritytech.github.io/substrate/master/sc_cli/commands/struct.RunCmd.html</a></p>
+<p>Bute then each node can decide which subset of these it chooses, and how it implements it.</p>
+<p><a href="https://paritytech.github.io/substrate/master/node_template/cli/enum.Subcommand.html">https://paritytech.github.io/substrate/master/node_template/cli/enum.Subcommand.html</a>
+<a href="https://paritytech.github.io/substrate/master/node_cli/enum.Subcommand.html">https://paritytech.github.io/substrate/master/node_cli/enum.Subcommand.html</a></p>
+<ul>
+<li>execution strategies</li>
+<li>database type</li>
+<li>logs</li>
+<li>RPC</li>
+<li>pruning</li>
+<li>sync modes</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Wasm Build + `std` feature.
+
+- How to compile to wasm? `build.rs`!
+- just get your `std` features right please!
+
+<aside class="notes"><p><a href="https://crates.io/crates/substrate-wasm-builder">https://crates.io/crates/substrate-wasm-builder</a> (seen env variables, pretty useful!) <!-- markdown-link-check-disable-line -->
+<a href="https://docs.substrate.io/build/build-process/">https://docs.substrate.io/build/build-process/</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Chain Specification
+
+<aside class="notes"><p>raw vs not-raw</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## #1 Rust-Docs Tip Of All Time
+
+- Search traits, find implementations.
+- Examples: `trait Block`, `trait Extrinsic`, `trait Header`.
+
+```rust
+trait Config {
+  type Foo: SomeTrait<Bar>
+}
+```
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Especially in FRAME, often times you have to parameterize your pallets with a pattern like above.
+Simply search the trait in the rust-docs, and find the implementors!</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Additional Resources! 😋
+
+> Check speaker notes (click "s" 😉)
+
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+
+<aside class="notes"><p>One important concept that is important to substrate-based chains, but is somewhat missing here is
+<code>chain-spec</code>. Make sure to read up about it in the substrate docs.</p>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

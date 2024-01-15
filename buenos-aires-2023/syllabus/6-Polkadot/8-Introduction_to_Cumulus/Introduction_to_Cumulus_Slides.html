@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Introduction to Cumulus</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Introduction to Cumulus
+</script></section><section  data-markdown><script type="text/template">
+### Outline
+
+<pba-flex center>
+
+1. [What is Cumulus?](#what-is-cumulus)
+1. [Cumulus Runtime Validation](#cumulus-runtime-validation)
+1. [Cumulus on the Node Side](#cumulus-on-the-node-side)
+1. [Transform Solo to Parachain](#transform-solo-to-parachain)
+1. [References](#references)
+
+</pba-flex>
+</script></section><section ><section data-markdown><script type="text/template">
+## What is Cumulus?
+
+> Cumulus clouds are shaped sort of like dots; together they form a system that is intricate, beautiful and functional
+
+SDK for building substrate/FRAME-based Parachains
+</script></section><section data-markdown><script type="text/template">
+<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-1.svg" style="width: 1500px" />
+
+<aside class="notes"><ul>
+<li>Substrate is a framework for building blockchains</li>
+<li>But only &quot;solo&quot; chains</li>
+<li>Split into runtime/node side</li>
+<li>FRAME allows you to build modular components reused by runtimes</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-2.svg" style="width: 1500px" />
+
+<aside class="notes"><ul>
+<li>Polkadot makes uses of Substrate</li>
+<li>The concept of Parachains is introduced in Polkadot</li>
+<li>It implements Parachain Sharding and Validation as node and runtime-side logic</li>
+<li>Has its own networking protocols built with Substrate/libp2p</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+<img src="../../../assets/img/5-Polkadot/cumulus/cumulus-3.svg" style="width: 1500px" />
+
+<aside class="notes"><ul>
+<li>Cumulus uses the generic types of Substrate</li>
+<li>These generic types/interfaces are extended to make them work with/for Parachains</li>
+<li>Polkadot itself is providing APIs that are used by Cumulus to implement the Substrate interfaces/types</li>
+</ul>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Cumulus Runtime Validation
+
+### Polkadot requirements
+
+- Polkadot requires a validation blob for verifying Parachain state transitions
+- This blob is required to be a valid Wasm binary that exposes the `validate_block` function
+- Wasm runtimes are deeply baked into the Substrate core protocol
+- The Substrate runtime is the state transition function
+</script></section><section  data-markdown><script type="text/template">
+## Verify a State Transition
+
+- A Substrate chain verifies a Block state transition on import
+- Importing a block is done using `execute_block`
+- Executing a block means to execute the entire block with all transactions
+- The input header must match the header that is the result of executing the block
+- This ensures that the storage root, the extrinsic root, etc., are correct
+</script></section><section  data-markdown><script type="text/template">
+#### Parachain Validation Function = Parachain Runtime
+
+- Reuse the substrate-based runtime
+- Augment the runtime with the `validate_block` function
+- The validation blob stored on the relay chain & the runtime code blob stored in the Parachain state are the same
+</script></section><section  data-markdown><script type="text/template">
+## Cumulus Validation Blob
+
+```rust
+fn validate_block(input: InputParams) -> Output {
+
+
+
+
+
+
+
+
+
+
+
+
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Cumulus Validation Blob
+
+```rust
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+
+
+
+
+
+
+
+
+
+}
+```
+
+<aside class="notes"><p>We construct the sparse in-memory database from the storage proof inside the block data and
+then ensure that the storage root matches the storage root in the <code>parent_head</code>.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Cumulus Validation Blob
+
+```rust
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+	replace_host_functions();
+
+
+
+
+
+
+
+
+}
+```
+
+<aside class="notes"><p>We replace all the storage related host functions with functions inside the wasm blob.
+This means instead of calling into the host, we will stay inside the wasm execution.
+This is
+very important as the relay chain validator hasn&#39;t the state required to verify the block.
+But
+we have the in-memory database that contains all the values from the state of the parachain
+that we require to verify the block.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Cumulus Validation Blob
+
+```rust
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+	replace_host_functions();
+
+    // Run `execute_block` on top of the state
+    with_state(state, || {
+        execute_block(input.block).expect("Block is invalid")
+    })
+
+
+
+}
+```
+
+<aside class="notes"><ul>
+<li>On solo chains we also run the block import on some state</li>
+<li>This state belongs to the parent of the block that should be imported</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Cumulus Validation Blob
+
+```rust
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+	replace_host_functions();
+
+    // Run `execute_block` on top of the state
+    with_state(state, || {
+        execute_block(input.block).expect("Block is invalid")
+    })
+
+    // Create the output of the result
+    create_output()
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+### Cumulus Validation Blob
+
+```rust
+fn create_output(block: Block) -> ValidationResult {
+	let head_data = HeadData(block.header().encode());
+
+	let new_validation_code = crate::NewValidationCode::<PSC>::get();
+	let upward_messages = crate::UpwardMessages::<PSC>::get();
+	let processed_downward_messages = crate::ProcessedDownwardMessages::<PSC>::get();
+	let horizontal_messages = crate::HrmpOutboundMessages::<PSC>::get();
+	let hrmp_watermark = crate::HrmpWatermark::<PSC>::get();
+
+	ValidationResult {
+		head_data,
+		new_validation_code: new_validation_code.map(Into::into),
+		upward_messages,
+		processed_downward_messages,
+		horizontal_messages,
+		hrmp_watermark,
+	}
+}
+```
+
+<aside class="notes"><ul>
+<li><code>create_output</code> includes for example:<ul>
+<li>the number of processed messages</li>
+<li>The upward messages sent</li>
+<li>Is there a runtime upgrade to schedule?</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Parachain System Pallet
+
+```rust
+//! `cumulus-pallet-parachain-system` handles low-level details
+//! of being a parachain.
+/// It's responsibilities include:
+//!
+//! - ingestion of the parachain validation data
+//! - ingestion of incoming downward and horizontal
+//!   messages and dispatching them
+//! - coordinating upgrades with the relay-chain
+//! - communication of parachain outputs, such as
+//!   sent messages, signalling an upgrade, etc.
+```
+</script></section><section  data-markdown><script type="text/template">
+## Cumulus on the Node Side
+
+- [Relay chain interface](#relay-chain-interface)
+- [Finality](#finality)
+- [Triggering Block Authoring](#triggering-block-authoring)
+- [Ensuring Block Availability](#ensuring-block-availability)
+</script></section><section  data-markdown><script type="text/template">
+## Relay chain interface
+
+<img rounded src="../../../assets/img/5-Polkadot/cumulus/relay-chain-interface.png" style="width: 600px" />
+
+<aside class="notes"><p>The relay chain interface is responsible for following the relay chain and providing block and finality notification stream along with some runtime api calls into the relay chain state for message processing.
+It can be run as an in-process full-node or a separate RPC node.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Finality
+
+```rust
+loop {
+    let finalized = finalized_relay_chain_blocks_stream.next().await;
+
+    let parachain_block = match get_parachain_block_for_relay_chain_block(finalized) {
+        Some(b) => b,
+        None => continue,
+    };
+
+    set_finalized_parachain_block(parachain_block);
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Triggering Block Authoring
+
+```rust
+loop {
+    let imported = import_relay_chain_blocks_stream.next().await;
+
+    if relay_chain_awaits_parachain_candidate(imported) {
+        let pov = match parachain_trigger_block_authoring(imported) {
+            Some(p) => p,
+            None => continue,
+        };
+
+        relay_chain_distribute_pov(pov)
+    }
+}
+```
+
+<aside class="notes"><ul>
+<li><code>parachain_trigger_block_authoring</code> itself can decide if it wants to build a block.</li>
+<li>e.g. the parachain having a block time of 30 seconds</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ensuring Block Availability
+
+- On a solo chain a block gets part of the canonical chain by:
+  - Being distributed to other nodes in the network
+  - Being a valid block that can be imported by a majority of the validators
+- On a Parachain a block only needs to be accepted by the relay chain validators to be part of the canonical chain
+- The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
+- So, the relay chain could expect some parent block for the next block that no one is aware of
+
+<aside class="notes"><ul>
+<li>Collators can be malicious and just do not propagate their block in the network</li>
+<li>Collators could crash after sending the block to the relay chain, but before propagating it in the Parachain network.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ensuring Block Availability
+
+```rust
+loop {
+    let imported = import_relay_chain_blocks_stream.next().await;
+
+    let candidate = match get_backed_parachain_candidate_for_relay_block(imported) {
+        Some(c) => c,
+        None => continue,
+    };
+
+    spawn(|| {
+        wait(some_time).await;
+
+        if !is_block_known(candidate.hash) {
+            let pov = recover_candidate(candidate);
+
+            let header = import_pov(pov);
+            announce_block(header);
+        }
+    })
+}
+```
+
+<aside class="notes"><ul>
+<li>PoV recovery</li>
+<li>Relay chain stores the PoVs for 24 hours</li>
+<li>Every node relay chain/parachain can ask the relay chain validators for their piece to restore the PoV</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Runtime Upgrades
+
+- Every Substrate blockchain supports runtime upgrades
+- Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
+- Runtime upgrade is delay by a parameter configured by the relay chain
+- The first Parachain block that will be included after X relay chain blocks needs to apply the upgrade.
+- Cumulus will make sure that the runtime update is applied at the correct block
+
+<aside class="notes"><p>A Parachain will follow the same paradigm, but the relay chain needs to be informed before the update.
+Cumulus will provide functionality to notify the relay chain about the runtime update.
+The update will not be enacted directly; instead it takes X relay blocks (a value that is configured by the relay chain)
+before the relay chain allows the update to be applied.
+The first Parachain block that will be included after X relay chain blocks needs to apply the upgrade.
+If the update is applied before the waiting period is finished, the relay chain will reject the Parachain block for inclusion.
+The Cumulus runtime pallet will provide the functionality to register the runtime upgrade and will also make sure that the
+update is applied at the correct block.
+<a href="https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade">https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Transform Solo to Parachain
+
+To convert a Substrate runtime into a Parachain runtime, the following code needs to be added to the runtime:
+
+```rust
+cumulus_pallet_parachain_system::register_validate_block!(Block, Executive);
+```
+
+<aside class="notes"><p>When compiling a runtime that uses Cumulus, a Wasm binary is generated that contains the full code of the Parachain runtime plus the validate_block functionality.
+This binary is required to register a Parachain on the relay chain.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Transform Solo to Parachain
+
+Time for an exercise!
+
+- [Convert a solo chain How-to guide](https://docs.substrate.io/reference/how-to-guides/parachains/convert-a-solo-chain/)
+</script></section><section  data-markdown><script type="text/template">
+### Migrating a parachain
+
+In Cumulus, take a look at:
+
+- [./pallets/solo-to-para/src/lib.rs](https://github.com/paritytech/cumulus/blob/master/pallets/solo-to-para/src/lib.rs)
+- [./parachains/runtimes/starters/seedling/src/lib.rs](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/starters/seedling/src/lib.rs)
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section><section  data-markdown><script type="text/template">
+## References
+
+1. https://github.com/paritytech/cumulus/blob/master/docs/overview.md
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Transaction Queue and Block Builder</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Transaction Queue and Block Builder
+</script></section><section ><section data-markdown><script type="text/template">
+### Prelude: Definitions
+
+```rust
+pub struct Block<Header, Extrinsic: MaybeSerialize> {
+  /// The block header.
+  pub header: Header,
+  /// The accompanying extrinsics.
+  pub extrinsics: Vec<Extrinsic>,
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Prelude: Extrinsic
+
+<div class="text-left">
+
+<h3>extrinsic</h3>
+
+_/ɪkˈstrɪnsɪk,ɛkˈstrɪnsɪk/_
+
+<br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;_adjective_
+
+<br />
+
+> not part of the essential nature of someone or something; coming or operating from outside.
+> "a complex interplay of extrinsic and intrinsic factors"
+
+</div>
+</script></section><section data-markdown><script type="text/template">
+### Prelude: What an Extrinsic really is?
+
+> An Extrinsic is data that come from outside of the runtime.
+
+Yes, transactions are **a type of extrinsic**, but not all extrinsics are transactions.
+
+<hr />
+
+<div class="text-left">
+
+##### Extrinsic Types
+
+- **Signed** Extrinsics (--> what you typically call "_transaction_")
+- **Unsigned** Extrinsics
+- **Inherent** Extrinsics
+
+</div>
+</script></section><section data-markdown><script type="text/template">
+### Prelude: Signed Extrinsics
+
+- a.k.a. "transactions"
+- signed and submitted by external accounts
+- signature verified in the "standard way"
+</script></section><section data-markdown><script type="text/template">
+### Prelude: Unsigned Extrinsics
+
+- extrinsics which are NOT signed in the "standard way".
+- usually still requires a signature to be safe.
+- extra layers of programability is provided to developers.
+</script></section><section data-markdown><script type="text/template">
+## Prelude: Inherent Extrinsics
+
+- data that is provided by block authors
+- it may not be strictly deterministic
+- "soft" verification by others
+
+> All extrinsics must have some kind of check, else they are not sybil resistant.
+</script></section><section data-markdown><script type="text/template">
+## Prelude: Extrinsic Examples
+
+- Signed Extrinsic
+  - Balance Transfer
+  - Most everything...
+- Unsigned Extrinsic
+  - Claim DOT Presale Tokens
+  - I'm Online
+- Inherent Extrinsic
+  - Update the Timestamp
+</script></section></section><section ><section data-markdown><script type="text/template">
+### Context
+
+<image src="../../../assets/img/4-Substrate/4.4-pool-context.svg" style="width: 1000px">
+
+<aside class="notes"><ul>
+<li>Transaction are submitted to a transaction pool either externally (by other peers in the network) or locally (by RPC).</li>
+<li>A gossip protocol propagates transactions to other network participants.</li>
+<li>A block author builds the block which in turn updates the runtime&#39;s state transition function.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### TxPool Tasks.
+
+It (re)validates transactions, and bans them when needed.
+
+<!-- .element: class="fragment" -->
+
+Orders Transactions
+
+<!-- .element: class="fragment" -->
+
+It provides transaction submission and status updates via RPC.
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Being Generic
+
+Substrate's transaction pool is extremely generic in the sense that:
+
+- It makes very little assumptions about what a transaction is.
+
+- It allows for the behavior of the pool to be overwritten using rust's trait system (`graph::ChainApi`).
+
+Let's Continue by looking at each of the 3 mentioned tasks of a transaction pool.
+</script></section></section><section ><section data-markdown><script type="text/template">
+### 1. Transaction Validation
+
+> Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+
+> Transaction validation should be **static** aka. cheap to perform.
+
+<!-- .element: class="fragment" -->
+
+This is done, as you guessed it, through the runtime API.
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### 1. Transaction Validation
+
+The runtime API.
+
+```rust
+impl TaggedTransactionQueue<Block> for Runtime {
+  fn validate_transaction(
+    source: TransactionSource,
+    tx: <Block as BlockT>::Extrinsic,
+    block_hash: <Block as BlockT>::Hash,
+  ) -> TransactionValidity {
+    ..
+  }
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### 1. Transaction Validation: Source
+
+<div class="flex-container">
+
+<div class="left">
+
+<pre>
+impl TaggedTransactionQueue<Block> for Runtime {
+  fn validate_transaction(
+    <strong style="text-decoration:underline">source: TransactionSource,</strong>
+    tx: <Block as BlockT>::Extrinsic,
+    block_hash: <Block as BlockT>::Hash,
+  ) -> TransactionValidity {
+    ..
+  }
+}
+</pre>
+</div>
+
+<div class="right">
+Substrate's transaction pool implementation makes it possible to apply different validation schemes depending on the source of the transaction.
+
+Transactions can be received either by:
+
+- The network - gossiped by other peers.
+- RPC - submitted locally.
+</div>
+
+</div>
+</script></section><section data-markdown><script type="text/template">
+### 1. Transaction Validation
+
+The important bit of this is the return type.
+
+```rust [6]
+impl TaggedTransactionQueue<Block> for Runtime {
+  fn validate_transaction(
+    source: TransactionSource,
+    tx: <Block as BlockT>::Extrinsic,
+    block_hash: <Block as BlockT>::Hash,
+  ) -> TransactionValidity {
+    ..
+  }
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### 1. Transaction Validation
+
+```rust [1|4|6,7|9|11|14-40]
+pub type Tag = Vec<u8>
+pub type TransactionValidity = Result<ValidTransaction, TransactionValidityError>;
+
+pub struct ValidTransaction {
+  pub priority: u64,
+
+  pub requires: Vec<Tag>,
+  pub provides: Vec<Tag>,
+
+  pub longevity: u64,
+
+  pub propagate: bool,
+}
+
+pub enum TransactionValidityError {
+  Invalid(InvalidTransaction),
+  Unknown(UnknownTransaction),
+}
+
+pub enum InvalidTransaction {
+  Payment,
+  Future,
+  Stale,
+  BadSigner,
+  ...
+}
+
+pub enum UnknownTransaction {...}
+```
+</script></section><section data-markdown><script type="text/template">
+### 1. Transaction Validation
+
+> The Runtime tells the pool almost everything, either about the transaction being valid, or invalid.
+
+<aside class="notes"><p>important to emphasize: the transaction pool does not know what a valid transaction is because of
+the runtime/client boundary, because it does not know the runtime at all. It can only &quot;ask&quot; the
+runtime.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### 1. Transaction (re)Validation
+
+```rust [5]
+pub struct ValidTransaction {
+  pub priority: u64,
+  pub requires: Vec<_>,
+  pub provides: Vec<_>,
+  pub longevity: u64,
+  pub propagate: bool,
+}
+```
+
+- The longevity means how long the transaction validity (whatever it was) is valid for.
+
+- The pool re-checks with the pool based on this field.
+</script></section><section data-markdown><script type="text/template">
+### 1. Transaction Validation: Banning
+
+Once certain transaction is discovered to be invalid, it is banned for a fixed duration of time.
+
+Default in substrate is `Duration::from_secs(60 * 30)`.
+
+> Update: https://github.com/paritytech/substrate/pull/11786
+
+<aside class="notes"><p>TODO we probably also ban the peer who sent us that transaction? but have to learn.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+### 2. Transaction Ordering
+
+```rust [3,4]
+pub struct ValidTransaction {
+	pub priority: u64,
+	pub requires: Vec<_>,
+	pub provides: Vec<_>,
+	pub longevity: u64,
+	pub propagate: bool,
+}
+```
+
+The pool clusters **validated** transactions into two groups:
+
+1. **Ready**: All of the `requires` tags of that transaction have already been seen _by other `Ready` transactions_.
+2. **Future**: Some of the `requires` tags of that transaction have not yet been seen.
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering: Quiz Time.
+
+```rust
+pool.import(Transaction {
+  data: vec![1u8],
+  requires: vec![],
+  provides: vec![],
+  ..Default::default()
+});
+```
+
+```rust
+pool.ready().count() // 1
+pool.future().count() // 0
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering: Quiz Time.
+
+```rust
+pool.import(Transaction {
+  data: vec![1u8],
+  requires: vec![1],
+  provides: vec![2],
+  ..Default::default()
+});
+```
+
+```rust
+pool.ready().count() // 1
+pool.future().count() // 1
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering: Quiz Time.
+
+```rust
+pool.import(Transaction {
+  data: Default::default(),
+  requires: vec![2],
+  provides: vec![3],
+  ..Default::default()
+});
+```
+
+```rust
+pool.ready().count() // 1
+pool.future().count() // 2
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering: Quiz Time.
+
+```rust
+pool.import(Transaction {
+  data: Default::default(),
+  requires: vec![],
+  provides: vec![1],
+  ..Default::default()
+});
+```
+
+```rust
+pool.ready().count() // 4
+pool.future().count() // 0
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering
+
+> Common example: Wallet knows the current account nonce, and wants to submit a transaction for Alice.
+
+```rust
+requires: vec![(alice, current_nonce).encode()],
+provides: vec![(alice, current_nonce + 1).encode()],
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering
+
+Once block authoring is happening, we only look at the **Ready** (sub)pool.
+
+<image src="../../../assets/img/4-Substrate/4.4-pool-context.svg" style="width: 1000px">
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering
+
+From that pool, we take the transaction with the **highest priority** (and repeat).
+
+Or, if you want to be specific, the pool orders based on:
+
+1. priority.
+2. ttl: shortest longevity goes first.
+3. time in the queue: longest to have waited goes first.
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### 2. Transaction Ordering
+
+> Someone asked the other day why the pool is not FIFO. Well, if you write a runtime that sets all
+> priority to 0.. what happens?
+</script></section></section><section ><section data-markdown><script type="text/template">
+### 3. Submission And Reporting
+
+The transaction queue exposes a `submit_and_watch` api.
+
+This is how applications submit transactions, and watch the outcome.
+</script></section><section data-markdown><script type="text/template">
+### 3. Submission And Reporting
+
+```rust
+pub enum TransactionStatus<Hash, BlockHash> {
+	/// Transaction is part of the future queue.
+	Future,
+	/// Transaction is part of the ready queue.
+	Ready,
+	/// The transaction has been broadcast to the given peers.
+	Broadcast(Vec<String>),
+	/// Transaction has been included in block with given hash.
+	InBlock(BlockHash),
+	/// The block this transaction was included in has been retracted.
+	Retracted(BlockHash),
+	/// Maximum number of finality watchers has been reached,
+	/// old watchers are being removed.
+	FinalityTimeout(BlockHash),
+	/// Transaction has been finalized by a finality-gadget, e.g GRANDPA
+	Finalized(BlockHash),
+	/// Transaction has been replaced in the pool, by another transaction
+	/// that provides the same tags. (e.g. same (sender, nonce)).
+	Usurped(Hash),
+	/// Transaction has been dropped from the pool because of the limit.
+	Dropped,
+	/// Transaction is no longer valid in the current state.
+	Invalid,
+}
+```
+</script></section></section><section  data-markdown><script type="text/template">
+### Bonus: A Page In History
+
+> https://github.com/paritytech/substrate/issues/728
+
+> Work towards a flexible transaction queue that relies **only on runtime logic to provide comprehensive dependency and queuing management**... should not be aware of the concepts of accounts, signatures, indexes or nonces.
+
+> Returns `Valid` if the transaction can be **statically** validated; ... the u64 is the priority used to determine which of a mutually exclusive set of transactions are better to include... Any transactions that do get included in a block should be instantly discarded (and banned) if they result in a panic execution.
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

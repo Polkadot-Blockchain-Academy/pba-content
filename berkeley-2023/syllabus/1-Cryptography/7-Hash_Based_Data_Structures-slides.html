@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Hash Based Data Structures</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Hash Based Data Structures
+</script></section><section  data-markdown><script type="text/template">
+## Comparison to<br/>Pointer Based Data Structures
+
+- A hash references the _content_ of some data;
+- A pointer tells you where to find it;
+- We can not have cycles of hashes.
+</script></section><section  data-markdown><script type="text/template">
+## Hash Chains
+
+<img style="width: 800px" src="./img/Hash-Chains.png" />
+
+A hash chain is a linked list using hashes to connect nodes.
+
+<aside class="notes"><p>Each block has the hash of the previous one.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Merkle Trees
+
+<img style="width: 800px" src="./img/Merkle-tree-all-purple.png" />
+
+A binary Merkle tree is a binary tree using hashes to connect nodes.
+
+<aside class="notes"><p>Ralph Merkle is a Berkeley alum!</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Proofs
+
+- The root or head hash is a commitment to the entire data structure.
+- Generate a proof by expanding some but not all hashes.
+
+_Crucial for the trustless nature of decentralised cryptographic data systems!_
+</script></section><section  data-markdown><script type="text/template">
+## Proofs: Merkle Copaths
+
+<img style="width: 800px" src="./img/Merkle-Copaths.png" />
+
+<aside class="notes"><p>Given the children of a node, we can compute a node
+Given the purple nodes and the white leaf, we can compute the white nodes bottom to top.
+If we compute the correct root, this proves that the leaf was in the tree</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Security
+
+Collision resistance: we reasonably assume only one preimage for each hash,<br/>therefore making the data structure's linkage persistent and enduring (until the cryptography becomes compromised 😥).
+
+<aside class="notes"><p>Explain what could happen when this fails.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Proof Sizes
+
+Proof of a leaf has size $O(\log n)$<br/>and so do proofs of updates of a leaf
+</script></section><section  data-markdown><script type="text/template">
+## Key-Value Databases and Tries
+</script></section><section  data-markdown><script type="text/template">
+## Key-value database
+
+The data structure stores a map `key -> value`.<br/>
+We should be able to:
+
+<pba-flex center>
+
+- `put(key, value)`
+- `get(key)`
+- `delete(key)`
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Provability in key-value databases
+
+We should also be able to perform the following operations for a provable key-value database:
+
+1. For any key, if `<key,value>` is in the database, we can prove it.
+1. If no value is associated to a key, we need to be able to prove that as well.
+</script></section><section  data-markdown><script type="text/template">
+## Types of Data Structures
+
+- _**Trees**_ are rooted, directed acyclic graphs where each child has only one parent.
+- _**Merkle Trees**_ are _trees_ which use hashes as links.
+- _**Tries**_ are a particular class of _trees_ where:
+  - Given a particular piece of data, it will always be on a particular path.
+- _**Radix Tries**_ are a particular class of a trie where:
+  - The location of a value is determined the path constructed one digit at a time.
+- _**Patricia Tries**_ are _radix tries_ which are optimized to ensure lonely node-paths are consolidated into a single node.
+
+<aside class="notes"><p>Just a selection we&#39;ll cover in this course.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Radix Trie
+
+_Words:_ to, tea, ted, ten, inn, A.
+
+<img style="width: 800px" src="./img/Trie.png" />
+
+Each node splits on the next digit in base $r$
+
+<aside class="notes"><p>In this image, $r$ is 52 (26 lowercase + 26 uppercase).</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Patricia Trie
+
+_Words:_ to, tea, ted, ten, inn, A.
+
+<img style="width: 700px" src="./img/Patricia-Trie.png" />
+
+If only one option for a sequence we merge them.
+
+<!-- TODO maybe some code stuff with extension nodes etc. -->
+</script></section><section  data-markdown><script type="text/template">
+## Patricia Trie Structures
+
+```rust
+pub enum Node {
+  Leaf {
+    partial_path: Slice<RADIX>,
+    value: Value
+  },
+  Branch {
+    partial_path: Slice<RADIX>,
+    children: [Option<Hash>; RADIX],
+    value: Option<Value>,
+  },
+}
+```
+
+<aside class="notes"><p>The current implementation actually makes use of dedicated &quot;extension&quot; nodes instead of branch nodes that hold a partial path. There&#39;s a good explanation of them <a href="https://ethereum.stackexchange.com/questions/39915/ethereum-merkle-patricia-trie-extension-node">here</a>.</p>
+<p>Additionally, if the size of a value is particularly large, it is replaced with the hash of its value.</p>
+<!-- TODO: Add a nice illustration similar to Shawn's dev-trie-backend-walk here. --></aside></script></section><section  data-markdown><script type="text/template">
+## Hash Trie
+
+- Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.
+- Solution: pre-hash the data before inserting it to make keys random.
+- _Resistance against partial collision is important._
+- Could be a Merkle trie or regular.
+</script></section><section  data-markdown><script type="text/template">
+## Computational and Storage <br/>Trade-offs
+
+What radix $r$ is best?
+
+- Proof size of a leaf is $r \log_r n$
+  - $r=2$ gives the smallest proof for one leaf
+
+...but:
+
+- Higher branching at high levels of the tree can give smaller batch proofs.
+- For storage, it is best to read consecutive data so high $r$ is better.
+</script></section><section  data-markdown><script type="text/template">
+## Merkle Mountain Ranges
+
+- Efficient proofs and updates for a hash chain
+- Append only data structure
+- Lookup elements by number
+</script></section><section  data-markdown><script type="text/template">
+## Merkle Mountain Ranges
+
+<img style="width: 800px" src="./img/U-MMR-13.png" />
+
+<aside class="notes"><p>we have several Merkle trees of sizes that are powers of two.
+The trees that are here correspond to the binary digits of 13 that are 1.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Merkle Mountain Ranges
+
+<img style="width: 800px" src="./img/U-MMR-14.png" />
+</script></section><section  data-markdown><script type="text/template">
+## Merkle Mountain Ranges
+
+<img style="width: 800px" src="./img/MMR-13.png" />
+
+<aside class="notes"><ul>
+<li>Not as balanced as a binary tree but close</li>
+<li>Can update the peak nodes alone on-chain</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

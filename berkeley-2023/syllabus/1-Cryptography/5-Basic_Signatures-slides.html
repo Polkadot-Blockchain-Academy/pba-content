@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Digital Signature Basics</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Digital Signatures Basics
+</script></section><section  data-markdown><script type="text/template">
+## Signature API
+
+Signature libraries should generally all expose some basic functions:
+
+- `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
+- `fn public_key(sk) -> pk;` <br/> Return the `pk` (public key) from a `sk`.
+- `fn sign(sk, msg) -> signature;` <br/> Takes `sk` and a message; returns a digital signature.
+- `fn verify(pk, msg, signature) -> bool;` <br/> For the inputs `pk`, a message, and a signature; returns whether the signature is valid.
+
+<aside class="notes"><p>The input <code>r</code> could be anything, for example the movement pattern of a mouse.</p>
+<p>For some cryptographies (ECDSA), the verify might not take in the public key as an input. It takes in the message and signature, and returns the public key if it is valid.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Subkey Demo
+
+## Key Generation and Signing
+
+<aside class="notes"><p>See the Jupyter notebook and/or HackMD cheat sheet for this lesson.</p>
+<ol>
+<li>Generate a secret key</li>
+<li>Sign a message</li>
+<li>Verify the signature</li>
+<li>Attempt to alter the message</li>
+</ol>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Hash Functions
+
+There are two lessons dedicated to hash functions.<br/>But they are used as part of all signing processes.
+
+For now, we only concern ourselves with using Blake2.
+</script></section><section  data-markdown><script type="text/template">
+## Hashed Messages
+
+As mentioned in the introduction,<br/>it's often more practical to sign the hash of a message.
+
+Therefore, the sign/verify API may be _used_ like:
+
+<pba-flex center>
+
+- `fn sign(sk, H(msg)) -> signature;`
+- `fn verify(pk, H(msg), signature) -> bool;`
+
+</pba-flex>
+
+Where `H` is a hash function (for our purposes, Blake2).<br/>
+This means the verifier will need to run the correct hash function on the message.
+</script></section><section  data-markdown><script type="text/template">
+## Cryptographic Guarantees
+
+Signatures provide many useful properties:
+
+- Confidentiality: Weak, the same as a hash
+- Authenticity: Yes
+- Integrity: Yes
+- Non-repudiation: Yes
+
+<aside class="notes"><p>If a hash is signed, you can prove a signature is valid <em>without</em> telling anyone the actual message that was signed, just the hash.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Signing Payloads
+
+Signing payloads are an important part of system design.<br/>
+Users should have credible expectations about how their messages are used.
+
+For example, when a user authorizes a transfer,<br/>they almost always mean just one time.
+
+<aside class="notes"><p>There need to be explicit rules about how a message is interpreted. If the same signature can be used in multiple contexts, there is the possibility that it will be maliciously resubmitted.</p>
+<p>In an application, this typically looks like namespacing in the signature payload.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Signing and Verifying
+
+<img style="height: 600px" src="./img/sig-verify-flow.svg" />
+
+<aside class="notes"><p>Note that signing and encryption are <em>not</em> inverses.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Replay Attacks
+
+Replay attacks occur when someone intercepts and resends a valid message.<br/>
+The receiver will carry out the instructions since the message contains a valid signature.
+
+<pba-flex center>
+
+- Since we assume that channels are insecure, all messages should be considered intercepted.
+- The "receiver", for blockchain purposes, is actually an automated system.
+
+</pba-flex>
+
+<aside class="notes"><p>Lack of <em>context</em> is the problem.
+Solve by embedding the context and intent _within the message being signed.
+Tell the story of Ethereum Classic replays.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Replay Attack Prevention
+
+Signing payloads should be designed so that they can<br/>only be used _one time_ and in _one context_.<br/>
+Examples:
+
+<pba-flex center>
+
+- Monotonically increasing account nonces
+- Timestamps (or previous blocks)
+- Context identifiers like genesis hash and spec versions
+</script></section><section  data-markdown><script type="text/template">
+# Signature Schemes
+</script></section><section  data-markdown><script type="text/template">
+## ECDSA
+
+- Uses Secp256k1 elliptic curve.
+- ECDSA (used initially in Bitcoin/Ethereum) was developed to work around the patent on Schnorr signatures.
+- ECDSA complicates more advanced cryptographic techniques, like threshold signatures.
+- Nondeterministic
+</script></section><section  data-markdown><script type="text/template">
+## Ed25519
+
+- Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.
+- Signing is 20-30x faster than ECDSA signatures.
+- Deterministic
+</script></section><section  data-markdown><script type="text/template">
+## Sr25519
+
+Sr25519 addresses several small risk factors that emerged<br/>from Ed25519 usage by blockchains.
+</script></section><section  data-markdown><script type="text/template">
+## Use in Substrate
+
+- Sr25519 is the default key type in most Substrate-based applications.
+- Its public key is 32 bytes and generally used to identify key holders (likewise for ed25519).
+- Secp256k1 public keys are _33_ bytes, so their _hash_ is used to represent their holders.
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

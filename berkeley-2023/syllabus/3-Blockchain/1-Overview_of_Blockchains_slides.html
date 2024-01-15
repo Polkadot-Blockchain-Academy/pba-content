@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Blockchain Overview</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Overview of Blockchains
+</script></section><section  data-markdown><script type="text/template">
+## Upholding Expectations
+
+What is the core problem we want to solve?
+
+Trustless provisioning of infrastructure.
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Something kind of like a server, that doesn&#39;t rely on a server operator, and has strong guarantees like Cryptography has to offer.</p>
+<p>One framing: Coming to a shared understanding of a common history, and therefore a common state, of a system.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Comparison with Cryptography
+
+Cryptography provides strong guarantees about _messages_ without a trusted party, regardless of the conduit over which a message was transported.
+
+<aside class="notes"><p>Crypto guarantees:</p>
+<ul>
+<li>No tampering</li>
+<li>No eavesdropping</li>
+<li>Authorship</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Application Disentanglement
+
+Removing trust allows us to unpackage applications.
+
+<img style="width: 800px; padding-right: 2em" src="./img/application-disentanglement.png" />
+
+<aside class="notes"><p>The idea here is to discuss how applications are often seen as an entire bundle: e.g.
+Instagram is the database, the algorithms, the UX.
+But when we have credible expectations that we&#39;re interacting with the same system, rules, data, it&#39;s possible to build lots of ways to access and interact with the system.
+It also removes the need for a central authority to deal with all appeals/complaints from various users.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+# Desired Properties
+</script></section><section data-markdown><script type="text/template">
+## Permissionless access
+
+Anyone should be able to access and interact with the system.
+</script></section><section data-markdown><script type="text/template">
+## Privacy
+
+Users should have credible expectations about what information they give up about themselves.
+</script></section><section data-markdown><script type="text/template">
+## Authenticity
+
+Users should have credible expectations about the messages they see, regardless of the platform the messages are on.
+</script></section><section data-markdown><script type="text/template">
+## Finality
+
+Users should be able to form credible expectations about when a state transition is final.
+</script></section><section data-markdown><script type="text/template">
+## Behavior
+
+The system should behave as expected, even if system operators do not.
+</script></section><section data-markdown><script type="text/template">
+## _Unstoppability_
+
+No individual actor, company, state, or coalition should be able to degrade any of these properties.
+</script></section></section><section ><section data-markdown><script type="text/template">
+## A Shared History
+
+<img style="height: 500px;" src="./img/sapiens.jpg" />
+
+<aside class="notes"><p>So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2 users have no visibility into the history of the app. They must trust the provider to accurately represent the current state. By giving the service provider the power to change the story, we give them the power to shape our understanding of reality and consequently our behavior.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## A Shared History
+
+> Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
+
+> Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
+
+<!-- .element: class="fragment" -->
+
+_-- Yuval Noah Harari, Sapiens --_
+</script></section><section data-markdown><script type="text/template">
+## Shared Story of a State Machine
+
+<pba-cols>
+<pba-col>
+<pba-flex center>
+
+If we agree on:
+
+- The starting state<br/>(aka genesis state)
+- The history of transitions
+
+</pba-col>
+<pba-col>
+</pba-flex>
+
+Then we _MUST_ agree on:
+
+<pba-flex center>
+
+- The current state
+
+</pba-flex>
+
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p>Now that we have a formal math-y model of systems that we care about, we can see that the notion of shared stories being powerful is more than slick language of philosophical mumbo jumbo. Even the term genesis state (or genesis block) is taken straight from mythology. We aren&#39;t newly discovering or inventing the idea that having a shared understanding of our past is important. It dates back to pre-history. We are just formalizing it and applying it to digital services.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## Blockchains (Finally)
+
+A blockchain can be thought of in three parts
+
+<pba-cols>
+<pba-col>
+<pba-flex center>
+
+**State Machine**
+
+What does the state hold?
+
+What are the _rules_ to change it?
+
+</pba-flex>
+</pba-col>
+<pba-col>
+<pba-flex center>
+
+**Shared History** (data structure)
+
+Which potential histories exist?
+
+</pba-flex>
+</pba-col>
+<pba-col>
+
+<pba-flex center>
+
+**Consensus**
+
+Which history is the real one?
+
+What part of history is final?
+
+</pba-flex>
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p>First, each blockchain tracks some state machine. We&#39;ve discussed several examples of what that might be already, we&#39;ll code some simple examples shortly, and we&#39;ll spend all of module 5 digging into how to create a blockchain-friendly production-ready state machine.</p>
+<p>Next is the Blockchain Data structure. This data structure is basically a linked list of state transitions. But unlike the linked lists you studied in your data structures course, it isn&#39;t just linked by memory addresses or any other malleable thing. Instead it is cryptographically linked so that if anyone presents a different history, you can tell right away that you don&#39;t agree on a shared history. We&#39;ll dive into this data structure in the next lesson.</p>
+<p>Finally, is a consensus mechanism. Defining a state machine alone does not uniquely define a history. There are many possible valid histories. Just like the many worlds interpretation of quantum mechanics. To really agree on the current state, we need to agree on which of the possible histories is the real one.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Short History of Blockchains
+</script></section><section data-markdown><script type="text/template">
+## Bitcoin
+
+<img rounded style="width: 500px;" src="./img/bitcoin-transaction.png" />
+
+Uses an unspent transaction output (UTXO) model & Proof of Work (PoW) consensus. <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Who knows where the figure is from?</p>
+<p>CLICK</p>
+<p>Bitcoin was first.
+It was a money app.
+The first app chain.
+It hosts a smart contract in the broad definition.</p>
+<p>It was the first time most people considered a digital service that was not run by a particular person.</p>
+<p>Figure source: <a href="https://bitcoin.org/en/bitcoin-paper">Bitcoin white paper</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Litecoin, Monero, Dogecoin
+
+<img src="./img/altcoins.png" />
+
+<aside class="notes"><p>Only a few year later people realized they could fork the code and make small changed and improvements.
+Some changes were trivial.
+Some were interesting: monero and privacy.</p>
+<p>For me personally, this was a small crisis.
+I thought bitcoin was the one global one.
+Aren&#39;t these other coins undermining the narrative?
+NO! The point is that anytime you don&#39;t like the system or have an idea for a better one, you can do it!
+If you don&#39;t like bitcoin, build your own coin and make it better.
+Let the market decide.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Ethereum
+
+- Generalization of Bitcoin: provides a quasi-Turing-complete VM
+- Uses an account-based system
+- Accounts can store balances, but can also store executable code (smart contracts)
+- Each contract can have its own internal state and API
+</script></section><section data-markdown><script type="text/template">
+## Smart contracts - Two Definitions
+
+<br />
+<br />
+
+#### Broad Definition <small style="margin-top:20px;">_"Szabo definition"_</small>
+
+<blockquote>A machine program with rules that we could have defined in a contract, but instead a machine performs or verifies performance.</blockquote>
+
+#### Narrow Definition <small style="margin-top:20px;">_"Web3 definition"_</small>
+
+<blockquote>A program that specifies how users can interact with a state machine and is deployed permissionlessly to a blockchain network</blockquote>
+</script></section></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

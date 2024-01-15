@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Workshop Slide Template</title>
+    <link rel="shortcut icon" href="./../../favicon.ico" />
+    <link rel="stylesheet" href="./../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+<!---
+**********
+**********
+A Workshop is an instructor-lead experience that individual students follow-along with them on.
+**********
+**********
+--->
+
+# Workshop Slide Template
+
+### _Module X, Lesson Y_
+</script></section><section  data-markdown><script type="text/template">
+## In this Workshop, we will practice:
+
+<!--- Insert Skills that are being practiced. Simple syntax is fine, e.g., "Using pallets." "Building a hash function"--->
+
+- Skill 1
+- Skill 2
+- Skill 3
+</script></section><section  data-markdown><script type="text/template">
+## Starter Code:
+
+<!---
+If there is any starter code that is needed for this exercise, please insert a link to it here:
+- Source from a dedicated repo
+- Source included in `assets/code/...` directory of this repo
+- A Jupyter notebook, see templates in `content-templates/jupyter-notebooks`
+--->
+</script></section><section  data-markdown><script type="text/template">
+## Template
+
+<!---
+If there is any kind of template that learners are filling in to complete this workshop, link to it here.
+
+If you want to use Rust code outside of the Substrate context, you may want to use a EvCxR template.
+
+If you want to use Substrate or other proprietary tools,
+--->
+</script></section><section  data-markdown><script type="text/template">
+## Instructions:
+
+<!---
+Write numeric instructions in the order that the instructor will complete them.
+Put 1-2 steps on each slide.
+
+Use language that is as direct and straightforward as possible for each instruction.
+Consider starting each instruction with a verb (e.g., "Open the XXX file", "Call the XXX API").
+
+If any particular instruction is complicated, use multiple sentences or insert an image.
+
+For the last instruction, clarify what 'success' looks like at the end of the workshop.
+--->
+
+1.
+2.
+</script></section><section  data-markdown><script type="text/template">
+3.
+4.
+
+--
+</script></section><section  data-markdown><script type="text/template">
+### Hints:
+
+<!--- Add hints for any instructions or steps that are particularly complicated. Hints should not entirely provide the answer, but should provide a reference point for users to find the answer. --->
+
+<!-- Solutions should be provided **in a seporate branch** within this repository. -->
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../dist/reveal.js"></script>
+    <script src="./../../plugin/markdown/markdown.js"></script>
+    <script src="./../../plugin/highlight/highlight.js"></script>
+    <script src="./../../plugin/zoom/zoom.js"></script>
+    <script src="./../../plugin/notes/notes.js"></script>
+    <script src="./../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

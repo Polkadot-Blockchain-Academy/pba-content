@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Parachains Architecture</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Parachains Architecture
+</script></section><section  data-markdown><script type="text/template">
+## Lecture Goals
+
+<widget-text center>
+
+- General blockchain challenges <!-- .element: class="fragment" -->
+- Parachain consensus <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain Challenges
+
+<widget-columns>
+<widget-column>
+
+<image src="../../../assets/img/5-Polkadot/5.4-1.svg" style="width: 600px">
+
+</widget-column>
+<widget-column>
+
+<ul>
+  <li class="fragment"> Performance </li>
+  <li class="fragment"> Scalability </li>
+</ul>
+
+</widget-column>
+</widget-columns>
+</script></section><section  data-markdown><script type="text/template">
+## Resolving Conflicts
+
+<widget-columns>
+<widget-column>
+
+<image src="../../../assets/img/5-Polkadot/5.4-1.svg" style="width: 600px">
+
+</widget-column>
+<widget-column>
+
+<ul>
+  <li class="fragment"> Security </li>
+  <li class="fragment"> Liveness </li>
+  <li class="fragment"> Decentralization </li>
+</ul>
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><p>Scalability: In every aspect: Throughput, but also storage.
+Relay chain validators are &quot;light clients&quot; to parachains.
+Parachains act as heterogenous shards, both in terms of execution and data availability.
+In contrast to Ethereum 2, which will just offer sharded data availability.</p>
+<p>Performance via Specialization: Parachains operate independently via &quot;collator&quot; nodes, can do whatever they want, as long as the provide a PoV to relay chain validators.
+Relay chain validators don&#39;t have to bother about handling transaction pools and such.</p>
+<p>Parachains help with all of these, but let&#39;s focus on scalability first.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## How to achieve scalability?
+
+- Split the work <!-- .element: class="fragment" -->
+- But maintain (economic) security! <!-- .element: class="fragment" -->
+- Liveness? <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Security: Defer solution to upcoming slides. (Also mention shared security.)
+Liveness: Suggest rotation.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Split the Work
+
+<image src="../../../assets/img/5-Polkadot/5.4-2.svg" style="width: 900px">
+
+<aside class="notes"><p>Introduce split up work between validators.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Rotate Groups
+
+<image src="../../../assets/img/5-Polkadot/5.4-3.svg" style="width: 775px">
+
+<aside class="notes"><p>Problem: Imagine each group is its own shard/blockchain - that would mean each node, as we rotate, would need to keep state for all those shards/parachains → Does not scale too well.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Introducing Collators
+
+<image src="../../../assets/img/5-Polkadot/5.4-4.svg" style="width: 1000px">
+
+<aside class="notes"><p>From the perspective of the relay chain collators are completely untrusted and even unknown, but can keep storage and take care of some of the heavy lifting, like gossiping transactions, maintaining transaction pools, ...</p>
+<p>Idea: Visualize how performance and scalability is achieved.
+For example that collators are responsible to keep state for the parachains, take care of lots of the nitty-gritty details of block production.
+Validators don&#39;t have to worry about individual transactions, collecting &amp; prioritizing them, keeping them in pools.</p>
+<p>In ETH 2 version 1 nomenclature: Collators/Parachain provide shards for data availability, but also version 2 execution shards.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Recap PoV
+
+<widget-text center>
+
+- Collators - external/untrusted <!-- .element: class="fragment" -->
+- PoV ... Proof of Validity <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+### PoV (usually)
+
+<widget-text center>
+
+- Parachain Block Data <!-- .element: class="fragment" -->
+- Patricia Merkle Trie <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## All good?
+
+<widget-text center>
+
+- Bad group - security? <!-- .element: class="fragment" -->
+- Large groups - scalability? <!-- .element: class="fragment" -->
+- Performance <!-- .element: class="fragment" -->
+- Liveness <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Large group: Make it statistically unlikely enough to have a majority malicious group.
+Works, but:</p>
+<p>→ Performance: relying on statistics: groups have to be relatively large ~40 validators.
+→ Liveness: If nodes don&#39;t vote we have to assume the worst → escalate.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Catch Bad Guys
+</script></section><section  data-markdown><script type="text/template">
+## Wait .. Bad Guys?
+
+What can malicious nodes actually do?
+
+<widget-text center>
+
+- No (faithful) PVF execution <!-- .element: class="fragment" -->
+- Manipulate messages <!-- .element: class="fragment" -->
+- Fool Light Clients <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Quick recap: What harm can a malicious validator actually do? What do we need to worry about?</p>
+<p>Not (properly) executing the block, providing results that don&#39;t adhere to the rules of the PVF.
+Such a block would likely be not accepted by other parachain nodes, but light clients might get fooled and more importantly other parachains can get fooled with manipulated messages.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Catch Bad Guys
+
+<widget-text center>
+
+- and punish them <!-- when caught --> <!-- .element: class="fragment" -->
+- gamblers ruin <!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li>Eventually the system can be broken, but if attempts result in loss of significant funds any realistic attacker will go bankrupt way before.</li>
+<li>Purpose of backing checkers: Get skin in the game - collators are external.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## How do we do that?
+
+<widget-text center>
+
+- 2 (3) phase process <!-- .element: class="fragment" -->
+- Validators get skin in the game (backing) <!-- .element: class="fragment" -->
+- Check the checkers (approvals) <!-- .element: class="fragment" -->
+- Punish (disputes) <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>How: Validators need to be known in advance so collator nodes can connect.
+We need to be able to check the checkers.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Two Phase Process
+
+<widget-text center>
+
+- Backing <!-- .element: class="fragment" -->
+- Approval <!-- .element: class="fragment" -->
+
+Does this work already? <!-- .element: class="fragment" -->
+
+No <!-- .element: class="fragment" -->
+
+What is the problem? <!-- .element: class="fragment" -->
+
+<aside class="notes"><ol>
+<li>Approval checkers must not be guessable in advance - solvable via VRF.</li>
+<li>Data must be guaranteed available, so backers cannot get away with not providing necessary data to approval checkers.</li>
+</ol>
+<p>→ Not sufficient.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Three Phase Process
+
+<widget-text center>
+
+- Backing <!-- .element: class="fragment" -->
+- Inclusion/Availability <!-- .element: class="fragment" -->
+- Approval <!-- .element: class="fragment" -->
+
+Does this work already? <!-- .element: class="fragment" -->
+
+Yes! <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## But how?
+
+<widget-text center>
+
+- Backing group is untrusted <!-- .element: class="fragment" -->
+- Collators are untrusted <!-- .element: class="fragment" -->
+- Availability proof on chain? <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>How do we actually achieve availability?</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Solution Attempt #1
+
+<widget-columns>
+<widget-column>
+
+<image src="../../../assets/img/5-Polkadot/5.4-6.svg" style="width: 600px">
+
+</widget-column>
+<widget-column>
+
+<ul>
+  <li class="fragment"> Send PoV to all validators </li>
+</ul>
+
+</widget-column>
+</widget-columns>
+</script></section><section  data-markdown><script type="text/template">
+## Solution Attempt #1
+
+<widget-columns>
+<widget-column>
+
+<image src="../../../assets/img/5-Polkadot/5.4-7.svg" style="width: 600px">
+
+</widget-column>
+<widget-column>
+
+<ul>
+
+  <li> Send PoV to all validators </li>
+  <li> Sign Statements </li>
+
+</ul>
+
+Works, but very costly: Performance! <!-- .element: class="fragment" -->
+
+</widget-column>
+</widget-columns>
+</script></section><section  data-markdown><script type="text/template">
+## Solution Attempt #2
+
+<widget-columns>
+<widget-column>
+
+<image src="../../../assets/img/5-Polkadot/5.4-8.svg" style="width: 600px">
+
+</widget-column>
+<widget-column>
+
+<ul>
+
+<span class="fragment"> Problems: </span>
+<span class="fragment"> Still inefficient! 40x overhead. </span>
+
+</ul>
+
+</widget-column>
+</widget-columns>
+</script></section><section  data-markdown><script type="text/template">
+## Solution Attempt #2
+
+<widget-columns>
+<widget-column>
+
+<image src="../../../assets/img/5-Polkadot/5.4-9.svg" style="width: 600px">
+
+</widget-column>
+<widget-column>
+
+<ul>
+
+and <span> relatively easy to DoS </span>
+
+</ul>
+
+</widget-column>
+</widget-columns>
+</script></section><section  data-markdown><script type="text/template">
+## Solution Attempt #3
+
+<widget-columns>
+<widget-column>
+
+<image src="../../../assets/img/5-Polkadot/5.4-10.svg" style="width: 600px">
+
+</widget-column>
+<widget-column>
+
+<ul>
+  <li class="fragment"> Erasure coding </li>
+  <li class="fragment"> Distribute to all </li>
+  <li class="fragment"> Overhead only 3x </li>
+  <li class="fragment"> Hard to DoS </li>
+</ul>
+
+</widget-column>
+</widget-columns>
+</script></section><section  data-markdown><script type="text/template">
+## Recap
+
+<widget-text center>
+
+- Known backing group - get skin in the game <!-- .element: class="fragment" -->
+- Make available <!-- .element: class="fragment" -->
+- Reveal approval checkers <!-- .element: class="fragment" -->
+- Catch bad guys <!-- .element: class="fragment" -->
+- Punish them <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Disputes
+
+<widget-text center>
+
+- Raised during approval checking <!-- .element: class="fragment" -->
+- Escalation to all nodes: Performance!? <!-- .element: class="fragment" -->
+- Slash Offenders - have them pay the bill! <!-- .element: class="fragment" -->
+- Disputes are not expected to happen ... <!-- .element: class="fragment" -->
+- ... because they exist! <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Summary
+
+<widget-text center>
+
+- Secure heterogeneous sharding <!-- .element: class="fragment" -->
+- Shared Security <!-- .element: class="fragment" -->
+- Performance via Specialization <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Relay chain validators act as light clients for all parachains and are responsible for making sure all state transactions are sound.
+Therefore shards (parachains) don&#39;t have to run light clients for all other shards (parachains), but instead only for the relay chain.</p>
+</aside></script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Introduction to FRAME</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+## Lesson Plan
+
+<table>
+<tr>
+  <td>Monday</td>
+  <td>Tuesday</td>
+  <td>Wednesday</td>
+  <td>Thursday</td>
+  <td>Friday</td>
+  <td>Weekend</td>
+</tr>
+<tr class="text-small">
+<td>
+
+- Introduction To FRAME
+- Exercise: Proof of Existence Runtime
+- Pallet Coupling
+- FRAME Tips and Tricks
+- FRAME Common Knowledge (Pallets & Traits)
+- FRAME Assignment (whole week!)
+
+</td>
+<td>
+
+- Storage
+- Events & Errors
+- Calls
+- Hooks
+
+</td>
+<td>
+
+- Construct Runtime + Tests
+- Origins
+- Outer Enum
+
+</td>
+<td>
+
+- FRAME Benchmarking
+- Exercise: Benchmarking Example
+
+</td>
+<td>
+
+- FRAME Under the Hood
+  - Deep Dive
+  - Executive
+- Migration & Try Runtime
+- Signed Extensions
+
+</td>
+<td>
+
+- Live Coding + Q/A Sessions (12pm-ish)
+- Complete FRAME Assignment
+
+</td>
+</tr>
+</table>
+</script></section><section  data-markdown><script type="text/template">
+# Introduction to FRAME
+</script></section><section  data-markdown><script type="text/template">
+## What is FRAME?
+
+FRAME is a Rust framework for more easily building Substrate runtimes.
+</script></section><section  data-markdown><script type="text/template">
+## Explaining FRAME Concisely
+
+<pba-flex center>
+
+Writing the Sudo Pallet:
+
+Without FRAME: 2210 lines of code.
+
+With FRAME: 310 lines of code.
+
+7x Smaller.
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Goals of FRAME
+
+- Make it easy and concise for developers to do development.
+- Provide maximum flexibility and compatibility for pallet developers.
+- Provide maximum modularity for runtime developers.
+- Be as similar to vanilla Rust as possible.
+</script></section><section  data-markdown><script type="text/template">
+## Building Blocks of FRAME
+
+- FRAME Development
+  - Pallets
+  - Macros
+- FRAME Coordination
+  - FRAME System
+  - FRAME Executive
+  - Construct Runtime
+</script></section><section  data-markdown><script type="text/template">
+## Pallets
+
+FRAME takes the opinion that the blockchain runtime should be composed of individual modules. We call these Pallets.
+
+<image src="../../../assets/img/6-FRAME/frame1.svg" style="height: 600px">
+</script></section><section  data-markdown><script type="text/template">
+## Building Blocks of Pallets
+
+Pallets are composed of multiple parts common for runtime development:
+
+- Dispatchable extrinsics
+- Storage items
+- Hooks for:
+  - Block initialization,
+  - Finalizing block (_!= block finality i.e. GRANDPA_)
+</script></section><section  data-markdown><script type="text/template">
+## More Building Blocks of Pallets
+
+And some less important ones:
+
+- Events
+- Errors
+- Custom validation/communication with tx-pool
+- Offchain workers
+- A lot more! but you will learn about them later.
+</script></section><section  data-markdown><script type="text/template">
+### "Shell" Pallet
+
+```rust
+pub use pallet::*;
+
+#[frame_support::pallet]
+pub mod pallet {
+  use frame_support::pallet_prelude::*;
+  use frame_system::pallet_prelude::*;
+
+  #[pallet::pallet]
+  #[pallet::generate_store(pub(super) trait Store)]
+  pub struct Pallet<T>(_);
+
+  #[pallet::config]  // snip
+  #[pallet::event]   // snip
+  #[pallet::error]   // snip
+  #[pallet::storage] // snip
+  #[pallet::call]    // snip
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## FRAME Macros
+
+Rust allows you to write Macros, which is code that generates code.
+
+FRAME uses Macros to simplify the development of Pallets, while keeping all of the benefits of using Rust.
+
+We will look more closely at each attribute throughout this module.
+</script></section><section  data-markdown><script type="text/template">
+## See For Yourself
+
+- `wc -l` will show the number of lines of a file.
+- `cargo expand` will expand the macros to "pure" Rust.
+
+```sh
+➜  substrate git:(master) ✗ wc -l frame/sudo/src/lib.rs
+    310 frame/sudo/src/lib.rs
+
+➜  substrate git:(master) ✗ cargo expand -p pallet-sudo | wc -l
+    2210
+```
+</script></section><section  data-markdown><script type="text/template">
+## FRAME System
+
+The FRAME System is a Pallet which is assumed to always exist when using FRAME. You can see that in the `Config` of every Pallet:
+
+```rust
+#[pallet::config]
+pub trait Config: frame_system::Config { ... }
+```
+
+It contains all the most basic functions and types needed for a blockchain system. Also contains many low level extrinsics to manage your chain directly.
+
+<div class="flex-container">
+<div class="left-small">
+
+- Block Number
+- Accounts
+- Hash
+- etc...
+
+</div>
+<div class="right text-small">
+
+- `T::BlockNumber`
+- `frame_system::Pallet::<T>::block_number()`
+- `T::AcccountId`
+- `T::Hash`
+- `T::Hashing::hash(&bytes)`
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+## FRAME Executive
+
+The FRAME Executive is a "coordinator", defining the order that your FRAME based runtime executes.
+
+```rust
+/// Actually execute all transitions for `block`.
+pub fn execute_block(block: Block) { ... }
+```
+
+- Initialize Block
+  - `on_runtime_upgrade` and `on_initialize` hooks
+- Initial Checks
+- Signature Verification
+- Execute Extrinsics
+  - `on_idle` and `on_finalize` hooks
+- Final Checks
+</script></section><section  data-markdown><script type="text/template">
+## Construct Runtime
+
+Your final runtime is composed of Pallets, which are brought together with the `construct_runtime!` macro.
+
+```rust
+// Create the runtime by composing the FRAME pallets that were previously configured.
+construct_runtime!(
+	pub struct Runtime
+	where
+		Block = Block,
+		NodeBlock = opaque::Block,
+		UncheckedExtrinsic = UncheckedExtrinsic,
+	{
+		System: frame_system,
+		RandomnessCollectiveFlip: pallet_randomness_collective_flip,
+		Timestamp: pallet_timestamp,
+		Aura: pallet_aura,
+		Grandpa: pallet_grandpa,
+		Balances: pallet_balances,
+		TransactionPayment: pallet_transaction_payment,
+		Sudo: pallet_sudo,
+		// Include the custom logic from the pallet-template in the runtime.
+		TemplateModule: pallet_template,
+	}
+);
+```
+</script></section><section  data-markdown><script type="text/template">
+## Pallet Configuration
+
+Before you can add a Pallet to the final runtime, it needs to be configured as defined in the `Config`.
+
+<div class="flex-container text-small">
+<div class="left" style="max-width: 50%;">
+
+In the Pallet:
+
+```rust
+/// The timestamp pallet configuration trait.
+#[pallet::config]
+pub trait Config: frame_system::Config {
+  type Moment: Parameter + Default + AtLeast32Bit + Scale<Self::BlockNumber, Output = Self::Moment> + Copy + MaxEncodedLen + scale_info::StaticTypeInfo;
+
+  type OnTimestampSet: OnTimestampSet<Self::Moment>;
+
+  #[pallet::constant]
+  type MinimumPeriod: Get<Self::Moment>;
+
+  type WeightInfo: WeightInfo;
+}
+```
+
+</div>
+
+<div class="right" style="max-width: 50%; padding-left: 10px;">
+
+In the Runtime:
+
+```rust
+/// The timestamp pallet configuration.
+
+impl pallet_timestamp::Config for Runtime {
+  type Moment = u64;
+
+  type OnTimestampSet = Aura;
+
+
+  type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
+
+  type WeightInfo = ();
+}
+```
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+## Exercise: Proof of Existence Blockchain
+
+Let's get our hands dirty and use all of these pieces together!
+
+https://docs.substrate.io/tutorials/work-with-pallets/use-macros-in-a-custom-pallet/
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
