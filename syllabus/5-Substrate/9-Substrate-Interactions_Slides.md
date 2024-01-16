@@ -10,7 +10,7 @@ duration: 60 minutes
 ## Before we start
 
 Find all the commands that will be used in this workshop:
-[hackmd.io/@ak0n/hk24-substrate-interaction](https://hackmd.io/@ak0n/hk24-substrate-interaction)
+[tinyurl.com/hk24-substrate](https://hackmd.io/@ak0n/hk24-substrate-interaction)
  
 ---
 
@@ -142,7 +142,7 @@ https://paritytech.github.io/substrate/master/sc_rpc/index.html
 
 ### Workshop: Intro
 
-- Transfer tokens from one account to another.
+- Transfer tokens from Alice to Bob.
 
 <br/>
 
@@ -161,7 +161,6 @@ Notes:
 ### Workshop: Spin up your node
 
 - Check out cli docs
-
 ```sh
 ./target/release/minimal-node --help
 ```
@@ -169,7 +168,6 @@ Notes:
 <br/>
 
 - Spin up your dev node.
-
 ```sh
 ./target/release/minimal-node --chain=dev --tmp
 ```
@@ -215,7 +213,7 @@ wscat \
 <br/>
 
 - This itself is Scale Encoded. See [frame-metadata](https://github.com/paritytech/frame-metadata).
-- Derive type of Balance using this metadata.
+- Derive type of AccountInfo using this metadata.
 
 <!-- .element: class="fragment" -->
 
@@ -228,36 +226,10 @@ Notes:
 
 ---v
 
-### Workshop: Transfer some tokens
-
-- Take PJS help to get the signed extrinsic.
-- Use the following command to submit the extrinsic.
-
-```sh
-wscat \
-  -c ws://localhost:9944 \
-  -x '{"jsonrpc":"2.0", "id": 42, "method":"author_submitExtrinsic", "params": [""] }' \
-  | jq
-```
-
-<br/>
-
-- Check balance again for both accounts.
-- What happens to nonce of Alice?
-
-<!-- .element: class="fragment" -->
-
-Notes:
-
-- Students will learn how to build the signed extrinsic themselves in their assignment.
-- Let students do the second part themselves.
-
----v
-
 ### Workshop: Decoding balance
 
-- Use https://www.shawntabrizi.com/substrate-js-utilities/codec/ to decode balance.
-- Use the following balance struct
+- Use [scale decoder](https://www.shawntabrizi.com/substrate-js-utilities/codec/) to decode balance.
+- Use the following type information for AccountInfo.
 
 ```json
 {
@@ -294,6 +266,26 @@ The actual type is:
 
 ---v
 
+### Workshop: Transfer some tokens
+
+- &shy;<!-- .element: class="fragment" --> Take PJS help to get the signed extrinsic.
+- &shy;<!-- .element: class="fragment" --> Use the following command to submit the extrinsic.
+```sh
+wscat \
+  -c ws://localhost:9944 \
+  -x '{"jsonrpc":"2.0", "id": 42, "method":"author_submitExtrinsic", "params": [""] }' \
+  | jq
+```
+- &shy;<!-- .element: class="fragment" --> Check balance again for both accounts.
+- &shy;<!-- .element: class="fragment" --> What happens to nonce of Alice?
+
+Notes:
+
+- Students will learn how to build the signed extrinsic themselves in their assignment.
+- Let students do the second part themselves.
+
+---v
+
 ### Workshop: Versions
 
 - Find runtime version of the polkadot and westend chain `state_getRuntimeVersion`.
@@ -327,18 +319,8 @@ Notes:
 https://github.com/JFJun/go-substrate-rpc-client
 https://github.com/polkascan/py-substrate-interface
 more here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
-
----
-
-## `subxt`
-
-- Something analogous to `PJS` for Rust.
-- The real magic is that it generates the types by fetching the metadata at compile time, or linking
-  it statically.
-- ..It might need manual updates when the code, and therefore the metadata changes.
-
-Notes:
 Listen to James Wilson introducing subxt: https://www.youtube.com/watch?v=aFk6We_Ke1I
+
 ---
 
 ## Additional Resources! 😋
@@ -386,3 +368,12 @@ wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"s
 ```
 
 Notice that this number that we get back is the little endian (SCALE) encoded value that we passed in at first.
+
+---
+
+## `subxt`
+
+- Something analogous to `PJS api` for Rust.
+- The real magic is that it generates the types by fetching the metadata at compile time, or linking
+  it statically.
+- ..It might need manual updates when the code, and therefore the metadata changes.
