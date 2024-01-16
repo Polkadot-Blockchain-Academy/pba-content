@@ -33,7 +33,7 @@ Notes:
 
 ---v
 
-## It All Began With a Runtime..
+### It All Began With a Runtime..
 
 - The Node / Runtime division is one of the most important design decisions in Substrate.
   - 👿 Bad: Fixed opinion. <!-- .element: class="fragment" -->
@@ -345,10 +345,9 @@ Notes:
 ### Example #2: Block Import
 
 - *A state key is only meaningful at a given block*
-- &shy;*A `:code` is only meaningful at at given block*
-<!-- .element: class="fragment" -->
-- &shy;*A runtime (API) is only meaningful when executed at a give block*
-<!-- .element: class="fragment" -->
+- &shy;<!-- .element: class="fragment" -->*A `:code` / Runtime is only meaningful at at given block*
+- &shy;<!-- .element: class="fragment" -->*A runtime (API) is only meaningful when executed at a give block*
+
 
 Notes:
 
@@ -361,12 +360,6 @@ Notes:
 
 - Similarly, almost all RPC operations that interact with the runtime have an `Option<Hash>`
   argument. This specifies "at which block to load the runtime and state from".
-
----v
-
-### Example #2: Block Import
-
-- I can add one more small touch to this to make it more accurate.. 🤌
 
 ---v
 
@@ -413,8 +406,8 @@ Note: make sure roots in the header match!
 
 - An Extrinsic is data that come from outside of the runtime.
 - &shy;<!-- .element: class="fragment" -->Inherents are data that is put into the block by the block author, directly.
-- &shy;<!-- .element: class="fragment" --> Yes, transactions are **a type of extrinsic**, but not all extrinsics are transactions.
-- &shy;<!-- .element: class="fragment" --> So, why is it called _Transaction Pool_ and not _Extrinsic Pool_?
+- &shy;<!-- .element: class="fragment" -->Yes, transactions are **a type of extrinsic**, but not all extrinsics are transactions.
+- &shy;<!-- .element: class="fragment" -->So, why is it called _Transaction Pool_ and not _Extrinsic Pool_?
 
 Notes:
 
@@ -489,7 +482,7 @@ The point being, eventually the pool builds a list of "ready transactions".
 
 ### Example #3: Block Authoring
 
-```rust [1-100|1-2|4-5|7-9|11-12|14-20|21-100]
+```rust [1-100|1-2|4-5|7-9|11-12|14-21|23-100]
 // get the best-block, based on whatever consensus rule we have.
 let (best_number, best_hash) = consensus::best_block();
 
@@ -506,9 +499,10 @@ let mut block: NodeBlock = Default::default();
 // repeatedly apply transactions.
 while let Some(next_transaction) = transaction_pool_iter::next() {
   state.execute(|| {
-    runtime.apply_extrinsic(next_transaction);
+    if runtime.apply_extrinsic(next_ext).is_ok() {
+      block.extrinsics.push(next_ext);
+    }
   });
-  block.extrinsics.push(next_transaction);
 }
 
 // set the new state root.
@@ -532,7 +526,7 @@ Notes:
 
 ### Example #3: Block Authoring
 
-```rust [14-15,25-26]
+```rust [14-15,25-100]
 // get the best-block, based on whatever consensus rule we have.
 let (best_number, best_hash) = consensus::best_block();
 
@@ -552,9 +546,10 @@ runtime.initialize_block(&block.header);
 // repeatedly apply transactions.
 while let Some(next_ext) = transaction_pool_iter::next() {
   state.execute(|| {
-    runtime.apply_extrinsic(next_ext);
+    if runtime.apply_extrinsic(next_ext).is_ok() {
+      block.extrinsics.push(next_ext);
+    }
   });
-  block.extrinsics.push(next_ext);
 }
 
 // finalize and set the final header.
@@ -574,7 +569,6 @@ Good question to ask: what about inherents? see appendix slides.
 
 ```rust
 fn initialize_block(raw_header: Header) { ... }
-// note the opaque extrinsic type.
 fn apply_extrinsic(extrinsic: Vec<u8>) { ... }
 fn finalize_block(..) -> Header { ... }
 ```
@@ -632,7 +626,7 @@ because it is dynamically typed, but if needed, it could.
 
 ---
 
-### Radical Upgradeability
+## Radical Upgradeability
 
 Comes at the cost of radical opaque/dynamic typing.
 
@@ -660,7 +654,7 @@ also, as noted in an earlier slide, once you make it work for one chain, it work
 
 ---v
 
-## Oblivious Node 🙈🙉
+### Oblivious Node 🙈🙉
 
 $$STF = F(blockBody_{N+1}, state_{N}) > state_{N+1}$$
 
@@ -678,7 +672,7 @@ This is why forkless upgrades are possible in substrate.
 
 ---v
 
-## Oblivious Node 🙈🙉
+### Oblivious Node 🙈🙉
 
 - What about new host functions?
 - <!-- .element: class="fragment" --> What about a new header field*?
@@ -722,7 +716,7 @@ time to ask any missing questions.
 
 ---v
 
-## Defining a Runtime API
+### Defining a Runtime API
 
 ```rust [1-7|9-15|17-100|1-100]
 // somewhere in common between node/runtime => substrate-primitive.
@@ -756,7 +750,7 @@ Notes:
 
 ---v
 
-## Defining a Host Function
+### Defining a Host Function
 
 ```rust
 // somewhere in substrate primitives, almost always `sp_io`.
@@ -857,10 +851,6 @@ sp_io::storage::root();
 
 ---
 
-## Considerations
-
----
-
 ## Considerations: Speed
 
 - (new) Wasmtime is near-native 🏎️.
@@ -914,7 +904,7 @@ wasm can be bigger than the actual hashing cost.
 
 ---
 
-### Consideration: Native Runtime
+## Consideration: Native Runtime
 
 <img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-native.svg" />
 
@@ -970,7 +960,7 @@ fn execute_native_else_wasm() {
 ### Consideration: Native Runtime
 
 - Question: what happens if you upgrade your runtime, but forget to bump the spec version?
-- &shy;<!-- .element: class="fragment" --> Question: What if a runtime upgrade is only tweaking implementation details, but not the specification?
+- &shy;<!-- .element: class="fragment" -->Question: What if a runtime upgrade is only tweaking implementation details, but not the specification?
 
 Notes:
 
@@ -979,7 +969,7 @@ But, if some are executing native, then you will have a consensus error.
 
 ---v
 
-## Speaking of Versions..
+### Speaking of Versions..
 
 - Make sure you understand the difference! 👍
   - Node Version
@@ -1021,7 +1011,7 @@ But, if some are executing native, then you will have a consensus error.
 
 ### Considerations: Panic
 
-- In a more broad sense, all validators never want to avoid wasting their time.
+- All validators/nodes want to avoid wasting their time.
 - While building a block, sometimes it is unavoidable (when?). <!-- .element: class="fragment" -->
 - While importing a block, nodes will not tolerate this. <!-- .element: class="fragment" -->
 
@@ -1032,7 +1022,6 @@ But, if some are executing native, then you will have a consensus error.
 - Panic is a (free) form of wasting a validator's time.
 - Practically Wasm instance killed; State changes reverted.
   - Any fee payment also reverted.
-- Transactions that consume resources but fail to pay fees are similar. <!-- .element: class="fragment" -->
 
 Notes:
 
@@ -1096,7 +1085,7 @@ See the documentation of `ApplyExtrinsicResult` in Substrate for more info about
 
 ---
 
-### Consideration: Altering Host Function
+## Consideration: Altering Host Function
 
 - A runtime upgrade now requires a new `sp_io::new_stuff::foo()`. Can we do a normal runtime upgrade?
 
@@ -1142,7 +1131,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 
 ### Host Functions..
 
-## NEED TO BE KEPT FOREVER 😈
+#### NEED TO BE KEPT FOREVER 😈
 
 <!-- .element: class="fragment" -->
 
@@ -1297,7 +1286,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 
 ---
 
-### Activity: Expected Panics In The Runtime
+## Activity: Expected Panics In The Runtime
 
 - Look into the `frame-executive` crate's code. See instances of `panic!()`, and see if you can make
   sense out of it.
@@ -1338,13 +1327,9 @@ panic if any transaction fails to apply.
 Notes:
 
 TODO: update links, most are outdated.
-- Some very recent change the the block building API set: https://github.com/paritytech/substrate/pull/14414
+- Some very recent change the the block building API set: https://github.com/paritytech/substrate/pull/14414 / https://github.com/paritytech/polkadot-sdk/pull/1781
 
-- New runtime API for building genesis config: https://github.com/paritytech/substrate/pull/14310
-
-- All Substrate PRs that have added new host functions: https://github.com/paritytech/substrate/issues?q=label%3AE4-newhostfunctions+is%3Aclosed
-
-- All substrate PRs that have required the node to be update first: https://github.com/paritytech/substrate/issues?q=is%3Aclosed+label%3A%22E10-client-update-first+%F0%9F%91%80%22
+- New runtime API for building genesis config: https://github.com/paritytech/substrate/pull/14310 / https://github.com/paritytech/polkadot-sdk/pull/1492
 
 - New metadata version, including types for the runtime API: https://github.com/paritytech/substrate/issues/12939
 
@@ -1371,7 +1356,7 @@ Content that is not covered, but is relevant.
 
 ---
 
-### Consideration: Runtime API Versioning
+## Consideration: Runtime API Versioning
 
 - Same principle, but generally easier to deal with.
 - Metadata is part of the runtime, known **per block**.
@@ -1436,7 +1421,7 @@ But what you have to do is dependent on the scenario.
 
 ---
 
-### Inherents and Block Authoring
+## Inherents and Block Authoring
 
 - What about Inherents?
 

@@ -1,9 +1,8 @@
 ---
-title: Substrate's Transaction Pool and its Runtime API
-duration: 30 minutes
+title: Substrate Transaction Pool
 ---
 
-# Substrate's Transaction Pool
+# Substrate Transaction Pool
 
 ---
 
@@ -80,8 +79,8 @@ Moving transactions from one list to the other.
 <diagram class="mermaid" style="display: flex; width: 80%">
 graph LR
     W["🤠 Wild West"] --"😈"--> T["🗑️"]
-    W --"😇"--> R["✅ Ready"]
-    W --"😇"--> F["⏰ Future"]
+    W --"😇 ⌛️"--> R["✅ Ready"]
+    W --"😇 ⏳"--> F["⏰ Future"]
 </diagram>
 
 ---v
@@ -123,27 +122,29 @@ impl TaggedTransactionQueue<Block> for Runtime {
 
 ### 1. Transaction Validation
 
-```rust[1-100|5-6|8-9|11-12|14-19|1-100]
+```rust[1-100|5-6|8-9|11-12|14-100|1-100]
 pub type TransactionValidity = Result<ValidTransaction, TransactionValidityError>;
 
 /// This is going into `Ready` or `Future`
 pub struct ValidTransaction {
-  /// In ready or future, what is the priority?
+  /// If in "Ready", what is the priority?
   pub priority: u64,
 
-  /// For how long is this valid?
+  /// For how long is this validity?
   pub longevity: u64,
 
   /// Should be propagate it?
   pub propagate: bool,
 
-  /// Does this require any other tag to be present?
+  /// Does this require any other tag to be present in ready?
   ///
   /// This determines "Ready" or "Future".
-  pub requires: Vec<Vec<u8>>,
+  pub requires: Vec<Tag>,
   /// Does this provide any tags?
-  pub provides: Vec<Vec<u8>>,
+  pub provides: Vec<Tag>,
 }
+
+type Tag = Vec<u8>
 ```
 
 ---v
@@ -155,13 +156,13 @@ pub struct ValidTransaction {
 
 Notes:
 
-- See: https://github.com/paritytech/substrate/pull/11786
+See: https://github.com/paritytech/substrate/pull/11786
 
-NOTE: we probably also ban the peer who sent us that transaction? but have to learn.
+we probably also ban the peer who sent us that transaction? but have to learn.
 
 ---
 
-### 2. Transaction Ordering
+## 2. Transaction Ordering
 
 - `provides` and `requires` is a very flexible mechanism; it allows you to:
   - Specify if a transaction is "Ready" or "Future"
@@ -364,15 +365,18 @@ Note: The oder in this slide matters and it is top to bottom.
 
 ### 2. Transaction Ordering: `priority`
 
-From the **Ready pool**, we take the **highest priority** transaction (and repeat).
+From the **Ready pool**, when all requirements are met, then `priority` dictates the order.
 
-Or, if you want to be specific, the pool orders based on:
+Further tie breakers:
 
-1. `priority`
-1. ttl: shortest longevity goes first
-1. time in the queue: longest to have waited goes first
+2. ttl: shortest `longevity` goes first
+3. time in the queue: longest to have waited goes first
 
 <!-- .element: class="fragment" -->
+
+Note:
+
+https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146
 
 ---v
 
@@ -394,7 +398,14 @@ Purposes of a nonce:
 2. Replay protection
 3. Double spend protection
 
-✅ You will implement a nonce system using the above primitives as a part of your assignment.
+---v
+
+### 2. Transaction Ordering: `nonce`
+
+- ✅ You will implement a nonce system using the above primitives as a part of your assignment.
+- General idea: `require -> (account, nonce - 1).encode()`, provide: `provides -> (account, nonce).encode()`
+
+
 
 Notes:
 
