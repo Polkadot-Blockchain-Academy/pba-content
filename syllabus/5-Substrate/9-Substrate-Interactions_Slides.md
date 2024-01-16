@@ -9,10 +9,17 @@ duration: 60 minutes
 
 ## Before we start
 
-- Clone substrate node template
+Find all the commands that will be used in this workshop:
+[hackmd.io/@ak0n/hk24-substrate-interaction](https://hackmd.io/@ak0n/hk24-substrate-interaction)
+ 
+---
+
+## Before we start
+
+- Clone polkadot-sdk
 
 ```sh
-git clone https://github.com/substrate-developer-hub/substrate-node-template`
+git clone https://github.com/paritytech/polkadot-sdk.git
 ```
 
 <br/>
@@ -20,7 +27,7 @@ git clone https://github.com/substrate-developer-hub/substrate-node-template`
 - Compile your node
 
 ```sh
-cargo build --release
+cargo build --release -p minimal-node
 ```
 
 ---
@@ -28,6 +35,10 @@ cargo build --release
 ## Interacting With a Substrate Blockchain
 
 > How does a user or an application interact with a blockchain?
+
+Notes:
+
+- Wait for 1 answer from students or at least for 10 seconds.
 
 ---v
 
@@ -37,7 +48,7 @@ cargo build --release
 
 <br/>
 
-- Run your own node.
+- Run their own node.
 
 <!-- .element: class="fragment" -->
 
@@ -123,13 +134,15 @@ recall:
 https://paritytech.github.io/substrate/master/sc_rpc_api/index.html
 https://paritytech.github.io/substrate/master/sc_rpc/index.html
 
-The full list can also be seen here: https://polkadot.js.org/docs/substrate/rpc/
+- The full list can also be seen here: https://polkadot.js.org/docs/substrate/rpc/
+- Specs: https://paritytech.github.io/json-rpc-interface-spec/introduction.html
+- Upcoming changes to JSON-RPC api: https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048
 
 ---
 
 ### Workshop: Intro
 
-- Transfer some tokens from Alice to Charlie.
+- Transfer tokens from one account to another.
 
 <br/>
 
@@ -139,8 +152,8 @@ The full list can also be seen here: https://polkadot.js.org/docs/substrate/rpc/
 
 Notes:
 
-- When we start up a dev chain, some well known accounts are already minted some balance at genesis. Alice and Charlie
-  are well known accounts.
+- When we start up a dev chain, some well known accounts are already minted some balance at genesis. We will use Alice
+  and Bob which are well known accounts.
 - The parts we cheat is because we will need to know more about FRAME to be able to calculate some storage keys.
 
 ---v
@@ -150,7 +163,7 @@ Notes:
 - Check out cli docs
 
 ```sh
-./target/release/node-template --help
+./target/release/minimal-node --help
 ```
 
 <br/>
@@ -158,27 +171,20 @@ Notes:
 - Spin up your dev node.
 
 ```sh
-./target/release/node-template --chain=dev --force-authoring --alice --tmp
+./target/release/minimal-node --chain=dev --tmp
 ```
 
 <!-- .element: class="fragment" -->
 
 Notes:
 
-- What does each flag do? What other flag can you use?
+- What does --chain=dev and --tmp do? What other flag can you use?
 
 ---v
 
 ### Workshop: Check balance
 
-- Query current balance of Charlie.
-- Storage key where Charlie's balance is stored
-
-```
-0x26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9b0edae20838083f2cde1c4080db8cf8090b5ab205c6974c9ea841be688864633dc9ca8a357843eeacf2314649965fe22
-```
-
-- We will use `state_getStorage` to query balance.
+- Query current balance of Alice and Bob.
 
 ```sh
 wscat \
@@ -188,36 +194,15 @@ wscat \
 ```
 
 Notes:
-You will learn how the storage key is calculated in FRAME based substrate chains in the FRAME module.
 
----v
-
-### Workshop: Transfer some tokens
-
-- Take PJS help to get the signed extrinsic.
-- Use the following command to submit the extrinsic.
-
-```sh
-wscat \
-  -c ws://localhost:9944 \
-  -x '{"jsonrpc":"2.0", "id": 42, "method":"author_submitExtrinsic", "params": [""] }' \
-  | jq
-```
-
-<br/>
-
-- Check balance now.
-- What happens if you execute the same payload again?
-
-<!-- .element: class="fragment" -->
-
-Notes:
-Let students do the second part themselves.
+- You will learn how the storage key is calculated in FRAME based substrate chains in the FRAME module.
+- What do you get?
 
 ---v
 
 ### Workshop: Metadata
 
+- Recall type information is lost in SCALE encoded data.
 - Substrate exposes type information using metadata.
 
 ```sh
@@ -236,29 +221,36 @@ wscat \
 
 Notes:
 
-- Metadata help users and apps understand the type information. Remember with SCALE, type information is lost.
-- [Metadata](https://hackmd.io/@ak0n/rJUhmXmK6) with most details stripped off.
+- Use PJS app to get frame-metadata: Developer > RPC Calls > state > getMetadata.
+- [Metadata](https://hackmd.io/@ak0n/rJUhmXmK6) with most details not relevant stripped off.
 - Read more about
   metadata: https://docs.substrate.io/build/application-development/#exposing-runtime-information-as-metadata.
-- Can also use https://www.shawntabrizi.com/substrate-js-utilities/codec/ to decode balance with the following custom
-  type
 
-```json
-{
-  "Balance": {
-    "nonce": "u32",
-    "consumers": "u32",
-    "providers": "u32",
-    "sufficients": "u32",
-    "data": {
-      "free": "u128",
-      "reserved": "u128",
-      "frozen": "u128",
-      "flags": "u128"
-    }
-  }
-}
+---v
+
+### Workshop: Transfer some tokens
+
+- Take PJS help to get the signed extrinsic.
+- Use the following command to submit the extrinsic.
+
+```sh
+wscat \
+  -c ws://localhost:9944 \
+  -x '{"jsonrpc":"2.0", "id": 42, "method":"author_submitExtrinsic", "params": [""] }' \
+  | jq
 ```
+
+<br/>
+
+- Check balance again for both accounts.
+- What happens to nonce of Alice?
+
+<!-- .element: class="fragment" -->
+
+Notes:
+
+- Students will learn how to build the signed extrinsic themselves in their assignment.
+- Let students do the second part themselves.
 
 ---v
 
@@ -269,15 +261,31 @@ Notes:
 
 ```json
 {
-  "Balance": {
+  "info": {
     "nonce": "u32",
-    "consumers": "u32",
+    "ignore": "(u32, u32, u32)",
+    "balance": {
+      "free": "u64",
+      "ignore": "(u64, u64, u128)"
+    }
+  }
+}
+```
+
+Notes:
+The actual type is:
+
+```json
+{
+  "info": {
+    "nonce": "u32",
+    "ignore": "u32",
     "providers": "u32",
     "sufficients": "u32",
-    "data": {
-      "free": "u128",
-      "reserved": "u128",
-      "frozen": "u128",
+    "balance": {
+      "free": "u64",
+      "reserved": "u64",
+      "frozen": "u64",
       "flags": "u128"
     }
   }
@@ -292,12 +300,17 @@ Notes:
 - Find node version of the polkadot and westend chain `system_version`.
 - Change RPC provider and see if any of the above value changes?
 
+<br/>
+
+- For runtime version, you read `specVersion` : `1,005,000` as `1.5.0`.
+
+<!-- .element: class="fragment" -->
+
 Notes:
 
 - `wscat -c wss://polkadot-rpc.dwellir.com -x '{"jsonrpc":"2.0", "id":1, "method":"state_getRuntimeVersion"}' | jq`.
 - `wscat -c wss://polkadot-rpc.dwellir.com -x '{"jsonrpc":"2.0", "id":1, "method":"system_version"}' | jq`.
-- For runtime version, you read `specVersion` : `1,005,000` as `1.5.0`.
-- Polkadot Telemetry: https://telemetry.polkadot.io/.
+- Show polkadot telemetry: https://telemetry.polkadot.io/.
 
 ---
 
@@ -317,6 +330,29 @@ more here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
 
 ---
 
+## `subxt`
+
+- Something analogous to `PJS` for Rust.
+- The real magic is that it generates the types by fetching the metadata at compile time, or linking
+  it statically.
+- ..It might need manual updates when the code, and therefore the metadata changes.
+
+Notes:
+Listen to James Wilson introducing subxt: https://www.youtube.com/watch?v=aFk6We_Ke1I
+---
+
+## Additional Resources! 😋
+
+> Check speaker notes (click "s" 😉)
+
+Notes:
+
+- see "Client Libraries" here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
+- https://paritytech.github.io/json-rpc-interface-spec/introduction.html
+- Full subxt guide: https://docs.rs/subxt/latest/subxt/book/index.html
+
+---
+
 ### JSON-RPC: Mini Activity
 
 In Kusama:
@@ -324,7 +360,7 @@ In Kusama:
 - Find the genesis hash..
 - Number of extrinsics at block 10,000,000.
 - The block number is stored under `twox128("System") ++ twox128("Number")`.
-    - Find it now, and at block 10,000,000.
+- Find it now, and at block 10,000,000.
 
 <br/>
 
@@ -350,26 +386,3 @@ wscat -c wss://kusama-rpc.polkadot.io -x '{"jsonrpc":"2.0", "id":72, "method":"s
 ```
 
 Notice that this number that we get back is the little endian (SCALE) encoded value that we passed in at first.
-
----
-
-## `subxt`
-
-- Something analogous to `PJS` for Rust.
-- The real magic is that it generates the types by fetching the metadata at compile time, or linking
-  it statically.
-- ..It might need manual updates when the code, and therefore the metadata changes.
-
-Notes:
-Listen to James Wilson introducing subxt: https://www.youtube.com/watch?v=aFk6We_Ke1I
----
-
-## Additional Resources! 😋
-
-> Check speaker notes (click "s" 😉)
-
-Notes:
-
-- see "Client Libraries" here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
-- https://paritytech.github.io/json-rpc-interface-spec/introduction.html
-- Full subxt guide: https://docs.rs/subxt/latest/subxt/book/index.html
