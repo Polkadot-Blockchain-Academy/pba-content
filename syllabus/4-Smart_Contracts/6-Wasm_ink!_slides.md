@@ -952,7 +952,7 @@ Notes:
 pub fn transfer(&mut self) {
     let caller = self.env().caller();
 
-    let balance = self.balances.get(caller).unwrap_or(0);
+    let mut balance = self.balances.get(caller).unwrap_or(0);
     let endowment = self.env().transferred_value();
 
     balance += endowment;
