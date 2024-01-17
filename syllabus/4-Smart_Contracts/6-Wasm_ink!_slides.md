@@ -2061,7 +2061,7 @@ Notes:
 ## The Dark Forest: the Monsters are real
 
 * During the rescue attempts the **get** transaction would get rejected by the Infura node.
-* Due to the time pressure and late night time, the ginal **get** tx slipped into a later block.
+* Due to the time pressure and late night time, the final **get** tx slipped into a later block.
 * When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meaning a bot had already executed the internal *burn* call and took the funds.
 
 Notes:
