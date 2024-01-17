@@ -350,8 +350,10 @@ _The way to make a protocol truly upgradeable is to design a meta-protocol._
 
 Note:
 
+
 In this figure, the meta-protocol, the substrate node, is not forklessly upgrade-able. It can only
 be upgraded with a fork.
+
 
 ---v
 
