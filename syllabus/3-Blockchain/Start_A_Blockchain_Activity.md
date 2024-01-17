@@ -47,20 +47,16 @@ Node runners can contribute PoW hashrate to the network in exchange for tokens.
 
 ### Fork the Network
 
-In BA we forked the difficulty, but maybe there is something more compelling. Maybe fork to adjust max block size. Nice because it happened for real in bitcoin. Maybe hard because I believe max block size is controlled in the runtime.
+Our chain's PoW is based on md5 which is getting old and weak, so we upgrade to add the newer standard sha3 while keeping the original md5 in place to facilitate a smooth transition. Actually we decide to add both sha3 and keccak just in case the NSA fucked with sha3.
 
-Another idea:
-When we launch the chain, we allow PoW block to have either of two valid kinds of seals. For example, one based on sha3 and another based on keccak. Then we pretend there is a cultural war and some people like one function or the other wnad some people don't care. When the time comes to fork, we have three different versions of the node available: 1 only accepts sha3, 2 only accepts keccak, 3 is the original that accepts either. In this way we can see that there will be at least two viable chains (the sha 3 chain and the keccak chain). If there are a lot of nodes that still run the old version and accept either hash, they will form a third chain. But if there are only a few such nodes, they will re-org into one of the other two chains, and potentially reorg back and forth between them.
+(If desired, insert the [Forks lesson](./7-Forks_slides.md) here.)
 
-### Light Clients
+We find out about a practical attack against md5 and decide to remove it.
 
-TODO
+Finally, there is a contentious fork. Some of the community are keccak maxis, others are sha3 maxis, others don't have a preference and are okay to allow both until the dust settles.
 
-### Other Infrastructure
-
-Like block explorer or indexer?
+There could be three chains after step seven. But we want a relatively stable chain for the contracts work in the afternoon, so we try to guide the class toward agreeing on a single chain if it is not happening naturally.
 
 ### Smart Contracts
 
-The Smart Contracts module has an activity about launching smart contracts on a running chain.
-When these modules are run back-to-back, it makes an excellent learning experience to use this same chain we just launched to also launch the smart contracts.
+The Smart Contracts module is run immediately after, it makes an excellent learning experience to use this same chain they just launched to also launch the smart contracts.

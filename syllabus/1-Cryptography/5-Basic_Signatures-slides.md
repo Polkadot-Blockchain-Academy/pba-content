@@ -169,7 +169,6 @@ is difficult
 Setup is difficult secret sharing and setup
 
 Show image of ECDSA vs schnorr to demonstrate this
----
 
 ## Ed25519
 

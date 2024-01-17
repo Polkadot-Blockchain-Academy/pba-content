@@ -7,12 +7,33 @@ description: A formal, yet friendly consensus framework
 
 ---
 
-## Goals of this lecture
+## Agenda
 
 <br/>
 
-1. formalize the consensus problem and related concepts <!-- .element: class="fragment"-->
-2. provide a framework for designing DAG-based consensus protocols <!-- .element: class="fragment"-->
+1. formalizing the consensus problem and related concepts <!-- .element: class="fragment"-->
+2. meeting a framework for designing DAG-based consensus protocols <!-- .element: class="fragment"-->
+
+---
+
+## How can this help?
+
+<br/>
+
+It's not very likely that you will design a new consensus protocol from scratch or even implement one... 
+<!-- .element: class="fragment"-->
+but it's more likely that you will have to either <font color="#c2ff33">choose</font> or <font color="#c2ff33">integrate</font> one with your system.
+<!-- .element: class="fragment"-->
+
+---
+
+## The actual goals
+
+<br/>
+
+- identify the key <font color="#e6007a">assumptions</font> and <font color="#e6007a">limitations</font> of the protocols
+- understand the <font color="#e6007a">trade-offs</font> between different approaches
+- see what <font color="#e6007a">consequences</font> the design choices have
 
 ---
 
@@ -64,11 +85,11 @@ Participants, called **nodes**
 
 <br/>
 
-- nodes can be either honest or malicious
-- honest nodes follow the protocol
-- malicious nodes can deviate from the protocol in any way they want
-- malicious nodes can collude with each other
-- malicious nodes can be controlled by an adversary
+- nodes can be either <font color="#c2ff33">honest</font> or <font color="#e6007a">malicious</font>
+- <font color="#c2ff33">honest</font> nodes follow the protocol
+- <font color="#e6007a">malicious</font> nodes can deviate from the protocol in any way they want
+- <font color="#e6007a">malicious</font> nodes can collude with each other
+- <font color="#e6007a">malicious</font> nodes can be controlled by an adversary
 
 ---
 

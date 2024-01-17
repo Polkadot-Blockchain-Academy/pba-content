@@ -43,3 +43,9 @@ _static/
 *.dtmp
 
 syllabus/4-Smart_Contracts/*.html
+
+## list of directories that should not be pushed
+cambridge-2022
+buenos-aires-2023
+berkeley-2023
+current

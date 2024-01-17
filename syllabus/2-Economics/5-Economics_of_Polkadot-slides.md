@@ -244,7 +244,7 @@ Question: What do you think about Inflation?
         <li class="fragment">Highly domain specific and have high degree of flexibility in their architecture.</li>
         <li class="fragment">Share same messaging standard to be interoperable and exchange messages through the Relay Chain.</li>
     </ul>
-    <li class="fragment">Polkadot: 43 Parachains, Kusama: 46 Parachains.</li>
+    <li class="fragment">Polkadot: 50 Parachains, Kusama: 46 Parachains.</li>
     <li class="fragment">Their state transition function (STF) is registered on the Relay Chain.</li>
     <ul>
         <li class="fragment">Validators can validate state transitions without knowing all the data on the Parachain.</li>
@@ -310,10 +310,10 @@ Question: What do you think about Inflation?
 
 ---
 
-## Outlook Polkadot 2.0
+## Outlook Polkadot
 
 <ul>
-    <li class="fragment">Based on Gav’s Keynote at Polkadot Decoded 2023.</li>
+    <li class="fragment">Based on Gav’s Keynote at Polkadot Decoded 2023 and RFC-1.</li>
     <li class="fragment">A new narrative of the whole Polkadot system.</li>
     <li class="fragment">We move away from regarding Parachains as a distinct entity but rather regard Polkadot as global distributed computer.</li>
     <li class="fragment">It's spaces and apps rather than chains.</li>

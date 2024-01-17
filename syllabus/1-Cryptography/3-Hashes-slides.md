@@ -18,8 +18,6 @@ We often want a succinct representation of some data<br />with the expectation t
 
 ## Hash Function Properties
 
-<pba-flex center>
-
 <section>
     <p class="fragment">Accept unbounded size input</p>
     <p class="fragment">Map to a bounded output</p>
@@ -30,7 +28,12 @@ We often want a succinct representation of some data<br />with the expectation t
     <p class="fragment">Resist collisions<br />(attacker controls both inputs)</p>
 </section>
 
-</pba-flex>
+Notes:
+
+1.  one way meaning for a given output difficult to get the input
+1.  attacker has the value 5 and from that can find a preimage that hashes to 5 (5 just an example value)
+1.  attacker has input and output and cant find a another input which maps to the output
+1.  More generally the attacker has the entire input space and cant find two inputs which hash to the same value
 
 ---
 
@@ -59,7 +62,7 @@ hash('hello') =
 **Large input (1.2 MB):**
 
 ```text
-hash(Harry_Potter_series_as_string) =
+hash(Harry_Potter_series_as_string) u
  0xc4d194054f03dc7155ccb080f1e6d8519d9d6a83e916960de973c93231aca8f4
 ```
 
@@ -99,11 +102,10 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ## Speed
 
-Some hash functions are designed to be slow.
-
-These have applications like password hashing, which would slow down brute-force attackers.
-
-For our purposes, we generally want them to be fast.
+- Some hash functions are designed to be slow. <!-- .element: class="fragment" data-fragment-index="0" -->
+- Does anyone know why someone would want a hash function to be slow? <!-- .element: class="fragment" data-fragment-index="1" -->
+- These have applications like password hashing, which would slow down brute-force attackers. <!-- .element: class="fragment" data-fragment-index="2" -->
+- For our purposes, we generally want them to be fast. <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
@@ -236,8 +238,8 @@ single hash collision often results in the hash function being considered unsafe
 
 > With 23 people, there is a 6% chance that someone will be born on a specific date, but a 50% chance that two share a birthday.
 
-- Must compare each output with every other, not with a single one.<br />
-- Number of possible "hits" increases exponentially for more attempts, reducing the expected success to the square-root of what a specific target would be.
+- Must compare each birthday with every other, not with a single one.<br /> <!-- .element: class="fragment" data-fragment-index="0" -->
+- Number of possible "hits" increases exponentially for more attempts, reducing the expected success to the square-root of what a specific target would be. <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-col>
 <pba-col>
@@ -307,9 +309,8 @@ Let's see which cryptographic properties apply to hashes.
 
 ## Confidentiality
 
-Sending or publically posting a hash of some data $D$ keeps $D$ confidential, as only those who already knew $D$ recognize $H(D)$ as representing $D$.
-
-Both cryptographic and non-cryptographic hashes work for this. _only if the input space is large enough_.
+- Sending or publicly posting a hash of some data $D$ keeps $D$ confidential, as only those who already knew $D$ recognize $H(D)$ as representing $D$.
+- Both cryptographic and non-cryptographic hashes work for this, _only if the input space is large enough_.
 
 ---v
 
@@ -326,6 +327,9 @@ hash('scissors') = 0x389a2d4e358d901bfdf22245f32b4b0a401cc16a4b92155a2ee5da98273
 The other player doesn't need to undo the hash function to know what you played!
 
 Notes:
+
+Question:
+How can we fix this issue?
 
 The data space has to be _sufficiently large_.
 Adding some randomness to input of the hash fixes this. Add x bits of randomness to make it x bits of security on that hash.
@@ -352,6 +356,8 @@ However, if used in another cryptographic primitive that _does_ provide non-repu
 
 Notes:
 
+- The hash alone doesnt give one the ability to authenticate or identify the originator of the data because anyone with access to the data can produce the same hash.
+
 This is key in digital signatures. However, it's important to realize that if $D$ is kept secret, $H(D)$ is basically meaningless.
 
 ---
@@ -374,7 +380,9 @@ In [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent), each file chunk is ha
 
 Notes:
 
-The hash of the large file can also serve as a signal to the protocol that transmission is complete.
+- Content addressed file is when a file is identified based on the content of the file.
+
+- The hash of the large file can also serve as a signal to the protocol that transmission is complete.
 
 ---
 
@@ -408,10 +416,12 @@ Hash of pub key:
 
 It is often useful to commit to some information<br /> without storing or revealing it:
 
-- A prediction market would want to reveal predictions only after the confirming/refuting event occurred.
-- Users of a system may want to discuss proposals without storing the proposal on the system.
+- A prediction market would want to reveal predictions only after the confirming/refuting event occurred.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Users of a system may want to discuss proposals without storing the proposal on the system.<!-- .element: class="fragment" data-fragment-index="1" -->
+- However, participants should not be able to modify their predictions or proposals.<!-- .element: class="fragment" data-fragment-index="2" -->
 
-However, participants should not be able to modify their predictions or proposals.
+Notes:
+What is an example of an application would use an application like this?
 
 ---
 
