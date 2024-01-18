@@ -565,4 +565,3 @@ And it’s also usually them, who actually creates ink! side of the extension.
 ## Third way?
 
 There are plans to integrate contracts with XCM…
-

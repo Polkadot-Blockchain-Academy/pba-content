@@ -112,7 +112,6 @@ _The first 5 words of the [BIP39 English dictionary](https://github.com/bitcoin/
 </pba-col>
 </pba-cols>
 
-
 Notes:
 
 Question to ask:
@@ -242,16 +241,16 @@ Derivations can either be "hard" or "soft".
 
 ## Hard Derivation
 
-
 Hard derivation requires the secret key and derives new child secret keys.<!-- .element: class="fragment" data-fragment-index="0" -->
 
 Always do hard paths first, then conclude in soft paths.<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
-    Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
+Typical "operational security" usages should favor hard derivation over soft derivation because hard derivations avoid leaking the sibling keys, unless the original secret is compromised.
 
     DONT MENTION THIS BUT FOR NOTES!!
     - Because you cannot derive a parent key from a child key with hard derivation but with soft you can
+
 ---
 
 ## Hard Derivation in Wallets

@@ -3,6 +3,7 @@ title: Introduction to Cryptography
 description: Cryptographic primitives for Web3 engineers
 duration: 1 hour
 ---
+
 # Cryptography Day I
 
 <pba-flex center>
@@ -15,6 +16,7 @@ duration: 1 hour
 </pba-flex>
 
 ---
+
 # Introduction to Cryptography
 
 ---
