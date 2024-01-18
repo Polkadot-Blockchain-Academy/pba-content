@@ -68,6 +68,7 @@ Substrate is a **Rust framework** for **building blockchains**.
 <aside class="notes"><p>Substrate is a pure technological investment against chain maximalism, even outside of Polkadot. You
 can create sovereign chains with substrate, or Polkadot Parachains, or more hybrid things. More on
 this when you learn about Substrate&#39;s role in the Polkadot ecosystem.</p>
+<p>Figure: <a href="https://www.youtube.com/watch?v=0IoUZdDi5Is">https://www.youtube.com/watch?v=0IoUZdDi5Is</a></p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Core Philosophies of Substrate 💭
 
@@ -191,8 +192,7 @@ fn main() {
 
 <img rounded width="900px" src="../../assets/img/5-Substrate/dev-4-1-speed.png" />
 
-<aside class="notes"><p>this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for
-Rustacean&#39;s chapter on <code>no_std</code> covers this very well.</p>
+<aside class="notes"><p>this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for Rustacean&#39;s chapter on <code>no_std</code> covers this very well.</p>
 <p>Also, this is a good time to talk about how we use &quot;Runtime&quot; in a different way.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## 🤩 Generic, Modular and Extensible Design
@@ -297,7 +297,7 @@ be upgraded with a fork.</p>
 ### 🏦 Governance + Upgradeability
 
 - Meta-protocol?
-- &shy;<!-- .element: class="fragment" --> "*State machine as stored WASM*  " in the Substrate node.
+- &shy;<!-- .element: class="fragment" -->"*Runtime as WASM*  " in the Substrate node.
 - <!-- .element: class="fragment" --> Inherently upgradeable protocol?
 - <!-- .element: class="fragment" --> WASM Runtime
 </script></section></section><section ><section data-markdown><script type="text/template">
@@ -407,7 +407,9 @@ bug in it, everyone is affected.</p>
 ## State of Light Client/Nodes
 
 - Node that follows headers, therefore knows state roots and can ask for state-proofs to do more.
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>Establish that it is merely an alternative node implementation.</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### State of Light Clients
 
 <img src="../../assets/img/5-Substrate/dev-4-1-smoldot.svg" />
@@ -424,7 +426,10 @@ configured with GRANDPA.</p>
 ### State of Light Clients
 
 <img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-smoldot-browser.svg" />
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>Similarly it is dead simple to embed smoldot in mobile etc.</p>
+<p>Separate lecture on this later.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Communication Paths
 
 <img style="width: 1400px" src="../../assets/img/5-Substrate/dev-4-1-comms.svg" />
@@ -491,6 +496,40 @@ fn main() {
 
 <img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-contracts.svg" />
 </script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-contracts-full.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+<pba-cols>
+
+<pba-col>
+  <img style="width: 600px;" src="../../assets/img/5-Substrate/peter-parker-glasses-off.png" />
+</pba-col>
+
+<pba-col>
+  <img src="../../assets/img/5-Substrate/ethereum-logo.svg" />
+</pba-col>
+
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+<pba-cols>
+
+<pba-col>
+  <img style="width: 600px;" src="../../assets/img/5-Substrate/peter-parker-glasses-on.png" />
+</pba-col>
+
+<pba-col>
+  <img style="width: 400px; background: white; border-radius: 50%; padding: 30px;" src="../../assets/img/5-Substrate/substrate-logo.svg" />
+  <p style="font-size: 6rem;">😎</p>
+</pba-col>
+
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+
 ### Substrate and Smart Contracts
 
 > SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
