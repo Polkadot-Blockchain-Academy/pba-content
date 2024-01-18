@@ -20,9 +20,12 @@ description: A formal, yet friendly consensus framework
 
 <br/>
 
-It's not very likely that you will design a new consensus protocol from scratch or even implement one... 
+It's not very likely that you will design a new consensus protocol from scratch or even implement one...
+
 <!-- .element: class="fragment"-->
+
 but it's more likely that you will have to either <font color="#c2ff33">choose</font> or <font color="#c2ff33">integrate</font> one with your system.
+
 <!-- .element: class="fragment"-->
 
 ---

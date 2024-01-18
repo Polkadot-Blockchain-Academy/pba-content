@@ -558,7 +558,7 @@ Dynamic first-price auction with _random ending time._
 
 ---
 
-## Lumina Celestia 
+## Lumina Celestia
 
 <img rounded style="width:600px" src="./img/2.3-collection-preview.jpg" />
 
