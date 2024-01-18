@@ -208,7 +208,6 @@ The version subscription mechanism allows parties to subscribe to version update
 
 ```rust
 pub enum VersionedXcm {
-  V2(v2::Xcm),
   V3(v3::Xcm),
   V4(v4::Xcm),
 }
@@ -322,8 +321,8 @@ In the following scenario Chain A is using XCM v2
 <!-- prettier-ignore-start -->
 flowchart BT
 subgraph registryA[Chain A's Registry]
-  chainB("Chain B \n\n v2")
-  chainC("Chain C \n\n v3")
+  chainB("Chain B \n\n v3")
+  chainC("Chain C \n\n v4")
   chainD("Chain D \n\n v4")
   chainE("Chain E \n\n v3")
 end
