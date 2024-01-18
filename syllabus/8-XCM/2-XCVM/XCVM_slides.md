@@ -250,20 +250,20 @@ graph LR
 
 <diagram class="mermaid"> <!-- Fetching DepositAsset instruction -->
 graph LR
-    subgraph Program
-        WithdrawAsset:::disabled-->BuyExecution:::disabled
-        BuyExecution-->DepositAsset
-        DepositAsset
-    end
-    Executor(Executor)--"Fetch"-->DepositAsset
-    subgraph Registers
-        Holding(Holding)
-        Origin(Origin)
-    end
-    Registers-.-Executor
-    linkStyle 0 opacity:0.3
-    linkStyle 1 opacity:0.3
-    classDef disabled opacity:0.3
+subgraph Program
+WithdrawAsset:::disabled-->BuyExecution:::disabled
+BuyExecution-->DepositAsset
+DepositAsset
+end
+Executor(Executor)--"Fetch"-->DepositAsset
+subgraph Registers
+Holding(Holding)
+Origin(Origin)
+end
+Registers-.-Executor
+linkStyle 0 opacity:0.3
+linkStyle 1 opacity:0.3
+classDef disabled opacity:0.3
 </diagram>
 
 ---v
@@ -271,6 +271,8 @@ graph LR
 ## XCVM Operation
 
 <diagram class="mermaid"> <!-- Getting assets from Holding register -->
+
+<!-- prettier-ignore-start -->
 graph LR
     subgraph Program
         WithdrawAsset:::disabled-->BuyExecution:::disabled
@@ -287,6 +289,7 @@ graph LR
     linkStyle 0 opacity:0.3
     linkStyle 1 opacity:0.3
     classDef disabled opacity:0.3
+    <!-- prettier-ignore-end -->
 </diagram>
 
 ---v
@@ -294,6 +297,7 @@ graph LR
 ## XCVM Operation
 
 <diagram class="mermaid"> <!-- Putting assets in Location specified by the Origin register -->
+<!-- prettier-ignore-start -->
 graph LR
     subgraph Program
         WithdrawAsset:::disabled-->BuyExecution:::disabled
@@ -310,6 +314,8 @@ graph LR
     linkStyle 0 opacity:0.3
     linkStyle 1 opacity:0.3
     classDef disabled opacity:0.3
+<!-- prettier-ignore-end -->
+
 </diagram>
 
 ---v

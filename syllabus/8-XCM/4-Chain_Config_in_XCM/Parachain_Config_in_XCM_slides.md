@@ -332,10 +332,10 @@ Notes:
 
 ## `xcm-builder` adaptersk
 
-|Fungibility/Number|Single|Multiple|
-|--------|------|--------|
-|Fungible|FungibleAdapter|FungiblesAdapter|
-|Non-fungible|NonFungibleAdapter|NonFungiblesAdapter|
+| Fungibility/Number | Single             | Multiple            |
+| ------------------ | ------------------ | ------------------- |
+| Fungible           | FungibleAdapter    | FungiblesAdapter    |
+| Non-fungible       | NonFungibleAdapter | NonFungiblesAdapter |
 
 ---
 
