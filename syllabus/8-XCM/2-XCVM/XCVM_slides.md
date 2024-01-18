@@ -416,7 +416,7 @@ The two ways of transferring assets between consensus systems are teleports and 
 
 ### 1. Asset teleportation
 
-<img rounded style="width: 500px;" src="../../../assets/img/8-XCM/teleport.png" />
+<img rounded style="width: 500px;" src="../img/teleport.png" />
 
 Notes:
 
@@ -445,7 +445,7 @@ graph LR
 
 ### 2. Reserve asset transfers
 
-<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/reserve-tx.png" />
+<img rounded style="width: 400px;" src="../img/reserve-tx.png" />
 
 Notes:
 
