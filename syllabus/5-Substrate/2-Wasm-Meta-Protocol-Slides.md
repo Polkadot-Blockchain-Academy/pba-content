@@ -338,10 +338,9 @@ Notes:
 
 ### Example #2: Block Import
 
-- *A state key is only meaningful at a given block*
-- &shy;<!-- .element: class="fragment" -->*A `:code` / Runtime is only meaningful at at given block*
-- &shy;<!-- .element: class="fragment" -->*A runtime (API) is only meaningful when executed at a give block*
-
+- _A state key is only meaningful at a given block_
+- &shy;<!-- .element: class="fragment" -->_A `:code` / Runtime is only meaningful at at given block_
+- &shy;<!-- .element: class="fragment" -->_A runtime (API) is only meaningful when executed at a give block_
 
 Notes:
 
@@ -644,8 +643,6 @@ also, as noted in an earlier slide, once you make it work for one chain, it work
 - The underlying reason why the node is "**kept in the dark**" is so that it wouldn't need to care
   about the runtime upgrading from one block to the other.
 
-
-
 ---v
 
 ### Oblivious Node 🙈🙉
@@ -828,7 +825,6 @@ sp_io::storage::get(..);
 sp_io::storage::set(..);
 sp_io::storage::root();
 ```
-
 
 ---
 
@@ -1301,6 +1297,7 @@ panic if any transaction fails to apply.
 ## Lecture Recap (Part 2)
 
 - Considerations:
+
   - Speed
   - Native Execution and Versioning
   - Panics
@@ -1321,6 +1318,7 @@ panic if any transaction fails to apply.
 Notes:
 
 TODO: update links, most are outdated.
+
 - Some very recent change the the block building API set: https://github.com/paritytech/substrate/pull/14414 / https://github.com/paritytech/polkadot-sdk/pull/1781
 
 - New runtime API for building genesis config: https://github.com/paritytech/substrate/pull/14310 / https://github.com/paritytech/polkadot-sdk/pull/1492
@@ -1416,7 +1414,6 @@ But what you have to do is dependent on the scenario.
 
 - Find all the `#[version]` macros in `sp-io` to find all the versioned host functions.
 
-
 ---
 
 ## Inherents and Block Authoring
@@ -1478,5 +1475,3 @@ https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
 <img rounded style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
 
 ---v
-
-

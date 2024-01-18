@@ -250,14 +250,13 @@ Preventing side channel attacks is _hard_! Noticing sidechannel attacks is even 
 
 <img style="width: 800px;" src="./img/we_rolled_our_own_crypto.png" />
 
-### 
+###
+
 Notes:
 
 Be very, very careful whenever you do _anything_ that touches a secret. That includes any operation involving the secret, or reading/writing it somewhere.
 
 When necessary, talk to a security expert or cryptographer.
-
-
 
 ---
 
