@@ -570,7 +570,6 @@ pub fn flip(&mut self) {
 </li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
-
 ## Error handling: cross-contract calls
 
 <div style="font-size: 0.7em;">
@@ -596,6 +595,7 @@ pub fn transfer(
     Ok(())
 }
 ```
+
 </div>
 
 - What is the state of this contract if the transfer fails?
@@ -606,7 +606,6 @@ pub fn transfer(
 <li>no-op</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
-
 ## Contracts: Defining shared behaviour
 
 <div style="font-size: 0.5em;">
@@ -704,8 +703,8 @@ pub fn flip(&mut self) {
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Importance of events
 
-* **Events** are information that is emitted by transactions taking place on a blockchain.
-* **Events** are way for a smart contracts to communicate that a specific action or state change has occurred.
+- **Events** are information that is emitted by transactions taking place on a blockchain.
+- **Events** are way for a smart contracts to communicate that a specific action or state change has occurred.
 
 <aside class="notes"><ul>
 <li>we talked about the technical aspects of events but what are they exactly and what are they usefull for</li>
@@ -720,8 +719,8 @@ pub fn flip(&mut self) {
 
 <img rounded style="width: 250px;" src="./img/ink/transacting.svg" />
 
-* The most important use of events is to pass along return values from contracts to a dapp's UI.
-* How to access historical data?
+- The most important use of events is to pass along return values from contracts to a dapp's UI.
+- How to access historical data?
 
 <aside class="notes"><ul>
 <li>ppl are transacting among each other e.g. an PSP22 token</li>
@@ -734,17 +733,17 @@ pub fn flip(&mut self) {
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Event indexers
 
-* blockchain = append-only database
-* events = logs
-* indexers = log processors
+- blockchain = append-only database
+- events = logs
+- indexers = log processors
 
 An **indexer** is a process that listens to the events, processes them and stores normalized data in a persistent, queryable storage.
 Typically some sort of API is then server over that data, that can be easily queried by the frontend applications.
 
 **Examples:**
 
-* [Subsquid: https://subsquid.io/](https://subsquid.io/)
-* [TheGraph: https://thegraph.com/](https://thegraph.com/)
+- [Subsquid: https://subsquid.io/](https://subsquid.io/)
+- [TheGraph: https://thegraph.com/](https://thegraph.com/)
 
 <aside class="notes"><ul>
 <li>using terminology from event driven design architectures</li>
@@ -800,7 +799,7 @@ pub struct Token {
 <div style="font-size: 0.72em;">
 
 | Type         | Decoding                              | Encoding example             | Remark                                                                         |
-|--------------|---------------------------------------|------------------------------|--------------------------------------------------------------------------------|
+| ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
 | Boolean      | false                                 | 0x0                          | encoded using least significant bit of a single byte                           |
 |              | true                                  | 0x1                          |                                                                                |
 | Unsigned int | 42                                    | 0x2a00                       |                                                                                |
@@ -1144,6 +1143,7 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 # Common Vulnerabilities
 </script></section><section  data-markdown><script type="text/template">
 ## Past exploits: The DAO hack (2016)
+
 - The DAO (Decentralized Autonomous Organization) was a crowdfunding project on the Ethereum network.
 - In June 2016 an attacker drained funds (worth ~$50 million at that time) and was about to drain even more.
 - The funds were moved into an account subject to a 28-day holding period under the terms of the DAO smart contract.
@@ -1422,7 +1422,7 @@ function isOwner(address _addr) constant returns (bool) {
 
 <div style="font-size: 0.70em;">
 
-``` [1-4|6-16]
+```[1-4|6-16]
 function initWallet(address[] _owners, uint _required, uint _daylimit) {
   initDaylimit(_daylimit);
   initMultiowned(_owners, _required);
@@ -1605,7 +1605,6 @@ impl MyContract {
 }
 ```
 
-
 <aside class="notes"><ul>
 <li>substate /ink! usually has no need for a proxy pattern but similar concepts do apply</li>
 <li>what is wrong with this code?</li>
@@ -1707,15 +1706,14 @@ pub fn batch_transfer(
 
 <aside class="notes"><ul>
 <li>can you spot the problem? Which line exactly is problematic?</li>
-<li>actually Rust is pretty good at catching runtime overflows, so this will panic, unless<pre><code class="language-toml">[profile.dev]
+<li>actually Rust is pretty good at catching runtime overflows, so this will panic, unless</li>
+</ul>
+<pre><code class="language-toml">[profile.dev]
 overflow-checks = false
 [profile.release]
 overflow-checks = false
 </code></pre>
-</li>
-</ul>
 </aside></script></section><section  data-markdown><script type="text/template">
-
 ## The BatchOverflow exploit: example
 
 <div style="font-size: 0.70em;">
@@ -1754,8 +1752,8 @@ assert_eq!(128, receiver_balance_after);
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="400" src="./img/ink/printer.gif" />
 
-* money printer goes brrr...
-* How would you fix it?
+- money printer goes brrr...
+- How would you fix it?
 
 </div>
 
@@ -1784,26 +1782,29 @@ fn safe_multiply(a: MyBalance, b: MyBalance) -> Result<MyBalance, MyError> {
 
 ```
 
-* We perform a reverse operation (division)
-* Value *c* is divided by *a* and we check whether this is equal to the value of *b*
-* If this was an overflow and wrapped around back to 0 then this check fails incorrect.
+- We perform a reverse operation (division)
+- Value _c_ is divided by _a_ and we check whether this is equal to the value of _b_
+- If this was an overflow and wrapped around back to 0 then this check fails incorrect.
 </script></section><section  data-markdown><script type="text/template">
 ## The BatchOverflow exploit: fixit
 
-* runtime checks in Rust are performed only in *debug* mode, as they hinder performance
+- runtime checks in Rust are performed only in _debug_ mode, as they hinder performance
+
 ```toml
 [profile.release]
 overflow-checks = false
 ```
 
-* This prints 0 in *release* mode and panics in *debug*:
+- This prints 0 in _release_ mode and panics in _debug_:
+
 ```rust
 let x: u8 = "128".parse().unwrap();
 let val: u8 = x + 128;
 println!("{}", val);
 ```
 
-* it's best to be explicit:
+- it's best to be explicit:
+
 ```rust
 let amount = (count as MyBalance).checked_mul(value)
               .ok_or(MyError::Arithmetic)?;
@@ -1823,9 +1824,9 @@ let amount = (count as MyBalance).checked_mul(value)
 </aside></script></section><section  data-markdown><script type="text/template">
 # MEV
 
-* The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work.
-* It was referred to as the *invisible tax*, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network.
-* After the Merge (Ethereum's move to POS consensus) **Miner Extractable Value** became **Maximal extractable value**.
+- The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work.
+- It was referred to as the _invisible tax_, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network.
+- After the Merge (Ethereum's move to POS consensus) **Miner Extractable Value** became **Maximal extractable value**.
 
 <aside class="notes"><ul>
 <li>MEV skyrocketed during the 2021 DeFi summer.</li>
@@ -1837,9 +1838,9 @@ let amount = (count as MyBalance).checked_mul(value)
 </aside></script></section><section  data-markdown><script type="text/template">
 ## MEV: The Dark Forest
 
-* We have now seen a number of smart contract exploits.
-* Blockchain is a highly **competetive and adversarial** environment.
-* But the dangers pale in comparison to the **mempool**.
+- We have now seen a number of smart contract exploits.
+- Blockchain is a highly **competetive and adversarial** environment.
+- But the dangers pale in comparison to the **mempool**.
 
 <aside class="notes"><ul>
 <li>if a smart contract can be exploited for profit it&#39;s just a matter of time when it will be.</li>
@@ -1853,9 +1854,9 @@ let amount = (count as MyBalance).checked_mul(value)
 
 <div style="font-size: 0.72em;">
 
-* Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predators.
-* **Generalized Frontrunners** are bots looking for *any* profitable transactions submitted to the mempool.
-* *Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos* **[August 2020]**.
+- Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predators.
+- **Generalized Frontrunners** are bots looking for _any_ profitable transactions submitted to the mempool.
+- _Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos_ **[August 2020]**.
 
 <aside class="notes"><ul>
 <li>Cixin Liu [Si-Szin Lju]</li>
@@ -1869,19 +1870,18 @@ let amount = (count as MyBalance).checked_mul(value)
 </li>
 </ul>
 </div></aside></script></section><section  data-markdown><script type="text/template">
-
 ## The Dark Forest
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/kurzgesagt.jpg" />
 
 <div style="font-size: 0.70em;">
 
-credit: **Kurzgesagt** , *Why We Should NOT Look For Aliens - The Dark Forest*
+credit: **Kurzgesagt** , _Why We Should NOT Look For Aliens - The Dark Forest_
 
 </div>
 
-* The Dark Forest theory is (one of) a solution to the Fermi's paradox.
-* Great explanation in this episode of the Kurzgesagt.
+- The Dark Forest theory is (one of) a solution to the Fermi's paradox.
+- Great explanation in this episode of the Kurzgesagt.
 
 <aside class="notes"><ul>
 <li>also Stanislaw Lem in (<em>The New Cosmogony</em>, A Perfect Vacuum, 1971)</li>
@@ -1890,9 +1890,9 @@ credit: **Kurzgesagt** , *Why We Should NOT Look For Aliens - The Dark Forest*
 </aside></script></section><section  data-markdown><script type="text/template">
 ## MEV: The Dark Forest
 
-* Someone had asked on the *#support* channel of Uniswap whether it was possible to recover liquidity tokens that were erronously sent to the <font color="#8d3aed">[liquidity token base contract](https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L140)</font>.
-* This meant *anyone* who calls *burn* on the Uniswap contract, passing own address, would receive the extra tokens (worth *USD 12K*).
-* **Dan Robinson**, a researcher and a white-hat hacker offered to help.
+- Someone had asked on the _#support_ channel of Uniswap whether it was possible to recover liquidity tokens that were erronously sent to the <font color="#8d3aed">[liquidity token base contract](https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L140)</font>.
+- This meant _anyone_ who calls _burn_ on the Uniswap contract, passing own address, would receive the extra tokens (worth _USD 12K_).
+- **Dan Robinson**, a researcher and a white-hat hacker offered to help.
 
 <aside class="notes"><ul>
 <li>Not even a bug, jusy a by-product of how UniswapV2 is designed</li>
@@ -1905,8 +1905,8 @@ credit: **Kurzgesagt** , *Why We Should NOT Look For Aliens - The Dark Forest*
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/flashboys.png" />
 
-* In another article, *Phil Daian et al, 2019* talked about how one particular species of frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitable transactions.
-* If someone just submitted a *burn* transaction to the mempool the Dark Forest bots would be imediately alerted.
+- In another article, _Phil Daian et al, 2019_ talked about how one particular species of frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitable transactions.
+- If someone just submitted a _burn_ transaction to the mempool the Dark Forest bots would be imediately alerted.
 
 <aside class="notes"><ul>
 <li>Dan was well aware this would not be easy</li>
@@ -1916,7 +1916,7 @@ credit: **Kurzgesagt** , *Why We Should NOT Look For Aliens - The Dark Forest*
 </aside></script></section><section  data-markdown><script type="text/template">
 ## The Dark Forest: To The Rescue
 
-* Dan Robinson recruited the help of fellow engineers (i.e. [Georgios Konstantopoulos]() and [Alberto Cuesta Canada]() and a few others) and they came up with the following solution:
+- Dan Robinson recruited the help of fellow engineers (i.e. [Georgios Konstantopoulos]() and [Alberto Cuesta Canada]() and a few others) and they came up with the following solution:
 
 <div style="font-size: 0.62em;">
 
@@ -1969,6 +1969,7 @@ Contract Getter is IGetter {
   }
 }
 ```
+
 </div>
 
 <aside class="notes"><ul>
@@ -1983,9 +1984,9 @@ Contract Getter is IGetter {
 </aside></script></section><section  data-markdown><script type="text/template">
 ## The Dark Forest: the Monsters are real
 
-* During the rescue attempts the **get** transaction would get rejected by the Infura node.
-* Due to the time pressure and late night time, the final **get** tx slipped into a later block.
-* When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meaning a bot had already executed the internal *burn* call and took the funds.
+- During the rescue attempts the **get** transaction would get rejected by the Infura node.
+- Due to the time pressure and late night time, the final **get** tx slipped into a later block.
+- When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meaning a bot had already executed the internal _burn_ call and took the funds.
 
 <aside class="notes"><ul>
 <li>If the attacker only tried executing the get transaction, it would revert without calling the burn function.</li>
@@ -1996,11 +1997,11 @@ Contract Getter is IGetter {
 </aside></script></section><section  data-markdown><script type="text/template">
 ## The Dark Forest: the Monsters are real
 
-* Avoid public infrastructure.
-* Some examples of a private pool transactions offerings:
-  * <font color="#8d3aed">[blocxroute](https://bloxroute.com/products/)</font>
-  * <font color="#8d3aed">[taichi network](https://taichi.network/)</font>
-  * <font color="#8d3aed">[1inch network](https://1inch.io/)</font>
+- Avoid public infrastructure.
+- Some examples of a private pool transactions offerings:
+  - <font color="#8d3aed">[blocxroute](https://bloxroute.com/products/)</font><!-- markdown-link-check-disable-line -->
+  - <font color="#8d3aed">[taichi network](https://taichi.network/)</font>
+  - <font color="#8d3aed">[1inch network](https://1inch.io/)</font>
 
 <aside class="notes"><ul>
 <li>maybe a better obfuscation (e..g get could be a no-op instea dof reverting if called without set)<ul>
@@ -2165,12 +2166,12 @@ pub fn swap(
      }
  ...
  }
- ```
+```
 
 </div>
 
-- Contract was vulnerable to a *sandwitch* attack:
-  - A bot could purchase some amount of *token_out* just before the trade is executed, raising the price.
+- Contract was vulnerable to a _sandwitch_ attack:
+  - A bot could purchase some amount of _token_out_ just before the trade is executed, raising the price.
   - After victims tx is executed the bot sells, back running the trade.
 - Design should protect the user from excessive slippage.
 
@@ -2180,7 +2181,7 @@ pub fn swap(
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Why is MEV a problem?
 
-* ... and how big of a problem it is?
+- ... and how big of a problem it is?
 
 <aside class="notes"><ul>
 <li>we end this section with a general discussion of repercussion of MEV</li>
@@ -2190,9 +2191,9 @@ pub fn swap(
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="400" src="./img/ink/infllation.png" />
 
-* Users engage in bid wars to include their txs in a block.
-* This drivers gas prices higher and higher.
-* The *regular / honest* users are the ones hurt the most.
+- Users engage in bid wars to include their txs in a block.
+- This drivers gas prices higher and higher.
+- The _regular / honest_ users are the ones hurt the most.
 
 <aside class="notes"><ul>
 <li>The competition among users to get their transactions included in a block with higher priority leads to increased demand for block space.</li>
@@ -2208,9 +2209,9 @@ pub fn swap(
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="600" src="./img/ink/congestion.jpg" />
 
-* Miners/validators have the power to order or censors include transactions in a block.
-* They will naturaly lean towards processing the txs with higher gas fees, or even to insert their own txs.
-* Other txs will be stuck in the mempool, leading to congestion.
+- Miners/validators have the power to order or censors include transactions in a block.
+- They will naturaly lean towards processing the txs with higher gas fees, or even to insert their own txs.
+- Other txs will be stuck in the mempool, leading to congestion.
 
 <aside class="notes"><ul>
 <li>Transaction Ordering: Miners have the discretion to choose the order in which they include transactions in a block.</li>
@@ -2220,8 +2221,8 @@ pub fn swap(
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Zero-sum game
 
-- Total extracted MEV before the merge: *283'962 ETH* (**$ 675,623,114** December 2019 - September 2022)
-- Total extracted MEV since the merge: *407'804 ETH* (**$ 970'275'823** in Jan 2024)
+- Total extracted MEV before the merge: _283'962 ETH_ (**$ 675,623,114** December 2019 - September 2022)
+- Total extracted MEV since the merge: _407'804 ETH_ (**$ 970'275'823** in Jan 2024)
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/cumulative_MEV.jpg" />
 
@@ -2278,9 +2279,9 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Private mempools
 
-* MEV actors can contract with miners / validators.
-* They do it for a substantial fee, but at leat this way they still profit.
-* Why does this lead to a horrible outcome for a blockchain?
+- MEV actors can contract with miners / validators.
+- They do it for a substantial fee, but at leat this way they still profit.
+- Why does this lead to a horrible outcome for a blockchain?
 
 <aside class="notes"><ul>
 <li>they send their tx directly to the miner, skipping the mempool</li>
@@ -2301,8 +2302,8 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Flashbots (MEV-geth)
 
-* flashbots: democratizing MEV Extraction.
-* [MEV-geth](https://github.com/flashbots/mev-geth)
+- flashbots: democratizing MEV Extraction.
+- [MEV-geth](https://github.com/flashbots/mev-geth)
 
 <aside class="notes"><ul>
 <li>flashbots is a sealed-bid block space auction mechanism for bidding on transaction order preference.</li>
@@ -2311,11 +2312,11 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 </aside></script></section><section  data-markdown><script type="text/template">
 ## MEV: the good, the bad and the ugly
 
-* Is all MEV inherently bad for the network?
+- Is all MEV inherently bad for the network?
   - arbitrage
   - liquidations
-* MEV is unavoidable.
-* MEV as a security budget?
+- MEV is unavoidable.
+- MEV as a security budget?
 
 <aside class="notes"><ul>
 <li>MEV is wrong and it has to be stopped?<ul>
@@ -2342,17 +2343,17 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 
 <div style="font-size: 0.45em">
 
-* **Block Builders**
-Responsible for collecting the txs, assembling the blocks, including validating the txs and creating the block header.
-They also include the MEV offer to validators (fee).
+- **Block Builders**
+  Responsible for collecting the txs, assembling the blocks, including validating the txs and creating the block header.
+  They also include the MEV offer to validators (fee).
 
-* **Relayers:**
-Collect blocks, choosing the ones with biggest MEV offer.
-Send block headers (**NOT** blocks) to the validators (block proposers).
+- **Relayers:**
+  Collect blocks, choosing the ones with biggest MEV offer.
+  Send block headers (**NOT** blocks) to the validators (block proposers).
 
-* **Block Proposers:**
-Validators who are chosen to propose blocks are known as "block proposers."
-They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network.
+- **Block Proposers:**
+  Validators who are chosen to propose blocks are known as "block proposers."
+  They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network.
 
 </div>
 
@@ -2381,7 +2382,7 @@ They choose the best MEV offers, sign them with staking key and send them back t
 </li>
 <li>validators sign the headers and send the signatures back to the relayers</li>
 <li>relayers send the blocks to the network<ul>
-<li>Q: why can&#39;t it be stolen at this point? </li>
+<li>Q: why can&#39;t it be stolen at this point?</li>
 <li>Because he already signed a header for this slot &amp; it was sent on chain. Cheat at this point = get your stake slashed</li>
 </ul>
 </li>
@@ -2390,9 +2391,9 @@ They choose the best MEV offers, sign them with staking key and send them back t
 </aside></script></section><section  data-markdown><script type="text/template">
 ## MEV: tip of the iceberg
 
-* <font color="#8d3aed">[DeFi MOOC](https://defi-learning.org/f22)</font>, especially lectures by [Arthur Gervais](https://arthurgervais.com/).
-* **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with *Phil Daian, Georgios Konstantopoulos, Charlie Noyes*.
-* <font color="#8d3aed">[Flashbots](https://www.flashbots.net/)</font> R&D organization focused on MEV research.
+- <font color="#8d3aed">[DeFi MOOC](https://defi-learning.org/f22)</font>, especially lectures by [Arthur Gervais](https://arthurgervais.com/).
+- **Bankless** podcast <font color="#8d3aed">[episode 66](https://www.youtube.com/watch?v=rOVz7dOrGyY)</font> with _Phil Daian, Georgios Konstantopoulos, Charlie Noyes_.
+- <font color="#8d3aed">[Flashbots](https://www.flashbots.net/)</font> R&D organization focused on MEV research.
 </script></section><section  data-markdown><script type="text/template">
 ## Fin
 

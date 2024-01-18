@@ -70,7 +70,7 @@ node.</li>
 </script></section><section data-markdown><script type="text/template">
 ### What We Know So Far
 
-```rust 
+```rust
   sp_io::TestExternalities::new_empty().execute_with(|| {
         sp_io::storage::get(..);
     });
@@ -94,6 +94,7 @@ node.</li>
 - O(1) read and write.
 
 > Spoiler, that is not how data is stored internally in the database.
+
 <!-- .element: class="fragment" -->
 
 <aside class="notes"><ul>
@@ -292,7 +293,7 @@ simplification.</p>
 
 - We know the state-root at a given block `n`.
 - Assume this is a base-27, patricia trie.
-  English alphabet along with '_' is the key-scope.
+  English alphabet along with '\_' is the key-scope.
 - Let's see the steps needed to read `balances_alice` from the storage.
 </script></section><section data-markdown><script type="text/template">
 <img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-m1.svg" />
@@ -325,12 +326,13 @@ the [radix tree visualization](https://www.cs.usfca.edu/~galles/visualization/Ra
 ## Merklized: Proofs
 
 Back to our question
+
 > If alice only has this state root, how can she verify her balance is correct?
 </script></section><section data-markdown><script type="text/template">
 <img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-proof.svg" />
 
 <aside class="notes"><p>Give 30 seconds to students to make sense of the image by themselves.</p>
-<p>The important point is that for example the whole data under <code>_system</code> is  hidden away behind one hash.</p>
+<p>The important point is that for example the whole data under <code>_system</code> is hidden away behind one hash.</p>
 <p>Receiver will hash the root node, and check it against a publicly known storage root.</p>
 <p>This differs slightly from how actual proof generation might work in the code.</p>
 <p>In general, you have a tradeoff: send more data, but require less hashing on Alice, or opposite (this is what we call &quot;
@@ -359,7 +361,7 @@ compact proof&quot;).</p>
 <div>
 
 - Intermediary (branch) nodes could contain values.
-    - `:code` contains some value, `:code:more` can also contain value.
+  - `:code` contains some value, `:code:more` can also contain value.
 
 </div>
 
@@ -384,8 +386,8 @@ it will be <code>O(LOG_n)</code>.</p>
 ## Large data nodes 🤔
 
 - Two common problems that merkle proofs have:
-    - If the one of the parent nodes has some large data.
-    - If you want to prove the deletion/non-existence of a leaf node.
+  - If the one of the parent nodes has some large data.
+  - If you want to prove the deletion/non-existence of a leaf node.
 </script></section><section data-markdown><script type="text/template">
 <img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-proof-fat.svg" />
 </script></section><section data-markdown><script type="text/template">
@@ -452,10 +454,10 @@ All of that can be delayed.</p>
 ### Overlay
 
 - Almost identical semantic to your CPU cache:
-    - <!-- .element: class="fragment" --> Once you read a value, it stays here, and can be re-read for cheap.
-    - <!-- .element: class="fragment" --> Once you write a value, it will only be written here.
-        - It can be read for cheap.
-    - <!-- .element: class="fragment" --> All writes are flushed at the end of the runtime api call.
+  - <!-- .element: class="fragment" --> Once you read a value, it stays here, and can be re-read for cheap.
+  - <!-- .element: class="fragment" --> Once you write a value, it will only be written here.
+    - It can be read for cheap.
+  - <!-- .element: class="fragment" --> All writes are flushed at the end of the runtime api call.
 - <!-- .element: class="fragment" --> No race conditions as runtime is single-threaded.
 </script></section><section data-markdown><script type="text/template">
 <img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay.svg" />
@@ -552,11 +554,11 @@ the trie layer and pull a whole lot of data back from the disk and build all the
 There are multiple implementations of `Externalities`:
 
 - [`TestExternalities`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.TestExternalities.html):
-    - `Overlay`
-    - `TrieDb` with `InMemoryBackend`
+  - `Overlay`
+  - `TrieDb` with `InMemoryBackend`
 - [`Ext`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.Ext.html) (the real thing 🫡)
-    - `Overlay`
-    - `TrieDb` with a real database being the backend
+  - `Overlay`
+  - `TrieDb` with a real database being the backend
 </script></section><section data-markdown><script type="text/template">
 ### Substrate Storage
 

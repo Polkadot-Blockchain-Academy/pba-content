@@ -28,6 +28,7 @@
   <main class="reveal">
     <article class="slides">
       <section  data-markdown><script type="text/template">
+
 # Cryptography Day II
 
 <pba-flex center>
@@ -139,9 +140,9 @@ Example: "5 of 7 key holders have signed this message.".<!-- .element: class="fr
 ### Key Generation - Threshold
 
 - Threshold multi-signature schemes require that all signers run a distributed key generation (DKG) protocol that constructs key "shares".
-<img style="height: 500px" src="./img/11-simplex_graph.png" /><!-- .element: class="fragment" data-fragment-index="0" -->
+  <img style="height: 500px" src="./img/11-simplex_graph.png" /><!-- .element: class="fragment" data-fragment-index="0" -->
 - The secret encodes the threshold behavior, and signing demands some threshold of signature "fragments".<!-- .element: class="fragment" data-fragment-index="1" -->
--  This DKG protocol breaks other useful things, like hard key derivation.<!-- .element: class="fragment" data-fragment-index="2" -->
+- This DKG protocol breaks other useful things, like hard key derivation.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 <aside class="notes"><p>DKG requires MPC which adds a lot of communication overhead.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -196,10 +197,9 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introd
 ### Ring Signatures
 
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
-<img style="height: 300px" src="./img/Ring-signature.png" /><!-- .element: class="fragment" data-fragment-index="1" -->
+  <img style="height: 300px" src="./img/Ring-signature.png" /><!-- .element: class="fragment" data-fragment-index="1" -->
 - Ring signatures come in many sizes, with many ways of presenting their anonymity sets.<!-- .element: class="fragment" data-fragment-index="2" -->
 - Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).<!-- .element: class="fragment" data-fragment-index="3" -->
-
 
 <aside class="notes"><ul>
 <li>ZCash uses a ring signature based upon Groth16 zkSNARKs which makes the entire chain history be the anonymity set.</li>

@@ -38,7 +38,6 @@
 - Interrupts and questions are always welcome.
 - Narratives > facts.
 
-
 Your feedback is highly appreciated!
 </script></section><section ><section data-markdown><script type="text/template">
 ## What is Substrate?
@@ -198,7 +197,7 @@ fn main() {
 ## 🤩 Generic, Modular and Extensible Design
 
 - Second line of defense.
-- Whatever code we write is (thanks to Rust) perfectly executed, *but what should we write*?
+- Whatever code we write is (thanks to Rust) perfectly executed, _but what should we write_?
 
 <aside class="notes"><p>this is where a module, generic design is useful. You can change components easily based on the
 needs of the future.</p>
@@ -297,7 +296,7 @@ be upgraded with a fork.</p>
 ### 🏦 Governance + Upgradeability
 
 - Meta-protocol?
-- &shy;<!-- .element: class="fragment" -->"*Runtime as WASM*  " in the Substrate node.
+- &shy;<!-- .element: class="fragment" -->"_Runtime as WASM_ " in the Substrate node.
 - <!-- .element: class="fragment" --> Inherently upgradeable protocol?
 - <!-- .element: class="fragment" --> WASM Runtime
 </script></section></section><section ><section data-markdown><script type="text/template">
@@ -331,7 +330,6 @@ be upgraded with a fork.</p>
 
 </pba-cols>
 </script></section></section><section ><section data-markdown><script type="text/template">
-
 ## Positive Consequences of _Wasm_ Runtime 🔥
 </script></section><section data-markdown><script type="text/template">
 ### 🤖 Deterministic Execution
@@ -349,7 +347,7 @@ be upgraded with a fork.</p>
 
 <aside class="notes"><p>how can we guarantee that neither enter an infinite loop, or try to access the filesystem?</p>
 </aside></script></section><section data-markdown><script type="text/template">
- ### 🌈 Easier (light)Node Development
+### 🌈 Easier (light)Node Development
 
 <aside class="notes"><p>for the case of node, your node only needs to implement the host/client, and NOT re-implement the
 business logic.</p>
@@ -529,7 +527,6 @@ fn main() {
 
 </pba-cols>
 </script></section><section data-markdown><script type="text/template">
-
 ### Substrate and Smart Contracts
 
 > SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
@@ -571,7 +568,6 @@ fee-less.</p>
 ### Substrate and Smart Contracts
 
 <img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-4-1-ink.jpeg" />
-
 </script></section></section><section  data-markdown><script type="text/template">
 ## Technical Freedom vs Ease
 
@@ -822,7 +818,9 @@ hardcoded, but the protocol itself is flexible.</p>
 ## Homework 📚
 
 Highly suggested reading to ingest this lecture better:
-  - [`polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html)</script></section><section  data-markdown><script type="text/template">
+
+- [`polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html)
+</script></section><section  data-markdown><script type="text/template">
 ## Additional Resources! 😋
 
 > Check speaker notes (click "s" 😉)
@@ -875,7 +873,6 @@ consensus, crypto or database code) to be contributed back so everyone can benef
 <li>a takeaway after each section, more clear path (shawn).</li>
 </ul>
 </aside></script></section><section ><section data-markdown><script type="text/template">
-
 ## Appendix: More Diagrams of Substrate and Polkadot
 
 <aside class="notes"><p>I made these figures recently to explain the relationship between Substrate, Cumulus and Polkadot.
@@ -928,7 +925,7 @@ A Parachain
 
 - Any language that can compile to Wasm and exposes a fixed set of functions, to be used by the client.
 - ... But, of course, Substrate comes with a framework to make this developer-friendly, **FRAME™️**.
-</script></section></section><section  data-markdown><script type="text/template"></script></section>
+</script></section></section>
     </article>
   </main>
 

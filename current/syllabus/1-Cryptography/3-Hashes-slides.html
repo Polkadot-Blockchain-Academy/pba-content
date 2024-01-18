@@ -39,7 +39,6 @@ We often want a succinct representation of some data<br />with the expectation t
 </script></section><section  data-markdown><script type="text/template">
 ## Hash Function Properties
 
-
 - Accept unbounded size input <!-- .element: class="fragment" data-fragment-index="0" -->
 - Map to a bounded output <!-- .element: class="fragment" data-fragment-index="1" -->
 - Be fast to compute <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -113,7 +112,7 @@ hash('hellp') =
 
 - Some hash functions are designed to be slow. <!-- .element: class="fragment" data-fragment-index="0" -->
 - Does anyone know why someone would want a hash function to be slow? <!-- .element: class="fragment" data-fragment-index="1" -->
-- These have applications like password hashing, which would slow down brute-force attackers. <!-- .element: class="fragment" data-fragment-index="2" --> 
+- These have applications like password hashing, which would slow down brute-force attackers. <!-- .element: class="fragment" data-fragment-index="2" -->
 - For our purposes, we generally want them to be fast. <!-- .element: class="fragment" data-fragment-index="3" -->
 </script></section><section  data-markdown><script type="text/template">
 ## Famous Hash Algorithms
@@ -244,7 +243,7 @@ So, hash function security is only half of the bit space.
 It should be difficult for someone to partially (for a substring of the hash output) find a collision or "second" pre-image.
 
 - Bitcoin PoW is a partial pre-image attack. <!-- .element: class="fragment" data-fragment-index="0" -->
-- Can anyone explain how? <!-- .element: class="fragment" data-fragment-index="1" --> 
+- Can anyone explain how? <!-- .element: class="fragment" data-fragment-index="1" -->
 - Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.<!-- .element: class="fragment" data-fragment-index="2" -->
 - Prefix collision resistance important to rationalize costs for some cryptographic data structures.<!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -324,7 +323,7 @@ Members of a peer-to-peer network may host and share<br />file chunks rather tha
 In [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent), each file chunk is hash identified so peers can<br /> _request and verify_ the chunk is a member of the larger,<br /> _content addressed_ file.
 
 <aside class="notes"><ul>
-<li><p>Content addressed file is when a file is identified based on the content of the file. </p>
+<li><p>Content addressed file is when a file is identified based on the content of the file.</p>
 </li>
 <li><p>The hash of the large file can also serve as a signal to the protocol that transmission is complete.</p>
 </li>

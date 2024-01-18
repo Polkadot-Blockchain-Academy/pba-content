@@ -287,10 +287,9 @@ database::store_state(block.header.hash, state)
 </aside></script></section><section data-markdown><script type="text/template">
 ### Example #2: Block Import
 
-- *A state key is only meaningful at a given block*
-- &shy;<!-- .element: class="fragment" -->*A `:code` / Runtime is only meaningful at at given block*
-- &shy;<!-- .element: class="fragment" -->*A runtime (API) is only meaningful when executed at a give block*
-
+- _A state key is only meaningful at a given block_
+- &shy;<!-- .element: class="fragment" -->_A `:code` / Runtime is only meaningful at at given block_
+- &shy;<!-- .element: class="fragment" -->_A runtime (API) is only meaningful when executed at a give block_
 
 <aside class="notes"><ul>
 <li><p>The same way that Alice&#39;s balance value is only meaningful when read at a given block.</p>
@@ -543,8 +542,6 @@ probably had the same class of issues. This is the same matter, on a a different
 
 - The underlying reason why the node is "**kept in the dark**" is so that it wouldn't need to care
   about the runtime upgrading from one block to the other.
-
-
 </script></section><section data-markdown><script type="text/template">
 ### Oblivious Node 🙈🙉
 
@@ -696,7 +693,6 @@ sp_io::storage::get(..);
 sp_io::storage::set(..);
 sp_io::storage::root();
 ```
-
 </script></section></section><section  data-markdown><script type="text/template">
 ## Lecture Recap (Part 1)
 
@@ -1093,6 +1089,7 @@ panic if any transaction fails to apply.</p>
 ## Lecture Recap (Part 2)
 
 - Considerations:
+
   - Speed
   - Native Execution and Versioning
   - Panics
@@ -1194,7 +1191,6 @@ But what you have to do is dependent on the scenario.
 - Then see if/how this is being used in the node code.
 
 - Find all the `#[version]` macros in `sp-io` to find all the versioned host functions.
-
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Inherents and Block Authoring
 
@@ -1245,9 +1241,7 @@ come first, we also keep our example aligned.</p>
 ## Misc
 
 <img rounded style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
-</script></section><section data-markdown><script type="text/template">
-
-</script></section></section>
+</script></section><section data-markdown><script type="text/template"></script></section></section>
     </article>
   </main>
 

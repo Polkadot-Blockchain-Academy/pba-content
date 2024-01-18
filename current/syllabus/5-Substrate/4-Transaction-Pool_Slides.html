@@ -69,7 +69,6 @@ You can jump the line by offering to bribe the block producers.</p>
 
 <image rounded src="../../assets/img/5-Substrate/dev-pool-context.svg">
 
-
 <aside class="notes"><ul>
 <li>Gossip</li>
 <li>Queue of all transactions, queue of ready transactions.</li>
@@ -98,10 +97,10 @@ graph LR
 </script></section><section data-markdown><script type="text/template">
 ### 1. Transaction Validation
 
-* Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
-* Transaction validation should be **cheap** to perform.
-* Transaction pool is entirely an **offchain operation**.
-  * No state change
+- Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+- Transaction validation should be **cheap** to perform.
+- Transaction pool is entirely an **offchain operation**.
+  - No state change
 
 <aside class="notes"><p>Important, must pause and ask!</p>
 <ul>
@@ -166,7 +165,6 @@ type Tag = Vec<u8>
 - `provides` and `requires` is a very flexible mechanism; it allows you to:
   - Specify if a transaction is "Ready" or "Future"
   - Within each, what transactions should ge before which.
-
 
 <aside class="notes"><p>it essentially forms a graph.</p>
 <p>Order mostly matters within the ready pool. I am not sure if the code maintains an order in <code>future</code> as well. In any
@@ -382,8 +380,6 @@ Purposes of a nonce:
 
 - ✅ You will implement a nonce system using the above primitives as a part of your assignment.
 - General idea: `require -> (account, nonce - 1).encode()`, provide: `provides -> (account, nonce).encode()`
-
-
 
 <aside class="notes"><p>Transaction Ordering: Each time a transaction is sent from an account, the nonce increases by one. This sequential
 numbering ensures that transactions are processed in the order they are sent.</p>

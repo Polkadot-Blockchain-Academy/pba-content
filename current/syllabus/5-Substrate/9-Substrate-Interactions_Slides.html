@@ -35,7 +35,7 @@
 
 Find all the commands that will be used in this workshop:
 [tinyurl.com/hk24-substrate](https://hackmd.io/@ak0n/hk24-substrate-interaction)
- </script></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Before we start
 
 - Clone polkadot-sdk
@@ -162,6 +162,7 @@ and Bob which are well known accounts.</li>
 ### Workshop: Spin up your node
 
 - Check out cli docs
+
 ```sh
 ./target/release/minimal-node --help
 ```
@@ -169,6 +170,7 @@ and Bob which are well known accounts.</li>
 <br/>
 
 - Spin up your dev node.
+
 ```sh
 ./target/release/minimal-node --chain=dev --tmp
 ```
@@ -260,12 +262,14 @@ metadata: <a href="https://docs.substrate.io/build/application-development/#expo
 
 - &shy;<!-- .element: class="fragment" --> Take PJS help to get the signed extrinsic.
 - &shy;<!-- .element: class="fragment" --> Use the following command to submit the extrinsic.
+
 ```sh
 wscat \
   -c ws://localhost:9944 \
   -x '{"jsonrpc":"2.0", "id": 42, "method":"author_submitExtrinsic", "params": [""] }' \
   | jq
 ```
+
 - &shy;<!-- .element: class="fragment" --> Check balance again for both accounts.
 - &shy;<!-- .element: class="fragment" --> What happens to nonce of Alice?
 
