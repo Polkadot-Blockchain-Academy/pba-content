@@ -60,6 +60,8 @@ Substrate is a pure technological investment against chain maximalism, even outs
 can create sovereign chains with substrate, or Polkadot Parachains, or more hybrid things. More on
 this when you learn about Substrate's role in the Polkadot ecosystem.
 
+Figure: https://www.youtube.com/watch?v=0IoUZdDi5Is
+
 ---
 
 ## Core Philosophies of Substrate 💭
@@ -220,8 +222,7 @@ https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/3215760/nsa-relea
 
 Notes:
 
-this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for
-Rustacean's chapter on `no_std` covers this very well.
+this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for Rustacean's chapter on `no_std` covers this very well.
 
 Also, this is a good time to talk about how we use "Runtime" in a different way.
 
@@ -368,7 +369,7 @@ This is very similar to treating your own runtime as a smart contract.
 ### 🏦 Governance + Upgradeability
 
 - Meta-protocol?
-- &shy;<!-- .element: class="fragment" --> "*State machine as stored WASM*  " in the Substrate node.
+- &shy;<!-- .element: class="fragment" -->"*Runtime as WASM*  " in the Substrate node.
 - <!-- .element: class="fragment" --> Inherently upgradeable protocol?
 - <!-- .element: class="fragment" --> WASM Runtime
 
@@ -524,6 +525,10 @@ https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-sm
 
 - Node that follows headers, therefore knows state roots and can ask for state-proofs to do more.
 
+Note:
+
+Establish that it is merely an alternative node implementation.
+
 ---v
 
 ### State of Light Clients
@@ -548,6 +553,12 @@ configured with GRANDPA.
 ### State of Light Clients
 
 <img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-smoldot-browser.svg" />
+
+Note:
+
+Similarly it is dead simple to embed smoldot in mobile etc.
+
+Separate lecture on this later.
 
 ---
 
@@ -628,6 +639,46 @@ fn main() {
 <img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-contracts.svg" />
 
 ---v
+
+### Substrate and Smart Contracts
+
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-contracts-full.svg" />
+
+---v
+
+### Substrate and Smart Contracts
+
+<pba-cols>
+
+<pba-col>
+  <img style="width: 600px;" src="../../assets/img/5-Substrate/peter-parker-glasses-off.png" />
+</pba-col>
+
+<pba-col>
+  <img src="../../assets/img/5-Substrate/ethereum-logo.svg" />
+</pba-col>
+
+</pba-cols>
+
+---v
+
+### Substrate and Smart Contracts
+
+<pba-cols>
+
+<pba-col>
+  <img style="width: 600px;" src="../../assets/img/5-Substrate/peter-parker-glasses-on.png" />
+</pba-col>
+
+<pba-col>
+  <img style="width: 400px; background: white; border-radius: 50%; padding: 30px;" src="../../assets/img/5-Substrate/substrate-logo.svg" />
+  <p style="font-size: 6rem;">😎</p>
+</pba-col>
+
+</pba-cols>
+
+---v
+
 
 ### Substrate and Smart Contracts
 
