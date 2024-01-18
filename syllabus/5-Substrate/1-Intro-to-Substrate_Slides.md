@@ -15,7 +15,6 @@ duration: 60 minutes
 - Interrupts and questions are always welcome.
 - Narratives > facts.
 
-
 Your feedback is highly appreciated!
 
 ---
@@ -231,7 +230,7 @@ Also, this is a good time to talk about how we use "Runtime" in a different way.
 ## 🤩 Generic, Modular and Extensible Design
 
 - Second line of defense.
-- Whatever code we write is (thanks to Rust) perfectly executed, *but what should we write*?
+- Whatever code we write is (thanks to Rust) perfectly executed, _but what should we write_?
 
 Notes:
 
@@ -351,10 +350,8 @@ _The way to make a protocol truly upgradeable is to design a meta-protocol._
 
 Note:
 
-
 In this figure, the meta-protocol, the substrate node, is not forklessly upgrade-able. It can only
 be upgraded with a fork.
-
 
 ---v
 
@@ -371,7 +368,7 @@ This is very similar to treating your own runtime as a smart contract.
 ### 🏦 Governance + Upgradeability
 
 - Meta-protocol?
-- &shy;<!-- .element: class="fragment" -->"*Runtime as WASM*  " in the Substrate node.
+- &shy;<!-- .element: class="fragment" -->"_Runtime as WASM_ " in the Substrate node.
 - <!-- .element: class="fragment" --> Inherently upgradeable protocol?
 - <!-- .element: class="fragment" --> WASM Runtime
 
@@ -411,7 +408,6 @@ This is very similar to treating your own runtime as a smart contract.
 
 ---
 
-
 ## Positive Consequences of _Wasm_ Runtime 🔥
 
 ---v
@@ -439,7 +435,7 @@ how can we guarantee that neither enter an infinite loop, or try to access the f
 
 ---v
 
- ### 🌈 Easier (light)Node Development
+### 🌈 Easier (light)Node Development
 
 Notes:
 
@@ -681,7 +677,6 @@ fn main() {
 
 ---v
 
-
 ### Substrate and Smart Contracts
 
 > SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
@@ -735,7 +730,6 @@ fee-less.
 ### Substrate and Smart Contracts
 
 <img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-4-1-ink.jpeg" />
-
 
 ---
 
@@ -915,7 +909,6 @@ Notes:
 - Among the definitions of the Wasm runtime, let's recap what the state transition is.
 - The block execution definition will be described more in the Wasm-meta lecture.
 
-
 ---
 
 ## Full Substrate Architecture
@@ -1076,7 +1069,9 @@ hardcoded, but the protocol itself is flexible.
 ## Homework 📚
 
 Highly suggested reading to ingest this lecture better:
-  - [`polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html)
+
+- [`polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html)
+
 ---
 
 ## Additional Resources! 😋
@@ -1128,7 +1123,6 @@ exception](https://www.gnu.org/software/classpath/license.html).
 - a takeaway after each section, more clear path (shawn).
 
 ---
-
 
 ## Appendix: More Diagrams of Substrate and Polkadot
 
@@ -1200,5 +1194,3 @@ People actually tried sticking things like JVM into the browser (_Java Applets_)
 
 - Any language that can compile to Wasm and exposes a fixed set of functions, to be used by the client.
 - ... But, of course, Substrate comes with a framework to make this developer-friendly, **FRAME™️**.
-
----

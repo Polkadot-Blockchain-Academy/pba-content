@@ -18,7 +18,6 @@ We often want a succinct representation of some data<br />with the expectation t
 
 ## Hash Function Properties
 
-
 - Accept unbounded size input <!-- .element: class="fragment" data-fragment-index="0" -->
 - Map to a bounded output <!-- .element: class="fragment" data-fragment-index="1" -->
 - Be fast to compute <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -28,10 +27,11 @@ We often want a succinct representation of some data<br />with the expectation t
 - Resist collisions<br />(attacker controls both inputs) <!-- .element: class="fragment" data-fragment-index="6" -->
 
 Notes:
- 1. one way meaning for a given output difficult to get the input
- 1. attacker has the value 5 and from that can find a preimage that hashes to 5 (5 just an example value)
- 1. attacker has input and output and cant find a another input which maps to the output
- 1. More generally the attacker has the entire input space and cant find two inputs which hash to the same value
+
+1.  one way meaning for a given output difficult to get the input
+1.  attacker has the value 5 and from that can find a preimage that hashes to 5 (5 just an example value)
+1.  attacker has input and output and cant find a another input which maps to the output
+1.  More generally the attacker has the entire input space and cant find two inputs which hash to the same value
 
 ---
 
@@ -102,7 +102,7 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 - Some hash functions are designed to be slow. <!-- .element: class="fragment" data-fragment-index="0" -->
 - Does anyone know why someone would want a hash function to be slow? <!-- .element: class="fragment" data-fragment-index="1" -->
-- These have applications like password hashing, which would slow down brute-force attackers. <!-- .element: class="fragment" data-fragment-index="2" --> 
+- These have applications like password hashing, which would slow down brute-force attackers. <!-- .element: class="fragment" data-fragment-index="2" -->
 - For our purposes, we generally want them to be fast. <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
@@ -270,13 +270,13 @@ e.g., a 256 bit hash output yields 2^128 security
 It should be difficult for someone to partially (for a substring of the hash output) find a collision or "second" pre-image.
 
 - Bitcoin PoW is a partial pre-image attack. <!-- .element: class="fragment" data-fragment-index="0" -->
-- Can anyone explain how? <!-- .element: class="fragment" data-fragment-index="1" --> 
+- Can anyone explain how? <!-- .element: class="fragment" data-fragment-index="1" -->
 - Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.<!-- .element: class="fragment" data-fragment-index="2" -->
 - Prefix collision resistance important to rationalize costs for some cryptographic data structures.<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 This is a technique used to trick users into thinking they are interacting with a trusted entity (like a account or piece of data) when they are actually interacting with a malicious actor. This can be done by creating a fraudulent address that looks similar to a legitimate one.
-example AEVXZ AEVYZ 
+example AEVXZ AEVYZ
 
 ---
 
@@ -357,7 +357,7 @@ However, if used in another cryptographic primitive that _does_ provide non-repu
 
 Notes:
 
-- The hash alone doesnt give one the ability to authenticate or identify the originator of the data because anyone with access to the data can produce the same hash. 
+- The hash alone doesnt give one the ability to authenticate or identify the originator of the data because anyone with access to the data can produce the same hash.
 
 This is key in digital signatures. However, it's important to realize that if $D$ is kept secret, $H(D)$ is basically meaningless.
 
@@ -381,7 +381,7 @@ In [Bittorrent](https://en.wikipedia.org/wiki/BitTorrent), each file chunk is ha
 
 Notes:
 
-- Content addressed file is when a file is identified based on the content of the file. 
+- Content addressed file is when a file is identified based on the content of the file.
 
 - The hash of the large file can also serve as a signal to the protocol that transmission is complete.
 
@@ -423,6 +423,7 @@ It is often useful to commit to some information<br /> without storing or reveal
 
 Notes:
 What is an example of an application would use an application like this?
+
 ---
 
 ## Commit-Reveal

@@ -1,6 +1,6 @@
 ---
 title: Substrate Merklized Storage
-duration: 90mins  
+duration: 90mins
 ---
 
 # Substrate Storage
@@ -54,7 +54,7 @@ Notes:
 
 ### What We Know So Far
 
-```rust 
+```rust
   sp_io::TestExternalities::new_empty().execute_with(|| {
         sp_io::storage::get(..);
     });
@@ -84,6 +84,7 @@ Notes:
 - O(1) read and write.
 
 > Spoiler, that is not how data is stored internally in the database.
+
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -292,7 +293,6 @@ Notes:
 - imagine: `sp_io::storage::get(b"ad")`
 - We will traverse the path later.
 
-
 ---v
 
 ### Merklized
@@ -310,7 +310,7 @@ simplification.
 
 - We know the state-root at a given block `n`.
 - Assume this is a base-27, patricia trie.
-  English alphabet along with '_' is the key-scope.
+  English alphabet along with '\_' is the key-scope.
 - Let's see the steps needed to read `balances_alice` from the storage.
 
 ---v
@@ -328,8 +328,8 @@ Notes:
 
 Notes:
 
-- We are interested in "balances_" so we read that node from database.
-- Did you notice the mistake in the slide? "_" technically would not be allowed in base-26, so it really is base-27.
+- We are interested in "balances\_" so we read that node from database.
+- Did you notice the mistake in the slide? "\_" technically would not be allowed in base-26, so it really is base-27.
 
 ---v
 
@@ -357,6 +357,7 @@ the [radix tree visualization](https://www.cs.usfca.edu/~galles/visualization/Ra
 ## Merklized: Proofs
 
 Back to our question
+
 > If alice only has this state root, how can she verify her balance is correct?
 
 ---v
@@ -367,7 +368,7 @@ Notes:
 
 Give 30 seconds to students to make sense of the image by themselves.
 
-The important point is that for example the whole data under `_system` is  hidden away behind one hash.
+The important point is that for example the whole data under `_system` is hidden away behind one hash.
 
 Receiver will hash the root node, and check it against a publicly known storage root.
 
@@ -403,7 +404,7 @@ compact proof").
 <div>
 
 - Intermediary (branch) nodes could contain values.
-    - `:code` contains some value, `:code:more` can also contain value.
+  - `:code` contains some value, `:code:more` can also contain value.
 
 </div>
 
@@ -435,8 +436,8 @@ it will be `O(LOG_n)`.
 ## Large data nodes 🤔
 
 - Two common problems that merkle proofs have:
-    - If the one of the parent nodes has some large data.
-    - If you want to prove the deletion/non-existence of a leaf node.
+  - If the one of the parent nodes has some large data.
+  - If you want to prove the deletion/non-existence of a leaf node.
 
 ---v
 
@@ -524,10 +525,10 @@ All of that can be delayed.
 ### Overlay
 
 - Almost identical semantic to your CPU cache:
-    - <!-- .element: class="fragment" --> Once you read a value, it stays here, and can be re-read for cheap.
-    - <!-- .element: class="fragment" --> Once you write a value, it will only be written here.
-        - It can be read for cheap.
-    - <!-- .element: class="fragment" --> All writes are flushed at the end of the runtime api call.
+  - <!-- .element: class="fragment" --> Once you read a value, it stays here, and can be re-read for cheap.
+  - <!-- .element: class="fragment" --> Once you write a value, it will only be written here.
+    - It can be read for cheap.
+  - <!-- .element: class="fragment" --> All writes are flushed at the end of the runtime api call.
 - <!-- .element: class="fragment" --> No race conditions as runtime is single-threaded.
 
 ---v
@@ -656,11 +657,11 @@ https://www.youtube.com/embed/OoMPlJKUULY
 There are multiple implementations of `Externalities`:
 
 - [`TestExternalities`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.TestExternalities.html):
-    - `Overlay`
-    - `TrieDb` with `InMemoryBackend`
+  - `Overlay`
+  - `TrieDb` with `InMemoryBackend`
 - [`Ext`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.Ext.html) (the real thing 🫡)
-    - `Overlay`
-    - `TrieDb` with a real database being the backend
+  - `Overlay`
+  - `TrieDb` with a real database being the backend
 
 ---v
 
@@ -840,8 +841,8 @@ Notes:
 
 - About state version:
 
-    - https://github.com/paritytech/substrate/pull/9732
-    - https://github.com/paritytech/substrate/discussions/11824
+  - https://github.com/paritytech/substrate/pull/9732
+  - https://github.com/paritytech/substrate/discussions/11824
 
 - An "old but gold" read about trie in
   Ethereum: https://medium.com/shyft-network/understanding-trie-databases-in-ethereum-9f03d2c3325d
