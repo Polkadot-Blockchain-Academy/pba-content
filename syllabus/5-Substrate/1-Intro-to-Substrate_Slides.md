@@ -8,26 +8,25 @@ duration: 60 minutes
 
 ---
 
-## Before Going Any Further 🛑
-
-While I speak, please clone `substrate`, and run `cargo build && cargo build --release`.
-
-> https://github.com/paritytech/substrate
-
----
-
 ## About These Lectures and Lecturer
 
 - Ground-up, low-level, but hands-on.
 - Intentionally avoiding FRAME, but giving you the tools to be successful at it.
-- Narratives above facts all.
 - Interrupts and questions are always welcome.
+- Narratives > facts.
+
+
+Your feedback is highly appreciated!
 
 ---
 
 ## What is Substrate?
 
 Substrate is a **Rust framework** for **building blockchains**.
+
+Note:
+
+like a blockchain making factory.
 
 ---v
 
@@ -43,25 +42,25 @@ Highlight the multi-chain part.
 
 ### Why Substrate?
 
-<img rounded width="1000px" src="../../assets/img/5-Substrate/dev-4.1-maximalism.png" />
-
-Notes:
-
-Polkadot is the biggest bet in this ecosystem against chain maximalism, and Substrate plays a big
-role in this scenario.
+- ⛓️ Future is multi-chain.
+- 😭 Building a blockchain is hard. Upgrading it even harder.
+<!-- .element: class="fragment" -->
+- 💡 Framework!
+<!-- .element: class="fragment" -->
 
 ---v
 
 ### Why Substrate?
 
-- ⛓️ Future is multi-chain.
-<!-- .element: class="fragment" -->
-- 😭 Building a blockchain is hard. Upgrading it even harder.
-<!-- .element: class="fragment" -->
-- 💡 Framework!
-<!-- .element: class="fragment" -->
-- 🧐 But which attitude to take?
-<!-- .element: class="fragment" -->
+<img rounded width="1000px" src="../../assets/img/5-Substrate/dev-4.1-maximalism.png" />
+
+Notes:
+
+Substrate is a pure technological investment against chain maximalism, even outside of Polkadot. You
+can create sovereign chains with substrate, or Polkadot Parachains, or more hybrid things. More on
+this when you learn about Substrate's role in the Polkadot ecosystem.
+
+Figure: https://www.youtube.com/watch?v=0IoUZdDi5Is
 
 ---
 
@@ -96,6 +95,9 @@ meet the demands of today.
 
 https://en.wikipedia.org/wiki/Bitcoin_scalability_problem
 https://ycharts.com/indicators/ethereum_average_gas_price
+
+It is interesting to checkout some projects that are now trying to be "Substrate for L2s":
+https://github.com/Sovereign-Labs/sovereign-sdk / https://arbitrum.io/orbit
 
 ---v
 
@@ -220,8 +222,7 @@ https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/3215760/nsa-relea
 
 Notes:
 
-this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for
-Rustacean's chapter on `no_std` covers this very well.
+this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for Rustacean's chapter on `no_std` covers this very well.
 
 Also, this is a good time to talk about how we use "Runtime" in a different way.
 
@@ -230,7 +231,7 @@ Also, this is a good time to talk about how we use "Runtime" in a different way.
 ## 🤩 Generic, Modular and Extensible Design
 
 - Second line of defense.
-- Our _execution_ (possibly thanks to Rust) is perfect, but we can't predict the future.
+- Whatever code we write is (thanks to Rust) perfectly executed, *but what should we write*?
 
 Notes:
 
@@ -291,7 +292,7 @@ particular implementation.
 <!-- .element: class="fragment" -->
 - What use is governance, if the upgrade cannot be enacted?
 <!-- .element: class="fragment" -->
-- (trustlessly) Upgradeability!
+- (trustless and forkless) Upgradeability!
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -340,7 +341,7 @@ whole thing to be updated.
 
 ### 🏦 Governance + Upgradeability
 
-_The way to make a protocol truly upgradeable is to design a meta-protocol that is not upgradeable._
+_The way to make a protocol truly upgradeable is to design a meta-protocol._
 
 ---v
 
@@ -350,8 +351,10 @@ _The way to make a protocol truly upgradeable is to design a meta-protocol that 
 
 Note:
 
-In this figure, the meta-protocol, the substrate client, is not forklessly upgrade-able. It can only
-be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
+
+In this figure, the meta-protocol, the substrate node, is not forklessly upgrade-able. It can only
+be upgraded with a fork.
+
 
 ---v
 
@@ -359,18 +362,22 @@ be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
 
 <img src="../../assets/img/5-Substrate/dev-4-1-substrate-meta-substrate.svg" />
 
+Note:
+
+This is very similar to treating your own runtime as a smart contract.
+
 ---v
 
 ### 🏦 Governance + Upgradeability
 
-- Fixed meta-protocol?
-- &shy;<!-- .element: class="fragment" --> "_State machine as stored Wasm_" in the Substrate client.
-- <!-- .element: class="fragment" --> inherently upgradeable protocol?
-- <!-- .element: class="fragment" --> Substrate Wasm Runtime
+- Meta-protocol?
+- &shy;<!-- .element: class="fragment" -->"*Runtime as WASM*  " in the Substrate node.
+- <!-- .element: class="fragment" --> Inherently upgradeable protocol?
+- <!-- .element: class="fragment" --> WASM Runtime
 
 ---
 
-### Substrate Architecture
+## Substrate Architecture
 
 <img src="../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
 
@@ -391,12 +398,12 @@ be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
 </pba-col>
 
 <pba-col center>
-<h3 style="color: var(--substrate-host); top: 0"> Client (Meta-protocol) </h3>
+<h3 style="color: var(--substrate-host); top: 0"> Node (Meta-protocol) </h3>
 
 - Native Binary
 - Executes the Wasm runtime
 - Everything else: Database, Networking, Mempool, Consensus..
-- Also known as: Host
+- Also known as: Host, Client
 
 </pba-col>
 
@@ -404,105 +411,6 @@ be upgraded with a fork. The WASM protocol, though, can be upgraded forklessly.
 
 ---
 
-## The Runtime
-
-<div>
-
-- Runtime -> **Application Logic**.
-
-</div>
-<!-- .element: class="fragment" -->
-<div>
-
-- A _fancy_ term: Runtime -> **State Transition Function**.
-
-</div>
-<!-- .element: class="fragment" -->
-<div>
-
-- A _technical_ term: Runtime -> **how to execute blocks**.
-
-</div>
-<!-- .element: class="fragment" -->
-
-Notes:
-
-- I would personally call the runtime STF to avoid confusion with the "runtime" that is the general
-  programming runtime, but kinda too late for that now.
-- Among the definitions of the Wasm runtime, let's recap what the state transition is.
-- The block execution definition will be described more in the Wasm-meta lecture.
-
----
-
-## State Transition Function
-
-**State**
-
-<img style="width: 600px" src="../../assets/img/5-Substrate/dev-4-1-state-def.svg" />
-
-Notes:
-
-entire set of data upon which we want to maintain a consensus.
-key value.
-associated with each block.
-
----v
-
-### State Transition Function
-
-**Transition Function**
-
-<img width="400px" src="../../assets/img/5-Substrate/dev-4-1-state-transition-def.svg" />
-
----v
-
-### State Transition Function
-
-$$STF = F(block_{N}, state_{N}, code_{N}): state_{N+1}$$
-
----v
-
-### State Transition Function
-
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-state.svg" />
-
-Notes:
-
-The Wasm runtime in this figure is in fact obtained from the state (see `0x123`)
-
----v
-
-### State Transition Function
-
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-state-code.svg" />
-
----v
-
-### State Transition Function
-
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-state-code-next.svg" />
-
-Notes:
-
-THIS IS HOW A META-PROTOCOL MAKES A SYSTEM UPGRADE-ABLE.
-
-could we have updated the code in N+1? By default, no because we load the wasm before you even look
-into the block.
-
-IMPORTANT: State is not IN THE BLOCK, each state has AN ASSOCIATED BLOCK.
-
-Keeping the state is 100% optional. You can always re-create the state of block `N` by re-executing
-block `[0, .., N-1]`.
-
-ofc, changing the Wasm code cannot be done by anyone. That's up to governance.
-
----
-
-## Full Substrate Architecture
-
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-full.svg" />
-
----
 
 ## Positive Consequences of _Wasm_ Runtime 🔥
 
@@ -510,7 +418,7 @@ ofc, changing the Wasm code cannot be done by anyone. That's up to governance.
 
 ### 🤖 Deterministic Execution
 
-- Portable, yet deterministic.
+- Portable, yet deterministic bytecode.
 
 Notes:
 
@@ -527,21 +435,21 @@ Wasm's instruction set is deterministic, so all good.
 
 Notes:
 
-howe can we guarantee that neither enter an infinite loop, or try to access the filesystem?
+how can we guarantee that neither enter an infinite loop, or try to access the filesystem?
 
 ---v
 
-### 🌈 Easier (light)Client Development
+ ### 🌈 Easier (light)Node Development
 
 Notes:
 
-for the case of client, your client only needs to implement a set of host environments, and NOT
-re-implement the business logic.
+for the case of node, your node only needs to implement the host/client, and NOT re-implement the
+business logic.
 
-Simply compare the process to create an alternative client for Ethereum, where you need to
+Simply compare the process to create an alternative node for Ethereum, where you need to
 re-implement the EVM.
 
-Same applies to light client, as they do not need to deal with the state transition function.
+Same applies to light node, as they do not need to deal with the state transition function.
 
 ---v
 
@@ -566,8 +474,8 @@ This update was:
 
 Notes:
 
-take a moment to establish that this upgrade is forkless. The runtime is upgraded, but the client is
-not. In fact, the client didn't need to know about this at all.
+take a moment to establish that this upgrade is forkless. The runtime is upgraded, but the node is
+not. In fact, the node didn't need to know about this at all.
 
 This is what the meta-protocol achieves.
 
@@ -575,8 +483,11 @@ This is what the meta-protocol achieves.
 
 ## Negative Consequences of _Wasm_ Runtime
 
-- 😩 Constrained resources (memory, speed, host access).
-- 🌈 Client diversification != state-transition diversification
+---v
+
+### 😩 Constrained Resources
+
+👾 memory, speed, host access
 
 Notes:
 
@@ -585,91 +496,46 @@ Notes:
 - Can be slower than native, depending on the executor/execution method.
 - Limited access to the host host env, all needs to be done through syscalls.
 
+---v
+
+### 🌈 Node diversification != runtime diversification
+
+Notes:
+
 Less state-transition diversification, because the runtime is the same for all clients. If there a
 bug in it, everyone is affected.
+---v
 
----
+### 🔄 Metering
 
-## Consensus <> Runtime 🤔
-
-- Yes, consensus is not a core part of a blockchain runtime. Why?
-- Not part of your STF!
-<!-- .element: class="fragment" -->
-- The consensus protocol is to your runtime what HTTP is to Facebook.
-<!-- .element: class="fragment" -->
+- Is not so great in WASM...
+- New experimental work on PolkaVM, based on RiscV.
 
 Notes:
 
-comments from Joshy:
+It is possible to meter wasm, but it has overhead, and it is still not perfect. Goes back to the instruction set being relatively large.
 
-I think this is important. The runtime is the application you want to run.
+Both of the following are amazing reads:
 
-Consensus is outside of this application helping us agree what the official state of this runtime
-is. Last wave I used this analogy.
+https://forum.polkadot.network/t/eliminating-pre-dispatch-weight/400
 
-Imagine a writers room for some TV show. Writers are sitting around coming up with potential plot
-points for future episodes. Any of their ideas could work. But eventually they need to agree what
-the next episode to air actually will be.
+https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-smart-contracts-and-possibly-more/3811/32
 
 ---
 
-## Database <> State 🤔
+## State of Light Client/Nodes
 
-- State is the entire set of key value data that is associated with one block.
-- Database is the component that allows this be stored in disk. May or may not be key-value.
+- Node that follows headers, therefore knows state roots and can ask for state-proofs to do more.
 
-<img style="width: 800px" src="../../assets/img/5-Substrate/dev-4-1-state-database.svg" />
+Note:
 
-Notes:
-
-state is sometimes called "storage" asd well.
-
----
-
-## Database <> Runtime 🤔
-
-- Yes, data is stored outside of the runtime. Why?
-- Wasm runtime does not have the means to store it.
-<!-- .element: class="fragment" -->
-- Yet, the interpretation of the data is up to the runtime.
-<!-- .element: class="fragment" -->
-
----v
-
-### Database <> Runtime 🤔
-
-<img style="width: 1200px" src="../../assets/img/5-Substrate/dev-4-1-state-opaque.svg" />
-
----v
-
-## The Client: Database 🤔
-
-- The database, from the client's PoV, is a _untyped_, key-value storage.
-- The runtime knows which key/value means what.
-
----
-
-## State of Light Clients
-
-- Client that follows headers, therefore knows state roots and can ask for state-proofs to do more.
+Establish that it is merely an alternative node implementation.
 
 ---v
 
 ### State of Light Clients
 
-<pba-cols>
-<pba-col>
-
-- Not only possible, but they can also run as Wasm, in the browser!
-- "Substrate Connect" / SMOLDOT
-
-</pba-col>
-<pba-col>
-
-<img style="width: 600px;" src="../../assets/img/5-Substrate/dev-4-1-smoldot.svg" />
-
-</pba-col>
-</pba-cols>
+<img src="../../assets/img/5-Substrate/dev-4-1-smoldot.svg" />
 
 Notes:
 
@@ -683,6 +549,18 @@ This has to do with the fact that consensus and a few other bits of the client a
 100% independent. For example, GRANDPA has a pallet on the runtime side, but is mostly in the
 client. Now, a client that is configured with GRANDPA can only work with runtimes that are also
 configured with GRANDPA.
+
+---v
+
+### State of Light Clients
+
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-smoldot-browser.svg" />
+
+Note:
+
+Similarly it is dead simple to embed smoldot in mobile etc.
+
+Separate lecture on this later.
 
 ---
 
@@ -758,12 +636,6 @@ fn main() {
 
 ---
 
-## Substrate and Polkadot
-
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
-
----
-
 ## Substrate and Smart Contracts
 
 <img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-contracts.svg" />
@@ -772,7 +644,47 @@ fn main() {
 
 ### Substrate and Smart Contracts
 
-> A Substrate-Connect extension is syncing a chain who's runtime is executing wasm contracts.
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-contracts-full.svg" />
+
+---v
+
+### Substrate and Smart Contracts
+
+<pba-cols>
+
+<pba-col>
+  <img style="width: 600px;" src="../../assets/img/5-Substrate/peter-parker-glasses-off.png" />
+</pba-col>
+
+<pba-col>
+  <img src="../../assets/img/5-Substrate/ethereum-logo.svg" />
+</pba-col>
+
+</pba-cols>
+
+---v
+
+### Substrate and Smart Contracts
+
+<pba-cols>
+
+<pba-col>
+  <img style="width: 600px;" src="../../assets/img/5-Substrate/peter-parker-glasses-on.png" />
+</pba-col>
+
+<pba-col>
+  <img style="width: 400px; background: white; border-radius: 50%; padding: 30px;" src="../../assets/img/5-Substrate/substrate-logo.svg" />
+  <p style="font-size: 6rem;">😎</p>
+</pba-col>
+
+</pba-cols>
+
+---v
+
+
+### Substrate and Smart Contracts
+
+> SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
 
 Question: How many nested Wasm blobs are executing one another?
 
@@ -789,7 +701,7 @@ Question: How many nested Wasm blobs are executing one another?
 <pba-col>
 
 - The browser is executing:
-- a Wasm blob (substrate-connect)
+- a Wasm blob (SMOLDOT in extension)
 - that executes a Wasm blob (runtime)
 - that executes a Wasm blob (contract)
 
@@ -800,18 +712,14 @@ Question: How many nested Wasm blobs are executing one another?
 
 ### Substrate and Smart Contracts
 
-<img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-4-1-ink.jpeg" />
-
----v
-
-### Substrate and Smart Contracts
-
 - So when should you write with a smart contract (Ink!) and when a Runtime (FRAME)?
 
 Notes:
 
+https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/runtime_vs_smart_contract/index.html
+
 I was asked this yesterday as well. My latest answer is: if you don't need any of the customizations
-that a blockchain client/runtime gives to you, and the performance of a shared platform is okay for
+that a blockchain node/runtime gives to you, and the performance of a shared platform is okay for
 you, then go with a smart contract. If you need more, you need a "runtime" (some kind of chian,
 parachain or solo)
 
@@ -822,22 +730,70 @@ Also, a contract can not have fee-less transactions.
 Also, a contract usually depends on a token for gas, while a runtime can be in principle token-less
 fee-less.
 
+---v
+
+### Substrate and Smart Contracts
+
+<img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-4-1-ink.jpeg" />
+
+
 ---
 
 ## Technical Freedom vs Ease
 
 <img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-4-1-freedom.svg" />
 
+Notes:
+
+OpenZepplin is working on templates for substrate now:
+
+https://github.com/OpenZeppelin/polkadot-runtime-template
+
+We also have some of our own:
+
+https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/templates/index.html
+
 ---
 
-### Substrate: The Gaming Console of Blockchains!
+## Substrate and Polkadot
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
+
+> ..is the biggest bet against chain maximalism
+
+---v
+
+### Repository Structure
+
+#### [`polkadot-sdk`](https://github.com/paritytech/polkadot-sdk)
+
+- Substrate + FRAME + XCM
+- Cumulus
+- Bridges
+- Polkadot Node
+
+**This is a big repo, please clone and run `cargo build` on it after this lecture**
+
+<br/>
+
+#### [`polkadot-fellowship/runtime`](https://github.com/polkadot-fellows/runtimes)
+
+- Polkadot Runtimes
+
+Notes:
+
+https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html
+
+---
+
+## Substrate: The Gaming Console of Blockchains!
 
 <pba-cols>
 <pba-col>
 
 <img src="../../assets/img/5-Substrate/nintendo-console-2.png" style="width:400px;" />
 
-Substrate Client
+Substrate Node
 
 </pba-col>
 <pba-col>
@@ -851,7 +807,179 @@ Substrate's Wasm Runtime
 
 Notes:
 
-Another good analogy: Client is the FPGA, and FRAME/Wasm is the VHDL.
+Another good analogy: Node is the FPGA, and FRAME/Wasm is the VHDL.
+
+---
+
+## Substrate Architecture
+
+So far we covered high level facts about Substrate. Now let's dive deeper into its architecture using the Runtime/STF.
+
+---
+
+## State Transition Function
+
+Let's explore this definition of the runtime a bit more.
+
+---v
+
+### State Transition Function
+
+**State**
+
+<img style="width: 600px" src="../../assets/img/5-Substrate/dev-4-1-state-def.svg" />
+
+Notes:
+
+entire set of data upon which we want to maintain a consensus.
+key value.
+associated with each block.
+
+---v
+
+### State Transition Function
+
+**Transition Function**
+
+<img width="400px" src="../../assets/img/5-Substrate/dev-4-1-state-transition-def.svg" />
+
+---v
+
+### State Transition Function
+
+$$STF = F(block_{N+1}, state_{N}, code_{N}): state_{N+1}$$
+
+Note:
+
+Who can find a small nitpick issue in this?
+
+Code is part of state.
+
+---v
+
+### State Transition Function
+
+<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-state.svg" />
+
+Notes:
+
+This diagram should really be 100000% clear to everyone. Pause.
+
+The Wasm runtime in this figure is in fact obtained from the state (see `0x123`)
+
+---v
+
+### State Transition Function
+
+<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-state-code.svg" />
+
+Note:
+
+now what would happen when we want to execute block N+2?
+
+---v
+
+### State Transition Function
+
+<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-state-code-next.svg" />
+
+Notes:
+
+THIS IS HOW A META-PROTOCOL MAKES A SYSTEM UPGRADE-ABLE.
+
+Q: could we have updated the code in N+1? By default, no because we load the wasm before you even look
+into the block.
+
+IMPORTANT: State is not IN THE BLOCK, each state has AN ASSOCIATED BLOCK.
+
+Keeping the state is 100% optional. You can always re-create the state of block `N` by re-executing
+block `[0, .., N-1]`.
+
+ofc, changing the Wasm code cannot be done by anyone. That's up to governance.
+
+---v
+
+### The Runtime
+
+<div>
+
+- Blockchain -> **State Machine**
+- Runtime -> **State Transition Function**
+  - &shy;<!-- .element: class="fragment" -->Or, **application logic**.
+  - &shy;<!-- .element: class="fragment" -->Or, **how to execute blocks**
+
+Notes:
+
+- I would personally call the runtime STF to avoid confusion with the "runtime" that is the general
+  programming runtime, but kinda too late for that now.
+- Among the definitions of the Wasm runtime, let's recap what the state transition is.
+- The block execution definition will be described more in the Wasm-meta lecture.
+
+
+---
+
+## Full Substrate Architecture
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-full.svg" />
+
+---
+
+## Consensus <> Runtime 🤔
+
+- Yes, consensus is not a core part of a blockchain runtime. Why?
+- Not part of your STF!
+<!-- .element: class="fragment" -->
+- The consensus protocol is to your runtime what HTTP is to Facebook.
+<!-- .element: class="fragment" -->
+
+Notes:
+
+comments from Joshy:
+
+I think this is important. The runtime is the application you want to run.
+
+Consensus is outside of this application helping us agree what the official state of this runtime
+is. Last wave I used this analogy.
+
+Imagine a writers room for some TV show. Writers are sitting around coming up with potential plot
+points for future episodes. Any of their ideas could work. But eventually they need to agree what
+the next episode to air actually will be.
+
+---
+
+## Database <> State 🤔
+
+- State is the entire set of key value data that is associated with one block.
+- Database is the component that allows this be stored in disk. May or may not be key-value.
+
+<img style="width: 800px" src="../../assets/img/5-Substrate/dev-4-1-state-database.svg" />
+
+Notes:
+
+state is sometimes called "storage" asd well.
+
+---
+
+### Database <> Runtime 🤔
+
+- Yes, data is stored outside of the runtime. Why?
+- Wasm runtime does not have the means to store it.
+<!-- .element: class="fragment" -->
+- Yet, the interpretation of the data is up to the runtime.
+<!-- .element: class="fragment" -->
+
+---v
+
+### Database <> Runtime 🤔
+
+<img style="width: 1200px" src="../../assets/img/5-Substrate/dev-4-1-state-opaque.svg" />
+
+---v
+
+### The Node: Database 🤔
+
+- The database, from the client's PoV, is a _untyped_, key-value storage.
+- The runtime knows which key/value means what.
 
 ---
 
@@ -859,11 +987,12 @@ Another good analogy: Client is the FPGA, and FRAME/Wasm is the VHDL.
 
 - Substrate's design stems from 3 core principles:
   - **Rust**, **Generic Design**, **Upgradeability/Governance**
-- Client / Runtime architecture
-- State Transition
 - Positive and negative consequences of Wasm
 - Substrate next to Polkadot and other chains.
 - Substrate for Smart Contracts.
+- Light Nodes/Clients.
+- Node / Runtime architecture
+- State Transition Deep Dive -> Forkless Upgrade
 
 ---v
 
@@ -873,7 +1002,7 @@ Another good analogy: Client is the FPGA, and FRAME/Wasm is the VHDL.
 
 ---v
 
-## Recap: 🏦 Governance and Upgradeability
+### Recap: 🏦 Governance and Upgradeability
 
 A timeless system must be:
 
@@ -889,7 +1018,7 @@ Notes:
 
 Question: how would you put the meta-protocol of Substrate into words?
 
-The client is basically a wasm meta-protocol that does only one thing. This meta-protocol is
+The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
 hardcoded, but the protocol itself is flexible.
 
 ---
@@ -898,19 +1027,18 @@ hardcoded, but the protocol itself is flexible.
 
 #### Track: Main Lectures
 
-- Wasm Meta Protocol
-- Substrate Storage
+- Wasm Meta Protocol (Kian)
+- Substrate Storage (Ankan)
 
 #### Track: Aux Lecture
 
-- TX-Pool
-- Substrate: Show Me The Code
-- Substrate Interactions
-- SCALE
+- Tx Pool (Kian)
+- Interacting with Substrate (Ankan)
+- SCALE Codec (Ankan)
 
 #### Track: Graded Activity
 
-- FRAME-Less
+- FRAMELess Runtime
 
 ---v
 
@@ -918,42 +1046,37 @@ hardcoded, but the protocol itself is flexible.
 
 #### Day 0
 
-- Introduction ✅ (60m)
-- Wasm Meta Protocol (120+m)
-  - Activity: Finding Runtime APIs and Host Functions in Substrate
-- 🌭 _Lunch Break_
-- Show Me The Code (60m)
-- Substrate Interactions (60m)
-- FRAME-Less Activity (60m)
-
-Notes:
-
-We are aware that the module is highly skewed in terms of lecture time, but is is intentional and we
-want to see how it works. This allows you to kickstart with your assignment earlier.
+- ✅ Introduction
+- SCALE Codec
+- Interacting with Substrate
+- 📚 FRAMELess Assignment
 
 ---v
 
-## Rest of This Module! 😈
+### Rest of This Module! 😈
 
 #### Day 1
 
-- Transaction Pool (60m)
-- SCALE (60m)
-- Substrate/FRAME Tips and Tricks
-- 🌭 _Lunch Break_
-- FRAME-Less Activity
+- Wasm Meta Protocol
+- Tx Pool
+- 📚 FRAMELess Activity
 
 ---v
 
-## Rest of This Module! 😈
+### Rest of This Module! 😈
 
 #### Day 2
 
-- Substrate Storage (90m)
-- FRAME-Less Activity
-- 🌭 _Lunch Break_
-- End of Module 🎉
+- Substrate Storage
+- (Substrate/FRAME Tips and Tricks)
+- 📚 FRAMELess Activity
 
+---
+
+## Homework 📚
+
+Highly suggested reading to ingest this lecture better:
+  - [`polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html)
 ---
 
 ## Additional Resources! 😋
@@ -1006,6 +1129,33 @@ exception](https://www.gnu.org/software/classpath/license.html).
 
 ---
 
+
+## Appendix: More Diagrams of Substrate and Polkadot
+
+Notes:
+
+I made these figures recently to explain the relationship between Substrate, Cumulus and Polkadot.
+They use the most generic term for client and runtime, namely "Host" and "STF" respectively.
+
+---v
+
+Substrate
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-substrate-new-1.svg" />
+
+---v
+
+Polkadot
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-substrate-new-2.svg" />
+---v
+
+A Parachain
+
+<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-substrate-new-3.svg" />
+
+---
+
 ## Appendix: What is Wasm Anyways?
 
 > WebAssembly (abbreviated Wasm) is a _binary instruction format_ for a _stack-based virtual
@@ -1052,27 +1202,3 @@ People actually tried sticking things like JVM into the browser (_Java Applets_)
 - ... But, of course, Substrate comes with a framework to make this developer-friendly, **FRAME™️**.
 
 ---
-
-## Appendix: More Diagrams of Substrate and Polkadot
-
-Notes:
-
-I made these figures recently to explain the relationship between Substrate, Cumulus and Polkadot.
-They use the most generic term for client and runtime, namely "Host" and "STF" respectively.
-
----v
-
-Substrate
-
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-substrate-new-1.svg" />
-
----v
-
-Polkadot
-
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-substrate-new-2.svg" />
----v
-
-A Parachain
-
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-1-substrate-new-3.svg" />
