@@ -152,13 +152,13 @@ Game theory distinguishes between:
 
 ## Static and Dynamic Games
 
-|                  | Static Game                                     | Dynamic Game                                                                                           |
-| ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Definition       | All players take their actions at the same time | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
-| Simple Example   | Rock-Paper-Scissors                             | Tic-Tac-Toe                                                                                            |
-| Economic Example | Sealed-bid auction.                             | English Auction.                                   |
-|                  |   All bidders submit their bids simultaneously (in a sealed envelope).                               | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
-| Representation   | Payoff Matrix                                   | Decision Tree                                                                                          |
+|                  | Static Game                                                          | Dynamic Game                                                                                           |
+| ---------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Definition       | All players take their actions at the same time                      | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
+| Simple Example   | Rock-Paper-Scissors                                                  | Tic-Tac-Toe                                                                                            |
+| Economic Example | Sealed-bid auction.                                                  | English Auction.                                                                                       |
+|                  | All bidders submit their bids simultaneously (in a sealed envelope). | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
+| Representation   | Payoff Matrix                                                        | Decision Tree                                                                                          |
 
 ---
 
@@ -722,7 +722,6 @@ Link will be distributed!
     <li class="fragment">Tit-For-Tat: Start with cooperate and copy the opponent's strategy of the last round.</li>
 </ul>
 
-
 ---
 
 ## Repeated Prisonner's Dilemma
@@ -790,7 +789,6 @@ Link will be distributed!
 ## Game 3: Questions?
 
 ### Don't ask about strategies!
-
 
 ---
 

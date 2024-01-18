@@ -8,9 +8,8 @@ title: Accounting Models & User Abstractions in Blockchains
 
 ## Multi-User State Machines
 
-* We can model simple state machines.
-* But now we want a multi-user state machine where users can interact.
-
+- We can model simple state machines.
+- But now we want a multi-user state machine where users can interact.
 
 Notes:
 
@@ -23,8 +22,8 @@ Imagine you plug the output of your amp into the input of my amp
 
 ## Multiple Models
 
-* Unspent Transaction Output
-* Accounts
+- Unspent Transaction Output
+- Accounts
 
 Notes:
 

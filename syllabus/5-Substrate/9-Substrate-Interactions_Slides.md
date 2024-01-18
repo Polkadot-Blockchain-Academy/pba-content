@@ -11,7 +11,7 @@ duration: 60 minutes
 
 Find all the commands that will be used in this workshop:
 [tinyurl.com/hk24-substrate](https://hackmd.io/@ak0n/hk24-substrate-interaction)
- 
+
 ---
 
 ## Before we start
@@ -161,6 +161,7 @@ Notes:
 ### Workshop: Spin up your node
 
 - Check out cli docs
+
 ```sh
 ./target/release/minimal-node --help
 ```
@@ -168,6 +169,7 @@ Notes:
 <br/>
 
 - Spin up your dev node.
+
 ```sh
 ./target/release/minimal-node --chain=dev --tmp
 ```
@@ -270,12 +272,14 @@ The actual type is:
 
 - &shy;<!-- .element: class="fragment" --> Take PJS help to get the signed extrinsic.
 - &shy;<!-- .element: class="fragment" --> Use the following command to submit the extrinsic.
+
 ```sh
 wscat \
   -c ws://localhost:9944 \
   -x '{"jsonrpc":"2.0", "id": 42, "method":"author_submitExtrinsic", "params": [""] }' \
   | jq
 ```
+
 - &shy;<!-- .element: class="fragment" --> Check balance again for both accounts.
 - &shy;<!-- .element: class="fragment" --> What happens to nonce of Alice?
 
