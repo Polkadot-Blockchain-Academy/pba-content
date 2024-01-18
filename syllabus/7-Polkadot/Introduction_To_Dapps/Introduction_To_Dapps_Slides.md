@@ -24,7 +24,7 @@ duration: 1 hour
 
 # What is a Dapp?
 
----
+---v
 
 <img rounded style="width: 1000px" data-src="./img/1-what-is-a-dapp/moonbeam.png" />
 
@@ -74,9 +74,9 @@ https://staking.polkadot.network
 
 </pba-flex>
 
----
+---v
 
-## What is Dapp: Characteristics
+## Dapp Characteristics
 
 Although no strict definition, dapps have certain characteristics:
 
@@ -91,7 +91,7 @@ Although no strict definition, dapps have certain characteristics:
 - Allows signing and submitting of transactions.
 <!-- .element: class="fragment" -->
 
----
+---v
 
 ### Is a dapp a dapp if it is hosted via traditional web hosting, versus something like IPFS?
 
@@ -100,7 +100,7 @@ Although no strict definition, dapps have certain characteristics:
 ### Does a dapp have to be open source to be a dapp?
 <!-- .element: class="fragment" -->
 
----
+---v
 
 ## Is a Web Extension a Dapp?
 
@@ -136,7 +136,7 @@ Although no strict definition, dapps have certain characteristics:
 
 <img rounded style="width: 1000px" data-src="./img/1-what-is-a-dapp/polkassembly.png" />
 
----
+---v
 
 ## What is a Dapp: Summary
 
@@ -154,7 +154,7 @@ Although no strict definition, dapps have certain characteristics:
 
 # Dapp Tech Stack
 
----
+---v
 
 ## Dapp Tech Stack
 
