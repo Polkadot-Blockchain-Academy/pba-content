@@ -3,6 +3,7 @@ title: Advanced Digital Signatures
 description: More exotic digital signature methods
 duration: 1 hour
 ---
+
 # Cryptography Day II
 
 <pba-flex center>
@@ -60,7 +61,6 @@ Potential example to give verbally:
 - Session keys are used to sign operational messages, but also in challenge-response type games to prove availability by signing a message.
 - Registrar.
 - Identity chains.
-
 
 ---
 
@@ -151,9 +151,9 @@ These require multi-party computation (MPC) protocols, which add some complexity
 ### Key Generation - Threshold
 
 - Threshold multi-signature schemes require that all signers run a distributed key generation (DKG) protocol that constructs key "shares".
-<img style="height: 500px" src="./img/11-simplex_graph.png" /><!-- .element: class="fragment" data-fragment-index="0" -->
+  <img style="height: 500px" src="./img/11-simplex_graph.png" /><!-- .element: class="fragment" data-fragment-index="0" -->
 - The secret encodes the threshold behavior, and signing demands some threshold of signature "fragments".<!-- .element: class="fragment" data-fragment-index="1" -->
--  This DKG protocol breaks other useful things, like hard key derivation.<!-- .element: class="fragment" data-fragment-index="2" -->
+- This DKG protocol breaks other useful things, like hard key derivation.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -224,10 +224,9 @@ Schnorr & BLS multi-signatures avoid complicating verifier logic,<br/>but introd
 ### Ring Signatures
 
 - Ring signatures prove the signer lies within some "anonymity set" of signing keys, but hide which key actually signed.
-<img style="height: 300px" src="./img/Ring-signature.png" /><!-- .element: class="fragment" data-fragment-index="1" -->
+  <img style="height: 300px" src="./img/Ring-signature.png" /><!-- .element: class="fragment" data-fragment-index="1" -->
 - Ring signatures come in many sizes, with many ways of presenting their anonymity sets.<!-- .element: class="fragment" data-fragment-index="2" -->
 - Anonymous blockchain transactions typically employ ring signatures (Monero, ZCash).<!-- .element: class="fragment" data-fragment-index="3" -->
-
 
 Notes:
 
