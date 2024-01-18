@@ -92,7 +92,7 @@ To execute this operation, we will interact with the following components:
 Upon successful XCM execution, a TaskScheduled event will fire on the Turing Network, indicating that the remote call has been executed successfully, thereby creating an automation task.
 
 <figure>
-  <img rounded style="width: 900px;" src="../../../assets/img/8-XCM/high-level-product-flow.jpg" />
+  <img rounded style="width: 900px;" src="../img/high-level-product-flow.jpg" />
   <figcaption>High-level product flow between Moonriver and Turing Network</figcaption>
 </figure>
 
@@ -177,7 +177,7 @@ It requires the following parameters:
 <br/>
 
 <figure>
-  <img rounded style="width: 900px;" src="../../../assets/img/8-XCM/xcm-transactor-extrinsic.png" />
+  <img rounded style="width: 900px;" src="../img/xcm-transactor-extrinsic.png" />
   <figcaption>The parameters in the `transactThroughDerivative()` extrinsic</figcaption>
 </figure>
 
@@ -199,38 +199,38 @@ Likewise, `overallWeight` sets an upper limit on XCM execution, including the Tr
 
 ---v
 
-<img rounded style="width: 770px;" src="../../../assets/img/8-XCM/xcm-send-1.png"/>
+<img rounded style="width: 770px;" src="../img/xcm-send-1.png"/>
 
 Once all the parameters are set, we can proceed by submitting and signing the transaction.
 The XCM message can be conveniently triggered directly from the extrinsic tab of [polkadot.js apps](https://polkadot.js.org/apps/).
 
 ---v
 
-<img rounded style="width: 770px;" src="../../../assets/img/8-XCM/xcm-send-2.png"/>
+<img rounded style="width: 770px;" src="../img/xcm-send-2.png"/>
 
 `DescendOrigin(descend_location)`: The first instruction in the XCM array is DescendOrigin, transferring authority to the user's proxy account on the destination chain.
 
 ---v
 
-<img rounded style="width: 770px;" src="../../../assets/img/8-XCM/xcm-send-3.png"/>
+<img rounded style="width: 770px;" src="../img/xcm-send-3.png"/>
 
 `WithdrawAsset` and `BuyExecution`: These two instructions work together to deduct XCM fees from the user's proxy wallet and reserve them for execution.
 
 ---v
 
-<img rounded style="width: 770px;" src="../../../assets/img/8-XCM/xcm-send-4.png"/>
+<img rounded style="width: 770px;" src="../img/xcm-send-4.png"/>
 
 XCM message - Buy Execution
 ---v
 
-<img rounded style="width: 770px;" src="../../../assets/img/8-XCM/xcm-send-5.png"/>
+<img rounded style="width: 770px;" src="../img/xcm-send-5.png"/>
 
 `Transact(origin_type, require_weight_at_most, call)`: The Transact instruction executes the encoded innerCall on the target chain.
 We ensured that the gas cost does not exceed the specified limit by setting requireWeightAtMost during the call.
 
 ---v
 
-<img rounded style="width: 770px;" src="../../../assets/img/8-XCM/xcm-send-5.png"/>
+<img rounded style="width: 770px;" src="../img/xcm-send-5.png"/>
 
 <div style="font-size: 0.82em;">
 

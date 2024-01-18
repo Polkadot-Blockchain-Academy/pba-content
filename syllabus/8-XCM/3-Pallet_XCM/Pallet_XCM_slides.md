@@ -119,11 +119,11 @@ Then it lets the `XcmRouter` handle the forwarding of the message.
 
 <pba-cols>
 <pba-col>
-<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/teleport.png" />
+<img rounded style="width: 400px;" src="../img/teleport.png" />
 </pba-col>
 
 <pba-col>
-<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/reserve-tx.png" />
+<img rounded style="width: 400px;" src="../reserve-tx.png" />
 </pba-col>
 </pba-cols>
 

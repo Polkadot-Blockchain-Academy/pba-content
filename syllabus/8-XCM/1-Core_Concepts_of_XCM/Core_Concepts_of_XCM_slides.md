@@ -155,19 +155,19 @@ It's up to the interpreter to interpret the intention how it makes sense.
 
 ### Message format changes
 
-<img style="width: 1050px;" src="../../../assets/img/8-XCM/against-native-messaging.svg" />
+<img style="width: 1050px;" src="../img/against-native-messaging.svg" />
 
 ---v
 
 ### Message format changes
 
-<img style="width: 1050px;" src="../../../assets/img/8-XCM/against-native-messaging-2.svg" />
+<img style="width: 1050px;" src="../img/against-native-messaging-2.svg" />
 
 ---v
 
 ### Message format changes
 
-<img rounded style="width: 1050px" src="../../../assets/img/8-XCM/xcm-executor-routing-calls.png" />
+<img rounded style="width: 1050px" src="../img/xcm-executor-routing-calls.png" />
 
 Notes:
 
@@ -797,6 +797,6 @@ In reality, it's better to use the counted variant of the wildcards, for benchma
 ---v
 
 <figure>
-    <img rounded style="width: 50%;" src="../../../assets/img/8-XCM/subscan-xcm-dashboard.png" />
+    <img rounded style="width: 50%;" src="../img/subscan-xcm-dashboard.png" />
     <figcaption>Source: <a href="https://polkadot.subscan.io/xcm_dashboard">Subscan</a></figcaption>
 </figure>
