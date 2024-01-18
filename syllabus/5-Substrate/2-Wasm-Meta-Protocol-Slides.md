@@ -16,12 +16,6 @@ duration: 60 minutes
 
 ## It All Began With a Runtime..
 
-<img rounded style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
-
----v
-
-### It All Began With a Runtime..
-
 - Personal opinion:
 
 > Substrate technology stack will put "Wasm stored onchain" on the map,<br/>
@@ -1348,6 +1342,10 @@ SomeExternalities.execute_with(|| {
 
 ### Post Lecture Notes
 
+HK:
+
+- The panic section is so important and it comes at the end, therefore hard to understand. Simplify it and deliver it sooner.
+
 ---
 
 ## Appendix
@@ -1472,3 +1470,13 @@ come first, we also keep our example aligned.
 
 Should you wish to see the real version of this, check this crate:
 https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
+
+---
+
+## Misc
+
+<img rounded style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
+
+---v
+
+
