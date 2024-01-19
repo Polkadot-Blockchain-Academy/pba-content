@@ -16,15 +16,26 @@ duration: 1 hour
 - Connecting a Dapp to Substrate
 - Interacting with Web Extensions
 - Working with Polkadot JS API
-- Polkadot JS API: Constructing Transactions
+- Constructing Transactions with Polkadot JS API
+- Dapp Optimisation
 - Other Areas Worth Mentioning
-    - More to come...
+    - XCM Tools
+
+---
+
+## Putting everything together
+
+How do humans interact with Substrate-based chains?
+<!-- .element: class="fragment" -->
+We use dapps
+<!-- .element: class="fragment" -->
 
 ---
 
 # What is a Dapp?
 
 ---v
+
 
 <img rounded style="width: 1000px" data-src="./img/1-what-is-a-dapp/moonbeam.png" />
 
@@ -88,7 +99,7 @@ Although no strict definition, dapps have certain characteristics:
 <!-- .element: class="fragment" -->
 - Not reliant on centralised APIs
 <!-- .element: class="fragment" -->
-- Allows signing and submitting of transactions.
+- Allows signing and submitting of transactions
 <!-- .element: class="fragment" -->
 
 ---v
@@ -138,18 +149,45 @@ Although no strict definition, dapps have certain characteristics:
 
 ---v
 
-## What is a Dapp: Summary
+## What is a Dapp
 
-- The more “decentralized” the application is, the more it’s considered a Dapp.
+- The more “decentralized” the application is, the more it’s considered a Dapp
 - Does not necessarily need connection with a blockchain node (E.g. Polkadot Vault)
 <!-- .element: class="fragment" -->
 - Can the app function if all centralised services are turned off?
 <!-- .element: class="fragment" -->
-   - If it can, it is more likely to be a dapp.
+   - If it can, it is more likely to be a dapp
 <!-- .element: class="fragment" -->
-- No strict form factor - web, mobile, desktop apps can all be dapps.
+- No strict form factor - web, mobile, desktop apps can all be dapps
+<!-- .element: class="fragment" -->
+- Dapps are becoming increasingly technical
+<!-- .element: class="fragment" -->
+- They are more suited to agile development
 <!-- .element: class="fragment" -->
 
+---v
+
+## Value Proposition of a Dapp
+
+<span style="text-align: left;">
+
+✅ Maximally decentralised: most important
+<!-- .element: class="fragment" -->
+✅ Easy it is to understand and use
+<!-- .element: class="fragment" -->
+✅ In demand use case
+<!-- .element: class="fragment" -->
+✅ Offers real utility to the chain
+<!-- .element: class="fragment" -->
+✅ Stability, reliability, 24/7 uptime
+<!-- .element: class="fragment" -->
+
+❌ The latest and greatest JavaScript Framework
+<!-- .element: class="fragment" -->
+❌ Marketing gimmicks, airdrops, bonuses, etc
+<!-- .element: class="fragment" -->
+
+</span>
 ---
 
 # Dapp Tech Stack
@@ -165,15 +203,15 @@ Although no strict definition, dapps have certain characteristics:
 <!-- .element: class="fragment" -->
 - Linting: ESLint, Stylistic, Prettier, etc...
 <!-- .element: class="fragment" -->
-- GitHub CI (dependabot, auto-merge, gh-pages publish, releases, stale, license, link-checker).
+- GitHub CI (dependabot, auto-merge, gh-pages publish, releases, stale, license, link-checker)
 <!-- .element: class="fragment" -->
-- Automated release management (Release Please).
+- Automated release management (Release Please)
 <!-- .element: class="fragment" -->
-- Desktop: Electron (Ledger API supported).
+- Desktop: Electron (Ledger API supported)
 <!-- .element: class="fragment" -->
-- Testing frameworks - vary (or test in prod).
+- Testing frameworks - vary (or test in prod)
 <!-- .element: class="fragment" -->
-- APIs. Polkadot JS API being the most popular.
+- APIs. Polkadot JS API being the most popular
 <!-- .element: class="fragment" -->
 - SCSS, HTML
 <!-- .element: class="fragment" -->
@@ -190,11 +228,11 @@ APIs need to know a chain’s metadata before it can interact with it.
 
 <br>
 
-- A chain’s metadata describes calls, storage items, runtime constants, and types, used by the chain.
+- A chain’s metadata describes calls, storage items, runtime constants, and types, used by the chain
 <!-- .element: class="fragment" -->
-- Once metadata is known, APIs can query chain state, and know what types to use when submitting transactions.
+- Once metadata is known, APIs can query chain state, and know what types to use when submitting transactions
 <!-- .element: class="fragment" -->
-- APIs can either fetch metadata dynamically, or store it statically.
+- APIs can either fetch metadata dynamically, or store it statically
 <!-- .element: class="fragment" -->
 
 ---v
@@ -205,9 +243,9 @@ APIs need to know a chain’s metadata before it can interact with it.
 
 <pba-flex center>
 
-- Designed for one runtime version (not the best idea).
+- Designed for one runtime version (not the best idea)
 <!-- .element: class="fragment" -->
-- Ability to load with app bundle instead of fetching on API Initialisation.
+- Ability to load with app bundle instead of fetching on API Initialisation
 <!-- .element: class="fragment" -->
 
 </pba-flex>
@@ -218,7 +256,7 @@ APIs need to know a chain’s metadata before it can interact with it.
 
 <br/>
 
-- Fetch system related information (blocks, transaction version, genesisHash…).
+- Fetch system related information (blocks, transaction version, genesisHash…)
 <!-- .element: class="fragment" -->
 - Read chain storage items
 <!-- .element: class="fragment" -->
@@ -411,33 +449,33 @@ pub fn api_pending_rewards(who: T::AccountId) -> Option<BalanceOf<T>> {
 
 ## About Runtime Calls
 
-- Not a storage item or constant, but a function that returns a value.
-- Also compiled into the WASM runtime, but not exposed by metadata.
+- Not a storage item or constant, but a function that returns a value
+- Also compiled into the WASM runtime, but not exposed by metadata
 - Runtime APIs can be useful for dapps:
-  - Performing additional calculations with on chain data.
-  - Type conversions.
-  - Key generation and decoding / light-weight computation.
+  - Performing additional calculations with on chain data
+  - Type conversions
+  - Key generation and decoding / light-weight computation
 
 ---v
 
 ## Summary
 
-- Dapps (generall) need to know metadata of a chain to communicate with it.
+- Dapps (generall) need to know metadata of a chain to communicate with it
 <!-- .element: class="fragment" -->
-- Chain-level info: block::{events, extrinsics}, genesisHash, transactionVersion, etc, can be queried.
+- Chain-level info: block::{events, extrinsics}, genesisHash, transactionVersion, etc, can be queried
 <!-- .element: class="fragment" -->
-- Runtime constants and storage items can be queried.
+- Runtime constants and storage items can be queried
 <!-- .element: class="fragment" -->
-- Runtime calls are an additional means to query values derived from runtime.
+- Runtime calls are an additional means to query values derived from runtime
 <!-- .element: class="fragment" -->
-- Substrate exposes HTTP and Websocket endpoints, implements JSON RPC protocol.
+- Substrate exposes HTTP and Websocket endpoints, implements JSON RPC protocol
 <!-- .element: class="fragment" -->
-- All these communication methods should be supported in a good API - more on this later.
+- All these communication methods should be supported in a good API - more on this later
 <!-- .element: class="fragment" -->
 
 ---
 
-## Interacting with Web Extensions
+# Interacting with Web Extensions
 
 ---v
 
@@ -448,11 +486,11 @@ pub fn api_pending_rewards(who: T::AccountId) -> Option<BalanceOf<T>> {
 
 <br/>
 
-- Web extensions inject an interface into window.injectedWeb3, and keyed with an id.
+- Web extensions inject an interface into window.injectedWeb3, and keyed with an id
 <!-- .element: class="fragment" -->
-- Dapps can communicate with extensions by interacting with window.injectedWeb3 once it has been injected.
+- Dapps can communicate with extensions by interacting with window.injectedWeb3 once it has been injected
 <!-- .element: class="fragment" -->
-- Commonly used with Chrome / Brave browsers.
+- Commonly used with Chrome / Brave browsers
 <!-- .element: class="fragment" -->
 
 </pba-col>
@@ -467,9 +505,9 @@ pub fn api_pending_rewards(who: T::AccountId) -> Option<BalanceOf<T>> {
 
 ## Connect & Retrieving Accounts
 
-- Connect: Call `enable()` to retrieve extension API (popup here).
+- Connect: Call `enable()` to retrieve extension API (popup here)
 
-- Retrieve: Retrieve accounts and signer (to sign transactions).
+- Retrieve: Retrieve accounts and signer (to sign transactions)
 
 <br/>
 
@@ -538,21 +576,21 @@ injectedWeb3Interval = setInterval(() => {
 
 ## Web Extensions: Summary
 
-- Access extension APIs from window.injectedWeb3.
+- Access extension APIs from window.injectedWeb3
 <!-- .element: class="fragment" -->
-- Web extensions are unpredictable and might break (this has happened multiple times).
+- Web extensions are unpredictable and might break (this has happened multiple times)
 <!-- .element: class="fragment" -->
-- They are a necessary evil for many dapps.
+- They are a necessary evil for many dapps
 <!-- .element: class="fragment" -->
-- Dapps can support alternatives to web extensions (Ledger, Polkadot Vault, Wallet Connect), 
+- Dapps can support alternatives to web extensions (Ledger, Polkadot Vault, Wallet Connect)
 <!-- .element: class="fragment" -->
-- Avoid @polkadot/extension-dapp. 
+- Avoid @polkadot/extension-dapp
 <!-- .element: class="fragment" -->
-- Alternative: @polkadot-cloud/react (in Beta).
+- Alternative: @polkadot-cloud/react (in Beta)
 <!-- .element: class="fragment" -->
 ---
 
-## Polkadot JS API
+# Polkadot JS API
 
 ---v
 
@@ -562,13 +600,13 @@ injectedWeb3Interval = setInterval(() => {
 <!-- .element: class="fragment" -->
 - Dynamically fetches chain metadata on connect
 <!-- .element: class="fragment" -->
-- Provides helpers for decoding SCALE, and encodes under the hood when constructing extrinsics / transactions.
+- Provides helpers for decoding SCALE, and encodes under the hood when constructing extrinsics / transactions
 <!-- .element: class="fragment" -->
 - Websocket and HTTP Interface support
 <!-- .element: class="fragment" -->
 - Supports Smoldot light client (with @substrate/connect)
 <!-- .element: class="fragment" -->
-- It is the only poduction ready Polkadot API existing today.
+- It is the only poduction ready Polkadot API existing today
 <!-- .element: class="fragment" -->
 
 ---v
@@ -638,11 +676,11 @@ const await api.call.nominationPoolsApi.pointsToBalance(poolId, points);
 
 - Polkadot JS API results are SCALE encoded.
 <!-- .element: class="fragment" -->
-- API provides helpers to format results into different formats, depending on the type returned.
+- API provides helpers to format results into different formats, depending on the type returned
 <!-- .element: class="fragment" -->
-- toNumber(), toJson(), toString(), toHuman(), are available depending on data type returned.
+- toNumber(), toJson(), toString(), toHuman(), are available depending on data type returned
 <!-- .element: class="fragment" -->
-- toHuman(): "human-readable representation" - generally safer as numbers are returned as strings.
+- toHuman(): "human-readable representation" - generally safer as numbers are returned as strings
 <!-- .element: class="fragment" -->
 
 ---v
@@ -716,7 +754,7 @@ const slashedKeys = await api.query.staking.nominatorSlashInEra.keys(652);
 
 ---
 
-### Constructing Transactions
+# Constructing Transactions
 
 ---v
 
@@ -803,18 +841,24 @@ const alice = keyring.addFromUri('//Alice');
 <!-- .element: class="fragment" -->
 - This is achieved by creating an extrinsic payload using Polkadot JS API
 <!-- .element: class="fragment" -->
-- The payload needs to be signed, which creates a transaction signature.
+- The payload needs to be signed, which creates a transaction signature
 <!-- .element: class="fragment" -->
 - Flow: build payload -> sign (signature) -> submit transaction
 <!-- .element: class="fragment" -->
 
 ---v
 
+<div style="padding:0 2rem">
+
 ### When do we call something an extrinsic and when a transaction?
+
+</div>
 
 ---v
 
 ## Constructing a Payload
+
+Polkadot JS API types format tx data under the hood.
 
 <span style="font-size:22px;">
 
@@ -853,3 +897,160 @@ const raw = api.registry.createType('ExtrinsicPayload', payload, {
 ```
 
 </span>
+
+---v
+
+### Example: Payload to Polkadot Vault
+
+- Build a payload using Polkadot JS API
+
+- Generating a QR Code with that payload to sign on Polkadot Vault
+
+- Scan the resulting signature
+
+- Send the transaction with the payload AND signature
+
+---v
+
+### Submitting Payload from QR
+
+<span style="font-size:22px;">
+
+```javascript
+import { decodeAddress } from '@polkadot/util-crypto';
+
+// New transaction
+const tx = api.tx.balances.transferKeepAlive({ Id: '//Alice' }, '100');
+
+// Construct Payload
+const payload = await constructPayload(tx);
+
+// Sign Payload
+const payloadU8a = payload.toU8a();
+const SUBSTRATE_ID = new Uint8Array([0x53]);
+const CRYPTO_SR25519 = new Uint8Array([0x01]);
+const COMMAND = 2;
+
+const qrData = u8aConcat(
+  SUBSTRATE_ID,
+  CRYPTO_SR25519,
+  new Uint8Array([cmd]),
+  decodeAddress(address),
+  u8aToU8a(payload),
+  u8aToU8a(genesisHash)
+);
+
+// Scan resulting QR signature from Webcam.
+const signature = await scanSignature();
+
+// Add signature & payload to tx and send.
+tx.addSignature('//Bob', signature, payload);
+const unsub = await txRef.current.send(
+  ({ status, events = [] }: AnyApi) => {
+    ...
+  });
+```
+
+</span>
+
+---
+
+# Dapp Optimisation
+
+---v
+
+## Dapp Optimisation
+
+<br/>
+
+<img style="width: 1200px" data-src="./img/6-other-areas/dapp-development-time.png" />
+
+---v
+
+## Visualising Dapp Bundle
+
+Use a visualizer for package analysis, cutting down on dependencies.
+
+<img style="width: 900px" data-src="./img/6-other-areas/visualizer.png" />
+
+---v
+
+<pba-cols>
+<pba-col style="font-size:24px">
+
+## Local Storage
+
+- Use local storage to cache data derived from heavy computations
+
+- Size limits vary per browser, most have 5MB / 2.5M character limits
+
+- Test local storage limits: http://dev-test.nemikor.com/web-storage/support-test/
+
+- Brave localStorage: limited to 5101k characters
+
+</pba-col>
+<pba-col style="font-size:24px">
+
+<img data-src="./img/6-other-areas/local-storage.png" />
+
+</pba-col>
+</pba-cols>
+
+---v
+
+## Offline / Online Detection
+
+- Dapps tend to host interfaces for real time data.
+<!-- .element: class="fragment" -->
+- Therefore, they need to reflect their connection status at all times.
+<!-- .element: class="fragment" -->
+
+<span>
+
+- Tools:
+  - Navigator.onLine
+  - Polling (for VPN / Virtualisation scenarios)
+
+</span>
+<!-- .element: class="fragment" -->
+
+<br/>
+
+### How might a dapp decentralise polling?
+<!-- .element: class="fragment" -->
+
+---v
+
+## Limiting re-renders
+
+- `useMemo` and `useCallback` for React.
+
+- Only use state required for the UI.
+
+- This is an area staking dashboard is exploring now. 
+
+- TODO: custom event strategy to limit re-renders.
+
+---
+
+# Other Areas Worth Mentioning
+
+---v
+
+## XCM Tools
+
+<br/>
+
+### Asset Transfer API
+
+Typescript API for transferring XCM assets across chains.
+
+https://github.com/paritytech/asset-transfer-api
+
+<br/>
+
+### ParaSpell
+
+General purpose XCM API, Router and SDK.
+
+https://paraspell.github.io/docs/ 
