@@ -19,7 +19,6 @@ duration: 1 hour
 - Constructing Transactions with Polkadot JS API
 - Dapp Optimisation
 - Miscellaneous Mentions
-    - XCM Tools
 
 ---
 
@@ -1315,6 +1314,7 @@ export const Balances: FC = () => {
     </BalancesWrapper>
   )
 }
+```
 
 ---
 
@@ -1339,3 +1339,43 @@ https://github.com/paritytech/asset-transfer-api
 General purpose XCM API, Router and SDK.
 
 https://paraspell.github.io/docs/ 
+
+---v
+
+## Using AI in Your Workflows
+
+<span>
+
+- ChatGPT has various use cases:
+  - Can simplify code. “Can you make this code more efficient or simpler?”
+  - Can provide in-app Q&A with latest models.
+
+</span>
+<!-- .element: class="fragment" -->
+
+<span>
+
+- Github Copilot - becoming very useful and is worth using.
+  - Predicts code as you write it, oftentimes with impressive accuracy, provides help & solutions to inline errors.
+
+</span>
+<!-- .element: class="fragment" -->
+
+- Dall-E can be used to generate dapp interfaces.
+<!-- .element: class="fragment" -->
+- Illustrator AI prompts can generate vector artwork.
+<!-- .element: class="fragment" -->
+
+<br/>
+
+<span style="font-weight: bold">
+
+- It will become easier to mimic or fake dapps - social engineering.
+  - Remember: Not your keys, not your coins.
+
+</span>
+<!-- .element: class="fragment" -->
+
+---v
+
+# Questions?
