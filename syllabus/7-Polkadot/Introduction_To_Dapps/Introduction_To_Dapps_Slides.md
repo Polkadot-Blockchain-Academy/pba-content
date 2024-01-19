@@ -18,7 +18,7 @@ duration: 1 hour
 - Working with Polkadot JS API
 - Constructing Transactions with Polkadot JS API
 - Dapp Optimisation
-- Other Areas Worth Mentioning
+- Miscellaneous Mentions
     - XCM Tools
 
 ---
@@ -1008,7 +1008,7 @@ Use a visualizer for package analysis, cutting down on dependencies.
 <span>
 
 - Tools:
-  - Navigator.onLine
+  - Navigator.onLine, query or subscribe
   - Polling (for VPN / Virtualisation scenarios)
 
 </span>
@@ -1021,19 +1021,304 @@ Use a visualizer for package analysis, cutting down on dependencies.
 
 ---v
 
-## Limiting re-renders
+## Rendering in React
 
-- `useMemo` and `useCallback` for React.
+- React apps are constructed of components
+<!-- .element: class="fragment" -->
+- Components are constructed with JSX markup
+<!-- .element: class="fragment" -->
+- Every component can store state, and pass down data to child components as props
+<!-- .element: class="fragment" -->
+- When state changes, the component re-renders and the DOM is refreshed
+<!-- .element: class="fragment" -->
+- Every child component also re-renders if its props have changed
+<!-- .element: class="fragment" -->
 
-- Only use state required for the UI.
+---v
 
-- This is an area staking dashboard is exploring now. 
+## Simple React State Example
 
-- TODO: custom event strategy to limit re-renders.
+<span style="font-size: 24px">
+
+```jsx
+import type { Dispatch, FC, SetStateAction } from 'react';
+import { useState } from 'react';
+
+// React Component: App entry
+const App: FC = () => {
+  const [title, setTitle] = useState<string>('Hello World');
+
+  return (
+    <div>
+      <h1>{title}</h1>
+      <UpdateTitleButton setTitle={setTitle} />
+    </div>
+  )
+}
+
+// React component: update button
+const UpdateTitleButton: FC = ({ setTitle }: { setTitle: Dispatch<SetAction<string>>}) => {
+
+  const handleChangeTitle = () => {
+    setTitle(generateRandomPhrase());
+  }
+
+  return (
+    <button onClick={() => handleChangeTitle()}>
+      Update Title
+    </button>
+  )
+}
+```
+
+</span>
+
+---v
+
+## Rendering in React with Polkadot JS API
+
+- Now imagine if a Polkadot JS API subscription is setting state.
+<!-- .element: class="fragment" -->
+- Many components will be using this state via hooks and context providers (out of scope of this lecture).
+<!-- .element: class="fragment" -->
+- Every time the callback function is executed, component state is updated.
+<!-- .element: class="fragment" -->
+- This can lead to excessive re-renders.
+<!-- .element: class="fragment" -->
+- This issue is exacerbated the more API calls you introduce.
+<!-- .element: class="fragment" -->
+- Your dapp will eventually experience slowdown and performance issues.
+<!-- .element: class="fragment" -->
+
+---v
+
+## Component Hierarchy with Providers
+
+<div style="padding: 0 2rem; font-size: 24px;">
+
+```jsx
+export const App: FC = () => {
+
+  return (
+    <StakingProvider> // Polkadot JS API subscriptions here
+      <BalancesProvider> // Polkadot JS API subscriptions here
+        <Router>
+          <Home />      //  Uses `useStaking() and `useBalances()`
+          <Staking />   //  Uses `useStaking()`
+          <Balances />  //  Uses `useBalances()`
+        </Router>
+      </BalancesProvider>
+    </StakingProvider>
+  )
+}
+
+```
+
+</span>
+
+---v
+
+## Tools to prevent excessive re-renders
+
+<span>
+
+- `useMemo`: Caches a computation result between re-renders.
+
+</span>
+<!-- .element: class="fragment" -->
+
+<span>
+
+- `useCallback`: Caches a functon definition between re-renders.
+
+</span>
+<!-- .element: class="fragment" -->
+
+<span>
+
+- `useRef`: Allows persisting of values between re-renders without causing a re-render - useful for `unsub`s.
+
+</span>
+<!-- .element: class="fragment" -->
+
+- Use local providers: wrapping a provider around components deeper in the component tree.
+<!-- .element: class="fragment" -->
+
+<span>
+
+<br/>
+
+<span style="font-weight: bold">
+
+- Only use state required to determine UI updates.
+
+- Deliver custom events from outside React on a per-component basis.
+
+</span>
+<!-- .element: class="fragment" -->
+
+---v
+
+## Only Use State Required to Determine UI Updates
+
+What should be stored in state?
+
+<br/>
+
+- The `network` the dapp is trying to connect to.
+
+- Polkadot JS API `provider`
+
+- Polkadot JS API `api` instance
+
+- Connection status (connected, disconnected, connecting, error).
+
+- API is ready to be used.
+
+---v
+
+## Only Use State Required to Determine UI Updates
+
+What should be stored in state?
+
+<br/>
+
+<div style='text-align: left; padding-left: 2rem'>
+
+ ✅ &nbsp;&nbsp;The `network` the dapp is trying to connect to.
+
+❌ &nbsp;&nbsp;Polkadot JS API `provider`
+
+❌ &nbsp;&nbsp;Polkadot JS API `api` instance
+
+✅ &nbsp;&nbsp;Connection status (connected, disconnected, connecting, error).
+
+✅ &nbsp;&nbsp;API is ready to be used.
+
+</div>
+
+---v
+
+<div style="padding: 0 2rem">
+
+## Deliver Custom Events From Outside React on a Per-Component Basis
+
+</div>
+
+<pba-cols>
+<pba-col style="font-size:24px; width: 500px">
+
+Outside React
+
+```typescript
+// `BalancesController.ts
+//
+// Static class that handles API subscriptions 
+// and dispatches custom events to `document`.
+const unsub = api.query.system.account(
+    '//Alice', 
+    (result) => {
+      document.dispatchEvent(
+        new CustomEvent('new-balance-update', {
+          detail: {
+            result.toHuman()
+          },
+        })
+      );
+});
+
+
+this._unsubs.push(unsub);
+```
+
+
+</pba-col>
+<pba-col style="font-size:24px; width: 500px">
+
+Inside React
+
+```typescript
+  // Balances.tsx
+  //
+  // Listens to custom events and updates state 
+  // accordingly.
+  const newBalanceUpdateCallback = (e: Event) => {
+    if (isCustomEvent(e)) {
+      const balances = e.detail;
+      setBalances(balances);
+    }
+  };
+
+  // Add event listener for notifications.
+  const ref = useRef<Document>(document);
+  useEventListener(
+    'new-balance-update',
+    newBalanceUpdateCallback,
+    ref
+  );
+```
+
+</pba-col>
+</pba-cols>
+
+</span>
+
+---v
+
+## Component Hierarchy with Custom Events
+
+- Custom events are now cutting down on React re-renders.
+
+- Better separation of concerns.
+
+<br/>
+
+<div style="padding: 0 2rem; font-size: 24px;">
+
+```jsx
+export const App: FC = () => {
+
+  return (
+    <StakingProvider> // Polkadot JS API subscriptions here
+        <Router>
+          <Home />      //  Uses `useStaking() and `new-balance-update` custom event.
+          <Staking />   //  Still uses `useStaking()`
+          <Balances />  //  Uses `new-balance-update` custom event.
+        </Router>
+    </StakingProvider>
+  )
+}
+```
+
+</div>
+
+---v
+
+
+## Component Hierarchy with Custom Events
+
+Be as surgical as you can with custom events. Tailor them to individual components. 
+
+<br/>
+
+<div style="font-size: 24px;">
+
+```jsx
+export const Balances: FC = () => {
+
+  return (
+    <BalancesWrapper>
+      <Header /> 
+      <BalanceGraph /> // <- `new-balance-update` custom event.
+      <TransactionHistory /> // <- `new-transaction-update` custom event.
+      <Footer />
+    </BalancesWrapper>
+  )
+}
 
 ---
 
-# Other Areas Worth Mentioning
+# Miscellaneous Mentions
 
 ---v
 
