@@ -13,7 +13,7 @@ duration: 1 hour
 ## Agenda
 
 - What is a Dapp?
-- Connecting a Dapp to Substrate
+- Dapp Communication With Substrate Runtimes
 - Interacting with Web Extensions
 - Working with Polkadot JS API
 - Constructing Transactions with Polkadot JS API
@@ -217,7 +217,7 @@ Although no strict definition, dapps have certain characteristics:
 
 ---
 
-# Connecting a Dapp to Substrate
+# Dapp Communication With Substrate Runtimes
 
 ---v
 
