@@ -490,6 +490,11 @@ Original pool PR from ages ago, old but gold: https://github.com/paritytech/subs
 
 > Returns `Valid` if the transaction can be **statically** validated; ... the u64 is the priority used to determine which of a mutually exclusive set of transactions are better to include... Any transactions that do get included in a block should be instantly discarded (and banned) if they result in a panic execution.
 
+### Post Lecture
+
+More about MEV
+
+
 ---
 
 # Appendix
