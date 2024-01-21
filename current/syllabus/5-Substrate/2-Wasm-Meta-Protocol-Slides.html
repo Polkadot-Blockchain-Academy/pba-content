@@ -417,7 +417,7 @@ let runtime = wasm::Executor::new(code);
 let mut block: NodeBlock = Default::default();
 
 // repeatedly apply transactions.
-while let Some(next_transaction) = transaction_pool_iter::next() {
+while let Some(next_ext) = transaction_pool_iter::next() {
   state.execute(|| {
     if runtime.apply_extrinsic(next_ext).is_ok() {
       block.extrinsics.push(next_ext);
