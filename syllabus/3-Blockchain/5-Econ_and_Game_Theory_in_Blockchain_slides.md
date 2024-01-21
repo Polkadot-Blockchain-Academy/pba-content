@@ -873,7 +873,7 @@ So Bitcoin mining is in fact a huge coordination game and this is why honesty AK
 
 - More complex examples will be explored later in the forks lecture on Friday
 - Paper investigating PoW Nash Equilibrium and following the majority:
-  https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=7bf78054192d98e999edcdf08971a5eed42518d2
+  https://typeset.io/pdf/mining-pool-game-model-and-nash-equilibrium-analysis-for-pow-2lckzso542.pdf
 
 ---
 

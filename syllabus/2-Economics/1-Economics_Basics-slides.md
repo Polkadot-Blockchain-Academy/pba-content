@@ -86,10 +86,6 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- It is also important to understand the limits of these economic concepts and when they might not work as intended.
-
 ---
 
 ## Outline
@@ -122,13 +118,6 @@ Notes:
 ## Guiding Human Behavior
 
 > An incentive is a bullet, a key:<br/>an often tiny object with astonishing power to change a situation.<br/>-- Steven Levitt --
-
-Notes:
-
-- Human behavior is driven by incentives.
-- The aggregation of these behaviors lead to societies.
-- Carefully designing incentives lays the ground for functioning systems.
-- You might be asked to implement certain protocols, which you have to judge if they make sense / can be improved.
 
 ---
 
@@ -163,10 +152,6 @@ Notes:
 </ul>
 
 </pba-flex>
-
-Notes:
-
-- **Question: What are the advantages / disadvantages of those incentives?**
 
 ---
 
@@ -329,35 +314,17 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- A famous artist dies and her art increases in price.
-- An unusually nice summer reduces hotel prices in popular vacations destinations.
-
 ---
 
 ## Law of Demand: A Basic Principle
 
 - When prices increase, quantity demanded of a good (generally) decreases.
 
-Notes:
-
-- **Question: Anybody know exceptions?**
-- Exception are "Veblen goods" where demand increases when price increases.
-  These are typically luxury goods that signal something (e.g. status, reputation) in addition to being useful to consumption.
-  Examples are jewelry, luxury cars, etc.
-- This is not a contradiction to the law of demand because the good's social value depends on the price; i.e., the good "changes" and becomes more desirable as the price increases.
-
 ---
 
 ## Visualizing Demand: The Demand Curve
 
 <img rounded style="width:900px" src="./img/2.1-market-demand.png" />
-
-Notes:
-
-- **Question: What influences the aggregate market demand?**
-- The market demand is the sum of all individual curves.
 
 ---
 
@@ -376,12 +343,6 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- In the ice cream example, a substitution good could be frozen yoghurt: if its price goes down, the demand for ice cream will decrease.
-- If people's appetite for ice cream increases (perhaps via advertisement), the demand will increase.
-- In people expect a shortage of ice cream in the near future, the demand will increase immediately.
-
 ---
 
 ## Moving the demand curve
@@ -395,12 +356,6 @@ Notes:
 - If the price of a good increases, the quantity supplied also increases
 
 (because suppliers can make more profit!).
-
-Notes:
-
-- That is, assuming that suppliers manage to sell all produced goods at said price.
-- For example, if the ice cream price increases the store will hire a second employee to sell more scoops per hour.
-- As another example, some petroleum deposits are easier and cheaper to extract than others, so some deposits will be extracted only if the oil price is above a certain threshold.
 
 ---
 
@@ -523,10 +478,6 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- Special form of Oligopoly is the Duopoly with two firms, something that we see later.
-
 ---
 
 ## Market Form Examples
@@ -589,12 +540,6 @@ Notes:
 </ul>
 
 </pba-flex>
-
-Notes:
-
-- This makes sense: The firm produces up to the point where an additional unit costs exactly what it gets for it on the market.
-- Notice that having the market price be equal to the marginal production costs is pretty surprising, as it is ideal from a point of view of society welfare, even though every firm is acting selfishly.
-- In this perfect world, firms will have zero economic profit, meaning they make just enough money to cover production costs and keep the company running.
 
 ---
 
@@ -667,6 +612,34 @@ Notes:
 
 ---
 
+## Is the Government a Monopoly?
+
+---
+
+## Monopoly: Disadvantages
+
+<pba-flex center>
+<ul>
+<li class="fragment">Higher Prices: they are free to set prices arbitrarily.</li>
+<li class="fragment">Inferior Products: there is little incentive to improve the product offered.</li>
+<li class="fragment">Price Discrimination: different prices can be charged for different customers (based on their elasticity).</li>
+<li class="fragment">This leads to sub-optimal pricing and sub-optimal society welfare: consumers either pay more than they should ("monopolist tax") or are excluded from market.</li>
+
+---
+
+## Example: Antitrust case against Microsoft in 1990s
+
+<pba-flex center>
+<ul>
+<li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
+<li class="fragment">A removal of the IE would lead to a "Blue Screen of Death".</li>
+
+---
+
+## Monopoly: Advantages?
+
+---
+
 ## Oligopolies
 
 <pba-flex center>
@@ -710,13 +683,6 @@ Notes:
 #### _(or: why bother trading at all?)_
 
 > It is the maxim of every prudent master of a family, never to attempt to make at home what it will cost him more to make than to buy.<br/>-- Adam Smith, 1776 --
-
-Notes:
-
-- In this part, we take a closer look at the following concepts:
-  - Comparative advantage.
-  - Opportunity costs.
-  - Gains from trade.
 
 ---
 
@@ -763,15 +729,6 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- Comparative advantage of meat:
-  - Opp. cost Alice: **1kg meat = 2kg potatoes**
-  - Opp. cost Bob: 1kg meat = 5kg potatoes
-- Comparative advantage of potatoes:
-  - Opp. cost Alice: 1kg potatoes = 1/2kg meat
-  - Opp. cost Bob: **1kg potatoes = 1/5kg meat**
-
 ---
 
 ## Comparative advantage II
@@ -792,19 +749,29 @@ Notes:
 </ul>
 </pba-flex>
 
-Notes:
+---
 
-- Assume one working day with one worker (8 hrs).
-- Autarky:
-  - Alice: 4hrs _ 10 meat, 4hrs _ 20 potatoes = 40 meat, 80 potatoes
-  - Bob: 4hrs _ 2 meat, 4hrs _ 10 potatoes = 8 meat, 40 potatoes
-- Trade:
+## Situation A: Autarky
 
-  - Alice: 5hrs _ 10 meat, 3hrs _ 20 potatoes = 50 meat, 60 potatoes
-  - Bob: 0hrs _ 2 meat, 8hrs _ 10 potatoes = 0 meat, 80 potatoes
-  - Alice could trade 9 meat for 30 potatoes:
-    - Alice: 41 meat, 90 potatoes
-    - Bob: 9 meat, 50 potatoes
+<div style="text-align: center;">
+    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-autarky.png" />
+</div>
+
+---
+
+## Situation: Focus on Comparative Advantage
+
+<div style="text-align: center;">
+    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-trade.png" />
+</div>
+
+---
+
+## Situation: Trade
+
+<div style="text-align: center;">
+    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-betteroff.png" />
+</div>
 
 ---
 
@@ -842,13 +809,6 @@ Notes:
 </ul>
 
 </pba-flex>
-
-Notes:
-
-- What does that tell us about daily life?
-  - **Stick with what you are good at**: It's often good to stick things where you have a comparative advantage: For example, assume you are a great software engineer with a job that has a high salary, but you also want to help clean up the ocean. Instead of giving up your job and go clean the ocean, you might want to allocate some of your salary to ocean cleanup, having a larger effect.
-  - **Realize that absolute advantage is not all**Only because one co-worker has a total advantage in two dimensions of the job, another co worker can still have the comparative advantage in one of the tasks.
-  - **Question**: What are your opportunity costs of being here?
 
 ---
 
@@ -895,12 +855,6 @@ Notes:
 </ul>
 
 </pba-flex>
-
-Notes:
-
-- There are formulas to calculate how much a future payout in the future is worth today.
-- You need to make assumptions about your rate of return in the meantime.
-- Often risk free rate is used.
 
 ---
 
@@ -974,19 +928,6 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- Confirmation bias especially pronounced in todays time where people get trapped in echo chambers fostered by algorithms that keep feeding you information that you want to hear.
-- Overconfidence: If asked, more than 50% of people think they drive above average.
-  BUT has also positive effects.
-  Sometimes overconfident people are better than others and statistically perform better in practice.
-- Anchoring Effect
-- Endowment Effect: This bias occurs when we overvalue something simply because we own it.
-- Hindsight Bias - This is the tendency to believe, after an outcome is already known, that you would have predicted or could have foreseen the outcome.
-  It is often referred to as the "I knew it all along" effect.
-- Availability Bias - People make decisions based on the information that is readily available to them, rather than the complete data set.
-  This bias can often lead to inaccurate conclusions.
-
 ---
 
 ## Behavioral Economics
@@ -1005,10 +946,6 @@ Notes:
 
 # Classroom Discussions
 
-Notes:
-
-- Roughly 20 minutes
-
 ---
 
 ## Behavioral Biases
@@ -1023,13 +960,6 @@ Notes:
 > Warren Buffett announces that he increased his exposure to Apple by buying more stocks.
 > The price of AAPL goes up.
 
-Notes:
-
-- Herding effect
-- Cannot be in the hope of a price response by Buffett's trade because it already happened.
-- Self-fulfilling prophecy
-- Maybe still rational?
-
 ---
 
 ## Situation 2:
@@ -1039,11 +969,6 @@ Notes:
 > The investor keeps buying in at 80 USD, 50 USD and finally at 5 USD, 3 USD and 1 USD.
 > When a friend asks him to stop he keeps arguing to recover the losses by "buying the dip" and to "further reducing the average buying price".
 
-Notes:
-
-- Sunk Cost Fallacy
-- Learn to accept losses
-
 ---
 
 ## Situation 3:
@@ -1052,24 +977,17 @@ Notes:
 > Mentally, he is already looking forward to finally buy it, but a friend urges him to do some more research.
 > He agrees and is reading through articles that pop up after googling "Why you should buy the new iPhone".
 
-Notes:
-
-- Confirmation Bias
-- Mitigating by actively looking outside the echo-chamber that is just catering to your opinion.
-
 ---
 
 ## Situation 4:
 
 > A Swiss energy company could increase the number of new renewable electricity contracts from 3% to 80-90% by pre-selecting the green option when customers were renewing their energy contracts.
 
-Notes:
+---
 
-- Default effect
-- Is it always good?
-  People might consume more energy because they feel better about their contract, companies can exploit this effect "default to accept all cookies".
-- https://www.bbc.com/news/science-environment-56361970
-- [Paper](https://www.nature.com/articles/s41562-021-01070-3.epdf?sharing_token=4HCcx-Aouj5gOGkD37i319RgN0jAjWel9jnR3ZoTv0MsXRMaQ2nk_xsjwawpA_drZ4p8HWONsx-i-1PN3ZRN0hxsKmhDtSpN5xn5qXXWcPCTjRQxPpY5yovJQehlrDn56a7Ff3-f5ESorQLlggQObIrxTOC9Y4nefV5OGXZRww9iZyuuvAOwV0kRLk12-rKINRixIpE45bF2ZtQQdPcWuA%3D%3D&tracking_referrer=www.bbc.com)
+## Situation 5
+
+> Andrew had 50 Microsoft stocks. He decided to sell 40 of them at a price of 350 USD, still keeping 10. He used his earnings to pay some bills and does not plan to buy any stocks back. In the following days he caught himself looking at the charts hoping the price would go down to less than 350 USD.
 
 ---
 
@@ -1129,10 +1047,6 @@ Notes:
 
 ## Where do you see yourself or others suffer from behavioral biases?
 
-Notes:
-
-Open class discussion.
-
 ---
 
 ## Monopoly
@@ -1144,13 +1058,6 @@ Open class discussion.
   - AirBnb
   - ...
 - How do these firms exert their market power, if not over price-setting?
-
-Notes:
-
-- transparency? (stealing tips!)
-- fees (uber, airbnb)
-- surge pricing (uber)
-- opaque auction mechanism (google in the case of online ads)
 
 ---
 
@@ -1199,11 +1106,6 @@ Notes:
 - The points are translated to USD after each game.
 - You can constantly check your balance by opening the wallet app link and sign in with your wallet.
 
-Notes:
-
-- Completely trusted and centralized xD
-- If you leave your cookies you can simply log back in otherwise you need to log in again.
-
 ---
 
 # Everybody got a wallet?
@@ -1233,14 +1135,12 @@ In the Ultimatum Game, Player 1 can offer between 0 and 100 points, and Player 2
 - If Player 2 rejects, both players get 0 points.
 
 | Example | Player 1's Offer | Player 2's Decision | Player 1's Points | Player 2's Points |
-|---------|------------------|----------------------|-------------------|-------------------|
-| 1       | 0                | Reject               | 0                 | 0                 |
-| 2       | 30               | Reject               | 0                 | 0                 |
-| 3       | 80              | Accept               | 20                | 80                |
-
+| ------- | ---------------- | ------------------- | ----------------- | ----------------- |
+| 1       | 0                | Reject              | 0                 | 0                 |
+| 2       | 30               | Reject              | 0                 | 0                 |
+| 3       | 80               | Accept              | 20                | 80                |
 
 ---
-
 
 <!-- .slide: data-background-color="#4A2439" -->
 
@@ -1263,21 +1163,6 @@ Link will be distributed!
 - Why did people offer something?
 - What did we measure here?
 
-Notes:
-
-- What would we expect from rational players (they do not know the concept of Nash Equilibrium yet but intuitively they can argue).
-- What do you expect the data to look like?
-- Did we measure fairness?
-  No.
-- How could we measure fairness?
-  - Dictator game
-- Talk about results in the literature:
-  - Many people offer 40-50%
-  - Almost nobody offers more than 50%
-  - Many people reject below 30%
-  - This is not only because of the stakes.
-    There are experiments in Thailand and Indonesia where they play with half year salary.
-
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -1293,11 +1178,6 @@ Notes:
 - Identical product
 - Demand always meets supply
 - Named after French mathematician Augustin Cournot.
-
-Notes:
-
-- Game 1: Cournot Competition with 2 firms (players from the audience) for 10 rounds
-- THe basic outline was given by Antoine Augustin Cournot in 1844, we will hear it again in GT.
 
 ---
 
@@ -1326,13 +1206,13 @@ In this game, the unit price is calculated as follows:
 Unit price = 60 - sum of both goods produced
 
 Your profit is calculated as:
-Profit = Unit Price * your amount produced
+Profit = Unit Price \* your amount produced
 
-| Example | Goods Produced (Each) | Unit Price Calculation        | Your Profit Calculation |
-|---------|------------------------|------------------------------|--------------------------|
-| 1       | 15                     | 60 - (15 + 15) = 30           | 30 * 15 = 450            |
-| 2       | 30                     | 60 - (30 + 30) = 0            | 0 * 30 = 0               |
-| 3       | 0                      | 60 - (0 + 0) = 60             | 60 * 0 = 0               |
+| Example | Goods Produced (Each) | Unit Price Calculation | Your Profit Calculation |
+| ------- | --------------------- | ---------------------- | ----------------------- |
+| 1       | 15                    | 60 - (15 + 15) = 30    | 30 \* 15 = 450          |
+| 2       | 30                    | 60 - (30 + 30) = 0     | 0 \* 30 = 0             |
+| 3       | 0                     | 60 - (0 + 0) = 60      | 60 \* 0 = 0             |
 
 ---
 

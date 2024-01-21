@@ -23,7 +23,7 @@ And it allows them to know whether they have identical histories in O(1) by just
 
 ## Hash Linked List
 
-![Blockchain with payload shown](./img/hash-linked-1.svg)
+<img src="./img/hash-linked-1.svg" width="1000px" />
 
 Notes:
 
@@ -33,17 +33,17 @@ This is a simplified blockchain. Each block has a pointer to the parent block as
 
 ## Hash Linked List
 
-![Blockchain with payload shown and parent hash calculated](./img/hash-linked-2.svg)
+<img src="./img/hash-linked-2.svg" width="1000px" />
 
 Notes:
 
-The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.
+The pointer is a cryptographic hash of the parent block.
 
 ---v
 
 ## Hash Linked List
 
-![Blockchain with payload and parent hash included](./img/hash-linked-3.svg)
+<img src="./img/hash-linked-3.svg" width="1000px" />
 
 Notes:
 
@@ -202,10 +202,10 @@ The parent hash links blocks together (cryptographically linked list). The other
 
 </pba-flex>
 
-- Version
 - Previous Hash
-- Tx Merkle Root
 - Time
+- Version
+- Tx Merkle Root
 - N_Bits
 - Nonce
 
@@ -214,18 +214,18 @@ The parent hash links blocks together (cryptographically linked list). The other
 
 <pba-flex center>
 
-**Ethereum**
+**Ethereum (PoW)**
 
 </pba-flex>
 
+- Parent Hash
 - Time
 - Block Number
-- Base Fee
-- Difficulty
-- Mix Hash
-- Parent Hash
+- Transactions root
 - State Root
+- Difficulty
 - Nonce
+- ... even more
 
 </pba-col>
 </pba-cols>
@@ -235,7 +235,7 @@ The parent hash links blocks together (cryptographically linked list). The other
 ## Substrate Header
 
 - Parent hash
-- Number
+- Block Number (aka height)
 - State root
 - Extrinsics root
 - Consensus Digest
