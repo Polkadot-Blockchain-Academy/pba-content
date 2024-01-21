@@ -68,6 +68,7 @@ duration: 1 hour
 - Complete FRAME Assignment
 
 </td>
+</tr>
 </table>
 
 ---
