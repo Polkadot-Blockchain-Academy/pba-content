@@ -6,11 +6,11 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 
 ## Hands on Activities
 
-* The primary coding activity is [Blockchain From Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/). Each student should close this repository to work through it in and after class. This will occupy 8-10 hours of class time.
+- The primary coding activity is [Blockchain From Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/). Each student should close this repository to work through it in and after class. This will occupy 8-10 hours of class time.
 
-* Grandpa Board Game - TODO find the repo, it may have gotten deleted. For now the content was copied into https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html
+- Grandpa Board Game - TODO find the repo, it may have gotten deleted. For now the content was copied into https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html
 
-* Start a Block and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW). TODO Unify these in the separate repo so the activity can be re-used externally.
+- Start a Block and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW). TODO Unify these in the separate repo so the activity can be re-used externally.
 
 ## Approximate Schedule
 
