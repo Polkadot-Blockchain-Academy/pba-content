@@ -56,6 +56,7 @@ match signer_balance {
 let signer_balance = Runtime::get_state::<AccountBalance>(&Self::get_storage_key(&signer))
 	.ok_or(TransactionValidityError::Invalid(InvalidTransaction::BadSigner))?;
 ```
+
 <!-- .element: class="fragment" -->
 
 <aside class="notes"><p><a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or">https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or</a>
@@ -78,8 +79,8 @@ if ext.function.tip.is_some() {
 	let tip_amount = ext.function.tip.expect("checked to be some; qed");
 }
 ```
-<!-- .element: class="fragment" -->
 
+<!-- .element: class="fragment" -->
 </script></section></section><section  data-markdown><script type="text/template">
 # Part 1 Substrate Stuff
 </script></section><section ><section data-markdown><script type="text/template">
@@ -114,7 +115,6 @@ pub type NumberFor<C> = <<C as Config>::Header as HeaderT>::Number;
 fully qualified syntax.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## The `std` Paradigm
-
 
 `std` <-> `core` <-> `no_std`
 
@@ -592,7 +592,6 @@ pub struct BoundedVec<T, S: Get<u32>>(
 );
 ```
 
-
 <aside class="notes"><p><code>PhantomData</code>?</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### `bounded`
@@ -735,7 +734,7 @@ where
 </aside></script></section><section data-markdown><script type="text/template">
 ### Implementing Traits For Tuples
 
-Modern syntax of making a trait "*tuple-call-able*"
+Modern syntax of making a trait "_tuple-call-able_"
 
 ```rust
 // In the most basic form:
@@ -764,7 +763,6 @@ impl_for_tuples!(A, B, C, D, E, F);
 </code></pre>
 </aside></script></section></section><section  data-markdown><script type="text/template">
 ### Debugging Macros Generated Code
-
 
 <img rounded src="./img/frame-macro-error.gif" />
 
@@ -809,7 +807,6 @@ let value = maybe_value.ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndC
 use frame_support::DefensiveOption;
 let value = maybe_value.defensive_ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)
 ```
-
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Final Words on Panics
 
@@ -825,7 +822,6 @@ let value = maybe_value.defensive_ok_or(Error::IKnowThisWillNeverHappenButIAmOnl
 
 2. Panics in Internal API --> Well Documented Code.
 </script></section><section data-markdown><script type="text/template">
-
 ### Final Words on Panics
 
 ````rust
@@ -908,7 +904,6 @@ assignment, perhaps.</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 # Appendix
-
 </script></section><section ><section data-markdown><script type="text/template">
 ## Generics vs. Associated Types
 
