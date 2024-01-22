@@ -36,6 +36,7 @@ match signer_balance {
 let signer_balance = Runtime::get_state::<AccountBalance>(&Self::get_storage_key(&signer))
 	.ok_or(TransactionValidityError::Invalid(InvalidTransaction::BadSigner))?;
 ```
+
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -62,8 +63,8 @@ if ext.function.tip.is_some() {
 	let tip_amount = ext.function.tip.expect("checked to be some; qed");
 }
 ```
-<!-- .element: class="fragment" -->
 
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -110,7 +111,6 @@ fully qualified syntax.
 ---
 
 ## The `std` Paradigm
-
 
 `std` <-> `core` <-> `no_std`
 
@@ -677,7 +677,6 @@ pub struct BoundedVec<T, S: Get<u32>>(
 );
 ```
 
-
 Notes:
 
 `PhantomData`?
@@ -846,7 +845,7 @@ Notes:
 
 ### Implementing Traits For Tuples
 
-Modern syntax of making a trait "*tuple-call-able*"
+Modern syntax of making a trait "_tuple-call-able_"
 
 ```rust
 // In the most basic form:
@@ -884,13 +883,13 @@ impl_for_tuples!(A, B, C, D, E, F);
 
 ### Debugging Macros Generated Code
 
-
 <img rounded src="./img/frame-macro-error.gif" />
 
 Notes:
 
 - Crucial to start debugging from the first macro expansion, not the end!
 - This is only when you are working with a framework like FRAME that is a lot of macro-generated code. If you are writing macros, there are different tricks that you can learn about online.
+
 ---
 
 ## Defensive Programming
@@ -936,7 +935,6 @@ use frame_support::DefensiveOption;
 let value = maybe_value.defensive_ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)
 ```
 
-
 ---
 
 ## Final Words on Panics
@@ -956,7 +954,6 @@ Notes:
 2. Panics in Internal API --> Well Documented Code.
 
 ---v
-
 
 ### Final Words on Panics
 
@@ -1039,7 +1036,6 @@ Notes:
 ---
 
 # Appendix
-
 
 ---
 
