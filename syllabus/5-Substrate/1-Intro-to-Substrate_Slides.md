@@ -368,7 +368,7 @@ This is very similar to treating your own runtime as a smart contract.
 ### 🏦 Governance + Upgradeability
 
 - Meta-protocol?
-- &shy;<!-- .element: class="fragment" -->"_Runtime as WASM_ " in the Substrate node.
+- &shy;<!-- .element: class="fragment" -->"*Runtime as WASM*  " in the Substrate node.
 - <!-- .element: class="fragment" --> Inherently upgradeable protocol?
 - <!-- .element: class="fragment" --> WASM Runtime
 
@@ -676,6 +676,7 @@ fn main() {
 </pba-cols>
 
 ---v
+
 
 ### Substrate and Smart Contracts
 
