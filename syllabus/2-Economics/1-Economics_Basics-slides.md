@@ -221,7 +221,6 @@ duration: 2 hour
 
 </pba-flex>
 
-
 ---
 
 ## The Power of Intrinsic Incentives
@@ -251,7 +250,6 @@ duration: 2 hour
 </ul>
 </pba-flex>
 
-
 ---
 
 ## Conclusion
@@ -280,20 +278,17 @@ duration: 2 hour
 
 </pba-flex>
 
-
 ---
 
 ## Law of Demand: A Basic Principle
 
 - When prices increase, quantity demanded of a good (generally) decreases.
 
-
 ---
 
 ## Visualizing Demand: The Demand Curve
 
 <img rounded style="width:900px" src="./img/2.1-market-demand.png" />
-
 
 ---
 
@@ -325,7 +320,6 @@ duration: 2 hour
 - If the price of a good increases, the quantity supplied also increases
 
 (because suppliers can make more profit!).
-
 
 ---
 
@@ -365,7 +359,6 @@ duration: 2 hour
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-2.png" />
 </div>
-
 
 ---
 
@@ -511,6 +504,7 @@ duration: 2 hour
 ---
 
 ## Example: Antitrust case against Microsoft in 1990s
+
 <pba-flex center>
 <ul>
 <li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
@@ -835,7 +829,6 @@ duration: 2 hour
 > Mentally, he is already looking forward to finally buy it, but a friend urges him to do some more research.
 > He agrees and is reading through articles that pop up after googling "Why you should buy the new iPhone".
 
-
 ---
 
 ## Situation 4:
@@ -976,14 +969,12 @@ In the Ultimatum Game, Player 1 can offer between 0 and 100 points, and Player 2
 - If Player 2 rejects, both players get 0 points.
 
 | Example | Player 1's Offer | Player 2's Decision | Player 1's Points | Player 2's Points |
-|---------|------------------|----------------------|-------------------|-------------------|
-| 1       | 0                | Reject               | 0                 | 0                 |
-| 2       | 30               | Reject               | 0                 | 0                 |
-| 3       | 80              | Accept               | 20                | 80                |
-
+| ------- | ---------------- | ------------------- | ----------------- | ----------------- |
+| 1       | 0                | Reject              | 0                 | 0                 |
+| 2       | 30               | Reject              | 0                 | 0                 |
+| 3       | 80               | Accept              | 20                | 80                |
 
 ---
-
 
 <!-- .slide: data-background-color="#4A2439" -->
 
@@ -1049,13 +1040,13 @@ In this game, the unit price is calculated as follows:
 Unit price = 60 - sum of both goods produced
 
 Your profit is calculated as:
-Profit = Unit Price * your amount produced
+Profit = Unit Price \* your amount produced
 
-| Example | Goods Produced (Each) | Unit Price Calculation        | Your Profit Calculation |
-|---------|------------------------|------------------------------|--------------------------|
-| 1       | 15                     | 60 - (15 + 15) = 30           | 30 * 15 = 450            |
-| 2       | 30                     | 60 - (30 + 30) = 0            | 0 * 30 = 0               |
-| 3       | 0                      | 60 - (0 + 0) = 60             | 60 * 0 = 0               |
+| Example | Goods Produced (Each) | Unit Price Calculation | Your Profit Calculation |
+| ------- | --------------------- | ---------------------- | ----------------------- |
+| 1       | 15                    | 60 - (15 + 15) = 30    | 30 \* 15 = 450          |
+| 2       | 30                    | 60 - (30 + 30) = 0     | 0 \* 30 = 0             |
+| 3       | 0                     | 60 - (0 + 0) = 60      | 60 \* 0 = 0             |
 
 ---
 

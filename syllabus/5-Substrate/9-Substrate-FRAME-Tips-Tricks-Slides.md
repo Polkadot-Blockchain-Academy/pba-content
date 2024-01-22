@@ -3,12 +3,68 @@ title: Substrate/FRAME Tips and Tricks
 description: Substrate and FRAME Tips and Tricks for Web3 Engineers
 ---
 
-# FRAME Tips and Tricks
+# Substrate / FRAME Tips and Tricks
 
 Notes:
 
 - A random collection of things that you should probably know about.
 - These are relevant for coding in FRAME and Substrate.
+
+---
+
+# Part 0 FRAMELess Assignment Retro
+
+---v
+
+## Formatter
+
+`rustfmt` It is a good thing, please use it!
+
+---v
+
+## Options --> Results
+
+```rust
+let signer_balance = Runtime::get_state::<AccountBalance>(&Self::get_storage_key(&signer));
+match signer_balance {
+	Some(_) => (),
+	None => {return Err(TransactionValidityError::Invalid(InvalidTransaction::BadSigner))},
+};
+```
+
+```rust
+let signer_balance = Runtime::get_state::<AccountBalance>(&Self::get_storage_key(&signer))
+	.ok_or(TransactionValidityError::Invalid(InvalidTransaction::BadSigner))?;
+```
+
+<!-- .element: class="fragment" -->
+
+Notes:
+
+https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or
+https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or_else
+
+---v
+
+## `expect` for Impossible Panics
+
+```rust
+if ext.function.tip.is_some() {
+	let tip_amount = ext.function.tip.unwrap();
+}
+```
+
+```rust
+if ext.function.tip.is_some() {
+  // ..
+  // ..
+  // ..
+  // ..
+	let tip_amount = ext.function.tip.expect("checked to be some; qed");
+}
+```
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -31,15 +87,14 @@ types.
 
 Example:
 
-```rust [1-4|1-8|1-12|14|1-100]
+```rust [1-4|1-8|1-12|1-100]
 trait Config {
   type Extrinsic
   type Header: HeaderT
 }
 
 pub type ExtrinsicFor<C> = <C as Config>::Extrinsic;
-fn process_extrinsic<C>(<C as Config>::Extrinsic) { .. }
-fn process_extrinsic<C>(BlockFor<C>) { .. }
+fn process_extrinsic<C>(e: ExtrinsicFor<C>) { .. }
 
 trait HeaderT {
   type Number;
@@ -53,114 +108,17 @@ Notes:
 turbo fish
 fully qualified syntax.
 
----v
-
-### Speaking of Traits..
-
-- What is the difference between generics and associated types?
-
-```rust
-trait Block<Extrinsic> {
-  fn execute(e: Extrinsic)
-}
-```
-
-vs
-
-```rust
-trait Block {
-  type Extrinsic;
-  fn execute(e: Self::Extrinsic)
-}
-```
-
-Notes:
-
-In cambridge, I did this this. But since students should now know traits really well, I will drop it.
-
-```rust
-trait Engine {
-    fn start() {}
-}
-
-struct BMW;
-impl Engine for BMW {}
-
-trait Brand {
-    fn name() -> &'static str;
-}
-
-trait Car<E: Engine> {
-    type Brand: Brand;
-}
-
-struct KianCarCo;
-impl Brand for KianCarCo {
-  fn name() -> &'static str {
-    "KianCarCo!"
-    }
-}
-
-struct MyCar;
-impl<E: Engine> Car<E> for MyCar {
-    type Brand = MyBrand;
-}
-
-fn main() {
-    // Car<E1>, Car<E2> are different traits!
-
-    // Generics can be bounded, or constrained
-    // impl<E: Engine> Car<E> {}
-    // impl Car<BMW> {}
-
-    // Associated types can:
-    // only be bounded when being defined,
-    // Can be constrained when being implemented, or when the trait is being used.
-    fn some_fn<E: Engine, C: Car<E, Brand = MyBrand>>(car: C) {
-      // and we are told associated types are more like output types, lets get the brand of car
-      let name = <<C as Car<E>>::Brand as Brand>::name();
-    }
-    fn other_fn<C: Car<BMW, Brand = MyBrand>>(car: C) {
-
-    }
-
-    // now, check this out
-}
-```
-
----v
-
-### Speaking of Traits..
-
-Both generics and associated types can be specified, but the syntax is a bit different.
-
-```rust
-trait Block<Extrinsic> {
-  type Header
-}
-
-fn process_block<B: Block<E1, Header = H1>>(b: B)
-```
-
----v
-
-### Speaking of Traits..
-
-- Anything that can be expressed with associated types can also be expressed with generics.
-- Associated Types << Generics
-- Associated types usually lead to less boilerplate.
-
-</div>
-
 ---
 
 ## The `std` Paradigm
 
-- Recap:
+`std` <-> `core` <-> `no_std`
 
+Notes:
+
+- Recap:
   - `std` is the interface to the common OS-abstractions.
   - `core` is a subset of `std` that makes no assumption about the operating system.
-
 - a `no_std` crate is one that relies on `core` rather than `std`.
 
 ---v
@@ -213,15 +171,9 @@ dependencies "std".
 Then, in `std = ["dep/std"]` you are saying "if my std is enabled, enable my dependencies std as
 well".
 
----v
-
-### Cargo Features
-
 - The name "`std`" is just an idiom in the rust ecosystem.
 - `no_std` does NOT mean Wasm!
 - `std` does not mean native!
-
-Notes:
 
 But in substrate, it kinda means like that:
 
@@ -263,7 +215,7 @@ error: duplicate lang item in crate sp_io (which frame_support depends on): oom.
 ### The `std` Paradigm
 
 A subset of the standard types in rust that also exist in rust `core` are re-exported from
-[`sp_std`](https://paritytech.github.io/substrate/master/sp_std/index.html).
+[`sp_std`](https://paritytech.github.io/polkadot-sdk/master/sp_std/index.html).
 
 ```rust
 sp_std::prelude::*;
@@ -273,7 +225,6 @@ Notes:
 
 Hashmap not exported due to non-deterministic concerns.
 floats are usable, but also non-deterministic! (and I think they lack `encode`, `decode` impl)
-
 interesting to look at `if_std` macro in `sp_std`.
 
 ---
@@ -297,17 +248,6 @@ interesting to look at `if_std` macro in `sp_std`.
 
 ### Logging And Prints In The Runtime.
 
-- `wasm2wat polkadot_runtime.wasm > dump | rg stripped`
-
-- Should get you the `.rodata` (read-only data) line of the wasm blob, which contains all the logging
-  noise.
-
-- This contains string literals form errors, logs, metadata, etc.
-
----v
-
-### Logging And Prints In The Runtime.
-
 ```rust
 #[derive(sp_std::fmt::Debug)]
 struct LONG_AND_BEAUTIFUL_NAME {
@@ -321,6 +261,13 @@ struct LONG_AND_BEAUTIFUL_NAME {
 ```
 
 will add a lot of string literals to your wasm blob.
+
+Notes:
+
+- `wasm2wat polkadot_runtime.wasm > dump | rg stripped`
+- Should get you the `.rodata` (read-only data) line of the wasm blob, which contains all the logging
+  noise.
+- This contains string literals form errors, logs, metadata, etc.
 
 ---v
 
@@ -362,8 +309,7 @@ impl ::core::fmt::Debug for WithDebug {
 
 ### Logging And Prints In The Runtime.
 
-Once types implement `Debug` or `RuntimeDebug`, they can be printed. Various ways:
-
+- Once types implement `Debug` or `RuntimeDebug`, they can be printed. Various ways:
 - If you only want something in tests, native builds etc
 
 ```rust
@@ -395,20 +341,14 @@ log::debug!(target: "bar", "hello world! ({})", 10u32);
 
 Notes:
 
-https://paritytech.github.io/substrate/master/sp_tracing/index.html
+https://paritytech.github.io/polkadot-sdk/master/sp_tracing/index.html
 
----v
-
-### Logging And Prints In The Runtime.
-
-- Log statements are only evaluated if the corresponding level and target is met.
+Log statements are only evaluated if the corresponding level and target is met.
 
 ```rust
 /// only executed if `RUST_LOG=KIAN=trace`
 frame_support::log::trace!(target: "KIAN", "({:?})", (0..100000).into_iter().collect());
 ```
-
-Notes:
 
 `log` in rust does not do anything -- it only tracks what needs to be logged. Then you need a logger
 to actually export them. In rust this is often `env_logger` or `sp_tracing` in substrate tests.
@@ -513,11 +453,16 @@ let z = x * y;
 
 ---v
 
-### Larger Types
+### Arithmetic Types
 
-- [`U256`](https://paritytech.github.io/substrate/master/sp_core/struct.U256.html), `U512`: battle-tested since the ethereum days.
+- See [`sp-arithmetic`](https://paritytech.github.io/polkadot-sdk/master/sp_arithmetic/index.html) to
+  learn more.
+
+Notes:
+
+- [`U256`](https://paritytech.github.io/polkadot-sdk/master/sp_core/struct.U256.html), `U512`: battle-tested since the ethereum days.
 - [substrate-fixed](https://github.com/encointer/substrate-fixed): community project. Supercharged `PerThing` and `Fixed`.
-- [`big_uint.rs`](https://paritytech.github.io/substrate/master/sp_arithmetic/biguint/index.html) (unaudited)
+- [`big_uint.rs`](https://paritytech.github.io/polkadot-sdk/master/sp_arithmetic/biguint/index.html) (unaudited)
 
 ```rust
 
@@ -526,13 +471,6 @@ pub struct BigUint {
 	pub(crate) digits: Vec<Single>,
 }
 ```
-
----v
-
-### Arithmetic Types
-
-- See [`sp-arithmetic`](https://paritytech.github.io/substrate/master/sp_arithmetic/index.html) to
-  learn more.
 
 ---
 
@@ -586,6 +524,9 @@ relevant.
 
 https://doc.rust-lang.org/std/primitive.u32.html#method.checked_add
 https://doc.rust-lang.org/std/primitive.u32.html#method.saturating_add
+
+Also substrate's version of the same:
+https://paritytech.github.io/polkadot-sdk/master/sp_arithmetic/traits/trait.SaturatedConversion.html
 
 ---v
 
@@ -658,25 +599,6 @@ T is u32 or larger.
 
 <!-- .element: class="fragment" -->
 
----v
-
-### Fallibility: Conversion
-
-- Substrate also provides a trait for infallible saturated conversion as well.
-- See `sp-arithmetic` for more handy stuff.
-
-```rust
-trait SaturatedConversion {
-  fn saturated_into<T>(self) -> T
-}
-
-assert_eq!(u128::MAX.saturating_into::<u32>(), u32::MAX);
-```
-
-Notes:
-
-https://paritytech.github.io/substrate/master/sp_arithmetic/traits/trait.SaturatedConversion.html
-
 ---
 
 # Part 2: FRAME Stuff
@@ -745,7 +667,7 @@ You have implemented this as a part of your rust exam.
 
 ## `bounded`
 
-- `BoundedVec`, `BoundedSlice`, `BoundedBTreeMap`, `BoundedSlice`
+- `BoundedVec`, `BoundedSlice`, `BoundedBTreeMap`
 
 ```rust
 #[derive(Encode, Decode)]
@@ -755,7 +677,9 @@ pub struct BoundedVec<T, S: Get<u32>>(
 );
 ```
 
-- &shy;<!-- .element: class="fragment" --> `PhantomData`?
+Notes:
+
+`PhantomData`?
 
 ---v
 
@@ -772,9 +696,7 @@ pub struct BoundedVec<T>(
 );
 ```
 
----v
-
-### `bounded`
+Notes:
 
 _`Get` trait is a way to convey values through types. The type system is mostly for compiler, and
 has minimal overhead at runtime._
@@ -831,7 +753,7 @@ impl Config for Runtime {
 <!-- .element: class="fragment" -->
 
 ```rust
-Runtime as Config>::Convertor::convert(_, _);
+<Runtime as Config>::Convertor::convert(_, _);
 ```
 
 <!-- .element: class="fragment" -->
@@ -893,24 +815,53 @@ fn main() {
 
 ### Implementing Traits For Tuples
 
-1. `on_initialize`, in its ideal form, does not have `&self`, it is defined on the **type**, not a **value**.
-
-1. **Tuples** are the natural way to group **types** together (analogous to have a **vector** is the natural way to group **values** together..)
-
 ```rust
+Impl<A, B, C> OnInitialize for (A, B, C)
+where
+  A: OnInitialize,
+  B: OnInitialize,
+  C: OnInitialize,
+{
+  fn on_initialize() {
+    A::on_initialize();
+    B::on_initialize();
+    C::on_initialize();
+  }
+}
+```
+
+```
 // fully-qualified syntax - turbo-fish.
 <(Module1, Module2, Module3) as OnInitialize>::on_initialize();
 ```
+
+<!-- .element: class="fragment" -->
+
+Notes:
+
+**Tuples** are the natural way to group **types** together (analogous to have a **vector** is the natural way to group **values** together..)
 
 ---v
 
 ### Implementing Traits For Tuples
 
+Modern syntax of making a trait "_tuple-call-able_"
+
+```rust
+// In the most basic form:
+#[impl_for_tuples(30)]
+pub trait OnTimestampSet<Moment> {
+	fn on_timestamp_set(moment: Moment);
+}
+```
+
+Notes:
+
+https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/
+
 Only problem: A lot of boilerplate. Macros!
 
 Historically, we made this work with `macro_rules!`
-
-Notes:
 
 ```rust
 macro_rules! impl_for_tuples {
@@ -928,23 +879,16 @@ impl_for_tuples!(A, B, C, D, E);
 impl_for_tuples!(A, B, C, D, E, F);
 ```
 
----v
+---
 
-### Implementing Traits For Tuples
+### Debugging Macros Generated Code
 
-And then someone made `impl_for_tuples` crate.
-
-```rust
-// In the most basic form:
-#[impl_for_tuples(30)]
-pub trait OnTimestampSet<Moment> {
-	fn on_timestamp_set(moment: Moment);
-}
-```
+<img rounded src="./img/frame-macro-error.gif" />
 
 Notes:
 
-https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/
+- Crucial to start debugging from the first macro expansion, not the end!
+- This is only when you are working with a framework like FRAME that is a lot of macro-generated code. If you are writing macros, there are different tricks that you can learn about online.
 
 ---
 
@@ -953,11 +897,248 @@ https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/
 > ..is a form of defensive design to ensure the continuing function of a piece of software under
 > unforeseen circumstances... where **high availability**, **safety**, or **security** is needed.
 
-- As you know, you should (almost) never panic in your runtime code.
+---v
+
+### Defensive Programming
+
+```
+let maybe_value: Option<u32> = Some(42);
+// ...
+let value = maybe_value.unwrap(); // aggressive programming 🤠
+let value = maybe_value.expect("written evidence") // better ✅
+let value = maybe_value.ok_or(Error::DefensiveError)?; // best ✅
+let value = maybe_value.ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)?; // best ✅
+```
 
 ---v
 
 ### Defensive Programming
+
+```rust
+let value = maybe_value.ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)
+  .map_err(|e| {
+    #[cfg(test)]
+    panic!("An impossible error happened!: {:?}", e);
+    log::error!(target: "..", "defensive error happened: {:?}", e);
+    e
+  })?;
+```
+
+---v
+
+### Defensive Programming
+
+[Defensive traits](https://paritytech.github.io/substrate/master/frame_support/traits/trait.Defensive.html)
+
+```rust
+use frame_support::DefensiveOption;
+let value = maybe_value.defensive_ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)
+```
+
+---
+
+## Final Words on Panics
+
+1. Panics can happen other than `Err(_).unwrap()`
+
+Notes:
+
+- slice/vector indexing can panic if out of bound
+- `.insert`, `.remove`
+- division by zero.
+
+---v
+
+### Final Words on Panics
+
+2. Panics in Internal API --> Well Documented Code.
+
+---v
+
+### Final Words on Panics
+
+````rust
+/// Multiplies the given input by two.
+///
+/// Some further information about what this does, and where it could be used.
+///
+/// ```
+/// fn main() {
+///   let x = multiply_by_2(10);
+///   assert_eq!(10, 20);
+/// }
+/// ```
+///
+/// ## Panics
+///
+/// Panics under such and such condition.
+fn multiply_by_2(x: u32) -> u32 { .. }
+````
+
+Notes:
+
+- Speaking of documentation, [here's a very good guideline](https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html)!
+
+---v
+
+### Final Words on Panics
+
+- Try and not be this guy:
+
+```rust
+/// This function works with module x and multiples the given input by two. If
+/// we optimize the other variant of it, we would be able to achieve more
+/// efficiency but I have to think about it. Probably can panic if the input
+/// overflows u32 lolololooooo
+fn multiply_by_2(x: u32) -> u32 { .. }
+```
+
+---
+
+## Additional Resources! 😋
+
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+
+> Check speaker notes (click "s" 😉)
+
+> Good luck with FRAME!
+
+Notes:
+
+- Rust didn't have u128 until not too long ago! https://github.com/paritytech/substrate/pull/163/files
+- `TryFrom`/`TryInto` are also not too old! https://github.com/paritytech/substrate/pull/163/files#r188938077
+- Remove `As`, which tried to fill the lack of `TryFrom/TryInto` https://github.com/paritytech/substrate/pull/2602
+- Runtime Logging PR: https://github.com/paritytech/substrate/pull/3821
+
+- Impl trait for tuples:
+
+  - https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array
+  - https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch
+  - https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name
+  - https://turbo.fish/
+  - https://techblog.tonsser.com/posts/what-is-rusts-turbofish
+  - https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/
+
+- std/no_std
+  - https://paritytech.github.io/substrate/master/sp_std/index.html
+  - https://doc.rust-lang.org/core/index.html
+  - https://doc.rust-lang.org/std/index.html
+  - https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature
+
+### Feedback After Lecture:
+
+- Update on defensive ops: https://github.com/paritytech/substrate/pull/12967
+- Next time, talk about making a storage struct be `<T: Config>`.
+- SignedExtension should technically be part of the substrate module. Integrate it in the
+  assignment, perhaps.
+- A section about `XXXNoBound` traits.
+
+---
+
+# Appendix
+
+---
+
+## Generics vs. Associated Types
+
+- What is the difference between generics and associated types?
+
+```rust
+trait Block<Extrinsic> {
+  fn execute(e: Extrinsic)
+}
+```
+
+vs
+
+```rust
+trait Block {
+  type Extrinsic;
+  fn execute(e: Self::Extrinsic)
+}
+```
+
+Notes:
+
+In cambridge, I did this this. But since students should now know traits really well, I will drop it.
+
+```rust
+trait Engine {
+    fn start() {}
+}
+
+struct BMW;
+impl Engine for BMW {}
+
+trait Brand {
+    fn name() -> &'static str;
+}
+
+trait Car<E: Engine> {
+    type Brand: Brand;
+}
+
+struct KianCarCo;
+impl Brand for KianCarCo {
+  fn name() -> &'static str {
+    "KianCarCo!"
+    }
+}
+
+struct MyCar;
+impl<E: Engine> Car<E> for MyCar {
+    type Brand = MyBrand;
+}
+
+fn main() {
+    // Car<E1>, Car<E2> are different traits!
+
+    // Generics can be bounded, or constrained
+    // impl<E: Engine> Car<E> {}
+    // impl Car<BMW> {}
+
+    // Associated types can:
+    // only be bounded when being defined,
+    // Can be constrained when being implemented, or when the trait is being used.
+    fn some_fn<E: Engine, C: Car<E, Brand = MyBrand>>(car: C) {
+      // and we are told associated types are more like output types, lets get the brand of car
+      let name = <<C as Car<E>>::Brand as Brand>::name();
+    }
+    fn other_fn<C: Car<BMW, Brand = MyBrand>>(car: C) {
+
+    }
+
+    // now, check this out
+}
+```
+
+---v
+
+### Speaking of Traits..
+
+Both generics and associated types can be specified, but the syntax is a bit different.
+
+```rust
+trait Block<Extrinsic> {
+  type Header
+}
+
+fn process_block<B: Block<E1, Header = H1>>(b: B)
+```
+
+---v
+
+### Speaking of Traits..
+
+- Anything that can be expressed with associated types can also be expressed with generics.
+- Associated Types << Generics
+- Associated types usually lead to less boilerplate.
+
+</div>
+
+---
+
+## Defensive Programming Contd.
 
 - First reminder: don't panic, unless if you want to punish someone!
 - `.unwrap()`? no no
@@ -1119,46 +1300,3 @@ It adds some boilerplate to:
 
 1. Panic when `debug_assertions` are enabled (tests).
 1. append a `log::error!`.
-
----
-
-## Additional Resources! 😋
-
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
-
-> Check speaker notes (click "s" 😉)
-
-> Good luck with FRAME!
-
-Notes:
-
-- Rust didn't have u128 until not too long ago! https://github.com/paritytech/substrate/pull/163/files
-- `TryFrom`/`TryInto` are also not too old! https://github.com/paritytech/substrate/pull/163/files#r188938077
-- Remove `As`, which tried to fill the lack of `TryFrom/TryInto` https://github.com/paritytech/substrate/pull/2602
-- Runtime Logging PR: https://github.com/paritytech/substrate/pull/3821
-
-- Impl trait for tuples:
-
-  - https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array
-  - https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch
-  - https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name
-  - https://turbo.fish/
-  - https://techblog.tonsser.com/posts/what-is-rusts-turbofish
-  - https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/
-
-- std/no_std
-  - https://paritytech.github.io/substrate/master/sp_std/index.html
-  - https://doc.rust-lang.org/core/index.html
-  - https://doc.rust-lang.org/std/index.html
-  - https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature
-
-### Feedback After Lecture:
-
-- Lecture is still kinda dense and long, try and trim
-- Update on defensive ops: https://github.com/paritytech/substrate/pull/12967
-- Next time, talk about making a storage struct be `<T: Config>`.
-- Cargo format
-- SignedExtension should technically be part of the substrate module. Integrate it in the
-  assignment, perhaps.
-- A section about `XXXNoBound` traits.
-- A section about reading your compiler errors top to bottom, especially with an example in FRAME.

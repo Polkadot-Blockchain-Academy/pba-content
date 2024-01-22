@@ -56,25 +56,27 @@ The output of verification being an option represents the possibility of an inva
 - Revealing output does not leak secret key
 
 ---
- ## Recall Signature Interface
 
-- `sign(sk, msg) -> signature;` 
+## Recall Signature Interface
 
-- `verify(pk, msg, signature) -> bool;` 
+- `sign(sk, msg) -> signature;`
 
+- `verify(pk, msg, signature) -> bool;`
 
 ---
+
 ## BLS-based VRF
 
 - In some cases,`output = Hash(signature)` (RSA-FDH-VRF, BLS-based VRF)
 
-- `sign(sk, input) `: run `BLS.sign(sk, input)->signature`, return `signature` 
+- `sign(sk, input) `: run `BLS.sign(sk, input)->signature`, return `signature`
 
 - `eval(sk,input)`： return `Hash (signature)`
 
 - `verify(pk,input, signature)`: `BLS.verify(pk, input, signature)?=1`, if holds, output `hash (signature)`
 
 ---
+
 ## VRF Usage
 
 - Choose input after key, then the key holder cannot influence the output
@@ -98,21 +100,27 @@ The signature proves that this is the output associated to their input and publi
 ---
 
 ## VRF Example
-_Lottery_ 
+
+_Lottery_
+
 - Lottery organizer generate $pk$,$sk$ for VRF;
 - Each participants choose their own tickets $t_i$;
 
-<img style="width: 500px;" src="./img/vrf1.png" /> 
-
----
- ## VRF Example
-  _Lottery_ 
-  - Lottery organizer computes `eval(sk,$t_i$)-> $y_i$` for each participants;
-  - $y_i$ determines wining or not;
-  - `sign(sk, $t_i$) -> $\sigma_i$` published for verification. 
 <img style="width: 500px;" src="./img/vrf1.png" />
 
 ---
+
+## VRF Example
+
+_Lottery_
+
+- Lottery organizer computes `eval(sk,$t_i$)-> $y_i$` for each participants;
+- $y_i$ determines wining or not;
+- `sign(sk, $t_i$) -> $\sigma_i$` published for verification.
+  <img style="width: 500px;" src="./img/vrf1.png" />
+
+---
+
 ## VRF Extensions
 
 - Threshold VRFs / Common coin
@@ -130,7 +138,7 @@ Dfinity based their consensus on this.
 But this needs a DKG, and it's unclear if a decentralized protocol can do those easily.
 A participant in a RingVRF could still only reveal _one_ random number.
 
---- 
+---
 
 ## Threshold VRFs
 
@@ -140,6 +148,7 @@ A participant in a RingVRF could still only reveal _one_ random number.
 - Combine $t$ `output_i`, `signature_i` to get `output`, `signature`.
 
 ---
+
 ## Ring Signature and Ring VRFs
 
 - Ring Signature: Sign on behalf of a group people without revealing the true identity of the signer;
@@ -159,7 +168,7 @@ _Magical data expansion_
 - Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing
 
 - A message of $k$ symbols is turned into a coded message of $n$ symbols and can be recovered from any $k$ of these $n$ symbols
- 
+
 ---
 
 ## Erasure Coding Intuition
@@ -231,13 +240,14 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
 ---
 
- ## Example for 1 Bit Erasuring
-  Parity Check: $n=k+1$
+## Example for 1 Bit Erasuring
 
-- Codeword length $(x_1,\cdots,x_k)$: $k$ 
+Parity Check: $n=k+1$
+
+- Codeword length $(x_1,\cdots,x_k)$: $k$
 - Add a sum of the codeword
 
-<img style="width: 1000px;" src="./img/ECC1.png" /> 
+<img style="width: 1000px;" src="./img/ECC1.png" />
 
 - What if one element gets erasured during transmission?
 
@@ -251,12 +261,9 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
 ---
 
-
 ## Use in Decentralized Systems
 
-
-
-<img style="width: 600px;" src="./img/ECC2.png" /> 
+<img style="width: 600px;" src="./img/ECC2.png" />
 
 ---
 
@@ -266,7 +273,6 @@ The magic here is polynomials, and the fact that a polynomial of degree $n$ is c
 
   - but not have everyone store
   - but we don't trust everyone who is storing pieces
-
 
 ---
 
@@ -289,49 +295,56 @@ Notes:
 Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-secret-sharing-scheme-ea83a888f033
 
 ---
- ## How to Share Secrets?
 
-  - A polynomial of degree $t$ is completely determined by $t+1$ points.  
-  - We can reconstruct the $t$ polynomial from any of its $t+1$ points (use Lagrange interpolation).
-  - With point less than $t+1$, the polynomial cannot be uncovered.
-  - $y=x^3+4x^2+2$
+## How to Share Secrets?
+
+- A polynomial of degree $t$ is completely determined by $t+1$ points.
+- We can reconstruct the $t$ polynomial from any of its $t+1$ points (use Lagrange interpolation).
+- With point less than $t+1$, the polynomial cannot be uncovered.
+- $y=x^3+4x^2+2$
   <img style="width:500px " src="./img/secshare1.png" />
 
 ---
- ## How to Share Secrets?
-  - Assume we want to share a secret value $a$ among $n$ people
-  - We expect that with any $k$ secret shares we are able to reconstruct $a$;
+
+## How to Share Secrets?
+
+- Assume we want to share a secret value $a$ among $n$ people
+- We expect that with any $k$ secret shares we are able to reconstruct $a$;
 
 ---
-  ## Share Secret Value $a$
-- Construct polynomial $f(X)=a_0+a_1X+a_2X^2+\cdots+a_{k-1}X^{k-1}$ with degree $k-1$; 
+
+## Share Secret Value $a$
+
+- Construct polynomial $f(X)=a_0+a_1X+a_2X^2+\cdots+a_{k-1}X^{k-1}$ with degree $k-1$;
 
 - **$a_0=a$**;
 - $a_1$,$\cdots$, $a_{k-1}$ are all randomly picked;
- 
+
 - The $n$ secret shares are $f(1)$, $f(2)$,$\cdots$, $f(n)$;
 
 - With any $k$ of the $n$ secret shares, we are able to recover $f(x)$.
 
 ---
-## Example:$a=12, n=5, k=4$ 
+
+## Example:$a=12, n=5, k=4$
 
 - Construct a polynomial $f(x)=12-13x-7x^2+2x^3$
 
 <img style="width:600px " src="./img/secshare2.png" />
 
 ---
-## Example:$a=12, n=5, k=4$ 
-  
-  - Evaluate on $f(1)$, $f(2)$, $f(3)$, $f(4)$, $f(5)$
-  
+
+## Example:$a=12, n=5, k=4$
+
+- Evaluate on $f(1)$, $f(2)$, $f(3)$, $f(4)$, $f(5)$
+
   <img style="width:600px " src="./img/secshare3.png" />
 
 ---
 
 ## Distributed Private Key Storage
 
-- The management and protection of private keys is important; 
+- The management and protection of private keys is important;
 
 - There are wallet introduced Shamir secret sharing to help share private key into multiple pieces;
 
@@ -345,6 +358,7 @@ Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-sec
 - So can other people who collect enough shares.
 
 ---
+
 ## Recall Asymmetric (Public Key) Encryption
 
 - `fn generate_key(r) -> sk;` <br/> Generate a `sk` (secret key) from some input `r`.
@@ -353,11 +367,12 @@ Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-sec
 - `fn decrypt(sk, ciphertext) -> msg;` <br/> For the inputs `sk` and a ciphertext; returns the original message.
 
 ---
+
 ## Proxy Reencryption Intuition
 
 <img rounded style="height: 400px" src="./img/proxy1.png" />
 
-- Directly give Email Server $sk_A$? 
+- Directly give Email Server $sk_A$?
 - $A$ encrypt the email using $pk_B$ by itself and send the ciphertext to server?
 
 ---
@@ -390,6 +405,7 @@ Notes:
 ---
 
 ## Requirements for Proxy Reencryption
+
 - Bob (delegatee) should be able to correctly decrypt new ciphertext with his $pk$;
 
 - With $rk$, Proxy can not get Alice's (delegator) secret key.

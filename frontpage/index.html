@@ -8,6 +8,35 @@
   <link rel="icon" href="./assets/favicon.svg" />
   <link rel="shortcut icon" href="./assets/favicon.png" />
   <style>
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 300;
+      src: url('./fonts/unbounded/Unbounded-Light.woff2');
+      src: local(''),
+            url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype'), /* Safari, Android, iOS */
+    }
+
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 400;
+      src: url('./fonts/unbounded/Unbounded-Regular.woff2');
+      src: local(''),
+            url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    }
+
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 700;
+      src: url('./fonts/unbounded/Unbounded-Bold.woff2');
+      src: local(''),
+            url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+    }
     /* local variables */
     html {
       --font-size: 16px;
@@ -94,8 +123,8 @@
       justify-content: space-around;
     }
 
-    .slide-list li img{
-      padding: 1rem 0rem 0.5rem;
+    .slide-list li img {
+      border: 0.2rem solid var(--r-heading-font);
     }
 
     .slide-card-name {
@@ -115,8 +144,6 @@
     }
 
     .slide-list li a {
-      padding-top: calc(var(--size) / 3);
-      padding-bottom: calc(var(--size) / 3);
       font-size: calc(var(--font-size) * 1.2);
       color: var(--r-main-color);
       text-decoration: none;
@@ -170,28 +197,24 @@
   </header>
 
   <main class="site-main">
-    <div class="slide-list">
+    <ul class="slide-list">
       <li>
         <a href="cambridge-2022&#x2F;index.html" title="Lectures during Cambridge (U.K.) - 2022" class="slide-card" target="_blank">
-          <img src="./assets/1-cambridge.jpg" width="400" /><br />
-          <span class="slide-card-name">Cohort #1 - Cambridge (2022)</span>
+          <img src="./assets/1-cambridge.jpg" width="600" />
         </a>
         <a href="buenos-aires-2023&#x2F;index.html" title="Lectures during Buenos Aires (Argentina) - 2023" class="slide-card" target="_blank">
-          <img src="./assets/2-buenosaires.jpg" width="400" /><br />
-          <span class="slide-card-name">Cohort #2 - Buenos Aires (2023)</span>
+          <img src="./assets/2-buenosaires.jpg" width="600" />
         </a>
       </li>
       <li>
         <a href="berkeley-2023&#x2F;index.html" title="Lectures during Berkeley (U.S.A.) - 2023" class="slide-card" target="_blank">
-          <img src="./assets/3-berkeley.jpeg" width="400" /><br />
-          <span class="slide-card-name">Cohort #3 - Berkeley (2023)</span>
+          <img src="./assets/3-berkeley.jpg" width="600" />
         </a>
         <a href="current&#x2F;index.html" title="Lectures during Hong Kong (H.K.) - 2024" class="slide-card" target="_blank">
-          <img src="./assets/4-polyu.png" width="400" /><br />
-          <span class="slide-card-name">Cohort #4 - Hong Kong (2024)</span>
+          <img src="./assets/4-polyu.jpg" width="600" />
         </a>
       </li>
-    </ul>
+    </div>
   </main>
 
 </body>

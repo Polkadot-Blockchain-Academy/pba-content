@@ -5,6 +5,120 @@
 **/
 
 /*********************************************
+	 * NAVIGATION CONTROLS
+	 *********************************************/
+   .reveal .controls {
+    color: var(--r-color-controls);
+  }
+
+  /*********************************************
+     * PROGRESS BAR
+     *********************************************/
+  .reveal .progress {
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--r-color-controls);
+    height: 0.15em;
+  }
+
+  /*********************************************
+     * PRINT BACKGROUND
+     *********************************************/
+  @media print {
+    .backgrounds {
+      background-color: var(--r-background-color);
+    }
+  }
+
+  /*********************************************
+   * FONTS
+   *********************************************/
+  /* font: unbounded https://unbounded.polkadot.network/ */
+  @font-face {
+    font-family: 'Unbounded';
+    font-style: normal;
+    font-weight: 300;
+    src: url('./fonts/unbounded/Unbounded-Light.woff2');
+    src: local(''),
+          url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'), /* Super Modern Browsers */
+          url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype'), /* Safari, Android, iOS */
+  }
+
+  @font-face {
+    font-family: 'Unbounded';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/unbounded/Unbounded-Regular.woff2');
+    src: local(''),
+          url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+          url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  }
+
+  @font-face {
+    font-family: 'Unbounded';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./fonts/unbounded/Unbounded-Bold.woff2');
+    src: local(''),
+          url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+          url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+  }
+
+  /* fonts: work-sans-regular - latin	https://google-webfonts-helper.herokuapp.com/fonts/work-sans/work-sans?subsets=latin */
+  @font-face {
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+         url('./fonts/work-sans/work-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./fonts/work-sans/work-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./fonts/work-sans/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+
+  /* work-sans-800 - latin */
+  @font-face {
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 800;
+    src: url('./fonts/work-sans/work-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
+    src: local(''),
+         url('./fonts/work-sans/work-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./fonts/work-sans/work-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./fonts/work-sans/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+
+  /* work-sans-italic - latin */
+  @font-face {
+    font-family: 'Work Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: url('./fonts/work-sans/work-sans-v17-latin-italic.eot'); /* IE9 Compat Modes */
+    src: local(''),
+         url('./fonts/work-sans/work-sans-v17-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./fonts/work-sans/work-sans-v17-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./fonts/work-sans/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+
+  /* work-sans-800italic - latin */
+  @font-face {
+    font-family: 'Work Sans';
+    font-style: italic;
+    font-weight: 800;
+    src: url('./fonts/work-sans/work-sans-v17-latin-800italic.eot'); /* IE9 Compat Modes */
+    src: local(''),
+         url('./fonts/work-sans/work-sans-v17-latin-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./fonts/work-sans/work-sans-v17-latin-800italic.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-800italic.woff') format('woff'), /* Modern Browsers */
+         url('./fonts/work-sans/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./fonts/work-sans/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
+  }
+
+/*********************************************
  * GLOBAL STYLES
  *********************************************/
 
@@ -506,116 +620,3 @@ a {
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
 }
 
-/*********************************************
-	 * NAVIGATION CONTROLS
-	 *********************************************/
-.reveal .controls {
-	color: var(--r-color-controls);
-}
-
-/*********************************************
-	 * PROGRESS BAR
-	 *********************************************/
-.reveal .progress {
-	background: rgba(0, 0, 0, 0.2);
-	color: var(--r-color-controls);
-	height: 0.15em;
-}
-
-/*********************************************
-	 * PRINT BACKGROUND
-	 *********************************************/
-@media print {
-	.backgrounds {
-		background-color: var(--r-background-color);
-	}
-}
-
-/*********************************************
- * FONTS
- *********************************************/
-/* font: unbounded https://unbounded.polkadot.network/ */
-@font-face {
-	font-family: 'Unbounded';
-	font-style: normal;
-	font-weight: 300;
-	src: url('./fonts/unbounded/Unbounded-Light.woff2');
-	src: local(''),
-				url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'), /* Super Modern Browsers */
-				url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype'), /* Safari, Android, iOS */
-}
-
-@font-face {
-	font-family: 'Unbounded';
-	font-style: normal;
-	font-weight: 400;
-	src: url('./fonts/unbounded/Unbounded-Regular.woff2');
-	src: local(''),
-				url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'), /* Super Modern Browsers */
-				url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
-}
-
-@font-face {
-	font-family: 'Unbounded';
-	font-style: normal;
-	font-weight: 700;
-	src: url('./fonts/unbounded/Unbounded-Bold.woff2');
-	src: local(''),
-				url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'), /* Super Modern Browsers */
-				url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
-}
-
-/* fonts: work-sans-regular - latin	https://google-webfonts-helper.herokuapp.com/fonts/work-sans/work-sans?subsets=latin */
-@font-face {
-	font-family: 'Work Sans';
-	font-style: normal;
-	font-weight: 400;
-	src: local(''),
-			 url('./fonts/work-sans/work-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-			 url('./fonts/work-sans/work-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-			 url('./fonts/work-sans/work-sans-v17-latin-regular.svg#WorkSans') format('svg'); /* Legacy iOS */
-}
-
-/* work-sans-800 - latin */
-@font-face {
-	font-family: 'Work Sans';
-	font-style: normal;
-	font-weight: 800;
-	src: url('./fonts/work-sans/work-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
-	src: local(''),
-			 url('./fonts/work-sans/work-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-			 url('./fonts/work-sans/work-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
-			 url('./fonts/work-sans/work-sans-v17-latin-800.svg#WorkSans') format('svg'); /* Legacy iOS */
-}
-
-/* work-sans-italic - latin */
-@font-face {
-	font-family: 'Work Sans';
-	font-style: italic;
-	font-weight: 400;
-	src: url('./fonts/work-sans/work-sans-v17-latin-italic.eot'); /* IE9 Compat Modes */
-	src: local(''),
-			 url('./fonts/work-sans/work-sans-v17-latin-italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff2') format('woff2'), /* Super Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-italic.woff') format('woff'), /* Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-italic.ttf') format('truetype'), /* Safari, Android, iOS */
-			 url('./fonts/work-sans/work-sans-v17-latin-italic.svg#WorkSans') format('svg'); /* Legacy iOS */
-}
-
-/* work-sans-800italic - latin */
-@font-face {
-	font-family: 'Work Sans';
-	font-style: italic;
-	font-weight: 800;
-	src: url('./fonts/work-sans/work-sans-v17-latin-800italic.eot'); /* IE9 Compat Modes */
-	src: local(''),
-			 url('./fonts/work-sans/work-sans-v17-latin-800italic.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-			 url('./fonts/work-sans/work-sans-v17-latin-800italic.woff2') format('woff2'), /* Super Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-800italic.woff') format('woff'), /* Modern Browsers */
-			 url('./fonts/work-sans/work-sans-v17-latin-800italic.ttf') format('truetype'), /* Safari, Android, iOS */
-			 url('./fonts/work-sans/work-sans-v17-latin-800italic.svg#WorkSans') format('svg'); /* Legacy iOS */
-}
