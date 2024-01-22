@@ -582,7 +582,7 @@ impl Get<u32> for Foo {
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## `bounded`
 
-- `BoundedVec`, `BoundedSlice`, `BoundedBTreeMap`, `BoundedSlice`
+- `BoundedVec`, `BoundedSlice`, `BoundedBTreeMap`
 
 ```rust
 #[derive(Encode, Decode)]
@@ -656,7 +656,7 @@ impl Config for Runtime {
 <!-- .element: class="fragment" -->
 
 ```rust
-Runtime as Config>::Convertor::convert(_, _);
+<Runtime as Config>::Convertor::convert(_, _);
 ```
 
 <!-- .element: class="fragment" -->
