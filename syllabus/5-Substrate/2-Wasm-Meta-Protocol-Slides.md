@@ -1476,3 +1476,5 @@ https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
 <img rounded style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
 
 ---v
+
+
