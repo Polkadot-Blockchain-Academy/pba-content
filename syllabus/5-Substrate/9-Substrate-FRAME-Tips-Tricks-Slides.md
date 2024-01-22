@@ -667,7 +667,7 @@ You have implemented this as a part of your rust exam.
 
 ## `bounded`
 
-- `BoundedVec`, `BoundedSlice`, `BoundedBTreeMap`, `BoundedSlice`
+- `BoundedVec`, `BoundedSlice`, `BoundedBTreeMap`
 
 ```rust
 #[derive(Encode, Decode)]
@@ -754,7 +754,7 @@ impl Config for Runtime {
 <!-- .element: class="fragment" -->
 
 ```rust
-Runtime as Config>::Convertor::convert(_, _);
+<Runtime as Config>::Convertor::convert(_, _);
 ```
 
 <!-- .element: class="fragment" -->
