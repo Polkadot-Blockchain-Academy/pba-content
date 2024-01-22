@@ -490,7 +490,6 @@ Original pool PR from ages ago, old but gold: https://github.com/paritytech/subs
 
 More about MEV
 
-
 ---
 
 # Appendix
