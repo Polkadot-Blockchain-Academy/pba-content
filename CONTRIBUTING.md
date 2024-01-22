@@ -63,7 +63,7 @@ corepack enable
 # Install Dependencies
 yarn
 # Run a slide server watching for file changes
-yarn start
+yarn dev
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
