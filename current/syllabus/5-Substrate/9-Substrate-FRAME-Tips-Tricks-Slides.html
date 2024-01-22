@@ -29,13 +29,58 @@
     <article class="slides">
       <section  data-markdown><script type="text/template">
 
-# FRAME Tips and Tricks
+# Substrate / FRAME Tips and Tricks
 
 <aside class="notes"><ul>
 <li>A random collection of things that you should probably know about.</li>
 <li>These are relevant for coding in FRAME and Substrate.</li>
 </ul>
-</aside></script></section><section  data-markdown><script type="text/template">
+</aside></script></section><section ><section data-markdown><script type="text/template">
+# Part 0 FRAMELess Assignment Retro
+</script></section><section data-markdown><script type="text/template">
+## Formatter
+
+`rustfmt` It is a good thing, please use it!
+</script></section><section data-markdown><script type="text/template">
+## Options --> Results
+
+```rust
+let signer_balance = Runtime::get_state::<AccountBalance>(&Self::get_storage_key(&signer));
+match signer_balance {
+	Some(_) => (),
+	None => {return Err(TransactionValidityError::Invalid(InvalidTransaction::BadSigner))},
+};
+```
+
+```rust
+let signer_balance = Runtime::get_state::<AccountBalance>(&Self::get_storage_key(&signer))
+	.ok_or(TransactionValidityError::Invalid(InvalidTransaction::BadSigner))?;
+```
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p><a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or">https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or</a>
+<a href="https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or_else">https://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or_else</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+## `expect` for Impossible Panics
+
+```rust
+if ext.function.tip.is_some() {
+	let tip_amount = ext.function.tip.unwrap();
+}
+```
+
+```rust
+if ext.function.tip.is_some() {
+  // ..
+  // ..
+  // ..
+  // ..
+	let tip_amount = ext.function.tip.expect("checked to be some; qed");
+}
+```
+<!-- .element: class="fragment" -->
+
+</script></section></section><section  data-markdown><script type="text/template">
 # Part 1 Substrate Stuff
 </script></section><section ><section data-markdown><script type="text/template">
 ## `<Type as Trait>::AssociatedType`
@@ -49,15 +94,14 @@ types.</p>
 
 Example:
 
-```rust [1-4|1-8|1-12|14|1-100]
+```rust [1-4|1-8|1-12|1-100]
 trait Config {
   type Extrinsic
   type Header: HeaderT
 }
 
 pub type ExtrinsicFor<C> = <C as Config>::Extrinsic;
-fn process_extrinsic<C>(<C as Config>::Extrinsic) { .. }
-fn process_extrinsic<C>(BlockFor<C>) { .. }
+fn process_extrinsic<C>(e: ExtrinsicFor<C>) { .. }
 
 trait HeaderT {
   type Number;
@@ -68,105 +112,21 @@ pub type NumberFor<C> = <<C as Config>::Header as HeaderT>::Number;
 
 <aside class="notes"><p>turbo fish
 fully qualified syntax.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Speaking of Traits..
-
-- What is the difference between generics and associated types?
-
-```rust
-trait Block<Extrinsic> {
-  fn execute(e: Extrinsic)
-}
-```
-
-vs
-
-```rust
-trait Block {
-  type Extrinsic;
-  fn execute(e: Self::Extrinsic)
-}
-```
-
-<aside class="notes"><p>In cambridge, I did this this. But since students should now know traits really well, I will drop it.</p>
-<pre><code class="language-rust">trait Engine {
-    fn start() {}
-}
-
-struct BMW;
-impl Engine for BMW {}
-
-trait Brand {
-    fn name() -&gt; &amp;&#39;static str;
-}
-
-trait Car&lt;E: Engine&gt; {
-    type Brand: Brand;
-}
-
-struct KianCarCo;
-impl Brand for KianCarCo {
-  fn name() -&gt; &amp;&#39;static str {
-    &quot;KianCarCo!&quot;
-    }
-}
-
-struct MyCar;
-impl&lt;E: Engine&gt; Car&lt;E&gt; for MyCar {
-    type Brand = MyBrand;
-}
-
-fn main() {
-    // Car&lt;E1&gt;, Car&lt;E2&gt; are different traits!
-
-    // Generics can be bounded, or constrained
-    // impl&lt;E: Engine&gt; Car&lt;E&gt; {}
-    // impl Car&lt;BMW&gt; {}
-
-    // Associated types can:
-    // only be bounded when being defined,
-    // Can be constrained when being implemented, or when the trait is being used.
-    fn some_fn&lt;E: Engine, C: Car&lt;E, Brand = MyBrand&gt;&gt;(car: C) {
-      // and we are told associated types are more like output types, lets get the brand of car
-      let name = &lt;&lt;C as Car&lt;E&gt;&gt;::Brand as Brand&gt;::name();
-    }
-    fn other_fn&lt;C: Car&lt;BMW, Brand = MyBrand&gt;&gt;(car: C) {
-
-    }
-
-    // now, check this out
-}
-</code></pre>
-</aside></script></section><section data-markdown><script type="text/template">
-### Speaking of Traits..
-
-Both generics and associated types can be specified, but the syntax is a bit different.
-
-```rust
-trait Block<Extrinsic> {
-  type Header
-}
-
-fn process_block<B: Block<E1, Header = H1>>(b: B)
-```
-</script></section><section data-markdown><script type="text/template">
-### Speaking of Traits..
-
-- Anything that can be expressed with associated types can also be expressed with generics.
-- Associated Types << Generics
-- Associated types usually lead to less boilerplate.
-
-</div>
-</script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## The `std` Paradigm
 
-- Recap:
 
-  - `std` is the interface to the common OS-abstractions.
-  - `core` is a subset of `std` that makes no assumption about the operating system.
+`std` <-> `core` <-> `no_std`
 
-- a `no_std` crate is one that relies on `core` rather than `std`.
-</script></section><section data-markdown><script type="text/template">
+<aside class="notes"><ul>
+<li>Recap:<ul>
+<li><code>std</code> is the interface to the common OS-abstractions.</li>
+<li><code>core</code> is a subset of <code>std</code> that makes no assumption about the operating system.</li>
+</ul>
+</li>
+<li>a <code>no_std</code> crate is one that relies on <code>core</code> rather than <code>std</code>.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Cargo Features
 
 - Way to compile different code via flags.
@@ -206,14 +166,12 @@ library. This is the default.</p>
 dependencies &quot;std&quot;.</p>
 <p>Then, in <code>std = [&quot;dep/std&quot;]</code> you are saying &quot;if my std is enabled, enable my dependencies std as
 well&quot;.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Cargo Features
-
-- The name "`std`" is just an idiom in the rust ecosystem.
-- `no_std` does NOT mean Wasm!
-- `std` does not mean native!
-
-<aside class="notes"><p>But in substrate, it kinda means like that:</p>
+<ul>
+<li>The name &quot;<code>std</code>&quot; is just an idiom in the rust ecosystem.</li>
+<li><code>no_std</code> does NOT mean Wasm!</li>
+<li><code>std</code> does not mean native!</li>
+</ul>
+<p>But in substrate, it kinda means like that:</p>
 <p>std =&gt; native
 no_std =&gt; wasm</p>
 </aside></script></section><section data-markdown><script type="text/template">
@@ -246,15 +204,15 @@ error: duplicate lang item in crate sp_io (which frame_support depends on): oom.
 ### The `std` Paradigm
 
 A subset of the standard types in rust that also exist in rust `core` are re-exported from
-[`sp_std`](https://paritytech.github.io/substrate/master/sp_std/index.html).
+[`sp_std`](https://paritytech.github.io/polkadot-sdk/master/sp_std/index.html).
 
 ```rust
 sp_std::prelude::*;
 ```
 
 <aside class="notes"><p>Hashmap not exported due to non-deterministic concerns.
-floats are usable, but also non-deterministic! (and I think they lack <code>encode</code>, <code>decode</code> impl)</p>
-<p>interesting to look at <code>if_std</code> macro in <code>sp_std</code>.</p>
+floats are usable, but also non-deterministic! (and I think they lack <code>encode</code>, <code>decode</code> impl)
+interesting to look at <code>if_std</code> macro in <code>sp_std</code>.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Logging And Prints In The Runtime.
 
@@ -273,15 +231,6 @@ floats are usable, but also non-deterministic! (and I think they lack <code>enco
 </script></section><section data-markdown><script type="text/template">
 ### Logging And Prints In The Runtime.
 
-- `wasm2wat polkadot_runtime.wasm > dump | rg stripped`
-
-- Should get you the `.rodata` (read-only data) line of the wasm blob, which contains all the logging
-  noise.
-
-- This contains string literals form errors, logs, metadata, etc.
-</script></section><section data-markdown><script type="text/template">
-### Logging And Prints In The Runtime.
-
 ```rust
 #[derive(sp_std::fmt::Debug)]
 struct LONG_AND_BEAUTIFUL_NAME {
@@ -295,7 +244,14 @@ struct LONG_AND_BEAUTIFUL_NAME {
 ```
 
 will add a lot of string literals to your wasm blob.
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li><code>wasm2wat polkadot_runtime.wasm &gt; dump | rg stripped</code></li>
+<li>Should get you the <code>.rodata</code> (read-only data) line of the wasm blob, which contains all the logging
+noise.</li>
+<li>This contains string literals form errors, logs, metadata, etc.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Logging And Prints In The Runtime.
 
 `sp_std::fmt::Debug` vs `sp_debug_derive::RuntimeDebug`
@@ -328,8 +284,7 @@ impl ::core::fmt::Debug for WithDebug {
 </script></section><section data-markdown><script type="text/template">
 ### Logging And Prints In The Runtime.
 
-Once types implement `Debug` or `RuntimeDebug`, they can be printed. Various ways:
-
+- Once types implement `Debug` or `RuntimeDebug`, they can be printed. Various ways:
 - If you only want something in tests, native builds etc
 
 ```rust
@@ -355,18 +310,12 @@ log::debug!(target: "bar", "hello world! ({})", 10u32);
 1. `// $ RUST_LOG=foo=debug,bar=trace cargo run`
 2. `sp_tracing::try_init_simple()`
 
-<aside class="notes"><p><a href="https://paritytech.github.io/substrate/master/sp_tracing/index.html">https://paritytech.github.io/substrate/master/sp_tracing/index.html</a></p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Logging And Prints In The Runtime.
-
-- Log statements are only evaluated if the corresponding level and target is met.
-
-```rust
-/// only executed if `RUST_LOG=KIAN=trace`
-frame_support::log::trace!(target: "KIAN", "({:?})", (0..100000).into_iter().collect());
-```
-
-<aside class="notes"><p><code>log</code> in rust does not do anything -- it only tracks what needs to be logged. Then you need a logger
+<aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/sp_tracing/index.html">https://paritytech.github.io/polkadot-sdk/master/sp_tracing/index.html</a></p>
+<p>Log statements are only evaluated if the corresponding level and target is met.</p>
+<pre><code class="language-rust">/// only executed if `RUST_LOG=KIAN=trace`
+frame_support::log::trace!(target: &quot;KIAN&quot;, &quot;({:?})&quot;, (0..100000).into_iter().collect());
+</code></pre>
+<p><code>log</code> in rust does not do anything -- it only tracks what needs to be logged. Then you need a logger
 to actually export them. In rust this is often <code>env_logger</code> or <code>sp_tracing</code> in substrate tests.</p>
 <p>In the runtime, the log messages are sent via the host functions to the client to be printed.</p>
 <p>If the interface is built with <code>disable-logging</code>, it omits all log messages.</p>
@@ -453,25 +402,23 @@ let z = x * y;
 > 25
 ```
 </script></section><section data-markdown><script type="text/template">
-### Larger Types
-
-- [`U256`](https://paritytech.github.io/substrate/master/sp_core/struct.U256.html), `U512`: battle-tested since the ethereum days.
-- [substrate-fixed](https://github.com/encointer/substrate-fixed): community project. Supercharged `PerThing` and `Fixed`.
-- [`big_uint.rs`](https://paritytech.github.io/substrate/master/sp_arithmetic/biguint/index.html) (unaudited)
-
-```rust
-
-pub struct BigUint {
-	/// digits (limbs) of this number (sorted as msb -> lsb).
-	pub(crate) digits: Vec<Single>,
-}
-```
-</script></section><section data-markdown><script type="text/template">
 ### Arithmetic Types
 
-- See [`sp-arithmetic`](https://paritytech.github.io/substrate/master/sp_arithmetic/index.html) to
+- See [`sp-arithmetic`](https://paritytech.github.io/polkadot-sdk/master/sp_arithmetic/index.html) to
   learn more.
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li><a href="https://paritytech.github.io/polkadot-sdk/master/sp_core/struct.U256.html"><code>U256</code></a>, <code>U512</code>: battle-tested since the ethereum days.</li>
+<li><a href="https://github.com/encointer/substrate-fixed">substrate-fixed</a>: community project. Supercharged <code>PerThing</code> and <code>Fixed</code>.</li>
+<li><a href="https://paritytech.github.io/polkadot-sdk/master/sp_arithmetic/biguint/index.html"><code>big_uint.rs</code></a> (unaudited)</li>
+</ul>
+<pre><code class="language-rust">
+pub struct BigUint {
+    /// digits (limbs) of this number (sorted as msb -&gt; lsb).
+    pub(crate) digits: Vec&lt;Single&gt;,
+}
+</code></pre>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ### Fallibility: Math Operations
 
 Things like **addition**, **multiplication**, **division** could all easily fail.
@@ -516,6 +463,8 @@ recovery.</p>
 relevant.</p>
 <p><a href="https://doc.rust-lang.org/std/primitive.u32.html#method.checked_add">https://doc.rust-lang.org/std/primitive.u32.html#method.checked_add</a>
 <a href="https://doc.rust-lang.org/std/primitive.u32.html#method.saturating_add">https://doc.rust-lang.org/std/primitive.u32.html#method.saturating_add</a></p>
+<p>Also substrate&#39;s version of the same:
+<a href="https://paritytech.github.io/polkadot-sdk/master/sp_arithmetic/traits/trait.SaturatedConversion.html">https://paritytech.github.io/polkadot-sdk/master/sp_arithmetic/traits/trait.SaturatedConversion.html</a></p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### Fallibility: Conversion
 
@@ -576,22 +525,7 @@ T is u32 or larger.
 `T` can be any of numeric types.
 
 <!-- .element: class="fragment" -->
-</script></section><section data-markdown><script type="text/template">
-### Fallibility: Conversion
-
-- Substrate also provides a trait for infallible saturated conversion as well.
-- See `sp-arithmetic` for more handy stuff.
-
-```rust
-trait SaturatedConversion {
-  fn saturated_into<T>(self) -> T
-}
-
-assert_eq!(u128::MAX.saturating_into::<u32>(), u32::MAX);
-```
-
-<aside class="notes"><p><a href="https://paritytech.github.io/substrate/master/sp_arithmetic/traits/trait.SaturatedConversion.html">https://paritytech.github.io/substrate/master/sp_arithmetic/traits/trait.SaturatedConversion.html</a></p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</script></section></section><section  data-markdown><script type="text/template">
 # Part 2: FRAME Stuff
 </script></section><section ><section data-markdown><script type="text/template">
 ## `trait Get`
@@ -658,8 +592,9 @@ pub struct BoundedVec<T, S: Get<u32>>(
 );
 ```
 
-- &shy;<!-- .element: class="fragment" --> `PhantomData`?
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p><code>PhantomData</code>?</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### `bounded`
 
 - Why not do a bounded type like this? 🤔
@@ -672,12 +607,10 @@ pub struct BoundedVec<T>(
   u32,
 );
 ```
-</script></section><section data-markdown><script type="text/template">
-### `bounded`
 
-_`Get` trait is a way to convey values through types. The type system is mostly for compiler, and
-has minimal overhead at runtime._
-</script></section></section><section ><section data-markdown><script type="text/template">
+<aside class="notes"><p><em><code>Get</code> trait is a way to convey values through types. The type system is mostly for compiler, and
+has minimal overhead at runtime.</em></p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## `trait Convert`
 
 ```rust
@@ -776,22 +709,46 @@ fn main() {
 </aside></script></section><section data-markdown><script type="text/template">
 ### Implementing Traits For Tuples
 
-1. `on_initialize`, in its ideal form, does not have `&self`, it is defined on the **type**, not a **value**.
-
-1. **Tuples** are the natural way to group **types** together (analogous to have a **vector** is the natural way to group **values** together..)
-
 ```rust
+Impl<A, B, C> OnInitialize for (A, B, C)
+where
+  A: OnInitialize,
+  B: OnInitialize,
+  C: OnInitialize,
+{
+  fn on_initialize() {
+    A::on_initialize();
+    B::on_initialize();
+    C::on_initialize();
+  }
+}
+```
+
+```
 // fully-qualified syntax - turbo-fish.
 <(Module1, Module2, Module3) as OnInitialize>::on_initialize();
 ```
-</script></section><section data-markdown><script type="text/template">
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p><strong>Tuples</strong> are the natural way to group <strong>types</strong> together (analogous to have a <strong>vector</strong> is the natural way to group <strong>values</strong> together..)</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Implementing Traits For Tuples
 
-Only problem: A lot of boilerplate. Macros!
+Modern syntax of making a trait "*tuple-call-able*"
 
-Historically, we made this work with `macro_rules!`
+```rust
+// In the most basic form:
+#[impl_for_tuples(30)]
+pub trait OnTimestampSet<Moment> {
+	fn on_timestamp_set(moment: Moment);
+}
+```
 
-<aside class="notes"><pre><code class="language-rust">macro_rules! impl_for_tuples {
+<aside class="notes"><p><a href="https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/">https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/</a></p>
+<p>Only problem: A lot of boilerplate. Macros!</p>
+<p>Historically, we made this work with <code>macro_rules!</code></p>
+<pre><code class="language-rust">macro_rules! impl_for_tuples {
     ( $( $elem:ident ),+ ) =&gt; {
         impl&lt;$( $elem: OnInitialize, )*&gt; OnInitialize for ($( $elem, )*) {
             fn on_initialize() {
@@ -805,29 +762,244 @@ impl_for_tuples!(A, B, C, D);
 impl_for_tuples!(A, B, C, D, E);
 impl_for_tuples!(A, B, C, D, E, F);
 </code></pre>
-</aside></script></section><section data-markdown><script type="text/template">
-### Implementing Traits For Tuples
+</aside></script></section></section><section  data-markdown><script type="text/template">
+### Debugging Macros Generated Code
 
-And then someone made `impl_for_tuples` crate.
 
-```rust
-// In the most basic form:
-#[impl_for_tuples(30)]
-pub trait OnTimestampSet<Moment> {
-	fn on_timestamp_set(moment: Moment);
-}
-```
+<img rounded src="./img/frame-macro-error.gif" />
 
-<aside class="notes"><p><a href="https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/">https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/</a></p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+<aside class="notes"><ul>
+<li>Crucial to start debugging from the first macro expansion, not the end!</li>
+<li>This is only when you are working with a framework like FRAME that is a lot of macro-generated code. If you are writing macros, there are different tricks that you can learn about online.</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template">
 ## Defensive Programming
 
 > ..is a form of defensive design to ensure the continuing function of a piece of software under
 > unforeseen circumstances... where **high availability**, **safety**, or **security** is needed.
-
-- As you know, you should (almost) never panic in your runtime code.
 </script></section><section data-markdown><script type="text/template">
 ### Defensive Programming
+
+```
+let maybe_value: Option<u32> = Some(42);
+// ...
+let value = maybe_value.unwrap(); // aggressive programming 🤠
+let value = maybe_value.expect("written evidence") // better ✅
+let value = maybe_value.ok_or(Error::DefensiveError)?; // best ✅
+let value = maybe_value.ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)?; // best ✅
+```
+</script></section><section data-markdown><script type="text/template">
+### Defensive Programming
+
+```rust
+let value = maybe_value.ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)
+  .map_err(|e| {
+    #[cfg(test)]
+    panic!("An impossible error happened!: {:?}", e);
+    log::error!(target: "..", "defensive error happened: {:?}", e);
+    e
+  })?;
+```
+</script></section><section data-markdown><script type="text/template">
+### Defensive Programming
+
+[Defensive traits](https://paritytech.github.io/substrate/master/frame_support/traits/trait.Defensive.html)
+
+```rust
+use frame_support::DefensiveOption;
+let value = maybe_value.defensive_ok_or(Error::IKnowThisWillNeverHappenButIAmOnlyAnApeAndCanMakeMistakes)
+```
+
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Final Words on Panics
+
+1. Panics can happen other than `Err(_).unwrap()`
+
+<aside class="notes"><ul>
+<li>slice/vector indexing can panic if out of bound</li>
+<li><code>.insert</code>, <code>.remove</code></li>
+<li>division by zero.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### Final Words on Panics
+
+2. Panics in Internal API --> Well Documented Code.
+</script></section><section data-markdown><script type="text/template">
+
+### Final Words on Panics
+
+````rust
+/// Multiplies the given input by two.
+///
+/// Some further information about what this does, and where it could be used.
+///
+/// ```
+/// fn main() {
+///   let x = multiply_by_2(10);
+///   assert_eq!(10, 20);
+/// }
+/// ```
+///
+/// ## Panics
+///
+/// Panics under such and such condition.
+fn multiply_by_2(x: u32) -> u32 { .. }
+````
+
+<aside class="notes"><ul>
+<li>Speaking of documentation, <a href="https://doc.rust-lang.org/rustdoc/how-to-write-documentation.html">here&#39;s a very good guideline</a>!</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### Final Words on Panics
+
+- Try and not be this guy:
+
+```rust
+/// This function works with module x and multiples the given input by two. If
+/// we optimize the other variant of it, we would be able to achieve more
+/// efficiency but I have to think about it. Probably can panic if the input
+/// overflows u32 lolololooooo
+fn multiply_by_2(x: u32) -> u32 { .. }
+```
+</script></section></section><section  data-markdown><script type="text/template">
+## Additional Resources! 😋
+
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+
+> Check speaker notes (click "s" 😉)
+
+> Good luck with FRAME!
+
+<aside class="notes"><ul>
+<li><p>Rust didn&#39;t have u128 until not too long ago! <a href="https://github.com/paritytech/substrate/pull/163/files">https://github.com/paritytech/substrate/pull/163/files</a></p>
+</li>
+<li><p><code>TryFrom</code>/<code>TryInto</code> are also not too old! <a href="https://github.com/paritytech/substrate/pull/163/files#r188938077">https://github.com/paritytech/substrate/pull/163/files#r188938077</a></p>
+</li>
+<li><p>Remove <code>As</code>, which tried to fill the lack of <code>TryFrom/TryInto</code> <a href="https://github.com/paritytech/substrate/pull/2602">https://github.com/paritytech/substrate/pull/2602</a></p>
+</li>
+<li><p>Runtime Logging PR: <a href="https://github.com/paritytech/substrate/pull/3821">https://github.com/paritytech/substrate/pull/3821</a></p>
+</li>
+<li><p>Impl trait for tuples:</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array">https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch</a></li>
+<li><a href="https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name">https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name</a></li>
+<li><a href="https://turbo.fish/">https://turbo.fish/</a></li>
+<li><a href="https://techblog.tonsser.com/posts/what-is-rusts-turbofish">https://techblog.tonsser.com/posts/what-is-rusts-turbofish</a></li>
+<li><a href="https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/">https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/</a></li>
+</ul>
+</li>
+<li><p>std/no_std</p>
+<ul>
+<li><a href="https://paritytech.github.io/substrate/master/sp_std/index.html">https://paritytech.github.io/substrate/master/sp_std/index.html</a></li>
+<li><a href="https://doc.rust-lang.org/core/index.html">https://doc.rust-lang.org/core/index.html</a></li>
+<li><a href="https://doc.rust-lang.org/std/index.html">https://doc.rust-lang.org/std/index.html</a></li>
+<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature">https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="feedback-after-lecture">Feedback After Lecture:</h3>
+<ul>
+<li>Update on defensive ops: <a href="https://github.com/paritytech/substrate/pull/12967">https://github.com/paritytech/substrate/pull/12967</a></li>
+<li>Next time, talk about making a storage struct be <code>&lt;T: Config&gt;</code>.</li>
+<li>SignedExtension should technically be part of the substrate module. Integrate it in the
+assignment, perhaps.</li>
+<li>A section about <code>XXXNoBound</code> traits.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Appendix
+
+</script></section><section ><section data-markdown><script type="text/template">
+## Generics vs. Associated Types
+
+- What is the difference between generics and associated types?
+
+```rust
+trait Block<Extrinsic> {
+  fn execute(e: Extrinsic)
+}
+```
+
+vs
+
+```rust
+trait Block {
+  type Extrinsic;
+  fn execute(e: Self::Extrinsic)
+}
+```
+
+<aside class="notes"><p>In cambridge, I did this this. But since students should now know traits really well, I will drop it.</p>
+<pre><code class="language-rust">trait Engine {
+    fn start() {}
+}
+
+struct BMW;
+impl Engine for BMW {}
+
+trait Brand {
+    fn name() -&gt; &amp;&#39;static str;
+}
+
+trait Car&lt;E: Engine&gt; {
+    type Brand: Brand;
+}
+
+struct KianCarCo;
+impl Brand for KianCarCo {
+  fn name() -&gt; &amp;&#39;static str {
+    &quot;KianCarCo!&quot;
+    }
+}
+
+struct MyCar;
+impl&lt;E: Engine&gt; Car&lt;E&gt; for MyCar {
+    type Brand = MyBrand;
+}
+
+fn main() {
+    // Car&lt;E1&gt;, Car&lt;E2&gt; are different traits!
+
+    // Generics can be bounded, or constrained
+    // impl&lt;E: Engine&gt; Car&lt;E&gt; {}
+    // impl Car&lt;BMW&gt; {}
+
+    // Associated types can:
+    // only be bounded when being defined,
+    // Can be constrained when being implemented, or when the trait is being used.
+    fn some_fn&lt;E: Engine, C: Car&lt;E, Brand = MyBrand&gt;&gt;(car: C) {
+      // and we are told associated types are more like output types, lets get the brand of car
+      let name = &lt;&lt;C as Car&lt;E&gt;&gt;::Brand as Brand&gt;::name();
+    }
+    fn other_fn&lt;C: Car&lt;BMW, Brand = MyBrand&gt;&gt;(car: C) {
+
+    }
+
+    // now, check this out
+}
+</code></pre>
+</aside></script></section><section data-markdown><script type="text/template">
+### Speaking of Traits..
+
+Both generics and associated types can be specified, but the syntax is a bit different.
+
+```rust
+trait Block<Extrinsic> {
+  type Header
+}
+
+fn process_block<B: Block<E1, Header = H1>>(b: B)
+```
+</script></section><section data-markdown><script type="text/template">
+### Speaking of Traits..
+
+- Anything that can be expressed with associated types can also be expressed with generics.
+- Associated Types << Generics
+- Associated types usually lead to less boilerplate.
+
+</div>
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Defensive Programming Contd.
 
 - First reminder: don't panic, unless if you want to punish someone!
 - `.unwrap()`? no no
@@ -971,55 +1143,7 @@ It adds some boilerplate to:
 
 1. Panic when `debug_assertions` are enabled (tests).
 1. append a `log::error!`.
-</script></section></section><section  data-markdown><script type="text/template">
-## Additional Resources! 😋
-
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
-
-> Check speaker notes (click "s" 😉)
-
-> Good luck with FRAME!
-
-<aside class="notes"><ul>
-<li><p>Rust didn&#39;t have u128 until not too long ago! <a href="https://github.com/paritytech/substrate/pull/163/files">https://github.com/paritytech/substrate/pull/163/files</a></p>
-</li>
-<li><p><code>TryFrom</code>/<code>TryInto</code> are also not too old! <a href="https://github.com/paritytech/substrate/pull/163/files#r188938077">https://github.com/paritytech/substrate/pull/163/files#r188938077</a></p>
-</li>
-<li><p>Remove <code>As</code>, which tried to fill the lack of <code>TryFrom/TryInto</code> <a href="https://github.com/paritytech/substrate/pull/2602">https://github.com/paritytech/substrate/pull/2602</a></p>
-</li>
-<li><p>Runtime Logging PR: <a href="https://github.com/paritytech/substrate/pull/3821">https://github.com/paritytech/substrate/pull/3821</a></p>
-</li>
-<li><p>Impl trait for tuples:</p>
-<ul>
-<li><a href="https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array">https://stackoverflow.com/questions/64332037/how-can-i-store-a-type-in-an-array</a></li>
-<li><a href="https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch">https://doc.rust-lang.org/book/ch17-02-trait-objects.html#trait-objects-perform-dynamic-dispatch</a></li>
-<li><a href="https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name">https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name</a></li>
-<li><a href="https://turbo.fish/">https://turbo.fish/</a></li>
-<li><a href="https://techblog.tonsser.com/posts/what-is-rusts-turbofish">https://techblog.tonsser.com/posts/what-is-rusts-turbofish</a></li>
-<li><a href="https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/">https://docs.rs/impl-trait-for-tuples/latest/impl_trait_for_tuples/</a></li>
-</ul>
-</li>
-<li><p>std/no_std</p>
-<ul>
-<li><a href="https://paritytech.github.io/substrate/master/sp_std/index.html">https://paritytech.github.io/substrate/master/sp_std/index.html</a></li>
-<li><a href="https://doc.rust-lang.org/core/index.html">https://doc.rust-lang.org/core/index.html</a></li>
-<li><a href="https://doc.rust-lang.org/std/index.html">https://doc.rust-lang.org/std/index.html</a></li>
-<li><a href="https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature">https://rust-lang.github.io/api-guidelines/naming.html#feature-names-are-free-of-placeholder-words-c-feature</a></li>
-</ul>
-</li>
-</ul>
-<h3 id="feedback-after-lecture">Feedback After Lecture:</h3>
-<ul>
-<li>Lecture is still kinda dense and long, try and trim</li>
-<li>Update on defensive ops: <a href="https://github.com/paritytech/substrate/pull/12967">https://github.com/paritytech/substrate/pull/12967</a></li>
-<li>Next time, talk about making a storage struct be <code>&lt;T: Config&gt;</code>.</li>
-<li>Cargo format</li>
-<li>SignedExtension should technically be part of the substrate module. Integrate it in the
-assignment, perhaps.</li>
-<li>A section about <code>XXXNoBound</code> traits.</li>
-<li>A section about reading your compiler errors top to bottom, especially with an example in FRAME.</li>
-</ul>
-</aside></script></section>
+</script></section></section>
     </article>
   </main>
 
