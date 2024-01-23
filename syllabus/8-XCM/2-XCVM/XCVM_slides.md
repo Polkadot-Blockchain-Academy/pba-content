@@ -155,7 +155,7 @@ graph LR
 
 Notes:
 
-Here we have a very simple program, which if executed locally would result in a regular asset transfer.
+Here we have a very simple program, which if executed locally would result in a regular asset transfer within a single consensus system.
 
 ---v
 
