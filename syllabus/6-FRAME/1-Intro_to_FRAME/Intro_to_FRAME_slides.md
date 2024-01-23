@@ -20,6 +20,8 @@ duration: 1 hour
 
 - Introduction to FRAME
 - 👩‍💻 Exercise: Proof of Existence Runtime
+- Assignment 3 Feedback
+- FRAME Tips and Tricks
 - Announce FRAME Assignment
 
 </td>
@@ -28,6 +30,7 @@ duration: 1 hour
 - Pallet Coupling
 - FRAME Common Knowledge (Pallets & Traits)
 - FRAME Storage
+- Live Coding
 
 </td>
 <td>
@@ -37,6 +40,7 @@ duration: 1 hour
 - Origins
 - Outer Enum
 - Hooks
+- Live Coding
 
 </td>
 <td>
@@ -45,6 +49,7 @@ duration: 1 hour
 - 👨‍💻 Exercise: Tests
 - FRAME Benchmarking
 - 👨🏾‍💻 Exercise: Benchmarking
+- Live Coding
 
 </td>
 <td>
@@ -54,11 +59,13 @@ duration: 1 hour
   - Executive
 - Signed Extensions
 - Migrations & Try Runtime
+- Frame Updates
+- Live Coding
 
 </td>
 <td>
 
-- Complete FRAME Exercise
+- Complete FRAME Assignment
 
 </td>
 </tr>
@@ -156,7 +163,6 @@ pub mod pallet {
   use frame_system::pallet_prelude::*;
 
   #[pallet::pallet]
-  #[pallet::generate_store(pub(super) trait Store)]
   pub struct Pallet<T>(_);
 
   #[pallet::config]  // snip

@@ -490,7 +490,7 @@ let runtime = wasm::Executor::new(code);
 let mut block: NodeBlock = Default::default();
 
 // repeatedly apply transactions.
-while let Some(next_transaction) = transaction_pool_iter::next() {
+while let Some(next_ext) = transaction_pool_iter::next() {
   state.execute(|| {
     if runtime.apply_extrinsic(next_ext).is_ok() {
       block.extrinsics.push(next_ext);
@@ -1343,6 +1343,7 @@ SomeExternalities.execute_with(|| {
 HK:
 
 - The panic section is so important and it comes at the end, therefore hard to understand. Simplify it and deliver it sooner.
+- More examples of unsigned tx
 
 ---
 
