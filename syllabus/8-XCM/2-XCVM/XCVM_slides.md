@@ -85,7 +85,7 @@ XCVM Instructions might change a register, they might change the state of the co
 
 ## Example: WithdrawAsset
 
-An instruction used to get assets from an account into the holding register.
+An instruction used to get assets from an account and put them into the holding register.
 
 <pba-flex center>
 
