@@ -301,7 +301,7 @@ pub enum Error<T> {
 	/// Errors coming from another place.
 	SystemError(SystemError<T>),
 	/// Some Error with minimal data
-	DataError(u8),
+	DataError(u16),
 }
 ```
 
