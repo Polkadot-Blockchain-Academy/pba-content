@@ -348,7 +348,6 @@ Notes:
 
 Locations are relative, so they must be updated and rewritten when sent to another chain, for them to be interpreted correctly.
 
-TODO: Move elsewhere.
 Native tokens are referenced by the location to their system.
 
 ---v
