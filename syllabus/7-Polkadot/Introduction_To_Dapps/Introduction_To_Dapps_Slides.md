@@ -25,8 +25,11 @@ duration: 1 hour
 ## Putting everything together
 
 How do humans interact with Substrate-based chains?
+
 <!-- .element: class="fragment" -->
+
 We use dapps
+
 <!-- .element: class="fragment" -->
 
 ---
@@ -34,7 +37,6 @@ We use dapps
 # What is a Dapp?
 
 ---v
-
 
 <img rounded style="width: 1000px" data-src="./img/1-what-is-a-dapp/moonbeam.png" />
 
@@ -108,6 +110,7 @@ Although no strict definition, dapps have certain characteristics:
 <br/>
 
 ### Does a dapp have to be open source to be a dapp?
+
 <!-- .element: class="fragment" -->
 
 ---v
@@ -154,9 +157,9 @@ Although no strict definition, dapps have certain characteristics:
 - Does not necessarily need connection with a blockchain node (E.g. Polkadot Vault)
 <!-- .element: class="fragment" -->
 - Can the app function if all centralised services are turned off?
-<!-- .element: class="fragment" -->
-   - If it can, it is more likely to be a dapp
-<!-- .element: class="fragment" -->
+  <!-- .element: class="fragment" -->
+  - If it can, it is more likely to be a dapp
+  <!-- .element: class="fragment" -->
 - No strict form factor - web, mobile, desktop apps can all be dapps
 <!-- .element: class="fragment" -->
 - Dapps are becoming increasingly technical
@@ -171,23 +174,34 @@ Although no strict definition, dapps have certain characteristics:
 <span style="text-align: left;">
 
 ✅ Maximally decentralised: most important
+
 <!-- .element: class="fragment" -->
+
 ✅ Easy it is to understand and use
+
 <!-- .element: class="fragment" -->
+
 ✅ In demand use case
+
 <!-- .element: class="fragment" -->
+
 ✅ Offers real utility to the chain
+
 <!-- .element: class="fragment" -->
+
 ✅ Stability, reliability, 24/7 uptime
+
 <!-- .element: class="fragment" -->
 
 ❌ The latest and greatest JavaScript Framework
-<!-- .element: class="fragment" -->
-❌ Marketing gimmicks, airdrops, bonuses, etc
+
 <!-- .element: class="fragment" -->
 
-</span>
----
+❌ Marketing gimmicks, airdrops, bonuses, etc
+
+<!-- .element: class="fragment" -->
+
+## </span>
 
 # Dapp Tech Stack
 
@@ -198,6 +212,7 @@ Although no strict definition, dapps have certain characteristics:
 - <span class="colored-light-green">TypeScript</span>, JS Framework (<span class="colored-light-green">React</span>, Vue, ….) and a toolchain (<span class="colored-light-green">Vite</span>, CRA, Webpack…)
 
 <!-- .element: class="fragment" -->
+
 - A Modern package manager: NPM / Yarn / PNPM
 <!-- .element: class="fragment" -->
 - Linting: ESLint, Stylistic, Prettier, etc...
@@ -380,6 +395,7 @@ Storage items can be queried once they are known.
 
 Can be updated by governance (or `pallet-sudo` if your chain supports it!). Useful when you know values will change over time, or may urgently need to change.
 E.g. nomination pools: `maxPoolMembers`, `globalMaxCommission`.
+
 <!-- .element: class="fragment" -->
 
 ---v
@@ -411,6 +427,7 @@ impl pallet_nomination_pools_runtime_api::NominationPoolsApi<
   }
 }
 ```
+
 </span>
 
 ---v
@@ -513,14 +530,14 @@ pub fn api_pending_rewards(who: T::AccountId) -> Option<BalanceOf<T>> {
 <span style="font-size:24px">
 
 ```javascript
-// If account subscriptions are not supported, simply 
-// get the account(s) from the extension. 
+// If account subscriptions are not supported, simply
+// get the account(s) from the extension.
 // Otherwise, subscribe to accounts.
 if (!extensionHasFeature(id, "subscribeAccounts")) {
   const accounts = await extension.accounts.get();
   handleAccounts(accounts);
 } else {
-  const unsub = extension.accounts.subscribe((accounts) => {
+  const unsub = extension.accounts.subscribe(accounts => {
     handleAccounts(accounts || []);
   });
   addToUnsubscribe(id, unsub);
@@ -560,7 +577,6 @@ injectedWeb3Interval = setInterval(() => {
     }
   }
 }, checkEveryMs);
-
 ```
 
 </span>
@@ -587,6 +603,7 @@ injectedWeb3Interval = setInterval(() => {
 <!-- .element: class="fragment" -->
 - Alternative: @polkadot-cloud/react (in Beta)
 <!-- .element: class="fragment" -->
+
 ---
 
 # Polkadot JS API
@@ -617,8 +634,8 @@ injectedWeb3Interval = setInterval(() => {
 ```javascript
 import { ApiPromise, WsProvider } from "@polkadot/api";
 
-// The WebSocket Provider allows sending requests using WebSocket to a WebSocket RPC server TCP port. 
-// Unlike the [[HttpProvider]], it does support subscriptions and allows listening to events such 
+// The WebSocket Provider allows sending requests using WebSocket to a WebSocket RPC server TCP port.
+// Unlike the [[HttpProvider]], it does support subscriptions and allows listening to events such
 // as new blocks or balance changes.
 const provider = new WsProvider("wss://westend-rpc.polkadot.io");
 
@@ -641,6 +658,7 @@ const api = await ApiPromise.create({ provider });
 <br/>
 
 ### `ApiPromise.create` is asynchronous. Why might this be?
+
 <!-- .element: class="fragment" -->
 
 </span>
@@ -650,23 +668,30 @@ const api = await ApiPromise.create({ provider });
 ## Namespaces
 
 - `api.rpc`: System level information (JSON-RPC).
+
 ```
 const chain = await api.rpc.system.chain();
 const lastHeader = await api.rpc.chain.getHeader();
 ```
 
 - `api.query`: Gets storage items
+
 ```
 const payees = await api.query.staking.payee(stash);
 ```
+
 - `api.consts`: Gets runtime constants
+
 ```
 const historyDepth = await api.consts.staking.historyDepth();
 ```
+
 - `api.call`: Calls a runtime api
+
 ```
 const await api.call.nominationPoolsApi.pointsToBalance(poolId, points);
 ```
+
 - `api.derive`: Helpers that combine queries from multiple sources
 
 ---v
@@ -692,7 +717,7 @@ Subscribe to a query. Callback function is executed when a update happens on cha
 
 ```javascript
 // Subscribe to balance changes for an account.
-const unsub = 
+const unsub =
   await api.query.system.account(ADDR, ({ nonce, data: balance }) => {
     console.log(`free balance is ${balance.free}`);
     console.log(`reserved balance is ${balance.reserved}`);
@@ -721,8 +746,9 @@ const unsub = await api.queryMulti(
     [api.query.balances.locks, address],
   ],
   async ([ledger, { data: accountData, nonce }, locks]) => {
-  // Handle results.
-});
+    // Handle results.
+  }
+);
 ```
 
 ---v
@@ -732,8 +758,7 @@ const unsub = await api.queryMulti(
 Fetch every entry of a storage item as entries (as in `Object.entries()`).
 
 ```javascript
-const bondedPools =
-  await api.query.nominationPools.bondedPools.entries();
+const bondedPools = await api.query.nominationPools.bondedPools.entries();
 
 let exposures = bondedPools.map(([keys, val]) => {
   const id = keys.toHuman()[0];
@@ -763,6 +788,7 @@ const slashedKeys = await api.query.staking.nominatorSlashInEra.keys(652);
 
 - Polkadot JS API contains methods that sign extrinsic payloads and submits them
 - `api.tx.<pallet>.<call>(...args)`
+
 ```javascript
 const tx = api.tx.staking.bond(amount);
 ```
@@ -773,6 +799,7 @@ const tx = api.tx.staking.bond(amount);
 <span>
 
 - Multiple `api.tx` calls can be batched:
+
 ```javascript
 const tx = api.tx.utility.batch(...txs);
 ```
@@ -790,10 +817,15 @@ const tx = api.tx.utility.batch(...txs);
 <span>
 
 - `api.tx` calls can be wrapped in a proxied call:
+
 ```javascript
-const tx = api.tx.proxy.proxy({
-   id: fromAddress
-}, null, tx);
+const tx = api.tx.proxy.proxy(
+  {
+    id: fromAddress,
+  },
+  null,
+  tx
+);
 ```
 
 </span>
@@ -813,21 +845,19 @@ const tx = api.tx.proxy.proxy({
 
 ```javascript
 // Create alice account.
-const alice = keyring.addFromUri('//Alice');
+const alice = keyring.addFromUri("//Alice");
 
-  // Make a transfer from Alice to Bob, waiting for inclusion.
-  const unsub = await api.tx.balances
-  .transfer(BOB, 12345)
-  .signAndSend(alice, (result) => {
-    console.log(`Current status is ${result.status}`);
+// Make a transfer from Alice to Bob, waiting for inclusion.
+const unsub = await api.tx.balances.transfer(BOB, 12345).signAndSend(alice, result => {
+  console.log(`Current status is ${result.status}`);
 
-    if (result.status.isInBlock) {
-      console.log(`Transaction included at blockHash ${result.status.asInBlock}`);
-    } else if (result.status.isFinalized) {
-      console.log(`Transaction finalized at blockHash ${result.status.asFinalized}`);
-      unsub();
-    }
-  });
+  if (result.status.isInBlock) {
+    console.log(`Transaction included at blockHash ${result.status.asInBlock}`);
+  } else if (result.status.isFinalized) {
+    console.log(`Transaction finalized at blockHash ${result.status.asFinalized}`);
+    unsub();
+  }
+});
 ```
 
 </span>
@@ -1016,6 +1046,7 @@ Use a visualizer for package analysis, cutting down on dependencies.
 <br/>
 
 ### How might a dapp decentralise polling?
+
 <!-- .element: class="fragment" -->
 
 ---v
@@ -1040,34 +1071,29 @@ Use a visualizer for package analysis, cutting down on dependencies.
 <span style="font-size: 24px">
 
 ```jsx
-import type { Dispatch, FC, SetStateAction } from 'react';
-import { useState } from 'react';
+import type { Dispatch, FC, SetStateAction } from "react";
+import { useState } from "react";
 
 // React Component: App entry
 const App: FC = () => {
-  const [title, setTitle] = useState<string>('Hello World');
+  const [title, setTitle] = useState < string > "Hello World";
 
   return (
     <div>
       <h1>{title}</h1>
       <UpdateTitleButton setTitle={setTitle} />
     </div>
-  )
-}
+  );
+};
 
 // React component: update button
-const UpdateTitleButton: FC = ({ setTitle }: { setTitle: Dispatch<SetAction<string>>}) => {
-
+const UpdateTitleButton: FC = ({ setTitle }: { setTitle: Dispatch<SetAction<string>> }) => {
   const handleChangeTitle = () => {
     setTitle(generateRandomPhrase());
-  }
+  };
 
-  return (
-    <button onClick={() => handleChangeTitle()}>
-      Update Title
-    </button>
-  )
-}
+  return <button onClick={() => handleChangeTitle()}>Update Title</button>;
+};
 ```
 
 </span>
@@ -1097,20 +1123,22 @@ const UpdateTitleButton: FC = ({ setTitle }: { setTitle: Dispatch<SetAction<stri
 
 ```jsx
 export const App: FC = () => {
-
   return (
-    <StakingProvider> // Polkadot JS API subscriptions here
-      <BalancesProvider> // Polkadot JS API subscriptions here
+    <StakingProvider>
+      {" "}
+      // Polkadot JS API subscriptions here
+      <BalancesProvider>
+        {" "}
+        // Polkadot JS API subscriptions here
         <Router>
-          <Home />      //  Uses `useStaking() and `useBalances()`
-          <Staking />   //  Uses `useStaking()`
-          <Balances />  //  Uses `useBalances()`
+          <Home /> // Uses `useStaking() and `useBalances()`
+          <Staking /> // Uses `useStaking()`
+          <Balances /> // Uses `useBalances()`
         </Router>
       </BalancesProvider>
     </StakingProvider>
-  )
-}
-
+  );
+};
 ```
 
 </span>
@@ -1184,7 +1212,7 @@ What should be stored in state?
 
 <div style='text-align: left; padding-left: 2rem'>
 
- ✅ &nbsp;&nbsp;The `network` the dapp is trying to connect to.
+✅ &nbsp;&nbsp;The `network` the dapp is trying to connect to.
 
 ❌ &nbsp;&nbsp;Polkadot JS API `provider`
 
@@ -1212,10 +1240,10 @@ Outside React
 ```typescript
 // `BalancesController.ts
 //
-// Static class that handles API subscriptions 
+// Static class that handles API subscriptions
 // and dispatches custom events to `document`.
 const unsub = api.query.system.account(
-    '//Alice', 
+    '//Alice',
     (result) => {
       document.dispatchEvent(
         new CustomEvent('new-balance-update', {
@@ -1230,31 +1258,26 @@ const unsub = api.query.system.account(
 this._unsubs.push(unsub);
 ```
 
-
 </pba-col>
 <pba-col style="font-size:24px; width: 500px">
 
 Inside React
 
 ```typescript
-  // Balances.tsx
-  //
-  // Listens to custom events and updates state 
-  // accordingly.
-  const newBalanceUpdateCallback = (e: Event) => {
-    if (isCustomEvent(e)) {
-      const balances = e.detail;
-      setBalances(balances);
-    }
-  };
+// Balances.tsx
+//
+// Listens to custom events and updates state
+// accordingly.
+const newBalanceUpdateCallback = (e: Event) => {
+  if (isCustomEvent(e)) {
+    const balances = e.detail;
+    setBalances(balances);
+  }
+};
 
-  // Add event listener for notifications.
-  const ref = useRef<Document>(document);
-  useEventListener(
-    'new-balance-update',
-    newBalanceUpdateCallback,
-    ref
-  );
+// Add event listener for notifications.
+const ref = useRef<Document>(document);
+useEventListener("new-balance-update", newBalanceUpdateCallback, ref);
 ```
 
 </pba-col>
@@ -1276,27 +1299,27 @@ Inside React
 
 ```jsx
 export const App: FC = () => {
-
   return (
-    <StakingProvider> // Polkadot JS API subscriptions here
-        <Router>
-          <Home />      //  Uses `useStaking() and `new-balance-update` custom event.
-          <Staking />   //  Still uses `useStaking()`
-          <Balances />  //  Uses `new-balance-update` custom event.
-        </Router>
+    <StakingProvider>
+      {" "}
+      // Polkadot JS API subscriptions here
+      <Router>
+        <Home /> // Uses `useStaking() and `new-balance-update` custom event.
+        <Staking /> // Still uses `useStaking()`
+        <Balances /> // Uses `new-balance-update` custom event.
+      </Router>
     </StakingProvider>
-  )
-}
+  );
+};
 ```
 
 </div>
 
 ---v
 
-
 ## Component Hierarchy with Custom Events
 
-Be as surgical as you can with custom events. Tailor them to individual components. 
+Be as surgical as you can with custom events. Tailor them to individual components.
 
 <br/>
 
@@ -1307,7 +1330,7 @@ export const Balances: FC = () => {
 
   return (
     <BalancesWrapper>
-      <Header /> 
+      <Header />
       <BalanceGraph /> // <- `new-balance-update` custom event.
       <TransactionHistory /> // <- `new-transaction-update` custom event.
       <Footer />
@@ -1338,7 +1361,7 @@ https://github.com/paritytech/asset-transfer-api
 
 General purpose XCM API, Router and SDK.
 
-https://paraspell.github.io/docs/ 
+https://paraspell.github.io/docs/
 
 ---v
 
