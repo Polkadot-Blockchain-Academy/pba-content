@@ -554,41 +554,6 @@ if (!extensionHasFeature(id, "subscribeAccounts")) {
 
 ---v
 
-## window.injectedWeb3 is populated asynchronously
-
-May not exist when your dapp requests it. Intervals can be used to check.
-
-<br/>
-
-<span style="font-size:24px">
-
-```javascript
-// Interval duration.
-const checkEveryMs = 300;
-
-// Total interval iterations.
-const totalChecks = 10;
-
-injectedWeb3Interval = setInterval(() => {
-  injectCounter++;
-
-  // Exit interval if total checks have passed.
-  if (injectCounter === totalChecks) {
-    handleClearInterval(false);
-  } else {
-    // Check `injectedWeb3` is present
-    const injectedWeb3 = window?.injectedWeb3 || null;
-    if (injectedWeb3 !== null) {
-      handleClearInterval(true);
-    }
-  }
-}, checkEveryMs);
-```
-
-</span>
-
----v
-
 ## Avoid @polkadot/extension-dapp
 
 <img width="1000px" data-src="./img/4-web-extensions/multi-popup.png" />
