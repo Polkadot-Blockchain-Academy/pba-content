@@ -10,6 +10,10 @@ duration: 1 hour
     }
 </style>
 
+# Introduction to Dapps
+
+---
+
 ## Agenda
 
 - What is a Dapp?
@@ -1144,6 +1148,13 @@ export const App: FC = () => {
 ---v
 
 ## Tools to prevent excessive re-renders
+
+<span>
+
+- Populate all initial state values with one update, then subscribe.
+
+</span>
+<!-- .element: class="fragment" -->
 
 <span>
 
