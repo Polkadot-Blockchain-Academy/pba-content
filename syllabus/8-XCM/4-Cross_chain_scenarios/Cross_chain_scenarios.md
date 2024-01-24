@@ -1,10 +1,10 @@
 ---
-title: Cross-chain scenario
+title: Cross-chain scenarios
 description: Exploring and end-to-end cross-chain use-case.
 duration: 1 hour
 ---
 
-# Cross-chain scenario
+# Cross-chain scenarios
 
 ---v
 
