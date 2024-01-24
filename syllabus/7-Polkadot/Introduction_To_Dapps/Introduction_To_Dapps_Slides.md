@@ -690,9 +690,9 @@ Subscribe to a query. Callback function is executed when a update happens on cha
 // Subscribe to balance changes for an account.
 const unsub =
   await api.query.system.account(ADDR, ({ nonce, data: balance }) => {
-    console.log(`free balance is ${balance.free}`);
-    console.log(`reserved balance is ${balance.reserved}`);
-    console.log(`nonce of ${nonce}`);
+    console.log(`free balance is ${balance.free.toString()}`);
+    console.log(`reserved balance is ${balance.reserved.toString()}`);
+    console.log(`nonce of ${nonce.toString()}`);
 });
 
 ...
