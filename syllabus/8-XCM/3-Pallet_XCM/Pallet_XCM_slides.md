@@ -123,7 +123,7 @@ Then it lets the `XcmRouter` handle the forwarding of the message.
 </pba-col>
 
 <pba-col>
-<img rounded style="width: 400px;" src="../reserve-tx.png" />
+<img rounded style="width: 400px;" src="../img/reserve-tx.png" />
 </pba-col>
 </pba-cols>
 

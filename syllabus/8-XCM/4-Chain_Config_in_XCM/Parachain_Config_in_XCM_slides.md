@@ -1,260 +1,260 @@
 ---
-title: Parachain XCM Configuration # Also update the h1 header on the first slide to the same name
-description: XCM configuration overview and considerations, for parachains.
+title: Cross-chain scenario
+description: Exploring and end-to-end cross-chain use-case.
 duration: 1 hour
 ---
 
-# Parachain XCM Configuration
+# Cross-chain scenario
 
 ---v
 
-## _At the end of this lecture, you will be able to:_
+## What we've seen so far
 
 <pba-flex center>
 
-- Understand the different XCM configurable parts of a chain
-- Construct different XCM configurations for chains with different needs
+- What XCM is and its main concepts
+- How XCM programs are written and executed
+- The interface between FRAME and XCM
 
----
+---v
 
-## 🛠️ `XcmConfig`
+## What we'll look into now
 
 <pba-flex center>
 
-The XCM executor is very configurable.
-
-This is because different systems can/need to interpret some instructions differently than others.
-
-For example, a DEX chain might implement the `ExchangeAsset` instruction, but perhaps not an identity chain.
-
-Notes:
-
-The XCM Configuration has many configurable items
-
-EXERCISE: ask the class to raise hands and postulate on what they think should be configurable.
+- Cross-chain examples
+- Cross-chain composability
+- Attack scenarios
 
 ---v
 
-## 🛠️ Configurables in `XcmConfig`
+## At the end of this lecture, you will be able to:
 
-```rust [1-2|6-7|8-9|10-11|12-13|16-31]
-// How we convert locations into account ids
-type SovereignAccountOf = SovereignAccountOf;
+<pba-flex center>
 
-pub struct XcmConfig;
-impl Config for XcmConfig {
-  // Pre-execution filters
-  type Barrier = Barrier;
-  // How we withdraw/deposit assets
-  type AssetTransactor = LocalAssetTransactor;
-  // How we convert a Location to a FRAME dispatch origin
-  type OriginConverter = LocalOriginConverter;
-  // How we route the XCM outside this chain
-  type XcmSender = XcmRouter;
-  // Who we trust as reserve chains
-  type IsReserve = ?;
-  // Who do we trust as teleporters
-  type IsTeleporter = ?;
-  // How we weigh a message
-  type Weigher = ?;
-  // How we charge for fees
-  type Trader = ?;
-  // How we handle responses
-  type ResponseHandler = ?;
-  // How we handle asset traps
-  type AssetTrap = ?;
-  // How we handle asset claims
-  type AssetClaims = ?;
-  // How we handle version subscriptions
-  type SubscriptionService = ?;
-  // The absolute Location of the current system
-  type UniversalLocation = ?;
-}
-```
+- Build existing or new cross-chain use-cases
+- Leverage services offered by the broader Polkadot ecosystem for your apps
+- Mitigate risk during cross-chain interactions
+
+---
+
+# Cross-chain DEX
 
 Notes:
 
-- `SovereignAccountOf`: Means of converting a `Location` into an account ID
-  Used later for: `OriginConverter` , `AssetTransactor`
-
-- `xcm-pallet` is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.
+Let's start with a cross-chain DEX.
+Say we have a DEX chain working, with liquidity pools and users.
+It's only working for accounts on that chain, but we'd like to extend it to the broader Polkadot ecosystem.
 
 ---v
 
-## 🛠️ `xcm-builder`
+## Requirements
 
-`xcm-builder` is a crate containing common configuration shims to facilitate XCM configuration.
+<pba-flex center>
 
-Most pre-built configuration items can be found in `xcm-builder`.
+- Accounts on other chains can transfer tokens to our chain
+- They can do swaps without an account on our chain
+- They can add/remove liquidity without an account on our chain
 
----
+---v
 
-### 🤔 Some useful questions when configuring XCM
-
-- _Is my chain going to transfer just the native token? or multiple kinds of assets?_
-
-- _Is my chain going to allow free execution?_
-  _Maybe only limited to some parachains/relay chain?_
-
-- _Is my chain a 20 byte account chain?_
-  _a 32 byte account chain?_
-
-- _How will my chain accept fee payment?_
-  _In one asset?_
-  _In several?_
-
-Notes:
-
-- Some of the answers to these questions might imply you need to use your own custom primitives.
-
----
-
-### 📁 `SovereignAccountOf`
-
-- Defines how we convert a `Location` into a local account ID.
-- Used when we want to withdraw/deposit tokens from a `Location` defined origin
-- Used when we want to dispatch as signed origins from a `Location` defined origin.
+## Diagram
 
 <diagram class="mermaid">
-graph TD;
-  Location("AccountId32 { id: [18, 52, ..., 205, 239], network: Some(Rococo) }")-- SovereignAccountOf -->Account("0x123..def (Alice)")
+graph LR
+A(A) --"Transfer"--> DEX(DEX)
+DEX --"Swap/Liquidity"--> DEX
 </diagram>
 
 Notes:
 
-- This will define how we convert a `Location` into a local account ID.
-- This is useful when we want to withdraw/deposit tokens from a `Location` defined origin or when we want to dispatch as signed origins from a `Location` defined origin.
+Swaps and liquidity exist on our DEX chain.
+However, we want an end user that already has an account on the A chain to simply use the funds it has there to interact with our chain.
+No need for them to create an account on our chain.
+How do we do that?
 
----v
+---
 
-### `HashedDescription`
+## Configuring XCM
 
-Hashes the description of a `Location` and converts that into an `AccountId`.
-
-```rust
-
-pub struct HashedDescription<AccountId, Describe>(PhantomData<(AccountId, Describe)>);
-impl<
-  AccountId: From<[u8; 32]> + Clone,
-  Describe: DescribeLocation
-> ConvertLocation<AccountId> for HashedDescription<AccountId, Describe>
-{
-	fn convert_location(value: &Location) -> Option<AccountId> {
-		Some(blake2_256(&Describe::describe_location(value)?).into())
-	}
-}
-```
-
----v
-
-### `DescribeLocation`
-
-Means of converting a location into a stable and unique descriptive identifier.
-
-```rust
-pub trait DescribeLocation {
-	/// Create a description of the given `location` if possible. No two locations should have the
-	/// same descriptor.
-	fn describe_location(location: &Location) -> Option<Vec<u8>>;
-}
-```
+The XCM configuration translates the XCVM instructions into actual native runtime functionality of our chain.
 
 Notes:
 
-[Impl for Tuple](https://github.com/paritytech/polkadot/blob/c7f58c17f906467634a5b236d7b3c1df24057419/xcm/xcm-builder/src/location_conversion.rs#L34)
+The first step is to add the XCM executor to our chain.
+
+The executor is highly configurable, we need to make sure to tailor it to our use-case.
 
 ---v
 
-### `DescribeTerminus`
-
-```rust
-fn describe_location(l: &Location) -> Option<Vec<u8>> {
-	match (l.parents, &l.interior) {
-		(0, Here) => Some(Vec::new()),
-		_ => return None,
-	}
-}
-```
-
----v
-
-### `DescribePalletTerminal`
-
-```rust
-fn describe_location(l: &Location) -> Option<Vec<u8>> {
-	match (l.parents, &l.interior) {
-		(0, X1(PalletInstance(i))) =>
-			Some((b"Pallet", Compact::<u32>::from(*i as u32)).encode()),
-		_ => return None,
-	}
-}
-```
-
----v
-
-### `AccountId32Aliases`
-
-- Converts a local `AccountId32` `Location` into an account ID of 32 bytes.
-- Needed for dealing with local accounts on the same system.
-
----v
-
-### Example converter
-
-An example of a converter definition:
+## AssetTransactor
 
 <pba-flex center>
 
 ```rust
-pub type LocationToAccount = (
-  AccountId32Aliases<Network, AccounId>, // For dealing with local accounts
-  HashedDescription<AccountId, (
-    LegacyDescribeForeignChainAccount, // Legacy conversion - MUST BE FIRST!
-    DescribeTerminus,
-    DescribePalletTerminal
-  )>,
+type AssetTransactor = FungiblesAdapter<
+  Assets,
+  Matcher,
+  LocationToAccountId,
+  ...
+>;
+```
+
+Notes:
+
+This is a type that exists in `xcm-builder` to help adapt existing FRAME pallets to the XCVM.
+`Assets` is the assets pallet as configured in `construct_runtime`.
+`Matcher` is a type that can convert from XCM `Location`s into the actual asset IDs our chain works with.
+`LocationToAccountId` converts from XCM `Location`s to account ids on our local chain.
+
+There are other adapters ready for other pallets, like:
+- `FungibleAdapter` for the balances pallet
+- `NonFungiblesAdapter` for the uniques pallet
+
+---v
+
+## Teleports or reserve asset transfers?
+
+<pba-flex center>
+
+```rust
+type IsReserve = ();
+type IsTeleporter = ();
+```
+
+Notes:
+
+We can either use teleports or reserve asset transfers for moving assets between chains.
+Which one should we use here?
+In general we want reserve asset transfers since the real asset stays on the reserve and we just get a derivative of it, requires less trust.
+Once we configure the locations we trust as reserves, we can start receiving transfers from them.
+
+---v
+
+## Reserve asset transfers
+
+<pba-flex center>
+
+```rust
+Xcm(vec![
+  WithdrawAsset(withdraw_amount),
+  DepositReserveAsset {
+    assets: All.into(),
+    dest: (Parent, Parachain(dex_para_id)).into(),
+    xcm: Xcm(vec![
+      DepositAsset { assets, beneficiary },
+    ]),
+  },
+])
+```
+
+Notes:
+
+We could also use the XCM pallet's `transfer_assets` extrinsic, or `limited_reserve_asset_transfer`, to transfer assets over to our DEX chain.
+`transfer_assets` will use our configuration to realize if it should use a teleport or a reserve asset transfer.
+However, with this custom approach, we can add the rest of our program afterwards.
+
+---v
+
+## Sovereign account
+
+<diagram class="mermaid">
+graph LR
+A(A) --"XCM"-->DEX(DEX)
+A -.- ALocation("AccountId32(0x...)")
+DEX -.- DEXLocation("../Parachain(A)/AccountId32(0x...)")
+</diagram>
+
+Notes:
+
+The XCM Location on A is just a wrapper around the account on that chain.
+The Location of the message that our DEX chain receives references the A chain.
+Where do the funds go?
+
+---v
+
+## XCM Location -> AccountId
+
+<pba-flex center>
+
+```rust
+type LocationToAccountId = (
+  AccountId32Aliases<Network, AccountId>,
+  HashedDescription<
+    AccountId,
+    DescribeFamily<DescribeAccountId32Terminal>
+  >,
 );
 ```
 
+Notes:
+
+The funds arrive to the sovereign account of the account that sent them.
+`LocationToAccountId` transforms the location to an account id.
+`AccountId32Aliases` just removes the wrapper for local accounts.
+
+`HashedDescription` is more interesting.
+Given an arbitrary location, it calculates the account by hashing the description of the parents and junctions.
+This is used for figuring out the sovereign account.
+
+Once the sovereign account over on the DEX chain is funded, we can use it for swapping.
+
 ---
 
-# 🚧 `Barrier`
+## Swaps
 
-- Barriers specify whether or not an XCM is allowed to be executed on the local consensus system.
-- They are checked before the actual XCM instruction execution.
-- **Barriers should not involve any heavy computation.**
+<pba-flex center>
+
+```rust
+enum Instruction<Call> {
+  // ...snip...
+  ExchangeAsset {
+    give: AssetFilter,
+    want: Assets,
+    maximal: bool,
+  },
+  // ...snip...
+}
+```
 
 Notes:
 
-**At the point at which barriers are checked nothing has yet been paid for its execution**.
+This instruction can be used to express a swap.
+You specify how much you're willing to give and how much you want in return.
+If `maximal`, you use up all the `give` and accordingly receive more than `want`.
+If not, you use the least amount of `give` and get at least `want`.
+This can be paired up with other instructions to send the XCM we want.
 
 ---v
 
-## `AllowTopLevelPaidExecutionFrom<T>`
+## Make the swap
 
-- For origins contained in `T`, it makes sure the first instruction puts asset into the holding register, followed by a `BuyExecution` instruction capable of buying sufficient weight.
-- **Critical to avoid free DOS**.
+<pba-flex center>
+
+```rust
+Xcm(vec![
+  WithdrawAsset(withdraw_amount),
+  BuyExecution { fees, weight_limit },
+  ExchangeAsset { give, want, maximal },
+  DepositAsset { assets, beneficiary },
+])
+```
 
 Notes:
 
-- A chain without `AllowTopLevelPaidExecutionFrom` could potentially receive several heavy-computation instructions without paying for it.
-  Checking that the first instructions are indeed paying for execution helps to quick-discard them.
+A program like this sent to the DEX chain will:
+- take the assets from our sovereign account
+- pays for execution
+- swap the tokens we specified
+- deposit them back into the sovereign account
 
-- While `BuyExecution` is crucial for messages coming from other consensus systems, local XCM execution fees are paid as any other substrate extrinsic.
-
----v
-
-## `AllowExplicitUnpaidExecutionFrom<T>`
-
-- Allows free execution if `origin` is contained in `T` and the first instruction is `UnpaidExecution`.
+What if we didn't include the `BuyExecution` instruction? We'd be able to exchange for more tokens.
 
 ---v
 
-# Attack scenario
+## Denial of Service attack
 
-Say we don't have a barrier, then we accept all incoming XCMs.
-
-A message that doesn't pay fees can be sent repeatedly to cause a denial of service attack.
+Imagine a million of these:
 
 <pba-flex center>
 
@@ -265,11 +265,28 @@ Xcm(vec![
 ])
 ```
 
+Notes:
+
+If we don't enforce fee payment, then someone could send a ton of small messages to our chain, forcing our chain to execute a lot of work for free.
+
+---v
+
+## Barriers to the rescue
+
+<pba-flex center>
+
+```rust
+type Barrier: ShouldExecute;
+```
+
+Notes:
+
+The executor can be configured with barriers that are run for each message that wants to be executed.
+The barriers determine whether the message can be executed or whether it's dropped.
+
 ---v
 
 ## Requiring fees to be paid
-
-The first thing we can do to protect ourselves from that sort of attack is use the `AllowTopLevelPaidExecutionFrom<T>` barrier:
 
 <pba-flex center>
 
@@ -277,65 +294,96 @@ The first thing we can do to protect ourselves from that sort of attack is use t
 type Barrier = AllowTopLevelPaidExecutionFrom<Everything>;
 ```
 
-We can accept messages from `Everything` since they'll be dropped before execution if they don't intend to pay for fees.
+Notes:
+
+This barrier is in `xcm-builder` and will reject any message that doesn't intend to pay fees.
+This translates to not including the `BuyExecution` instruction.
+With this, we exclude the messages that don't pay fees.
+
+The `Everything` specifies we don't actually filter any origin of the messages, as long as they pay for their own execution.
 
 ---v
 
-## Physical vs Computed origin
+## Up until now
 
-- Physical origin: the consensus system that built this particular XCM and sent it to the recipient. E.g. Parachain A
-- Computed origin: the entity that ultimately instructed the consensus system to build the XCM. E.g. A user account in parachain A
+```rust
+Xcm(vec![
+  WithdrawAsset(withdraw_amount),
+  DepositReserveAsset {
+    assets: All.into(),
+    dest: (Parent, Parachain(dex_para_id)).into(),
+    xcm: Xcm(vec![
+      BuyExecution { fees, weight_limit },
+      ExchangeAsset { give, want, maximal },
+      DepositAsset { assets, beneficiary },
+    ]),
+  },
+])
+```
 
 Notes:
 
-If an EOA transfers some funds via XCM, then the computed origin would be its account, but the physical origin would be the platform that was used (e.g. parachain).
+Until now, we do the transfer to the DEX, do the swap, and deposit the tokens in the sovereign account.
+
+---
+
+## Getting the tokens back
+
+<pba-flex center>
+
+- We've sent the tokens
+- We made a swap
+- Now how do we get them back into our chain?
 
 ---v
 
-## `WithComputedOrigin`
-
-Allows for origin altering instructions at the start.
-
-This allows messages from user accounts instead of only chains.
+## Message to get them back
 
 <pba-flex center>
 
 ```rust
-pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>;
+InitiateReserveWithdraw {
+  assets: All.into(),
+  reserve: (Parent, Parachain(a_para_id)).into(),
+  xcm: Xcm(vec![
+    BuyExecution { fees, weight_limit },
+    DepositAsset { assets, beneficiary },
+  ]),
+}
 ```
-
----v
-
-## `TakeWeightCredit`
-
-- Subtracts the maximum weight the message can consume from the available weight credit.
-- Usually configured for local XCM execution
-
----
-
-# 🪙 `AssetTransactor`
-
-- Defines how to withdraw and deposit assets
-- Heavily dependant on the assets we want our chain to transfer
-
-<diagram class="mermaid">
-graph LR
-  Withdraw("WithdrawAsset((Here, 100u128).into())")-->DOT(100 tokens from e.g. pallet-balances)
-</diagram>
 
 Notes:
 
-- The relay chain is a clear example of a chain that handles a **single token**.
-- AssetHub on the contrary acts as an asset-reserve chain, and it needs to handle **several assets**
+The message is different because the reserve is not where it's executed, it's the destination.
 
 ---v
 
-## `xcm-builder` adaptersk
+## Putting it all together
 
-| Fungibility/Number | Single             | Multiple            |
-| ------------------ | ------------------ | ------------------- |
-| Fungible           | FungibleAdapter    | FungiblesAdapter    |
-| Non-fungible       | NonFungibleAdapter | NonFungiblesAdapter |
+<pba-flex center>
+
+```rust
+Xcm(vec![
+  WithdrawAsset(withdraw_amount),
+  BuyExecution { fees, weight_limit },
+  DepositReserveAsset {
+    assets: All.into(),
+    dest: (Parent, Parachain(dex_para_id)).into(),
+    xcm: Xcm(vec![
+      BuyExecution { fees, weight_limit },
+      ExchangeAsset { give, want, maximal },
+      InitiateReserveWithdraw {
+        assets: All.into(),
+        reserve: (Parent, Parachain(a_para_id)).into(),
+        xcm: Xcm(vec![
+          BuyExecution { fees, weight_limit },
+          DepositAsset { assets, beneficiary },
+        ]),
+      }
+    ]),
+  },
+])
+```
 
 ---
 
