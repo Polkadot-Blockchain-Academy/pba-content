@@ -1125,10 +1125,8 @@ const UpdateTitleButton: FC = ({ setTitle }: { setTitle: Dispatch<SetAction<stri
 export const App: FC = () => {
   return (
     <StakingProvider>
-      {" "}
       // Polkadot JS API subscriptions here
       <BalancesProvider>
-        {" "}
         // Polkadot JS API subscriptions here
         <Router>
           <Home /> // Uses `useStaking() and `useBalances()`
@@ -1301,7 +1299,6 @@ useEventListener("new-balance-update", newBalanceUpdateCallback, ref);
 export const App: FC = () => {
   return (
     <StakingProvider>
-      {" "}
       // Polkadot JS API subscriptions here
       <Router>
         <Home /> // Uses `useStaking() and `new-balance-update` custom event.
