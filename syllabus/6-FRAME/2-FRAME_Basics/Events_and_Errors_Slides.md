@@ -277,7 +277,7 @@ pub enum Error<T> {
 
 ## Nested Errors
 
-Errors support up to 5 bytes, which allows you to create nested errors, or insert other minimal data with the `PalletError` derive macro.
+Errors support up to 4 bytes, which allows you to create nested errors, or insert other minimal data with the `PalletError` derive macro.
 
 ```rust
 #[derive(Encode, Decode, PalletError, TypeInfo)]
@@ -301,7 +301,7 @@ pub enum Error<T> {
 	/// Errors coming from another place.
 	SystemError(SystemError<T>),
 	/// Some Error with minimal data
-	DataError(u16),
+	DataError(u8),
 }
 ```
 
