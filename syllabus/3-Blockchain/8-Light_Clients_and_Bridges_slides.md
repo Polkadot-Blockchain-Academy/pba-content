@@ -447,12 +447,12 @@ Your app is only as quality as the lower of the blockspaces.
 
 ## Example: Depository Mint Model
 
-* Send tokens to a contract on source chain
-* Message is relayed to destination chain
-  * Offchain relay and transaction
-  * XCM
-  * "Somehow"
-* New "wrapped" tokens are minted on the destination chain
+- Send tokens to a contract on source chain
+- Message is relayed to destination chain
+  - Offchain relay and transaction
+  - XCM
+  - "Somehow"
+- New "wrapped" tokens are minted on the destination chain
 
 <!-- TODO really needs a figure -->
 

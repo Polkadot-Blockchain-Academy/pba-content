@@ -1,19 +1,18 @@
 ---
-title: Substrate's Transaction Pool and its Runtime API
-duration: 30 minutes
+title: Substrate Transaction Pool
 ---
 
-# Substrate's Transaction Pool
+# Substrate Transaction Pool
 
 ---
 
-## Transaction Pools
+## Why Transaction Pool?
+
+Because it is a (⛓️ blockspace) market.
 
 <pba-cols>
 <pba-col>
-
 <img style="width: 500px;" src="./img/tx-pool/BlockspaceBooth.png" />
-
 </pba-col>
 
 <pba-col>
@@ -47,92 +46,388 @@ Second, it is more accurate to think of the transactions themselves waiting in l
 
 Let's take a closer look.
 
----v
+---
 
-### Paths of a Transaction
+## Context
 
-<img style="width: 900px;" src="./img/tx-pool/blockchain_p2p.svg" />
-
-Notes:
-
-Previously, in the blockchain module, we saw this figure.
-It points out that each node has its own view of the blockchain.
-Now I'll show you another layer of detail which is that each node also has its own transaction pool
-CLICK
-
----v
-
-### Paths of a Transaction
-
-<img style="width: 900px;" src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
+<image rounded src="../../assets/img/5-Substrate/dev-pool-context.svg">
 
 Notes:
 
-There are many paths a transaction can take from the user who signed it to a finalized block.
-Let's talk through some.
-Directly to user's authoring node and into chain is simplest.
-Could also be gossiped to other author.
-Could even go in a block, get orphaned off, back to tx pool, and then in a new block
+- Gossip
+- Queue of all transactions, queue of ready transactions.
+- Then given to the block author, only READY ones.
 
 ---v
 
-### Pool Validation
+### Context
 
-- Check signature
-- Check that sender can afford fees
-- Make sure state is ready for application
+Any Transaction Pool has two main objectives:
 
-Notes:
-
-When a node gets a transaction, it does some light pre-validation sometimes known as pool validation.
-This checking determines whether the transactions is {valid now, valid in some potential future, invalid}.
-There is periodic re-validation if transactions have been in the pool for a long time.
-
----v
-
-### Pool Prioritization
-
-- Priority Queue
-- Prioritized by...
-  - Fee
-  - Bribe
-  - Fee per blockspace
-- This is all off-chain
-
-Notes:
-
-There are a few more things the Substrate tx pool does too, and we will look at them in detail soon.
+1. Validate Transactions
+   - Ready, Future, or 🗑️?
+2. Order them
+   - Within each list, who is first?
 
 ---
 
-## Tx Pool Runtime Api
+## 1. Transaction Validation
 
-```rust
-pub trait TaggedTransactionQueue<Block: BlockT>: Core<Block> {
-    fn validate_transaction(
-        &self,
-        __runtime_api_at_param__: <Block as BlockT>::Hash,
-        source: TransactionSource,
-        tx: <Block as BlockT>::Extrinsic,
-    ) -> Result<TransactionValidity, ApiError> { ... }
-}
-```
+Moving transactions from one list to the other.
 
-[`TaggedTransactionQueue` Rustdocs](https://paritytech.github.io/substrate/master/sp_transaction_pool/runtime_api/trait.TaggedTransactionQueue.html)
-
-Introduced in [paritytech/substrate#728](https://github.com/paritytech/substrate/issues/728)
-
-Notes:
-
-This is another runtime api, similar to the block builder and the core that are used for creating and importing blocks.
-Like most others, it requires that the Core api also be implemented.
-
-This one is slightly different in that it is actually called from off-chain, and is not part of your STF.
-So let's talk about that for a little bit.
+<diagram class="mermaid" style="display: flex; width: 80%">
+graph LR
+    W["🤠 Wild West"] --"😈"--> T["🗑️"]
+    W --"😇 ⌛️"--> R["✅ Ready"]
+    W --"😇 ⏳"--> F["⏰ Future"]
+</diagram>
 
 ---v
 
-### Runtime vs STF
+### 1. Transaction Validation
+
+- Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+- Transaction validation should be **cheap** to perform.
+- Transaction pool is entirely an **offchain operation**.
+  - No state change
+
+Notes:
+
+Important, must pause and ask!
+
+- Why is it from the runtime? because the transaction format is opaque and the node doesn't even know what to do with it.
+- Why does it have to be cheap? wild west, unpaid, DoS!
+- Pesky question: but be aware that from the runtime's perspective, the node could be malicious. The runtime cannot trust the node to obey.
+
+---v
+
+### 1. Transaction Validation
+
+The runtime API.
+
+```rust[1-100|6]
+impl TaggedTransactionQueue<Block> for Runtime {
+  fn validate_transaction(
+    source: TransactionSource,
+    tx: <Block  as BlockT>::Extrinsic,
+    block_hash: <Block as BlockT>::Hash,
+  ) -> TransactionValidity {
+    ..
+  }
+}
+```
+
+---v
+
+### 1. Transaction Validation
+
+```rust[1-100|5-6|8-9|11-12|14-100|1-100]
+pub type TransactionValidity = Result<ValidTransaction, TransactionValidityError>;
+
+/// This is going into `Ready` or `Future`
+pub struct ValidTransaction {
+  /// If in "Ready", what is the priority?
+  pub priority: u64,
+
+  /// For how long is this validity?
+  pub longevity: u64,
+
+  /// Should be propagate it?
+  pub propagate: bool,
+
+  /// Does this require any other tag to be present in ready?
+  ///
+  /// This determines "Ready" or "Future".
+  pub requires: Vec<Tag>,
+  /// Does this provide any tags?
+  pub provides: Vec<Tag>,
+}
+
+type Tag = Vec<u8>
+```
+
+---v
+
+### 1. Transaction Validation: Banning
+
+- Once certain transaction is discovered to be invalid, **its hash** is banned for a fixed duration of time.
+- Default in substrate is `Duration::from_secs(60 * 30)`, can be configured via CLI.
+
+Notes:
+
+See: https://github.com/paritytech/substrate/pull/11786
+
+we probably also ban the peer who sent us that transaction? but have to learn.
+
+---
+
+## 2. Transaction Ordering
+
+- `provides` and `requires` is a very flexible mechanism; it allows you to:
+  - Specify if a transaction is "Ready" or "Future"
+  - Within each, what transactions should ge before which.
+
+Note: it essentially forms a graph.
+
+Order mostly matters within the ready pool. I am not sure if the code maintains an order in `future` as well. In any
+case, not a big big deal.
+
+---v
+
+### 2. Transaction Ordering: Quiz Time.
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  A,
+  provides: vec![],
+  requires: vec![]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+    <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+---v
+
+### 2. Transaction Ordering: Quiz Time.
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  B,
+  provides: vec![1],
+  requires: vec![2]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+      <pre>(B, pr: vec![1], rq: vec![2])</pre>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+---v
+
+### 2. Transaction Ordering: Quiz Time.
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  C,
+  provides: vec![2],
+  requires: vec![3]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+      <pre>(B, pr: vec![1], rq: vec![2])</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    </td>
+    <td>
+      <pre>(C, pr: vec![2], rq: vec![3])</pre>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+---v
+
+### 2. Transaction Ordering: Quiz Time.
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  D,
+  provides: vec![1],
+  requires: vec![0]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(D, pr: vec![1], rq: vec![])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(B, pr: vec![1], rq: vec![2])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(C, pr: vec![2], rq: vec![3])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+Note: The oder in this slide matters and it is top to bottom.
+
+---v
+
+### 2. Transaction Ordering: `priority`
+
+From the **Ready pool**, when all requirements are met, then `priority` dictates the order.
+
+Further tie breakers:
+
+2. ttl: shortest `longevity` goes first
+3. time in the queue: longest to have waited goes first
+
+<!-- .element: class="fragment" -->
+
+Note:
+
+https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146
+
+---v
+
+### 2. Transaction Ordering: `priority`
+
+> How can the pool be a pure FIFO?
+
+Notes:
+
+All priorities set to 0.
+
+---v
+
+### 2. Transaction Ordering: `nonce`
+
+Purposes of a nonce:
+
+1. Ordering
+2. Replay protection
+3. Double spend protection
+
+---v
+
+### 2. Transaction Ordering: `nonce`
+
+- ✅ You will implement a nonce system using the above primitives as a part of your assignment.
+- General idea: `require -> (account, nonce - 1).encode()`, provide: `provides -> (account, nonce).encode()`
+
+Notes:
+
+Transaction Ordering: Each time a transaction is sent from an account, the nonce increases by one. This sequential
+numbering ensures that transactions are processed in the order they are sent.
+
+Double Spending Prevention: Since each transaction has a unique nonce, it's impossible for two transactions with the
+same nonce to both be valid. This stops attackers from attempting to send the same funds twice.
+
+Replay Attack Protection: In a replay attack, a valid transaction is maliciously or fraudulently repeated or delayed.
+With a nonce, once a transaction is executed, any attempt to execute it again will fail since the nonce will no longer
+match the current state of the account.
+
+---
+
+## Shower Thought: Runtime vs STF
+
+> Transaction pool is entirely an **offchain operation**
+
+Note:
+
+what we said before. What does this imply?
+
+---v
+
+### Shower Thought: Runtime vs STF
 
 <img style="width: 1100px;" src="./img/tx-pool/peter-parker-glasses-off.png" />
 
@@ -141,138 +436,91 @@ Notes:
 It is commonly said that the runtime is basically your STF.
 This is a good first order approximation.
 It is nearly true.
-
 ---v
 
-### Runtime vs STF
+### Shower Thought: Runtime vs STF
 
 <img style="width: 1100px;" src="./img/tx-pool/peter-parker-glasses-on.png" />
 
 Notes:
 
-But as we can see here, when we put our glasses on, actually only some of the apis are part of the stf.
-
----v
-
-## Why is pool logic in the runtime?
-
-- Transaction type is Opaque
-- Runtime logic is opaque
-- You must understand the transaction to prioritize it
-
-Notes:
-
-So if this is not part of the STF why is it in the runtime at all?
-This logic is tightly related to the runtime application logic.
-The types are opaque outside of the runtime.
-So this logic must go in the runtime.
-
-But if it is not on-chain, can individual validators customize it.
-In short yes.
-There is a mechanism for this.
-We won't go deeply into the mechanism, but validators can specify alternate wasm blocs to use instead of the official one.
+But as we can see here, when we put our glasses on, actually only some of the apis are part of the stf. the non-stf
+parts are runtime APIs that are called and use, but don't really contribute to the STF. typically the runtime cannot
+make assumptions about these. From the PoV of the runtime, when doing the main consensus critical work (authoring,
+importing) these did not happen.
 
 ---
 
-## Jobs of the API
+## Lecture Recap
 
-- Make fast pre-checks
-- Give the transaction a priority
-- Determine whether the transaction is ready now or may be ready in the future
-- Determine a dependency graph among the transactions
+- Blockspace Market, Competition.
+- Main tasks:
+  - Validate (valid and invalid)
+  - Order (split valid into "Ready" and "Future")
+    - provides and requires
+    - priority: Fee/tip
+- By Runtime, but not in STF
 
 Notes:
 
-So we spoke earlier about the jobs of a transaction pool in general.
-Specifically the pre-checks and the priority
-Here is a more specific list of tasks that Substrate's TaggedTransactionPool does.
+- Each node's pool is a local wild west.
+- Because it is wild west, the transaction pool must only check static and cheap things.
+- The block author won't trust the pool validation, and re-execute all checks.
+- Shower Thought: Transaction queue validation is part of the runtime, but not part of the STF.
 
-The second two points are the new additions, and they are the duty of the "tags" after which the tagged transaction queue is named.
+---
 
-The results of all of this are returned to the client side through a shared type `ValidTransaction` or `InvalidTransaction`
+## Additional Resources
 
----v
+> Check speaker notes (click "s" 😉)
 
-### `ValidTransaction`
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+
+Notes:
+
+https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L149
+
+Original pool PR from ages ago, old but gold: https://github.com/paritytech/substrate/issues/728
+
+> Work towards a flexible transaction queue that relies **only on runtime logic to provide comprehensive dependency and queuing management**... should not be aware of the concepts of accounts, signatures, indexes or nonces.
+
+> Returns `Valid` if the transaction can be **statically** validated; ... the u64 is the priority used to determine which of a mutually exclusive set of transactions are better to include... Any transactions that do get included in a block should be instantly discarded (and banned) if they result in a panic execution.
+
+### Post Lecture
+
+More about MEV
+
+---
+
+# Appendix
+
+---
+
+## Transaction Pool Submission API
 
 ```rust
-pub struct ValidTransaction {
-    pub priority: TransactionPriority,
-    pub requires: Vec<TransactionTag>,
-    pub provides: Vec<TransactionTag>,
-    pub longevity: TransactionLongevity,
-    pub propagate: bool,
+pub enum TransactionStatus<Hash, BlockHash> {
+	/// Transaction is part of the future queue.
+	Future,
+	/// Transaction is part of the ready queue.
+	Ready,
+	/// The transaction has been broadcast to the given peers.
+	Broadcast(Vec<String>),
+	/// Transaction has been included in block with given hash.
+	InBlock(BlockHash),
+	/// The block this transaction was included in has been retracted.
+	Retracted(BlockHash),
+	/// Maximum number of finality watchers has been reached,
+	/// old watchers are being removed.
+	FinalityTimeout(BlockHash),
+	/// Transaction has been finalized by a finality-gadget, e.g GRANDPA
+	Finalized(BlockHash),
+	/// Transaction has been replaced in the pool, by another transaction
+	/// that provides the same tags. (e.g. same (sender, nonce)).
+	Usurped(Hash),
+	/// Transaction has been dropped from the pool because of the limit.
+	Dropped,
+	/// Transaction is no longer valid in the current state.
+	Invalid,
 }
 ```
-
-[`ValidTransaction` Rustdocs](https://paritytech.github.io/substrate/master/sp_runtime/transaction_validity/struct.ValidTransaction.html)
-
-Notes:
-
-We indicate that the transaction passes the prechecks at all by returning this valid transaction struct.
-If it weren't even valid, we would return a different, `InvalidTransaction` struct.
-You learned yesterday how to navigate the rustdocs to find the docs on that one.
-
-Priority we've discussed.
-It is worth noting that the notion of priority is intentionally opaque to the client.
-The runtime may assign this value however it sees fit.
-
-Provides and requires all forming a dependency graph between the transactions.
-Requires is a list of currently unmet dependency transactions.
-This transaction will be ready in a future where these dependencies are met so it is kept in the pool.
-
-A simple intuitive example of this is payments.
-Image alice pays bob some tokens in transaction1.
-Then bob pays those same tokes to charlie in transaction2.
-trasnaction2 will be valid only after transaction1 has been applied.
-It is a dependency.
-
-Longevity is a field I'm not so familiar with.
-It is how long the transaction should stay in the pool before being dropped or re-validated.
-TODO what are the units? How does one set it?
-
-And finally whether the transaction should be gossiped.
-This is usually true.
-Only in special edge cases would this be false.
-
----v
-
-### Example 1: UTXO System
-
-<img src="./img/tx-pool/utxo.svg" />
-
-Notes:
-
-Prioritize by implicit tip (difference of inputs and outputs)
-Requires all missing input transactions
-provides this input
-
----v
-
-### Example 2: Nonced Account System
-
-<img src="./img/tx-pool/accounts.svg" />
-
-Notes:
-
-Prioritize by explicit tip
-Requires all previous nonces for this account
-provides this nonce for this account
-
-This demonstrates one of the biggest downsides of the Accounts system.
-Transactions cannot deterministically specify the initial state on which they operate.
-There is only an inherent ordering between transactions from the same account.
-
----v
-
-## Always Re-check On-chain
-
-<img style="width: 900px;" src="./img/tx-pool/blockchain_p2p_with_pool.svg" />
-
-Notes:
-
-None of this new pool information changes the fundamentals you learned last week.
-You must execute the state transitions in full on chain.
-
-Most of the time you are not the block author.
-When you import a block from another node, you cannot trust them to have done the pre-checks correctly.

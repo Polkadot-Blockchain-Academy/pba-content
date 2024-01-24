@@ -16,8 +16,8 @@ Shoot the shit until the initial nervousness starts to wear off.
 
 ## Goals
 
-* Trustless provisioning of infrastructure. <!-- .element: class="fragment" -->
-* Ways to coordinate with people we don't trust. <!-- .element: class="fragment" -->
+- Trustless provisioning of infrastructure. <!-- .element: class="fragment" -->
+- Ways to coordinate with people we don't trust. <!-- .element: class="fragment" -->
 
 Notes:
 
@@ -160,9 +160,9 @@ In fact redundant systems were widely studied even before web 2. Consider a flig
 
 ## Web3
 
-* <span>A provision of digital services without the need to trust a service _provider_.</span> <!-- .element: class="fragment" -->
-* Providers do not need to be trusted; they are economically incentivized to behave honestly. <!-- .element: class="fragment" -->
-* Allow users to interact with a common system without trusting any intermediaries. <!-- .element: class="fragment" -->
+- <span>A provision of digital services without the need to trust a service _provider_.</span> <!-- .element: class="fragment" -->
+- Providers do not need to be trusted; they are economically incentivized to behave honestly. <!-- .element: class="fragment" -->
+- Allow users to interact with a common system without trusting any intermediaries. <!-- .element: class="fragment" -->
 
 Notes:
 
@@ -209,8 +209,6 @@ The system should behave as expected, even if system operators do not.
 No individual actor, company, state, or coalition should be able to degrade any of these properties.
 
 ---
-
-
 
 ## A Shared History
 
@@ -401,7 +399,7 @@ What part of history is final?
 
 Notes:
 
-Let's end this lesson with a  little history of what we have seen in the blockchain space so far.
+Let's end this lesson with a little history of what we have seen in the blockchain space so far.
 
 First, each blockchain tracks some state machine. We've discussed several examples of what that might be already, we'll code some simple examples shortly, and we'll spend all of module 5 digging into how to create a blockchain-friendly production-ready state machine.
 
