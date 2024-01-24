@@ -288,13 +288,13 @@ The last of our key processes
 <pba-flex center>
 
 1. Relay node imports block in which parachain's avail. core was vacated
-1. `CollationGeneration` requests a collation from the collator
+1. CollationGeneration requests a collation from the collator
 <!-- .element: class="fragment" data-fragment-index="1" -->
 1. Parachain consensus decides whether this collator can author
 <!-- .element: class="fragment" data-fragment-index="2" -->
 1. Collator proposes, seals, and imports a new block
 <!-- .element: class="fragment" data-fragment-index="3" -->
-1. Collator bundles the new block and information necessary to process and validate it, a **collation!**
+1. Collator bundles the new block and information necessary to process and validate it, a collation!
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
