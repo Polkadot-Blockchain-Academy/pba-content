@@ -205,7 +205,9 @@ Although no strict definition, dapps have certain characteristics:
 
 <!-- .element: class="fragment" -->
 
-## </span>
+</span>
+
+---
 
 # Dapp Tech Stack
 
@@ -480,7 +482,7 @@ pub fn api_pending_rewards(who: T::AccountId) -> Option<BalanceOf<T>> {
 
 ## Summary
 
-- Dapps (generall) need to know metadata of a chain to communicate with it
+- Dapps (generally) need to know metadata of a chain to communicate with it
 <!-- .element: class="fragment" -->
 - Chain-level info: block::{events, extrinsics}, genesisHash, transactionVersion, etc, can be queried
 <!-- .element: class="fragment" -->
