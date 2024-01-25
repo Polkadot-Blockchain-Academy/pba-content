@@ -1047,7 +1047,7 @@ import { useState } from "react";
 
 // React Component: App entry
 const App: FC = () => {
-  const [title, setTitle] = useState < string > "Hello World";
+  const [title, setTitle] = useState<string>("Hello World");
 
   return (
     <div>
@@ -1085,32 +1085,6 @@ const UpdateTitleButton: FC = ({ setTitle }: { setTitle: Dispatch<SetAction<stri
 <!-- .element: class="fragment" -->
 - Your dapp will eventually experience slowdown and performance issues.
 <!-- .element: class="fragment" -->
-
----v
-
-## Component Hierarchy with Providers
-
-<div style="padding: 0 2rem; font-size: 24px;">
-
-```jsx
-export const App: FC = () => {
-  return (
-    <StakingProvider>
-      // Polkadot JS API subscriptions here
-      <BalancesProvider>
-        // Polkadot JS API subscriptions here
-        <Router>
-          <Home /> // Uses `useStaking() and `useBalances()`
-          <Staking /> // Uses `useStaking()`
-          <Balances /> // Uses `useBalances()`
-        </Router>
-      </BalancesProvider>
-    </StakingProvider>
-  );
-};
-```
-
-</span>
 
 ---v
 
@@ -1155,28 +1129,10 @@ export const App: FC = () => {
 
 - Only use state required to determine UI updates.
 
-- Deliver custom events from outside React on a per-component basis.
+- Deliver custom events from outside React.
 
 </span>
 <!-- .element: class="fragment" -->
-
----v
-
-## Only Use State Required to Determine UI Updates
-
-What should be stored in state?
-
-<br/>
-
-- The `network` the dapp is trying to connect to.
-
-- Polkadot JS API `provider`
-
-- Polkadot JS API `api` instance
-
-- Connection status (connected, disconnected, connecting, error).
-
-- API is ready to be used.
 
 ---v
 
@@ -1204,7 +1160,11 @@ What should be stored in state?
 
 <div style="padding: 0 2rem">
 
-## Deliver Custom Events From Outside React on a Per-Component Basis
+## Deliver Custom Events From Outside React
+
+Better separation of concerns
+
+<br/>
 
 </div>
 
@@ -1260,59 +1220,6 @@ useEventListener("new-balance-update", newBalanceUpdateCallback, ref);
 </pba-cols>
 
 </span>
-
----v
-
-## Component Hierarchy with Custom Events
-
-- Custom events are now cutting down on React re-renders.
-
-- Better separation of concerns.
-
-<br/>
-
-<div style="padding: 0 2rem; font-size: 24px;">
-
-```jsx
-export const App: FC = () => {
-  return (
-    <StakingProvider>
-      // Polkadot JS API subscriptions here
-      <Router>
-        <Home /> // Uses `useStaking() and `new-balance-update` custom event.
-        <Staking /> // Still uses `useStaking()`
-        <Balances /> // Uses `new-balance-update` custom event.
-      </Router>
-    </StakingProvider>
-  );
-};
-```
-
-</div>
-
----v
-
-## Component Hierarchy with Custom Events
-
-Be as surgical as you can with custom events. Tailor them to individual components.
-
-<br/>
-
-<div style="font-size: 24px;">
-
-```jsx
-export const Balances: FC = () => {
-
-  return (
-    <BalancesWrapper>
-      <Header />
-      <BalanceGraph /> // <- `new-balance-update` custom event.
-      <TransactionHistory /> // <- `new-transaction-update` custom event.
-      <Footer />
-    </BalancesWrapper>
-  )
-}
-```
 
 ---
 
