@@ -108,6 +108,7 @@ This is a type that exists in `xcm-builder` to help adapt existing FRAME pallets
 `LocationToAccountId` converts from XCM `Location`s to account ids on our local chain.
 
 There are other adapters ready for other pallets, like:
+
 - `FungibleAdapter` for the balances pallet
 - `NonFungiblesAdapter` for the uniques pallet
 
@@ -243,6 +244,7 @@ Xcm(vec![
 Notes:
 
 A program like this sent to the DEX chain will:
+
 - take the assets from our sovereign account
 - pays for execution
 - swap the tokens we specified
