@@ -1206,7 +1206,7 @@ Inside React
 // accordingly.
 const newBalanceUpdateCallback = (e: Event) => {
   if (isCustomEvent(e)) {
-    const balances = e.detail;
+    const { balances } = e.detail;
     setBalances(balances);
   }
 };
