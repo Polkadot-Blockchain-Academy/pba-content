@@ -1041,7 +1041,7 @@ Use a visualizer for package analysis, cutting down on dependencies.
 
 <span style="font-size: 24px">
 
-```jsx
+```tsx
 import type { Dispatch, FC, SetStateAction } from "react";
 import { useState } from "react";
 
