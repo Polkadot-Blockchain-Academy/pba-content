@@ -77,7 +77,128 @@ Notes:
 
 ## Polkadot's Data Availability Solution
 
+---
 
+### Design Considerations
+
+<pba-flex center>
+
+1. Avoid storing full PoV in each validator 
+1. Avoid fragility, where misbehavior can compromise PoV retrieval
+<!-- .element: class="fragment" data-fragment-index="1" -->
+1. Need cryptographic scheme to prove availability before approvals start
+<!-- .element: class="fragment" data-fragment-index="2" -->
+1. Need a way to verify retrieved PoV integrity
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-flex>
+
+Notes:
+- Passing full PoV copies to a large fraction of validators would work, but we can do much better!
+- Misbehavior up to 1/3 should be accomodated to match threat model
+
+---
+
+### Laying the Foundation: Execution Cores
+
+<pba-cols>
+<pba-col center>
+
+- Minimal unit of Polkadot execution scheduling
+- At most 1 candidate pending availability per relay block, per core
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Considered "occupied" while a candidate paired with that core is pending availability
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- It saves resources to bundle signals about availability for all cores together
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-col>
+<pba-col center>
+
+<img src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Processor_Cores.jpeg" style="width: 100%" />
+
+</pba-col>
+</pba-cols>
+
+---
+
+### Laying the Foundation: Erasure Coding
+
+The goal: Avoid storing full PoV in each validator 
+
+<pba-flex center>
+
+- Encode data of K chunks into a larger encoded data of N chunks
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Any K-subset of N chunks can be used to recover the data
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+</pba-flex>
+
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/erasure-coding-1.png" />
+
+Notes:
+- Erasure coding allows storing only 3x PoV size vs 334x for 1000 validators
+
+---
+
+### In code
+
+```rust
+type Data = Vec<u8>;
+
+pub struct Chunk {
+	pub index: usize,
+	pub bytes: Vec<u8>,
+}
+
+pub fn encode(_input: &Data) -> Vec<Chunk> {
+	todo!()
+}
+
+pub fn reconstruct(_chunks: impl Iterator<Item = Chunk>) -> Result<Data, Error> {
+	todo!()
+}
+```
+
+---
+
+### Polkadot's Data Availability Protocol
+
+<pba-flex center>
+
+- Each PoV is divided into $N_{validator}$ chunks
+- Validator with index i gets a chunk with the same index
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Validators sign statements when they receive their chunk
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Once we have $\frac{2}{3} + 1$ of signed statements,<br/>PoV is considered available
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Any subset of $\frac{1}{3} + 1$ of chunks can recover the data
+<!-- .element: class="fragment" data-fragment-index="4" -->
+- When PoV is later retrieved by approvers,<br/>chunk validity is verified using merkle proof
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+</pba-flex>
+
+Notes:
+How are our design goals satisfied by this approach?
+- Minimizes total storage 
+- Maintains 1/3 + 1 security model
+- Proves availability with signed statements
+- PoV integrity guaranteed by integrity of individual chunks
+
+---
+
+### Bitfields
+
+Cambridge 12
+
+---
+
+### Availability Threshold
+
+Cambridge 15
 
 ---
 
