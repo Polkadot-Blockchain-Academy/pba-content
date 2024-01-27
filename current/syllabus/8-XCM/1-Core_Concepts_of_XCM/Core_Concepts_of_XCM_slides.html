@@ -109,7 +109,7 @@ A common format has its benefits though, as we&#39;ll see next.</p>
 
 XCM is a **versioned** language.
 
-It's currently in version 3.
+It's currently in version 4.
 
 What goes in each version is defined via an RFC process.
 </script></section><section data-markdown><script type="text/template">
@@ -122,6 +122,8 @@ What goes in each version is defined via an RFC process.
 It's not called an XCM message,
 
 the same way it's not called an ATM machine.
+
+We can also call them XCM programs, since they are executable.
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## 😬 Why not _native_ messages?
 
@@ -148,15 +150,15 @@ It&#39;s up to the interpreter to interpret the intention how it makes sense.</p
 </aside></script></section><section data-markdown><script type="text/template">
 ### Message format changes
 
-<img style="width: 1050px;" src="../../../assets/img/8-XCM/against-native-messaging.svg" />
+<img style="width: 1050px;" src="../img/against-native-messaging.svg" />
 </script></section><section data-markdown><script type="text/template">
 ### Message format changes
 
-<img style="width: 1050px;" src="../../../assets/img/8-XCM/against-native-messaging-2.svg" />
+<img style="width: 1050px;" src="../img/against-native-messaging-2.svg" />
 </script></section><section data-markdown><script type="text/template">
 ### Message format changes
 
-<img rounded style="width: 1050px" src="../../../assets/img/8-XCM/xcm-executor-routing-calls.png" />
+<img rounded style="width: 1050px" src="../img/xcm-executor-routing-calls.png" />
 
 <aside class="notes"><p>XCM abstracts away the actual on-chain operation that will be called, which lets the recipient redirect calls to always make them valid.</p>
 </aside></script></section><section data-markdown><script type="text/template">
@@ -195,7 +197,8 @@ XCM assumes the following things from the underlying environment.
 - **Asynchronous**
 - **Asymmetric**
 
-<aside class="notes"><p>The 4 &#39;A&#39;s are assumptions XCM makes over the transport protocol and overall the environment where these messages are sent and processed.</p>
+<aside class="notes"><p>The 4 &#39;A&#39;s are assumptions XCM makes over the transport protocol and overall the environment where these messages are sent and processed.
+This doesn&#39;t mean that the transport protocol used has to have these guarantees, it simply means the language constructs are built around them.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Agnostic
 
@@ -526,7 +529,7 @@ They are an implementation detail of the transport layer.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### Bridge (actual routing)
 
-<diagram class="mermaid">
+<diagram class="mermaid limit size-50">
 graph TD
     Universe(Universal Location):::disabled-->Polkadot(Polkadot):::disabled
     Universe-->Kusama(Kusama)
@@ -561,7 +564,7 @@ Locations external to the local system can be represented by a local account.
 We call this the **sovereign account** of that location.
 
 They are a mapping from a `Location` to an account id.
-
+</script></section><section data-markdown><script type="text/template">
 <diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->A(A) & B(B)
@@ -574,8 +577,6 @@ A single account on a system can have multiple sovereign accounts on many other 
 In this example, Alice is an account on AssetHub, and it controls a sovereign account on Collectives.</p>
 <p>When transferring between consensus systems, the sovereign account is the one that gets the funds on the destination system.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-## Sovereign Accounts again
-
 <diagram class="mermaid">
 graph TD
     Polkadot(Polkadot)-->A(A) & B(B)
@@ -640,149 +641,15 @@ enum WildFungibility {
 In this case, we can either list all the assets we want or use a wildcard to select all of them.
 In reality, it&#39;s better to use the counted variant of the wildcards, for benchmarking.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
-## Reanchoring
-
-How do different locations reference the same asset?
-
-<diagram class="mermaid limit size-70">
-graph TD
-    Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
-    Polkadot-->BridgeHub("Bridge Hub (1002)")
-    AssetHub-->Alice(Alice)
-    AssetHub-->AssetsPallet(Pallet Assets)
-    AssetsPallet-->Asset(USDT)
-</diagram>
-
-<aside class="notes"><p>Locations are relative, so they must be updated and rewritten when sent to another chain, for them to be interpreted correctly.</p>
-<p>TODO: Move elsewhere.
-Native tokens are referenced by the location to their system.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### USDT from Asset Hub
-
-`PalletInstance(50)/GeneralIndex(1984)`
-
-<diagram class="mermaid limit size-70">
-graph TD
-    Polkadot(Polkadot):::disabled-->AssetHub("📍 Asset Hub (1000)")
-    Polkadot-->BridgeHub("Bridge Hub (1002)"):::disabled
-    AssetHub-->Alice(Alice):::disabled
-    AssetHub-->AssetsPallet(Pallet Assets)
-    AssetsPallet-->Asset(USDT)
-    linkStyle 0 opacity:0.3
-    linkStyle 1 opacity:0.3
-    linkStyle 2 opacity:0.3
-    classDef disabled opacity:0.3
-</diagram>
-</script></section><section data-markdown><script type="text/template">
-### USDT from Bridge Hub
-
-`../Parachain(1000)/PalletInstance(50)/GeneralIndex(1984)`
-
-<diagram class="mermaid limit size-70">
-graph TD
-    Polkadot(Polkadot)-->AssetHub("Asset Hub (1000)")
-    Polkadot-->BridgeHub("📍 Bridge Hub (1002)")
-    AssetHub-->Alice(Alice):::disabled
-    AssetHub-->AssetsPallet(Pallet Assets)
-    AssetsPallet-->Asset(USDT)
-    BridgeHub-->Polkadot
-    linkStyle 1 opacity:0.3
-    linkStyle 2 opacity:0.3
-    linkStyle 5 stroke-dasharray:5
-    classDef disabled opacity:0.3
-</diagram>
-</script></section><section data-markdown><script type="text/template">
-### Reanchoring to the rescue
-
-<diagram class="mermaid">
-graph LR
-    subgraph OutgoingMessage[Outgoing message from Bridge Hub]
-        USDTBridgeHub(USDT from Bridge Hub's perspective)
-    end
-    USDTBridgeHub--Reanchoring-->USDTAssetHub
-    subgraph IncomingMessage[Incoming message in Asset Hub]
-        USDTAssetHub(USDT from Asset Hub's perspective)
-    end
-</diagram>
-</script></section></section><section ><section data-markdown><script type="text/template">
-## 🤹 Cross-consensus transfers
-
-<aside class="notes"><p>The two ways of transferring assets between consensus systems are teleports and reserve transfers.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### 1. Asset teleportation
-
-<img rounded style="width: 500px;" src="../../../assets/img/8-XCM/teleport.png" />
-
-<aside class="notes"><p>Teleportation works by burning the assets on the source chain and minting them on the destination chain.
-This method is the simplest one, but requires a lot of trust, since failure to burn or mint on either side will affect the total issuance.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### 1.1. Example: System parachains?
-
-<diagram class="mermaid">
-graph LR
-    BridgeHub(Bridge Hub)--"Trust"-->AssetHub(Asset Hub)
-</diagram>
-</script></section><section data-markdown><script type="text/template">
-### 1.2. Example: Polkadot and Kusama?
-
-<diagram class="mermaid">
-graph LR
-    Polkadot(Polkadot)--"No trust"-->Kusama(Kusama)
-</diagram>
-</script></section><section data-markdown><script type="text/template">
-### 2. Reserve asset transfers
-
-<img rounded style="width: 400px;" src="../../../assets/img/8-XCM/reserve-tx.png" />
-
-<aside class="notes"><p>Reserve asset transfers are more complicated, since they bring in a third actor called the reserve chain.
-Chain A and B needn&#39;t trust each other, they only need to trust the reserve chain.
-The reserve chain holds the real assets, A and B deal only with derivatives.
-The transfer is made by burning derivatives from A, moving them from A&#39;s SA to B&#39;s SA in R, then minting on B.</p>
-<p>In some cases, the sender, A, can also be the reserve for a particular asset, in which case the process is simplified, there&#39;s no burning of derivatives.
-This usually happens with parachains&#39; native tokens.</p>
-<p>You always trust the issuer of the token to not mint infinite tokens.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### 2.1. Example: Parachain native tokens
-
-<diagram class="mermaid">
-graph LR
-    subgraph A [A = R]
-        Sender(Sender account)--"Move X real asset"-->BSovereignAccount(B's Sovereign Account)
-    end
-    A--"Mint X derivatives"-->B(B)
-</diagram>
-
-<aside class="notes"><p>Most parachains act as the reserve for their own token.
-To transfer their token to other chains, they move the real assets to a sovereign account and then tell the chain to mint equivalent derivatives.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### 2.2. Example: Polkadot to Kusama
-
-<diagram class="mermaid">
-graph LR
-    Polkadot(Polkadot)-->AssetHubP
-    subgraph AssetHubP [Asset Hub Polkadot]
-        Sender(Sender account)--"Move X real DOT"-->KusamaSovereignAccount("Kusama's sovereign account")
-    end
-    AssetHubP--"Mint X DOT derivatives"-->Kusama(Kusama)
-</diagram>
-
-<aside class="notes"><p>AssetHub Kusama acts as the reserve for KSM.
-Kusama doesn&#39;t trust Polkadot to teleport KSM to it, but it does trust its own reserve, the AssetHub.
-Polkadot has a sovereign account in Kusama&#39;s AssetHub with some amount of KSM.
-Whenever some user in Polkadot wants to get KSM on Kusama, they just give the DOT to Polkadot and the KSM are moved from one sovereign account to another.
-No new trust relationships are added.</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Summary
+
+<pba-flex center>
 
 - XCM
 - XCM vs XCMP
 - Locations
 - Sovereign Accounts
 - Assets
-- Reanchoring
-- Cross-consensus transfers
-  - Teleports
-  - Reserve asset transfers
 </script></section><section data-markdown><script type="text/template">
 ## Next steps
 
@@ -793,7 +660,7 @@ No new trust relationships are added.</p>
 3. XCM [Docs](https://paritytech.github.io/xcm-docs/)
 </script></section><section data-markdown><script type="text/template">
 <figure>
-    <img rounded style="width: 50%;" src="../../../assets/img/8-XCM/subscan-xcm-dashboard.png" />
+    <img rounded style="width: 50%;" src="../img/subscan-xcm-dashboard.png" />
     <figcaption>Source: <a href="https://polkadot.subscan.io/xcm_dashboard">Subscan</a></figcaption>
 </figure>
 </script></section></section>
