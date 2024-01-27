@@ -9,10 +9,10 @@ verticalSeparator: "\r?\n---v\r?\n"
 # Below can be any of these: https://revealjs.com/config/
 revealOptions:
     transition: "none" # animation between slides = none/fade/slide/convex/concave/zoom
-	backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
-	slideNumber: true
-	controls: true
-	progress: true
+    backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
+    slideNumber: true
+    controls: true
+    progress: true
 ---
 
 # **Econ & Game Theory in Blockchain**
