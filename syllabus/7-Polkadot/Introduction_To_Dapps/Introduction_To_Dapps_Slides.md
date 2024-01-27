@@ -816,16 +816,16 @@ const tx = api.tx.proxy.proxy(
 
 ```javascript
 // Create alice account.
-const alice = keyring.addFromUri("//Alice");
+const from = keyring.addFromUri("//Alice");
 
 // Make a transfer from Alice to Bob, waiting for inclusion.
-const unsub = await api.tx.balances.transfer(BOB, 12345).signAndSend(alice, result => {
+const unsub = await api.tx.balances.transfer(BOB, 12345).signAndSend(from, { signer }, result => {
   console.log(`Current status is ${result.status}`);
 
   if (result.status.isInBlock) {
-    console.log(`Transaction included at blockHash ${result.status.asInBlock}`);
+    console.log(`Transaction included at blockHash ${result.status.InBlock}`);
   } else if (result.status.isFinalized) {
-    console.log(`Transaction finalized at blockHash ${result.status.asFinalized}`);
+    console.log(`Transaction finalized at blockHash ${result.status.isFinalized}`);
     unsub();
   }
 });
