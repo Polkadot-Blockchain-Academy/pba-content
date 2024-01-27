@@ -147,7 +147,7 @@ Polkadot tries to accomplish that mission by solving three problems:
 
 ## The Decisions
 
-What are the type 1 decisions which make Polkadot... Polkadot?
+What are the type 1 decisions which define Polkadot?
 
 ---
 
@@ -555,20 +555,16 @@ An invention machine.
 
 ---
 
-## A Format for Discussing Decisions
+# So what is Polkadot?
 
-What questions should you ask when learning about the decisions of a Protocol?
+---
 
-<br />
+## Polkadot is...
 
-- What is (the decision)?
-- What do we need to consider when making (the decision)?
-  - Is it a Type 1 or Type 2 decision?
-- What decisions has (chain) decided to make and why?
-  - What tradeoffs have they chosen?
-- What decisions have others decided to make?
-  - How might those decisions be better or worse?
-- Where can the blockchain community still improve on (the decision)?
+- A scalable, heterogeneous, sharded, multi-chain network.
+- A permissionless and ubiquitous computer.
+- A decentralized open-source community.
+- A digital-native sovereign network.
 
 ---
 
