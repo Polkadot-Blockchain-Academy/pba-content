@@ -561,9 +561,10 @@ An invention machine.
 
 ## Polkadot is...
 
-- A vision toward a multi-chain future.
-- A scaling solution for application specific blockchains.
-- A foundation for a world with less trust and more truth.
+- A scalable, heterogeneous, sharded, multi-chain network.
+- A permissionless and ubiquitous computer.
+- A decentralized open-source community.
+- A digital-native sovereign network.
 
 ---
 
