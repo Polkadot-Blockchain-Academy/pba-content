@@ -7,12 +7,15 @@ duration: 45 minutes
 # Execution Sharding in Polkadot
 
 Notes:
+
 - Presenter Introduction
 - Topic
 - In this lecture we'll be talking about sharding. The term might be somewhat familiar to those of you following modern cloud or maybe other blockchains with similar ideas.
 
 ---
+
 ## Parachains Protocol
+
 <img style="width: 500px" src="../assets/polkadot-components.svg"/>
 
 Notes:
@@ -23,12 +26,14 @@ If we're looking at one pillar in detail we are accepting that other pillars lik
 ---
 
 ## Execution Sharding in Polkadot
+
 <img style="width: 500px" src="../assets/scalability-trilemma.svg"/>
 
-Notes: 
+Notes:
 First let's outline why we even need to go through all of that trouble. IN short sharding is our answer to scalability. And I could say that in general sharding is **solving** scalability. But in truth as many have heard...
 
 ---
+
 ## Execution Sharding in Polkadot
 
 <pba-cols>
@@ -67,7 +72,7 @@ Everyone checking everything is sacrificing scalability for security (and simpli
 
 Notes:
 Everyone checking everything is sacrificing scalability for security (and simplicity).
-Everyone checking everything was a nice solution at first for things like BTC because it was the simplest option to guarantee safety. But unfortunately it introduces so much unnecessary work that it stops us for scaling. 
+Everyone checking everything was a nice solution at first for things like BTC because it was the simplest option to guarantee safety. But unfortunately it introduces so much unnecessary work that it stops us for scaling.
 
 ---
 
@@ -81,16 +86,15 @@ Notes:
 Imagine a start-up company with 3 employees. They all make hand-crafted bags and at the end of the day they all share their bags between each other to check for defects. This is a simple approach and ensures that even if one employee was being lazy in the end we'll get a good product because the mistakes will be caught. That was BTC when it was a small network.
 
 ---
+
 ## Company analogy
 
 - Company grows to **100** employees
 - All make hand-crafted bags
 - At the end of the day they all share their bags between each other to check for defects... **but there are too many bags!**
 
-
 Notes:
-Okay that's it! We close the company! Bag making clearly cannot be scaled. NO. We change our ways. We introduce new levels, abstractions, and responsibilities. 
-
+Okay that's it! We close the company! Bag making clearly cannot be scaled. NO. We change our ways. We introduce new levels, abstractions, and responsibilities.
 
 ---
 
@@ -112,9 +116,8 @@ Maybe people working in this company really dislike checking for defects and wou
 - Some check for defects
 - **ESCALATE in case of defects**
 
-Notes: 
+Notes:
 It's the "Hey, everyone check this out!" in the start-up setting. That's the whisteblowing of corporations, ticket sending of IT, and the "I want to speak to your manager" of Karens. If there is an issue we only need someone, anyone to raise it and then we can escalate and investigate in full force. Now how does that relate to Polkadot?
-
 
 ---
 
@@ -126,13 +129,14 @@ Notes:
 Because if you imagine a whisteblower, you only need one such brave person in the most corrupt company to completely ruin their scheme. It's the same in Polkadot because we leverage this property to the fullest. As long as we get at least **one**, a single one validator doing the checks we can escalate them and ruin the day of the attackers, despite only a fraction of the network doing the checks.
 
 ---
+
 ## Properties of Escalation
 
 Escalation is the happy path optimization. If there is no issue only very few checkers will participate in the process.
 
 Notes:
 Escalation is the happy path optimization. If there is no issue only very few checkers will participate in the process.
-This solution is only effective because in reality most of the blocks produced are indeed valid and honest. So the happy path optimization brings insane gains and allows for shared workload. 
+This solution is only effective because in reality most of the blocks produced are indeed valid and honest. So the happy path optimization brings insane gains and allows for shared workload.
 
 ---
 
@@ -154,6 +158,7 @@ Now that we have the core principle of sharding let's look at how it manifests i
 ---
 
 ## Parachains Protocols
+
 <pba-flex center>
 
 1. **Collation**: Collect transactions.
@@ -169,8 +174,8 @@ Parachains Protocol which gives us execution sharding is a combination of 5 prot
 
 [Polkadot v1.0: Sharding and Economic Security](https://polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security/) is a comprehensive writeup of the content here in much more detail. Please read it after the lesson if you would like to understand how Polkadot works from top to bottom.
 
-
 ---
+
 ## Parachains Protocols
 
 Validators are constantly running many instances of these protocols, for candidates at different stages in their lifecycle.
@@ -181,6 +186,7 @@ A validator can receive collations for one parachain, while managing availabilit
 ---
 
 ## Parachains Protocols
+
 <pba-flex center>
 
 1. **Collation: Collect transactions.**
@@ -201,8 +207,8 @@ Okay so let's look at the first thing. We're starting from bottom up. Collation.
 Notes:
 Or so you thought. There's actually a bit of a hidden step before collation that is not on the path of each parablock but it sets the stage for the other steps. And that's something I call assignment. To achieve that we'll be working with the set of...
 
-
 ---
+
 ## 0. Assignment - Active Validators
 
 <img style="width: 500px" src="../assets/polkadot-components.svg"/>
@@ -221,7 +227,7 @@ Notes:
 Validators are divided into small **Backing Groups**.
 
 Notes:
-Every Session (4 hours in Polkadot), the parachains consensus takes in those active validators and  _partitions_ them into small **groups** which work together. Those groups are currently around 5 validators each in Polkadot and Kusama. Those groups are called backing groups. 
+Every Session (4 hours in Polkadot), the parachains consensus takes in those active validators and _partitions_ them into small **groups** which work together. Those groups are currently around 5 validators each in Polkadot and Kusama. Those groups are called backing groups.
 
 Backing groups are mapping 1 to 1 to specific **Execution Core**s, and these assignments are rotated around every few blocks. Currently a parachain is connected to a specific execution core, think of it as a core that executes parachain blocks.
 
@@ -244,7 +250,7 @@ In that map the white ovals are the validators. They are grouped into backing gr
 
 Once every few blocks the backing groups **rotate**.
 
-Notes: 
+Notes:
 Once every few blocks the backing groups **rotate** around and they change the execution core they are serving. This makes it so even if a backing group is full of malicious they cannot wholly block a specific execution core for too long.
 
 ---
@@ -263,24 +269,25 @@ Now we can move to the first official step of the parachains protocol. Collation
 Collators are **not** validators. They are parachain-specific nodes which produce parachain blocks by collecting (collating) transactions together.
 
 Notes:
-Collators build parachain blocks and in this image they are the white circles around the outer edge. They are directly linked to specific parachains which are the lone pink squares. Those collators bundle transactions coming from the network and form them into parachain blocks. Those parachain blocks transition the state of the parachain. 
-
+Collators build parachain blocks and in this image they are the white circles around the outer edge. They are directly linked to specific parachains which are the lone pink squares. Those collators bundle transactions coming from the network and form them into parachain blocks. Those parachain blocks transition the state of the parachain.
 
 ---
+
 ## 1. Collation - Collations
 
 <img style="width: 900px" src="../../../assets/img/7-Polkadot/parachain-validation-multiple.svg" />
 
 Notes:
 A a bit simpler way to represent it is like this. Here we have 3 parachains scheduled on 3 cores. Collators from each parachain provide a bundle of transactions. They also attack something called a PoV - Proof of Validity which will be crucial to ensure to validate those transactions later on.
+
 ---
 
 ## 1. Collation - Networking
 
 Collators once they build the parablock need to check who are the validators that are currently assigned to their execution core and send the collations to them over the p2p network.
 
-Notes: 
-Collators once they build the parablock (often referred to as candidate parablocks or just candidates) need to check who are the validators that are currently assigned to their execution core and send the collations to them. 
+Notes:
+Collators once they build the parablock (often referred to as candidate parablocks or just candidates) need to check who are the validators that are currently assigned to their execution core and send the collations to them.
 
 ---
 
@@ -298,7 +305,7 @@ Now we are at the next step. We just sent some collations to the validators in o
 Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators.
 
 Notes:
-Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators. That is the group we created in the assignment step. The few validators or backers (3 on the image) receive a bunch of parachain blocks / parablocks / collations / candidates (all the same thing). 
+Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators. That is the group we created in the assignment step. The few validators or backers (3 on the image) receive a bunch of parachain blocks / parablocks / collations / candidates (all the same thing).
 
 ---
 
@@ -313,7 +320,7 @@ We can zoom in on a specific backing group. Here we cna see that backers are fir
 
 ## 2. Backing - Checks
 
-The backers receiving collations need to perform some initial checks to ensure their validity. 
+The backers receiving collations need to perform some initial checks to ensure their validity.
 
 Notes:
 But for them to do their job correctly backers after receiving collations need to perform some initial checks to ensure their validity. They simply cannot trust random data blobs coming from the external nodes. And to perform those checks we need to learn a bit about the PVF.
@@ -325,7 +332,6 @@ But for them to do their job correctly backers after receiving collations need t
 <img rounded style="width: 1000px" src="../assets/runtime_validation_2.svg" />
 
 > **Parachain Validation Function** (PVF) is a function which takes in the current parachain state (PoV), the promised parachain state, and the parachain state transition arguments. It re-executes the parachain logic/runtime/STF using the arguments on the current state and checks if it matches the promised state. If it does, the parachain block is valid.
-
 
 Notes:
 Read definition.
@@ -341,7 +347,6 @@ Notes:
 Just as a reminder this is nothing new. It is the same mechanism covered in the shared security lecture. The wasm blobs are our STFs and to check we rerun the transition and match the state.
 
 ---
-
 
 ## 2. Backing - PVF code
 
@@ -368,13 +373,12 @@ PoV contains the elements necessary for the state transition and the resulting s
 
 ## 2. Backing - PVF results
 
-In the end the backer performing the `validate_block` knows that the transition is either correct or not. 
+In the end the backer performing the `validate_block` knows that the transition is either correct or not.
 
-Notes: 
+Notes:
 In the end the backer performing the `validate_block` knows that the transition is either correct or not. Actually what even can cause it to fail?
 
 ---
-
 
 ### Backing - PVF failure
 
@@ -399,6 +403,7 @@ The biggest one that we are concerned about is point 2. We need to make sure tha
 ---
 
 ## 2. Backing - Statements
+
 <pba-flex center>
 
 - Receive collation
@@ -413,8 +418,8 @@ Once backers verify that the parablock is correct they create and sign their bac
 
 ---
 
-
 ## 2. Backing - Skin in the Game
+
 <pba-flex center>
 
 - The main goal of backing is to provide "skin in the game".
@@ -444,8 +449,7 @@ Once a certain threshold of backers (3 of 5 in Polkadot) in the group approves t
 # 3. Availability
 
 Notes:
-Backers accepted the responsibility for the parablock but now there's some more work to be done. 
-
+Backers accepted the responsibility for the parablock but now there's some more work to be done.
 
 ---
 
@@ -457,6 +461,7 @@ Notes:
 For the parablock to proceed in its lifecycle at one point or another others will need to verify it. To do it they need to have the necessary data. And that's where data availability comes in. Backers need to ensure that the data is available to the entire network. Naively this could be done by making it so everyone just downloads the whole thing but that is yet again... not scalable. So we need to do something else. Let's go on a small detour about erasure coding.
 
 ---
+
 ## 3. Availability - Erasure Coding
 
 <img rounded style="width: 450px" src="../assets/line.drawio.svg" />
@@ -465,6 +470,7 @@ Notes:
 That's a line. If we have those two red points everyone agrees that there is only 1 specific line we can draw through those. Line is a 1st degree polynomial.
 
 ---
+
 ## 3. Availability - Erasure Coding
 
 <img rounded style="width: 450px" src="../assets/poly-2nd.drawio.svg" />
@@ -473,6 +479,7 @@ Notes:
 Interesting property thats a quadratic polynomial. So a second degree. We need exactly 3 points to be able to draw it exactly.
 
 ---
+
 ## 3. Availability - Erasure Coding
 
 <img rounded style="width: 450px" src="../assets/poly-3rd.drawio.svg" />
@@ -486,11 +493,10 @@ You might start seeing a pattern but that's a 3rd degree polynomial, we need exa
 
 <img rounded style="width: 450px" src="../assets/line-redundant.drawio.svg" />
 
-Notes: 
+Notes:
 Now let's go back to the nice and simple line. What if the gave us 3 points from the line? We can remove any one of them and we are still able to draw the line. That's a nice property.
 
 Imagine you have 3 friends. Each remembers a single point from the line. But remembering the whole line is to difficult for any of you. If any of you goes missing you can still recreate the line by combining the other two points and remembering a point is much easier than a line.
-
 
 ---
 
@@ -507,7 +513,7 @@ Of course if two of your friends go missing we have a problem. We can no longer 
 
 - Represent the data as a high degree polynomial (very curvy curve)
 - Each validator is responsible for one point (small availability chunk)
-- Distribute more points than needed 
+- Distribute more points than needed
 - As long as enough of these points remain recoverable from validators we can recover the data
 
 Notes:
@@ -537,7 +543,7 @@ Inclusion happens on an individual core so we can have a single candidate includ
 
 > Only valid parachain blocks will become finalized.
 
-Notes: 
+Notes:
 This is imperative. It can very much be possible for included blocks to be malicious or full of invalid transactions, but from that point on we finished setting up the stage and we need to do the final checks. And that's where approval checking comes in.
 
 ---
@@ -582,7 +588,7 @@ The whole approval checking process is simply started whenever we spot some incl
 
 ## 4. Approval Checking - Assignment (simplified)
 
-- Imagine you use a VRF to randomize a number between 0 and 100. 
+- Imagine you use a VRF to randomize a number between 0 and 100.
 - The number you get is for how much you should wait before doing the check yourself.
 - Others don't know what number you got.
 
@@ -612,7 +618,7 @@ but over time more and more people start checking because higher and higher numb
 
 ---
 
-## 4. Approval Checking - Threshold 
+## 4. Approval Checking - Threshold
 
 - Validators starting with the lowest numbers (in the lowest tranches) start validating the parablock.
 - Gradually higher and higher numbers start revealing themselves continuing the process.
@@ -623,7 +629,7 @@ The protocol is parametrised to such a way that we require around 30 checks made
 
 ---
 
-## 4. Approval Checking - Invalidity 
+## 4. Approval Checking - Invalidity
 
 - Validators starting with the lowest numbers (in the lowest tranches) start validating the parablock.
 - Gradually higher and higher numbers start revealing themselves continuing the process.
@@ -633,11 +639,11 @@ The protocol is parametrised to such a way that we require around 30 checks made
 Notes:
 So this is the moment we've been building up to all this time. If at least one node out of those 30 is honest then at this point if we have an invalid block it is time to raise the alarm. It is time to escalate the problem. The node will send a special statement called a dispute statement and that will cause the issue to be escalated. We'll cover the consequences of that in the next step.
 
-Also for those wondering what are the chances that all 30 are malicious it's 1/3^30 which is around 1 in 205 trillions. 
+Also for those wondering what are the chances that all 30 are malicious it's 1/3^30 which is around 1 in 205 trillions.
 
 ---
 
-## 4. Approval Checking - No-Shows 
+## 4. Approval Checking - No-Shows
 
 - Validators starting with the lowest numbers (in the lowest tranches) start validating the parablock.
 - Gradually higher and higher numbers start revealing themselves continuing the process.
@@ -655,7 +661,7 @@ Malicious attackers can try and eliminate good guys so that they get the first 3
 <img rounded style="width: 700px" src="../assets/lernaean-hydra.jpg" />
 
 Notes:
-Fighting DoS should be like fighting a hydra. Even if you eliminate a few honest nodes even more will raise in their place. 2/3 * 3 gives us 2 extra honest nodes per one no-show.
+Fighting DoS should be like fighting a hydra. Even if you eliminate a few honest nodes even more will raise in their place. 2/3 \* 3 gives us 2 extra honest nodes per one no-show.
 
 ---
 
@@ -664,7 +670,7 @@ Fighting DoS should be like fighting a hydra. Even if you eliminate a few honest
 <img rounded style="width: 1300px" src="../assets/approval_flow.svg" />
 
 Notes:
-This is a flow chart from the perspective of an individual approval checker. First once we notice inclusion we generate the assignment. Then we wait for our turn but if the parablock got approved before that we call it a day, we locally mark it as approved for us and finish the process. 
+This is a flow chart from the perspective of an individual approval checker. First once we notice inclusion we generate the assignment. Then we wait for our turn but if the parablock got approved before that we call it a day, we locally mark it as approved for us and finish the process.
 In case our voice is still needed we reveal our assignment, recover data, do checks and send our statement. If we don't like the block we start a dispute with a dispute statement.
 
 Interesting this state machine either outputs or stalls. In case of stalling it might be because there is a dispute started in the dispute coordinator subsystem.
@@ -674,7 +680,7 @@ Interesting this state machine either outputs or stalls. In case of stalling it 
 # 5. Disputes
 
 Notes:
-Disputes are the last step of the protocol. They are the last resort to ensure security. This is the part of the protocol that is definitely not on the happy path, that's the path of war. Disputes is the logic that if written correctly should never ever trigger, because the incentives will be stacked against the attackers so much that why even bother attacking. 
+Disputes are the last step of the protocol. They are the last resort to ensure security. This is the part of the protocol that is definitely not on the happy path, that's the path of war. Disputes is the logic that if written correctly should never ever trigger, because the incentives will be stacked against the attackers so much that why even bother attacking.
 
 ---
 
@@ -710,7 +716,7 @@ When a dispute is initiated it means that we have two validators with opposing s
 > In Polkadot disputes break execution sharding. They temporarily sacrifice scalability to ensure security.
 
 Notes:
-Disputes are very inefficient but they are the ultimate source of truth. We forego sharding to ask everyone for their opinion. Majority vote in our system should always reveal the truth because only a 1/3 can be malicious. 
+Disputes are very inefficient but they are the ultimate source of truth. We forego sharding to ask everyone for their opinion. Majority vote in our system should always reveal the truth because only a 1/3 can be malicious.
 
 ---
 
@@ -718,7 +724,7 @@ Disputes are very inefficient but they are the ultimate source of truth. We fore
 
 Dispute reaches a resolution when a supermajority of validators (2/3rds) agree on the validity of the parablock.
 
-The parablock was either valid or invalid. 
+The parablock was either valid or invalid.
 
 Notes:
 To be extra careful the dispute reaches its resolution only when we get to 2/3rds of the validators agreeing on the validity of the parablock. The parablock was either valid or invalid. This cannot fail. It's expensive to get this confirmation because everyone makes the checks but it reveals the truth. So now that we know it we need to make someone pay for it.
@@ -740,6 +746,7 @@ If the dispute says that the block was actually valid it means it was a false al
 ---
 
 ## Parachains Protocols
+
 <pba-flex center>
 
 1. **Collation**: Collect transactions.
@@ -764,7 +771,7 @@ It might be a time to maybe mention block authoring or production. The protocol 
 
 ## Block Production - BABE
 
-As of today we use BABE for block production. BABE is a block production protocol that is based on VRFs. 
+As of today we use BABE for block production. BABE is a block production protocol that is based on VRFs.
 
 Block producers when elected can author a single relay chain block and they can fill up that block with backed and available parablocks.
 
@@ -799,7 +806,7 @@ The authoring mechanism is also paired with a chain selection logic. This logic 
 # Block Finalization
 
 Notes:
-We technically could depend on probabilistic finality just like BTC does so assume that once enough blocks are built on top of a block it's final. Probabilistic finality is quite slow and somewhat annoying to reason about and it would be nice to get some proper guaranteed finality. 
+We technically could depend on probabilistic finality just like BTC does so assume that once enough blocks are built on top of a block it's final. Probabilistic finality is quite slow and somewhat annoying to reason about and it would be nice to get some proper guaranteed finality.
 
 ---
 
@@ -949,4 +956,3 @@ Orchestra ensures that the message to the other subsystem only arrives after it 
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
-
