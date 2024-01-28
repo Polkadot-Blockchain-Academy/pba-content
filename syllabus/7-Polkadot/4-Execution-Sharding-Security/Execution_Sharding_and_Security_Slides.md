@@ -265,6 +265,14 @@ Collators are **not** validators. They are parachain-specific nodes which produc
 Notes:
 Collators build parachain blocks and in this image they are the white circles around the outer edge. They are directly linked to specific parachains which are the lone pink squares. Those collators bundle transactions coming from the network and form them into parachain blocks. Those parachain blocks transition the state of the parachain. 
 
+
+---
+## 1. Collation - Collations
+
+<img style="width: 900px" src="../../../assets/img/7-Polkadot/parachain-validation-multiple.svg" />
+
+Notes:
+A a bit simpler way to represent it is like this. Here we have 3 parachains scheduled on 3 cores. Collators from each parachain provide a bundle of transactions. They also attack something called a PoV - Proof of Validity which will be crucial to ensure to validate those transactions later on.
 ---
 
 ## 1. Collation - Networking
@@ -290,7 +298,16 @@ Now we are at the next step. We just sent some collations to the validators in o
 Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators.
 
 Notes:
-Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators. That is the group we created in the assignment step. The few validators or backers (3 on the image) receive a bunch of parachain blocks / parablocks / collations / candidates (all the same thing). Backers are first point of contact to the outside world.
+Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators. That is the group we created in the assignment step. The few validators or backers (3 on the image) receive a bunch of parachain blocks / parablocks / collations / candidates (all the same thing). 
+
+---
+
+## 2. Backing - Backers
+
+<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple-zoom.png" />
+
+Notes:
+We can zoom in on a specific backing group. Here we cna see that backers are first point of contact to the outside world. They are the like club bouncers for the relay chain.
 
 ---
 
@@ -299,7 +316,7 @@ Validators in the backing group are often called backers for those parablocks th
 The backers receiving collations need to perform some initial checks to ensure their validity. 
 
 Notes:
-The backers receiving collations need to perform some initial checks to ensure their validity. They simply trust random data blobs coming from the external nodes. And to perform those checks we need to learn a bit about the PVF.
+But for them to do their job correctly backers after receiving collations need to perform some initial checks to ensure their validity. They simply cannot trust random data blobs coming from the external nodes. And to perform those checks we need to learn a bit about the PVF.
 
 ---
 
@@ -307,12 +324,21 @@ The backers receiving collations need to perform some initial checks to ensure t
 
 <img rounded style="width: 1000px" src="../assets/runtime_validation_2.svg" />
 
-> **Parachain Validation Function** (PVF) is a function which takes in the current parachain state, the promised parachain state, and the parachain state transition arguments. It re-executes the parachain logic using the arguments on the current state and checks if it matches the promised state. If it does, the parachain block is valid.
+> **Parachain Validation Function** (PVF) is a function which takes in the current parachain state (PoV), the promised parachain state, and the parachain state transition arguments. It re-executes the parachain logic/runtime/STF using the arguments on the current state and checks if it matches the promised state. If it does, the parachain block is valid.
 
 
 Notes:
 Read definition.
 PVF reruns the STF in a sandbox environment to test its outputs.
+
+---
+
+## 2. Backing - PVF reminder
+
+<img style="width: 1200px" src="../../../assets/img/7-Polkadot/parachain-validation.svg" />
+
+Notes:
+Just as a reminder this is nothing new. It is the same mechanism covered in the shared security lecture. The wasm blobs are our STFs and to check we rerun the transition and match the state.
 
 ---
 
@@ -334,7 +360,7 @@ fn validate_block(parent: HeadData, relay_parent: RelayChainHash, pov: Vec<u8>)
 ```
 
 Notes:
-That's a slightly simplified code example of how it might look. The validator has access to the parachain Wasm blob which is the parachain state transition logic. They also have the current state as pointed to by the parent HeadData. We only need to provide the transactions and the new state and both of those are located in the PoV variable - Proof of Validity.
+That's a slightly simplified code example of how it might look. The validator has access to the parachain Wasm blob which is the parachain state transition logic. They also have the current state as pointed to by the parent HeadData. We only need to provide the transactions, details about the old state (merkle proof) and the new state root and both of those are located in the PoV variable - Proof of Validity.
 
 PoV contains the elements necessary for the state transition and the resulting state so it's something the validator can easily check if it's correct or not.
 
