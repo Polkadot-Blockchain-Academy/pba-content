@@ -822,8 +822,8 @@ const from = keyring.addFromUri("//Alice");
 const unsub = await api.tx.balances.transfer(BOB, 12345).signAndSend(from, { signer }, result => {
   console.log(`Current status is ${result.status}`);
 
-  if (result.status.isInBlock) {
-    console.log(`Transaction included at blockHash ${result.status.InBlock}`);
+  if (result.status.inBlock) {
+    console.log(`Transaction included at blockHash ${result.status.inBlock}`);
   } else if (result.status.isFinalized) {
     console.log(`Transaction finalized at blockHash ${result.status.isFinalized}`);
     unsub();
