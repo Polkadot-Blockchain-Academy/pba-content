@@ -172,10 +172,15 @@ Additionally, if the size of a value is particularly large, it is replaced with 
 
 ## Hash Trie
 
-- Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.
-- Solution: pre-hash the data before inserting it to make keys random.
-- _Resistance against partial collision is important._
-- Could be a Merkle trie or regular.
+- Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Solution: pre-hash the data before inserting it to make keys random.<!-- .element: class="fragment" data-fragment-index="2" -->
+- Resistance against partial collision is important.<!-- .element: class="fragment" data-fragment-index="3" -->
+- Could be a Merkle trie or regular.<!-- .element: class="fragment" data-fragment-index="4" -->
+
+Notes:
+
+- Q: Why would pre-hashing the data make the keys random? A: Because each piece of data should be unique! it is a good selection scheme.
+  Talk about how to determine keys in bitcoin state tree
 
 ---
 
@@ -188,8 +193,12 @@ What radix $r$ is best?
 
 ...but:
 
-- Higher branching at high levels of the tree can give smaller batch proofs.
-- For storage, it is best to read consecutive data so high $r$ is better.
+- Higher branching at high levels of the tree can give smaller batch proofs. <!-- .element: class="fragment" data-fragment-index="0" -->
+- For storage, it is best to read consecutive data so high $r$ is better. <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Notes:
+Q: Why would higher branching at high levels of the tree give smaller batch proofs?
+A: Less nodes are needed in order to prove various parts of the tree
 
 ---
 
@@ -226,6 +235,13 @@ Notes:
 
 - Not as balanced as a binary tree but close
 - Can update the peak nodes alone on-chain
+
+Applications:
+
+- Stateless Client can very efficiently prove the end parts of the tree allowing for a client which doesnt need to store the whole blockchain just a few latest nodes.
+- Look at the structure if each leaf is a block then if previous stuff is pruned that is fine because you still carry around the hash or peak of a selection of blocks
+- Lightclients, efficiently see whether a transaction is included in a block without needing the entire the entire blockchain history
+  We use this in polkadot for our bridging!!
 
 ---
 
