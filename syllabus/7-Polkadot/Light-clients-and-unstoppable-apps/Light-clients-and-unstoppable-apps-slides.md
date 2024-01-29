@@ -786,6 +786,15 @@ console.log('Please visit: https://cloudflare-ipfs.com/ipns/dotapps.io/?rpc=ws%3
 <p class="inline-table">
   <img src="./img/code.jpg" />
 </p>
+
+---
+
+<img src="./img/Lc1.png" />
+
+---v
+
+<img src="./img/Lc2.png" />
+
 ---
 
 #### Known vulnerabilities
