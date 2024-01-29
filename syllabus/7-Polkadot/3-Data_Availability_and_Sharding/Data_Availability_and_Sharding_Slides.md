@@ -1,7 +1,7 @@
 ---
 title: Data Availability and Sharding
 description: Data Availability Problem, Erasure coding, Data sharding.
-duration: 30-45 mins
+duration: 1h
 ---
 
 # Data Availability and Sharding
@@ -12,86 +12,158 @@ duration: 30-45 mins
 
 <pba-flex center>
 
-1. [Data Availability Problem](#data-availability-problem)
-1. [Erasure coding](#erasure-coding)
-1. [Data Availability Sampling](#data-availability-sampling)
+1. [Data Availability Problem](#what-data-needs-availability)
+1. [Polkadot's Data Availability Solution](#polkadots-data-availability-solution)
+1. [Erasure coding](#erasure-coding-revisited)
+1. [Ongoing Work](#ongoing-work)
 1. [References](#references)
 
 </pba-flex>
 
 ---
 
+## What Data Needs Availability?
+
+<pba-flex center>
+
+Sharded Permanent Record: **Parachains!**
+
+Condensed Permanent Record: **Relay Chain!**
+
+Comprehensive 24 Hour Record: **Polkadot DA!**
+
+</pba-flex>
+
+Notes:
+- Most data live solely on parachains
+- Condensed data, hashes and commitments, stored on relay chain
+- DA secures heavy (MBs) information critical to the secure progression of parachains. Should be dropped from validators when old.
+
+---
+
 ## Data Availability Problem
 
-How do we ensure a piece of data is retrievable without storing it on every single node forever?
+How do we ensure a piece of data is retrievable without storing it on every single node forever (on-chain)?
 
-Incorrectness can be proven (fraud proofs), but unavailability can't.
+Incorrectness can be proven (merkle proofs), but unavailability can't.
 
----v
+Notes:
+- You can't just hold a small number of nodes accountable for making some data available
+- Needs an off chain solution! 
+    - All other data added to relay chain per day: ~555M
+    - 40 PoVs per block for a day: ~72G
+
+---
 
 ### Data Availability Problem: Parachains
 
-Imagine a parachain collator produces a block, but only sends it to relay chain validators to verify.
+<div class="r-stack">
+<img src="../../../assets/img/7-Polkadot/Data_Availability/DA_Parachains_1.svg" style="width: 70%" />
+<img src="../../../assets/img/7-Polkadot/Data_Availability/DA_Parachains_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
 
-What could such a collator do?
+Notes:
 
-<pba-flex center>
-
+Block producers withholding blocks can:
 - Prevent nodes and users from learning the parachain state
 - Prevent other collators from being able to create blocks
 
-</pba-flex>
+Solution: 
+- Validators keep enough info for collators to reconstruct recent parachain blocks
 
-We want other collators to be able to reconstruct the block from the relay chain.
-
----v
+---
 
 ### Data Availability Problem: Relay Chain
 
-If that block's PoV is only stored by a few validators, what if they go offline or rogue?
+<img src="../../../assets/img/7-Polkadot/Data_Availability/DA_Relay_1.svg" style="width: 70%" />
+
+Notes:
+- Malicious backers could distribute invalid PoV to only malicious approval checkers
+- Really bad
+- It means attackers could consistently finalize invalid parachain blocks with ~40 dishonest approval checkers
+
+---
+
+### Data Availability Problem: Relay Chain
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/DA_Relay_2.svg" style="width: 70%" />
+
+Notes:
+- With honest DA layer, selective distribution isn't possible
+
+---
+
+## Polkadot's Data Availability Solution
+
+---
+
+### Design Considerations
 
 <pba-flex center>
 
-- Honest approval-checkers are not able to verify validity
+1. Avoid storing full PoV in each validator 
+1. Avoid fragility, where misbehavior can compromise PoV retrieval
+<!-- .element: class="fragment" data-fragment-index="1" -->
+1. Need cryptographic scheme to prove availability before approvals start
+<!-- .element: class="fragment" data-fragment-index="2" -->
+1. Need a way to verify retrieved PoV integrity
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
 Notes:
-
-This is really bad.
-It means we could finalize an invalid parachain block.
-
----
-
-## Problem
-
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/comic.png" />
-
-Notes:
-
-I really like this comic from the paradigm article about Data Availability Sampling. But it works for our case as well with data sharding.
+- Passing full PoV copies to a large fraction of validators would work, but we can do much better!
+- Misbehavior up to 1/3 should be accomodated to match threat model
 
 ---
 
-## Erasure coding
+### Laying the Foundation: Execution Cores
 
-The goal:
+<pba-cols>
+<pba-col center>
+
+- Minimal unit of Polkadot execution scheduling
+- At most 1 candidate pending availability per relay block, per core
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Considered "occupied" while a candidate paired with that core is pending availability
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- It saves resources to bundle signals about availability for all cores together
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-col>
+<pba-col center>
+
+<img src="../../../assets/img/5-Polkadot/Availability_Cores_Deep_Dive/Processor_Cores.jpeg" style="width: 100%" />
+
+</pba-col>
+</pba-cols>
+
+---
+
+### Laying the Foundation: Erasure Coding
+
+The goal: Avoid storing full PoV in each validator 
 
 <pba-flex center>
 
-- Encode data of K chunks into a larger encoded data of N chunks
+- Encode data of K chunks into a larger code word of N chunks
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - Any K-subset of N chunks can be used to recover the data
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
 <img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/erasure-coding-1.png" />
 
----v
+Notes:
+- Erasure coding allows storing only 3x PoV size vs 334x for 1000 validators
+
+---
 
 ### In code
 
 ```rust
-
 type Data = Vec<u8>;
 
 pub struct Chunk {
@@ -108,71 +180,161 @@ pub fn reconstruct(_chunks: impl Iterator<Item = Chunk>) -> Result<Data, Error> 
 }
 ```
 
+Notes:
+- Opaque data and chunks
+- encode: data -> chunks
+- reconstruct: chunks -> data
+
 ---
 
-### Polynomials
+### Polkadot Data Availability Overview
 
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/line.svg" />
+<pba-flex center>
 
----v
+- Each PoV is divided into $N_{validator}$ chunks
+- Validator with index i gets a chunk with the same index
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Validators sign statements when they receive their chunk
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Once we have $\frac{2}{3} + 1$ of signed statements,<br/>PoV is considered available
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Any subset of $\frac{1}{3} + 1$ of chunks can recover the data
+<!-- .element: class="fragment" data-fragment-index="4" -->
+- When PoV is later retrieved by approvers,<br/>chunk validity is verified using a merkle proof
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
-### Polynomials: Line
+</pba-flex>
 
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/line-extra.svg" />
+Notes:
+How are our design goals satisfied by this approach?
+- Minimizes total storage 
+- Maintains 1/3 + 1 security model
+- Proves availability with signed statements
+- PoV integrity guaranteed by integrity of individual chunks
 
----v
+---
 
-### Even More Polynomials
+### Availability Distribution
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/bitfield-chunk-req.svg" style="width: 40%" />
+
+Notes:
+- Validator i sees backing statements on chain and requests chunk i for each PoV from its associated backer
+- Backers respond with chunks, or availability times out
+
+---
+
+### Availability Statement Format: Bitfields
+
+One structure to sign them all!
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/availability-gossip.svg" style="width: 70%" />
+
+Notes:
+- Number of bits equivalent to the number of `AvailabilityCore`s
+- Bit `i` represents one validator's report as to whether it has its chunk of the PoV occupying core `i`
+- Condenses a validator's perspective into a minimal structure to be signed and gossiped
+- Submitted on-chain by block producers
+
+---
+
+### Availability On-Chain
+
+<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/availability-bitfields.png" />
+
+Notes:
+- These statements are gossiped off-chain and included in a block in a ParachainsInherent.
+- Why does availability threshold tallying need to occur on-chain?
+
+---
+
+### Availability Thresholds Visualized
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/relay-block-construction-I.svg" style="width: 60%"/>
+
+Notes:
+- Validator Y is producing a block
+- Statements from validators a, f, g, and b determine availability for blocks occupying 5 cores
+- Candidates 0, 3, and 4 are marked as included. Approvals start. Cores are freed to repeat process.
+
+What is wrong with this diagram?
+
+---
+
+### PoV Chunk Validation
+
+What happens if there's a bad chunk in the reconstructed PoV?
+
+Solution: Merkle proofs!
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pba-flex center>
+
+- PoV chunks form branches of a merkle tree
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Proof distributed with each chunk
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Chunks checked against erasure_root from CandidateReceipt
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+Notes:
+- Corrupted PoV -> PVF failure not attributable to backers
+- Can lead to punishment of innocent parties in disputes
+
+---
+
+## Erasure Coding Revisited
+
+<pba-flex center>
+
+- Encode data of K chunks into a larger code word of N chunks
+- Any K-subset of N chunks can be used to recover the data
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+</pba-flex>
+
+<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/erasure-coding-1.png" />
+
+<br>
+
+EX: Lagrange Interpolation
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Notes:
+- Polkadot uses: Fast fourier transform (FFT) based Reed-Solomon algorithm (https://github.com/paritytech/reed-solomon-novelpoly)
+- Better visually intuitive example: Lagrange interpolation 
+
+---
+
+### Lagrange Interpolating Polynomial
+
+For any number $n$ of points $(x_i,y_i)$ there exists only one polynomial of degree $n-1$ such that $p(x_i) = y_i$ for all $i$
 
 <img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/polynomial-2.png" />
 
----v
-
-### Polynomial we need
-
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" />
-
-We want to have a polynomial, such that:
-
-$$ p(x_i) = y_i$$
-
 Notes:
 
-Question: what is x_i and y_i wrt to our data?
+Question: What are $x_i$ and $y_i$ wrt to our data?
 
 ---
 
-### Lagrange interpolating polynomial
+### Interpolation for Data Recovery
 
-<!-- prettier-ignore -->
-$$ \ell_j(x) = \frac{(x-x_0)}{(x_j-x_0)} \cdots \frac{(x-x_{j-1})}{(x_j-x_{j - 1})} \frac{(x-x_{j+1})}{(x_j-x_{j+1})} \cdots \frac{(x-x_k)}{(x_j-x_k)} $$
+<img rounded style="width: 80%" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" />
 
-<!-- prettier-ignore -->
-$$ L(x) = \sum_{j=0}^{k} y_j \ell_j(x) $$
+Notes:
+- We want that polynomial of degree n-1
+- We can obtain it using any n
 
 ---
 
-### Reed-Solomon codes
+### Summary: Reed-Solomon with Lagrange interpolation
 
-Congrats! You've just learned Reed-Solomon encoding (almost).
-
-Actual Reed-Solomon codes are defined over finite-fields.
-
-It can detect and correct combinations of errors and erasures.
-
-Notes:
-
-The simplest example of a finite field is arithmetic mod prime number.
-Computers are quite bad at division by prime numbers.
-Reed-Solomon codes are used in CDs, DVDs, QR codes and RAID 6.
-
----v
-
-### Reed-Solomon with Lagrange interpolation
-
-1. Divide the data into elements of size $P$ bits.
+1. Divide the data into chunks of size $P$ bits.
 1. Interpret the bytes as (big) numbers $\mod P$.
-1. Index of each element is $x_i$ and the element itself is $y_i$.
+1. Index of each chunk is $x_i$ and the chunk itself is $y_i$.
 1. Construct the interpolating polynomial $p(x)$ and evaluate it at additional $n - k$ points.
 1. The encoding is $(y_0, ..., y_{k-1}, p(k), ... p(n - 1))$ along with indices.
 
@@ -182,134 +344,67 @@ How do we do reconstruction?
 
 ---
 
-## Polkadot's Data Availability Protocol
+### Final Twist, Multiple Code Words
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_1.svg" style="width: 70%" />
+
+Notes:
+- Previously described Reed Solomon as if we are encoding the PoV into a single code word
+- Size limitations per code word -> many code words
+- Each code word encodes a small subset of the original data
+
+---
+
+### Final Twist, Multiple Code Words
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_2.svg" style="width: 70%" />
+
+Notes:
+- Previously described Reed Solomon as if we are encoding the PoV into a single code word
+- Size limitations per code word -> many code words
+- Each code word encodes a small subset of the original data
+
+---
+
+### Final Twist, Multiple Code Words
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_3.svg" style="width: 70%" />
+
+Notes:
+- Chunk i is actually composed of smaller chunks i for each code word in a PoV
+
+---
+
+### Ongoing Work
+
+Reed Solomon is costly, taking 14-20% of validator CPU time.
+
+**Obvious target for optimization!**
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <pba-flex center>
 
-- Each PoV is divided into $N_{validator}$ chunks
-- Validator with index i gets a chunk with the same index
-- Validators sign statements when they receive their chunk
-- Once we have $\frac{2}{3} + 1$ of signed statements,<br/>PoV is considered available
-- Any subset of $\frac{1}{3} + 1$ of chunks can recover the data
+- Systemic chunks recovery 
+<!-- .element: class="fragment" data-fragment-index="2" -->
+	- Removes need for decoding
+<!-- .element: class="fragment" data-fragment-index="2" -->
+	- Instead, re-encode to check chunk validity
+<!-- .element: class="fragment" data-fragment-index="2" -->
+	- ~50% CPU time improvement
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Compiler elision of array bounds checks + inlining
+<!-- .element: class="fragment" data-fragment-index="3" -->
+	- ~33-50% CPU time improvement depending on unsafe Rust use
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Better implemented Reed Solomon library (potential 10x improvement!)
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
 
 Notes:
-
-The total amount of data stored by all validators is PoV \* 3.
-With 5MB PoV and 1k validators, each validator only stores 15KB per PoV.
-With this protocol, we've killed two birds with one stone!
-
----
-
-### CandidateIncluded
-
-<img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/candidate-included.png" />
-
----
-
-### Availability Bitfields
-
-<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/availability-bitfields.png" />
-
-Notes:
-
-Each validator actually signs a statement per relay chain block, not per PoV to reduce the number of signatures.
-These statements are gossiped off-chain and included in a block in a ParachainsInherent.
-
----
-
-### Challenge 1
-
-How does a validator know if a chunk corresponds to the committed data?
-
-<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/merkel.JPG" />
-
----v
-
-### Not that Merkle!
-
-<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/Ralph_Merkle.png" />
-
----
-
-### Challenge 2
-
-How do we know if what can be reconstructed from chunks is the same data that was encoded with Reed-Solomon?
-
-<pba-flex center>
-
-- Polkadot uses approval-voting/disputes mechanism for that
-- Celestia uses Fraud Proofs
-- Danksharding uses KZG commitments
-
-</pba-flex>
-
----
-
-## Data Availability Sampling
-
-Ethereum (Danksharding) and Celestia adopt an approach of Data Availability Sampling, where each light client makes its own judgement of availability by sampling and distributing a few random chunks.
-
-This can eliminate honest majority assumption!
-
-This approach guarantees there's at least one honest full nodes that has the data with high probability.
-
-<br/>
-
-> https://arxiv.org/abs/1809.09044
-
----
-
-## Safety of Polkadot's protocol
-
-If we have at most $f$ out of $3f + 1$ malicious + offline validators, then if the data is marked as available, it **can** be recovered.
-
-What if that assumption is broken?
-
-If $2f + 1$ are malicious, every PoS is doomed anyway.
-
-Notes:
-
-We'll see in the next lesson, how approval-voting can prevent unavailable blocks from being finalized even with $>f$ malicious nodes.
-
----
-
-## 2D Reed-Solomon Encoding
-
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/2d-reed-solomon.png" />
-
-Notes:
-
-The approach of 2D Reed-Solomon Encoding can reduce the size of
-a Fraud Proof used by Celestia.
-But it adds an overhead computationally and on the amount of data stored.
-
----
-
-## Comparison with other approaches
-
-- Both Danksharding and Celestia use 2D encoding and DAS
-- Celestia doesn't implement data sharding
-- Data availability is only part of ensuring validity
-- Polkadot's DA is able to process dozens of MB per second
-
-Notes:
-
-Danksharding is aiming at 1.3 MB/s and Celestia < 1 MB/s.
-
----
-
-## Ideas to Explore
-
-<pba-flex center>
-
-- Data Availability Sampling for parachain<br/>light clients and full nodes
-- Consider using KZG commitments
-- Reducing the number of signatures to verify
-- A Data Availability Parachain
-
-</pba-flex>
+Systemic chunks recovery RFC: https://github.com/alindima/RFCs/blob/av-chunk-indices/text/0047-assignment-of-availability-chunks.md
+ 
+Better implemented Reed Solomon: https://github.com/paritytech/reed-solomon-novelpoly/issues/40 
 
 ---
 
@@ -319,21 +414,7 @@ Danksharding is aiming at 1.3 MB/s and Celestia < 1 MB/s.
 
 ---
 
-### Bonus
-
-<pba-flex center>
-
-- Polkadot uses a field of size $2^{16}$ with efficient arithmetic
-- Polkadot uses an FFT-based Reed-Solomon algorithm (no Lagrange)
-
-</pba-flex>
-
-> https://github.com/paritytech/reed-solomon-novelpoly
-
----
-
 ## References
 
 1. https://www.youtube.com/watch?v=1pQJkt7-R4Q
-1. https://notes.ethereum.org/@vbuterin/proto_danksharding_faq
-1. https://www.paradigm.xyz/2022/08/das
+1. https://github.com/alindima/RFCs/blob/av-chunk-indices/text/0047-assignment-of-availability-chunks.md
