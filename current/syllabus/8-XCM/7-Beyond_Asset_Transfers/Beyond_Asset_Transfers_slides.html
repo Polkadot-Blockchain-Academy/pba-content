@@ -38,7 +38,7 @@
 1. Pre-requisites
 1. XCMultisig
 1. XCM Universal Interface
-1. General XCM Tips
+1. XCM NFT Origins
 1. Conclusion
 1. Next Steps
 1. References
@@ -76,13 +76,15 @@ state Polkadot {
         v0: Multisig ID 0
         sxc: Send XCM Call
         vacc: 0x123...
+        ixc: **XCM Converters**
 
         state if_state <<choice>>
         v0 --> if_state
 
         if_state --> sxc
-        if_state --> vacc
+        if_state --> ixc
 
+        ixc --> vacc
         vacc --> [*]: Transact
 
 
@@ -134,19 +136,23 @@ state Polkadot {
 
 To better understand how this all works, let's go over the messages being sent and their origins.
 
-```rust [0|1-13|15-33|35|37-53|55|57-75]
+```rust [1-17|19-37|39|41-57|59|61-79]
 let multisig: MultiLocation = MultiLocation {
   parents: 1,
   interior: Junctions::X3(
     Junction::Parachain(<T as pallet::Config>::ParaId::get()),
-    Junction::PalletInstance(<T as pallet::Config>::INV4PalletIndex::get()),
-    Junction::GeneralIndex(0u128),
+    Junction::Plurality {
+      id: BodyId::Index(0),
+      part: BodyPart::Voice,
+    },
   ),
 };
 
-let multisig_interior = Junctions::X2(
-  Junction::PalletInstance(<T as pallet::Config>::INV4PalletIndex::get()),
-  Junction::GeneralIndex(0u128),
+let multisig_interior = Junctions::X1(
+  Junction::Plurality {
+    id: BodyId::Index(0),
+    part: BodyPart::Voice,
+  }
 );
 
 let destination = MultiLocation {
@@ -217,38 +223,51 @@ MultiLocation {
 
 Now that we understand the origin and message structure, let's take a look at those _XCM Converters_!
 
-<diagram class="mermaid">
-stateDiagram-v2
-  direction LR
+```rust [1-8|10-25|27-35|37-42]
+pub struct HashedDescription<AccountId, Describe>(PhantomData<(AccountId, Describe)>);
+impl<AccountId: From<[u8; 32]> + Clone, Describe: DescribeLocation> ConvertLocation<AccountId>
+	for HashedDescription<AccountId, Describe>
+{
+	fn convert_location(value: &Location) -> Option<AccountId> {
+		Some(blake2_256(&Describe::describe_location(value)?).into())
+	}
+}
 
-    para: Parachain 2125
-    pal: Pallet 51
-    m: Mulisig ID 0
-    acc: 0x123...
+pub struct DescribeFamily<DescribeInterior>(PhantomData<DescribeInterior>);
+impl<Suffix: DescribeLocation> DescribeLocation for DescribeFamily<Suffix> {
+	fn describe_location(l: &Location) -> Option<Vec<u8>> {
+		match (l.parent_count(), l.first_interior()) {
+      [...]
+			(1, Some(Parachain(index))) => {
+				let tail_junctions = l.interior().clone().split_first().0;
+				let tail = Location::new(0, tail_junctions);
+				let interior = Suffix::describe_location(&tail)?;
+				Some((b"SiblingChain", Compact::<u32>::from(*index), interior).encode())
+			},
+      [...]
+			_ => return None,
+		}
+	}
+}
 
-    para --> if
-    pal --> if
-    m --> hash
+pub struct DescribeBodyTerminal;
+impl DescribeLocation for DescribeBodyTerminal {
+	fn describe_location(l: &Location) -> Option<Vec<u8>> {
+		match l.unpack() {
+			(0, [Plurality { id, part }]) => Some((b"Body", id, part).encode()),
+			_ => return None,
+		}
+	}
+}
 
-      state Checks {
-        if: Parachain == 2125 && Pallet == 51
-        if --> [*]: No Match
-        if --> Hasher: Match
-      }
-
-      state Hasher {
-        cs: Constant Salt
-
-        cs --> hash
-      }
-
-    hash --> acc
-
-</diagram>
-
-<aside class="notes"><p>The reason for the custom hasher is to replicate the account generation in the origin chain.
-The combination of these checks and the hasher makes up the converters that return AccountIds and native Origins for our MultiLocation.</p>
-</aside></script></section><section data-markdown><script type="text/template">
+// Our resulting location description before hashing
+(
+  b"SiblingChain",
+  Compact::<u32>::from(para_id),
+  (b"Body", BodyId::Index(multisig_id), BodyPart::Voice).encode()
+).encode()
+```
+</script></section><section data-markdown><script type="text/template">
 ### What happens if we map AccountId origins to the exact accounts within?
 
 ## Account Impersonation!
@@ -262,9 +281,7 @@ Hey Chain B, I'm sending you a balance transfer request from one of my users, th
 # TRUST!
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
-
-<aside class="notes"><p>Emphatically explain this!</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</script></section></section><section ><section data-markdown><script type="text/template">
 ## XCM Universal Interface
 
 XCM can be used as a general API abstraction on top of multiple blockchains.
@@ -336,7 +353,7 @@ MultiAsset {
         // Pallet ID so we know which pallet we should be using to look up the NFT
         Junction::PalletInstance(pallet_id),
         // General Index to select a specific collection by integer id
-        // Or GeneralKev to select a specific collection bv it's contract id
+        // Or GeneralKey to select a specific collection bv it's contract id
         Junction::GeneralIndex(collection_id) or Junction::GeneralKey(contract_address),
       )
     }
@@ -403,97 +420,62 @@ impl xcm_executor::Config for XcmConfig {
 }
 ```
 </script></section></section><section ><section data-markdown><script type="text/template">
-## General XCM Tips
+## XCM NFT Origins
 
-In this section we will go over some general tips on how to build with XCM.
+It is possible to use XCM to bridge non-fungibles, but if all you need is to authenticate ownership of an NFT from a smart contract chain to operate in another chain, you can skip bridging altogether.
 </script></section><section data-markdown><script type="text/template">
-### MultiLocations & MultiAssets
+### How?
 
-Deciding how to map MultiLocations to entities in your runtime is very important, as these MultiLocations will end up being used across other XCM-connected chains.
+<diagram class="mermaid">
+stateDiagram-v2
+state Polkadot {
+    alice: Alice
 
-```rust [1-4|6-8|10-11|13-14|16-17|19-24|26-32]
-// Main runtime token
-Junctions::X1(Parachain(para_id));
-Junctions::X2(Parachain(para_id), GeneralIndex(main_token_id));
-Junctions::X2(Parachain(para_id), PalletInstance(balances_pallet_id));
+    alice --> nvc: Transact on InvArch as NFT 0 from collection 0x234
 
-// Other tokens
-Junctions::X2(Parachain(para_id), GeneralIndex(token_id));
-Junctions::X3(Parachain(para_id), PalletInstance(tokens_pallet_id), GeneralIndex(token_id));
+    state Astar {
+        nvc: NFT Verifier Contract 0x123
+        ncc: NFT Collection Contract 0x234
 
-// Runtime protocols (i.e. Treasury or it's account)
-Junctions::X2(Parachain(para_id), PalletInstance(treasury_pallet_id));
+        nvc --> ncc: Does Alice own NFT 0?
+        ncc --> nvc: Yes
 
-// Wasm smart contracts
-Junctions::X3(Parachain(para_id), PalletInstance(contracts_pallet_id), AccountId32(wasm_contract_account));
+        nvc --> nxc: **XCM Location**
+    }
 
-// EVM smart contracts
-Junctions::X3(Parachain(para_id), PalletInstance(evm_pallet_id), AccountKey20(evm_contract_account));
+    state InvArch {
+        nxc: NFT Origin XCM Converter
+        vcr: Verifier Contract Registry
+        pallets: Pallets that accept NFT Origin
 
-// Wasm or EVM contracts
-Junctions::X3(
-  Parachain(para_id),
-  PalletInstance(contracts_pallet_id || evm_pallet_id),
-  AccountId32(wasm_contract_account) || AccountKey20(evm_contract_account),
-);
+        nxc --> vcr: Is 0x123 the registered verifier for Astar?
+        vcr --> nxc: Yes
+        nxc --> pallets: **NFT Origin**
+    }
 
-// NFTs
-MultiAsset {
-  // Match collection
-  id: Concrete(wasm_or_evm_multilocation || X2(Parachain(para_id), PalletInstance(nft_pallet_id))),
-  // Match item
-  fun: Fungibility::NonFungible(AssetInstance::Index(nft_id))
-};
-```
+}
+</diagram>
 </script></section><section data-markdown><script type="text/template">
-### Message Instructions
+### Mapping the location to an origin
 
-```rust [1-23|25-45]
-// Pay for execution fees and refund surplus
-Xcm(vec![
-  // Withdraw asset to use within this message, places the amount in the holding register.
-  Instruction::WithdrawAsset(fee_multiasset.into()),
-  // Pay for execution fees during this message.
-  Instruction::BuyExecution {
-    // The asset and amount we withdrew in the first instruction.
-    fees: fee_multiasset,
-    // Max amount of weight we are willing to buy.
-    weight_limit: WeightLimit::Unlimited,
-  },
-  // An instruction or set of instructions that will require payment of execution fees.
-  <Instruction that pays execution fee>,
-  // Refund unused purchased weight back to the holding register.
-  Instruction::RefundSurplus,
-  // Deposit assets from the holding register back into the balance of an account.
-  Instruction::DepositAsset {
-    // Match total amount of all assets in the holding register.
-    assets: MultiAssetFilter::Wild(WildMultiAsset::All),
-    // The receiver of the refunded fees, usually the origin that paid for the fees in the first place.
-    beneficiary: account_id_multilocation,
-  },
-]);
-
-// XCM assertions
-
-// Errors is described pallet does not exist in the runtime.
-ExpectPallet {
-  // Pallet index.
-  index: 21,
-  // Pallet name.
-  name: "Referenda".as_bytes().to_vec(),
-  // Name of the module.
-  module_name: "pallet_referenda".as_bytes().to_vec(),
-  // Major version of the crate.
-  crate_major: 4,
-  // Minimum minor version acceptable.
-  min_crate_minor: 0,
+```rust
+// **XCM Location**
+MultiLocation {
+  parents: 1,
+  interior: Junctions::X4(
+    Junction::Parachain(Astar),
+    Junction::GeneralKey(0x123),
+    Junction::GeneralKey(0x234),
+    Junction::GeneralIndex(0)
+  )
 }
 
-// Errors if described asset and amount are not present in the holding register.
-ExpectAsset(MultiAsset {
-	id: AssetId::Concrete(asset_multilocation),
-  fun: Fungibility::Fungible(1_000_000_000_000u128),
-})
+// **NFT Origin**
+Origin::Nft {
+  parachain: Astar,
+  collection: 0x1234,
+  nft: 0
+}
 ```
 </script></section></section><section  data-markdown><script type="text/template">
 ## Conclusion
