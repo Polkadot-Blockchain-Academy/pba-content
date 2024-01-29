@@ -12,11 +12,10 @@ duration: 30-45 mins
 
 <pba-flex center>
 
-1. [Availability vs Storage](#availability-vs-storage)
-1. [Data Availability Problem](#data-availability-problem)
-1. [Polkadot's Data Availability Solution](#polkadot's-data-availability-solution)
-1. [Erasure coding](#erasure-coding)
-1. [Further Work](#further-work)
+1. [Data Availability Problem](#what-data-needs-availability)
+1. [Polkadot's Data Availability Solution](#polkadots-data-availability-solution)
+1. [Erasure coding](#erasure-coding-revisited)
+1. [Ongoing Work](#ongoing-work)
 1. [References](#references)
 
 </pba-flex>
@@ -36,9 +35,9 @@ Comprehensive Short Term Record: **Polkadot DA!**
 </pba-flex>
 
 Notes:
-- Most data lives solely on parachains
+- Most data live solely on parachains
 - Condensed data, hashes and commitments, stored on relay chain
-- Information critical to the secure progression of parachains. Should be dropped from validators when old.
+- DA secures heavy (MBs) information critical to the secure progression of parachains. Should be dropped from validators when old.
 
 ---
 
@@ -184,7 +183,7 @@ pub fn reconstruct(_chunks: impl Iterator<Item = Chunk>) -> Result<Data, Error> 
 Notes:
 - Opaque data and chunks
 - encode: data -> chunks
-- decode: chunks -> data
+- reconstruct: chunks -> data
 
 ---
 
@@ -201,7 +200,7 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="3" -->
 - Any subset of $\frac{1}{3} + 1$ of chunks can recover the data
 <!-- .element: class="fragment" data-fragment-index="4" -->
-- When PoV is later retrieved by approvers,<br/>chunk validity is verified using merkle proof
+- When PoV is later retrieved by approvers,<br/>chunk validity is verified using a merkle proof
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
 </pba-flex>
@@ -226,6 +225,8 @@ Notes:
 ---
 
 ### Availability Statement Format: Bitfields
+
+One structure to sign them all!
 
 <img src="../../../assets/img/7-Polkadot/Data_Availability/availability-gossip.svg" style="width: 70%" />
 
@@ -315,13 +316,13 @@ For any number $n$ of points $(x_i,y_i)$ there exists only one polynomial of deg
 
 Notes:
 
-Question: What is x_i and y_i wrt to our data?
+Question: What are $x_i$ and $y_i$ wrt to our data?
 
 ---
 
 ### Interpolation for Data Recovery
 
-<img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" />
+<img rounded style="width: 80%" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" />
 
 Notes:
 - We want that polynomial of degree n-1
@@ -331,9 +332,9 @@ Notes:
 
 ### Summary: Reed-Solomon with Lagrange interpolation
 
-1. Divide the data into elements of size $P$ bits.
+1. Divide the data into chunks of size $P$ bits.
 1. Interpret the bytes as (big) numbers $\mod P$.
-1. Index of each element is $x_i$ and the element itself is $y_i$.
+1. Index of each chunk is $x_i$ and the chunk itself is $y_i$.
 1. Construct the interpolating polynomial $p(x)$ and evaluate it at additional $n - k$ points.
 1. The encoding is $(y_0, ..., y_{k-1}, p(k), ... p(n - 1))$ along with indices.
 
