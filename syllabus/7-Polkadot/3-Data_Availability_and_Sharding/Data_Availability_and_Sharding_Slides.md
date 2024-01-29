@@ -81,7 +81,7 @@ Solution:
 Notes:
 - Malicious backers could distribute invalid PoV to only malicious approval checkers
 - Really bad
-- It means attackers could consistently finalize invalid parachain blocks with ~40 dishonest approval checkers
+- It means attackers could consistently finalize invalid parachain blocks with just a hand full of dishonest approval checkers
 
 ---
 
@@ -206,11 +206,9 @@ Notes:
 </pba-flex>
 
 Notes:
-How are our design goals satisfied by this approach?
-- Minimizes total storage 
-- Maintains 1/3 + 1 security model
-- Proves availability with signed statements
-- PoV integrity guaranteed by integrity of individual chunks
+- PoV is K chunks from erasure coding slide
+- We store 3 K chunks, 3x PoV size among validators
+- We need 1/3 + 1 of those chunks to reassemble PoV
 
 ---
 
@@ -244,7 +242,7 @@ Notes:
 
 Notes:
 - These statements are gossiped off-chain and included in a block in a ParachainsInherent.
-- Why does availability threshold tallying need to occur on-chain?
+- Why do we need bitfields on-chain?
 
 ---
 
@@ -316,7 +314,7 @@ For any number $n$ of points $(x_i,y_i)$ there exists only one polynomial of deg
 
 Notes:
 
-Question: What are $x_i$ and $y_i$ wrt to our data?
+Question: What are x_i and y_i wrt to our data?
 
 ---
 
@@ -333,7 +331,7 @@ Notes:
 ### Summary: Reed-Solomon with Lagrange interpolation
 
 1. Divide the data into chunks of size $P$ bits.
-1. Interpret the bytes as (big) numbers $\mod P$.
+1. Interpret the chunks as (big) numbers $\mod P$.
 1. Index of each chunk is $x_i$ and the chunk itself is $y_i$.
 1. Construct the interpolating polynomial $p(x)$ and evaluate it at additional $n - k$ points.
 1. The encoding is $(y_0, ..., y_{k-1}, p(k), ... p(n - 1))$ along with indices.
@@ -372,6 +370,7 @@ Notes:
 
 Notes:
 - Chunk i is actually composed of smaller chunks i for each code word in a PoV
+- If we can reassemble the data from any one code word, then we can reassemble all of them
 
 ---
 
