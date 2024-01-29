@@ -12,6 +12,7 @@ duration: 30-45 mins
 
 <pba-flex center>
 
+1. [Availability vs Storage](#availability-vs-storage)
 1. [Data Availability Problem](#data-availability-problem)
 1. [Polkadot's Data Availability Solution](#polkadot's-data-availability-solution)
 1. [Erasure coding](#erasure-coding)
@@ -19,6 +20,25 @@ duration: 30-45 mins
 1. [References](#references)
 
 </pba-flex>
+
+---
+
+## What Data Needs Availability?
+
+<pba-flex center>
+
+Sharded Permanent Record: **Parachains!**
+
+Condensed Permanent Record: **Relay Chain!**
+
+Comprehensive Short Term Record: **Polkadot DA!**
+
+</pba-flex>
+
+Notes:
+- Most data lives solely on parachains
+- Condensed data, hashes and commitments, stored on relay chain
+- Information critical to the secure progression of parachains. Should be dropped from validators when old.
 
 ---
 
