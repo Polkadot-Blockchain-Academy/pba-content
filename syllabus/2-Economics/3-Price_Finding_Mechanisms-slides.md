@@ -249,6 +249,7 @@ TIP: use arrow chars in unicode for style: https://www.htmlsymbols.xyz/arrow-sym
   - If both bids are above $r$, the payment is the second-highest bid.
 
 Notes:
+
 - Selena is basically participating as a bidder bidding r
 
 ---
@@ -264,6 +265,7 @@ Notes:
 <img rounded style="width: 1400px;" src="./img/reserve-price.svg" />
 
 Notes:
+
 - Basically there are four cases equally likely. In one case she makes a loss, the other doesn't matter but in two cases she makes a gain.
 - The proof idea is that if $r=0.5$, half of the time one valuation is above it and the other is below it, and the reserve price increases the paying price.
   On the other hand, if both valuations are below $r$ then there is no sale, which decreases Selena's revenue, but this case only happens one quarter of the time.
@@ -637,7 +639,7 @@ Dynamic first-price auction with _random ending time._
 
 ---
 
-## Lumina Celestia 
+## Lumina Celestia
 
 <img rounded style="width:600px" src="./img/2.3-collection-preview.jpg" />
 

@@ -314,7 +314,6 @@ In the interrogation they both are offered the following:
     <img style="width: 1200px; margin: auto; display: block;" src="./img/2.2-PD-NE-4.png" />
 </div>
 
-
 ## Finding the NE
 
 <div style="text-align: center;">
@@ -718,8 +717,8 @@ Link will be distributed!
     <li class="fragment">Each strategy would play against every other strategy and against itself.</li>
 </ul>
 
-
 Notes:
+
 - Based on https://ve42.co/Axelrod1980a and https://www.youtube.com/watch?v=mScpHTIi-kM
 
 ---
@@ -749,8 +748,8 @@ Notes:
     </li>
 </ul>
 
-
 Notes:
+
 - This was rather big surprise, especially since dominant strategy is being nasty.
 - A lot of it is what we can observe in today's politics.
 

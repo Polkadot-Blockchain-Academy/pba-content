@@ -66,6 +66,7 @@ Notes:
 🤖$~~~$ 🤝 $~~~$👪
 
 Notes:
+
 - Cryptography would be meaningless without humans using it.
 - They have a great symphony: where cryptography's has boundaries, economics offers solutions and vice versa.
 - For example, in a commit-reveal scheme, cryptographically the process is bulletproof, the original choices can be revealed and not be tempered with. But, in reality, questions arise to why people should reveal, maybe its better to run off and not reveal.
@@ -173,6 +174,7 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - A rational agent would compile all the factors into a single dimension (utility or value) and maximizes for payout.
 
 ---
@@ -249,7 +251,7 @@ Notes:
     - Control: No change
     - Low Pay: Some small commission for each sold card.
     - High Pay: Higher commission for each sold card.
-  - Outcome: Low pay performance was lower than no pay. High pay was higher though.  
+  - Outcome: Low pay performance was lower than no pay. High pay was higher though.
 
 ---
 
@@ -280,7 +282,8 @@ Notes:
 </ul>
 </pba-flex>
 
-Notes: 
+Notes:
+
 - Still, not always financial incentives - reputation scores
 - While automated agents existed for a while, they become much more accessible for everybody due to blockchain technology
 - Your electric car might soon have a wallet that automatically pays for charging at a red light.
@@ -371,8 +374,8 @@ Notes:
 
 - Where the curves meet we obtain a point of equilibrium, which establishes a market quantity and a market price.
 - If price is higher than equilibrium price:
-  - more supply than demand 
-  - some goods remain unsold 
+  - more supply than demand
+  - some goods remain unsold
   - sellers will be forced to reduce the price to get rid of their stock.
 - if price is lower:
   - there is more demand than supply.
@@ -399,8 +402,9 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - **Question**: Examples for each?
-  - High elasticity: luxury goods or with high substitutes, where buyers can easily adjust their consumption. Butter / Magerine 
+  - High elasticity: luxury goods or with high substitutes, where buyers can easily adjust their consumption. Butter / Magerine
   - Low elasticity: essential goods such as energy.
 
 ---
@@ -410,6 +414,7 @@ Notes:
 </div>
 
 Notes:
+
 - Which one represents low / high elasticity?
 
 ---
@@ -419,6 +424,7 @@ Notes:
 </div>
 
 Notes:
+
 - Inelastic: A rather big price change leads to little change in quantity.
 - Elastic: A rather big price change leads to a large change in quantity.
 
@@ -429,6 +435,7 @@ Notes:
 </div>
 
 Notes:
+
 - What are some examples?
 - Perfectly Elastic: Ice-Tea
 - Perfectly Inelastic: Insulin
@@ -508,8 +515,10 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - A monopoly is if only one seller exists
 - A monopolistic market is if there might be more sellers but one is dominant.
+
 ---
 
 ## Why discuss this?
@@ -557,8 +566,9 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - Monopolies often form when large entities engage in price wars and undercut smaller businesses until they go bankrupt.
-- There are different types of monopolies: 
+- There are different types of monopolies:
   - Natural (high barrier of entry, e.g. railroads)
   - Geographic
   - Technological
@@ -569,6 +579,7 @@ Notes:
 ## Is the Government a Monopoly?
 
 Notes:
+
 - Legitimate use of Force
 - Provider of Public Goods
 - Regulation
@@ -585,6 +596,7 @@ Notes:
 <li class="fragment">This leads to sub-optimal pricing and sub-optimal society welfare: consumers either pay more than they should ("monopolist tax") or are excluded from market.</li>
 
 Notes:
+
 - There are three conditions for price discrimination to work:
   - The company needs to have sufficient market power
   - The company needs to be able to identify differences in demand.
@@ -595,6 +607,7 @@ Notes:
 ---
 
 ## Example: Antitrust case against Microsoft in 1990s
+
 <pba-flex center>
 <ul>
 <li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
@@ -604,8 +617,8 @@ Notes:
 
 ## Monopoly: Advantages?
 
-
 Notes:
+
 - Economies of scale (specialisation)
 - Price stability
 - Potentially higher investments like R&D that benefit customers down the line.
@@ -996,6 +1009,7 @@ Notes:
 > Andrew had 50 Microsoft stocks. He decided to sell 40 of them at a price of 350 USD, still keeping 10. He used his earnings to pay some bills and does not plan to buy any stocks back. In the following days he caught himself looking at the charts hoping the price would go down to less than 350 USD.
 
 Notes:
+
 - Not rational.
 - Regret aversion?
 - Sunk cost fallacy?
@@ -1035,6 +1049,7 @@ Notes:
 </span>
 
 Notes:
+
 - What biases could be happening here?
 - **Survivor bias**: is the logical error of concentrating on entities that passed a selection process while overlooking those that did not.
   This can lead to incorrect conclusions because of incomplete data.
@@ -1249,7 +1264,6 @@ Notes:
 - = q_1* = q_2* = 20
 - Show with example.
   If firm 1 plays 20 then 19 leads to smaller payoff and 21 for other firm.
-
 
 ---
 
