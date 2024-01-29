@@ -16,7 +16,7 @@ Notes:
 
 ## Parachains Protocol
 
-<img style="width: 500px" src="../assets/polkadot-components.svg"/>
+<img style="width: 800px" src="../assets/polkadot-components.svg"/>
 
 Notes:
 And the core pillar of Polkadot where sharding is implemented is in the Parachains Consenus Protocol. That's the pillar down there at the bottom. And we'll be looking at how it works in detail.
@@ -27,7 +27,7 @@ If we're looking at one pillar in detail we are accepting that other pillars lik
 
 ## Execution Sharding in Polkadot
 
-<img style="width: 500px" src="../assets/scalability-trilemma.svg"/>
+<img style="width: 600px" src="../assets/scalability-trilemma.svg"/>
 
 Notes:
 First let's outline why we even need to go through all of that trouble. IN short sharding is our answer to scalability. And I could say that in general sharding is **solving** scalability. But in truth as many have heard...
@@ -94,6 +94,7 @@ Imagine a start-up company with 3 employees. They all make hand-crafted bags and
 - At the end of the day they all share their bags between each other to check for defects... **but there are too many bags!**
 
 Notes:
+But what if this company grows? What if we have 100 employees? Issues is there is too many bags to have everyone check everything.
 Okay that's it! We close the company! Bag making clearly cannot be scaled. NO. We change our ways. We introduce new levels, abstractions, and responsibilities.
 
 ---
@@ -138,6 +139,8 @@ Notes:
 Escalation is the happy path optimization. If there is no issue only very few checkers will participate in the process.
 This solution is only effective because in reality most of the blocks produced are indeed valid and honest. So the happy path optimization brings insane gains and allows for shared workload.
 
+It's worth pointing that optimistic rollups are also a happy path optimization, but our approach is just... less optimistic which gives us the perfect balance between security and scalability. And a bit of a spoiler but also reduces our time to finality to manageable numbers. 
+
 ---
 
 ## Properties of Escalation
@@ -181,7 +184,7 @@ Parachains Protocol which gives us execution sharding is a combination of 5 prot
 Validators are constantly running many instances of these protocols, for candidates at different stages in their lifecycle.
 
 Notes:
-A validator can receive collations for one parachain, while managing availability chunks for a different parablock, while approval checking a totally different parablock. All of that happens at the same time in various subsystems.
+One important note about this whole system is that it runs asynchronously in multiple threads on the same validator. A validator can receive collations for one parachain, while managing availability chunks for a different parablock, while approval checking a totally different parablock. All of that happens at the same time in various subsystems.
 
 ---
 
@@ -613,8 +616,11 @@ Validators starting with the lowest numbers (in the lowest tranches) start valid
 - Validators starting with the lowest numbers (in the lowest tranches) start validating the parablock.
 - Gradually higher and higher numbers start revealing themselves continuing the process.
 
+<img style="width: 900px" src="../assets/tranches.svg" />
+
 Notes:
-but over time more and more people start checking because higher and higher numbers are called in to reveal themselves.
+but over time more and more people start checking because higher and higher numbers are called in to reveal themselves. This is how it can be visualized. We group up validators with similar roles together into those small tranches. Every single active validator is one of those tranches. The more time passes the more tranches are woken up and do their checks. You can notice that the first tranche is a bit larger. That is because...
+
 
 ---
 
@@ -623,6 +629,8 @@ but over time more and more people start checking because higher and higher numb
 - Validators starting with the lowest numbers (in the lowest tranches) start validating the parablock.
 - Gradually higher and higher numbers start revealing themselves continuing the process.
 - Once a certain threshold of validators (30) have submitted valid statements, the parablock is considered **Approved**.
+
+<img style="width: 800px" src="../assets/tranches_happy.svg" />
 
 Notes:
 The protocol is parametrised to such a way that we require around 30 checks made in total. If we get 30 positive checks the parablock is considered approved. But wait... wait if it's invalid?
@@ -649,10 +657,19 @@ Also for those wondering what are the chances that all 30 are malicious it's 1/3
 - Gradually higher and higher numbers start revealing themselves continuing the process.
 - Once a certain threshold of validators (30) have submitted valid statements, the parablock is considered Approved.
 - If even a single validator submits an invalid statement, the issue is **escalated** into a **Dispute**.
-- If a validator disappears (no-shows) after revealing themselves we assume a DoS attack and we require more checkers (+3).
+- If a validator disappears (no-shows) after revealing themselves we assume a DoS attack and we require more checkers (+ 1 tranche).
 
 Notes:
 Malicious attackers can try and eliminate good guys so that they get the first 30 votes in. The best way to do it is to DoS honest guys causing them to miss their spot. Although assignments are hidden so they don't even know who to DoS. Only option is to DoS them after they reveal themselves which gives us an option to react and be extra cautious when nodes suddenly disappear.
+
+---
+
+## 4. Approval Checking - No-Shows
+
+<img style="width: 800px" src="../assets/tranches_dos.svg" />
+
+Notes:
+So this will look something like that. In one tranche one of the validators will wake up because it is their time to check. They announce themselves first, start rebuilding the PoV, but before they can publish they PVF result they get DoSed. We never receive their result so remaining validators raise a soft alarm, they start requiring more checkers. And because of that another tranche will be called in before finishing the approval process. 
 
 ---
 
@@ -674,7 +691,6 @@ This is a flow chart from the perspective of an individual approval checker. Fir
 In case our voice is still needed we reveal our assignment, recover data, do checks and send our statement. If we don't like the block we start a dispute with a dispute statement.
 
 Interesting this state machine either outputs or stalls. In case of stalling it might be because there is a dispute started in the dispute coordinator subsystem.
-
 ---
 
 # 5. Disputes
@@ -779,6 +795,24 @@ Notes:
 BABE is a block production protocol that is based on VRFs. It's a protocol that allows us to elect block producers and those block producers when elected can author a single relay chain block and they can fill up that block with backed and available parablocks. They have some freedom in what parablocks they choose. They of course get some rewards for making the block as it's a bit of extra effort. They do this totally alongside all the parachains logic we went over so far.
 
 Sometimes BABE can elect multiple authors for the same slot so we naturally get some forks at the head of the chain. That is not a huge issues but its just some wasted effort.
+
+---
+
+## Block Production - Candidate Receipts
+
+**Candidate receipt:**
+- The parachain ID.
+- The collator's ID and signature.
+- A hash of the parent block's candidate receipt.
+- A Merkle root of the block's erasure-coded pieces.
+- A Merkle root of any outgoing messages.
+- A hash of the block.
+- The state root of the parachain before block execution.
+- The state root of the parachain after block execution.
+
+Notes:
+I mentioned that authors add a parablock into the relay chain block they are authoring. But in reality adding a whole parablock to the relay chain block is not feasible. We need a compact representation of the parablock/candidate - a candidate receipt. In it we store all the elements needed to identify the block later on and ensure that the data and transitions match to what was approved.
+
 
 ---
 
