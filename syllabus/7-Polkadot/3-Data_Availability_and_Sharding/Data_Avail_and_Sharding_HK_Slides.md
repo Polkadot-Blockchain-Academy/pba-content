@@ -128,7 +128,7 @@ The goal: Avoid storing full PoV in each validator
 
 <pba-flex center>
 
-- Encode data of K chunks into a larger encoded data of N chunks
+- Encode data of K chunks into a larger code word of N chunks
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Any K-subset of N chunks can be used to recover the data
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -161,9 +161,14 @@ pub fn reconstruct(_chunks: impl Iterator<Item = Chunk>) -> Result<Data, Error> 
 }
 ```
 
+Notes:
+- Opaque data and chunks
+- encode: data -> chunks
+- decode: chunks -> data
+
 ---
 
-### Polkadot's Data Availability Protocol
+### Polkadot Data Availability Overview
 
 <pba-flex center>
 
@@ -190,105 +195,205 @@ How are our design goals satisfied by this approach?
 
 ---
 
-### Bitfields
+### Availability Distribution
 
-Cambridge 12
+<img src="../../../assets/img/7-Polkadot/Data_Availability/bitfield-chunk-req.svg" style="width: 40%" />
 
----
-
-### Availability Threshold
-
-Cambridge 15
+Notes:
+- Validator i sees backing statements on chain and requests chunk i for each PoV from its associated backer
+- Backers respond with chunks, or availability times out
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+### Availability Statement Format: Bitfields
 
-# Questions
+<img src="../../../assets/img/7-Polkadot/Data_Availability/availability-gossip.svg" style="width: 70%" />
+
+Notes:
+- Number of bits equivalent to the number of `AvailabilityCore`s
+- Bit `i` represents one validator's report as to whether it has its chunk of the PoV occupying core `i`
+- Condenses a validator's perspective into a minimal structure to be signed and gossiped
+- Submitted on-chain by block producers
 
 ---
 
-## Erasure coding
+### Availability On-Chain
 
-The goal:
+<img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/availability-bitfields.png" />
+
+Notes:
+- These statements are gossiped off-chain and included in a block in a ParachainsInherent.
+- Why does availability threshold tallying need to occur on-chain?
+
+---
+
+### Availability Thresholds Visualized
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/relay-block-construction-I.svg" style="width: 60%"/>
+
+Notes:
+- Validator Y is producing a block
+- Statements from validators a, f, g, and b determine availability for blocks occupying 5 cores
+- Candidates 0, 3, and 4 are marked as included. Approvals start. Cores are freed to repeat process.
+
+What is wrong with this diagram?
+
+---
+
+### PoV Chunk Validation
+
+What happens if there's a bad chunk in the reconstructed PoV?
+
+Solution: Merkle proofs!
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <pba-flex center>
 
-- Encode data of K chunks into a larger encoded data of N chunks
+- PoV chunks form branches of a merkle tree
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Proof distributed with each chunk
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Chunks checked against erasure_root from CandidateReceipt
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+Notes:
+- Corrupted PoV -> PVF failure not attributable to backers
+- Can lead to punishment of innocent parties in disputes
+
+---
+
+## Erasure Coding Revisited
+
+<pba-flex center>
+
+- Encode data of K chunks into a larger code word of N chunks
 - Any K-subset of N chunks can be used to recover the data
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-flex>
 
 <img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/erasure-coding-1.png" />
 
+<br>
 
----v
+EX: Lagrange Interpolation
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
-### Even More Polynomials
+Notes:
+- Polkadot uses: Fast fourier transform (FFT) based Reed-Solomon algorithm (https://github.com/paritytech/reed-solomon-novelpoly)
+- Better visually intuitive example: Lagrange interpolation 
+
+---
+
+### Lagrange Interpolating Polynomial
+
+For any number $n$ of points $(x_i,y_i)$ there exists only one polynomial of degree $n-1$ such that $p(x_i) = y_i$ for all $i$
 
 <img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/polynomial-2.png" />
 
----v
+Notes:
 
-### Polynomial we need
+Question: What is x_i and y_i wrt to our data?
+
+---
+
+### Interpolation for Data Recovery
 
 <img rounded style="width: 800px" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" />
 
-We want to have a polynomial, such that:
-
-$$ p(x_i) = y_i$$
-
 Notes:
-
-Question: what is x_i and y_i wrt to our data?
-
-
+- We want that polynomial of degree n-1
+- We can obtain it using any n
 
 ---
 
-## Polkadot's Data Availability Protocol
+### Summary: Reed-Solomon with Lagrange interpolation
 
+1. Divide the data into elements of size $P$ bits.
+1. Interpret the bytes as (big) numbers $\mod P$.
+1. Index of each element is $x_i$ and the element itself is $y_i$.
+1. Construct the interpolating polynomial $p(x)$ and evaluate it at additional $n - k$ points.
+1. The encoding is $(y_0, ..., y_{k-1}, p(k), ... p(n - 1))$ along with indices.
 
 Notes:
 
-The total amount of data stored by all validators is PoV \* 3.
-With 5MB PoV and 1k validators, each validator only stores 15KB per PoV.
-With this protocol, we've killed two birds with one stone!
-
+How do we do reconstruction?
 
 ---
 
-### Availability Bitfields
+### Final Twist, Multiple Code Words
 
-
+<img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_1.svg" style="width: 70%" />
 
 Notes:
+- Previously described Reed Solomon as if we are encoding the PoV into a single code word
+- Size limitations per code word -> many code words
+- Each code word encodes a small subset of the original data
 
-Each validator actually signs a statement per relay chain block, not per PoV to reduce the number of signatures.
-These statements are gossiped off-chain and included in a block in a ParachainsInherent.
+---
+
+### Final Twist, Multiple Code Words
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_2.svg" style="width: 70%" />
+
+Notes:
+- Previously described Reed Solomon as if we are encoding the PoV into a single code word
+- Size limitations per code word -> many code words
+- Each code word encodes a small subset of the original data
+
+---
+
+### Final Twist, Multiple Code Words
+
+<img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_3.svg" style="width: 70%" />
+
+Notes:
+- Chunk i is actually composed of smaller chunks i for each code word in a PoV
+
+---
+
+### Ongoing Work
+
+Reed Solomon is costly, taking 14-20% of validator CPU time.
+
+**Obvious target for optimization!**
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pba-flex center>
+
+- Systemic chunks recovery 
+<!-- .element: class="fragment" data-fragment-index="2" -->
+	- Removes need for decoding
+<!-- .element: class="fragment" data-fragment-index="2" -->
+	- Instead, re-encode to check chunk validity
+<!-- .element: class="fragment" data-fragment-index="2" -->
+	- ~50% CPU time improvement
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Compiler elision of array bounds checks + inlining
+<!-- .element: class="fragment" data-fragment-index="3" -->
+	- ~33-50% CPU time improvement depending on unsafe Rust use
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- Better implemented Reed Solomon library (potential 10x improvement!)
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+Notes:
+Systemic chunks recovery RFC: https://github.com/alindima/RFCs/blob/av-chunk-indices/text/0047-assignment-of-availability-chunks.md
+ 
+Better implemented Reed Solomon: https://github.com/paritytech/reed-solomon-novelpoly/issues/40 
 
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
-
----
-
-### Bonus
-
-<pba-flex center>
-
-- Polkadot uses a field of size $2^{16}$ with efficient arithmetic
-- Polkadot uses an FFT-based Reed-Solomon algorithm (no Lagrange)
-
-</pba-flex>
-
-> https://github.com/paritytech/reed-solomon-novelpoly
 
 ---
 
 ## References
 
 1. https://www.youtube.com/watch?v=1pQJkt7-R4Q
-1. https://www.paradigm.xyz/2022/08/das
+1. https://github.com/alindima/RFCs/blob/av-chunk-indices/text/0047-assignment-of-availability-chunks.md
