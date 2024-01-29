@@ -1,6 +1,6 @@
 ---
 title: Econ & Game Theory in Blockchain # Also update the h1 header on the first slide to the same name
-description: Blockchain applications of Econ & Game Theory 
+description: Blockchain applications of Econ & Game Theory
 duration: 60 minutes
 # PBA has a theme: "reveal-md/PBA-theme.css", alternatively, you can use a named default like "night" from this list: https://github.com/hakimel/reveal.js/tree/master/css/theme/source
 # Add custom css files for your slides here, comma separated:
@@ -8,11 +8,11 @@ separator: "\r?\n---\r?\n"
 verticalSeparator: "\r?\n---v\r?\n"
 # Below can be any of these: https://revealjs.com/config/
 revealOptions:
-    transition: "none" # animation between slides = none/fade/slide/convex/concave/zoom
-	backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
-	slideNumber: true
-	controls: true
-	progress: true
+  transition: "none" # animation between slides = none/fade/slide/convex/concave/zoom
+  backgroundTransition: "fade" # background swap between slides = none/fade/slide/convex/concave/zoom
+  slideNumber: true
+  controls: true
+  progress: true
 ---
 
 # **Econ & Game Theory in Blockchain**
@@ -873,7 +873,7 @@ So Bitcoin mining is in fact a huge coordination game and this is why honesty AK
 
 - More complex examples will be explored later in the forks lecture on Friday
 - Paper investigating PoW Nash Equilibrium and following the majority:
-   https://typeset.io/pdf/mining-pool-game-model-and-nash-equilibrium-analysis-for-pow-2lckzso542.pdf
+  https://typeset.io/pdf/mining-pool-game-model-and-nash-equilibrium-analysis-for-pow-2lckzso542.pdf
 
 ---
 
@@ -1104,7 +1104,7 @@ Submitting the truth is the Schelling Point in here and it makes it easy to be h
 
 <pba-cols>
     <pba-col>
-        What to do with attackers? 
+        What to do with attackers?
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
@@ -1123,7 +1123,7 @@ But what if there are some attackers? What can we do about them?
 
 <pba-cols>
     <pba-col>
-        What to do with attackers? 
+        What to do with attackers?
         <br/><br/>
         If they go unpunished they can repeat the attack until successful
     </pba-col>
@@ -1145,11 +1145,11 @@ And that's not good.
 
 <pba-cols>
     <pba-col>
-        What to do with attackers? 
+        What to do with attackers?
         <br/><br/>
         If they go unpunished they can repeat the attack until successful
         <br/><br/>
-        Or even worse, they can make a million fake identities and spam incorrect votes 
+        Or even worse, they can make a million fake identities and spam incorrect votes
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
@@ -1202,11 +1202,11 @@ We need to build out incentives in a way that shapes the expected behavior of th
 
 <pba-cols>
     <pba-col>
-        What to do with attackers? 
+        What to do with attackers?
         <br/><br/>
         If they go unpunished they can repeat the attack until successful
         <br/><br/>
-        Or even worse, they can make a million fake identities and spam incorrect votes 
+        Or even worse, they can make a million fake identities and spam incorrect votes
     </pba-col>
     <pba-col>
         <img style="width: 500px" src="./img/econ-game-theory/temp3.drawio.svg" alt="Temperature Line with a Cluster of Measurements" />
@@ -1225,7 +1225,7 @@ So going back to our oracle problem how can we deal with attackers?
 
 <pba-cols>
     <pba-col>
-        <div style="color: grey;">What to do with attackers? 
+        <div style="color: grey;">What to do with attackers?
         <br/><br/>
         If they go unpunished they can repeat the attack until successful
         <br/><br/></div>

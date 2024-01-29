@@ -52,7 +52,6 @@ Let's take a closer look.
 
 <image rounded src="../../assets/img/5-Substrate/dev-pool-context.svg">
 
-
 Notes:
 
 - Gossip
@@ -87,10 +86,10 @@ graph LR
 
 ### 1. Transaction Validation
 
-* Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
-* Transaction validation should be **cheap** to perform.
-* Transaction pool is entirely an **offchain operation**.
-  * No state change
+- Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+- Transaction validation should be **cheap** to perform.
+- Transaction pool is entirely an **offchain operation**.
+  - No state change
 
 Notes:
 
@@ -167,7 +166,6 @@ we probably also ban the peer who sent us that transaction? but have to learn.
 - `provides` and `requires` is a very flexible mechanism; it allows you to:
   - Specify if a transaction is "Ready" or "Future"
   - Within each, what transactions should ge before which.
-
 
 Note: it essentially forms a graph.
 
@@ -405,8 +403,6 @@ Purposes of a nonce:
 - ✅ You will implement a nonce system using the above primitives as a part of your assignment.
 - General idea: `require -> (account, nonce - 1).encode()`, provide: `provides -> (account, nonce).encode()`
 
-
-
 Notes:
 
 Transaction Ordering: Each time a transaction is sent from an account, the nonce increases by one. This sequential
@@ -489,6 +485,10 @@ Original pool PR from ages ago, old but gold: https://github.com/paritytech/subs
 > Work towards a flexible transaction queue that relies **only on runtime logic to provide comprehensive dependency and queuing management**... should not be aware of the concepts of accounts, signatures, indexes or nonces.
 
 > Returns `Valid` if the transaction can be **statically** validated; ... the u64 is the priority used to determine which of a mutually exclusive set of transactions are better to include... Any transactions that do get included in a block should be instantly discarded (and banned) if they result in a panic execution.
+
+### Post Lecture
+
+More about MEV
 
 ---
 

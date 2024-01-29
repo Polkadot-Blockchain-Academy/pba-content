@@ -1,12 +1,14 @@
 ---
-title: Sassafras Authoring 
-description: Latest Module for Block Authoring on Polkadot 
+title: Sassafras Authoring
+description: Latest Module for Block Authoring on Polkadot
 duration: 35min
 ---
+
 ## Sassafras and Semi-Anonymous Single Leader Election
+
 ---
 
-# But.. 
+# But..
 
 - Wait dont we have BABE? <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -17,10 +19,10 @@ duration: 35min
 - Forks are legitimate. <!-- .element: class="fragment" data-fragment-index="1" -->
 - Why is forking an issue? <!-- .element: class="fragment" data-fragment-index="2" -->
 - Fun Fact Babe only uses random slot assignment 25% of the time <!-- .element: class="fragment" data-fragment-index="3" -->
-- Why is this an issue? <!-- .element: class="fragment" data-fragment-index="4" --> 
+- Why is this an issue? <!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
-    Is an issue because falling back on a known ahead of time schedule is vunerable to attacks
+Is an issue because falling back on a known ahead of time schedule is vunerable to attacks
 
 ---
 
@@ -36,7 +38,7 @@ Yes!! Sassafras!!
 ---
 
 # So what are our goals again?
- 
+
 - Reduce to no forks(Almost) <!-- .element: class="fragment" data-fragment-index="1" -->
 - Make slots annonymous(Not known ahead of time) <!-- .element: class="fragment" data-fragment-index="2" -->
 - Go fast be secure etc.. <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -50,8 +52,8 @@ Yes!! Sassafras!!
 - Intro RingVRF <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
-    VRF value is like a pubkey (Publicly known) and can provide
-    a signature or proof that you produced that random value
+VRF value is like a pubkey (Publicly known) and can provide
+a signature or proof that you produced that random value
 
 ---
 
@@ -67,17 +69,16 @@ Notes:
 
 ---
 
-# Why is a RingVRF useful? 
+# Why is a RingVRF useful?
 
 - Answer: Allows us to know someone we know(sort of) has produced a VRFOutput but to not know who. <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
-    Sort of because we know that the person is in the Ring
+Sort of because we know that the person is in the Ring
 
 ---
 
 # Who will the participants be in the Ring?
-
 
 <pba-cols>
 <pba-col>
@@ -100,9 +101,8 @@ Answer: Active consensus participants (Validators) <!-- .element: class="fragmen
 - Each participant creates a ticket (RingVRFOutput) <!-- .element: class="fragment" data-fragment-index="2" -->
 - When should we create a ticket? <!-- .element: class="fragment" data-fragment-index="3" -->
 
-Notes:
-    - Lottery being participation in consensus!
-    - Tickets should be created and submitted One epoch before the Party begins
+Notes: - Lottery being participation in consensus! - Tickets should be created and submitted One epoch before the Party begins
+
 ---
 
 # Submission of tickets
@@ -117,7 +117,7 @@ Notes:
 
 ---
 
-## Is there a problem? 
+## Is there a problem?
 
 - Question: is there any issue with submitting your own ticket? <!-- .element: class="fragment" data-fragment-index="0" -->
 - Answer: Annonymity broken!! <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -129,9 +129,8 @@ Notes:
 - We want to prevent someone from finding ways to manipulating randomness <!-- .element: class="fragment" data-fragment-index="0" -->
 - What can happen if a bad actor can get a majority of the slots for an epoch? <!-- .element: class="fragment" data-fragment-index="1" -->
 
-Notes:
-    - Consecutive slots can lead to more biasability in the randomness later down the line
-    - Consecutive slots can cause problems for the network like outages or maliciious long forks
+Notes: - Consecutive slots can lead to more biasability in the randomness later down the line - Consecutive slots can cause problems for the network like outages or maliciious long forks
+
 ---
 
 # Outside in assignment
@@ -140,7 +139,9 @@ Notes:
 1. `[tick1, tick3, .., tick2, tick0]` <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
+
 - How does this help?
+
 ---
 
 ## Claim a slot

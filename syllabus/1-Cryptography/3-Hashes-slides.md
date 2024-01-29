@@ -18,15 +18,13 @@ We often want a succinct representation of some data<br />with the expectation t
 
 ## Hash Function Properties
 
-<section>
-    <p class="fragment">Accept unbounded size input</p>
-    <p class="fragment">Map to a bounded output</p>
-    <p class="fragment">Be fast to compute</p>
-    <p class="fragment">Be computable strictly one-way<br />(difficult to find a pre-image for a hash)</p>
-    <p class="fragment">Resist pre-image attacks<br />(attacker controls one input)</p>
-    <p class="fragment">Second pre-image resistance: Given an input and output<br />(resisting second pre-image attacks).</p>
-    <p class="fragment">Resist collisions<br />(attacker controls both inputs)</p>
-</section>
+- Accept unbounded size input <!-- .element: class="fragment" data-fragment-index="0" -->
+- Map to a bounded output <!-- .element: class="fragment" data-fragment-index="1" -->
+- Be fast to compute <!-- .element: class="fragment" data-fragment-index="2" -->
+- Be computable strictly one-way<br />(difficult to find a pre-image for a hash) <!-- .element: class="fragment" data-fragment-index="3" -->
+- Resist pre-image attacks<br />(attacker controls one input) <!-- .element: class="fragment" data-fragment-index="4" -->
+- Second pre-image resistance: Given an input and output<br />(resisting second pre-image attacks). <!-- .element: class="fragment" data-fragment-index="5" -->
+- Resist collisions<br />(attacker controls both inputs) <!-- .element: class="fragment" data-fragment-index="6" -->
 
 Notes:
 
@@ -271,11 +269,14 @@ e.g., a 256 bit hash output yields 2^128 security
 
 It should be difficult for someone to partially (for a substring of the hash output) find a collision or "second" pre-image.
 
-<section>
-    <p class="fragment">Bitcoin PoW is a partial pre-image attack.</p>
-    <p class="fragment">Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.</p>
-    <p class="fragment">Prefix collision resistance important to rationalize costs for some cryptographic data structures.</p>
-</section>
+- Bitcoin PoW is a partial pre-image attack. <!-- .element: class="fragment" data-fragment-index="0" -->
+- Can anyone explain how? <!-- .element: class="fragment" data-fragment-index="1" -->
+- Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.<!-- .element: class="fragment" data-fragment-index="2" -->
+- Prefix collision resistance important to rationalize costs for some cryptographic data structures.<!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+This is a technique used to trick users into thinking they are interacting with a trusted entity (like a account or piece of data) when they are actually interacting with a malicious actor. This can be done by creating a fraudulent address that looks similar to a legitimate one.
+example AEVXZ AEVYZ
 
 ---
 
