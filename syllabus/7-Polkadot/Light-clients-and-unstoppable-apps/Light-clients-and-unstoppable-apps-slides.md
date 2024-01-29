@@ -293,15 +293,14 @@ This is especially advantageous for users on limited data plans or slow internet
 
 ### Real-life example
 
-<video controls width="100%">
-    <source src="./img/LightClients.mp4" type="video/mp4">
-    Sorry, your browser doesn't support embedded videos.
-</video>
+<img src="./img/Lc3.png" />
+
+http://tinyurl.com/fast-and-light
 
 Notes:
 
 "Slow internet connections": lets see a real-life example.
-Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using a very "questionable internet connection" which had a very bad day due to way-too-many-connected people;
+Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the Talisman wallet, and what are the benefits - using a very "questionable internet connection" which had a very bad day due to way-too-many-connected people;
 Once the [talisman wallet](https://www.talisman.xyz/) loads up, pay attention to the spinners - Polkadot is loading with a light client while Kusama with the usual JSON-RPC method
 
 Full video: https://tinyurl.com/decoded-talisman-light-client
@@ -813,9 +812,9 @@ Notes:
 Stay with me - the next is the last but not the easiest part:
 
 - **Eclipse attacks (full nodes and light clients both affected)**.
-  Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network (from the bootnodes).
+  Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network.
   Imagine if all these nodes were to refuse sending data back, that would isolate smoldot from the network - The way that smoldot learns which nodes exist (GOSSIP) is from the nodes themselves (bootnodes).
-  If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes - if the list of bootnodes only contains malicious nodes, smoldot will never be able to reach any non-malicious node.
+  If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes
   If the list of bootnodes contains a single honest node, then smoldot will be able to reach the whole network.
   !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the blockchain!
 
