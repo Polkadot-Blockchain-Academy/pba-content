@@ -48,7 +48,7 @@ A collection of code libraries extending a Substrate FRAME chain so that it can 
 
 Notes:
 
-- Substrate is a framework for building blockchains
+- Substrate is a blockchain building framework
 - But only "solo" chains
 - Split into runtime/node side
 - Both Polkadot and Cumulus extend substrate
@@ -104,10 +104,6 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
-Notes:
-
-- How do these communication channels service our key processes?
-
 ---
 
 ## Handling Incoming Relay Information
@@ -118,17 +114,9 @@ These drive parachain consensus and ensure the availability of parachain blocks.
 <br/>
 Together they keep parachain nodes up to date such that collating is possible.
 
-Notes:
-
-To recap, these key processes are:
-
-- Follow relay "new best head" to update para "new best head"
-- Follow relay finalized block to update para finalized block
-- Request parablocks not shared by peers from relay (data recovery)
-
 ---
 
-### Consensus Mechanism
+### Parachain Consensus
 
 Parachain consensus is modified to:
 
@@ -144,8 +132,8 @@ Notes:
 - Sequencing consensus: Decide on an accepted ordering of blocks and of transactions within a block
 - Sequencing consensus requires that we update our knowledge of the new best head of the parachain.
   That way nodes are in agreement about which block to build on top of.
+- Cumulus sequencing consensus is modular and changeable
 - Sequencing options: Aura consensus, tendermint style consensus
-- When a parablock is included in a relay block that becomes finalized, that parablock is finalized by extension.
 
 ---
 
@@ -154,7 +142,7 @@ Notes:
 Collators are responsible for authoring new blocks, and they do so when importing relay blocks.
 Honest Collators will choose to author blocks descending from the best head.
 
-```rust[|4-8]
+```rust[|3|4-8|11]
 // Greatly simplified
 loop {
     let imported = import_relay_chain_blocks_stream.next().await;
@@ -186,7 +174,7 @@ To facilitate shared security, parachains inherit their finality from the relay 
 
 <br/>
 
-```rust[|4-8]
+```rust[|3|4-8|11]
 // Greatly simplified
 loop {
     let finalized = finalized_relay_chain_blocks_stream.next().await;
@@ -231,8 +219,8 @@ The PoV is too big to be included on-chain when a parablock is backed, so valida
 
 Notes:
 
-The Candidate Receipt contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
-The Candidate Receipt only references a PoV, it does not substitute it
+- The Candidate Receipt contains mainly hashes so its main use is to verify the correctness of known PoVs
+- The Candidate Receipt only references a PoV, it does not substitute it
 
 ---
 
@@ -255,22 +243,6 @@ Notes:
 
 ---
 
-### The Availability Process
-
-<pba-flex center>
-
-- Erasure coding is applied to the PoV, breaking it into chunks
-- 3x original PoV size, vs 300x to store copies
-<!-- .element: class="fragment" data-fragment-index="1" -->
-- 1/3 of chunks sufficient to assemble PoV
-<!-- .element: class="fragment" data-fragment-index="2" -->
-- 2/3 of validators must claim to have their chunks
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-</pba-flex>
-
----
-
 ## Availability Outcome
 
 <img src="../assets/malicious_collator_4.svg" style="width: 70%" />
@@ -288,20 +260,16 @@ The last of our key processes
 <pba-flex center>
 
 1. Relay node imports block in which parachain's avail. core was vacated
-1. `CollationGeneration` requests a collation from the collator
+1. CollationGeneration requests a collation from the collator
 <!-- .element: class="fragment" data-fragment-index="1" -->
-1. Parachain consensus decides whether this collator can author
+1. Parachain consensus decides whether it's this collator's turn to author
 <!-- .element: class="fragment" data-fragment-index="2" -->
 1. Collator proposes, seals, and imports a new block
 <!-- .element: class="fragment" data-fragment-index="3" -->
-1. Collator bundles the new block and information necessary to process and validate it, a **collation!**
+1. Collator bundles the new block and information necessary to process and validate it, a collation!
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
-
-Notes:
-
-- Aura is current default parachain consensus, but this consensus is modular and changeable
 
 ---
 
@@ -311,15 +279,14 @@ Notes:
 
 Notes:
 
-A subset of Para-Relay communication
+- First, sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to backers
+- At least one backer responds, signing its approval
+- Triggers gossip of candidate to parachain node import queues
+- This hand shake isn't necessary with Aura. Why?
 
 ---
 
-#### From Collator to Relay Node and Parachain Nodes
-
-- Sent from Collator, which owns both `CollatorService` and `ParachainConsensus`
-- Sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to validators
-- Sent to parachain node import queues
+#### Distribution in Code
 
 ```rust[1|5]
 let result_sender = self.service.announce_with_barrier(block_hash);
@@ -328,6 +295,12 @@ tracing::info!(target: LOG_TARGET, ?block_hash, "Produced proof-of-validity cand
 
 Some(CollationResult { collation, result_sender: Some(result_sender) })
 ```
+
+Notes:
+
+- Prepares the announcement of a new parablock to peers with "announce_with_barrier"
+- Waits for green light from validator by sending it a "result_sender"
+- When validator sends positive result through sender, then the collator announces the block
 
 ---
 
@@ -419,7 +392,7 @@ The code is hashed and saved in the storage of the relay chain.
 
 Notes:
 
-PVF not only contains the runtime but also a function `validate_block` needed to interpret all the extra information in a PoV required for validation.
+PVF not only contains the runtime, but also a function `validate_block` needed to interpret all the extra information in a PoV required for validation.
 This extra information is unique to each parachain and opaque to the relay chain.
 
 ---
@@ -429,12 +402,10 @@ This extra information is unique to each parachain and opaque to the relay chain
 <div class="r-stack">
 <img src="../assets/collation_path_1.svg" style="width: 70%" />
 <img src="../assets/collation_path_2.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
 Notes:
-
-The input of the runtime validation process is the PoV and the function called in the PVF is 'validate_block', this will use the PoV to be able to call the effective runtime and then create an output representing the state transition, which is called a CandidateReceipt.
+The input of the runtime validation process is the PoV, and the function called in the PVF is 'validate_block'. Validate block converts the PoV into necessary inputs on top of which a parachain's STF can be run. The output created is called a CandidateReceipt.
 
 ---
 
@@ -449,7 +420,7 @@ The input of the runtime validation process is the PoV and the function called i
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - The host functions most importantly allow the runtime to query its state, so we need a light weight replacement for the parachain's state sufficient for the execution of this single block
 <!-- .element: class="fragment" data-fragment-index="3" -->
-- `validate_block` prepares said state and host functions
+- validate_block prepares said state and host functions, then runs the parachain's STF on top of them
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
@@ -556,11 +527,11 @@ Code highlighting:
 
 Notes:
 
-orange: Data values modified in this block
-green: Hash of the siblings node required for the pov
-white: Hash of the nodes that are constructed with orange and green nodes
-red: Unneeded hash
-blue: Head of the trie, hash present in the previous block header
+- orange: Data values modified in this block
+- green: Hash of the siblings node required for the pov
+- white: Hash of the nodes that are constructed with orange and green nodes
+- red: Unneeded hash
+- blue: Head of the trie, hash present in the previous block header
 
 ---
 
@@ -585,7 +556,7 @@ fn validate_block(input: InputParams) -> Output {
 ```
 
 - Now we know where the **storage_proof** comes from!
-- **into_state** constructs our storage trie
+- into_state constructs our storage trie
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Host functions written to access this new storage
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -652,7 +623,7 @@ https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgra
   <!-- .element: class="fragment" data-fragment-index="1" -->
 - Super majority concludes the vote
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- The state of the new PVF is updated on the relay chain
+- The new PVF replaces the prior one in relay chain state
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
