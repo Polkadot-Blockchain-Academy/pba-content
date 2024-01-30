@@ -35,6 +35,7 @@ Comprehensive 24 Hour Record: **Polkadot DA!**
 </pba-flex>
 
 Notes:
+
 - Most data live solely on parachains
 - Condensed data, hashes and commitments, stored on relay chain
 - DA secures heavy (MBs) information critical to the secure progression of parachains. Should be dropped from validators when old.
@@ -48,10 +49,11 @@ How do we ensure a piece of data is retrievable without storing it on every sing
 Incorrectness can be proven (merkle proofs), but unavailability can't.
 
 Notes:
+
 - You can't just hold a small number of nodes accountable for making some data available
-- Needs an off chain solution! 
-    - All other data added to relay chain per day: ~555M
-    - 40 PoVs per block for a day: ~72G
+- Needs an off chain solution!
+  - All other data added to relay chain per day: ~555M
+  - 40 PoVs per block for a day: ~72G
 
 ---
 
@@ -66,10 +68,12 @@ Notes:
 Notes:
 
 Block producers withholding blocks can:
+
 - Prevent nodes and users from learning the parachain state
 - Prevent other collators from being able to create blocks
 
-Solution: 
+Solution:
+
 - Validators keep enough info for collators to reconstruct recent parachain blocks
 
 ---
@@ -79,6 +83,7 @@ Solution:
 <img src="../../../assets/img/7-Polkadot/Data_Availability/DA_Relay_1.svg" style="width: 70%" />
 
 Notes:
+
 - Malicious backers could distribute invalid PoV to only malicious approval checkers
 - Really bad
 - It means attackers could consistently finalize invalid parachain blocks with just a hand full of dishonest approval checkers
@@ -90,6 +95,7 @@ Notes:
 <img src="../../../assets/img/7-Polkadot/Data_Availability/DA_Relay_2.svg" style="width: 70%" />
 
 Notes:
+
 - With honest DA layer, selective distribution isn't possible
 
 ---
@@ -102,7 +108,7 @@ Notes:
 
 <pba-flex center>
 
-1. Avoid storing full PoV in each validator 
+1. Avoid storing full PoV in each validator
 1. Avoid fragility, where misbehavior can compromise PoV retrieval
 <!-- .element: class="fragment" data-fragment-index="1" -->
 1. Need cryptographic scheme to prove availability before approvals start
@@ -113,6 +119,7 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - Passing full PoV copies to a large fraction of validators would work, but we can do much better!
 - Misbehavior up to 1/3 should be accomodated to match threat model
 
@@ -143,7 +150,7 @@ Notes:
 
 ### Laying the Foundation: Erasure Coding
 
-The goal: Avoid storing full PoV in each validator 
+The goal: Avoid storing full PoV in each validator
 
 <pba-flex center>
 
@@ -157,6 +164,7 @@ The goal: Avoid storing full PoV in each validator
 <img rounded style="width: 1000px" src="../../../assets/img/7-Polkadot/Data_Availability/erasure-coding-1.png" />
 
 Notes:
+
 - Erasure coding allows storing only 3x PoV size vs 334x for 1000 validators
 
 ---
@@ -181,6 +189,7 @@ pub fn reconstruct(_chunks: impl Iterator<Item = Chunk>) -> Result<Data, Error> 
 ```
 
 Notes:
+
 - Opaque data and chunks
 - encode: data -> chunks
 - reconstruct: chunks -> data
@@ -206,6 +215,7 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - PoV is K chunks from erasure coding slide
 - We store 3 K chunks, 3x PoV size among validators
 - We need 1/3 + 1 of those chunks to reassemble PoV
@@ -217,6 +227,7 @@ Notes:
 <img src="../../../assets/img/7-Polkadot/Data_Availability/bitfield-chunk-req.svg" style="width: 40%" />
 
 Notes:
+
 - Validator i sees backing statements on chain and requests chunk i for each PoV from its associated backer
 - Backers respond with chunks, or availability times out
 
@@ -229,6 +240,7 @@ One structure to sign them all!
 <img src="../../../assets/img/7-Polkadot/Data_Availability/availability-gossip.svg" style="width: 70%" />
 
 Notes:
+
 - Number of bits equivalent to the number of `AvailabilityCore`s
 - Bit `i` represents one validator's report as to whether it has its chunk of the PoV occupying core `i`
 - Condenses a validator's perspective into a minimal structure to be signed and gossiped
@@ -241,6 +253,7 @@ Notes:
 <img rounded style="width: 600px" src="../../../assets/img/7-Polkadot/Data_Availability/availability-bitfields.png" />
 
 Notes:
+
 - These statements are gossiped off-chain and included in a block in a ParachainsInherent.
 - Why do we need bitfields on-chain?
 
@@ -251,6 +264,7 @@ Notes:
 <img src="../../../assets/img/7-Polkadot/Data_Availability/relay-block-construction-I.svg" style="width: 60%"/>
 
 Notes:
+
 - Validator Y is producing a block
 - Statements from validators a, f, g, and b determine availability for blocks occupying 5 cores
 - Candidates 0, 3, and 4 are marked as included. Approvals start. Cores are freed to repeat process.
@@ -264,6 +278,7 @@ What is wrong with this diagram?
 What happens if there's a bad chunk in the reconstructed PoV?
 
 Solution: Merkle proofs!
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <pba-flex center>
@@ -278,6 +293,7 @@ Solution: Merkle proofs!
 </pba-flex>
 
 Notes:
+
 - Corrupted PoV -> PVF failure not attributable to backers
 - Can lead to punishment of innocent parties in disputes
 
@@ -298,11 +314,13 @@ Notes:
 <br>
 
 EX: Lagrange Interpolation
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
+
 - Polkadot uses: Fast fourier transform (FFT) based Reed-Solomon algorithm (https://github.com/paritytech/reed-solomon-novelpoly)
-- Better visually intuitive example: Lagrange interpolation 
+- Better visually intuitive example: Lagrange interpolation
 
 ---
 
@@ -323,6 +341,7 @@ Question: What are x_i and y_i wrt to our data?
 <img rounded style="width: 80%" src="../../../assets/img/7-Polkadot/Data_Availability/reed-solomon.png" />
 
 Notes:
+
 - We want that polynomial of degree n-1
 - We can obtain it using any n
 
@@ -347,6 +366,7 @@ How do we do reconstruction?
 <img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_1.svg" style="width: 70%" />
 
 Notes:
+
 - Previously described Reed Solomon as if we are encoding the PoV into a single code word
 - Size limitations per code word -> many code words
 - Each code word encodes a small subset of the original data
@@ -358,6 +378,7 @@ Notes:
 <img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_2.svg" style="width: 70%" />
 
 Notes:
+
 - Previously described Reed Solomon as if we are encoding the PoV into a single code word
 - Size limitations per code word -> many code words
 - Each code word encodes a small subset of the original data
@@ -369,6 +390,7 @@ Notes:
 <img src="../../../assets/img/7-Polkadot/Data_Availability/Multiple_Code_Words_3.svg" style="width: 70%" />
 
 Notes:
+
 - Chunk i is actually composed of smaller chunks i for each code word in a PoV
 - If we can reassemble the data from any one code word, then we can reassemble all of them
 
@@ -379,22 +401,23 @@ Notes:
 Reed Solomon is costly, taking 14-20% of validator CPU time.
 
 **Obvious target for optimization!**
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <pba-flex center>
 
-- Systemic chunks recovery 
-<!-- .element: class="fragment" data-fragment-index="2" -->
-	- Removes need for decoding
-<!-- .element: class="fragment" data-fragment-index="2" -->
-	- Instead, re-encode to check chunk validity
-<!-- .element: class="fragment" data-fragment-index="2" -->
-	- ~50% CPU time improvement
-<!-- .element: class="fragment" data-fragment-index="2" -->
+- Systemic chunks recovery
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+      - Removes need for decoding
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+      - Instead, re-encode to check chunk validity
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+      - ~50% CPU time improvement
+  <!-- .element: class="fragment" data-fragment-index="2" -->
 - Compiler elision of array bounds checks + inlining
-<!-- .element: class="fragment" data-fragment-index="3" -->
-	- ~33-50% CPU time improvement depending on unsafe Rust use
-<!-- .element: class="fragment" data-fragment-index="3" -->
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+      - ~33-50% CPU time improvement depending on unsafe Rust use
+  <!-- .element: class="fragment" data-fragment-index="3" -->
 - Better implemented Reed Solomon library (potential 10x improvement!)
 <!-- .element: class="fragment" data-fragment-index="4" -->
 
@@ -402,8 +425,8 @@ Reed Solomon is costly, taking 14-20% of validator CPU time.
 
 Notes:
 Systemic chunks recovery RFC: https://github.com/alindima/RFCs/blob/av-chunk-indices/text/0047-assignment-of-availability-chunks.md
- 
-Better implemented Reed Solomon: https://github.com/paritytech/reed-solomon-novelpoly/issues/40 
+
+Better implemented Reed Solomon: https://github.com/paritytech/reed-solomon-novelpoly/issues/40
 
 ---
 

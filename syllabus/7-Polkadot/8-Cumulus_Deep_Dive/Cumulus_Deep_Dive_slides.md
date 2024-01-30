@@ -281,7 +281,7 @@ Notes:
 
 - First, sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to backers
 - At least one backer responds, signing its approval
-- Triggers gossip of candidate to parachain node import queues 
+- Triggers gossip of candidate to parachain node import queues
 - This hand shake isn't necessary with Aura. Why?
 
 ---
@@ -297,6 +297,7 @@ Some(CollationResult { collation, result_sender: Some(result_sender) })
 ```
 
 Notes:
+
 - Prepares the announcement of a new parablock to peers with "announce_with_barrier"
 - Waits for green light from validator by sending it a "result_sender"
 - When validator sends positive result through sender, then the collator announces the block
