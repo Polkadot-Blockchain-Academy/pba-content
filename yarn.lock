@@ -2320,14 +2320,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open@npm:8.4.2":
-  version: 8.4.2
-  resolution: "open@npm:8.4.2"
+"open@npm:8.4.0":
+  version: 8.4.0
+  resolution: "open@npm:8.4.0"
   dependencies:
     define-lazy-prop: ^2.0.0
     is-docker: ^2.1.1
     is-wsl: ^2.2.0
-  checksum: 6388bfff21b40cb9bd8f913f9130d107f2ed4724ea81a8fd29798ee322b361ca31fa2cdfb491a5c31e43a3996cfe9566741238c7a741ada8d7af1cb78d85cf26
+  checksum: e9545bec64cdbf30a0c35c1bdc310344adf8428a117f7d8df3c0af0a0a24c513b304916a6d9b11db0190ff7225c2d578885080b761ed46a3d5f6f1eebb98b63c
   languageName: node
   linkType: hard
 
@@ -2639,21 +2639,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.11.0":
+"qs@npm:6.11.0, qs@npm:^6.4.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
   dependencies:
     side-channel: ^1.0.4
   checksum: 6e1f29dd5385f7488ec74ac7b6c92f4d09a90408882d0c208414a34dd33badc1a621019d4c799a3df15ab9b1d0292f97c1dd71dc7c045e69f81a8064e5af7297
-  languageName: node
-  linkType: hard
-
-"qs@npm:^6.4.0":
-  version: 6.11.2
-  resolution: "qs@npm:6.11.2"
-  dependencies:
-    side-channel: ^1.0.4
-  checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
   languageName: node
   linkType: hard
 
@@ -2767,9 +2758,9 @@ __metadata:
     livereload: 0.9.3
     lodash: 4.17.21
     mustache: 4.2.0
-    open: 8.4.2
+    open: 8.4.0
     puppeteer: 1.20.0
-    reveal.js: 4.5.0
+    reveal.js: 4.4.0
     serve-favicon: 2.5.0
     try-require: 1.2.1
     update-notifier: 5.1.0
@@ -2784,10 +2775,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reveal.js@npm:4.5.0":
-  version: 4.5.0
-  resolution: "reveal.js@npm:4.5.0"
-  checksum: c6bd879c603c426666fc33da78b98e0cc14d073f2b6f62ac8f3d3b737c31dc95d21a7fa3ff920d6cc0f5adb28efc0e1fc46d7408065bad1feff6cefcf2986143
+"reveal.js@npm:4.4.0":
+  version: 4.4.0
+  resolution: "reveal.js@npm:4.4.0"
+  checksum: e3918968e919a53d7a572b175c81ba53133617f60ab149085e57c93a441ff5195434a187b127f0e8c29a0a073fe49c4b9cbec92245ad7d62ae65f0fb80de6ede
   languageName: node
   linkType: hard
 
