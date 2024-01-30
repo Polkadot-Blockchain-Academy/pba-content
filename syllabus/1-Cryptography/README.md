@@ -51,15 +51,11 @@ They should not zone-out of class to complete this during class time, they shoul
 1. `p4_signing` assignment problem
 1. ☕ Break
 1. [6-Advanced_Signatures](6-Advanced_Signatures-slides.md)
-   <!-- FIXME move to separate MONO repo for crypto-->
-   - 💻 [AES Modes](./materials/aes-modes-activity/) Activity
 1. `p6_merkle` assignment problem
 
 #### Afternoon
 
 1. [7-Hash_Based_Data_Structures-slides](./7-Hash_Based_Data_Structures-slides.md)
-   <!-- FIXME move to separate MONO repo for crypto-->
-   - 💻 [Merkle Tree](./materials/merkle-tree-activity/) Activity
 1. `p5_data_integrity_and_recovery` assignment problem
 1. `p7_exotics` assignment problem if it exists
 1. ☕ Break
@@ -70,6 +66,10 @@ They should not zone-out of class to complete this during class time, they shoul
 
 #### Morning
 
+1. [9-ZK_Proofs](9-ZK_Proofs-slides.md)
+
+#### Afternoon
+
 1. [8-Exotic_Primitives](8-Exotic_Primitives-slides.md)
-1. [9-Cryptography_In_Context](9-Cryptography_In_Context-slides.md)
+1. [10-Cryptography_In_Context](10-Cryptography_In_Context-slides.md)
 1. `p9_attacks::timing_attacks` assignment problem

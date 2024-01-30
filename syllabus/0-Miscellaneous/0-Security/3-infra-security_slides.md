@@ -117,7 +117,7 @@ Some company offered a prize for reading ToS till the end, by placing an easter 
 
 <img rounded style="width: 1400px" data-src="./img/3-infra-security/2-hetzner.png" />
 
-[Web source: Reddit](https://www.reddit.com/r/hetzner/comments/wucxs4/comment/ilfoj8u/)
+[Web source: Reddit](https://www.reddit.com/r/hetzner/comments/wucxs4/comment/ilfoj8u/) <!-- markdown-link-check-disable-line -->
 
 Notes:
 

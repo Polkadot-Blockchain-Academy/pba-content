@@ -1,24 +1,54 @@
 # Blockchain Fundamentals Module
 
-This module introduces students to the problem space that blockchain is trying to solve (resilient, equitable, trustless infrastructure) as well as the technical aspects of how it solves those problems and to what extent it falls short.
+This module introduces students to the shortcomings of centralized infrastructure including censorship, equity, reliability, and trustworthiness. It then demonstrates through lectures, coding activities, and games, how a peer to peer network can achieve consensus on a shared history that is recorded in the blockchain data structure.
 
-The primary coding activity, which will run throughout the module is [Blockchain From Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/).
+The module is designed to fit a schedule of 5 session of contact time lasting about 3-4 hours each. Some out-of-class study is expected, and a graded assignment is recommended.
 
-## Collaboration with Smart Contracts Module
+## Hands on Activities
 
-In some PBA offerings, this module is slated to be taught immediately before the module on Smart Contracts.
-When this is the case, these two modules can be intertwined to achieve a more compelling learning experience.
+- The primary coding activity is [Blockchain From Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/). Each student should close this repository to work through it in and after class. This will occupy 8-10 hours of class time.
 
-This intertwined approach begins with the Smart Contracts instructor defining and motivating the concept of a Smart contract, and leaving students wondering where such a contract could execute.
-It continues with the Blockchain instructor showing that a blockchain is a perfect place to run a smart contract, and introduces the technical aspects according to this module.
-Next, the Smart Contracts instructor gives students hands on experience building smart contracts in common blockchain-oriented programming environments.
-Finally, the super-module concludes with an activity in which students launch a blockchain and participate as node operators, then launch their own smart contracts on top of the just-launched blockchain.
+- Grandpa Board Game - TODO find the repo, it may have gotten deleted. For now the content was copied into https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html
 
-When taught as a collaboration, the super-module requires roughly 5 days.
-For more details, see the [Hybrid Lesson Outline](Outline_Hybrid.md)
+- Start a Block and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW). TODO Unify these in the separate repo so the activity can be re-used externally.
 
-## Independent Module
+## Approximate Schedule
 
-When the aforementioned collaboration with the smart contracts module is not practical, this module may still be taught standalone.
-When taught as a standalone entity, the module requires roughly 2.5 - 3 days.
-For more details, see the [Standalone Lesson Outline](Outline_Standalone.md).
+### Block 1
+
+- 🗣️ [Overview of Blockchains](./1-Overview_of_Blockchains_slides.md)
+- 🎲 (Optional) [Manual Consensus Game](./Manual_Consenus_Activity.md)
+- ☕ Break
+- 🗣️ [P2P Networks](./2-P2P_Networking_slides.md)
+- ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
+
+### Block 2
+
+- 🗣️ [Blockchain Datastructure](./3-Blockchain_Structure_slides.md)
+- ⌨️ Continue BFS
+- ☕ Break
+- 🗣️ [Consensus Part 1 - Author Selection](./4-Consensus-Authoring-slides.md)
+- ⌨️ Continue BFS
+
+### Block 3
+
+- 🗣️ [Econ and Game Theory in Blockchain](./5-Econ_and_Game_Theory_in_Blockchain_slides.md)
+- ⌨️ Continue BFS
+- ☕ Break
+- 🗣️ [Accounts vs UTXOs](./6-Accounts_and_UTXOs_slides.md)
+- ⌨️ Continue BFS
+
+### Block 4
+
+- ⌨️ Start A Blockchain and Perform Forks ([Writeup](./Start_A_Blockchain_Activity.md), [Repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW))
+- 🗣️ [Types of Forks](./7-Forks_slides.md)
+- ☕ Break
+- 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges_slides.md)
+- ⌨️ Continue BFS
+
+### Block 5
+
+- 🗣️ [Consensus Part 2 - Finality](./9-Consensus_Finality_slides.md)
+- 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
+- ☕ Break
+- 🗣️ Guest Speaker

@@ -18,18 +18,10 @@ duration: 1 hour
 <tr class="text-small">
 <td>
 
-- Substrate Lectures
-
-</td>
-<td>
-
-- Substrate Lectures
-
-</td>
-<td>
-
 - Introduction to FRAME
 - 👩‍💻 Exercise: Proof of Existence Runtime
+- Assignment 3 Feedback
+- FRAME Tips and Tricks
 - Announce FRAME Assignment
 
 </td>
@@ -38,6 +30,7 @@ duration: 1 hour
 - Pallet Coupling
 - FRAME Common Knowledge (Pallets & Traits)
 - FRAME Storage
+- Live Coding
 
 </td>
 <td>
@@ -47,21 +40,16 @@ duration: 1 hour
 - Origins
 - Outer Enum
 - Hooks
+- Live Coding
 
 </td>
-<td>
-
-- Complete FRAMEless Exercise
-
-</td>
-</tr>
-<tr class="text-small">
 <td>
 
 - Construct Runtime + Tests
 - 👨‍💻 Exercise: Tests
 - FRAME Benchmarking
 - 👨🏾‍💻 Exercise: Benchmarking
+- Live Coding
 
 </td>
 <td>
@@ -71,28 +59,13 @@ duration: 1 hour
   - Executive
 - Signed Extensions
 - Migrations & Try Runtime
+- Frame Updates
+- Live Coding
 
 </td>
 <td>
 
-- Spill Over + Live Coding
-- Polkadot Lectures
-
-</td>
-
-<td>
-
-- Polkadot Lectures
-
-</td>
-<td>
-
-- Polkadot Lectures
-
-</td>
-<td>
-
-- Complete FRAME Exercise
+- Complete FRAME Assignment
 
 </td>
 </tr>
@@ -190,7 +163,6 @@ pub mod pallet {
   use frame_system::pallet_prelude::*;
 
   #[pallet::pallet]
-  #[pallet::generate_store(pub(super) trait Store)]
   pub struct Pallet<T>(_);
 
   #[pallet::config]  // snip

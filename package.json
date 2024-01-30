@@ -3,24 +3,29 @@
   "version": "0.1.0",
   "description": "Polkadot Blockchain Academy",
   "scripts": {
-    "start": "reveal-md ./ --watch --absolute-url http://localhost:1948",
-    "s": "yarn start",
-    "dev": "yarn start",
+    "dev": "reveal-md ./ --watch --absolute-url http://localhost:1948",
     "help-rmd": "reveal-md --help",
-    "build": "rm -rf build && reveal-md ./ --static build",
-    "build-internal-static-slides": "rm -rf build && reveal-md ./ --static build --absolute-url https://do-not-share-pba-internal.on.fleek.co/",
-    "build-slides-for-site-book": "rm -rf ../src/slides && reveal-md ./ --static ../src/slides --absolute-url https://polkadot-blockchain-academy.github.io/pba-site/",
-    "build-student-static-slides": "rm -rf build && reveal-md ./ --static build --absolute-url https://polkadot-blockchain-academy.on.fleek.co/ --glob 'syllabus/[0-8]*/**/*[Ss]lides.md'",
+    "tag:cambridge": "git checkout tags/cambridge-2022 && yarn && yarn run build && mv build cambridge-2022&& git checkout main",
+    "tag:buenos-aires": "git checkout tags/buenos-aires-2023 && yarn && yarn run build && mv build buenos-aires-2023 && git checkout main",
+    "tag:berkeley": "git checkout tags/berkeley-2023 && yarn && yarn run build && mv build berkeley-2023 && git checkout main",
+    "tag:current": "git checkout main && yarn && yarn run build && mv build current",
+    "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv current build",
+    "move-frontpage": "cp -r ./frontpage/* ./build/.",
+    "prepare-deployment": "git fetch --tags && yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:current && mkdir build && yarn run move-tags && yarn run move-frontpage",
+    "clean": "rm -rf build",
+    "build": "yarn run clean && reveal-md ./ --static build",
+    "deploy": "gh-pages -d build",
     "serve": "http-server ./build -p 1949 -s & echo server started http://localhost:1949",
-    "fmt": "prettier --config .prettierrc.js --write '**/*.md'",
-    "fmt-book": "prettier --config .prettierrc.js --write '../src/**/*.md'",
+    "lint": "prettier --config .prettierrc.js '**/*.md' --check",
+    "lint:write": "prettier --config .prettierrc.js --write '**/*.md'",
     "mod-links": "MOD_NUMBER=$0; find syllabus/ -path syllabus/${MOD_NUMBER}\\*.md -print0 | xargs -0 -n1 markdown-link-check -c .github/workflows/mlc_config.json && echo \"\nCheck complete for mod\"",
     "links": "markdown-link-check -c .github/workflows/mlc_config.json"
   },
   "dependencies": {
-    "reveal-md": "git+https://github.com/NukeManDan/reveal-md.git#patch-1"
+    "reveal-md": "^5.5.2"
   },
   "devDependencies": {
+    "gh-pages": "^6.1.0",
     "http-server": "^14.1.1",
     "markdown-link-check": "^3.10.3",
     "prettier": "^2.6.2"

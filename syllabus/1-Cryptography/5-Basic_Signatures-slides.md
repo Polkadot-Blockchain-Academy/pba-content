@@ -46,9 +46,9 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ## Hash Functions
 
-There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.
+There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.<!-- .element: class="fragment" data-fragment-index="0" -->
 
-For now, we only concern ourselves with using Blake2.
+For now, we only concern ourselves with using Blake2.<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
 
@@ -58,12 +58,10 @@ As mentioned in the introduction,<br />it's often more practical to sign the has
 
 Therefore, the sign/verify API may be _used_ like:
 
-<pba-flex center>
+- `fn sign(sk, H(msg)) -> signature;` <!-- .element: class="fragment" data-fragment-index="0" -->
+- `fn verify(pk, H(msg), signature) -> bool;` <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- `fn sign(sk, H(msg)) -> signature;`
-- `fn verify(pk, H(msg), signature) -> bool;`
-
-</pba-flex>
+Notes:
 
 Where `H` is a hash function (for our purposes, Blake2).<br />
 This means the verifier will need to run the correct hash function on the message.
@@ -83,7 +81,12 @@ Signatures provide many useful properties:
 
 Notes:
 
-If a hash is signed, you can prove a signature is valid _without_ telling anyone the actual message that was signed, just the hash.
+Question what do each of these mean?
+
+- Confidentiality - If a hash is signed, you can prove a signature is valid _without_ telling anyone the actual message that was signed, just the hash.
+- Authenticity: Authenticity assures that the data comes from a verified source.
+- Integrity assures that the data has not been changed in an unauthorized manner.
+- Non-Repudiation provides evidence that can be used to prove the involvement of parties in a communication, preventing them from denying their actions.
 
 ---
 
@@ -169,7 +172,6 @@ is difficult
 Setup is difficult secret sharing and setup
 
 Show image of ECDSA vs schnorr to demonstrate this
----
 
 ## Ed25519
 
