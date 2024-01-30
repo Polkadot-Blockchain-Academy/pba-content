@@ -152,11 +152,16 @@ pub enum Node {
 <!-- TODO: Add a nice illustration similar to Shawn's dev-trie-backend-walk here. --></aside></script></section><section  data-markdown><script type="text/template">
 ## Hash Trie
 
-- Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.
-- Solution: pre-hash the data before inserting it to make keys random.
-- _Resistance against partial collision is important._
-- Could be a Merkle trie or regular.
-</script></section><section  data-markdown><script type="text/template">
+- Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Solution: pre-hash the data before inserting it to make keys random.<!-- .element: class="fragment" data-fragment-index="2" -->
+- Resistance against partial collision is important.<!-- .element: class="fragment" data-fragment-index="3" -->
+- Could be a Merkle trie or regular.<!-- .element: class="fragment" data-fragment-index="4" -->
+
+<aside class="notes"><ul>
+<li>Q: Why would pre-hashing the data make the keys random? A: Because each piece of data should be unique! it is a good selection scheme.
+Talk about how to determine keys in bitcoin state tree</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Computational and Storage <br />Trade-offs
 
 What radix $r$ is best?
@@ -166,9 +171,12 @@ What radix $r$ is best?
 
 ...but:
 
-- Higher branching at high levels of the tree can give smaller batch proofs.
-- For storage, it is best to read consecutive data so high $r$ is better.
-</script></section><section  data-markdown><script type="text/template">
+- Higher branching at high levels of the tree can give smaller batch proofs. <!-- .element: class="fragment" data-fragment-index="0" -->
+- For storage, it is best to read consecutive data so high $r$ is better. <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<aside class="notes"><p>Q: Why would higher branching at high levels of the tree give smaller batch proofs?
+A: Less nodes are needed in order to prove various parts of the tree</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Merkle Mountain Ranges
 
 - Efficient proofs and updates for a hash chain
@@ -193,6 +201,13 @@ The trees that are here correspond to the binary digits of 13 that are 1.</p>
 <aside class="notes"><ul>
 <li>Not as balanced as a binary tree but close</li>
 <li>Can update the peak nodes alone on-chain</li>
+</ul>
+<p>Applications:</p>
+<ul>
+<li>Stateless Client can very efficiently prove the end parts of the tree allowing for a client which doesnt need to store the whole blockchain just a few latest nodes.</li>
+<li>Look at the structure if each leaf is a block then if previous stuff is pruned that is fine because you still carry around the hash or peak of a selection of blocks</li>
+<li>Lightclients, efficiently see whether a transaction is included in a block without needing the entire the entire blockchain history
+We use this in polkadot for our bridging!!</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->

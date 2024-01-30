@@ -61,9 +61,9 @@ Signature libraries should generally all expose some basic functions:
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Hash Functions
 
-There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.
+There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.<!-- .element: class="fragment" data-fragment-index="0" -->
 
-For now, we only concern ourselves with using Blake2.
+For now, we only concern ourselves with using Blake2.<!-- .element: class="fragment" data-fragment-index="1" -->
 </script></section><section  data-markdown><script type="text/template">
 ## Hashed Messages
 
@@ -71,16 +71,12 @@ As mentioned in the introduction,<br />it's often more practical to sign the has
 
 Therefore, the sign/verify API may be _used_ like:
 
-<pba-flex center>
+- `fn sign(sk, H(msg)) -> signature;` <!-- .element: class="fragment" data-fragment-index="0" -->
+- `fn verify(pk, H(msg), signature) -> bool;` <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- `fn sign(sk, H(msg)) -> signature;`
-- `fn verify(pk, H(msg), signature) -> bool;`
-
-</pba-flex>
-
-Where `H` is a hash function (for our purposes, Blake2).<br />
-This means the verifier will need to run the correct hash function on the message.
-</script></section><section  data-markdown><script type="text/template">
+<aside class="notes"><p>Where <code>H</code> is a hash function (for our purposes, Blake2).<br />
+This means the verifier will need to run the correct hash function on the message.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Cryptographic Guarantees
 
 Signatures provide many useful properties:
@@ -92,7 +88,13 @@ Signatures provide many useful properties:
 <li class="fragment"><strong>Non-repudiation: </strong> Yes</li>
 </ul>
 
-<aside class="notes"><p>If a hash is signed, you can prove a signature is valid <em>without</em> telling anyone the actual message that was signed, just the hash.</p>
+<aside class="notes"><p>Question what do each of these mean?</p>
+<ul>
+<li>Confidentiality - If a hash is signed, you can prove a signature is valid <em>without</em> telling anyone the actual message that was signed, just the hash.</li>
+<li>Authenticity: Authenticity assures that the data comes from a verified source.</li>
+<li>Integrity assures that the data has not been changed in an unauthorized manner.</li>
+<li>Non-Repudiation provides evidence that can be used to prove the involvement of parties in a communication, preventing them from denying their actions.</li>
+</ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Signing Payloads
 
@@ -150,19 +152,23 @@ Examples:
 <li class="fragment">ECDSA complicates more advanced cryptographic techniques, like threshold signatures.</li>
 <li class="fragment">Non-Deterministic</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
-## Ed25519
 
+<aside class="notes"><p>inverted nonce to get from all signing parties
+is difficult</p>
+<p>Setup is difficult secret sharing and setup</p>
+<p>Show image of ECDSA vs schnorr to demonstrate this</p>
+<h2 id="ed25519">Ed25519</h2>
 <ul>
 <li class="fragment">Schnorr signature designed to reduce mistakes in implementation and usage in classical applications, like TLS certificates.</li>
 <li class="fragment">Signing is 20-30x faster than ECDSA signatures.</li>
 <li class="fragment">Deterministic</li>
-</ul>
-</script></section><section  data-markdown><script type="text/template">
+</ul></aside></script></section><section  data-markdown><script type="text/template">
 ## Sr25519
 
 Sr25519 addresses several small risk factors that emerged<br />from Ed25519 usage by blockchains.
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>Can be Deterministic but in Substrate is implemented as non-deterministic</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Use in Substrate
 
 - Sr25519 is the default key type in most Substrate-based applications.
