@@ -675,7 +675,9 @@ const await api.call.nominationPoolsApi.pointsToBalance(poolId, points);
 <!-- .element: class="fragment" -->
 - toNumber(), toJson(), toString(), toHuman(), are available depending on data type returned
 <!-- .element: class="fragment" -->
-- toHuman(): "human-readable representation" - generally safer as numbers are returned as strings
+- toHuman(): "human-readable representation", usually to strings.
+<!-- .element: class="fragment" -->
+- Safer to format balances as strings - numbers may overflow.
 <!-- .element: class="fragment" -->
 
 ---v
@@ -904,9 +906,11 @@ const raw = api.registry.createType('ExtrinsicPayload', payload, {
 
 - Build a payload using Polkadot JS API
 
-- Generating a QR Code with that payload to sign on Polkadot Vault
+- Generating a QR Code representation of the payload
 
-- Scan the resulting signature
+- Scan QR Code with Polkadot Vault
+
+- Scan the resulting signature from Polkadot Vault back to dapp
 
 - Send the transaction with the payload AND signature
 
@@ -914,7 +918,7 @@ const raw = api.registry.createType('ExtrinsicPayload', payload, {
 
 ### Submitting Payload from QR
 
-<span style="font-size:22px;">
+<span style="font-size:21px;">
 
 ```javascript
 import { decodeAddress } from '@polkadot/util-crypto';
@@ -945,7 +949,8 @@ const signature = await scanSignature();
 
 // Add signature & payload to tx and send.
 tx.addSignature('//Bob', signature, payload);
-const unsub = await txRef.current.send(
+
+const unsub = await tx.send(
   ({ status, events = [] }: AnyApi) => {
     ...
   });
@@ -1032,7 +1037,7 @@ Use a visualizer for package analysis, cutting down on dependencies.
 <!-- .element: class="fragment" -->
 - When state changes, the component re-renders and the DOM is refreshed
 <!-- .element: class="fragment" -->
-- Every child component also re-renders if its props have changed
+- Every child component could potentially re-render if its props have changed
 <!-- .element: class="fragment" -->
 
 ---v
@@ -1118,13 +1123,9 @@ const UpdateTitleButton: FC = ({ setTitle }: { setTitle: Dispatch<SetAction<stri
 </span>
 <!-- .element: class="fragment" -->
 
-- Use local providers: wrapping a provider around components deeper in the component tree.
-<!-- .element: class="fragment" -->
-
 <span>
 
 <br/>
-
 <span style="font-weight: bold">
 
 - Only use state required to determine UI updates.
