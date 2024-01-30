@@ -87,6 +87,21 @@ How does Selena _optimally_ sell the item?
 - For price $p$, prob. of making a sale is $(1-p^2)$.
 - Hence her expected revenue is $p \cdot ( 1-p^2)$.
 
+Notes:
+
+- If both buyers accept the posted price, we assume the firm selects a random buyer to trade with.
+- The proof of this and all other math formulas can be found in the slides, for anyone interested.
+- Assuming that 100% of the sale price is profit for the seller, this profit is
+
+  - p in case of selling, 0 otherwise, where
+  - (1-p^2) is the probability of selling the item.
+  - To see this probability, consider conversely that the probability that none of the buyers accepts the price must be $p^2$, because each valuation must be below $p$, and these are two individual events each happening with probability $p$ (recall: valuations are uniformly distributed between 0 and 1).
+
+- $Pr\{v_i \leq x\}$ is the probability that the randomly drawn value of valuation $v_i$ is below $x$.
+- Independent values will be important: when is this (not) a sensible assumption?
+  (Example: oil drilling rights auctions, ...)
+- Uniform distribution is just for pedagogical reasons; standard model allows for more general distributions.
+
 ---
 
 ## Price posting
@@ -105,6 +120,14 @@ How does Selena _optimally_ sell the item?
 
 </pba-col>
 </pba-cols>
+
+Notes:
+
+- Prices, valuations, and revenue are given in the same currency unit, say, USD.
+- How do we maximize the expected revenue function f(p)=p (1-p^2)?
+  The function has a unique peak, so at the maximum, the first derivative must be zero.
+- The function is maximized for a $p$ satisfying $$ f'(p)=1-p^2 - 2p^2 = 0 \implies p = \sqrt{1/3}.$$
+- Expected revenue is then $f(\sqrt{1/3})=\frac{2}{3}\sqrt{1/3}\approx 0.38.$
 
 ---
 
@@ -189,6 +212,19 @@ Four auction formats we discuss today:
 
 <img rounded style="width: 1300px;" src="./img/second-price-auction.svg" />
 
+Notes:
+
+- We can immediately say that you should never overbid (i.e., bid above your valuation), because in that case your profit can only be zero (if you lose) or negative (if you win).
+  So the key question is whether you should ever underbid.
+- Look at Situation 1: In the case that Bob's bid is higher than your valuation, bidding truthfully or underbidding both lead to losing and having a revenue of zero.
+- Look at Situation 2: But if Bob's bid is lower than your valuation, any bid between these two values leads to you winning and having the same profit (namely the difference of these values), hence there is no gain in underbidding.
+  However if you underbid too much, you run the risk of losing and having zero profit.
+- Hence in both cases we see that underbidding does not increase your profit, and can only decrease your chance of winning.
+  So it is better to bid exactly your valuation.
+- The proof can be easily generalized to any number of bidders (to obtain that in a second-price auction, it is a dominant strategy for each bidder to bid truthfully.
+
+TIP: use arrow chars in unicode for style: https://www.htmlsymbols.xyz/arrow-symbols
+
 ---
 
 ## Second-price auction
@@ -212,6 +248,10 @@ Four auction formats we discuss today:
   - If one bid is above $r$, the payment is $r$.
   - If both bids are above $r$, the payment is the second-highest bid.
 
+Notes:
+
+- Selena is basically participating as a bidder bidding r
+
 ---
 
 ## Reserve price
@@ -224,9 +264,35 @@ Four auction formats we discuss today:
 
 <img rounded style="width: 1400px;" src="./img/reserve-price.svg" />
 
+Notes:
+
+- Basically there are four cases equally likely. In one case she makes a loss, the other doesn't matter but in two cases she makes a gain.
+- The proof idea is that if $r=0.5$, half of the time one valuation is above it and the other is below it, and the reserve price increases the paying price.
+  On the other hand, if both valuations are below $r$ then there is no sale, which decreases Selena's revenue, but this case only happens one quarter of the time.
+  Finally, if both valuations are above $r$, the presence of a reserve price does no affect the result.
+  Overall, there is a positive net gain in Selena's expected revenue.
+  Below we present the formal proof.
+- The probability that both valuations are below $r$ is $r^2$, the prob. that $r$ is in between the valuations is $2r(1-r)$, and the prob.that both valuations are above $r$ is $(1-r)^2$.
+  You can check that these probabilities sum up to one.
+- In the first case Selena's revenue is zero, and in the second case it is $r$.
+  Hence the expected revenue for the first two cases is $2r^2(1-r)$.
+- To compute the expected revenue of the third case, we simply copy the integral formula for the expected value (from a couple of slides ago), but we restrict the integration limits to $[r, 1]$:
+  \begin{align}
+  \int_r^1 x\cdot f(x) dx &= 2\int_r^1 (x-x^2)dx\\
+  &=2\cdot \left[\frac{x^2}{2}-\frac{x^3} {3}\right]\_r^1 \\&=\frac{1}{3} - r^2 + \frac{2}{3}r^3.
+  \end{align}
+- Putting all terms together, we obtain that the expected revenue is
+  $$R(r)=0+2r^2(1-r)+\left(\frac{1}{3} - r^2 + \frac{2}{3}r^3\right)=\frac{1}{3}+r^2-\frac{4}{3}r^3.$$
+- To maximize the auctioneer's expected revenue function $R(r)$ above:
+  - We evaluate the function at all the local extrema (minima and maxima).
+  - Since the function is continuous and differentiable, the local extrema are found at the borders $r=0$ and $r=1$, and at the roots of the derivative $R'(r)=2r-4r^2=0$.
+    These roots are $r=0$ and $r=1/2$.
+  - By inspecting all these points, we find that the global maximum is found at $r=1/2$, with a value of $R(1/2)=5/12\approx 0.42$.
+- Literature: Myerson, Roger B. "Optimal auction design." Mathematics of Operations Research 6, No. 1 (1981): 58-73.
+
 ---
 
-## English auction
+## English clock auction
 
 Recall the rules:
 
@@ -240,11 +306,17 @@ Recall the rules:
 
 </pba-flex>
 
+Notes:
+
+- Next we move to English clock auctions, which have a very similar analysis.
+- Notice it has a flavor of a second-price auction: the price you pay is decided by another bidder, not you.
+- In a sense, these two auction formats are strategically equivalent!
+
 ---
 
-## English auction
+## English clock auction
 
-- English auction is **strategically equivalent** to static second-price auction.
+- English clock auction is **strategically equivalent** to static second-price auction.
 - It is a dominant strategy to stay until the price reaches one's valuation.
 - The expected revenue for Selena is the also the same!
 - Consequently, these two formats are also **revenue equivalent**.
@@ -255,6 +327,15 @@ Recall the rules:
 
 - Second-price and English auctions popular among theorists, not so popular among practitioners.
 - One reason is that they are prone to _shill-bidding_: bidder that acts on behalf of the auctioneer to drive up the price.
+
+Notes:
+
+- You could argue its similar like a reserve price, but the difference is that the other bidders don't know the value.
+- Both second-price auctions and English auctions have the truthful bidding property, which is very satisfactory for theorists.
+  However, as you can probably tell, they are not so popular in practice.
+- A shill bidder has no intention of winning, but just increasing the price that the winner must pay.
+  They do it to benefit the auctioneer.
+- Shill bidding is frowned upon, sometimes illegal, but it is usually hard or impossible to prove and to prevent.
 
 ---
 
@@ -365,7 +446,7 @@ Recall the rules:
 
 - Static first-price auction.
 - Static second-price auction.
-- English auction.
+- English clock auction.
 - Dutch auction.
 
 </pba-col>
@@ -374,7 +455,7 @@ Recall the rules:
 **Learned under standard assumptions:**
 
 - First-price and Dutch auctions are strategy equivalent.
-- Second-price and English auctions are strategy equivalent.
+- Second-price and English clock auctions are strategy equivalent.
 - All four auctions are revenue equivalent.
 - Having a reserve price increases the expected revenue,
   and it beats posting a price.
@@ -535,8 +616,8 @@ Dynamic first-price auction with _random ending time._
 
 ## NFT Auction
 
-- You have the chance to bid on one of 39 NFTs that are created by a professional artist.
-- There are 13 unique NFTs which are minted each three times.
+- You have the chance to bid on one professionally created NFTs by an experienced artist.
+- There are 13 unique NFTs which are minted up to each three times (random process).
 - Use your budget that you accumulated during the last Academy Games.
 - Everything that you will not use for bidding (or if your bid was lower than your budget), you will receive at the end of the Academy.
 - **100% of the revenue of the auctions goes to the artist.**

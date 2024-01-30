@@ -22,6 +22,14 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- Focus on the pure economic concepts and not diving into blockchain yet.
+- That is covered by another lecture doing so.
+- Economics of Polkadot
+- Interactive: Ask questions!
+- Collective Decision Making is held by Bo Li, Guest lecturer of PolyU
+
 ---
 
 # Economics Basics
@@ -56,6 +64,13 @@ duration: 2 hour
 </pba-cols>
 
 🤖$~~~$ 🤝 $~~~$👪
+
+Notes:
+
+- Cryptography would be meaningless without humans using it.
+- They have a great symphony: where cryptography's has boundaries, economics offers solutions and vice versa.
+- For example, in a commit-reveal scheme, cryptographically the process is bulletproof, the original choices can be revealed and not be tempered with. But, in reality, questions arise to why people should reveal, maybe its better to run off and not reveal.
+- Together they are the toolbox to design unstoppable systems.
 
 ---
 
@@ -158,6 +173,10 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- A rational agent would compile all the factors into a single dimension (utility or value) and maximizes for payout.
+
 ---
 
 ## Incentives often work well
@@ -221,6 +240,19 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- **Question: Why did that happen?**
+- Gneezy & Rustichini (2000): A fine is a price.
+- Additional study: Gneezy & Rustichini (2000): Pay enough or don't pay at all
+  - Again in Israel
+  - Highschool kids go door to door for fundraising
+  - They separated them into three groups.
+    - Control: No change
+    - Low Pay: Some small commission for each sold card.
+    - High Pay: Higher commission for each sold card.
+  - Outcome: Low pay performance was lower than no pay. High pay was higher though.
+
 ---
 
 ## The Power of Intrinsic Incentives
@@ -249,6 +281,13 @@ duration: 2 hour
 <li class="fragment">This shifts the application of incentives beyond a human context and into the realm of digital systems and automated processes.</li>
 </ul>
 </pba-flex>
+
+Notes:
+
+- Still, not always financial incentives - reputation scores
+- While automated agents existed for a while, they become much more accessible for everybody due to blockchain technology
+- Your electric car might soon have a wallet that automatically pays for charging at a red light.
+- Or you might be able to pay for priority green lights.
 
 ---
 
@@ -331,6 +370,20 @@ duration: 2 hour
 - What if the Quantity is lower than the Eq. Quantity?
 - Moving either supply or demand leads to new Eq.
 
+Notes:
+
+- Where the curves meet we obtain a point of equilibrium, which establishes a market quantity and a market price.
+- If price is higher than equilibrium price:
+  - more supply than demand
+  - some goods remain unsold
+  - sellers will be forced to reduce the price to get rid of their stock.
+- if price is lower:
+  - there is more demand than supply.
+  - this leads to shortages of the good
+  - sellers will notice this and increase the price.
+- Hence, we always converge to the equilibrium price.
+- Similarly, if the quantity supplied is too low, there is a business opportunity to supply more unit of the good and make a profit, so eventually someone will increase the supply quantity.
+
 ---
 
 ## Elasticity
@@ -348,11 +401,21 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- **Question**: Examples for each?
+  - High elasticity: luxury goods or with high substitutes, where buyers can easily adjust their consumption. Butter / Magerine
+  - Low elasticity: essential goods such as energy.
+
 ---
 
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-1.png" />
 </div>
+
+Notes:
+
+- Which one represents low / high elasticity?
 
 ---
 
@@ -360,11 +423,22 @@ duration: 2 hour
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-2.png" />
 </div>
 
+Notes:
+
+- Inelastic: A rather big price change leads to little change in quantity.
+- Elastic: A rather big price change leads to a large change in quantity.
+
 ---
 
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-3.png" />
 </div>
+
+Notes:
+
+- What are some examples?
+- Perfectly Elastic: Ice-Tea
+- Perfectly Inelastic: Insulin
 
 ---
 
@@ -440,6 +514,11 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- A monopoly is if only one seller exists
+- A monopolistic market is if there might be more sellers but one is dominant.
+
 ---
 
 ## Why discuss this?
@@ -485,6 +564,64 @@ duration: 2 hour
 </ul>
 
 </pba-flex>
+
+Notes:
+
+- Monopolies often form when large entities engage in price wars and undercut smaller businesses until they go bankrupt.
+- There are different types of monopolies:
+  - Natural (high barrier of entry, e.g. railroads)
+  - Geographic
+  - Technological
+  - Licensed
+
+---
+
+## Is the Government a Monopoly?
+
+Notes:
+
+- Legitimate use of Force
+- Provider of Public Goods
+- Regulation
+
+---
+
+## Monopoly: Disadvantages
+
+<pba-flex center>
+<ul>
+<li class="fragment">Higher Prices: they are free to set prices arbitrarily.</li>
+<li class="fragment">Inferior Products: there is little incentive to improve the product offered.</li>
+<li class="fragment">Price Discrimination: different prices can be charged for different customers (based on their elasticity).</li>
+<li class="fragment">This leads to sub-optimal pricing and sub-optimal society welfare: consumers either pay more than they should ("monopolist tax") or are excluded from market.</li>
+
+Notes:
+
+- There are three conditions for price discrimination to work:
+  - The company needs to have sufficient market power
+  - The company needs to be able to identify differences in demand.
+  - The company needs to be able to restrict secondary markets.
+- This is a "problem" for the consumers, because it reduces their welfare, i.e., they pay more than they would in a competitive market.
+- It also sometimes even prevents some groups from purchasing.
+
+---
+
+## Example: Antitrust case against Microsoft in 1990s
+
+<pba-flex center>
+<ul>
+<li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
+<li class="fragment">A removal of the IE would lead to a "Blue Screen of Death".</li>
+
+---
+
+## Monopoly: Advantages?
+
+Notes:
+
+- Economies of scale (specialisation)
+- Price stability
+- Potentially higher investments like R&D that benefit customers down the line.
 
 ---
 
@@ -624,6 +761,30 @@ duration: 2 hour
     <li class="fragment"><strong>Specialization result</strong>: With trade, both are better off than in Situation A.</li>
 </ul>
 </pba-flex>
+
+---
+
+## Situation A: Autarky
+
+<div style="text-align: center;">
+    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-autarky.png" />
+</div>
+
+---
+
+## Situation: Focus on Comparative Advantage
+
+<div style="text-align: center;">
+    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-trade.png" />
+</div>
+
+---
+
+## Situation: Trade
+
+<div style="text-align: center;">
+    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-betteroff.png" />
+</div>
 
 ---
 
@@ -843,6 +1004,18 @@ duration: 2 hour
 
 ---
 
+## Situation 5
+
+> Andrew had 50 Microsoft stocks. He decided to sell 40 of them at a price of 350 USD, still keeping 10. He used his earnings to pay some bills and does not plan to buy any stocks back. In the following days he caught himself looking at the charts hoping the price would go down to less than 350 USD.
+
+Notes:
+
+- Not rational.
+- Regret aversion?
+- Sunk cost fallacy?
+
+---
+
 ## Titan Submersible Incident
 
 <ul>
@@ -874,6 +1047,14 @@ duration: 2 hour
 <span style="display:flex; justify-content:center; align-items:center;">
 <img rounded style="width:600px" src="./img/2.1-ocean-gate-blog-post.png" class="fragment" />
 </span>
+
+Notes:
+
+- What biases could be happening here?
+- **Survivor bias**: is the logical error of concentrating on entities that passed a selection process while overlooking those that did not.
+  This can lead to incorrect conclusions because of incomplete data.
+- Of course most accidents happen because of operator error, because most vessels underwent certification!
+- What bias are we facing maybe? **Hindsight Bias**: is the common tendency for people to perceive past events as having been more predictable than they were.
 
 ---
 
@@ -1069,6 +1250,20 @@ Link will be distributed!
 - What strategy did you employ?
 - Did your behavior change over the rounds?
 - What was the best choice for each firm?
+
+Notes:
+
+- Calculate equilibrium:
+- $\pi = P(Q) * q$
+- For Firm 1: $\pi = (60 - q_1 - q_2) * q_1$
+- solve for optimal $q_1$ -> delta-pi / delta-q1 = -2q_1 - q_2 + 60 =! 0
+- q_1\* = (60 - q_2) / 2
+- q_2\* = (60 - q_1) / 2
+- q1* = (60 - (60-q1*)/2) / 2
+- = 30 - 15 + (q_1*/4) = q_1*
+- = q_1* = q_2* = 20
+- Show with example.
+  If firm 1 plays 20 then 19 leads to smaller payoff and 21 for other firm.
 
 ---
 

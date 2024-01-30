@@ -6,6 +6,15 @@ duration: 1 hour lesson + 2 hours activities
 
 # Game Theory Basics
 
+Notes:
+
+Game theory is a field of study at the intersection of mathematics and economics.
+It considers an economic system to be a game and people to be players.
+According to the rules of the game, it analyzes the players' best strategies and then uses this analysis to explain the observed behavior of the economic system.
+
+Game theory is an interesting an powerful tool, because it's fairly simple and intuitive, yet extremely powerful to make predictions.
+Hence, it's a good idea to learn game theoretical principles and keep them in the back of your mind when designing economic systems.
+
 ---
 
 # Outline
@@ -170,6 +179,11 @@ Game theory distinguishes between:
 | Simple Example        | Chess                                                 | Poker                                                      |
 | Economic Example      | Sealed auction for seized Bitcoin.                    | Used-car market: the resale value of a used car is opaque. |
 
+Notes:
+
+- There is also the notion of perfect and imperfect information which we should skip here.
+  More info: https://economics.stackexchange.com/questions/13292/imperfect-vs-incomplete-information
+
 ---
 
 ### Three firms want to hire an engineer...
@@ -294,21 +308,11 @@ In the interrogation they both are offered the following:
 
 ---
 
-## Finding the NE
-
-<div style="text-align: center;">
-    <img style="width: 1200px; margin: auto; display: block;" src="./img/2.2-PD-NE-3.png" />
-</div>
-
----
-
-## Finding the NE
+## Prisoners' Dilemma IRL
 
 <div style="text-align: center;">
     <img style="width: 1200px; margin: auto; display: block;" src="./img/2.2-PD-NE-4.png" />
 </div>
-
----
 
 ## Finding the NE
 
@@ -659,6 +663,8 @@ Link will be distributed!
 
 ---
 
+---
+
 ## Game 1: Results!
 
 ---
@@ -711,6 +717,10 @@ Link will be distributed!
     <li class="fragment">Each strategy would play against every other strategy and against itself.</li>
 </ul>
 
+Notes:
+
+- Based on https://ve42.co/Axelrod1980a and https://www.youtube.com/watch?v=mScpHTIi-kM
+
 ---
 
 ## Repeated Prisonner's Dilemma
@@ -737,6 +747,11 @@ Link will be distributed!
         </ul>
     </li>
 </ul>
+
+Notes:
+
+- This was rather big surprise, especially since dominant strategy is being nasty.
+- A lot of it is what we can observe in today's politics.
 
 ---
 
