@@ -44,8 +44,9 @@ Yes!! Sassafras!!<!-- .element: class="fragment" data-fragment-index="1" -->
 - Go fast be secure etc.. <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
-    - Does anyone know how we can still have forks no matter what?
-    - Why do we want that again? 
+
+- Does anyone know how we can still have forks no matter what?
+- Why do we want that again?
 
 ---
 
@@ -68,8 +69,10 @@ a signature or proof that you produced that random value
 - Meaning we have a valid signature but from that signature cannot identify which secret in the ring signed the message <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
-    - Ring signatures trade some _non-repudation_ for _privacy_.
-    - So what do we
+
+- Ring signatures trade some _non-repudation_ for _privacy_.
+- So what do we
+
 ---
 
 # VRF
@@ -78,8 +81,9 @@ Notes:
 - We can then submit a VRF 'signature' or proof that we indeed possess the secret that generated that random output <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
-    VRF value is like a pubkey (Publicly known) and can provide
-    a signature or proof that you produced that random value
+
+VRF value is like a pubkey (Publicly known) and can provide
+a signature or proof that you produced that random value
 
 ---
 
@@ -125,9 +129,11 @@ Answer: Active consensus participants (Validators) <!-- .element: class="fragmen
 - When should we create a ticket? <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
-    1. Lottery being participation in consensus!
-    1. Tickets should be created and submitted One epoch before the Party begins
-    1. Why do we want to be a person selected to participate in consensus again?
+
+1. Lottery being participation in consensus!
+2. Tickets should be created and submitted One epoch before the Party begins
+3. Why do we want to be a person selected to participate in consensus again?
+
 ---
 
 # Submission of tickets
@@ -164,8 +170,9 @@ Notes: - Consecutive slots can lead to more biasability in the randomness later 
 1. `[tick1, tick3, .., tick2, tick0]` <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
-    1. How does this help?
-    1. Answer: If you have found a way to get consecutive tickets then it breaks up the consecutive tickets
+
+1. How does this help?
+2. Answer: If you have found a way to get consecutive tickets then it breaks up the consecutive tickets
 
 ---
 
