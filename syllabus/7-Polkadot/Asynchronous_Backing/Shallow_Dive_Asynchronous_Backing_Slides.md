@@ -38,6 +38,9 @@ Lets get to it
 
 <img rounded style="width: 1100px" src="../assets/synchronous_backing_simplified.svg" />
 
+> Why is this synchronous?
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 Notes:
 
 - The dividing line between the left and right is when a candidate is backed on chain
@@ -56,9 +59,13 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
+> Why is this asynchronous?
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
 Notes:
 
-Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing
+- Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing
+- Why is backing asynchronous in this diagram?
 
 ---
 
@@ -172,7 +179,7 @@ Image version 3:
 
 <pba-flex center>
 
-- A parachain's record of all parablocks on a particular chain fork produced but not yet included
+- A parachain's record of all parablocks on a particular chain fork that have been produced but not yet included
 - Used to apply limitations when constructing future blocks
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Lives in the parachain runtime
@@ -194,6 +201,7 @@ Limitation example, upward messages remaining before the relay chain would have 
 
 Notes:
 
+- Segment filled with ancestors from the perspective of a new candidate being built
 - Segment added to as each new block is imported into the parachain runtime
 - Segment shrinks when one of its ancestor blocks becomes included
 - Maximum unincluded segment capacity is set both on the parachain and relay chain
@@ -218,7 +226,7 @@ UsedBandwidth:
 
 <pba-flex center>
 
-- The relay chain's record of all candidates on all chain forks from all parachains
+- The relay chain's record of all unincluded candidates on all chain forks from all parachains
 - As if you folded all unincluded segments into one huge structure
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Used to store candidates and later provide them to the on-chain backing process
@@ -236,7 +244,8 @@ UsedBandwidth:
 
 Notes:
 
-- Fragment trees only built for active leaves
+- Fragment tree composed of multiple unincluded segments for the same parachain
+- Fragment trees are rooted in relay chain active leaves
 - Fragment trees built per scheduled parachain at each leaf
 - Fragment trees may have 0 or more fragments representing potential parablocks making up possible futures for a parachain's state.
 - Collation generation, passing, and seconding work has already been completed for each fragment.
@@ -269,7 +278,7 @@ Notes:
   - Overlapping leases of many lengths
   - Lease + On-demand
 - How does asynchronous backing help?
-- The unincluded segment is necessary to build 2 or more parablocks in a single relay block
+  - The unincluded segment is necessary to build 2 or more parablocks in a single relay block
 
 ---
 
