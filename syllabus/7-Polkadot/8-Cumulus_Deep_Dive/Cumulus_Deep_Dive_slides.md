@@ -75,7 +75,7 @@ Notes:
   - Author and submit collations
 - Collation: Info necessary for validators to process and validate a parachain block.
 - Collations include: upward and horizontal messages, new validation code, resulting head data, proof of validity, processed downward messages, and hrmp_watermark (relay block up to which all hrmp messages have been processed)
-- PoV: The smallest bundle of information sufficient to validate a block.
+- PoV: Information necessary to mimic parachain state and transactions for the purpose of executing a single parachain block.
   Will revisit in more detail.
 
 ---
@@ -93,6 +93,9 @@ Notes:
 Notes:
 
 - New best head: New block at the head of the fork most preferred by BABE
+  - Decending from finalized block
+  - Slightly more complicated form of "longest chain" selection
+
 
 ---
 
@@ -282,7 +285,6 @@ Notes:
 - First, sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to backers
 - At least one backer responds, signing its approval
 - Triggers gossip of candidate to parachain node import queues
-- This hand shake isn't necessary with Aura. Why?
 
 ---
 
@@ -471,7 +473,7 @@ then ensure that the storage root matches the storage root in the `parent_head`.
 
 ### Collation Revisited
 
-```rust[1|2-5|12-15|6-7|8-11]
+```rust[1|2-9,12-15|10-11]
 pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
 	/// Messages destined to be interpreted by the Relay chain itself.
 	pub upward_messages: UpwardMessages,
