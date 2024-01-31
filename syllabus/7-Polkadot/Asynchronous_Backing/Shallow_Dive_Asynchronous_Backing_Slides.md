@@ -39,6 +39,7 @@ Lets get to it
 <img rounded style="width: 1100px" src="../assets/synchronous_backing_simplified.svg" />
 
 > How is this synchronous?
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -60,6 +61,7 @@ Notes:
 </div>
 
 > How is this asynchronous?
+
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:

@@ -96,7 +96,6 @@ Notes:
   - Decending from finalized block
   - Slightly more complicated form of "longest chain" selection
 
-
 ---
 
 ## Cumulus and Para-Relay Communication
