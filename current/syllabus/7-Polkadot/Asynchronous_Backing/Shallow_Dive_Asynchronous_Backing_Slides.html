@@ -55,6 +55,10 @@
 
 <img rounded style="width: 1100px" src="../assets/synchronous_backing_simplified.svg" />
 
+> How is this synchronous?
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 <aside class="notes"><ul>
 <li>The dividing line between the left and right is when a candidate is backed on chain</li>
 <li>Approvals, disputes, and finality don&#39;t immediately gate the production of farther candidates.
@@ -71,7 +75,14 @@ So we don&#39;t need to represent those steps in this model.</li>
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
-<aside class="notes"><p>Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing</p>
+> How is this asynchronous?
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<aside class="notes"><ul>
+<li>Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing</li>
+<li>Why is backing asynchronous in this diagram?</li>
+</ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## The Async Backing Optimistic Collator Assumptions
 
@@ -169,7 +180,7 @@ Brief BABE fork choice rule review</p>
 
 <pba-flex center>
 
-- A parachain's record of all parablocks on a particular chain fork produced but not yet included
+- A parachain's record of all parablocks on a particular chain fork that have been produced but not yet included
 - Used to apply limitations when constructing future blocks
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Lives in the parachain runtime
@@ -186,6 +197,7 @@ Brief BABE fork choice rule review</p>
 <img rounded style="width: 1100px" src="../assets/unincluded_segment_1.svg" />
 
 <aside class="notes"><ul>
+<li>Segment filled with ancestors from the perspective of a new candidate being built</li>
 <li>Segment added to as each new block is imported into the parachain runtime</li>
 <li>Segment shrinks when one of its ancestor blocks becomes included</li>
 <li>Maximum unincluded segment capacity is set both on the parachain and relay chain</li>
@@ -206,7 +218,7 @@ Brief BABE fork choice rule review</p>
 
 <pba-flex center>
 
-- The relay chain's record of all candidates on all chain forks from all parachains
+- The relay chain's record of all unincluded candidates on all chain forks from all parachains
 - As if you folded all unincluded segments into one huge structure
 <!-- .element: class="fragment" data-fragment-index="1" -->
 - Used to store candidates and later provide them to the on-chain backing process
@@ -221,7 +233,8 @@ Brief BABE fork choice rule review</p>
 <img rounded style="width: 1500px" src="../assets/Prospective_Parachains_Overview.svg" />
 
 <aside class="notes"><ul>
-<li>Fragment trees only built for active leaves</li>
+<li>Fragment tree composed of multiple unincluded segments for the same parachain</li>
+<li>Fragment trees are rooted in relay chain active leaves</li>
 <li>Fragment trees built per scheduled parachain at each leaf</li>
 <li>Fragment trees may have 0 or more fragments representing potential parablocks making up possible futures for a parachain&#39;s state.</li>
 <li>Collation generation, passing, and seconding work has already been completed for each fragment.</li>
@@ -250,8 +263,10 @@ Brief BABE fork choice rule review</p>
 <li>Lease + On-demand</li>
 </ul>
 </li>
-<li>How does asynchronous backing help?</li>
+<li>How does asynchronous backing help?<ul>
 <li>The unincluded segment is necessary to build 2 or more parablocks in a single relay block</li>
+</ul>
+</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Resources

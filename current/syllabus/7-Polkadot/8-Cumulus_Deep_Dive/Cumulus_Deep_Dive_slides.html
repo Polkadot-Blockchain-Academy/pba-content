@@ -91,7 +91,7 @@ A collection of code libraries extending a Substrate FRAME chain so that it can 
 </li>
 <li>Collation: Info necessary for validators to process and validate a parachain block.</li>
 <li>Collations include: upward and horizontal messages, new validation code, resulting head data, proof of validity, processed downward messages, and hrmp_watermark (relay block up to which all hrmp messages have been processed)</li>
-<li>PoV: The smallest bundle of information sufficient to validate a block.
+<li>PoV: Information necessary to mimic parachain state and transactions for the purpose of executing a single parachain block.
 Will revisit in more detail.</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -106,7 +106,11 @@ Will revisit in more detail.</li>
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 <aside class="notes"><ul>
-<li>New best head: New block at the head of the fork most preferred by BABE</li>
+<li>New best head: New block at the head of the fork most preferred by BABE<ul>
+<li>Decending from finalized block</li>
+<li>Slightly more complicated form of &quot;longest chain&quot; selection</li>
+</ul>
+</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Cumulus and Para-Relay Communication
@@ -272,7 +276,6 @@ The last of our key processes
 <li>First, sent to tethered relay node <code>CollationGeneration</code> subsystem to be repackaged and forwarded to backers</li>
 <li>At least one backer responds, signing its approval</li>
 <li>Triggers gossip of candidate to parachain node import queues</li>
-<li>This hand shake isn&#39;t necessary with Aura. Why?</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 #### Distribution in Code
@@ -435,7 +438,7 @@ then ensure that the storage root matches the storage root in the <code>parent_h
 </script></section><section  data-markdown><script type="text/template">
 ### Collation Revisited
 
-```rust[1|2-5|12-15|6-7|8-11]
+```rust[1|2-9,12-15|10-11]
 pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
 	/// Messages destined to be interpreted by the Relay chain itself.
 	pub upward_messages: UpwardMessages,
