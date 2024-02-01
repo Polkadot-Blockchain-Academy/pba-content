@@ -293,7 +293,7 @@ classDef disabled opacity:0.3
 
 ## XCVM Operation
 
-<diagram class="mermaid"> <!-- Putting assets in Location specified by the Origin register -->
+<diagram class="mermaid"> <!-- Putting assets in Location specified by the beneficiary field -->
 graph LR
 subgraph Program
 WithdrawAsset:::disabled-->BuyExecution:::disabled
@@ -306,7 +306,8 @@ Holding(Holding)
 Origin(Origin)
 end
 Registers-.-Executor
-Executor--"Put assets"-->Origin
+DepositAsset-.-Beneficiary(Beneficiary)
+Executor--"Put assets"-->Beneficiary
 linkStyle 0 opacity:0.3
 linkStyle 1 opacity:0.3
 classDef disabled opacity:0.3
