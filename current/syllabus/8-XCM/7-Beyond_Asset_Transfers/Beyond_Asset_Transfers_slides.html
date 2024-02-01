@@ -400,12 +400,12 @@ impl AssetExchange for MyNftStandardExchanger {
 		want: &MultiAssets,
 		maximal: bool,
 	) -> Result<Assets, Assets> {
-    match (give, want) {
-      (FUNGIBLE, NONFUNGIBLE) => MyNftPallet::buy(...),
-      (NONFUNGIBLE, FUNGIBLE) => MyNftPallet::sell(...),
-      (NONFUNGIBLE, NONFUNGIBLE) => MyNftPallet::swap(...),
-      (FUNGIBLE, FUNGIBLE) => Err(give),
-    }
+		match (give, want) {
+			(FUNGIBLE, NONFUNGIBLE) => MyNftPallet::buy(...),
+			(NONFUNGIBLE, FUNGIBLE) => MyNftPallet::sell(...),
+			(NONFUNGIBLE, NONFUNGIBLE) => MyNftPallet::swap(...),
+			(FUNGIBLE, FUNGIBLE) => Err(give),
+		}
 	}
 }
 
