@@ -210,12 +210,13 @@ impl xcm_executor::Config for XcmConfig {
 
 - Single asset-transactor in Rococo
 - Asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **_pallet-balances_**
-- Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
+- Essentially, this configures XCM such that the native token (ROC) is associated with the multilocation **Here**.
 
 Notes:
 
 - Rococo is tracking teleports in the **CheckAccount**, which is defined in **palletXcm**.
-  This aims at maintaining the total issuance even if assets have been teleported to another chain.
+  This aims to maintain the total issuance even if assets have been teleported to another chain.
+- ROC is the native token in Rococo 
 
 ---
 
