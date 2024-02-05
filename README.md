@@ -15,9 +15,10 @@ Selected through an admission process, candidates will receive an intensive educ
 
 The curriculum is expected to change per cohort in the first run. You can find the snapshot of the slides at the end of each cohort here:
 
-- [Cambridge 2022](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/cambridge-2022)
-- [Buenos Aires January 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/buenos-aires-2023)
-- [Berkeley July 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/berkeley-2023)
+- [Cambridge - August 2022](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/cambridge-2022)
+- [Buenos Aires - January 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/buenos-aires-2023)
+- [Berkeley - July 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/berkeley-2023)
+- [Hong Kong - January 2024](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/hong-kong-2024)
 
 ## Venue Suggestions
 
