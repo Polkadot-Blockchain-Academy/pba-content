@@ -1,17 +1,19 @@
 {
   "name": "polkadot-blockchain-academy",
-  "version": "0.1.0",
-  "description": "Polkadot Blockchain Academy",
+  "version": "0.4.0",
+  "description": "Polkadot Blockchain Academy - Content",
+  "license": "MIT",
   "scripts": {
     "dev": "reveal-md ./ --watch --absolute-url http://localhost:1948",
     "help-rmd": "reveal-md --help",
     "tag:cambridge": "git checkout tags/cambridge-2022 && yarn && yarn run build && mv build cambridge-2022&& git checkout main",
     "tag:buenos-aires": "git checkout tags/buenos-aires-2023 && yarn && yarn run build && mv build buenos-aires-2023 && git checkout main",
     "tag:berkeley": "git checkout tags/berkeley-2023 && yarn && yarn run build && mv build berkeley-2023 && git checkout main",
+    "tag:hong-kong": "git checkout tags/hong-kong-2024 && yarn && yarn run build && mv build hong-kong-2024 && git checkout main",
     "tag:current": "git checkout main && yarn && yarn run build && mv build current",
-    "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv current build",
+    "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv hong-kong-2024 && mv current build",
     "move-frontpage": "cp -r ./frontpage/* ./build/.",
-    "prepare-deployment": "git fetch --tags && yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:current && mkdir build && yarn run move-tags && yarn run move-frontpage",
+    "prepare-deployment": "git fetch --tags && yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:hong-kong && mkdir build && yarn run move-tags && yarn run move-frontpage",
     "clean": "rm -rf build",
     "build": "yarn run clean && reveal-md ./ --static build",
     "deploy": "gh-pages -d build",
@@ -30,6 +32,5 @@
     "markdown-link-check": "^3.10.3",
     "prettier": "^2.6.2"
   },
-  "packageManager": "yarn@3.2.1",
-  "license": "Unlicensed"
+  "packageManager": "yarn@3.2.1"
 }
