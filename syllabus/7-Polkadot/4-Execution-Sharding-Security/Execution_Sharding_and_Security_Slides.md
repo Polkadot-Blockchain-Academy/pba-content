@@ -429,6 +429,21 @@ Once backers verify that the parablock is correct they create and sign their bac
 
 - Backers are agreeing that if the parablock turns out to be bad, they will lose 100% of their stake.
 
+</pba-flex>
+
+Notes:
+Making sure that the backers put some skin in the game. Backers are validators so they have a lot of stake, generally millions of DOT, so if they make incorrect statements they are putting a lot on the table.
+
+---
+
+## 2. Backing - Skin in the Game
+
+<pba-flex center>
+
+- The main goal of backing is to provide "skin in the game".
+
+- Backers are agreeing that if the parablock turns out to be bad, they will lose 100% of their stake.
+
 - Backing on its own does not provide security, only **accountability**.
 
 - Parablock head data as well as the backing statements are embedded into the relay chain (can be multiple parablocks)
@@ -436,7 +451,7 @@ Once backers verify that the parablock is correct they create and sign their bac
 </pba-flex>
 
 Notes:
-Making sure that the backers put some skin in the game. Backers are validators so they have a lot of stake, generally millions of DOT, so if they make incorrect statements they are putting a lot on the table. The main goal of backing is not immediate security but accountability. Backers are doing the checks to protect themselves from being punished.
+The main goal of backing is not immediate security but accountability. Backers are doing the checks to protect themselves from being punished. Those details will be embedded into the chain so backers can be held accountable.
 
 ---
 
@@ -461,7 +476,9 @@ Backers accepted the responsibility for the parablock but now there's some more 
 At this point, the backers are responsible for making the data needed to check the parablock available to the **entire network**.
 
 Notes:
-For the parablock to proceed in its lifecycle at one point or another others will need to verify it. To do it they need to have the necessary data. And that's where data availability comes in. Backers need to ensure that the data is available to the entire network. Naively this could be done by making it so everyone just downloads the whole thing but that is yet again... not scalable. So we need to do something else. Let's go on a small detour about erasure coding.
+For the parablock to proceed in its lifecycle at one point or another others will need to verify it. To do it they need to have the necessary data. And that's where data availability comes in. Backers need to ensure that the data is available to the entire network. Naively this could be done by making it so everyone just downloads the whole thing but that is yet again... not scalable. So we need to do something else. Let's go on a small detour about erasure coding which is our solution for data availability and data sharding. Because execution is not the only thing that needs to be sharded. Later today we'll have a more in=depth lecture on data sharding but let's look at the high level idea.
+
+So now back to erasure coding.
 
 ---
 
@@ -479,7 +496,7 @@ That's a line. If we have those two red points everyone agrees that there is onl
 <img rounded style="width: 450px" src="../assets/poly-2nd.drawio.svg" />
 
 Notes:
-Interesting property thats a quadratic polynomial. So a second degree. We need exactly 3 points to be able to draw it exactly.
+Let's keep going further... thats a quadratic polynomial. So a second degree. We need exactly 3 points to be able to draw it exactly.
 
 ---
 
@@ -488,7 +505,7 @@ Interesting property thats a quadratic polynomial. So a second degree. We need e
 <img rounded style="width: 450px" src="../assets/poly-3rd.drawio.svg" />
 
 Notes:
-You might start seeing a pattern but that's a 3rd degree polynomial, we need exactly 4 points to draw it.
+You might start seeing a pattern but now that's a 3rd degree polynomial, we need exactly 4 points to draw it.
 
 ---
 
@@ -497,9 +514,9 @@ You might start seeing a pattern but that's a 3rd degree polynomial, we need exa
 <img rounded style="width: 450px" src="../assets/line-redundant.drawio.svg" />
 
 Notes:
-Now let's go back to the nice and simple line. What if the gave us 3 points from the line? We can remove any one of them and we are still able to draw the line. That's a nice property.
+Now let's go back to the nice and simple line. What if they gave us 3 points from the line? We can remove any one of them and we are still able to draw the line. That's a nice property.
 
-Imagine you have 3 friends. Each remembers a single point from the line. But remembering the whole line is to difficult for any of you. If any of you goes missing you can still recreate the line by combining the other two points and remembering a point is much easier than a line.
+Imagine you have 3 friends. Each remembers a single point from the line. But remembering the whole line is too difficult for any of you. If any of you goes missing you can still recreate the line by combining the other two points and remembering a point is much easier than a line.
 
 ---
 
