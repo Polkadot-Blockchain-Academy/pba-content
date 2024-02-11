@@ -139,7 +139,7 @@ Notes:
 Escalation is the happy path optimization. If there is no issue only very few checkers will participate in the process.
 This solution is only effective because in reality most of the blocks produced are indeed valid and honest. So the happy path optimization brings insane gains and allows for shared workload.
 
-It's worth pointing that optimistic rollups are also a happy path optimization, but our approach is just... less optimistic which gives us the perfect balance between security and scalability. And a bit of a spoiler but also reduces our time to finality to manageable numbers. 
+It's worth pointing that optimistic rollups are also a happy path optimization, but our approach is just... less optimistic which gives us the perfect balance between security and scalability. And a bit of a spoiler but also reduces our time to finality to manageable numbers.
 
 ---
 
@@ -638,7 +638,6 @@ Validators starting with the lowest numbers (in the lowest tranches) start valid
 Notes:
 but over time more and more people start checking because higher and higher numbers are called in to reveal themselves. This is how it can be visualized. We group up validators with similar roles together into those small tranches. Every single active validator is one of those tranches. The more time passes the more tranches are woken up and do their checks. You can notice that the first tranche is a bit larger. That is because...
 
-
 ---
 
 ## 4. Approval Checking - Threshold
@@ -686,7 +685,7 @@ Malicious attackers can try and eliminate good guys so that they get the first 3
 <img style="width: 800px" src="../assets/tranches_dos.svg" />
 
 Notes:
-So this will look something like that. In one tranche one of the validators will wake up because it is their time to check. They announce themselves first, start rebuilding the PoV, but before they can publish they PVF result they get DoSed. We never receive their result so remaining validators raise a soft alarm, they start requiring more checkers. And because of that another tranche will be called in before finishing the approval process. 
+So this will look something like that. In one tranche one of the validators will wake up because it is their time to check. They announce themselves first, start rebuilding the PoV, but before they can publish they PVF result they get DoSed. We never receive their result so remaining validators raise a soft alarm, they start requiring more checkers. And because of that another tranche will be called in before finishing the approval process.
 
 ---
 
@@ -707,8 +706,7 @@ Notes:
 This is a flow chart from the perspective of an individual approval checker. First once we notice inclusion we generate the assignment. Then we wait for our turn but if the parablock got approved before that we call it a day, we locally mark it as approved for us and finish the process.
 In case our voice is still needed we reveal our assignment, recover data, do checks and send our statement. If we don't like the block we start a dispute with a dispute statement.
 
-Interesting this state machine either outputs or stalls. In case of stalling it might be because there is a dispute started in the dispute coordinator subsystem.
----
+## Interesting this state machine either outputs or stalls. In case of stalling it might be because there is a dispute started in the dispute coordinator subsystem.
 
 # 5. Disputes
 
@@ -818,6 +816,7 @@ Sometimes BABE can elect multiple authors for the same slot so we naturally get 
 ## Block Production - Candidate Receipts
 
 **Candidate receipt:**
+
 - The parachain ID.
 - The collator's ID and signature.
 - A hash of the parent block's candidate receipt.
@@ -829,7 +828,6 @@ Sometimes BABE can elect multiple authors for the same slot so we naturally get 
 
 Notes:
 I mentioned that authors add a parablock into the relay chain block they are authoring. But in reality adding a whole parablock to the relay chain block is not feasible. We need a compact representation of the parablock/candidate - a candidate receipt. In it we store all the elements needed to identify the block later on and ensure that the data and transitions match to what was approved.
-
 
 ---
 
