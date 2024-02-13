@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "extractSyllabus.ts"],
   "exclude": ["build"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
