@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { fileURLToPath } from "node:url";
+import svgr from "vite-plugin-svgr";
 
 const filesNeedToExclude = ["build"];
 
@@ -10,7 +11,7 @@ const filesPathToExclude = filesNeedToExclude.map((src) => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   root: 'src',
   build: {
     outDir: '../dist',

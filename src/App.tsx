@@ -1,32 +1,29 @@
-import { useState } from 'react'
+import { Accordion } from './components/Accordion'
+
 import './App.css'
+import someJson from "./syllabus.json"
+import Logo from "./assets/pba-logo-white.svg?react";
 
-const App = () => {
-  const accordionData = {
-    title: 'Section 1',
-    content: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis sapiente
-      laborum cupiditate possimus labore, hic temporibus velit dicta earum
-      suscipit commodi eum enim atque at? Et perspiciatis dolore iure
-      voluptatem.`,
-  }
+export const replaceText = (v: string) => v.replace(/\d+-*/g, "").replace(/-/g, " ").replace(/_/g, " ")
 
-  const { title, content } = accordionData
-  const [isActive, setIsActive] = useState(false)
-
+export const App = () => {
   return (
     <>
-      <h1>Agenda</h1>
+      <header className="site-header site-header--small">
+        <menu className="menu menu--header">
+          <li className="menu-item">
+            <Logo className="site-logo" />
+          </li>
+          <li className="menu-item">
+            <h2>PBA Agenda</h2>
+          </li>
+        </menu>
+      </header>
       <div className="accordion">
-        <div className="accordion-item">
-          <div className="accordion-title" onClick={() => setIsActive(!isActive)}>
-            <div>{title}</div>
-            <div>{isActive ? '-' : '+'}</div>
-          </div>
-          {isActive && <div className="accordion-content">{content}</div>}
-        </div>
+        {
+          Object.entries(someJson).map(r => <Accordion title={replaceText(r[0])} content={r[1]} />)
+        }
       </div>
     </>
   )
-}
-
-export default App
+} 
