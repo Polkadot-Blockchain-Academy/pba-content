@@ -10,7 +10,7 @@
     "tag:buenos-aires": "git checkout tags/buenos-aires-2023 && yarn && yarn run build && mv build buenos-aires-2023 && git checkout main",
     "tag:berkeley": "git checkout tags/berkeley-2023 && yarn && yarn run build && mv build berkeley-2023 && git checkout main",
     "tag:hong-kong": "git checkout tags/hong-kong-2024 && yarn && yarn run build && mv build hong-kong-2024 && git checkout main",
-    "tag:current": "git checkout main && yarn && yarn run build && mv build current",
+    "tag:current": "git checkout main && yarn && yarn run build:all && mv build current",
     "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv hong-kong-2024 build && mv current build",
     "move-frontpage": "cp -r ./frontpage/* ./build/.",
     "prepare-deployment": "git fetch --tags && yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:hong-kong && yarn run tag:current && mkdir build && yarn run move-tags && yarn run move-frontpage",
@@ -24,7 +24,7 @@
     "links": "markdown-link-check -c .github/workflows/mlc_config.json",
     "extract": "ts-node extractSyllabus.ts",
     "dev:agenda": "vite",
-    "build:agenda": "vite build",
+    "build:agenda": "yarn run extract && vite build",
     "build:all": "yarn run build && yarn run build:agenda && cp -R dist/* build/.",
     "lint:agenda": "prettier --config .prettierrc.cjs '**/*.tsx' --check",
     "lint-fix:agenda": "prettier --config .prettierrc.cjs --write '**/*.tsx'"
