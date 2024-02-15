@@ -11,7 +11,9 @@ const filesPathToExclude = filesNeedToExclude.map((src) => {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [react(), svgr({
+    include: '**/*.svg'
+  })],
   root: 'src',
   build: {
     outDir: '../dist',

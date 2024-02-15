@@ -25,11 +25,11 @@
     padding: 0.5rem;
     margin-left: 1rem;
     background-color: #ff61b5;
+    padding-left:1rem;
 }
 
-.accordion-content a {
+.accordion-draw a {
     text-decoration: none;
-    padding-left:1rem;
 }
 
 .accordion-content:hover {

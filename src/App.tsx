@@ -2,7 +2,7 @@ import { Accordion } from './components/Accordion'
 
 import './App.css'
 import someJson from "./syllabus.json"
-import Logo from "./assets/pba-logo-white.svg?react";
+import Logo from "./images/pba-logo-white.svg";
 
 export const replaceText = (v: string) => v.replace(/\d+-*/g, "").replace(/-/g, " ").replace(/_/g, " ")
 
@@ -11,8 +11,8 @@ export const App = () => {
     <>
       <header className="site-header site-header--small">
         <menu className="menu menu--header">
-          <li className="menu-item">
-            <Logo className="site-logo" />
+          <li className="menu-item logo">
+            <Logo />
           </li>
           <li className="menu-item">
             <h2>PBA Agenda</h2>
@@ -20,9 +20,7 @@ export const App = () => {
         </menu>
       </header>
       <div className="accordion">
-        {
-          Object.entries(someJson).map(r => <Accordion title={replaceText(r[0])} content={r[1]} />)
-        }
+        {Object.entries(someJson).map(r => <Accordion title={replaceText(r[0])} content={r[1]} path={"syllabus/" + r[0]}/>)}
       </div>
     </>
   )

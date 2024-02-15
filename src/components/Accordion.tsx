@@ -5,9 +5,11 @@ import { replaceText } from '../App'
 interface AccordionInterface {
   title: string
   content: string | JSX.Element | object
+  path: string
 }
 
-export const Accordion = ({ title, content }: AccordionInterface) => {
+export const Accordion = ({ title, content, path }: AccordionInterface) => {
+  
   const [isActive, setIsActive] = useState(false)
 
   return (
@@ -20,13 +22,15 @@ export const Accordion = ({ title, content }: AccordionInterface) => {
         Object.entries(content).map(r => {
           const text = replaceText(r[0])
           if (Object.values(r[1])[0] === undefined) {
+            console.log('path', path + "/" + r[0] + "_slides.html")
+
             return (
-              <div className="accordion-content">
-                <a href="?text">{text}</a>
-              </div>
+              <a href={path + "/" + r[0] + "_slides.html"}>
+                <div className="accordion-content">{text}</div>
+              </a>
             )
           } else {
-            return <Accordion title={text} content={r[1]} />
+            return <Accordion title={text} content={r[1]} path={path + "/" + r[0]} />
           }
         })
       }</div>}
