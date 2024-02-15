@@ -14,6 +14,7 @@ export default defineConfig({
   plugins: [react(), svgr({
     include: '**/*.svg'
   })],
+  base: './',
   root: 'src',
   build: {
     outDir: '../dist',

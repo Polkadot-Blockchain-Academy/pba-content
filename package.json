@@ -24,7 +24,7 @@
     "links": "markdown-link-check -c .github/workflows/mlc_config.json",
     "extract": "ts-node extractSyllabus.ts",
     "dev:agenda": "vite",
-    "build:agenda": "vite build --base='/'",
+    "build:agenda": "vite build",
     "build:all": "yarn run build && yarn run build:agenda && cp -R dist/* build/.",
     "lint:agenda": "prettier --config .prettierrc.cjs '**/*.tsx' --check",
     "lint-fix:agenda": "prettier --config .prettierrc.cjs --write '**/*.tsx'"
