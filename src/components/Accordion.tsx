@@ -22,10 +22,8 @@ export const Accordion = ({ title, content, path }: AccordionInterface) => {
         Object.entries(content).map(r => {
           const text = replaceText(r[0])
           if (Object.values(r[1])[0] === undefined) {
-            console.log('path', path + "/" + r[0] + "_slides.html")
-
             return (
-              <a href={path + "/" + r[0] + "_slides.html"}>
+              <a href={path + "/" + r[0] + "-slides.html"}>
                 <div className="accordion-content">{text}</div>
               </a>
             )
