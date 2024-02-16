@@ -1,23 +1,25 @@
-name: GitHub Pages Publish
+### Deactivated deployment for now
 
-on:
-  push:
-    branches: [main]
+# name: GitHub Pages Publish
 
-jobs:
-  gh-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org
-      - run: yarn install
-      - name: Build
-        working-directory: "."
-        run: yarn run prepare-deployment
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: build
+# on:
+#   push:
+#     branches: [main]
+
+# jobs:
+#   gh-deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+#           registry-url: https://registry.npmjs.org
+#       - run: yarn install
+#       - name: Build
+#         working-directory: "."
+#         run: yarn run prepare-deployment
+#       - name: Deploy
+#         uses: JamesIves/github-pages-deploy-action@v4
+#         with:
+#           folder: build
