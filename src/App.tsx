@@ -4,7 +4,7 @@ import './App.css'
 import someJson from "./syllabus.json"
 import Logo from "./images/pba-logo-white.svg";
 
-export const replaceText = (v: string) => v.replace(/\d+-*/g, "").replace(/-/g, " ").replace(/_/g, " ")
+export const replaceText = (v: string) => v.replace(/\d+?(?=-)/g, "").replace(/-|_/g, " ")
 
 export const App = () => {
   return (
@@ -15,7 +15,7 @@ export const App = () => {
             <Logo />
           </li>
           <li className="menu-item">
-            <h2>PBA Agenda</h2>
+            <h2>Table of Contents</h2>
           </li>
         </menu>
       </header>
