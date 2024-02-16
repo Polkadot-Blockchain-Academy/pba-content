@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Security Awareness in Web3</title>
+  <link rel="icon" href="./../../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Security Awareness in Web3
+
+## The context, impacts, and mitigations
+</script></section><section  data-markdown><script type="text/template">
+### _Lesson Objectives:_
+
+<pba-flex center>
+
+- Be able to describe the threats which exist in the Web3 space
+- Navigate the risks posed with confidence
+- Understand the measures taken to minimize impact
+
+</pba-flex>
+</script></section><section ><section data-markdown><script type="text/template">
+## The Inevitable Jargon
+
+Time for a quick speedrun
+
+<aside class="notes"><p>Security folks love their jargon and acronyms, you may be familiar with some of these, but no worries if not.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Threat Actor
+
+Any individual, group, or entity that poses a potential risk or threat to the security of a system or organization.
+
+<aside class="notes"><p>Threat actors can be hackers, cybercriminals, social engineers, insiders, state-sponsored groups, or other malicious actors.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Attack Surface
+
+The points of entry, or potential vulnerabilities in a system that could be exploited by a threat actor to compromise or gain unauthorized access.
+
+<aside class="notes"><p>This ranges from network interfaces, APIs, software, hardware and infrastructure, through to human factors.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Attack Vector
+
+Specific paths or methods that threat actors use to launch attacks against a system or organization.
+
+<aside class="notes"><p>These can include various techniques, some of which could be phishing emails, software vulnerabilities, social engineering, malware, or brute-force attacks.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Eyes are on us
+
+<pba-flex center>
+
+- Crypto Market Capitalization: $1,231,359,133,397
+- 24 Hour Trading Volume: $39,807,353,848
+
+</pba-flex>
+
+<aside class="notes"><p>Those are some big numbers, that&#39;s $1.23 Trillion.
+As a result, there are a lot of eyes on the industry as a whole - not just because people are excited about decentralization and Web3.
+These projects carry a lot of influence and responsibility, from maintaining infrastructure through to securing funds.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## In the real world
+
+#### _there is no scope_
+
+<aside class="notes"><p>In the real world, there is minimal scope - financially motivated attackers do not follow a code of ethics, and will monetize whatever they can get their hands on.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Funds
+
+Quickest and easiest way to make money: attack wallets and services
+
+<aside class="notes"><p>Financially motivated attacks are among the most common, earnings from these can be used to fund more advanced future attacks, for market manipulation, or directly cashed out</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Networks & Infrastructure
+
+<pba-flex center>
+
+- Smart Contracts
+- Ransomware
+- Impact on network availability
+- Malicious code injection/node creation
+
+</pba-flex>
+
+<aside class="notes"><p>Attackers can and will exploit anything, these can be on-chain attacks - such as exploitation of vulnerabilities in smart contracts, or even crafting and sending their own malicious smart contracts</p>
+<p>Ransomware and denial of service attacks can be utilized to reduce confidence in or extort funds from projects</p>
+<p>Mechanics of protocols themselves can be taken advantage of through 51% attacks, double spends, or malicious validation</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Personally Identifiable Information
+
+<pba-flex center>
+
+- Account takeover
+- Identity theft
+- Impersonation
+
+</pba-flex>
+
+<aside class="notes"><p>You know you&#39;re you, and your teams know you&#39;re you - this trust can be taken advantage of by attackers, impersonating people with social capital and good social standing to pivot deeper into organizations and networks - or even something as simple as identity theft to launder money.</p>
+<p>It may sound far-fetched, but this is a very real problem in the Web3 ecosystem - so if a request seems a bit bizarre, it&#39;s never a bad idea to check in and verify via an alternative line of communication which has already been established.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## A look at potential adversaries
+
+<pba-flex center>
+
+- Lazarus Group (APT 38)
+- Sanctioned Nation States
+- Future Adversaries
+
+</pba-flex>
+
+<aside class="notes"><p>So now we know some of the ways that threat actors can strike, let&#39;s take a moment to look at who and why.
+As mentioned before, a lot of attacks in the Web3 ecosystem are financially motivated - especially for nation states which are experiencing financial sanctions due to whatever geopolitical antics they are involved in.
+While that&#39;s true, we can&#39;t rule out politically motivated attacks.</p>
+<ul>
+<li>Lazarus Group<ul>
+<li>$400m in 2021</li>
+<li>$1.7b in 2022</li>
+</ul>
+</li>
+<li>Russia</li>
+<li>US in future</li>
+<li>More advanced &amp; persistent<ul>
+<li>Resources</li>
+<li>Driven</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Up to date devices are great
+
+### _but there's more to it than that_
+</script></section><section ><section data-markdown><script type="text/template">
+# Types of Adversaries
+
+### A Deeper Dive
+</script></section><section data-markdown><script type="text/template">
+#### Opportunists
+
+Individuals or small groups who take advantage of easily exploitable vulnerabilities without significant planning, often targeting low-hanging fruit and utilizing readily available tools and techniques.
+
+<aside class="notes"><p>Opportunists can impact us from phishing through to being in the wrong place at the wrong time.
+Keep your guard up when in transit or a public place, all it takes is a momentary lapse in focus for a device to be stolen.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### I Pickpocketed a Pickpocket
+
+<img rounded style="width: 1100px" src="./img/2-security_awareness/pickpocket.gif" />
+
+<aside class="notes"><p>Source: <a href="https://www.youtube.com/watch?v=j25VkESewZg">I Pickpocketed a Pickpocket</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Organized Crime Groups (OCGs)
+
+More sophisticated adversaries with dedicated resources and a more defined focus.
+They operate like traditional criminal organizations and often engage in large-scale, financially motivated attacks.
+
+<aside class="notes"><p>OCGs will have more information than a mere opportunist, with more time spent assessing their targets - vulnerabilities affecting the cyber realm, but even social media, gaining a better understanding - for example: knowledge of frequent travel locations, offices, events, etc.
+This knowledge can be used to carry out more advanced phishing campaigns, also known as spearphishing - but more on that later.</p>
+<p>These details can be used for extortion, be it compromising information or physical threats, through to kidnap for those higher value targets.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Nation States
+
+The most sophisticated and well-resourced adversaries in the landscape.
+They have significant technical capabilities and may engage in cyber-espionage sabotage, or warfare.
+
+<aside class="notes"><p>Nation states can act similarly to OCGs, but with increased skill and greater financial backing, with the added benefit of additional operating locations: think airports, border crossings, police forces.</p>
+<p>In the context of Web3, nation states may be interested in:</p>
+<ul>
+<li>Money</li>
+<li>Service Disruption</li>
+<li>Undermining Integrity</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Methods of Adversaries
+</script></section><section data-markdown><script type="text/template">
+#### Theft
+
+<pba-cols>
+<pba-col center>
+
+- Laptops
+- Phones
+- Keys
+
+</pba-col>
+<pba-col center>
+
+- Auld Wallets
+- ID Documents
+- Hardware Wallets
+
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p>A lot is at stake, even when an opportunist strikes - for most people our entire lives are on our devices these days.
+Losing a device can mean lost, and potentially compromised, second factor authentication - locking you out, but letting a crook in, but also the potential exposure of your wallet seeds, along with whatever is signed in.</p>
+<p>Lost or stolen keys and ID documents pose an increased physical threat: the leak of your home address and the means to access it, which can also extend to workplaces or infrastructure locations</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Tampering
+
+<iframe width="1440" height="646" src="https://www.youtube-nocookie.com/embed/meNlOrdQJFo?autoplay=1&showinfo=0&controls=0&mute=1"data-preload data-autoplay></iframe>
+
+<aside class="notes"><p>Computers are small but powerful - think about the size of the Apollo flight computer, while nowadays we have a computer with much greater processing power in our pockets, but the progress hasn&#39;t stopped - there are powerful SoCs, Systems on a Chip, which can be utilized by attackers.</p>
+<p>They range from devices, such as the Rubber Ducky, through to a simple USB-USB cable which looks innocuous enough, but can wreak havoc - and even exfiltrate data or allow for remote control.</p>
+<p>These can put your devices - be it phone, laptop, or hardware wallet - at risk of malware injection or firmware integrity</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Tampering: Mitigations
+
+<img rounded style="width: 500px" src="./img/2-security_awareness/cables.png" />
+
+<aside class="notes"><p>So what can we do to mitigate these attacks?
+For a start use our own, trusted, cables - consider identifying them in a distinctive way: that could be wrapping some tape around the end, breaking out the ol&#39; sharpie (other permanent markers are available), or applying a coat of nail polish.</p>
+<p>Don&#39;t use that charger you found randomly left in a café, even if it was offered to you by a nice businessman, and it&#39;s probably best to not pick up that mysterious USB on the side of the road anyway.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Hacking
+
+<pba-flex center>
+
+- Direct attacks
+- DNS poisoning
+- Targeted Man in the Middle attacks
+
+</pba-flex>
+
+<aside class="notes"><p>If you&#39;re on a network that isn&#39;t your own or trusted (home, hotspot, place of work), pop on your VPN for additional protection and privacy.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### Social Engineering
+
+Phishing and its counterparts, vishing, smishing, etc.
+
+<aside class="notes"><p>Phishing and attacks under its umbrella are still a very real threat, but often downplayed - but more on them later.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Situational Awareness
+</script></section><section data-markdown><script type="text/template">
+### Shoulder Surfing
+
+<aside class="notes"><p>Privacy screens are a mitigation, but they&#39;re not infallible - they reduce the viewing angle, but those behind you still have the best seats in the house.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Shoulder Surfing
+
+<img rounded style="width: 350px" src="./img/2-security_awareness/com-truise.png" />
+
+<aside class="notes"><p>Besides, we know that Mr Tom Cruise runs at a 22° angle, rendering privacy screens useless.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Shoulder Surfing
+
+<img rounded style="width: 700px" src="./img/2-security_awareness/shoulder-pads.jpg" />
+
+<aside class="notes"><p>It&#39;s unrealistic that you can wear shoulder pads all the time to block the view of your sweet sweet screen real estate.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Shoulder Surfing
+
+<img rounded style="width: 700px" src="./img/2-security_awareness/scousers.jpg" />
+
+<aside class="notes"><p>Nor are you going to be able to rapidly grow out your hair</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Shoulder Surfing
+
+<img rounded style="width: 700px" src="./img/2-security_awareness/shouldersurf.jpg" />
+
+<aside class="notes"><p>In Feng Shui, having a solid wall behind you is considered favorable, especially when sitting at a desk.
+A solid wall represents support, stability, and protection.</p>
+<p>There&#39;s truth to this, it also adds privacy - so if you happen to be working in a public place, consider the flow of energy and listen to Feng Shui - find a nice wall to sit against.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Visual Cues
+
+<aside class="notes"><p>It’s no secret that folks in tech love their stickers, they make our devices unique versus our friends and colleagues - but this also comes with downsides.
+There’s a tipping point between a casual interest and direct involvement: stickers can act like a fingerprint, but what kind of information can we glean from them?</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Device Stickers
+
+Some things can be identified from these, such as:
+
+<pba-flex center>
+
+- Role
+- Industry
+- Employer/Projects
+
+</pba-flex>
+
+<aside class="notes"><ul>
+<li>Role<ul>
+<li>Developers: Framework/Language/Software stickers</li>
+<li>DevOps: Cloud service/provider stickers</li>
+<li>Security: Security tools and software</li>
+</ul>
+</li>
+<li>Employer<ul>
+<li>Lots of brand-specific stickers can indicate affiliation to an organization or project</li>
+</ul>
+</li>
+</ul>
+<p>Cover in transit - benefit of protected device</p>
+</aside></script></section><section data-markdown><script type="text/template">
+<pba-cols>
+  <pba-col>
+    <h3>Clothing, Swag, Drip</h3>
+    Call it what you will, but it can be a source of information disclosure
+  </pba-col>
+  <pba-col center>
+    <img rounded style="width: 500px" src="./img/2-security_awareness/btc-coat.png" />
+  </pba-col>
+</pba-cols>
+
+<aside class="notes"><p>Donning the latest swag is turning yourself into a billboard</p>
+<ul>
+<li>Advertising the project mentioned</li>
+<li>Advertising potential affiliations</li>
+<li>Advertising why you would make a financially sound target</li>
+</ul>
+<p>The last point applies to tattoos too, unless it&#39;s a Dogecoin tattoo.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Digital Footprint
+</script></section><section data-markdown><script type="text/template">
+### Social Media
+
+<pba-cols>
+<pba-col center>
+
+#### The Usual Suspects
+
+- Twitter
+- Meta
+- Linkedin
+
+</pba-col>
+<pba-col center>
+
+#### The Less Obvious
+
+- Telegram
+- WhatsApp
+- Discord
+
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p>Data can be inferred through social media, listing your position on LinkedIn gives attackers confirmation of your presence, the format of email addresses is likely easily discoverable, opening the door to spearphishing attacks.</p>
+<p>Messaging apps are rapidly becoming social media, remember that posts and stories aren&#39;t necessarily private and can be viewed by anyone with your number.
+We can mitigate the impact of these by ensuring device separation - which is also great for work-life balance, which is a great opportunity to revisit phishing.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Phishing
+
+Humans get distracted, stressed, and tired, this is when phishers thrive.
+
+If it didn't work, they would have stopped by now.
+
+<aside class="notes"><p>Phishing is still highly effective, at the end of the day we&#39;re only human.
+The cost of phishing is constantly dropping, making it easier for the masses to be reached
+Actions and decisions are circumstantial</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Rise of AI
+
+Phishing is easier than ever, just ask ChatGPT:
+
+<img rounded style="width: 1000px" src="./img/2-security_awareness/gpt-github-email.png" />
+
+<aside class="notes"><p>Not only is phishing getting cheaper, the bar to entry has been significantly lowered.
+Existing trusted email infrastructure and its exploitation leads to more and more convincing attacks, paired with the rise of services like ChatGPT, the risk is increasing.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Beyond the Nigerian prince
+
+Phishers are getting smarter, and your digital footprint is on their radar.
+
+<img rounded style="width: 800px" src="./img/2-security_awareness/gpt-travel-email.png" />
+
+<aside class="notes"><p>Posting online comes with its share of danger, broadcasting your location to the world.
+Think again before you post, could an adversary use this information to target you, your family, or colleagues - is it advertising that your team is all in one place, or perhaps alerting them to the fact that your team is distracted and probably stressed with travel?</p>
+<p>There is also the issue of consent - avoid blindly tagging people and tainting their operational security, ask first - it&#39;s also just a nice thing to do, rather than making bold assumptions about what they are on board with.</p>
+<p>Not to say don&#39;t post, but add a delay to obscure your live location and minimize physical risks</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Reacting to a Phish
+
+<pba-flex center>
+
+1. Stop
+1. Take a moment
+1. Verify
+1. Report
+
+</pba-flex>
+
+<aside class="notes"><p>So why is phishing suddenly important?
+It&#39;s not, it&#39;s always been important - but downplayed.
+We&#39;re in a rapidly evolving space, which comes with a lot of eyes - for better or for worse.</p>
+<p>It&#39;s always preferred to be interrupted for a second opinion on a potential phishing attempt than an unfolding incident, it&#39;ll even put a big smile on the faces of security folks all over.
+After all, we&#39;re there to help, rather than preach from our ivory towers and reprimand those who make mistakes.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+
+  <script src="./../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"transition":"slide","backgroundTransition":"fade","slideNumber":true,"controls":true,"progress":true,"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"center":true}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
