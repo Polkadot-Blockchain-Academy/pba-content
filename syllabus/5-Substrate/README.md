@@ -30,24 +30,24 @@ Ensure the `main` branch is write protected, by required a PR first`- no one sho
 
 #### Morning
 
-1. [Introduction](./1-Intro-to-Substrate_Slides.md) (60m)
-1. [Wasm Meta Protocol](./2-Wasm-Meta-Protocol-Slides.md) (90m)
+1. [Introduction](./1-Intro-to-Substrate_slides.md) (60m)
+1. [Wasm Meta Protocol](./2-Wasm-Meta-Protocol_slides.md) (90m)
 <!-- FIXME where is this? -->
 1. Activity: Finding Runtime APIs and Host Functions in Substrate
 
 #### Afternoon
 
-1. [Show Me The Code](./9-Substrate-In-The-Code_Slides.md) (60m)
-1. [Substrate Interactions](./9-Substrate-Interactions_Slides.md) (60m)
+1. [Show Me The Code](./9-Substrate-In-The-Code_slides.md) (60m)
+1. [Substrate Interactions](./9-Substrate-Interactions_slides.md) (60m)
 1. FRAMELess Assignment (60m)
 
 ### Day 2
 
 #### Morning
 
-1. [Transaction Pool](./4-Transaction-Pool_Slides.md) (60m)
-1. [SCALE](./9-SCALE_Slides.md) (60m)
-1. [Substrate and FRAME Tips and Tricks](./9-Substrate-FRAME-Tips-Tricks-Slides.md)
+1. [Transaction Pool](./4-Transaction-Pool_slides.md) (60m)
+1. [SCALE](./9-SCALE_slides.md) (60m)
+1. [Substrate and FRAME Tips and Tricks](./9-Substrate-FRAME-Tips-Tricks-slides.md)
 
 #### Afternoon
 
@@ -57,5 +57,5 @@ Ensure the `main` branch is write protected, by required a PR first`- no one sho
 
 #### Morning
 
-1. [Substrate Storage](./3-Merklized-Storage_Slides.md) (90m)
+1. [Substrate Storage](./3-Merklized-Storage_slides.md) (90m)
 1. FRAMELess Assignment

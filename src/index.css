@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #f9faf8;
+}
+
+body {
+  font-family: Tahoma,Verdana, Geneva, sans-serif;
+  font-size: 20px;
+  background: rgb(238, 174, 202);
+  background: #140526;
+}
+
+h1 {
+  text-align: center;
+  margin: 2rem 0 4rem 0;
+}
+
+@media screen and (max-width: 700px) {
+  body {
+    font-size: 18px;
+  }
+}
