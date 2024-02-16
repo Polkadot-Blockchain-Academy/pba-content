@@ -11,3 +11,8 @@ yarn.lock
 # Ignore files that don't need *text* formatting
 assets
 plugin
+
+CONTRIBUTING.md
+LICENSE.md
+README.md
+SECURITY.md

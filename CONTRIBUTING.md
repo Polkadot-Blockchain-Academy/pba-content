@@ -31,7 +31,7 @@ syllabus/
 │  │  ├─ 1.1-Workshops_and_Activities/
 │  │  │  ├─ 1.1-*_Activity.md
 │  │  │  ├─ 1.1-*_Workshop.md
-│  │  ├─ 1.1-*_Slides.md
+│  │  ├─ 1.1-*_slides.md
 │  ├─ example-module-lesson-plans/
 │  |   ├─ 1.1-Lesson_Plan_*_1.md
 ├  |   ├─ 1.2-Lesson_Plan_*_2.md
