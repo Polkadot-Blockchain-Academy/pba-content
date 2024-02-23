@@ -6,6 +6,8 @@ duration: 1 hour
 
 # Outer Enum
 
+([Reference in `polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/frame_composite_enums/index.html))
+
 ---
 
 ## Outer Enum
