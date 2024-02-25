@@ -12,6 +12,8 @@ duration: 1 hour
 
 This presentation will cover the use of Origin in FRAME, and how you can customize and extend this abstractions.
 
+([Reference in `polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/frame_origin/index.html))
+
 ---
 
 ## What is Origin?
