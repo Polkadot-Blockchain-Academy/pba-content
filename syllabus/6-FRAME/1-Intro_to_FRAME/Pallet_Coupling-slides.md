@@ -6,6 +6,8 @@ duration: 1 hour
 
 # Pallet Coupling
 
+([Reference in `polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/frame_pallet_coupling/index.html))
+
 ---
 
 ## Overview
