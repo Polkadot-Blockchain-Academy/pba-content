@@ -43,12 +43,15 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 - ⌨️ Start A Blockchain and Perform Forks ([Writeup](./Start_A_Blockchain_Activity.md), [Repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW))
 - 🗣️ [Types of Forks](./7-Forks_slides.md)
 - ☕ Break
-- 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges_slides.md)
-- ⌨️ Continue BFS
-
-### Block 5
-
 - 🗣️ [Consensus Part 2 - Finality](./9-Consensus_Finality_slides.md)
 - 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
+
+### Block 5
+- 🗣️ Maybe Rollups, and Blockspace vs Blobspace
+- ⌨️ Continue BFS
+
+### Block 6
+- 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges_slides.md)
+- ⌨️ Continue BFS
 - ☕ Break
 - 🗣️ Guest Speaker
