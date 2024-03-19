@@ -567,7 +567,7 @@ Allocating cores by time rather than for a fixed block size could allow for smal
 1. [Implementers Guide: Scheduler Pallet](https://paritytech.github.io/polkadot/book/runtime/scheduler.html)
 1. [RFC: Agile Coretime](https://github.com/polkadot-fellows/RFCs/pull/1)
 1. [RFC: Coretime Scheduling Regions](https://github.com/polkadot-fellows/rfcs/pull/3)
-1. [Rob Habermeier's Blog: Polkadot Blockspace Over Blockchains](https://www.rob.tech/polkadot-blockspace-over-blockchains/)
+1. [Rob Habermeier's Blog: Polkadot Blockspace Over Blockchains](https://www.rob.tech/blog/polkadot-blockspace-over-blockchains/)
 
 </pba-col>
 

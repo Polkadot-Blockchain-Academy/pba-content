@@ -16,15 +16,15 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 
 ### Block 1
 
-- 🗣️ [Overview of Blockchains](./1-Overview_of_Blockchains_slides.md)
+- 🗣️ [Overview of Blockchains](./1-Overview_of_Blockchains-slides.md)
 - 🎲 (Optional) [Manual Consensus Game](./Manual_Consenus_Activity.md)
 - ☕ Break
-- 🗣️ [P2P Networks](./2-P2P_Networking_slides.md)
+- 🗣️ [P2P Networks](./2-P2P_Networking-slides.md)
 - ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
 
 ### Block 2
 
-- 🗣️ [Blockchain Datastructure](./3-Blockchain_Structure_slides.md)
+- 🗣️ [Blockchain Datastructure](./3-Blockchain_Structure-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
 - 🗣️ [Consensus Part 1 - Author Selection](./4-Consensus-Authoring-slides.md)
@@ -32,23 +32,26 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 
 ### Block 3
 
-- 🗣️ [Econ and Game Theory in Blockchain](./5-Econ_and_Game_Theory_in_Blockchain_slides.md)
+- 🗣️ [Econ and Game Theory in Blockchain](./5-Econ_and_Game_Theory_in_Blockchain-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
-- 🗣️ [Accounts vs UTXOs](./6-Accounts_and_UTXOs_slides.md)
+- 🗣️ [Accounts vs UTXOs](./6-Accounts_and_UTXOs-slides.md)
 - ⌨️ Continue BFS
 
 ### Block 4
 
 - ⌨️ Start A Blockchain and Perform Forks ([Writeup](./Start_A_Blockchain_Activity.md), [Repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW))
-- 🗣️ [Types of Forks](./7-Forks_slides.md)
+- 🗣️ [Types of Forks](./7-Forks-slides.md)
 - ☕ Break
-- 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges_slides.md)
-- ⌨️ Continue BFS
+- 🗣️ [Consensus Part 2 - Finality](./9-Consensus_Finality-slides.md)
+- 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
 
 ### Block 5
+- 🗣️ Maybe Rollups, and Blockspace vs Blobspace
+- ⌨️ Continue BFS
 
-- 🗣️ [Consensus Part 2 - Finality](./9-Consensus_Finality_slides.md)
-- 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
+### Block 6
+- 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges-slides.md)
+- ⌨️ Continue BFS
 - ☕ Break
 - 🗣️ Guest Speaker
