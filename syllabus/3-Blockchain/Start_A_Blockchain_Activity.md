@@ -49,7 +49,7 @@ Node runners can contribute PoW hashrate to the network in exchange for tokens.
 
 Our chain's PoW is based on md5 which is getting old and weak, so we upgrade to add the newer standard sha3 while keeping the original md5 in place to facilitate a smooth transition. Actually we decide to add both sha3 and keccak just in case the NSA fucked with sha3.
 
-(If desired, insert the [Forks lesson](./7-Forks_slides.md) here.)
+(If desired, insert the [Forks lesson](./7-Forks-slides.md) here.)
 
 We find out about a practical attack against md5 and decide to remove it.
 

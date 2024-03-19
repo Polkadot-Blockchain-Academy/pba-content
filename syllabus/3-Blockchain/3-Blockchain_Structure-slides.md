@@ -379,7 +379,7 @@ A resource created, and often sold, by a decentralized blockchain network.
 #### Learn more:
 
 - Article: https://a16zcrypto.com/blockspace-explained/
-- Article: https://www.rob.tech/polkadot-blockspace-over-blockchains/
+- Article: https://www.rob.tech/blog/polkadot-blockspace-over-blockchains/
 - Podcast: https://youtu.be/jezH_7qEk50?t=5330
 
 Notes:
