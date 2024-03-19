@@ -38,7 +38,7 @@ Ensure the `main` branch is write protected, by required a PR first`- no one sho
 #### Afternoon
 
 1. [Show Me The Code](./9-Substrate-In-The-Code-slides.md) (60m)
-1. [Substrate Interactions](./9-Substrate-Interactions_slides.md) (60m)
+1. [Substrate Interactions](./9-Substrate-Interactions-slides.md) (60m)
 1. FRAMELess Assignment (60m)
 
 ### Day 2
