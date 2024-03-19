@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Polkadot Blockchain Academy</title>
+  <link rel="stylesheet" href="./assets/PBA-theme.css" id="theme" />
+  <link rel="icon" href="./assets/favicon.svg" />
+  <link rel="shortcut icon" href="./assets/favicon.png" />
+  <style>
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 300;
+      src: url('./fonts/unbounded/Unbounded-Light.woff2');
+      src: local(''),
+            url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype'), /* Safari, Android, iOS */
+    }
+
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 400;
+      src: url('./fonts/unbounded/Unbounded-Regular.woff2');
+      src: local(''),
+            url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    }
+
+    @font-face {
+      font-family: 'Unbounded';
+      font-style: normal;
+      font-weight: 700;
+      src: url('./fonts/unbounded/Unbounded-Bold.woff2');
+      src: local(''),
+            url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+            url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype'), /* Safari, Android, iOS */
+    }
+    /* local variables */
+    html {
+      --font-size: 16px;
+      --container: 100em;
+      --size: 1.5rem;
+    }
+
+    /* general layout elements */
+    html,
+    body,
+
+    .site-main {
+      margin: 0 auto;
+    }
+
+    .site {
+      display: flex;
+      flex-direction: column;
+    }
+
+    html {
+      align-items: center;
+      font-size: var(--font-size);
+      color: var(--r-main-color);
+      background-color: var(--r-background-color);
+    }
+
+    /* site layout */
+    .site {
+      max-width: var(--container);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      background-color: var(--r-selection-background-color);
+    }
+
+    .site-footer {
+      position: sticky;
+      bottom: 0;
+      background-color: var(--r-selection-background-color);
+    }
+
+    a:hover {
+      color: var(--r-link-color-dark) !important;
+    }
+
+    a span:first-of-type {
+      color: var(--r-heading-color);
+    }
+
+    h1 {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: var(--r-heading-letter-spacing);
+      font-family: var(--r-heading-font);
+      font-size: calc(var(--font-size) * 1.5);
+      text-shadow: var(--r-heading1-text-shadow);
+    }
+
+    .site-logo {
+      width: calc(var(--size) * 10);
+      margin-left: calc(var(--size) / 2);
+    }
+
+    .slide-list {
+      margin-top: 2rem;
+      width: 75vw;
+      max-width: var(--container);
+    }
+
+    .slide-list li::before {
+      color: var(--r-link-color);
+    }
+
+    .slide-list li {
+      /* Replacing the link-color-hover with the CYAN #00B2FF */
+      /* color: var(--r-link-color-hover); */
+      color: var(--r-hub-cyan);
+      display: flex;
+      align-items: center;
+      list-style-type: none;
+      justify-content: space-around;
+    }
+
+    .slide-list li img {
+      border: 0.2rem solid var(--r-heading-font);
+    }
+
+    .slide-card-name {
+      font-family: var(--r-heading-font);
+      letter-spacing: var(--r-heading-letter-spacing);
+    }
+
+    .slide-card-path {
+      font-style: italic;
+      color: var(--r-link-color);
+      font-size: 0.7em;
+    }
+
+    a:hover .slide-card-path {
+      color: var(--r-hub-cyan);
+      transition: color 200ms ease-in-out;
+    }
+
+    .slide-list li a {
+      font-size: calc(var(--font-size) * 1.2);
+      color: var(--r-main-color);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    .slide-list li a:hover {
+      color: var(--r-hub-cyan);
+    }
+
+    /* menu navigation bar, sticky */
+    .menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu--header {
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .menu--footer {
+      justify-content: center;
+      padding: calc(var(--font-size) * 0.5);
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .menu--footer .menu-item {
+      font-size: var(--font-size);
+      font-family: var(--r-heading-font);
+    }
+  </style>
+
+
+<body class="site">
+  <header class="site-header site-header--small">
+    <menu class="menu menu--header">
+      <li class="menu-item">
+        <img class="site-logo" src="./assets/pba-logo-white.svg" />
+      </li>
+      <li class="menu-item">
+        <h1>PBA Slides</h1>
+      </li>
+    </menu>
+  </header>
+
+  <main class="site-main">
+    <ul class="slide-list">
+      <li>
+        <a href="cambridge-2022&#x2F;index.html" title="Lectures during Cambridge (U.K.) - 2022" class="slide-card" target="_blank">
+          <img src="./assets/1-cambridge.jpg" width="600" />
+        </a>
+        <a href="buenos-aires-2023&#x2F;index.html" title="Lectures during Buenos Aires (Argentina) - 2023" class="slide-card" target="_blank">
+          <img src="./assets/2-buenosaires.jpg" width="600" />
+        </a>
+      </li>
+      <li>
+        <a href="berkeley-2023&#x2F;index.html" title="Lectures during Berkeley (U.S.A.) - 2023" class="slide-card" target="_blank">
+          <img src="./assets/3-berkeley.jpg" width="600" />
+        </a>
+        <a href="hong-kong-2024&#x2F;index.html" title="Lectures during Hong Kong (H.K.) - 2024" class="slide-card" target="_blank">
+          <img src="./assets/4-polyu.jpg" width="600" />
+        </a>
+      </li>
+    </div>
+  </main>
+
+</body>
+
+</html>

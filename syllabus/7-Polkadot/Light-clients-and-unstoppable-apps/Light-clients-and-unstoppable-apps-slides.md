@@ -65,7 +65,7 @@ I will pause there for a few seconds to let this sink in;
 
 ---v
 
-<img rounded style="width: 30%;" src="./img/learn-student.gif" />
+<img rounded style="width: 45%;" src="./img/learn-student.gif" />
 
 Notes:
 
@@ -293,37 +293,65 @@ This is especially advantageous for users on limited data plans or slow internet
 
 ### Real-life example
 
-<video controls width="100%">
-    <source src="./img/LightClients.mp4" type="video/mp4">
-    Sorry, your browser doesn't support embedded videos.
-</video>
+<img src="./img/Lc3.png" />
+
+http://tinyurl.com/fast-and-light
 
 Notes:
 
 "Slow internet connections": lets see a real-life example.
-Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the wallet, and what are the benefits - using a very "questionable internet connection" which had a very bad day due to way-too-many-connected people;
+Time: Polkadot decoded 2022; Stage: Co-founder of Talisman wallet, Jonathan Dunne, takes the stage demo of our Light client solution (smoldot) is integrated in the Talisman wallet, and what are the benefits - using a very "questionable internet connection" which had a very bad day due to way-too-many-connected people;
 Once the [talisman wallet](https://www.talisman.xyz/) loads up, pay attention to the spinners - Polkadot is loading with a light client while Kusama with the usual JSON-RPC method
 
 Full video: https://tinyurl.com/decoded-talisman-light-client
 
 ---v
 
-<h2>How does a light client know where to connect to</h2>
+### How does a light client know
 
-<pba-cols>
-  <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_1.png" />
-  </pba-col>
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-  <pba-col left>
-    <img rounded style="width: 100%" src="./img/where_to_2.png" />
-  </pba-col>
-  <!-- .element: class="fragment" data-fragment-index="2" -->
-</pba-cols>
+### where to connect to
+
+Notes:
+A normal node has a
+
+---v
+
+<h2>Chainspec</h2>
+
+```json[0|2|3|4|5-9|10-15|16-18|19-21|22-27]
+{
+  "name": "Polkadot",
+  "id": "polkadot",
+  "chainType": "Live",
+  "properties": {
+    "ss58Format": 0,
+    "tokenDecimals": 10,
+    "tokenSymbol": "DOT"
+  },
+  "bootNodes": [
+    "/dns/bootnode-0.polkadot.io/tcp/30333/wss/p2p/12D3KooWHJBMZgt7ymAdTRtadPcGXpJw79vBGe8z53r9JMkZW7Ha",
+    "/dns/bootnode-1.polkadot.io/tcp/30334/wss/p2p/12D3KooWSz8r2WyCdsfWHgPyvD8GKQdJ1UAiRmrcrs8sQB3fe2KU",
+    ....
+    "/dns/bootnode-n.polkadot.io/tcp/30334/wss/p2p/12D3KooWEjk6QXrZJ26fLpaajisJGHiz6WiQsR8k7mkM9GmWKnRZ"
+  ],
+  "forkBlocks": null,
+  "badBlocks": null,
+  "consensusEngine": null,
+  "genesis": {
+    "stateRootHash": "0x29d0d972cd2e8df205f00472e5ab354a4e17"
+  },
+  "lightSyncState": {
+    "babeEpochChanges": "0x04a3aea....00000040000000000000002", // ~70k chars
+    "babeFinalizedBlockWeight": 4767107,
+    "finalizedBlockHeader": "0x34a6572....45314925780", // ~500 chars
+    "grandpaAuthoritySet": "0xa5042f8da...005e4a2301" // ~70k chars
+  }
+}
+```
 
 Notes:
 
-As you probably already learned a chain specification is a configuration file that defines the parameters and initial settings for a blockchain network.
+As you probably already learned a chain specification is a "configuration file" that defines the parameters and initial settings for a blockchain network.
 
 It serves as a blueprint for launching and running a new blockchain node, providing essential information to set up the network;
 
@@ -332,7 +360,9 @@ Our Substrate nodes can produce what is called a Chain spec which Smoldot then u
 
 ---v
 
-### How does a light client know what/who to trust
+### How does a light client know
+
+### what/who to trust
 
 <img rounded style="margin-top: 150px; width: 70%" src="./img/know-who-to-trust.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -392,25 +422,24 @@ A Light client receives these justifications and this way it verifies the authen
 </pba-cols>
 <pba-cols>
   <pba-col left>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Fully verifies all blocks (authenticity/validity)</div>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all the chain’s storage in its database</div>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all past blocks in its database</div>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">At initial startup, can take hours to be
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Fully verifies all blocks (authenticity/validity)</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all the chain’s storage in its database</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all past blocks in its database</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">At initial startup, can take hours to be
 ready</div>
   </pba-col>
 
   <pba-col left>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Only verifies the authenticity of blocks</div>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Requests state of the chain on demand</div>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">No database whatsoever</div>
-    <div class="white, bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Initializes in few seconds</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Only verifies the authenticity of blocks</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Requests state of the chain on demand</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">No database whatsoever</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Initializes in few seconds</div>
   </pba-col>
 </pba-cols>
 
 ---
 
 <img src="./img/words.png" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
@@ -490,6 +519,7 @@ Notes:
 
 - npm package
 - rpc provider from polkadotJS
+- The newest Polkadot API, a composable, modular, and “light-client first” alternative to PJS.
 - Chrome and Mozilla extension
 - Comes with 4 integrated "Well Known" chains (Kusama, Polkadot, Westend, Rococo) - which means these chains can be used without the need of providing chainspecs;
 
@@ -501,8 +531,12 @@ Notes:
   <diagram class="mermaid">
     stateDiagram-v2
       Smoldot_Light_Client --> Substrate_connect
+      Smoldot_Light_Client --> P.API
       Substrate_connect --> PolkadotJS_API
       PolkadotJS_API --> UI_dAPP
+
+      Substrate_connect --> P.API
+      P.API --> UI_dAPP
 
       Smoldot_Light_Client --> Custom_Code\n(with_JSON_RPC_API)
       Custom_Code\n(with_JSON_RPC_API) --> UI_dAPP
@@ -535,6 +569,10 @@ The dApp (UI) connects to a third-party-owned publicly-accessible node client
 <p class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Centralized and insecure:</span> Publicly-accessible node can be malicious</p>
 <p class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</p>
 
+Notes:
+
+We saw 3 different scenarios. Lets analyze each one in order to understand what is the most effecient and secure way for a dApp to connect to the nodes network and become unstoppable
+
 ---v
 
 ## So what one needs to do
@@ -548,7 +586,7 @@ The dApp (UI) connects to a third-party-owned publicly-accessible node client
 
 ## In your dApp
 
-```javascript[0|1|3-5|7-9]
+```javascript[0|1|3-4|5|7-9]
 import { ApiPromise, WsProvider } from "@polkadot/api";
 
 // Maybe some more code that does some magic here
@@ -596,20 +634,25 @@ The dApp (UI) connects to a node client that the user has installed on their mac
 <!-- .element: class="fragment" data-fragment-index="2" -->
 <p>..........</p>
 <!-- .element: class="fragment" data-fragment-index="3" -->
-<p>..................</p>
+<p>.... too long ? ? ....</p>
 <!-- .element: class="fragment" data-fragment-index="4" -->
-<p>......wait for it.......</p>
+<p>.................................</p>
 <!-- .element: class="fragment" data-fragment-index="5" -->
-<p>..............................</p>
+<p>.........................................</p>
 <!-- .element: class="fragment" data-fragment-index="6" -->
-<p>ok</p>
+<p>........... maybe get some water ?...........</p>
 <!-- .element: class="fragment" data-fragment-index="7" -->
+<p>...................................................</p>
+<!-- .element: class="fragment" data-fragment-index="8" -->
+<!-- .element: class="fragment" data-fragment-index="9" -->
+<p>done</p>
+<!-- .element: class="fragment" data-fragment-index="10" -->
 
 ---v
 
 ## In your dApp
 
-```javascript[|1|3-5|7-9]
+```javascript[0|1|3-4|5|7-9]
 import { ApiPromise, WsProvider } from "@polkadot/api";
 
 // Maybe some more code that does some magic here
@@ -742,6 +785,15 @@ console.log('Please visit: https://cloudflare-ipfs.com/ipns/dotapps.io/?rpc=ws%3
 <p class="inline-table">
   <img src="./img/code.jpg" />
 </p>
+
+---
+
+<img src="./img/Lc1.png" />
+
+---v
+
+<img src="./img/Lc2.png" />
+
 ---
 
 #### Known vulnerabilities
@@ -760,9 +812,9 @@ Notes:
 Stay with me - the next is the last but not the easiest part:
 
 - **Eclipse attacks (full nodes and light clients both affected)**.
-  Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network (from the bootnodes).
-  Imagine if all these nodes were to refuse sending data back, that would isolate smoldot from the network - The way that smoldot learns which nodes exist, is from the nodes themselves (bootnodes).
-  If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes - if the list of bootnodes only contains malicious nodes, smoldot will never be able to reach any non-malicious node.
+  Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network.
+  Imagine if all these nodes were to refuse sending data back, that would isolate smoldot from the network - The way that smoldot learns which nodes exist (GOSSIP) is from the nodes themselves (bootnodes).
+  If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes
   If the list of bootnodes contains a single honest node, then smoldot will be able to reach the whole network.
   !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the blockchain!
 

@@ -3,6 +3,7 @@
 
 # Build artifacts
 build/
+dist/
 
 # Jupyter artifacts
 
@@ -43,3 +44,37 @@ _static/
 *.dtmp
 
 syllabus/4-Smart_Contracts/*.html
+
+## list of directories that should not be pushed
+cambridge-2022
+buenos-aires-2023
+berkeley-2023
+hong-kong-2024
+current
+
+
+## vite
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

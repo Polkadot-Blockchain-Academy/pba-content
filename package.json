@@ -1,27 +1,54 @@
 {
   "name": "polkadot-blockchain-academy",
-  "version": "0.1.0",
-  "description": "Polkadot Blockchain Academy",
+  "version": "1.0.0",
+  "description": "Polkadot Blockchain Academy - Content",
+  "license": "MIT",
   "scripts": {
     "dev": "reveal-md ./ --watch --absolute-url http://localhost:1948",
     "help-rmd": "reveal-md --help",
-    "build": "rm -rf build && reveal-md ./ --static build",
-    "deploy": "yarn build && gh-pages -d build",
+    "tag:cambridge": "git checkout tags/cambridge-2022 && yarn && yarn run build && mv build cambridge-2022&& git checkout main",
+    "tag:buenos-aires": "git checkout tags/buenos-aires-2023 && yarn && yarn run build && mv build buenos-aires-2023 && git checkout main",
+    "tag:berkeley": "git checkout tags/berkeley-2023 && yarn && yarn run build && mv build berkeley-2023 && git checkout main",
+    "tag:hong-kong": "git checkout tags/hong-kong-2024 && yarn && yarn run build && mv build hong-kong-2024 && git checkout main",
+    "tag:current": "git checkout main && yarn && yarn run build:all && mv build current",
+    "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv hong-kong-2024 build && mv current build",
+    "move-frontpage": "cp -r ./frontpage/* ./build/.",
+    "prepare-deployment": "git fetch --tags && yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:hong-kong && yarn run tag:current && mkdir build && yarn run move-tags && yarn run move-frontpage",
+    "clean": "rm -rf build",
+    "build": "yarn run clean && reveal-md ./ --static build",
+    "deploy": "gh-pages -d build",
     "serve": "http-server ./build -p 1949 -s & echo server started http://localhost:1949",
-    "fmt": "prettier --config .prettierrc.js --write '**/*.md'",
-    "fmt-book": "prettier --config .prettierrc.js --write '../src/**/*.md'",
+    "lint": "prettier --config .prettierrc.cjs '**/*.md' --check",
+    "lint:write": "prettier --config .prettierrc.cjs --write '**/*.md'",
     "mod-links": "MOD_NUMBER=$0; find syllabus/ -path syllabus/${MOD_NUMBER}\\*.md -print0 | xargs -0 -n1 markdown-link-check -c .github/workflows/mlc_config.json && echo \"\nCheck complete for mod\"",
-    "links": "markdown-link-check -c .github/workflows/mlc_config.json"
+    "links": "markdown-link-check -c .github/workflows/mlc_config.json",
+    "extract": "ts-node extractSyllabus.ts",
+    "dev:agenda": "vite",
+    "build:agenda": "yarn run extract && vite build",
+    "build:all": "yarn run build && yarn run build:agenda && cp -R dist/* build/.",
+    "lint:agenda": "prettier --config .prettierrc.cjs '**/*.tsx' --check",
+    "lint-fix:agenda": "prettier --config .prettierrc.cjs --write '**/*.tsx'"
   },
   "dependencies": {
+    "glob": "^10.3.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "reveal-md": "^5.5.2"
   },
   "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@vitejs/plugin-react-swc": "^3.5.0",
     "gh-pages": "^6.1.0",
     "http-server": "^14.1.1",
     "markdown-link-check": "^3.10.3",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0",
+    "vite-plugin-svgr": "^4.2.0"
   },
-  "packageManager": "yarn@3.2.1",
-  "license": "Unlicensed"
+  "packageManager": "yarn@3.2.1"
 }

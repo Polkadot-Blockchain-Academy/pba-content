@@ -6,6 +6,12 @@ duration: 2 hour
 
 # The Economics of Polkadot
 
+Notes:
+
+- We shift gears a bit and focus on the Economics of Polkadot here
+- If you are less familiar with Polkadot, don't worry if you don't understand all concepts. They will be explained in more detail during the other Modules and you can always revisit the slides.
+- If you have questions ask.
+
 ---
 
 ## Overview
@@ -103,7 +109,8 @@ duration: 2 hour
     </div>
     <div style="flex: 1;">
         <ul>
-            <li class="fragment"><strong>Central variable</strong>: Ideal staking rate (currently ~53.5%).</li>
+            <li class="fragment"><strong>Green</strong>: Yearly interest rate in staking, <strong>Blue</strong>: Inflation stakers</li>
+            <li class="fragment"><strong>Central variable</strong>: Ideal staking rate (currently ~59.3%).</li>
             <li class="fragment">Highest staking rewards at the ideal staking rate.</li>
             <li class="fragment">Incentives to (increase) decrease the staking rate it is (below) above the optimal.</li>
             <li class="fragment">Staking inefficiencies -> Treasury.</li>
@@ -153,7 +160,7 @@ Question: What do you think about Inflation?
         <li class="fragment">Good behavior is rewarded with staking rewards.</li>
         <li class="fragment">Malicious / Neglecting behavior is punished (slashed).</li>
     </ul>
-    <li class="fragment">Currently, minimum total stake is ~1.6M DOTs.</li>
+    <li class="fragment">Currently, minimum total stake is ~2.1M DOTs.</li>
     <li class="fragment">The total stake in the system directly translates to the <strong>economic security</strong> that it provides.</li>
     <li class="fragment">Total stake is pooled from validators (self-stake) and their nominators (nominated stake)</li>
     <ul>
@@ -379,8 +386,8 @@ Question: What do you think about Inflation?
         <li class="fragment">Staking inefficiencies (deviations from optimal staking rate)</li>
     </ul>
     <li class="fragment">Through governance, everybody can submit proposals to initiate treasury spending.</li>
-    <li class="fragment">It currently holds around 46M DOT.</li>
-    <li class="fragment">Spending is incentivized by a burn mechanism (1% every 26 days).</li>
+    <li class="fragment">It currently holds around 43M DOT.</li>
+    <li class="fragment">Spending is incentivized by a burn mechanism (1% every 24 days).</li>
 </ul>
 
 ---
@@ -420,7 +427,7 @@ Question: What do you think about Inflation?
     <li class="fragment">The DOT token captures the utility that the parachains provide and converts it to security.</li>
     <li class="fragment">The slot mechanics (renewal, auctions) creates a market where parachains need to outcompete opportunity costs to be sustainable (i.e., they need to be useful).</li>
     <li class="fragment">Polkadot is a DAO that will be able to fund its own preservation and evolution.</li>
-    <li class="fragment">There are many changes to come with Polkadot 2.0 creating a much more agile system.</li>
+    <li class="fragment">There are many changes to come to Polkadot creating a much more agile system.</li>
 </ul>
 
 ---
@@ -429,5 +436,7 @@ Question: What do you think about Inflation?
 
 - [Agile Coretime RFC](https://github.com/polkadot-fellows/RFCs/pull/1)
 - [Discussion on Changing Inflation Model](https://forum.polkadot.network/t/adjusting-the-current-inflation-model-to-sustain-treasury-inflow/3301)
-- [Talk about Polkadot 2.0](https://www.youtube.com/watch?v=GIB1WeVuJD0)
+- [Talk about Agile Polkadot](https://www.youtube.com/watch?v=GIB1WeVuJD0)
 - [Nominating and Validator Selection On Polkadot](https://polkadot.network/blog/nominating-and-validator-selection-on-polkadot/)
+- [(Journal Version) Paper on Validator Selection](https://www.sciencedirect.com/science/article/abs/pii/S0305048323000336)
+- [(Open Source Version) Paper on Validator Selection)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4253515)
