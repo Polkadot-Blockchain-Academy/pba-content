@@ -1,4 +1,4 @@
-# Module 7: Polkadot
+# Module: 4 Governance
 
 ## Learning Outcomes
 
@@ -23,6 +23,3 @@
 ## Day 3
 
 ### Morning
-
-### Afternoon
-

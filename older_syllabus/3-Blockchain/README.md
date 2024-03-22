@@ -1,6 +1,4 @@
-# Module 3: Blockchain Fundamentals
-
-## Learning Outcomes
+# Blockchain Fundamentals Module
 
 This module introduces students to the shortcomings of centralized infrastructure including censorship, equity, reliability, and trustworthiness. It then demonstrates through lectures, coding activities, and games, how a peer to peer network can achieve consensus on a shared history that is recorded in the blockchain data structure.
 
@@ -14,13 +12,9 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 
 - Start a Block and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW). TODO Unify these in the separate repo so the activity can be re-used externally.
 
-## Assignments
+## Approximate Schedule
 
-## Schedule
-
-### Day 1
-
-#### Morning
+### Block 1
 
 - 🗣️ [Overview of Blockchains](./1-Overview_of_Blockchains-slides.md)
 - 🎲 (Optional) [Manual Consensus Game](./Manual_Consenus_Activity.md)
@@ -28,7 +22,7 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 - 🗣️ [P2P Networks](./2-P2P_Networking-slides.md)
 - ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
 
-#### Afternoon
+### Block 2
 
 - 🗣️ [Blockchain Datastructure](./3-Blockchain_Structure-slides.md)
 - ⌨️ Continue BFS
@@ -36,9 +30,7 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 - 🗣️ [Consensus Part 1 - Author Selection](./4-Consensus-Authoring-slides.md)
 - ⌨️ Continue BFS
 
-### Day 2
-
-#### Morning
+### Block 3
 
 - 🗣️ [Econ and Game Theory in Blockchain](./5-Econ_and_Game_Theory_in_Blockchain-slides.md)
 - ⌨️ Continue BFS
@@ -46,7 +38,7 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 - 🗣️ [Accounts vs UTXOs](./6-Accounts_and_UTXOs-slides.md)
 - ⌨️ Continue BFS
 
-#### Afternoon
+### Block 4
 
 - ⌨️ Start A Blockchain and Perform Forks ([Writeup](./Start_A_Blockchain_Activity.md), [Repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW))
 - 🗣️ [Types of Forks](./7-Forks-slides.md)
@@ -54,15 +46,11 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 - 🗣️ [Consensus Part 2 - Finality](./9-Consensus_Finality-slides.md)
 - 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
 
-### Day 3
-
-#### Morning
-
+### Block 5
 - 🗣️ Maybe Rollups, and Blockspace vs Blobspace
 - ⌨️ Continue BFS
 
-#### Afternoon
-
+### Block 6
 - 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
