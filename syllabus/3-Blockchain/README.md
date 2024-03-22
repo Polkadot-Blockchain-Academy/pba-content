@@ -1,5 +1,8 @@
 # Module 3: Blockchain Fundamentals
 
+#### Prerequisites:
+Latest stable rust compiler. You can install [the entire substrate developer environment](https://docs.substrate.io/install/).
+
 ## Learning Outcomes
 
 This module introduces students to the shortcomings of centralized infrastructure including censorship, equity, reliability, and trustworthiness. It then demonstrates through lectures, coding activities, and games, how a peer to peer network can achieve consensus on a shared history that is recorded in the blockchain data structure.
@@ -13,8 +16,6 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 - Grandpa Board Game - TODO find the repo, it may have gotten deleted. For now the content was copied into https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html
 
 - Start a Block and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW). TODO Unify these in the separate repo so the activity can be re-used externally.
-
-## Assignments
 
 ## Schedule
 
@@ -66,4 +67,4 @@ The module is designed to fit a schedule of 5 session of contact time lasting ab
 - 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
-- 🗣️ Guest Speaker
+- 🗣️ Guest Speaker (Jonas - Economics of Polkadot)

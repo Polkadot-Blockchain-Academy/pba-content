@@ -4,8 +4,6 @@
 
 ## Hands on activities
 
-## Assignments
-
 ## Schedule
 
 ## Day 1

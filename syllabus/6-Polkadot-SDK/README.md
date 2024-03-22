@@ -6,23 +6,17 @@
 
 ### Hands on activities
 
-### Assignments
-
 ## Frame
 
 ### Learning Outcomes
 
 ### Hands on activities
 
-### Assignments
-
 ## Cross Consensus Messaging (XCM)
 
 ### Learning Outcomes
 
 ### Hands on activities
-
-### Assignments
 
 ----
 

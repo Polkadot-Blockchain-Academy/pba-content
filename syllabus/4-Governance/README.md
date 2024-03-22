@@ -1,10 +1,10 @@
 # Module: 4 Governance
 
+#### Prerequisites:
+
 ## Learning Outcomes
 
 ## Hands on activities
-
-## Assignments
 
 ## Schedule
 
