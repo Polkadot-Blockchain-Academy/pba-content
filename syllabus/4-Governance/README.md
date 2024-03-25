@@ -21,6 +21,9 @@ The Governance Module aims to equip blockchain developers and founders with the 
 
 ## Hands on activities
 
+● Challenge-Based Prototyping & Interactive Workshop
+● Solving Governance Challenges from the Ecosystem provided by experts
+
 ## Schedule
 
 ## Day 1 (Foundation Module)
