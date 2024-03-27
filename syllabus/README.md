@@ -1,12 +1,11 @@
 # Syllabus
 
-| Module | Length   | Name                                                                                |
-| ------ | -------- | ----------------------------------------------------------------------------------- |
-| M1     | 2 Days   | [Cryptography for Blockchain](./1-Cryptography/)                                    |
-| M2     | 2 Days   | [Interdisciplinary Concepts for Decentralized Devs (Econ, Polisci)](./2-Economics/) |
-| M3     | 2.5 Days | [Blockchain & Consensus](./3-Blockchain/)                                           |
-| M4     | 2.5 Days | [Smart Contracts](./4-Smart_Contracts/)                                             |
-| M5     | 2.5 Days | [Substrate](./5-Substrate/)                                                         |
-| M6     | 5 days   | [Pallets and FRAME](./6-FRAME/)                                                     |
-| M7     | 2.5 Days | [Polkadot, Cumulus and Parachains](./7-Polkadot/)                                   |
-| M8     | 2 days   | [XCM](./8-XCM/)                                                                     |
+| Module| Name                                                                                         | Length   |
+| ------| -------------------------------------------------------------------------------------------- | -------- |
+| 1     | [Cryptography for Blockchain](./1-Cryptography/README.md)                                    | 3 Days   |
+| 2     | [Interdisciplinary Concepts for Decentralized Devs (Econ, Polisci)](./2-Economics/README.md) | 1.5 Days |
+| 3     | [Blockchain & Consensus](./3-Blockchain/README.md)                                           | 3 Days   |
+| 4     | [Governance](./4-Governance/README.md)                                                       | 1 Day    |
+| 5     | [Smart Contracts](./4-Smart_Contracts/README.md)                                             | 1 Day    |
+| 6     | [Polkadot-SDK](./5-Substrate/README.md) (Substrate, FRAME, XCM)                              | 10 Days  |
+| 7     | [Polkadot](./7-Polkadot/README.md)                                                           | 2.5 Days |
