@@ -60,8 +60,8 @@ Notes:
 ### Data Availability Problem: Parachains
 
 <div class="r-stack">
-<img src="../assets/Data_Availability_and_Sharding/DA_Parachains_1.svg" style="width: 70%" />
-<img src="../assets/Data_Availability_and_Sharding/DA_Parachains_2.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/DA_Parachains_1.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/DA_Parachains_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
@@ -80,7 +80,7 @@ Solution:
 
 ### Data Availability Problem: Relay Chain
 
-<img src="../assets/Data_Availability_and_Sharding/DA_Relay_1.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/DA_Relay_1.svg" style="width: 70%" />
 
 Notes:
 
@@ -92,7 +92,7 @@ Notes:
 
 ### Data Availability Problem: Relay Chain
 
-<img src="../assets/Data_Availability_and_Sharding/DA_Relay_2.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/DA_Relay_2.svg" style="width: 70%" />
 
 Notes:
 
@@ -141,7 +141,7 @@ Notes:
 </pba-col>
 <pba-col center>
 
-<img src="../assets/Data_Availability_and_Sharding/Processor_Cores.jpeg" style="width: 100%" />
+<img src="assets/data-availability-and-sharding/Processor_Cores.jpeg" style="width: 100%" />
 
 </pba-col>
 </pba-cols>
@@ -161,7 +161,7 @@ The goal: Avoid storing full PoV in each validator
 
 </pba-flex>
 
-<img rounded style="width: 1000px" src="../assets/Data_Availability_and_Sharding/erasure-coding-1.png" />
+<img rounded style="width: 1000px" src="assets/data-availability-and-sharding/erasure-coding-1.png" />
 
 Notes:
 
@@ -224,7 +224,7 @@ Notes:
 
 ### Availability Distribution
 
-<img src="../assets/Data_Availability_and_Sharding/bitfield-chunk-req.svg" style="width: 40%" />
+<img src="assets/data-availability-and-sharding/bitfield-chunk-req.svg" style="width: 40%" />
 
 Notes:
 
@@ -237,7 +237,7 @@ Notes:
 
 One structure to sign them all!
 
-<img src="../assets/Data_Availability_and_Sharding/availability-gossip.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/availability-gossip.svg" style="width: 70%" />
 
 Notes:
 
@@ -250,7 +250,7 @@ Notes:
 
 ### Availability On-Chain
 
-<img rounded style="width: 600px" src="../assets/Data_Availability_and_Sharding/availability-bitfields.png" />
+<img rounded style="width: 600px" src="assets/data-availability-and-sharding/availability-bitfields.png" />
 
 Notes:
 
@@ -261,7 +261,7 @@ Notes:
 
 ### Availability Thresholds Visualized
 
-<img src="../assets/Data_Availability_and_Sharding/relay-block-construction-I.svg" style="width: 60%"/>
+<img src="assets/data-availability-and-sharding/relay-block-construction-I.svg" style="width: 60%"/>
 
 Notes:
 
@@ -309,7 +309,7 @@ Notes:
 
 </pba-flex>
 
-<img rounded style="width: 1000px" src="../assets/Data_Availability_and_Sharding/erasure-coding-1.png" />
+<img rounded style="width: 1000px" src="assets/data-availability-and-sharding/erasure-coding-1.png" />
 
 <br>
 
@@ -328,7 +328,7 @@ Notes:
 
 For any number $n$ of points $(x_i,y_i)$ there exists only one polynomial of degree $n-1$ such that $p(x_i) = y_i$ for all $i$
 
-<img rounded style="width: 1000px" src="../assets/Data_Availability_and_Sharding/polynomial-2.png" />
+<img rounded style="width: 1000px" src="assets/data-availability-and-sharding/polynomial-2.png" />
 
 Notes:
 
@@ -338,7 +338,7 @@ Question: What are x_i and y_i wrt to our data?
 
 ### Interpolation for Data Recovery
 
-<img rounded style="width: 80%" src="../assets/Data_Availability_and_Sharding/reed-solomon.png" />
+<img rounded style="width: 80%" src="assets/data-availability-and-sharding/reed-solomon.png" />
 
 Notes:
 
@@ -363,7 +363,7 @@ How do we do reconstruction?
 
 ### Final Twist, Multiple Code Words
 
-<img src="../assets/Data_Availability_and_Sharding/Multiple_Code_Words_1.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/Multiple_Code_Words_1.svg" style="width: 70%" />
 
 Notes:
 
@@ -375,7 +375,7 @@ Notes:
 
 ### Final Twist, Multiple Code Words
 
-<img src="../assets/Data_Availability_and_Sharding/Multiple_Code_Words_2.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/Multiple_Code_Words_2.svg" style="width: 70%" />
 
 Notes:
 
@@ -387,7 +387,7 @@ Notes:
 
 ### Final Twist, Multiple Code Words
 
-<img src="../assets/Data_Availability_and_Sharding/Multiple_Code_Words_3.svg" style="width: 70%" />
+<img src="assets/data-availability-and-sharding/Multiple_Code_Words_3.svg" style="width: 70%" />
 
 Notes:
 

@@ -39,10 +39,10 @@ A collection of code libraries extending a Substrate FRAME chain so that it can 
 ---
 
 <div class="r-stack">
-<img src="../assets/Cumulus_Deep_Dive/spc_1.svg" style="width: 70%" />
-<img src="../assets/Cumulus_Deep_Dive/spc_2.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/spc_1.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/spc_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="../assets/Cumulus_Deep_Dive/spc_3.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/spc_3.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -101,8 +101,8 @@ Notes:
 ## Cumulus and Para-Relay Communication
 
 <div class="r-stack">
-<img src="../assets/Cumulus_Deep_Dive/para-relay_communication_1.svg" style="width: 1100px" />
-<img src="../assets/Cumulus_Deep_Dive/para-relay_communication_2.svg" style="width: 1100px" />
+<img src="assets/cumulus-deep-dive/para-relay_communication_1.svg" style="width: 1100px" />
+<img src="assets/cumulus-deep-dive/para-relay_communication_2.svg" style="width: 1100px" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
@@ -229,11 +229,11 @@ Notes:
 ### Malicious collator example
 
 <div class="r-stack">
-<img src="../assets/Cumulus_Deep_Dive/malicious_collator_1.svg" style="width: 900px" />
+<img src="assets/cumulus-deep-dive/malicious_collator_1.svg" style="width: 900px" />
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="../assets/Cumulus_Deep_Dive/malicious_collator_2.svg" style="width: 900px" />
+<img src="assets/cumulus-deep-dive/malicious_collator_2.svg" style="width: 900px" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="../assets/Cumulus_Deep_Dive/malicious_collator_3.svg" style="width: 900px" />
+<img src="assets/cumulus-deep-dive/malicious_collator_3.svg" style="width: 900px" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -247,7 +247,7 @@ Notes:
 
 ## Availability Outcome
 
-<img src="../assets/Cumulus_Deep_Dive/malicious_collator_4.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/malicious_collator_4.svg" style="width: 70%" />
 
 ---
 
@@ -277,7 +277,7 @@ The last of our key processes
 
 ## Collation Distribution
 
-<img src="../assets/Cumulus_Deep_Dive/para-relay_communication_1.svg" style="width: 1100px" />
+<img src="assets/cumulus-deep-dive/para-relay_communication_1.svg" style="width: 1100px" />
 
 Notes:
 
@@ -324,10 +324,10 @@ Notes:
 </pba-flex>
 
 <div class="r-stack">
-<img src="../assets/Cumulus_Deep_Dive/runtime_validation_1.svg" style="width: 60%" />
-<img src="../assets/Cumulus_Deep_Dive/runtime_validation_2.svg" style="width: 60%" />
+<img src="assets/cumulus-deep-dive/runtime_validation_1.svg" style="width: 60%" />
+<img src="assets/cumulus-deep-dive/runtime_validation_2.svg" style="width: 60%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="../assets/Cumulus_Deep_Dive/runtime_validation_3.svg" style="width: 60%" />
+<img src="assets/cumulus-deep-dive/runtime_validation_3.svg" style="width: 60%" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -371,7 +371,7 @@ The code is hashed and saved in the storage of the relay chain.
 <pba-cols>
 <pba-col center>
 
-<img src="../assets/Cumulus_Deep_Dive/cumulus_sketch_4.svg" width = "100%"/>
+<img src="assets/cumulus-deep-dive/cumulus_sketch_4.svg" width = "100%"/>
 
 </pba-col>
 <pba-col center>
@@ -401,8 +401,8 @@ This extra information is unique to each parachain and opaque to the relay chain
 #### Validation Path Visualized
 
 <div class="r-stack">
-<img src="../assets/Cumulus_Deep_Dive/collation_path_1.svg" style="width: 70%" />
-<img src="../assets/Cumulus_Deep_Dive/collation_path_2.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/collation_path_1.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/collation_path_2.svg" style="width: 70%" />
 </div>
 
 Notes:
@@ -462,9 +462,9 @@ then ensure that the storage root matches the storage root in the `parent_head`.
 ##### Host Function Replacement Visualized
 
 <div class="r-stack">
-<img src="../assets/Cumulus_Deep_Dive/replace_host_function_1.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/replace_host_function_1.svg" style="width: 70%" />
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="../assets/Cumulus_Deep_Dive/replace_host_function_2.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/replace_host_function_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
@@ -513,9 +513,9 @@ Code highlighting:
 ### Example of Witness Data Construction
 
 <div class="r-stack">
-<img src="../assets/Cumulus_Deep_Dive/pov_witness_data_1.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/pov_witness_data_1.svg" style="width: 70%" />
 <!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="../assets/Cumulus_Deep_Dive/pov_witness_data_2.svg" style="width: 70%" />
+<img src="assets/cumulus-deep-dive/pov_witness_data_2.svg" style="width: 70%" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 

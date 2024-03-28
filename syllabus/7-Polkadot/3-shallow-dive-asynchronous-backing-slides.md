@@ -36,7 +36,7 @@ Lets get to it
 
 ## Synchronous Backing Simplified
 
-<img rounded style="width: 1000px" src="../assets/Shallow_Dive_Asynchronous_Backing/synchronous_backing_simplified.svg" />
+<img rounded style="width: 1000px" src="assets/shallow-dive-asynchronous-backing/synchronous_backing_simplified.svg" />
 
 > How is this synchronous?
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -52,10 +52,10 @@ Notes:
 ## Async Backing Simplified
 
 <div class="r-stack">
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_simplified_1.svg" />
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_simplified_2.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/async_backing_simplified_1.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/async_backing_simplified_2.svg" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_simplified_3.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/async_backing_simplified_3.svg" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -119,17 +119,17 @@ Notes:
 
 ## Parablock Validation Pipelining
 
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_pipelining.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/async_backing_pipelining.svg" />
 
 ---
 
 ## Synchronous Backing, Another Look
 
 <div class="r-stack">
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/synchronous_backing_1.svg" />
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/synchronous_backing_2.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/synchronous_backing_1.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/synchronous_backing_2.svg" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/synchronous_backing_3.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/synchronous_backing_3.svg" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -149,10 +149,10 @@ Image version 3:
 ## Async Backing, Another Look
 
 <div class="r-stack">
-<img rounded style="width: 1500px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_1.svg" />
-<img rounded style="width: 1500px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_2.svg" />
+<img rounded style="width: 1500px" src="assets/shallow-dive-asynchronous-backing/async_backing_1.svg" />
+<img rounded style="width: 1500px" src="assets/shallow-dive-asynchronous-backing/async_backing_2.svg" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
-<img rounded style="width: 1500px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_3.svg" />
+<img rounded style="width: 1500px" src="assets/shallow-dive-asynchronous-backing/async_backing_3.svg" />
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
@@ -198,7 +198,7 @@ Limitation example, upward messages remaining before the relay chain would have 
 
 ## Unincluded Segment
 
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/unincluded_segment_1.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/unincluded_segment_1.svg" />
 
 Notes:
 
@@ -211,7 +211,7 @@ Notes:
 
 ## Unincluded Segment
 
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/unincluded_segment_2.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/unincluded_segment_2.svg" />
 
 Notes:
 
@@ -241,7 +241,7 @@ UsedBandwidth:
 
 ## Prospective Parachains Snapshot
 
-<img rounded style="width: 1500px" src="../assets/Shallow_Dive_Asynchronous_Backing/Prospective_Parachains_Overview.svg" />
+<img rounded style="width: 1500px" src="assets/shallow-dive-asynchronous-backing/Prospective_Parachains_Overview.svg" />
 
 Notes:
 
@@ -256,7 +256,7 @@ Notes:
 ## Async Backing Simplified
 
 <div class="r-stack">
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/async_backing_simplified_3.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/async_backing_simplified_3.svg" />
 </div>
 
 Notes:
@@ -270,7 +270,7 @@ Returning to our most basic diagram
 
 ## Async Backing and Exotic Core Scheduling
 
-<img rounded style="width: 1100px" src="../assets/Shallow_Dive_Asynchronous_Backing/exotic_core_scheduling.svg" />
+<img rounded style="width: 1100px" src="assets/shallow-dive-asynchronous-backing/exotic_core_scheduling.svg" />
 
 Notes:
 
