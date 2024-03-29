@@ -2,9 +2,9 @@ name: Main CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, 2024-singapore]
   pull_request:
-    branches: [main]
+    branches: [main, 2024-singapore]
 
 jobs:
   build:
