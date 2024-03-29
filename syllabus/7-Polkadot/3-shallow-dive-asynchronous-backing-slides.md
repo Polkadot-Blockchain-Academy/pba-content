@@ -39,6 +39,7 @@ Lets get to it
 <img rounded style="width: 1000px" src="assets/shallow-dive-asynchronous-backing/synchronous_backing_simplified.svg" />
 
 > How is this synchronous?
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
