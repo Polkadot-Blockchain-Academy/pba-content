@@ -23,11 +23,11 @@ We will also understand the importance of running such contracts on a trustworth
 
 ### Morning
 
-- Introduction
+- Introduction (lecturer: Filip, assisting: Piotr)
   - ink! vs Solidity
   - ink! & Rust
   - ink! & Substrate
-- Hands-on: my first ink! contract
+- Hands-on: my first ink! contract (lecturer: Filip, assisting: Piotr)
   - Flipper, Echo or an Adder contract
   - Cargo.toml
   - code walk-through
@@ -41,30 +41,30 @@ We will also understand the importance of running such contracts on a trustworth
     - contracts-ui
     - queries
     - mutations
-- Developing contracts
+- Developing contracts (lecturer: Filip, assisting: Piotr)
   - error handling
     - revertable construtors
     - call stack
   - cross-contract calls
     - handling errors
   - shared behaviour
-- Importance of events of DAPP development
+- Importance of events of DAPP development (lecturer: Filip, assisting: Piotr)
   - indexers
   - events as storage
 
 ### Afternoon
 
-- Deeper dive: storage
+- Deeper dive: storage (lecturer: Filip, assisting: Piotr)
   - SCALE codec
   - storage layout types
   - Mapping
   - Lazy
   - upgradeability & storage
     - storage migrations
-- Interacting with the execution environment
-- Testing smart contracts
+- Interacting with the execution environment (lecturer: Piotr, assisting: Filip)
+- Testing smart contracts (lecturer: Piotr, assisting: Filip)
   - hands-on
-- Exploits & vulnerabilities lecture
+- Exploits & vulnerabilities lecture (lecturer: Filip, assisting: Piotr)
   - one hands-on hacking exercise during the lecture, to be decided
   - The DAO hack & reentrancy attacks
   - The Parity Wallet Hack(s)
@@ -80,4 +80,8 @@ We will also understand the importance of running such contracts on a trustworth
 
 #### Morning
 
-ink! The Game
+ink! The Game (lecturer: Piotr, assisting: Filip)
+
+## Assignment
+
+students will be given a contract with a deliberate vulnerability. They will be tasked with finding it and exploiting. Assignment will be autograded with passing grade when the storage state changes due to the exploit.
