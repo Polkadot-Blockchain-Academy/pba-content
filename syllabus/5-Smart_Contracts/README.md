@@ -84,4 +84,6 @@ ink! The Game (lecturer: Piotr, assisting: Filip)
 
 ## Assignment
 
-students will be given a contract with a deliberate vulnerability. They will be tasked with finding it and exploiting. Assignment will be autograded with passing grade when the storage state changes due to the exploit.
+Students will be given a contract with a deliberate vulnerability. They will be tasked with finding it and exploiting. Assignment will be autograded with passing grade when the storage state changes due to the exploit.
+- When? End of Day 1
+- Deadline for submissions: Next morning after day 2 of the lectures (e.g 7am local time as a cutoff).
