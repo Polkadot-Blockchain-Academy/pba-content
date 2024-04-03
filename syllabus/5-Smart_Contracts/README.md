@@ -27,7 +27,7 @@ We will also understand the importance of running such contracts on a trustworth
   - ink! vs Solidity
   - ink! & Rust
   - ink! & Substrate
-- Hands-on: my first ink! contract (lecturer: Filip, assisting: Piotr)
+- Hands-on: my first ink! contract (lecturer: Piotr, assisting: Filip)
   - Flipper, Echo or an Adder contract
   - Cargo.toml
   - code walk-through
@@ -61,8 +61,16 @@ We will also understand the importance of running such contracts on a trustworth
   - Lazy
   - upgradeability & storage
     - storage migrations
-- Interacting with the execution environment (lecturer: Piotr, assisting: Filip)
 - Testing smart contracts (lecturer: Piotr, assisting: Filip)
+  - three main testing and simulation strategies
+    - unit tests
+    - e2e tests
+    - drink tests
+  - hands-on
+- Interacting with the execution environment (lecturer: Piotr, assisting: Filip)
+  - environment functions
+  - runtime call
+  - chain extension
   - hands-on
 - Exploits & vulnerabilities lecture (lecturer: Filip, assisting: Piotr)
   - one hands-on hacking exercise during the lecture, to be decided
