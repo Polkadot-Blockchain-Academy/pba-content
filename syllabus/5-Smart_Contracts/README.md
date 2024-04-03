@@ -105,3 +105,5 @@ The work has to be done both in changing contract's code and in the chain extens
 Assignment will be autograded with passing grade when the contract behaves as expected.
 
 Same deadlines as the main assignment.
+
+There will be only a small weight of the secondary assignment in the final grade: it is meant for the most curious and ambitious students.
