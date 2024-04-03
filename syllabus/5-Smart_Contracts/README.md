@@ -90,8 +90,18 @@ We will also understand the importance of running such contracts on a trustworth
 
 ink! The Game (lecturer: Piotr, assisting: Filip)
 
-## Assignment
+## Assignments
+
+### Main one
 
 Students will be given a contract with a deliberate vulnerability. They will be tasked with finding it and exploiting. Assignment will be autograded with passing grade when the storage state changes due to the exploit.
 - When? End of Day 1
 - Deadline for submissions: Next morning after day 2 of the lectures (e.g 7am local time as a cutoff).
+
+### Secondary one
+
+The task is to take one of the examples from the hands-on workshop and modify it to meet new criteria.
+The work has to be done both in changing contract's code and in the chain extension implementation (pure Rust, but within FRAME runtime).
+Assignment will be autograded with passing grade when the contract behaves as expected.
+
+Same deadlines as the main assignment.
