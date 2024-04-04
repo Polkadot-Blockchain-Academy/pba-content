@@ -23,11 +23,11 @@ We will also understand the importance of running such contracts on a trustworth
 
 ### Morning
 
-- Introduction
+- Introduction (lecturer: Filip, assisting: Piotr)
   - ink! vs Solidity
   - ink! & Rust
   - ink! & Substrate
-- Hands-on: my first ink! contract
+- Hands-on: my first ink! contract (lecturer: Piotr, assisting: Filip)
   - Flipper, Echo or an Adder contract
   - Cargo.toml
   - code walk-through
@@ -41,30 +41,38 @@ We will also understand the importance of running such contracts on a trustworth
     - contracts-ui
     - queries
     - mutations
-- Developing contracts
+- Developing contracts (lecturer: Filip, assisting: Piotr)
   - error handling
     - revertable construtors
     - call stack
   - cross-contract calls
     - handling errors
   - shared behaviour
-- Importance of events of DAPP development
+- Importance of events of DAPP development (lecturer: Filip, assisting: Piotr)
   - indexers
   - events as storage
 
 ### Afternoon
 
-- Deeper dive: storage
+- Deeper dive: storage (lecturer: Filip, assisting: Piotr)
   - SCALE codec
   - storage layout types
   - Mapping
   - Lazy
   - upgradeability & storage
     - storage migrations
-- Interacting with the execution environment
-- Testing smart contracts
+- Testing smart contracts (lecturer: Piotr, assisting: Filip)
+  - three main testing and simulation strategies
+    - unit tests
+    - e2e tests
+    - drink tests
   - hands-on
-- Exploits & vulnerabilities lecture
+- Interacting with the execution environment (lecturer: Piotr, assisting: Filip)
+  - environment functions
+  - runtime call
+  - chain extension
+  - hands-on
+- Exploits & vulnerabilities lecture (lecturer: Filip, assisting: Piotr)
   - one hands-on hacking exercise during the lecture, to be decided
   - The DAO hack & reentrancy attacks
   - The Parity Wallet Hack(s)
@@ -80,4 +88,22 @@ We will also understand the importance of running such contracts on a trustworth
 
 #### Morning
 
-ink! The Game
+ink! The Game (lecturer: Piotr, assisting: Filip)
+
+## Assignments
+
+### Main one
+
+Students will be given a contract with a deliberate vulnerability. They will be tasked with finding it and exploiting. Assignment will be autograded with passing grade when the storage state changes due to the exploit.
+- When? End of Day 1
+- Deadline for submissions: Next morning after day 2 of the lectures (e.g 7am local time as a cutoff).
+
+### Secondary one
+
+The task is to take one of the examples from the hands-on workshop and modify it to meet new criteria.
+The work has to be done both in changing contract's code and in the chain extension implementation (pure Rust, but within FRAME runtime).
+Assignment will be autograded with passing grade when the contract behaves as expected.
+
+Same deadlines as the main assignment.
+
+There will be only a small weight of the secondary assignment in the final grade: it is meant for the most curious and ambitious students.
