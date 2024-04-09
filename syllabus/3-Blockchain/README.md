@@ -2,7 +2,18 @@
 
 This module introduces students to the shortcomings of centralized infrastructure including censorship, equity, reliability, and trustworthiness. It then demonstrates through lectures, coding activities, and games, how a peer to peer network can achieve consensus on a shared history that is recorded in the blockchain data structure.
 
-The module is designed to fit a schedule of 5 session of contact time lasting about 3-4 hours each. Some out-of-class study is expected, and a graded assignment is recommended.
+The module is designed to 3 days of contact time lasting about 6-8 hours each day. Some out-of-class study is expected, and a graded assignment is recommended.
+
+## Learning Outcomes
+* Students will understand the goals of decentralized systems, the tradeoffs made to achieve those goals, and the place for centralized alternatives.
+* Understand the importance of agreeing on history to agree on a notion of a present state.
+* Students will understand the fundamentals of distributed consensus.
+* Students will understand the blockchain datastructure, why each piece of data is in it, and how it tracks the history of a shared state machine.
+* Students will be able to start a blockchain on their own.
+* Students will be able to inform the instructor if anyone on the pba team ever actually reads this list.
+* Students will be able to write blockchain related code.
+* Students will be able to demonstrate how the grandpa finality gadget works.
+* Students will understand how to grandpa finality gadget work.
 
 ## Hands on Activities
 
