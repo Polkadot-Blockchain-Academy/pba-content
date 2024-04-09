@@ -33,6 +33,7 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 - 🗣️ [P2P Networks and State Machines](./2-P2P_Networks_State_Machines-slides.md)
 - ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
 
+### Morning
 
 - 🗣️ [Blockchain Datastructure](./3-Blockchain_Structure-slides.md)
 - ⌨️ Continue BFS
@@ -48,6 +49,7 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 - 🗣️ [Economics and Game Theory in Blockchain](./6-Econ_and_Game_Theory_in_Blockchain-slides.md)
 - ⌨️ Continue BFS
 
+### Afternoon
 
 - ⌨️ Start A Blockchain and Perform Forks ([Writeup](./Start_A_Blockchain_Activity.md), [Repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW))
 - 🗣️ [Types of Forks](./7-Forks-slides.md)
@@ -60,6 +62,7 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 - ☕ Break
 - 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
 
+### Afternoon
 
 - 🗣️ Randomness in Blockchain
 - ⌨️ Continue BFS
