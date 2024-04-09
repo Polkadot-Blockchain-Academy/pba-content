@@ -21,48 +21,54 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 
 - Grandpa Board Game - TODO find the repo, it may have gotten deleted. For now the content was copied into https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html
 
-- Start a Block and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW). TODO Unify these in the separate repo so the activity can be re-used externally.
+- Start a Blockchain and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW). TODO Unify these in the separate repo so the activity can be re-used externally.
 
 ## Approximate Schedule
 
-### Block 1
+### Day 1
 
-- 🗣️ [Overview of Blockchains](./1-Overview_of_Blockchains-slides.md)
+- 🗣️ [Decentralized Systems: Goals and History](./1-Overview_Goals_History-slides.md)
 - 🎲 (Optional) [Manual Consensus Game](./Manual_Consenus_Activity.md)
 - ☕ Break
-- 🗣️ [P2P Networks](./2-P2P_Networking-slides.md)
+- 🗣️ [P2P Networks and State Machines](./2-P2P_Networks_State_Machines-slides.md)
 - ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
 
-### Block 2
 
 - 🗣️ [Blockchain Datastructure](./3-Blockchain_Structure-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
-- 🗣️ [Consensus Part 1 - Author Selection](./4-Consensus-Authoring-slides.md)
+- 🗣️ [Accounts vs UTXOs](./4-Accounts_and_UTXOs-slides.md)
 - ⌨️ Continue BFS
 
-### Block 3
+### Day 2
 
-- 🗣️ [Econ and Game Theory in Blockchain](./5-Econ_and_Game_Theory_in_Blockchain-slides.md)
+- 🗣️ [Consensus Part 1 - Author Selection](./5-Consensus-Authoring-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
-- 🗣️ [Accounts vs UTXOs](./6-Accounts_and_UTXOs-slides.md)
+- 🗣️ [Economics and Game Theory in Blockchain](./6-Econ_and_Game_Theory_in_Blockchain-slides.md)
 - ⌨️ Continue BFS
 
-### Block 4
 
 - ⌨️ Start A Blockchain and Perform Forks ([Writeup](./Start_A_Blockchain_Activity.md), [Repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW))
 - 🗣️ [Types of Forks](./7-Forks-slides.md)
 - ☕ Break
-- 🗣️ [Consensus Part 2 - Finality](./9-Consensus_Finality-slides.md)
+- ⌨️ Continue BFS
+
+### Day 3
+
+- 🗣️ [Consensus Part 2 - Finality](./8-Consensus_Finality-slides.md)
+- ☕ Break
 - 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
 
-### Block 5
-- 🗣️ Maybe Rollups, and Blockspace vs Blobspace
+
+- 🗣️ Randomness in Blockchain
+- ⌨️ Continue BFS
+- 🗣️ [Light Clients Bridges](./9-Light_Clients_and_Bridges-slides.md)
 - ⌨️ Continue BFS
 
-### Block 6
-- 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges-slides.md)
+### Extra Time
+
+Some classes naturally go at a faster pace than others. If there is extra time do more coding or try this lesson.
+
 - ⌨️ Continue BFS
-- ☕ Break
-- 🗣️ Guest Speaker
+- 🗣️ [Designing_DAG_based_consensus](./10-Designing_DAG_based_consensus-slides.md)
