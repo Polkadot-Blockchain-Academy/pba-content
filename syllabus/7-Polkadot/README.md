@@ -25,7 +25,6 @@
 
 ## Hands on activities
 
-- Build a parachain (maybe)
 - Malicious validator zombienet testing (maybe)
 - Quiz
 
@@ -35,31 +34,32 @@
 
 ### Morning
 
-- Introduction to Polkadot part 2 [Maciej]
+- The Decisions of Polkadot [Shawn]
+- Shared Security [Shawn]
+- Introduction to Parachains Consensus [Maciej]
 - Data Preparation - Collation & Backing [Maciej]
-- Data Sharding - Data Availability [Bradley]
-- Execution Sharding - Approvals and Disputes [Maciej]
 
 ### Afternoon
 
+- Data Sharding - Data Availability [Bradley]
+- Execution Sharding - Approvals and Disputes [Maciej]
 - Coretime [Maciej]
-- Cumulus [Bradley]
-- Asynchronous Backing [Bradley]
-- XCMP [? > Maciej]
+- Cumulus Deep-dive [Bradley]
 
 ## Day 2
 
 ### Morning
 
-- Light Clients [Nikos]
+- Asynchronous Backing [Bradley]
+- XCMP [Shawn > Maciej]
 - NPoS & Staking [Ankan > Kian > Maciej]
-- Zombienet [Javier > Nikos > Maciej]
 - Malus activity [Maciej + Bradley]
 
 ### Afternoon
 
 - Contributing to Polkadot [Shawn]
 - Ecosystem & Economy [Shawn]
+- Light Clients [Nikos]
 - Quiz [Maciej + Bradley]
 
 ## Day 3
