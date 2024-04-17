@@ -6,6 +6,8 @@ duration: 35min
 
 ## Sassafras and Semi-Anonymous Single Leader Election
 
+TODO: Andrew combine these with the authoring slides. You have creative liberty over the authoring ones. Hack them up! If we ever wanna go back there is the git history.
+
 ---
 
 # But..
