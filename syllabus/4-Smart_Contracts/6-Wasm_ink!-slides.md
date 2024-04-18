@@ -50,6 +50,10 @@ Legal contracts need two things:
 
 ---
 
+<!-- TODOs-->
+<!-- gas metering -->
+<!-- Turing completness -->
+
 ## Introduction: Smart Contracts
 
 * Smart contracts run **deterministic** code.
@@ -124,418 +128,100 @@ Notes:
 
 ---
 
-Questions?
+<font color="#8d3aed">**Questions?**</font>
 
 ---
-
 
 ## Hands-on: my first ink! contract
 
+* Visit: https://github.com/Polkadot-Blockchain-Academy/ink-hands-on
+* Navigate to `escrow` and read the instructions.
+
+Notes:
+- Piotr takes over
+- we will be writing an escrow contract
+- probaly a lunch break after
+
 ---
 
-<!-- Install the required tooling -->
+## Developing Smart Contracts
 
-<!-- ```sh -->
-<!-- sudo apt install binaryen -->
-<!-- rustup component add rust-src --toolchain nightly -->
-<!-- rustup target add wasm32-unknown-unknown --toolchain nightly -->
-<!-- cargo install dylint-link -->
-<!-- cargo install cargo-contract --force -->
-<!-- ``` -->
+Notes:
 
-<!-- - [binaryen](https://github.com/WebAssembly/binaryen) is a compiler for WebAssembly. -->
-<!-- - [dylint-link](https://github.com/trailofbits/dylint) adds DSL specific lints. -->
+---
 
-<!-- Notes: -->
+## Contracts: Defining shared behaviour
 
-<!-- - Binaryen is a compiler and toolchain infrastructure library for WebAssembly -->
-<!-- - at the moment ink! uses a few unstable Rust features, thus nightly is require -->
-<!-- - rust source code is needed to compile it to wasm -->
-<!-- - wasm target is added -->
-<!-- - cargo-contract is a batteries included CLI tool for compiling, deploying and interacting with the contracts -->
+- `ink::trait_definition` describes the contract behaviour.
 
-<!-- --- -->
+```rust
+#[ink::trait_definition]
+pub trait PSP22 {
+    #[ink(message)]
+    fn total_supply(&self) -> Balance;
 
-<!-- ## Development: cargo-contract -->
+    #[ink(message)]
+    fn balance_of(&self, owner: AccountId) -> Balance;
 
-<!-- Create a contract -->
+    #[ink(message)]
+    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
 
-<!-- ```sh -->
-<!-- cargo contract new flipper -->
-<!-- ``` -->
+    #[ink(message)]
+    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
+    ...
 
-<!-- ```sh -->
-<!-- /home/CloudStation/Blockchain-Academy/flipper: -->
-<!--   drwxrwxr-x 2 filip filip 4096 Jul  7 11:11 . -->
-<!--   drwxr-xr-x 5 filip filip 4096 Jul  7 11:11 .. -->
-<!--   -rwxr-xr-x 1 filip filip  573 Jul  7 11:11 Cargo.toml -->
-<!--   -rwxr-xr-x 1 filip filip  285 Jul  7 11:11 .gitignore -->
-<!--   -rwxr-xr-x 1 filip filip 5186 Jul  7 11:11 lib.rs -->
-<!-- ``` -->
+```
 
-<!-- Notes: -->
+Notes:
+- PSP22 (ERC20-like) contract definition
 
-<!-- - ask how many student have written some code in Rust, this should feel familiar to them -->
+---
 
-<!-- --- -->
+## Contracts: Defining shared behaviour
 
-<!-- ## Development: Cargo.toml -->
+* contracts that respect the definition need to implement it.
 
-<!-- <div style="font-size: 0.72em;"> -->
+```rust
+impl PSP22 for Token {
+    #[ink(message)]
+    fn total_supply(&self) -> u128 {
+        self.data.total_supply()
+    }
 
-<!-- ```toml -->
-<!-- [package] -->
-<!-- version = "0.1.0" -->
-<!-- authors = ["fbielejec"] -->
-<!-- edition = "2021" -->
+    ...
 
-<!-- [dependencies] -->
-<!-- ink = { version = "=4.3.0", default-features = false } -->
-<!-- scale = { package = "parity-scale-codec", version = "3", default-features = false, features = ["derive"] } -->
-<!-- scale-info = { version = "2.5", default-features = false, features = ["derive"], optional = true } -->
+```
 
-<!-- [lib] -->
-<!-- path = "lib.rs" -->
+Notes:
+- utilizes "normal" rust traits with some macro magic
 
-<!-- [features] -->
-<!-- default = ["std"] -->
-<!-- std = [ -->
-<!--     "ink/std", -->
-<!--     "scale/std", -->
-<!--     "scale-info/std", -->
-<!-- ] -->
-<!-- ``` -->
+---
 
-<!-- </div> -->
+## Cross-contract calls
 
-<!-- Notes: -->
+- Sharing the trait definition allows for e.g a cross-contract call.
 
-<!-- - who knows why is the std library not included by default? -->
-<!-- - Answer: contracts are compiled to Wasm (executed ib a sandboxed environment with no system interfaces, no IO, no networking) -->
+```
+impl SimpleDex {
+    use psp22_trait::{PSP22Error, PSP22};
 
-<!-- --- -->
+    /// Returns balance of a PSP22 token for an account
+    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
+        let psp22: ink::contract_ref!(PSP22) = token.into();
+        psp22.balance_of(account)
+    }
+    ...
+```
 
-<!-- ## Development: contract code -->
+Notes:
 
-<!-- <div style="font-size: 0.62em;"> -->
-
-<!-- ```rust -->
-<!-- #[ink::contract] -->
-<!-- pub mod flipper { -->
-
-<!--     #[ink(storage)] -->
-<!--     pub struct Flipper { -->
-<!--         value: bool, -->
-<!--     } -->
-
-<!--     impl Flipper { -->
-<!--         #[ink(constructor)] -->
-<!--         pub fn new(init_value: bool) -> Self { -->
-<!--             Self { value: init_value } -->
-<!--         } -->
-
-<!--         #[ink(constructor)] -->
-<!--         pub fn default() -> Self { -->
-<!--             Self::new(Default::default()) -->
-<!--         } -->
-
-<!--         #[ink(message)] -->
-<!--         pub fn flip(&mut self) { -->
-<!--             self.value = !self.value; -->
-<!--         } -->
-
-<!--         #[ink(message)] -->
-<!--         pub fn get(&self) -> bool { -->
-<!--             self.value -->
-<!--         } -->
-<!--     } -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- </div> -->
-
-<!-- Notes: -->
-
-<!-- - basic contract that flips a bit in storage -->
-<!-- - contract will have a storage definition, constructor(s), messages -->
-<!-- - grouped in a module -->
-
-<!-- --- -->
-
-<!-- ## Development: Compilation & artifacts -->
-
-<!-- Compile: -->
-
-<!-- ```sh -->
-<!-- cargo +nightly contract build -->
-<!-- ``` -->
-
-<!-- Artifacts: -->
-
-<!-- ``` -->
-<!--  [1/*] Building cargo project -->
-<!--     Finished release [optimized] target(s) in 0.09s -->
-
-<!-- The contract was built in RELEASE mode. -->
-
-<!-- Your contract artifacts are ready. You can find them in: -->
-<!-- /home/CloudStation/Blockchain-Academy/flipper/target/ink -->
-
-<!--   - flipper.contract (code + metadata) -->
-<!--   - flipper.wasm (the contract's code) -->
-<!--   - flipper.json (the contract's metadata) -->
-<!-- ``` -->
-
-<!-- Notes: -->
-
-<!-- - produces Wasm bytecode and some additional artifacts: -->
-<!-- - .wasm is the contract compiled bytecode -->
-<!-- - .json is contract ABI aka metadata (for use with e.g. dapps) -->
-<!--   - definitions of events, storage, transactions -->
-<!-- - .contracts is both of these together -->
-
-<!-- --- -->
-
-<!-- ## Contracts code and instance -->
-
-<!-- Deploy: -->
-
-<!-- ```sh -->
-<!-- cargo contract instantiate --constructor default --suri //Alice -->
-<!--   --skip-confirm --execute -->
-<!-- ``` -->
-
-<!-- Output: -->
-
-<!-- ```sh [1-2|3-5] -->
-<!--   Event Contracts ➜ CodeStored -->
-<!--          code_hash: 0xbf18c768eddde46205f6420cd6098c0c6e8d75b8fb042d635b1ba3d38b3d30ad -->
-<!--        Event Contracts ➜ Instantiated -->
-<!--          deployer: 5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY -->
-<!--          contract: 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8 -->
-<!-- ``` -->
-
-<!-- Notes: -->
-
-<!-- - we see a bunch of information on gas usage -->
-<!-- - we see two events one for storing contract code another for instantiating the contract -->
-<!--   - why is that? -->
-<!--   - code & instance are separated, we will come back to that -->
-<!-- - finally we see code hash and the newly created contracts address -->
-
-<!-- --- -->
-
-<!-- ## Interacting with the contracts: queries -->
-
-<!-- ```sh -->
-<!-- cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8 -->
-<!--   --message get --suri //Alice --output-json -->
-<!-- ``` -->
-
-<!-- - contract state? -->
-<!-- - tip: `default` constructor was called -->
-
-<!-- Notes: -->
-
-<!-- - who can tell me what will be the contract state at this point? -->
-
-<!-- --- -->
-
-<!-- ## Interacting with the contracts: queries -->
-
-<!-- <\!-- Query the contract state: -\-> -->
-
-<!-- <\!-- ```sh -\-> -->
-<!-- <\!-- cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8 -\-> -->
-<!-- <\!--   --message get --suri //Alice --output-json -\-> -->
-<!-- <\!-- ``` -\-> -->
-
-<!-- <\!-- Result: -\-> -->
-
-<!-- ```[6] -->
-<!-- "data": { -->
-<!--   "Tuple": { -->
-<!--     "ident": "Ok", -->
-<!--     "values": [ -->
-<!--       { -->
-<!--         "Bool": false -->
-<!--       } -->
-<!--     ] -->
-<!--   } -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- --- -->
-
-<!-- ## Interacting: transactions -->
-
-<!-- Sign and execute a transaction: -->
-
-<!-- ```sh -->
-<!-- cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8 -->
-<!--   --message flip --suri //Alice --skip-confirm --execute -->
-<!-- ``` -->
-
-<!-- Query the state: -->
-
-<!-- ```sh -->
-<!-- cargo contract call --contract 5EXm8WLAGEXn6zy1ebHZ4MrLmjiNnHarZ1pBBjZ5fcnWF3G8 -->
-<!--   --message get --suri //Alice --output-json -->
-<!-- ``` -->
-
-<!-- Result: -->
-
-<!-- <div style="font-size: 0.82em;"> -->
-
-<!-- ```[6] -->
-<!-- "data": { -->
-<!--   "Tuple": { -->
-<!--     "ident": "Ok", -->
-<!--     "values": [ -->
-<!--       { -->
-<!--         "Bool": true -->
-<!--       } -->
-<!--     ] -->
-<!--   } -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- </div> -->
-
-<!-- Notes: -->
-
-<!-- - if I query it again the bit is flipped -->
-<!-- - no surprises there -->
-
-<!-- --- -->
-
-<!-- ## Dev environment: Contracts UI -->
-
-<!-- <img rounded style="width: 1400px;" src="./img/ink/contracts_ui_1.jpg" /> -->
-
-<!-- Notes: -->
-
-<!-- - there is also a graphical env for deploying & interacting with contracts -->
-<!-- - deploy & create an instance of flipper -->
-
-<!-- --- -->
-
-<!-- ## Dev environment: Contracts UI -->
-
-<!-- <img rounded style="width: 1400px;" src="./img/ink/contracts_ui_2.jpg" /> -->
-
-<!-- Notes: -->
-
-<!-- - call a transaction -->
-
-<!-- --- -->
-
-<!-- ## Dev environment: Contracts UI -->
-
-<!-- <img rounded style="width: 1400px;" src="./img/ink/contracts_ui_3.jpg" /> -->
-
-<!-- Notes: -->
-
-<!-- - query state -->
-
-<!-- --- -->
-
-<!-- ## Developing contracts: Constructors -->
-
-<!-- ```rust [7,12,17|13,18,7-9|2-4,8|21-23] -->
-<!-- #[ink(storage)] -->
-<!-- pub struct Flipper { -->
-<!--     value: bool, -->
-<!-- } -->
-
-<!-- #[ink(constructor)] -->
-<!-- pub fn new(init_value: bool) -> Self { -->
-<!--     Self { value: init_value } -->
-<!-- } -->
-
-<!-- #[ink(constructor)] -->
-<!-- pub fn default() -> Self { -->
-<!--     Self::new(Default::default()) -->
-<!-- } -->
-
-<!-- #[ink(constructor)] -->
-<!-- pub fn non_default() -> Self { -->
-<!--     Self::new(false) -->
-<!-- } -->
-
-<!-- #[ink(constructor)] -->
-<!-- pub fn fallible_constructor() -> Result<Self,Error> { -->
-<!--     fallible_function()?; -->
-<!--     Ok(Self::new(false)) -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- Notes: -->
-
-<!-- - lets dissect what a contract code is built like -->
-<!-- - no limit of the number of constructors -->
-<!-- - constructors can call other constructors -->
-<!-- - constructors return the initial storage -->
-<!-- - constructors can return Result -->
-<!-- - a lot of complexity conveniently hidden behind macros -->
-
-<!-- --- -->
-
-<!-- ## Developing contracts: Queries -->
-
-<!-- ```rust -->
-<!-- #[ink(message)] -->
-<!-- pub fn get(&self) -> bool { -->
-<!--     self.value -->
-<!-- } -->
-<!-- ``` -->
-
-<!-- - `#[ink(message)]` is how we tell ink! this is a function that can be called on the contract -->
-<!-- - `&self` is a reference to the contract's storage -->
-<!-- <\!-- #you’re calling this method on  -\-> -->
-
-<!-- Notes: -->
-
-<!-- - returns information about the contract state stored on chain -->
-<!-- - reaches to the storage, decodes it and returns the value -->
-
-<!-- --- -->
-
-<!-- ## Developing contracts: Mutations -->
-
-<!-- ```rust [1-2|6] -->
-<!-- #[ink(message, payable)] -->
-<!-- pub fn place_bet(&mut self, bet_type: BetType) -> Result<()> { -->
-<!--     let player = self.env().caller(); -->
-<!--     let amount = self.env().transferred_value(); -->
-<!--     ... -->
-<!--     self.data.set(&data); -->
-<!--     ... -->
-<!-- ``` -->
-
-<!-- - `&mut self` is a mutable reference to the object you’re calling this method on -->
-<!-- - `payable` allows receiving value as part of the call to the ink! message -->
-
-<!-- Notes: -->
-
-<!-- - constructors are inherently payable -->
-<!-- - ink! message will reject calls with funds if it's not marked as such -->
-<!-- - mutable references allow me to modify the storage. -->
-<!-- - queries are for free, mutations are metered (you pay gas) -->
-<!--   - you will also pay for queries within such transactions -->
-
-<!-- --- -->
+---
 
 ## Contracts: Error handling
 
 <div style="font-size: 0.72em;">
 
-```rust [1-4|8-11,16|14,20]
-pub enum MyResult<T, E> {
-    Ok(value: T),
-    Err(msg: E),
-}
-
+```rust [9|3-6|15]
 #[derive(Debug, PartialEq, Eq, Encode, Decode)]
 #[cfg_attr(feature = "std", derive(scale_info::TypeInfo))]
 pub enum MyError {
@@ -556,22 +242,23 @@ pub type Result<T> = core::result::Result<T, MyError>;
 
 </div>
 
-- ink! uses idiomatic Rust error handling: `Result<T,E>` type
+- ink! uses idiomatic Rust for error handling: `Result<T,E>` type
 - Use the Err variant to pass your own semantics
 - Type aliases reduce boilerplate & enhance readability
 
 Notes:
-
-- ink! uses idiomatic Rust error handling
-- ~~messages are the `system boundary`~~
-- returning error variant or panicing reverts the transaction
-  - panicing is the same as returning Err variant (`Result` is just being nice)
+  - panic! = same as returning Err variant (`Result` is just being nice)
 
 ---
 
 ## Error handling: call stack
 
 ```rust
+#[ink(constructor)]
+pub fn new() -> Self {
+    Self { value: false }
+}
+
 #[ink(message)]
 pub fn flip(&mut self) {
     self.value = !self.value;
@@ -584,12 +271,9 @@ pub fn flip(&mut self) {
 
 ```
 
-- what is the state of this contract if the tx is called in an odd block number?
+- What is the state of this contract when tx is called in an odd block number?
 
 Notes:
-
-- answer: whatever it was prior to the tx:
-  - returning error variant reverts the entire tx on the call stack
 
 ---
 
@@ -621,66 +305,16 @@ pub fn transfer(
 
 </div>
 
-- What is the state of this contract if the transfer fails?
+- What is the state of this contract when the transfer fails?
 
 Notes:
 
-- this is a contract that adds 1 for every successfull PSP22 transfer
-- uses a cross cotract all to initate that transfer
-- no-op
-
 ---
 
-## Contracts: Defining shared behaviour
+## Events
 
-<div style="font-size: 0.5em;">
-
-```rust [1-14|17,22]
-#[ink::trait_definition]
-pub trait PSP22 {
-    #[ink(message)]
-    fn total_supply(&self) -> Balance;
-
-    #[ink(message)]
-    fn balance_of(&self, owner: AccountId) -> Balance;
-
-    #[ink(message)]
-    fn approve(&mut self, spender: AccountId, amount: Balance) -> Result<(), PSP22Error>;
-
-    #[ink(message)]
-    fn transfer(&mut self, to: AccountId, value: Balance, data: Vec<u8>) -> Result<(), PSP22Error>;
-    ...
-
-impl SimpleDex {
-    use psp22_trait::{PSP22Error, PSP22};
-
-    /// Returns balance of a PSP22 token for an account
-    fn balance_of(&self, token: AccountId, account: AccountId) -> Balance {
-        let psp22: ink::contract_ref!(PSP22) = token.into();
-        psp22.balance_of(account)
-    }
-    ...
-```
-
-</div>
-
-- Trait Definition: `#[ink::trait_definition]`.
-- Sharing the trait definition to do a cross-contract call.
-
-Notes:
-
-- (part of) PSP22 (ERC20 like) contract definition
-- all contracts that respect this definition need to implement it
-- you can now share the trait definition with other contracts
-- while getting a typed reference to an instance
-
----
-
-## Contracts: Events
-
-```rust
+```rust [1-9|3-6]
 #[ink(event)]
-#[derive(Debug)]
 pub struct BetPlaced {
     #[ink(topic)]
     player: AccountId,
@@ -690,19 +324,13 @@ pub struct BetPlaced {
 }
 ```
 
-- Events are a way of letting the outside world know about what's happening inside the contract.
-- `#[ink(event)]` is a macro that defines events.
-- Topics mark fields for indexing.
+- Events are a way of letting the outside world know about what's happening inside the contracts.
 
 Notes:
 
-- events are especially important for dapps
-- storage is expensive: reading e.g. aggregate data from chain directly is impossible / impractical
-- dapps the can listen to the event, normalize & store off-chain and answer e.g. complex queries
-
 ---
 
-## Contracts: Events
+## Events and errors
 
 ```rust
 #[ink(message)]
@@ -723,26 +351,9 @@ pub fn flip(&mut self) {
 
 ```
 
-- What happens to the events from reverted transactions?
 - Will this event be emitted in an odd block?
 
 Notes:
-
-- answer: yes, but only because I reverted the condition :)
-
----
-
-## Importance of events
-
-- **Events** are information that is emitted by transactions taking place on a blockchain.
-- **Events** are way for a smart contracts to communicate that a specific action or state change has occurred.
-
-Notes:
-
-- we talked about the technical aspects of events but what are they exactly and what are they usefull for
-- what happens when a tx is submitted?
-  - it goes to mempool where it is picked up by a block producer and eventually included in the blockchain.
-- so transactions do not immediately return a value. Enter events
 
 ---
 
@@ -750,17 +361,10 @@ Notes:
 
 <img rounded style="width: 250px;" src="./img/ink/transacting.svg" />
 
-- The most important use of events is to pass along return values from contracts to a dapp's UI.
-- How to access historical data?
+* Imagine a handfull of addresses transacting in PSP22 tokens among themselves.
+* Contract state stores just their cumulative balance 
 
 Notes:
-
-- ppl are transacting among each other e.g. an PSP22 token
-- head of the contract state stores just their cumulative balance
-- what if you want to display a history of transactions?
-- e.g. DEX may want to show to a user all the deposits they have made
-- replaying txs is slow and expensive
-- enter indexers
 
 ---
 
@@ -770,20 +374,14 @@ Notes:
 - events = logs
 - indexers = log processors
 
-An **indexer** is a process that listens to the events, processes them and stores normalized data in a persistent, queryable storage.
-Typically some sort of API is then server over that data, that can be easily queried by the frontend applications.
+An **indexer** is an off-chain process that listens to the events, processes them and stores normalized data in a persistent, queryable manner.
 
-**Examples:**
+---
+
+## Event indexers
 
 - [Subsquid: https://subsquid.io/](https://subsquid.io/)
 - [TheGraph: https://thegraph.com/](https://thegraph.com/)
-
-Notes:
-
-- using terminology from event driven design architectures
-- in a classical relational database for example
-- examples of indexers
-- logs are also a cheaper form of storage: evm logs cost 8 gas per byte, whereas contract storage costs 20,000 gas per 32 bytes.
 
 ---
 
@@ -792,18 +390,17 @@ Notes:
 - Events can be used as a cheaper form of storage.
 - EVM logs cost 8 gas per byte, whereas contract storage costs 20,000 gas per 32 bytes.
 
-Notes:
+---
 
-- as the last more esoteric usage of logs
-- logs are also a cheaper form of storage:
+<font color="#8d3aed">**Questions?**</font>
 
 ---
 
-# Deeper dive
+# Storage
 
 ---
 
-## Deeper dive: Storage
+## Storage: deeper dive
 
 ```rust
 use ink::storage::Mapping;
@@ -819,10 +416,6 @@ pub struct Token {
 
 Notes:
 
-- now that we dipped our toes lets dissect more
-- starting with the storage
-- what does this code actually put into the chain storage?
-
 ---
 
 <img rounded style="width: 1000px;" src="./img/ink/storage.svg" />
@@ -830,10 +423,6 @@ Notes:
 <font color="#8d3aed">SCALE</font> (_<font color="#8d3aed">S</font>imple <font color="#8d3aed">C</font>oncatenated <font color="#8d3aed">A</font>ggregate <font color="#8d3aed">L</font>ittle <font color="#8d3aed">E</font>ndian_)
 
 Notes:
-
-- Pallet contracts storage is organized like a key-value database
-- each storage cell has a unique storage key and points to a SCALE encoded value
-- SCALE codec is not self-describing (vide metadata)
 
 ---
 
@@ -843,21 +432,16 @@ Notes:
 
 | Type         | Decoding                              | Encoding example             | Remark                                                                         |
 | ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
-| Boolean      | false                                 | 0x0                          | encoded using least significant bit of a single byte                           |
-|              | true                                  | 0x1                          |                                                                                |
-| Unsigned int | 42                                    | 0x2a00                       |                                                                                |
+| Boolean      | false / true                          | 0x0 / 0x1                    | encoded using least significant (rightmost) bit of a single byte               |
+| Int (unsigned)          | 42u32                      | 0x2a000000                   |                                                                                |
+| Tuple        | (42u16, true)                         | 0x2a0001                     | concatenation of each encoded value                                            |
 | Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a or 0x0101             | first byte encodes the variant index, remaining bytes encode the data          |
-| Tuple        | (3, false)                            | 0x0c00                       | concatenation of each encoded value                                            |
-| Vector       | [4, 8, 15, 16, 23, 42]                | 0x18040008000f00100017002a00 | encoding of the vector length followed by conatenation of each item's encoding |
-| Struct       | {x:30u64, y:true}                     | [0x1e,0x0,0x0,0x0,0x1]       | names are ignored, Vec<u8> structure, only order matters                       |
+| Vector       | [42u8, 0, 1]                          | 0x0c2a0001                   | encoding of the vector length followed by conatenation of each item's encoding |
+| Struct       | {x:42u32, y:true}                     | [0x2a,0x00,0x00,0x00,0x1]    | names are ignored, Vec<u8> structure, only order matters                       |
 
 </div>
 
 Notes:
-
-- this table is not exhaustive
-- struct example: stored as an vector, names are ignored, only order matters, first four bytes encode the 64-byte integer and then the least significant bit of the last byte encodes the boolean
-- can you decode the enum example? 42 and false
 
 ---
 
