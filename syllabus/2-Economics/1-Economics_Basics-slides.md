@@ -165,7 +165,7 @@ Notes:
     <ul>
     <li class="fragment">Are primarily driven by monetary gains (payoff maximization).</li>
     <li class="fragment">Act in self-interest.</li>
-    <li class="fragment">Have unlimited cognitive resources.</li>
+    <li class="fragment">Uses all information available to them efficiently.</li>
     </ul>
 </li>
 <li class="fragment">Remark: In this, all factors can be translated into monetary terms.</li>
