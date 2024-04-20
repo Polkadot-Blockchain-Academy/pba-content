@@ -459,15 +459,11 @@ pub struct Token {
 }
 ```
 
-- By default ink! stores all storage struct fields under a single storage cell (`Packed` layout)
+- By default ink! stores all storage struct fields under a single storage cell (called the **Packed** layout)
 
 Notes:
 
-- We talked about the kv database that the storage is, now how is it used precisely
-- Types that can be stored entirely under a single storage cell are called Packed Layout
-- by default ink! stores all storage struct fields under a single storage cell
-- as a consequence message interacting with the contract storage will always need to read and decode the entire contract storage struct
-- .. which may be what you want or not, depending on access patterns
+- two types of layout
 
 ---
 
@@ -546,10 +542,6 @@ pub struct Token {
 
 Notes:
 
-- Use Mapping when you need to store a lot of values of the same type.
-- if your message only accesses a single key of a Mapping, it will not load the whole mapping but only the value being accessed.
-- there are other collection types in ink!: HashMap or BTreeMap (to name a few).
-  - these data structures are all Packed, unlike Mapping!
 
 ---
 
@@ -559,21 +551,18 @@ Notes:
 pub fn transfer(&mut self) {
     let caller = self.env().caller();
 
-    let balance = self.balances.get(caller).unwrap_or(0);
+    let mut balance = self.balances.get(caller).unwrap_or(0);
     let endowment = self.env().transferred_value();
 
     balance += endowment;
 }
-
 
 ```
 
 - what is wrong here?
 
 Notes:
-
-- working with mapping:
-- Answer: Mapping::get() method will result in an owned value (a local copy), as opposed to a direct reference into the storage. Changes to this value won't be reflected in the contract's storage "automatically". To avoid this common pitfall, the value must be inserted again at the same key after it was modified. The transfer function from above example illustrates this:
+- Mapping::get() has copy semantics
 
 ---
 
