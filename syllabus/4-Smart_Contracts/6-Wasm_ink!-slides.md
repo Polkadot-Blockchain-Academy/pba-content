@@ -583,10 +583,13 @@ pub fn transfer(&mut self) {
 
 Notes:
 
-- working with mapping:
-- `Mapping::get()` method will result in an owned value (a local copy).
-- Changes to this value won't be reflected in the contract's storage at all!
-- you need to inserted it again at the same key.
+---
+
+## Lazy Storage
+
+<img rounded style="width: 1000px;" src="./img/ink/storage-layout.svg" />
+
+Notes:
 
 ---
 
@@ -604,28 +607,14 @@ pub struct Roulette {
 
 - Every type wrapped in `Lazy` has a separate storage cell.
 - `ManualKey` assignes explicit storage key to it.
-- Why would you want to use a `ManualKey` instead of a generated one?
 
 Notes:
-
-- packed layout can get problematic if we're storing a large collection in the contracts storage that most of the transactions do not need access too
-- there is a 16kb hard limit on a buffer used for decoding, contract trying to decode more will trap / revert
-- lazy provides per-cell access, like a mapping
-- lazy storage cell can be auto-assigned or chosen manually
-- using ManualKey instead of AutoKey might be especially desirable for upgradable contracts, as using AutoKey might result in a different storage key for the same field in a newer version of the contract.
-  - This may break your contract after an upgrade!
 
 ---
 
 ## Storage: Lazy
 
-<img rounded style="width: 1000px;" src="./img/ink/storage-layout.svg" />
-
-Notes:
-
-- only the pointer (the key) to the lazy type is stored under the root key.
-- only when there is a read of `d` will the pointer be de-referenced and it's value decoded.
-- lazy is a bit of a mis-nomer here, because storage is already initialized.
+- Why would you want to use a `ManualKey` instead of a generated one?
 
 ---
 
@@ -650,19 +639,13 @@ pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
 
 Notes:
 
-- append only != immutable
-- proxy pattern known from e.g. solidity is still possible
-- within the Substrate framework contract's code is stored on-chain and it's instance is a pointer to that code
-- incentivizes cleaning up after oneself
-- big storage optimization
-
 ---
 
 ## Upgradeability: storage
 
 <div style="font-size: 0.72em;">
 
-```rust [1-4,6-10|1-4,12-16|18-21|23-26]
+```rust [1-4,6-10|1-4,12-16]
 #[ink(message)]
 pub fn get_values(&self) -> (u32, bool) {
     (self.x, self.y)
@@ -693,57 +676,56 @@ Notes:
   - Introducing new variable(s) before any of the existing ones
   - Changing variable type(s)
   - Removing variables
-- Answer: no, SCALE encoding is oblivious to names, only order matters
 
 ---
 
-## Upgradeability: storage migrations
+## Hands-on: storage migrations
 
-<div style="font-size: 0.70em;">
+<!-- <div style="font-size: 0.70em;"> -->
 
-```rust []
-pub struct OldState {
-    pub field_1: u32,
-    pub field_2: bool,
-}
+<!-- ```rust [] -->
+<!-- pub struct OldState { -->
+<!--     pub field_1: u32, -->
+<!--     pub field_2: bool, -->
+<!-- } -->
 
-#[ink(storage)]
-pub struct OldA {
-    old_state: Lazy<OldState, ManualKey<123>>,
-}
+<!-- #[ink(storage)] -->
+<!-- pub struct OldA { -->
+<!--     old_state: Lazy<OldState, ManualKey<123>>, -->
+<!-- } -->
 
-#[ink(message)]
-pub fn set_code(&mut self, code_hash: [u8; 32], callback: Option<Selector>) {
-  set_code_hash(&code_hash)?;
-  call_migrate()?; // delegates a `migrate` call to the new contract code, but using callers context
-}
-```
+<!-- #[ink(message)] -->
+<!-- pub fn set_code(&mut self, code_hash: [u8; 32], callback: Option<Selector>) { -->
+<!--   set_code_hash(&code_hash)?; -->
+<!--   call_migrate()?; // delegates a `migrate` call to the new contract code, but using callers context -->
+<!-- } -->
+<!-- ``` -->
 
-```rust []
-pub struct UpdatedOldState {
-    pub field_1: bool,
-    pub field_2: u32,
-}
+<!-- ```rust [] -->
+<!-- pub struct UpdatedOldState { -->
+<!--     pub field_1: bool, -->
+<!--     pub field_2: u32, -->
+<!-- } -->
 
-#[ink(storage)]
-pub struct NewA {
-    updated_old_state: Lazy<UpdatedOldState, ManualKey<123>>,
-}
+<!-- #[ink(storage)] -->
+<!-- pub struct NewA { -->
+<!--     updated_old_state: Lazy<UpdatedOldState, ManualKey<123>>, -->
+<!-- } -->
 
-#[ink(message, selector = 0x4D475254)]
-pub fn migrate(&mut self) -> Result<()> {
-    if let Some(OldContractState { field_1, field_2 }) = get_contract_storage(&123)? {
-        self.updated_old_state.set(&UpdatedOldState {
-            field_1: field_2,
-            field_2: field_1,
-        });
-        return Ok(());
-    }
-    return Err(Error::MigrationFailed);
-}
-```
+<!-- #[ink(message, selector = 0x4D475254)] -->
+<!-- pub fn migrate(&mut self) -> Result<()> { -->
+<!--     if let Some(OldContractState { field_1, field_2 }) = get_contract_storage(&123)? { -->
+<!--         self.updated_old_state.set(&UpdatedOldState { -->
+<!--             field_1: field_2, -->
+<!--             field_2: field_1, -->
+<!--         }); -->
+<!--         return Ok(()); -->
+<!--     } -->
+<!--     return Err(Error::MigrationFailed); -->
+<!-- } -->
+<!-- ``` -->
 
-</div>
+<!-- </div> -->
 
 Notes:
 
@@ -756,25 +738,25 @@ Notes:
 
 ---
 
-## Contracts upgradeability: access control
+<!-- ## Contracts upgradeability: access control -->
 
-```rust [3]
-#[ink(message)]
-pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> {
-    ensure_owner(self.env().caller())?;
-    ink::env::set_code_hash(&code_hash)?;
-    Ok(())
-}
+<!-- ```rust [3] -->
+<!-- #[ink(message)] -->
+<!-- pub fn set_code(&mut self, code_hash: [u8; 32]) -> Result<()> { -->
+<!--     ensure_owner(self.env().caller())?; -->
+<!--     ink::env::set_code_hash(&code_hash)?; -->
+<!--     Ok(()) -->
+<!-- } -->
 
-```
+<!-- ``` -->
 
-Notes:
+<!-- Notes: -->
 
-- you DO NOT want to leave this message un-guarded
-- solutions to `ensure_owner` can range from a very simple ones address checks
-- to a multiple-role database of access controlled accounts stored and maintained in a separate contract
+<!-- - you DO NOT want to leave this message un-guarded -->
+<!-- - solutions to `ensure_owner` can range from a very simple ones address checks -->
+<!-- - to a multiple-role database of access controlled accounts stored and maintained in a separate contract -->
 
----
+<!-- --- -->
 
 # Common Vulnerabilities
 
