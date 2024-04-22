@@ -663,8 +663,6 @@ Link will be distributed!
 
 ---
 
----
-
 ## Game 1: Results!
 
 ---
