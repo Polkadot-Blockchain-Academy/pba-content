@@ -49,6 +49,5 @@ These are played with **real money on the line** and ends in an auction with tho
 
 ### Day 3 (0.25 day)
 
-- Quiz
-
 #### Morning
+- Quiz
