@@ -9,21 +9,22 @@ async function removeMultilineSequences(directoryPath) {
             if ((await fs.promises.lstat(path.join(directoryPath, "/", file))).isDirectory()) {
                 removeMultilineSequences(path.join(directoryPath, "/", file))
             } else {
+                if (file.split(/[.]+/).pop() === "md") {
 
-                const filePath = path.join(directoryPath, file);
-                const fileContent = await fs.promises.readFile(filePath, 'utf-8');
-                const modifiedContent = removeSequences(fileContent);
+                    const filePath = path.join(directoryPath, file);
+                    const fileContent = await fs.promises.readFile(filePath, 'utf-8');
+                    const modifiedContent = removeSequences(fileContent);
 
-                if (modifiedContent !== fileContent) {
-                    await fs.promises.writeFile(filePath, modifiedContent);
-                    console.log(`Modified: ${filePath}`);
-                } else {
-                    console.log(`No modifications: ${filePath}`);
+                    if (modifiedContent !== fileContent) {
+                        await fs.promises.writeFile(filePath, modifiedContent);
+                        console.log(`Modified: ${filePath}`);
+                    } else {
+                        console.log(`No modifications: ${filePath}`);
+                    }
                 }
             }
-
-            console.log('Processing complete.');
         }
+        console.log('Processing complete.');
     } catch (error) {
         console.error('Error occurred:', error);
     }
