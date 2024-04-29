@@ -53,5 +53,5 @@ function removeSequences(content) {
 }
 
 // Example usage
-const directoryPath = `${process.argv[3]}`; // Replace this with your directory path
+const directoryPath = `syllabus/${process.argv[3]}`; // Replace this with your directory path
 removeMultilineSequences(directoryPath);
