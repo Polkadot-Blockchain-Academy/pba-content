@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "reveal-md ./ --watch --absolute-url http://localhost:1948",
-    "remove-notes": "node remove-notes.mjs --",
+    "notes": "node adjust-notes.mjs --",
     "help-rmd": "reveal-md --help",
     "tag:cambridge": "git checkout tags/cambridge-2022 && yarn && yarn run build && mv build cambridge-2022&& git checkout main",
     "tag:buenos-aires": "git checkout tags/buenos-aires-2023 && yarn && yarn run build && mv build buenos-aires-2023 && git checkout main",
