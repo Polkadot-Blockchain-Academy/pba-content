@@ -4,6 +4,21 @@ description: Hash functions in Substrate
 duration: 1 hour
 ---
 
+# Cryptography Day III
+
+<pba-flex center>
+
+- Quiz<!-- .element: class="fragment" data-fragment-index="-1" -->
+- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="0" -->
+- Exotic Primitives<!-- .element: class="fragment" data-fragment-index="1" -->
+- Merkle Tree Activity<!-- .element: class="fragment" data-fragment-index="2" -->
+- Zero-Knowledge Proofs Intro<!-- .element: class="fragment" data-fragment-index="3" -->
+- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+---
+
 # Hash Based Data Structures
 
 ---

@@ -4,6 +4,21 @@ description: Hash functions in Substrate
 duration: 1 hour
 ---
 
+# Cryptography Day II
+
+<pba-flex center>
+
+- Quiz<!-- .element: class="fragment" data-fragment-index="-1" -->
+- Hash functions<!-- .element: class="fragment" data-fragment-index="0" -->
+- Encryption<!-- .element: class="fragment" data-fragment-index="1" -->
+- Basic Digital Signatures<!-- .element: class="fragment" data-fragment-index="2" -->
+- Advanced Digital Signatures<!-- .element: class="fragment" data-fragment-index="3" -->
+- AES Mods activity<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+---
+
 # Hash Functions
 
 ---

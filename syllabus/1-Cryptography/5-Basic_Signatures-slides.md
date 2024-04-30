@@ -4,6 +4,21 @@ description: Hands-on application of digital signature
 duration: 1 hour
 ---
 
+# Cryptography Day II
+
+<pba-flex center>
+
+- Quiz
+- Hash functions
+- Encryption
+- Basic Digital Signatures<!-- .element: class="fragment" data-fragment-index="2" -->
+- Advanced Digital Signatures<!-- .element: class="fragment" data-fragment-index="3" -->
+- AES Mods activity<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+---
+
 # Digital Signatures Basics
 
 ---
