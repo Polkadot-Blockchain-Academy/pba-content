@@ -109,8 +109,9 @@ We should also be able to perform the following operations for a provable key-va
 - _**Tries**_ are a particular class of _trees_ where:
   - Given a particular piece of data, it will always be on a particular path.
 - _**Radix Tries**_ are a particular class of a trie where:
-  - The location of a value is determined the path constructed one digit at a time.
-- _**Patricia Tries**_ are _radix tries_ which are optimized to ensure lonely node-paths are consolidated into a single node.
+  - The location of a value is determined the path constructed one chunk of digits (represented in the chosen radix) at a time.
+  - are optimized to ensure lonely node-paths are consolidated into a single node.
+- _**Patricia Tries**_ are _radix-2 tries_ 
 
 Notes:
 
@@ -118,7 +119,7 @@ Just a selection we'll cover in this course.
 
 ---
 
-## Radix Trie
+## Trie
 
 _Words:_ to, tea, ted, ten, inn, A.
 
@@ -132,7 +133,7 @@ In this image, $r$ is 52 (26 lowercase + 26 uppercase).
 
 ---
 
-## Patricia Trie
+## Radix Trie
 
 _Words:_ to, tea, ted, ten, inn, A.
 
@@ -144,7 +145,7 @@ If only one option for a sequence we merge them.
 
 ---
 
-## Patricia Trie Structures
+## Radix Trie Structures
 
 ```rust
 pub enum Node {
@@ -162,7 +163,7 @@ pub enum Node {
 
 Notes:
 
-The current implementation actually makes use of dedicated "extension" nodes instead of branch nodes that hold a partial path. There's a good explanation of them [here](https://ethereum.stackexchange.com/questions/39915/ethereum-merkle-patricia-trie-extension-node).
+The old implementation actually made use of dedicated "extension" nodes instead of branch nodes that hold a partial path. There's a good explanation of them [here](https://ethereum.stackexchange.com/questions/39915/ethereum-merkle-patricia-trie-extension-node).
 
 Additionally, if the size of a value is particularly large, it is replaced with the hash of its value.
 
