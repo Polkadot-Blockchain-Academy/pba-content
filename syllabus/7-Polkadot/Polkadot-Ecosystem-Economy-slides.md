@@ -124,7 +124,7 @@ The DOT token serves multiple purposes to help the Polkadot network function:
 Approximately...
 
 Model to be updated after Agile Coretime is live, as parachain slot auctions will be obsolete
-and there are proposals to burn coretime revenue. 
+and there are proposals to burn coretime revenue.
 
 Notes:
 
@@ -446,7 +446,7 @@ Current:
 
 Future:
 
-- Coretime Chain:  responsible for the sales of coretime.
+- Coretime Chain: responsible for the sales of coretime.
 - Staking: Manage all the validator and nominator logic, rewards, etc...
 - Governance: Manage all the various proposals and tracks.
 - Eventually everything...
