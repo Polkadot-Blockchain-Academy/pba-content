@@ -8,10 +8,25 @@ duration: 3.5 hour
 
 <pba-flex center>
 
+- Quiz
+- Hash Based Data Structures
+- Exotic Primitives
+- Merkle Tree Activity
+- Zero-Knowledge Proofs Intro<!-- .element: class="fragment" data-fragment-index="3" -->
+- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+---
+
+# Cryptography Day IV
+
+<pba-flex center>
+
+- Quiz
 - ZK Proofs<!-- .element: class="fragment" data-fragment-index="0" -->
-- Exotic Primitives<!-- .element: class="fragment" data-fragment-index="1" -->
-- Invited Lectures<!-- .element: class="fragment" data-fragment-index="2" -->
-- Cryptography in Context<!-- .element: class="fragment" data-fragment-index="3" -->
+- ZKP Activity<!-- .element: class="fragment" data-fragment-index="1" -->
+- Cryptography in Context<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
