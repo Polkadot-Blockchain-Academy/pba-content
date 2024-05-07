@@ -519,10 +519,10 @@ All of that can be delayed.
 ### Overlay
 
 - Almost identical semantic to your CPU cache:
-    - <!-- .element: class="fragment" --> Once you read a value, it stays here, and can be re-read for cheap.
-    - <!-- .element: class="fragment" --> Once you write a value, it will only be written here.
-        - It can be read for cheap.
-    - <!-- .element: class="fragment" --> All writes are flushed when all extrinsics for a block are applied.
+  - <!-- .element: class="fragment" --> Once you read a value, it stays here, and can be re-read for cheap.
+  - <!-- .element: class="fragment" --> Once you write a value, it will only be written here.
+    - It can be read for cheap.
+  - <!-- .element: class="fragment" --> All writes are flushed when all extrinsics for a block are applied.
 - <!-- .element: class="fragment" --> No race conditions as runtime is single-threaded.
 
 ---v
@@ -731,6 +731,7 @@ Notes:
 
 Notes:
 Shawn's answer on usecases: https://substrate.stackexchange.com/questions/139/what-are-good-use-cases-for-child-tries/144#144
+
 - Used in smart contracts for being able to delete contract data and reinstate later.
 - Generating proof of contribution to crowdloan.
 - Alternative trie format.

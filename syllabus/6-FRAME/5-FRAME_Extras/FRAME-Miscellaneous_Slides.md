@@ -18,6 +18,7 @@ description: Signed Extensions and Pallet Tasks.
 <!-- .element: class="fragment" -->
 
 Notes:
+
 - See what is signed in the extrinsic.
 - Looked at Signed Extension.
 
@@ -117,6 +118,7 @@ type Pre = (
 ```
 
 - [Issue #1725](https://github.com/paritytech/polkadot-sdk/issues/1725)
+
 ---
 
 ## Admin tasks
@@ -128,8 +130,7 @@ type Pre = (
 
 - Standard means of determining what work can be executed via an off-chain worker or script.
 
-<!-- .element: class="fragment" -->
----
+## <!-- .element: class="fragment" -->
 
 ## Off-chain worker and pallet::Tasks
 
@@ -170,4 +171,3 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 
 Notes:
 PR: https://github.com/paritytech/polkadot-sdk/pull/1343
-
