@@ -82,8 +82,8 @@ Release:
 #### Morning
 
 1. Quiz 3
-1. 10-Advanced ZK proofs
-1. [11-Cryptography_In_Context](10-Cryptography_In_Context-slides.md)
+1. [10-Advanced ZK proofs](10-Advanced_ZK_proofs-slides.md)
+1. [11-Cryptography_In_Context](11-Cryptography_In_Context-slides.md)
 1. ZKP activity.
 
 Release:
