@@ -3,6 +3,7 @@ title: Advanced ZK Proofs
 description: Introduction to zero-knowledge proofs and zk-SNARKS
 duration: 2 hour
 ---
+
 # Cryptography Day IV
 
 <pba-flex center>
@@ -126,23 +127,23 @@ SAGE demo
 
 ---
 
-# Proving the correctness of the wiring 
+# Proving the correctness of the wiring
 
-- So far we have proven that the we have a solution which satisfies each round of PLONK gate.<!-- .element: class="fragment" data-fragment-index="1" --> 
-- However we have not proven that we are using the outputs from previous rounds in correct places in each round.<!-- .element: class="fragment" data-fragment-index="2" --> 
-- So the prover could cheat and use the values.<!-- .element: class="fragment" data-fragment-index="3" --> 
-- The verifier need enforce equality of reused values in different rounds.<!-- .element: class="fragment" data-fragment-index="4" --> 
-- This is actually the hard creative bit in PLONK and that is what P stands for in PLONK.<!-- .element: class="fragment" data-fragment-index="5" --> 
+- So far we have proven that the we have a solution which satisfies each round of PLONK gate.<!-- .element: class="fragment" data-fragment-index="1" -->
+- However we have not proven that we are using the outputs from previous rounds in correct places in each round.<!-- .element: class="fragment" data-fragment-index="2" -->
+- So the prover could cheat and use the values.<!-- .element: class="fragment" data-fragment-index="3" -->
+- The verifier need enforce equality of reused values in different rounds.<!-- .element: class="fragment" data-fragment-index="4" -->
+- This is actually the hard creative bit in PLONK and that is what P stands for in PLONK.<!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---
 
-# The wiring in a glance 
+# The wiring in a glance
 
 - TODO: wired table
 
 ---
 
-#  The Trace polynomial
+# The Trace polynomial
 
 ---
 
@@ -157,57 +158,64 @@ SAGE demo
 ---
 
 # Developing a wiring enforcement gadget/polynomial
-- We take a step back and develop some tool to tackle this. <!-- .element: class="fragment" data-fragment-index="1" --> 
-- They sound random and irrelevant at first but it all make sense at the end. <!-- .element: class="fragment" data-fragment-index="2" --> 
+
+- We take a step back and develop some tool to tackle this. <!-- .element: class="fragment" data-fragment-index="1" -->
+- They sound random and irrelevant at first but it all make sense at the end. <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
-
 
 # Product check
-- We have a polynomial $f(x)$ and we want to prove that:<!-- .element: class="fragment" data-fragment-index="1" --> 
-- $\prod_{i in \{1..39\}}f(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" --> 
-- We could perform a a zero test $\prod_{i in \{1..39\}}f(i)$ but the degree is huge. <!-- .element: class="fragment" data-fragment-index="3" --> 
-- Instead we introduce a new polynomial: <!-- .element: class="fragment" data-fragment-index="4" --> 
+
+- We have a polynomial $f(x)$ and we want to prove that:<!-- .element: class="fragment" data-fragment-index="1" -->
+- $\prod_{i in \{1..39\}}f(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
+- We could perform a a zero test $\prod_{i in \{1..39\}}f(i)$ but the degree is huge. <!-- .element: class="fragment" data-fragment-index="3" -->
+- Instead we introduce a new polynomial: <!-- .element: class="fragment" data-fragment-index="4" -->
 - $t(x) = $\prod_{i in \{1..x+1}}f(i)$ <!-- .element: class="fragment" data-fragment-index="5" -->.
 - We have a nice recursion: $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$
+
 ---
 
-# Product check 
-- The observeration is that  if you have the recursion:
-$t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$ <!-- .element: class="fragment" data-fragment-index="1" --> 
-- And you know $ t(39) = 1 $ then you know that:
-- $\prod_{i in \{1..39}}f(i).
-- We intepolate $t$ and it will have order 38 (vs 38 * 13)$ <!-- .element: class="fragment" data-fragment-index="2" --> 
-- We run a zero test on $t(x + 1) - t(x)f(x+1) = 0$ for $\{1,...,39\}$ <!-- .element: class="fragment" data-fragment-index="3" --> 
+# Product check
 
+- The observeration is that if you have the recursion:
+  $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$ <!-- .element: class="fragment" data-fragment-index="1" -->
+- And you know $ t(39) = 1 $ then you know that:
+- $\prod\_{i in \{1..39}}f(i).
+- We intepolate $t$ and it will have order 38 (vs 38 \* 13)$ <!-- .element: class="fragment" data-fragment-index="2" -->
+- We run a zero test on $t(x + 1) - t(x)f(x+1) = 0$ for $\{1,...,39\}$ <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
 # Ratio check
-- We can run the product check to prove $\prod_{i in \{1..39\}}f(i)/g(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" --> 
-- $t(x + 1) = t(x)f(x+1)/g(x + 1)$ <!-- .element: class="fragment" data-fragment-index="2" --> 
-- We can only run a zero test polynomials. <!-- .element: class="fragment" data-fragment-index="3" --> 
+
+- We can run the product check to prove $\prod_{i in \{1..39\}}f(i)/g(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
+- $t(x + 1) = t(x)f(x+1)/g(x + 1)$ <!-- .element: class="fragment" data-fragment-index="2" -->
+- We can only run a zero test polynomials. <!-- .element: class="fragment" data-fragment-index="3" -->
 - Run zero test on $t(x + 1)g(x + 1) - t(x)f(x+1)$.
 
 ---
 
-# Permutation check 
+# Permutation check
+
 - Now we want to use the ratio check to enforce the wiring we have.
-- note that let $\psi$ be a permutation which preserve $T$ i.e. we have $T(a) = T(\psi(a))$ then 
+- note that let $\psi$ be a permutation which preserve $T$ i.e. we have $T(a) = T(\psi(a))$ then
 - ${(a, T(a))| for all a in \{1,..,39}} == {(\psi(a), T(a))| for all a \in \{1,...,39\}\}$
 - Then for any random $u_1, u_2$
-$\prod_{a\in\{1,..,39\}}\frac{u_1 - u_2 * a - T(a)}{u_1 - u_2 * \psi(a) - T(\psi(a))} = 1.
+  $\prod\_{a\in\{1,..,39\}}\frac{u*1 - u_2 * a - T(a)}{u*1 - u_2 * \psi(a) - T(\psi(a))} = 1.
 
 ---
 
-# Proof of wiring being correct 
+# Proof of wiring being correct
+
 - The verifier runs a zero test on $T(x) - N$.
 - The verifier runs a zero test on $T(3x) - a(x)$, $T(3x+1) - b(x), $T(3x+2) - c(x)$
-- A Permutation check on $T(x)$ and $T(\psi(x))$ Which is a zero test on 
+- A Permutation check on $T(x)$ and $T(\psi(x))$ Which is a zero test on
 - $t(x + 1)(u_1 - u_2* (x+1) - T(x + 1)) - t(x)(u_1 - u_2 * (psi(x)+1) - T(psi(x)+1) = 0$
+
 ---
 
 # Proof of correctness of the wiring on the trace polynomial.
+
 SAGE demo
 
 ---
@@ -229,7 +237,7 @@ SAGE demo
 - $f(x) = q(x) \times  \prod(x-1)..(x-13)$<!-- .element: class="fragment" data-fragment-index="2" -->
 - The prover commit to $f$ and $q$.<!-- .element: class="fragment" data-fragment-index="3" -->
 - The verifier ask the prover to provide them with $f(u)$ and $q(u)$ for some random point $u$<!-- .element: class="fragment" data-fragment-index="4" -->
-- It is very unlikely that the prover is able to lie about $f(u)$ and $q(u)$ given he has commited to $f$ and $q$. 
+- It is very unlikely that the prover is able to lie about $f(u)$ and $q(u)$ given he has commited to $f$ and $q$.
 - The verifier computes $\prod(u-1)...(u-13)$<!-- .element: class="fragment" data-fragment-index="5" -->
 - The verifier verifies that $f(u) = q(u)\times \prod(u-1)...(u-13)$ and if so believes that the prover has a solution.<!-- .element: class="fragment" data-fragment-index="6" -->
 

@@ -72,7 +72,11 @@ A state machine defines:
 
 </pba-flex>
 
+<!-- TODO: THIS LINK DOES NOT EXIST AND NEEDS TO BE FIXED
+
 <img style="width: 900px;" src="../4-Smart_Contracts/img/state-machine-general.svg" />
+
+-->
 
 <!-- FIXME - do you want to use shared img assets? Breaks the module specific intention of folders per mod... @joshy -Nuke
 Let's see how the hybrid contracts/blockchain thing goes first; then sort this. -Joshy

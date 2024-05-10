@@ -4334,7 +4334,7 @@ __metadata:
     reveal-md: ^5.5.2
     ts-node: ^10.9.2
     typescript: ^5.3.3
-    vite: ^5.1.0
+    vite: ^5.1.7
     vite-plugin-svgr: ^4.2.0
   languageName: unknown
   linkType: soft
@@ -5445,9 +5445,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.1.0":
-  version: 5.2.9
-  resolution: "vite@npm:5.2.9"
+"vite@npm:^5.1.7":
+  version: 5.2.8
+  resolution: "vite@npm:5.2.8"
   dependencies:
     esbuild: ^0.20.1
     fsevents: ~2.3.3
@@ -5481,7 +5481,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 7a97f9547af8550c55bc2529cc6827c1ef0a043a09e9686cf20b615e8d59305cbe917954e806c5fdad6c33bfb883c1ce51325a9c474b5aa5bc13c377a74805fd
+  checksum: c0a77271b548fce443af59a383939924ffcba8e6d0ba6ecb2e481d0ec2318465d2116ce9317599c448e6d6d8af11a67b8efc5b52cb1deab37d2e83311ac4f1b5
   languageName: node
   linkType: hard
 

@@ -159,30 +159,34 @@ Notes:
 
 ---
 
-
 ## How do (polynomial-based) SNARKs prove of knowledge
- - Translate our problem into an arithmetic circuit which should output zero if we know the solution.<!-- .element: class="fragment" data-fragment-index="0" -->
- - Make a polynomials which have roots in specific values using the solutions.<!-- .element: class="fragment" data-fragment-index="1" -->
- - Prove that we know the polynomial by evaluating it at random values and provig that we have evaluated it correctly.<!-- .element: class="fragment" data-fragment-index="2" -->
- - We talk about each step in detail in next lecture<!-- .element: class="fragment" data-fragment-index="3" -->
- - Most popular SNARKs uses polynomials, other SNARKs could use other mathematical structures such as vectors, etc<!-- .element: class="fragment" data-fragment-index="4" -->
- 
+
+- Translate our problem into an arithmetic circuit which should output zero if we know the solution.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Make a polynomials which have roots in specific values using the solutions.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Prove that we know the polynomial by evaluating it at random values and provig that we have evaluated it correctly.<!-- .element: class="fragment" data-fragment-index="2" -->
+- We talk about each step in detail in next lecture<!-- .element: class="fragment" data-fragment-index="3" -->
+- Most popular SNARKs uses polynomials, other SNARKs could use other mathematical structures such as vectors, etc<!-- .element: class="fragment" data-fragment-index="4" -->
+
 Notes:
- - We can not send the polynomial as a proof: 1. it is too big (so not succinct) 2. reveals the secret solution.
+
+- We can not send the polynomial as a proof: 1. it is too big (so not succinct) 2. reveals the secret solution.
 
 ---
 
 # SNARK = PIOP + commitment + Fiat-Shamir
+
 - PIOP => ARK
 - PIOP + Commitment => SARK
 - PIOP + Commitment + Fiat-Shamir => SNARK
+
 ---
 
 # SARK → SNARK
-- Everytime the prover need the verifier to provide them with a random value... <!-- .element: class="fragment" data-fragment-index="1" --> 
-- The prover apply a hash function to all it has already provided to the verifier. <!-- .element: class="fragment" data-fragment-index="2" --> 
-- This way the prover is unable to cheat and control the value and break the systemc. <!-- .element: class="fragment" data-fragment-index="3" --> 
-- This is know Fiat-Shamir Transform <!-- .element: class="fragment" data-fragment-index="4" --> 
+
+- Everytime the prover need the verifier to provide them with a random value... <!-- .element: class="fragment" data-fragment-index="1" -->
+- The prover apply a hash function to all it has already provided to the verifier. <!-- .element: class="fragment" data-fragment-index="2" -->
+- This way the prover is unable to cheat and control the value and break the systemc. <!-- .element: class="fragment" data-fragment-index="3" -->
+- This is know Fiat-Shamir Transform <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
@@ -271,7 +275,7 @@ Non-deterministic arithmetic circuits
 ## Recall steps to SNARKify your problem
 
 - Turn the problem into an arithmetic circuit (describe it only with +, -, x). <!-- .element: class="fragment" data-fragment-index="0" -->
-- Make polynomials from the circuit and your secret solution.<!-- .element: class="fragment" data-fragment-index="1" --> 
+- Make polynomials from the circuit and your secret solution.<!-- .element: class="fragment" data-fragment-index="1" -->
 - But we are not aming at making you zk-Proof expert in one lecture.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
@@ -366,7 +370,6 @@ $r_{i} \times (r_{i} - 1) = 0$
 Circom demo.
 
 ---
-
 
 ## Summary
 
