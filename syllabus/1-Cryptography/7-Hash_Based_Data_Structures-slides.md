@@ -126,7 +126,7 @@ We should also be able to perform the following operations for a provable key-va
 - _**Radix Tries**_ are a particular class of a trie where:
   - The location of a value is determined the path constructed one chunk of digits (represented in the chosen radix) at a time.
   - are optimized to ensure lonely node-paths are consolidated into a single node.
-- _**Patricia Tries**_ are _radix-2 tries_ 
+- _**Patricia Tries**_ are _radix-2 tries_
 
 Notes:
 

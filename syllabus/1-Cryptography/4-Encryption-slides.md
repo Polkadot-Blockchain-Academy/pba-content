@@ -290,9 +290,9 @@ In practice, asymmetric encryption is _almost always_ hybrid encryption.
 | Property        | Symmetric | Asymmetric | Authenticated | Hybrid + Authenticated |
 | --------------- | --------- | ---------- | ------------- | ---------------------- |
 | Confidentiality | Yes       | Yes        | Yes           | Yes                    |
-| Authenticity    | No     | No         | Yes         | Yes                    |
-| Integrity       | No      | No       | Yes           | Yes                    |
-| Non-repudiation | No        | No       | No            | No                   |
+| Authenticity    | No        | No         | Yes           | Yes                    |
+| Integrity       | No        | No         | Yes           | Yes                    |
+| Non-repudiation | No        | No         | No            | No                     |
 
 Notes:
 

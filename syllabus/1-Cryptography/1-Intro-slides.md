@@ -132,7 +132,7 @@ There is no such thing as a "closed channel" :)
 - Data availability<!-- .element: class="fragment" data-fragm ent-index="4" -->
 - Data verifiability<!-- .element: class="fragment" data-fragm ent-index="5" -->
 - ...<!-- .element: class="fragment" data-fragm ent-index="6" -->
-</pba-flex>
+  </pba-flex>
 
 Notes:
 
