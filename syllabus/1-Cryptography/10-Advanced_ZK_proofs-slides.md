@@ -201,7 +201,7 @@ SAGE demo
 - note that let $\psi$ be a permutation which preserve $T$ i.e. we have $T(a) = T(\psi(a))$ then
 - ${(a, T(a))| for all a in \{1,..,39}} == {(\psi(a), T(a))| for all a \in \{1,...,39\}\}$
 - Then for any random $u_1, u_2$
-  $\prod\_{a\in\{1,..,39\}}\frac{u_1 - u_2 _ a - T(a)}{u_1 - u_2 _ \psi(a) - T(\psi(a))} = 1.
+  $\prod\_{a\in\{1,..,39\}}\frac{u*1 - u_2 * a - T(a)}{u*1 - u_2 * \psi(a) - T(\psi(a))} = 1.
 
 ---
 
