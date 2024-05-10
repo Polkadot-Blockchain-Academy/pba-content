@@ -128,7 +128,7 @@ Notes:
 
 - Find the code at [paritytech/trie](https://github.com/paritytech/trie).
 
----v
+---
 
 ### Recap
 
@@ -254,13 +254,7 @@ Namely:
 > as radix trees with radix equals 2, which means that each bit of the key is compared individually
 > and each node is a two-way (i.e., left versus right) branch.
 
----v
-
-### Merklized
-
-> Substrate uses a base-16, (patricia) radix merkle trie.
-
----v
+---
 
 ### Merklized
 
@@ -270,7 +264,7 @@ Namely:
 
 <div>
 
-- We take the **storage key**, and make it be the path on a trie.
+- We take the **storage key**, and make it to be the path on a trie.
 
 </div>
 <!-- .element: class="fragment" -->
@@ -413,7 +407,7 @@ compact proof").
 <div>
 
 - Storage Key != Database Key.
-- 1 Storage access = Many data base access.
+- 1 Storage access = Many database access.
 
 </div>
 <!-- .element: class="fragment" -->
@@ -487,7 +481,7 @@ One can assume that the green node is like any other node in the trie.
 ### Unbalanced Tree
 
 - Unbalanced tree means unbalanced performance.
-  An attack vector, if done right.
+  An attack vector, if done wrong.
 - More about this in FRAME storage, and how it is prevented there.
 
 Notes:
@@ -528,7 +522,7 @@ All of that can be delayed.
   - <!-- .element: class="fragment" --> Once you read a value, it stays here, and can be re-read for cheap.
   - <!-- .element: class="fragment" --> Once you write a value, it will only be written here.
     - It can be read for cheap.
-  - <!-- .element: class="fragment" --> All writes are flushed at the end of the runtime api call.
+  - <!-- .element: class="fragment" --> All writes are flushed when all extrinsics for a block are applied.
 - <!-- .element: class="fragment" --> No race conditions as runtime is single-threaded.
 
 ---v
@@ -735,6 +729,13 @@ Notes:
 
 <img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-child.svg" />
 
+Notes:
+Shawn's answer on usecases: https://substrate.stackexchange.com/questions/139/what-are-good-use-cases-for-child-tries/144#144
+
+- Used in smart contracts for being able to delete contract data and reinstate later.
+- Generating proof of contribution to crowdloan.
+- Alternative trie format.
+
 ---v
 
 ### Child Trees
@@ -799,7 +800,7 @@ Here's a different way to represent it; the nodes are bigger on the base-8 trie.
 - base-26: Bigger proofs, less nodes.
 
 Notes:
-Anyone interested in blockchain and research stuff should look into this.
+✅ 16 has been benchmarked as a good middle-ground.
 
 ---
 
@@ -812,9 +813,9 @@ Anyone interested in blockchain and research stuff should look into this.
 - KV-Based storage
 - Merklized storage, and proofs
 - Large nodes
-- Radix order consequences
 - Unbalanced tree
 - State pruning
+- Radix order consequences
 
 </pba-col>
 
