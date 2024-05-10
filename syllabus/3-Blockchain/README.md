@@ -81,7 +81,7 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 
 #### Afternoon
 
-- 🗣️ [Light Clients Bridges](./8-Light_Clients_and_Bridges-slides.md)
+- 🗣️ [Light Clients Bridges](./9-Light_Clients_and_Bridges-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
 - 🗣️ Guest Speaker (Jonas - Economics of Polkadot)
