@@ -1,4 +1,9 @@
-# Blockchain Fundamentals Module
+# Module 3: Blockchain Fundamentals
+
+#### Prerequisites:
+Latest stable rust compiler. You can install [the entire substrate developer environment](https://docs.substrate.io/install/).
+
+## Learning Outcomes
 
 This module introduces students to the shortcomings of centralized infrastructure including censorship, equity, reliability, and trustworthiness. It then demonstrates through lectures, coding activities, and games, how a peer to peer network can achieve consensus on a shared history that is recorded in the blockchain data structure.
 
@@ -23,9 +28,11 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 
 - Start a Blockchain and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW).
 
-## Approximate Schedule
+## Schedule
 
 ### Day 1
+
+#### Morning
 
 - 🗣️ [Decentralized Systems: Goals and History](./1-Overview_Goals_History-slides.md)
 - 🎲 (Optional) [Manual Consensus Game](./Manual_Consenus_Activity.md)
@@ -33,7 +40,7 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 - 🗣️ [P2P Networks and State Machines](./2-P2P_Networks_State_Machines-slides.md)
 - ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
 
-### Afternoon
+#### Afternoon
 
 - 🗣️ [Blockchain Datastructure](./3-Blockchain_Structure-slides.md)
 - ⌨️ Continue BFS
@@ -43,13 +50,15 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 
 ### Day 2
 
+#### Morning
+
 - 🗣️ [Consensus Part 1 - Author Selection](./5-Consensus-Authoring-slides.md)
 - ⌨️ Continue BFS
 - ☕ Break
 - 🗣️ [Economics and Game Theory in Blockchain](./6-Econ_and_Game_Theory_in_Blockchain-slides.md)
 - ⌨️ Continue BFS
 
-### Afternoon
+#### Afternoon
 
 - ⌨️ Start A Blockchain and Perform Forks ([Repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW))
 - 🗣️ [Types of Forks](./7-Forks-slides.md)
@@ -63,15 +72,16 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 - ☕ Break
 - 🎲 [Grandpa Board Game](https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html) TODO Find proper repo
 
-### Afternoon
-- 🗣️ Blockchain Economy (Slides TBD)
-- ☕ Break
+### Day 3
+
+#### Morning
+
+- 🗣️ Maybe Rollups, and Blockspace vs Blobspace
+- ⌨️ Continue BFS
+
+#### Afternoon
+
 - 🗣️ [Light Clients Bridges](./9-Light_Clients_and_Bridges-slides.md)
 - ⌨️ Continue BFS
-
-### Extra Time
-
-Some classes naturally go at a faster pace than others. If there is extra time do more coding or try this lesson.
-
-- ⌨️ Continue BFS
-- 🗣️ [Designing_DAG_based_consensus](./10-Designing_DAG_based_consensus-slides.md)
+- ☕ Break
+- 🗣️ Guest Speaker (Jonas - Economics of Polkadot)

@@ -4,19 +4,6 @@ description: A lesson on symmetric and asymmetric encryption.
 duration: 1 hour
 ---
 
-# Cryptography Day II
-
-<pba-flex center>
-
-- Encryption<!-- .element: class="fragment" data-fragment-index="0" -->
-- Basic Digital Signatures<!-- .element: class="fragment" data-fragment-index="1" -->
-- Advanced Digital Signatures<!-- .element: class="fragment" data-fragment-index="2" -->
-- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="3" -->
-
-</pba-flex>
-
----
-
 # Encryption
 
 ---
@@ -68,11 +55,11 @@ The input `r` is typically a source of randomness, for example the movement patt
 Provides:
 
 - Confidentiality
-- Authenticity\*
 
 Does not provide:
 
-- Integrity\*
+- Authenticity
+- Integrity
 - Non-Repudiation
 
 Notes:
@@ -220,7 +207,7 @@ Provides:
 
 Does not provide:
 
-- Integrity\*
+- Integrity
 - Authenticity
 - Non-Repudiation
 
@@ -303,9 +290,9 @@ In practice, asymmetric encryption is _almost always_ hybrid encryption.
 | Property        | Symmetric | Asymmetric | Authenticated | Hybrid + Authenticated |
 | --------------- | --------- | ---------- | ------------- | ---------------------- |
 | Confidentiality | Yes       | Yes        | Yes           | Yes                    |
-| Authenticity    | Yes\*     | No         | Yes\*         | Yes                    |
-| Integrity       | No\*      | No\*       | Yes           | Yes                    |
-| Non-repudiation | No        | No\*       | No            | No\*                   |
+| Authenticity    | No        | No         | Yes           | Yes                    |
+| Integrity       | No        | No         | Yes           | Yes                    |
+| Non-repudiation | No        | No         | No            | No                     |
 
 Notes:
 

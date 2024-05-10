@@ -4,19 +4,6 @@ description: More exotic digital signature methods
 duration: 1 hour
 ---
 
-# Cryptography Day II
-
-<pba-flex center>
-
-- Encryption<!-- .element: class="fragment" data-fragment-index="0" -->
-- Basic Digital Signatures<!-- .element: class="fragment" data-fragment-index="1" -->
-- Advanced Digital Signatures<!-- .element: class="fragment" data-fragment-index="2" -->
-- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="3" -->
-
-</pba-flex>
-
----
-
 # Advanced Digital Signatures
 
 ---

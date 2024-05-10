@@ -164,6 +164,20 @@ If (and only if) formatting _breaks_ markdown from rendering correctly, you may 
 
 The above ` ```html ` block will not be formatted.
 
+
+### Remove notes from slides
+
+If for any reason you want to remove the notes from the slides, you can run:
+```
+yarn run remove-notes <No-Module>
+```
+If for example you want to remove all notes from the Economics module you can run:
+```
+yarn run remove-notes 2-Economics
+```
+
+The script then will search all the files under `./syllabus/2-Economics` directory and remove all sequences that starts with `Notes:` and finishes with either `---` or `---v` (leaving that slide remaining).
+
 ### Check embedded links
 
 To ensure all `*.md` contain no broken links within them, we have included a [simple link checker](https://github.com/tcort/markdown-link-check) you can run per module of content with:

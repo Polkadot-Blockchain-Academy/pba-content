@@ -1,17 +1,19 @@
 ---
 title: ZK proofs
 description: Introduction to zero-knowledge proofs and zk-SNARKS
-duration: 3.5 hour
+duration: 2 hour
 ---
 
 # Cryptography Day III
 
 <pba-flex center>
 
-- ZK Proofs<!-- .element: class="fragment" data-fragment-index="0" -->
-- Exotic Primitives<!-- .element: class="fragment" data-fragment-index="1" -->
-- Invited Lectures<!-- .element: class="fragment" data-fragment-index="2" -->
-- Cryptography in Context<!-- .element: class="fragment" data-fragment-index="3" -->
+- Quiz
+- Hash Based Data Structures
+- Exotic Primitives
+- Merkle Tree Activity
+- Zero-Knowledge Proofs Intro<!-- .element: class="fragment" data-fragment-index="3" -->
+- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
 
@@ -29,8 +31,6 @@ duration: 3.5 hour
 2. [Examples](#simple-zk-example)<!-- .element: class="fragment" data-fragment-index="1" -->
 3. [zk-SNARKs](#zk-snarks)<!-- .element: class="fragment" data-fragment-index="2" -->
 4. [Applications of zk-SNARKs](#zk-application)<!-- .element: class="fragment" data-fragment-index="3" -->
-5. [Under the hood of zk-SNARKs](#zk-practice)<!-- .element: class="fragment" data-fragment-index="4" -->
-6. [Generating ZK-proofs using Circom and snarkjs](#circom-snarkjs)<!-- .element: class="fragment" data-fragment-index="6" -->
 
 </pba-flex>
 
@@ -159,6 +159,37 @@ Notes:
 
 ---
 
+## How do (polynomial-based) SNARKs prove of knowledge
+
+- Translate our problem into an arithmetic circuit which should output zero if we know the solution.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Make a polynomials which have roots in specific values using the solutions.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Prove that we know the polynomial by evaluating it at random values and provig that we have evaluated it correctly.<!-- .element: class="fragment" data-fragment-index="2" -->
+- We talk about each step in detail in next lecture<!-- .element: class="fragment" data-fragment-index="3" -->
+- Most popular SNARKs uses polynomials, other SNARKs could use other mathematical structures such as vectors, etc<!-- .element: class="fragment" data-fragment-index="4" -->
+
+Notes:
+
+- We can not send the polynomial as a proof: 1. it is too big (so not succinct) 2. reveals the secret solution.
+
+---
+
+# SNARK = PIOP + commitment + Fiat-Shamir
+
+- PIOP => ARK
+- PIOP + Commitment => SARK
+- PIOP + Commitment + Fiat-Shamir => SNARK
+
+---
+
+# SARK → SNARK
+
+- Everytime the prover need the verifier to provide them with a random value... <!-- .element: class="fragment" data-fragment-index="1" -->
+- The prover apply a hash function to all it has already provided to the verifier. <!-- .element: class="fragment" data-fragment-index="2" -->
+- This way the prover is unable to cheat and control the value and break the systemc. <!-- .element: class="fragment" data-fragment-index="3" -->
+- This is know Fiat-Shamir Transform <!-- .element: class="fragment" data-fragment-index="4" -->
+
+---
+
 ## Applications of zk-SNARKs
 
 ---
@@ -212,15 +243,40 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 ---
 
-## Under the hood of zk-SNARKs
+## Practical Considerations
 
-- We are going to talk about the elementary math behind zk-SNARKs.
-- The goal is to familiarize you with the magic behind the zk-SNARKs.<!-- .element: class="fragment" data-fragment-index="0" -->
-- But we are not aming at making you zk-Proof expert in one lecture.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Very powerful primitive<!-- .element: class="fragment" data-fragment-index="0" -->
+- Useful for both scaling and privacy<!-- .element: class="fragment" data-fragment-index="1" -->
+- One can design many protocols with ZK Proofs that wouldn't otherwise be possible<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
+
+## Downside
+
+- Slow prover time for general computation<!-- .element: class="fragment" data-fragment-index="1" -->
+- To be fast, need to hand optimize<!-- .element: class="fragment" data-fragment-index="2" -->
+- Very weird computation model:<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
+Weird as in binary arithmetic is hard, condition is hard.
+taking square-root of an element mod p is easy.
+Non-deterministic arithmetic circuits
 
-- Don't worry if you are not able to follow. Not essential.<!-- .element: class="fragment" data-fragment-index="0" -->
+---
+
+## Under the hood of zk-SNARKs
+
+- We are going to talk about the elementary math behind zk-SNARKs.<!-- .element: class="fragment" data-fragment-index="0" -->
+- The goal is to familiarize you with the magic behind the zk-SNARKs.<!-- .element: class="fragment" data-fragment-index="1" -->
+- But we are not aming at making you zk-Proof expert in one lecture.<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
+
+## Recall steps to SNARKify your problem
+
+- Turn the problem into an arithmetic circuit (describe it only with +, -, x). <!-- .element: class="fragment" data-fragment-index="0" -->
+- Make polynomials from the circuit and your secret solution.<!-- .element: class="fragment" data-fragment-index="1" -->
+- But we are not aming at making you zk-Proof expert in one lecture.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -312,176 +368,6 @@ $r_{i} \times (r_{i} - 1) = 0$
 ## Writing our circuit in Circom
 
 Circom demo.
-
----
-
-## Circuit to SNARK Strategy
-
-- To represent the circuit as a univariate polynomial called the "Trace Polynomial".<!-- .element: class="fragment" data-fragment-index="1" -->
-- The trace polynomial is equal to zero at each "gate" of the circuit if the solution satisfies the gate relation.<!-- .element: class="fragment" data-fragment-index="2" -->
-- Then the verifier should be able to test if the polynomial actually has a root for every gate.<!-- .element: class="fragment" data-fragment-index="3" -->
-- ... without knowing the polynomial: This is done using "polynomial commitment".<!-- .element: class="fragment" data-fragment-index="4" -->
-
----
-
-## Universal PLONK Gate
-
-<img style="height: 200px; padding-left:100px" src="./img/factorization-circuit.png" />
-
-- Supppose we have a left input $a$ and a right input $b$ and we are doing some addition and multiplication with them and the output is $c$.<!-- .element: class="fragment" data-fragment-index="1" -->
-- Then we could encode all of these operations as:<!-- .element: class="fragment" data-fragment-index="2" -->
-  $Q_l\times a + Q_r \times b + Q_o \times c + Q_m \times a\times b + Q_c = 0$<!-- .element: class="fragment" data-fragment-index="3" -->
-- for some constant $Q_l$ $Q_r$ $Q_o$ $Q_m$ and $Q_c$<!-- .element: class="fragment" data-fragment-index="4" -->
-- in fact all the operation we discussed can be written using one of these gates.<!-- .element: class="fragment" data-fragment-index="5" -->
-
----
-
-## Gate table for factorization
-
-$r \times s = N$
-
-$Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
-
- <img style="height: 200px; padding-left:100px" src="./img/gate-table-factorization.png" />
-
----
-
-## Gate table for left input to be small and not 1
-
-$r_{01} = r_{0} + 2r_{1}$
-
-$r = r_{01} + 4r_{2}$
-
-$r_{i} \times (r_{i} - 1) = 0 \Rightarrow r_{i}^2 - r_{i} = 0$
-
-$(r-1)\times\frac{1}{r - 1} = 1 \Rightarrow r\frac{1}{r - 1} - \frac{1}{r - 1} = 1$
-
-$Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
-
-<img style="height: 500px; padding-left:100px" src="./img/gate-table-left-input-less-than-8-and-not-1.png" />
-
----
-
-## Gate table for the right input to be an integer and not 1
-
-$Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
-<img style="height: 500px; padding-left:100px" src="./img/gate-table-right-input-less-than-8-and-not-1.png" />
-
----
-
-## Encode the trace as a polynomial T
-
-- You can always encode a column of a table into a polynomial.<!-- .element: class="fragment" data-fragment-index="1" -->
-- $Q_l(x)$ such that $Q_l(1) = 0, Q_l(2) = 1, Q_l(3) = 1, Q_l(4) = -1 ,...$<!-- .element: class="fragment" data-fragment-index="2" -->
-  <img style="height: 300px; padding-left:100px" src="./img/gate-table-left-input-less-than-8-and-not-1.png" /><!-- .element: class="fragment" data-fragment-index="2" --> sa
-- When you have one polynomial for each column then you can turn the whole table into a polynomial:<!-- .element: class="fragment" data-fragment-index="3" -->
-  $Q_l(x)\times a(x) + Q_r(x)\times b(x) + Q_o(x)\times  c(x) + Q_m(x)\times a(x)\times b(x) + Q_c(x)$<!-- .element: class="fragment" data-fragment-index="4" -->
-  $= 0$<!-- .element: class="fragment" data-fragment-index="4" -->
-
----
-
-## Compute the trace polynomial from the gate table
-
-SAGE demo
-
----
-
-## Prove that Validity of T
-
-- T encode every gate is evaluated correctly: Zero test.
-- The wiring is correct: Permutation test (we are not discussing it in this course).
-
----
-
-# Zero test
-
-- if f(x) = 0 for x = 1,..,13 then
-- $f(x) = q(x) \times  (x-1)\times ...\times (x-13)$
-- $f(x)/q(x) = (x-1)...(x-13)$
-- How to verifier this.
-
----
-
-## Zero test on the resulting polynomial.
-
-SAGE demo
-
----
-
-# Zero test without knowing the polynomial: Polynomial commitment
-
-- When the prover tells the $f(x)$ at some point $u$ ($f(u)$) without revealing $f(x)$.<!-- .element: class="fragment" data-fragment-index="1" -->
-- It is a tool to convince the verifier which it has done so honestly.<!-- .element: class="fragment" data-fragment-index="2" -->
-- The prover first commit to the polynomial $f(x)$ so later on, they can't back off and cheat (and use another polynomial).<!-- .element: class="fragment" data-fragment-index="3" -->
-- Then the verifier is going to ask the prover to evaluate the polynomials in random point $u$.<!-- .element: class="fragment" data-fragment-index="4" -->
-- The verifier is able to be confident that $f(u) = v$.<!-- .element: class="fragment" data-fragment-index="5" -->
-
----
-
-# Zero test using polynomial commitment.
-
-- The prover claims it has $f(x)$ satisfying the circuit.<!-- .element: class="fragment" data-fragment-index="1" -->
-- The prover is also able to compute $q(x)$ such that <!-- .element: class="fragment" data-fragment-index="2" -->
-- $f(x) = q(x) \times  \prod(x-1)..(x-13)$<!-- .element: class="fragment" data-fragment-index="2" -->
-- The prover commit to $f$ and $q$.<!-- .element: class="fragment" data-fragment-index="3" -->
-- The verifier ask the prover to provide them with $f(u)$ and $q(u)$ for some random point $u$<!-- .element: class="fragment" data-fragment-index="4" -->
-- The verifier computes $\prod(u-1)...(u-13)$<!-- .element: class="fragment" data-fragment-index="5" -->
-- The verifier verifies that $f(u) = q(u)\times \prod(u-1)...(u-13)$ and if so believes that the prover has a solution.<!-- .element: class="fragment" data-fragment-index="6" -->
-
----
-
-# KZG Polynomial-commitment
-
-- Is the most space efficient polynomial commitment.<!-- .element: class="fragment" data-fragment-index="1" -->
-- Uses elliptic curve cryptography.<!-- .element: class="fragment" data-fragment-index="2" -->
-- It requires trusted setup: a pre-computation with toxic waste which needs to be discarded to keep the scheme secure.<!-- .element: class="fragment" data-fragment-index="2" -->
-
----
-
-## Making ZK non-interactive
-
-- The only interactive step is when verifier is quizzing prover with a random value $r$.<!-- .element: class="fragment" data-fragment-index="1" -->
-- We replace that with asking the prover to apply a secure hash function to his commitment to generate $r$.<!-- .element: class="fragment" data-fragment-index="2" -->
-- That way if the prover changes his commitment his point also changes without his control. <!-- .element: class="fragment" data-fragment-index="3" -->
-
----
-
-## Use Circom to generate trace polynomials.
-
-Circom demo
-
----
-
-## Use snarkjs to generate proofs
-
-Generate proof demo with snarkjs
-
----
-
-## Use snarkjs to verify the proofs
-
-Verify the proof snarkjs
-
----
-
-## Practical Considerations
-
-- Very powerful primitive<!-- .element: class="fragment" data-fragment-index="0" -->
-- Useful for both scaling and privacy<!-- .element: class="fragment" data-fragment-index="1" -->
-- One can design many protocols with ZK Proofs that wouldn't otherwise be possible<!-- .element: class="fragment" data-fragment-index="2" -->
-
----
-
-## Downside
-
-- Slow prover time for general computation<!-- .element: class="fragment" data-fragment-index="1" -->
-- To be fast, need to hand optimize<!-- .element: class="fragment" data-fragment-index="2" -->
-- Very weird computation model:<!-- .element: class="fragment" data-fragment-index="3" -->
-
-Notes:
-Weird as in binary arithmetic is hard, condition is hard.
-taking square-root of an element mod p is easy.
-Non-deterministic arithmetic circuits
 
 ---
 
