@@ -111,7 +111,7 @@ This was already expanded once, and could be expanded in the future.
 
 ## Block Import Weight Breakdown
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/block-import.svg" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/benchmark/block-import.svg" />
 
 ---
 
@@ -132,7 +132,7 @@ This was already expanded once, and could be expanded in the future.
 </div>
 <div class="right">
 
-<img style="height: 600px;" src="../../../assets/img/6-FRAME/benchmark/benchmarking.svg" />
+<img style="height: 600px;" src="../../../../assets/img/6-FRAME/benchmark/benchmarking.svg" />
 
 </div>
 </div>
@@ -167,7 +167,7 @@ mod benchmarks {
 <div class="flex-container">
 <div class="left-small">
 
-<img style="height: 600px;" src="../../../assets/img/6-FRAME/benchmark/linear-regression.svg" />
+<img style="height: 600px;" src="../../../../assets/img/6-FRAME/benchmark/linear-regression.svg" />
 
 </div>
 <div class="right">
@@ -277,7 +277,7 @@ For each component and repeat:
 
 ## Benchmarks Evaluated Over Components
 
-<img style="height: 600px;" src="../../../assets/img/6-FRAME/benchmark/components.svg" />
+<img style="height: 600px;" src="../../../../assets/img/6-FRAME/benchmark/components.svg" />
 
 ---
 
@@ -306,7 +306,7 @@ pub(super) type Number<T: Config> = StorageValue<_, BlockNumberFor<T>, ValueQuer
 
 The Identity Pallet
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-icon.svg" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/benchmark/identity-icon.svg" />
 
 ---
 
@@ -596,7 +596,7 @@ Ok(())
 
 ## Results: Extrinsic Time vs. # of Registrars
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.png" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/benchmark/identity-raw-registrars.png" />
 
 Notes:
 
@@ -606,7 +606,7 @@ Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 
 ## Results: Extrinsic Time vs. # of Sub-Accounts
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-sub.png" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/benchmark/identity-raw-sub.png" />
 
 Notes:
 
@@ -616,7 +616,7 @@ Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 
 ## Results: Extrinsic Time vs. Additional Fields
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-raw-fields.png" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/benchmark/identity-raw-fields.png" />
 
 Notes:
 
@@ -626,7 +626,7 @@ Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 
 ## Result: DB Operations vs. Sub Accounts
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/identity-db-sub.png" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/benchmark/identity-db-sub.png" />
 
 Notes:
 
@@ -917,8 +917,8 @@ Let's now step away from concepts and talk about cold hard data.
 <div class="right" style="padding-left: 10px;">
 
 <div class="r-stack">
-	<img style="height: 500px;" src="../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram.png" />
-	<img style="height: 500px;" class="fragment" src="../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram-alpha.png" />
+	<img style="height: 500px;" src="../../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram.png" />
+	<img style="height: 500px;" class="fragment" src="../../../../assets/img/6-FRAME/benchmark/polkadot-size-histogram-alpha.png" />
 </div>
 </div>
 
@@ -938,13 +938,13 @@ https://substrate.stackexchange.com/questions/525/how-expensive-is-it-to-access-
 
 At 32 KB, performance decreases for each additional 4 KB.
 
-<img style="height: 500px" src="../../../assets/img/6-FRAME/benchmark/paritydb-vs-rocksdb-read.png" />
+<img style="height: 500px" src="../../../../assets/img/6-FRAME/benchmark/paritydb-vs-rocksdb-read.png" />
 
 ---
 
 ### RocksDB Inconsistency
 
-<img style="width: 1200px;" src="../../../assets/img/6-FRAME/benchmark/rocksdb-hiccups.png" />
+<img style="width: 1200px;" src="../../../../assets/img/6-FRAME/benchmark/rocksdb-hiccups.png" />
 
 When doing benchmarking, we saw some really bizarre, but reproducible problems with RocksDB.
 
@@ -977,7 +977,7 @@ To benchmark the entire extrinsic, including the weight of DB operations directl
 RocksDB was too inconsistent to give reproducible results, and really slow to populate.
 So we use an in-memory DB for benchmarking.
 
-<img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/rocksdb-hiccups.png" />
+<img style="height: 200px;" src="../../../../assets/img/6-FRAME/benchmark/rocksdb-hiccups.png" />
 
 </pba-col>
 </pba-cols>
@@ -993,7 +993,7 @@ So we use an in-memory DB for benchmarking.
 
 Executing a whole block, increasing the number of txs in each block. We expected to get linear growth of execution time, but in fact it was superlinear!
 
-<img style="height: 250px;" src="../../../assets/img/6-FRAME/benchmark/nonlinear-events.png" />
+<img style="height: 250px;" src="../../../../assets/img/6-FRAME/benchmark/nonlinear-events.png" />
 
 </pba-col>
 <pba-col>
@@ -1004,7 +1004,7 @@ Each time we appended a new event, we were passing the growing event object over
 
 We updated the append api so only new data is pushed.
 
-<img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/event-fix.png" />
+<img style="height: 200px;" src="../../../../assets/img/6-FRAME/benchmark/event-fix.png" />
 
 </pba-col>
 </pba-cols>
@@ -1190,7 +1190,7 @@ Example:
 - `on_finalize` is the last thing to happen in a block, and must execute for the block to be successful.
 - Variable weight needs at can lead to overweight blocks.
 
-<img style="height: 200px;" src="../../../assets/img/6-FRAME/benchmark/on-finalize.svg" />
+<img style="height: 200px;" src="../../../../assets/img/6-FRAME/benchmark/on-finalize.svg" />
 
 ---
 

@@ -41,7 +41,7 @@ Recall that the boundary for this division is the **state transition**
 
 ## Substrate: a short recap
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-full-comm.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-full-comm.svg" />
 
 ---v
 
@@ -169,7 +169,7 @@ See https://paritytech.github.io/substrate/master/sp_storage/well_known_keys/ind
 
 ### Example #1: State
 
-<img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-4-1-state-opaque.svg" />
+<img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-4-1-state-opaque.svg" />
 
 ---
 
@@ -218,7 +218,7 @@ https://paritytech.github.io/substrate/master/sp_runtime/generic/index.html
 
 ---v
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-block-opaque.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-block-opaque.svg" />
 
 ---v
 
@@ -297,7 +297,7 @@ let code = database::get(well_known_keys::CODE);
 runtime.execute_block(opaque_block);
 ```
 
-<img style="width: 600px" src="../../assets/img/5-Substrate/dev-4-1-state-database.svg" />
+<img style="width: 600px" src="../../../assets/img/5-Substrate/dev-4-1-state-database.svg" />
 
 Notes:
 
@@ -372,7 +372,7 @@ Note: make sure roots in the header match!
 
 ### Example #2: Block Import: Recap
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-import.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-import.svg" />
 
 ---
 
@@ -425,7 +425,7 @@ are indeed valuable and nodes share them.
 
 ### Example #3: Block Authoring
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-author-pool.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-author-pool.svg" />
 
 <div class="fragment fade-out" style="width: 220px; height: 120px; position: fixed; left: 450px; bottom: 180px; background: #140526"></div>
 <div class="fragment fade-out" style="width: 220px; height: 90px; position: fixed; left: 450px; bottom: 180px; background: #140526"></div>
@@ -440,7 +440,7 @@ The point being, eventually the pool builds a list of "ready transactions".
 
 ### Example #3: Block Authoring
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-author-builder.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-author-builder.svg" />
 
 <div id="pool-1" class="fragment" style="
     width: 300px; height: 30px; position: fixed; left: 450px; top: 610px;
@@ -686,7 +686,7 @@ new chain, they are all VERY easy to change.
 
 ## Substrate: The Full Picture
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-full.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-full.svg" />
 
 Notes:
 
@@ -868,7 +868,7 @@ https://github.com/paritytech/substrate/issues/13640
 </pba-col>
 <pba-col center>
 
-<img style="width: 700px;" src="../../assets/img/5-Substrate/dev-4-3-io.svg" />
+<img style="width: 700px;" src="../../../assets/img/5-Substrate/dev-4-3-io.svg" />
 
 </pba-col>
 </pba-cols>
@@ -896,7 +896,7 @@ wasm can be bigger than the actual hashing cost.
 
 ## Consideration: Native Runtime
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-native.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-native.svg" />
 
 ---v
 
@@ -969,19 +969,19 @@ But, if some are executing native, then you will have a consensus error.
 
 ### Speaking of Versions..
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-substrate-meta-version.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-1-substrate-meta-version.svg" />
 
 ---v
 
 ### Speaking of Versions..
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-telemetry.png" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-telemetry.png" />
 
 ---v
 
 ### Speaking of Versions..
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-PJS.png" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-PJS.png" />
 
 ---v
 
@@ -1313,7 +1313,7 @@ panic if any transaction fails to apply.
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Notes:
 
@@ -1473,6 +1473,6 @@ https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
 
 ## Misc
 
-<img rounded style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
+<img rounded style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
 
 ---v

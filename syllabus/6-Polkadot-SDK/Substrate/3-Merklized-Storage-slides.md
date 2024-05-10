@@ -9,7 +9,7 @@ duration: 90mins
 
 ## What We Know So Far
 
-<img style="width: 900px;" src="../../assets/img/5-Substrate/dev-storage-1.svg" />
+<img style="width: 900px;" src="../../../assets/img/5-Substrate/dev-storage-1.svg" />
 
 Notes:
 
@@ -35,7 +35,7 @@ Notes:
 
 ### What We Know So Far
 
-<img style="width: 900px;" src="../../assets/img/5-Substrate/dev-storage-2.svg" />
+<img style="width: 900px;" src="../../../assets/img/5-Substrate/dev-storage-2.svg" />
 
 ---v
 
@@ -74,7 +74,7 @@ Notes:
 
 ### Key Value
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-kv-backend.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-kv-backend.svg" />
 
 ---v
 
@@ -280,7 +280,7 @@ Namely:
 
 ### Merklized
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/trie-backend-simple-simple.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/trie-backend-simple-simple.svg" />
 
 Notes:
 
@@ -291,7 +291,7 @@ Notes:
 
 ### Merklized
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-simple.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-simple.svg" />
 
 Notes:
 
@@ -309,7 +309,7 @@ simplification.
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-m1.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-walk-m1.svg" />
 
 Notes:
 
@@ -318,7 +318,7 @@ Notes:
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-0.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-walk-0.svg" />
 
 Notes:
 
@@ -327,21 +327,21 @@ Notes:
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-1.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-walk-1.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-2.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-walk-2.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-walk-full.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-walk-full.svg" />
 
 ---v
 
 ## Q/A Break
 
-<img src="../../assets/img/5-Substrate/dev-4-8-qr-radix-tree-visualization.png" />
+<img src="../../../assets/img/5-Substrate/dev-4-8-qr-radix-tree-visualization.png" />
 
 Try inserting (and deleting) bunch of keys and see how you fill up the trie in
 the [radix tree visualization](https://www.cs.usfca.edu/~galles/visualization/RadixTree.html).
@@ -356,7 +356,7 @@ Back to our question
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-proof.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-proof.svg" />
 
 Notes:
 
@@ -423,7 +423,7 @@ it will be `O(LOG_n)`.
 
 ## Substrate Storage: The Updated Picture
 
-<img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-storage-3.svg" />
+<img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-storage-3.svg" />
 
 ---
 
@@ -435,7 +435,7 @@ it will be `O(LOG_n)`.
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-proof-fat.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-proof-fat.svg" />
 
 ---v
 
@@ -457,7 +457,7 @@ struct RuntimeVersion {
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-proof-fat-fix.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-proof-fat-fix.svg" />
 <!-- TODO: update figure. -->
 
 What is the ramification of this for full nodes, and light clients?
@@ -474,7 +474,7 @@ One can assume that the green node is like any other node in the trie.
 
 ### Unbalanced Tree
 
-<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-trie-backend-unbalanced.svg" />
+<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-trie-backend-unbalanced.svg" />
 
 ---v
 
@@ -527,27 +527,27 @@ All of that can be delayed.
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay-1.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay-1.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay-2.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay-2.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay-3.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay-3.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay-4.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay-4.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay-5.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay-5.svg" />
 
 ---v
 
@@ -562,7 +562,7 @@ All of that can be delayed.
 </pba-col>
 <pba-col>
 
-<img style="width: 700px;" src="../../assets/img/5-Substrate/dev-4-3-io.svg" />
+<img style="width: 700px;" src="../../../assets/img/5-Substrate/dev-4-3-io.svg" />
 
 </pba-col>
 
@@ -604,11 +604,11 @@ Notes:
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay-nested.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay-nested.svg" />
 
 ---v
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-overlay-nested-1.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-overlay-nested-1.svg" />
 
 ---v
 
@@ -642,7 +642,7 @@ https://www.youtube.com/embed/OoMPlJKUULY
 
 ### Substrate Storage: Final Figure
 
-<img style="width: 1000px;" src="../../assets/img/5-Substrate/dev-storage-externalities-full.svg" />
+<img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-storage-externalities-full.svg" />
 
 ---v
 
@@ -699,22 +699,22 @@ Notes:
 
 ### State Pruning
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-pruning-1.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-pruning-1.svg" />
 ---v
 
 ### State Pruning
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-pruning-2.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-pruning-2.svg" />
 ---v
 
 ### State Pruning
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-pruning-3.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-pruning-3.svg" />
 ---v
 
 ### State Pruning
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-pruning-4.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-pruning-4.svg" />
 
 ---v
 
@@ -727,7 +727,7 @@ Notes:
 
 ## Child Trees
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-4-3-child.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-child.svg" />
 
 Notes:
 Shawn's answer on usecases: https://substrate.stackexchange.com/questions/139/what-are-good-use-cases-for-child-tries/144#144
@@ -758,7 +758,7 @@ Shawn's answer on usecases: https://substrate.stackexchange.com/questions/139/wh
 
 ### Base 2, Base 16, Base-26?
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-16.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-16.svg" />
 <!-- TODO: update figure to represent node size. -->
 
 Tradeoff: "_IO count vs. Node size_"
@@ -786,7 +786,7 @@ nodes.
 
 ### Base 2, Base 16, Base-26?
 
-<img style="width: 1400px;" src="../../assets/img/5-Substrate/dev-trie-backend-16-with-size.svg" />
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-16-with-size.svg" />
 
 Note:
 
@@ -820,7 +820,7 @@ Notes:
 </pba-col>
 
 <pba-col>
-<img src="../../assets/img/5-Substrate/dev-storage-full.svg" />
+<img src="../../../assets/img/5-Substrate/dev-storage-full.svg" />
 </pba-col>
 
 </pba-cols>
@@ -832,7 +832,7 @@ Notes:
 - Check speaker notes (click "s" 😉).
 - Follows some additional content that is not covered.
 
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Notes:
 

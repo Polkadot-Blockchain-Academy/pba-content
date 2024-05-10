@@ -486,13 +486,13 @@ Transactional layers can be used to attack your chain:
 
 ## Patricia Trie
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/patricia-trie.svg" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/patricia-trie.svg" />
 
 ---
 
 ## Storage Keys
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/navigate-storage-2.svg" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/navigate-storage-2.svg" />
 
 ---
 
@@ -1106,7 +1106,7 @@ fn balance_map() {
 
 All pallets and storage items naturally form "prefix tries".
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/balance-trie.svg" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/balance-trie.svg" />
 
 In this diagram, a pallet "Balances" has a storage value "Total Issuance" and a map of "Accounts" with balances as the value.
 
@@ -1293,7 +1293,7 @@ Now that we know that transparent hashers are extremely useful, there are really
 <div class="flex-container">
 <div class="left">
 
-<img src="../../../assets/img/5-Substrate/unbalanced-tree.svg" />
+<img src="../../../../assets/img/5-Substrate/unbalanced-tree.svg" />
 
 </div>
 <div class="right">

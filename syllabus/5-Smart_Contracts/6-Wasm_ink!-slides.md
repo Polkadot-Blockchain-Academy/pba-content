@@ -2587,7 +2587,8 @@ impl MyContract {
 
 <br/>
 
-<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/onions.png" />
+<!--  TODO: FIXME IMAGE DOES NOT EXIST
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/onions.png" /> -->
 
 ---
 
@@ -3127,7 +3128,8 @@ async fn e2e_transfer(mut client: ink_e2e::Client<C, E>) -> E2EResult<()> {
 
 ## E2E pipeline: traps, traps everywhere
 
-<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/trap.gif" />
+<!--  TODO: FIXME IMAGE DOES NOT EXIST
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/trap.gif" /> -->
 
 ---
 
