@@ -8,10 +8,9 @@ duration: 1 hour
 
 <pba-flex center>
 
-- Introduction to cryptography.<!-- .element: class="fragment" data-fragment-index="0" -->
+- Introduction to cryptography<!-- .element: class="fragment" data-fragment-index="0" -->
 - Addresses and Keys<!-- .element: class="fragment" data-fragment-index="1" -->
-- Hash functions<!-- .element: class="fragment" data-fragment-index="2" -->
-- Many time pad activity<!-- .element: class="fragment" data-fragment-index="3" -->
+- Many time pad activity<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
@@ -36,9 +35,8 @@ Just kidding!
 <pba-flex center>
 
 - Understand the goals of cryptography<!-- .element: class="fragment" data-fragment-index="0" -->
-- Understand some network and contextual assumptions<!-- .element: class="fragment" data-fragment-index="1" -->
-- Learn what expectations cryptography upholds<!-- .element: class="fragment" data-fragment-index="2" -->
-- Learn the primitives<!-- .element: class="fragment" data-fragment-index="3" -->
+- Understand security guarantees for resources<!-- .element: class="fragment" data-fragment-index="1" -->
+- Learn the primitives<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
@@ -61,7 +59,25 @@ We will not cover any details for hybrid or interactive protocols in the course.
 
 ## Operating Context
 
-##### _The internet is a public space._
+##### _Protocols use resources and cryptography ensures that they provide security guarantees_
+
+- **Network, storage, computation, etc.**: We want to specify guarantees on what the resources provide.
+
+<pba-flex center>
+
+- Stored/transmitted data is untampered,<!-- .element: class="fragment" data-fragment-index="1" -->
+- Transmitted data comes from a specific sender,<!-- .element: class="fragment" data-fragment-index="2" -->
+- A computation over data has been performed correctly,<!-- .element: class="fragment" data-fragment-index="3" -->
+- Sensitive data does not get leaked,<!-- .element: class="fragment" data-fragment-index="4" -->
+- and many more...<!-- .element: class="fragment" data-fragment-index="5" -->
+
+</pba-flex>
+
+---
+
+## Operating Context: Example
+
+##### _The internet is a public space_
 
 We communicate over public channels.
 Adversaries may want to:
@@ -88,20 +104,11 @@ not just person-to-person messages.
 
 ---
 
-## Operating Context
+## Public vs. Private Systems
 
-##### _Resources are constrained._
+_Cryptography based on public systems is more sound_
 
-- **Network, storage, computation, etc.**: We don't want to send, store, or operate on the same data, but we want guarantees about it, e.g. that we agree on a message's contents.
-- **Privacy**: We must assume that all channels can be monitored, and thus closed channels are heavily constrained (i.e. assumed to not exist).
-
----
-
-## Open vs. Closed Channels
-
-_Cryptography based on public systems is more sound._
-
-**Kerckhoff's Principle:** Security should not rely on secret _methods_,<br/>but rather on secret _information_.
+**Kerckhoff's Principle:** Security should not rely on secret _methods_,<br/>but rather on secret _information_
 
 Notes:
 
@@ -114,7 +121,7 @@ There is no such thing as a "closed channel" :)
 
 ---
 
-## Cryptographic Guarantees\*
+## Security Guarantees\*
 
 <pba-flex center>
 
@@ -122,8 +129,10 @@ There is no such thing as a "closed channel" :)
 - Data authenticity<!-- .element: class="fragment" data-fragm ent-index="1" -->
 - Data integrity<!-- .element: class="fragment" data-fragm ent-index="2" -->
 - Non-repudiation<!-- .element: class="fragment" data-fragm ent-index="3" -->
-
-</pba-flex>
+- Data availability<!-- .element: class="fragment" data-fragm ent-index="4" -->
+- Data verifiability<!-- .element: class="fragment" data-fragm ent-index="5" -->
+- ...<!-- .element: class="fragment" data-fragm ent-index="6" -->
+  </pba-flex>
 
 Notes:
 
@@ -133,25 +142,6 @@ This is regardless of who (human, machine, or otherwise) is using them and their
 Why an asterisk?
 There generally are no perfect & absolute guarantees here, but for most practical purposes the bounds on where these fail are good enough to serve our needs as engineers and users.
 Do note the assumptions and monitor their validity over time (like quantum tech).
-
----
-
-## Important Non-Guarantee
-
-<pba-flex center>
-
-- Data availability
-
-</pba-flex>
-
-<br/>
-
-Cryptography alone cannot make strong guarantees that data is available to people when they want to access it.
-
-Notes:
-
-There are many schemes to get around this, and this topic will come up later in the course.
-We will touch on erasure coding, which makes data availability more efficient.
 
 ---
 
@@ -236,9 +226,32 @@ Non-repudiation ensures if Bob sends me some data, I can prove to a third party 
 
 ---
 
+## Data availability
+
+Not always considered a cryptographic guarantee, but in many contexts we would like that data is available to people when they want to access it.
+
+Notes:
+
+Cryptography alone cannot make strong guarantees that data is available to people when they want to access it.
+
+There are many schemes to get around this, and this topic will come up later in the course.
+We will touch on erasure coding, which makes data availability more efficient.
+
+---
+
+## Data Verifiability
+
+In some contexts we want to show that (possibly sensitive) data satisfies certain properties.
+
+Notes:
+
+Proving without showing --> we will see that zero-knowledge proofs will allow us to show that a data satisfies certain properties. For example, that I know the key that corresponds to the ciphertext data that I have sent you. Or that the data I have sent you is indeed the correct result of a computation.
+
+---
+
 ## One-Way Functions
 
-One-way functions form the basis of both<br/>**(cryptographic) hashing** and **asymmetric cryptography**. A function $f$ is one way if:
+One-way functions form the basis of cryptographic primitives. A function $f$ is one way if:
 
 - it is reasonably fast to compute<!-- .element: class="fragment" data-fragm ent-index="1" -->
 - it is very, very slow to undo<!-- .element: class="fragment" data-fragm ent-index="2" -->
@@ -286,7 +299,7 @@ Hashes can be useful for many applications:
 
 <pba-flex center>
 
-- Symmetric encryption assumes all parties begin with some shared secret information.
+- Symmetric cryptography assumes all parties begin with some shared secret information.
 - This is a potentially very difficult requirement.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 - The shared secret can then be used to protect further communications from others who do not know this secret.<!-- .element: class="fragment" data-fragm ent-index="2" -->
 - In essence, it gives a way of "extending" a shared secret over time.<!-- .element: class="fragment" data-fragm ent-index="3" -->
@@ -329,7 +342,7 @@ _Using only the public key_, information can be transformed ("encrypted") such t
 
 - _Using the secret key_, information can be transformed ("signed") such that anyone with knowledge of the information and the counterpart public key is able to affirm the operation.
 - Digital signatures provide message authenticity and integrity guarantees.<!-- .element: class="fragment" data-fragm ent-index="1" -->
-- There are two lessons are dedicated to digital signatures,<br/>this is strictly an intro.<!-- .element: class="fragment" data-fragm ent-index="1" -->
+- There are two lessons dedicated to digital signatures,<br/>this is strictly an intro.<!-- .element: class="fragment" data-fragm ent-index="1" -->
 
 ---
 
@@ -352,7 +365,7 @@ It has a special property: it proves (beyond reasonable doubt) that the signer (
 
 ---
 
-## Non-repudiation for Crypgraphic Signatures
+## Non-repudiation for Cryptographic Signatures
 
 There is cryptographic proof that the secret was known to the producer of the signature.
 

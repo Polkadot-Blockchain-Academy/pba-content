@@ -354,7 +354,7 @@ Up to this point, we covered:
 
 <br/>
 
-<img rounded style="width: 1200px;" src="./img/3.10-rbc.svg" />
+<img rounded style="width: 1200px;" src="./img/dag-based/rbc.svg" />
 
 ---
 
@@ -373,7 +373,7 @@ Due to the very high communication complexity we use heuristics or cryptography-
 Atomic broadcast
 <br/>
 
-<img rounded style="width: 700px;" src="./img/3.10-atomic-broadcast.svg" />
+<img rounded style="width: 700px;" src="./img/dag-based/atomic-broadcast.svg" />
 
 ---
 
@@ -384,7 +384,7 @@ Atomic broadcast
 Randomness beacon
 <br/>
 
-<img rounded style="width: 700px;" src="./img/3.10-randomness-beacon.svg" />
+<img rounded style="width: 700px;" src="./img/dag-based/randomness-beacon.svg" />
 
 ---
 
@@ -392,7 +392,7 @@ Randomness beacon
 
 <br/>
 
-<img rounded style="width: 1200px;" src="./img/3.10-timeline-1.svg" />
+<img rounded style="width: 1200px;" src="./img/dag-based/timeline-1.svg" />
 
 ---
 
@@ -400,7 +400,7 @@ Randomness beacon
 
 <br/>
 
-<img rounded style="width: 1200px;" src="./img/3.10-timeline-2.svg" />
+<img rounded style="width: 1200px;" src="./img/dag-based/timeline-2.svg" />
 
 ---
 
@@ -464,7 +464,7 @@ Aleph paper, as the first, also achieved fully asynchronous randomness beacon:
 Directed Acyclic Graph
 <br/>
 
-<img rounded style="width: 700px;" src="./img/3.10-dag.svg" />
+<img rounded style="width: 700px;" src="./img/dag-based/dag.svg" />
 
 ---
 
@@ -475,7 +475,7 @@ Directed Acyclic Graph
 Intuition: graph represents the dependencies between messages (units).
 <br/>
 
-<img rounded style="width: 700px;" src="./img/3.10-message-dependency.svg" />
+<img rounded style="width: 700px;" src="./img/dag-based/message-dependency.svg" />
 
 ---
 
@@ -520,7 +520,7 @@ Intuition: graph represents the dependencies between messages (units).
 
 <br/>
 
-<img rounded style="width: 600px;" src="./img/3.10-adversarial-control.svg" />
+<img rounded style="width: 600px;" src="./img/dag-based/adversarial-control.svg" />
 
 ---
 
@@ -612,7 +612,7 @@ Aleph Zero BFT protocol
 
 <br/>
 
-<img rounded style="width: 600px;" src="./img/3.10-heads.svg" />
+<img rounded style="width: 600px;" src="./img/dag-based/heads.svg" />
 
 ---
 
@@ -620,7 +620,7 @@ Aleph Zero BFT protocol
 
 <br/>
 
-<img rounded style="width: 800px;" src="./img/3.10-building-blocks.svg" />
+<img rounded style="width: 800px;" src="./img/dag-based/building-blocks.svg" />
 
 ---
 
@@ -628,7 +628,7 @@ Aleph Zero BFT protocol
 
 <br/>
 
-<img rounded style="width: 500px;" src="./img/3.10-choosing-head.svg" />
+<img rounded style="width: 500px;" src="./img/dag-based/choosing-head.svg" />
 
 ---
 
@@ -680,7 +680,7 @@ Sig<sub>`sk`</sub>(nonce)
 
 <br/>
 
-<img rounded style="width: 600px;" src="./img/3.10-shamir.svg" />
+<img rounded style="width: 600px;" src="./img/dag-based/shamir.svg" />
 
 ---
 
@@ -688,7 +688,7 @@ Sig<sub>`sk`</sub>(nonce)
 
 <br/>
 
-<img rounded style="width: 600px;" src="./img/3.10-shamir-2.svg" />
+<img rounded style="width: 600px;" src="./img/dag-based/shamir-2.svg" />
 
 Problem: need for trusted dealer! <!-- .element: class="fragment"-->
 
@@ -706,4 +706,4 @@ Problem: need for trusted dealer! <!-- .element: class="fragment"-->
 
 <br/>
 
-<img rounded style="width: 600px;" src="./img/3.10-xoring.svg" />
+<img rounded style="width: 600px;" src="./img/dag-based/xoring.svg" />

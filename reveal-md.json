@@ -16,5 +16,5 @@
     "assets"
   ],
   "preprocessor": null,
-  "glob": "**/*[Ss]lides.md"
+  "glob": "./syllabus/**/*[Ss]lides.md"
 }
