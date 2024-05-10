@@ -47,7 +47,7 @@ The DOT token can be in one of the following states:
 ## Reserved vs Locked Balance
 
 - New terms "Frozen" and "Held" are not quite used in Polkadot yet...
-- Both states belong to the user... but cannot be spent / transferred.
+- DOT in both states belong to the user... but cannot be spent / transferred.
 - Reserved balances stack on top of one another.
   - Useful for user deposits, or other use cases where there is sybil concerns.
   - Ex: Deposit for storing data on-chain,
@@ -123,6 +123,9 @@ The DOT token serves multiple purposes to help the Polkadot network function:
 
 Approximately...
 
+Model to be updated after Agile Coretime is live, as parachain slot auctions will be obsolete
+and there are proposals to burn coretime revenue.
+
 Notes:
 
 - 50% Staking / Governance
@@ -161,6 +164,8 @@ There’s a function that redirects some of the 10% inflation to the Treasury, i
 
 Token holders are financially incentivized to maximize their staking returns, and thus distribute their tokens appropriately.
 
+[Ideal staking rate model to be revisited](https://forum.polkadot.network/t/adjusting-polkadots-ideal-staking-rate-calculation/3897) after parachain slot auctions are discontinued.
+
 ---
 
 ## DOT Inflation vs Staking
@@ -196,6 +201,8 @@ Back of the napkin math:
 - ~100 Parachain = 3 Million DOT per Parachain Slot
 
 At equilibrium...
+
+The costs of running parachains change significantly with Agile Coretime.
 
 ---
 
@@ -383,7 +390,7 @@ Treasury will automatically burn a 1% of its funds every spending period (24 day
 - Bounties: Multi-stage payments to individuals managed by governance and an appointed bounty curator.
 - Tips: Small payments to individuals that can be made more easily through specific governance tracks.
 
-The Polkadot Treasury currently has over 45,000,000 DOT.
+The Polkadot Treasury currently has over 33,000,000 DOT.
 
 ---
 
@@ -439,6 +446,7 @@ Current:
 
 Future:
 
+- Coretime Chain: responsible for the sales of coretime.
 - Staking: Manage all the validator and nominator logic, rewards, etc...
 - Governance: Manage all the various proposals and tracks.
 - Eventually everything...
@@ -558,12 +566,10 @@ Users can get clear visibility into the transactions they are signing, and perfo
 ## Block Explorers
 
 - Polkadot-JS Apps Explorer - Polkadot dashboard block explorer. Supports dozens of other networks, including Kusama, Westend, and other remote or local endpoints.
-- Polkascan - Blockchain explorer for Polkadot, Kusama, and other related chains.
 - Subscan - Blockchain explorer for Substrate chains.
-- DotScanner - Polkadot & Kusama Blockchain explorer.
 - 3xpl.com - Fastest ad-free universal block explorer and JSON API with Polkadot support.
 - Blockchair.com - Universal blockchain explorer and search engine with Polkadot support.
-- Polkaholic.io - Polkadot & Kusama Blockchain explorer with API and DeFi support across 40+ parachains.
+- Statescan.io - Polkadot & Kusama Blockchain explorer.
 
 Notes:
 
