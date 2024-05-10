@@ -50,7 +50,7 @@ Let's take a closer look.
 
 ## Context
 
-<image rounded src="../../assets/img/5-Substrate/dev-pool-context.svg">
+<image rounded src="../../../assets/img/5-Substrate/dev-pool-context.svg">
 
 Notes:
 
@@ -474,7 +474,7 @@ Notes:
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Notes:
 

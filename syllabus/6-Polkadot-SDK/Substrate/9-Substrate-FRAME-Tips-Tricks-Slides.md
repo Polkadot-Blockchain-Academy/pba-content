@@ -997,7 +997,7 @@ fn multiply_by_2(x: u32) -> u32 { .. }
 
 ## Additional Resources! 😋
 
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
 
 > Check speaker notes (click "s" 😉)
 
