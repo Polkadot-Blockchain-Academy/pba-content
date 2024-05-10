@@ -12,7 +12,7 @@ duration: 1 hour
 
 Recall the following figure:
 
-<img style="height: 600px" src="../../../assets/img/6-FRAME/frame0.svg" />
+<img style="height: 600px" src="../../../../assets/img/6-FRAME/frame0.svg" />
 
 Notes:
 
@@ -24,7 +24,7 @@ Without frame, there is the runtime and there is the client, and an API that sit
 
 By the end of this lecture, you will fully understand this figure.
 
-<img style="height: 600px" src="../../../assets/img/6-FRAME/frame1.svg" />
+<img style="height: 600px" src="../../../../assets/img/6-FRAME/frame1.svg" />
 
 ---
 

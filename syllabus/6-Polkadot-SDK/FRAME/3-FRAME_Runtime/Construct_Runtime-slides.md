@@ -13,7 +13,7 @@ instructors: ["Kian Paimani"]
 
 ---
 
-<img style="height: 600px" src="../../../assets/img/6-FRAME/frame1.svg" />
+<img style="height: 600px" src="../../../../assets/img/6-FRAME/frame1.svg" />
 
 ---
 

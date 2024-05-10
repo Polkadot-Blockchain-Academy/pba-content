@@ -56,7 +56,7 @@ Notes:
 
 ## Interacting With a Substrate Blockchain
 
-<img style="width: 1200px;" src="../../assets/img/5-Substrate/dev-4-1-json.svg" />
+<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-1-json.svg" />
 
 ---
 
