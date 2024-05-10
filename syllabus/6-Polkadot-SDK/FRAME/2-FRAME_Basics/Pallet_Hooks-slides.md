@@ -348,7 +348,7 @@ https://paritytech.github.io/substrate/master/pallet_examples/index.html
 
 - Threads can **overlap**, each is reading the state of its corresponding block
 
-<img style="height: 500px" src="../../../assets/img/6-FRAME/ocw.svg"  />
+<img style="height: 500px" src="../../../../assets/img//6-FRAME/ocw.svg" />
 
 <!-- .element: class="fragment" -->
 

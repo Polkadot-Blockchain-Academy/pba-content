@@ -486,13 +486,13 @@ Transactional layers can be used to attack your chain:
 
 ## Patricia Trie
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/patricia-trie.svg" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/patricia-trie.svg" />
 
 ---
 
 ## Storage Keys
 
-<img style="height: 500px;" src="../../../assets/img/6-FRAME/navigate-storage-2.svg" />
+<img style="height: 500px;" src="../../../../assets/img/6-FRAME/navigate-storage-2.svg" />
 
 ---
 
