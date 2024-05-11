@@ -26,7 +26,7 @@ Notes:
 
 ## Extending pre-dispatch checks
 
-<img rounded src="../../../assets/img/5-Substrate/dev-5-x-signed-extensions.svg" />
+<img rounded src="../../../../assets//img/5-Substrate/dev-5-x-signed-extensions.svg" />
 
 ---
 
