@@ -8,6 +8,7 @@ description: A working programmer’s guide to the crypto industry
 # Smart Contracts in Ink!
 
 Notes:
+
 - we will pause for questions
 
 ---
@@ -28,14 +29,14 @@ Notes:
 
 Legal contracts need two things:
 
-* **Intention**: The parties must **intend** to enter the contractual agreement.
-* **Consideration**: Consideration emphasizes the reciprocal nature of a contract (_Quid Pro Quo_).
+- **Intention**: The parties must **intend** to enter the contractual agreement.
+- **Consideration**: Consideration emphasizes the reciprocal nature of a contract (_Quid Pro Quo_).
 
 ---
 
 ## Introduction: Smart Contracts
 
-* Alice agrees to give Bob a monetary gift for his birthday:
+- Alice agrees to give Bob a monetary gift for his birthday:
   - Alice and Bob decide to use an escrow service to facilitate the transfer.
   - Alice sets up an account with the chosen escrow agent and transfers the money.
   - The escrow holds the funds until the condition is met.
@@ -45,8 +46,8 @@ Legal contracts need two things:
 
 ## Introduction: Smart Contracts
 
-* Can we use a Smart Contract for this purpose?
-* Is this still a legal contract if we do?
+- Can we use a Smart Contract for this purpose?
+- Is this still a legal contract if we do?
 
 ---
 
@@ -56,17 +57,17 @@ Legal contracts need two things:
 
 ## Introduction: Smart Contracts
 
-* Smart contracts run **deterministic** code.
-* They execute it in the context of a blockchain protocol.
-* They execute publicly: anyone can instantly track asset transfers and other related information.
+- Smart contracts run **deterministic** code.
+- They execute it in the context of a blockchain protocol.
+- They execute publicly: anyone can instantly track asset transfers and other related information.
   - They are **auditable** by anyone.
-* They allow for transacting anonymously.
+- They allow for transacting anonymously.
 
 ---
 
 ## Introduction: ink! vs. Solidity
 
-* Two most active and maintained languages are **Solidity** and Vyper, with ink! being a recent runner-up.
+- Two most active and maintained languages are **Solidity** and Vyper, with ink! being a recent runner-up.
 
 |                 | ink!                        | Solidity      |
 | --------------- | --------------------------- | ------------- |
@@ -79,6 +80,7 @@ Legal contracts need two things:
 | Interfaces?     | Yes: Rust traits            | Yes           |
 
 Notes:
+
 - why another SC language
 
 ---
@@ -88,6 +90,7 @@ Notes:
 <img rounded style="width: 900px;" src="./img/ink/lego0.png" />
 
 Notes:
+
 - Substrate is a framework for developing customized blockchain runtimes from composable pallets.
 
 ---
@@ -97,6 +100,7 @@ Notes:
 <img rounded style="width: 900px;" src="./img/ink/lego1.png" />
 
 Notes:
+
 - pallet contracts provides
   - instrumentation
   - execution engine
@@ -107,6 +111,7 @@ Notes:
 <img rounded style="width: 800px;" src="./img/ink/schema1.png" />
 
 Notes:
+
 - pallet contracts is oblivious to the programming language
 - it accepts Wasm bytecode and executes it's instructions
 
@@ -115,6 +120,7 @@ Notes:
 <img rounded style="width: 800px;" src="./img/ink/schema2.png" />
 
 Notes:
+
 - contracts itself can be written in ink!
 
 ---
@@ -122,9 +128,10 @@ Notes:
 <img rounded style="width: 800px;" src="./img/ink/schema3.png" />
 
 Notes:
--  any other language that compilers to Wasm
-  - Solang
-  - or ask!
+
+- any other language that compilers to Wasm
+- Solang
+- or ask!
 
 ---
 
@@ -134,10 +141,11 @@ Notes:
 
 ## Hands-on: my first ink! contract
 
-* Visit: https://github.com/Polkadot-Blockchain-Academy/ink-hands-on
-* Navigate to `escrow` and read the instructions.
+- Visit: https://github.com/Polkadot-Blockchain-Academy/ink-hands-on
+- Navigate to `escrow` and read the instructions.
 
 Notes:
+
 - Piotr takes over
 - we will be writing an escrow contract
 - probaly a lunch break after
@@ -173,13 +181,14 @@ pub trait PSP22 {
 ```
 
 Notes:
+
 - PSP22 (ERC20-like) contract definition
 
 ---
 
 ## Contracts: Defining shared behaviour
 
-* contracts that respect the definition need to implement it.
+- contracts that respect the definition need to implement it.
 
 ```rust
 impl PSP22 for Token {
@@ -193,6 +202,7 @@ impl PSP22 for Token {
 ```
 
 Notes:
+
 - utilizes "normal" rust traits with some macro magic
 
 ---
@@ -247,7 +257,8 @@ pub type Result<T> = core::result::Result<T, MyError>;
 - Type aliases reduce boilerplate & enhance readability
 
 Notes:
-  - panic! = same as returning Err variant (`Result` is just being nice)
+
+- panic! = same as returning Err variant (`Result` is just being nice)
 
 ---
 
@@ -361,8 +372,8 @@ Notes:
 
 <img rounded style="width: 250px;" src="./img/ink/transacting.svg" />
 
-* Imagine a handfull of addresses transacting in PSP22 tokens among themselves.
-* Contract state stores just their cumulative balance 
+- Imagine a handfull of addresses transacting in PSP22 tokens among themselves.
+- Contract state stores just their cumulative balance
 
 Notes:
 
@@ -430,14 +441,14 @@ Notes:
 
 <div style="font-size: 0.72em;">
 
-| Type         | Decoding                              | Encoding example             | Remark                                                                         |
-| ------------ | ------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------ |
-| Boolean      | false / true                          | 0x0 / 0x1                    | encoded using least significant (rightmost) bit of a single byte               |
-| Int (unsigned)          | 42u32                      | 0x2a000000                   |                                                                                |
-| Tuple        | (42u16, true)                         | 0x2a0001                     | concatenation of each encoded value                                            |
-| Enum         | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a or 0x0101             | first byte encodes the variant index, remaining bytes encode the data          |
-| Vector       | [42u8, 0, 1]                          | 0x0c2a0001                   | encoding of the vector length followed by conatenation of each item's encoding |
-| Struct       | {x:42u32, y:true}                     | [0x2a,0x00,0x00,0x00,0x1]    | names are ignored, Vec<u8> structure, only order matters                       |
+| Type           | Decoding                              | Encoding example          | Remark                                                                         |
+| -------------- | ------------------------------------- | ------------------------- | ------------------------------------------------------------------------------ |
+| Boolean        | false / true                          | 0x0 / 0x1                 | encoded using least significant (rightmost) bit of a single byte               |
+| Int (unsigned) | 42u32                                 | 0x2a000000                |                                                                                |
+| Tuple          | (42u16, true)                         | 0x2a0001                  | concatenation of each encoded value                                            |
+| Enum           | enum IntOrBool { Int(u8), Bool(bool)} | 0x002a or 0x0101          | first byte encodes the variant index, remaining bytes encode the data          |
+| Vector         | [42u8, 0, 1]                          | 0x0c2a0001                | encoding of the vector length followed by conatenation of each item's encoding |
+| Struct         | {x:42u32, y:true}                     | [0x2a,0x00,0x00,0x00,0x1] | names are ignored, Vec<u8> structure, only order matters                       |
 
 </div>
 
@@ -542,7 +553,6 @@ pub struct Token {
 
 Notes:
 
-
 ---
 
 ## Storage: working with `Mapping`
@@ -562,6 +572,7 @@ pub fn transfer(&mut self) {
 - what is wrong here?
 
 Notes:
+
 - Mapping::get() has copy semantics
 
 ---
