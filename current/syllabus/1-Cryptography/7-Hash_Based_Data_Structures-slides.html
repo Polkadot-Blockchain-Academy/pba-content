@@ -29,6 +29,19 @@
     <article class="slides">
       <section  data-markdown><script type="text/template">
 
+# Cryptography Day III
+
+<pba-flex center>
+
+- Quiz<!-- .element: class="fragment" data-fragment-index="-1" -->
+- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="0" -->
+- Exotic Primitives<!-- .element: class="fragment" data-fragment-index="1" -->
+- Merkle Tree Activity<!-- .element: class="fragment" data-fragment-index="2" -->
+- Zero-Knowledge Proofs Intro<!-- .element: class="fragment" data-fragment-index="3" -->
+- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
 # Hash Based Data Structures
 </script></section><section  data-markdown><script type="text/template">
 ## Comparison to<br />Pointer Based Data Structures
@@ -106,12 +119,13 @@ We should also be able to perform the following operations for a provable key-va
 - _**Tries**_ are a particular class of _trees_ where:
   - Given a particular piece of data, it will always be on a particular path.
 - _**Radix Tries**_ are a particular class of a trie where:
-  - The location of a value is determined the path constructed one digit at a time.
-- _**Patricia Tries**_ are _radix tries_ which are optimized to ensure lonely node-paths are consolidated into a single node.
+  - The location of a value is determined the path constructed one chunk of digits (represented in the chosen radix) at a time.
+  - are optimized to ensure lonely node-paths are consolidated into a single node.
+- _**Patricia Tries**_ are _radix-2 tries_
 
 <aside class="notes"><p>Just a selection we&#39;ll cover in this course.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
-## Radix Trie
+## Trie
 
 _Words:_ to, tea, ted, ten, inn, A.
 
@@ -121,7 +135,7 @@ Each node splits on the next digit in base $r$
 
 <aside class="notes"><p>In this image, $r$ is 52 (26 lowercase + 26 uppercase).</p>
 </aside></script></section><section  data-markdown><script type="text/template">
-## Patricia Trie
+## Radix Trie
 
 _Words:_ to, tea, ted, ten, inn, A.
 
@@ -131,7 +145,7 @@ If only one option for a sequence we merge them.
 
 <!-- TODO maybe some code stuff with extension nodes etc. -->
 </script></section><section  data-markdown><script type="text/template">
-## Patricia Trie Structures
+## Radix Trie Structures
 
 ```rust
 pub enum Node {
@@ -147,7 +161,7 @@ pub enum Node {
 }
 ```
 
-<aside class="notes"><p>The current implementation actually makes use of dedicated &quot;extension&quot; nodes instead of branch nodes that hold a partial path. There&#39;s a good explanation of them <a href="https://ethereum.stackexchange.com/questions/39915/ethereum-merkle-patricia-trie-extension-node">here</a>.</p>
+<aside class="notes"><p>The old implementation actually made use of dedicated &quot;extension&quot; nodes instead of branch nodes that hold a partial path. There&#39;s a good explanation of them <a href="https://ethereum.stackexchange.com/questions/39915/ethereum-merkle-patricia-trie-extension-node">here</a>.</p>
 <p>Additionally, if the size of a value is particularly large, it is replaced with the hash of its value.</p>
 <!-- TODO: Add a nice illustration similar to Shawn's dev-trie-backend-walk here. --></aside></script></section><section  data-markdown><script type="text/template">
 ## Hash Trie
