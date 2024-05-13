@@ -1763,7 +1763,6 @@ pub fn swap(
 - Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price.
 - What can go wrong here?
 
-
 ---
 
 ## Sandwitch attacks
@@ -1819,13 +1818,12 @@ function _transfer(address sender, address recipient, uint256 amount) internal v
 
 </div>
 
-* If the owner trades the token it behaves like a regular ERC20.
-* If anyone else transacts it only returns 10% of the specified amount ..
+- If the owner trades the token it behaves like a regular ERC20.
+- If anyone else transacts it only returns 10% of the specified amount ..
   - despite emitting an event with a full amount.
-* .. Leaving a sandwitch attacker with a stomack full of salmonella!
+- .. Leaving a sandwitch attacker with a stomack full of salmonella!
 
 ---
-
 
 # Maximal Extractable Value (MEV)
 
@@ -2055,9 +2053,9 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 - Re-entrancy vulnerabilities
 - Integer overflows
 - Sybil attacks
-<!-- - ... -->
-<!-- - Regulatory attacks 😅 -->
-<!-- - ... -->
+  <!-- - ... -->
+  <!-- - Regulatory attacks 😅 -->
+  <!-- - ... -->
 - Take MEV into account
   - MEV-resistant design patterns
 
