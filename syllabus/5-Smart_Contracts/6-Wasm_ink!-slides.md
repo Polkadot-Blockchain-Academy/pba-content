@@ -738,14 +738,14 @@ Notes:
 
 <!-- </div> -->
 
-Notes:
+<!-- Notes: -->
 
-- if the new contract code does not match the stored state you can perform a storage migration
-- think of regular relational DB and schema migrations
-- a good pattern to follow is to perform the update and the migration in one atomic transaction:
-  - if anything fails whole tx is reverted
-  - won't end up in a broken state
-  - make sure it can fit into one block!
+<!-- - if the new contract code does not match the stored state you can perform a storage migration -->
+<!-- - think of regular relational DB and schema migrations -->
+<!-- - a good pattern to follow is to perform the update and the migration in one atomic transaction: -->
+<!--   - if anything fails whole tx is reverted -->
+<!--   - won't end up in a broken state -->
+<!--   - make sure it can fit into one block! -->
 
 ---
 
@@ -779,13 +779,6 @@ Notes:
 - In June 2016 an attacker drained funds (worth ~$50 million at that time) and was about to drain even more.
 - The funds were moved into an account subject to a 28-day holding period under the terms of the DAO smart contract.
 
-NOTES:
-
-- Ethereum was searching for its killer app, dao's were supposed to be it
-- DAO was a form of a decentralized investor - directed venture capital (VC) fund.
-- At a pinnacle of it's popularity The DAO attracted nearly 15% of all the ETH in circulation back then.
-- the funds were actually not gone (but they would be soon).
-
 ---
 
 ## Past exploits: The DAO hack (2016)
@@ -794,24 +787,12 @@ NOTES:
   - On one hand the blockchain promised to be decentralized and tamper-resistant.
   - On the other hand the public's confidence and optimism about the then young blockchain technology demanded an intervention.
 
-Notes:
-
-- the hacker was slowly draining the funds from the DAO, in front of everyone
-- DAO SC was sending an amount of ETH equivalent to the hacker’s deposit
-- an ethical obligation to prevent theft
-
 ---
 
 ## Past exploits: The DAO hack (2016)
 
 - Eventually a vote in favour of **forking** the Ethereum history won out with 85% of the votes.
 - Some miners decided to keep mining on the old history, and this sesulted in the creation of _Ethereum_ (ETH) and _Ethereum Classic_ (ETC) which operates to this day.
-
-Notes:
-
-- forking mean that the new chain would operate as though the hack never happened
-- basically re-writing history
-- the fork happened becasue of ideological differences
 
 ---
 
@@ -822,11 +803,6 @@ Notes:
 - The DAO hacker used what became known as a _reentrancy_ attack.
 - Attacker exploited a _fallback_ function in Solidity to create a loop that slowly syphoned funds out of the DAO contract.
 - Fallback functions are special constructs in Solidity that are triggered in specific situations.
-
-Notes:
-
-- fallback function is a special function that is executed when a contract receives Ether without any data
-- ... or when it receives a message that does not match any of its function signatures.
 
 ---
 
@@ -849,12 +825,6 @@ contract FallbackExample {
 - The fallback function does not take any arguments and has no return values.
 - It can be marked as **payable** to allow the contract to receive funds.
 - It is triggered if ETH is sent to the contract and there is no accompanying _calldata_ (a data location like memory or storage).
-
-Notes:
-
-- Fallback functions can include arbitrary logic in them, in this attack example it called back into withdraw function
-- It's worth noting that as of Solidity version 0.6.0, you can also use the fallback keyword instead of receive to define the fallback function.
-- However, it's a good practice to use receive for the fallback function related to Ether reception, and fallback for fallback functions without the ability to receive Ether.
 
 ---
 
@@ -900,16 +870,6 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 
 </div>
 
-Notes:
-
-- ink! does not have fallback functions, but it is not immune from reentrancy attacks either
-- this contract mimics the DAO
-- it has a mapping for maintaing balances
-- it has a deposit function for sending the funds and a withdraw for getting them all back at once
-- withdrawals calls the `callers` contract and sends the funds to a function with this 4 byte signature.
-- can anyone spot what the problem is?
-- how would you use it to craft an attack?
-
 ---
 
 ## Reentrancy: attacker's code example
@@ -943,20 +903,11 @@ pub fn receive(&mut self) -> Result<(), DaoError> {
 
 </div>
 
-Notes:
-
-- attacker deploys an SC that acts as an investor
-- it begins by depositing and this contract deposits some ETH into The DAO.
-- This entitles the attacker to later call the `withdraw` function of the DAO to get his deposits back.
-- When the `withdraw` is called, the DAO sends back the funds by calling the payable `receive` function.
-- but this function is crafted by the attacker to maliciously call the DAOs `withdraw` again.
-- since the state is not yet updated the call does not revert and withdraw send the funds yet again.
-- this effectively creates an evil feedback loop which drains all the funds.
-- how would you fix this?
-
 ---
 
 ## Reentrancy: fixing the vulnerabilities
+
+Checks-Effects-Interactions pattern
 
 <div style="font-size: 0.70em;">
 
@@ -984,339 +935,322 @@ pub fn withdraw(&mut self) -> Result<(), DaoError> {
 
 </div>
 
-Note:
-
-- simplest fix is to just change the order of operations in the `withdraw` fn
-- This way when the function calls into the attacker contract’s receive() function, and it tries to re-enter the `withdraw` the entry is removed from the balance's map and the whole transaction reverts.
-- Checks-Effects-Interactions pattern
-
 ---
 
-## Reentrancy: fixing the vulnerabilities
+<!-- ## Reentrancy: fixing the vulnerabilities -->
 
-<div style="font-size: 0.70em;">
+<!-- <div style="font-size: 0.70em;"> -->
 
-```rust [8]
-#[ink(message)]
-pub fn withdraw(&mut self) -> Result<(), DaoError> {
-    let caller = self.env().caller();
-    let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?;
+<!-- ```rust [8] -->
+<!-- #[ink(message)] -->
+<!-- pub fn withdraw(&mut self) -> Result<(), DaoError> { -->
+<!--     let caller = self.env().caller(); -->
+<!--     let balance = self.balances.get(caller).ok_or(DaoError::NoDeposit)?; -->
 
-    build_call::<DefaultEnvironment>()
-        .call(caller)
-        .call_flags(CallFlags::default().set_allow_reentry(false))
-        .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56])))
-        .transferred_value(balance)
-        .returns::<()>()
-        .invoke();
+<!--     build_call::<DefaultEnvironment>() -->
+<!--         .call(caller) -->
+<!--         .call_flags(CallFlags::default().set_allow_reentry(false)) -->
+<!--         .exec_input(ExecutionInput::new(Selector::new([0x52, 0x45, 0x43, 0x56]))) -->
+<!--         .transferred_value(balance) -->
+<!--         .returns::<()>() -->
+<!--         .invoke(); -->
 
-    self.balances.remove(caller);
+<!--     self.balances.remove(caller); -->
 
-    Ok(())
-}
-```
+<!--     Ok(()) -->
+<!-- } -->
+<!-- ``` -->
 
-</div>
+<!-- </div> -->
 
-Note:
+<!-- Note: -->
 
-- Another fix id to contract to explicitely dissallow re-entering the `receive` function while the `withdraw` it is still executing.
-- this way any re-entry is blocked
-- ink! has built-in syntax for this, that works on the calls stack level
-- mutex (mutually exclusive) pattern
+<!-- - Another fix id to contract to explicitely dissallow re-entering the `receive` function while the `withdraw` it is still executing. -->
+<!-- - this way any re-entry is blocked -->
+<!-- - ink! has built-in syntax for this, that works on the calls stack level -->
+<!-- - mutex (mutually exclusive) pattern -->
 
----
+<!-- --- -->
 
-## Past exploits: The Parity Wallet Hack (July 2017)
+<!-- ## The Parity Wallet Hack (July 2017) -->
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/multisig_exploit_1.png" />
+<!-- <img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/multisig_exploit_1.png" /> -->
 
-- Vulnerability on the Parity Multisig Wallet allowed an attacker to steal > 150,000 ETH.
-- Three high-profile multisig wallet contracts used to store funds from token sales were affected.
-- The attacker sent 2 transactions to each of the affected contracts:
-  - the first to obtain ownership of the MultiSig.
-  - the second to move all of its funds.
+<!-- - Vulnerability on the Parity Multisig Wallet allowed an attacker to steal > 150,000 ETH. -->
+<!-- - Three high-profile multisig wallet contracts used to store funds from token sales were affected. -->
+<!-- - The attacker sent 2 transactions to each of the affected contracts: -->
+<!--   - the first to obtain ownership of the MultiSig. -->
+<!--   - the second to move all of its funds. -->
 
-Notes:
+<!-- --- -->
 
-- worth some ~30M USD back then.
-- the exploit was silly by todays standards
-- but we have to remember this is a blast from the past
+<!-- ## The Parity Wallet Hack: proxy pattern -->
 
----
+<!-- ```solidity [] -->
+<!-- address constant _walletLibrary = 0xcafecafecafecafecafecafecafecafecafecafe; -->
 
-## The Parity Wallet Hack: proxy pattern
+<!-- ... -->
 
-```solidity []
-address constant _walletLibrary = 0xcafecafecafecafecafecafecafecafecafecafe;
+<!-- function isOwner(address _addr) constant returns (bool) { -->
+<!--   return _walletLibrary.delegatecall(msg.data); -->
+<!-- } -->
+<!-- ``` -->
 
-...
+<!-- - **Proxy pattern** is a way to reduce costs by sharing code between contracts. -->
+<!-- - All logic is stored in a stateless library contract deployed once, and a lightweight contract proper is deployed as many times as neccesary. -->
+<!-- - `DELEGATECALL` EVM instruction does the following: -->
+<!--   - for whatever method that calls it, it will delegate that call to another contract, but using the context of the current contract. -->
 
-function isOwner(address _addr) constant returns (bool) {
-  return _walletLibrary.delegatecall(msg.data);
-}
-```
+<!-- Notes: -->
 
-- **Proxy pattern** is a way to reduce costs by sharing code between contracts.
-- All logic is stored in a stateless library contract deployed once, and a lightweight contract proper is deployed as many times as neccesary.
-- `DELEGATECALL` EVM instruction does the following:
-  - for whatever method that calls it, it will delegate that call to another contract, but using the context of the current contract.
+<!-- - ethereum's EVM does not have the separation between code and the SC instance like substrate does. -->
+<!-- - think `super` call in Java. -->
+<!-- - context = state, state of a library is not altered when delgating a call. -->
+<!-- - all perfectly innocent and used ot this day, problem lies elsewhere. -->
 
-Notes:
+<!-- --- -->
 
-- ethereum's EVM does not have the separation between code and the SC instance like substrate does.
-- think `super` call in Java.
-- context = state, state of a library is not altered when delgating a call.
-- all perfectly innocent and used ot this day, problem lies elsewhere.
+<!-- ## The Parity Wallet Hack: `initWallet` library function -->
 
----
+<!-- <div style="font-size: 0.70em;"> -->
 
-## The Parity Wallet Hack: `initWallet` library function
+<!-- ```[1-4|6-16] -->
+<!-- function initWallet(address[] _owners, uint _required, uint _daylimit) { -->
+<!--   initDaylimit(_daylimit); -->
+<!--   initMultiowned(_owners, _required); -->
+<!-- } -->
 
-<div style="font-size: 0.70em;">
+<!-- function initMultiowned(address[] _owners, uint _required) { -->
+<!--   m_numOwners = _owners.length + 1; -->
+<!--   m_owners[1] = uint(msg.sender); -->
+<!--   m_ownerIndex[uint(msg.sender)] = 1; -->
+<!--   for (uint i = 0; i < _owners.length; ++i) -->
+<!--   { -->
+<!--     m_owners[2 + i] = uint(_owners[i]); -->
+<!--     m_ownerIndex[uint(_owners[i])] = 2 + i; -->
+<!--   } -->
+<!--   m_required = _required; -->
+<!-- } -->
+<!-- ``` -->
 
-```[1-4|6-16]
-function initWallet(address[] _owners, uint _required, uint _daylimit) {
-  initDaylimit(_daylimit);
-  initMultiowned(_owners, _required);
-}
+<!-- </div> -->
 
-function initMultiowned(address[] _owners, uint _required) {
-  m_numOwners = _owners.length + 1;
-  m_owners[1] = uint(msg.sender);
-  m_ownerIndex[uint(msg.sender)] = 1;
-  for (uint i = 0; i < _owners.length; ++i)
-  {
-    m_owners[2 + i] = uint(_owners[i]);
-    m_ownerIndex[uint(_owners[i])] = 2 + i;
-  }
-  m_required = _required;
-}
-```
+<!-- - wallet library contained `initWallet` function that was called from the wallets constructor. -->
+<!-- - and _i.e._ it called this logic. -->
 
-</div>
+<!-- Notes: -->
 
-- wallet library contained `initWallet` function that was called from the wallets constructor.
-- and _i.e._ it called this logic.
+<!-- - it writes the owners of this contract to the contracts storage (state) -->
+<!-- - still nothing technically nothing wrong here -->
 
-Notes:
+<!-- --- -->
 
-- it writes the owners of this contract to the contracts storage (state)
-- still nothing technically nothing wrong here
+<!-- ## The Parity Wallet Hack: the critical mistake -->
 
----
+<!-- ```solidity [] -->
+<!-- function() payable { -->
+<!--   // just being sent some cash? -->
+<!--   if (msg.value > 0) -->
+<!--     Deposit(msg.sender, msg.value); -->
+<!--   else if (msg.data.length > 0) -->
+<!--     _walletLibrary.delegatecall(msg.data); -->
+<!-- } -->
+<!-- ``` -->
 
-## The Parity Wallet Hack: the critical mistake
+<!-- - This exact code was defined in the wallet itself. -->
+<!-- - Do you see what happens here? -->
+<!-- - How would you fix this? -->
 
-```solidity []
-function() payable {
-  // just being sent some cash?
-  if (msg.value > 0)
-    Deposit(msg.sender, msg.value);
-  else if (msg.data.length > 0)
-    _walletLibrary.delegatecall(msg.data);
-}
-```
+<!-- Notes: -->
 
-- This exact code was defined in the wallet itself.
-- Do you see what happens here?
-- How would you fix this?
+<!-- - reckognize this? yes, this is a fallback function -->
+<!-- - who can tell me what happens here? -->
+<!-- - If a method with this name is not defined in this contract -->
+<!-- - and if no ETH is being sent in the transaction -->
+<!-- - and if there is some data in the message payload -->
+<!-- - Then call the exact same method as it is defined in \_walletLibrary (but using `delegatecall` that is in the context of this contract) -->
+<!-- - the hacker effectively re-initialized the wallet, overwrote the owners making himself the sole owner and stole the funds. -->
 
-Notes:
+<!-- --- -->
 
-- reckognize this? yes, this is a fallback function
-- who can tell me what happens here?
-- If a method with this name is not defined in this contract
-- and if no ETH is being sent in the transaction
-- and if there is some data in the message payload
-- Then call the exact same method as it is defined in \_walletLibrary (but using `delegatecall` that is in the context of this contract)
-- the hacker effectively re-initialized the wallet, overwrote the owners making himself the sole owner and stole the funds.
+<!-- ## The Parity Wallet Hack: the aftermath -->
 
----
+<!-- - The `initWallet` and `initMultiowned` should have been defined as `internal` (aka private). -->
+<!-- - There was no check in place for whether the wallet was already initialized. -->
+<!-- - The raw `DELEGATECALL` should haven been replaced with a whitelist of calls that can be delegated. -->
 
-## The Parity Wallet Hack: the aftermath
+<!-- Notes: -->
 
-- The `initWallet` and `initMultiowned` should have been defined as `internal` (aka private).
-- There was no check in place for whether the wallet was already initialized.
-- The raw `DELEGATECALL` should haven been replaced with a whitelist of calls that can be delegated.
+<!-- - so what was at fault here? -->
+<!-- - you could argue there were at least three vulnerabilities -->
+<!-- - fixing either of them would have prevented the exploit -->
+<!-- - akin to e.g. running unsanitized SQL (sql injections). -->
 
-Notes:
+<!-- --- -->
 
-- so what was at fault here?
-- you could argue there were at least three vulnerabilities
-- fixing either of them would have prevented the exploit
-- akin to e.g. running unsanitized SQL (sql injections).
+<!-- ## The Parity Wallet Hack: reloaded (November 2017) -->
 
----
+<!-- <img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" /> -->
 
-## The Parity Wallet Hack: reloaded (November 2017)
+<!-- - Following the fix for the original multisig vulnerability exploited in July a new version of the library contract was deployed. -->
+<!-- - Unfortunately it contained another vulnerability ... -->
+<!-- - Estimated losses totalled over 500,000 ETH. -->
 
-<img rounded style="width: 900px;" src="./img/ink/anyone_can_kill_it.jpg" />
+<!-- Notes: -->
 
-- Following the fix for the original multisig vulnerability exploited in July a new version of the library contract was deployed.
-- Unfortunately it contained another vulnerability ...
-- Estimated losses totalled over 500,000 ETH.
+<!-- - USD 150 million USD back then -->
+<!-- - including over 300,000 ETH from the Web3 Foundation team. -->
+<!-- - hacker did not walk with funds this itme, rather locked them forever -->
 
-Notes:
+<!-- --- -->
 
-- USD 150 million USD back then
-- including over 300,000 ETH from the Web3 Foundation team.
-- hacker did not walk with funds this itme, rather locked them forever
+<!-- ## The Parity Wallet Hack reloaded: the what? -->
 
----
+<!-- ```solidity [] -->
+<!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -->
+<!--   suicide(_to); -->
+<!-- } -->
+<!-- ``` -->
 
-## The Parity Wallet Hack reloaded: the what?
+<!-- - library contract contained this function. -->
+<!-- - `suicide` (now `selfdestruct`) opcode was added to the EVM after the DAO hack. -->
+<!-- - It removes a contract from the blockchain and sends its ETH balance to a designated recipient. -->
+<!-- - Hacker was able to call this function on the _library_ contract itself, remove it and rendered all of the proxy contracts broken. -->
+<!-- - `kill` is protected with a `onlymanyowners` modifier so how was he able to call it? -->
 
-```solidity []
-function kill(address _to) onlymanyowners(sha3(msg.data)) external {
-  suicide(_to);
-}
-```
+<!-- Notes: -->
 
-- library contract contained this function.
-- `suicide` (now `selfdestruct`) opcode was added to the EVM after the DAO hack.
-- It removes a contract from the blockchain and sends its ETH balance to a designated recipient.
-- Hacker was able to call this function on the _library_ contract itself, remove it and rendered all of the proxy contracts broken.
-- `kill` is protected with a `onlymanyowners` modifier so how was he able to call it?
+<!-- - The DAO attack continued for days due to the immutability of Solidity contracts -->
+<!-- - remmeber how whitehat hackers tried to syphon the funds only faster than the blackhat? -->
+<!-- - This is why it was introduced - as a safety feature in case of security threats -->
 
-Notes:
+<!-- --- -->
 
-- The DAO attack continued for days due to the immutability of Solidity contracts
-- remmeber how whitehat hackers tried to syphon the funds only faster than the blackhat?
-- This is why it was introduced - as a safety feature in case of security threats
+<!-- ## The Parity Wallet Hack reloaded: the how? -->
 
----
+<!-- <div style="font-size: 0.72em;"> -->
 
-## The Parity Wallet Hack reloaded: the how?
+<!-- ```solidity [] -->
+<!-- uint public m_numOwners; -->
 
-<div style="font-size: 0.72em;">
+<!-- modifier only_uninitialized { if (m_numOwners > 0) throw; _; } -->
 
-```solidity []
-uint public m_numOwners;
+<!-- function initWallet(address[] _owners, uint _required, uint _daylimit) only_uninitialized -->
+<!--   initDaylimit(_daylimit); -->
+<!--   initMultiowned(_owners, _required); -->
+<!-- } -->
 
-modifier only_uninitialized { if (m_numOwners > 0) throw; _; }
+<!-- function initMultiowned(address[] _owners, uint _required) internal { -->
+<!--   ... -->
+<!-- } -->
+<!-- ``` -->
 
-function initWallet(address[] _owners, uint _required, uint _daylimit) only_uninitialized
-  initDaylimit(_daylimit);
-  initMultiowned(_owners, _required);
-}
+<!-- </div> -->
 
-function initMultiowned(address[] _owners, uint _required) internal {
-  ...
-}
-```
+<!-- - in the aftermath of the July attack the above changes were added to the library: -->
+<!--   - `initMultiowned` was given _internal_ visibility. -->
+<!--   - `only_uninitialized` check was added. -->
+<!-- - So what happened? -->
 
-</div>
+<!-- Notes: -->
 
-- in the aftermath of the July attack the above changes were added to the library:
-  - `initMultiowned` was given _internal_ visibility.
-  - `only_uninitialized` check was added.
-- So what happened?
+<!-- - that does seems to fix the problem: if the attacker attempts to invoke `initWallet` on an already deployed contract it is rejected -->
+<!-- - can anyone say what has happened? -->
 
-Notes:
+<!-- --- -->
 
-- that does seems to fix the problem: if the attacker attempts to invoke `initWallet` on an already deployed contract it is rejected
-- can anyone say what has happened?
+<!-- ## The Parity Wallet Hack reloaded: the how? -->
 
----
+<!-- <div style="font-size: 0.72em;"> -->
 
-## The Parity Wallet Hack reloaded: the how?
+<!-- ```solidity [] -->
+<!-- uint public m_numOwners; -->
 
-<div style="font-size: 0.72em;">
+<!-- modifier only_uninitialized { if (m_numOwners > 0) throw; _; } -->
 
-```solidity []
-uint public m_numOwners;
+<!-- function initWallet(address[] _owners, uint _required, uint _daylimit) only_uninitialized -->
+<!--   initDaylimit(_daylimit); -->
+<!--   initMultiowned(_owners, _required); -->
+<!-- } -->
 
-modifier only_uninitialized { if (m_numOwners > 0) throw; _; }
+<!-- function initMultiowned(address[] _owners, uint _required) internal { -->
+<!--   ... -->
+<!-- } -->
 
-function initWallet(address[] _owners, uint _required, uint _daylimit) only_uninitialized
-  initDaylimit(_daylimit);
-  initMultiowned(_owners, _required);
-}
+<!-- function kill(address _to) onlymanyowners(sha3(msg.data)) external { -->
+<!--   suicide(_to); -->
+<!-- } -->
+<!-- ``` -->
 
-function initMultiowned(address[] _owners, uint _required) internal {
-  ...
-}
+<!-- - by default, Solidity functions have _public_ visibility. -->
+<!-- - `initWallet` was public in the library itsef. -->
+<!-- - By calling it hacker has made himself the owner of the library (since `m_numOwners == 0` in an un-initialized contract) and than called `kill`, passing his own address. -->
+<!-- - [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code -->
 
-function kill(address _to) onlymanyowners(sha3(msg.data)) external {
-  suicide(_to);
-}
-```
+<!-- </div> -->
 
-- by default, Solidity functions have _public_ visibility.
-- `initWallet` was public in the library itsef.
-- By calling it hacker has made himself the owner of the library (since `m_numOwners == 0` in an un-initialized contract) and than called `kill`, passing his own address.
-- [Details](https://github.com/openethereum/parity-ethereum/issues/6995) of the exploit: https://etherscan.io/address/0x863df6bfa4469f3ead0be8f9f2aae51c91a907b4#code
+<!-- Notes: -->
 
-</div>
+<!-- - it had to be, all the library functions have to be public to be callable from the outside -->
+<!-- - this time around hacker walked with no funds (as the lib had none) -->
 
-Notes:
+<!-- --- -->
 
-- it had to be, all the library functions have to be public to be callable from the outside
-- this time around hacker walked with no funds (as the lib had none)
+<!-- ## The Parity Wallet Hack reloaded: lessons for ink! development -->
 
----
+<!-- ```rust -->
+<!-- impl MyContract { -->
 
-## The Parity Wallet Hack reloaded: lessons for ink! development
+<!--   #[ink(message)] -->
+<!--   pub fn terminate(&mut self) -> Result<()> { -->
+<!--       let caller = self.env().caller(); -->
+<!--       self.env().terminate_contract(caller) -->
+<!--   } -->
 
-```rust
-impl MyContract {
+<!--   ... -->
+<!-- } -->
+<!-- ``` -->
 
-  #[ink(message)]
-  pub fn terminate(&mut self) -> Result<()> {
-      let caller = self.env().caller();
-      self.env().terminate_contract(caller)
-  }
+<!-- Notes: -->
 
-  ...
-}
-```
+<!-- - substate /ink! usually has no need for a proxy pattern but similar concepts do apply -->
+<!-- - what is wrong with this code? -->
+<!-- - how would you fix it? -->
 
-Notes:
+<!-- --- -->
 
-- substate /ink! usually has no need for a proxy pattern but similar concepts do apply
-- what is wrong with this code?
-- how would you fix it?
+<!-- ## The Parity Wallet Hack reloaded: lessons for ink! development -->
 
----
+<!-- ```rust [4,8-14] -->
+<!-- #[ink(message)] -->
+<!-- pub fn terminate(&mut self) -> Result<()> { -->
+<!--     let caller = self.env().caller(); -->
+<!--     self.ensure_owner()?; -->
+<!--     self.env().terminate_contract(caller) -->
+<!-- } -->
 
-## The Parity Wallet Hack reloaded: lessons for ink! development
+<!-- fn ensure_owner(&self) -> Result<(), GovernanceError> { -->
+<!--     let caller = self.env().caller(); -->
+<!--     match caller.eq(&self.owner) { -->
+<!--         true => Ok(()), -->
+<!--         false => Err(Error::NotOwner), -->
+<!--     } -->
+<!-- } -->
+<!-- ``` -->
 
-```rust [4,8-14]
-#[ink(message)]
-pub fn terminate(&mut self) -> Result<()> {
-    let caller = self.env().caller();
-    self.ensure_owner()?;
-    self.env().terminate_contract(caller)
-}
+<!-- Notes: -->
 
-fn ensure_owner(&self) -> Result<(), GovernanceError> {
-    let caller = self.env().caller();
-    match caller.eq(&self.owner) {
-        true => Ok(()),
-        false => Err(Error::NotOwner),
-    }
-}
-```
+<!-- - making sure only designated account(s) can call `terminate` -->
 
-Notes:
-
-- making sure only designated account(s) can call `terminate`
-
----
+<!-- --- -->
 
 ## The BatchOverflow exploit (April 2018)
 
 <img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/batch_overflow.png" />
 
-- In just two transaction an attacker was able to withdraw **~115e57 (115 octodecillion)** BEC (Beauty Coin).
-- BEC was trading at USD 0.32 per token, which makes the total value of that exploit a staggering **USD 3.7e60 (3.7 novemdecillion)**.
-- It was followed by a number of similar exploits, all targeting ERC20 tokens, prompting many exchanges to halt all ERC20 trading.
-
-Notes:
-
-- off course there was nowhere near that liquidity so no, there is not a person richer than Earths GDP
-- OKEx, Poloniex, Changelly, Huobi...
+- In two transaction an attacker was withdrew **~115e57 (115 octodecillion)** BEC (Beauty Coin).
+- BEC was trading at USD 0.32, which makes the total value of the exploit **USD 3.7e60 (3.7 novemdecillion)**.
+- It was followed by a number of similar exploits targeting ERC20 tokens, prompting many exchanges to halt ERC20 trading altogether.
 
 ---
 
@@ -1328,13 +1262,7 @@ Notes:
 
 - Integer _overflow_ and _underflow_ occur when user supplied data **controls the value of an unsigned integer.**
 - The user supplied data either adds to or subtracts beyond the limits of what the variable type can hold, causing it to **wrap around**.
-
-Notes:
-
-- Primitive integer types supported by CPUs are finite approximations to the infinite set of integers known form mathematics
-- and underflow for that matter
-- as in back to a number it understands
-- u8 holds 8 bits and (128+128) mod 256 = 0
+- u8 holds 8 bits and `(128+128) mod 2^8 = 0`
 
 ---
 
@@ -1503,219 +1431,219 @@ Notes:
 
 ---
 
-# Maximal Extractable Value (MEV)
+<!-- # Maximal Extractable Value (MEV) -->
 
-Notes:
+<!-- Notes: -->
 
-- we will now talk about MEV (Maximal extractable value)
+<!-- - we will now talk about MEV (Maximal extractable value) -->
 
----
+<!-- --- -->
 
-# MEV
+<!-- # MEV -->
 
-- The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work.
-- It was referred to as the _invisible tax_, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network.
-- After the Merge (Ethereum's move to POS consensus) **Miner Extractable Value** became **Maximal extractable value**.
+<!-- - The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work. -->
+<!-- - It was referred to as the _invisible tax_, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network. -->
+<!-- - After the Merge (Ethereum's move to POS consensus) **Miner Extractable Value** became **Maximal extractable value**. -->
 
-Notes:
+<!-- Notes: -->
 
-- MEV skyrocketed during the 2021 DeFi summer.
-- MEV was first applied in the context of proof-of-work, and referred to as the Miner Extractable Value.
-- This is because in POW miners hold most of the power, controlling the transaction inclusion / exclusion and ordering.
-- However in the proof-of-stake the validators are been responsible for these roles.
-- The value extraction methods still exist though, so the term "Maximal extractable value" is now used instead.
+<!-- - MEV skyrocketed during the 2021 DeFi summer. -->
+<!-- - MEV was first applied in the context of proof-of-work, and referred to as the Miner Extractable Value. -->
+<!-- - This is because in POW miners hold most of the power, controlling the transaction inclusion / exclusion and ordering. -->
+<!-- - However in the proof-of-stake the validators are been responsible for these roles. -->
+<!-- - The value extraction methods still exist though, so the term "Maximal extractable value" is now used instead. -->
 
----
+<!-- --- -->
 
-## MEV: The Dark Forest
+<!-- ## MEV: The Dark Forest -->
 
-- We have now seen a number of smart contract exploits.
-- Blockchain is a highly **competetive and adversarial** environment.
-- But the dangers pale in comparison to the **mempool**.
+<!-- - We have now seen a number of smart contract exploits. -->
+<!-- - Blockchain is a highly **competetive and adversarial** environment. -->
+<!-- - But the dangers pale in comparison to the **mempool**. -->
 
-Notes:
+<!-- Notes: -->
 
-- if a smart contract can be exploited for profit it's just a matter of time when it will be.
-- there is a lot af smart ppl spending a lot of time examining contracts for vulnerabilities.
-- mempool is the set of pending, unconfirmed transactions.
+<!-- - if a smart contract can be exploited for profit it's just a matter of time when it will be. -->
+<!-- - there is a lot af smart ppl spending a lot of time examining contracts for vulnerabilities. -->
+<!-- - mempool is the set of pending, unconfirmed transactions. -->
 
----
+<!-- --- -->
 
-## MEV: The Dark Forest
+<!-- ## MEV: The Dark Forest -->
 
-<img style="margin-top: 10px;margin-bottom: 10px" height="400" src="./img/ink/dark_forest.jpg" />
+<!-- <img style="margin-top: 10px;margin-bottom: 10px" height="400" src="./img/ink/dark_forest.jpg" /> -->
 
-<div style="font-size: 0.72em;">
+<!-- <div style="font-size: 0.72em;"> -->
 
-- Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predators.
-- **Generalized Frontrunners** are bots looking for _any_ profitable transactions submitted to the mempool.
-- _Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos_ **[August 2020]**.
+<!-- - Novel by Cixin Liu describes the concept of a "dark forest", the ultimate adversarial environment, where detection means certain destuction from the hands of apex predators. -->
+<!-- - **Generalized Frontrunners** are bots looking for _any_ profitable transactions submitted to the mempool. -->
+<!-- - _Ethereum is a Dark Forest, Dan Robinson and Georgios Konstantopoulos_ **[August 2020]**. -->
 
-Notes:
+<!-- Notes: -->
 
-- Cixin Liu [Si-Szin Lju]
-- who's familiar with these novels?
-- The Dark Forest is a 2-nd book in the sci-fi series Remembrance of the Earth's Past
-- Publicly identifying someone else’s location is as good as directly destroying them
-- These Frontrunners work by copying it and replacing the address with their own
-  - They can even execute the transaction in a sandbox and submit just the profitable internal transactions as their own.
-  - One encounter with such a bot was described by these two researchers.
+<!-- - Cixin Liu [Si-Szin Lju] -->
+<!-- - who's familiar with these novels? -->
+<!-- - The Dark Forest is a 2-nd book in the sci-fi series Remembrance of the Earth's Past -->
+<!-- - Publicly identifying someone else’s location is as good as directly destroying them -->
+<!-- - These Frontrunners work by copying it and replacing the address with their own -->
+<!--   - They can even execute the transaction in a sandbox and submit just the profitable internal transactions as their own. -->
+<!--   - One encounter with such a bot was described by these two researchers. -->
 
-</div>
+<!-- </div> -->
 
----
+<!-- --- -->
 
-## The Dark Forest
+<!-- ## The Dark Forest -->
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/kurzgesagt.jpg" />
+<!-- <img style="margin-top: 10px;margin-bottom: 10px" width="800" src="./img/ink/kurzgesagt.jpg" /> -->
 
-<div style="font-size: 0.70em;">
+<!-- <div style="font-size: 0.70em;"> -->
 
-credit: **Kurzgesagt** , _Why We Should NOT Look For Aliens - The Dark Forest_
+<!-- credit: **Kurzgesagt** , _Why We Should NOT Look For Aliens - The Dark Forest_ -->
 
-</div>
+<!-- </div> -->
 
-- The Dark Forest theory is (one of) a solution to the Fermi's paradox.
-- Great explanation in this episode of the Kurzgesagt.
+<!-- - The Dark Forest theory is (one of) a solution to the Fermi's paradox. -->
+<!-- - Great explanation in this episode of the Kurzgesagt. -->
 
-Notes:
+<!-- Notes: -->
 
-- also Stanislaw Lem in (_The New Cosmogony_, A Perfect Vacuum, 1971)
-- David Brin (astronomer and author)
+<!-- - also Stanislaw Lem in (_The New Cosmogony_, A Perfect Vacuum, 1971) -->
+<!-- - David Brin (astronomer and author) -->
 
----
+<!-- --- -->
 
-## MEV: The Dark Forest
+<!-- ## MEV: The Dark Forest -->
 
-- Someone had asked on the _#support_ channel of Uniswap whether it was possible to recover liquidity tokens that were erronously sent to the <font color="#8d3aed">[liquidity token base contract](https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L140)</font>.
-- This meant _anyone_ who calls _burn_ on the Uniswap contract, passing own address, would receive the extra tokens (worth _USD 12K_).
-- **Dan Robinson**, a researcher and a white-hat hacker offered to help.
+<!-- - Someone had asked on the _#support_ channel of Uniswap whether it was possible to recover liquidity tokens that were erronously sent to the <font color="#8d3aed">[liquidity token base contract](https://github.com/Uniswap/v2-core/blob/master/contracts/UniswapV2Pair.sol#L140)</font>. -->
+<!-- - This meant _anyone_ who calls _burn_ on the Uniswap contract, passing own address, would receive the extra tokens (worth _USD 12K_). -->
+<!-- - **Dan Robinson**, a researcher and a white-hat hacker offered to help. -->
 
-Notes:
+<!-- Notes: -->
 
-- Not even a bug, jusy a by-product of how UniswapV2 is designed
-- For details I refer you to the original article
-- Only that he knew this wouldn't be as easy as calling burn and returning the tokens to the owner
-- ... because of the monsters in the forest
+<!-- - Not even a bug, jusy a by-product of how UniswapV2 is designed -->
+<!-- - For details I refer you to the original article -->
+<!-- - Only that he knew this wouldn't be as easy as calling burn and returning the tokens to the owner -->
+<!-- - ... because of the monsters in the forest -->
 
----
+<!-- --- -->
 
-## MEV: The Dark Forest
+<!-- ## MEV: The Dark Forest -->
 
-<img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/flashboys.png" />
+<!-- <img style="margin-top: 10px;margin-bottom: 10px" width="900" src="./img/ink/flashboys.png" /> -->
 
-- In another article, _Phil Daian et al, 2019_ talked about how one particular species of frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitable transactions.
-- If someone just submitted a _burn_ transaction to the mempool the Dark Forest bots would be imediately alerted.
+<!-- - In another article, _Phil Daian et al, 2019_ talked about how one particular species of frontrunning bots, called **Generalized Frontrunners** scans the mempool for profitable transactions. -->
+<!-- - If someone just submitted a _burn_ transaction to the mempool the Dark Forest bots would be imediately alerted. -->
 
-Notes:
+<!-- Notes: -->
 
-- Dan was well aware this would not be easy
-- it was a ticking time bomb
-- They had to desing an obfuscated rescue method to try and not alert the bots about the free money.
+<!-- - Dan was well aware this would not be easy -->
+<!-- - it was a ticking time bomb -->
+<!-- - They had to desing an obfuscated rescue method to try and not alert the bots about the free money. -->
 
----
+<!-- --- -->
 
-## The Dark Forest: To The Rescue
+<!-- ## The Dark Forest: To The Rescue -->
 
-- Dan Robinson recruited the help of fellow engineers (i.e. [Georgios Konstantopoulos]() and [Alberto Cuesta Canada]() and a few others) and they came up with the following solution:
+<!-- - Dan Robinson recruited the help of fellow engineers (i.e. [Georgios Konstantopoulos]() and [Alberto Cuesta Canada]() and a few others) and they came up with the following solution: -->
 
-<div style="font-size: 0.62em;">
+<!-- <div style="font-size: 0.62em;"> -->
 
-```Solidity [1-7 | 9-21 | 23-47]
-interface IGetter {
-  function set(bool) external;
-}
+<!-- ```Solidity [1-7 | 9-21 | 23-47] -->
+<!-- interface IGetter { -->
+<!--   function set(bool) external; -->
+<!-- } -->
 
-interface IPool {
-  function burn(address to) external returns (uint amount0, uint amount1);
-}
+<!-- interface IPool { -->
+<!--   function burn(address to) external returns (uint amount0, uint amount1); -->
+<!-- } -->
 
-contract Setter {
+<!-- contract Setter { -->
 
-  address private owner;
+<!--   address private owner; -->
 
-  constructor () public {
-    owner = msg.sender;
-  }
+<!--   constructor () public { -->
+<!--     owner = msg.sender; -->
+<!--   } -->
 
-  function set(address getter, bool on) public {
-    require(msg.sender == owner, "no-owner");
-    IGetter(getter).set(on);
-  }
-}
+<!--   function set(address getter, bool on) public { -->
+<!--     require(msg.sender == owner, "no-owner"); -->
+<!--     IGetter(getter).set(on); -->
+<!--   } -->
+<!-- } -->
 
-Contract Getter is IGetter {
-  IPool private pool;
-  address private setter;
-  address private getter;
-  address private dest;
-  bool private on;
+<!-- Contract Getter is IGetter { -->
+<!--   IPool private pool; -->
+<!--   address private setter; -->
+<!--   address private getter; -->
+<!--   address private dest; -->
+<!--   bool private on; -->
 
-  constructor(address pool_, address setter_, address getter_, address dest_) public {
-    pool = IPool(pool_);
-    setter = setter_;
-    getter = getter_;
-    dest = dest_;
-  }
+<!--   constructor(address pool_, address setter_, address getter_, address dest_) public { -->
+<!--     pool = IPool(pool_); -->
+<!--     setter = setter_; -->
+<!--     getter = getter_; -->
+<!--     dest = dest_; -->
+<!--   } -->
 
-  function set(bool on_) public override {
-    require(msg.sender == setter, "no-setter");
-    on = on_;
-  }
+<!--   function set(bool on_) public override { -->
+<!--     require(msg.sender == setter, "no-setter"); -->
+<!--     on = on_; -->
+<!--   } -->
 
-  function get() public {
-    require(msg.sender == getter "no-getter");
-    require(on == true, "no-break");
-    pool.burn(dest);
-  }
-}
-```
+<!--   function get() public { -->
+<!--     require(msg.sender == getter "no-getter"); -->
+<!--     require(on == true, "no-break"); -->
+<!--     pool.burn(dest); -->
+<!--   } -->
+<!-- } -->
+<!-- ``` -->
 
-</div>
+<!-- </div> -->
 
-Notes:
+<!-- Notes: -->
 
-- the call to _burn_ is hidden inside a larger _get_ tx
-- the tx is split into two, among two contracts:
-  - _Setter_ contract which, when called by its owner, would activate the Getter contract.
-  - _Getter_ when called by its owner, would make the burn call ONLY if activated else it reverts.
-- Can you see the problem (or the challenge here?)
+<!-- - the call to _burn_ is hidden inside a larger _get_ tx -->
+<!-- - the tx is split into two, among two contracts: -->
+<!--   - _Setter_ contract which, when called by its owner, would activate the Getter contract. -->
+<!--   - _Getter_ when called by its owner, would make the burn call ONLY if activated else it reverts. -->
+<!-- - Can you see the problem (or the challenge here?) -->
 
----
+<!-- --- -->
 
-## The Dark Forest: the Monsters are real
+<!-- ## The Dark Forest: the Monsters are real -->
 
-- During the rescue attempts the **get** transaction would get rejected by the Infura node.
-- Due to the time pressure and late night time, the final **get** tx slipped into a later block.
-- When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meaning a bot had already executed the internal _burn_ call and took the funds.
+<!-- - During the rescue attempts the **get** transaction would get rejected by the Infura node. -->
+<!-- - Due to the time pressure and late night time, the final **get** tx slipped into a later block. -->
+<!-- - When the it was finally executed it reverted with **INSUFFICIENT_LIQUIDITY_BURNED**, meaning a bot had already executed the internal _burn_ call and took the funds. -->
 
-Notes:
+<!-- Notes: -->
 
-- If the attacker only tried executing the get transaction, it would revert without calling the burn function.
-- The hope was that by the time the attacker executed both the _set_ and _get_ txs in a sequence, to spot the internal call to _pool.burn_ and frontrun the rescue attempt, the get transaction would already be included in a mined block
-- BUT : this means the _set_ and _get_ txs **have** to be included in the same block.
-- Do you see what could have been done better?
+<!-- - If the attacker only tried executing the get transaction, it would revert without calling the burn function. -->
+<!-- - The hope was that by the time the attacker executed both the _set_ and _get_ txs in a sequence, to spot the internal call to _pool.burn_ and frontrun the rescue attempt, the get transaction would already be included in a mined block -->
+<!-- - BUT : this means the _set_ and _get_ txs **have** to be included in the same block. -->
+<!-- - Do you see what could have been done better? -->
 
----
+<!-- --- -->
 
-## The Dark Forest: the Monsters are real
+<!-- ## The Dark Forest: the Monsters are real -->
 
-- Avoid public infrastructure.
-- Some examples of a private pool transactions offerings:
-  - <font color="#8d3aed">[blocxroute](https://bloxroute.com/products/)</font><!-- markdown-link-check-disable-line -->
-  - <font color="#8d3aed">[taichi network](https://taichi.network/)</font>
-  - <font color="#8d3aed">[1inch network](https://1inch.io/)</font>
+<!-- - Avoid public infrastructure. -->
+<!-- - Some examples of a private pool transactions offerings: -->
+<!--   - <font color="#8d3aed">[blocxroute](https://bloxroute.com/products/)</font><\!-- markdown-link-check-disable-line -\-> -->
+<!--   - <font color="#8d3aed">[taichi network](https://taichi.network/)</font> -->
+<!--   - <font color="#8d3aed">[1inch network](https://1inch.io/)</font> -->
 
-Notes:
+<!-- Notes: -->
 
-- maybe a better obfuscation (e..g get could be a no-op instea dof reverting if called without set)
-  - causing a bot to miss the internal tx
-- contact a miner to manually include your tx in a block, skipping the mempool
-- or sync your own node
+<!-- - maybe a better obfuscation (e..g get could be a no-op instea dof reverting if called without set) -->
+<!--   - causing a bot to miss the internal tx -->
+<!-- - contact a miner to manually include your tx in a block, skipping the mempool -->
+<!-- - or sync your own node -->
 
----
+<!-- --- -->
 
-## Common Vulnerabilities
+## Frontrunning attack
 
 ```rust []
 #[ink(storage)]
@@ -1736,16 +1664,13 @@ pub fn register(&mut self, name: Vec<u8>) {
 
 - On-chain domain name registry with a register fee of 1 Azero.
 - Why is this a bad idea?
-
-Notes:
-
-- Can you propose a better design?
-- everything on-chain is public
-- this will be front-run in no time
+- Can you propose a beter design?
 
 ---
 
-## Common Vulnerabilities: frontrunning
+## Frontrunning attack: fixit
+
+Commit - Reveal scheme.
 
 <div style="font-size: 0.62em;">
 
@@ -1803,18 +1728,9 @@ pub fn reveal(&mut self, name: Vec<u8>) {
 
 </div>
 
-- Previous design had a fatal flaw: it was opened to a frontrunning attack.
-- Anyone could read the name from the tx and replace the address with his own.
-- A much better design is a commit - reveal scheme.
-
-Notes:
-
-- think *Nike*or _CocaCola_
-- or an auction with users bidding for names
-
 ---
 
-## Common Vulnerabilities
+## Sandwitch attacks
 
 <div style="font-size: 0.72em;">
 
@@ -1847,16 +1763,13 @@ pub fn swap(
 - Tx swaps the specified amount of one of the pool's PSP22 tokens to another PSP22 token according to the current price.
 - What can go wrong here?
 
-Notes:
-
-- no slippage protection in place.
-- bot will frontrun the victim's tx by purchasing token_out before the trade is executed.
-- this purchase will raise the price of the asset for the victim trader and increases his slippage
-- if the bot sells right after the victims tx (back runs the victim) this is a sandwich attack
-
 ---
 
-## Common Vulnerabilities: sandwitch attacks
+## Sandwitch attacks
+
+- Attacker purchases some amount of _token_out_ just before the trade is executed, raising the price.
+- After victims tx is executed he sells, backrunning the trade.
+- Design should protect the user from excessive slippage:
 
 <div style="font-size: 0.70em;">
 
@@ -1879,14 +1792,48 @@ Notes:
 
 </div>
 
-- Contract was vulnerable to a _sandwitch_ attack:
-  - A bot could purchase some amount of _token_out_ just before the trade is executed, raising the price.
-  - After victims tx is executed the bot sells, back running the trade.
-- Design should protect the user from excessive slippage.
+---
 
-Notes:
+## Salmonella Contract
 
-- slippage protection in place
+<div style="font-size: 0.70em;">
+
+```solidity [6-13|14]
+function _transfer(address sender, address recipient, uint256 amount) internal virtual {
+  require(sender != address(0), "ERC20: transfer from the zero address");
+  require(recipient != address(0), "ERC20: transfer to the zero address");
+  uint256 senderBalance = _balances[sender];
+  require(senderBalance >= amount, "ERC20: transfer amount exceeds balance");
+  if (sender == ownerA || sender == ownerB) {
+    _balances[sender] = senderBalance - amount;
+    _balances[recipient] += amount;
+  } else {
+    _balances[sender] = senderBalance - amount;
+    uint256 trapAmount = (amount * 10) / 100;
+    _balances[recipient] += trapAmount;
+  }
+  emit Transfer(sender, recipient, amount);
+}
+```
+
+</div>
+
+- If the owner trades the token it behaves like a regular ERC20.
+- If anyone else transacts it only returns 10% of the specified amount ..
+  - despite emitting an event with a full amount.
+- .. Leaving a sandwitch attacker with a stomack full of salmonella!
+
+---
+
+# Maximal Extractable Value (MEV)
+
+---
+
+# MEV
+
+- The concept of MEV was first floated as early as 2014 (Ethereum pre-genesis), in the context of Proof-of-work.
+- It was referred to as the _invisible tax_, the maximum value a miner can extract from moving around transactions when producing a block on a blockchain network.
+- After the Merge (Ethereum's move to POS consensus) **Miner Extractable Value** became **Maximal extractable value**.
 
 ---
 
@@ -1964,18 +1911,12 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 
 </div>
 
-Notes:
-
-- Assume we are in the longest chain rule scenario (this can be POW or POS chain).
-- How? Imagine a block with three juicy MEV opportunities. These txs are already validated and part of the chain.
-- validator sees this opportunity and instead proposes his own block, but leaves some of the opportunities out of it.
-- now other validators are incentivized to take these MEV opportunities and start building on his proposed block, thus causing a re-org.
-
 ---
 
 ## Consensus instability (longest chain)
 
-- If block rewards are smaller than the MEV opportunities, rational miners / validators will destabilize consensus by reordering or censoring the transactions all the time.
+- All actors are rational actors
+- If MEV > block rewards miners / validators will destabilize the consensus by reordering or censoring the transactions all the time.
 
 <img style="margin-top: 10px;margin-bottom: 10px" height="600" width="600" src="./img/ink/consensus_instability1.png" />
 
@@ -1985,127 +1926,119 @@ credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
 
 </div>
 
-- What could the searcher / arbitrageurs do to not have their MEV stolen from them?
-
-Notes:
-
-- Time bandit attack
-- Because of MEV we cannot assume 51% honest majority
-- all actors are rational actors, so they will go for maximal profit
-- imagine you are the searcher and you found this MEV opportunity.
-  - What can you do to be sure to have it included?
+<!-- - What could the searcher / arbitrageurs do to not have their MEV stolen from them? -->
 
 ---
 
-## Private mempools
+<!-- ## Private mempools -->
 
-- MEV actors can contract with miners / validators.
-- They do it for a substantial fee, but at leat this way they still profit.
-- Why does this lead to a horrible outcome for a blockchain?
+<!-- - MEV actors can contract with miners / validators. -->
+<!-- - They do it for a substantial fee, but at leat this way they still profit. -->
+<!-- - Why does this lead to a horrible outcome for a blockchain? -->
 
-Notes:
+<!-- Notes: -->
 
-- they send their tx directly to the miner, skipping the mempool
-- when its the validator turn to propose a block they include this tx in it (for a fee)
-- can you see any problems with this?
+<!-- - they send their tx directly to the miner, skipping the mempool -->
+<!-- - when its the validator turn to propose a block they include this tx in it (for a fee) -->
+<!-- - can you see any problems with this? -->
 
----
+<!-- --- -->
 
-## Private mempools
+<!-- ## Private mempools -->
 
-- Pretty soon everbody is sending their txs to a handful of validators that they trust.
-- It is very hard to become a new trusted validator.
-- Massive centralization.
+<!-- - Pretty soon everbody is sending their txs to a handful of validators that they trust. -->
+<!-- - It is very hard to become a new trusted validator. -->
+<!-- - Massive centralization. -->
 
-Notes:
+<!-- Notes: -->
 
-- centralization of power
-- rich get richer type of a problem
+<!-- - centralization of power -->
+<!-- - rich get richer type of a problem -->
 
----
+<!-- --- -->
 
-## Flashbots (MEV-geth)
+<!-- ## Flashbots (MEV-geth) -->
 
-- flashbots: democratizing MEV Extraction.
-- [MEV-geth](https://github.com/flashbots/mev-geth)
+<!-- - flashbots: democratizing MEV Extraction. -->
+<!-- - [MEV-geth](https://github.com/flashbots/mev-geth) -->
 
-Notes:
+<!-- Notes: -->
 
-- flashbots is a sealed-bid block space auction mechanism for bidding on transaction order preference.
-- auctions happen off-chain
+<!-- - flashbots is a sealed-bid block space auction mechanism for bidding on transaction order preference. -->
+<!-- - auctions happen off-chain -->
 
----
+<!-- --- -->
 
-## MEV: the good, the bad and the ugly
+<!-- ## MEV: the good, the bad and the ugly -->
 
-- Is all MEV inherently bad for the network?
-  - arbitrage
-  - liquidations
-- MEV is unavoidable.
-- MEV as a security budget?
+<!-- - Is all MEV inherently bad for the network? -->
+<!--   - arbitrage -->
+<!--   - liquidations -->
+<!-- - MEV is unavoidable. -->
+<!-- - MEV as a security budget? -->
 
-Notes:
+<!-- Notes: -->
 
-- MEV is wrong and it has to be stopped?
-  - arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy
-  - liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly.
-- MEV is a fact of life.
-- from the economic security perspective: MEV could be an additional source of revenue for the validators.
-- but it HAS to be distributed equally, else it is an almost existential threat to the network.
+<!-- - MEV is wrong and it has to be stopped? -->
+<!--   - arbitrage: there are markets that are not equal and arbitrageurs provide a service that keeps the systems healthy -->
+<!--   - liquidations: you want fast loan liquidations (right after a price oracle update that triggers them) and the lenders ot be repayed swiftly. -->
+<!-- - MEV is a fact of life. -->
+<!-- - from the economic security perspective: MEV could be an additional source of revenue for the validators. -->
+<!-- - but it HAS to be distributed equally, else it is an almost existential threat to the network. -->
 
----
+<!-- --- -->
 
-## What to do: Proposer-builder separation (PBS)
+<!-- ## What to do: Proposer-builder separation (PBS) -->
 
-[MEV-boost](https://boost.flashbots.net/) is an implementation of PBS for post-merge Ethereum
+<!-- [MEV-boost](https://boost.flashbots.net/) is an implementation of PBS for post-merge Ethereum -->
 
-<img style="margin-top: 10px;margin-bottom: 10px" height="800" src="./img/ink/pbs.svg" />
+<!-- <img style="margin-top: 10px;margin-bottom: 10px" height="800" src="./img/ink/pbs.svg" /> -->
 
-<div style="font-size: 0.62em;">
+<!-- <div style="font-size: 0.62em;"> -->
 
-credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/)
+<!-- credit: [Dan Boneh](https://crypto.stanford.edu/~dabo/) -->
 
-</div>
+<!-- </div> -->
 
-<div style="font-size: 0.45em">
+<!-- <div style="font-size: 0.45em"> -->
 
-- **Block Builders**
-  Responsible for collecting the txs, assembling the blocks, including validating the txs and creating the block header.
-  They also include the MEV offer to validators (fee).
+<!-- - **Block Builders** -->
+<!--   Responsible for collecting the txs, assembling the blocks, including validating the txs and creating the block header. -->
+<!--   They also include the MEV offer to validators (fee). -->
 
-- **Relayers:**
-  Collect blocks, choosing the ones with biggest MEV offer.
-  Send block headers (**NOT** blocks) to the validators (block proposers).
+<!-- - **Relayers:** -->
+<!--   Collect blocks, choosing the ones with biggest MEV offer. -->
+<!--   Send block headers (**NOT** blocks) to the validators (block proposers). -->
 
-- **Block Proposers:**
-  Validators who are chosen to propose blocks are known as "block proposers."
-  They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network.
+<!-- - **Block Proposers:** -->
+<!--   Validators who are chosen to propose blocks are known as "block proposers." -->
+<!--   They choose the best MEV offers, sign them with staking key and send them back to relayers, who publish them to the network. -->
 
-</div>
+<!-- </div> -->
 
-Notes:
+<!-- Notes: -->
 
-- PBS is basically an open market of block builders and validators (block proposers)
-- searchers and users send their txs to block builders
-  - builders are just ppl they have a business relation with
-  - they might send them to multiple ones that they trust
-  - if they happen to steal their tx they will just never come back to them again
-- now builders take bundles from the searchers and txs from the end users and they construct blocks out of them
-  - they order them
-- they send the to relayers that they trust in turn
-  - can relayers cheat here?
-  - they could technically steal the txs from the builders
-  - but just once
-- relayers talk to the validators
-  - they don't send blocks, because if they did the rational validators would steal the MEV
-  - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers
-- validators sign the headers and send the signatures back to the relayers
-- relayers send the blocks to the network
-  - Q: why can't it be stolen at this point?
-  - Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed
-- rent for block space type of arrangment
+<!-- - PBS is basically an open market of block builders and validators (block proposers) -->
+<!-- - searchers and users send their txs to block builders -->
+<!--   - builders are just ppl they have a business relation with -->
+<!--   - they might send them to multiple ones that they trust -->
+<!--   - if they happen to steal their tx they will just never come back to them again -->
+<!-- - now builders take bundles from the searchers and txs from the end users and they construct blocks out of them -->
+<!--   - they order them -->
+<!-- - they send the to relayers that they trust in turn -->
+<!--   - can relayers cheat here? -->
+<!--   - they could technically steal the txs from the builders -->
+<!--   - but just once -->
+<!-- - relayers talk to the validators -->
+<!--   - they don't send blocks, because if they did the rational validators would steal the MEV -->
+<!--   - instead they send commitments (block headers, hashed transactions) along with a proposed fee from searchers -->
+<!-- - validators sign the headers and send the signatures back to the relayers -->
+<!-- - relayers send the blocks to the network -->
+<!--   - Q: why can't it be stolen at this point? -->
+<!--   - Because he already signed a header for this slot & it was sent on chain. Cheat at this point = get your stake slashed -->
+<!-- - rent for block space type of arrangment -->
 
----
+<!-- --- -->
 
 ## MEV: tip of the iceberg
 
@@ -2117,24 +2050,14 @@ Notes:
 
 ## Fin
 
-- Integer overflows
 - Re-entrancy vulnerabilities
+- Integer overflows
 - Sybil attacks
-- ...
-- Regulatory attacks 😅
-- ...
+  <!-- - ... -->
+  <!-- - Regulatory attacks 😅 -->
+  <!-- - ... -->
 - Take MEV into account
-
-Notes:
-
-- long list of possible attacks
-- too long to fit into one lecture
-- baseline: get an audit from a respectable firm
-- publish your source code (security by obscurity is not security)
-- take MEV into account when designing your protocols.
-- MEV-resistant design patterns in your smart contracts.
-  - timelocks
-  - encryption
+  - MEV-resistant design patterns
 
 ---
 
