@@ -10,6 +10,8 @@ duration: 1 hour
 
 ## What you'll learn
 
+<pba-flex center>
+
 - The XCVM
 - XCM Executor
 
@@ -33,11 +35,13 @@ The program executes until it either runs to the end or hits an error, at which 
 
 ## XCVM Registers
 
+<pba-flex center>
+
 - Holding
 - Origin
 - ErrorHandler
 - Appendix
-- etc
+- ...
 
 Notes:
 
@@ -65,6 +69,11 @@ Expresses a number of assets in control of the xcm execution that have no on-cha
 They don't belong to any account.
 
 It can be seen as the register holding "unspent assets".
+
+Notes:
+
+Some instructions, like `WithdrawAsset`, put funds in the holding register.
+Other instructions, like `DepositAsset`, take funds out of the holding register.
 
 ---v
 
@@ -127,9 +136,15 @@ These items provide the executor access to the chain's runtime.
 This is, for example, how different chains can route different asset instructions to different
 pallets (pallet-balances vs pallet-assets).
 
+Notes:
+
+The executor's state is transient, so any state changes to the underlying system need to happen in these configuration items.
+
 ---
 
 # Summary
+
+<pba-flex center>
 
 - XCVM
 - XCM Executor
@@ -138,4 +153,10 @@ pallets (pallet-balances vs pallet-assets).
 
 # Workshop
 
-We'll implement our own very simple implementation of the XCVM.
+We'll create our own very simple implementation of the XCVM.
+
+---
+
+# Next steps
+
+How does the XCM subsystem interact with FRAME.

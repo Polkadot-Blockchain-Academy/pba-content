@@ -22,4 +22,4 @@ TODO: Talk about it, show some code, demo.
 
 # Workshop
 
-Next, we'll play around with all we've learnt with XCM.
+Lets play around with all we've learnt about XCM.

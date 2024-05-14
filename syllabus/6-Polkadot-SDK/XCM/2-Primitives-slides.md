@@ -28,7 +28,7 @@ Instructions: how an XCM expresses what actions it wants the receiver to perform
 
 Way of referencing any entity in the network, for example, the recipient of the message.
 
-<diagram class="mermaid">
+<diagram class="mermaid limit size-50">
 graph LR
     Message(Message)
     Alice(Alice)--"?"-->Bob(Bob)
@@ -160,7 +160,9 @@ Location {
 </pba-col>
 <pba-col>
 
-`../Parachain(50)`
+```
+../Parachain(50)
+```
 
 </pba-col>
 
@@ -453,6 +455,8 @@ How do we reference these assets?
 
 ### Asset Representation
 
+<pba-flex center>
+
 ```rust
 struct Asset {
     pub id: AssetId,
@@ -481,6 +485,8 @@ NonFungible - each token of this asset is unique and cannot be seen as having th
 ---v
 
 ### Asset filtering and wildcards
+
+<pba-flex center>
 
 ```rust
 enum AssetFilter {
@@ -527,7 +533,7 @@ Every XCM is a sequence of instructions.
 
 ## Example: WithdrawAsset
 
-An instruction used to get assets from an account and put them into the holding register.
+An instruction used to get assets from an account to use them during the execution of the message.
 
 <pba-flex center>
 
@@ -586,12 +592,24 @@ Different things can be reported, like a certain pallet, the result of an operat
 
 # Summary
 
+<pba-flex center>
+
 - Locations
 - Assets
 - Instructions
 
 ---
 
+# Questions?
+
+---
+
+# Workshop
+
+We'll play around with these primitives.
+
+---
+
 # Next steps
 
-How do these primitives get together to perform cross-chain execution?
+How do these primitives get together to perform cross-consensus execution?
