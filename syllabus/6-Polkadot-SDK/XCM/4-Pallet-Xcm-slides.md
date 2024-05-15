@@ -217,13 +217,13 @@ With an instruction like `ReportError`, you can know if your operation was succe
 
 At the end of execution, if assets are left in the holding register, they are trapped.
 
-These assets live in a storage item under the XCM pallet*.
+These assets live in a storage item under the XCM pallet\*.
 
 The pallet provides an extrinsic to claim them.
 
 Notes:
 
-* Only if the pallet is configured to be the asset trapper.
+- Only if the pallet is configured to be the asset trapper.
 
 ---
 

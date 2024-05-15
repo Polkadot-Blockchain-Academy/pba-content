@@ -60,12 +60,13 @@ Notes:
 XCM simulator provides a macro for declaring a mock relay chain.
 
 We need to specify a couple of things:
+
 - Runtime: The actual runtime of our relay chain.
 - RuntimeCall, RuntimeEvent: Runtime aggregated types
 - XcmConfig: The struct that contains our XCM configuration.
 - MessageQueue, System: Specific pallets on our runtime.
 - new_ext: A function that returns an instance of `TestExternalities`.
-We can initialize storage for our tests with this.
+  We can initialize storage for our tests with this.
 
 ---v
 
@@ -85,6 +86,7 @@ Notes:
 XCM simulator provides a macro for declaring a mock parachain.
 
 We need to specify less things:
+
 - Runtime: The actual runtime of our parachain.
 - XcmpMessageHandler, DmpMessageHandler: The message handlers, always the message queue pallet.
 - new_ext: A function that returns an instance of `TestExternalities`.
