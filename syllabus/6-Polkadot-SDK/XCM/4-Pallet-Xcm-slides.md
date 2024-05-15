@@ -10,7 +10,7 @@ duration: 1 hour
 
 ## What you'll learn
 
-- The link between XCM and FRAME
+How to link XCM and FRAME
 
 ---
 

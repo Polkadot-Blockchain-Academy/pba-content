@@ -11,6 +11,13 @@ Notes:
 We mentioned the executor is highly configurable.
 What can we configure?
 
+---v
+
+## What you'll learn
+
+- Different configuration items available in the XCM executor.
+- The tools available to help you configure them.
+
 ---
 
 # Config items
@@ -29,6 +36,8 @@ Notes:
 
 We'll briefly introduce you to all these concepts.
 It might be a bit dry, but the idea is to jump straight to the workshop afterwards.
+
+These are all associated types on an `XcmConfig` struct.
 
 ---
 
