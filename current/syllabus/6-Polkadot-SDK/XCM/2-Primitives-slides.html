@@ -5,15 +5,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>Introduction to Cross Consensus Messaging (XCM)</title>
-  <link rel="icon" href="./../../../../assets/favicon.svg" />
-  <link rel="shortcut icon" href="./../../../../assets/favicon.png" />
-  <link rel="stylesheet" href="./../../../../dist/reset.css" />
-  <link rel="stylesheet" href="./../../../../dist/reveal.css" />
-  <link rel="stylesheet" href="./../../../.././assets/styles/PBA-theme.css" id="theme" />
-  <link rel="stylesheet" href="./../../../../css/highlight/shades-of-purple.css" />
+  <title>XCM primitives</title>
+  <link rel="icon" href="./../../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
 
-  <link rel="stylesheet" href="./../../../.././assets/styles/custom-classes.css" />
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
 
 </head>
 
@@ -21,7 +21,7 @@
   <header class="site-header">
     <!-- This logo is a link only on the watching server, not the production build -->
     <a href="">
-      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
         alt="PBA Logo">
     </a>
   </header>
@@ -29,224 +29,25 @@
     <article class="slides">
       <section ><section data-markdown><script type="text/template">
 
-# Introduction to Cross-Consensus Messaging (XCM)
-
-## _Core Concepts, Terms, and Logic_
-
-<aside class="notes"><p><strong>Pre-requisites</strong></p>
-<ul>
-<li>FRAME (Storage Items, Dispatchables, Event, Errors, etc.)</li>
-<li>Polkadot &amp; parachains conceptually</li>
-<li>Assets (NFTs and fungibles)</li>
-</ul>
-</aside></script></section><section data-markdown><script type="text/template">
-## _At the end of this lecture, you will be able to:_
+# XCM Primitives
+</script></section><section data-markdown><script type="text/template">
+## What you'll learn
 
 <pba-flex center>
 
-- Define the concepts, syntax, and terms of XCM
-- Navigate existing resources that relate to XCM
-- Differentiate between XCM and message-passing protocols like XCMP
-</script></section></section><section ><section data-markdown><script type="text/template">
-# Cross-chain use cases
+- Locations
+- Assets
+- Instructions
 
-Why would we want to perform operations on different blockchains?
-
-<aside class="notes"><p>EXERCISE: ask the class to raise hands and postulate on generally what one might do.
-We are expecting them to say transfers, but there are so many other things you could do, so many more problems worth solving with cross-chain:</p>
-<ul>
-<li>One contract calling another contract</li>
-<li>Credential checking</li>
-<li>Voting</li>
-</ul>
-</aside></script></section><section data-markdown><script type="text/template">
-## 🎬 Some Concrete Use-cases
-
-<pba-flex center>
-
-- Cross-consensus asset transfers
-- Execute platform-specific actions such as governance voting
-- Enables single use-case chains
-  - [Collectives](https://github.com/paritytech/cumulus/tree/master/parachains/runtimes/collectives)
-  - Identity chains
-
-<aside class="notes"><p>While the goal of XCM is to be general, flexible and future-proof, there are of course practical needs which it must address, not least the transfer of tokens between chains.
-We need a way to reason about, and pay for, any required fees on the receiving CS.
-Platform-specific action; for example, within a Substrate chain, it can be desirable to dispatch a remote call into one of its pallets to access a niche feature.
-XCM enables a single chain to direct the actions of many other chains, which hides the complexity of multi-chain messaging behind an understandable and declarative API.</p>
+<aside class="notes"><p>Locations: how an XCM references various entities in the network.
+Assets: how an XCM can specify fungible and non-fungible assets.
+Instructions: how an XCM expresses what actions it wants the receiver to perform.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
-> XCM is a **language** for communicating **intentions** between **consensus systems**.
-</script></section><section data-markdown><script type="text/template">
-### Consensus systems
+# Locations
 
-A chain, contract or other global, encapsulated, state machine singleton.
-
-<pba-flex center>
-
-It does not even have to be a _distributed_ system, only that it can form _some_ kind of consensus.
-
-<aside class="notes"><p>A consensus system does not necessarily have to be a blockchain or a smart contract.
-It can be something that already exists in the Web 2.0 world, such as an EC2 instance in an AWS server.
-XCM is Cross-Consensus since it&#39;s much more than cross chain.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### ✉️ A Format, not a Protocol
-
-XCM is a **_messaging format_**.
-
-It is akin to the post card from the post office.
-
-It is _not_ a messaging protocol!
-
-A post card doesn't send itself!
-
-<aside class="notes"><p>It cannot be used to actually &quot;send&quot; any message between systems; its utility is only in expressing what should be done by the receiver.
-Like many aspects core to Substrate, this separation of concerns empowers us to be far more generic and enable much more.
-A post card relies on the postal service to get itself sent towards its receivers, and that is what a messaging protocol does.</p>
-<p>The transport layer concerns itself with sending arbitrary blobs, it doesn&#39;t care about the format.
-A common format has its benefits though, as we&#39;ll see next.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Versioning
-
-XCM is a **versioned** language.
-
-It's currently in version 4.
-
-What goes in each version is defined via an RFC process.
-</script></section><section data-markdown><script type="text/template">
-### Terminology: XCMs
-
-**XCM**, Cross-Consensus Messaging, is the format.
-
-**An XCM** is a Cross-Consensus Message.
-
-It's not called an XCM message,
-
-the same way it's not called an ATM machine.
-
-We can also call them XCM programs, since they are executable.
-</script></section></section><section ><section data-markdown><script type="text/template">
-## 😬 Why not _native_ messages?
-
-Drawbacks of relying on native messaging or transaction format:
-
-<pba-flex center>
-
-- Native message format changes from system to system, it also could change within the _same_ system, e.g. when upgrading it
-- Common cross-consensus use-cases do not map one-to-one to a single transaction
-- Different consensus systems have different assumptions e.g. fee payment
-
-<aside class="notes"><ul>
-<li>A system which intends to send messages to more than one destination would need to understand how to author a message for each.
-On that note, even a single destination may alter its native transaction/message format over time.
-Smart contracts might get upgrades, blockchains might introduce new features or alter existing ones and in doing so change their transaction format.</li>
-<li>Special tricks may be required to withdraw funds, exchange them and then deposit the result all inside a single transaction.
-Onward notifications of transfers, needed for a coherent reserve-asset framework, do not exist in chains unaware of others.
-Some use-cases don&#39;t require accounts.</li>
-<li>Some systems assume that fee payment had already been negotiated, while some do not.</li>
-</ul>
-<p>TODO: Why not just send EVM programs. Why XCVM instead of EVM?
-Add Shawn&#39;s picture.
-It&#39;s up to the interpreter to interpret the intention how it makes sense.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Message format changes
-
-<img style="width: 1050px;" src="../img/against-native-messaging.svg" />
-</script></section><section data-markdown><script type="text/template">
-### Message format changes
-
-<img style="width: 1050px;" src="../img/against-native-messaging-2.svg" />
-</script></section><section data-markdown><script type="text/template">
-### Message format changes
-
-<img rounded style="width: 1050px" src="../img/xcm-executor-routing-calls.png" />
-
-<aside class="notes"><p>XCM abstracts away the actual on-chain operation that will be called, which lets the recipient redirect calls to always make them valid.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### No one-to-one mapping
+Way of referencing any entity in the network, for example, the recipient of the message.
 
 <diagram class="mermaid limit size-50">
-graph TD
-    subgraph Message
-        WithdrawAsset(WithdrawAsset)-->DepositAlice("DepositAsset(Alice)")
-        DepositAlice-->DepositBob("DepositAsset(Bob)")
-    end
-</diagram>
-
-<aside class="notes"><p>You might want to withdraw some assets and deposit some amount to one account and another to another.
-Using transactions, you&#39;d have to send many messages to achieve this.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Different assumptions
-
-<diagram class="mermaid">
-graph LR
-    A(Chain A)--"Pays for fees"-->B(Chain B)
-    A--"Doesn't pay for fees"-->C(Chain C)
-</diagram>
-
-<aside class="notes"><p>Different systems have different assumptions.
-Using native messages, you&#39;d have to tailor your messages to all systems you want to message.</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
-## Four 'A's
-
-XCM assumes the following things from the underlying environment.
-
-<pba-flex center>
-
-- **Agnostic**
-- **Absolute**
-- **Asynchronous**
-- **Asymmetric**
-
-<aside class="notes"><p>The 4 &#39;A&#39;s are assumptions XCM makes over the transport protocol and overall the environment where these messages are sent and processed.
-This doesn&#39;t mean that the transport protocol used has to have these guarantees, it simply means the language constructs are built around them.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-## Agnostic
-
-XCM makes no assumptions about the nature of the Consensus System between which messages are being passed.
-
-<aside class="notes"><p>XCM is not restricted to Polkadot, it&#39;s a language that can be used for communication between any systems.
-For example, EVM-chains or Cosmos hubs.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-## Absolute
-
-XCM assumes that the environment guarantees delivery, interpretation, and ordering of messages.
-
-<aside class="notes"><p>The message format does not do much about the message possibly not being delivered.
-In IBC, for example, you factor in fallibility of the transport protocol into your messages.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-## Asynchronous
-
-XCMs crossing the barrier between a single consensus system cannot generally be synchronous.
-
-XCM in no way assume that the sender will be blocking on messages.
-
-<aside class="notes"><p>You can&#39;t just block execution in the middle of a block, it has to be asynchronous.
-Different systems have different ways of tracking time.
-No assumption of blocking for sender/receiver.</p>
-<p>Generally, consensus systems are not designed to operate in sync with external systems.
-They intrinsically need to have a uniform state to reason about and do not, by default, have the means to verify states of other consensus systems.
-Thus, each consensus system cannot make any guarantees on the expected time required to deliver results; doing so haphazardly would cause the recipient to be blocked waiting for responses that are either late or would never be delivered, and one of the possible reasons for that would be an impending runtime upgrade that caused a change in how responses are delivered.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-## Asymmetric
-
-XCM doesn't assume there'll be messages flowing in the other direction.
-
-If you want to send responses, you have to make it explicitly.
-
-<aside class="notes"><p>There are no results or callbacks.
-Any results must be separately communicated to the sender with an additional message.
-The receiver side can and does handle errors, but the sender will not be notified, unless the error handler specifically tries to send back an XCM that makes some sort of XCM that notifies status back to the origin, but such an action should be considered as constructing a separate XCM for the sole purpose of reporting information, rather than an intrinsic functionality built into XCM.
-XCM is a bit like REST.
-XCMP is a bit like TCP/IP but not quite.
-Analogies can often hurt more than they help.</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
-## 📍 Locations in XCM
-
-<pba-flex center>
-
-Before sending a message to another system, we need a way to address it.
-
-<diagram class="mermaid">
 graph LR
     Message(Message)
     Alice(Alice)--"?"-->Bob(Bob)
@@ -255,14 +56,12 @@ graph LR
     Alice--"?"-->SmartContract(Smart Contract)
 </diagram>
 
-<aside class="notes"><p>XCM defines a <code>Location</code> type that acts as a URL for consensus systems.</p>
-<p>The <code>Location</code> type identifies any single <em>location</em> that exists within the world of consensus.
-Representing a scalable multi-shard blockchain such as Polkadot, an ERC-20 asset account on a parachain, a smart contract on some chain, etc.
-It is usually represented as a location <em>relative</em> to the current consensus system.
-Relative locations are easier to handle due to the fact that the network structure can change.</p>
-<p>Locations don&#39;t define the actual path to get there, just a way of addressing.</p>
+<aside class="notes"><p>The <code>Location</code> is sort of the URL for consensus systems.
+A Location can be a scalable multi-shard blockchain such as Polkadot, an ERC-20 asset account on a parachain, a smart contract, etc.
+They can be relative or absolute.
+They don&#39;t need to correspond with the actual path the message will take, that&#39;s the job of the transport protocol.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-## Interior locations
+## Interior Locations
 
 > Given two consensus systems, A and B. A is **interior** to B if a state change in A implies a state change in B.
 
@@ -359,7 +158,9 @@ Location {
 </pba-col>
 <pba-col>
 
-`../Parachain(50)`
+```
+../Parachain(50)
+```
 
 </pba-col>
 
@@ -556,7 +357,7 @@ graph TD
 </diagram>
 
 <aside class="notes"><p>The actual message is routed through Bridge Hub.</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section data-markdown><script type="text/template">
 ## Sovereign Accounts
 
 Locations external to the local system can be represented by a local account.
@@ -586,15 +387,15 @@ graph TD
     A-->BSA("Collective's sovereign account")
 </diagram>
 </script></section></section><section ><section data-markdown><script type="text/template">
-<pba-col>
-
-## 💰 Assets in XCM
+# Assets
 
 Most messages will deal with assets in some way.
 
-How do we address these assets?
+How do we reference these assets?
 </script></section><section data-markdown><script type="text/template">
 ### Asset Representation
+
+<pba-flex center>
 
 ```rust
 struct Asset {
@@ -619,6 +420,8 @@ NonFungible - each token of this asset is unique and cannot be seen as having th
 </aside></script></section><section data-markdown><script type="text/template">
 ### Asset filtering and wildcards
 
+<pba-flex center>
+
 ```rust
 enum AssetFilter {
     Definite(Assets),
@@ -641,47 +444,102 @@ enum WildFungibility {
 In this case, we can either list all the assets we want or use a wildcard to select all of them.
 In reality, it&#39;s better to use the counted variant of the wildcards, for benchmarking.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
-## Summary
+# Instructions
+
+Every XCM is a sequence of instructions.
+</script></section><section data-markdown><script type="text/template">
+## Kinds of instructions
 
 <pba-flex center>
 
-- XCM
-- XCM vs XCMP
+- Command
+- Trusted Indication
+- Information
+- System Notification
+</script></section><section data-markdown><script type="text/template">
+## Example: WithdrawAsset
+
+An instruction used to get assets from an account to use them during the execution of the message.
+
+<pba-flex center>
+
+```rust
+WithdrawAsset(Assets)
+```
+
+<aside class="notes"><p>This instruction is a command.
+It takes the assets from the account specified in the origin register and puts them in the holding register.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Example: ReceiveTeleportedAsset
+
+<pba-flex center>
+
+Used for teleporting assets between two systems.
+
+```rust
+ReceiveTeleportedAsset(Assets)
+```
+
+<aside class="notes"><p>This instruction is a trusted indication.
+It tells the receiver that the sender has burnt some assets and they should be minted here.
+This is used for teleports, which we&#39;ll look into in the next lecture.
+A lot of trust is needed between both systems.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Example: QueryResponse
+
+Used for reporting information back to another system.
+
+<pba-flex center>
+
+```rust
+QueryResponse {
+    #[codec(compact)]
+    query_id: QueryId,
+    response: Response,
+    max_weight: Weight,
+    querier: Option<Location>,
+}
+```
+
+<aside class="notes"><p>This instruction is reporting back information.
+Different things can be reported, like a certain pallet, the result of an operation, etc.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+# Summary
+
+<pba-flex center>
+
 - Locations
-- Sovereign Accounts
 - Assets
-</script></section><section data-markdown><script type="text/template">
-## Next steps
+- Instructions
+</script></section><section  data-markdown><script type="text/template">
+# Questions?
+</script></section><section  data-markdown><script type="text/template">
+# Workshop
 
-<pba-flex center>
+We'll play around with these primitives.
+</script></section><section  data-markdown><script type="text/template">
+# Next steps
 
-1. Blog series introducing XCM: Parts [1](https://medium.com/polkadot-network/xcm-the-cross-consensus-message-format-3b77b1373392), [2](https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83), and [3](https://medium.com/polkadot-network/xcm-part-iii-execution-and-error-management-ceb8155dd166).
-2. XCM Format [repository](https://github.com/paritytech/xcm-format)
-3. XCM [Docs](https://paritytech.github.io/xcm-docs/)
-</script></section><section data-markdown><script type="text/template">
-<figure>
-    <img rounded style="width: 50%;" src="../img/subscan-xcm-dashboard.png" />
-    <figcaption>Source: <a href="https://polkadot.subscan.io/xcm_dashboard">Subscan</a></figcaption>
-</figure>
-</script></section></section>
+How do these primitives get together to perform cross-consensus execution?
+</script></section>
     </article>
   </main>
 
-  <script src="./../../../../dist/reveal.js"></script>
+  <script src="./../../../dist/reveal.js"></script>
 
-  <script src="./../../../../plugin/markdown/markdown.js"></script>
-  <script src="./../../../../plugin/highlight/highlight.js"></script>
-  <script src="./../../../../plugin/zoom/zoom.js"></script>
-  <script src="./../../../../plugin/notes/notes.js"></script>
-  <script src="./../../../../plugin/math/math.js"></script>
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
 
-  <script src="./../../../../assets/plugin/mermaid.js"></script>
-  <script src="./../../../../assets/plugin/mermaid-theme.js"></script>
+  <script src="./../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../assets/plugin/mermaid-theme.js"></script>
 
-  <script src="./../../../../assets/plugin/chart/chart.js"></script>
-  <script src="./../../../../assets/plugin/chart/chart.min.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.min.js"></script>
 
-  <script src="./../../../../assets/plugin/tailwindcss.min.js"></script>
+  <script src="./../../../assets/plugin/tailwindcss.min.js"></script>
 
   <script>
     function extend() {
