@@ -1,43 +1,41 @@
 # Cross Consensus Messaging (XCM)
 
-## Lessons Overview
+## Learning outcomes
 
-### Exercises
+- Students will understand the what and why of XCM.
+- Students will get familiar with writing XCM programs.
+- Students will understand how XCM programs are executed.
+- Students will get familiar with configuring chains for XCM execution.
 
-All referenced below are stored in a [master copy](https://github.com/Polkadot-Blockchain-Academy/pba-xcm-activities--master) monorepo.
-Each cohort should have a new template derived from that repo, and the new one shared to the cohort specific github team to them using this master copy.
+## Hands-on activities
+
+The whole module will revolve around a workshop, with each lecture introducing the relevant
+concepts needed to get hacking.
+
+## Schedule
 
 ### Day 1
 
-**Morning** (Founder Friendly)
+#### Morning
 
-Lecture - 1-Core_Concepts_of_XCM (2.5 hr) @gav
-Coffee break (30 min)
-Lecture - 2-XCVM (1 hr) @gav
+Lecture 1 - Presentation (45 minutes)
+Lecture 2 - Primitives (2 hours)
+Workshop - Fundamentals 1, 2 and 3 (1 hour)
 
-**Afternoon** (Engineers Only)
+#### Afternoon
 
-Exercise - Usage of XCM locations (1.5 hr) @keith & @cisco
-Exercise - Using XCM simulator (1.5 hr) @keith & @cisco
+Lecture 3 - XCM Executor (1 hour)
+Workshop - Fundamentals 4 (1 hour)
+Lecture 4 - Pallet XCM (1 hour)
+Workshop - Fundamentals 5 (1 hour)
 
 ### Day 2
 
-**Morning** (Engineers Only)
+#### Morning
 
-Lecture - 3-XCM Pallet XCM (2.5 hr) @gav
-Coffee break (20 min)
-Lecture - 4-Chain_Config_in_XCM (1.5 hr) @gav
+Lecture 5 - XCM configuration and XCM simulator (2 hours)
+Lecture 6 - ??? (2 hours)
 
-**Afternoon** (Engineers Only)
+#### Afternoon
 
-Exercise - More XCM simulator (1.5 hr) @keith
-Coffee break (15 min)
-Exercise - Configuring XCM (1.5 hr) @keith
-
-### Additional content
-
-Things that did not fit into this sequence but can be used to extend:
-
-Lecture - XCM 5, Beyond Asset Transfers (1.5 hr) @arrudagates (Beyond Asset Transfers)
-Lecture and Workshop - XCM in Use (2 hr) @chrisli30 (XCM in Use)
-Exercise - Writing an RFC (1.5 hr) @keith & @cisco (_not yet created_)
+Workshop - Simulator (4 hours)
