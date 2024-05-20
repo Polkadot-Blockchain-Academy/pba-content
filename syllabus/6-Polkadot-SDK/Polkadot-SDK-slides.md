@@ -255,6 +255,8 @@ About Polkadot SDK
 
 <img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
 
+Note:
+
 https://blog.kianenigma.nl/posts/tech/polkadot-s-build-horizon/
 https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/index.html
 https://wiki.polkadot.network/
