@@ -12,12 +12,8 @@
     * Data collation
     * Availability sharding
     * Execution sharding
-    * Scheduling (Coretime)
+    * Scheduling (+Coretime)
     * XCMP
-* Governance
-    * How does the system evolve?
-    * OpenGov
-    * Fellowship
 * Tooling
     * What extra tools are available to build on Polkadot?
     * Cumulus
@@ -25,8 +21,8 @@
 
 ## Hands on activities
 
-- Malicious validator zombienet testing (maybe)
-- Quiz
+- Zombienet v2 - Simulating the Polkadot Network
+- Quiz - Test your knowledge of the Polkadot Protocol
 
 # Schedule
 
@@ -34,37 +30,31 @@
 
 ### Morning
 
-- The Decisions of Polkadot [Shawn]
-- Shared Security [Shawn]
-- Introduction to Parachains Consensus [Maciej]
-- Data Preparation - Collation & Backing [Maciej]
+1. The Decisions of Polkadot [Shawn]
+1. Shared Security [Shawn]
+1. Introduction to Parachains Consensus [Maciej]
+1. Data Preparation - Collation & Backing [Maciej]
 
 ### Afternoon
 
-- Data Sharding - Data Availability [Bradley]
-- Execution Sharding - Approvals and Disputes [Maciej]
-- Coretime [Maciej]
-- Cumulus Deep-dive [Bradley]
+5. Data Sharding - Data Availability [Bradley]
+1. Execution Sharding - Approvals and Disputes [Maciej]
+1. Cumulus Deep-dive [Bradley]
+1. Asynchronous Backing [Bradley]
 
 ## Day 2
 
 ### Morning
 
-- Asynchronous Backing [Bradley]
-- XCMP [Shawn > Maciej]
-- NPoS & Staking [Ankan > Kian > Maciej]
-- Malus activity [Maciej + Bradley]
+9. Coretime [Maciej]
+1. NPoS & Staking [Kian > Maciej]
+1. Ecosystem & Economy [Shawn]
+1. XCMP [Shawn > Maciej]
 
 ### Afternoon
 
-- Contributing to Polkadot [Shawn]
-- Ecosystem & Economy [Shawn]
-- Light Clients [Nikos]
-- Quiz [Maciej + Bradley]
-
-## Day 3
-
-### Morning
-
-### Afternoon
+13. Contributing to Polkadot [Shawn]
+1. Quiz [Maciej + Bradley]
+1. Light Clients [Nikos]
+1. Zombienet v2 [Javier]
 

@@ -2,6 +2,7 @@
 title: What is Shared Security?
 description: A high level overview of Shared Security in Polkadot
 duration: 1 hour
+owner: Shawn Tabrizi
 ---
 
 # What is Shared Security?

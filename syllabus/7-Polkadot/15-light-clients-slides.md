@@ -1,7 +1,8 @@
 ---
 title: Light Clients and Unstoppable Apps
 description: Light Clients and Unstoppable Apps, for Web3 engineers.
-duration: 45+ mins
+duration: 45 min
+owner: Nikos
 ---
 
 # Light clients<br/>and<br/>Unstoppable Apps

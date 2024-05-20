@@ -1,7 +1,8 @@
 ---
 title: Execution Sharding in Polkadot
-description: Details the Collation, Backing, Approval-Voting, and Disputes systems and how they work together to provide secure execution sharding in Polkadot.
+description: Details about the Approval-Voting and Disputes systems and how they work together to provide secure execution sharding in Polkadot through the means of escalation.
 duration: 45 minutes
+owner: Maaciej Zyszkiewicz
 ---
 
 # Execution Sharding in Polkadot

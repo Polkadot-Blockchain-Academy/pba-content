@@ -1,7 +1,8 @@
 ---
-title: Execution Sharding in Polkadot
-description: Details the Collation, Backing, Approval-Voting, and Disputes systems and how they work together to provide secure execution sharding in Polkadot.
+title: Data Preparation, Collation, and Backing
+description: Details about collation and backing phases in the parachains protocol.
 duration: 45 minutes
+owner: Maciej Zyszkiewicz
 ---
 
 # Execution Sharding in Polkadot

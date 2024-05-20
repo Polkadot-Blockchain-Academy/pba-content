@@ -2,6 +2,7 @@
 title: The Decisions of Polkadot
 description: A High Level Review of the Key Decisions of Polkadot
 duration: 1 hour
+owner: Shawn Tabrizi
 ---
 
 # The Decisions of Polkadot
