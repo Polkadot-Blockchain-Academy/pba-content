@@ -29,8 +29,8 @@ There will be amazing modules going into further details of each. This will be v
 
 ## Polkadot
 
-* As a platform for developers.
-* Polkadot stems from Ethereum. A single threaded smart contract blockchain.
+- As a platform for developers.
+- Polkadot stems from Ethereum. A single threaded smart contract blockchain.
 
 ---v
 
@@ -48,7 +48,7 @@ There will be amazing modules going into further details of each. This will be v
 
 ### Polkadot
 
-* Let's make this *sharded*, such that it can achieve execution sharding.
+- Let's make this _sharded_, such that it can achieve execution sharding.
 
 Note:
 
@@ -60,14 +60,13 @@ The holy grain of what ETH 2.0 was meant to be.
 
 <img width="800px" rounded src="./img/multi-threaded.svg" />
 
-* Have we compromised security in any way in this model?
+- Have we compromised security in any way in this model?
 
 ---v
 
 ### Polkadot
 
 <img width="800px" rounded src="./img/multi-threaded-dot.svg" />
-
 
 Note: Polkadot achieves perfect shared security and sharded execution. The primitives that can
 progress an input in parallel is called a "Core", much like a normal CPU.
@@ -77,7 +76,6 @@ progress an input in parallel is called a "Core", much like a normal CPU.
 ### Polkadot
 
 <img width="800px" rounded src="./img/dot-heterogenous.svg" />
-
 
 Note:
 
@@ -101,7 +99,6 @@ therefore smart contracts. We can run anything we want. We can run a whole block
 
 <img width="800px" rounded src="./img/dot-parachain-auction.svg" />
 
-
 Note:
 
 Finally, let's make the deployment of those shards flexible and permissionless. We arrive at
@@ -116,9 +113,9 @@ Polkadot what it is today.
 
 Terminology:
 
-* Polkadot Relay Chain
-* Parachain
-* Execution Core
+- Polkadot Relay Chain
+- Parachain
+- Execution Core
 
 Note:
 
@@ -142,9 +139,9 @@ TODO: maybe turn into slides, maybe leave as notes for now.
 
 ### Polkadot SDK
 
-* Building a blockchain is damn painful hard.
-* This is why Polkadot has pivoted for years to build a modular and extensible blockchain framework
-  called *Substrate* and *FRAME*.
+- Building a blockchain is damn painful hard.
+- This is why Polkadot has pivoted for years to build a modular and extensible blockchain framework
+  called _Substrate_ and _FRAME_.
 
 ---v
 
@@ -179,14 +176,13 @@ software. WASM.
 
 Cumulus augments Substrate to make it Polkadot-compatible.
 
-
 ---
 
 ## Interoperability
 
 Underrated truth about interoperability of blockchains:
 
-*🚀 Shared security puts communication on steroids 🚀*
+_🚀 Shared security puts communication on steroids 🚀_
 
 Note:
 
@@ -211,12 +207,12 @@ but it can 100% ensure that the parachain will do exactly as stated in its WASM 
 
 Polkadot's services to developers:
 
-* Transport protocols for parachains/cores to send payloads to one
+- Transport protocols for parachains/cores to send payloads to one
   another.
-  * XCMP, HRMP, VMP, DMP 😶‍🌫️
-  * As a developer you won't deal with these! 😮‍💨
-* Language to compose messages and programs and send them over.
-  * XCM
+  - XCMP, HRMP, VMP, DMP 😶‍🌫️
+  - As a developer you won't deal with these! 😮‍💨
+- Language to compose messages and programs and send them over.
+  - XCM
 
 Note:
 
@@ -226,7 +222,8 @@ abstract entities within chains, not just the chain itself.
 Async and Sync: Disjoint consensus systems are in principle[^1] asynchronous by nature. This is an
 important concept to keep in mind.
 
-[^1]: Technically, if two parachains are co-scheduled in the same core in the same block, they
+[^1]:
+    Technically, if two parachains are co-scheduled in the same core in the same block, they
     could have synchronous communication. But they cannot count on this. So at the programming
     model, one must assume everything is always asynchronous.
 
@@ -236,16 +233,16 @@ important concept to keep in mind.
 
 About Polkadot
 
-* Heterogenous Sharded Execution, Shared Security.
-* Parachain
-* Core
-* Exposing Cores: Auctions -> On-Demand -> World Computer
+- Heterogenous Sharded Execution, Shared Security.
+- Parachain
+- Core
+- Exposing Cores: Auctions -> On-Demand -> World Computer
 
 About Polkadot SDK
 
-* Substrate
-* FRAME
-* XCM
+- Substrate
+- FRAME
+- XCM
 
 ---
 
