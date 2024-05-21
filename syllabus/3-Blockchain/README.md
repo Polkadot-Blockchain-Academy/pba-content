@@ -26,7 +26,7 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 
 - Grandpa Board Game - TODO find the repo, it may have gotten deleted. For now the content was copied into https://polkadot-blockchain-academy.github.io/pba-book/blockchain-contracts/_materials/grandpa-board-game.html
 
-- Start a Blockchain and Fork Off - This activity is written up [in this repo](./Start_A_Blockchain_Activity.md) and also in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW).
+- Start a Blockchain and Fork Off - This activity is written up in [its own repo](https://github.com/Polkadot-Blockchain-Academy/Academy-PoW).
 
 ## Schedule
 
