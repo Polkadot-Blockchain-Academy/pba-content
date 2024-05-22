@@ -8,12 +8,12 @@ duration: 1 hour
 
 <pba-flex center>
 
-- Quiz<!-- .element: class="fragment" data-fragment-index="-1" -->
-- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="0" -->
-- Exotic Primitives<!-- .element: class="fragment" data-fragment-index="1" -->
-- Merkle Tree Activity<!-- .element: class="fragment" data-fragment-index="2" -->
-- Zero-Knowledge Proofs Intro<!-- .element: class="fragment" data-fragment-index="3" -->
-- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="4" -->
+- Quiz<!-- .element: class="fragment" data-fragment-index="0" -->
+- Hash Based Data Structures<!-- .element: class="fragment" data-fragment-index="1" -->
+- Exotic Primitives<!-- .element: class="fragment" data-fragment-index="2" -->
+- Merkle Tree Activity<!-- .element: class="fragment" data-fragment-index="3" -->
+- Zero-Knowledge Proofs Intro<!-- .element: class="fragment" data-fragment-index="4" -->
+- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="5" -->
 
 </pba-flex>
 
@@ -25,9 +25,9 @@ duration: 1 hour
 
 ## Comparison to<br />Pointer Based Data Structures
 
-- A hash references the _content_ of some data;
-- A pointer tells you where to find it;
-- We can not have cycles of hashes.
+- A hash references the<!-- .element: class="fragment" data-fragment-index="0" --> **content**<!-- .element: class="fragment" data-fragment-index="0" --> of some data;<!-- .element: class="fragment" data-fragment-index="0" -->
+- A pointer tells you where to find it;<!-- .element: class="fragment" data-fragment-index="1" -->
+- We can not have cycles of hashes.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -75,7 +75,9 @@ If we compute the correct root, this proves that the leaf was in the tree
 
 ## Security
 
-Collision resistance: we reasonably assume only one preimage for each hash,<br />therefore making the data structure's linkage persistent and enduring (until the cryptography becomes compromised 😥).
+- Collision resistance: we reasonably assume only one preimage for each hash,<!-- .element: class="fragment" data-fragment-index="0" -->
+- therefore making the data structure's linkage persistent and enduring<!-- .element: class="fragment" data-fragment-index="1" -->
+- (until the cryptography becomes compromised 😥).<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -100,9 +102,9 @@ We should be able to:
 
 <pba-flex center>
 
-- `put(key, value)`
-- `get(key)`
-- `delete(key)`
+- `put(key, value)`<!-- .element: class="fragment" data-fragment-index="1" -->
+- `get(key)`<!-- .element: class="fragment" data-fragment-index="2" -->
+- `delete(key)`<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -112,8 +114,8 @@ We should be able to:
 
 We should also be able to perform the following operations for a provable key-value database:
 
-1. For any key, if `<key,value>` is in the database, we can prove it.
-1. If no value is associated to a key, we need to be able to prove that as well.
+1. For any key, if <!-- .element: class="fragment" data-fragment-index="1" --> `<key,value>`<!-- .element: class="fragment" data-fragment-index="1" --> is in the database, we can prove it.<!-- .element: class="fragment" data-fragment-index="1" -->
+1. If no value is associated to a key, we need to be able to prove that as well.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -188,7 +190,7 @@ Additionally, if the size of a value is particularly large, it is replaced with 
 
 ## Hash Trie
 
-- Inserting arbitrary (or worse, user-determined) keys into the Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Inserting arbitrary (or worse, user-determined) keys into the Radix/Patricia tree can lead to highly unbalanced branches, enlarging proof-sizes and lookup times.<!-- .element: class="fragment" data-fragment-index="1" -->
 - Solution: pre-hash the data before inserting it to make keys random.<!-- .element: class="fragment" data-fragment-index="2" -->
 - Resistance against partial collision is important.<!-- .element: class="fragment" data-fragment-index="3" -->
 - Could be a Merkle trie or regular.<!-- .element: class="fragment" data-fragment-index="4" -->

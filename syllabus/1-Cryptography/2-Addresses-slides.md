@@ -12,9 +12,9 @@ duration: 30 min
 
 <pba-flex center>
 
-1. Binary Formats
-1. Seed Creation
-1. Hierarchical Deterministic Key Derivation
+1. Binary Formats<!-- .element: class="fragment" data-fragment-index="1" -->
+1. Seed Creation<!-- .element: class="fragment" data-fragment-index="2" -->
+1. Hierarchical Deterministic Key Derivation<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -24,11 +24,11 @@ duration: 30 min
 
 When representing binary data, there are a few different display formats you should be familiar with.
 
-Hex: 0-9, a-f
+Hex: 0-9, a-f<!-- .element: class="fragment" data-fragment-index="1" -->
 
-Base64: A-Z, a-z, 0-9, +, /
+Base64: A-Z, a-z, 0-9, +, /<!-- .element: class="fragment" data-fragment-index="2" -->
 
-Base58: Base64 without 0/O, I/l, +, and /
+Base58: Base64 without 0/O, I/l, +, and /<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
@@ -123,9 +123,13 @@ Does anyone know what a BIP is?
 
 For the Math peoples, what is a secret key?<!-- .element: class="fragment" data-fragment-index="0" -->
 
-The secret key is a scalar value from the scalar field of the base field from which an elliptic curve is defined over. Not a phrase! <!-- .element: class="fragment" data-fragment-index="1" -->
+Mathematically, the secret key is usually an element of some huge finite field. <!-- .element: class="fragment" data-fragment-index="1" -->
 
-BIP39 applies 2,048 rounds of the SHA-512 hash function<br /> to the mnemonic to derive a 64 byte key.<!-- .element: class="fragment" data-fragment-index="2" -->
+In common asymmetric cryptographic systems, it is an element of the scalar field of an elliptic curve. <!-- .element: class="fragment" data-fragment-index="2" -->
+
+In that regard, it not just a phrase! <!-- .element: class="fragment" data-fragment-index="3" -->
+
+BIP39 applies 2,048 rounds of the SHA-512 hash function<br /> to the mnemonic to derive a 64 byte key.<!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
@@ -134,17 +138,17 @@ BIP39 applies 2,048 rounds of the SHA-512 hash function<br /> to the mnemonic to
 Different key derivation functions affect the ability to use the same mnemonic in multiple wallets as different wallets may use different functions to derive the secret from the mnemonic.
 
 Notes:
-i.e. May hash to a different base field because of a different elliptic curve
+i.e. May hash to a different scalar field because of a different elliptic curve
 
 ---
 
 ## Cryptography Types
 
-Generally, you will encounter 3 different modern types of cryptography across most systems you use.
+In common (modernish) cryptosystems, generally you will encounter 3 different modern types of cryptography across most systems you use.
 
 - Ed25519
 - Sr25519
-- ECDSA
+- ECDSA (over secp256k1)
 
 We will go more in depth in future lectures!
 
@@ -158,6 +162,8 @@ Sr25519 and Ed25519 uses the same which is Curve25519
 You may have learned RSA in school. It is outdated now, and requires _huge_ keys.
 RSA-4096: A 4096-bit RSA key 512 bytes
 sr25519 is 32 bytes
+
+There is also BLS12-381 curves but it is less user facing.
 
 ---
 
