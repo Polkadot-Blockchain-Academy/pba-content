@@ -36,10 +36,9 @@ We often want a succinct representation of some data<br />with the expectation t
 - Accept unbounded size input <!-- .element: class="fragment" data-fragment-index="0" -->
 - Map to a bounded output <!-- .element: class="fragment" data-fragment-index="1" -->
 - Be fast to compute <!-- .element: class="fragment" data-fragment-index="2" -->
-- Be computable strictly one-way<br />(difficult to find a pre-image for a hash) <!-- .element: class="fragment" data-fragment-index="3" -->
-- Resist pre-image attacks<br />(attacker controls one input) <!-- .element: class="fragment" data-fragment-index="4" -->
-- Second pre-image resistance: Given an input and output<br />(resisting second pre-image attacks). <!-- .element: class="fragment" data-fragment-index="5" -->
-- Resist collisions<br />(attacker controls both inputs) <!-- .element: class="fragment" data-fragment-index="6" -->
+- Resist pre-image attacks:<br />Given an output, it is hard to compute a pre-image <!-- .element: class="fragment" data-fragment-index="3" -->
+- Second pre-image resistance: <br />Given an input (and its hashed output), it is hard to compute another input with the same hash<br /><!-- .element: class="fragment" data-fragment-index="4" -->
+- Resist collisions:<br />It is hard to compute two inputs that have the same hash<!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 
@@ -94,22 +93,6 @@ hash('hello') =
 hash('hellp') =
  0x7bc9c272894216442e0ad9df694c50b6a0e12f6f4b3d9267904239c63a7a0807
 ```
-
----
-
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Rust Demo
-
-## Hashing a Message
-
-Notes:
-
-See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
-
-1. Use a longer message
-1. Hash it
-1. Verify the signature on the hash
 
 ---
 
@@ -235,8 +218,6 @@ In a second pre-image attack, the attacker only controls one input.
 
 In a collision, the attacker controls both inputs.
 
-They may attempt to trick someone into signing one message.
-
 Notes:
 
 Attacker has intention to impersonate the signer with the other. Generally speaking, even finding a
@@ -286,8 +267,6 @@ It should be difficult for someone to partially (for a substring of the hash out
 
 - Bitcoin PoW is a partial pre-image attack. <!-- .element: class="fragment" data-fragment-index="0" -->
 - Can anyone explain how? <!-- .element: class="fragment" data-fragment-index="1" -->
-- Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.<!-- .element: class="fragment" data-fragment-index="2" -->
-- Prefix collision resistance important to rationalize costs for some cryptographic data structures.<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 This is a technique used to trick users into thinking they are interacting with a trusted entity (like a account or piece of data) when they are actually interacting with a malicious actor. This can be done by creating a fraudulent address that looks similar to a legitimate one.
@@ -524,7 +503,7 @@ Each leaf is the hash of some data object and each node is the hash of its child
 
 Merkle trees allow many proofs relevant to the rest of this course,<br />e.g. that some data object is a member of the tree<br />without passing the entire tree.
 
-**_More info in the next lesson._**
+**_More info in a later lesson._**
 
 ---
 
@@ -533,41 +512,3 @@ Merkle trees allow many proofs relevant to the rest of this course,<br />e.g. th
 # Questions
 
 ---
-
-<!-- TODO: migrate below to Substrate slides? Or...?  -->
-
-## Hash Examples in Substrate
-
-**Sr25519 Signatures**
-
-Sr25519 hashes the message as part of its signing process.
-
-**Transactions**
-
-In transactions in Substrate, key holders sign a<br /> _hash of the instructions_ when the instructions<br />are longer than 256 bytes.
-
----
-
-## Database Keys
-
-**TwoX64** is safe to use when users (read: attackers)<br />cannot control the input, e.g. when a<br />database key is a system-assigned index.
-
-**Blake2** should be used for everything else.
-
-_Again, there is a whole lesson on hash-based data structures._
-
----
-
-## Other Uses of Hashes in Substrate
-
-Hashes are also used for:
-
-<pba-flex center>
-
-- Generating multisig accounts
-- Generating system-controlled accounts
-- Generating proxy-controlled accounts
-- Representing proposals
-- Representing claims (e.g. the asset trap)
-
-</pba-flex>
