@@ -55,10 +55,9 @@ We often want a succinct representation of some data<br />with the expectation t
 - Accept unbounded size input <!-- .element: class="fragment" data-fragment-index="0" -->
 - Map to a bounded output <!-- .element: class="fragment" data-fragment-index="1" -->
 - Be fast to compute <!-- .element: class="fragment" data-fragment-index="2" -->
-- Be computable strictly one-way<br />(difficult to find a pre-image for a hash) <!-- .element: class="fragment" data-fragment-index="3" -->
-- Resist pre-image attacks<br />(attacker controls one input) <!-- .element: class="fragment" data-fragment-index="4" -->
-- Second pre-image resistance: Given an input and output<br />(resisting second pre-image attacks). <!-- .element: class="fragment" data-fragment-index="5" -->
-- Resist collisions<br />(attacker controls both inputs) <!-- .element: class="fragment" data-fragment-index="6" -->
+- Resist pre-image attacks:<br />Given an output, it is hard to compute a pre-image <!-- .element: class="fragment" data-fragment-index="3" -->
+- Second pre-image resistance: <br />Given an input (and its hashed output), it is hard to compute another input with the same hash<br /><!-- .element: class="fragment" data-fragment-index="4" -->
+- Resist collisions:<br />It is hard to compute two inputs that have the same hash<!-- .element: class="fragment" data-fragment-index="5" -->
 
 <aside class="notes"><ol>
 <li>one way meaning for a given output difficult to get the input</li>
@@ -108,19 +107,6 @@ hash('hellp') =
  0x7bc9c272894216442e0ad9df694c50b6a0e12f6f4b3d9267904239c63a7a0807
 ```
 </script></section><section  data-markdown><script type="text/template">
-<!-- .slide: data-background-color="#4A2439" -->
-
-# Rust Demo
-
-## Hashing a Message
-
-<aside class="notes"><p>See the Jupyter notebook and/or HackMD cheat sheet for this lesson.</p>
-<ol>
-<li>Use a longer message</li>
-<li>Hash it</li>
-<li>Verify the signature on the hash</li>
-</ol>
-</aside></script></section><section  data-markdown><script type="text/template">
 ## Speed
 
 - Some hash functions are designed to be slow. <!-- .element: class="fragment" data-fragment-index="0" -->
@@ -214,8 +200,6 @@ In a second pre-image attack, the attacker only controls one input.
 
 In a collision, the attacker controls both inputs.
 
-They may attempt to trick someone into signing one message.
-
 <aside class="notes"><p>Attacker has intention to impersonate the signer with the other. Generally speaking, even finding a
 single hash collision often results in the hash function being considered unsafe.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -257,8 +241,6 @@ It should be difficult for someone to partially (for a substring of the hash out
 
 - Bitcoin PoW is a partial pre-image attack. <!-- .element: class="fragment" data-fragment-index="0" -->
 - Can anyone explain how? <!-- .element: class="fragment" data-fragment-index="1" -->
-- Prefix/suffix pre-image attack resistance reduces opportunity for UI attacks for address spoofing.<!-- .element: class="fragment" data-fragment-index="2" -->
-- Prefix collision resistance important to rationalize costs for some cryptographic data structures.<!-- .element: class="fragment" data-fragment-index="3" -->
 
 <aside class="notes"><p>This is a technique used to trick users into thinking they are interacting with a trusted entity (like a account or piece of data) when they are actually interacting with a malicious actor. This can be done by creating a fraudulent address that looks similar to a legitimate one.
 example AEVXZ AEVYZ</p>
@@ -440,46 +422,12 @@ Any change at any point in the list would create downstream changes to all hashe
 
 Merkle trees allow many proofs relevant to the rest of this course,<br />e.g. that some data object is a member of the tree<br />without passing the entire tree.
 
-**_More info in the next lesson._**
+**_More info in a later lesson._**
 </script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
-</script></section><section  data-markdown><script type="text/template">
-<!-- TODO: migrate below to Substrate slides? Or...?  -->
-
-## Hash Examples in Substrate
-
-**Sr25519 Signatures**
-
-Sr25519 hashes the message as part of its signing process.
-
-**Transactions**
-
-In transactions in Substrate, key holders sign a<br /> _hash of the instructions_ when the instructions<br />are longer than 256 bytes.
-</script></section><section  data-markdown><script type="text/template">
-## Database Keys
-
-**TwoX64** is safe to use when users (read: attackers)<br />cannot control the input, e.g. when a<br />database key is a system-assigned index.
-
-**Blake2** should be used for everything else.
-
-_Again, there is a whole lesson on hash-based data structures._
-</script></section><section  data-markdown><script type="text/template">
-## Other Uses of Hashes in Substrate
-
-Hashes are also used for:
-
-<pba-flex center>
-
-- Generating multisig accounts
-- Generating system-controlled accounts
-- Generating proxy-controlled accounts
-- Representing proposals
-- Representing claims (e.g. the asset trap)
-
-</pba-flex>
-</script></section>
+</script></section><section  data-markdown><script type="text/template"></script></section>
     </article>
   </main>
 

@@ -37,8 +37,9 @@
 - Hash Based Data Structures
 - Exotic Primitives
 - Merkle Tree Activity
-- Zero-Knowledge Proofs Intro<!-- .element: class="fragment" data-fragment-index="3" -->
-- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="4" -->
+- Zero-Knowledge Proofs (Part I)<!-- .element: class="fragment" data-fragment-index="3" -->
+- Crypto in Context <!-- .element: class="fragment" data-fragment-index="4" -->
+- VRF Poker Activity<!-- .element: class="fragment" data-fragment-index="5" -->
 
 </pba-flex>
 </script></section><section  data-markdown><script type="text/template">
@@ -105,7 +106,7 @@ _Example:_ Schnorr signatures are ZK Proofs
 </script></section><section  data-markdown><script type="text/template">
 ## The ZK Proof Example we study in this module
 
-_Example:_ Prover knows a non-trivial factorization of N.
+_Example:_ Prover knows a non-trivial factorization of N
 
 - Prover wants to prove that they know $N = r \times s$ without revealing $r$ or $s$.<!-- .element: class="fragment" data-fragment-index="0" -->
 - The Prover should convince us they know the two non-trivial integer $r$ and $s$ that is $r,s \neq 1$ such that:<!-- .element: class="fragment" data-fragment-index="1" -->
@@ -115,12 +116,12 @@ $r\times s = N$ <!-- .element: class="fragment" data-fragment-index="1" -->
 - Without revealing any other information about $r$ or $s$.<!-- .element: class="fragment" data-fragment-index="2" -->
 - The statement is $N$ and the witnesses are $r$ and $s$.<!-- .element: class="fragment" data-fragment-index="3" -->
 </script></section><section  data-markdown><script type="text/template">
-## ZK Proof properties.
+## ZK Proof properties
 
 - Completeness: If the claim is true, then it _must_ pass `verify(statement, proof) == true`
-- Statistical Knowledge Soundness: If the prover does not know the witness then `verify(statement, proof) == false` with high probability.
-- Zero Knowledge: the proof reveals nothing about the witness that was not revealed by the statement itself.<!-- .element: class="fragment" data-fragment-index="0" -->
-- The common way of implementing zero knowledge protocol is by means of zk-SNARK.<!-- .element: class="fragment" data-fragment-index="1" -->
+- Statistical Knowledge Soundness: If the prover does not know the witness then `verify(statement, proof) == false` with high probability
+- Zero Knowledge: the proof reveals nothing about the witness that was not revealed by the statement itself<!-- .element: class="fragment" data-fragment-index="0" -->
+- The common way of implementing zero knowledge protocol is by means of zk-SNARK<!-- .element: class="fragment" data-fragment-index="1" -->
 
 <aside class="notes"><ul>
 <li>We prove Zero knowldege by showing a party without any knowledge of the witness, could fool an external party who was not been part of the interaction that they interacted with the prover and got a valid proof form the prover.</li>
@@ -223,9 +224,9 @@ To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivativ
 
 - Slow prover time for general computation<!-- .element: class="fragment" data-fragment-index="1" -->
 - To be fast, need to hand optimize<!-- .element: class="fragment" data-fragment-index="2" -->
-- Very weird computation model:<!-- .element: class="fragment" data-fragment-index="3" -->
 
-<aside class="notes"><p>Weird as in binary arithmetic is hard, condition is hard.
+<aside class="notes"><p>Very weird computation model?
+Weird as in binary arithmetic is hard, condition is hard.
 taking square-root of an element mod p is easy.
 Non-deterministic arithmetic circuits</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -245,7 +246,7 @@ Non-deterministic arithmetic circuits</p>
 
 - The trick is to transform our problem of proving the knowledge of factors (witnesses) into:<!-- .element: class="fragment" data-fragment-index="0" -->
 - A problem of knowledge of certain polynomials.<!-- .element: class="fragment" data-fragment-index="1" -->
-- $x^n + a_{n-1} x^n-1 + \dots + a_1x + a_0$ <!-- .element: class="fragment" data-fragment-index="2" -->
+- $x^n + a_{n-1} x^{n-1} + \dots + a_1x + a_0$ <!-- .element: class="fragment" data-fragment-index="2" -->
 - Then verifier could ask me questions about those polynomials, and if the prover answers correctly,<!-- .element: class="fragment" data-fragment-index="3" -->
 - The verifier could be fairly confident that the prover knows that polynomial hence also the witness.<!-- .element: class="fragment" data-fragment-index="4" -->
 </script></section><section  data-markdown><script type="text/template">
