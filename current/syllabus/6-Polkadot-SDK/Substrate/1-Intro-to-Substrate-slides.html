@@ -30,7 +30,9 @@
       <section  data-markdown><script type="text/template">
 
 # Introduction to Substrate
-</script></section><section  data-markdown><script type="text/template">
+
+<!-- ---
+
 ## About These Lectures and Lecturer
 
 - Ground-up, low-level, but hands-on.
@@ -38,7 +40,7 @@
 - Interrupts and questions are always welcome.
 - Narratives > facts.
 
-Your feedback is highly appreciated!
+Your feedback is highly appreciated! -->
 </script></section><section ><section data-markdown><script type="text/template">
 ## What is Substrate?
 
@@ -240,11 +242,6 @@ particular implementation.</p>
 - We have correct code, and components are easy to swap, replace, and upgrade.
 - What use is that, if we cannot agree on what to replace/upgrade?
 - Governance!
-<!-- .element: class="fragment" -->
-- What use is governance, if the upgrade cannot be enacted?
-<!-- .element: class="fragment" -->
-- (trustless and forkless) Upgradeability!
-<!-- .element: class="fragment" -->
 
 <aside class="notes"><p>Even if we are governable, but we still need &quot;trust&quot; to enact the upgrade, it is hardly any better.
 In essence, if an upgrade mechanism is not self-enacting, it might as well just reside offchain and
@@ -253,7 +250,7 @@ be a signaling mechanism.</p>
 ### 🏦 Governance + Upgradeability
 
 - ✅ Governance: Easy
-- 😢 Upgradeability: Not so much
+- 😢 (Trustless) Upgradeability: Not so much
 </script></section><section data-markdown><script type="text/template">
 ### 🏦 Governance + Upgradeability
 
@@ -553,7 +550,7 @@ Question: How many nested Wasm blobs are executing one another?
 </script></section><section data-markdown><script type="text/template">
 ### Substrate and Smart Contracts
 
-- So when should you write with a smart contract (Ink!) and when a Runtime (FRAME)?
+- So when should you write with a smart contract, and when a Runtime (FRAME)?
 
 <aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/runtime_vs_smart_contract/index.html">https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/runtime_vs_smart_contract/index.html</a></p>
 <p>I was asked this yesterday as well. My latest answer is: if you don&#39;t need any of the customizations
@@ -564,11 +561,7 @@ parachain or solo)</p>
 <p>Also, a contract can not have fee-less transactions.</p>
 <p>Also, a contract usually depends on a token for gas, while a runtime can be in principle token-less
 fee-less.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Substrate and Smart Contracts
-
-<img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-4-1-ink.jpeg" />
-</script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section></section><section  data-markdown><script type="text/template">
 ## Technical Freedom vs Ease
 
 <img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-4-1-freedom.svg" />
@@ -577,6 +570,8 @@ fee-less.</p>
 <p><a href="https://github.com/OpenZeppelin/polkadot-runtime-template">https://github.com/OpenZeppelin/polkadot-runtime-template</a></p>
 <p>We also have some of our own:</p>
 <p><a href="https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/templates/index.html">https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/templates/index.html</a></p>
+<p>Omni node:</p>
+<p><a href="https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-and-feedback/7823/5">https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-and-feedback/7823/5</a></p>
 </aside></script></section><section ><section data-markdown><script type="text/template">
 ## Substrate and Polkadot
 
@@ -772,49 +767,24 @@ Substrate's Wasm meta-protocol exactly enables the latest ✅
 <aside class="notes"><p>Question: how would you put the meta-protocol of Substrate into words?</p>
 <p>The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
 hardcoded, but the protocol itself is flexible.</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section></section><section  data-markdown><script type="text/template">
 ## Rest of This Module! 😈
 
 #### Track: Main Lectures
 
-- Wasm Meta Protocol (Kian)
-- Substrate Storage (Ankan)
+- Wasm Meta Protocol
+- Substrate Storage
 
 #### Track: Aux Lecture
 
 - Tx Pool (Kian)
-- Interacting with Substrate (Ankan)
-- SCALE Codec (Ankan)
+- Interacting with Substrate
+- SCALE Codec
 
-#### Track: Graded Activity
+#### Track: Activity
 
 - FRAMELess Runtime
-</script></section><section data-markdown><script type="text/template">
-### Rest of This Module! 😈
-
-#### Day 0
-
-- ✅ Introduction
-- SCALE Codec
-- Interacting with Substrate
-- 📚 FRAMELess Assignment
-</script></section><section data-markdown><script type="text/template">
-### Rest of This Module! 😈
-
-#### Day 1
-
-- Wasm Meta Protocol
-- Tx Pool
-- 📚 FRAMELess Activity
-</script></section><section data-markdown><script type="text/template">
-### Rest of This Module! 😈
-
-#### Day 2
-
-- Substrate Storage
-- (Substrate/FRAME Tips and Tricks)
-- 📚 FRAMELess Activity
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section><section  data-markdown><script type="text/template">
 ## Homework 📚
 
 Highly suggested reading to ingest this lecture better:
