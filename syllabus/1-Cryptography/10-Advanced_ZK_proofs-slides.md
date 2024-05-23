@@ -154,7 +154,7 @@ SAGE demo
 
 # The wiring permutation: $T(i)=T(\psi(i))$
 
-<img style="height: 700px; padding-left:100px" src="./img/psi-with-wiring.png" />
+<img style="height: 700px; padding-left:100px" src="./img/psi-with-wirings.png" />
 
 ---
 
