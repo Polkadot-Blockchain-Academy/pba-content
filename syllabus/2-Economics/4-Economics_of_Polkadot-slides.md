@@ -6,7 +6,14 @@ duration: 2 hour
 
 # The Economics of Polkadot
 
+Notes:
+
+- We shift gears a bit and focus on the Economics of Polkadot here
+- If you are less familiar with Polkadot, don't worry if you don't understand all concepts. They will be explained in more detail during the other Modules and you can always revisit the slides.
+- If you have questions ask.
+
 ---
+
 ## Overview
 
 <ul>
@@ -127,7 +134,12 @@ duration: 2 hour
     </ul>
 </ul>
 
+Notes:
+
+Question: What do you think about Inflation?
+
 ---
+
 ## Potential changes incoming
 
 <ul>
