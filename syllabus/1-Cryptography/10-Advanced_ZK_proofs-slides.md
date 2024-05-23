@@ -138,8 +138,7 @@ SAGE demo
 
 # The Wiring in a Glance
 
- <img style="height: 700px; padding-left:100px" src="./img/wiring-fans-with-constraints.png" />
----
+## <img style="height: 700px; padding-left:100px" src="./img/wiring-fans-with-constraints.png" />
 
 # The Trace polynomial
 
@@ -153,7 +152,7 @@ SAGE demo
 
 ---
 
-# The wiring permutation:  $T(i)=T(\psi(i))$
+# The wiring permutation: $T(i)=T(\psi(i))$
 
 <img style="height: 700px; padding-left:100px" src="./img/psi-with-wiring.png" />
 
@@ -161,18 +160,18 @@ SAGE demo
 
 # Naive Permutation check wtih zero test
 
-- We could find polynomial $\psi$. <!-- .element: class="fragment" data-fragment-index="1" --> 
-- Then compute $T(\psi(x))$. <!-- .element: class="fragment" data-fragment-index="2" --> 
-- Then compute $T(\psi(x)) - T(x)$. <!-- .element: class="fragment" data-fragment-index="3" --> 
-- Run Zero-test to  erify that $T(\psi(x)) - T(x)/((x - 1)...(x - 39))$ is a polynomial. <!-- .element: class="fragment" data-fragment-index="4" --> 
-- We will end up with a degree $38\times38 = 1444$ polynomial. <!-- .element: class="fragment" data-fragment-index="5" --> 
-- It is impractical. <!-- .element: class="fragment" data-fragment-index="6" --> 
+- We could find polynomial $\psi$. <!-- .element: class="fragment" data-fragment-index="1" -->
+- Then compute $T(\psi(x))$. <!-- .element: class="fragment" data-fragment-index="2" -->
+- Then compute $T(\psi(x)) - T(x)$. <!-- .element: class="fragment" data-fragment-index="3" -->
+- Run Zero-test to erify that $T(\psi(x)) - T(x)/((x - 1)...(x - 39))$ is a polynomial. <!-- .element: class="fragment" data-fragment-index="4" -->
+- We will end up with a degree $38\times38 = 1444$ polynomial. <!-- .element: class="fragment" data-fragment-index="5" -->
+- It is impractical. <!-- .element: class="fragment" data-fragment-index="6" -->
 
 ---
 
 # SAGE demo: Computing the trace and the wiring
-SAGE demo
 
+SAGE demo
 
 ---
 
@@ -198,8 +197,8 @@ SAGE demo
 
 - The observeration is that if you have the recursion: <!-- .element: class="fragment" data-fragment-index="1" -->
 - $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$ <!-- .element: class="fragment" data-fragment-index="2" -->
-- And you know $ t(39) = 1 $ then you know that: <!-- .element: class="fragment" data-fragment-index="3" --> 
-- $\prod\_{i \in \{1..39}}f(i) = 1$ . <!-- .element: class="fragment" data-fragment-index="4" --> 
+- And you know $ t(39) = 1 $ then you know that: <!-- .element: class="fragment" data-fragment-index="3" -->
+- $\prod\_{i \in \{1..39}}f(i) = 1$ . <!-- .element: class="fragment" data-fragment-index="4" -->
 - We intepolate $t$ and it will have degree 38 (vs $38 \times 38$) <!-- .element: class="fragment" data-fragment-index="5" -->
 - We run a zero test on $t(x + 1) - t(x)f(x+1) = 0$ for $\{1,...,39\}$. <!-- .element: class="fragment" data-fragment-index="6" -->
 
@@ -212,16 +211,15 @@ SAGE demo
 - We can only run a zero test polynomials. <!-- .element: class="fragment" data-fragment-index="3" -->
 - Run zero test on $t(x + 1)g(x + 1) - t(x)f(x+1)$. <!-- .element: class="fragment" data-fragment-index="4" -->
 
-
 ---
 
 # Permutation check
 
-- Now we want to use the ratio check to enforce our wiring. <!-- .element: class="fragment" data-fragment-index="1" --> 
-- We have $T(a) = T(\psi(a))$ then <!-- .element: class="fragment" data-fragment-index="2" --> 
-- $\{ (a, T(a))| \textrm{ for all } a \in \{1,..,39\}\} == {(\psi(a), T(a))| \textrm{ for all } a \in \{1,...,39\}\}$ <!-- .element: class="fragment" data-fragment-index="3" --> 
-- Then for any random $u_1, u_2$ <!-- .element: class="fragment" data-fragment-index="4" --> 
-- $\prod_{a\in\{1,..,39\}}\frac{u_1 - u_2 \times a - T(a)}{u_1 - u_2 \times \psi(a) - T(\psi(a))} = 1$. <!-- .element: class="fragment" data-fragment-index="5" --> 
+- Now we want to use the ratio check to enforce our wiring. <!-- .element: class="fragment" data-fragment-index="1" -->
+- We have $T(a) = T(\psi(a))$ then <!-- .element: class="fragment" data-fragment-index="2" -->
+- $\{ (a, T(a))| \textrm{ for all } a \in \{1,..,39\}\} == {(\psi(a), T(a))| \textrm{ for all } a \in \{1,...,39\}\}$ <!-- .element: class="fragment" data-fragment-index="3" -->
+- Then for any random $u_1, u_2$ <!-- .element: class="fragment" data-fragment-index="4" -->
+- $\prod_{a\in\{1,..,39\}}\frac{u_1 - u_2 \times a - T(a)}{u_1 - u_2 \times \psi(a) - T(\psi(a))} = 1$. <!-- .element: class="fragment" data-fragment-index="5" -->
 
 ---
 
@@ -229,7 +227,7 @@ SAGE demo
 
 - The verifier runs a zero test on $T(x) - N$.
 - The verifier runs a zero test on $T(3x) - a(x)$, $T(3x+1) - b(x)$, $T(3x+2) - c(x)$
-- A Permutation check on $T(x)$ and $T(\psi(x))$ 
+- A Permutation check on $T(x)$ and $T(\psi(x))$
 
 ---
 
@@ -238,8 +236,7 @@ SAGE demo
 SAGE Demo
 
 Zero test on:
-$t(x + 1)(u_1 - u_2 \times (x+1) - T(x + 1)) - t(x)(u_1 - u_2 \times (\psi(x)+1) - T(\psi(x)+1) = 0$ 
-
+$t(x + 1)(u_1 - u_2 \times (x+1) - T(x + 1)) - t(x)(u_1 - u_2 \times (\psi(x)+1) - T(\psi(x)+1) = 0$
 
 ---
 
@@ -260,7 +257,7 @@ $t(x + 1)(u_1 - u_2 \times (x+1) - T(x + 1)) - t(x)(u_1 - u_2 \times (\psi(x)+1)
 - $f(x) = q(x) \times  \prod(x-1)..(x-13)$<!-- .element: class="fragment" data-fragment-index="3" -->
 - The prover commit to $f$ and $q$.<!-- .element: class="fragment" data-fragment-index="4" -->
 - The verifier ask the prover to provide them with $f(u)$ and $q(u)$ for some random point $u$<!-- .element: class="fragment" data-fragment-index="5" -->
-- It is very unlikely that the prover is able to lie about $f(u)$ and $q(u)$ given he has commited to $f$ and $q$. <!-- .element: class="fragment" data-fragment-index="6" --> 
+- It is very unlikely that the prover is able to lie about $f(u)$ and $q(u)$ given he has commited to $f$ and $q$. <!-- .element: class="fragment" data-fragment-index="6" -->
 - The verifier computes $\prod(u-1)...(u-13)$<!-- .element: class="fragment" data-fragment-index="7" -->
 - The verifier verifies that $f(u) = q(u)\times \prod(u-1)...(u-13)$ and if so believes that the prover has a solution.<!-- .element: class="fragment" data-fragment-index="8" -->
 
@@ -299,6 +296,7 @@ Generate proof demo with snarkjs
 Verify the proof snarkjs
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions
