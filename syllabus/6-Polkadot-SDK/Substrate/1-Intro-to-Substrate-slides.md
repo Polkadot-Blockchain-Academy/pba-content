@@ -6,7 +6,7 @@ duration: 60 minutes
 
 # Introduction to Substrate
 
----
+<!-- ---
 
 ## About These Lectures and Lecturer
 
@@ -15,7 +15,7 @@ duration: 60 minutes
 - Interrupts and questions are always welcome.
 - Narratives > facts.
 
-Your feedback is highly appreciated!
+Your feedback is highly appreciated! -->
 
 ---
 
@@ -288,11 +288,6 @@ particular implementation.
 - We have correct code, and components are easy to swap, replace, and upgrade.
 - What use is that, if we cannot agree on what to replace/upgrade?
 - Governance!
-<!-- .element: class="fragment" -->
-- What use is governance, if the upgrade cannot be enacted?
-<!-- .element: class="fragment" -->
-- (trustless and forkless) Upgradeability!
-<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -305,7 +300,7 @@ be a signaling mechanism.
 ### 🏦 Governance + Upgradeability
 
 - ✅ Governance: Easy
-- 😢 Upgradeability: Not so much
+- 😢 (Trustless) Upgradeability: Not so much
 
 ---v
 
@@ -707,7 +702,7 @@ Question: How many nested Wasm blobs are executing one another?
 
 ### Substrate and Smart Contracts
 
-- So when should you write with a smart contract (Ink!) and when a Runtime (FRAME)?
+- So when should you write with a smart contract, and when a Runtime (FRAME)?
 
 Notes:
 
@@ -725,12 +720,6 @@ Also, a contract can not have fee-less transactions.
 Also, a contract usually depends on a token for gas, while a runtime can be in principle token-less
 fee-less.
 
----v
-
-### Substrate and Smart Contracts
-
-<img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-4-1-ink.jpeg" />
-
 ---
 
 ## Technical Freedom vs Ease
@@ -746,6 +735,10 @@ https://github.com/OpenZeppelin/polkadot-runtime-template
 We also have some of our own:
 
 https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/templates/index.html
+
+Omni node:
+
+https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-and-feedback/7823/5
 
 ---
 
@@ -1020,49 +1013,18 @@ hardcoded, but the protocol itself is flexible.
 
 #### Track: Main Lectures
 
-- Wasm Meta Protocol (Kian)
-- Substrate Storage (Ankan)
+- Wasm Meta Protocol
+- Substrate Storage
 
 #### Track: Aux Lecture
 
 - Tx Pool (Kian)
-- Interacting with Substrate (Ankan)
-- SCALE Codec (Ankan)
+- Interacting with Substrate
+- SCALE Codec
 
-#### Track: Graded Activity
+#### Track: Activity
 
 - FRAMELess Runtime
-
----v
-
-### Rest of This Module! 😈
-
-#### Day 0
-
-- ✅ Introduction
-- SCALE Codec
-- Interacting with Substrate
-- 📚 FRAMELess Assignment
-
----v
-
-### Rest of This Module! 😈
-
-#### Day 1
-
-- Wasm Meta Protocol
-- Tx Pool
-- 📚 FRAMELess Activity
-
----v
-
-### Rest of This Module! 😈
-
-#### Day 2
-
-- Substrate Storage
-- (Substrate/FRAME Tips and Tricks)
-- 📚 FRAMELess Activity
 
 ---
 

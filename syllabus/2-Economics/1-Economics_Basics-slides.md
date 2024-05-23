@@ -16,19 +16,17 @@ duration: 2 hour
 <li class="fragment">Economics Basics</li>
 <li class="fragment">Game Theory Basics</li>
 <li class="fragment">Price Finding Mechanisms</li>
-<li class="fragment">Collective Decision Making</li>
 <li class="fragment">The Economics of Polkadot</li>
 </ul>
 
 </pba-flex>
 
-Notes:
+---
 
-- Focus on the pure economic concepts and not diving into blockchain yet.
-- That is covered by another lecture doing so.
-- Economics of Polkadot
-- Interactive: Ask questions!
-- Collective Decision Making is held by Bo Li, Guest lecturer of PolyU
+# Grading
+
+- Exam for onsite students at Saturday.
+- Coding Assignment for onsite and remote students.
 
 ---
 
@@ -64,13 +62,6 @@ Notes:
 </pba-cols>
 
 🤖$~~~$ 🤝 $~~~$👪
-
-Notes:
-
-- Cryptography would be meaningless without humans using it.
-- They have a great symphony: where cryptography's has boundaries, economics offers solutions and vice versa.
-- For example, in a commit-reveal scheme, cryptographically the process is bulletproof, the original choices can be revealed and not be tempered with. But, in reality, questions arise to why people should reveal, maybe its better to run off and not reveal.
-- Together they are the toolbox to design unstoppable systems.
 
 ---
 
@@ -165,17 +156,13 @@ Notes:
     <ul>
     <li class="fragment">Are primarily driven by monetary gains (payoff maximization).</li>
     <li class="fragment">Act in self-interest.</li>
-    <li class="fragment">Uses all information available to them efficiently.</li>
+    <li class="fragment">Have unlimited cognitive resources.</li>
     </ul>
 </li>
 <li class="fragment">Remark: In this, all factors can be translated into monetary terms.</li>
 </ul>
 
 </pba-flex>
-
-Notes:
-
-- A rational agent would compile all the factors into a single dimension (utility or value) and maximizes for payout.
 
 ---
 
@@ -240,19 +227,6 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- **Question: Why did that happen?**
-- Gneezy & Rustichini (2000): A fine is a price.
-- Additional study: Gneezy & Rustichini (2000): Pay enough or don't pay at all
-  - Again in Israel
-  - Highschool kids go door to door for fundraising
-  - They separated them into three groups.
-    - Control: No change
-    - Low Pay: Some small commission for each sold card.
-    - High Pay: Higher commission for each sold card.
-  - Outcome: Low pay performance was lower than no pay. High pay was higher though.
-
 ---
 
 ## The Power of Intrinsic Incentives
@@ -281,13 +255,6 @@ Notes:
 <li class="fragment">This shifts the application of incentives beyond a human context and into the realm of digital systems and automated processes.</li>
 </ul>
 </pba-flex>
-
-Notes:
-
-- Still, not always financial incentives - reputation scores
-- While automated agents existed for a while, they become much more accessible for everybody due to blockchain technology
-- Your electric car might soon have a wallet that automatically pays for charging at a red light.
-- Or you might be able to pay for priority green lights.
 
 ---
 
@@ -370,20 +337,6 @@ Notes:
 - What if the Quantity is lower than the Eq. Quantity?
 - Moving either supply or demand leads to new Eq.
 
-Notes:
-
-- Where the curves meet we obtain a point of equilibrium, which establishes a market quantity and a market price.
-- If price is higher than equilibrium price:
-  - more supply than demand
-  - some goods remain unsold
-  - sellers will be forced to reduce the price to get rid of their stock.
-- if price is lower:
-  - there is more demand than supply.
-  - this leads to shortages of the good
-  - sellers will notice this and increase the price.
-- Hence, we always converge to the equilibrium price.
-- Similarly, if the quantity supplied is too low, there is a business opportunity to supply more unit of the good and make a profit, so eventually someone will increase the supply quantity.
-
 ---
 
 ## Elasticity
@@ -401,21 +354,11 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- **Question**: Examples for each?
-  - High elasticity: luxury goods or with high substitutes, where buyers can easily adjust their consumption. Butter / Magerine
-  - Low elasticity: essential goods such as energy.
-
 ---
 
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-1.png" />
 </div>
-
-Notes:
-
-- Which one represents low / high elasticity?
 
 ---
 
@@ -423,22 +366,11 @@ Notes:
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-2.png" />
 </div>
 
-Notes:
-
-- Inelastic: A rather big price change leads to little change in quantity.
-- Elastic: A rather big price change leads to a large change in quantity.
-
 ---
 
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-3.png" />
 </div>
-
-Notes:
-
-- What are some examples?
-- Perfectly Elastic: Ice-Tea
-- Perfectly Inelastic: Insulin
 
 ---
 
@@ -514,11 +446,6 @@ Notes:
 
 </pba-flex>
 
-Notes:
-
-- A monopoly is if only one seller exists
-- A monopolistic market is if there might be more sellers but one is dominant.
-
 ---
 
 ## Why discuss this?
@@ -564,64 +491,6 @@ Notes:
 </ul>
 
 </pba-flex>
-
-Notes:
-
-- Monopolies often form when large entities engage in price wars and undercut smaller businesses until they go bankrupt.
-- There are different types of monopolies:
-  - Natural (high barrier of entry, e.g. railroads)
-  - Geographic
-  - Technological
-  - Licensed
-
----
-
-## Is the Government a Monopoly?
-
-Notes:
-
-- Legitimate use of Force
-- Provider of Public Goods
-- Regulation
-
----
-
-## Monopoly: Disadvantages
-
-<pba-flex center>
-<ul>
-<li class="fragment">Higher Prices: they are free to set prices arbitrarily.</li>
-<li class="fragment">Inferior Products: there is little incentive to improve the product offered.</li>
-<li class="fragment">Price Discrimination: different prices can be charged for different customers (based on their elasticity).</li>
-<li class="fragment">This leads to sub-optimal pricing and sub-optimal society welfare: consumers either pay more than they should ("monopolist tax") or are excluded from market.</li>
-
-Notes:
-
-- There are three conditions for price discrimination to work:
-  - The company needs to have sufficient market power
-  - The company needs to be able to identify differences in demand.
-  - The company needs to be able to restrict secondary markets.
-- This is a "problem" for the consumers, because it reduces their welfare, i.e., they pay more than they would in a competitive market.
-- It also sometimes even prevents some groups from purchasing.
-
----
-
-## Example: Antitrust case against Microsoft in 1990s
-
-<pba-flex center>
-<ul>
-<li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
-<li class="fragment">A removal of the IE would lead to a "Blue Screen of Death".</li>
-
----
-
-## Monopoly: Advantages?
-
-Notes:
-
-- Economies of scale (specialisation)
-- Price stability
-- Potentially higher investments like R&D that benefit customers down the line.
 
 ---
 
@@ -726,8 +595,8 @@ Notes:
 <ul>
     <li class="fragment">Consider the following example:
         <ul>
-            <li class="fragment">Suppose Alice can produce 10kg of meat or 20kg of potatoes per hour.</li>
-            <li class="fragment">Suppose Bob can produce 2kg of meat or 10kg of potatoes per hour.</li>
+            <li class="fragment">Suppose Alice can produce 10kg of meat and 20kg of potatoes per hour.</li>
+            <li class="fragment">Suppose Bob can produce 2kg of meat and 10kg of potatoes per hour.</li>
         </ul>
     </li>
     <li class="fragment">Alice has an <em>absolute</em> advantage over Bob at producing both goods.
@@ -761,30 +630,6 @@ Notes:
     <li class="fragment"><strong>Specialization result</strong>: With trade, both are better off than in Situation A.</li>
 </ul>
 </pba-flex>
-
----
-
-## Situation A: Autarky
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-autarky.png" />
-</div>
-
----
-
-## Situation: Focus on Comparative Advantage
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-trade.png" />
-</div>
-
----
-
-## Situation: Trade
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-betteroff.png" />
-</div>
 
 ---
 
@@ -1004,18 +849,6 @@ Notes:
 
 ---
 
-## Situation 5
-
-> Andrew had 50 Microsoft stocks. He decided to sell 40 of them at a price of 350 USD, still keeping 10. He used his earnings to pay some bills and does not plan to buy any stocks back. In the following days he caught himself looking at the charts hoping the price would go down to less than 350 USD.
-
-Notes:
-
-- Not rational.
-- Regret aversion?
-- Sunk cost fallacy?
-
----
-
 ## Titan Submersible Incident
 
 <ul>
@@ -1047,14 +880,6 @@ Notes:
 <span style="display:flex; justify-content:center; align-items:center;">
 <img rounded style="width:600px" src="./img/2.1-ocean-gate-blog-post.png" class="fragment" />
 </span>
-
-Notes:
-
-- What biases could be happening here?
-- **Survivor bias**: is the logical error of concentrating on entities that passed a selection process while overlooking those that did not.
-  This can lead to incorrect conclusions because of incomplete data.
-- Of course most accidents happen because of operator error, because most vessels underwent certification!
-- What bias are we facing maybe? **Hindsight Bias**: is the common tendency for people to perceive past events as having been more predictable than they were.
 
 ---
 
@@ -1092,26 +917,28 @@ Notes:
 
 - You can earn points by applying the concepts presented in this course to similar situations when playing with/against your colleagues.
 - In session 2.1, 2.2 and 2.3, you can increase your budget (starting at 0) during several economic games.
-- We have a total budget of $3000 for this.
+- We have a total budget of **$4200** for this.
 - The budget is split between all the games that we play and total points earned by all of you are dynamically adjusted to correspond to the budget.
-- In 2.3, there is a big final: You can use your earnings to bid for amazing NFTs by a professional artist in an experimental auction setting.
+- In 2.3, there is a big finale: You can use your earnings to bid for amazing NFTs by a professional artist in an experimental auction setting.
 
 ---
 
-## Sign-in
+## Sign-in & Games
 
-- You will sign in to each of the games with your Polkadot wallet.
-- You should always sign in with the same address to keep earning points to that address.
-- Note that you can use a pre-existing address but it might have privacy implications.
+- Your behavior and payouts in the games are linked to your Polkadot address.
+- You need to sign a message to prove ownership to join the games.
+- If you do not clear your cache, you should be able to continue without signing in again.
 - Make sure not to forget your wallet credentials, because your final payout / NFT will be tied to that wallet.
+- Please do not use a VPN, this can cause connection issues.
+- Make sure you are on a stable internet connection.
+- If something doesn't work, it's good to try to refresh the browser.
 
 ---
 
 ## Disclaimer
 
 1. If a bug occurs and the reward points are messed up or something else goes wrong, we may intervene.
-1. We cannot help you recovering your Polkadot wallet.
-   If you lose access, you need to create a new account in the games but you will lose previous earnings.
+1. We cannot help you recovering your account, if you lose access you lose your rewards.
 
 ---
 
@@ -1123,7 +950,7 @@ Notes:
 
 ---
 
-# Everybody got a wallet?
+# Everybody set up?
 
 ---
 
@@ -1136,7 +963,7 @@ Notes:
 - Player 2 sees the offer and can decide to accept or reject the offer.
 - If the offer is accepted, the endowment is split according to the offer.
 - If the offer is rejected, both get 0 points.
-- Budget for the game $670.
+- **Budget for the game $938.**
 - There is no right or wrong here.
   It is your choice how to behave in this context!
 
@@ -1204,7 +1031,7 @@ Link will be distributed!
 - All units are sold, but the price decreases in the quantity.
 - Repeated over 10 rounds **with the same participant**
 - Points accumulate and are added to your budget.
-- Budget for the game: $670
+- **Budget for the game: $938**
 
 ---
 
@@ -1250,20 +1077,6 @@ Link will be distributed!
 - What strategy did you employ?
 - Did your behavior change over the rounds?
 - What was the best choice for each firm?
-
-Notes:
-
-- Calculate equilibrium:
-- $\pi = P(Q) * q$
-- For Firm 1: $\pi = (60 - q_1 - q_2) * q_1$
-- solve for optimal $q_1$ -> delta-pi / delta-q1 = -2q_1 - q_2 + 60 =! 0
-- q_1\* = (60 - q_2) / 2
-- q_2\* = (60 - q_1) / 2
-- q1* = (60 - (60-q1*)/2) / 2
-- = 30 - 15 + (q_1*/4) = q_1*
-- = q_1* = q_2* = 20
-- Show with example.
-  If firm 1 plays 20 then 19 leads to smaller payoff and 21 for other firm.
 
 ---
 
