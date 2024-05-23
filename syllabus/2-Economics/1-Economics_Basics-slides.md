@@ -22,6 +22,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 # Grading
 
 - Exam for onsite students at Saturday.
@@ -63,6 +64,7 @@ duration: 2 hour
 🤖$~~~$ 🤝 $~~~$👪
 
 ---
+
 ## Why are economic concepts<br/>important?
 
 <pba-flex center>
@@ -77,6 +79,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Outline
 
 <pba-flex center>
@@ -109,6 +112,7 @@ duration: 2 hour
 > An incentive is a bullet, a key:<br/>an often tiny object with astonishing power to change a situation.<br/>-- Steven Levitt --
 
 ---
+
 ## Understanding Incentives
 
 <pba-flex center>
@@ -142,6 +146,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Rationality in Economics
 
 <pba-flex center>
@@ -160,6 +165,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Incentives often work well
 
 <pba-flex center>
@@ -222,6 +228,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## The Power of Intrinsic Incentives
 
 <pba-flex center>
@@ -250,6 +257,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Conclusion
 
 <pba-flex center>
@@ -277,16 +285,19 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Law of Demand: A Basic Principle
 
 - When prices increase, quantity demanded of a good (generally) decreases.
 
 ---
+
 ## Visualizing Demand: The Demand Curve
 
 <img rounded style="width:900px" src="./img/2.1-market-demand.png" />
 
 ---
+
 ## Influences on demand?
 
 <pba-flex center>
@@ -303,6 +314,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Moving the demand curve
 
 <img rounded style="width:1100px" src="./img/2.1-demand-curve.png" />
@@ -316,6 +328,7 @@ duration: 2 hour
 (because suppliers can make more profit!).
 
 ---
+
 ## Demand and Supply Interplay: Market Equilibrium
 
 <img rounded style="width: 600px;" src="./img/2.1-supply-and-demand.png" />
@@ -325,6 +338,7 @@ duration: 2 hour
 - Moving either supply or demand leads to new Eq.
 
 ---
+
 ## Elasticity
 
 <pba-flex center>
@@ -341,21 +355,25 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-1.png" />
 </div>
 
 ---
+
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-2.png" />
 </div>
 
 ---
+
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-3.png" />
 </div>
 
 ---
+
 ## Conclusion: The Dynamics of Demand and Supply
 
 <pba-flex center>
@@ -400,6 +418,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Market Form Examples
 
 <pba-flex center>
@@ -428,6 +447,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Why discuss this?
 
 <pba-flex center>
@@ -458,6 +478,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Formation of a Monopoly
 
 <pba-flex center>
@@ -472,9 +493,11 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Is the Government a Monopoly?
 
 ---
+
 ## Monopoly: Disadvantages
 
 <pba-flex center>
@@ -485,7 +508,9 @@ duration: 2 hour
 <li class="fragment">This leads to sub-optimal pricing and sub-optimal society welfare: consumers either pay more than they should ("monopolist tax") or are excluded from market.</li>
 
 ---
+
 ## Example: Antitrust case against Microsoft in 1990s
+
 <pba-flex center>
 <ul>
 <li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
@@ -495,8 +520,8 @@ duration: 2 hour
 
 ## Monopoly: Advantages?
 
-
 ---
+
 ## Oligopolies
 
 <pba-flex center>
@@ -542,6 +567,7 @@ duration: 2 hour
 > It is the maxim of every prudent master of a family, never to attempt to make at home what it will cost him more to make than to buy.<br/>-- Adam Smith, 1776 --
 
 ---
+
 ## The economic question
 
 <pba-flex center>
@@ -586,6 +612,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Comparative advantage II
 
 <pba-flex center>
@@ -605,6 +632,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Situation A: Autarky
 
 <div style="text-align: center;">
@@ -641,6 +669,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Time: The Ultimate Resource
 
 <pba-flex center>
@@ -686,6 +715,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Time Value of Money: A Guiding Principle
 
 <pba-flex center>
@@ -757,6 +787,7 @@ duration: 2 hour
 </pba-flex>
 
 ---
+
 ## Behavioral Economics
 
 > Simply put, the stock market is a creation of man and therefore reflects human idiosyncrasy.<br/>-- Ralph Nelson Elliott --
@@ -774,6 +805,7 @@ duration: 2 hour
 # Classroom Discussions
 
 ---
+
 ## Behavioral Biases
 
 - Which biases might be responsible for the following situations?
@@ -787,6 +819,7 @@ duration: 2 hour
 > The price of AAPL goes up.
 
 ---
+
 ## Situation 2:
 
 > A stock investor bought a big position in Disney at around 100 USD per share.
@@ -795,6 +828,7 @@ duration: 2 hour
 > When a friend asks him to stop he keeps arguing to recover the losses by "buying the dip" and to "further reducing the average buying price".
 
 ---
+
 ## Situation 3:
 
 > Peter wants to buy a new smartphone and fancies the new iPhone.
@@ -802,16 +836,19 @@ duration: 2 hour
 > He agrees and is reading through articles that pop up after googling "Why you should buy the new iPhone".
 
 ---
+
 ## Situation 4:
 
 > A Swiss energy company could increase the number of new renewable electricity contracts from 3% to 80-90% by pre-selecting the green option when customers were renewing their energy contracts.
 
 ---
+
 ## Situation 5
 
 > Andrew had 50 Microsoft stocks. He decided to sell 40 of them at a price of 350 USD, still keeping 10. He used his earnings to pay some bills and does not plan to buy any stocks back. In the following days he caught himself looking at the charts hoping the price would go down to less than 350 USD.
 
 ---
+
 ## Titan Submersible Incident
 
 <ul>
@@ -845,11 +882,13 @@ duration: 2 hour
 </span>
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 ## Where do you see yourself or others suffer from behavioral biases?
 
 ---
+
 ## Monopoly
 
 - We have seen: Monopolists' market power leads to inefficient outcomes.
@@ -861,6 +900,7 @@ duration: 2 hour
 - How do these firms exert their market power, if not over price-setting?
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Activities
@@ -1039,6 +1079,7 @@ Link will be distributed!
 - What was the best choice for each firm?
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Game 2: Results!

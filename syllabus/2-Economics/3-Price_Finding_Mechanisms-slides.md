@@ -20,6 +20,7 @@ duration: 1 hour
 <img rounded style="width: 800px; margin-right: 200px;" src="./img/2.1-supply-and-demand.png" />
 
 ---
+
 ## Supply-demand for BIG markets
 
 - Supply-demand model works well for _big_ markets.
@@ -28,11 +29,13 @@ duration: 1 hour
 - Only sensible price at which a buyer and seller can trade.
 
 ---
+
 ## What about _difficult_ markets?
 
 <img rounded style="width: 900px;" src="./img/2.3-auction-platform.png" />
 
 ---
+
 ## What about _difficult_ markets?
 
 Today we focus on markets with few buyers or sellers,
@@ -47,6 +50,7 @@ few trades, or non-standardized goods.
 </pba-flex>
 
 ---
+
 ## A simple model
 
 <pba-flex center>
@@ -61,6 +65,7 @@ few trades, or non-standardized goods.
 How does Selena _optimally_ sell the item?
 
 ---
+
 ## Let's assume...
 
 <pba-flex center>
@@ -72,6 +77,7 @@ How does Selena _optimally_ sell the item?
 </pba-flex>
 
 ---
+
 ## Price posting
 
 - Simplest solution: Selena posts a price $p$, sells item to first taker.
@@ -82,6 +88,7 @@ How does Selena _optimally_ sell the item?
 - Hence her expected revenue is $p \cdot ( 1-p^2)$.
 
 ---
+
 ## Price posting
 
 <pba-cols>
@@ -100,6 +107,7 @@ How does Selena _optimally_ sell the item?
 </pba-cols>
 
 ---
+
 ## Auctions
 
 <img rounded style="width: 500px;" src="./img/2.3-auctioneer.gif" />
@@ -120,6 +128,7 @@ How does Selena _optimally_ sell the item?
 </pba-flex>
 
 ---
+
 ## Auctions
 
 - Alice and Bob (bidders) submit bids based on own valuations.
@@ -129,6 +138,7 @@ How does Selena _optimally_ sell the item?
 _An auction is a competitive game for buyers, where the seller makes the rules._
 
 ---
+
 ## Auction formats
 
 <pba-flex center>
@@ -143,6 +153,7 @@ _An auction is a competitive game for buyers, where the seller makes the rules._
 </pba-flex>
 
 ---
+
 ## Auction formats
 
 Four auction formats we discuss today:
@@ -159,6 +170,7 @@ Four auction formats we discuss today:
 </pba-flex>
 
 ---
+
 ## Second-price auction
 
 - Why make the winner pay the second highest bid?
@@ -169,6 +181,7 @@ Four auction formats we discuss today:
   - zero, otherwise
 
 ---
+
 ## Second-price auction
 
 - **Truthful equilibrium**: a _dominant strategy_ to bid truthfully.
@@ -177,6 +190,7 @@ Four auction formats we discuss today:
 <img rounded style="width: 1300px;" src="./img/second-price-auction.svg" />
 
 ---
+
 ## Second-price auction
 
 **Expected revenue**
@@ -189,6 +203,7 @@ Four auction formats we discuss today:
   Why not?
 
 ---
+
 ## Reserve price
 
 - Because the format we considered is not optimal for the auctioneer!
@@ -210,6 +225,7 @@ Four auction formats we discuss today:
 <img rounded style="width: 1400px;" src="./img/reserve-price.svg" />
 
 ---
+
 ## English auction
 
 Recall the rules:
@@ -225,6 +241,7 @@ Recall the rules:
 </pba-flex>
 
 ---
+
 ## English auction
 
 - English auction is **strategically equivalent** to static second-price auction.
@@ -233,12 +250,14 @@ Recall the rules:
 - Consequently, these two formats are also **revenue equivalent**.
 
 ---
+
 ## Shill bidding
 
 - Second-price and English auctions popular among theorists, not so popular among practitioners.
 - One reason is that they are prone to _shill-bidding_: bidder that acts on behalf of the auctioneer to drive up the price.
 
 ---
+
 ## First-price auction
 
 <pba-flex center>
@@ -251,6 +270,7 @@ Recall the rules:
 </pba-flex>
 
 ---
+
 ## First-price auction
 
 Bidding in the first-price auction is **not** truthful.
@@ -269,6 +289,7 @@ Bidding in the first-price auction is **not** truthful.
 _Nash equilibrium:_ A set of strategies, one per player, where no one has an incentive to change their strategy.
 
 ---
+
 ## First-price auction
 
 **Intuition:** suppose you are Alice
@@ -281,6 +302,7 @@ _Nash equilibrium:_ A set of strategies, one per player, where no one has an inc
   at which point you and Bob each wins _half of the time_.
 
 ---
+
 ## First-price auction
 
 **Expected revenue**
@@ -293,6 +315,7 @@ _Nash equilibrium:_ A set of strategies, one per player, where no one has an inc
 The same as in second-price auction!
 
 ---
+
 ## Revenue Equivalence
 
 **Fact:** When valuations are secret and independent,
@@ -300,6 +323,7 @@ there is no reserve price, and item goes to highest bidder,
 then _all auction mechanisms_ are _revenue equivalent_.
 
 ---
+
 ## Dutch auctions
 
 <pba-flex center>
@@ -312,6 +336,7 @@ then _all auction mechanisms_ are _revenue equivalent_.
 </pba-flex>
 
 ---
+
 ## Dutch Auction
 
 Recall the rules:
@@ -439,6 +464,7 @@ But we implicitly assumed that Alice is risk neutral.
 Yet she might prefer to bid more and win more often.
 
 ---
+
 ## Front Running
 
 Computer systems may have _front runners_: special nodes can see an incoming bid, react by creating their own bid, and make it look like their bid was created first.
@@ -447,6 +473,7 @@ If you run an auction on a system with front runners, which of the four auctions
 Why?
 
 ---
+
 ## Front Running
 
 _Answer:_ Meet front runner _Fred_.
@@ -478,6 +505,7 @@ Particularly bad when done by a front runner (microseconds).
 How to protect an auction from snipers?
 
 ---
+
 ## Sniping
 
 _Answer:_ **candle auctions.**<br/>
@@ -498,6 +526,7 @@ Dynamic first-price auction with _random ending time._
 - Sniping protection: the longer you wait to bid, the higher the chances the auction ends.
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Workshop: Auction Games

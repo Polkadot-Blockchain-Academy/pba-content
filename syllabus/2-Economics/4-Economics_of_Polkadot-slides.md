@@ -7,6 +7,7 @@ duration: 2 hour
 # The Economics of Polkadot
 
 ---
+
 ## Overview
 
 <ul>
@@ -128,6 +129,7 @@ duration: 2 hour
 </ul>
 
 ---
+
 ## Potential changes incoming
 
 <ul>

@@ -7,6 +7,7 @@ duration: 1 hour lesson + 2 hours activities
 # Game Theory Basics
 
 ---
+
 # Outline
 
 <ul>
@@ -34,11 +35,13 @@ duration: 1 hour lesson + 2 hours activities
 > Game theory studies strategic situations where the outcome for each participant or 'player' depends on the actions of all others. It formulates models to represent these scenarios and predicts the most likely or optimal outcomes.
 
 ---
+
 ## Game Theory in Web3
 
 In the context of blockchains, game theoretic reasoning is used for <span style="font-style: italic;">modelling</span> and <span style="font-style: italic;">understanding</span>.
 
 ---
+
 ## Modelling
 
 <ul>
@@ -70,6 +73,7 @@ In the context of blockchains, game theoretic reasoning is used for <span style=
 </ul>
 
 ---
+
 ## Game theory is <span style="font-style: italic;">abstract</span>
 
 <ul>
@@ -81,6 +85,7 @@ In the context of blockchains, game theoretic reasoning is used for <span style=
 </ul>
 
 ---
+
 # What is a Game?
 
 ---
@@ -133,6 +138,7 @@ In the context of blockchains, game theoretic reasoning is used for <span style=
 </pba-cols>
 
 ---
+
 ## Types of games
 
 Game theory distinguishes between:
@@ -146,15 +152,16 @@ Game theory distinguishes between:
 
 ## Static and Dynamic Games
 
-|                  | Static Game                                     | Dynamic Game                                                                                           |
-| ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Definition       | All players take their actions at the same time | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
-| Simple Example   | Rock-Paper-Scissors                             | Tic-Tac-Toe                                                                                            |
-| Economic Example | Sealed-bid auction.                             | English Auction.                                   |
-|                  |   All bidders submit their bids simultaneously (in a sealed envelope).                               | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
-| Representation   | Payoff Matrix                                   | Decision Tree                                                                                          |
+|                  | Static Game                                                          | Dynamic Game                                                                                           |
+| ---------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Definition       | All players take their actions at the same time                      | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
+| Simple Example   | Rock-Paper-Scissors                                                  | Tic-Tac-Toe                                                                                            |
+| Economic Example | Sealed-bid auction.                                                  | English Auction.                                                                                       |
+|                  | All bidders submit their bids simultaneously (in a sealed envelope). | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
+| Representation   | Payoff Matrix                                                        | Decision Tree                                                                                          |
 
 ---
+
 ## Completeness of Information in Games
 
 |                       | Game of Complete Information                          | Game of Incomplete Information                             |
@@ -164,6 +171,7 @@ Game theory distinguishes between:
 | Economic Example      | Sealed auction for seized Bitcoin.                    | Used-car market: the resale value of a used car is opaque. |
 
 ---
+
 ### Three firms want to hire an engineer...
 
 <pba-cols>
@@ -188,6 +196,7 @@ Game theory distinguishes between:
 </pba-cols>
 
 ---
+
 ## Utility
 
 <ul>
@@ -209,6 +218,7 @@ Game theory distinguishes between:
 </ul>
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Common Games
@@ -224,6 +234,7 @@ A fundamental problem:
 It's a static game of complete information.
 
 ---
+
 ## Bonnie and Clyde
 
 Bonnie and Clyde are accused of robbing two banks:
@@ -246,6 +257,7 @@ In the interrogation they both are offered the following:
 </ul>
 
 ---
+
 ## Bonnie and Clyde
 
 - **Cooperate** ($C$) with each other and not say anything
@@ -256,6 +268,7 @@ In the interrogation they both are offered the following:
 </div>
 
 ---
+
 ## Nash-Equilibrium
 
 <ul>
@@ -327,6 +340,7 @@ In the interrogation they both are offered the following:
 Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a strategy that is always optimal for a player, regardless of what the other players do.
 
 ---
+
 ## Prisoners' Dilemma IRL
 
 <ul>
@@ -334,8 +348,8 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 <li class="fragment"><strong>OPEC:</strong> <a href="https://www.opec.org/opec_web/en/">Limiting oil supply</a> is in the best interest of all. However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
 </ul>
 
-
 ---
+
 ## Ultimatum Game
 
 <ul>
@@ -353,6 +367,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 
 ---
+
 ## Coordination Game
 
 <ul>
@@ -394,6 +409,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </pba-cols>
 
 ---
+
 ## Coordination Game Example
 
 <pba-cols>
@@ -412,6 +428,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </pba-cols>
 
 ---
+
 ## Coordination Game Example
 
 <pba-cols>
@@ -430,6 +447,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </pba-cols>
 
 ---
+
 ## Equilibrium selection
 
 <ul>
@@ -445,6 +463,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </div>
 
 ---
+
 ## Schelling Points
 
 <ul>
@@ -454,6 +473,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 
 ---
+
 ## Schelling Points
 
 > If you are to meet a stranger in New York City, but you cannot communicate with the person, then when and where will you choose to meet?
@@ -467,6 +487,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 
 ---
+
 # Summary (so far...)
 
 <ul>
@@ -497,6 +518,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 
 ---
+
 ## Common Goods
 
 <ul>
@@ -506,6 +528,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 
 ---
+
 ## Public vs. Common Good
 
 <ul>
@@ -530,6 +553,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 
 ---
+
 ## Overfishing
 
 <ul>
@@ -556,11 +580,13 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 
 ---
+
 <!-- .slide: data-background-color="#000" -->
 
 # Break (10 minutes)
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Open Source
@@ -568,6 +594,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 > Providing open-source software is like contributing to a public good and the community will therefore sooner or later collapse!
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Design a 2x2 game
@@ -583,6 +610,7 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 Design this game in a 2x2 matrix and assign payoffs to the different outcomes.
 
 ---
+
 ## Design a 2x2 game
 
 - What is/are the Nash Equilibrium/Equilibria here?
@@ -590,11 +618,13 @@ Design this game in a 2x2 matrix and assign payoffs to the different outcomes.
 - How would you translate this game to real scenarios?
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Workshop: Games
 
 ---
+
 ## Game 1: Guessing Game
 
 - We divide the classroom into three groups and play a guessing game.
@@ -628,6 +658,7 @@ Link will be distributed!
 - Did your strategy change over time?
 
 ---
+
 ## Game 1: Results!
 
 ---
@@ -680,8 +711,8 @@ Link will be distributed!
     <li class="fragment">Each strategy would play against every other strategy and against itself.</li>
 </ul>
 
-
 ---
+
 ## Repeated Prisonner's Dilemma
 
 <ul>
@@ -690,7 +721,6 @@ Link will be distributed!
     <li class="fragment">Grim trigger: Always cooperate but retaliate and defect forever, if the other defect once.</li>
     <li class="fragment">Tit-For-Tat: Start with cooperate and copy the opponent's strategy of the last round.</li>
 </ul>
-
 
 ---
 
@@ -708,8 +738,8 @@ Link will be distributed!
     </li>
 </ul>
 
-
 ---
+
 ## Repeated Prisonner's Dilemma
 
 <ul>
@@ -760,7 +790,6 @@ Link will be distributed!
 
 ### Don't ask about strategies!
 
-
 ---
 
 ## Game 3: Let's go!
@@ -777,6 +806,7 @@ Link will be distributed!
 - Did you punish?
 
 ---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 ## Game 3: Results!
@@ -803,6 +833,7 @@ Link will be distributed!
 </ul>
 
 ---
+
 ## Summary
 
 - the basics of game theoretic concepts.
