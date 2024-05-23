@@ -103,8 +103,8 @@ We should be able to:
 <pba-flex center>
 
 - `put(key, value)`<!-- .element: class="fragment" data-fragment-index="1" -->
-- `get(key)`<!-- .element: class="fragment" data-fragment-index="2" --> 
-- `delete(key)`<!-- .element: class="fragment" data-fragment-index="3" --> 
+- `get(key)`<!-- .element: class="fragment" data-fragment-index="2" -->
+- `delete(key)`<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -114,8 +114,8 @@ We should be able to:
 
 We should also be able to perform the following operations for a provable key-value database:
 
-1. For any key, if <!-- .element: class="fragment" data-fragment-index="1" -->  `<key,value>`<!-- .element: class="fragment" data-fragment-index="1" -->  is in the database, we can prove it.<!-- .element: class="fragment" data-fragment-index="1" --> 
-1. If no value is associated to a key, we need to be able to prove that as well.<!-- .element: class="fragment" data-fragment-index="2" --> 
+1. For any key, if <!-- .element: class="fragment" data-fragment-index="1" --> `<key,value>`<!-- .element: class="fragment" data-fragment-index="1" --> is in the database, we can prove it.<!-- .element: class="fragment" data-fragment-index="1" -->
+1. If no value is associated to a key, we need to be able to prove that as well.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
