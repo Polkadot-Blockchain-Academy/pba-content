@@ -102,12 +102,11 @@ print("Naive wire  polynomial: ", naive_wire_poly)
 print("Zero test polynomial:", zero_test_poly)
 print("The remainder of wirepoly/zerotest: ",naive_wire_poly % zero_test_poly)
 
-
 u1 = ZKField('0x'+hashlib.sha256("Hello, PBA! I'm u1".encode()).hexdigest())
 u2 = ZKField('0x'+hashlib.sha256("Hello, PBA! I'm u2".encode()).hexdigest())
 
-u1 = ZKField(-1)
-u2 = ZKField(1)
+#u1 = ZKField(-1)
+#u2 = ZKField(1)
 #$\prod_{a\in\{1,..,39\}}\frac{u_1 - u_1 \times a - T(a)}{u_1 - u_2 \times \psi(a) - T(\psi(a))}
 f_numerator = [0]*39
 g_denominator = [0]*39
