@@ -35,11 +35,11 @@ duration: 1 hour
 
 ## VRF Interface
 
+- `eval(sk,input) -> output`
+
 - `sign(sk, input) -> signature`
 
 - `verify(pk, input, signature) -> option output`
-
-- `eval(sk,input) -> output`
 
 Notes:
 
@@ -52,28 +52,8 @@ The output of verification being an option represents the possibility of an inva
 - Output is a deterministic function of _key_ and _input_
   - i.e. eval should be deterministic
 - It should be pseudo-random
-- But until the VRF is revealed, only the holder<br/>of the secret key knows the output
+- But until the VRF proof is revealed, only the holder<br/>of the secret key knows the output
 - Revealing output does not leak secret key
-
----
-
-## Recall Signature Interface
-
-- `sign(sk, msg) -> signature;`
-
-- `verify(pk, msg, signature) -> bool;`
-
----
-
-## BLS-based VRF
-
-- In some cases,`output = Hash(signature)` (RSA-FDH-VRF, BLS-based VRF)
-
-- `sign(sk, input) `: run `BLS.sign(sk, input)->signature`, return `signature`
-
-- `eval(sk,input)`： return `Hash (signature)`
-
-- `verify(pk,input, signature)`: `BLS.verify(pk, input, signature)?=1`, if holds, output `hash (signature)`
 
 ---
 
@@ -93,9 +73,8 @@ The signature proves that this is the output associated to their input and publi
 
 - Playing a card game in a distributed and trustless way
 - For player A to draw a card, the players agree on a new random number x
-- A's card is determined by
-  `eval(sk_A,x) mod 52`
-- To play the card, A publishes the signature
+- A's card is determined by `eval(sk_A,x) mod 52`
+- To play the card, A publishes the VRF proof (signature)
 
 ---
 
@@ -118,6 +97,24 @@ _Lottery_
 - $y_i$ determines wining or not;
 - `sign(sk, $t_i$) -> $\sigma_i$` published for verification.
   <img style="width: 500px;" src="./img/vrf1.png" />
+
+---
+
+## Recall Signature Interface
+
+- `sign(sk, msg) -> signature;`
+
+- `verify(pk, msg, signature) -> bool;`
+
+---
+
+## BLS-based VRF
+
+- `sign(sk,input) `: run `BLS.sign(sk, input)->signature`, return `signature`
+
+- `eval(sk,input)`： return `Hash(signature)`
+
+- `verify(pk,input,signature)`: `BLS.verify(pk, input, signature)?=1`, if holds, output `Hash(signature)`
 
 ---
 
