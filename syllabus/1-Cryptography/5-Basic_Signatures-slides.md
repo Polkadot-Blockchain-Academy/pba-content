@@ -189,6 +189,7 @@ Setup is difficult secret sharing and setup
 Show image of ECDSA vs schnorr to demonstrate this
 
 ---
+
 ## Ed25519
 
 <ul>
@@ -200,14 +201,16 @@ Show image of ECDSA vs schnorr to demonstrate this
 ---
 
 ## Schnorr Signature
-- To Sign: <!-- .element: class="fragment" data-fragment-index="0" --> 
-  - $r \leftarrow kG$ <!-- .element: class="fragment" data-fragment-index="1" --> 
-  - $e \leftarrow H(r | M)$<!-- .element: class="fragment" data-fragment-index="2" -->       (<s>Verify sends random $e$</s>) <!-- .element: class="fragment" data-fragment-index="2" --> 
-  - $s \leftarrow k - xe$        ($x$ is signer's secret key). <!-- .element: class="fragment" data-fragment-index="3" --> 
-  - Send $(s, e)$. <!-- .element: class="fragment" data-fragment-index="4" --> 
-- To Verify : <!-- .element: class="fragment" data-fragment-index="5" --> 
-  - recover $r = sG + e Pub_{Signer}.$ <!-- .element: class="fragment" data-fragment-index="6" --> 
-  - Verify $e \stackrel{?}{=}  H(r | M)$ <!-- .element: class="fragment" data-fragment-index="7" --> 
+
+- To Sign: <!-- .element: class="fragment" data-fragment-index="0" -->
+  - $r \leftarrow kG$ <!-- .element: class="fragment" data-fragment-index="1" -->
+  - $e \leftarrow H(r | M)$<!-- .element: class="fragment" data-fragment-index="2" --> (<s>Verify sends random $e$</s>) <!-- .element: class="fragment" data-fragment-index="2" -->
+  - $s \leftarrow k - xe$ ($x$ is signer's secret key). <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Send $(s, e)$. <!-- .element: class="fragment" data-fragment-index="4" -->
+- To Verify : <!-- .element: class="fragment" data-fragment-index="5" -->
+  - recover $r = sG + e Pub_{Signer}.$ <!-- .element: class="fragment" data-fragment-index="6" -->
+  - Verify $e \stackrel{?}{=}  H(r | M)$ <!-- .element: class="fragment" data-fragment-index="7" -->
+
 ---
 
 ## Sr25519
@@ -229,5 +232,5 @@ Can be Deterministic but in Substrate is implemented as non-deterministic
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
- 
+
 # Questions

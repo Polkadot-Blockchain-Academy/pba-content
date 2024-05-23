@@ -12,7 +12,7 @@ duration: 1 hour
 
 <pba-flex center>
 
-1. Keeping Secrets Secret <!-- .element: class="fragment" data-fragment-index="1" --> 
+1. Keeping Secrets Secret <!-- .element: class="fragment" data-fragment-index="1" -->
 1. Security and Usability <!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
