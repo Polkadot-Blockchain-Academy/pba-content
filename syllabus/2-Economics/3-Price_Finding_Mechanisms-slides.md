@@ -126,21 +126,6 @@ Notes:
 - For price $p$, prob. of making a sale is $(1-p^2)$.
 - Hence her expected revenue is $p \cdot ( 1-p^2)$.
 
-Notes:
-
-- If both buyers accept the posted price, we assume the firm selects a random buyer to trade with.
-- The proof of this and all other math formulas can be found in the slides, for anyone interested.
-- Assuming that 100% of the sale price is profit for the seller, this profit is
-
-  - p in case of selling, 0 otherwise, where
-  - (1-p^2) is the probability of selling the item.
-  - To see this probability, consider conversely that the probability that none of the buyers accepts the price must be $p^2$, because each valuation must be below $p$, and these are two individual events each happening with probability $p$ (recall: valuations are uniformly distributed between 0 and 1).
-
-- $Pr\{v_i \leq x\}$ is the probability that the randomly drawn value of valuation $v_i$ is below $x$.
-- Independent values will be important: when is this (not) a sensible assumption?
-  (Example: oil drilling rights auctions, ...)
-- Uniform distribution is just for pedagogical reasons; standard model allows for more general distributions.
-
 ---
 
 ## Price posting
@@ -159,14 +144,6 @@ Notes:
 
 </pba-col>
 </pba-cols>
-
-Notes:
-
-- Prices, valuations, and revenue are given in the same currency unit, say, USD.
-- How do we maximize the expected revenue function f(p)=p (1-p^2)?
-  The function has a unique peak, so at the maximum, the first derivative must be zero.
-- The function is maximized for a $p$ satisfying $$ f'(p)=1-p^2 - 2p^2 = 0 \implies p = \sqrt{1/3}.$$
-- Expected revenue is then $f(\sqrt{1/3})=\frac{2}{3}\sqrt{1/3}\approx 0.38.$
 
 ---
 

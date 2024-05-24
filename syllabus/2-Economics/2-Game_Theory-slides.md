@@ -6,15 +6,6 @@ duration: 1 hour lesson + 2 hours activities
 
 # Game Theory Basics
 
-Notes:
-
-Game theory is a field of study at the intersection of mathematics and economics.
-It considers an economic system to be a game and people to be players.
-According to the rules of the game, it analyzes the players' best strategies and then uses this analysis to explain the observed behavior of the economic system.
-
-Game theory is an interesting an powerful tool, because it's fairly simple and intuitive, yet extremely powerful to make predictions.
-Hence, it's a good idea to learn game theoretical principles and keep them in the back of your mind when designing economic systems.
-
 ---
 
 # Outline
@@ -220,11 +211,6 @@ Notes:
 | Information available | All information relevant to decision-making is known. | Not all information relevant to decision-making is known.  |
 | Simple Example        | Chess                                                 | Poker                                                      |
 | Economic Example      | Sealed auction for seized Bitcoin.                    | Used-car market: the resale value of a used car is opaque. |
-
-Notes:
-
-- There is also the notion of perfect and imperfect information which we should skip here.
-  More info: https://economics.stackexchange.com/questions/13292/imperfect-vs-incomplete-information
 
 ---
 

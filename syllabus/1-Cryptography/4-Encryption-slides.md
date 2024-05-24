@@ -69,20 +69,6 @@ Notes:
 
 ---
 
-## Non-repudiation for Symmetric Encryption
-
-There is cryptographic proof that the secret was known to the producer of the encrypted message.
-
-<br/>
-
-However, knowledge of the secret is not restricted to one party: Both (or all) parties in a symmetrically encrypted communication know the secret. Additionally, in order to prove this to anyone, they must also gain knowledge of the secret.<!-- .element: class="fragment" data-fragment-index="0" -->
-
-Notes:
-
-The degree of non-repudiation given by pure symmetric crytography is not very useful.
-
----
-
 ## Symmetric Encryption
 
 #### _Example: XOR Cipher_

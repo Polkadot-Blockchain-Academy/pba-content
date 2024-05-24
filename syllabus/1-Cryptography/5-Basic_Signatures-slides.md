@@ -59,15 +59,15 @@ See the Jupyter notebook and/or HackMD cheat sheet for this lesson.
 
 ---
 
-## Hash Functions
+<!-- ##  Hash Functions -->
 
-There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes.<!-- .element: class="fragment" data-fragment-index="0" -->
+<!-- There are two lessons dedicated to hash functions.<br />But they are used as part of all signing processes. -->
 
-For now, we only concern ourselves with using Blake2.<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- For now, we only concern ourselves with using Blake2. -->
 
----
+<!-- --- -->
 
-## Hashed Messages
+## Signing Hashed Messages
 
 As mentioned in the introduction,<br />it's often more practical to sign the hash of a message.
 
@@ -188,6 +188,8 @@ Setup is difficult secret sharing and setup
 
 Show image of ECDSA vs schnorr to demonstrate this
 
+---
+
 ## Ed25519
 
 <ul>
@@ -195,6 +197,19 @@ Show image of ECDSA vs schnorr to demonstrate this
 <li class="fragment">Signing is 20-30x faster than ECDSA signatures.</li>
 <li class="fragment">Deterministic</li>
 </ul>
+
+---
+
+## Schnorr Signature
+
+- To Sign: <!-- .element: class="fragment" data-fragment-index="0" -->
+  - $r \leftarrow kG$ <!-- .element: class="fragment" data-fragment-index="1" -->
+  - $e \leftarrow H(r | M)$<!-- .element: class="fragment" data-fragment-index="2" --> (<s>Verify sends random $e$</s>) <!-- .element: class="fragment" data-fragment-index="2" -->
+  - $s \leftarrow k - xe$ ($x$ is signer's secret key). <!-- .element: class="fragment" data-fragment-index="3" -->
+  - Send $(s, e)$. <!-- .element: class="fragment" data-fragment-index="4" -->
+- To Verify : <!-- .element: class="fragment" data-fragment-index="5" -->
+  - recover $r = sG + e Pub_{Signer}.$ <!-- .element: class="fragment" data-fragment-index="6" -->
+  - Verify $e \stackrel{?}{=}  H(r | M)$ <!-- .element: class="fragment" data-fragment-index="7" -->
 
 ---
 

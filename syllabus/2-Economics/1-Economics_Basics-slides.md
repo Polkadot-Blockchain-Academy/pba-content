@@ -21,7 +21,9 @@ duration: 2 hour
 
 </pba-flex>
 
-Notes:
+---
+
+# Grading
 
 - Focus on the pure economic concepts and not diving into blockchain yet.
 - That is covered by another lecture.
@@ -801,30 +803,6 @@ Notes:
 
 ---
 
-## Situation A: Autarky
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-autarky.png" />
-</div>
-
----
-
-## Situation: Focus on Comparative Advantage
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-trade.png" />
-</div>
-
----
-
-## Situation: Trade
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-betteroff.png" />
-</div>
-
----
-
 ## Absolute vs Comparative Advantage
 
 <pba-flex center>
@@ -1324,20 +1302,6 @@ Link will be distributed!
 - What strategy did you employ?
 - Did your behavior change over the rounds?
 - What was the best choice for each firm?
-
-Notes:
-
-- Calculate equilibrium:
-- $\pi = P(Q) * q$
-- For Firm 1: $\pi = (60 - q_1 - q_2) * q_1$
-- solve for optimal $q_1$ -> delta-pi / delta-q1 = -2q_1 - q_2 + 60 =! 0
-- q_1\* = (60 - q_2) / 2
-- q_2\* = (60 - q_1) / 2
-- q1* = (60 - (60-q1*)/2) / 2
-- = 30 - 15 + (q_1*/4) = q_1*
-- = q_1* = q_2* = 20
-- Show with example.
-  If firm 1 plays 20 then 19 leads to smaller payoff and 21 for other firm.
 
 ---
 

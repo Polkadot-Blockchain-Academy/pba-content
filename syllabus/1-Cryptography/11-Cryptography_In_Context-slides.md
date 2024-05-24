@@ -12,8 +12,8 @@ duration: 1 hour
 
 <pba-flex center>
 
-1. Keeping Secrets Secret
-1. Security and Usability
+1. Keeping Secrets Secret <!-- .element: class="fragment" data-fragment-index="1" -->
+1. Security and Usability <!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
@@ -266,7 +266,7 @@ When necessary, talk to a security expert or cryptographer.
 - Validate each primitive's assumptions when combining primitives<!-- .element: class="fragment" data-fragment-index="1" -->
 - Use the most reputable library you can<!-- .element: class="fragment" data-fragment-index="2" -->
 - Realize when things need serious consideration<!-- .element: class="fragment" data-fragment-index="3" -->
-- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamalb<!-- .element: class="fragment" data-fragment-index="4" -->
+- Some potentially scary terms: Curve point, padding schemes, IV, twisted curve, pairings, ElGamal<!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 
