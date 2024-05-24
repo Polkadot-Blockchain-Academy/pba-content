@@ -25,6 +25,15 @@ duration: 2 hour
 
 # Grading
 
+- Focus on the pure economic concepts and not diving into blockchain yet.
+- That is covered by another lecture.
+- Economics of Polkadot
+- Interactive: Ask questions!
+
+---
+
+# Grading
+
 - Exam for onsite students at Saturday.
 - Coding Assignment for onsite and remote students.
 
@@ -63,6 +72,13 @@ duration: 2 hour
 
 🤖$~~~$ 🤝 $~~~$👪
 
+Notes:
+
+- Cryptography would be meaningless without humans using it.
+- Crypto & Econ pair well! Together they are the toolbox to design unstoppable systems.
+- They have a great symphony: where cryptography's has boundaries, economics offers solutions and vice versa.
+- Example from crypto module: Commit-reveal scheme is cryptographically secure. But how can we make sure entities reveal if it is to their disadvantage?
+
 ---
 
 ## Why are economic concepts<br/>important?
@@ -77,6 +93,10 @@ duration: 2 hour
 </ul>
 
 </pba-flex>
+
+Notes:
+
+- It is also important to understand the limits of these economic concepts and when they might not work as intended.
 
 ---
 
@@ -110,6 +130,13 @@ duration: 2 hour
 ## Guiding Human Behavior
 
 > An incentive is a bullet, a key:<br/>an often tiny object with astonishing power to change a situation.<br/>-- Steven Levitt --
+
+Notes:
+
+- Human behavior is driven by incentives.
+- The aggregation of these behaviors lead to societies.
+- Carefully designing incentives lays the ground for functioning systems.
+- You might be asked to implement certain protocols, which you have to judge if they make sense / can be improved.
 
 ---
 
@@ -145,6 +172,10 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- **Question: What are the advantages / disadvantages of those incentives?**
+
 ---
 
 ## Rationality in Economics
@@ -163,6 +194,10 @@ duration: 2 hour
 </ul>
 
 </pba-flex>
+
+Notes:
+- For example: should you do a vacation at the beach in Spain for two weeks or travel through France for two weeks?
+- A rational agent would compile all the factors into a single dimension (utility or value) and maximizes for payout.
 
 ---
 
@@ -227,6 +262,11 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- **Question: Why did that happen?**
+- Gneezy & Rustichini (2000): A fine is a price.
+
 ---
 
 ## The Power of Intrinsic Incentives
@@ -256,6 +296,12 @@ duration: 2 hour
 </ul>
 </pba-flex>
 
+Notes: 
+- Still, not always financial incentives - reputation scores
+- While automated agents existed for a while, they become much more accessible for everybody due to blockchain technology
+- Your electric car might soon have a wallet that automatically pays for charging at a red light.
+- Or you might be able to pay for priority green lights.
+
 ---
 
 ## Conclusion
@@ -284,17 +330,35 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- A famous artist dies and her art increases in price.
+- An unusually nice summer reduces hotel prices in popular vacations destinations.
+
 ---
 
 ## Law of Demand: A Basic Principle
 
 - When prices increase, quantity demanded of a good (generally) decreases.
 
+Notes:
+
+- **Question: Anybody know exceptions?**
+- Exception are "Veblen goods" where demand increases when price increases.
+  These are typically luxury goods that signal something (e.g. status, reputation) in addition to being useful to consumption.
+  Examples are jewelry, luxury cars, etc.
+- This is not a contradiction to the law of demand because the good's social value depends on the price; i.e., the good "changes" and becomes more desirable as the price increases.
+
 ---
 
 ## Visualizing Demand: The Demand Curve
 
 <img rounded style="width:900px" src="./img/2.1-market-demand.png" />
+
+Notes:
+
+- **Question: What influences the aggregate market demand?**
+- The market demand is the sum of all individual curves.
 
 ---
 
@@ -313,6 +377,12 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- In the ice cream example, a substitution good could be frozen yoghurt: if its price goes down, the demand for ice cream will decrease.
+- If people's appetite for ice cream increases (perhaps via advertisement), the demand will increase.
+- In people expect a shortage of ice cream in the near future, the demand will increase immediately.
+
 ---
 
 ## Moving the demand curve
@@ -327,6 +397,12 @@ duration: 2 hour
 
 (because suppliers can make more profit!).
 
+Notes:
+
+- That is, assuming that suppliers manage to sell all produced goods at said price.
+- For example, if the ice cream price increases the store will hire a second employee to sell more scoops per hour.
+- As another example, some petroleum deposits are easier and cheaper to extract than others, so some deposits will be extracted only if the oil price is above a certain threshold.
+
 ---
 
 ## Demand and Supply Interplay: Market Equilibrium
@@ -336,6 +412,14 @@ duration: 2 hour
 - What happens when Price is higher than the Eq. Price?
 - What if the Quantity is lower than the Eq. Quantity?
 - Moving either supply or demand leads to new Eq.
+
+Notes:
+
+- Where the curves meet we obtain a point of equilibrium, which establishes a market quantity and a market price.
+- If price is higher than equilibrium price -> more supply than demand -> some goods remain unsold -> sellers will be forced to reduce the price to get rid of their stock.
+- If price is lower than equilibrium price -> more demand than supply -> shortages of the good -> sellers will increase the price to marke more profit.
+- Hence, we always converge to the equilibrium price.
+- If the quantity supplied is too low -> business opportunity to supply more unit of the good and make a profit -> eventually someone will increase the supply quantity.
 
 ---
 
@@ -354,11 +438,19 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+- **Question**: Examples for each?
+  - High elasticity: luxury goods or with high substitutes, where buyers can easily adjust their consumption. Butter / Magerine 
+  - Low elasticity: essential goods such as energy.
+
 ---
 
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-1.png" />
 </div>
+
+Notes:
+- Which one represents low / high elasticity?
 
 ---
 
@@ -366,11 +458,20 @@ duration: 2 hour
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-2.png" />
 </div>
 
+Notes:
+- Inelastic: A rather big price change leads to little change in quantity.
+- Elastic: A rather big price change leads to a large change in quantity.
+
 ---
 
 <div style="text-align: center;">
     <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-elasticity-3.png" />
 </div>
+
+Notes:
+- What are some examples?
+- Perfectly Elastic: Ice-Tea
+- Perfectly Inelastic: Insulin
 
 ---
 
@@ -417,6 +518,10 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- Special form of Oligopoly is the Duopoly with two firms, something that we see later.
+
 ---
 
 ## Market Form Examples
@@ -446,6 +551,9 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+- A monopoly is if only one seller exists
+- A monopolistic market is if there might be more sellers but one is dominant.
 ---
 
 ## Why discuss this?
@@ -477,6 +585,12 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- This makes sense: The firm produces up to the point where an additional unit costs exactly what it gets for it on the market.
+- Notice that having the market price be equal to the marginal production costs is pretty surprising, as it is ideal from a point of view of society welfare, even though every firm is acting selfishly.
+- In this perfect world, firms will have zero economic profit, meaning they make just enough money to cover production costs and keep the company running.
+
 ---
 
 ## Formation of a Monopoly
@@ -492,9 +606,22 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+- Monopolies often form when large entities engage in price wars and undercut smaller businesses until they go bankrupt.
+- There are different types of monopolies: 
+  - Natural (high barrier of entry, e.g. railroads)
+  - Geographic
+  - Technological
+  - Licensed
+
 ---
 
 ## Is the Government a Monopoly?
+
+Notes:
+- Legitimate use of Force
+- Provider of Public Goods
+- Regulation
 
 ---
 
@@ -507,10 +634,17 @@ duration: 2 hour
 <li class="fragment">Price Discrimination: different prices can be charged for different customers (based on their elasticity).</li>
 <li class="fragment">This leads to sub-optimal pricing and sub-optimal society welfare: consumers either pay more than they should ("monopolist tax") or are excluded from market.</li>
 
+Notes:
+- There are three conditions for price discrimination to work:
+  - The company needs to have sufficient market power
+  - The company needs to be able to identify differences in demand.
+  - The company needs to be able to restrict secondary markets.
+- This is a "problem" for the consumers, because it reduces their welfare, i.e., they pay more than they would in a competitive market.
+- It also sometimes even prevents some groups from purchasing.
+
 ---
 
 ## Example: Antitrust case against Microsoft in 1990s
-
 <pba-flex center>
 <ul>
 <li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
@@ -519,6 +653,12 @@ duration: 2 hour
 ---
 
 ## Monopoly: Advantages?
+
+
+Notes:
+- Economies of scale (specialisation)
+- Price stability
+- Potentially higher investments like R&D that benefit customers down the line.
 
 ---
 
@@ -566,6 +706,13 @@ duration: 2 hour
 
 > It is the maxim of every prudent master of a family, never to attempt to make at home what it will cost him more to make than to buy.<br/>-- Adam Smith, 1776 --
 
+Notes:
+
+- In this part, we take a closer look at the following concepts:
+  - Comparative advantage.
+  - Opportunity costs.
+  - Gains from trade.
+
 ---
 
 ## The economic question
@@ -611,6 +758,15 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- Comparative advantage of meat:
+  - Opp. cost Alice: **1kg meat = 2kg potatoes**
+  - Opp. cost Bob: 1kg meat = 5kg potatoes
+- Comparative advantage of potatoes:
+  - Opp. cost Alice: 1kg potatoes = 1/2kg meat
+  - Opp. cost Bob: **1kg potatoes = 1/5kg meat**
+
 ---
 
 ## Comparative advantage II
@@ -631,29 +787,19 @@ duration: 2 hour
 </ul>
 </pba-flex>
 
----
+Notes:
 
-## Situation A: Autarky
+- Assume one working day with one worker (8 hrs).
+- Autarky:
+  - Alice: 4hrs X 10 meat, 4hrs X 20 potatoes = 40 meat, 80 potatoes
+  - Bob: 4hrs X 2 meat, 4hrs X 10 potatoes = 8 meat, 40 potatoes
+- Trade:
 
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-autarky.png" />
-</div>
-
----
-
-## Situation: Focus on Comparative Advantage
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-trade.png" />
-</div>
-
----
-
-## Situation: Trade
-
-<div style="text-align: center;">
-    <img rounded style="width: 1200px; margin-right: 10px;" src="./img/2.1-comparative-betteroff.png" />
-</div>
+  - Alice: 5hrs X 10 meat, 3hrs X 20 potatoes = 50 meat, 60 potatoes
+  - Bob: 0hrs X 2 meat, 8hrs X 10 potatoes = 0 meat, 80 potatoes
+  - Alice could trade 9 meat for 30 potatoes:
+    - Alice: 41 meat, 90 potatoes
+    - Bob: 9 meat, 50 potatoes
 
 ---
 
@@ -667,6 +813,13 @@ duration: 2 hour
 </ul>
 
 </pba-flex>
+
+Notes:
+
+- What does that tell us about daily life?
+  - **Stick with what you are good at**: It's often good to stick things where you have a comparative advantage: For example, assume you are a great software engineer with a job that has a high salary, but you also want to help clean up the ocean. Instead of giving up your job and go clean the ocean, you might want to allocate some of your salary to ocean cleanup, having a larger effect.
+  - **Realize that absolute advantage is not all**Only because one co-worker has a total advantage in two dimensions of the job, another co worker can still have the comparative advantage in one of the tasks.
+  - **Question**: What are your opportunity costs of being here?
 
 ---
 
@@ -713,6 +866,13 @@ duration: 2 hour
 </ul>
 
 </pba-flex>
+
+Notes:
+
+- There are formulas to calculate how much a future payout in the future is worth today.
+- You need to make assumptions about your rate of return in the meantime.
+- Often risk free rate is used.
+- **Question: What is 1000$ worth to you now?**
 
 ---
 
@@ -786,6 +946,19 @@ duration: 2 hour
 
 </pba-flex>
 
+Notes:
+
+- Confirmation bias especially pronounced in todays time where people get trapped in echo chambers fostered by algorithms that keep feeding you information that you want to hear.
+- Overconfidence: If asked, more than 50% of people think they drive above average.
+  BUT has also positive effects.
+  Sometimes overconfident people are better than others and statistically perform better in practice.
+- Anchoring Effect
+- Endowment Effect: This bias occurs when we overvalue something simply because we own it.
+- Hindsight Bias - This is the tendency to believe, after an outcome is already known, that you would have predicted or could have foreseen the outcome.
+  It is often referred to as the "I knew it all along" effect.
+- Availability Bias - People make decisions based on the information that is readily available to them, rather than the complete data set.
+  This bias can often lead to inaccurate conclusions.
+
 ---
 
 ## Behavioral Economics
@@ -804,6 +977,10 @@ duration: 2 hour
 
 # Classroom Discussions
 
+Notes:
+
+- Roughly 20 minutes
+
 ---
 
 ## Behavioral Biases
@@ -818,6 +995,13 @@ duration: 2 hour
 > Warren Buffett announces that he increased his exposure to Apple by buying more stocks.
 > The price of AAPL goes up.
 
+Notes:
+
+- Herding effect
+- Cannot be in the hope of a price response by Buffett's trade because it already happened.
+- Self-fulfilling prophecy
+- Maybe still rational?
+
 ---
 
 ## Situation 2:
@@ -827,6 +1011,11 @@ duration: 2 hour
 > The investor keeps buying in at 80 USD, 50 USD and finally at 5 USD, 3 USD and 1 USD.
 > When a friend asks him to stop he keeps arguing to recover the losses by "buying the dip" and to "further reducing the average buying price".
 
+Notes:
+
+- Sunk Cost Fallacy
+- Learn to accept losses
+
 ---
 
 ## Situation 3:
@@ -835,17 +1024,35 @@ duration: 2 hour
 > Mentally, he is already looking forward to finally buy it, but a friend urges him to do some more research.
 > He agrees and is reading through articles that pop up after googling "Why you should buy the new iPhone".
 
+Notes:
+
+- Confirmation Bias
+- Mitigating by actively looking outside the echo-chamber that is just catering to your opinion.
+
 ---
 
 ## Situation 4:
 
 > A Swiss energy company could increase the number of new renewable electricity contracts from 3% to 80-90% by pre-selecting the green option when customers were renewing their energy contracts.
 
+Notes:
+
+- Default effect
+- Is it always good?
+  People might consume more energy because they feel better about their contract, companies can exploit this effect "default to accept all cookies".
+- https://www.bbc.com/news/science-environment-56361970
+- [Paper](https://www.nature.com/articles/s41562-021-01070-3.epdf?sharing_token=4HCcx-Aouj5gOGkD37i319RgN0jAjWel9jnR3ZoTv0MsXRMaQ2nk_xsjwawpA_drZ4p8HWONsx-i-1PN3ZRN0hxsKmhDtSpN5xn5qXXWcPCTjRQxPpY5yovJQehlrDn56a7Ff3-f5ESorQLlggQObIrxTOC9Y4nefV5OGXZRww9iZyuuvAOwV0kRLk12-rKINRixIpE45bF2ZtQQdPcWuA%3D%3D&tracking_referrer=www.bbc.com)
+
 ---
 
 ## Situation 5
 
 > Andrew had 50 Microsoft stocks. He decided to sell 40 of them at a price of 350 USD, still keeping 10. He used his earnings to pay some bills and does not plan to buy any stocks back. In the following days he caught himself looking at the charts hoping the price would go down to less than 350 USD.
+
+Notes:
+- Not rational.
+- Regret aversion?
+- Sunk cost fallacy?
 
 ---
 
@@ -881,11 +1088,22 @@ duration: 2 hour
 <img rounded style="width:600px" src="./img/2.1-ocean-gate-blog-post.png" class="fragment" />
 </span>
 
+Notes:
+- What biases could be happening here?
+- **Survivor bias**: is the logical error of concentrating on entities that passed a selection process while overlooking those that did not.
+  This can lead to incorrect conclusions because of incomplete data.
+- Of course most accidents happen because of operator error, because most vessels underwent certification!
+- What bias are we facing maybe? **Hindsight Bias**: is the common tendency for people to perceive past events as having been more predictable than they were.
+
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
 
 ## Where do you see yourself or others suffer from behavioral biases?
+
+Notes:
+
+Open class discussion.
 
 ---
 
@@ -898,6 +1116,13 @@ duration: 2 hour
   - AirBnb
   - ...
 - How do these firms exert their market power, if not over price-setting?
+
+Notes:
+
+- transparency? (stealing tips!)
+- fees (uber, airbnb)
+- surge pricing (uber)
+- opaque auction mechanism (google in the case of online ads)
 
 ---
 
