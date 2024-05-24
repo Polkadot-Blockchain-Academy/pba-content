@@ -105,14 +105,16 @@ print("The remainder of wirepoly/zerotest: ",naive_wire_poly % zero_test_poly)
 u1 = ZKField('0x'+hashlib.sha256("Hello, PBA! I'm u1".encode()).hexdigest())
 u2 = ZKField('0x'+hashlib.sha256("Hello, PBA! I'm u2".encode()).hexdigest())
 
-#u1 = ZKField(-1)
-#u2 = ZKField(1)
 #$\prod_{a\in\{1,..,39\}}\frac{u_1 - u_1 \times a - T(a)}{u_1 - u_2 \times \psi(a) - T(\psi(a))}
-f_numerator = [0]*39
-g_denominator = [0]*39
+f_numerator = [0]*40
+g_denominator = [0]*40
 for i in range(0, 39):
    f_numerator[i] = u1 - u2 * psi[i] - T[psi[i]-1]
    g_denominator[i] = u1 - u2 * (i + 1) - T[i]
+
+#because our group is not cyclic of size 39 we need to deal with t(40)
+f_numerator[39] = f_numerator[0] 
+g_denominator[39] = g_denominator[0]
 
 for i in range(0, 39):
    if (f_numerator[i] != g_denominator[psi[i]-1]):
@@ -122,28 +124,29 @@ p_acc = ZKField(1)
 for i in range(0, 39):
    p_acc *= f_numerator[i]/g_denominator[psi[i]-1]
 
-print(p_acc)
+assert(p_acc == 1)
 
-t = [0]*39
+t = [0]*40
 t[0] = f_numerator[0]/g_denominator[0]
-for i in range(1,39):
+for i in range(1,40):
    t[i] = t[i-1] * f_numerator[i]/g_denominator[i]
 
+x_values = range(1, 41)
 fx = PolysOnZKField.lagrange_polynomial(zip(x_values,f_numerator))
 gx = PolysOnZKField.lagrange_polynomial(zip(x_values,g_denominator))
 tx = PolysOnZKField.lagrange_polynomial(zip(x_values,t))
 
 perm_poly = tx(x+1) * gx(x+1) - tx(x) * fx(x+1)
 for i in range(1,40):
-   print(perm_poly(i))
+   assert(perm_poly(i) == 0)
 
 print("Perm check polynomial: ", perm_poly)
 print("Zero test polynomial:", zero_test_poly)
-print("The remainder of permpoly/zerotest: ",perm_poly % zero_test_poly)
+print("The remainder of permpoly/zerotest: ", perm_poly % zero_test_poly)
 
 qx = perm_poly / zero_test_poly
 print("q(x):",qx)
 
 # y^2 = x^3 + 8*x + 10 embeding degree 8 on 101 order 89
 # (trace_poly(r) - trace_poly(tau)) / (r - tau)
-for i in range(0, 39):
+
