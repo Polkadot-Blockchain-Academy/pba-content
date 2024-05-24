@@ -54,11 +54,22 @@
 ## What is Game Theory?
 
 > Game theory studies strategic situations where the outcome for each participant or 'player' depends on the actions of all others. It formulates models to represent these scenarios and predicts the most likely or optimal outcomes.
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Game theory is all about the power of incentives.</li>
+<li>Helps you understand and design systems and guide behavior of participants.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Game Theory in Web3
 
 In the context of blockchains, game theoretic reasoning is used for <span style="font-style: italic;">modelling</span> and <span style="font-style: italic;">understanding</span>.
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>The term is heavily over-used.</li>
+<li>9/10 times people using the term they simply mean there is some economic structure behind their protocols.</li>
+<li>Rarely real game theoretic analysis is done.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Modelling
 
 <ul>
@@ -84,7 +95,28 @@ In the context of blockchains, game theoretic reasoning is used for <span style=
 <li class="fragment">Modern game theory is used in economics, biology, sociology, political science, psychology, among others.</li>
 <li class="fragment">In economics, game theory is used to analyze many different strategic situations like auctions, industrial economics, and business administration.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>In Plato&#39;s texts, Socrates recalls the following considerations of a commentator of the Battle of Delium:<ul>
+<li>An example is a soldier considering his options in battle: if his side is likely to win, his personal contribution might not be essential, but he risks injury or death.
+If his side is likely to lose, his risk of injury or death increases, and his contribution becomes pointless.</li>
+<li>This reasoning might suggest the soldier is better off fleeing, regardless of the likely outcome of the battle.</li>
+<li>If all soldiers think this way, the battle is certain to be lost.</li>
+<li>The soldiers&#39; anticipation of each other&#39;s reasoning can lead to a self-fulfilling prophecy: they might panic and retreat before the enemy even engages, resulting in a defeat.</li>
+</ul>
+</li>
+<li>Spanish conqueror Cortez, when landing in Mexico with a small force who had good reason to fear their capacity to repel attack from the far more numerous Aztecs, removed the risk that his troops might think their way into a retreat by burning the ships on which they had landed</li>
+<li>Antoine Augustin Cournot, a french mathematician, already described a duopoly game with respective solution in 1844.<ul>
+<li>We will see this later.</li>
+</ul>
+</li>
+<li>Examples:<ul>
+<li>Biology: Animals fight for resources or are peaceful, why cooperation evolved</li>
+<li>Political science: Art of conflict, escalation and de-escalation between nations.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Game theory is <span style="font-style: italic;">abstract</span>
 
 <ul>
@@ -94,7 +126,15 @@ In the context of blockchains, game theoretic reasoning is used for <span style=
 <li class="fragment">Con: A certain lack of realism.</li>
 <li class="fragment">In any case: Modeling a strategic situation always entails a tradeoff between tractability and realism.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Need to explain what we mean by lack of realism:</li>
+<li>Often people have more choices than we model.</li>
+<li>Often people take other things into consideration when making choices than the model allows.</li>
+<li>Often people know more/less than we assume.</li>
+<li>How to resolve the tradeoff between tractability and realism is often subjective and depends on the taste of the modeler.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 # What is a Game?
 </script></section><section  data-markdown><script type="text/template">
 ## Definition: (Economic) Game
@@ -139,7 +179,9 @@ In the context of blockchains, game theoretic reasoning is used for <span style=
 
 </pba-col>
 </pba-cols>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>Crucial feature of a game: outcome not only depends on own actions but also on the actions of the other players.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Types of games
 
 Game theory distinguishes between:
@@ -151,14 +193,18 @@ Game theory distinguishes between:
 </script></section><section  data-markdown><script type="text/template">
 ## Static and Dynamic Games
 
-|                  | Static Game                                                          | Dynamic Game                                                                                           |
-| ---------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Definition       | All players take their actions at the same time                      | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
-| Simple Example   | Rock-Paper-Scissors                                                  | Tic-Tac-Toe                                                                                            |
-| Economic Example | Sealed-bid auction.                                                  | English Auction.                                                                                       |
-|                  | All bidders submit their bids simultaneously (in a sealed envelope). | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
-| Representation   | Payoff Matrix                                                        | Decision Tree                                                                                          |
-</script></section><section  data-markdown><script type="text/template">
+|                  | Static Game                                     | Dynamic Game                                                                                           |
+| ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Definition       | All players take their actions at the same time | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
+| Simple Example   | Rock-Paper-Scissors                             | Tic-Tac-Toe                                                                                            |
+| Economic Example | Sealed-bid auction.                             | English Auction.                                   |
+|                  |   All bidders submit their bids simultaneously (in a sealed envelope).                               | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
+| Representation   | Payoff Matrix                                   | Decision Tree                                                                                          |
+
+<aside class="notes"><ul>
+<li>Also referred to as simultaneous or sequential games</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Completeness of Information in Games
 
 |                       | Game of Complete Information                          | Game of Incomplete Information                             |
@@ -189,7 +235,22 @@ Game theory distinguishes between:
 
 </pba-col>
 </pba-cols>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ol>
+<li><p>The game is static.
+For it to be dynamic, firms would need to make offers sequentially, <em>knowing what the firms before had offered</em>.</p>
+</li>
+<li><p>The game is of complete information.
+To make information incomplete, we would need to have that the value of hiring the engineer differs between firms and is unknown between firms.
+Or that the cost of working for the engineer is not known to the firms.
+The point is that we need to have uncertainty over payoffs.</p>
+</li>
+</ol>
+<ul>
+<li>This lesson focuses on static games of complete information.</li>
+<li>When we look at auctions in lesson Price finding mechanisms, we will also consider games of incomplete information, both dynamic and static.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Utility
 
 <ul>
@@ -209,7 +270,12 @@ Game theory distinguishes between:
     </li>
     <li class="fragment">Most things have <strong>diminishing rates of returns</strong>.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Expected Utility is the average utility we get from comparing several outcomes and weigh them with the probability they occur.</li>
+<li>In the following, we won&#39;t need that, because either we deal with money or other dimensions that are comparable.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Common Games
@@ -221,7 +287,13 @@ A fundamental problem:
 > Even though everyone knows there is a socially optimal course of actions, no one will take it because they are rational utility maximizers.
 
 It's a static game of complete information.
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>One of the most famous games studied in game theory.</p>
+<ul>
+<li>Static because both players take their action at the same time.</li>
+<li>Complete because everybody is aware of all the payouts.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Bonnie and Clyde
 
 Bonnie and Clyde are accused of robbing two banks:
@@ -240,7 +312,9 @@ In the interrogation they both are offered the following:
 <li class="fragment">If you do not confess but your partner does, you go to jail for 5 years: 1 extra year for obstruction of justice.</li>
 <li class="fragment">However, if you confess but your partner does not, we reduce your jail time to one year.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>They are interrogated in different rooms, apart from each other.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Bonnie and Clyde
 
 - **Cooperate** ($C$) with each other and not say anything
@@ -249,7 +323,12 @@ In the interrogation they both are offered the following:
 <div style="text-align: center;">
     <img style="width: 700px; margin: auto; display: block;" src="./img/Bonnie-clyde-1.png" />
 </div>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>They can either cooperate or defect</li>
+<li>Second payoff is Clyde, first is Bonnie</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Nash-Equilibrium
 
 <ul>
@@ -303,14 +382,27 @@ In the interrogation they both are offered the following:
 <img rounded style="width: 800px; margin-right: 250px;" src="./img/Bonnie-clyde-2.png" />
 
 Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a strategy that is always optimal for a player, regardless of what the other players do.
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>No matter what Clyde does, D is always the best choice.
+So, they end up both defecting, resulting in 4 years each.
+It would be in their best interest to cooperate and not to say anything.
+This would minimize the total jail time for the two.
+However, both Bonnie and Clyde are rational utility maximizers.
+So, they end up in a situation where they not only fare worse <em>individually</em> (4 instead of 2) but also <em>jointly</em> (the total jail time is 8 years rather than 4 years).</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Prisoners' Dilemma IRL
 
 <ul>
 <li class="fragment"><strong>Nuclear Arms Race:</strong> <a href="https://www.history.com/topics/cold-war/arms-race">NATO and Russia</a> prefer no arms race to an arms race. Yet, having some arms is preferable to having no arms, irrespective of whether the other one is armed.</li>
 <li class="fragment"><strong>OPEC:</strong> <a href="https://www.opec.org/opec_web/en/">Limiting oil supply</a> is in the best interest of all. However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+
+<aside class="notes"><p>OPEC: Organization of the Petroleum Exporting Countries.
+It is something like a cartel that agree on limiting the global oil production and keep the oil price artificially high.</p>
+<p>OPEC and Cartels generally seems to overcome the Prisoners&#39; Dilemma...
+More on that later.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Ultimatum Game
 
 <ul>
@@ -326,7 +418,12 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
     </li>
     <li class="fragment">That means, the proposer offering something small and the recipient always accepting is the only NE.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>We saw that empirically that is not the case.</li>
+<li>Fairness concerns are too strong in that setting.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Coordination Game
 
 <ul>
@@ -362,7 +459,14 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 
 </pba-col>
 </pba-cols>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>Examples:</p>
+<ul>
+<li>Driving on the right/left side of the road.</li>
+<li>Money adoption.</li>
+<li>Standard adoption.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Coordination Game Example
 
 <pba-cols>
@@ -379,7 +483,15 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 
 </pba-col>
 </pba-cols>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>That is, for both players it holds:<ul>
+<li>Playing $L$ is a <em>best response</em> to the other player playing $L$.</li>
+<li>Playing $R$ is a <em>best response</em> to the other player playing $R$.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Coordination Game Example
 
 <pba-cols>
@@ -396,7 +508,11 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 
 </pba-col>
 </pba-cols>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>Nash equilibrium: If other players follows the recommended strategy, then the best response for you is to do the same.
+As the same logic is true for other players, it&#39;s reasonable to assume that everybody will indeed follow the recommended strategy.</p>
+<p>However, a Nash equilibrium is a weaker notion than a dominant strategy, because if the other players don&#39;t follow the recommended strategy, it is not clear what your best response should be.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Equilibrium selection
 
 <ul>
@@ -410,7 +526,12 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
     <img rounded style="width: 550px;" src="./img/2.2-sweden-1967.jpg" /><br/>
     <p>Sweden, 1967.</p>
 </div>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>The NE does not predict any outcome.</li>
+<li>Sweden switched from left-side driving to right-side.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Schelling Points
 
 <ul>
@@ -418,7 +539,11 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 <li class="fragment">This is especially pronounced in games with multiple equilibria (e.g., coordination games).</li>
 <li class="fragment">There are theories that offer insights into which strategies players actually take.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>In the 1950s American economist Thomas Schelling ran a couple of informal experiments in which he asked his students (quote on slide)</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Schelling Points
 
 > If you are to meet a stranger in New York City, but you cannot communicate with the person, then when and where will you choose to meet?
@@ -430,7 +555,16 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 </ul>
 <li class="fragment">Basic idea: in case of multiple equilibria, social norms may help to choose one.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Imagine you are held in prison.</li>
+<li>You and your significant other is asked to guess a number.</li>
+<li>If you both guess the same number, you are set free.</li>
+<li>You have the following options: 0.231, 1, or 0.823</li>
+<li>Guessing both the same number is a NE every time.</li>
+<li>It&#39;s highly likely you will walk free.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 # Summary (so far...)
 
 <ul>
@@ -455,7 +589,12 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 <li class="fragment"><strong>Non-rivalrous</strong> My consumption does not affect yours</li>
 <li class="fragment">e.g., fireworks, street-lighting.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>We will now talk about public goods and common goods, which are goods enjoyed by everyone.</li>
+<li>This is, of course, a very important and very tricky class of goods in a collective.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Common Goods
 
 <ul>
@@ -463,7 +602,16 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 <li class="fragment"><strong>Rivalrous</strong> My consumption reduces your possibility to consume</li>
 <li class="fragment">i.e., a public park, an office coffee machine.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Recall: Public good was <em>non</em>-rivalrous.</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>Public park: anyone can go; too many people spoil the experience or kills the grass.</li>
+<li>Coffee machine in the office: anyone can use it; too many users may cause congestion or the amount of coffee may be limited.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Public vs. Common Good
 
 <ul>
@@ -484,7 +632,14 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
   <li class="fragment">What would be best for the collective?</li>
 <ul>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>As long as $\alpha&gt;1$, it&#39;s best for the collective to contribute as much money as possible, because the money in the project increases magically, so we end up with more money that we started with.</li>
+<li>However, the problem is that everyone benefits from the project funds regardless of their individual contribution (it is a common good). If a player decreases their initial contribution by one dollar, their individual payoff decreases by $\alpha/N$ dollars, so as long as $\alpha&lt;N$, it is best for each individual to contribute zero.</li>
+<li>As a result, we can expect that no one will contribute anything, and the money-multiplying powers of the project will be unused. This opportunity cost is a tragedy of the commons.</li>
+<li>Finally, if $\alpha\geq N$ then it would be individually better to contribute everything, and we would not have a tragedy of the commons.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Overfishing
 
 <ul>
@@ -505,17 +660,37 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 <li class="fragment">There should be fishing/production/mining! After all, there are always benefits to these activities.</li>
 <li class="fragment">The tragedy of the commons is that the externality is not priced into these activities, driving them to inefficiently high levels.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>To be precise, in the last example the so-called &quot;tragedy&quot; is not that producing a good leads to air pollution; after all, this may be unavoidable if we want to consume the good.
+The tragedy is that even if we agree on the level of production and air pollution that is economically ideal for the collective, we will end up with more pollution.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#000" -->
 
 # Break (10 minutes)
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Next up class activities.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Open Source
 
 > Providing open-source software is like contributing to a public good and the community will therefore sooner or later collapse!
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Why it might not fail:<ul>
+<li>Other incentives:<ul>
+<li>Intrinsic motivation</li>
+<li>Reputation concerns (your github history is part of your CV)</li>
+<li>Reciprocity</li>
+<li>Direct benefit: Some contributors also use the software and benefit from improvements.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Design a 2x2 game
@@ -529,17 +704,54 @@ Choosing D is a <span style="font-style: italic;">dominant strategy</span>: a st
 > All friends will be present to see the result.
 
 Design this game in a 2x2 matrix and assign payoffs to the different outcomes.
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Need a white board!</li>
+<li>Give Class about 5 minuets to discuss in small groups on this</li>
+<li>Then have 10 minutes to ask the class you solve the 2x2 matrix and discuss (on next slide).</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Design a 2x2 game
 
 - What is/are the Nash Equilibrium/Equilibria here?
 - Which type of games does this remind you of?
 - How would you translate this game to real scenarios?
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Game of chicken or Hawk-Dove Game</li>
+<li><table>
+<thead>
+<tr>
+<th></th>
+<th>Swerve</th>
+<th>Straight</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Swerve</strong></td>
+<td>0, 0</td>
+<td>-1, +1</td>
+</tr>
+<tr>
+<td><strong>Straight</strong></td>
+<td>+1, -1</td>
+<td>-1000, -1000</td>
+</tr>
+</tbody></table>
+</li>
+<li>&quot;Anti-Coordination Game&quot; with the tension between competition and mutual benefit of compromise.</li>
+<li>Real-world situations of conflict, where both would prefer not to fight but would actually like to intimidate, leading to a real conflict.</li>
+<li>Two businesses would be better off not to engage in price war, but it would be good to be the only one to reduce the price to grab some market share.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Workshop: Games
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>roughly 70 minutes</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Game 1: Guessing Game
 
 - We divide the classroom into three groups and play a guessing game.
@@ -565,7 +777,26 @@ Link will be distributed!
 - What number did you choose / what was your strategy?
   (which group were you in?)
 - Did your strategy change over time?
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>A number above 2/3*100 does not make sense</li>
+<li>If everybody believes that, choosing a number above 2/3*2/3*100 does not make sense</li>
+<li>... it goes to 0</li>
+<li>But does 0 Win? No!</li>
+<li><strong>Question: Who made these considerations?</strong></li>
+<li>Empirical results:<ul>
+<li>Financial Times asked their readers to submit their solution: Winning number was 13 (~1500 participants)</li>
+<li>Other news magazine: ~3700 subjects, winning number 16.99, ~2800 subjects, winning number 14.7</li>
+<li>There were spikes at 33 (response to randomness), 22 (response to that), and 0 (rationality)</li>
+</ul>
+</li>
+<li>Level-k-thinking: 1 or 2 steps most prevalent, seldom more than that.</li>
+<li><strong>Question: What would be the NE for multiplication of 1 of the mean?</strong><ul>
+<li>It becomes a coordination game where all players choose the same value.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Game 1: Results!
 </script></section><section  data-markdown><script type="text/template">
 ## Game 2: Prisoner's Dilemma
@@ -605,7 +836,12 @@ Link will be distributed!
     <li class="fragment">The game would be repeated 200 times.</li>
     <li class="fragment">Each strategy would play against every other strategy and against itself.</li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+
+<aside class="notes"><ul>
+<li>Based on <a href="https://ve42.co/Axelrod1980a">https://ve42.co/Axelrod1980a</a> and <a href="https://www.youtube.com/watch?v=mScpHTIi-kM">https://www.youtube.com/watch?v=mScpHTIi-kM</a></li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Repeated Prisonner's Dilemma
 
 <ul>
@@ -614,6 +850,7 @@ Link will be distributed!
     <li class="fragment">Grim trigger: Always cooperate but retaliate and defect forever, if the other defect once.</li>
     <li class="fragment">Tit-For-Tat: Start with cooperate and copy the opponent's strategy of the last round.</li>
 </ul>
+
 </script></section><section  data-markdown><script type="text/template">
 ## Repeated Prisonner's Dilemma
 
@@ -628,7 +865,13 @@ Link will be distributed!
         </ul>
     </li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+
+<aside class="notes"><ul>
+<li>This was rather big surprise, especially since dominant strategy is being nasty.</li>
+<li>A lot of it is what we can observe in today&#39;s politics.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Repeated Prisonner's Dilemma
 
 <ul>
@@ -666,6 +909,7 @@ Link will be distributed!
 ## Game 3: Questions?
 
 ### Don't ask about strategies!
+
 </script></section><section  data-markdown><script type="text/template">
 ## Game 3: Let's go!
 
@@ -677,7 +921,13 @@ Link will be distributed!
 - Were your groups able to sustain cooperation?
 - Did you cooperate?
 - Did you punish?
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Additional free rider problem: Punishment was fixed to 100% of the other&#39;s points.
+That means, it was better to hope for other players to punish a player.</li>
+<li>They cooperate maybe because they did not understand the game.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
 ## Game 3: Results!
@@ -700,7 +950,20 @@ Link will be distributed!
         </ul>
     </li>
 </ul>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>What about empirical evidence?</p>
+<ul>
+<li>One Round: Little contribution.</li>
+<li>Many Rounds: Some little contribution but quickly to 0.</li>
+<li>Some longer and stronger contribution but eventually going to 0 quickly</li>
+<li>Different group sizes: Larger groups are more prone to freeriding, i.e., cooperation collapses more quickly.</li>
+<li><strong>Question: How can we distinguish freerider from those that only freeride because they expect others to freeride?</strong><ul>
+<li>Answer: Ask them to provide a &quot;conditional cooperation table&quot; - i.e., they should state how much they contribute given other&#39;s /(average) contributions.</li>
+<li>Real freeriders have 0 even if others contribute.</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Summary
 
 - the basics of game theoretic concepts.
