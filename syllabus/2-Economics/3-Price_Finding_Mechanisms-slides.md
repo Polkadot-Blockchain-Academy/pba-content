@@ -298,7 +298,7 @@ Notes:
 
 Notes:
 
-- We can immediately say that you should never overbid (i.e., bid above your valuation), because in that case your profit can only be zero (if you lose) or negative (if you win).
+- We can immediately say that you should never overbid (i.e., bid above your valuation), because in that case your profit can only be zero (if you lose) or sometimes negative (if you win).
   So the key question is whether you should ever underbid.
 - In the case that Bob's bid is higher than your valuation, bidding truthfully or underbidding both lead to losing and having a revenue of zero.
 - But if Bob's bid is lower than your valuation, any bid between these two values leads to you winning and having the same profit (namely the difference of these values), hence there is no gain in underbidding.
@@ -825,6 +825,7 @@ The themes of his creations mostly focus on exploring the relationship between r
 ---
 
 <img rounded style="width:600px" src="./img/2.3-nft.jpeg" />
+
 
 ---
 
