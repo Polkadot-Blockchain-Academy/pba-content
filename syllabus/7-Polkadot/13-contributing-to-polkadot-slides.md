@@ -8,12 +8,13 @@ duration: 60 min
 
 ---
 
-<img rounded style="width: 1100px" src="assets/Contributing/intro.png" />
-<!-- check size -->
+<img rounded style="width: 1000px" src="assets/Contributing/intro.png" />
 
 ---
 
 ## Prerequisite Knowledge
+
+</br>
 
 - Mid-Level Rust Programming Abilities
   - Fluency with the first 11 chapters of The Rust Book
@@ -29,33 +30,22 @@ duration: 60 min
 
 <img rounded style="width: 800px" src="assets/Contributing/dotcodeschool.png" />
 
-<pba-flex center>
+
+<br/>
+
 https://dotcodeschool.com/
-</pba-flex>
+
+
 
 ---
 
 ## The Polkadot Blockchain Academy
 
-<!-- need to fix this, not sure how to have multiple images in the collage. Table can be on the right side -->
+<!-- took screenshoot to save time -->
 
 
-<img rounded style="width: 800px" src="assets/Contributing/Academy.jpeg" />
-<img rounded style="width: 800px" src="assets/Contributing/Academy1.jpeg" />
-<img rounded style="width: 800px" src="assets/Contributing/Academy2.jpeg" />
-<img rounded style="width: 800px" src="assets/Contributing/Academy3.jpeg" />
-<img rounded style="width: 800px" src="assets/Contributing/Academy4.jpeg" />
+<img rounded style="width: 1000px" src="assets/Contributing/PBA.png"/>
 
-
-<pba-col right>
-5 Global Cohorts
-5 Weeks in Person
-7 Modules
-~1,000 Applicants*
-~90 Students*
-~50 Graduates*
-~20 Hires*
-</pba-col>
 
 
 https://polkadot.network/academy/
@@ -69,61 +59,88 @@ https://polkadot.network/academy/
 ---
 
 ### Polkadot SDK
-<!-- original slides had 90 and -90 degree "Polkadot SDK text around a box-->
 
 ---
 
 ## The Mono Repo
 <!-- skipped Polkadot SDK repo has evolved slide, not relevant for PBA-->
+<!-- Originally bullet points were on right column -->
+
 <img rounded style="width: 600px" src="assets/Contributing/Monorepo.png" />
 
-<pba-col right>
+</br>
+
 - Merging into a single repository simplifies the development process
 - Eliminates the need for “companion” PRs across multiple repositories.
 - Improves collaboration among team members. 
 - Makes it easier to manage issues, pull requests, and documentation.
-</pba-col>
 
 
 ---
 
 ## Runtime Extraction
+<pba-cols>
+<pba-col left>
 
 <img rounded style="width: 600px" src="assets/Contributing/Monorepo2.png" />
 
+</pba-col>
+
+</br>
+
+<span style="font-size:0.75em;">    
+
+</br>
+
 <pba-col right>
-Extraction of the various Polkadot Runtimes established the decentralized ownership of this code. Includes:
+
+</br>
+
+<pba-flex left>
+Extraction of the various Polkadot Runtimes established decentralized ownership of this code. Includes:
+</pba-flex>
+
+</br>
+<pba-flex left>
+
 - Relay Chain Runtimes
   - Polkadot
   - Kusama
+
 - System Parachains
   - Asset Hub
   - Bridges Hub
   - Collectives
   - etc...
-</pba-col>
+  </pba-flex>
+
+  </pba-col>
+  </pba-cols>
+
+
+</span>
 
 ---
 
 ## Repository Ownership
 
+</br>
+
 <img rounded style="width: 800px" src="assets/Contributing/Owners.png" />
-
-<pba-col left>
-Parity Technologies
-</pba-col>
-
-The Polkadot Network via the Fellowship
-</pba-col>
 
 
 ---
 
 ## Polkadot RFCs
+
+</br>
+
 - Requests for Comment (RFCs) are proposed changes to the technical implementation of the Polkadot network.
 - The Polkadot Fellowship reviews and provides feedback to the RFCs.
 - RFC approval is done on-chain either by the fellowship or through public referendum.
 - The Polkadot Fellowship also stewards forward approved RFCs.
+
+</br>
 
 https://github.com/polkadot-fellows/RFCs
 
@@ -136,117 +153,121 @@ https://github.com/polkadot-fellows/RFCs
 
 ## The Fellowship
 
+</br>
+
 - A technical organization that stewards the development of the Polkadot Network.
 - Composed of core developers and researchers.
 - Servants to the DOT holders via referendum signaling.
 
+</br>
+
 https://github.com/polkadot-fellows
 
 ---
+
+### Fellowship Manifesto
 <img rounded style="width: 800px" src="assets/Contributing/Manifesto.png" />
 
 https://github.com/polkadot-fellows/manifesto
 
 
 ---
+### Polkadot Fellows
 
 <img rounded style="width: 800px" src="assets/Contributing/fellows.png" />
 
-
+</br>
 The current Polkadot Fellows.
 
-
 ---
-
 ## Rank Summary
 
-<table class="no-bullet-padding">
-<tr>
-  <td>Dan</td>
-  <td>Title</td>
-  <td>Time from Dan I</td>
-  <td>Salary Factor (OECD)</td>
-</tr>
-<tr class="text-small">
-<td>
-
-- n/a
-- I
-- II
-- III
-- IV
-- V
-- VI
-- VII
-- VIII
-- IX
-</td>
-<td>
-- Candidate
-- Humble
-- Proficient
-- Fellow
-- Architect
-- Architect Adept
-- Grant Architect
-- Free Master
-- Master Constant
-- Grand Master
-</td>
-<td>
-- n/a
-- n/a
-- ~1 year
-- ~2 years
-- 3 years
-- > 4 years
-- > 5 years
-- > 6 years!
-- > 11 years!
-- > 19 years!
-</td>
-<td>
-- 0.0
-- 0.125
-- 0.25
-- 1.0
-- 1.5
-- 2.0
-- 2.5
-- 2.5
-- 2.5
-- 2.5
-</td>
-
-Salary RFC: https://github.com/polkadot-fellows/RFCs/pull/50/
-OECD: Organisation for Economic Co-operation and Development
-
-<pba-col right>
 - The fellowship has different ranks based on their contributions to Polkadot.
 - The requirements to be promoted are defined in the manifesto.
 - Fellowship members can choose to accept a salary for their rank.
 - Salary is based on the OECD average salary for engineers.
-</pba-col>
+
+
+---
+
+## Ranks
+<!-- TO DO need to have table only on left side to provide space for bullet points-->
+
+
+
+| Dan  | Title           | Time from Dan I | Salary Factor (OECD) |
+|------|-----------------|-----------------|----------------------|
+| n/a  | Candidate       |       n/a       |          0.0         |
+| I    | Humble          |       n/a       |         0.125        |
+| II   | Proficient      |     ~1 year     |         0.25         |
+| III  | Fellow          |     ~2 years    |          1.0         |
+| IV   | Architect       |   &gt; 3 years  |          1.5         |
+| V    | Architect Adept |   &gt; 4 years  |          2.0         |
+| VI   | Grant Architect |   &gt; 5 years  |          2.5         |
+| VII  | Free Master     |  &gt; 6 years!  |          2.5         |
+| VIII | Master Constant |  &gt; 11 years! |          2.5         |
+| IX   | Grand Master    |  &gt; 19 years! |          2.5         |
+
+
+</br>
+<span style="font-size:0.5em;">
+
+Salary RFC: https://github.com/polkadot-fellows/RFCs/pull/50/
+</br>
+OECD: Organisation for Economic Co-operation and Development
+
+
 
 ---
 
 ## Dan I
 
-The requirements (condensed) to become a Dan I member of the Polkadot Fellowship are:
+<!-- TO DO columns should be better aligned -->
 
-<pba-col left>
+<span style="font-size:0.75em;">
+
+<pba-flex center>
+
+
+
+_The requirements (condensed) to become a Dan I member of the Polkadot Fellowship are:_
+
+</span>
+
+</br>
+
 - Three clear examples of a modest but substantial contribution to protocol development.
 - Actively been involved in the design of a component deployed to the network.
 - Substantially assisted in the analysis, or authoring of formalisation or implementation of a protocol component.
 - Should be able to list all key goals, principles and tenets of Polkadot’s overall philosophy.
-</pba-col>
-<pba-col right>
+
+</pba-flex>
+
+---
+
+## Dan I Contributions
+
+
+</br>
+
+<pba-flex center>
+
+
 Possible examples of a “modest but substantial contribution” may be:
+
+</br>
+
 - identifying and correcting a non-trivial issue in protocol code or formalisation;
 - being available and playing a crucial operational role for a network fix;
 - proposing a reasonable and non-trivial protocol innovation; or
 - doing a valuable, innovative and insightful refactoring or simplification.
-</pba-col>
+
+
+</pba-flex> 
+
+
+
+
 
 
 ---
@@ -259,16 +280,20 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ## Fellowship Clarity
 
+</br>
+
 - The Fellowship is a very new, and still developing organization.
 - The Fellowship offers technical influence over the Polkadot Network and a regular income.
 - It is attempting to provide human needs of consistent / regular income from a resilient decentralized source.
-- _The barrier to entry is intentionally very high._
+- The barrier to entry is intentionally _very high._
 - It is NOT a requirement to contribute to the Polkadot SDK or broader ecosystem.
 - It is NOT the path for everyone, even not necessarily for all core developers. 
 
 ---
 
 ## My recommended path to becoming a fellow…
+
+</br>
 
 - Join a team in the Polkadot (or broader) ecosystem aligned with the values of the fellowship.
 - Work with them to split your time between their work and core contributions to the Polkadot SDK.
@@ -285,11 +310,13 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ---
 
-## **Before you can contribute** you need to find an issue.
+#### **Before you can contribute** you need to find an issue.
 
 ---
 
 ## A common mistake…
+
+</br>
 
 - Don’t come to the Polkadot SDK with brand new features that you want to implement.
 - Polkadot is already a huge codebase, and does not want to maintain more code.
@@ -299,7 +326,10 @@ Possible examples of a “modest but substantial contribution” may be:
 ---
 ## Find the right issues
 
-Not all issues are created equal:
+</br>
+
+
+_Not all issues are created equal:_
 
 - _Difficulty:_ What level of Rust and/or Substrate expertise do you need to have to complete the issue?
 - _Sensitivity:_ What parts of the codebase does the issue touch, and how could that potentially affect the network?
@@ -309,7 +339,7 @@ Not all issues are created equal:
 ---
 
 
-## Issue Filters: C1-Mentor, C2-Good-First-Issue, D0-Easy
+#### Issue Filters: C1-Mentor, C2-Good-First-Issue, D0-Easy
 
 
 <img rounded style="width: 1000px" src="assets/Contributing/issues.png" />
@@ -324,13 +354,15 @@ Not all issues are created equal:
 
 ---
 
-## An Issue that Rust Compiler Can Entirely Check
+### An Issue that Rust Compiler Can Entirely Check
 
 <img rounded style="width: 1000px" src="assets/Contributing/example2.png" />
 
 
 ---
 ## Become a subject expert and code owner
+
+</br>
 
 - Training new open source contributors is very much a long term investment mindset.
 - You are more likely to find issues to work on and people to mentor you if you create a focus area for your contributions.
@@ -339,6 +371,8 @@ Not all issues are created equal:
 
 ---
 ## Keep conversations in public.
+
+</br>
 
 - The urge is to always try to open a direct message to quickly discuss and resolve questions.
 - Culture for Polkadot is: global and async.
@@ -354,7 +388,11 @@ Not all issues are created equal:
 
 ---
 ## Breakdown Large PRs
+
+</br>
+
 A large PR is the easiest way to get repository owners to place your code at the bottom of their “TODO” stack. Split up large PRs into multiple parts!
+
 - Take advantage of the Rust compiler.
   - Create a PR with just low sensitivity type changes
   - Sensitive logical changes in another PR which should be more compact to review.
@@ -363,3 +401,153 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 
 ---
+
+## Write Tests!
+
+<img rounded style="float:right;  padding-left:20px" src="assets/Contributing/boyscoutrule.png" />
+
+
+- The best way for a reviewer to sanity check your work is to read and understand your tests, and verify it passes.
+    - You will be surprised how even the most trivial changes can (and should) include a test!
+- Try to get additional test scenarios from the original issue creator, to ensure your solution aligns with their vision of the problem.
+- Write additional tests to cement your understanding of existing code, and add additional code coverage.
+
+
+---
+
+## Write Docs!
+
+</br>
+
+- Code always needs to be contextualized into what problem it is trying to solve and how it is choosing to solve that problem.
+- Documentation in the code should allow a reader to answer what the intention of the code is.
+- Documentation in the PR should guide the reviewer through the PR, highlighting the key areas of importance and the crux of the changes.
+
+---
+
+## Review Your Own PR
+
+</br>
+
+- Once you have a final PR open, and ready for review, go through and review your own PR.
+- Leave comments on code that you might want to highlight for other reviewers.
+    - For example sensitive changes that need extra scrutiny.
+- Catch any dead code, leftover comments, todos, formatting problems, and other low hanging fruit.
+    - As a reviewer, it is pretty discouraging to see the PR is not in great shape to be merged when reviewing it.
+
+---
+
+## My First PR 😬
+
+
+<img rounded style="width: 1000px" src="assets/Contributing/firstpr.png" />
+
+
+---
+
+## Get Paid!
+
+<img rounded style="width: 1000px" src="assets/Contributing/tip.png" />
+
+
+---
+
+<img rounded style="width: 1000px" src="assets/Contributing/visualizer.png" />
+
+
+
+</br>
+Expect Chaos.
+
+
+---
+
+
+### Questions?
+
+
+
+ <script src="/dist/reveal.js"></script>
+
+  <script src="/plugin/markdown/markdown.js"></script>
+  <script src="/plugin/highlight/highlight.js"></script>
+  <script src="/plugin/zoom/zoom.js"></script>
+  <script src="/plugin/notes/notes.js"></script>
+  <script src="/plugin/math/math.js"></script>
+
+  <script src="/assets/plugin/mermaid.js"></script>
+  <script src="/assets/plugin/mermaid-theme.js"></script>
+
+  <script src="/assets/plugin/chart/chart.js"></script>
+  <script src="/assets/plugin/chart/chart.min.js"></script>
+
+  <script src="/assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
