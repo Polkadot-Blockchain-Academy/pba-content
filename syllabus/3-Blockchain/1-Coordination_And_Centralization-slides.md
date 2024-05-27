@@ -77,7 +77,6 @@ So now we understand the goals of web3. How do we achieve them? The key is allow
 
 _-- Yuval Noah Harari, Sapiens --_
 
-
 Notes:
 
 Knowing and believing shared stories is important because it helps bootstrap trust.

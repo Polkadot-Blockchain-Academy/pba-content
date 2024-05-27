@@ -190,13 +190,13 @@ Game theory distinguishes between:
 
 ## Static and Dynamic Games
 
-|                  | Static Game                                     | Dynamic Game                                                                                           |
-| ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Definition       | All players take their actions at the same time | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
-| Simple Example   | Rock-Paper-Scissors                             | Tic-Tac-Toe                                                                                            |
-| Economic Example | Sealed-bid auction.                             | English Auction.                                   |
-|                  |   All bidders submit their bids simultaneously (in a sealed envelope).                               | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
-| Representation   | Payoff Matrix                                   | Decision Tree                                                                                          |
+|                  | Static Game                                                          | Dynamic Game                                                                                           |
+| ---------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Definition       | All players take their actions at the same time                      | Players move sequentially and possibly multiple times, (at least partially) observing previous actions |
+| Simple Example   | Rock-Paper-Scissors                                                  | Tic-Tac-Toe                                                                                            |
+| Economic Example | Sealed-bid auction.                                                  | English Auction.                                                                                       |
+|                  | All bidders submit their bids simultaneously (in a sealed envelope). | Auctioneer publicly raises price if at least one bidder accepts the price.                             |
+| Representation   | Payoff Matrix                                                        | Decision Tree                                                                                          |
 
 Notes:
 
@@ -432,7 +432,6 @@ So, they end up in a situation where they not only fare worse _individually_ (4 
 <li class="fragment"><strong>Nuclear Arms Race:</strong> <a href="https://www.history.com/topics/cold-war/arms-race">NATO and Russia</a> prefer no arms race to an arms race. Yet, having some arms is preferable to having no arms, irrespective of whether the other one is armed.</li>
 <li class="fragment"><strong>OPEC:</strong> <a href="https://www.opec.org/opec_web/en/">Limiting oil supply</a> is in the best interest of all. However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
 </ul>
-
 
 Notes:
 
@@ -803,10 +802,10 @@ Notes:
 Notes:
 
 - Game of chicken or Hawk-Dove Game
-- |           | Swerve   | Straight     |
-|-----------|----------|--------------|
-| **Swerve**| 0, 0     | -1, +1       |
-| **Straight** | +1, -1  | -1000, -1000 |
+- |              | Swerve | Straight     |
+  | ------------ | ------ | ------------ |
+  | **Swerve**   | 0, 0   | -1, +1       |
+  | **Straight** | +1, -1 | -1000, -1000 |
 - "Anti-Coordination Game" with the tension between competition and mutual benefit of compromise.
 - Real-world situations of conflict, where both would prefer not to fight but would actually like to intimidate, leading to a real conflict.
 - Two businesses would be better off not to engage in price war, but it would be good to be the only one to reduce the price to grab some market share.
@@ -924,8 +923,8 @@ Link will be distributed!
     <li class="fragment">Each strategy would play against every other strategy and against itself.</li>
 </ul>
 
-
 Notes:
+
 - Based on https://ve42.co/Axelrod1980a and https://www.youtube.com/watch?v=mScpHTIi-kM
 
 ---
@@ -938,7 +937,6 @@ Notes:
     <li class="fragment">Grim trigger: Always cooperate but retaliate and defect forever, if the other defect once.</li>
     <li class="fragment">Tit-For-Tat: Start with cooperate and copy the opponent's strategy of the last round.</li>
 </ul>
-
 
 ---
 
@@ -956,8 +954,8 @@ Notes:
     </li>
 </ul>
 
-
 Notes:
+
 - This was rather big surprise, especially since dominant strategy is being nasty.
 - A lot of it is what we can observe in today's politics.
 
@@ -1012,7 +1010,6 @@ Notes:
 ## Game 3: Questions?
 
 ### Don't ask about strategies!
-
 
 ---
 

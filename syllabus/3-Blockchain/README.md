@@ -34,10 +34,10 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 
 #### Morning
 
-- 🗣️ [Decentralized Systems: Goals and History](./1-Overview_Goals_History-slides.md)
-- 🎲 (Optional) [Manual Consensus Game](./Manual_Consenus_Activity.md)
+- 🗣️ [Coordination and Centralization: Past, Present, Future](./1-Coordination_And_Centralization-slides.md)
+- 🗣️ [P2P Networks](./2-P2P_Networks-slides.md)
 - ☕ Break
-- 🗣️ [P2P Networks and State Machines](./2-P2P_Networks_State_Machines-slides.md)
+- 🗣️ [State Machines](./2.5-State_Machines-slides.md)
 - ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
 
 #### Afternoon
