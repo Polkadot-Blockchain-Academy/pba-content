@@ -803,9 +803,7 @@ The themes of his creations mostly focus on exploring the relationship between r
 
 <img rounded style="width:600px" src="./img/2.3-nft.jpeg" />
 
-
 ---
-
 
 ## The NFTs
 
