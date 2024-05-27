@@ -81,12 +81,15 @@ Based on well maintained open repositories listed on https://wiki.polkadot.netwo
 
 ---
 
-## JS/TS APIs
+## JS/TS/Python/Rust & APIs
 
 <pba-col center>
 
 - [Polkadot-JS](https://polkadot.js.org/)
 - [Polkadot-API](https://github.com/polkadot-api/polkadot-api)
+- [Python Substrate Interface](https://github.com/polkascan/py-substrate-interface)
+- [Subxt](https://github.com/paritytech/subxt)
+- [Substrate API Sidecar](https://github.com/paritytech/substrate-api-sidecar/)
 
 </pba-col>
 
