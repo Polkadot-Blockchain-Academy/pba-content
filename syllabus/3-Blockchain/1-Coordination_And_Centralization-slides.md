@@ -125,13 +125,47 @@ Notes:
 
 <img style="height: 500px;" src="./img/overview/StorytellingTechnology.png" />
 
+---
 
+## Who Writes the Story?
 
+A Dictator?
 
+<blockquote>Dictator (n) - One who dictates, speaks, or narrates.
 
+Notes:
 
+This is how we used to understand how much grain was in the grainery.
 
+This is how we used to understand what the holy scriptures told us to do.
 
+This is dangerous.
+
+---v
+
+## Tell the Story Together
+
+<img style="height: 500px;" src="./img/overview/campfire1.png" />
+
+---v
+
+## Tell the Story Together
+
+<img style="height: 500px;" src="./img/overview/campfire3.png" />
+
+---v
+
+## Tell the Story Together
+
+<img style="height: 500px;" src="./img/overview/campfire4.png" />
+
+---
+
+# The 21st Century Rumor Mill
+
+Notes:
+
+Shifting gears a little bit, let's take a look at what oral tradition, communication, and gossip have looked like in more recent times.
 
 ## Web 0
 
@@ -297,6 +331,6 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ---
 
-# Coorination and Centralization
+# Coordination and Centralization
 
-## PAst Present and Future
+## Past Present and Future
