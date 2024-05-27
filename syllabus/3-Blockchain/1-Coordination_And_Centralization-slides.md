@@ -115,7 +115,7 @@ I bet some of you have other similar stories.
 
 Chancellor on Brink of second bailout for banks
 
-<img style="height: 500px;" src="./img/overview/ChancellorOnBrink.png" />
+<img style="height: 500px;" src="./img/overview/ChancellorOnBrink.jpeg" />
 
 Notes:
 
@@ -166,6 +166,8 @@ This is dangerous.
 Notes:
 
 Shifting gears a little bit, let's take a look at what oral tradition, communication, and gossip have looked like in more recent times.
+
+---
 
 ## Web 0
 
