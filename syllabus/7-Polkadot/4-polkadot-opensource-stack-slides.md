@@ -20,6 +20,7 @@ Based on well maintained open repositories listed on https://wiki.polkadot.netwo
 - [Parachain Template by OpenZeppelin](https://github.com/OpenZeppelin/polkadot-runtime-templates)
 - [Templates on Polkadot SDK](https://github.com/paritytech/polkadot-sdk/tree/master/templates)
 - [Templates on POP](https://github.com/r0gue-io/pop-cli)
+- [Tenplates by Tanssi](https://github.com/moondance-labs/tanssi)
 
 </pba-col>
 
@@ -29,6 +30,9 @@ Based on well maintained open repositories listed on https://wiki.polkadot.netwo
 
 <pba-col center>
 
+- [ParaSpell](https://github.com/paraspell/xcm-tools)
+- [XCM-SDK](https://github.com/moonbeam-foundation/xcm-sdk/)
+- [XCM-Tools (debugging XCM)](https://github.com/Moonsong-Labs/xcm-tools)
 - [BagPipes (formerly xcmsend)](https://github.com/XcmSend/app)
 - [Ocelloids SDK](https://github.com/sodazone/ocelloids-sdk)
 
