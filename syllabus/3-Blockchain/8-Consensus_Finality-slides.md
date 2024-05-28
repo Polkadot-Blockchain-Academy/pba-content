@@ -36,7 +36,31 @@ But these conditions are not interesting, and are often not realistic. It gets i
 
 </pba-flex>
 
+---
+
+## What do these things have in common?
+
+<img style="width: 600px" src="./img/roller_coaster.jpg" />
+
 ---v
+
+## What do these things have in common?
+
+<img style="width: 600px" src="./img/slackline.jpg" />
+
+---v
+
+## What do these things have in common?
+
+<img style="width: 600px" src="./img/wheel.jpg" />
+
+---v
+
+## What do these things have in common?
+
+<img style="width: 600px" src="./img/ratchet.jpg" />
+
+---
 
 ## Adversarial Conditions
 
