@@ -14,6 +14,15 @@ Introduce instructors, tell about background, glad to be here.
 Let's all learn together.
 Shoot the shit until the initial nervousness starts to wear off, or at least peaks.
 
+Lets get started.
+
+For 100ks of year, humans have been on this earth.
+During this time we have been working on better and better ways to understand each other, and coordinate with each other.
+Sometimes we coordinate to do great things like build skyscrapers, or win sports tournaments.
+Other times we just coordinate enough to not anger each other.
+
+I believe that blcokchain is our generation's contribution to this endeavor that human kind is on.
+
 ---
 
 ## Goals
@@ -45,6 +54,117 @@ Crypto guarantees:
 - Authenticity of the author
 
 We want these same _kinds_ of guarantees, not just about messages, but about entire systems.
+
+---
+
+## A Shared History
+
+<img style="height: 500px;" src="./img/overview/sapiens.jpg" />
+
+Notes:
+
+So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2, and indeed often in governmental bureaucracies, users have no visibility into the history of the app. They must trust the provider to accurately represent the current state. By giving the service provider the power to change the story, we give them the power to shape our understanding of reality and consequently our behavior.
+
+---v
+
+## A Shared History
+
+> Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
+
+> Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
+
+<!-- .element: class="fragment" -->
+
+_-- Yuval Noah Harari, Sapiens --_
+
+Notes:
+
+Knowing and believing shared stories is important because it helps bootstrap trust.
+
+---
+
+## Let's Tell Some Stories
+
+- Enuma Elish<!-- .element: class="fragment" -->
+- Cherokee Creation Story<!-- .element: class="fragment" -->
+- Big Bang<!-- .element: class="fragment" -->
+- Genesis Creation Stor(ies)<!-- .element: class="fragment" -->
+
+Notes:
+
+Tell them or let students tell them.
+
+These stories have really stood the test of time. They span cultures. They are the bedrock of much of modern humanity's understanding of who they are.
+
+---v
+
+## Newer Stories
+
+<img style="height: 500px;" src="./img/overview/DeclarationOfIndependance.png" />
+
+Notes:
+
+I'm not only a human. I'm also an American. This story is also important to me.
+
+I bet some of you have other similar stories.
+
+---v
+
+## Modern Stories
+
+Chancellor on Brink of second bailout for banks
+
+<img style="height: 500px;" src="./img/overview/ChancellorOnBrink.jpeg" />
+
+Notes:
+
+---
+
+## Storytelling Technology
+
+<img style="height: 500px;" src="./img/overview/StorytellingTechnology.png" />
+
+---
+
+## Who Writes the Story?
+
+A Dictator?
+
+<blockquote>Dictator (n) - One who dictates, speaks, or narrates.
+
+Notes:
+
+This is how we used to understand how much grain was in the grainery.
+
+This is how we used to understand what the holy scriptures told us to do.
+
+This is dangerous.
+
+---v
+
+## Tell the Story Together
+
+<img style="height: 500px;" src="./img/overview/campfire1.png" />
+
+---v
+
+## Tell the Story Together
+
+<img style="height: 500px;" src="./img/overview/campfire3.png" />
+
+---v
+
+## Tell the Story Together
+
+<img style="height: 500px;" src="./img/overview/campfire4.png" />
+
+---
+
+# The 21st Century Rumor Mill
+
+Notes:
+
+Shifting gears a little bit, let's take a look at what oral tradition, communication, and gossip have looked like in more recent times.
 
 ---
 
@@ -212,24 +332,6 @@ No individual actor, company, state, or coalition should be able to degrade any 
 
 ---
 
-## A Shared History
+# Coordination and Centralization
 
-<img style="height: 500px;" src="./img/overview/sapiens.jpg" />
-
-Notes:
-
-So now we understand the goals of web3. How do we achieve them? The key is allowing users to agree on a shared history. The simplest blockchains do nothing more than timestamp and attest to a stream of historical records. In Web 2, and indeed often in governmental bureaucracies, users have no visibility into the history of the app. They must trust the provider to accurately represent the current state. By giving the service provider the power to change the story, we give them the power to shape our understanding of reality and consequently our behavior.
-
----v
-
-## A Shared History
-
-> Any large-scale operation - whether a modern state, a medieval church, or an archaic tribe - is rooted in common stories that exist only in people's collective imaginations.
-
-> Telling effective stories is not easy. The difficulty lies ... in convincing everyone else to believe it. Much of history revolves around this question: How does one convince millions of people to believe particular stories about gods, nations, or LLCs?
-
-<!-- .element: class="fragment" -->
-
-_-- Yuval Noah Harari, Sapiens --_
-
----
+## Past Present and Future
