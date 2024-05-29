@@ -174,7 +174,7 @@ Note:
         <li class="fragment">Good behavior is rewarded with staking rewards.</li>
         <li class="fragment">Malicious / Neglecting behavior is punished (slashed).</li>
     </ul>
-    <li class="fragment">Currently, minimum total stake is ~2.1M DOTs.</li>
+    <li class="fragment">Currently, minimum total stake is ~2.4M DOTs.</li>
     <li class="fragment">The total stake in the system directly translates to the <strong>economic security</strong> that it provides.</li>
     <li class="fragment">Total stake is pooled from validators (self-stake) and their nominators (nominated stake)</li>
     <ul>
