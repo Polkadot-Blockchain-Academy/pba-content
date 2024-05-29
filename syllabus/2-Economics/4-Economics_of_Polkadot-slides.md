@@ -6,9 +6,14 @@ duration: 2 hour
 
 # The Economics of Polkadot
 
+Note:
+- First: Lecture
+- Then we will see the tournament results and discuss
+
 ---
 
-## Overview
+## The Economics of Polkadot
+
 
 <ul>
 <li class="fragment">Which economic pieces build the the Polkadot Network?</li>
@@ -17,6 +22,11 @@ duration: 2 hour
 </ul>
 
 <p class="fragment">Remark: There are currently many changes planned</p>
+
+Note:
+- It was a bit challenging to find a good structure for this.
+- Because most of the "old" system is still fully in place and important, but a lot is about to change very soon.
+- I focus on the system as it is now (also conceptually things do not change) and reference to upcoming changes.
 
 ---
 
@@ -113,6 +123,29 @@ duration: 2 hour
     </div>
 </div>
 
+Notes:
+- current staking rate 56.7%
+- Assume we have 100 token in the whole network. The yearly inflation rate is 10%. Now assume that we have an ideal staking rate of 50% and we actually have 50% of the token staked the whole year (i.e., all inflation goes to stakers). That means, of the 100 token, we have 50 in the staking system. Let’s also make a simplifying assumption that staking rewards are only distributed once after one year.
+
+- At the end of the year, 10 token (100*0.1) are minted from inflation and distributed to those 50 token (equally). Only those get the rewards, because only they are part of the staking system. 
+
+- Let’s say I had 1 token in the staking system at the beginning of the year, then I will have 1.2 token after (because I get 1/50th of the 10 token). As you can see, my staking APY (yield) is 20%.
+
+---
+
+# Adjusted Ideal Rate
+
+<ul>
+<li class="fragment">Referendum 166 proposed to change the calculation of the ideal rate.</li>
+<li class="fragment">Got accepted by community with overwhelming approval and support.</li>
+<li class="fragment">Without it, the ideal rate would be 51.5% now!</li>
+<li class="fragment">That would lead to large reduction of staking rewards to stakers.</li>
+</ul>
+
+Note:
+- before: auction_proportion <- min(auctioned_slots, 60) / 200 , ideal_stake <- 75 / 100 - auction_proportion
+- now: auction_proportion <- min(auctioned_slots, 60) / 300 , ideal_stake <- 75 / 100 - auction_proportion
+  
 ---
 
 ## Inflation
@@ -126,17 +159,8 @@ duration: 2 hour
         <li class="fragment">It incentivizes to work with the tokens (i.e., bond for good parachains, use for message passing).</li>
         <li class="fragment">Deflation can cause a halt of economic activity, because people start hoarding tokens.</li>
     </ul>
-</ul>
+    <li class="fragment">Polkadot is paying validators to do their job and be resilient from inflation!</li>
 
----
-
-## Potential changes incoming
-
-<ul>
-    <li class="fragment">The current system incentivizes to move the staking rate to the ideal rate.</li>
-    <li class="fragment">Then, Treasury inflow would be 0 DOT.</li>
-    <li class="fragment">That is not sustainable.</li>
-    <li class="fragment">Proposed change: Detach inflation to stakers from total inflation and divert the rest to Treasury directly.</li>
 </ul>
 
 ---
@@ -206,6 +230,9 @@ duration: 2 hour
 </pba-col>
 </pba-cols>
 
+Notes:
+- Talk about economic security of validators (self-stake + NPV of future rewards (moderated by commission)).
+
 ---
 
 ## Validator Selection
@@ -228,7 +255,7 @@ duration: 2 hour
 
 ---
 
-# Parachains
+# Parachains / Cores
 
 ---
 
@@ -241,7 +268,7 @@ duration: 2 hour
         <li class="fragment">Highly domain specific and have high degree of flexibility in their architecture.</li>
         <li class="fragment">Share same messaging standard to be interoperable and exchange messages through the Relay Chain.</li>
     </ul>
-    <li class="fragment">Polkadot: 50 Parachains, Kusama: 46 Parachains.</li>
+    <li class="fragment">Polkadot: 50 Parachains, Kusama: 45 Parachains.</li>
     <li class="fragment">Their state transition function (STF) is registered on the Relay Chain.</li>
     <ul>
         <li class="fragment">Validators can validate state transitions without knowing all the data on the Parachain.</li>
@@ -264,6 +291,9 @@ duration: 2 hour
     <li class="fragment">Bonded tokens held (trustlessly) in custody on the Relay Chain.</li>
     <li class="fragment">The tokens will be refunded after the slot expires.</li>
 </ul>
+
+<p class="fragment">This will change in favor of agile coretime markets likely in August 2024.</p>
+
 
 ---
 
@@ -307,15 +337,15 @@ duration: 2 hour
 
 ---
 
-## Outlook Polkadot
+## Outlook: Polkadot
 
 <ul>
     <li class="fragment">Based on Gav’s Keynote at Polkadot Decoded 2023 and RFC-1.</li>
-    <li class="fragment">A new narrative of the whole Polkadot system.</li>
-    <li class="fragment">We move away from regarding Parachains as a distinct entity but rather regard Polkadot as global distributed computer.</li>
+    <li class="fragment">Blockspace: A new narrative of the whole Polkadot system.</li>
+    <li class="fragment">Polkadot is moving away from regarding Parachains as a distinct entity but rather regard the whole network as global distributed computer.</li>
     <li class="fragment">It's spaces and apps rather than chains.</li>
     <li class="fragment">This computer has computation cores that can be allocated flexible to applications that need it.</li>
-    <li class="fragment">Coretime can be bought, shared, resold.</li>
+    <li class="fragment">Cores can be much easier be acquired, shared, and resold.</li>
 </ul>
 
 ---
@@ -341,26 +371,72 @@ duration: 2 hour
 
 ---
 
-## Bulk markets
+## Agile Coretime
 
 <ul>
-    <li class="fragment">It's not yet finalized how they work but likely:</li>
+    <li class="fragment">The final design is not yet determined.</li>
     <ul>
-        <li class="fragment">Around 75% of cores are allocated to the market.</li>
         <li class="fragment">Cores are sold for 4 weeks as NFT by a broker.</li>
         <li class="fragment">Unrented cores go to the instantaneous market.</li>
         <li class="fragment">Price de-/increases relative to demand.</li>
+        <ul>
+            <li class="fragment">Dutch auction.</li>
+        </ul>
         <li class="fragment">Current tenants have a priority buy right for their core(s).</li>
+        <ul>
+            <li class="fragment">One goal is to offer price predictability for existing teams.</li>
+            <li class="fragment">Challenging Task.</li>
+        </ul>
+    </ul>
+</ul>
+
+
+---
+
+## Agile Coretime
+
+<ul>
+    <li class="fragment">The first three cores are already being sold on Kusama</li>
+    <ul>
+        <li class="fragment">First renewals are already happening.</li>
+        <li class="fragment">There is some discussion about adjusting the market structure.</li>
+        <li class="fragment">In RFC17, I proposed some design for the market.</li>
+        <li class="fragment">Launch on Polkadot in August 2024!</li>
+    </ul>
+</ul>
+
+
+---
+
+## RFC 10
+
+<ul>
+    <li class="fragment">Proposed to burn coretime revenues.</li>
+    <li class="fragment">Got accepted by the fellowship.</li>
+    <li class="fragment"><strong>Clear incentives:</strong> Coretime is clearly a cost.</li>
+    <ul>
+        <li class="fragment">Some actors might asymmetrically benefit from Treasury.</li>
+    </ul>
+    <li class="fragment"><strong>Balancing Inflation:</strong> Deflationary pressure in the system.</li>
+    <ul>
+        <li class="fragment">Initially rather low.</li>
+    </ul>
+    <li class="fragment"><strong>Collective Value Accrual:</strong></li>
+    <ul>
+        <li class="fragment">Burning one DOT benefits all other DOTs equally.</li>
     </ul>
 </ul>
 
 ---
 
-## Why the change?
+
+## Why Agile Coretime?
 
 <ul>
     <li class="fragment">This allows for low barriers of entry for people to simply deploy their code to a core and test stuff</li>
     <li class="fragment">It makes blockspace more efficient, because not all teams can/want to have a full block every 6/12 seconds.</li>
+    <li class="fragment">Secondary markets increase efficiency and improve resource allocation.</li>
+
 </ul>
 
 ---
@@ -422,11 +498,56 @@ duration: 2 hour
 
 ---
 
+# Potential Changes to the Economics
+
+---
+
+## Independent Treasury Inflow
+
+<ul>
+    <li class="fragment">The current system incentivizes to move the staking rate to the ideal rate.</li>
+    <li class="fragment">Then, Treasury inflow would be 0 DOT.</li>
+    <li class="fragment">That is not sustainable.</li>
+    <li class="fragment">Proposed change: Detach inflation to stakers from total inflation and divert the rest to Treasury directly.</li>
+</ul>
+
+---
+
+## Fixed Ideal Staking Rate
+
+<ul>
+    <li class="fragment">Ideal staking rate scales with number of parachains.</li>
+    <li class="fragment">The notion of parachain in its original form is being deprecated.</li>
+    <li class="fragment">It might be much more reasonable to aim for a static ideal staking rate. </li>
+</ul>
+
+---
+
+## Lowered inflation?
+
+<ul>
+    <li class="fragment">Voices become louder that demand lowering inflation.</li>
+    <li class="fragment">This will be a highly debated topic.</li>
+    <li class="fragment">Inflation is used to pay validators and nominators to do their job.</li>
+    <li class="fragment">Interesting how many people "wake up" to the debate trying to block lowering of inflation.</li>
+</ul>
+
+Notes:
+- Validator rewards are a major contributor to the economic security of Polkadot.
+- Lowering inflation leads to lowered rewards.
+- We could increase minimum commission, but that would further disadvantage nominators.
+
+---
+
 ## Further Resources
 
 - [Agile Coretime RFC](https://github.com/polkadot-fellows/RFCs/pull/1)
+- [Updates on Coretime Sales](https://forum.polkadot.network/t/agile-coretime-launch-status-report/8347)
 - [Discussion on Changing Inflation Model](https://forum.polkadot.network/t/adjusting-the-current-inflation-model-to-sustain-treasury-inflow/3301)
 - [Talk about Agile Polkadot](https://www.youtube.com/watch?v=GIB1WeVuJD0)
 - [Nominating and Validator Selection On Polkadot](https://polkadot.network/blog/nominating-and-validator-selection-on-polkadot/)
 - [(Journal Version) Paper on Validator Selection](https://www.sciencedirect.com/science/article/abs/pii/S0305048323000336)
 - [(Open Source Version) Paper on Validator Selection)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4253515)
+- [Referendum 166](https://polkadot.polkassembly.io/referenda/166)
+- [Discussing on adjusting ideal rate](https://forum.polkadot.network/t/adjusting-polkadots-ideal-staking-rate-calculation/3897)
+- [RFC17](https://github.com/polkadot-fellows/RFCs/pull/17)
