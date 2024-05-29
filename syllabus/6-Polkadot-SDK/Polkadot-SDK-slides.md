@@ -147,7 +147,7 @@ TODO: maybe turn into slides, maybe leave as notes for now.
 
 ### Polkadot SDK
 
-<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
 
 All proudly™️ built with Substrate.
 
@@ -250,7 +250,7 @@ About Polkadot SDK
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Note:
 
