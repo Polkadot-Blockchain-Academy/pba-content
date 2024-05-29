@@ -341,7 +341,7 @@ Notes:
 
 <ul>
     <li class="fragment">Based on Gav’s Keynote at Polkadot Decoded 2023 and RFC-1.</li>
-    <li class="fragment">Blockspace: A new narrative of the whole Polkadot system.</li>
+    <li class="fragment">Blockspace: A current narrative in the Polkadot system.</li>
     <li class="fragment">Polkadot is moving away from regarding Parachains as a distinct entity but rather regard the whole network as global distributed computer.</li>
     <li class="fragment">It's spaces and apps rather than chains.</li>
     <li class="fragment">This computer has computation cores that can be allocated flexible to applications that need it.</li>
@@ -452,7 +452,7 @@ Notes:
         <li class="fragment">Staking inefficiencies (deviations from optimal staking rate)</li>
     </ul>
     <li class="fragment">Through governance, everybody can submit proposals to initiate treasury spending.</li>
-    <li class="fragment">It currently holds around 43M DOT.</li>
+    <li class="fragment">It currently holds around 28M DOT.</li>
     <li class="fragment">Spending is incentivized by a burn mechanism (1% every 24 days).</li>
 </ul>
 
