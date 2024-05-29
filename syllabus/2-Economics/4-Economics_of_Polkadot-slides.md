@@ -7,13 +7,13 @@ duration: 2 hour
 # The Economics of Polkadot
 
 Note:
+
 - First: Lecture
 - Then we will see the tournament results and discuss
 
 ---
 
 ## The Economics of Polkadot
-
 
 <ul>
 <li class="fragment">Which economic pieces build the the Polkadot Network?</li>
@@ -24,6 +24,7 @@ Note:
 <p class="fragment">Remark: There are currently many changes planned</p>
 
 Note:
+
 - It was a bit challenging to find a good structure for this.
 - Because most of the "old" system is still fully in place and important, but a lot is about to change very soon.
 - I focus on the system as it is now (also conceptually things do not change) and reference to upcoming changes.
@@ -124,10 +125,11 @@ Note:
 </div>
 
 Notes:
+
 - current staking rate 56.7%
 - Assume we have 100 token in the whole network. The yearly inflation rate is 10%. Now assume that we have an ideal staking rate of 50% and we actually have 50% of the token staked the whole year (i.e., all inflation goes to stakers). That means, of the 100 token, we have 50 in the staking system. Let’s also make a simplifying assumption that staking rewards are only distributed once after one year.
 
-- At the end of the year, 10 token (100*0.1) are minted from inflation and distributed to those 50 token (equally). Only those get the rewards, because only they are part of the staking system. 
+- At the end of the year, 10 token (100\*0.1) are minted from inflation and distributed to those 50 token (equally). Only those get the rewards, because only they are part of the staking system.
 
 - Let’s say I had 1 token in the staking system at the beginning of the year, then I will have 1.2 token after (because I get 1/50th of the 10 token). As you can see, my staking APY (yield) is 20%.
 
@@ -143,9 +145,10 @@ Notes:
 </ul>
 
 Note:
+
 - before: auction_proportion <- min(auctioned_slots, 60) / 200 , ideal_stake <- 75 / 100 - auction_proportion
 - now: auction_proportion <- min(auctioned_slots, 60) / 300 , ideal_stake <- 75 / 100 - auction_proportion
-  
+
 ---
 
 ## Inflation
@@ -231,6 +234,7 @@ Note:
 </pba-cols>
 
 Notes:
+
 - Talk about economic security of validators (self-stake + NPV of future rewards (moderated by commission)).
 
 ---
@@ -293,7 +297,6 @@ Notes:
 </ul>
 
 <p class="fragment">This will change in favor of agile coretime markets likely in August 2024.</p>
-
 
 ---
 
@@ -390,7 +393,6 @@ Notes:
     </ul>
 </ul>
 
-
 ---
 
 ## Agile Coretime
@@ -404,7 +406,6 @@ Notes:
         <li class="fragment">Launch on Polkadot in August 2024!</li>
     </ul>
 </ul>
-
 
 ---
 
@@ -428,7 +429,6 @@ Notes:
 </ul>
 
 ---
-
 
 ## Why Agile Coretime?
 
@@ -533,6 +533,7 @@ Notes:
 </ul>
 
 Notes:
+
 - Validator rewards are a major contributor to the economic security of Polkadot.
 - Lowering inflation leads to lowered rewards.
 - We could increase minimum commission, but that would further disadvantage nominators.
