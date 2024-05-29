@@ -465,7 +465,7 @@ Notes:
     <li class="fragment">This has huge potential that might not yet have been fully recognized by the people.</li>
     <li class="fragment">This provides the chain the power to fund its own existence and improves the utility in the future. It will pay…</li>
     <ul>
-        <li class="fragment">… <strong>core developers</strong> to improve the protocol.</li>
+        <li class="fragment">… <strong>core developers</strong> to improve the protocol (fellowship).</li>
         <li class="fragment">… <strong>researchers</strong> to explore new directions, solve problems and conduct studies that are beneficial for the network.</li>
         <li class="fragment">… for campaigns <strong>educating people</strong> about the protocol.</li>
         <li class="fragment">… for <strong>systems-parachains</strong> (development & collators).</li>
