@@ -52,7 +52,8 @@ Notes:
 - Substrate is a blockchain building framework
 - But only "solo" chains
 - Split into runtime/node side
-- Both Polkadot and Cumulus extend substrate
+- Polkadot is built using substrate
+- Cumulus extends substrate to allow any substrate chain to operate as a parachain
 - Polkadot provides APIs to collators
 
 ---
@@ -140,12 +141,12 @@ Notes:
 
 ---
 
-### Import Driven Block Authoring
+### Key Process 1: Import Driven Block Authoring
 
-Collators are responsible for authoring new blocks, and they do so when importing relay blocks.
+Collators are responsible for authoring new blocks. Prior to the rollout of asynchronous backing, they did so when importing relay blocks.
 Honest Collators will choose to author blocks descending from the best head.
 
-```rust[|3|4-8|11]
+```rust[3|4-8|11]
 // Greatly simplified
 loop {
     let imported = import_relay_chain_blocks_stream.next().await;
@@ -165,19 +166,17 @@ loop {
 
 Notes:
 
-- `parachain_trigger_block_authoring` itself can decide if it wants to build a block.
-- e.g. the parachain having a block time of 30 seconds
-- With asynchronous backing, parachain block authoring is untethered from relay block import.
+- With asynchronous backing, parachain block authoring is untethered from relay block import, though still ultimately reliant on it.
 
 ---
 
-### Finality
+### Key Process 2: Finality Updates
 
 To facilitate shared security, parachains inherit their finality from the relay chain.
 
 <br/>
 
-```rust[|3|4-8|11]
+```rust[3|4-8|11]
 // Greatly simplified
 loop {
     let finalized = finalized_relay_chain_blocks_stream.next().await;
@@ -194,9 +193,9 @@ loop {
 
 ---
 
-### Ensuring Block Availability
+### Key Process 3: Ensuring Block Availability
 
-As a part of the parachains protocol, Polkadot makes parachain blocks available for several hours after they are backed.
+As a part of the parachains protocol, Polkadot makes parachain blocks available for 24 hours after they are backed.
 <br/><br/>
 
 <pba-flex center>
@@ -206,13 +205,13 @@ As a part of the parachains protocol, Polkadot makes parachain blocks available 
   - Malicious collator
 
 </pba-flex>
+<br/><br/>
+
+> What role does cumulus play?
 
 Notes:
 
-- Approvers need the PoV to validate
-- Can't just trust backers to distribute the PoV faithfully
-- Malicious or faulty collators may advertise collations to validators without sharing them with other parachain nodes.
-- Cumulus is responsible for requesting missing blocks in the latter case
+- When Cumulus learns of a new parachain block via a receipt on the relay chain, it is responsible for deciding how long to wait before deciding that the block is missing and then requesting it from Polkadot DA.
 
 ---
 
@@ -252,13 +251,11 @@ Notes:
 
 ---
 
-# Collation Generation and Advertisement
+# Key Process 4: Collation Generation and Advertisement
 
 ---
 
 ## Collation Generation
-
-The last of our key processes
 
 <pba-flex center>
 
@@ -282,27 +279,9 @@ The last of our key processes
 
 Notes:
 
-- First, sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to backers
-- At least one backer responds, signing its approval
-- Triggers gossip of candidate to parachain node import queues
-
----
-
-#### Distribution in Code
-
-```rust[1|5]
-let result_sender = self.service.announce_with_barrier(block_hash);
-
-tracing::info!(target: LOG_TARGET, ?block_hash, "Produced proof-of-validity candidate.",);
-
-Some(CollationResult { collation, result_sender: Some(result_sender) })
-```
-
-Notes:
-
-- Prepares the announcement of a new parablock to peers with "announce_with_barrier"
-- Waits for green light from validator by sending it a "result_sender"
-- When validator sends positive result through sender, then the collator announces the block
+- New parablocks are communicated simultaneously in two ways
+  - A collation is sent to the collator's tethered relay node to be processed in the `CollationGeneration` subsystem. There it is repackaged before being forwarded to backers.
+  - An advertisement of the new parablock candidate is gossiped to parachain node import queues
 
 ---
 
@@ -334,7 +313,7 @@ Notes:
 
 <pba-flex center>
 
-- Building Blocks to make this possible, the PVF and PoV, are delivered within collations
+- The building blocks to make this possible, the PVF and PoV, are delivered within collations
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -394,7 +373,7 @@ The code is hashed and saved in the storage of the relay chain.
 
 Notes:
 
-PVF not only contains the runtime, but also a function `validate_block` needed to interpret all the extra information in a PoV required for validation.
+The function `validate_block` needed to interpret all the extra information in a PoV required for validation.
 This extra information is unique to each parachain and opaque to the relay chain.
 
 ---
@@ -431,7 +410,7 @@ The input of the runtime validation process is the PoV, and the function called 
 
 #### Validate Block in Code
 
-```rust [2|3-4|6|8-11]
+```rust [2|3-4|6|8-11|14]
 // Very simplified
 fn validate_block(input: InputParams) -> Output {
     // First let's initialize the state
@@ -449,14 +428,14 @@ fn validate_block(input: InputParams) -> Output {
 }
 ```
 
-<br/>
-
-> But where does `storage_proof` come from?
-
 Notes:
 
-We construct the sparse in-memory database from the storage proof and
-then ensure that the storage root matches the storage root in the `parent_head`.
+1. We construct the sparse in-memory database from the storage proof and then ensure that the storage root matches the storage root in the `parent_head`.
+2. Replace host functions
+3. Execute block
+4. Create output. We check whether the `storage_root` and other outputs resulting from validation matched the commitments made by the collator.
+
+But where does `storage_proof` come from?
 
 ---
 
@@ -496,18 +475,20 @@ Notes:
 
 Code highlighting:
 
-- CandidateCommitments: Messages passed upwards, Downward messages processed, New code (checked against validation outputs)
-- head_data & PoV (the validation inputs)
+- CandidateCommitments: Messages passed upwards, Downward messages processed, New code, `head_data` (checked against validation outputs)
+- PoV (the validation input)
 
 ---
 
-### Proof of Validity (Witness Data)
+### Witness Data (Storage Proof)
 
+- Makes up most if the information in a PoV
 - Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
-- It allows the reconstruction of a sparse in-memory merkle trie
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- State root can then be compared to that from parent header
+- It enables the construction of a sparse in-memory merkle trie
 <!-- .element: class="fragment" data-fragment-index="2" -->
+- State root can then be compared to that from parent header
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
@@ -537,9 +518,9 @@ Notes:
 
 ---
 
-#### Parablock Validation in Summary
+#### Witness Data in Validation
 
-```rust [2|3-4|6]
+```rust [4]
 // Very simplified
 fn validate_block(input: InputParams) -> Output {
     // First let's initialize the state
@@ -557,10 +538,10 @@ fn validate_block(input: InputParams) -> Output {
 }
 ```
 
-- Now we know where the **storage_proof** comes from!
+- Now we know where the **storage_proof** (witness data) comes from!
 - into_state constructs our storage trie
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- Host functions written to access this new storage
+- Host functions rewritten to access this new storage
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
@@ -571,21 +552,23 @@ fn validate_block(input: InputParams) -> Output {
 
 - Every Substrate blockchain supports runtime upgrades
 <!-- .element: class="fragment" data-fragment-index="0" -->
+- Every time a validator wants to validate a parablock, it must first compile the PVF
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ##### Problem
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 - What happens if PVF compilation takes too long?
-  <!-- .element: class="fragment" data-fragment-index="1" -->
+  <!-- .element: class="fragment" data-fragment-index="2" -->
   - Approval no-shows
   - In disputes neither side may reach super-majority
 
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 > Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
 
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 </pba-flex>
 
@@ -595,12 +578,10 @@ fn validate_block(input: InputParams) -> Output {
 
 The relay chain needs a fairly hard guarantee that PVFs can be compiled within a reasonable amount of time.
 
-<!-- .element: class="fragment" data-fragment-index="0" -->
-
 <br/>
 
 - Collators execute a runtime upgrade but it is not applied
-- Collators send the new runtime code to the relay chain in a collation
+- Code sent in collation `Option<ValidationCode>`
 - The relay chain executes the **PVF Pre-Checking Process**
 - The first parachain block to be included after the end of the process applies the new runtime
 
@@ -618,17 +599,30 @@ https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgra
 
 ##### PVF Pre-Checking Process
 
-- The relay chain keeps track of all the new PVFs that need to be checked
-- Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-  - binary vote: accept or reject
-  <!-- .element: class="fragment" data-fragment-index="1" -->
-- Super majority concludes the vote
+<pba-flex center>
+
+- Track
+- Check
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Vote
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- The new PVF replaces the prior one in relay chain state
+- Conclude
 <!-- .element: class="fragment" data-fragment-index="3" -->
+- Upgrade
+<!-- .element: class="fragment" data-fragment-index="4" -->
+- Notify
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+</pba-flex>
 
 Notes:
+
+- The relay chain keeps track of all the new PVFs that need to be checked
+- Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
+  - binary vote: accept or reject
+- Super majority concludes the vote
+- The new PVF replaces the prior one in relay chain state
+- A "go ahead" signal is sent, telling the parachain to apply the upgrade
 
 reference: https://paritytech.github.io/polkadot/book/pvf-prechecking.html
 
