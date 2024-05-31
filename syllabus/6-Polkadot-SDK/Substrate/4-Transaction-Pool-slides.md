@@ -98,6 +98,7 @@ Important, must pause and ask!
 - Why is it from the runtime? because the transaction format is opaque and the node doesn't even know what to do with it.
 - Why does it have to be cheap? wild west, unpaid, DoS!
 - Pesky question: but be aware that from the runtime's perspective, the node could be malicious. The runtime cannot trust the node to obey.
+  ** THE RUNTIME MUST RE-VALIDATE TRANSACTIONS LATER in block building and import as well **
 
 ---v
 
