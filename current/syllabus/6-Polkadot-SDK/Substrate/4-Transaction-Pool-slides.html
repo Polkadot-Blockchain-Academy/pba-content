@@ -106,7 +106,8 @@ graph LR
 <ul>
 <li>Why is it from the runtime? because the transaction format is opaque and the node doesn&#39;t even know what to do with it.</li>
 <li>Why does it have to be cheap? wild west, unpaid, DoS!</li>
-<li>Pesky question: but be aware that from the runtime&#39;s perspective, the node could be malicious. The runtime cannot trust the node to obey.</li>
+<li>Pesky question: but be aware that from the runtime&#39;s perspective, the node could be malicious. The runtime cannot trust the node to obey.
+** THE RUNTIME MUST RE-VALIDATE TRANSACTIONS LATER in block building and import as well **</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
 ### 1. Transaction Validation

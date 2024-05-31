@@ -34,26 +34,15 @@
 # Part 1
 
 - This is a big lecture, so I divided it into two small parts, that's all 🫵🏻
-</script></section><section ><section data-markdown><script type="text/template">
-## It All Began With a Runtime..
-
-- Personal opinion:
-
-> Substrate technology stack will put "Wasm stored onchain" on the map,<br/>
-> the same way Ethereum put "smart contracts stored onchain" on the map.
-
-<aside class="notes"><blockquote>
-<p>It is only a matter of time until every blockchain is doing the same thing.</p>
-</blockquote>
-</aside></script></section><section data-markdown><script type="text/template">
-### It All Began With a Runtime..
+</script></section><section  data-markdown><script type="text/template">
+## Meta Protocol
 
 - The Node / Runtime division is one of the most important design decisions in Substrate.
-  - 👿 Bad: Fixed opinion. <!-- .element: class="fragment" -->
-  - 😇 Good: Enables countless other things to not be fixed. <!-- .element: class="fragment" -->
+  - &shy;<!-- .element: class="fragment" --> 👿 Bad: _One_ fixed opinion.
+  - &shy;<!-- .element: class="fragment" --> 😇 Good: _Countless_ other things to flexible.
 
 <aside class="notes"><p>Recall that the boundary for this division is the <strong>state transition</strong></p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section ><section data-markdown><script type="text/template">
 ## Substrate: a short recap
 
 <img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-full-comm.svg" />
@@ -164,6 +153,7 @@ mod well_known_keys {
 
 <aside class="notes"><p>Short answer is: anything that is part of the STF definition must be opaque to the node, and is
 upgradeable, but we will learn this later.</p>
+<p>Another way to think of it: Anything that we want to keep upgrade-able needs to be opaque.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### Example #2: Block Import
 
@@ -562,6 +552,7 @@ This is why forkless upgrades are possible in substrate.</p>
 - What about new host functions?
 - <!-- .element: class="fragment" --> What about a new header field*?
 - <!-- .element: class="fragment" --> What about a new Hashing primitive?
+- <!-- .element: class="fragment" --> A new consensus/networking engine?
 
 🥺 No longer forkless.
 
@@ -569,8 +560,7 @@ This is why forkless upgrades are possible in substrate.</p>
 
 <aside class="notes"><p>But, recall that substrate&#39;s extensibility and generic-ness clause applies here.</p>
 <p>For some, like header, some hacks exist, like the <code>digest</code> field.</p>
-<p>Changing these is hard in a forkless manner. If you want to just change them at genesis and launch a
-new chain, they are all VERY easy to change.</p>
+<p>Changing these is hard in a forkless manner. If you want to just change them at genesis and launch a new chain, they are all VERY easy to change.</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
 ## Substrate: The Full Picture
 
@@ -746,64 +736,17 @@ A: wait and see, but is possible that simd optimization of the hash function in 
 <p>Again using a host function for speed up needs to be reasoned, cost of transmitting parameter in
 wasm can be bigger than the actual hashing cost.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
-## Consideration: Native Runtime
+### Runtime Version vs. Node Version
 
-<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-native.svg" />
-</script></section><section data-markdown><script type="text/template">
-### Consideration: Native Runtime
-
-- Remember the `fn version()` in `Core` API!
-
-```rust [1-100|4-5]
-/// Runtime version.
+```rust
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("node"),
 	spec_version: 268,
-	impl_name: create_runtime_str!("substrate-node"),
 	impl_version: 0,
-	authoring_version: 10,
-	apis: RUNTIME_API_VERSIONS,
-	transaction_version: 2,
-	state_version: 1,
+  ..
 };
 ```
-</script></section><section data-markdown><script type="text/template">
-### Consideration: Native Runtime
-
-- Native is only an option if spec versions match!
-
-```rust
-fn execute_native_else_wasm() {
-  let native_version = runtime::native::api::version();
-  let wasm_version = runtime::wasm::api::version();
-
-  // if spec name and version match.
-  if native_version == wasm_version {
-    runtime::native::execute();
-  } else {
-    runtime::wasm::execute();
-  }
-}
-```
-</script></section><section data-markdown><script type="text/template">
-### Consideration: Native Runtime
-
-- The days of native runtime are numbered 💀.
-</script></section><section data-markdown><script type="text/template">
-### Consideration: Native Runtime
-
-- Question: what happens if you upgrade your runtime, but forget to bump the spec version?
-- &shy;<!-- .element: class="fragment" -->Question: What if a runtime upgrade is only tweaking implementation details, but not the specification?
-
-<aside class="notes"><p>If everyone is executing wasm, technically nothing, but that&#39;s super confusing, don&#39;t do it.
-But, if some are executing native, then you will have a consensus error.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### Speaking of Versions..
-
-- Make sure you understand the difference! 👍
-  - Node Version
-  - Runtime Version
 </script></section><section data-markdown><script type="text/template">
 ### Speaking of Versions..
 
@@ -819,7 +762,7 @@ But, if some are executing native, then you will have a consensus error.</p>
 </script></section><section data-markdown><script type="text/template">
 ### Speaking of Versions..
 
-- What happens when Parity release a new `parity-polkadot` node binary?
+- What happens when Parity release a new `polkadot` node binary?
 - What happens when the Polkadot fellowship wants to update the runtime?
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Considerations: Panic
@@ -934,7 +877,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 - Optional activity: Go to the substrate repo, and find PRs that have altered host functions, and see the PR discussion. There are a few labels that help you find such PRs 😉.
 <!-- .element: class="fragment" -->
 </script></section></section><section ><section data-markdown><script type="text/template">
-## Workshop: Inspecting Wasm Code
+## Activity: Inspecting Wasm Code
 </script></section><section data-markdown><script type="text/template">
 - `wasm2wat polkadot_runtime.wasm > dump | rg import`
 
@@ -1067,7 +1010,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
   (export "__heap_base" (global 2))
 ```
 </script></section><section data-markdown><script type="text/template">
-### Workshop: Inspecting Wasm Code
+### Activity: Inspecting Wasm Code
 
 - Once you reach the Polkadot module, and you build your first parachain, repeat the same, I promise
   you will learn a thing or two :)
@@ -1238,11 +1181,11 @@ actually a runtime API for this too, but we won&#39;t cover it.</p>
 come first, we also keep our example aligned.</p>
 <p>Should you wish to see the real version of this, check this crate:
 <a href="https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html">https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html</a></p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section></section><section  data-markdown><script type="text/template">
 ## Misc
 
 <img rounded style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
-</script></section><section data-markdown><script type="text/template"></script></section></section>
+</script></section>
     </article>
   </main>
 

@@ -70,6 +70,21 @@ Substrate is a **Rust framework** for **building blockchains**.
 can create sovereign chains with substrate, or Polkadot Parachains, or more hybrid things. More on
 this when you learn about Substrate&#39;s role in the Polkadot ecosystem.</p>
 <p>Figure: <a href="https://www.youtube.com/watch?v=0IoUZdDi5Is">https://www.youtube.com/watch?v=0IoUZdDi5Is</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Why Substrate?
+
+#### 💭 An update in 2024 💭
+
+🧐 Multi-chain vs. Multi-shard 🧐
+
+<aside class="notes"><p>Polkadot led the way since 2016 to convince the world that the future is multi-chain.</p>
+<p>Cosmos tried to replicate the same without shared security.</p>
+<p>ETH is now doing something similar, with a Rollup-Centric roadmap.</p>
+<p>Interestingly, Polkadot is now arguing that the future is not necessarily multi-chain, but rather
+multi-shard. In that, there needs to be a sharded system, with a high degree of flexibility to
+schedule those shards. &quot;Multi-chain&quot; is merely one manifestation of a multi-shard system, which is
+actually not so flexible. We are now striving to make the multi-chain Polkadot more flexible, which
+is what JAM is going to be.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Core Philosophies of Substrate 💭
 
@@ -275,8 +290,10 @@ whole thing to be updated.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### 🏦 Governance + Upgradeability
 
-_The way to make a protocol truly upgradeable is to design a meta-protocol._
-</script></section><section data-markdown><script type="text/template">
+<img src="../../../assets/img/5-Substrate/dev-4-1-substrate-meta-substrate.svg" />
+
+<aside class="notes"><p>This is very similar to treating your own runtime as a smart contract.</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### 🏦 Governance + Upgradeability
 
 <img src="../../../assets/img/5-Substrate/dev-4-1-substrate-meta.svg" />
@@ -286,10 +303,8 @@ be upgraded with a fork.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### 🏦 Governance + Upgradeability
 
-<img src="../../../assets/img/5-Substrate/dev-4-1-substrate-meta-substrate.svg" />
-
-<aside class="notes"><p>This is very similar to treating your own runtime as a smart contract.</p>
-</aside></script></section><section data-markdown><script type="text/template">
+_The way to make a protocol truly upgradeable is to design a (fixed) meta-protocol._
+</script></section><section data-markdown><script type="text/template">
 ### 🏦 Governance + Upgradeability
 
 - Meta-protocol?
@@ -308,20 +323,36 @@ be upgraded with a fork.</p>
 <pba-col center>
 <h3 style="color: var(--substrate-runtime); top: 0"> Runtime (Protocol) </h3>
 
-- Application logic
-- Wasm (maybe **FRAME**)
-- Stored as a part of your chain state
+- Application logic aka. How we execute block
+- Stored as a part of your chain state as a WASM Blob
+- Upgradeable
 - Also known as: STF
 
 </pba-col>
 
 <pba-col center>
-<h3 style="color: var(--substrate-host); top: 0"> Node (Meta-protocol) </h3>
+
+<img width="600px" src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+
+</pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+#### Substrate (simplified) Architecture
+
+<pba-cols>
+<pba-col center>
+<h3 style="color: var(--substrate-host); top: 0"> Fixed Node (Meta-protocol) </h3>
 
 - Native Binary
 - Executes the Wasm runtime
 - Everything else: Database, Networking, Mempool, Consensus..
 - Also known as: Host, Client
+
+</pba-col>
+
+<pba-col center>
+
+<img width="600px" src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
 
 </pba-col>
 
@@ -398,32 +429,6 @@ bug in it, everyone is affected.</p>
 <p>Both of the following are amazing reads:</p>
 <p><a href="https://forum.polkadot.network/t/eliminating-pre-dispatch-weight/400">https://forum.polkadot.network/t/eliminating-pre-dispatch-weight/400</a></p>
 <p><a href="https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-smart-contracts-and-possibly-more/3811/32">https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-smart-contracts-and-possibly-more/3811/32</a></p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
-## State of Light Client/Nodes
-
-- Node that follows headers, therefore knows state roots and can ask for state-proofs to do more.
-
-<aside class="notes"><p>Establish that it is merely an alternative node implementation.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### State of Light Clients
-
-<img src="../../../assets/img/5-Substrate/dev-4-1-smoldot.svg" />
-
-<aside class="notes"><p>What was a light client? follows only block headers, therefore knows state roots, and a few other
-pieces of information, others send it state proofs if it wishes to do more.</p>
-<p>SMOLDOT is not exactly a substrate client. It is mainly designed to work with Polkadot. But with
-minimal tweaks, you could make it work for more substrate based chains.</p>
-<p>This has to do with the fact that consensus and a few other bits of the client and runtime are not
-100% independent. For example, GRANDPA has a pallet on the runtime side, but is mostly in the
-client. Now, a client that is configured with GRANDPA can only work with runtimes that are also
-configured with GRANDPA.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-### State of Light Clients
-
-<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-4-1-smoldot-browser.svg" />
-
-<aside class="notes"><p>Similarly it is dead simple to embed smoldot in mobile etc.</p>
-<p>Separate lecture on this later.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Communication Paths
 
@@ -526,30 +531,6 @@ fn main() {
 </script></section><section data-markdown><script type="text/template">
 ### Substrate and Smart Contracts
 
-> SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
-
-Question: How many nested Wasm blobs are executing one another?
-</script></section><section data-markdown><script type="text/template">
-### Substrate and Smart Contracts
-
-<pba-cols>
-<pba-col center>
-
-<img style="width: 600px;" src="https://media.tenor.com/Oc4nf8N08jIAAAAM/mind-blow-galaxy.gif" />
-
-</pba-col>
-<pba-col>
-
-- The browser is executing:
-- a Wasm blob (SMOLDOT in extension)
-- that executes a Wasm blob (runtime)
-- that executes a Wasm blob (contract)
-
-</pba-col>
-</pba-cols>
-</script></section><section data-markdown><script type="text/template">
-### Substrate and Smart Contracts
-
 - So when should you write with a smart contract, and when a Runtime (FRAME)?
 
 <aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/runtime_vs_smart_contract/index.html">https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/runtime_vs_smart_contract/index.html</a></p>
@@ -562,7 +543,7 @@ parachain or solo)</p>
 <p>Also, a contract usually depends on a token for gas, while a runtime can be in principle token-less
 fee-less.</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
-## Technical Freedom vs Ease
+## Development Options
 
 <img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-4-1-freedom.svg" />
 
@@ -743,8 +724,7 @@ the next episode to air actually will be.</p>
   - **Rust**, **Generic Design**, **Upgradeability/Governance**
 - Positive and negative consequences of Wasm
 - Substrate next to Polkadot and other chains.
-- Substrate for Smart Contracts.
-- Light Nodes/Clients.
+- Substrate and Smart Contracts.
 - Node / Runtime architecture
 - State Transition Deep Dive -> Forkless Upgrade
 </script></section><section data-markdown><script type="text/template">
@@ -777,7 +757,7 @@ hardcoded, but the protocol itself is flexible.</p>
 
 #### Track: Aux Lecture
 
-- Tx Pool (Kian)
+- Tx Pool
 - Interacting with Substrate
 - SCALE Codec
 
@@ -842,8 +822,12 @@ consensus, crypto or database code) to be contributed back so everyone can benef
 <ul>
 <li>a takeaway after each section, more clear path (shawn).</li>
 </ul>
-</aside></script></section><section ><section data-markdown><script type="text/template">
-## Appendix: More Diagrams of Substrate and Polkadot
+</aside></script></section><section  data-markdown><script type="text/template">
+## Appendix
+
+Content that is not covered, but is relevant.
+</script></section><section ><section data-markdown><script type="text/template">
+### More Diagrams of Substrate and Polkadot
 
 <aside class="notes"><p>I made these figures recently to explain the relationship between Substrate, Cumulus and Polkadot.
 They use the most generic term for client and runtime, namely &quot;Host&quot; and &quot;STF&quot; respectively.</p>
@@ -895,6 +879,56 @@ A Parachain
 
 - Any language that can compile to Wasm and exposes a fixed set of functions, to be used by the client.
 - ... But, of course, Substrate comes with a framework to make this developer-friendly, **FRAME™️**.
+</script></section></section><section ><section data-markdown><script type="text/template">
+## State of Light Client/Nodes
+
+- Node that follows headers, therefore knows state roots and can ask for state-proofs to do more.
+
+<aside class="notes"><p>Establish that it is merely an alternative node implementation.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### State of Light Clients
+
+<img src="../../../assets/img/5-Substrate/dev-4-1-smoldot.svg" />
+
+<aside class="notes"><p>What was a light client? follows only block headers, therefore knows state roots, and a few other
+pieces of information, others send it state proofs if it wishes to do more.</p>
+<p>SMOLDOT is not exactly a substrate client. It is mainly designed to work with Polkadot. But with
+minimal tweaks, you could make it work for more substrate based chains.</p>
+<p>This has to do with the fact that consensus and a few other bits of the client and runtime are not
+100% independent. For example, GRANDPA has a pallet on the runtime side, but is mostly in the
+client. Now, a client that is configured with GRANDPA can only work with runtimes that are also
+configured with GRANDPA.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### State of Light Clients
+
+<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-4-1-smoldot-browser.svg" />
+
+<aside class="notes"><p>Similarly it is dead simple to embed smoldot in mobile etc.</p>
+<p>Separate lecture on this later.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+> SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
+
+Question: How many nested Wasm blobs are executing one another?
+</script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+<pba-cols>
+<pba-col center>
+
+<img style="width: 600px;" src="https://media.tenor.com/Oc4nf8N08jIAAAAM/mind-blow-galaxy.gif" />
+
+</pba-col>
+<pba-col>
+
+- The browser is executing:
+- a Wasm blob (SMOLDOT in extension)
+- that executes a Wasm blob (runtime)
+- that executes a Wasm blob (contract)
+
+</pba-col>
+</pba-cols>
 </script></section></section>
     </article>
   </main>

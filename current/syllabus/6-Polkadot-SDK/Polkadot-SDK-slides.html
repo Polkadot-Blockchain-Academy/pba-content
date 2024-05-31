@@ -71,8 +71,8 @@
 
 <img width="800px" rounded src="./img/multi-threaded.svg" />
 
-- Have we compromised security in any way in this model?
-</script></section><section data-markdown><script type="text/template">
+<aside class="notes"><p>Have we compromised security in any way in this model?</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Polkadot
 
 <img width="800px" rounded src="./img/multi-threaded-dot.svg" />
@@ -144,8 +144,8 @@ All proudly™️ built with Substrate.
 
 Substrate 🤝 FRAME
 
-Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
-FRAME: An opinionated way to build that WASM protocol/runtime/STF.
+- Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
+- FRAME: An opinionated way to build that WASM protocol/runtime/STF.
 
 <aside class="notes"><p><strong>FRAME</strong> is a subset of blockchain within Substrate that allow you to focus only on writing the
 state transition function aka. Runtime of your blockchain and not deal with the rest of the
@@ -174,7 +174,7 @@ but it can 100% ensure that the parachain will do exactly as stated in its WASM 
 </script></section><section data-markdown><script type="text/template">
 ### Interoperability
 
-Polkadot's services to developers:
+Polkadot-SDK's services to developers:
 
 - Transport protocols for parachains/cores to send payloads to one
   another.
@@ -182,9 +182,13 @@ Polkadot's services to developers:
   - As a developer you won't deal with these! 😮‍💨
 - Language to compose messages and programs and send them over.
   - XCM
+    - Shared ideas between sovereign consensus systems.
+    - Asynchronous.
 
-<aside class="notes"><p>Consensus System: Moreover, the sender and recipient of these messages can be contracts, accounts, or any other
-abstract entities within chains, not just the chain itself.</p>
+<aside class="notes"><p>On &quot;XCMP, HRMP, VMP, DMP&quot;: It is similar to building a website. You know HTTP and TCP and such
+exist, and you use them via an interface, but you don&#39;t need to know them by heart.</p>
+<p>Consensus System: Moreover, the sender and recipient of these messages can be contracts, accounts, or any
+other abstract entities within chains, not just the chain itself.</p>
 <p>Async and Sync: Disjoint consensus systems are in principle[^1] asynchronous by nature. This is an
 important concept to keep in mind.</p>
 <p>[^1]:
