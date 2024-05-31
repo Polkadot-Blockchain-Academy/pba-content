@@ -14,24 +14,11 @@ duration: 60 minutes
 
 ---
 
-## It All Began With a Runtime..
-
-- Personal opinion:
-
-> Substrate technology stack will put "Wasm stored onchain" on the map,<br/>
-> the same way Ethereum put "smart contracts stored onchain" on the map.
-
-Notes:
-
-> It is only a matter of time until every blockchain is doing the same thing.
-
----v
-
-### It All Began With a Runtime..
+## Meta Protocol
 
 - The Node / Runtime division is one of the most important design decisions in Substrate.
-  - 👿 Bad: Fixed opinion. <!-- .element: class="fragment" -->
-  - 😇 Good: Enables countless other things to not be fixed. <!-- .element: class="fragment" -->
+  - &shy;<!-- .element: class="fragment" --> 👿 Bad: _One_ fixed opinion.
+  - &shy;<!-- .element: class="fragment" --> 😇 Good: _Countless_ other things to flexible.
 
 Notes:
 
@@ -187,6 +174,8 @@ Notes:
 
 Short answer is: anything that is part of the STF definition must be opaque to the node, and is
 upgradeable, but we will learn this later.
+
+Another way to think of it: Anything that we want to keep upgrade-able needs to be opaque.
 
 ---v
 
@@ -668,6 +657,7 @@ This is why forkless upgrades are possible in substrate.
 - What about new host functions?
 - <!-- .element: class="fragment" --> What about a new header field*?
 - <!-- .element: class="fragment" --> What about a new Hashing primitive?
+- <!-- .element: class="fragment" --> A new consensus/networking engine?
 
 🥺 No longer forkless.
 
@@ -679,8 +669,7 @@ But, recall that substrate's extensibility and generic-ness clause applies here.
 
 For some, like header, some hacks exist, like the `digest` field.
 
-Changing these is hard in a forkless manner. If you want to just change them at genesis and launch a
-new chain, they are all VERY easy to change.
+Changing these is hard in a forkless manner. If you want to just change them at genesis and launch a new chain, they are all VERY easy to change.
 
 ---
 
@@ -894,76 +883,17 @@ wasm can be bigger than the actual hashing cost.
 
 ---
 
-## Consideration: Native Runtime
+### Runtime Version vs. Node Version
 
-<img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-native.svg" />
-
----v
-
-### Consideration: Native Runtime
-
-- Remember the `fn version()` in `Core` API!
-
-```rust [1-100|4-5]
-/// Runtime version.
+```rust
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("node"),
 	spec_version: 268,
-	impl_name: create_runtime_str!("substrate-node"),
 	impl_version: 0,
-	authoring_version: 10,
-	apis: RUNTIME_API_VERSIONS,
-	transaction_version: 2,
-	state_version: 1,
+  ..
 };
 ```
-
----v
-
-### Consideration: Native Runtime
-
-- Native is only an option if spec versions match!
-
-```rust
-fn execute_native_else_wasm() {
-  let native_version = runtime::native::api::version();
-  let wasm_version = runtime::wasm::api::version();
-
-  // if spec name and version match.
-  if native_version == wasm_version {
-    runtime::native::execute();
-  } else {
-    runtime::wasm::execute();
-  }
-}
-```
-
----v
-
-### Consideration: Native Runtime
-
-- The days of native runtime are numbered 💀.
-
----v
-
-### Consideration: Native Runtime
-
-- Question: what happens if you upgrade your runtime, but forget to bump the spec version?
-- &shy;<!-- .element: class="fragment" -->Question: What if a runtime upgrade is only tweaking implementation details, but not the specification?
-
-Notes:
-
-If everyone is executing wasm, technically nothing, but that's super confusing, don't do it.
-But, if some are executing native, then you will have a consensus error.
-
----v
-
-### Speaking of Versions..
-
-- Make sure you understand the difference! 👍
-  - Node Version
-  - Runtime Version
 
 ---v
 
@@ -987,7 +917,7 @@ But, if some are executing native, then you will have a consensus error.
 
 ### Speaking of Versions..
 
-- What happens when Parity release a new `parity-polkadot` node binary?
+- What happens when Parity release a new `polkadot` node binary?
 - What happens when the Polkadot fellowship wants to update the runtime?
 
 ---
@@ -1130,7 +1060,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 
 ---
 
-## Workshop: Inspecting Wasm Code
+## Activity: Inspecting Wasm Code
 
 ---v
 
@@ -1269,7 +1199,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 
 ---v
 
-### Workshop: Inspecting Wasm Code
+### Activity: Inspecting Wasm Code
 
 - Once you reach the Polkadot module, and you build your first parachain, repeat the same, I promise
   you will learn a thing or two :)
@@ -1474,5 +1404,3 @@ https://paritytech.github.io/substrate/master/sc_basic_authorship/index.html
 ## Misc
 
 <img rounded style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-substrate-wasm.png" />
-
----v

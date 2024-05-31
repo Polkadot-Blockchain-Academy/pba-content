@@ -160,6 +160,11 @@
   --r-hub-pink: #E6007A;
   --r-hub-lime: #D3FF33;
   --r-hub-green: #56F39A;
+
+  /* Colors used in the Polkadot-SDK Lectures */
+  --substrate-green: #25cc85ff;
+  --substrate-runtime: #bb8ba6;
+  --substrate-host: #8d3aed;
 }
 
 /* box sizing;

@@ -60,7 +60,9 @@ The holy grain of what ETH 2.0 was meant to be.
 
 <img width="800px" rounded src="./img/multi-threaded.svg" />
 
-- Have we compromised security in any way in this model?
+Note:
+
+Have we compromised security in any way in this model?
 
 ---v
 
@@ -161,8 +163,8 @@ All proudly™️ built with Substrate.
 
 Substrate 🤝 FRAME
 
-Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
-FRAME: An opinionated way to build that WASM protocol/runtime/STF.
+- Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
+- FRAME: An opinionated way to build that WASM protocol/runtime/STF.
 
 Note:
 
@@ -205,7 +207,7 @@ but it can 100% ensure that the parachain will do exactly as stated in its WASM 
 
 ### Interoperability
 
-Polkadot's services to developers:
+Polkadot-SDK's services to developers:
 
 - Transport protocols for parachains/cores to send payloads to one
   another.
@@ -213,11 +215,16 @@ Polkadot's services to developers:
   - As a developer you won't deal with these! 😮‍💨
 - Language to compose messages and programs and send them over.
   - XCM
+    - Shared ideas between sovereign consensus systems.
+    - Asynchronous.
 
 Note:
 
-Consensus System: Moreover, the sender and recipient of these messages can be contracts, accounts, or any other
-abstract entities within chains, not just the chain itself.
+On "XCMP, HRMP, VMP, DMP": It is similar to building a website. You know HTTP and TCP and such
+exist, and you use them via an interface, but you don't need to know them by heart.
+
+Consensus System: Moreover, the sender and recipient of these messages can be contracts, accounts, or any
+other abstract entities within chains, not just the chain itself.
 
 Async and Sync: Disjoint consensus systems are in principle[^1] asynchronous by nature. This is an
 important concept to keep in mind.
