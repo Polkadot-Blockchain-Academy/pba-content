@@ -18,7 +18,9 @@ At the end of this lecture, you will learn why Substrate uses SCALE codec, how a
 
 Simple Concatenated Aggregate Little-Endian
 
-SCALE is a light-weight format which allows encoding (and decoding) which makes it highly suitable for resource-constrained execution environments like blockchain runtimes and low-power, low-memory devices.
+SCALE is a light-weight format which allows encoding (and decoding) which makes it highly suitable
+for resource-constrained execution environments like blockchain runtimes and low-power, low-memory
+devices.
 
 Notes:
 
@@ -29,23 +31,18 @@ Notes:
 
 ### Little-Endian
 
-Little endian systems store the least significant byte at the smallest memory address.
+* Each `word`'s memory address is the address of the smallest byte in the `word`.
+* Do we interpret this as the MSB or LSB?
+* WASM is Little Endian
 
-Wasm is a little endian system, which makes SCALE very performant.
+<img src="../../../assets/img/5-Substrate/endian-egg.png" />
 
-<pba-cols>
-<pba-col center>
 
-<img src="../../../assets/img/5-Substrate/Big-Endian.svg" style="background-color: white; border-radius: 10%; border: 5px solid red;" />
+---
 
-</pba-col>
+### Little-Endian
 
-<pba-col center>
-
-<img src="../../../assets/img/5-Substrate/Little-Endian.svg" style="background-color: white; border-radius: 10%; border: 5px solid green;" />
-
-</pba-col>
-</pba-cols>
+<img src="../../../assets/img/5-Substrate/endian.png" />
 
 Notes:
 
@@ -60,25 +57,48 @@ Notes:
 - Simple to define.
 - Not Rust-specific (but happens to work great in Rust).
   - Easy to derive codec logic: `#[derive(Encode, Decode)]`
-  - Viable and useful for APIs like: `MaxEncodedLen` and `TypeInfo`
   - It does not use Rust `std`, and thus can compile to Wasm `no_std`.
-- Consensus critical / bijective; one value will always encode to one blob and that blob will only decode to that value.
+- Consensus critical / bijective
 - Supports a copy-free decode for basic types on LE architectures.
-- It is about as thin and lightweight as can be.
 
 Notes:
 
 - MaxEncodedLen: Maximum encoded size to make some runtime guarantees about computation.
 - TypeInfo: Used to generate metadata.
 - Bijective exception later.
+  - one value will always encode to one blob and that blob will only decode to that value.
+
+---
+
+### Why SCALE? Why not X?
+
+- It is about as thin and lightweight as can be.
+- Truthfully, ahead of its time in the Rust community
+
+<pba-cols>
+<pba-col center>
+
+<img width="600px" src="../../../assets/img/5-Substrate/lib-bincode.png" style="background-color: white; border-radius: 10%; border: 5px solid red;" />
+
+</pba-col>
+
+<pba-col center>
+
+<img width="600px" src="../../../assets/img/5-Substrate/lib-scale.png" style="background-color: white; border-radius: 10%; border: 5px solid green;" />
+
+</pba-col>
+</pba-cols>
 
 ---
 
 ### SCALE is NOT Self-Descriptive
 
-It is important to note that the encoding context (knowledge of how the types and data structures look) needs to be known separately at both encoding and decoding ends.
+* The need for metadata!
 
-The encoded data does not include this contextual information.
+note:
+
+- It is important to note that the encoding context (knowledge of how the types and data structures look) needs to be known separately at both encoding and decoding ends.
+- The encoded data does not include this contextual information.
 
 ---
 
@@ -150,9 +170,7 @@ fn main() {
 ### Try It Yourself!
 
 ```sh
-mkdir temp
-cd temp
-cargo init
+cargo init temp
 cargo add parity-scale-codec --features derive
 ```
 
@@ -215,29 +233,31 @@ Basic integers are encoded using a fixed-width little-endian (LE) format.
 use parity_scale_codec::Encode;
 
 fn main() {
-	println!("{:02x?}", 69i8.encode());
-	println!("{:02x?}", 69u8.encode());
-	println!("{:02x?}", 42u16.encode());
+	println!("{:b}", 258u16);
+	println!("{:02x?}", 258u16);
+	println!("{:02x?}", 258u16.encode());
 	println!("{:02x?}", 16777215u32.encode());
 }
 ```
 
 ```sh
-[45]
-[45]
-[2a, 00]
+1_00000010
+102
+[02, 01]
 [ff, ff, ff, 00]
 ```
 
-Notes:
+Notes: xx notice the first two being the same. SCALE IS NOT DESCRIPTIVE of the type. The decoder is
+responsible for decoding this into some 1 byte-width type, be it u8 or i8 or something else.
 
-notice the first two being the same. SCALE IS NOT DESCRIPTIVE of the type. The decoder is responsible for decoding this into some 1 byte-width type, be it u8 or i8 or something else.
+Note that a normal <type>.encode() is printed out equivalent to the .to_be_bytes()
 
 ---
 
 ### Compact Integers
 
-A "compact" or general integer encoding is sufficient for encoding large integers (up to 2<sup>536</sup>) and is more efficient at encoding most values than the fixed-width version.
+A "compact" or general integer encoding is sufficient for encoding large integers (up to
+2<sup>536</sup>) and is more efficient at encoding most values than the fixed-width version.
 
 Though for single-byte values, the fixed-width integer is never worse.
 
@@ -250,11 +270,17 @@ Though for single-byte values, the fixed-width integer is never worse.
 <!-- prettier-ignore -->
 | `0b00` | `0b01` | `0b10` | `0b11` |
 | ------ | ------ | ------ | ------ |
-| single-byte mode; upper six bits are the LE encoding of the value. Valid only for values of `0` through `63`. | two-byte mode: upper six bits and the following byte is the LE encoding of the value. Valid only for values `64` through `(2^14 - 1)`. | four-byte mode: upper six bits and the following three bytes are the LE encoding of the value. Valid only for values `(2^14)` through `(2^30 - 1)`. |Big-integer mode: The upper six bits are the number of bytes following, plus four. The value is contained, LE encoded, in the bytes following. The final (most significant) byte must be non-zero. Valid only for values `(2^30)` through `(2^536 - 1)`. |
+| **single-byte mode**: upper six bits are the LE encoding of the value. Valid only for values of `0` through `63`. | **two-byte mode**: upper six bits and the following byte is the LE encoding of the value. Valid only for values `64` through `(2^14 - 1)`. | **four-byte mode**: upper six bits and the following three bytes are the LE encoding of the value. Valid only for values `(2^14)` through `(2^30 - 1)`. |**Big-integer mode**: The upper six bits are the number of bytes following, plus four. The value is contained, LE encoded, in the bytes following. The final (most significant) byte must be non-zero. Valid only for values `(2^30)` through `(2^536 - 1)`. |
 
 </div>
+<br>
 
-Compact/general integers are encoded with the two least significant **bits** denoting the mode.
+* Compact/general integers are encoded with the two least significant **bits** denoting the mode.
+
+Note:
+
+- The ranges must not overlap, or else encoding would be ambiguous. We prefer each number to be encoded in the smallest possible number of bits ofc.
+- How is the range 2^536 achieved? (64 + 3) * 8
 
 ---
 
@@ -372,7 +398,15 @@ fn main() {
 
 ### Compact Integers Are "Backwards Compatible"
 
-As you can see, you are able to "upgrade" a type without affecting the encoding.
+* For any unsigned integer value, regardless of the size/type , there is only one compact encoding.
+* As you can see, you are able to "upgrade" a type without affecting the encoding.
+
+
+```rust
+println!("{:02x?}", Compact::<u32>::from(1024).encode());
+println!("{:02x?}", Compact::<u64>::from(1024).encode());
+println!("{:02x?}", Compact::<u128>::from(1024).encode());
+```
 
 ---
 
@@ -516,16 +550,20 @@ use parity_scale_codec::Encode;
 fn main() {
 	println!("{:02x?}", [0u8, 1u8, 2u8, 3u8, 4u8].encode());
 	println!("{:02x?}", vec![0u8, 1u8, 2u8, 3u8, 4u8].encode());
+	println!("{:02x?}", Compact::<u32>::from(5).encode());
 	println!("{:02x?}", "hello".encode());
 	println!("{:02x?}", vec![0u8; 1024].encode());
+	println!("{:02x?}", Compact::<u32>::from(1024).encode());
 }
 ```
 
 ```sh
 [00, 01, 02, 03, 04]
 [14, 00, 01, 02, 03, 04]
+[14]
 [14, 68, 65, 6c, 6c, 6f]
 [01, 10, 00, 00, ... snip ... , 00]
+[01, 10]
 ```
 
 Notes:
@@ -536,11 +574,9 @@ Note that the length prefix can be multiple bytes, like the last example.
 
 ### Decoding
 
-We can similarly take raw bytes, and decode it into a well known type.
-
-Metadata can be used to convey to a program how to decode a type properly...
-
-But bad or no information means the proper format for the data cannot be known.
+* We can similarly take raw bytes, and decode it into a well known type.
+* Metadata can be used to convey to a program how to decode a type properly...
+* But bad or no information means the proper format for the data cannot be known.
 
 ---
 
@@ -618,9 +654,8 @@ Err(Error { cause: Some(Error { cause: Some(Error { cause: Some(Error { cause: S
 
 ### Exceptions: BTreeSet
 
-BTreeSet will decode from an unordered set, but will also order them as a result.
-
-Be careful... this one isn't bijective.
+* BTreeSet will decode from an unordered set, but will also order them as a result.
+* Be careful... this one isn't bijective.
 
 ```rust
 use parity_scale_codec::{ Encode, Decode, alloc::collections::BTreeSet };
@@ -641,13 +676,19 @@ fn main() {
 [14, 00, 01, 02, 03, 04]
 ```
 
+note: SCALE is bijective within one type.
+
 ---
 
 ### Optimizations and Tricks
 
 - `DecodeLength`: Read the length of a collection (like `Vec`) without decoding everything.
-
 - `EncodeAppend`: Append an item without decoding all the other items. (like `Vec`)
+
+Note:
+
+https://paritytech.github.io/polkadot-sdk/master/frame_support/storage/trait.StorageDecodeLength.html?search=DecodeLength
+https://paritytech.github.io/polkadot-sdk/master/frame_support/storage/trait.StorageDecodeLength.html?search=EncodeAppend
 
 ---
 
@@ -670,9 +711,11 @@ SCALE Codec has been implemented in other languages, including:
 
 ## Missing Some Metadata?
 
-To make SCALE useful as an encoding format within the Substrate and Polkadot ecosystem, we need to figure out a way to provide **metadata** about all the types we will expect, and when we will expect them.
+* To make SCALE useful as an encoding format within the Substrate and Polkadot ecosystem, we need to
+figure out a way to provide **metadata** about all the types we will expect, and when we will expect
+them.
 
-HINT: We do.
+* HINT: We do.
 
 ---
 
@@ -687,3 +730,5 @@ HINT: We do.
 <img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Notes:
+
+https://www.reddit.com/r/RISCV/comments/131ssuk/why_exactly_riscv_is_little_endian/
