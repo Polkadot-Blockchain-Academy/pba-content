@@ -443,6 +443,17 @@ _The way to make a protocol truly upgradeable is to design a (fixed) meta-protoc
 
 ---
 
+## Core Substrate Philosophies
+
+In one figure
+
+<img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
+
+- Don't care about a timeless system -> Substrate is not the right tool
+- Don't care about a truly resilient platform -> Polkadot is not the right platform
+
+---
+
 ## Positive Consequences of _Wasm_ Runtime 🔥
 
 ---v
@@ -574,8 +585,11 @@ https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-sm
 
 ### Example: SCALE vs JSON
 
+<div class="flex-container text-smaller">
+<div class="left">
+
 ```rust
-use parity_scale_codec::{Encode};
+use parity_scale_codec::{ Encode };
 
 #[derive(Encode)]
 struct Example {
@@ -591,18 +605,20 @@ fn main() {
 		optional: Some(69),
 	};
 	println!("{:?}", my_struct.encode());
-	// [42, 1, 1, 69, 0, 0, 0]
 	println!("{:?}", my_struct.encode().len());
-	// 7
 }
 ```
 
----v
+```sh
+[42, 1, 1, 69, 0, 0, 0]
+7
+```
 
-### Example: SCALE vs JSON
+</div>
+<div class="right" style="margin-left: 10px;">
 
 ```rust
-use serde::{Serialize};
+use serde::{ Serialize };
 
 #[derive(Serialize)]
 struct Example {
@@ -618,11 +634,17 @@ fn main() {
 		optional: Some(69),
 	};
 	println!("{:?}", serde_json::to_string(&my_struct).unwrap());
-	// "{\"number\":42,\"is_cool\":true,\"optional\":69}"
 	println!("{:?}", serde_json::to_string(&my_struct).unwrap().len());
-	// 42
 }
 ```
+
+```sh
+"{\"number\":42,\"is_cool\":true,\"optional\":69}"
+42
+```
+
+</div>
+</div>
 
 ---
 
@@ -769,7 +791,27 @@ Another good analogy: Node is the FPGA, and FRAME/Wasm is the VHDL.
 
 ---
 
-## Substrate Architecture
+## Lecture Recap - Part 1
+
+- Substrate's design stems from 3 core principles:
+  - **Rust**, **Generic Design**, **Upgradeability/Governance**
+  - **Runtime <> Node** Architecture
+- Positive and negative consequences of Wasm
+- Substrate next to Polkadot and other chains.
+- Development Options
+- Substrate and Smart Contracts.
+
+---v
+
+## Lecture Recap - Part 1
+
+- Questions?
+
+<img src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+
+---
+
+## Part 2: Substrate Architecture
 
 So far we covered high level facts about Substrate. Now let's dive deeper into its architecture using the Runtime/STF.
 
@@ -940,19 +982,15 @@ state is sometimes called "storage" asd well.
 
 ---
 
-## Lecture Recap
+## Lecture Recap - Part 2
 
-- Substrate's design stems from 3 core principles:
-  - **Rust**, **Generic Design**, **Upgradeability/Governance**
-- Positive and negative consequences of Wasm
-- Substrate next to Polkadot and other chains.
-- Substrate and Smart Contracts.
-- Node / Runtime architecture
+- Full Substrate Architecture
 - State Transition Deep Dive -> Forkless Upgrade
+- Consensus / Database being in node.
 
 ---v
 
-### Recap: Substrate Architecture
+### Lecture Recap - Part 2
 
 <img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-full.svg" />
 

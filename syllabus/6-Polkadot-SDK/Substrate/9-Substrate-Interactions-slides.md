@@ -9,26 +9,93 @@ duration: 60 minutes
 
 ## Before we start
 
-Find all the commands that will be used in this workshop:
-[tinyurl.com/hk24-substrate](https://hackmd.io/@ak0n/hk24-substrate-interaction)
+- Find all the commands that will be used in this workshop in the `speaker notes`:
+- Run these two now:
+
+```
+cargo install staging-chain-spec-builder
+cargo install --force --git https://github.com/kianenigma/pba-omni-node.git
+```
+
+Notes:
+
+Install stuff
+cargo install staging-chain-spec-builder
+cargo install --force --git https://github.com/kianenigma/pba-omni-node.git
+
+generate chain-spec file
+chain-spec-builder create --chain-name pba-chain -r ./target/release/wbuild/minimal-template-runtime/minimal_template_runtime.wasm default
+
+add some stuff to `balances.balances`
+
+["5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", 1000000],
+["5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty", 1000000],
+["5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y", 1000000],
+["5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy", 1000000],
+["5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw", 1000000],
+["5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL", 1000000],
+["5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY", 1000000],
+["5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc", 1000000],
+["5Ck5SLSHYac6WFt5UZRSsdJjwmpSZq85fd5TRNAdZQVzEAPT", 1000000],
+["5HKPmK9GYtE1PSLsS1qiYU9xQ9Si1NcEhdeCq9sw5bqu4ns8", 1000000],
+["5FCfAonRZgTFrTd9HREEyeJjDpT397KMzizE6T3DvebLFE7n", 1000000],
+["5CRmqmsiNFExV6VbdmPJViVxrWmkaXXvBrSX8oqBT8R9vmWk", 1000000],
+["5Fxune7f71ZbpP2FoY3mhYcmM596Erhv1gRue4nsPwkxMR4n", 1000000],
+["5CUjxa4wVKMj3FqKdqAUf7zcEMr4MYAjXeWmUf44B41neLmJ", 1000000]
+
+Change chain typw
+
+"chainType": "Development"
+
+"properties": {
+"tokenDecimals": 1,
+"tokenSymbol": "PBA"
+},
+
+Now you are ready for PJS
 
 ---
 
-## Before we start
+## Running a Substrate Chain
 
-- Clone polkadot-sdk
+- The 2024 and beyond edition
+- omni-node-driven-future
 
-```sh
-git clone https://github.com/paritytech/polkadot-sdk.git
-```
+Note:
 
-<br/>
+https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-and-feedback/7823/4
 
-- Compile your node
+---v
 
-```sh
-cargo build --release -p minimal-node
-```
+## Running a Substrate Chain
+
+- A Substrate node was meant to be oblivious to the runtime
+- Truth is that we have cheated a bit for some optimizations over the years
+  - Genesis state
+  - Native runtime for debugging
+
+...
+
+- Now, we are moving back towards removing the native runtime.
+- Node can be fully oblivious to the runtime, except for some _assumptions_:
+  - Consensus, Block/Header format, database type
+
+#### ☯️ !!Omni Nodes!! ☯️
+
+---v
+
+## Running a Substrate Chain
+
+- A runtime template --> `.wasm` file
+  - Exposes some apis that define how the genesis state should be built
+- A `chain-spec` file
+  - Specification of the chain, most notably includes **genesis state**.
+  - Possibly generated with `chain-spec-builder`
+- `./omni-node --chain spec.json --tmp...`
+
+Note:
+
+https://paritytech.github.io/polkadot-sdk/master/sc_chain_spec/index.html
 
 ---
 
@@ -131,8 +198,7 @@ The RPC methods that a substrate node exposes are scoped and has the pattern `"<
 Notes:
 recall:
 
-https://paritytech.github.io/substrate/master/sc_rpc_api/index.html
-https://paritytech.github.io/substrate/master/sc_rpc/index.html
+https://docs.rs/sc-rpc-api/latest/sc_rpc_api/
 
 - The full list can also be seen here: https://polkadot.js.org/docs/substrate/rpc/
 - Specs: https://paritytech.github.io/json-rpc-interface-spec/introduction.html
@@ -140,51 +206,35 @@ https://paritytech.github.io/substrate/master/sc_rpc/index.html
 
 ---
 
-### Workshop: Intro
+## Workshop
 
-- Transfer tokens from Alice to Bob.
+We will do a transfer twice:
 
-<br/>
-
-- We will cheat a bit and take help sometimes from [Polkadot.js app](https://polkadot.js.org/apps/#/explorer).
-
-<!-- .element: class="fragment" -->
-
-Notes:
-
-- When we start up a dev chain, some well known accounts are already minted some balance at genesis. We will use Alice
-  and Bob which are well known accounts.
-- The parts we cheat is because we will need to know more about FRAME to be able to calculate some storage keys.
+1. Once using the PJS-APPs.
+2. Once manually using RPC.
 
 ---v
 
-### Workshop: Spin up your node
+## Workshop: Step 0
 
-- Check out cli docs
+- Complete the steps in the README
+- Open PJS-APPs and connect to your local node.
 
-```sh
-./target/release/minimal-node --help
-```
+> Don't forget to run with `--tmp` flag.
 
-<br/>
+- Ideas:
 
-- Spin up your dev node.
-
-```sh
-./target/release/minimal-node --chain=dev --tmp
-```
-
-<!-- .element: class="fragment" -->
-
-Notes:
-
-- What does --chain=dev and --tmp do? What other flag can you use?
+- Play with `--consensus`
+- Try a `transfer`
 
 ---v
 
 ### Workshop: Check balance
 
 - Query current balance of Alice and Bob.
+
+* To get the storage key: `Developer -> Extrinsics`
+* `System -> Account`
 
 ```sh
 wscat \
@@ -195,8 +245,8 @@ wscat \
 
 Notes:
 
-- You will learn how the storage key is calculated in FRAME based substrate chains in the FRAME module.
-- What do you get?
+- You will learn how the storage key is calculated in FRAME based substrate chains in the FRAME
+  module.
 
 ---v
 
@@ -223,8 +273,200 @@ Notes:
 
 - Use PJS app to get frame-metadata: Developer > RPC Calls > state > getMetadata.
 - [Metadata](https://hackmd.io/@ak0n/rJUhmXmK6) with most details not relevant stripped off.
-- Read more about
-  metadata: https://docs.substrate.io/build/application-development/#exposing-runtime-information-as-metadata.
+
+```
+{
+  magicNumber: 1,635,018,093
+  metadata: {
+    V14: {
+      lookup: {
+        types: [
+          {
+            id: 3
+            type: {
+              path: [
+                frame_system
+                AccountInfo
+              ]
+              params: [
+                {
+                  name: Nonce
+                  type: 4
+                }
+                {
+                  name: AccountData
+                  type: 5
+                }
+              ]
+              def: {
+                Composite: {
+                  fields: [
+                    {
+                      name: nonce
+                      type: 4
+                      typeName: Nonce
+                      docs: []
+                    }
+                    {
+                      name: consumers
+                      type: 4
+                      typeName: RefCount
+                      docs: []
+                    }
+                    {
+                      name: providers
+                      type: 4
+                      typeName: RefCount
+                      docs: []
+                    }
+                    {
+                      name: sufficients
+                      type: 4
+                      typeName: RefCount
+                      docs: []
+                    }
+                    {
+                      name: data
+                      type: 5
+                      typeName: AccountData
+                      docs: []
+                    }
+                  ]
+                }
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 4
+            type: {
+              path: []
+              params: []
+              def: {
+                Primitive: U32
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 5
+            type: {
+              path: [
+                pallet_balances
+                types
+                AccountData
+              ]
+              params: [
+                {
+                  name: Balance
+                  type: 6
+                }
+              ]
+              def: {
+                Composite: {
+                  fields: [
+                    {
+                      name: free
+                      type: 6
+                      typeName: Balance
+                      docs: []
+                    }
+                    {
+                      name: reserved
+                      type: 6
+                      typeName: Balance
+                      docs: []
+                    }
+                    {
+                      name: frozen
+                      type: 6
+                      typeName: Balance
+                      docs: []
+                    }
+                    {
+                      name: flags
+                      type: 7
+                      typeName: ExtraFlags
+                      docs: []
+                    }
+                  ]
+                }
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+
+          {
+            id: 6
+            type: {
+              path: []
+              params: []
+              def: {
+                Primitive: U64
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 7
+            type: {
+              path: [
+                pallet_balances
+                types
+                ExtraFlags
+              ]
+              params: []
+              def: {
+                Composite: {
+                  fields: [
+                    {
+                      name: null
+                      type: 8
+                      typeName: u128
+                      docs: []
+                    }
+                  ]
+                }
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 8
+            type: {
+              path: []
+              params: []
+              def: {
+                Primitive: U128
+              }
+              docs: []
+            }
+          }
+
+        ]
+      }
+      pallets: [],
+      extrinsic: {},
+      type: 107
+    }
+  }
+}
+```
 
 ---v
 
@@ -270,8 +512,9 @@ The actual type is:
 
 ### Workshop: Transfer some tokens
 
-- &shy;<!-- .element: class="fragment" --> Take PJS help to get the signed extrinsic.
-- &shy;<!-- .element: class="fragment" --> Use the following command to submit the extrinsic.
+- Take PJS help to get the signed extrinsic.
+  - `Developer -> Extrinsics -> Balances -> Transfer`
+- Use the following command to submit the extrinsic.
 
 ```sh
 wscat \
@@ -280,15 +523,15 @@ wscat \
   | jq
 ```
 
-- &shy;<!-- .element: class="fragment" --> Check balance again for both accounts.
-- &shy;<!-- .element: class="fragment" --> What happens to nonce of Alice?
+- Check balance again for both accounts.
+- What happens to nonce of Alice?
 
 Notes:
 
 - Students will learn how to build the signed extrinsic themselves in their assignment.
 - Let students do the second part themselves.
 
----v
+---
 
 ### Workshop: Versions
 
@@ -314,16 +557,10 @@ Notes:
 
 - On top of `SCALE` and `JSON-RPC`, a large array of libraries have been built.
 
-- &shy;<!-- .element: class="fragment" --> `PJS-API` / `PJS-APPS`
-- &shy;<!-- .element: class="fragment" --> `subxt`
-- &shy;<!-- .element: class="fragment" --> Any many more!
-
-Notes:
-
-https://github.com/JFJun/go-substrate-rpc-client
-https://github.com/polkascan/py-substrate-interface
-more here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
-Listen to James Wilson introducing subxt: https://www.youtube.com/watch?v=aFk6We_Ke1I
+- `PJS-API` / `PJS-APPS`
+- future: `PAPI`
+- `subxt`
+- Any many more!
 
 ---
 
@@ -336,6 +573,11 @@ Notes:
 - see "Client Libraries" here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
 - https://paritytech.github.io/json-rpc-interface-spec/introduction.html
 - Full subxt guide: https://docs.rs/subxt/latest/subxt/book/index.html
+- https://github.com/JFJun/go-substrate-rpc-client
+- https://github.com/polkascan/py-substrate-interface
+- https://github.com/polkadot-api/polkadot-api
+- more here: https://project-awesome.org/substrate-developer-hub/awesome-substrate
+- Listen to James Wilson introducing subxt: https://www.youtube.com/watch?v=aFk6We_Ke1I
 
 ---
 
