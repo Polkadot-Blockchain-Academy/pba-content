@@ -449,8 +449,8 @@ In one figure
 
 <img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
 
-* Don't care about a timeless system -> Substrate is not the right tool
-* Don't care about a truly resilient platform -> Polkadot is not the right platform
+- Don't care about a timeless system -> Substrate is not the right tool
+- Don't care about a truly resilient platform -> Polkadot is not the right platform
 
 ---
 
@@ -805,7 +805,7 @@ Another good analogy: Node is the FPGA, and FRAME/Wasm is the VHDL.
 
 ## Lecture Recap - Part 1
 
-* Questions?
+- Questions?
 
 <img src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
 

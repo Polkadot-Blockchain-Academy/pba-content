@@ -786,7 +786,6 @@ sp_io::storage::root();
 
 # Part 2
 
-
 ---
 
 ## Detour: Extrinsic

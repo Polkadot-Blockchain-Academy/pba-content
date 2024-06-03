@@ -265,17 +265,15 @@ About Polkadot SDK
 
 (tentative)
 
-* 🤓 *Substrate*: Tuesday -> Thursday
-  * More theory, 2 ungraded activities
-* 🧑‍💻 *FRAME*: Thursday -> Thursday
-  * Main graded assignment
-  * Mix lecture and live-coding
-* 🚀 *XCM*: Friday + Saturday
-  * Hands-on
+- 🤓 _Substrate_: Tuesday -> Thursday
+  - More theory, 2 ungraded activities
+- 🧑‍💻 _FRAME_: Thursday -> Thursday
+  - Main graded assignment
+  - Mix lecture and live-coding
+- 🚀 _XCM_: Friday + Saturday
+  - Hands-on
 
 ---
-
-
 
 ## Additional Resources! 😋
 

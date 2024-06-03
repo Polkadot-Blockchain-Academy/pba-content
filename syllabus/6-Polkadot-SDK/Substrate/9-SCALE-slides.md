@@ -31,12 +31,11 @@ Notes:
 
 ### Little-Endian
 
-* Each `word`'s memory address is the address of the smallest byte in the `word`.
-* Do we interpret this as the MSB or LSB?
-* WASM is Little Endian
+- Each `word`'s memory address is the address of the smallest byte in the `word`.
+- Do we interpret this as the MSB or LSB?
+- WASM is Little Endian
 
 <img src="../../../assets/img/5-Substrate/endian-egg.png" />
-
 
 ---
 
@@ -93,7 +92,7 @@ Notes:
 
 ### SCALE is NOT Self-Descriptive
 
-* The need for metadata!
+- The need for metadata!
 
 note:
 
@@ -275,12 +274,12 @@ Though for single-byte values, the fixed-width integer is never worse.
 </div>
 <br>
 
-* Compact/general integers are encoded with the two least significant **bits** denoting the mode.
+- Compact/general integers are encoded with the two least significant **bits** denoting the mode.
 
 Note:
 
 - The ranges must not overlap, or else encoding would be ambiguous. We prefer each number to be encoded in the smallest possible number of bits ofc.
-- How is the range 2^536 achieved? (64 + 3) * 8
+- How is the range 2^536 achieved? (64 + 3) \* 8
 
 ---
 
@@ -398,9 +397,8 @@ fn main() {
 
 ### Compact Integers Are "Backwards Compatible"
 
-* For any unsigned integer value, regardless of the size/type , there is only one compact encoding.
-* As you can see, you are able to "upgrade" a type without affecting the encoding.
-
+- For any unsigned integer value, regardless of the size/type , there is only one compact encoding.
+- As you can see, you are able to "upgrade" a type without affecting the encoding.
 
 ```rust
 println!("{:02x?}", Compact::<u32>::from(1024).encode());
@@ -574,9 +572,9 @@ Note that the length prefix can be multiple bytes, like the last example.
 
 ### Decoding
 
-* We can similarly take raw bytes, and decode it into a well known type.
-* Metadata can be used to convey to a program how to decode a type properly...
-* But bad or no information means the proper format for the data cannot be known.
+- We can similarly take raw bytes, and decode it into a well known type.
+- Metadata can be used to convey to a program how to decode a type properly...
+- But bad or no information means the proper format for the data cannot be known.
 
 ---
 
@@ -654,8 +652,8 @@ Err(Error { cause: Some(Error { cause: Some(Error { cause: Some(Error { cause: S
 
 ### Exceptions: BTreeSet
 
-* BTreeSet will decode from an unordered set, but will also order them as a result.
-* Be careful... this one isn't bijective.
+- BTreeSet will decode from an unordered set, but will also order them as a result.
+- Be careful... this one isn't bijective.
 
 ```rust
 use parity_scale_codec::{ Encode, Decode, alloc::collections::BTreeSet };
@@ -711,11 +709,11 @@ SCALE Codec has been implemented in other languages, including:
 
 ## Missing Some Metadata?
 
-* To make SCALE useful as an encoding format within the Substrate and Polkadot ecosystem, we need to
-figure out a way to provide **metadata** about all the types we will expect, and when we will expect
-them.
+- To make SCALE useful as an encoding format within the Substrate and Polkadot ecosystem, we need to
+  figure out a way to provide **metadata** about all the types we will expect, and when we will expect
+  them.
 
-* HINT: We do.
+- HINT: We do.
 
 ---
 

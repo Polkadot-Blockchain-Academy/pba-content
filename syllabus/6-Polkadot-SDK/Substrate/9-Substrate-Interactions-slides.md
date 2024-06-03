@@ -9,8 +9,8 @@ duration: 60 minutes
 
 ## Before we start
 
-* Find all the commands that will be used in this workshop in the `speaker notes`:
-* Run these two now:
+- Find all the commands that will be used in this workshop in the `speaker notes`:
+- Run these two now:
 
 ```
 cargo install staging-chain-spec-builder
@@ -19,14 +19,12 @@ cargo install --force --git https://github.com/kianenigma/pba-omni-node.git
 
 Notes:
 
-
 Install stuff
 cargo install staging-chain-spec-builder
 cargo install --force --git https://github.com/kianenigma/pba-omni-node.git
 
 generate chain-spec file
-chain-spec-builder create --chain-name pba-chain -r ./target/release/wbuild/minimal-template-runtime/minimal_template_runtime.wasm  default
-
+chain-spec-builder create --chain-name pba-chain -r ./target/release/wbuild/minimal-template-runtime/minimal_template_runtime.wasm default
 
 add some stuff to `balances.balances`
 
@@ -50,19 +48,18 @@ Change chain typw
 "chainType": "Development"
 
 "properties": {
-  "tokenDecimals": 1,
-  "tokenSymbol": "PBA"
+"tokenDecimals": 1,
+"tokenSymbol": "PBA"
 },
 
 Now you are ready for PJS
-
 
 ---
 
 ## Running a Substrate Chain
 
-* The 2024 and beyond edition
-* omni-node-driven-future
+- The 2024 and beyond edition
+- omni-node-driven-future
 
 Note:
 
@@ -72,30 +69,29 @@ https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-an
 
 ## Running a Substrate Chain
 
-* A Substrate node was meant to be oblivious to the runtime
-* Truth is that we have cheated a bit for some optimizations over the years
-  * Genesis state
-  * Native runtime for debugging
+- A Substrate node was meant to be oblivious to the runtime
+- Truth is that we have cheated a bit for some optimizations over the years
+  - Genesis state
+  - Native runtime for debugging
 
 ...
 
-* Now, we are moving back towards removing the native runtime.
-* Node can be fully oblivious to the runtime, except for some _assumptions_:
-  * Consensus, Block/Header format, database type
+- Now, we are moving back towards removing the native runtime.
+- Node can be fully oblivious to the runtime, except for some _assumptions_:
+  - Consensus, Block/Header format, database type
 
 #### ☯️ !!Omni Nodes!! ☯️
-
 
 ---v
 
 ## Running a Substrate Chain
 
-* A runtime template --> `.wasm` file
-  * Exposes some apis that define how the genesis state should be built
-* A `chain-spec` file
-  * Specification of the chain, most notably includes **genesis state**.
-  * Possibly generated with `chain-spec-builder`
-* `./omni-node --chain spec.json --tmp...`
+- A runtime template --> `.wasm` file
+  - Exposes some apis that define how the genesis state should be built
+- A `chain-spec` file
+  - Specification of the chain, most notably includes **genesis state**.
+  - Possibly generated with `chain-spec-builder`
+- `./omni-node --chain spec.json --tmp...`
 
 Note:
 
@@ -203,6 +199,7 @@ Notes:
 recall:
 
 https://docs.rs/sc-rpc-api/latest/sc_rpc_api/
+
 - The full list can also be seen here: https://polkadot.js.org/docs/substrate/rpc/
 - Specs: https://paritytech.github.io/json-rpc-interface-spec/introduction.html
 - Upcoming changes to JSON-RPC api: https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048
@@ -220,16 +217,15 @@ We will do a transfer twice:
 
 ## Workshop: Step 0
 
-* Complete the steps in the README
-* Open PJS-APPs and connect to your local node.
-
+- Complete the steps in the README
+- Open PJS-APPs and connect to your local node.
 
 > Don't forget to run with `--tmp` flag.
 
-* Ideas:
+- Ideas:
 
-* Play with `--consensus`
-* Try a `transfer`
+- Play with `--consensus`
+- Try a `transfer`
 
 ---v
 
