@@ -449,6 +449,9 @@ In one figure
 
 <img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
 
+* Don't care about a timeless system -> Substrate is not the right tool
+* Don't care about a truly resilient platform -> Polkadot is not the right platform
+
 ---
 
 ## Positive Consequences of _Wasm_ Runtime 🔥
