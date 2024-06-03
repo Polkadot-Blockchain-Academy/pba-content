@@ -33,25 +33,75 @@
 </script></section><section  data-markdown><script type="text/template">
 ## Before we start
 
-Find all the commands that will be used in this workshop:
-[tinyurl.com/hk24-substrate](https://hackmd.io/@ak0n/hk24-substrate-interaction)
-</script></section><section  data-markdown><script type="text/template">
-## Before we start
+- Find all the commands that will be used in this workshop in the `speaker notes`:
+- Run these two now:
 
-- Clone polkadot-sdk
-
-```sh
-git clone https://github.com/paritytech/polkadot-sdk.git
+```
+cargo install staging-chain-spec-builder
+cargo install --force --git https://github.com/kianenigma/pba-omni-node.git
 ```
 
-<br/>
+<aside class="notes"><p>Install stuff
+cargo install staging-chain-spec-builder
+cargo install --force --git <a href="https://github.com/kianenigma/pba-omni-node.git">https://github.com/kianenigma/pba-omni-node.git</a></p>
+<p>generate chain-spec file
+chain-spec-builder create --chain-name pba-chain -r ./target/release/wbuild/minimal-template-runtime/minimal_template_runtime.wasm default</p>
+<p>add some stuff to <code>balances.balances</code></p>
+<p>[&quot;5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY&quot;, 1000000],
+[&quot;5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty&quot;, 1000000],
+[&quot;5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y&quot;, 1000000],
+[&quot;5DAAnrj7VHTznn2AWBemMuyBwZWs6FNFjdyVXUeYum3PTXFy&quot;, 1000000],
+[&quot;5HGjWAeFDfFCWPsjFQdVV2Msvz2XtMktvgocEZcCj68kUMaw&quot;, 1000000],
+[&quot;5CiPPseXPECbkjWCa6MnjNokrgYjMqmKndv2rSnekmSK2DjL&quot;, 1000000],
+[&quot;5GNJqTPyNqANBkUVMN1LPPrxXnFouWXoe2wNSmmEoLctxiZY&quot;, 1000000],
+[&quot;5HpG9w8EBLe5XCrbczpwq5TSXvedjrBGCwqxK1iQ7qUsSWFc&quot;, 1000000],
+[&quot;5Ck5SLSHYac6WFt5UZRSsdJjwmpSZq85fd5TRNAdZQVzEAPT&quot;, 1000000],
+[&quot;5HKPmK9GYtE1PSLsS1qiYU9xQ9Si1NcEhdeCq9sw5bqu4ns8&quot;, 1000000],
+[&quot;5FCfAonRZgTFrTd9HREEyeJjDpT397KMzizE6T3DvebLFE7n&quot;, 1000000],
+[&quot;5CRmqmsiNFExV6VbdmPJViVxrWmkaXXvBrSX8oqBT8R9vmWk&quot;, 1000000],
+[&quot;5Fxune7f71ZbpP2FoY3mhYcmM596Erhv1gRue4nsPwkxMR4n&quot;, 1000000],
+[&quot;5CUjxa4wVKMj3FqKdqAUf7zcEMr4MYAjXeWmUf44B41neLmJ&quot;, 1000000]</p>
+<p>Change chain typw</p>
+<p>&quot;chainType&quot;: &quot;Development&quot;</p>
+<p>&quot;properties&quot;: {
+&quot;tokenDecimals&quot;: 1,
+&quot;tokenSymbol&quot;: &quot;PBA&quot;
+},</p>
+<p>Now you are ready for PJS</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## Running a Substrate Chain
 
-- Compile your node
+- The 2024 and beyond edition
+- omni-node-driven-future
 
-```sh
-cargo build --release -p minimal-node
-```
-</script></section><section ><section data-markdown><script type="text/template">
+<aside class="notes"><p><a href="https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-and-feedback/7823/4">https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-and-feedback/7823/4</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Running a Substrate Chain
+
+- A Substrate node was meant to be oblivious to the runtime
+- Truth is that we have cheated a bit for some optimizations over the years
+  - Genesis state
+  - Native runtime for debugging
+
+...
+
+- Now, we are moving back towards removing the native runtime.
+- Node can be fully oblivious to the runtime, except for some _assumptions_:
+  - Consensus, Block/Header format, database type
+
+#### ☯️ !!Omni Nodes!! ☯️
+</script></section><section data-markdown><script type="text/template">
+## Running a Substrate Chain
+
+- A runtime template --> `.wasm` file
+  - Exposes some apis that define how the genesis state should be built
+- A `chain-spec` file
+  - Specification of the chain, most notably includes **genesis state**.
+  - Possibly generated with `chain-spec-builder`
+- `./omni-node --chain spec.json --tmp...`
+
+<aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/sc_chain_spec/index.html">https://paritytech.github.io/polkadot-sdk/master/sc_chain_spec/index.html</a></p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Interacting With a Substrate Blockchain
 
 > How does a user or an application interact with a blockchain?
@@ -135,55 +185,38 @@ The RPC methods that a substrate node exposes are scoped and has the pattern `"<
 - &shy;<!-- .element: class="fragment" --> `rpc`: information about the RPC endpoints.
 
 <aside class="notes"><p>recall:</p>
-<p><a href="https://paritytech.github.io/substrate/master/sc_rpc_api/index.html">https://paritytech.github.io/substrate/master/sc_rpc_api/index.html</a>
-<a href="https://paritytech.github.io/substrate/master/sc_rpc/index.html">https://paritytech.github.io/substrate/master/sc_rpc/index.html</a></p>
+<p><a href="https://docs.rs/sc-rpc-api/latest/sc_rpc_api/">https://docs.rs/sc-rpc-api/latest/sc_rpc_api/</a></p>
 <ul>
 <li>The full list can also be seen here: <a href="https://polkadot.js.org/docs/substrate/rpc/">https://polkadot.js.org/docs/substrate/rpc/</a></li>
 <li>Specs: <a href="https://paritytech.github.io/json-rpc-interface-spec/introduction.html">https://paritytech.github.io/json-rpc-interface-spec/introduction.html</a></li>
 <li>Upcoming changes to JSON-RPC api: <a href="https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048">https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048</a></li>
 </ul>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
-### Workshop: Intro
+## Workshop
 
-- Transfer tokens from Alice to Bob.
+We will do a transfer twice:
 
-<br/>
+1. Once using the PJS-APPs.
+2. Once manually using RPC.
+</script></section><section data-markdown><script type="text/template">
+## Workshop: Step 0
 
-- We will cheat a bit and take help sometimes from [Polkadot.js app](https://polkadot.js.org/apps/#/explorer).
+- Complete the steps in the README
+- Open PJS-APPs and connect to your local node.
 
-<!-- .element: class="fragment" -->
+> Don't forget to run with `--tmp` flag.
 
-<aside class="notes"><ul>
-<li>When we start up a dev chain, some well known accounts are already minted some balance at genesis. We will use Alice
-and Bob which are well known accounts.</li>
-<li>The parts we cheat is because we will need to know more about FRAME to be able to calculate some storage keys.</li>
-</ul>
-</aside></script></section><section data-markdown><script type="text/template">
-### Workshop: Spin up your node
+- Ideas:
 
-- Check out cli docs
-
-```sh
-./target/release/minimal-node --help
-```
-
-<br/>
-
-- Spin up your dev node.
-
-```sh
-./target/release/minimal-node --chain=dev --tmp
-```
-
-<!-- .element: class="fragment" -->
-
-<aside class="notes"><ul>
-<li>What does --chain=dev and --tmp do? What other flag can you use?</li>
-</ul>
-</aside></script></section><section data-markdown><script type="text/template">
+- Play with `--consensus`
+- Try a `transfer`
+</script></section><section data-markdown><script type="text/template">
 ### Workshop: Check balance
 
 - Query current balance of Alice and Bob.
+
+* To get the storage key: `Developer -> Extrinsics`
+* `System -> Account`
 
 ```sh
 wscat \
@@ -193,8 +226,8 @@ wscat \
 ```
 
 <aside class="notes"><ul>
-<li>You will learn how the storage key is calculated in FRAME based substrate chains in the FRAME module.</li>
-<li>What do you get?</li>
+<li>You will learn how the storage key is calculated in FRAME based substrate chains in the FRAME
+module.</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
 ### Workshop: Metadata
@@ -219,9 +252,199 @@ wscat \
 <aside class="notes"><ul>
 <li>Use PJS app to get frame-metadata: Developer &gt; RPC Calls &gt; state &gt; getMetadata.</li>
 <li><a href="https://hackmd.io/@ak0n/rJUhmXmK6">Metadata</a> with most details not relevant stripped off.</li>
-<li>Read more about
-metadata: <a href="https://docs.substrate.io/build/application-development/#exposing-runtime-information-as-metadata">https://docs.substrate.io/build/application-development/#exposing-runtime-information-as-metadata</a>.</li>
 </ul>
+<pre><code>{
+  magicNumber: 1,635,018,093
+  metadata: {
+    V14: {
+      lookup: {
+        types: [
+          {
+            id: 3
+            type: {
+              path: [
+                frame_system
+                AccountInfo
+              ]
+              params: [
+                {
+                  name: Nonce
+                  type: 4
+                }
+                {
+                  name: AccountData
+                  type: 5
+                }
+              ]
+              def: {
+                Composite: {
+                  fields: [
+                    {
+                      name: nonce
+                      type: 4
+                      typeName: Nonce
+                      docs: []
+                    }
+                    {
+                      name: consumers
+                      type: 4
+                      typeName: RefCount
+                      docs: []
+                    }
+                    {
+                      name: providers
+                      type: 4
+                      typeName: RefCount
+                      docs: []
+                    }
+                    {
+                      name: sufficients
+                      type: 4
+                      typeName: RefCount
+                      docs: []
+                    }
+                    {
+                      name: data
+                      type: 5
+                      typeName: AccountData
+                      docs: []
+                    }
+                  ]
+                }
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 4
+            type: {
+              path: []
+              params: []
+              def: {
+                Primitive: U32
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 5
+            type: {
+              path: [
+                pallet_balances
+                types
+                AccountData
+              ]
+              params: [
+                {
+                  name: Balance
+                  type: 6
+                }
+              ]
+              def: {
+                Composite: {
+                  fields: [
+                    {
+                      name: free
+                      type: 6
+                      typeName: Balance
+                      docs: []
+                    }
+                    {
+                      name: reserved
+                      type: 6
+                      typeName: Balance
+                      docs: []
+                    }
+                    {
+                      name: frozen
+                      type: 6
+                      typeName: Balance
+                      docs: []
+                    }
+                    {
+                      name: flags
+                      type: 7
+                      typeName: ExtraFlags
+                      docs: []
+                    }
+                  ]
+                }
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+
+          {
+            id: 6
+            type: {
+              path: []
+              params: []
+              def: {
+                Primitive: U64
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 7
+            type: {
+              path: [
+                pallet_balances
+                types
+                ExtraFlags
+              ]
+              params: []
+              def: {
+                Composite: {
+                  fields: [
+                    {
+                      name: null
+                      type: 8
+                      typeName: u128
+                      docs: []
+                    }
+                  ]
+                }
+              }
+              docs: []
+            }
+          }
+
+          ..
+
+          {
+            id: 8
+            type: {
+              path: []
+              params: []
+              def: {
+                Primitive: U128
+              }
+              docs: []
+            }
+          }
+
+        ]
+      }
+      pallets: [],
+      extrinsic: {},
+      type: 107
+    }
+  }
+}
+</code></pre>
 </aside></script></section><section data-markdown><script type="text/template">
 ### Workshop: Decoding balance
 
@@ -260,8 +483,9 @@ metadata: <a href="https://docs.substrate.io/build/application-development/#expo
 </aside></script></section><section data-markdown><script type="text/template">
 ### Workshop: Transfer some tokens
 
-- &shy;<!-- .element: class="fragment" --> Take PJS help to get the signed extrinsic.
-- &shy;<!-- .element: class="fragment" --> Use the following command to submit the extrinsic.
+- Take PJS help to get the signed extrinsic.
+  - `Developer -> Extrinsics -> Balances -> Transfer`
+- Use the following command to submit the extrinsic.
 
 ```sh
 wscat \
@@ -270,14 +494,14 @@ wscat \
   | jq
 ```
 
-- &shy;<!-- .element: class="fragment" --> Check balance again for both accounts.
-- &shy;<!-- .element: class="fragment" --> What happens to nonce of Alice?
+- Check balance again for both accounts.
+- What happens to nonce of Alice?
 
 <aside class="notes"><ul>
 <li>Students will learn how to build the signed extrinsic themselves in their assignment.</li>
 <li>Let students do the second part themselves.</li>
 </ul>
-</aside></script></section><section data-markdown><script type="text/template">
+</aside></script></section></section><section  data-markdown><script type="text/template">
 ### Workshop: Versions
 
 - Find runtime version of the polkadot and westend chain `state_getRuntimeVersion`.
@@ -295,20 +519,16 @@ wscat \
 <li><code>wscat -c wss://polkadot-rpc.dwellir.com -x &#39;{&quot;jsonrpc&quot;:&quot;2.0&quot;, &quot;id&quot;:1, &quot;method&quot;:&quot;system_version&quot;}&#39; | jq</code>.</li>
 <li>Show polkadot telemetry: <a href="https://telemetry.polkadot.io/">https://telemetry.polkadot.io/</a>.</li>
 </ul>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
 ### JSON-RPC: Application
 
 - On top of `SCALE` and `JSON-RPC`, a large array of libraries have been built.
 
-- &shy;<!-- .element: class="fragment" --> `PJS-API` / `PJS-APPS`
-- &shy;<!-- .element: class="fragment" --> `subxt`
-- &shy;<!-- .element: class="fragment" --> Any many more!
-
-<aside class="notes"><p><a href="https://github.com/JFJun/go-substrate-rpc-client">https://github.com/JFJun/go-substrate-rpc-client</a>
-<a href="https://github.com/polkascan/py-substrate-interface">https://github.com/polkascan/py-substrate-interface</a>
-more here: <a href="https://project-awesome.org/substrate-developer-hub/awesome-substrate">https://project-awesome.org/substrate-developer-hub/awesome-substrate</a>
-Listen to James Wilson introducing subxt: <a href="https://www.youtube.com/watch?v=aFk6We_Ke1I">https://www.youtube.com/watch?v=aFk6We_Ke1I</a></p>
-</aside></script></section><section  data-markdown><script type="text/template">
+- `PJS-API` / `PJS-APPS`
+- future: `PAPI`
+- `subxt`
+- Any many more!
+</script></section><section  data-markdown><script type="text/template">
 ## Additional Resources! 😋
 
 > Check speaker notes (click "s" 😉)
@@ -317,6 +537,11 @@ Listen to James Wilson introducing subxt: <a href="https://www.youtube.com/watch
 <li>see &quot;Client Libraries&quot; here: <a href="https://project-awesome.org/substrate-developer-hub/awesome-substrate">https://project-awesome.org/substrate-developer-hub/awesome-substrate</a></li>
 <li><a href="https://paritytech.github.io/json-rpc-interface-spec/introduction.html">https://paritytech.github.io/json-rpc-interface-spec/introduction.html</a></li>
 <li>Full subxt guide: <a href="https://docs.rs/subxt/latest/subxt/book/index.html">https://docs.rs/subxt/latest/subxt/book/index.html</a></li>
+<li><a href="https://github.com/JFJun/go-substrate-rpc-client">https://github.com/JFJun/go-substrate-rpc-client</a></li>
+<li><a href="https://github.com/polkascan/py-substrate-interface">https://github.com/polkascan/py-substrate-interface</a></li>
+<li><a href="https://github.com/polkadot-api/polkadot-api">https://github.com/polkadot-api/polkadot-api</a></li>
+<li>more here: <a href="https://project-awesome.org/substrate-developer-hub/awesome-substrate">https://project-awesome.org/substrate-developer-hub/awesome-substrate</a></li>
+<li>Listen to James Wilson introducing subxt: <a href="https://www.youtube.com/watch?v=aFk6We_Ke1I">https://www.youtube.com/watch?v=aFk6We_Ke1I</a></li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ### JSON-RPC: Mini Activity

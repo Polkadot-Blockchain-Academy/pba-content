@@ -311,39 +311,6 @@ state.execute(|| {
 
 <img style="width: 1200px;" src="../../../assets/img/5-Substrate/dev-4-3-import.svg" />
 </script></section></section><section ><section data-markdown><script type="text/template">
-## Detour: Extrinsic
-
-- Previous slides used the term "transactions" in a simplified way. Let's correct it.
-</script></section><section data-markdown><script type="text/template">
-### Detour: Extrinsic
-
-<diagram class="mermaid" center>
-  %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
-  flowchart TD
-    E(Extrinsic) ---> I(Inherent);
-    E --> T(Transaction)
-    T --> ST("Signed (aka. Transaction)")
-    T --> UT(Unsigned)
-</diagram>
-</script></section><section data-markdown><script type="text/template">
-### Detour: Extrinsic
-
-- An Extrinsic is data that come from outside of the runtime.
-- &shy;<!-- .element: class="fragment" -->Inherents are data that is put into the block by the block author, directly.
-- &shy;<!-- .element: class="fragment" -->Yes, transactions are **a type of extrinsic**, but not all extrinsics are transactions.
-- &shy;<!-- .element: class="fragment" -->So, why is it called _Transaction Pool_ and not _Extrinsic Pool_?
-
-<aside class="notes"><p>extrinsics are just blobs of data which can be included in a block. inherents are types of extrinsic
-which are crafted by the block builder itself in the production process. they are unsigned because
-the assertion is that they are &quot;inherently true&quot; by virtue of getting past all validators.</p>
-<p>notionally the origin can be said to be a plurality of validators. take for example the timestamp
-set inherent. if the data were sufficiently incorrect (i.e. the wrong time), then the block would
-not be accepted by enough validators and would not become canonicalised. so the &quot;nobody&quot; origin is
-actually the tacit approval of the validators.</p>
-<p>transactions are generally statements of opinion which are valuable to the chain to have included
-(because fees are paid or some other good is done). the transaction pool filters out which of these
-are indeed valuable and nodes share them.</p>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Example #3: Block Authoring
 </script></section><section data-markdown><script type="text/template">
 ### Example #3: Block Authoring
@@ -575,6 +542,7 @@ This is why forkless upgrades are possible in substrate.</p>
 - look for `impl_runtime_apis! {...}` and `decl_runtime_apis! {...}` macro calls.
   - Try and find the corresponding the node code calling a given api as well.
 - Look for `#[runtime_interface]` macro, and try and find usage of the host functions!
+  - Look for `sp_io::storage`
 - You have 15 minutes!
 </script></section><section data-markdown><script type="text/template">
 ### Defining a Runtime API
@@ -693,6 +661,45 @@ sp_io::storage::root();
 </script></section><section  data-markdown><script type="text/template">
 # Part 2
 </script></section><section ><section data-markdown><script type="text/template">
+## Detour: Extrinsic
+
+- Previous slides used the term "transactions" in a simplified way. Let's correct it.
+</script></section><section data-markdown><script type="text/template">
+### Detour: Extrinsic
+
+<diagram class="mermaid" center>
+  %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+  flowchart TD
+    E(Extrinsic) ---> I(Inherent);
+    E --> T(Transaction)
+    T --> ST("Signed (aka. Transaction)")
+    T --> UT(Unsigned)
+</diagram>
+</script></section><section data-markdown><script type="text/template">
+### Detour: Extrinsic
+
+- An Extrinsic is data that come from outside of the runtime.
+- &shy;<!-- .element: class="fragment" -->Inherents are data that is put into the block by the block author, directly.
+- &shy;<!-- .element: class="fragment" -->Yes, transactions are **a type of extrinsic**, but not all extrinsics are transactions.
+- &shy;<!-- .element: class="fragment" -->So, why is it called _Transaction Pool_ and not _Extrinsic Pool_?
+
+<aside class="notes"><p>extrinsics are just blobs of data which can be included in a block. inherents are types of extrinsic
+which are crafted by the block builder itself in the production process. they are unsigned because
+the assertion is that they are &quot;inherently true&quot; by virtue of getting past all validators.</p>
+<p>notionally the origin can be said to be a plurality of validators. take for example the timestamp
+set inherent. if the data were sufficiently incorrect (i.e. the wrong time), then the block would
+not be accepted by enough validators and would not become canonicalised. so the &quot;nobody&quot; origin is
+actually the tacit approval of the validators.</p>
+<p>transactions are generally statements of opinion which are valuable to the chain to have included
+(because fees are paid or some other good is done). the transaction pool filters out which of these
+are indeed valuable and nodes share them.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Detour: Extrinsic
+
+More change is coming; advance topic; not needed, but FYI:
+
+https://github.com/paritytech/polkadot-sdk/issues/2415
+</script></section></section><section ><section data-markdown><script type="text/template">
 ## Considerations: Speed
 
 - (new) Wasmtime is near-native 🏎️.
@@ -768,13 +775,6 @@ pub const VERSION: RuntimeVersion = RuntimeVersion {
 ## Considerations: Panic
 
 - What if any of the runtime calls, like `execute_block` or `apply_extrinsic` panics 😱?
-- To answer this, let's take a step back toward validator economics.
-</script></section><section data-markdown><script type="text/template">
-### Considerations: Panic
-
-- All validators/nodes want to avoid wasting their time.
-- While building a block, sometimes it is unavoidable (when?). <!-- .element: class="fragment" -->
-- While importing a block, nodes will not tolerate this. <!-- .element: class="fragment" -->
 </script></section><section data-markdown><script type="text/template">
 ### Considerations: Panic
 
@@ -797,9 +797,9 @@ workshop idea for FRAME: find all instances where the runtime actually correctly
 ### Considerations: Panic
 
 - Panic in a user-callable code path?
-- 🤬 annoy/DOS your poor validators <!-- .element: class="fragment" -->
-- Panic on "automatic" part of your blockchain like "initialize_block"? <!-- .element: class="fragment" -->
-- 😱 Stuck forever <!-- .element: class="fragment" -->
+- 🤬 annoy/DOS your poor validators
+- Panic on "automatic" part of your blockchain like "initialize_block"?
+- 😱 Stuck forever
 </script></section><section data-markdown><script type="text/template">
 ### Considerations: Panic
 
@@ -1034,7 +1034,7 @@ panic if any transaction fails to apply.</p>
 - Considerations:
 
   - Speed
-  - Native Execution and Versioning
+  - Versioning
   - Panics
   - Altering Host Functions
 
@@ -1048,11 +1048,10 @@ panic if any transaction fails to apply.</p>
 
 <img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
 
-<aside class="notes"><p>TODO: update links, most are outdated.</p>
-<ul>
-<li><p>Some very recent change the the block building API set: <a href="https://github.com/paritytech/substrate/pull/14414">https://github.com/paritytech/substrate/pull/14414</a> / <a href="https://github.com/paritytech/polkadot-sdk/pull/1781">https://github.com/paritytech/polkadot-sdk/pull/1781</a></p>
-</li>
+<aside class="notes"><ul>
 <li><p>New runtime API for building genesis config: <a href="https://github.com/paritytech/substrate/pull/14310">https://github.com/paritytech/substrate/pull/14310</a> / <a href="https://github.com/paritytech/polkadot-sdk/pull/1492">https://github.com/paritytech/polkadot-sdk/pull/1492</a></p>
+</li>
+<li><p>New changes to <code>initialize_block</code> to support MBM: <a href="https://polkadot-fellows.github.io/RFCs/approved/0013-prepare-blockbuilder-and-core-runtime-apis-for-mbms.html">https://polkadot-fellows.github.io/RFCs/approved/0013-prepare-blockbuilder-and-core-runtime-apis-for-mbms.html</a></p>
 </li>
 <li><p>New metadata version, including types for the runtime API: <a href="https://github.com/paritytech/substrate/issues/12939">https://github.com/paritytech/substrate/issues/12939</a></p>
 </li>
@@ -1072,7 +1071,8 @@ can be executed.</p>
 <h3 id="post-lecture-notes">Post Lecture Notes</h3>
 <p>HK:</p>
 <ul>
-<li>The panic section is so important and it comes at the end, therefore hard to understand. Simplify it and deliver it sooner.</li>
+<li>The panic section is so important and it comes at the end, therefore hard to understand. Simplify
+it and deliver it sooner.</li>
 <li>More examples of unsigned tx</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
