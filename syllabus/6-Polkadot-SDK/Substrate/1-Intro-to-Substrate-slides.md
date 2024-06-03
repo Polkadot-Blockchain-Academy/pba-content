@@ -443,6 +443,14 @@ _The way to make a protocol truly upgradeable is to design a (fixed) meta-protoc
 
 ---
 
+## Core Substrate Philosophies
+
+In one figure
+
+<img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
+
+---
+
 ## Positive Consequences of _Wasm_ Runtime 🔥
 
 ---v
