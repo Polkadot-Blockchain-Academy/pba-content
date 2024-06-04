@@ -41,6 +41,14 @@ This lecture is about learning two things:
 
 There will be amazing modules going into further details of each. This will be very high level.
 
+meta questions for ice breaker:
+
+- how many ppl know substrate/frame already?
+- how many ppl feel like they are comfortable with rust
+- with rust generics, traits and associated types
+- how many ppl know what polkadot-sdk is?
+- how many ppl know jam already? do you have the question of why are we still leaning all of this?
+
 ---
 
 ## Learning Outcomes
