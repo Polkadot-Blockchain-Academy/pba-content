@@ -4,14 +4,13 @@ description: In Introduction to Polkadot SDK
 duration: 120 mins
 ---
 
-
 ## Meta
 
 Before Getting started
 
-* 👋🏻 Questions
-* ⏰ Slides
-* `@kianenigma` / `kian@parity.io`
+- 👋🏻 Questions
+- ⏰ Slides
+- `@kianenigma` / `kian@parity.io`
 
 Note:
 
@@ -27,7 +26,7 @@ meta questions for ice breaker:
 
 # Introduction to Polkadot SDK
 
-* Polkadot + Substrate + FRAME + XCM
+- Polkadot + Substrate + FRAME + XCM
 
 Note:
 
@@ -199,7 +198,6 @@ Note:
 state transition function aka. Runtime of your blockchain and not deal with the rest of the
 software. WASM.
 
-
 ---v
 
 ### Polkadot SDK
@@ -211,7 +209,6 @@ All proudly™️ built with Substrate.
 1. the mighty Polkadot Relay Chain
 2. all the Polkadot Parachains to date.
 3. (less known) can be used to build any blockchain unrelated to Polkadot.
-
 
 ---v
 
