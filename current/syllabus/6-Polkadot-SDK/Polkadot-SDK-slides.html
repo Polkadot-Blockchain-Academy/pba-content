@@ -29,7 +29,26 @@
     <article class="slides">
       <section  data-markdown><script type="text/template">
 
+## Meta
+
+Before Getting started
+
+- 👋🏻 Questions
+- ⏰ Slides
+- `@kianenigma` / `kian@parity.io`
+
+<aside class="notes"><p>meta questions for ice breaker:</p>
+<ul>
+<li>how many ppl know substrate/frame already?</li>
+<li>how many ppl feel like they are comfortable with rust</li>
+<li>with rust generics, traits and associated types</li>
+<li>how many ppl know what polkadot-sdk is?</li>
+<li>how many ppl know jam already? do you have the question of why are we still learning all of this?</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 # Introduction to Polkadot SDK
+
+- Polkadot + Substrate + FRAME + XCM
 
 <aside class="notes"><p>This lecture is about learning two things:</p>
 <ol>
@@ -71,6 +90,7 @@
 </script></section><section data-markdown><script type="text/template">
 ### Polkadot
 
+- O.G ETH2 Vision from 2015
 - Let's make this _sharded_, such that it can achieve execution sharding.
 
 <aside class="notes"><p>The holy grain of what ETH 2.0 was meant to be.</p>
@@ -140,6 +160,22 @@ of Polkadot is the World Computer vision.</p>
 </script></section><section data-markdown><script type="text/template">
 ### Polkadot SDK
 
+⛓️‍💥 Substrate 🤝 FRAME 🤝 Cumulus ⛓️‍💥
+
+<img width="800px" rounded src="./img/substrate-frame-cumulus.svg" >
+</script></section><section data-markdown><script type="text/template">
+### Polkadot SDK
+
+- Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
+- FRAME: An opinionated way to build that WASM protocol/runtime/STF.
+- Cumulus: Parachain turbocharger
+
+<aside class="notes"><p><strong>FRAME</strong> is a subset of blockchain within Substrate that allow you to focus only on writing the
+state transition function aka. Runtime of your blockchain and not deal with the rest of the
+software. WASM.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Polkadot SDK
+
 <img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
 
 All proudly™️ built with Substrate.
@@ -148,17 +184,6 @@ All proudly™️ built with Substrate.
 2. all the Polkadot Parachains to date.
 3. (less known) can be used to build any blockchain unrelated to Polkadot.
 </script></section><section data-markdown><script type="text/template">
-### Polkadot SDK
-
-Substrate 🤝 FRAME
-
-- Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
-- FRAME: An opinionated way to build that WASM protocol/runtime/STF.
-
-<aside class="notes"><p><strong>FRAME</strong> is a subset of blockchain within Substrate that allow you to focus only on writing the
-state transition function aka. Runtime of your blockchain and not deal with the rest of the
-software. WASM.</p>
-</aside></script></section><section data-markdown><script type="text/template">
 ### Polkadot SDK
 
 Cumulus augments Substrate to make it Polkadot-compatible.

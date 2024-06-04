@@ -30,17 +30,6 @@
       <section  data-markdown><script type="text/template">
 
 # Introduction to Substrate
-
-<!-- ---
-
-## About These Lectures and Lecturer
-
-- Ground-up, low-level, but hands-on.
-- Intentionally avoiding FRAME, but giving you the tools to be successful at it.
-- Interrupts and questions are always welcome.
-- Narratives > facts.
-
-Your feedback is highly appreciated! -->
 </script></section><section ><section data-markdown><script type="text/template">
 ## What is Substrate?
 
@@ -147,6 +136,10 @@ predict the future.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### 🦀 Rust
 
+<img rounded src="../img/rust-meme.png" />
+
+Note:
+
 ```c
 int main() {
     int* x = malloc(sizeof(int));
@@ -169,30 +162,37 @@ fn main() {
 
 <!-- .element: class="fragment" -->
 
-<aside class="notes"><p>another one:</p>
-<pre><code class="language-c">int* foo() {
+Notes:
+
+another one:
+
+```c
+int* foo() {
     int x = 10;
-    return &amp;x;
+    return &x;
 }
 
 int main() {
     int* y = foo();
-    printf(&quot;%d\n&quot;, *y); // Accessing memory out of its scope
+    printf("%d\n", *y); // Accessing memory out of its scope
 }
-</code></pre>
+
+```
+
 <br/>
 
-<pre><code class="language-rust">fn foo() -&gt; &amp;&#39;static i32 {
+```rust
+fn foo() -> &'static i32 {
     let x = 10;
-    &amp;x
+    &x
 }
 
 fn main() {
     let y = foo();
-    println!(&quot;{}&quot;, y); // ❌
+    println!("{}", y); // ❌
 }
-</code></pre>
-</aside></script></section><section data-markdown><script type="text/template">
+```
+</script></section><section data-markdown><script type="text/template">
 ### 🦀 Rust
 
 > Microsoft and Google have each stated that software memory safety issues are behind around 70 percent of their vulnerabilities.
@@ -304,13 +304,6 @@ be upgraded with a fork.</p>
 ### 🏦 Governance + Upgradeability
 
 _The way to make a protocol truly upgradeable is to design a (fixed) meta-protocol._
-</script></section><section data-markdown><script type="text/template">
-### 🏦 Governance + Upgradeability
-
-- Meta-protocol?
-- &shy;<!-- .element: class="fragment" -->"_Runtime as WASM_ " in the Substrate node.
-- <!-- .element: class="fragment" --> Inherently upgradeable protocol?
-- <!-- .element: class="fragment" --> WASM Runtime
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Substrate Architecture
 
@@ -357,16 +350,35 @@ _The way to make a protocol truly upgradeable is to design a (fixed) meta-protoc
 </pba-col>
 
 </pba-cols>
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section></section><section ><section data-markdown><script type="text/template">
 ## Core Substrate Philosophies
 
-In one figure
+\*For a system to survive the **test of time\***:
+
+0. Correct and Safe
+1. Generic
+2. Governable
+3. Trust-less-ly Upgradeable.
+
+Substrate's Wasm meta-protocol exactly enables the latest ✅
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Question: how would you put the meta-protocol of Substrate into words?</p>
+<p>The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
+hardcoded, but the protocol itself is flexible.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Core Substrate Philosophies
+
+- Why all this complexity? 😵‍💫😵‍💫
 
 <img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
 
-- Don't care about a timeless system -> Substrate is not the right tool
-- Don't care about a truly resilient platform -> Polkadot is not the right platform
-</script></section><section ><section data-markdown><script type="text/template">
+<aside class="notes"><ul>
+<li>Don&#39;t care about a timeless system -&gt; Substrate is not the right tool</li>
+<li>Don&#39;t care about a truly resilient platform -&gt; Polkadot is not the right platform</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Positive Consequences of _Wasm_ Runtime 🔥
 </script></section><section data-markdown><script type="text/template">
 ### 🤖 Deterministic Execution
@@ -765,23 +777,7 @@ the next episode to air actually will be.</p>
 ### Lecture Recap - Part 2
 
 <img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-full.svg" />
-</script></section><section data-markdown><script type="text/template">
-### Recap: 🏦 Governance and Upgradeability
-
-A timeless system must be:
-
-1. Generic
-2. Governable
-3. Trust-less-ly Upgradeable.
-
-Substrate's Wasm meta-protocol exactly enables the latest ✅
-
-<!-- .element: class="fragment" -->
-
-<aside class="notes"><p>Question: how would you put the meta-protocol of Substrate into words?</p>
-<p>The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
-hardcoded, but the protocol itself is flexible.</p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</script></section></section><section  data-markdown><script type="text/template">
 ## Rest of This Module! 😈
 
 #### Track: Main Lectures
