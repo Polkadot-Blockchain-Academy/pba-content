@@ -6,17 +6,6 @@ duration: 60 minutes
 
 # Introduction to Substrate
 
-<!-- ---
-
-## About These Lectures and Lecturer
-
-- Ground-up, low-level, but hands-on.
-- Intentionally avoiding FRAME, but giving you the tools to be successful at it.
-- Interrupts and questions are always welcome.
-- Narratives > facts.
-
-Your feedback is highly appreciated! -->
-
 ---
 
 ## What is Substrate?
@@ -166,6 +155,10 @@ Some such mistakes are impossible to make in Rust.
 ---v
 
 ### 🦀 Rust
+
+<img rounded src="../img/rust-meme.png" />
+
+Note:
 
 ```c
 int main() {
@@ -380,15 +373,6 @@ be upgraded with a fork.
 
 _The way to make a protocol truly upgradeable is to design a (fixed) meta-protocol._
 
----v
-
-### 🏦 Governance + Upgradeability
-
-- Meta-protocol?
-- &shy;<!-- .element: class="fragment" -->"_Runtime as WASM_ " in the Substrate node.
-- <!-- .element: class="fragment" --> Inherently upgradeable protocol?
-- <!-- .element: class="fragment" --> WASM Runtime
-
 ---
 
 ## Substrate Architecture
@@ -445,9 +429,33 @@ _The way to make a protocol truly upgradeable is to design a (fixed) meta-protoc
 
 ## Core Substrate Philosophies
 
-In one figure
+*For a system to survive the **test of time***:
+
+0. Correct and Safe
+1. Generic
+2. Governable
+3. Trust-less-ly Upgradeable.
+
+Substrate's Wasm meta-protocol exactly enables the latest ✅
+
+<!-- .element: class="fragment" -->
+
+Notes:
+
+Question: how would you put the meta-protocol of Substrate into words?
+
+The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
+hardcoded, but the protocol itself is flexible.
+
+---v
+
+## Core Substrate Philosophies
+
+* Why all this complexity? 😵‍💫😵‍💫
 
 <img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
+
+Note:
 
 - Don't care about a timeless system -> Substrate is not the right tool
 - Don't care about a truly resilient platform -> Polkadot is not the right platform
@@ -994,26 +1002,6 @@ state is sometimes called "storage" asd well.
 
 <img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-full.svg" />
 
----v
-
-### Recap: 🏦 Governance and Upgradeability
-
-A timeless system must be:
-
-1. Generic
-2. Governable
-3. Trust-less-ly Upgradeable.
-
-Substrate's Wasm meta-protocol exactly enables the latest ✅
-
-<!-- .element: class="fragment" -->
-
-Notes:
-
-Question: how would you put the meta-protocol of Substrate into words?
-
-The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
-hardcoded, but the protocol itself is flexible.
 
 ---
 
