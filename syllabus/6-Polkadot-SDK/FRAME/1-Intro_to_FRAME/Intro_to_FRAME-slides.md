@@ -85,10 +85,10 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 
 <pba-flex center>
 
-* Writing the Sudo Pallet:
-* Without FRAME: 2210 lines of code.
-* With FRAME: 310 lines of code.
-* 7x Smaller.
+- Writing the Sudo Pallet:
+- Without FRAME: 2210 lines of code.
+- With FRAME: 310 lines of code.
+- 7x Smaller.
 
 </pba-flex>
 
@@ -352,8 +352,7 @@ impl pallet_timestamp::Config for Runtime {
 
 Let's get our hands dirty and use all of these pieces together!
 
-* use https://github.com/paritytech/polkadot-sdk-minimal-template
-* https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/guides/your_first_pallet/index.html
-  * This template has a node as well, but you are welcome to use the `pba-omni-node` with it.
-* Once done, run your pallet with the same omni-node, connect `polkadot.js.org/apps` to it and play around.
-
+- use https://github.com/paritytech/polkadot-sdk-minimal-template
+- https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/guides/your_first_pallet/index.html
+  - This template has a node as well, but you are welcome to use the `pba-omni-node` with it.
+- Once done, run your pallet with the same omni-node, connect `polkadot.js.org/apps` to it and play around.
