@@ -429,7 +429,7 @@ _The way to make a protocol truly upgradeable is to design a (fixed) meta-protoc
 
 ## Core Substrate Philosophies
 
-*For a system to survive the **test of time***:
+\*For a system to survive the **test of time\***:
 
 0. Correct and Safe
 1. Generic
@@ -451,7 +451,7 @@ hardcoded, but the protocol itself is flexible.
 
 ## Core Substrate Philosophies
 
-* Why all this complexity? 😵‍💫😵‍💫
+- Why all this complexity? 😵‍💫😵‍💫
 
 <img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
 
@@ -1001,7 +1001,6 @@ state is sometimes called "storage" asd well.
 ### Lecture Recap - Part 2
 
 <img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-full.svg" />
-
 
 ---
 

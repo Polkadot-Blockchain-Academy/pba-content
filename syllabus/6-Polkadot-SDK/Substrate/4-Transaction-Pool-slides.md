@@ -221,7 +221,47 @@ case, not a big big deal.
 ```
 (
   B,
-  provides: vec![1],
+  provides: vec![2],
+  requires: vec![1]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+---v
+
+### 2. Transaction Ordering: Quiz Time.
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  C,
+  provides: vec![3],
   requires: vec![2]
 )
 ```
@@ -242,54 +282,14 @@ case, not a big big deal.
       <pre>(A, pr: vec![], rq: vec![])</pre>
     </td>
     <td>
-      <pre>(B, pr: vec![1], rq: vec![2])</pre>
-    </td>
-  </tr>
-</tbody>
-</table>
-</pba-col>
-
-</pba-cols>
-
----v
-
-### 2. Transaction Ordering: Quiz Time.
-
-<pba-cols>
-<pba-col>
-
-```
-(
-  C,
-  provides: vec![2],
-  requires: vec![3]
-)
-```
-
-</pba-col>
-
-<pba-col>
-<table>
-<thead>
-  <tr>
-    <th>Ready</th>
-    <th>Future</th>
-  </tr>
-</thead>
-<tbody class="fragment">
-  <tr>
-    <td>
-      <pre>(A, pr: vec![], rq: vec![])</pre>
-    </td>
-    <td>
-      <pre>(B, pr: vec![1], rq: vec![2])</pre>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
     </td>
   </tr>
   <tr>
     <td>
     </td>
     <td>
-      <pre>(C, pr: vec![2], rq: vec![3])</pre>
+      <pre>(C, pr: vec![3], rq: vec![2])</pre>
     </td>
   </tr>
 </tbody>
@@ -309,7 +309,7 @@ case, not a big big deal.
 (
   D,
   provides: vec![1],
-  requires: vec![0]
+  requires: vec![]
 )
 ```
 
@@ -340,14 +340,14 @@ case, not a big big deal.
   </tr>
   <tr>
     <td>
-      <pre>(B, pr: vec![1], rq: vec![2])</pre>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
     </td>
     <td>
     </td>
   </tr>
   <tr>
     <td>
-      <pre>(C, pr: vec![2], rq: vec![3])</pre>
+      <pre>(C, pr: vec![3], rq: vec![2])</pre>
     </td>
     <td>
     </td>

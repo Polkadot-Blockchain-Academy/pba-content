@@ -648,6 +648,10 @@ Ok(Second(Second(Second(Second(Second(First))))))
 Err(Error { cause: Some(Error { cause: Some(Error { cause: Some(Error { cause: Some(Error { cause: None, desc: "Maximum recursion depth reached when decoding" }), desc: "Could not decode `Example::Second.0`" }), desc: "Could not decode `Example::Second.0`" }), desc: "Could not decode `Example::Second.0`" }), desc: "Could not decode `Example::Second.0`" })
 ```
 
+Note:
+
+question to ask: Will encoding of `T` or `Box<T>` differ? no
+
 ---
 
 ### Exceptions: BTreeSet
