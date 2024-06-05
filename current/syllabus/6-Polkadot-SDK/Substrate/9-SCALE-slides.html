@@ -615,7 +615,9 @@ Ok(Second(Second(Second(Second(Second(First))))))
 Ok(Second(Second(Second(Second(Second(First))))))
 Err(Error { cause: Some(Error { cause: Some(Error { cause: Some(Error { cause: Some(Error { cause: None, desc: "Maximum recursion depth reached when decoding" }), desc: "Could not decode `Example::Second.0`" }), desc: "Could not decode `Example::Second.0`" }), desc: "Could not decode `Example::Second.0`" }), desc: "Could not decode `Example::Second.0`" })
 ```
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>question to ask: Will encoding of <code>T</code> or <code>Box&lt;T&gt;</code> differ? no</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Exceptions: BTreeSet
 
 - BTreeSet will decode from an unordered set, but will also order them as a result.
