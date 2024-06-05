@@ -4,7 +4,7 @@ description: An introduction into FRAME, a framework for building Substrate runt
 duration: 1 hour
 ---
 
-## Lesson Plan
+<!-- ## Lesson Plan
 
 <table class="no-bullet-padding">
 <tr>
@@ -69,9 +69,7 @@ duration: 1 hour
 
 </td>
 </tr>
-</table>
-
----
+</table> -->
 
 # Introduction to FRAME
 
@@ -87,13 +85,10 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 
 <pba-flex center>
 
-Writing the Sudo Pallet:
-
-Without FRAME: 2210 lines of code.
-
-With FRAME: 310 lines of code.
-
-7x Smaller.
+- Writing the Sudo Pallet:
+- Without FRAME: 2210 lines of code.
+- With FRAME: 310 lines of code.
+- 7x Smaller.
 
 </pba-flex>
 
@@ -155,21 +150,25 @@ And some less important ones:
 ### "Shell" Pallet
 
 ```rust
-pub use pallet::*;
-
 #[frame_support::pallet]
 pub mod pallet {
-  use frame_support::pallet_prelude::*;
-  use frame_system::pallet_prelude::*;
-
   #[pallet::pallet]
   pub struct Pallet<T>(_);
 
-  #[pallet::config]  // snip
-  #[pallet::event]   // snip
-  #[pallet::error]   // snip
-  #[pallet::storage] // snip
-  #[pallet::call]    // snip
+  #[pallet::config]
+  pub trait Config: frame_system::Config { ... }
+
+  #[pallet::event]
+  pub enum Event { .. }
+
+  #[pallet::error]
+  pub enum Error { .. }
+
+  #[pallet::storage]
+  // snip
+
+  #[pallet::call]
+  impl Pallet { .. }
 }
 ```
 
@@ -208,6 +207,10 @@ The FRAME System is a Pallet which is assumed to always exist when using FRAME. 
 #[pallet::config]
 pub trait Config: frame_system::Config { ... }
 ```
+
+---
+
+## FRAME System
 
 It contains all the most basic functions and types needed for a blockchain system. Also contains many low level extrinsics to manage your chain directly.
 
@@ -258,20 +261,39 @@ Your final runtime is composed of Pallets, which are brought together with the `
 
 ```rust
 // Create the runtime by composing the FRAME pallets that were previously configured.
-construct_runtime!(
+construct_runtime! {
 	pub struct Runtime {
 		System: frame_system,
-		RandomnessCollectiveFlip: pallet_randomness_collective_flip,
+
 		Timestamp: pallet_timestamp,
-		Aura: pallet_aura,
-		Grandpa: pallet_grandpa,
 		Balances: pallet_balances,
 		TransactionPayment: pallet_transaction_payment,
 		Sudo: pallet_sudo,
-		// Include the custom logic from the pallet-template in the runtime.
-		TemplateModule: pallet_template,
 	}
-);
+};
+```
+
+---
+
+## Construct Runtime
+
+New syntax
+
+```rust
+// Composes the runtime by adding all the used pallets and deriving necessary types.
+#[runtime]
+mod runtime {
+  /// The main runtime type.
+  #[runtime::runtime]
+  #[runtime::derive(RuntimeCall, RuntimeEvent, RuntimeError, RuntimeOrigin, RuntimeTask)]
+  pub struct Runtime;
+
+  pub type System = frame_system;
+  pub type Timestamp = pallet_timestamp;
+  pub type Balances = pallet_balances;
+  pub type TransactionPayment = pallet_transaction_payment;
+  pub type Sudo = pallet_sudo;
+}
 ```
 
 ---
@@ -330,4 +352,7 @@ impl pallet_timestamp::Config for Runtime {
 
 Let's get our hands dirty and use all of these pieces together!
 
-https://docs.substrate.io/tutorials/build-application-logic/use-macros-in-a-custom-pallet/
+- use https://github.com/paritytech/polkadot-sdk-minimal-template
+- https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/guides/your_first_pallet/index.html
+  - This template has a node as well, but you are welcome to use the `pba-omni-node` with it.
+- Once done, run your pallet with the same omni-node, connect `polkadot.js.org/apps` to it and play around.
