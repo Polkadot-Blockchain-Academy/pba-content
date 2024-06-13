@@ -343,6 +343,7 @@ Follow the [connect a local parachain](https://docs.substrate.io/tutorials/build
 ---
 
 ## Non-trivial chore
+
 <pba-flex center>
 <pba-cols style="align-items:normal">
 <pba-col>
@@ -721,7 +722,7 @@ let network_config = NetworkConfig::load_from_toml("./0001-simple.toml")?;
 
 ### Spawn from Config
 
-Spawning can be _easily_ abstracted and using some _env_vars_, so the same code works in all the providers*
+Spawning can be _easily_ abstracted and using some _env_vars_, so the same code works in all the providers\*
 
 ```rust
 // Helper that use the env_var `ZOMBIE_PROVIDER` to return the fn to use.
@@ -766,6 +767,7 @@ network.add_node("new1", opts).await?;
 
 ---v
 Example: [Add a new parachain](https://paritytech.github.io/zombienet-sdk/zombienet_orchestrator/network/struct.Network.html#method.add_parachain) to a running network
+
 ```rust [1-7|9]
 let para_config = network
     .para_config_builder()
@@ -883,3 +885,4 @@ Notes:
 - [Zombienet-sdk docs](https://paritytech.github.io/zombienet-sdk/)
 
 - [Zombienet-sdk demos](https://github.com/pepoviola/zombienet-demo)
+```
