@@ -8,6 +8,15 @@ duration: 45+ mins
 
 ---
 
+#### What we will see
+- A brief history, the reality and the problem;
+- What is a light client and why I should care (importance);
+- How light client works;
+- JSON-RPC past and future;
+- Polkadot solutions and tools
+
+---
+
 #### Traditional Web 2
 
 <img rounded style="width: 80%;" src="./img/web2.png" />
@@ -237,6 +246,10 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---
+
+<img rounded style="width: 40rem" src="./img/whatislightclient.png" />
+
+---v
 
 # What is a Light Client?
 
@@ -474,6 +487,29 @@ ready</div>
   </pba-col>
 
   <pba-col left>
+  </pba-col>
+</pba-cols>
+
+---v
+
+<pba-cols>
+  <pba-col left>
+    <h2 style="text-align: center">Full node</h2>
+  </pba-col>
+  <pba-col left>
+    <h2 style="text-align: center">Light client</h2>
+  </pba-col>
+</pba-cols>
+<pba-cols>
+  <pba-col left>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Fully verifies all blocks (authenticity/validity)</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all the chain’s storage in its database</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Holds all past blocks in its database</div>
+    <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">At initial startup, can take hours to be
+ready</div>
+  </pba-col>
+
+  <pba-col left>
     <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Only verifies the authenticity of blocks</div>
     <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">Requests state of the chain on demand</div>
     <div class="white bg-[var(--r-heading-color)] text-base rounded-2xl p-4 !mt-2">No database whatsoever</div>
@@ -494,9 +530,8 @@ Notes: is transport agnostic in that the concepts can be used within the same pr
 
 ---v
 
-## On a diagram
+## Legacy vs New JSON RPC API
 
-<section>
   <diagram class="mermaid">
     stateDiagram-v2
       Substrate --> NEW_JSON_RPC_API
@@ -504,9 +539,10 @@ Notes: is transport agnostic in that the concepts can be used within the same pr
       Smoldot --> NEW_JSON_RPC_API
       Smoldot --> LEGACY_JSON_RPC_API
   </diagram>
-</section>
 
-Why a new JSON RPC is needed:
+---v
+
+## Why a new JSON RPC is needed:
 - Full Node Assumptions - not light client in-mind
 - Runtime Dependency
 - DoS Attack Vulnerabilities
@@ -522,6 +558,25 @@ New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 - DoS Attack Vulnerabilities: "Legacy JSON-RPC functions aren't designed to be anti-DoS, leading to reliance on hacks and poor user experiences."
 - Load Balancer Challenges: "Legacy JSON-RPC functions are not load-balancer-friendly, requiring client pinning to specific servers and complicating server downscaling."
 - Documentation Issues: "Many JSON-RPC functions are poorly documented, especially regarding corner cases, leading to inconsistent behavior - some functions that search for a block - when not found return null - others error."
+
+---v
+
+## Timeline?
+
+  <diagram class="mermaid">
+    stateDiagram-v2
+      Substrate --> NEW_JSON_RPC_API
+      Substrate --> LEGACY_JSON_RPC_API: X
+      Smoldot --> NEW_JSON_RPC_API
+      Smoldot --> LEGACY_JSON_RPC_API: X
+  </diagram>
+
+- When the Legacy JSON RPC API will be removed?
+- “as soon as realistically possible”
+
+Notes: 
+Forum article of Pierre: https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048/1
+New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 
 ---
 
@@ -540,20 +595,20 @@ Let's proceed with a more focused and detailed exploration of light clients in t
 
 <h1>Smoldot<h1>
 
-<div style="font-size:2.5rem; color: #fff">Light Client implementation from scratch</div>
+<div style="font-size:2rem; color: #fff">Light Client implementation from scratch</div>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 
-## rust
+### rust
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 <div>
-  <div style="font-size:1.75rem; color: #fff">smoldot-light-js (/wasm-node) - npm/deno</div>
+  <div style="font-size:2.2rem; color: #fff">smoldot (/lib) - Rust library</div>
   <!-- .element: class="fragment" data-fragment-index="3" -->
-  <div style="font-size:1.75rem; color: #fff">smoldot (/lib) - Rust library</div>
+  <div style="font-size:2.2rem; color: #fff">smoldot-light (/light-base)</div>
   <!-- .element: class="fragment" data-fragment-index="4" -->
-  <div style="font-size:1.75rem; color: #fff">smoldot-light (/light-base)</div>
+  <div style="font-size:2.2rem; color: #fff">smoldot-light-js (/wasm-node) - npm/deno</div>
   <!-- .element: class="fragment" data-fragment-index="5" -->
-  <div style="font-size:1.75rem; color: #fff">smoldot-full-node (/full-node)</div>
+  <div style="font-size:2.2rem; color: #fff">smoldot-full-node (/full-node)</div>
   <!-- .element: class="fragment" data-fragment-index="6" -->
 </div>
 <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -566,7 +621,7 @@ Let's proceed with a more focused and detailed exploration of light clients in t
 </p>
 <!-- .element: class="fragment" data-fragment-index="7" -->
 
-<a href="https://github.com/smol-dot/smoldot/">https://github.com/smol-dot/smoldot/</a>
+<p style="font-size:2rem; margin-top: 1rem"><a href="https://github.com/smol-dot/smoldot/">https://github.com/smol-dot/smoldot/</a></p>
 
 <!-- .element: class="fragment" data-fragment-index="8" -->
 
@@ -575,17 +630,33 @@ Notes:
 Smoldot - is the Light Client implementation from scratch - meaning, we did not make substrate lighter.
 It was rewritten from scratch, in rust - and it comes with:
 
-- smoldot-light-js (/wasm-node): A JavaScript package that can connect to a Substrate-based chains as a Light Client.
-  Works both in the browser and in NodeJS/Deno.
-  This is the main component of this repository.
 - smoldot (/lib): An unopinionated Rust library of general-purpose primitives that relate to Substrate and Polkadot.
   Serves as a base for the other components.
 - smoldot-light (/light-base): A platform-agnostic Rust library that can connect to a Substrate-based chain as a Light Client.
   Serves as the base for the smoldot-light-js component explained above.
+- smoldot-light-js (/wasm-node): A JavaScript package that can connect to a Substrate-based chains as a Light Client.
+  Works both in the browser and in NodeJS/Deno.
+  This is the main component of this repository.
 - smoldot-full-node (/full-node): A work-in-progress prototype of a full node binary that can connect to Substrate-base chains.
   Doesn't yet support many features that the official client supports.
 
 Powered by Pierre Krieger (a.k.a. tomaka)
+
+---v
+
+
+### Smoldot - On a diagram
+
+<section>
+  <diagram class="mermaid">
+    stateDiagram-v2
+      dAPP --> Smoldot
+      Smoldot --> LEGACY_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
+  </diagram>
+</section>
+
+Notes: meaning you need to send/receive and act with the JSONs
 
 ---v
 
@@ -600,10 +671,10 @@ Powered by Pierre Krieger (a.k.a. tomaka)
   <!-- .element: class="fragment" data-fragment-index="3" -->
 <p class="inline-table">
   <!-- .element: class="fragment" data-fragment-index="4" -->
-  <div style="font-size:3.5rem; color: #fff">Powered by: Parity</div>
+  <div style="font-size:2rem; color: #fff">Powered by: Parity</div>
   <!-- .element: class="fragment" data-fragment-index="4" -->
 </p>
-<a href="https://github.com/paritytech/substrate-connect/">https://github.com/paritytech/substrate-connect/</a>
+<p style="font-size:1.5rem; margin-top: 1rem"><a href="https://github.com/paritytech/substrate-connect/">https://github.com/paritytech/substrate-connect/</a></p>
 <!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
@@ -612,6 +683,27 @@ Notes:
 - rpc provider from polkadotJS
 - Chrome and Mozilla extension
 - Comes with 4 integrated "Well Known" chains (Kusama, Polkadot, Westend, Rococo) - which means these chains can be used without the need of providing chainspecs;
+
+---v
+
+### Substrate Connect - On a diagram
+
+<section>
+  <diagram class="mermaid limit size-80">
+    stateDiagram-v2
+      dApp --> substrate_connect
+      state substrate_connect {
+        [*] --> sc_provider
+        [*] --> Providers
+        sc_provider --> PJS_API
+        Providers --> Pokadot_API
+        PJS_API --> Smoldot
+        Pokadot_API --> Smoldot
+        Smoldot --> LEGACY_JSON_RPC_API
+        Smoldot --> NEW_JSON_RPC_API
+      }
+  </diagram>
+</section>
 
 ---v
 
@@ -620,14 +712,14 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="1" -->
 <div style="font-size:1.75rem; color: #fff">Light Client first: built on top of the new JSON-RPC API</div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<div style="font-size:1.5rem; color: #fff; margin: 1rem 0">Delightful TypeScript support with types and docs generated from on-chain metadata.</div>
+<div style="font-size:1.5rem; color: #fff; margin: 1rem 0">Delightful <span style="color: #d92f78; font-weight: bold;">TypeScript</span> support with types and docs generated from on-chain metadata.</div>
 <!-- .element: class="fragment" data-fragment-index="3" -->
 <div style="font-size:1.5rem; color: #fff; margin: 1rem 0">First class support for storage reads, constants, transactions, events and runtime-calls.</div>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 <div style="font-size:1.5rem; color: #d92f78; margin: 1rem 0">... and a lot more.</div>
 <!-- .element: class="fragment" data-fragment-index="5" -->
 <p class="inline-table">
-  <div style="font-size:2.5rem; color: #fff">Powered by:</div>
+  <div style="font-size:2rem; color: #fff">Powered by:</div>
   <!-- .element: class="fragment" data-fragment-index="6" -->
   <div style="display: inline-flex; "><img style="height:10rem" src="./img/papi_josep.png" /><img src="./img/papi_victor.png"  style="height: 10rem" /></div>
   <!-- .element: class="fragment" data-fragment-index="7" -->
@@ -635,66 +727,72 @@ Notes:
 <p style="font-size:1.5rem; margin-top: 1rem"><a href="https://github.com/polkadot-api/polkadot-api/">https://github.com/polkadot-api/polkadot-api/</a></p>
 <!-- .element: class="fragment" data-fragment-index="8" -->
 
-Notes:
-
-- npm package
-- rpc provider from polkadotJS
-- The newest Polkadot API, a composable, modular, and “light-client first” alternative to PJS.
-- Chrome and Mozilla extension
-- Comes with 4 integrated "Well Known" chains (Kusama, Polkadot, Westend, Rococo) - which means these chains can be used without the need of providing chainspecs;
-
 ---v
 
-### SMOLDOT: On a diagram
-
-<section>
-  <diagram class="mermaid limit size-60">
-    stateDiagram-v2
-      dAPP --> Smoldot_Light_Client
-      Smoldot_Light_Client --> NEW_JSON_RPC_API
-  </diagram>
-</section>
-
-Notes: meaning you need to send/receive and act with the JSONs
-
----v
-
-### PAPI: On a diagram
+### Polkadot API - On a diagram
 
 <diagram class="mermaid">
-  flowchart TD
-    dApp --> POLKADOT_API
-    POLKADOT_API --> node_js_worker
-    POLKADOT_API --> ws_provider_web
-    POLKADOT_API --> ws_provider_node
-    POLKADOT_API --> smoldot_worker
-    POLKADOT_API --> smoldot
-    node_js_worker --> NEW_JSON_RPC_API
-    ws_provider_web --> NEW_JSON_RPC_API
-    ws_provider_node --> NEW_JSON_RPC_API
-    smoldot_worker --> NEW_JSON_RPC_API
-    smoldot --> NEW_JSON_RPC_API
+  stateDiagram-v2
+    dApp --> Polkadot_API
+    state Polkadot_API {
+      [*] --> node_js_worker
+      [*] --> ws_provider_web
+      [*] --> ws_provider_node
+      [*] --> smoldot_worker
+      [*] --> smoldot
+      node_js_worker --> NEW_JSON_RPC_API
+      ws_provider_web --> NEW_JSON_RPC_API
+      ws_provider_node --> NEW_JSON_RPC_API
+      smoldot_worker --> NEW_JSON_RPC_API
+      smoldot --> NEW_JSON_RPC_API
+    }
 </diagram>
 
 ---v
 
-### SUBSTRATE CONNECT: On a diagram
+## SubXT
+<div style="font-size:1.25rem; margin: -2rem 0 2rem 0; color: #d92f78;">(Submit EXtrinsics)</div>
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
-<section>
-  <diagram class="mermaid limit size-60">
-    flowchart TD
-      dApp --> PJS_API
-      dApp --> POLKADOT_API
-      PJS_API --> SC-provider
-      SC-provider --> substrate_connect
-      Providers --> substrate_connect
-      POLKADOT_API --> Providers
-      substrate_connect --> smoldot
+<div style="font-size:1.75rem; color: #fff">a (rust) library for interacting with Substrate based nodes in <span style="color: #d92f78; font-weight: bold;">Rust and WebAssembly</span></div>
+<!-- .element: class="fragment" data-fragment-index="2" -->
+<ul style="font-size:1.4rem; margin: 2rem 10rem">
+  <li>Submit Extrinsics.</li>
+  <li>Subscribe to blocks, reading the extrinsics and associated events from them.</li>
+  <li>Read and iterate over storage values.</li>
+  <li>Read constants and custom values from the metadata.</li>
+  <li>Call runtime APIs, returning the results.</li>
+  <li>Do all of the above via a safe, statically types interface or via a dynamic one when you need the flexibility.</li>
+  <li>Compile to WASM and run entirely in the browser.</li>
+  <li>Do a bunch of things in a #[no_std] environment via the subxt-core crate.</li>
+  <li style="color: #d92f78; font-weight: bold;">Use a built-in light client (smoldot) to interact with chains.</li>
+</ul>
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<p class="inline-table">
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+  <div style="font-size:2rem; color: #fff">Powered by: Parity</div>
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+</p>
+<p style="font-size:1.5rem; margin-top: 1rem"><a href="https://github.com/paritytech/subxt/">https://github.com/paritytech/subxt/</a></p>
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+---v
+
+### SubXT - On a diagram
+
+<diagram class="mermaid limit size-80">
+  stateDiagram-v2
+    dAPP --> SubXT
+    state SubXT {
+      [*] --> Backend_RPC_Legacy_methods
+      [*] --> Backend_RPC_New_methods
+      Backend_RPC_Legacy_methods --> smoldot
+      Backend_RPC_New_methods --> smoldot
       smoldot --> LEGACY_JSON_RPC_API
       smoldot --> NEW_JSON_RPC_API
-  </diagram>
-</section>
-
+    }
+</diagram>
 
 ---
 
@@ -825,7 +923,7 @@ The uApp (UI) connects to an _integrated_ Light Client
 
 ---v
 
-## With Substrate Connect (and PJS API)
+## Substrate Connect (PolakdotJS)
 
 ```javascript[0|1-2|4-7|9-11]
 import { ScProvider } from "@polkadot/rpc-provider/substrate-connect";
@@ -841,7 +939,7 @@ const header = await api.rpc.chain.getHeader();
 const chainName = await api.rpc.system.chain();
 ```
 
----v
+<!-- ---v
 
 ## With Substrate Connect (without PJS API)
 
@@ -859,13 +957,13 @@ const mainChain = await scClient.addWellKnownChain(
 
 // Communicate with the network
 mainChain.sendJsonRpc(
-  '{"jsonrpc":"2.0","id":"1","method":"chainHead_unstable_follow","params":[true]}',
+  '{"jsonrpc":"2.0","id":"1","method":"chainhead_v1_follow","params":[true]}',
 );
-```
+``` -->
 
 ---v
 
-### With Substrate Connect and a Custom Chainspec
+### Substrate Connect (Custom Chainspec)
 
 ```javascript[0|1|2,4|7|8,13|9|10-12| 15-18]
 import { createScClient, WellKnownChain } from "@substrate/connect";
@@ -884,18 +982,76 @@ const mainChain = await scClient.addChain(
 
 // Communicate with the network
 mainChain.sendJsonRpc(
-  '{"jsonrpc":"2.0","id":"1","method":"chainHead_unstable_follow","params":[true]}',
+  '{"jsonrpc":"2.0","id":"1","method":"chainhead_v1_follow","params":[true]}',
 );
 ```
-
 ---v
 
-### Or even only with smoldot
+### SubXT
 
-```javascript[0|1|3|5,13|6-12|15-20|22-23|25-26]
+```rust[0|3|5-6|9-12|19-22|24-28|30-35|36-40]
+#![allow(missing_docs)]
+use futures::StreamExt;
+use subxt::{client::OnlineClient, lightclient::LightClient, PolkadotConfig};
+
+// Generate an interface that we can use from the node's metadata.
+#[subxt::subxt(runtime_metadata_path = "../artifacts/polkadot_metadata_small.scale")]
+pub mod polkadot {}
+
+const POLKADOT_SPEC: &str =
+  include_str!("../../artifacts/demo_chain_specs/polkadot.json");
+const ASSET_HUB_SPEC: &str =
+  include_str!("../../artifacts/demo_chain_specs/polkadot_asset_hub.json");
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // The lightclient logs are informative:
+    tracing_subscriber::fmt::init();
+
+    // Instantiate a light client with the Polkadot relay chain,
+    // and connect it to Asset Hub, too.
+    let (lightclient, polkadot_rpc) = LightClient::relay_chain(POLKADOT_SPEC)?;
+    let asset_hub_rpc = lightclient.parachain(ASSET_HUB_SPEC)?;
+
+    // Create Subxt clients from these Smoldot backed RPC clients.
+    let polkadot_api =
+      OnlineClient::<PolkadotConfig>::from_rpc_client(polkadot_rpc).await?;
+    let asset_hub_api =
+      OnlineClient::<PolkadotConfig>::from_rpc_client(asset_hub_rpc).await?;
+
+    // Use them!
+    let polkadot_sub = polkadot_api
+        .blocks()
+        .subscribe_finalized()
+        .await?
+        .map(|block| ("Polkadot", block));
+    let parachain_sub = asset_hub_api
+        .blocks()
+        .subscribe_finalized()
+        .await?
+        .map(|block| ("AssetHub", block));
+
+    let mut stream_combinator =
+      futures::stream::select(polkadot_sub, parachain_sub);
+
+    while let Some((chain, block)) = stream_combinator.next().await {
+        let block = block?;
+        println!("     Chain {:?} hash={:?}", chain, block.hash());
+    }
+
+    Ok(())
+}
+```
+---v
+
+### Smoldot
+
+```javascript[0|1|3-5|7,16|8-15|18-23|25-26|28-29]
 import * as smoldot from "smoldot";
 
-const chainSpec = new TextDecoder("utf-8").decode(fs.readFileSync('./westend-chain-specs.json'));
+const chainSpec = new TextDecoder("utf-8").decode(
+  fs.readFileSync('./westend-chain-specs.json')
+);
 
 const client = smoldot.start({
     maxLogLevel: 3,  // Can be increased for more verbosity
@@ -904,7 +1060,8 @@ const client = smoldot.start({
     forbidNonLocalWs: false,
     forbidWss: false,
     cpuRateLimit: 0.5,
-    logCallback: (_level, target, message) => console.log(_level, target, message)
+    logCallback: (_level, target, message) => 
+      console.log(_level, target, message)
 });
 
 client
@@ -947,11 +1104,13 @@ Notes:
 Stay with me - the next is the last but not the easiest part:
 
 - **Eclipse attacks (full nodes and light clients both affected)**.
+  "If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes
+  !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the blockchain!"
+
   Blockchain is a P2P network - and Smoldot tries to connect to a variety of nodes of this network.
   Imagine if all these nodes were to refuse sending data back, that would isolate smoldot from the network - The way that smoldot learns which nodes exist (GOSSIP) is from the nodes themselves (bootnodes).
   If smoldot is only ever connected to malicious nodes, it won't ever be able to reach non-malicious nodes
   If the list of bootnodes contains a single honest node, then smoldot will be able to reach the whole network.
-  !!! this attack is effectively a denial-of-service, as it will prevent smoldot from accessing the blockchain!
 
 - **Long-range attacks (full nodes and light clients both affected)**.
   If more than 2/3rds of the validators collaborate, they can fork a chain, starting from a block where they were validator, even if they are no longer part of the active validators at the head of the chain.
