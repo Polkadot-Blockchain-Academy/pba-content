@@ -14,6 +14,7 @@ duration: 45+ mins
 - How light client works;
 - JSON-RPC past and future;
 - Polkadot solutions and tools
+- Unstoppable apps
 
 ---
 
