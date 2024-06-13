@@ -9,6 +9,7 @@ duration: 45+ mins
 ---
 
 #### What we will see
+
 - A brief history, the reality and the problem;
 - What is a light client and why I should care (importance);
 - How light client works;
@@ -274,59 +275,81 @@ But that was actually true!
 ---v
 
 ### So.... what is a Light Client ???
+
 A Light Client is a compact blockchain node that enables users to interact with the blockchain network in a quick, secure and decentralized manner, without the need to download the entire blockchain.
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes: Thats a mouthfull - Lets split this sentence into parts - in order to explain it better
 
 ---v
 
-### A Light Client 
+### A Light Client
+
 ##### is a compact blockchain node
+
 It is a client that is lighter than a full node, in terms of memory consumption, number of threads, and code size;
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-Notes: A "Light Client" is a type of node implementation that allows applications to interact with the network, consuming fewer resources compared to full nodes, making them more suitable for resource-constrained devices like mobile phones, or  (see substrate connect);
+Notes: A "Light Client" is a type of node implementation that allows applications to interact with the network, consuming fewer resources compared to full nodes, making them more suitable for resource-constrained devices like mobile phones, or (see substrate connect);
 
 ---v
 
-### A Light Client 
-##### enables users to interact with the blockchain network 
-##### in a quick manner 
-> Polkadot's solution: initialization (from entering Rust code) to warp syncing being completely finished in a best case scenario.... 
+### A Light Client
+
+##### enables users to interact with the blockchain network
+
+##### in a quick manner
+
+> Polkadot's solution: initialization (from entering Rust code) to warp syncing being completely finished in a best case scenario....
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
+
 > is 547ms with the Westend network
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes: Light clients can synchronize with the blockchain more quickly since they only need to fetch recent data, using justifications (we will talk about it in a while), reducing the time needed to get up-to-date with the network (few seconds). This is especially advantageous for users on limited data plans or slow internet connections
 
 ---v
 
-### A Light Client 
-##### enables users to interact with the blockchain network 
-#### in a secure manner 
+### A Light Client
+
+##### enables users to interact with the blockchain network
+
+#### in a secure manner
+
 Does not connect to an JSON-RPC server but with the nodes' network using bootnodes
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
 
-### A Light Client 
-##### enables users to interact with the blockchain network 
+### A Light Client
+
+##### enables users to interact with the blockchain network
+
 #### in a decentralized manner
+
 It connects and interacts with the network in a fully trust-less way with it
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
 
-### A Light Client 
-##### enables users to interact with the blockchain network 
+### A Light Client
+
+##### enables users to interact with the blockchain network
+
 ##### without the need to download the entire blockchain.
+
 It is a node that doesn’t store the entire state of the chain but requests it on demand
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes: Instead of maintaining a complete copy of the blockchain, the node only carries a minimal amount of data necessary for its operations (e.g.chain specs).
 It relies on full nodes or other network participants to provide the additional information it needs;
-
 
 In the next slides we will explain "What is a Light Client" in a generic manner but also I will add some extra information around the Polkadot ecosystem solution that is implemented;
 
@@ -343,7 +366,7 @@ In the next slides we will explain "What is a Light Client" in a generic manner 
   <li>Cost Efficiency</li>
 </ul>
 
-Notes: 
+Notes:
 
 - Accessibility: Makes it feasible for devices with limited resources, such as smartphones or IoT devices, to participate in the blockchain network.
 - Scalability: Contributes to the scalability of blockchain networks by reducing the resource requirements for nodes, enabling more widespread adoption.
@@ -357,12 +380,11 @@ Overall, blockchain light clients are crucial for making blockchain technology m
 ---
 
 ### How does a Light Client know
+
 ### where to connect to
 
 Notes:
 A normal node has a
-
-
 
 ---v
 
@@ -522,12 +544,12 @@ ready</div>
 
 #### But before we go on... lets remember JSON-RPC
 
-- stateless, light-weight remote procedure call (RPC) protocol; 
-- defines data structures and the rules around their processing; 
+- stateless, light-weight remote procedure call (RPC) protocol;
+- defines data structures and the rules around their processing;
 - is transport agnostic;
 - uses JSON (RFC 4627) as data format;
 
-Notes: is transport agnostic in that the concepts can be used within the same process, over sockets, over HTTP, or in many various message passing environments. 
+Notes: is transport agnostic in that the concepts can be used within the same process, over sockets, over HTTP, or in many various message passing environments.
 
 ---v
 
@@ -544,13 +566,14 @@ Notes: is transport agnostic in that the concepts can be used within the same pr
 ---v
 
 ## Why a new JSON RPC is needed:
+
 - Full Node Assumptions - not light client in-mind
 - Runtime Dependency
 - DoS Attack Vulnerabilities
 - Load Balancer Challenges
 - Documentation Issues
 
-Notes: 
+Notes:
 Forum article of Pierre: https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048/1
 New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 
@@ -575,7 +598,7 @@ New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 - When the Legacy JSON RPC API will be removed?
 - “as soon as realistically possible”
 
-Notes: 
+Notes:
 Forum article of Pierre: https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048/1
 New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 
@@ -645,7 +668,6 @@ Powered by Pierre Krieger (a.k.a. tomaka)
 
 ---v
 
-
 ### Smoldot - On a diagram
 
 <section>
@@ -709,6 +731,7 @@ Notes:
 ---v
 
 ## The (NEW) Polkadot API
+
 <div style="font-size:1.25rem; margin: -2rem 0 2rem 0; color: #d92f78;">(aka PAPI)</div>
 <!-- .element: class="fragment" data-fragment-index="1" -->
 <div style="font-size:1.75rem; color: #fff">Light Client first: built on top of the new JSON-RPC API</div>
@@ -752,6 +775,7 @@ Notes:
 ---v
 
 ## SubXT
+
 <div style="font-size:1.25rem; margin: -2rem 0 2rem 0; color: #d92f78;">(Submit EXtrinsics)</div>
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -838,6 +862,7 @@ const chainName = await api.rpc.system.chain();
 ## User-Controlled Node
 
 The dApp (UI) connects to a node client that the user has installed on their machine
+
 <div>
   <p class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Secure Trustless:</span> connects to multiple nodes, verifies everything</p>
   <p class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</p>
@@ -986,6 +1011,7 @@ mainChain.sendJsonRpc(
   '{"jsonrpc":"2.0","id":"1","method":"chainhead_v1_follow","params":[true]}',
 );
 ```
+
 ---v
 
 ### SubXT
@@ -1043,6 +1069,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
+
 ---v
 
 ### Smoldot
@@ -1061,7 +1088,7 @@ const client = smoldot.start({
     forbidNonLocalWs: false,
     forbidWss: false,
     cpuRateLimit: 0.5,
-    logCallback: (_level, target, message) => 
+    logCallback: (_level, target, message) =>
       console.log(_level, target, message)
 });
 
@@ -1171,6 +1198,7 @@ Using Substrate Connect with smoldot and PAPI
 Using Substrate connect with smoldot and PolkadotJS API
 
 ---v
+
 ## Unstoppable apps
 
 <section>
@@ -1178,10 +1206,8 @@ Using Substrate connect with smoldot and PolkadotJS API
 
 - Decentralized Blockchain
 - Light Clients
-- Interplanetary File System (IPFS) 
+- Interplanetary File System (IPFS)
 
-</section>
----
-
+## </section>
 
 # Questions?
