@@ -17,12 +17,7 @@
 * Tooling
     * What extra tools are available to build on Polkadot?
     * Cumulus
-    * Zombienet
-
-## Hands on activities
-
-- Zombienet v2 - Simulating the Polkadot Network
-- Quiz - Test your knowledge of the Polkadot Protocol
+    * Zombienet (Covered previously)
 
 # Schedule
 
@@ -47,14 +42,13 @@
 ### Morning
 
 9. Coretime [Maciej]
-1. NPoS & Staking [Kian > Maciej]
 1. Ecosystem & Economy [Shawn]
-1. XCMP [Shawn > Maciej]
+1. Contributing to Polkadot [Shawn]
+1. NPoS & Staking [Kian + Maciej]
+1. XCMP [Shawn + Maciej]
 
 ### Afternoon
 
-13. Contributing to Polkadot [Shawn]
-1. Quiz [Maciej + Bradley]
 1. Light Clients [Nikos]
-1. Zombienet v2 [Javier]
+2. Special Guests
 
