@@ -8,21 +8,7 @@ owner: Maaciej Zyszkiewicz
 # Execution Sharding in Polkadot
 
 Notes:
-
-- Presenter Introduction
-- Topic
-- In this lecture we'll be talking about sharding. The term might be somewhat familiar to those of you following modern cloud or maybe other blockchains with similar ideas.
-
----
-
-## Parachains Protocol
-
-<img style="width: 800px" src="./assets/execution-sharding/polkadot-components.svg"/>
-
-Notes:
-And the core pillar of Polkadot where sharding is implemented is in the Parachains Consenus Protocol. That's the pillar down there at the bottom. And we'll be looking at how it works in detail.
-
-If we're looking at one pillar in detail we are accepting that other pillars like NPoS and Governance do their thing separately. NPoS provides us with a set of active validators, those will be the players in our game. Governance provides us parametrization of the system, so we can tweak the rules of the game but today we'll be looking at the current state of the game.
+Introduction
 
 ---
 
@@ -279,7 +265,7 @@ Collators build parachain blocks and in this image they are the white circles ar
 
 ## 1. Collation - Collations
 
-<img style="width: 900px" src="../.././assets/execution-sharding/img/7-Polkadot/parachain-validation-multiple.svg" />
+<img style="width: 900px" src="./assets/execution-sharding/parachain-validation-multiple.svg" />
 
 Notes:
 A a bit simpler way to represent it is like this. Here we have 3 parachains scheduled on 3 cores. Collators from each parachain provide a bundle of transactions. They also attack something called a PoV - Proof of Validity which will be crucial to ensure to validate those transactions later on.
@@ -345,7 +331,7 @@ PVF reruns the STF in a sandbox environment to test its outputs.
 
 ## 2. Backing - PVF reminder
 
-<img style="width: 1200px" src="../.././assets/execution-sharding/img/7-Polkadot/parachain-validation.svg" />
+<img style="width: 1200px" src="./assets/execution-sharding/parachain-validation.svg" />
 
 Notes:
 Just as a reminder this is nothing new. It is the same mechanism covered in the shared security lecture. The wasm blobs are our STFs and to check we rerun the transition and match the state.

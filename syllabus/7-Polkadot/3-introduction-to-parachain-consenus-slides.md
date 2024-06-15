@@ -407,22 +407,6 @@ And if something doesn't feel right they start an official dispute. Think of it 
 Notes:
 But if everything went smoothly the verified collations will get finalized by GRANDPA
 
----v
-
-# Parachain Consensus
-## Overview
-
-- Assignment: Group up validators. (1)
-- Collation: Collect transactions. (1)
-- Backing: Assign responsibility. (1)
-- Availability: Distribute data. (2)
-- Approval Checking: Verify correctness. (3)
-- Disputes: Resolve escalations. (3)
-- Finality: Solidify state. (3)
-
-Notes:
-Assignment, collation and backing will be covered together in a single lecture, then we will have a deep-dive into availability and finally the Approvals and disputes together.
-
 ---
 
 # Governance
