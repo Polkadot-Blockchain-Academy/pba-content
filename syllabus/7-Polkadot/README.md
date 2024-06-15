@@ -43,6 +43,8 @@
 1. Coretime [Maciej]
 1. Ecosystem & Economy [Shawn]
 1. Contributing to Polkadot [Shawn]
+1. XCMP [Shawn/Maciej] (optional)
+1. NPoS [Kian/Maciej] (optional)
 
 ### Afternoon
 
