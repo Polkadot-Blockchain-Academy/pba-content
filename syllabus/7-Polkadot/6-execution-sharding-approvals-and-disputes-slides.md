@@ -17,7 +17,7 @@ Notes:
 
 ## Parachains Protocol
 
-<img style="width: 800px" src="../assets/polkadot-components.svg"/>
+<img style="width: 800px" src="./assets/execution-sharding/polkadot-components.svg"/>
 
 Notes:
 And the core pillar of Polkadot where sharding is implemented is in the Parachains Consenus Protocol. That's the pillar down there at the bottom. And we'll be looking at how it works in detail.
@@ -28,7 +28,7 @@ If we're looking at one pillar in detail we are accepting that other pillars lik
 
 ## Execution Sharding in Polkadot
 
-<img style="width: 600px" src="../assets/scalability-trilemma.svg"/>
+<img style="width: 600px" src="./assets/execution-sharding/scalability-trilemma.svg"/>
 
 Notes:
 First let's outline why we even need to go through all of that trouble. IN short sharding is our answer to scalability. And I could say that in general sharding is **solving** scalability. But in truth as many have heard...
@@ -39,7 +39,7 @@ First let's outline why we even need to go through all of that trouble. IN short
 
 <pba-cols>
     <pba-col>
-        <img style="width: 500px" src="../assets/scalability-trilemma.svg"/>
+        <img style="width: 500px" src="./assets/execution-sharding/scalability-trilemma.svg"/>
     </pba-col>
     <pba-col>
         <blockquote>
@@ -215,7 +215,7 @@ Or so you thought. There's actually a bit of a hidden step before collation that
 
 ## 0. Assignment - Active Validators
 
-<img style="width: 500px" src="../assets/polkadot-components.svg"/>
+<img style="width: 500px" src="./assets/execution-sharding/polkadot-components.svg"/>
 
 **Active validators** are given to the parachain protocol by the NPoS election subsystem.
 
@@ -226,7 +226,7 @@ Notes:
 
 ## 0. Assignment - Backing Groups
 
-<img rounded style="width: 1100px" src="../assets/validator-groups.png" />
+<img rounded style="width: 1100px" src="./assets/execution-sharding/validator-groups.png" />
 
 Validators are divided into small **Backing Groups**.
 
@@ -239,7 +239,7 @@ Backing groups are mapping 1 to 1 to specific **Execution Core**s, and these ass
 
 ## 0. Assignment - Execution Cores
 
-<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple.png" />
+<img rounded style="width: 700px" src="./assets/execution-sharding/polkadot-architecture-simple.png" />
 
 Each backing group is assigned to an **Execution Core**.
 
@@ -250,7 +250,7 @@ In that map the white ovals are the validators. They are grouped into backing gr
 
 ## 0. Assignment - Rotations
 
-<img rounded style="width: 900px" src="../assets/pairing_backing_groups_with_cores.svg" />
+<img rounded style="width: 900px" src="./assets/execution-sharding/pairing_backing_groups_with_cores.svg" />
 
 Once every few blocks the backing groups **rotate**.
 
@@ -268,7 +268,7 @@ Now we can move to the first official step of the parachains protocol. Collation
 
 ## 1. Collation - Collator Nodes
 
-<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple.png" />
+<img rounded style="width: 700px" src="./assets/execution-sharding/polkadot-architecture-simple.png" />
 
 Collators are **not** validators. They are parachain-specific nodes which produce parachain blocks by collecting (collating) transactions together.
 
@@ -279,7 +279,7 @@ Collators build parachain blocks and in this image they are the white circles ar
 
 ## 1. Collation - Collations
 
-<img style="width: 900px" src="../../../assets/img/7-Polkadot/parachain-validation-multiple.svg" />
+<img style="width: 900px" src="../.././assets/execution-sharding/img/7-Polkadot/parachain-validation-multiple.svg" />
 
 Notes:
 A a bit simpler way to represent it is like this. Here we have 3 parachains scheduled on 3 cores. Collators from each parachain provide a bundle of transactions. They also attack something called a PoV - Proof of Validity which will be crucial to ensure to validate those transactions later on.
@@ -304,7 +304,7 @@ Now we are at the next step. We just sent some collations to the validators in o
 
 ## 2. Backing - Backers
 
-<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple.png" />
+<img rounded style="width: 700px" src="./assets/execution-sharding/polkadot-architecture-simple.png" />
 
 Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators.
 
@@ -315,7 +315,7 @@ Validators in the backing group are often called backers for those parablocks th
 
 ## 2. Backing - Backers
 
-<img rounded style="width: 700px" src="../assets/polkadot-architecture-simple-zoom.png" />
+<img rounded style="width: 700px" src="./assets/execution-sharding/polkadot-architecture-simple-zoom.png" />
 
 Notes:
 We can zoom in on a specific backing group. Here we cna see that backers are first point of contact to the outside world. They are the like club bouncers for the relay chain.
@@ -333,7 +333,7 @@ But for them to do their job correctly backers after receiving collations need t
 
 ## 2. Backing - PVF definition
 
-<img rounded style="width: 1000px" src="../assets/runtime_validation_2.svg" />
+<img rounded style="width: 1000px" src="./assets/execution-sharding/runtime_validation_2.svg" />
 
 > **Parachain Validation Function** (PVF) is a function which takes in the current parachain state (PoV), the promised parachain state, and the parachain state transition arguments. It re-executes the parachain logic/runtime/STF using the arguments on the current state and checks if it matches the promised state. If it does, the parachain block is valid.
 
@@ -345,7 +345,7 @@ PVF reruns the STF in a sandbox environment to test its outputs.
 
 ## 2. Backing - PVF reminder
 
-<img style="width: 1200px" src="../../../assets/img/7-Polkadot/parachain-validation.svg" />
+<img style="width: 1200px" src="../.././assets/execution-sharding/img/7-Polkadot/parachain-validation.svg" />
 
 Notes:
 Just as a reminder this is nothing new. It is the same mechanism covered in the shared security lecture. The wasm blobs are our STFs and to check we rerun the transition and match the state.
@@ -458,7 +458,7 @@ The main goal of backing is not immediate security but accountability. Backers a
 
 ## 2. Backing - Networking
 
-<img rounded style="width: 1000px" src="../assets/backing-networking.png" />
+<img rounded style="width: 1000px" src="./assets/execution-sharding/backing-networking.png" />
 
 Notes:
 Once a certain threshold of backers (3 of 5 in Polkadot) in the group approves the parablock it moves to the next stage. It can be broadcasted beyond it's backing group.
@@ -485,7 +485,7 @@ So now back to erasure coding.
 
 ## 3. Availability - Erasure Coding
 
-<img rounded style="width: 450px" src="../assets/line.drawio.svg" />
+<img rounded style="width: 450px" src="./assets/execution-sharding/line.drawio.svg" />
 
 Notes:
 That's a line. If we have those two red points everyone agrees that there is only 1 specific line we can draw through those. Line is a 1st degree polynomial.
@@ -494,7 +494,7 @@ That's a line. If we have those two red points everyone agrees that there is onl
 
 ## 3. Availability - Erasure Coding
 
-<img rounded style="width: 450px" src="../assets/poly-2nd.drawio.svg" />
+<img rounded style="width: 450px" src="./assets/execution-sharding/poly-2nd.drawio.svg" />
 
 Notes:
 Let's keep going further... thats a quadratic polynomial. So a second degree. We need exactly 3 points to be able to draw it exactly.
@@ -503,7 +503,7 @@ Let's keep going further... thats a quadratic polynomial. So a second degree. We
 
 ## 3. Availability - Erasure Coding
 
-<img rounded style="width: 450px" src="../assets/poly-3rd.drawio.svg" />
+<img rounded style="width: 450px" src="./assets/execution-sharding/poly-3rd.drawio.svg" />
 
 Notes:
 You might start seeing a pattern but now that's a 3rd degree polynomial, we need exactly 4 points to draw it.
@@ -512,7 +512,7 @@ You might start seeing a pattern but now that's a 3rd degree polynomial, we need
 
 ## 3. Availability - Erasure Coding
 
-<img rounded style="width: 450px" src="../assets/line-redundant.drawio.svg" />
+<img rounded style="width: 450px" src="./assets/execution-sharding/line-redundant.drawio.svg" />
 
 Notes:
 Now let's go back to the nice and simple line. What if they gave us 3 points from the line? We can remove any one of them and we are still able to draw the line. That's a nice property.
@@ -523,7 +523,7 @@ Imagine you have 3 friends. Each remembers a single point from the line. But rem
 
 ## 3. Availability - Erasure Coding
 
-<img rounded style="width: 450px" src="../assets/line-not-enough.drawio.svg" />
+<img rounded style="width: 450px" src="./assets/execution-sharding/line-not-enough.drawio.svg" />
 
 Notes:
 Of course if two of your friends go missing we have a problem. We can no longer recreate the line because we don't have enough points.
@@ -634,7 +634,7 @@ Validators starting with the lowest numbers (in the lowest tranches) start valid
 - Validators starting with the lowest numbers (in the lowest tranches) start validating the parablock.
 - Gradually higher and higher numbers start revealing themselves continuing the process.
 
-<img style="width: 900px" src="../assets/tranches.svg" />
+<img style="width: 900px" src="./assets/execution-sharding/tranches.svg" />
 
 Notes:
 but over time more and more people start checking because higher and higher numbers are called in to reveal themselves. This is how it can be visualized. We group up validators with similar roles together into those small tranches. Every single active validator is one of those tranches. The more time passes the more tranches are woken up and do their checks. You can notice that the first tranche is a bit larger. That is because...
@@ -647,7 +647,7 @@ but over time more and more people start checking because higher and higher numb
 - Gradually higher and higher numbers start revealing themselves continuing the process.
 - Once a certain threshold of validators (30) have submitted valid statements, the parablock is considered **Approved**.
 
-<img style="width: 800px" src="../assets/tranches_happy.svg" />
+<img style="width: 800px" src="./assets/execution-sharding/tranches_happy.svg" />
 
 Notes:
 The protocol is parametrised to such a way that we require around 30 checks made in total. If we get 30 positive checks the parablock is considered approved. But wait... wait if it's invalid?
@@ -683,7 +683,7 @@ Malicious attackers can try and eliminate good guys so that they get the first 3
 
 ## 4. Approval Checking - No-Shows
 
-<img style="width: 800px" src="../assets/tranches_dos.svg" />
+<img style="width: 800px" src="./assets/execution-sharding/tranches_dos.svg" />
 
 Notes:
 So this will look something like that. In one tranche one of the validators will wake up because it is their time to check. They announce themselves first, start rebuilding the PoV, but before they can publish they PVF result they get DoSed. We never receive their result so remaining validators raise a soft alarm, they start requiring more checkers. And because of that another tranche will be called in before finishing the approval process.
@@ -692,7 +692,7 @@ So this will look something like that. In one tranche one of the validators will
 
 ## 4. Approval Checking - No-Shows
 
-<img rounded style="width: 700px" src="../assets/lernaean-hydra.jpg" />
+<img rounded style="width: 700px" src="./assets/execution-sharding/lernaean-hydra.jpg" />
 
 Notes:
 Fighting DoS should be like fighting a hydra. Even if you eliminate a few honest nodes even more will raise in their place. 2/3 \* 3 gives us 2 extra honest nodes per one no-show.
@@ -701,7 +701,7 @@ Fighting DoS should be like fighting a hydra. Even if you eliminate a few honest
 
 ## 4. Approval Checking - Summary
 
-<img rounded style="width: 1300px" src="../assets/approval_flow.svg" />
+<img rounded style="width: 1300px" src="./assets/execution-sharding/approval_flow.svg" />
 
 Notes:
 This is a flow chart from the perspective of an individual approval checker. First once we notice inclusion we generate the assignment. Then we wait for our turn but if the parablock got approved before that we call it a day, we locally mark it as approved for us and finish the process.
@@ -846,7 +846,7 @@ Interestingly despite being forkless SASSAFRAS can result in forks due to imperf
 Validators refuse to author relay chain blocks on top of forks containing parablocks which are invalid or have lost disputes.
 This causes a "reorganization" whenever a dispute resolves against a candidate.
 
-<img rounded style="width: 650px" src="../assets/babe-chain-selection.png" />
+<img rounded style="width: 650px" src="./assets/execution-sharding/babe-chain-selection.png" />
 
 Notes:
 The authoring mechanism is also paired with a chain selection logic. This logic helps us leverage forks to our advantage by tactically ignoring relay blocks with invalid parablocks so the chain can easily reorg those out.
@@ -880,7 +880,7 @@ Instead of voting for the longest chain, validators vote for the longest chain w
 
 </pba-flex>
 
-<img rounded style="width: 650px" src="../assets/grandpa-voting-rule.png" />
+<img rounded style="width: 650px" src="./assets/execution-sharding/grandpa-voting-rule.png" />
 
 Notes:
 Similarly to the fork choice rules here grandpa will also ignore voting on invalid/disputed blocks.
@@ -902,7 +902,7 @@ Since Polkadot involves not only on-chain logic but off-chain logic, the runtime
 
 Clients learn about the state by invoking **Runtime APIs** at recent blocks, and the runtime is updated with **new blocks**.
 
-<img rounded style="width: 900px" src="../assets/runtime-node-interaction.png" />
+<img rounded style="width: 900px" src="./assets/execution-sharding/runtime-node-interaction.png" />
 
 Notes:
 
