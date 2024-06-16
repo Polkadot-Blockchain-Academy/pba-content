@@ -697,7 +697,6 @@ Notes:
 - Chrome and Mozilla extension
 - Comes with 4 integrated "Well Known" chains (Kusama, Polkadot, Westend, Rococo) - which means these chains can be used without the need of providing chainspecs;
 
-
 ---v
 
 ## The (NEW) Polkadot API
@@ -722,7 +721,6 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="8" -->
 
 ---v
-
 
 ## SubXT
 
@@ -822,6 +820,7 @@ Notes: meaning you need to send/receive and act with the JSONs
 </diagram>
 
 ---v
+
 ### SubXT - On a diagram
 
 <diagram class="mermaid limit size-80">
@@ -1209,6 +1208,7 @@ Using smoldot with PAPI:
 <img style="height: 30rem" src="./assets/light-clients/local.png" />
 
 Using Substrate Connect with smoldot and PAPI
+
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">localhost:3001</p>
 
 ---v
@@ -1218,6 +1218,7 @@ Using Substrate Connect with smoldot and PAPI
 <img style="height: 30rem" src="./assets/light-clients/apps.png" />
 
 Using Substrate connect with smoldot and PolkadotJS API
+
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://ipfs.io/ipns/dotapps.io/</p>
 
 Notes: IPFS: (InterPlanetary File System) is a protocol, hypermedia and file sharing peer-to-peer network for storing and sharing data in a distributed file system.
