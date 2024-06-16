@@ -280,7 +280,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ---
 
-<img style="width: 1000px" src="assets/Contributing/iwantyou.png" />
+<img style="width: 1000px" src="assets/Contributing/omg.png" />
 
 ---
 
