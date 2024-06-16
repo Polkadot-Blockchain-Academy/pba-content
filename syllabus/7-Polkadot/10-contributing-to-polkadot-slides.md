@@ -65,7 +65,6 @@ https://polkadot.network/academy/
 ## The Mono Repo
 
 <pba-cols>
-
 <pba-col left>
 
 <diagram class="mermaid">
@@ -86,11 +85,44 @@ flowchart LR
 - Makes it easier to manage issues, pull requests, and documentation.
 
 </pba-col>
-</pba-col>
+</pba-cols>
 
 ---
 
 ## Runtime Extraction
+
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+flowchart LR
+    A{Polkadot-SDK} ---> B
+    B{Polkadot Fellows} ---> C
+    C{runtimes}
+</diagram>
+
+Extraction of the various Polkadot Runtimes established decentralized ownership of this code.
+
+<pba-cols>
+<pba-col left>
+
+- Relay Chain Runtimes
+  - Polkadot
+  - Kusama
+
+</pba-col>
+<pba-col right>
+
+- System Parachains
+  - Asset Hub
+  - Bridges Hub
+  - Collectives
+  - etc...
+
+</pba-col>
+</pba-cols>
+
+---
+
+## Repository Ownership
 
 <pba-cols>
 <pba-col left>
@@ -98,47 +130,24 @@ flowchart LR
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
 flowchart LR
-    A{Substrate} ---> D
-    B{Polkadot} ---> D
-    C{Cumulus} ---> D
-    D{Polkadot SDK}
+    A{paritytech/polkadot-sdk}
 </diagram>
 
+Owned by Parity Technologies
+
 </pba-col>
-
-<span style="font-size:0.75em;">
-
 <pba-col right>
 
-<pba-flex left>
-Extraction of the various Polkadot Runtimes established decentralized ownership of this code. Includes:
-</pba-flex>
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+flowchart LR
+    A{polkadot-fellows/runtimes}
+</diagram>
 
-<pba-flex left>
+Owned by Parity Technologies
 
-- Relay Chain Runtimes
-
-  - Polkadot
-  - Kusama
-
-- System Parachains
-
-  - Asset Hub
-  - Bridges Hub
-  - Collectives
-  - etc...
-    </pba-flex>
-
-  </pba-col>
-  </pba-cols>
-
-</span>
-
----
-
-## Repository Ownership
-
-<img style="width: 800px" src="assets/Contributing/Owners.png" />
+</pba-col>
+</pba-cols>
 
 ---
 
