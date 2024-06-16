@@ -556,6 +556,64 @@ An invention machine.
 
 ---
 
+# JAM
+
+---
+
+## What is JAM?
+
+JAM is the next evolution of the Polkadot protocol.
+
+<img style="width: 600px;" src="../../assets/img/7-Polkadot/decisions/jam-pen-polkadot.png" />
+
+The JAM chain will be the successor to the existing Polkadot Relay chain.
+
+JAM will provide all the functionality of Polkadot v1, but also provide a more flexible foundation on which to build Web3 Applications.
+
+---
+
+## The Decisions of JAM
+
+<div class="grid grid-cols-2">
+<div>
+
+**Unchanged**
+
+- The Philosophies of Polkadot
+- The Goals of Polkadot
+  - Parallel Execution and Heterogenous Sharding
+  - Shared Security
+  - Interoperability
+
+</div>
+
+<div>
+
+**Changed**
+
+- Upgradability of the Core Protocol
+  - Substrate -> JAM Chain
+- Parachains -> Services
+- Wasm -> PolkaVM (RISC-V)
+- Synchronous Communication Capabilities
+
+</div>
+
+---
+
+## Is JAM a new protocol?
+
+JAM is certainly the next evolution of the Polkadot protocol.
+
+- Some things have explicitly changed.
+- But the problem we are trying to solve is the same.
+- And almost all of the same technology is being used to solve it.
+
+
+### JAM is Polkadot.
+
+---
+
 # So what is Polkadot?
 
 ---
