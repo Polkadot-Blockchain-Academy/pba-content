@@ -21,7 +21,7 @@ duration: 45+ mins
 
 #### Traditional Web 2
 
-<img rounded style="width: 80%;" src="./img/web2.png" />
+<img rounded style="width: 80%;" src="./assets/light-clients/web2.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -35,7 +35,7 @@ While I won't be roasting anyone, it's essential to recognize that platforms lik
 
 #### The Web 3 vision
 
-<img rounded style="width: 80%;" src="./img/web3.png" />
+<img rounded style="width: 80%;" src="./assets/light-clients/web3.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -52,7 +52,7 @@ Now, show of hands:
 
 #### The Web 3 reality
 
-<img rounded style="width: 80%;" src="./img/web3_reality.png" />
+<img rounded style="width: 80%;" src="./assets/light-clients/web3_reality.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -76,7 +76,7 @@ I will pause there for a few seconds to let this sink in;
 
 ---v
 
-<img rounded style="width: 45%;" src="./img/learn-student.gif" />
+<img rounded style="width: 45%;" src="./assets/light-clients/learn-student.gif" />
 
 Notes:
 
@@ -136,7 +136,7 @@ Any combination of “validator”, “bootnode” and “JSON-RPC node” is po
 
 #### The reality of blockchains today
 
-<img rounded style="width: 100%;" src="./img/reality_bc_today.png" />
+<img rounded style="width: 100%;" src="./assets/light-clients/reality_bc_today.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -160,7 +160,7 @@ Ask: WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
    <pba-col left>
-      <img rounded src="./img/USER-CONTROLLED-NODE.png" />
+      <img rounded src="./assets/light-clients/USER-CONTROLLED-NODE.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
@@ -182,7 +182,7 @@ node client</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
   <pba-col left>
-    <img rounded src="./img/PUBLICLY-ACCESSIBLE-NODE.png" />
+    <img rounded src="./assets/light-clients/PUBLICLY-ACCESSIBLE-NODE.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
@@ -233,14 +233,14 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 ## The reality of blockchains we want
 
-<img rounded style="width: 100%;" src="./img/reality_we_want.png" />
+<img rounded style="width: 100%;" src="./assets/light-clients/reality_we_want.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
 
 # The solution
 
-<img rounded src="./img/solution.jpeg" />
+<img rounded src="./assets/light-clients/solution.jpeg" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 # Light Clients
@@ -249,7 +249,7 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 ---
 
-<img rounded style="width: 40rem" src="./img/whatislightclient.png" />
+<img rounded style="width: 40rem" src="./assets/light-clients/whatislightclient.png" />
 
 ---v
 
@@ -261,7 +261,7 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 <p style="font-size:2rem">...but lighter!</p>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img rounded style="height: 350px;" src="./img/really.png" />
+<img rounded style="height: 350px;" src="./assets/light-clients/really.png" />
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
@@ -444,7 +444,7 @@ Our Substrate nodes can produce what is called a Chain spec which Smoldot then u
 
 ### what/who to trust
 
-<img rounded style="margin-top: 150px; width: 70%" src="./img/know-who-to-trust.png" />
+<img rounded style="margin-top: 150px; width: 70%" src="./assets/light-clients/know-who-to-trust.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -553,10 +553,12 @@ Notes: is transport agnostic in that the concepts can be used within the same pr
 
 ---v
 
-## Legacy vs New JSON RPC API
+## Legacy vs New JSON-RPC API
 
   <diagram class="mermaid">
     stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      LEGACY_JSON_RPC_API: Legacy JSON-RPC API
       Substrate --> NEW_JSON_RPC_API
       Substrate --> LEGACY_JSON_RPC_API
       Smoldot --> NEW_JSON_RPC_API
@@ -589,13 +591,16 @@ New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 
   <diagram class="mermaid">
     stateDiagram-v2
+    NEW_JSON_RPC_API: New JSON-RPC API
+    LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+    classDef badBadEvent fill:#343434,color:#ccc,font-weight:bold,stroke-width:2px,stroke:#999
       Substrate --> NEW_JSON_RPC_API
-      Substrate --> LEGACY_JSON_RPC_API: X
+      Substrate --> LEGACY_JSON_RPC_API:::badBadEvent : X
       Smoldot --> NEW_JSON_RPC_API
-      Smoldot --> LEGACY_JSON_RPC_API: X
+      Smoldot --> LEGACY_JSON_RPC_API:::badBadEvent : X
   </diagram>
 
-- When the Legacy JSON RPC API will be removed?
+- When the Legacy JSON-RPC API will be removed?
 - “as soon as realistically possible”
 
 Notes:
@@ -604,7 +609,7 @@ New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 
 ---
 
-<img src="./img/words.png" />
+<img src="./assets/light-clients/words.png" />
 
 Notes:
 
@@ -638,7 +643,7 @@ Let's proceed with a more focused and detailed exploration of light clients in t
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 <p class="inline-table">
-  <img style="width: 10rem; padding-top: 3rem" src="./img/poweredBy.png" />
+  <img style="width: 10rem; padding-top: 3rem" src="./assets/light-clients/poweredBy.png" />
   <!-- .element: class="fragment" data-fragment-index="7" -->
   <div style="font-size:1.5rem; color: #fff">Pierre Krieger - tomaka</div>
   <!-- .element: class="fragment" data-fragment-index="7" -->
@@ -668,21 +673,6 @@ Powered by Pierre Krieger (a.k.a. tomaka)
 
 ---v
 
-### Smoldot - On a diagram
-
-<section>
-  <diagram class="mermaid">
-    stateDiagram-v2
-      dAPP --> Smoldot
-      Smoldot --> LEGACY_JSON_RPC_API
-      Smoldot --> NEW_JSON_RPC_API
-  </diagram>
-</section>
-
-Notes: meaning you need to send/receive and act with the JSONs
-
----v
-
 ## Substrate Connect
 
 <div style="font-size:1.75rem; color: #fff">uses smoldot as an implementation detail</div>
@@ -690,7 +680,7 @@ Notes: meaning you need to send/receive and act with the JSONs
 
 <div style="font-size:1.5rem; color: #d92f78; margin: 0.5rem 0">javascript/typescript</div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-  <img width="900" src="./img/wellknown.png"  style="margin: 1rem 15%" />
+  <img width="900" src="./assets/light-clients/wellknown.png"  style="margin: 1rem 15%" />
   <!-- .element: class="fragment" data-fragment-index="3" -->
 <p class="inline-table">
   <!-- .element: class="fragment" data-fragment-index="4" -->
@@ -709,27 +699,6 @@ Notes:
 
 ---v
 
-### Substrate Connect - On a diagram
-
-<section>
-  <diagram class="mermaid limit size-80">
-    stateDiagram-v2
-      dApp --> substrate_connect
-      state substrate_connect {
-        [*] --> sc_provider
-        [*] --> Providers
-        sc_provider --> PJS_API
-        Providers --> Pokadot_API
-        PJS_API --> Smoldot
-        Pokadot_API --> Smoldot
-        Smoldot --> LEGACY_JSON_RPC_API
-        Smoldot --> NEW_JSON_RPC_API
-      }
-  </diagram>
-</section>
-
----v
-
 ## The (NEW) Polkadot API
 
 <div style="font-size:1.25rem; margin: -2rem 0 2rem 0; color: #d92f78;">(aka PAPI)</div>
@@ -745,32 +714,11 @@ Notes:
 <p class="inline-table">
   <div style="font-size:2rem; color: #fff">Powered by:</div>
   <!-- .element: class="fragment" data-fragment-index="6" -->
-  <div style="display: inline-flex; "><img style="height:10rem" src="./img/papi_josep.png" /><img src="./img/papi_victor.png"  style="height: 10rem" /></div>
+  <div style="display: inline-flex; "><img style="height:10rem" src="./assets/light-clients/papi_josep.png" /><img src="./assets/light-clients/papi_victor.png"  style="height: 10rem" /></div>
   <!-- .element: class="fragment" data-fragment-index="7" -->
 </p>
 <p style="font-size:1.5rem; margin-top: 1rem"><a href="https://github.com/polkadot-api/polkadot-api/">https://github.com/polkadot-api/polkadot-api/</a></p>
 <!-- .element: class="fragment" data-fragment-index="8" -->
-
----v
-
-### Polkadot API - On a diagram
-
-<diagram class="mermaid">
-  stateDiagram-v2
-    dApp --> Polkadot_API
-    state Polkadot_API {
-      [*] --> node_js_worker
-      [*] --> ws_provider_web
-      [*] --> ws_provider_node
-      [*] --> smoldot_worker
-      [*] --> smoldot
-      node_js_worker --> NEW_JSON_RPC_API
-      ws_provider_web --> NEW_JSON_RPC_API
-      ws_provider_node --> NEW_JSON_RPC_API
-      smoldot_worker --> NEW_JSON_RPC_API
-      smoldot --> NEW_JSON_RPC_API
-    }
-</diagram>
 
 ---v
 
@@ -804,18 +752,91 @@ Notes:
 
 ---v
 
+### Smoldot - On a diagram
+
+<section>
+  <diagram class="mermaid limit size-80">
+    stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+      dAPP --> Smoldot
+      Smoldot --> LEGACY_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
+  </diagram>
+</section>
+
+Notes: meaning you need to send/receive and act with the JSONs
+
+---v
+
+### Substrate Connect - On a diagram
+
+<section>
+  <diagram class="mermaid limit size-80">
+    stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+      substrate_connect: Substrate Connect
+      sc_provider: SC Provider
+      PJS_API: PolkadotJS API
+      Pokadot_API: Polkadot API
+      dApp --> substrate_connect
+      state substrate_connect {
+        [*] --> sc_provider
+        [*] --> Providers
+        sc_provider --> PJS_API
+        Providers --> Pokadot_API
+        PJS_API --> Smoldot
+        Pokadot_API --> Smoldot
+        Smoldot --> LEGACY_JSON_RPC_API
+        Smoldot --> NEW_JSON_RPC_API
+      }
+  </diagram>
+</section>
+---v
+
+### Polkadot API - On a diagram
+
+<diagram class="mermaid">
+  stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      ws_provider_web: WS Provider/Web
+      node_js_worker:  NodeJS/Worker
+      ws_provider_node: WS Provider/Node
+      smoldot_worker: Smoldot/Worker
+    dApp --> Polkadot_API
+    state Polkadot_API {
+      [*] --> node_js_worker
+      [*] --> ws_provider_web
+      [*] --> ws_provider_node
+      [*] --> smoldot_worker
+      [*] --> Smoldot
+      node_js_worker --> NEW_JSON_RPC_API
+      ws_provider_web --> NEW_JSON_RPC_API
+      ws_provider_node --> NEW_JSON_RPC_API
+      smoldot_worker --> NEW_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
+    }
+</diagram>
+
+---v
+
 ### SubXT - On a diagram
 
 <diagram class="mermaid limit size-80">
   stateDiagram-v2
+    NEW_JSON_RPC_API: New JSON-RPC API
+    LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+    Backend_RPC_Legacy_methods: Backend RPC Legacy methods 
+    Backend_RPC_New_methods: Backend RPC New methods
     dAPP --> SubXT
     state SubXT {
       [*] --> Backend_RPC_Legacy_methods
       [*] --> Backend_RPC_New_methods
-      Backend_RPC_Legacy_methods --> smoldot
-      Backend_RPC_New_methods --> smoldot
-      smoldot --> LEGACY_JSON_RPC_API
-      smoldot --> NEW_JSON_RPC_API
+      Backend_RPC_Legacy_methods --> Smoldot
+      Backend_RPC_New_methods --> Smoldot
+      Smoldot --> LEGACY_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
     }
 </diagram>
 
@@ -895,19 +916,18 @@ The dApp (UI) connects to a node client that the user has installed on their mac
 <!-- .element: class="fragment" data-fragment-index="2" -->
 <p>..........</p>
 <!-- .element: class="fragment" data-fragment-index="3" -->
-<p>.... too long ? ? ....</p>
+<p>.....................</p>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 <p>.................................</p>
 <!-- .element: class="fragment" data-fragment-index="5" -->
-<p>.........................................</p>
+<p>........ maybe get some water ? .........</p>
 <!-- .element: class="fragment" data-fragment-index="6" -->
-<p>........... maybe get some water ?...........</p>
-<!-- .element: class="fragment" data-fragment-index="7" -->
 <p>...................................................</p>
+<!-- .element: class="fragment" data-fragment-index="7" -->
+<p>.............................................................</p>
 <!-- .element: class="fragment" data-fragment-index="8" -->
-<!-- .element: class="fragment" data-fragment-index="9" -->
 <p>done</p>
-<!-- .element: class="fragment" data-fragment-index="10" -->
+<!-- .element: class="fragment" data-fragment-index="9" -->
 
 ---v
 
@@ -949,7 +969,7 @@ The uApp (UI) connects to an _integrated_ Light Client
 
 ---v
 
-## Substrate Connect (PolakdotJS)
+## Substrate Connect (PolkadotJS)
 
 ```javascript[0|1-2|4-7|9-11]
 import { ScProvider } from "@polkadot/rpc-provider/substrate-connect";
@@ -1111,7 +1131,7 @@ console.log('Please visit: https://cloudflare-ipfs.com/ipns/dotapps.io/?rpc=ws%3
 # Some demo maybe…?
 
 <p class="inline-table">
-  <img src="./img/code.jpg" />
+  <img src="./assets/light-clients/code.jpg" />
 </p>
 
 ---
@@ -1177,37 +1197,43 @@ Stay with me - the next is the last but not the easiest part:
 
 ## Unstoppable apps?
 
-<img style="height: 40rem" src="./img/on-chain-id.png" />
-
-Using smoldot with PAPI
+<img style="height: 30rem" src="./assets/light-clients/on-chain-id.png" />
+Using smoldot with PAPI:
+<p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://polkadot-blockchain-academy.github.io/onchain-id-verification/</p>
 
 ---v
 
 ## Unstoppable apps?
 
-<img style="height: 40rem" src="./img/local.png" />
+<img style="height: 30rem" src="./assets/light-clients/local.png" />
 
 Using Substrate Connect with smoldot and PAPI
 
+<p style="font-weight: bold; color: #d92f78; margin-top: 1rem">localhost:3001</p>
+
 ---v
 
 ## Unstoppable apps?
 
-<img style="height: 40rem" src="./img/apps.png" />
+<img style="height: 30rem" src="./assets/light-clients/apps.png" />
 
 Using Substrate connect with smoldot and PolkadotJS API
 
+<p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://ipfs.io/ipns/dotapps.io/</p>
+
+Notes: IPFS: (InterPlanetary File System) is a protocol, hypermedia and file sharing peer-to-peer network for storing and sharing data in a distributed file system.
 ---v
 
 ## Unstoppable apps
 
 <section>
-<img style="height: 30rem" src="./img/decentralized.png">
+<img style="height: 30rem" src="./assets/light-clients/decentralized.png">
 
 - Decentralized Blockchain
 - Light Clients
 - Interplanetary File System (IPFS)
+</section>
 
-## </section>
+---
 
 # Questions?
