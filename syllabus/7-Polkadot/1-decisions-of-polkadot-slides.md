@@ -152,37 +152,27 @@ What are the type 1 decisions which define Polkadot?
 
 ---
 
-## Wasm
+## Parallel Execution
 
-<div class="grid grid-cols-3">
+Polkadot scales through parallelization.
 
-<div>
+Polkadot provides parallelized execution using parallel execution cores.
 
-<img style="width: 400px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" />
+<img style="width: 1000px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
-</div>
-
-<div class="col-span-2">
-
-WebAssembly is the backbone of Polkadot. It is a fast, safe, and open meta-protocol which powers all of the state transitions of our ecosystem.
-
-It standardizes how chains execute, sandboxes that execution for improved security, and allows teams to build on Polkadot using any language that can be compiled into Wasm.
-
-</div>
-
-</div>
+Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
 
 ---
 
-## Sharding
+## Data Sharding
 
 <div class="grid grid-cols-2">
 
 <div>
 
-Polkadot scales primarily by parallelizing execution on separate data shards.
+Polkadot is able to do parallel execution because it splits up data on its network into separate data shards.
 
-These parallel chains (shards) are called Parachains.
+
 
 </div>
 
@@ -211,6 +201,30 @@ These parallel chains (shards) are called Parachains.
 Another key scaling decision is the choice of heterogeneous shards, allowing for application specific chains.
 
 Specialized solutions for problems are more performant than generalized solutions, as they can incorporate more details about the problem space.
+
+</div>
+
+</div>
+
+---
+
+## Execution Meta-Protocol
+
+<div class="grid grid-cols-3">
+
+<div>
+
+<img style="width: 400px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" />
+
+</div>
+
+<div class="col-span-2">
+
+Heterogenous sharded execution is the backbone of Polkadot.
+
+For this, we need a fast, safe, and open meta-protocol which powers all of the state transitions of our ecosystem.
+
+It standardizes how chains execute, sandboxes that execution for improved security, and allows teams to build on Polkadot using any language that can be compiled into Wasm.
 
 </div>
 
@@ -267,16 +281,6 @@ Notes:
 Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
 
 Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender. Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
-
----
-
-## Execution Cores
-
-Polkadot's Shared Security is powered through the creation and allocation of execution cores.
-
-<img style="width: 1000px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
-
-Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
 
 ---
 
