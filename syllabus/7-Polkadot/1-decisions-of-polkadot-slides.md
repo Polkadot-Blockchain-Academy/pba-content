@@ -458,7 +458,7 @@ Polkadot was originally designed around Web3 applications in the form of Paracha
 <br />
 
 - Originally, parachains would be long term applications-chains.
-- Services and On-Demand Parachains changed that viewpoint to also include applications that can spin-up and spin-down at will.
+- Services and Agile Coretime changed that viewpoint to also include applications that can spin-up and spin-down at will.
 - The future protocol will have even more exotic core scheduling and even more agile core usage, all because the type 1 decision around parachains is actually **execution cores**.
 
 Notes:
