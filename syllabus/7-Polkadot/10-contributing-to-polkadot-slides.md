@@ -181,9 +181,7 @@ https://github.com/polkadot-fellows/RFCs
 
 ---
 
-### Fellowship
-
-<!-- original slides had 90 and -90 degree "Fellowship" text around a box-->
+# Fellowship
 
 ---
 
@@ -213,18 +211,11 @@ The current Polkadot Fellows.
 
 ---
 
-## Rank Summary
-
-- The fellowship has different ranks based on their contributions to Polkadot.
-- The requirements to be promoted are defined in the manifesto.
-- Fellowship members can choose to accept a salary for their rank.
-- Salary is based on the OECD average salary for engineers.
-
----
-
 ## Ranks
 
-<!-- TO DO need to have table only on left side to provide space for bullet points-->
+<div class="grid grid-cols-3 text-small">
+
+<div class="col-span-2">
 
 | Dan  | Title           | Time from Dan I | Salary Factor (OECD) |
 | ---- | --------------- | --------------- | -------------------- |
@@ -239,38 +230,43 @@ The current Polkadot Fellows.
 | VIII | Master Constant | &gt; 11 years!  | 2.5                  |
 | IX   | Grand Master    | &gt; 19 years!  | 2.5                  |
 
-<span style="font-size:0.5em;">
+</br>
 
 Salary RFC: https://github.com/polkadot-fellows/RFCs/pull/50/
 
 OECD: Organisation for Economic Co-operation and Development
 
+</div>
+<div>
+
+- The fellowship has different ranks based on their contributions to Polkadot.
+- The requirements to be promoted are defined in the manifesto.
+- Fellowship members can choose to accept a salary for their rank.
+- Salary is based on the OECD average salary for engineers.
+
+
+</div>
+</div>
+
 ---
 
 ## Dan I
 
-<!-- TO DO columns should be better aligned -->
+The requirements (condensed) to become a Dan I member of the Polkadot Fellowship are:
 
-<span style="font-size:0.75em;">
 
-<pba-flex center>
-
-_The requirements (condensed) to become a Dan I member of the Polkadot Fellowship are:_
-
-</span>
+<pba-cols class="text-small">
+<pba-col left>
 
 - Three clear examples of a modest but substantial contribution to protocol development.
 - Actively been involved in the design of a component deployed to the network.
 - Substantially assisted in the analysis, or authoring of formalisation or implementation of a protocol component.
 - Should be able to list all key goals, principles and tenets of Polkadot’s overall philosophy.
 
-</pba-flex>
+</pba-col>
+<pba-col right>
 
----
-
-## Dan I Contributions
-
-<pba-flex center>
+<pba-flex left>
 
 Possible examples of a “modest but substantial contribution” may be:
 
@@ -280,6 +276,9 @@ Possible examples of a “modest but substantial contribution” may be:
 - doing a valuable, innovative and insightful refactoring or simplification.
 
 </pba-flex>
+
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -292,7 +291,7 @@ Possible examples of a “modest but substantial contribution” may be:
 - The Fellowship is a very new, and still developing organization.
 - The Fellowship offers technical influence over the Polkadot Network and a regular income.
 - It is attempting to provide human needs of consistent / regular income from a resilient decentralized source.
-- The barrier to entry is intentionally _very high._
+- **The barrier to entry is intentionally very high.**
 - It is NOT a requirement to contribute to the Polkadot SDK or broader ecosystem.
 - It is NOT the path for everyone, even not necessarily for all core developers.
 
@@ -315,7 +314,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ---
 
-#### **Before you can contribute** you need to find an issue.
+#### **Before you can contribute**</br>you need to find an issue.
 
 ---
 
