@@ -273,6 +273,20 @@ Wasm Runtimes
 
 ---
 
+## PolkaVM
+
+- JAM will use the PolkaVM instead of Wasm.
+  - PolkaVM is based on RISC-V.
+  - https://github.com/koute/polkavm
+- Nothing changes about the principles of shared security.
+  - Just a change in the execution meta-protocol.
+
+Notes:
+
+Practically speaking the transition should be a net positive security-wise; we have better sandboxing than wasmtime, the whole thing is lot simpler (there's no full blown optimizing compiler in the VM, because that part now runs entirely offline before the program is uploaded on chain) and unlike wasmtime we don't have any problems with non-O(n) compilation (PolkaVM is guaranteed O(n)) nor with overflowing the native stack (wasmtime makes use of the native stack for guest programs; PolkaVM doesn't)
+
+---
+
 # Parachain Validation
 
 ---
@@ -331,6 +345,18 @@ A random subset of validators are assigned to execute the parachain blocks.
 <img style="width: 600px" src="../../assets/img/7-Polkadot/parachain-validators-colored.svg" />
 
 The new state root is then committed to the relay chain so the process can repeat.
+
+---
+
+## Execution Core Math
+
+- Assuming we have 1023 validators...
+- Assuming we have each core be initially validated by 3 validators...
+- We can provide 341 parallel execution cores on Polkadot.
+
+From the JAM paper:
+
+<img style="width: 600px" src="../../assets/img/7-Polkadot/341-cores.png" />
 
 ---
 
