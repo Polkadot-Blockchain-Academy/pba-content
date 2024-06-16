@@ -673,21 +673,6 @@ Powered by Pierre Krieger (a.k.a. tomaka)
 
 ---v
 
-### Smoldot - On a diagram
-
-<section>
-  <diagram class="mermaid">
-    stateDiagram-v2
-      dAPP --> Smoldot
-      Smoldot --> LEGACY_JSON_RPC_API
-      Smoldot --> NEW_JSON_RPC_API
-  </diagram>
-</section>
-
-Notes: meaning you need to send/receive and act with the JSONs
-
----v
-
 ## Substrate Connect
 
 <div style="font-size:1.75rem; color: #fff">uses smoldot as an implementation detail</div>
@@ -1213,26 +1198,29 @@ Stay with me - the next is the last but not the easiest part:
 
 ## Unstoppable apps?
 
-<img style="height: 40rem" src="./img/on-chain-id.png" />
-
-Using smoldot with PAPI
+<img style="height: 30rem" src="./img/on-chain-id.png" />
+Using smoldot with PAPI:
+<p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://polkadot-blockchain-academy.github.io/onchain-id-verification/</p>
 
 ---v
 
 ## Unstoppable apps?
 
-<img style="height: 40rem" src="./img/local.png" />
+<img style="height: 30rem" src="./img/local.png" />
 
 Using Substrate Connect with smoldot and PAPI
+<p style="font-weight: bold; color: #d92f78; margin-top: 1rem">localhost:3001</p>
 
 ---v
 
 ## Unstoppable apps?
 
-<img style="height: 40rem" src="./img/apps.png" />
+<img style="height: 30rem" src="./img/apps.png" />
 
 Using Substrate connect with smoldot and PolkadotJS API
+<p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://ipfs.io/ipns/dotapps.io/</p>
 
+Notes: IPFS: (InterPlanetary File System) is a protocol, hypermedia and file sharing peer-to-peer network for storing and sharing data in a distributed file system.
 ---v
 
 ## Unstoppable apps
@@ -1243,7 +1231,8 @@ Using Substrate connect with smoldot and PolkadotJS API
 - Decentralized Blockchain
 - Light Clients
 - Interplanetary File System (IPFS)
+</section>
 
-## </section>
+---
 
 # Questions?
