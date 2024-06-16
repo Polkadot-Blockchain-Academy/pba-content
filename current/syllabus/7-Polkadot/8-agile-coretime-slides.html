@@ -31,10 +31,11 @@
 
 # Agile Coretime
 
-<aside class="notes"><p>Today we&#39;ll be tackling Agile Coretime. How many people heard about it? 
+<aside class="notes"><p>Today we&#39;ll be tackling Agile Coretime. How many people heard about it?
 I often see people confused about what coretime truly is, when it comes and what &quot;feature&quot; it is exactly.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Agile Coretime
+
 ## Core Features
 
 - Bulk Coretime Auctions
@@ -48,16 +49,17 @@ I often see people confused about what coretime truly is, when it comes and what
 and exposes it&#39;s most important resources, execution cores. Essentially it&#39;s an alternative scheduling mechanism.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Agile Coretime
+
 ## RFC Disclaimer
 
 <img style="width: 500px" src="./assets/coretime/rfc_1.png"/>
-
 
 <aside class="notes"><p>The coretime I will be presenting today is still in development. The blueprint for it was outlined in the Fellowship RFC 1 and 5 (links in notes) and it is mostly staying true to it but implementation details can be different here and there. Nevertheless the spirit will remain unchanged.</p>
 <p><a href="https://github.com/polkadot-fellows/RFCs/blob/main/text/0001-agile-coretime.md">https://github.com/polkadot-fellows/RFCs/blob/main/text/0001-agile-coretime.md</a>
 <a href="https://github.com/polkadot-fellows/RFCs/blob/main/text/0005-coretime-interface.md">https://github.com/polkadot-fellows/RFCs/blob/main/text/0005-coretime-interface.md</a></p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Agile Coretime
+
 ## JAM Disclaimer
 
 <img style="width: 500px" src="./assets/coretime/jam.png"/>
@@ -72,14 +74,16 @@ and exposes it&#39;s most important resources, execution cores. Essentially it&#
 <aside class="notes"><p>First let’s zoom out and look at the Polkadot protocol. What does it actually produce? And I don’t mean the individual parachains but the core protocol (mostly living on the relay chain) itself.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # The Product of Polkadot
+
 ## Blockspace
 
 <img style="width: 500px" src="./assets/coretime/blockspace.png"/>
 
-<aside class="notes"><p>It is blockspace! Blockspace is the data that we guarantee consensus on and provide availability for. And not only is it blockspace, it is high quality blockspace. 
+<aside class="notes"><p>It is blockspace! Blockspace is the data that we guarantee consensus on and provide availability for. And not only is it blockspace, it is high quality blockspace.
 The quality is referring to how confidence in it being secure and live, it needs to be durable system that stood the test of time.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # The Product of Polkadot
+
 ## Sharding
 
 <img style="width: 500px" src="./assets/coretime/polkadot-architecture.svg"/>
@@ -89,6 +93,7 @@ Sharding allows us to produce more blockspace with the same resources
 <aside class="notes"><p>And because Polkadot is effectively sharded it can validate in parallel producing plenty of blockspace.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # The Product of Polkadot
+
 ## Blockspace vs Coretime
 
 They are two sides of the same coin. Execution cores enable sharding and they create the highly valuable high quality blockspace.
@@ -98,8 +103,8 @@ They are two sides of the same coin. Execution cores enable sharding and they cr
 <aside class="notes"><p>There are some caveats to it, but generally coretime and blockspace are very highly coupled in Polkadot. The more coretime you have the more blockspace you gain out of it.
 Coretime is presenting a more execution based perspective and blockspace paints it in a data oriented way.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-
 # The Product of Polkadot
+
 ## Pricing blockspace
 
 <img style="width: 300px" src="./assets/coretime/tokens.png"/>
@@ -114,7 +119,7 @@ Blockspace needs to be priced and distributed to those that need it.
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
 
-Lease gave you the right to register your parachain and fully occupy a specific core. 
+Lease gave you the right to register your parachain and fully occupy a specific core.
 
 A core is able to validate a single block every 6s and leases were practically always 2 years.
 
@@ -124,7 +129,7 @@ A core is able to validate a single block every 6s and leases were practically a
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
 
-Lease gave you the right to register your parachain and fully occupy a specific core. 
+Lease gave you the right to register your parachain and fully occupy a specific core.
 
 A core is able to validate a single block every 6s and leases were practically always 2 years.
 
@@ -134,7 +139,7 @@ A core is able to validate a single block every 6s and leases were practically a
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
 
-Lease gave you the right to register your parachain and fully occupy a specific core. 
+Lease gave you the right to register your parachain and fully occupy a specific core.
 
 A core is able to validate a single block every 6s and leases were practically always 2 years.
 
@@ -144,7 +149,7 @@ A core is able to validate a single block every 6s and leases were practically a
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
 
-Lease gave you the right to register your parachain and fully occupy a specific core. 
+Lease gave you the right to register your parachain and fully occupy a specific core.
 
 A core is able to validate a single block every 6s and leases were practically always 2 years.
 
@@ -154,7 +159,7 @@ A core is able to validate a single block every 6s and leases were practically a
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
 
-Lease gave you the right to register your parachain and fully occupy a specific core. 
+Lease gave you the right to register your parachain and fully occupy a specific core.
 
 A core is able to validate a single block every 6s and leases were practically always 2 years.
 
@@ -164,6 +169,7 @@ A core is able to validate a single block every 6s and leases were practically a
 In reality teams could opt for a bit of a shorter time than two years but historically nearly none of them actually bid for periods lower than two years. Turns out that teams actually really really value long-term stability. Let’s remember that. It’s gonna come up.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Slot Auctions
 
 Leases are acquired on candle auction called Slot Auctions
@@ -171,6 +177,7 @@ Leases are acquired on candle auction called Slot Auctions
 <aside class="notes"><p>So now we know what is being sold so how was it sold? Every once in a while when an execution core was unscheduled it was being put up to a slot auction. A slot auction aimed to find a parachain that would occupy it for the next two years. The auction was a candle auction for those that remember how they work. Anyone wants to quickly remind us?</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Slot Auctions
 
 <img  src="./assets/coretime/slot_auctions.png"/>
@@ -179,6 +186,7 @@ Leases are acquired on candle auction called Slot Auctions
 <p><a href="https://parachains.info/auctions/polkadot-60-66">https://parachains.info/auctions/polkadot-60-66</a></p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Slot Auctions
 
 Tokens were **refunded** after the lease was over
@@ -190,6 +198,7 @@ What was the cost?
 <aside class="notes"><p>And now the most interesting bit after the lease was over the funds were returned to the original owners. Wait?! So what was the cost in that case if they just got them back? Was it free?</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Issues
 
 Why is Polkadot deprecating slot auctions and leases?
@@ -197,6 +206,7 @@ Why is Polkadot deprecating slot auctions and leases?
 <aside class="notes"><p>Today things are changing but to understand why let’s look at some of the pain points of the original system.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Issues
 
 - Most parachains didn't fully fill up their blocks (wasted blockspace)
@@ -208,6 +218,7 @@ Why is Polkadot deprecating slot auctions and leases?
 <aside class="notes"><p>Leases were very inflexible and in reality not many blockchains needed as much as a huge block every 6s. There was literally too much throughput for most use cases! But you still had to purchase the whole thing giving you blocks every 6s so the rest was waste</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Issues
 
 - Most parachains didn't fully fill up their blocks (wasted blockspace)
@@ -219,6 +230,7 @@ Why is Polkadot deprecating slot auctions and leases?
 <aside class="notes"><p>Not only the throughput was massive but the duration of the commitment was very long so small teams couldn’t really compete for slots as teams of erring longer commitments had priority</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Issues
 
 - Most parachains didn't fully fill up their blocks (wasted blockspace)
@@ -231,6 +243,7 @@ Why is Polkadot deprecating slot auctions and leases?
 want to build something cool without too much friction. Bidding with millions of dollars is no joke.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Issues
 
 - Most parachains didn't fully fill up their blocks (wasted blockspace)
@@ -243,6 +256,7 @@ want to build something cool without too much friction. Bidding with millions of
 projects that were bottlenecked as single core producing blocks every 6s was not enough for them.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Leases
+
 ## Issues
 
 - Most parachains didn't fully fill up their blocks (wasted blockspace)
@@ -269,6 +283,7 @@ and expand on how builders can utilize the underlying resources of Polkadot. So 
 <aside class="notes"><p>We&#39;ll start with a method that should be the most familiar and in fact very similar to the old slot auctions - bulk auctions.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Bulk Auctions
+
 ## What is being sold?
 
 Parablock every 6s for 28 days
@@ -278,6 +293,7 @@ Parablock every 6s for 28 days
 <aside class="notes"><p>So how much coretime are we selling this time around? Bit less then previously but still a large chunk of it - a whole bulk of coretime.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Bulk Auctions
+
 ## What method?
 
 Dutch Auctions
@@ -288,6 +304,7 @@ Dutch Auctions
 of weeks so it&#39;s not as rapid as the traditional ones, but the principle remains.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Bulk Auctions
+
 ## Where do the funds go?
 
 Price paid will no longer be returned after the "lease" is over. This time the cost is paid upfront instead of
@@ -296,9 +313,11 @@ implicitly through the opportunity cost of locking your funds like in crowd loan
 <aside class="notes"><p>CUrrent dominant strategy agreed on by the community is to burn the coretime profits. TLDR why is that volatile flows to the treasure are not healthy and introduce complex game theoretical attacks. Read more here: <a href="https://github.com/polkadot-fellows/RFCs/blob/main/text/0010-burn-coretime-revenue.md">https://github.com/polkadot-fellows/RFCs/blob/main/text/0010-burn-coretime-revenue.md</a></p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Bulk Auctions
+
 ## Pricing
 
 Price adapter cycle:
+
 - System starts at target price X
 - Dutch auction initiate with 10X (much more then we expect to sell it for)
 - Price drops to X over a week
@@ -308,6 +327,7 @@ Price adapter cycle:
 <aside class="notes"><p>Pricing could be it&#39;s own lecture but to keep it brief. The system starts with some default price X. The dutch auctions enters what we call a leadin period, a period where the price will steeply decrease from 10x to x over a week and then from x to x/10 over the next week. Then it&#39;s just a matter of setting a new target price for the next sale. Sales happen every 28 days.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Bulk Auctions
+
 ## Pricing
 
 <img style="width: 500px" src="./assets/coretime/bulk_pricing.png"/>
@@ -315,6 +335,7 @@ Price adapter cycle:
 <aside class="notes"><p>This very roughly approximates an exponential decay curve with three linear functions. We are actually in discussions to make it smooth and make the potential scope of prices even wider.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Bulk Auctions
+
 ## Leases repackaged?
 
 <img style="width: 500px" src="./assets/coretime/spider.jpg"/>
@@ -323,11 +344,12 @@ Price adapter cycle:
 before. How is that even new or better? Because that bulk you buy carries a lot more information and flexibility than previous leases.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Bulk Auctions
+
 ## Coretime Regions
 
 Leases when bought were instantly fixed and unchangeable.
 
-Coretime regions are NFTs that are transferrable and programmable*.
+Coretime regions are NFTs that are transferrable and programmable\*.
 
 <aside class="notes"><p>Previously to exchange leases teams had to go through governance and create a referendum. This time coretime regions can easily be reassigned to a different parachain.
 This allows interested parties to buy some off the auction and sell it off for a fixed price to others. Teams that don&#39;t want to deal with auctions can
@@ -352,6 +374,7 @@ Interlacing two or more different parachains means they can be co-scheduled onto
 same core. They might be taking turns or using any other arbitrary co-scheduling pattern.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Interlacing
+
 ## Example
 
 <img style="width: 700px" src="./assets/coretime/interlacing.svg"/>
@@ -359,7 +382,8 @@ same core. They might be taking turns or using any other arbitrary co-scheduling
 <aside class="notes"><p>A concrete example of that would be two parachains coscheduled onto the same core. They would take turns in producing blocks so each on will effectively have a 12s block time.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Interlacing
-## Mask Programmability 
+
+## Mask Programmability
 
 Interlacing is achieve through manipulating the coretime region bit masks.
 
@@ -368,7 +392,8 @@ Freshly bought coretime region from the bulk auction would be fully scheduled (c
 <img style="width: 700px" src="./assets/coretime/complete_mask.svg"/>
 </script></section><section data-markdown><script type="text/template">
 # Interlacing
-## Mask Programmability 
+
+## Mask Programmability
 
 Two parachains interlaced together would split the region into 2 complementary regions:
 
@@ -376,7 +401,8 @@ Two parachains interlaced together would split the region into 2 complementary r
 
 <aside class="notes"></aside></script></section><section data-markdown><script type="text/template">
 # Interlacing
-## Mask Programmability 
+
+## Mask Programmability
 
 Interlacing always should create masks that complement each other (XOR to 1):
 
@@ -402,11 +428,12 @@ with you? This is where the secondary markets come in.</p>
 
 RFC-1:
 
->  "[Agile Coretime] supports the possibility of building rich and dynamic secondary markets to optimize resource allocation and largely avoids the need for parameterization."
+> "[Agile Coretime] supports the possibility of building rich and dynamic secondary markets to optimize resource allocation and largely avoids the need for parameterization."
 
 <aside class="notes"><p>Coretime was built with secondary markets in mind. Those would be the interfaces where bulk coretime is bought, then split into smaller regions and potentially sold off to others.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Secondary Markets
+
 ## Current Solutions
 
 <img style="width: 700px" src="./assets/coretime/regionx_land.png"/>
@@ -414,6 +441,7 @@ RFC-1:
 <aside class="notes"><p><a href="https://www.regionx.tech/">https://www.regionx.tech/</a></p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Secondary Markets
+
 ## Current Solutions
 
 <img style="width: 700px" src="./assets/coretime/lastic_land.png"/>
@@ -421,11 +449,13 @@ RFC-1:
 <aside class="notes"><p><a href="https://www.lastic.xyz/">https://www.lastic.xyz/</a></p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Secondary Markets
+
 ## What to expect?
 
 <img style="width: 700px" src="./assets/coretime/regionx.png"/>
 </script></section><section data-markdown><script type="text/template">
 # Secondary Markets
+
 ## What to expect?
 
 <img style="width: 700px" src="./assets/coretime/lastic.png"/>
@@ -439,6 +469,7 @@ Who knows what else!</p>
 # On-Demand Coretime
 </script></section><section data-markdown><script type="text/template">
 # On-Demand Coretime
+
 ## Disclaimer
 
 **On-Demand Coretime** = Parathreads = Instantaneous Coretime
@@ -447,12 +478,14 @@ Who knows what else!</p>
 of the design since 1.0 days. On-Demand is the generally accepted term nowadays. But seeing this slide I just couldn&#39;t stop myself. We already had the version with two but now we graduated to three.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # On-Demand Coretime
+
 ## Disclaimer
 
 <img style="width: 500px" src="./assets/coretime/spider3.jpg"/>
 
 <aside class="notes"></aside></script></section><section data-markdown><script type="text/template">
 # On-Demand Coretime
+
 ## Limitations of Interlacing and Coretime Regions
 
 - Awesome flexibility ✅
@@ -469,6 +502,7 @@ On-demand is an **alternative** native method of acquiring coretime that focuses
 <aside class="notes"><p>What if we need to more dynamically react to the demand? What if we only want to tinker and play with Polkadot temporarily? On-demand is aiming to solve that by being an alternative native method of acquiring coretime.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # On-Demand Coretime
+
 ## Analogy to Cloud Spot Compute
 
 <aside class="notes"><p>Anyone here has heard of AWS Spot Instances? Or maybe Google Cloud Spot?</p>
@@ -478,15 +512,17 @@ On-demand is an **alternative** native method of acquiring coretime that focuses
 On-Demand allows to purchase a single block worth of coretime on a very short notice (6-12s).
 </script></section><section data-markdown><script type="text/template">
 # On-Demand Coretime
+
 ## Core Use Cases
 
 - Temporary parachains
-- Tinkering and experimentation 
+- Tinkering and experimentation
 - Low latency applications that produce very infrequently (certifications, etc.)
 
 <aside class="notes"><p>On-demand is perfect when someone’s wants to tinker and only temporarily make a few blocks or maybe for business that produces blocks very rarely and infrequently. Maybe you have an app that rarely get used but when it does it is crucial to quickly execute it with low latency, then hibernating until you get a transaction a only then emitting a single on-demand block is perfect for you!</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # On-Demand Coretime
+
 ## On-Demand Core Pool
 
 Governance dedicated a fixed minimal amount of cores to be solely available for on-demand use (**on-demand core pool**), but there is a way to further expand
@@ -497,6 +533,7 @@ the on-demand core pool we&#39;ll cover later. So to summarize most cores will b
 goes into the on-demand pool and can be purchased well... on-demand.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # On-Demand Coretime
+
 ## Pricing
 
 On-demand pricing is detached from the bulk auction pricing.
@@ -520,6 +557,7 @@ What if a single core is not enough for a large parachain project? 🐋
 <aside class="notes"><p>What can they do scale further?</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Elastic Scaling
+
 ## Not just a hypothetical
 
 Projects like Moonbeam and soon Mythical are definitely capable of fully utilizing a single core.
@@ -560,6 +598,7 @@ Parachain A needs to still produce blocks sequentially so now there needs to be 
 <aside class="notes"><p>Remember when we discussed how in the old auction model vast majority of teams opted for maximum duration leases of 2 years? Why did they do it?</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Renewals
+
 ## Value of Long-Term Stability
 
 Business don't like uncertainty. They want to know they can operate for a long time and budget for their expenses.
@@ -571,6 +610,7 @@ If every spike on the graph endangers your business you will build it elsewhere.
 <aside class="notes"><p>See that spike around 2021? Gas fees went from 20-30 to 700. Imagine you suddenly can&#39;t run your business because the gas is too high. That&#39;s a no-go for any serious business. So long-term stability is crucial for any business.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Renewals
+
 ## Price Stability Guarantee
 
 Renewals are a special sort of treatment for teams that value long-term stability extremely highly.
@@ -578,6 +618,7 @@ Renewals are a special sort of treatment for teams that value long-term stabilit
 If you don't interlace or split your coretime region and you fully utilize it then you can renew it for the same price you bought it for + small percentage (4% currently).
 </script></section><section data-markdown><script type="text/template">
 # Renewals
+
 ## Price Stability Guarantee
 
 Renewals can be made in the interlude phase before the actual bulk auction starts:
@@ -591,6 +632,7 @@ Renewals can be made in the interlude phase before the actual bulk auction start
 <aside class="notes"><p>Now comes the best part. What happens when all those features go live? They can be combined to fully utilize what Polkadot has to offer.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # All Together
+
 ## Leases Landscape
 
 <img style="width: 500px" src="./assets/coretime/dumb_coretime.png"/>
@@ -598,6 +640,7 @@ Renewals can be made in the interlude phase before the actual bulk auction start
 <aside class="notes"><p>In general we are hoping to migrate from a mundane and inflexible system like this.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # All Together
+
 ## Agile Coretime Landscape
 
 <img style="width: 800px" src="./assets/coretime/agile_coretime.png"/>
@@ -605,6 +648,7 @@ Renewals can be made in the interlude phase before the actual bulk auction start
 <aside class="notes"><p>To a much more free market model where blockspace can be freely allocated, interlaced, exchanged, scaled etc. Giving away the freedom to the users and allowing them to fully utilize the resources of Polkadot.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # All Together
+
 ## Agile Coretime Combinations
 
 - On-Demand cores work for Elastic Scaling allowing for quick scaling up and down based on demand

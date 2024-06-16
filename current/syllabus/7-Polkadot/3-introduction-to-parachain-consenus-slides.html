@@ -34,6 +34,7 @@
 <aside class="notes"><p>Introduction</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Polkadot
+
 ## Core Tenets (In My Opinion)
 
 - Polkadot is a decentralized open-source community
@@ -46,6 +47,7 @@
 <p>Polkadot is a decentralized open-source community. Hopefully at this point you got somewhat convinced about this one. Sitting here in the PBA which is funded by the biggest DAO in the digital world. And I&#39;m sure the Governance module also reinforced that idea.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Polkadot
+
 ## Core Tenets (In My Opinion)
 
 - Polkadot is a decentralized open-source community
@@ -57,6 +59,7 @@
 <aside class="notes"><p>Polkadot is a permissionless and ubiquitous computer. The key pieces to this were supplied by the customizable and programmable substrate/frame chains so something you got to experience in details over the last few weeks. They are fully adjustable state transition machines that can be deployed online.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Polkadot
+
 ## Core Tenets (In My Opinion)
 
 - Polkadot is a decentralized open-source community
@@ -69,7 +72,6 @@
 And to succeed in that mission Let&#39;s dive into the main topic for today - Parachain Consensus.</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
 # What is Parachains Consensus?
-
 
 <aside class="notes"><p>We will be looking at what is parachain consensus?</p>
 </aside></script></section><section  data-markdown><script type="text/template">
@@ -90,6 +92,7 @@ NPoS, Parachains Consensus and Gov all live on the **Relay Chain**
 <aside class="notes"><p>The first pillar worth exploring is NPoS. It is tightly connected to a frame pallet called staking that lives in the relay chain runtime</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # NPoS
+
 ## What's the goal of this pillar?
 
 We need to fairly elect a bounded number of players (validators) that will participate in the game (parachain consensus).
@@ -97,6 +100,7 @@ We need to fairly elect a bounded number of players (validators) that will parti
 <aside class="notes"><p>So what&#39;s the goal of this pillar? Player election!</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # NPoS
+
 ## NPoS Elections
 
 - Every 24h (era) an algorithmic election is held and a set of 300 validators is chosen - they will be the **active validator set**.
@@ -106,6 +110,7 @@ We need to fairly elect a bounded number of players (validators) that will parti
 <aside class="notes"><p>There&#39;s no better way than to vote with your wallet and NPoS is all about this idea.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # NPoS
+
 ## NPoS Nominations
 
 - Most validator don't own the stake they use for the elections and they simply focus on being a validator-as-a-service operators
@@ -120,20 +125,20 @@ If you all will be more interested in the topics and there will be time we might
 <aside class="notes"><p>But for now let&#39;s move to the Parachain Consensus. This is the heart of the relay chain that distinguishes it from other blockchains. This is the secret sauce.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
-## What's the goal?
 
+## What's the goal?
 
 <aside class="notes"><p>What&#39;s the goal? What does it try to accomplish? Well it&#39;s blockchain and there&#39;s one thing we really, really want to see in blockchains.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-
 # Parachain Consensus
+
 ## What's the goal?
 
 - Scalability
 
 <aside class="notes"></aside></script></section><section data-markdown><script type="text/template">
-
 # Parachain Consensus
+
 ## What's the goal?
 
 - Scalability
@@ -141,6 +146,7 @@ If you all will be more interested in the topics and there will be time we might
 
 <aside class="notes"></aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## What's the goal?
 
 - Scalability
@@ -151,32 +157,35 @@ If you all will be more interested in the topics and there will be time we might
 Okay, so how does it achieve scalability? You all have been learning about substrate and frame and building your own little chains. And it is true that Polkadot&#39;s Relay Chain is a also a Substrate-based chain but there&#39;s more to it. It&#39;s a substrate chain capable of aggregating the state of other substrate chains and thus sharing it&#39;s own security with them. Parachain Consensus is what validates all those other blockchains and makes them unite in the relay chain. This is what we call sharding.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## What's the goal?
 
 **Sharding**
 
-Sharding crucially allows us to parallelize execution. 
+Sharding crucially allows us to parallelize execution.
 
 <aside class="notes"><p>Sharding crucially allows us to parallelize execution. All those sovereign substrate blockchains can connect to the relay chain and entrust it with validation duties, while the chain itself can focus on the business logic and functionality. So all those little blockchains connected to the relay chain are called parachains. But actually does anyone know where this name comes from? ...</p>
 <p>But let&#39;s zoom out for a second.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Zooming out
 
 <img style="width: 500px" src="./assets/execution-sharding/polkadot-architecture.svg"/>
 
 <aside class="notes"><p>This is how Polkadot&#39;s relay chain and it&#39;s parachains can be visualized. This is just a single relay chain block slice. All those little blocks around the large circle are parachain blocks - parablocks. What I want you to take away from this picture is that Polkadot is a fundamentally just like a mothership for all those little parachains. And if they are fully capable and sovereign chains, then this makes Polkadot a layer 0 solution.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-
 # Parachain Consensus
+
 ## Zooming out
 
 Polkadot is a layer 0 protocol
 
-<aside class="notes"><p>Polkadot a layer 0 blockchain. A blockchain of blockchains, a platform for other platforms to build and flourish. </p>
+<aside class="notes"><p>Polkadot a layer 0 blockchain. A blockchain of blockchains, a platform for other platforms to build and flourish.</p>
 <p>And also Polkadot being a layer 0 is why I often think that a truly widely adopted and successful Polkadot does not mean people recognize the name, it means you recognize the project building on top of Polkadot. Marketing Polkadot is nice but I strongly believe that end consumers don&#39;t need to know about it just like AWS doesn&#39;t advertise to the mom and pops, they target builders.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Why do we learn it?
 
 To fully utilize what Polkadot offers you need to learn its quirks.
@@ -185,6 +194,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <p>So now that the why is covered let&#39;s look at how it all comes together. There is a lot of moving parts in the parachains consensus but let&#39;s start familiarizing ourselves with them. In the upcoming lectures we will be diving deeper into each individual step so don&#39;t worry if you miss something.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## The Game
 
 <div style="font-size: 0.8em">
@@ -199,6 +209,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 
 <aside class="notes"></aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## The Game
 
 <div style="font-size: 0.8em">
@@ -228,6 +239,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <br/>
 </script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## The Game
 
 <div style="font-size: 0.8em">
@@ -255,16 +267,17 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 </div>
 
 <br/>
-
 
 **The game works whenever <1/3 of validators misbehave.**
 </script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 <aside class="notes"><p>Those were the simplified rules of the game but those rules will be encompassed by specific sub-protocols within Polkadot and lets take a loot at them now.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -272,6 +285,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <aside class="notes"><p>Initially we&#39;ll be grouping up and assigning the validators in the active set, those are the ones that NPoS gives us.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -280,6 +294,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <aside class="notes"><p>Some other nodes will collect the user transactions and create collations.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -289,6 +304,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <aside class="notes"><p>Some validators will receive those collations and if they think they are correct they will vouch for them. Take on the responsibility for them.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -299,6 +315,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <aside class="notes"><p>All the data connected to the collation is distributed between the validators in a compressed form.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -310,6 +327,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <aside class="notes"><p>Validators perform the final correctness checks</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -322,6 +340,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <aside class="notes"><p>And if something doesn&#39;t feel right they start an official dispute. Think of it as starting the alarm bells and calling in for help.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -339,6 +358,7 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 <aside class="notes"><p>Up to this point maybe it wasn&#39;t clear but there are a lot of number that seem pretty arbitrary. For instance remember that the active validator set was 300? Why not 350? Who decided that? And most importantly who can change it? In Polkadot that&#39;s the token holders!</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # Governance
+
 ## OpenGov
 
 Polkadot has on-chain governance by stakeholder referendum, voting on subjects such as:
@@ -358,11 +378,13 @@ Polkadot has on-chain governance by stakeholder referendum, voting on subjects s
 <p><a href="https://polkadot.network/features/opengov/">https://polkadot.network/features/opengov/</a></p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
 # JAM
+
 ## Polkadot 2.0
 
 <aside class="notes"><p>Who here has heard of JAM?</p>
 </aside></script></section><section data-markdown><script type="text/template">
 # JAM
+
 ## Polkadot 2.0
 
 JAM is a further generalization and abstraction of Polkadot.
