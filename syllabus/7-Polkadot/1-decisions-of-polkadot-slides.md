@@ -160,7 +160,7 @@ Polkadot provides parallelized execution using parallel execution cores.
 
 <img style="width: 1000px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
-Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
+Execution cores allows Polkadot to provide blockspace-as-a-service, and are designed to work with any kind of Web3 application.
 
 ---
 
@@ -240,9 +240,11 @@ It also allows teams to build on Polkadot using any language that can be compile
 
 <div>
 
-An often overlooked problem is economic scaling of the entire blockchain ecosystem.
+Blockspace is the capacity of a blockchain to commit and finalize operations.
 
-Polkadot is unique in that it provides all connected parachains with the same security guarantees as the Relay Chain itself.
+An often overlooked problem is the economic scaling need to provide high quality blockspace.
+
+Polkadot is unique in that it provides blockspace to other Web3 applications with the same security guarantees as Polkadot itself.
 
 </div>
 
@@ -255,6 +257,8 @@ Polkadot is unique in that it provides all connected parachains with the same se
 </div>
 
 Notes:
+
+Learn more about blockspace: https://www.rob.tech/blog/polkadot-blockspace-over-blockchains/
 
 Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
 
@@ -433,7 +437,7 @@ What are the type 2 decisions of Polkadot?
 
 ## Parachains
 
-Polkadot was designed around Parachains, but the exact meaning and manifestation of a Parachain is evolving.
+Polkadot was originally designed around Web3 applications in the form of Parachains, but this categorization is evolving.
 
 <div class="grid grid-cols-2">
 
@@ -454,7 +458,7 @@ Polkadot was designed around Parachains, but the exact meaning and manifestation
 <br />
 
 - Originally, parachains would be long term applications-chains.
-- On-Demand Parachains (formerly parathreads) changed that viewpoint to also include chains which can spin-up and spin-down at will.
+- Services and On-Demand Parachains changed that viewpoint to also include applications that can spin-up and spin-down at will.
 - The future protocol will have even more exotic core scheduling and even more agile core usage, all because the type 1 decision around parachains is actually **execution cores**.
 
 Notes:
@@ -521,16 +525,6 @@ The staking system is a critical focus of the network, and we have one of the mo
 <br />
 
 The protocol has been actively evolving over time, making it more performant and accessible to users, for example with nomination pools.
-
----
-
-## SASSAFRAS
-
-While hybrid consensus is a type 1 decision, the underlying protocols can continue to evolve, such as from BABE to SASSAFRAS.
-
-> Semi Anonymous Sortition of Staked Assignees For Fixed-time Rhythmic Assignment of Slots
-
-An extension of BABE and acts as a constant-time block production protocol. This approach tries to address the shortcomings of BABE by ensuring that exactly one block is produced with time-constant intervals. The protocol utilizes zk-SNARKs to construct a ring-VRF and is a work in progress.
 
 ---
 
