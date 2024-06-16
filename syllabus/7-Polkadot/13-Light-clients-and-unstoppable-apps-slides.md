@@ -21,7 +21,7 @@ duration: 45+ mins
 
 #### Traditional Web 2
 
-<img rounded style="width: 80%;" src="./img/web2.png" />
+<img rounded style="width: 80%;" src="./assets/light-clients/web2.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -35,7 +35,7 @@ While I won't be roasting anyone, it's essential to recognize that platforms lik
 
 #### The Web 3 vision
 
-<img rounded style="width: 80%;" src="./img/web3.png" />
+<img rounded style="width: 80%;" src="./assets/light-clients/web3.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -52,7 +52,7 @@ Now, show of hands:
 
 #### The Web 3 reality
 
-<img rounded style="width: 80%;" src="./img/web3_reality.png" />
+<img rounded style="width: 80%;" src="./assets/light-clients/web3_reality.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -76,7 +76,7 @@ I will pause there for a few seconds to let this sink in;
 
 ---v
 
-<img rounded style="width: 45%;" src="./img/learn-student.gif" />
+<img rounded style="width: 45%;" src="./assets/light-clients/learn-student.gif" />
 
 Notes:
 
@@ -136,7 +136,7 @@ Any combination of “validator”, “bootnode” and “JSON-RPC node” is po
 
 #### The reality of blockchains today
 
-<img rounded style="width: 100%;" src="./img/reality_bc_today.png" />
+<img rounded style="width: 100%;" src="./assets/light-clients/reality_bc_today.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -160,7 +160,7 @@ Ask: WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
    <pba-col left>
-      <img rounded src="./img/USER-CONTROLLED-NODE.png" />
+      <img rounded src="./assets/light-clients/USER-CONTROLLED-NODE.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
@@ -182,7 +182,7 @@ node client</div>
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
   <pba-col left>
-    <img rounded src="./img/PUBLICLY-ACCESSIBLE-NODE.png" />
+    <img rounded src="./assets/light-clients/PUBLICLY-ACCESSIBLE-NODE.png" />
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="1" -->
 </pba-cols>
@@ -233,14 +233,14 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 ## The reality of blockchains we want
 
-<img rounded style="width: 100%;" src="./img/reality_we_want.png" />
+<img rounded style="width: 100%;" src="./assets/light-clients/reality_we_want.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
 
 # The solution
 
-<img rounded src="./img/solution.jpeg" />
+<img rounded src="./assets/light-clients/solution.jpeg" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 # Light Clients
@@ -249,7 +249,7 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 ---
 
-<img rounded style="width: 40rem" src="./img/whatislightclient.png" />
+<img rounded style="width: 40rem" src="./assets/light-clients/whatislightclient.png" />
 
 ---v
 
@@ -261,7 +261,7 @@ In the 3rd party case the user relies on the 3rd party node to connect to, in or
 
 <p style="font-size:2rem">...but lighter!</p>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-<img rounded style="height: 350px;" src="./img/really.png" />
+<img rounded style="height: 350px;" src="./assets/light-clients/really.png" />
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
@@ -444,7 +444,7 @@ Our Substrate nodes can produce what is called a Chain spec which Smoldot then u
 
 ### what/who to trust
 
-<img rounded style="margin-top: 150px; width: 70%" src="./img/know-who-to-trust.png" />
+<img rounded style="margin-top: 150px; width: 70%" src="./assets/light-clients/know-who-to-trust.png" />
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
@@ -609,7 +609,7 @@ New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 
 ---
 
-<img src="./img/words.png" />
+<img src="./assets/light-clients/words.png" />
 
 Notes:
 
@@ -643,7 +643,7 @@ Let's proceed with a more focused and detailed exploration of light clients in t
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 <p class="inline-table">
-  <img style="width: 10rem; padding-top: 3rem" src="./img/poweredBy.png" />
+  <img style="width: 10rem; padding-top: 3rem" src="./assets/light-clients/poweredBy.png" />
   <!-- .element: class="fragment" data-fragment-index="7" -->
   <div style="font-size:1.5rem; color: #fff">Pierre Krieger - tomaka</div>
   <!-- .element: class="fragment" data-fragment-index="7" -->
@@ -680,7 +680,7 @@ Powered by Pierre Krieger (a.k.a. tomaka)
 
 <div style="font-size:1.5rem; color: #d92f78; margin: 0.5rem 0">javascript/typescript</div>
 <!-- .element: class="fragment" data-fragment-index="2" -->
-  <img width="900" src="./img/wellknown.png"  style="margin: 1rem 15%" />
+  <img width="900" src="./assets/light-clients/wellknown.png"  style="margin: 1rem 15%" />
   <!-- .element: class="fragment" data-fragment-index="3" -->
 <p class="inline-table">
   <!-- .element: class="fragment" data-fragment-index="4" -->
@@ -715,7 +715,7 @@ Notes:
 <p class="inline-table">
   <div style="font-size:2rem; color: #fff">Powered by:</div>
   <!-- .element: class="fragment" data-fragment-index="6" -->
-  <div style="display: inline-flex; "><img style="height:10rem" src="./img/papi_josep.png" /><img src="./img/papi_victor.png"  style="height: 10rem" /></div>
+  <div style="display: inline-flex; "><img style="height:10rem" src="./assets/light-clients/papi_josep.png" /><img src="./assets/light-clients/papi_victor.png"  style="height: 10rem" /></div>
   <!-- .element: class="fragment" data-fragment-index="7" -->
 </p>
 <p style="font-size:1.5rem; margin-top: 1rem"><a href="https://github.com/polkadot-api/polkadot-api/">https://github.com/polkadot-api/polkadot-api/</a></p>
@@ -1132,7 +1132,7 @@ console.log('Please visit: https://cloudflare-ipfs.com/ipns/dotapps.io/?rpc=ws%3
 # Some demo maybe…?
 
 <p class="inline-table">
-  <img src="./img/code.jpg" />
+  <img src="./assets/light-clients/code.jpg" />
 </p>
 
 ---
@@ -1198,7 +1198,7 @@ Stay with me - the next is the last but not the easiest part:
 
 ## Unstoppable apps?
 
-<img style="height: 30rem" src="./img/on-chain-id.png" />
+<img style="height: 30rem" src="./assets/light-clients/on-chain-id.png" />
 Using smoldot with PAPI:
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://polkadot-blockchain-academy.github.io/onchain-id-verification/</p>
 
@@ -1206,7 +1206,7 @@ Using smoldot with PAPI:
 
 ## Unstoppable apps?
 
-<img style="height: 30rem" src="./img/local.png" />
+<img style="height: 30rem" src="./assets/light-clients/local.png" />
 
 Using Substrate Connect with smoldot and PAPI
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">localhost:3001</p>
@@ -1215,7 +1215,7 @@ Using Substrate Connect with smoldot and PAPI
 
 ## Unstoppable apps?
 
-<img style="height: 30rem" src="./img/apps.png" />
+<img style="height: 30rem" src="./assets/light-clients/apps.png" />
 
 Using Substrate connect with smoldot and PolkadotJS API
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://ipfs.io/ipns/dotapps.io/</p>
@@ -1226,7 +1226,7 @@ Notes: IPFS: (InterPlanetary File System) is a protocol, hypermedia and file sha
 ## Unstoppable apps
 
 <section>
-<img style="height: 30rem" src="./img/decentralized.png">
+<img style="height: 30rem" src="./assets/light-clients/decentralized.png">
 
 - Decentralized Blockchain
 - Light Clients
