@@ -8,17 +8,6 @@ duration: 60 minutes
 
 ---
 
-## About These Lectures and Lecturer
-
-- Ground-up, low-level, but hands-on.
-- Intentionally avoiding FRAME, but giving you the tools to be successful at it.
-- Interrupts and questions are always welcome.
-- Narratives > facts.
-
-Your feedback is highly appreciated!
-
----
-
 ## What is Substrate?
 
 Substrate is a **Rust framework** for **building blockchains**.
@@ -60,6 +49,28 @@ can create sovereign chains with substrate, or Polkadot Parachains, or more hybr
 this when you learn about Substrate's role in the Polkadot ecosystem.
 
 Figure: https://www.youtube.com/watch?v=0IoUZdDi5Is
+
+---v
+
+### Why Substrate?
+
+#### 💭 An update in 2024 💭
+
+🧐 Multi-chain vs. Multi-shard 🧐
+
+Note:
+
+Polkadot led the way since 2016 to convince the world that the future is multi-chain.
+
+Cosmos tried to replicate the same without shared security.
+
+ETH is now doing something similar, with a Rollup-Centric roadmap.
+
+Interestingly, Polkadot is now arguing that the future is not necessarily multi-chain, but rather
+multi-shard. In that, there needs to be a sharded system, with a high degree of flexibility to
+schedule those shards. "Multi-chain" is merely one manifestation of a multi-shard system, which is
+actually not so flexible. We are now striving to make the multi-chain Polkadot more flexible, which
+is what JAM is going to be.
 
 ---
 
@@ -144,6 +155,10 @@ Some such mistakes are impossible to make in Rust.
 ---v
 
 ### 🦀 Rust
+
+<img rounded src="../img/rust-meme.png" />
+
+Note:
 
 ```c
 int main() {
@@ -288,11 +303,6 @@ particular implementation.
 - We have correct code, and components are easy to swap, replace, and upgrade.
 - What use is that, if we cannot agree on what to replace/upgrade?
 - Governance!
-<!-- .element: class="fragment" -->
-- What use is governance, if the upgrade cannot be enacted?
-<!-- .element: class="fragment" -->
-- (trustless and forkless) Upgradeability!
-<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -305,7 +315,7 @@ be a signaling mechanism.
 ### 🏦 Governance + Upgradeability
 
 - ✅ Governance: Easy
-- 😢 Upgradeability: Not so much
+- 😢 (Trustless) Upgradeability: Not so much
 
 ---v
 
@@ -340,7 +350,11 @@ whole thing to be updated.
 
 ### 🏦 Governance + Upgradeability
 
-_The way to make a protocol truly upgradeable is to design a meta-protocol._
+<img src="../../../assets/img/5-Substrate/dev-4-1-substrate-meta-substrate.svg" />
+
+Note:
+
+This is very similar to treating your own runtime as a smart contract.
 
 ---v
 
@@ -357,20 +371,7 @@ be upgraded with a fork.
 
 ### 🏦 Governance + Upgradeability
 
-<img src="../../../assets/img/5-Substrate/dev-4-1-substrate-meta-substrate.svg" />
-
-Note:
-
-This is very similar to treating your own runtime as a smart contract.
-
----v
-
-### 🏦 Governance + Upgradeability
-
-- Meta-protocol?
-- &shy;<!-- .element: class="fragment" -->"_Runtime as WASM_ " in the Substrate node.
-- <!-- .element: class="fragment" --> Inherently upgradeable protocol?
-- <!-- .element: class="fragment" --> WASM Runtime
+_The way to make a protocol truly upgradeable is to design a (fixed) meta-protocol._
 
 ---
 
@@ -387,15 +388,27 @@ This is very similar to treating your own runtime as a smart contract.
 <pba-col center>
 <h3 style="color: var(--substrate-runtime); top: 0"> Runtime (Protocol) </h3>
 
-- Application logic
-- Wasm (maybe **FRAME**)
-- Stored as a part of your chain state
+- Application logic aka. How we execute block
+- Stored as a part of your chain state as a WASM Blob
+- Upgradeable
 - Also known as: STF
 
 </pba-col>
 
 <pba-col center>
-<h3 style="color: var(--substrate-host); top: 0"> Node (Meta-protocol) </h3>
+
+<img width="600px" src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+
+</pba-col>
+</pba-cols>
+
+---v
+
+#### Substrate (simplified) Architecture
+
+<pba-cols>
+<pba-col center>
+<h3 style="color: var(--substrate-host); top: 0"> Fixed Node (Meta-protocol) </h3>
 
 - Native Binary
 - Executes the Wasm runtime
@@ -404,7 +417,48 @@ This is very similar to treating your own runtime as a smart contract.
 
 </pba-col>
 
+<pba-col center>
+
+<img width="600px" src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+
+</pba-col>
+
 </pba-cols>
+
+---
+
+## Core Substrate Philosophies
+
+\*For a system to survive the **test of time\***:
+
+0. Correct and Safe
+1. Generic
+2. Governable
+3. Trust-less-ly Upgradeable.
+
+Substrate's Wasm meta-protocol exactly enables the latest ✅
+
+<!-- .element: class="fragment" -->
+
+Notes:
+
+Question: how would you put the meta-protocol of Substrate into words?
+
+The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
+hardcoded, but the protocol itself is flexible.
+
+---v
+
+## Core Substrate Philosophies
+
+- Why all this complexity? 😵‍💫😵‍💫
+
+<img style="width: 1200px" style="width: 1400px;" src="./img/centuries.png" />
+
+Note:
+
+- Don't care about a timeless system -> Substrate is not the right tool
+- Don't care about a truly resilient platform -> Polkadot is not the right platform
 
 ---
 
@@ -519,47 +573,6 @@ https://forum.polkadot.network/t/announcing-polkavm-a-new-risc-v-based-vm-for-sm
 
 ---
 
-## State of Light Client/Nodes
-
-- Node that follows headers, therefore knows state roots and can ask for state-proofs to do more.
-
-Note:
-
-Establish that it is merely an alternative node implementation.
-
----v
-
-### State of Light Clients
-
-<img src="../../../assets/img/5-Substrate/dev-4-1-smoldot.svg" />
-
-Notes:
-
-What was a light client? follows only block headers, therefore knows state roots, and a few other
-pieces of information, others send it state proofs if it wishes to do more.
-
-SMOLDOT is not exactly a substrate client. It is mainly designed to work with Polkadot. But with
-minimal tweaks, you could make it work for more substrate based chains.
-
-This has to do with the fact that consensus and a few other bits of the client and runtime are not
-100% independent. For example, GRANDPA has a pallet on the runtime side, but is mostly in the
-client. Now, a client that is configured with GRANDPA can only work with runtimes that are also
-configured with GRANDPA.
-
----v
-
-### State of Light Clients
-
-<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-4-1-smoldot-browser.svg" />
-
-Note:
-
-Similarly it is dead simple to embed smoldot in mobile etc.
-
-Separate lecture on this later.
-
----
-
 ## Communication Paths
 
 <img style="width: 1400px" src="../../../assets/img/5-Substrate/dev-4-1-comms.svg" />
@@ -580,8 +593,11 @@ Separate lecture on this later.
 
 ### Example: SCALE vs JSON
 
+<div class="flex-container text-smaller">
+<div class="left">
+
 ```rust
-use parity_scale_codec::{Encode};
+use parity_scale_codec::{ Encode };
 
 #[derive(Encode)]
 struct Example {
@@ -597,18 +613,20 @@ fn main() {
 		optional: Some(69),
 	};
 	println!("{:?}", my_struct.encode());
-	// [42, 1, 1, 69, 0, 0, 0]
 	println!("{:?}", my_struct.encode().len());
-	// 7
 }
 ```
 
----v
+```sh
+[42, 1, 1, 69, 0, 0, 0]
+7
+```
 
-### Example: SCALE vs JSON
+</div>
+<div class="right" style="margin-left: 10px;">
 
 ```rust
-use serde::{Serialize};
+use serde::{ Serialize };
 
 #[derive(Serialize)]
 struct Example {
@@ -624,11 +642,17 @@ fn main() {
 		optional: Some(69),
 	};
 	println!("{:?}", serde_json::to_string(&my_struct).unwrap());
-	// "{\"number\":42,\"is_cool\":true,\"optional\":69}"
 	println!("{:?}", serde_json::to_string(&my_struct).unwrap().len());
-	// 42
 }
 ```
+
+```sh
+"{\"number\":42,\"is_cool\":true,\"optional\":69}"
+42
+```
+
+</div>
+</div>
 
 ---
 
@@ -679,35 +703,7 @@ fn main() {
 
 ### Substrate and Smart Contracts
 
-> SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
-
-Question: How many nested Wasm blobs are executing one another?
-
----v
-
-### Substrate and Smart Contracts
-
-<pba-cols>
-<pba-col center>
-
-<img style="width: 600px;" src="https://media.tenor.com/Oc4nf8N08jIAAAAM/mind-blow-galaxy.gif" />
-
-</pba-col>
-<pba-col>
-
-- The browser is executing:
-- a Wasm blob (SMOLDOT in extension)
-- that executes a Wasm blob (runtime)
-- that executes a Wasm blob (contract)
-
-</pba-col>
-</pba-cols>
-
----v
-
-### Substrate and Smart Contracts
-
-- So when should you write with a smart contract (Ink!) and when a Runtime (FRAME)?
+- So when should you write with a smart contract, and when a Runtime (FRAME)?
 
 Notes:
 
@@ -725,15 +721,9 @@ Also, a contract can not have fee-less transactions.
 Also, a contract usually depends on a token for gas, while a runtime can be in principle token-less
 fee-less.
 
----v
-
-### Substrate and Smart Contracts
-
-<img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-4-1-ink.jpeg" />
-
 ---
 
-## Technical Freedom vs Ease
+## Development Options
 
 <img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-4-1-freedom.svg" />
 
@@ -746,6 +736,10 @@ https://github.com/OpenZeppelin/polkadot-runtime-template
 We also have some of our own:
 
 https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/templates/index.html
+
+Omni node:
+
+https://forum.polkadot.network/t/polkadot-parachain-omni-node-gathering-ideas-and-feedback/7823/5
 
 ---
 
@@ -805,7 +799,27 @@ Another good analogy: Node is the FPGA, and FRAME/Wasm is the VHDL.
 
 ---
 
-## Substrate Architecture
+## Lecture Recap - Part 1
+
+- Substrate's design stems from 3 core principles:
+  - **Rust**, **Generic Design**, **Upgradeability/Governance**
+  - **Runtime <> Node** Architecture
+- Positive and negative consequences of Wasm
+- Substrate next to Polkadot and other chains.
+- Development Options
+- Substrate and Smart Contracts.
+
+---v
+
+## Lecture Recap - Part 1
+
+- Questions?
+
+<img src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+
+---
+
+## Part 2: Substrate Architecture
 
 So far we covered high level facts about Substrate. Now let's dive deeper into its architecture using the Runtime/STF.
 
@@ -976,43 +990,17 @@ state is sometimes called "storage" asd well.
 
 ---
 
-## Lecture Recap
+## Lecture Recap - Part 2
 
-- Substrate's design stems from 3 core principles:
-  - **Rust**, **Generic Design**, **Upgradeability/Governance**
-- Positive and negative consequences of Wasm
-- Substrate next to Polkadot and other chains.
-- Substrate for Smart Contracts.
-- Light Nodes/Clients.
-- Node / Runtime architecture
+- Full Substrate Architecture
 - State Transition Deep Dive -> Forkless Upgrade
+- Consensus / Database being in node.
 
 ---v
 
-### Recap: Substrate Architecture
+### Lecture Recap - Part 2
 
 <img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-full.svg" />
-
----v
-
-### Recap: 🏦 Governance and Upgradeability
-
-A timeless system must be:
-
-1. Generic
-2. Governable
-3. Trust-less-ly Upgradeable.
-
-Substrate's Wasm meta-protocol exactly enables the latest ✅
-
-<!-- .element: class="fragment" -->
-
-Notes:
-
-Question: how would you put the meta-protocol of Substrate into words?
-
-The node is basically a wasm meta-protocol that does only one thing. This meta-protocol is
-hardcoded, but the protocol itself is flexible.
 
 ---
 
@@ -1020,49 +1008,18 @@ hardcoded, but the protocol itself is flexible.
 
 #### Track: Main Lectures
 
-- Wasm Meta Protocol (Kian)
-- Substrate Storage (Ankan)
+- Wasm Meta Protocol
+- Substrate Storage
 
 #### Track: Aux Lecture
 
-- Tx Pool (Kian)
-- Interacting with Substrate (Ankan)
-- SCALE Codec (Ankan)
+- Tx Pool
+- Interacting with Substrate
+- SCALE Codec
 
-#### Track: Graded Activity
+#### Track: Activity
 
 - FRAMELess Runtime
-
----v
-
-### Rest of This Module! 😈
-
-#### Day 0
-
-- ✅ Introduction
-- SCALE Codec
-- Interacting with Substrate
-- 📚 FRAMELess Assignment
-
----v
-
-### Rest of This Module! 😈
-
-#### Day 1
-
-- Wasm Meta Protocol
-- Tx Pool
-- 📚 FRAMELess Activity
-
----v
-
-### Rest of This Module! 😈
-
-#### Day 2
-
-- Substrate Storage
-- (Substrate/FRAME Tips and Tricks)
-- 📚 FRAMELess Activity
 
 ---
 
@@ -1124,7 +1081,13 @@ exception](https://www.gnu.org/software/classpath/license.html).
 
 ---
 
-## Appendix: More Diagrams of Substrate and Polkadot
+## Appendix
+
+Content that is not covered, but is relevant.
+
+---
+
+### More Diagrams of Substrate and Polkadot
 
 Notes:
 
@@ -1194,3 +1157,72 @@ People actually tried sticking things like JVM into the browser (_Java Applets_)
 
 - Any language that can compile to Wasm and exposes a fixed set of functions, to be used by the client.
 - ... But, of course, Substrate comes with a framework to make this developer-friendly, **FRAME™️**.
+
+---
+
+## State of Light Client/Nodes
+
+- Node that follows headers, therefore knows state roots and can ask for state-proofs to do more.
+
+Note:
+
+Establish that it is merely an alternative node implementation.
+
+---v
+
+### State of Light Clients
+
+<img src="../../../assets/img/5-Substrate/dev-4-1-smoldot.svg" />
+
+Notes:
+
+What was a light client? follows only block headers, therefore knows state roots, and a few other
+pieces of information, others send it state proofs if it wishes to do more.
+
+SMOLDOT is not exactly a substrate client. It is mainly designed to work with Polkadot. But with
+minimal tweaks, you could make it work for more substrate based chains.
+
+This has to do with the fact that consensus and a few other bits of the client and runtime are not
+100% independent. For example, GRANDPA has a pallet on the runtime side, but is mostly in the
+client. Now, a client that is configured with GRANDPA can only work with runtimes that are also
+configured with GRANDPA.
+
+---v
+
+### State of Light Clients
+
+<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-4-1-smoldot-browser.svg" />
+
+Note:
+
+Similarly it is dead simple to embed smoldot in mobile etc.
+
+Separate lecture on this later.
+
+---v
+
+### Substrate and Smart Contracts
+
+> SMOLDOT is syncing a chain who's runtime is executing wasm contracts.
+
+Question: How many nested Wasm blobs are executing one another?
+
+---v
+
+### Substrate and Smart Contracts
+
+<pba-cols>
+<pba-col center>
+
+<img style="width: 600px;" src="https://media.tenor.com/Oc4nf8N08jIAAAAM/mind-blow-galaxy.gif" />
+
+</pba-col>
+<pba-col>
+
+- The browser is executing:
+- a Wasm blob (SMOLDOT in extension)
+- that executes a Wasm blob (runtime)
+- that executes a Wasm blob (contract)
+
+</pba-col>
+</pba-cols>

@@ -68,7 +68,7 @@ Notes:
 
 ## Key Value
 
-> All this seems to indicate our storage externality is a simple key value database.
+> This seems to indicate our storage could be key-value all the way.. 🤔
 
 ---v
 
@@ -174,7 +174,7 @@ flowchart TD
 </pba-col>
 <pba-col>
 
-- Trie
+- Trie aka. Prefix tree
 - Assuming only leafs have data, this is encoding:
 
 <table>
@@ -384,6 +384,7 @@ compact proof").
 <div>
 
 - Storage key (`balances_alice`) is the path on the trie.
+- `sp_io::storage::get("balances_alice");`
 
 </div>
 <!-- .element: class="fragment" -->
@@ -427,51 +428,6 @@ it will be `O(LOG_n)`.
 
 ---
 
-## Large data nodes 🤔
-
-- Two common problems that merkle proofs have:
-  - If the one of the parent nodes has some large data.
-  - If you want to prove the deletion/non-existence of a leaf node.
-
----v
-
-<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-proof-fat.svg" />
-
----v
-
-## Large data nodes 🤔
-
-New "trie format" 🌈:
-
-- All data containing more than 32 bytes are replaced with their hash (pointer to the actual value).
-- The (larger than 32 bytes) value itself stored in the database under this hash.
-
-```rust
-struct RuntimeVersion {
-    ...
-    state_version: 0,
-}
-```
-
-<!-- .element: class="fragment" -->
-
----v
-
-<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-proof-fat-fix.svg" />
-<!-- TODO: update figure. -->
-
-What is the ramification of this for full nodes, and light clients?
-
-Notes:
-
-Both read and write have an extra step now, but proof are easier.
-
-Note from emeric: the green node is not really a "real" node, it is just `{ value: BIG_STUFF }` stored in the database.
-I will skip this detail for the sake of simplicity.
-One can assume that the green node is like any other node in the trie.
-
----
-
 ### Unbalanced Tree
 
 <img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-trie-backend-unbalanced.svg" />
@@ -511,7 +467,7 @@ All of that can be delayed.
 
 ## Overlay
 
-- Is a cache layer outside of the Runtime.
+- Is a cache layer **outside of the Runtime**.
 - It works **based on key-values**, **not trie-format**.
 
 ---v
@@ -627,8 +583,7 @@ the trie layer and pull a whole lot of data back from the disk and build all the
 
 ### Overlay: More Caches
 
-- There are more caches in the trie layer as well.
-  But outside of the scope of this lecture.
+- There are more caches in the trie layer as well. But outside of the scope of this lecture.
 
 ```bash
 ./substrate --help | grep cache
@@ -643,19 +598,6 @@ https://www.youtube.com/embed/OoMPlJKUULY
 ### Substrate Storage: Final Figure
 
 <img style="width: 1000px;" src="../../../assets/img/5-Substrate/dev-storage-externalities-full.svg" />
-
----v
-
-### Substrate Storage
-
-There are multiple implementations of `Externalities`:
-
-- [`TestExternalities`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.TestExternalities.html):
-  - `Overlay`
-  - `TrieDb` with `InMemoryBackend`
-- [`Ext`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.Ext.html) (the real thing 🫡)
-  - `Overlay`
-  - `TrieDb` with a real database being the backend
 
 ---v
 
@@ -722,26 +664,6 @@ Notes:
 
 - 🧠 Data stored onchain, but rarely changed? De nada.
 - State pruning is an _entirely client side optimization_,
-
----
-
-## Child Trees
-
-<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-child.svg" />
-
-Notes:
-Shawn's answer on usecases: https://substrate.stackexchange.com/questions/139/what-are-good-use-cases-for-child-tries/144#144
-
-- Used in smart contracts for being able to delete contract data and reinstate later.
-- Generating proof of contribution to crowdloan.
-- Alternative trie format.
-
----v
-
-### Child Trees
-
-- Stored on a different DB Column (async-ish bulk deletion).
-- Most importantly, alternative trie formats.
 
 ---
 
@@ -812,10 +734,14 @@ Notes:
 
 - KV-Based storage
 - Merklized storage, and proofs
-- Large nodes
 - Unbalanced tree
 - State pruning
 - Radix order consequences
+
+In the Appendix, you will find:
+
+- Large nodes affecting the proof
+- Child tries
 
 </pba-col>
 
@@ -874,7 +800,13 @@ proof recorder, and see which parts of the trie is exactly part of the proof.
 
 ---
 
-### Overlay
+## Appendix
+
+Content that is not covered, but is relevant.
+
+---
+
+### Overlay Limits
 
 - There is a limit to how many nested layers you can spawn
 - It is not free, thus it is attack-able.
@@ -910,3 +842,82 @@ with_storage_layer(|| {
 Notes:
 
 Meaning, if another client wants to sync polkadot, it should know the details of the trie format.
+
+---
+
+## Child Trees
+
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-child.svg" />
+
+Notes:
+
+Shawn's answer on usecases: https://substrate.stackexchange.com/questions/139/what-are-good-use-cases-for-child-tries/144#144
+
+- Used in smart contracts for being able to delete contract data and reinstate later.
+- Generating proof of contribution to crowdloan.
+- Alternative trie format.
+
+---v
+
+### Child Trees
+
+- Stored on a different DB Column (async-ish bulk deletion).
+- Easily prove-able
+- Most importantly, alternative trie formats.
+
+---
+
+## Large data nodes 🤔
+
+- Two common problems that merkle proofs have:
+  - If the one of the parent nodes has some large data.
+  - If you want to prove the deletion/non-existence of a leaf node.
+
+---v
+
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-proof-fat.svg" />
+
+---v
+
+## Large data nodes 🤔
+
+New "trie format" 🌈:
+
+- All data containing more than 32 bytes are replaced with their hash (pointer to the actual value).
+- The (larger than 32 bytes) value itself stored in the database under this hash.
+
+```rust
+struct RuntimeVersion {
+    ...
+    state_version: 0,
+}
+```
+
+<!-- .element: class="fragment" -->
+
+---v
+
+<img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-trie-backend-proof-fat-fix.svg" />
+
+What is the ramification of this for full nodes, and light clients?
+
+Notes:
+
+Both read and write have an extra step now, but proof are easier.
+
+Note from emeric: the green node is not really a "real" node, it is just `{ value: BIG_STUFF }` stored in the database.
+I will skip this detail for the sake of simplicity.
+One can assume that the green node is like any other node in the trie.
+
+---
+
+### Storage Implementation
+
+There are multiple implementations of `Externalities`:
+
+- [`TestExternalities`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.TestExternalities.html):
+  - `Overlay`
+  - `TrieDb` with `InMemoryBackend`
+- [`Ext`](https://paritytech.github.io/substrate/master/sp_state_machine/struct.Ext.html) (the real thing 🫡)
+  - `Overlay`
+  - `TrieDb` with a real database being the backend
