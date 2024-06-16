@@ -553,10 +553,12 @@ Notes: is transport agnostic in that the concepts can be used within the same pr
 
 ---v
 
-## Legacy vs New JSON RPC API
+## Legacy vs New JSON-RPC API
 
   <diagram class="mermaid">
     stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      LEGACY_JSON_RPC_API: Legacy JSON-RPC API
       Substrate --> NEW_JSON_RPC_API
       Substrate --> LEGACY_JSON_RPC_API
       Smoldot --> NEW_JSON_RPC_API
@@ -589,13 +591,16 @@ New JSON RPC Spec: https://paritytech.github.io/json-rpc-interface-spec/
 
   <diagram class="mermaid">
     stateDiagram-v2
+    NEW_JSON_RPC_API: New JSON-RPC API
+    LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+    classDef badBadEvent fill:#343434,color:#ccc,font-weight:bold,stroke-width:2px,stroke:#999
       Substrate --> NEW_JSON_RPC_API
-      Substrate --> LEGACY_JSON_RPC_API: X
+      Substrate --> LEGACY_JSON_RPC_API:::badBadEvent : X
       Smoldot --> NEW_JSON_RPC_API
-      Smoldot --> LEGACY_JSON_RPC_API: X
+      Smoldot --> LEGACY_JSON_RPC_API:::badBadEvent : X
   </diagram>
 
-- When the Legacy JSON RPC API will be removed?
+- When the Legacy JSON-RPC API will be removed?
 - “as soon as realistically possible”
 
 Notes:
@@ -668,21 +673,6 @@ Powered by Pierre Krieger (a.k.a. tomaka)
 
 ---v
 
-### Smoldot - On a diagram
-
-<section>
-  <diagram class="mermaid">
-    stateDiagram-v2
-      dAPP --> Smoldot
-      Smoldot --> LEGACY_JSON_RPC_API
-      Smoldot --> NEW_JSON_RPC_API
-  </diagram>
-</section>
-
-Notes: meaning you need to send/receive and act with the JSONs
-
----v
-
 ## Substrate Connect
 
 <div style="font-size:1.75rem; color: #fff">uses smoldot as an implementation detail</div>
@@ -707,26 +697,6 @@ Notes:
 - Chrome and Mozilla extension
 - Comes with 4 integrated "Well Known" chains (Kusama, Polkadot, Westend, Rococo) - which means these chains can be used without the need of providing chainspecs;
 
----v
-
-### Substrate Connect - On a diagram
-
-<section>
-  <diagram class="mermaid limit size-80">
-    stateDiagram-v2
-      dApp --> substrate_connect
-      state substrate_connect {
-        [*] --> sc_provider
-        [*] --> Providers
-        sc_provider --> PJS_API
-        Providers --> Pokadot_API
-        PJS_API --> Smoldot
-        Pokadot_API --> Smoldot
-        Smoldot --> LEGACY_JSON_RPC_API
-        Smoldot --> NEW_JSON_RPC_API
-      }
-  </diagram>
-</section>
 
 ---v
 
@@ -753,26 +723,6 @@ Notes:
 
 ---v
 
-### Polkadot API - On a diagram
-
-<diagram class="mermaid">
-  stateDiagram-v2
-    dApp --> Polkadot_API
-    state Polkadot_API {
-      [*] --> node_js_worker
-      [*] --> ws_provider_web
-      [*] --> ws_provider_node
-      [*] --> smoldot_worker
-      [*] --> smoldot
-      node_js_worker --> NEW_JSON_RPC_API
-      ws_provider_web --> NEW_JSON_RPC_API
-      ws_provider_node --> NEW_JSON_RPC_API
-      smoldot_worker --> NEW_JSON_RPC_API
-      smoldot --> NEW_JSON_RPC_API
-    }
-</diagram>
-
----v
 
 ## SubXT
 
@@ -804,18 +754,90 @@ Notes:
 
 ---v
 
+### Smoldot - On a diagram
+
+<section>
+  <diagram class="mermaid">
+    stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+      dAPP --> Smoldot
+      Smoldot --> LEGACY_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
+  </diagram>
+</section>
+
+Notes: meaning you need to send/receive and act with the JSONs
+
+---v
+
+### Substrate Connect - On a diagram
+
+<section>
+  <diagram class="mermaid limit size-80">
+    stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+      substrate_connect: Substrate Connect
+      sc_provider: SC Provider
+      PJS_API: PolkadotJS API
+      Pokadot_API: Polkadot API
+      dApp --> substrate_connect
+      state substrate_connect {
+        [*] --> sc_provider
+        [*] --> Providers
+        sc_provider --> PJS_API
+        Providers --> Pokadot_API
+        PJS_API --> Smoldot
+        Pokadot_API --> Smoldot
+        Smoldot --> LEGACY_JSON_RPC_API
+        Smoldot --> NEW_JSON_RPC_API
+      }
+  </diagram>
+</section>
+---v
+
+### Polkadot API - On a diagram
+
+<diagram class="mermaid">
+  stateDiagram-v2
+      NEW_JSON_RPC_API: New JSON-RPC API
+      ws_provider_web: WS Provider/Web
+      node_js_worker:  NodeJS/Worker
+      ws_provider_node: WS Provider/Node
+      smoldot_worker: Smoldot/Worker
+    dApp --> Polkadot_API
+    state Polkadot_API {
+      [*] --> node_js_worker
+      [*] --> ws_provider_web
+      [*] --> ws_provider_node
+      [*] --> smoldot_worker
+      [*] --> Smoldot
+      node_js_worker --> NEW_JSON_RPC_API
+      ws_provider_web --> NEW_JSON_RPC_API
+      ws_provider_node --> NEW_JSON_RPC_API
+      smoldot_worker --> NEW_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
+    }
+</diagram>
+
+---v
 ### SubXT - On a diagram
 
 <diagram class="mermaid limit size-80">
   stateDiagram-v2
+    NEW_JSON_RPC_API: New JSON-RPC API
+    LEGACY_JSON_RPC_API: Legacy JSON-RPC API
+    Backend_RPC_Legacy_methods: Backend RPC Legacy methods 
+    Backend_RPC_New_methods: Backend RPC New methods
     dAPP --> SubXT
     state SubXT {
       [*] --> Backend_RPC_Legacy_methods
       [*] --> Backend_RPC_New_methods
-      Backend_RPC_Legacy_methods --> smoldot
-      Backend_RPC_New_methods --> smoldot
-      smoldot --> LEGACY_JSON_RPC_API
-      smoldot --> NEW_JSON_RPC_API
+      Backend_RPC_Legacy_methods --> Smoldot
+      Backend_RPC_New_methods --> Smoldot
+      Smoldot --> LEGACY_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
     }
 </diagram>
 
@@ -895,19 +917,18 @@ The dApp (UI) connects to a node client that the user has installed on their mac
 <!-- .element: class="fragment" data-fragment-index="2" -->
 <p>..........</p>
 <!-- .element: class="fragment" data-fragment-index="3" -->
-<p>.... too long ? ? ....</p>
+<p>.....................</p>
 <!-- .element: class="fragment" data-fragment-index="4" -->
 <p>.................................</p>
 <!-- .element: class="fragment" data-fragment-index="5" -->
-<p>.........................................</p>
+<p>........ maybe get some water ? .........</p>
 <!-- .element: class="fragment" data-fragment-index="6" -->
-<p>........... maybe get some water ?...........</p>
-<!-- .element: class="fragment" data-fragment-index="7" -->
 <p>...................................................</p>
+<!-- .element: class="fragment" data-fragment-index="7" -->
+<p>.............................................................</p>
 <!-- .element: class="fragment" data-fragment-index="8" -->
-<!-- .element: class="fragment" data-fragment-index="9" -->
 <p>done</p>
-<!-- .element: class="fragment" data-fragment-index="10" -->
+<!-- .element: class="fragment" data-fragment-index="9" -->
 
 ---v
 
@@ -949,7 +970,7 @@ The uApp (UI) connects to an _integrated_ Light Client
 
 ---v
 
-## Substrate Connect (PolakdotJS)
+## Substrate Connect (PolkadotJS)
 
 ```javascript[0|1-2|4-7|9-11]
 import { ScProvider } from "@polkadot/rpc-provider/substrate-connect";
