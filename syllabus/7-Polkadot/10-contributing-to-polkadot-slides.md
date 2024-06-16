@@ -425,6 +425,8 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 <img style="width: 1000px" src="assets/Contributing/firstpr.png" />
 
+https://github.com/paritytech/substrate/pull/868
+
 ---
 
 ## Get Paid!
@@ -433,94 +435,14 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 ---
 
+## Expect Chaos
+
 <img style="width: 1000px" src="assets/Contributing/visualizer.png" />
 
-Expect Chaos.
+https://www.youtube.com/watch?v=aHcoFKhaUzA
 
 ---
 
-### Questions?
+<!-- .slide: data-background-color="#4A2439" -->
 
- <script src="/dist/reveal.js"></script>
-
-  <script src="/plugin/markdown/markdown.js"></script>
-  <script src="/plugin/highlight/highlight.js"></script>
-  <script src="/plugin/zoom/zoom.js"></script>
-  <script src="/plugin/notes/notes.js"></script>
-  <script src="/plugin/math/math.js"></script>
-
-  <script src="/assets/plugin/mermaid.js"></script>
-  <script src="/assets/plugin/mermaid-theme.js"></script>
-
-  <script src="/assets/plugin/chart/chart.js"></script>
-  <script src="/assets/plugin/chart/chart.min.js"></script>
-
-  <script src="/assets/plugin/tailwindcss.min.js"></script>
-
-  <script>
-    function extend() {
-      var target = {};
-      for (var i = 0; i < arguments.length; i++) {
-        var source = arguments[i];
-        for (var key in source) {
-          if (source.hasOwnProperty(key)) {
-            target[key] = source[key];
-          }
-        }
-      }
-      return target;
-    }
-
-    // default options to init reveal.js
-    var defaultOptions = {
-      controls: true,
-      progress: true,
-      history: true,
-      center: true,
-      transition: 'default', // none/fade/slide/convex/concave/zoom
-      slideNumber: true,
-      mermaid: {
-        startOnLoad: false,
-        logLevel: 3,
-        theme: 'base',
-        themeVariables: {
-          primaryColor: purple,
-          primaryTextColor: white,
-          primaryBorderColor: pink,
-          lineColor: pink,
-          secondaryColor: lightPurple,
-          tertiaryColor: lightPurple,
-        },
-      },
-      chart: {
-        defaults: {
-          color: 'lightgray', // color of labels
-          scale: {
-            beginAtZero: true,
-            ticks: { stepSize: 1 },
-            grid: { color: "lightgray" }, // color of grid lines
-          },
-        },
-        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
-        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
-      },
-      plugins: [
-        RevealMarkdown,
-        RevealHighlight,
-        RevealZoom,
-        RevealNotes,
-        RevealMath,
-        RevealMermaid,
-        RevealChart
-      ]
-    };
-
-    // options from URL query string
-    var queryOptions = Reveal().getQueryHash() || {};
-
-    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
-  </script>
-
-  <script>
-    Reveal.initialize(options);
-  </script>
+# Questions?
