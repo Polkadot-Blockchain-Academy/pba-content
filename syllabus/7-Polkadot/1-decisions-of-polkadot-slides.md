@@ -593,7 +593,7 @@ JAM will provide all the functionality of Polkadot v1, but also provide a more f
 
 - Upgradability of the Core Protocol
   - Substrate -> JAM Chain
-- Parachains -> Services
+- Services (as a superset of Parachains)
 - Wasm -> PolkaVM (RISC-V)
 - Synchronous Communication Capabilities
 
