@@ -609,7 +609,6 @@ JAM is certainly the next evolution of the Polkadot protocol.
 - But the problem we are trying to solve is the same.
 - And almost all of the same technology is being used to solve it.
 
-
 ### JAM is Polkadot.
 
 ---
