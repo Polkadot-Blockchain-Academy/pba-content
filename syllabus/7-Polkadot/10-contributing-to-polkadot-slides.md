@@ -8,7 +8,7 @@ duration: 60 min
 
 ---
 
-<img rounded style="width: 1000px" src="assets/Contributing/intro.png" />
+<img style="width: 1000px" src="assets/Contributing/intro.png" />
 
 ---
 
@@ -26,33 +26,41 @@ duration: 60 min
 
 ---
 
-## Learn Rust for Substrate
-
-<img rounded style="width: 800px" src="assets/Contributing/dotcodeschool.png" />
-
-<br/>
-
-https://dotcodeschool.com/
-
----
-
 ## The Polkadot Blockchain Academy
 
-<!-- took screenshoot to save time -->
+<pba-cols>
 
-<img rounded style="width: 1000px" src="assets/Contributing/PBA.png"/>
+<pba-col left>
+
+<img style="width: 600px" src="assets/Contributing/PBA.png"/>
+
+</pba-col>
+
+<pba-col right>
+
+- 5 Global Cohorts
+- 5 Weeks, In-Person
+- 8 Modules
+- ~1,000 Applicants
+- ~90 Students
+- ~50 Graduates
+- ~20 Hires
+
+</pba-col>
+
+</pba-cols>
 
 https://polkadot.network/academy/
 
 ---
 
-# I just graduated from the Polkadot Blockchain Academy…
+"I just graduated from the Polkadot Blockchain Academy…"
 
-#### _... now what?_
+## _... now what?_
 
 ---
 
-### Polkadot SDK
+# Polkadot SDK
 
 ---
 
@@ -61,7 +69,7 @@ https://polkadot.network/academy/
 <!-- skipped Polkadot SDK repo has evolved slide, not relevant for PBA-->
 <!-- Originally bullet points were on right column -->
 
-<img rounded style="width: 600px" src="assets/Contributing/Monorepo.png" />
+<img style="width: 600px" src="assets/Contributing/Monorepo.png" />
 
 </br>
 
@@ -77,7 +85,7 @@ https://polkadot.network/academy/
 <pba-cols>
 <pba-col left>
 
-<img rounded style="width: 600px" src="assets/Contributing/Monorepo2.png" />
+<img style="width: 600px" src="assets/Contributing/Monorepo2.png" />
 
 </pba-col>
 
@@ -122,7 +130,7 @@ Extraction of the various Polkadot Runtimes established decentralized ownership 
 
 </br>
 
-<img rounded style="width: 800px" src="assets/Contributing/Owners.png" />
+<img style="width: 800px" src="assets/Contributing/Owners.png" />
 
 ---
 
@@ -163,7 +171,7 @@ https://github.com/polkadot-fellows
 
 ### Fellowship Manifesto
 
-<img rounded style="width: 800px" src="assets/Contributing/Manifesto.png" />
+<img style="width: 800px" src="assets/Contributing/Manifesto.png" />
 
 https://github.com/polkadot-fellows/manifesto
 
@@ -171,7 +179,7 @@ https://github.com/polkadot-fellows/manifesto
 
 ### Polkadot Fellows
 
-<img rounded style="width: 800px" src="assets/Contributing/fellows.png" />
+<img style="width: 800px" src="assets/Contributing/fellows.png" />
 
 </br>
 The current Polkadot Fellows.
@@ -255,7 +263,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ---
 
-<img rounded style="width: 1000px" src="assets/Contributing/iwantyou.png" />
+<img style="width: 1000px" src="assets/Contributing/iwantyou.png" />
 
 ---
 
@@ -321,19 +329,19 @@ _Not all issues are created equal:_
 
 #### Issue Filters: C1-Mentor, C2-Good-First-Issue, D0-Easy
 
-<img rounded style="width: 1000px" src="assets/Contributing/issues.png" />
+<img style="width: 1000px" src="assets/Contributing/issues.png" />
 
 ---
 
 ## A Nonsensitive Entry Point to the Runtime
 
-<img rounded style="width: 1000px" src="assets/Contributing/example1.png" />
+<img style="width: 1000px" src="assets/Contributing/example1.png" />
 
 ---
 
 ### An Issue that Rust Compiler Can Entirely Check
 
-<img rounded style="width: 1000px" src="assets/Contributing/example2.png" />
+<img style="width: 1000px" src="assets/Contributing/example2.png" />
 
 ---
 
@@ -381,7 +389,7 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 ## Write Tests!
 
-<img rounded style="float:right;  padding-left:20px" src="assets/Contributing/boyscoutrule.png" />
+<img style="float:right;  padding-left:20px" src="assets/Contributing/boyscoutrule.png" />
 
 - The best way for a reviewer to sanity check your work is to read and understand your tests, and verify it passes.
   - You will be surprised how even the most trivial changes can (and should) include a test!
@@ -414,17 +422,17 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 ## My First PR 😬
 
-<img rounded style="width: 1000px" src="assets/Contributing/firstpr.png" />
+<img style="width: 1000px" src="assets/Contributing/firstpr.png" />
 
 ---
 
 ## Get Paid!
 
-<img rounded style="width: 1000px" src="assets/Contributing/tip.png" />
+<img style="width: 1000px" src="assets/Contributing/tip.png" />
 
 ---
 
-<img rounded style="width: 1000px" src="assets/Contributing/visualizer.png" />
+<img style="width: 1000px" src="assets/Contributing/visualizer.png" />
 
 </br>
 Expect Chaos.
