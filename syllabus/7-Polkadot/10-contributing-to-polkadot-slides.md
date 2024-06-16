@@ -66,17 +66,29 @@ https://polkadot.network/academy/
 
 ## The Mono Repo
 
-<!-- skipped Polkadot SDK repo has evolved slide, not relevant for PBA-->
-<!-- Originally bullet points were on right column -->
+<pba-cols>
 
-<img style="width: 600px" src="assets/Contributing/Monorepo.png" />
+<pba-col left>
 
-</br>
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+flowchart LR
+    A{Substrate} ---> D
+    B{Polkadot} ---> D
+    C{Cumulus} ---> D
+    D{Polkadot SDK}
+</diagram>
+
+</pba-col>
+<pba-col right>
 
 - Merging into a single repository simplifies the development process
 - Eliminates the need for “companion” PRs across multiple repositories.
 - Improves collaboration among team members.
 - Makes it easier to manage issues, pull requests, and documentation.
+
+</pba-col>
+</pba-col>
 
 ---
 
@@ -85,7 +97,14 @@ https://polkadot.network/academy/
 <pba-cols>
 <pba-col left>
 
-<img style="width: 600px" src="assets/Contributing/Monorepo2.png" />
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+flowchart LR
+    A{Substrate} ---> D
+    B{Polkadot} ---> D
+    C{Cumulus} ---> D
+    D{Polkadot SDK}
+</diagram>
 
 </pba-col>
 
