@@ -39,10 +39,11 @@ duration: 60 min
 - 5 Global Cohorts
 - 5 Weeks, In-Person
 - 8 Modules
-- ~1,000 Applicants
-- ~90 Students
-- ~50 Graduates
-- ~20 Hires
+- Per Cohort
+  - ~1,000 Applicants
+  - ~90 Students
+  - ~50 Graduates
+  - ~20 Hires
 
 </pba-col>
 
@@ -91,6 +92,8 @@ flowchart LR
 
 ## Runtime Extraction
 
+Extraction of the various Polkadot Runtimes established decentralized ownership of this code and the network itself.
+
 <diagram class="mermaid">
 %%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
 flowchart LR
@@ -99,23 +102,31 @@ flowchart LR
     C{runtimes}
 </diagram>
 
-Extraction of the various Polkadot Runtimes established decentralized ownership of this code.
-
 <pba-cols>
 <pba-col left>
 
-- Relay Chain Runtimes
-  - Polkadot
-  - Kusama
+<pba-flex center>
+
+Relay Chain Runtimes
+
+- Polkadot
+- Kusama
+
+</pba-flex>
 
 </pba-col>
 <pba-col right>
 
-- System Parachains
-  - Asset Hub
-  - Bridges Hub
-  - Collectives
-  - etc...
+<pba-flex center>
+
+System Parachains
+
+- Asset Hub
+- Bridges Hub
+- Collectives
+- etc...
+
+</pba-flex>
 
 </pba-col>
 </pba-cols>
@@ -133,7 +144,11 @@ flowchart LR
     A{paritytech/polkadot-sdk}
 </diagram>
 
-Owned by Parity Technologies
+<pba-flex center>
+
+Parity Technologies
+
+</pba-flex>
 
 </pba-col>
 <pba-col right>
@@ -144,7 +159,11 @@ flowchart LR
     A{polkadot-fellows/runtimes}
 </diagram>
 
-Owned by Parity Technologies
+<pba-flex center>
+
+The Polkadot Network via the Fellowship
+
+</pba-flex>
 
 </pba-col>
 </pba-cols>
