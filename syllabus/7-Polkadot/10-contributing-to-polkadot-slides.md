@@ -30,12 +30,9 @@ duration: 60 min
 
 <img rounded style="width: 800px" src="assets/Contributing/dotcodeschool.png" />
 
-
 <br/>
 
 https://dotcodeschool.com/
-
-
 
 ---
 
@@ -43,10 +40,7 @@ https://dotcodeschool.com/
 
 <!-- took screenshoot to save time -->
 
-
 <img rounded style="width: 1000px" src="assets/Contributing/PBA.png"/>
-
-
 
 https://polkadot.network/academy/
 
@@ -63,6 +57,7 @@ https://polkadot.network/academy/
 ---
 
 ## The Mono Repo
+
 <!-- skipped Polkadot SDK repo has evolved slide, not relevant for PBA-->
 <!-- Originally bullet points were on right column -->
 
@@ -72,13 +67,13 @@ https://polkadot.network/academy/
 
 - Merging into a single repository simplifies the development process
 - Eliminates the need for “companion” PRs across multiple repositories.
-- Improves collaboration among team members. 
+- Improves collaboration among team members.
 - Makes it easier to manage issues, pull requests, and documentation.
-
 
 ---
 
 ## Runtime Extraction
+
 <pba-cols>
 <pba-col left>
 
@@ -88,7 +83,7 @@ https://polkadot.network/academy/
 
 </br>
 
-<span style="font-size:0.75em;">    
+<span style="font-size:0.75em;">
 
 </br>
 
@@ -104,19 +99,20 @@ Extraction of the various Polkadot Runtimes established decentralized ownership 
 <pba-flex left>
 
 - Relay Chain Runtimes
+
   - Polkadot
   - Kusama
 
 - System Parachains
+
   - Asset Hub
   - Bridges Hub
   - Collectives
   - etc...
-  </pba-flex>
+    </pba-flex>
 
   </pba-col>
   </pba-cols>
-
 
 </span>
 
@@ -127,7 +123,6 @@ Extraction of the various Polkadot Runtimes established decentralized ownership 
 </br>
 
 <img rounded style="width: 800px" src="assets/Contributing/Owners.png" />
-
 
 ---
 
@@ -147,6 +142,7 @@ https://github.com/polkadot-fellows/RFCs
 ---
 
 ### Fellowship
+
 <!-- original slides had 90 and -90 degree "Fellowship" text around a box-->
 
 ---
@@ -166,12 +162,13 @@ https://github.com/polkadot-fellows
 ---
 
 ### Fellowship Manifesto
+
 <img rounded style="width: 800px" src="assets/Contributing/Manifesto.png" />
 
 https://github.com/polkadot-fellows/manifesto
 
-
 ---
+
 ### Polkadot Fellows
 
 <img rounded style="width: 800px" src="assets/Contributing/fellows.png" />
@@ -180,6 +177,7 @@ https://github.com/polkadot-fellows/manifesto
 The current Polkadot Fellows.
 
 ---
+
 ## Rank Summary
 
 - The fellowship has different ranks based on their contributions to Polkadot.
@@ -187,27 +185,24 @@ The current Polkadot Fellows.
 - Fellowship members can choose to accept a salary for their rank.
 - Salary is based on the OECD average salary for engineers.
 
-
 ---
 
 ## Ranks
+
 <!-- TO DO need to have table only on left side to provide space for bullet points-->
 
-
-
 | Dan  | Title           | Time from Dan I | Salary Factor (OECD) |
-|------|-----------------|-----------------|----------------------|
-| n/a  | Candidate       |       n/a       |          0.0         |
-| I    | Humble          |       n/a       |         0.125        |
-| II   | Proficient      |     ~1 year     |         0.25         |
-| III  | Fellow          |     ~2 years    |          1.0         |
-| IV   | Architect       |   &gt; 3 years  |          1.5         |
-| V    | Architect Adept |   &gt; 4 years  |          2.0         |
-| VI   | Grant Architect |   &gt; 5 years  |          2.5         |
-| VII  | Free Master     |  &gt; 6 years!  |          2.5         |
-| VIII | Master Constant |  &gt; 11 years! |          2.5         |
-| IX   | Grand Master    |  &gt; 19 years! |          2.5         |
-
+| ---- | --------------- | --------------- | -------------------- |
+| n/a  | Candidate       | n/a             | 0.0                  |
+| I    | Humble          | n/a             | 0.125                |
+| II   | Proficient      | ~1 year         | 0.25                 |
+| III  | Fellow          | ~2 years        | 1.0                  |
+| IV   | Architect       | &gt; 3 years    | 1.5                  |
+| V    | Architect Adept | &gt; 4 years    | 2.0                  |
+| VI   | Grant Architect | &gt; 5 years    | 2.5                  |
+| VII  | Free Master     | &gt; 6 years!   | 2.5                  |
+| VIII | Master Constant | &gt; 11 years!  | 2.5                  |
+| IX   | Grand Master    | &gt; 19 years!  | 2.5                  |
 
 </br>
 <span style="font-size:0.5em;">
@@ -215,8 +210,6 @@ The current Polkadot Fellows.
 Salary RFC: https://github.com/polkadot-fellows/RFCs/pull/50/
 </br>
 OECD: Organisation for Economic Co-operation and Development
-
-
 
 ---
 
@@ -227,8 +220,6 @@ OECD: Organisation for Economic Co-operation and Development
 <span style="font-size:0.75em;">
 
 <pba-flex center>
-
-
 
 _The requirements (condensed) to become a Dan I member of the Polkadot Fellowship are:_
 
@@ -247,11 +238,9 @@ _The requirements (condensed) to become a Dan I member of the Polkadot Fellowshi
 
 ## Dan I Contributions
 
-
 </br>
 
 <pba-flex center>
-
 
 Possible examples of a “modest but substantial contribution” may be:
 
@@ -262,19 +251,11 @@ Possible examples of a “modest but substantial contribution” may be:
 - proposing a reasonable and non-trivial protocol innovation; or
 - doing a valuable, innovative and insightful refactoring or simplification.
 
-
-</pba-flex> 
-
-
-
-
-
+</pba-flex>
 
 ---
 
-
 <img rounded style="width: 1000px" src="assets/Contributing/iwantyou.png" />
-
 
 ---
 
@@ -287,7 +268,7 @@ Possible examples of a “modest but substantial contribution” may be:
 - It is attempting to provide human needs of consistent / regular income from a resilient decentralized source.
 - The barrier to entry is intentionally _very high._
 - It is NOT a requirement to contribute to the Polkadot SDK or broader ecosystem.
-- It is NOT the path for everyone, even not necessarily for all core developers. 
+- It is NOT the path for everyone, even not necessarily for all core developers.
 
 ---
 
@@ -324,10 +305,10 @@ Possible examples of a “modest but substantial contribution” may be:
 - The best way to start becoming an expert at Polkadot SDK (or any open source repo) is to pick up existing issues created by experts who can also mentor you.
 
 ---
+
 ## Find the right issues
 
 </br>
-
 
 _Not all issues are created equal:_
 
@@ -338,12 +319,9 @@ _Not all issues are created equal:_
 
 ---
 
-
 #### Issue Filters: C1-Mentor, C2-Good-First-Issue, D0-Easy
 
-
 <img rounded style="width: 1000px" src="assets/Contributing/issues.png" />
-
 
 ---
 
@@ -351,15 +329,14 @@ _Not all issues are created equal:_
 
 <img rounded style="width: 1000px" src="assets/Contributing/example1.png" />
 
-
 ---
 
 ### An Issue that Rust Compiler Can Entirely Check
 
 <img rounded style="width: 1000px" src="assets/Contributing/example2.png" />
 
-
 ---
+
 ## Become a subject expert and code owner
 
 </br>
@@ -368,8 +345,8 @@ _Not all issues are created equal:_
 - You are more likely to find issues to work on and people to mentor you if you create a focus area for your contributions.
 - If you can become an expert in a topic area, you will be able to develop deeper and more relevant skills, and be able to transfer those skills to other topic areas.
 
-
 ---
+
 ## Keep conversations in public.
 
 </br>
@@ -380,13 +357,14 @@ _Not all issues are created equal:_
 - Use DMs to ping for attention, but bring important conversations and information to the Forum, GitHub, and other public spaces.
   - You will be surprised how many lurkers use these conversations to educate themselves.
 
-
 ---
+
 ### Pull Requests & Reviews
+
 <!-- original slides had 90 and -90 degree Pull requests and reviews text around a box-->
 
-
 ---
+
 ## Breakdown Large PRs
 
 </br>
@@ -399,19 +377,16 @@ A large PR is the easiest way to get repository owners to place your code at the
   - Chain their dependencies on each other.
 - Where you are refactoring many components (like pallets), do them one at a time where possible.
 
-
 ---
 
 ## Write Tests!
 
 <img rounded style="float:right;  padding-left:20px" src="assets/Contributing/boyscoutrule.png" />
 
-
 - The best way for a reviewer to sanity check your work is to read and understand your tests, and verify it passes.
-    - You will be surprised how even the most trivial changes can (and should) include a test!
+  - You will be surprised how even the most trivial changes can (and should) include a test!
 - Try to get additional test scenarios from the original issue creator, to ensure your solution aligns with their vision of the problem.
 - Write additional tests to cement your understanding of existing code, and add additional code coverage.
-
 
 ---
 
@@ -431,17 +406,15 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 - Once you have a final PR open, and ready for review, go through and review your own PR.
 - Leave comments on code that you might want to highlight for other reviewers.
-    - For example sensitive changes that need extra scrutiny.
+  - For example sensitive changes that need extra scrutiny.
 - Catch any dead code, leftover comments, todos, formatting problems, and other low hanging fruit.
-    - As a reviewer, it is pretty discouraging to see the PR is not in great shape to be merged when reviewing it.
+  - As a reviewer, it is pretty discouraging to see the PR is not in great shape to be merged when reviewing it.
 
 ---
 
 ## My First PR 😬
 
-
 <img rounded style="width: 1000px" src="assets/Contributing/firstpr.png" />
-
 
 ---
 
@@ -449,23 +422,16 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 <img rounded style="width: 1000px" src="assets/Contributing/tip.png" />
 
-
 ---
 
 <img rounded style="width: 1000px" src="assets/Contributing/visualizer.png" />
 
-
-
 </br>
 Expect Chaos.
 
-
 ---
 
-
 ### Questions?
-
-
 
  <script src="/dist/reveal.js"></script>
 
@@ -546,7 +512,6 @@ Expect Chaos.
 
     var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
   </script>
-
 
   <script>
     Reveal.initialize(options);

@@ -13,6 +13,7 @@ Introduction
 ---v
 
 # Polkadot
+
 ## Core Tenets (In My Opinion)
 
 - Polkadot is a decentralized open-source community
@@ -29,6 +30,7 @@ Polkadot is a decentralized open-source community. Hopefully at this point you g
 ---v
 
 # Polkadot
+
 ## Core Tenets (In My Opinion)
 
 - Polkadot is a decentralized open-source community
@@ -43,6 +45,7 @@ Polkadot is a permissionless and ubiquitous computer. The key pieces to this wer
 ---v
 
 # Polkadot
+
 ## Core Tenets (In My Opinion)
 
 - Polkadot is a decentralized open-source community
@@ -58,7 +61,6 @@ And to succeed in that mission Let's dive into the main topic for today - Parach
 ---
 
 # What is Parachains Consensus?
-
 
 Notes:
 We will be looking at what is parachain consensus?
@@ -91,16 +93,18 @@ The first pillar worth exploring is NPoS. It is tightly connected to a frame pal
 ---v
 
 # NPoS
+
 ## What's the goal of this pillar?
 
 We need to fairly elect a bounded number of players (validators) that will participate in the game (parachain consensus).
 
 Notes:
-So what's the goal of this pillar? Player election! 
+So what's the goal of this pillar? Player election!
 
 ---v
 
 # NPoS
+
 ## NPoS Elections
 
 - Every 24h (era) an algorithmic election is held and a set of 300 validators is chosen - they will be the **active validator set**.
@@ -113,6 +117,7 @@ There's no better way than to vote with your wallet and NPoS is all about this i
 ---v
 
 # NPoS
+
 ## NPoS Nominations
 
 - Most validator don't own the stake they use for the elections and they simply focus on being a validator-as-a-service operators
@@ -133,27 +138,26 @@ But for now let's move to the Parachain Consensus. This is the heart of the rela
 ---v
 
 # Parachain Consensus
-## What's the goal?
 
+## What's the goal?
 
 Notes:
 What's the goal? What does it try to accomplish? Well it's blockchain and there's one thing we really, really want to see in blockchains.
 
 ---v
 
-
 # Parachain Consensus
+
 ## What's the goal?
 
 - Scalability
 
 Notes:
 
-
 ---v
 
-
 # Parachain Consensus
+
 ## What's the goal?
 
 - Scalability
@@ -161,10 +165,10 @@ Notes:
 
 Notes:
 
-
 ---v
 
 # Parachain Consensus
+
 ## What's the goal?
 
 - Scalability
@@ -175,15 +179,15 @@ Notes:
 And security and decentralization but we'll dive into those on future lectures.
 Okay, so how does it achieve scalability? You all have been learning about substrate and frame and building your own little chains. And it is true that Polkadot's Relay Chain is a also a Substrate-based chain but there's more to it. It's a substrate chain capable of aggregating the state of other substrate chains and thus sharing it's own security with them. Parachain Consensus is what validates all those other blockchains and makes them unite in the relay chain. This is what we call sharding.
 
-
 ---v
 
 # Parachain Consensus
+
 ## What's the goal?
 
 **Sharding**
 
-Sharding crucially allows us to parallelize execution. 
+Sharding crucially allows us to parallelize execution.
 
 Notes:
 Sharding crucially allows us to parallelize execution. All those sovereign substrate blockchains can connect to the relay chain and entrust it with validation duties, while the chain itself can focus on the business logic and functionality. So all those little blockchains connected to the relay chain are called parachains. But actually does anyone know where this name comes from? ...
@@ -193,6 +197,7 @@ But let's zoom out for a second.
 ---v
 
 # Parachain Consensus
+
 ## Zooming out
 
 <img style="width: 500px" src="./assets/execution-sharding/polkadot-architecture.svg"/>
@@ -202,20 +207,21 @@ This is how Polkadot's relay chain and it's parachains can be visualized. This i
 
 ---v
 
-
 # Parachain Consensus
+
 ## Zooming out
 
 Polkadot is a layer 0 protocol
 
 Notes:
-Polkadot a layer 0 blockchain. A blockchain of blockchains, a platform for other platforms to build and flourish. 
+Polkadot a layer 0 blockchain. A blockchain of blockchains, a platform for other platforms to build and flourish.
 
 And also Polkadot being a layer 0 is why I often think that a truly widely adopted and successful Polkadot does not mean people recognize the name, it means you recognize the project building on top of Polkadot. Marketing Polkadot is nice but I strongly believe that end consumers don't need to know about it just like AWS doesn't advertise to the mom and pops, they target builders.
 
 ---v
 
 # Parachain Consensus
+
 ## Why do we learn it?
 
 To fully utilize what Polkadot offers you need to learn its quirks.
@@ -223,12 +229,12 @@ To fully utilize what Polkadot offers you need to learn its quirks.
 Notes:
 And I hope that this also makes it clearer why we will be learning those more in-depth core protocol elements. Because if you all are the next generation of builders then only if you understand what Polkadot truly offers, what are its strengths and weaknesses you will be able to build the next application that truly uses it's potential to the fullest. Because there are things that you can only build on Polkadot and nowhere else.
 
-
 So now that the why is covered let's look at how it all comes together. There is a lot of moving parts in the parachains consensus but let's start familiarizing ourselves with them. In the upcoming lectures we will be diving deeper into each individual step so don't worry if you miss something.
 
 ---v
 
 # Parachain Consensus
+
 ## The Game
 
 <div style="font-size: 0.8em">
@@ -246,6 +252,7 @@ Notes:
 ---v
 
 # Parachain Consensus
+
 ## The Game
 
 <div style="font-size: 0.8em">
@@ -277,6 +284,7 @@ Notes:
 ---v
 
 # Parachain Consensus
+
 ## The Game
 
 <div style="font-size: 0.8em">
@@ -304,13 +312,13 @@ Notes:
 </div>
 
 <br/>
-
 
 **The game works whenever <1/3 of validators misbehave.**
 
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 Notes:
@@ -319,6 +327,7 @@ Those were the simplified rules of the game but those rules will be encompassed 
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -329,6 +338,7 @@ Initially we'll be grouping up and assigning the validators in the active set, t
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -340,6 +350,7 @@ Some other nodes will collect the user transactions and create collations.
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -352,6 +363,7 @@ Some validators will receive those collations and if they think they are correct
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -365,6 +377,7 @@ All the data connected to the collation is distributed between the validators in
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -379,6 +392,7 @@ Validators perform the final correctness checks
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -394,6 +408,7 @@ And if something doesn't feel right they start an official dispute. Think of it 
 ---v
 
 # Parachain Consensus
+
 ## Overview
 
 - Assignment: Group up validators.
@@ -417,6 +432,7 @@ Up to this point maybe it wasn't clear but there are a lot of number that seem p
 ---v
 
 # Governance
+
 ## OpenGov
 
 Polkadot has on-chain governance by stakeholder referendum, voting on subjects such as:
@@ -440,6 +456,7 @@ https://polkadot.network/features/opengov/
 ---
 
 # JAM
+
 ## Polkadot 2.0
 
 Notes:
@@ -448,6 +465,7 @@ Who here has heard of JAM?
 ---v
 
 # JAM
+
 ## Polkadot 2.0
 
 JAM is a further generalization and abstraction of Polkadot.
