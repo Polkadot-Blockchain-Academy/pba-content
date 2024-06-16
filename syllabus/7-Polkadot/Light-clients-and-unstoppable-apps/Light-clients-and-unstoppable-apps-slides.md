@@ -673,6 +673,21 @@ Powered by Pierre Krieger (a.k.a. tomaka)
 
 ---v
 
+### Smoldot - On a diagram
+
+<section>
+  <diagram class="mermaid">
+    stateDiagram-v2
+      dAPP --> Smoldot
+      Smoldot --> LEGACY_JSON_RPC_API
+      Smoldot --> NEW_JSON_RPC_API
+  </diagram>
+</section>
+
+Notes: meaning you need to send/receive and act with the JSONs
+
+---v
+
 ## Substrate Connect
 
 <div style="font-size:1.75rem; color: #fff">uses smoldot as an implementation detail</div>
@@ -757,7 +772,7 @@ Notes:
 ### Smoldot - On a diagram
 
 <section>
-  <diagram class="mermaid">
+  <diagram class="mermaid limit size-80">
     stateDiagram-v2
       NEW_JSON_RPC_API: New JSON-RPC API
       LEGACY_JSON_RPC_API: Legacy JSON-RPC API

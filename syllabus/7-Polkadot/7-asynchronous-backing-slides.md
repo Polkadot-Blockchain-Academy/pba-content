@@ -2,6 +2,7 @@
 title: Shallow Dive, Asynchronous Backing
 description: Decoupling Backing and Inclusion Through Advance Work Based on Happy Path Assumptions
 duration: 30 min
+owner: Bradley Olson
 ---
 
 # Shallow Dive, Asynchronous Backing

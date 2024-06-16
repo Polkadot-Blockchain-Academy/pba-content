@@ -1,7 +1,8 @@
 ---
-title: Data Availability and Sharding
+title: Data Availability and Data Sharding Deep Dive
 description: Data Availability Problem, Erasure coding, Data sharding.
 duration: 1h
+owner: Bradley Olson
 ---
 
 # Data Availability and Sharding

@@ -2,6 +2,7 @@
 title: Cumulus Deep Dive
 description: Cumulus, architecture and function
 duration: 1.25 hours
+owner: Bradley Olson
 ---
 
 # Cumulus Deep Dive
