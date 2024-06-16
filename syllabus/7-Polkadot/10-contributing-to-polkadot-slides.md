@@ -308,8 +308,6 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ## Issues / Ideas
 
-<!-- original slides had 90 and -90 degree "ideas"/"issues" text around a box-->
-
 ---
 
 #### **Before you can contribute**</br>you need to find an issue.
@@ -373,8 +371,6 @@ _Not all issues are created equal:_
 ---
 
 ### Pull Requests & Reviews
-
-<!-- original slides had 90 and -90 degree Pull requests and reviews text around a box-->
 
 ---
 
