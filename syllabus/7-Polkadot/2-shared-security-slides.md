@@ -348,18 +348,6 @@ The new state root is then committed to the relay chain so the process can repea
 
 ---
 
-## Execution Core Math
-
-- Assuming we have 1023 validators...
-- Assuming we have each core be initially validated by 3 validators...
-- We can provide 341 parallel execution cores on Polkadot.
-
-From the JAM paper:
-
-<img style="width: 600px" src="../../assets/img/7-Polkadot/341-cores.png" />
-
----
-
 ## How do we stop things from going wrong?
 
 - Data Availability
