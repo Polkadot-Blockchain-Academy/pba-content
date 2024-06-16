@@ -14,7 +14,7 @@ duration: 60 min
 
 ## Prerequisite Knowledge
 
-</br>
+
 
 - Mid-Level Rust Programming Abilities
   - Fluency with the first 11 chapters of The Rust Book
@@ -108,21 +108,21 @@ flowchart LR
 
 </pba-col>
 
-</br>
+
 
 <span style="font-size:0.75em;">
 
-</br>
+
 
 <pba-col right>
 
-</br>
+
 
 <pba-flex left>
 Extraction of the various Polkadot Runtimes established decentralized ownership of this code. Includes:
 </pba-flex>
 
-</br>
+
 <pba-flex left>
 
 - Relay Chain Runtimes
@@ -147,7 +147,7 @@ Extraction of the various Polkadot Runtimes established decentralized ownership 
 
 ## Repository Ownership
 
-</br>
+
 
 <img style="width: 800px" src="assets/Contributing/Owners.png" />
 
@@ -155,14 +155,14 @@ Extraction of the various Polkadot Runtimes established decentralized ownership 
 
 ## Polkadot RFCs
 
-</br>
+
 
 - Requests for Comment (RFCs) are proposed changes to the technical implementation of the Polkadot network.
 - The Polkadot Fellowship reviews and provides feedback to the RFCs.
 - RFC approval is done on-chain either by the fellowship or through public referendum.
 - The Polkadot Fellowship also stewards forward approved RFCs.
 
-</br>
+
 
 https://github.com/polkadot-fellows/RFCs
 
@@ -176,13 +176,13 @@ https://github.com/polkadot-fellows/RFCs
 
 ## The Fellowship
 
-</br>
+
 
 - A technical organization that stewards the development of the Polkadot Network.
 - Composed of core developers and researchers.
 - Servants to the DOT holders via referendum signaling.
 
-</br>
+
 
 https://github.com/polkadot-fellows
 
@@ -200,7 +200,7 @@ https://github.com/polkadot-fellows/manifesto
 
 <img style="width: 800px" src="assets/Contributing/fellows.png" />
 
-</br>
+
 The current Polkadot Fellows.
 
 ---
@@ -231,11 +231,11 @@ The current Polkadot Fellows.
 | VIII | Master Constant | &gt; 11 years!  | 2.5                  |
 | IX   | Grand Master    | &gt; 19 years!  | 2.5                  |
 
-</br>
+
 <span style="font-size:0.5em;">
 
 Salary RFC: https://github.com/polkadot-fellows/RFCs/pull/50/
-</br>
+
 OECD: Organisation for Economic Co-operation and Development
 
 ---
@@ -252,7 +252,7 @@ _The requirements (condensed) to become a Dan I member of the Polkadot Fellowshi
 
 </span>
 
-</br>
+
 
 - Three clear examples of a modest but substantial contribution to protocol development.
 - Actively been involved in the design of a component deployed to the network.
@@ -265,13 +265,13 @@ _The requirements (condensed) to become a Dan I member of the Polkadot Fellowshi
 
 ## Dan I Contributions
 
-</br>
+
 
 <pba-flex center>
 
 Possible examples of a “modest but substantial contribution” may be:
 
-</br>
+
 
 - identifying and correcting a non-trivial issue in protocol code or formalisation;
 - being available and playing a crucial operational role for a network fix;
@@ -288,7 +288,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ## Fellowship Clarity
 
-</br>
+
 
 - The Fellowship is a very new, and still developing organization.
 - The Fellowship offers technical influence over the Polkadot Network and a regular income.
@@ -301,7 +301,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ## My recommended path to becoming a fellow…
 
-</br>
+
 
 - Join a team in the Polkadot (or broader) ecosystem aligned with the values of the fellowship.
 - Work with them to split your time between their work and core contributions to the Polkadot SDK.
@@ -324,7 +324,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ## A common mistake…
 
-</br>
+
 
 - Don’t come to the Polkadot SDK with brand new features that you want to implement.
 - Polkadot is already a huge codebase, and does not want to maintain more code.
@@ -335,7 +335,7 @@ Possible examples of a “modest but substantial contribution” may be:
 
 ## Find the right issues
 
-</br>
+
 
 _Not all issues are created equal:_
 
@@ -366,7 +366,7 @@ _Not all issues are created equal:_
 
 ## Become a subject expert and code owner
 
-</br>
+
 
 - Training new open source contributors is very much a long term investment mindset.
 - You are more likely to find issues to work on and people to mentor you if you create a focus area for your contributions.
@@ -376,7 +376,7 @@ _Not all issues are created equal:_
 
 ## Keep conversations in public.
 
-</br>
+
 
 - The urge is to always try to open a direct message to quickly discuss and resolve questions.
 - Culture for Polkadot is: global and async.
@@ -394,7 +394,7 @@ _Not all issues are created equal:_
 
 ## Breakdown Large PRs
 
-</br>
+
 
 A large PR is the easiest way to get repository owners to place your code at the bottom of their “TODO” stack. Split up large PRs into multiple parts!
 
@@ -419,7 +419,7 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 ## Write Docs!
 
-</br>
+
 
 - Code always needs to be contextualized into what problem it is trying to solve and how it is choosing to solve that problem.
 - Documentation in the code should allow a reader to answer what the intention of the code is.
@@ -429,7 +429,7 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 ## Review Your Own PR
 
-</br>
+
 
 - Once you have a final PR open, and ready for review, go through and review your own PR.
 - Leave comments on code that you might want to highlight for other reviewers.
@@ -453,7 +453,7 @@ A large PR is the easiest way to get repository owners to place your code at the
 
 <img style="width: 1000px" src="assets/Contributing/visualizer.png" />
 
-</br>
+
 Expect Chaos.
 
 ---
