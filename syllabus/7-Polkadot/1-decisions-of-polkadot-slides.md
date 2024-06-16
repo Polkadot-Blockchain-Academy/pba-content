@@ -172,7 +172,7 @@ Execution cores provide blockspace-as-a-service, and are designed to work with a
 
 Polkadot is able to do parallel execution because it splits up data on its network into separate data shards.
 
-
+Today, parallel chains (shards) are called Parachains.
 
 </div>
 
@@ -220,35 +220,13 @@ Specialized solutions for problems are more performant than generalized solution
 
 <div class="col-span-2">
 
-Heterogenous sharded execution is the backbone of Polkadot.
+To provide heterogenous sharded execution we need a fast, safe, and open meta-protocol to power all of the state transitions in our ecosystem.
 
-For this, we need a fast, safe, and open meta-protocol which powers all of the state transitions of our ecosystem.
+Today we use Wasm.
 
-It standardizes how chains execute, sandboxes that execution for improved security, and allows teams to build on Polkadot using any language that can be compiled into Wasm.
+It standardizes how Web3 applications execute and sandboxes that execution for improved security.
 
-</div>
-
-</div>
-
----
-
-## Interoperability
-
-<div class="grid grid-cols-2">
-
-<div>
-
-Individual application chains will inherently lack the ability to provide a full suite of optimized solutions for end users.
-
-Interoperability allows parachains to work together to complete, complex end-to-end scenarios.
-
-</div>
-
-<div>
-
-<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-2.svg" />
-
-A visual of XCMP channels between Parachains.
+It also allows teams to build on Polkadot using any language that can be compiled into Wasm.
 
 </div>
 
@@ -281,6 +259,30 @@ Notes:
 Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
 
 Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender. Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
+
+---
+
+## Interoperability
+
+<div class="grid grid-cols-2">
+
+<div>
+
+Individual application chains will inherently lack the ability to provide a full suite of optimized solutions for end users.
+
+Interoperability allows parachains to work together to complete, complex end-to-end scenarios.
+
+</div>
+
+<div>
+
+<img style="height: 500px;" src="../../assets/img/7-Polkadot/xcmp-2.svg" />
+
+A visual of XCMP channels between Parachains.
+
+</div>
+
+</div>
 
 ---
 
