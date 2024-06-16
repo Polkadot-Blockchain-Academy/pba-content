@@ -244,7 +244,6 @@ OECD: Organisation for Economic Co-operation and Development
 - Fellowship members can choose to accept a salary for their rank.
 - Salary is based on the OECD average salary for engineers.
 
-
 </div>
 </div>
 
@@ -253,7 +252,6 @@ OECD: Organisation for Economic Co-operation and Development
 ## Dan I
 
 The requirements (condensed) to become a Dan I member of the Polkadot Fellowship are:
-
 
 <pba-cols class="text-small">
 <pba-col left>
