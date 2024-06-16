@@ -152,37 +152,27 @@ What are the type 1 decisions which define Polkadot?
 
 ---
 
-## Wasm
+## Parallel Execution
 
-<div class="grid grid-cols-3">
+Polkadot scales through parallelization.
 
-<div>
+Polkadot provides parallelized execution using parallel execution cores.
 
-<img style="width: 400px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" />
+<img style="width: 1000px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
-</div>
-
-<div class="col-span-2">
-
-WebAssembly is the backbone of Polkadot. It is a fast, safe, and open meta-protocol which powers all of the state transitions of our ecosystem.
-
-It standardizes how chains execute, sandboxes that execution for improved security, and allows teams to build on Polkadot using any language that can be compiled into Wasm.
-
-</div>
-
-</div>
+Execution cores allows Polkadot to provide blockspace-as-a-service, and are designed to work with any kind of Web3 application.
 
 ---
 
-## Sharding
+## Data Sharding
 
 <div class="grid grid-cols-2">
 
 <div>
 
-Polkadot scales primarily by parallelizing execution on separate data shards.
+Polkadot is able to do parallel execution because it splits up data on its network into separate data shards.
 
-These parallel chains (shards) are called Parachains.
+Today, parallel chains (shards) are called Parachains.
 
 </div>
 
@@ -218,6 +208,64 @@ Specialized solutions for problems are more performant than generalized solution
 
 ---
 
+## Execution Meta-Protocol
+
+<div class="grid grid-cols-3">
+
+<div>
+
+<img style="width: 400px;" src="../../assets/img/0-Shared/logo/webassembly-blue.png" />
+
+</div>
+
+<div class="col-span-2">
+
+To provide heterogenous sharded execution we need a fast, safe, and open meta-protocol to power all of the state transitions in our ecosystem.
+
+Today we use Wasm.
+
+It standardizes how Web3 applications execute and sandboxes that execution for improved security.
+
+It also allows teams to build on Polkadot using any language that can be compiled into Wasm.
+
+</div>
+
+</div>
+
+---
+
+## Shared Security
+
+<div class="grid grid-cols-2">
+
+<div>
+
+Blockspace is the capacity of a blockchain to commit and finalize operations.
+
+An often overlooked problem is the economic scaling need to provide high quality blockspace.
+
+Polkadot is unique in that it provides blockspace to other Web3 applications with the same security guarantees as Polkadot itself.
+
+</div>
+
+<div>
+
+<img style="width: 500px" src="../../assets/img/0-Shared/parachains/parachains-transparent.png" />
+
+</div>
+
+</div>
+
+Notes:
+
+Learn more about blockspace: https://www.rob.tech/blog/polkadot-blockspace-over-blockchains/
+
+Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
+
+Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender. Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
+
+---
+
 ## Interoperability
 
 <div class="grid grid-cols-2">
@@ -239,44 +287,6 @@ A visual of XCMP channels between Parachains.
 </div>
 
 </div>
-
----
-
-## Shared Security
-
-<div class="grid grid-cols-2">
-
-<div>
-
-An often overlooked problem is economic scaling of the entire blockchain ecosystem.
-
-Polkadot is unique in that it provides all connected parachains with the same security guarantees as the Relay Chain itself.
-
-</div>
-
-<div>
-
-<img style="width: 500px" src="../../assets/img/0-Shared/parachains/parachains-transparent.png" />
-
-</div>
-
-</div>
-
-Notes:
-
-Security in proof-of-stake networks depends on economics, so there can only exist a limited amount of security in the world because economic value is, by definition, limited. As the number of blockchains increases due to scaling issues on single chains, their economic value — and therefore their security — gets spread out over multiple chains, leaving each one weaker than before.
-
-Polkadot introduces a shared security model so that chains can interact with others while knowing full well that their interlocutors have the same security guarantees as their own chain. Bridge-based solutions — where each chain handles its own security — force the receiver to trust the sender. Polkadot’s security model provides the necessary guarantees to make cross-chain messages meaningful without trusting the security of the sender.
-
----
-
-## Execution Cores
-
-Polkadot's Shared Security is powered through the creation and allocation of execution cores.
-
-<img style="width: 1000px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
-
-Execution cores provide blockspace-as-a-service, and are designed to work with any kind of consensus system.
 
 ---
 
@@ -427,7 +437,7 @@ What are the type 2 decisions of Polkadot?
 
 ## Parachains
 
-Polkadot was designed around Parachains, but the exact meaning and manifestation of a Parachain is evolving.
+Polkadot was originally designed around Web3 applications in the form of Parachains, but this categorization is evolving.
 
 <div class="grid grid-cols-2">
 
@@ -448,7 +458,7 @@ Polkadot was designed around Parachains, but the exact meaning and manifestation
 <br />
 
 - Originally, parachains would be long term applications-chains.
-- On-Demand Parachains (formerly parathreads) changed that viewpoint to also include chains which can spin-up and spin-down at will.
+- Services and Agile Coretime changed that viewpoint to also include applications that can spin-up and spin-down at will.
 - The future protocol will have even more exotic core scheduling and even more agile core usage, all because the type 1 decision around parachains is actually **execution cores**.
 
 Notes:
@@ -518,16 +528,6 @@ The protocol has been actively evolving over time, making it more performant and
 
 ---
 
-## SASSAFRAS
-
-While hybrid consensus is a type 1 decision, the underlying protocols can continue to evolve, such as from BABE to SASSAFRAS.
-
-> Semi Anonymous Sortition of Staked Assignees For Fixed-time Rhythmic Assignment of Slots
-
-An extension of BABE and acts as a constant-time block production protocol. This approach tries to address the shortcomings of BABE by ensuring that exactly one block is produced with time-constant intervals. The protocol utilizes zk-SNARKs to construct a ring-VRF and is a work in progress.
-
----
-
 ## OpenGov
 
 The specifics of Polkadot's on-chain governance system has changed multiple times in its history.
@@ -553,6 +553,63 @@ An on-chain treasury has and will always exist; but how exactly it spends funds 
 Polkadot is **designed** to evolve, and make type 2 decision making fast and easy.
 
 An invention machine.
+
+---
+
+# JAM
+
+---
+
+## What is JAM?
+
+JAM is the next evolution of the Polkadot protocol.
+
+<img style="width: 600px;" src="../../assets/img/7-Polkadot/decisions/jam-pen-polkadot.png" />
+
+The JAM chain will be the successor to the existing Polkadot Relay chain.
+
+JAM will provide all the functionality of Polkadot v1, but also provide a more flexible foundation on which to build Web3 Applications.
+
+---
+
+## The Decisions of JAM
+
+<div class="grid grid-cols-2">
+<div>
+
+**Unchanged**
+
+- The Philosophies of Polkadot
+- The Goals of Polkadot
+  - Parallel Execution and Heterogenous Sharding
+  - Shared Security
+  - Interoperability
+
+</div>
+
+<div>
+
+**Changed**
+
+- Upgradability of the Core Protocol
+  - Substrate -> JAM Chain
+- Services (as a superset of Parachains)
+- Wasm -> PolkaVM (RISC-V)
+- Synchronous Communication Capabilities
+
+</div>
+
+---
+
+## Is JAM a new protocol?
+
+JAM is certainly the next evolution of the Polkadot protocol.
+
+- Some things have explicitly changed.
+- But the problem we are trying to solve is the same.
+- And almost all of the same technology is being used to solve it.
+
+### JAM is Polkadot.
 
 ---
 

@@ -273,6 +273,20 @@ Wasm Runtimes
 
 ---
 
+## PolkaVM
+
+- JAM will use the PolkaVM instead of Wasm.
+  - PolkaVM is based on RISC-V.
+  - https://github.com/koute/polkavm
+- Nothing changes about the principles of shared security.
+  - Just a change in the execution meta-protocol.
+
+Notes:
+
+Practically speaking the transition should be a net positive security-wise; we have better sandboxing than wasmtime, the whole thing is lot simpler (there's no full blown optimizing compiler in the VM, because that part now runs entirely offline before the program is uploaded on chain) and unlike wasmtime we don't have any problems with non-O(n) compilation (PolkaVM is guaranteed O(n)) nor with overflowing the native stack (wasmtime makes use of the native stack for guest programs; PolkaVM doesn't)
+
+---
+
 # Parachain Validation
 
 ---
