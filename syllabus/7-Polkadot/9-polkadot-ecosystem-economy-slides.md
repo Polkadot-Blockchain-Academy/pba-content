@@ -33,7 +33,9 @@ Unfortunately this presentation could never be fully exhaustive, but perhaps it 
 
 <div class="text-left">
 
-The DOT token can be in one of the following states:
+DOT is the native token of the Polkadot Network.
+
+DOT tokens can be in one of the following states:
 
 1. Transferable
 2. Frozen (Locked)
@@ -99,10 +101,9 @@ The most bloat-ful storage on most blockchains are user accounts:
 - Polkadot is already designed to scale by sharding data.
   - Polkadot only needs to store the merkle root representing large amounts of data.
 - The cost to store data on shards are orders of magnitude cheaper.
-- We can have decreased storage deposits on these shards:
-
-  - ED: 1.0 DOT on Polkadot -> .01 DOT on Asset Hub
-  - Identity: 20 DOT on Polkadot -> .2 DOT on People Chain
+  - We can have decreased storage deposits on these shards:
+    - ED: 1.0 DOT on Polkadot -> .01 DOT on Asset Hub
+    - Identity: 20 DOT on Polkadot -> .2 DOT on People Chain
 
 ---
 
@@ -191,7 +192,7 @@ Event at the ideal staking rate, some percentage of the inflation is guaranteed 
 
 ---
 
-## DOT Utility: Blockspace
+## DOT Utility: Purchasing Blockspace
 
 Polkadot provides many utilities, but arguably its most important utility is providing flexible, secure, and scalable blockspace.
 
@@ -388,12 +389,12 @@ For instance, a referendum proposed in this track needs to amass 48.2% support (
 
 ## Governance Token Mechanics
 
-- DOT tokens are locked when you vote on a proposal.
-- You can reuse your locked tokens across multiple proposals.
+- DOT tokens are frozen when you vote on a proposal.
+- You can reuse your frozen tokens across multiple proposals.
   - Voting for one proposal does not affect your ability to vote on another proposal.
-- You can also reuse staked tokens (which are also just locked).
+- You can also reuse staked tokens (which are also just frozen).
 - You can update your vote while the proposal is ongoing.
-- If you used conviction voting, your tokens might be locked for long periods of time passed the end of a proposal.
+- If you used conviction voting, your tokens might be frozen for long periods of time passed the end of a proposal.
 
 ---
 
