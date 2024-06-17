@@ -156,7 +156,8 @@ Ask: WHAT ARE THE WAYS to connect to the network from a UI like (e.g. polkadotJS
   <pba-col left>
     <div>App connects to a node client that the user has installed on their machine</div>
     <div class="bg-green-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Secure</span><br />Trustless: connects to multiple nodes, verifies everything</div>
-    <div class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Convenient:</span> Works transparently</div>
+    <div class="bg-red-600 rounded-2xl p-4 !mt-2"><span class="font-bold">Inconvenient:</span> Needs an installation process and having a node up and running, plus maintenance effort</div>
+    
   </pba-col>
   <!-- .element: class="fragment" data-fragment-index="2" -->
    <pba-col left>
@@ -359,12 +360,20 @@ In the next slides we will explain "What is a Light Client" in a generic manner 
 
 <ul style="margin-left: 20%">
   <li>Accessibility</li>
+<!-- .element: class="fragment" data-fragment-index="1" -->
   <li>Scalability</li>
+<!-- .element: class="fragment" data-fragment-index="2" -->
   <li>Decentralization</li>
+<!-- .element: class="fragment" data-fragment-index="3" -->
   <li>User Experience</li>
+<!-- .element: class="fragment" data-fragment-index="4" -->
   <li>Security</li>
+<!-- .element: class="fragment" data-fragment-index="5" -->
   <li>Cost Efficiency</li>
+<!-- .element: class="fragment" data-fragment-index="6" -->
+
 </ul>
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
@@ -570,10 +579,15 @@ Notes: is transport agnostic in that the concepts can be used within the same pr
 ## Why a new JSON RPC is needed:
 
 - Full Node Assumptions - not light client in-mind
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - Runtime Dependency
+<!-- .element: class="fragment" data-fragment-index="2" -->
 - DoS Attack Vulnerabilities
+<!-- .element: class="fragment" data-fragment-index="3" -->
 - Load Balancer Challenges
+<!-- .element: class="fragment" data-fragment-index="4" -->
 - Documentation Issues
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 Forum article of Pierre: https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048/1
@@ -1198,28 +1212,42 @@ Stay with me - the next is the last but not the easiest part:
 ## Unstoppable apps?
 
 <img style="height: 30rem" src="./assets/light-clients/on-chain-id.png" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 Using smoldot with PAPI:
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://polkadot-blockchain-academy.github.io/onchain-id-verification/</p>
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---v
 
 ## Unstoppable apps?
 
 <img style="height: 30rem" src="./assets/light-clients/local.png" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Using Substrate Connect with smoldot and PAPI
 
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">localhost:3001</p>
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---v
 
 ## Unstoppable apps?
 
 <img style="height: 30rem" src="./assets/light-clients/apps.png" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Using Substrate connect with smoldot and PolkadotJS API
 
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
 <p style="font-weight: bold; color: #d92f78; margin-top: 1rem">https://ipfs.io/ipns/dotapps.io/</p>
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes: IPFS: (InterPlanetary File System) is a protocol, hypermedia and file sharing peer-to-peer network for storing and sharing data in a distributed file system.
 ---v
@@ -1230,9 +1258,14 @@ Notes: IPFS: (InterPlanetary File System) is a protocol, hypermedia and file sha
 <img style="height: 30rem" src="./assets/light-clients/decentralized.png">
 
 - Decentralized Blockchain
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 - Light Clients
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
 - Interplanetary File System (IPFS)
-</section>
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+  </section>
 
 ---
 
