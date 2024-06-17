@@ -130,19 +130,6 @@ The DOT token serves multiple purposes to help the Polkadot network function:
 
 ---
 
-## Ideal Usage of DOT Tokens
-
-<diagram class="mermaid">
-%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
-pie title Ideal Usage of DOT
-    "Staking" : 2674
-    "Transfers / Other" : 1337
-</diagram>
-
-Polkadot's main utility is providing security, so ideally most DOT tokens are used for staking.
-
----
-
 ## DOT Inflation
 
 <div class="grid grid-cols-2">
