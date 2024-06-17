@@ -36,8 +36,8 @@ Unfortunately this presentation could never be fully exhaustive, but perhaps it 
 The DOT token can be in one of the following states:
 
 1. Transferable
-2. Locked (Frozen)
-3. Reserved (Held)
+2. Frozen (Locked)
+3. Held (Reserved)
 
 </div>
 
@@ -45,14 +45,14 @@ The DOT token can be in one of the following states:
 
 ---
 
-## Reserved vs Locked Balance
+## Frozen vs Held Balance
 
-- New terms "Frozen" and "Held" are not quite used in Polkadot yet...
+- Old terms "Reserved" and "Locked" are on their way out...
 - DOT in both states belong to the user... but cannot be spent / transferred.
-- Reserved balances stack on top of one another.
+- Held balances stack on top of one another.
   - Useful for user deposits, or other use cases where there is sybil concerns.
   - Ex: Deposit for storing data on-chain,
-- Locked balances can overlap each other.
+- Frozen balances can overlap each other.
   - Useful when you want to use the same tokens for multiple use cases.
   - Ex: Using the same tokens for both staking and voting in governance.
 
@@ -94,6 +94,18 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 ---
 
+## Scaling with Data Sharding
+
+- Polkadot is already designed to scale by sharding data.
+  - Polkadot only needs to store the merkle root representing large amounts of data.
+- The cost to store data on shards are orders of magnitude cheaper.
+- We can have decreased storage deposits on these shards:
+
+  - ED: 1.0 DOT on Polkadot -> .01 DOT on Asset Hub
+  - Identity: 20 DOT on Polkadot -> .2 DOT on People Chain
+
+---
+
 ## DOT is a Utility Token
 
 <div class="grid grid-cols-3">
@@ -108,8 +120,8 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 The DOT token serves multiple purposes to help the Polkadot network function:
 
+- Purchasing Blockspace
 - Staking
-- Bonding for Parachain Slots / Execution Cores
 - On-Chain Decision Making
 - Value Bearing for Trading / Using
 
@@ -120,18 +132,14 @@ The DOT token serves multiple purposes to help the Polkadot network function:
 
 ## Ideal Usage of DOT Tokens
 
-<image src="../../assets/img/7-Polkadot/ideal-token-distribution.svg" style="width: 1000px;">
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+pie title Ideal Usage of DOT
+    "Staking" : 2674
+    "Transfers / Other" : 1337
+</diagram>
 
-Approximately...
-
-Model to be updated after Agile Coretime is live, as parachain slot auctions will be obsolete
-and there are proposals to burn coretime revenue.
-
-Notes:
-
-- 50% Staking / Governance
-- 30% Parachains
-- 20% Tradable / Useable
+Polkadot's main utility is providing security, so ideally most DOT tokens are used for staking.
 
 ---
 
@@ -149,7 +157,9 @@ Notes:
 
 DOT is currently configured to have a fixed inflation rate of 10% per year.
 
-Newly minted tokens are distributed to stakers (validators / nominators) and the treasury.
+Newly minted tokens are distributed to the treasury and stakers (validators / nominators).
+
+RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
 
 </div>
 
