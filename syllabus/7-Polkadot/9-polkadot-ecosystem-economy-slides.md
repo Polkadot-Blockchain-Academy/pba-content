@@ -233,6 +233,7 @@ Developers can purchase this blockspace **only** with the DOT token.
 Notes:
 
 - https://forum.polkadot.network/t/initial-coretime-pricing/5187
+- https://grillapp.net/12935/agile-coretime-pricing-explained-166522
 - https://www.youtube.com/watch?v=ci-h9zC-57Y
 - https://twitter.com/rphmeier/status/1797339044893917397
 
