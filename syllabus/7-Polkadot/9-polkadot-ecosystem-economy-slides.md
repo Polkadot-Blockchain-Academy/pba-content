@@ -400,11 +400,25 @@ For instance, a referendum proposed in this track needs to amass 48.2% support (
 
 ## Treasury
 
+<div class="grid grid-cols-3">
+
+<div class="text-left col-span-2">
+
 Polkadot has an on-chain treasury which is used to support permissionless and decentralized development of the network.
 
-Treasury gets its funds through inefficiencies in the inflation curve, slashing, and by taking 80% transaction fees.
+- Treasury gets its funds through inflation, slashing, and by taking 80% transaction fees.
 
-Treasury will automatically burn a 1% of its funds every spending period (24 days), placing pressure on spending the tokens.
+- Treasury will automatically burn a 1% of its funds every spending period (24 days), placing pressure on spending the tokens.
+
+</div>
+
+<div>
+
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/treasury.svg" />
+
+</div>
+
+</div>
 
 ---
 
