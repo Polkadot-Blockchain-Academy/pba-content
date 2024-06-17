@@ -202,11 +202,39 @@ Developers can purchase this blockspace **only** with the DOT token.
 
 ---
 
-## Parachain Economics Updates
+## Evolution of the Blockspace Marketplace
+<div class="grid grid-cols-3">
 
-There is a lot of ongoing discussion about updating the economics of Parachains.
+<div>
 
-Likely, these mechanics will update pretty soon, and continually over time.
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
+
+</br></br>
+
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+
+</div>
+
+<div class="col-span-2">
+
+
+- Initially blockspace was only sold in 2 year slots, in the form of Parachain auctions.
+- We recently transitioned to agile coretime which allows more flexible access to blockspace.
+  - Coretime sales use periodic dutch auctions.
+- JAM will continue to increase the flexibility of allocating and distributing blockspace.
+- Exactly how blockspace is allocated and sold will continue to evolve over time.
+
+
+</div>
+
+</div>
+
+
+Notes:
+
+- https://forum.polkadot.network/t/initial-coretime-pricing/5187
+- https://www.youtube.com/watch?v=ci-h9zC-57Y
+- https://twitter.com/rphmeier/status/1797339044893917397
 
 ---
 
