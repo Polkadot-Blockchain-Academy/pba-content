@@ -202,20 +202,6 @@ Developers can purchase this blockspace **only** with the DOT token.
 
 ---
 
-## Expected Parachain Costs
-
-Back of the napkin math:
-
-- ~1 Billion DOT
-- 30% Locked Up for Parachains = 300 Million
-- ~100 Parachain = 3 Million DOT per Parachain Slot
-
-At equilibrium...
-
-The costs of running parachains change significantly with Agile Coretime.
-
----
-
 ## Parachain Economics Updates
 
 There is a lot of ongoing discussion about updating the economics of Parachains.
@@ -236,7 +222,7 @@ Given the existence of a value bearing token, it can be used to provide security
 
 - Stakers are rewarded for good behavior, and punished for bad behavior.
 
-- Punishments are aggressive enough that rational actors would never act maliciously.
+- Punishment is designed to maximize the costs for a rational actor and thereby deter misbehavior.
 
 https://polkadot.network/features/staking/
 
@@ -400,7 +386,7 @@ Treasury will automatically burn a 1% of its funds every spending period (24 day
 - Bounties: Multi-stage payments to individuals managed by governance and an appointed bounty curator.
 - Tips: Small payments to individuals that can be made more easily through specific governance tracks.
 
-The Polkadot Treasury currently has over 33,000,000 DOT.
+The Polkadot Treasury currently has over 22,000,000 DOT. (June 2024)
 
 ---
 
