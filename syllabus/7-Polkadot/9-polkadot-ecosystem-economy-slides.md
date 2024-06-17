@@ -517,23 +517,9 @@ https://substrate.io/ecosystem/projects/
 
 Thanks to the treasury and Polkadot community, a number of different wallets have been developed across the ecosystem.
 
-<div class="text-small">
+<image src="../../assets/img/7-Polkadot/eco/wallets.png" style="width: 1200px;">
 
-|     Wallet      |                  Platforms                  | Staking and Nomination Pools | NFTs | Crowdloans | Ledger support | Governance |
-| :-------------: | :-----------------------------------------: | :--------------------------: | :--: | :--------: | :------------: | :--------: |
-|     Enkrypt     | Brave, Chrome, Edge, Firefox, Opera, Safari |            No, No            | Yes  |     No     |      Yes       |     No     |
-|    PolkaGate    |        Brave, Chrome, Firefox, Edge         |           Yes, Yes           |  No  |    Yes     |      Yes       |    Yes     |
-|    SubWallet    | Brave, Chrome, Edge, Firefox, iOs, Android  |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
-|    Talisman     |        Brave, Chrome, Edge, Firefox         |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
-| Fearless Wallet |         Brave, Chrome, iOS, Android         |           Yes, Yes           |  No  |     No     |       No       |     No     |
-|   Nova Wallet   |                iOS, Android                 |           Yes, Yes           | Yes  |    Yes     |      Yes       |    Yes     |
-|   Polkawallet   |                iOS, Android                 |           Yes, Yes           |  No  |    Yes     |       No       |    Yes     |
-
-</div>
-
-Notes:
-
-TODO make more pretty with icons or other images
+https://polkadot.network/ecosystem/wallets/
 
 ---
 
@@ -563,7 +549,7 @@ Users can get clear visibility into the transactions they are signing, and perfo
 
 - Polkadot-JS Apps Explorer - Polkadot dashboard block explorer. Supports dozens of other networks, including Kusama, Westend, and other remote or local endpoints.
 - Subscan - Blockchain explorer for Substrate chains.
-- 3xpl.com - Fastest ad-free universal block explorer and JSON API with Polkadot support.
+- 3xpl.com - Universal block explorer and JSON API with Polkadot support.
 - Blockchair.com - Universal blockchain explorer and search engine with Polkadot support.
 - Statescan.io - Polkadot & Kusama Blockchain explorer.
 
