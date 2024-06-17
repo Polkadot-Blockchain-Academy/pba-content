@@ -484,15 +484,17 @@ https://wiki.polkadot.network/docs/learn-system-chains
 
 ---
 
-## Market Bought Parachains
+## Market Bought Blockspace
 
 <div class="grid grid-cols-2">
 
 <div>
 
-Anyone with a great idea, and access to DOT token, can launch a parachain on Polkadot.
+Anyone with a great idea, and access to DOT token, can launch an application on Polkadot.
 
 Dozens of teams from around the world have already done that, and are taking advantage of the features that Polkadot provides.
+
+With JAM, this will only get easier.
 
 </div>
 
@@ -554,7 +556,7 @@ https://polkadot.network/ecosystem/wallets/
 
 ---
 
-## Ledger Support w/ Metadata
+## Generic Ledger Support
 
 <div class="grid grid-cols-3">
 
@@ -573,6 +575,10 @@ Users can get clear visibility into the transactions they are signing, and perfo
 </div>
 
 </div>
+
+Notes:
+
+- https://forum.polkadot.network/t/polkadot-generic-ledger-app/4295
 
 ---
 
