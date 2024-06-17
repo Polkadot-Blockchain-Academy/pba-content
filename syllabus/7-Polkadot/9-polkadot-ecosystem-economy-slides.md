@@ -178,6 +178,7 @@ RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
 Notes:
 
 Blue line shows that:
+
 - When there is too little being staked, validators are encouraged to stake more.
 - When there is too much being staked, validators are encouraged to stake less.
 
@@ -203,6 +204,7 @@ Developers can purchase this blockspace **only** with the DOT token.
 ---
 
 ## Evolution of the Blockspace Marketplace
+
 <div class="grid grid-cols-3">
 
 <div>
@@ -217,18 +219,15 @@ Developers can purchase this blockspace **only** with the DOT token.
 
 <div class="col-span-2">
 
-
 - Initially blockspace was only sold in 2 year slots, in the form of Parachain auctions.
 - We recently transitioned to agile coretime which allows more flexible access to blockspace.
   - Coretime sales use periodic dutch auctions.
 - JAM will continue to increase the flexibility of allocating and distributing blockspace.
 - Exactly how blockspace is allocated and sold will continue to evolve over time.
 
-
 </div>
 
 </div>
-
 
 Notes:
 
