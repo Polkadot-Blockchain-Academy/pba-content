@@ -156,13 +156,12 @@ RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
 
 ## Ideal Staking Rate
 
-We cannot force / tell users how to use their tokens, so we encourage "ideal" behavior by associating DOT token usage to how inflation is distributed.
-
-There’s a function that redirects some of the 10% inflation to the Treasury, instead of the stakers, when `ideal_rate != staking_rate`.
-
-Token holders are financially incentivized to maximize their staking returns, and thus distribute their tokens appropriately.
-
-[Ideal staking rate model to be revisited](https://forum.polkadot.network/t/adjusting-polkadots-ideal-staking-rate-calculation/3897) after parachain slot auctions are discontinued.
+- We cannot force / tell users how to use their tokens.
+  - So we encourage "ideal" behavior by associating DOT token usage to how inflation is distributed.
+  - There’s a function that redirects staking inflation to the Treasury, instead of the stakers, when `ideal_rate != staking_rate`.
+  - Token holders are financially incentivized to maximize their staking returns, and thus distribute their tokens appropriately.
+- Ideal Staking Rate is in the process of being adjusted since the introduction of coretime sales:
+  - https://forum.polkadot.network/t/adjusting-polkadots-ideal-staking-rate-calculation/3897
 
 ---
 
@@ -176,13 +175,26 @@ Token holders are financially incentivized to maximize their staking returns, an
 >
 > Black: Total Inflation vs Staking Rate
 
+Notes:
+
+Blue line shows that:
+- When there is too little being staked, validators are encouraged to stake more.
+- When there is too much being staked, validators are encouraged to stake less.
+
+Green line shows that validator APY goes down whenever more validators enter the staking system, that is unavoidable, but specifically past the ideal staking rate, the decrease in APY sharply decreases.
+
+Black line shows that inflation for for the whole network is fixed at 10%.
+
+The gap between the blue line and the black line shows the amount of inflation that is forwarded to the treasury, as compared to given to validators.
+Event at the ideal staking rate, some percentage of the inflation is guaranteed to go to the treasury.
+
 ---
 
-## DOT Utility: Parachains
+## DOT Utility: Blockspace
 
 Polkadot provides many utilities, but arguably its most important utility is providing flexible, secure, and scalable blockspace.
 
-Developers can purchase this blockspace as fixed-term or on-demand Parachains, **only** with the DOT token.
+Developers can purchase this blockspace **only** with the DOT token.
 
 <br />
 
