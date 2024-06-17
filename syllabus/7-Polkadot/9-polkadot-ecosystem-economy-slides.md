@@ -447,44 +447,35 @@ This can help provide additional resilience to the network from software bugs.
 
 ---
 
-## Types of Parachains
+## System Parachains
 
-- Polkadot System Chains
-- Market Bought Parachains
-
-<br />
-
-Perhaps this list will grow once more agile core allocation systems are implemented.
-
----
-
-## System Chains
-
-- System parachains contain core Polkadot protocol features, on a parachain rather than the Relay Chain.
-- Polkadot uses its own parallel execution scaling technology scale itself.
-- System parachains remove transactions from the Relay Chain, allowing more Relay Chain blockspace to be used for Polkadot's primary purpose: validating parachains.
-- System Chains are allocated by governance.
+- System parachains contain core Polkadot protocol features, on a parachain rather than Polkadot itself.
+- **Polkadot uses its own heterogenous sharded scaling technology to scale itself.**
+- System parachains remove transactions from the main Polkadot chain, allowing it to allocate more blockspace to other services.
+- System parachains are allocated blockspace by governance.
 
 Notes:
 
-https://wiki.polkadot.network/docs/learn-system-chains
+- https://wiki.polkadot.network/docs/learn-system-chains
+- https://github.com/polkadot-fellows/RFCs/blob/34d26ff1aa343b0cc980afbf2f40c1d5b6a781ea/text/0032-minimal-relay.md
 
 ---
 
-## Current and Future System Chains
+## Current and Future System Parachains
 
 Current:
 
 - Asset Hub: Allows creation and registration of tokens (FT & NFTs).
-- Collectives: Acts as a place for coordination of the Polkadot DAOs.
 - Bridge Hub: A chain for managing bridges to other networks.
+- Coretime Chain: responsible for the sales of coretime.
+- Collectives: Acts as a place for coordination of the Polkadot DAOs.
 - Encointer: A third-party built chain providing Proof of Personhood.
+- People Chain: A chain for managing identity and Personhood.
 
 Future:
 
-- Coretime Chain: responsible for the sales of coretime.
-- Staking: Manage all the validator and nominator logic, rewards, etc...
 - Governance: Manage all the various proposals and tracks.
+- Staking: Manage all the validator and nominator logic, rewards, etc...
 - Eventually everything...
 
 Notes:
