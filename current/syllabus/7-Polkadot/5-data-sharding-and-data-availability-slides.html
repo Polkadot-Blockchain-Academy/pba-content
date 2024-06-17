@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>Data Availability and Data Sharding Deep Dive</title>
+  <title>Data Availability and Data Sharding</title>
   <link rel="icon" href="./../../assets/favicon.svg" />
   <link rel="shortcut icon" href="./../../assets/favicon.png" />
   <link rel="stylesheet" href="./../../dist/reset.css" />
@@ -43,22 +43,31 @@
 
 </pba-flex>
 </script></section><section  data-markdown><script type="text/template">
-## What Data Needs Availability?
+## What Data Needs Offchain Availability?
 
 <pba-flex center>
 
-Sharded Permanent Record: **Parachains!**
+Sharded Permanent Record? ❌ **Parachains!**
 
-Condensed Permanent Record: **Relay Chain!**
+Condensed Permanent Record? ❌ **Relay Chain!**
 
-Comprehensive 24 Hour Record: **Polkadot DA!**
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Comprehensive 24 Hour Record? ✅ **Polkadot DA!**
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
 <aside class="notes"><ul>
-<li>Most data live solely on parachains</li>
+<li>Most permanent data live solely on parachains</li>
 <li>Condensed data, hashes and commitments, stored on relay chain</li>
-<li>DA secures heavy (MBs) information critical to the secure progression of parachains. Should be dropped from validators when old.</li>
+<li>Polkadot DA secures proofs of validity. PoV&#39;s contain information critical to the secure progression of parachains. These are dropped from validators when old.</li>
+<li>Way too large for on-chain storage!<ul>
+<li>All other data added to relay chain per day: ~555M</li>
+<li>40 PoVs per block for a day: ~72G</li>
+</ul>
+</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Data Availability Problem
@@ -69,14 +78,9 @@ Incorrectness can be proven (merkle proofs), but unavailability can't.
 
 <aside class="notes"><ul>
 <li>You can&#39;t just hold a small number of nodes accountable for making some data available</li>
-<li>Needs an off chain solution!<ul>
-<li>All other data added to relay chain per day: ~555M</li>
-<li>40 PoVs per block for a day: ~72G</li>
-</ul>
-</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
-### Data Availability Problem: Parachains
+### Vulnerabilities With No DA: Malicious Collator
 
 <div class="r-stack">
 <img src="assets/data-availability-and-sharding/DA_Parachains_1.svg" style="width: 70%" />
@@ -94,17 +98,17 @@ Incorrectness can be proven (merkle proofs), but unavailability can't.
 <li>Validators keep enough info for collators to reconstruct recent parachain blocks</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
-### Data Availability Problem: Relay Chain
+### Vulnerabilities With No DA: Malicious Backers
 
 <img src="assets/data-availability-and-sharding/DA_Relay_1.svg" style="width: 70%" />
 
 <aside class="notes"><ul>
-<li>Malicious backers could distribute invalid PoV to only malicious approval checkers</li>
+<li>Malicious backers could distribute invalid PoV selectively to malicious approval checkers or not at all</li>
 <li>Really bad</li>
 <li>It means attackers could consistently finalize invalid parachain blocks with just a hand full of dishonest approval checkers</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
-### Data Availability Problem: Relay Chain
+### Vulnerabilities With No DA: Malicious Backers
 
 <img src="assets/data-availability-and-sharding/DA_Relay_2.svg" style="width: 70%" />
 
@@ -139,12 +143,14 @@ Incorrectness can be proven (merkle proofs), but unavailability can't.
 <pba-col center>
 
 - Minimal unit of Polkadot execution scheduling
-- At most 1 candidate pending availability per relay block, per core
+- Cores abstract over several processing and storage resources
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- Considered "occupied" while a candidate paired with that core is pending availability
+- At most 1 candidate pending availability per relay block, per core
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- It saves resources to bundle signals about availability for all cores together
+- Considered "occupied" while a candidate paired with that core is pending availability
 <!-- .element: class="fragment" data-fragment-index="3" -->
+- It saves resources to bundle signals about availability for all cores together
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-col>
 <pba-col center>
@@ -153,7 +159,17 @@ Incorrectness can be proven (merkle proofs), but unavailability can't.
 
 </pba-col>
 </pba-cols>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><ul>
+<li>Cores abstract over<ul>
+<li>Backing processing</li>
+<li>DA processing</li>
+<li>DA storage</li>
+<li>On-Chain Inclusion</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 ### Laying the Foundation: Erasure Coding
 
 The goal: Avoid storing full PoV in each validator
@@ -317,7 +333,10 @@ For any number $n$ of points $(x_i,y_i)$ there exists only one polynomial of deg
 
 <img rounded style="width: 1000px" src="assets/data-availability-and-sharding/polynomial-2.png" />
 
-<aside class="notes"><p>Question: What are x_i and y_i wrt to our data?</p>
+<aside class="notes"><ul>
+<li>We can mathematically derive the interpolating polynomial for any set of points.</li>
+</ul>
+<p>Question: What are x_i and y_i wrt to our data?</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 ### Interpolation for Data Recovery
 

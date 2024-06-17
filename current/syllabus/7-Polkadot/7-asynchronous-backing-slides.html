@@ -55,14 +55,12 @@
 
 <img rounded style="width: 1000px" src="assets/shallow-dive-asynchronous-backing/synchronous_backing_simplified.svg" />
 
-> How is this synchronous?
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
 <aside class="notes"><ul>
-<li>The dividing line between the left and right is when a candidate is backed on chain</li>
-<li>Approvals, disputes, and finality don&#39;t immediately gate the production of farther candidates.
-So we don&#39;t need to represent those steps in this model.</li>
+<li>In synchronous backing: Backing for block <code>N+1</code> starts after inclusion for block <code>N</code> is complete. Backing and inclusion cannot take place simultaneously for different candidates of the same parachain and neither can outpace the other.</li>
+<li>White arrows represent execution flow</li>
+<li>The tasks within each of these purple circles take place during the time of a single relay chain block.</li>
+<li>Why might each of these two groupings of tasks need its own relay block to execute?</li>
+<li>Approvals, disputes, and finality not represented. Why?</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Async Backing Simplified
@@ -75,13 +73,9 @@ So we don&#39;t need to represent those steps in this model.</li>
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
-> How is this asynchronous?
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
 <aside class="notes"><ul>
-<li>Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing</li>
-<li>Why is backing asynchronous in this diagram?</li>
+<li>Notice difference in white execution arrow. Backing repeats, looping over and over. How is this possible?</li>
+<li>Our cache of backable parablock candidates allows inclusion to loop independently</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## The Async Backing Optimistic Collator Assumptions
@@ -145,6 +139,7 @@ Brief BABE fork choice rule review</p>
 </ul>
 <p>Image version 3:</p>
 <ul>
+<li>The execution context for a new parablock requires its parablock parent and relay parent</li>
 <li>Whole process is a cycle of duration 12 seconds (2 relay blocks).</li>
 <li>No part of this cycle can be started for a second candidate of the same parachain until the first is included.</li>
 </ul>
@@ -190,7 +185,7 @@ Brief BABE fork choice rule review</p>
 
 </pba-flex>
 
-<aside class="notes"><p>Limitation example, upward messages remaining before the relay chain would have to drop incoming messages from our parachain</p>
+<aside class="notes"><p>Limitation example: upward messages remaining before the relay chain would have to drop incoming messages from our parachain</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Unincluded Segment
 
@@ -237,7 +232,7 @@ Brief BABE fork choice rule review</p>
 <li>Fragment trees are rooted in relay chain active leaves</li>
 <li>Fragment trees built per scheduled parachain at each leaf</li>
 <li>Fragment trees may have 0 or more fragments representing potential parablocks making up possible futures for a parachain&#39;s state.</li>
-<li>Collation generation, passing, and seconding work has already been completed for each fragment.</li>
+<li>Collation generation and seconding work has already been completed for each fragment.</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Async Backing Simplified
@@ -248,8 +243,8 @@ Brief BABE fork choice rule review</p>
 
 <aside class="notes"><p>Returning to our most basic diagram</p>
 <ul>
-<li>Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram?</li>
-<li>Q: Which did I omit entirely?</li>
+<li>Q: Which parablock storage structure did I leave out the name of for simplicity, and where should that name go in our diagram?</li>
+<li>Q: Which parablock storage structure did I omit entirely?</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## Async Backing and Exotic Core Scheduling
@@ -259,7 +254,7 @@ Brief BABE fork choice rule review</p>
 <aside class="notes"><ul>
 <li>What is exotic core scheduling?<ul>
 <li>Multiple cores per parachain</li>
-<li>Overlapping leases of many lengths</li>
+<li>Overlapping bulk coretime leases of varying lengths</li>
 <li>Lease + On-demand</li>
 </ul>
 </li>
