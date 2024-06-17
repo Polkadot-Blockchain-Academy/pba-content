@@ -30,9 +30,11 @@ owner: Bradley Olson
 Sharded Permanent Record? ❌ **Parachains!**
 
 Condensed Permanent Record? ❌ **Relay Chain!**
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Comprehensive 24 Hour Record? ✅ **Polkadot DA!**
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
