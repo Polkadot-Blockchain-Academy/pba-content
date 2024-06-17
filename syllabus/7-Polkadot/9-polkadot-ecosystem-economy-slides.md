@@ -33,11 +33,13 @@ Unfortunately this presentation could never be fully exhaustive, but perhaps it 
 
 <div class="text-left">
 
-The DOT token can be in one of the following states:
+DOT is the native token of the Polkadot Network.
+
+DOT tokens can be in one of the following states:
 
 1. Transferable
-2. Locked (Frozen)
-3. Reserved (Held)
+2. Frozen (Locked)
+3. Held (Reserved)
 
 </div>
 
@@ -45,14 +47,14 @@ The DOT token can be in one of the following states:
 
 ---
 
-## Reserved vs Locked Balance
+## Frozen vs Held Balance
 
-- New terms "Frozen" and "Held" are not quite used in Polkadot yet...
+- Old terms "Reserved" and "Locked" are on their way out...
 - DOT in both states belong to the user... but cannot be spent / transferred.
-- Reserved balances stack on top of one another.
+- Held balances stack on top of one another.
   - Useful for user deposits, or other use cases where there is sybil concerns.
   - Ex: Deposit for storing data on-chain,
-- Locked balances can overlap each other.
+- Frozen balances can overlap each other.
   - Useful when you want to use the same tokens for multiple use cases.
   - Ex: Using the same tokens for both staking and voting in governance.
 
@@ -94,6 +96,17 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 ---
 
+## Scaling with Data Sharding
+
+- Polkadot is already designed to scale by sharding data.
+  - Polkadot only needs to store the merkle root representing large amounts of data.
+- The cost to store data on shards are orders of magnitude cheaper.
+  - We can have decreased storage deposits on these shards:
+    - ED: 1.0 DOT on Polkadot -> .01 DOT on Asset Hub
+    - Identity: 20 DOT on Polkadot -> .2 DOT on People Chain
+
+---
+
 ## DOT is a Utility Token
 
 <div class="grid grid-cols-3">
@@ -108,30 +121,13 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 The DOT token serves multiple purposes to help the Polkadot network function:
 
+- Purchasing Blockspace
 - Staking
-- Bonding for Parachain Slots / Execution Cores
 - On-Chain Decision Making
 - Value Bearing for Trading / Using
 
 </div>
 </div>
-
----
-
-## Ideal Usage of DOT Tokens
-
-<image src="../../assets/img/7-Polkadot/ideal-token-distribution.svg" style="width: 1000px;">
-
-Approximately...
-
-Model to be updated after Agile Coretime is live, as parachain slot auctions will be obsolete
-and there are proposals to burn coretime revenue.
-
-Notes:
-
-- 50% Staking / Governance
-- 30% Parachains
-- 20% Tradable / Useable
 
 ---
 
@@ -149,7 +145,9 @@ Notes:
 
 DOT is currently configured to have a fixed inflation rate of 10% per year.
 
-Newly minted tokens are distributed to stakers (validators / nominators) and the treasury.
+Newly minted tokens are distributed to the treasury and stakers (validators / nominators).
+
+RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
 
 </div>
 
@@ -159,13 +157,12 @@ Newly minted tokens are distributed to stakers (validators / nominators) and the
 
 ## Ideal Staking Rate
 
-We cannot force / tell users how to use their tokens, so we encourage "ideal" behavior by associating DOT token usage to how inflation is distributed.
-
-There’s a function that redirects some of the 10% inflation to the Treasury, instead of the stakers, when `ideal_rate != staking_rate`.
-
-Token holders are financially incentivized to maximize their staking returns, and thus distribute their tokens appropriately.
-
-[Ideal staking rate model to be revisited](https://forum.polkadot.network/t/adjusting-polkadots-ideal-staking-rate-calculation/3897) after parachain slot auctions are discontinued.
+- We cannot force / tell users how to use their tokens.
+  - So we encourage "ideal" behavior by associating DOT token usage to how inflation is distributed.
+  - There’s a function that redirects staking inflation to the Treasury, instead of the stakers, when `ideal_rate != staking_rate`.
+  - Token holders are financially incentivized to maximize their staking returns, and thus distribute their tokens appropriately.
+- Ideal Staking Rate is in the process of being adjusted since the introduction of coretime sales:
+  - https://forum.polkadot.network/t/adjusting-polkadots-ideal-staking-rate-calculation/3897
 
 ---
 
@@ -179,13 +176,27 @@ Token holders are financially incentivized to maximize their staking returns, an
 >
 > Black: Total Inflation vs Staking Rate
 
+Notes:
+
+Blue line shows that:
+
+- When there is too little being staked, validators are encouraged to stake more.
+- When there is too much being staked, validators are encouraged to stake less.
+
+Green line shows that validator APY goes down whenever more validators enter the staking system, that is unavoidable, but specifically past the ideal staking rate, the decrease in APY sharply decreases.
+
+Black line shows that inflation for for the whole network is fixed at 10%.
+
+The gap between the blue line and the black line shows the amount of inflation that is forwarded to the treasury, as compared to given to validators.
+Event at the ideal staking rate, some percentage of the inflation is guaranteed to go to the treasury.
+
 ---
 
-## DOT Utility: Parachains
+## DOT Utility: Purchasing Blockspace
 
 Polkadot provides many utilities, but arguably its most important utility is providing flexible, secure, and scalable blockspace.
 
-Developers can purchase this blockspace as fixed-term or on-demand Parachains, **only** with the DOT token.
+Developers can purchase this blockspace **only** with the DOT token.
 
 <br />
 
@@ -193,25 +204,38 @@ Developers can purchase this blockspace as fixed-term or on-demand Parachains, *
 
 ---
 
-## Expected Parachain Costs
+## Evolution of the Blockspace Marketplace
 
-Back of the napkin math:
+<div class="grid grid-cols-3">
 
-- ~1 Billion DOT
-- 30% Locked Up for Parachains = 300 Million
-- ~100 Parachain = 3 Million DOT per Parachain Slot
+<div>
 
-At equilibrium...
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
 
-The costs of running parachains change significantly with Agile Coretime.
+</br></br>
 
----
+<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
 
-## Parachain Economics Updates
+</div>
 
-There is a lot of ongoing discussion about updating the economics of Parachains.
+<div class="col-span-2">
 
-Likely, these mechanics will update pretty soon, and continually over time.
+- Initially blockspace was only sold in 2 year slots, in the form of Parachain auctions.
+- We recently transitioned to agile coretime which allows more flexible access to blockspace.
+  - Coretime sales use periodic dutch auctions.
+- JAM will continue to increase the flexibility of allocating and distributing blockspace.
+- Exactly how blockspace is allocated and sold will continue to evolve over time.
+
+</div>
+
+</div>
+
+Notes:
+
+- https://forum.polkadot.network/t/initial-coretime-pricing/5187
+- https://grillapp.net/12935/agile-coretime-pricing-explained-166522
+- https://www.youtube.com/watch?v=ci-h9zC-57Y
+- https://twitter.com/rphmeier/status/1797339044893917397
 
 ---
 
@@ -227,7 +251,7 @@ Given the existence of a value bearing token, it can be used to provide security
 
 - Stakers are rewarded for good behavior, and punished for bad behavior.
 
-- Punishments are aggressive enough that rational actors would never act maliciously.
+- Punishment is designed to maximize the costs for a rational actor and thereby deter misbehavior.
 
 https://polkadot.network/features/staking/
 
@@ -366,22 +390,36 @@ For instance, a referendum proposed in this track needs to amass 48.2% support (
 
 ## Governance Token Mechanics
 
-- DOT tokens are locked when you vote on a proposal.
-- You can reuse your locked tokens across multiple proposals.
+- DOT tokens are frozen when you vote on a proposal.
+- You can reuse your frozen tokens across multiple proposals.
   - Voting for one proposal does not affect your ability to vote on another proposal.
-- You can also reuse staked tokens (which are also just locked).
+- You can also reuse staked tokens (which are also just frozen).
 - You can update your vote while the proposal is ongoing.
-- If you used conviction voting, your tokens might be locked for long periods of time passed the end of a proposal.
+- If you used conviction voting, your tokens might be frozen for long periods of time passed the end of a proposal.
 
 ---
 
 ## Treasury
 
+<div class="grid grid-cols-3">
+
+<div class="text-left col-span-2">
+
 Polkadot has an on-chain treasury which is used to support permissionless and decentralized development of the network.
 
-Treasury gets its funds through inefficiencies in the inflation curve, slashing, and by taking 80% transaction fees.
+- Treasury gets its funds through inflation, slashing, and by taking 80% transaction fees.
 
-Treasury will automatically burn a 1% of its funds every spending period (24 days), placing pressure on spending the tokens.
+- Treasury will automatically burn a 1% of its funds every spending period (24 days), placing pressure on spending the tokens.
+
+</div>
+
+<div>
+
+<img style="width: 500px;" src="../../assets/img/7-Polkadot/decisions/treasury.svg" />
+
+</div>
+
+</div>
 
 ---
 
@@ -391,7 +429,7 @@ Treasury will automatically burn a 1% of its funds every spending period (24 day
 - Bounties: Multi-stage payments to individuals managed by governance and an appointed bounty curator.
 - Tips: Small payments to individuals that can be made more easily through specific governance tracks.
 
-The Polkadot Treasury currently has over 33,000,000 DOT.
+The Polkadot Treasury currently has over 22,000,000 DOT. (June 2024)
 
 ---
 
@@ -399,57 +437,45 @@ The Polkadot Treasury currently has over 33,000,000 DOT.
 
 ---
 
-## Alternative Polkadot Clients
+## A Future Full of Clients
 
-The main Polkadot Client is built using Rust in Substrate.
+The Web3 Foundation is allocating 10 Million DOT for creating a diverse ecosystem of Polkadot clients.
 
-However, other clients for Polkadot are under development:
+<img style="width: 1200px;" src="../../assets/img/7-Polkadot/eco/jam-clients.png" />
 
-- Kagome (C++17): https://github.com/soramitsu/kagome
-- Gossamer (Go): https://github.com/ChainSafe/gossamer
-
-Over time, this can help provide additional resilience to the network from software bugs.
+This can help provide additional resilience to the network from software bugs.
 
 ---
 
-## Types of Parachains
+## System Parachains
 
-- Polkadot System Chains
-- Market Bought Parachains
-
-<br />
-
-Perhaps this list will grow once more agile core allocation systems are implemented.
-
----
-
-## System Chains
-
-- System parachains contain core Polkadot protocol features, on a parachain rather than the Relay Chain.
-- Polkadot uses its own parallel execution scaling technology scale itself.
-- System parachains remove transactions from the Relay Chain, allowing more Relay Chain blockspace to be used for Polkadot's primary purpose: validating parachains.
-- System Chains are allocated by governance.
+- System parachains contain core Polkadot protocol features, on a parachain rather than Polkadot itself.
+- **Polkadot uses its own heterogenous sharded scaling technology to scale itself.**
+- System parachains remove transactions from the main Polkadot chain, allowing it to allocate more blockspace to other services.
+- System parachains are allocated blockspace by governance.
 
 Notes:
 
-https://wiki.polkadot.network/docs/learn-system-chains
+- https://wiki.polkadot.network/docs/learn-system-chains
+- https://github.com/polkadot-fellows/RFCs/blob/34d26ff1aa343b0cc980afbf2f40c1d5b6a781ea/text/0032-minimal-relay.md
 
 ---
 
-## Current and Future System Chains
+## Current and Future System Parachains
 
 Current:
 
 - Asset Hub: Allows creation and registration of tokens (FT & NFTs).
-- Collectives: Acts as a place for coordination of the Polkadot DAOs.
 - Bridge Hub: A chain for managing bridges to other networks.
+- Coretime Chain: responsible for the sales of coretime.
+- Collectives: Acts as a place for coordination of the Polkadot DAOs.
 - Encointer: A third-party built chain providing Proof of Personhood.
+- People Chain: A chain for managing identity and Personhood.
 
 Future:
 
-- Coretime Chain: responsible for the sales of coretime.
-- Staking: Manage all the validator and nominator logic, rewards, etc...
 - Governance: Manage all the various proposals and tracks.
+- Staking: Manage all the validator and nominator logic, rewards, etc...
 - Eventually everything...
 
 Notes:
@@ -458,15 +484,17 @@ https://wiki.polkadot.network/docs/learn-system-chains
 
 ---
 
-## Market Bought Parachains
+## Market Bought Blockspace
 
 <div class="grid grid-cols-2">
 
 <div>
 
-Anyone with a great idea, and access to DOT token, can launch a parachain on Polkadot.
+Anyone with a great idea, and access to DOT token, can launch an application on Polkadot.
 
 Dozens of teams from around the world have already done that, and are taking advantage of the features that Polkadot provides.
+
+With JAM, this will only get easier.
 
 </div>
 
@@ -522,27 +550,13 @@ https://substrate.io/ecosystem/projects/
 
 Thanks to the treasury and Polkadot community, a number of different wallets have been developed across the ecosystem.
 
-<div class="text-small">
+<image src="../../assets/img/7-Polkadot/eco/wallets.png" style="width: 1200px;">
 
-|     Wallet      |                  Platforms                  | Staking and Nomination Pools | NFTs | Crowdloans | Ledger support | Governance |
-| :-------------: | :-----------------------------------------: | :--------------------------: | :--: | :--------: | :------------: | :--------: |
-|     Enkrypt     | Brave, Chrome, Edge, Firefox, Opera, Safari |            No, No            | Yes  |     No     |      Yes       |     No     |
-|    PolkaGate    |        Brave, Chrome, Firefox, Edge         |           Yes, Yes           |  No  |    Yes     |      Yes       |    Yes     |
-|    SubWallet    | Brave, Chrome, Edge, Firefox, iOs, Android  |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
-|    Talisman     |        Brave, Chrome, Edge, Firefox         |           Yes, Yes           | Yes  |    Yes     |      Yes       |     No     |
-| Fearless Wallet |         Brave, Chrome, iOS, Android         |           Yes, Yes           |  No  |     No     |       No       |     No     |
-|   Nova Wallet   |                iOS, Android                 |           Yes, Yes           | Yes  |    Yes     |      Yes       |    Yes     |
-|   Polkawallet   |                iOS, Android                 |           Yes, Yes           |  No  |    Yes     |       No       |    Yes     |
-
-</div>
-
-Notes:
-
-TODO make more pretty with icons or other images
+https://polkadot.network/ecosystem/wallets/
 
 ---
 
-## Ledger Support w/ Metadata
+## Generic Ledger Support
 
 <div class="grid grid-cols-3">
 
@@ -562,13 +576,17 @@ Users can get clear visibility into the transactions they are signing, and perfo
 
 </div>
 
+Notes:
+
+- https://forum.polkadot.network/t/polkadot-generic-ledger-app/4295
+
 ---
 
 ## Block Explorers
 
 - Polkadot-JS Apps Explorer - Polkadot dashboard block explorer. Supports dozens of other networks, including Kusama, Westend, and other remote or local endpoints.
 - Subscan - Blockchain explorer for Substrate chains.
-- 3xpl.com - Fastest ad-free universal block explorer and JSON API with Polkadot support.
+- 3xpl.com - Universal block explorer and JSON API with Polkadot support.
 - Blockchair.com - Universal blockchain explorer and search engine with Polkadot support.
 - Statescan.io - Polkadot & Kusama Blockchain explorer.
 

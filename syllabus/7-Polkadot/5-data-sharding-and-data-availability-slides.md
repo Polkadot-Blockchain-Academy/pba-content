@@ -1,5 +1,5 @@
 ---
-title: Data Availability and Data Sharding Deep Dive
+title: Data Availability and Data Sharding
 description: Data Availability Problem, Erasure coding, Data sharding.
 duration: 1h
 owner: Bradley Olson
@@ -23,23 +23,30 @@ owner: Bradley Olson
 
 ---
 
-## What Data Needs Availability?
+## What Data Needs Offchain Availability?
 
 <pba-flex center>
 
-Sharded Permanent Record: **Parachains!**
+Sharded Permanent Record? ❌ **Parachains!**
 
-Condensed Permanent Record: **Relay Chain!**
+Condensed Permanent Record? ❌ **Relay Chain!**
 
-Comprehensive 24 Hour Record: **Polkadot DA!**
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Comprehensive 24 Hour Record? ✅ **Polkadot DA!**
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 </pba-flex>
 
 Notes:
 
-- Most data live solely on parachains
+- Most permanent data live solely on parachains
 - Condensed data, hashes and commitments, stored on relay chain
-- DA secures heavy (MBs) information critical to the secure progression of parachains. Should be dropped from validators when old.
+- Polkadot DA secures proofs of validity. PoV's contain information critical to the secure progression of parachains. These are dropped from validators when old.
+- Way too large for on-chain storage!
+  - All other data added to relay chain per day: ~555M
+  - 40 PoVs per block for a day: ~72G
 
 ---
 
@@ -52,13 +59,10 @@ Incorrectness can be proven (merkle proofs), but unavailability can't.
 Notes:
 
 - You can't just hold a small number of nodes accountable for making some data available
-- Needs an off chain solution!
-  - All other data added to relay chain per day: ~555M
-  - 40 PoVs per block for a day: ~72G
 
 ---
 
-### Data Availability Problem: Parachains
+### Vulnerabilities With No DA: Malicious Collator
 
 <div class="r-stack">
 <img src="assets/data-availability-and-sharding/DA_Parachains_1.svg" style="width: 70%" />
@@ -79,19 +83,19 @@ Solution:
 
 ---
 
-### Data Availability Problem: Relay Chain
+### Vulnerabilities With No DA: Malicious Backers
 
 <img src="assets/data-availability-and-sharding/DA_Relay_1.svg" style="width: 70%" />
 
 Notes:
 
-- Malicious backers could distribute invalid PoV to only malicious approval checkers
+- Malicious backers could distribute invalid PoV selectively to malicious approval checkers or not at all
 - Really bad
 - It means attackers could consistently finalize invalid parachain blocks with just a hand full of dishonest approval checkers
 
 ---
 
-### Data Availability Problem: Relay Chain
+### Vulnerabilities With No DA: Malicious Backers
 
 <img src="assets/data-availability-and-sharding/DA_Relay_2.svg" style="width: 70%" />
 
@@ -132,12 +136,14 @@ Notes:
 <pba-col center>
 
 - Minimal unit of Polkadot execution scheduling
-- At most 1 candidate pending availability per relay block, per core
+- Cores abstract over several processing and storage resources
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- Considered "occupied" while a candidate paired with that core is pending availability
+- At most 1 candidate pending availability per relay block, per core
 <!-- .element: class="fragment" data-fragment-index="2" -->
-- It saves resources to bundle signals about availability for all cores together
+- Considered "occupied" while a candidate paired with that core is pending availability
 <!-- .element: class="fragment" data-fragment-index="3" -->
+- It saves resources to bundle signals about availability for all cores together
+<!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-col>
 <pba-col center>
@@ -146,6 +152,14 @@ Notes:
 
 </pba-col>
 </pba-cols>
+
+Notes:
+
+- Cores abstract over
+  - Backing processing
+  - DA processing
+  - DA storage
+  - On-Chain Inclusion
 
 ---
 
@@ -332,6 +346,8 @@ For any number $n$ of points $(x_i,y_i)$ there exists only one polynomial of deg
 <img rounded style="width: 1000px" src="assets/data-availability-and-sharding/polynomial-2.png" />
 
 Notes:
+
+- We can mathematically derive the interpolating polynomial for any set of points.
 
 Question: What are x_i and y_i wrt to our data?
 
