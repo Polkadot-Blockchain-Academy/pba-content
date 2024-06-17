@@ -437,16 +437,13 @@ The Polkadot Treasury currently has over 22,000,000 DOT. (June 2024)
 
 ---
 
-## Alternative Polkadot Clients
+## A Future Full of Clients
 
-The main Polkadot Client is built using Rust in Substrate.
+The Web3 Foundation is allocating 10 Million DOT for creating a diverse ecosystem of Polkadot clients.
 
-However, other clients for Polkadot are under development:
+<img style="width: 1200px;" src="../../assets/img/7-Polkadot/eco/jam-clients.png" />
 
-- Kagome (C++17): https://github.com/soramitsu/kagome
-- Gossamer (Go): https://github.com/ChainSafe/gossamer
-
-Over time, this can help provide additional resilience to the network from software bugs.
+This can help provide additional resilience to the network from software bugs.
 
 ---
 
