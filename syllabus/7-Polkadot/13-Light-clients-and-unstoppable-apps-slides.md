@@ -551,6 +551,10 @@ ready</div>
 
 ---
 
+# Questions?
+
+---
+
 #### But before we go on... lets remember JSON-RPC
 
 - stateless, light-weight remote procedure call (RPC) protocol;
