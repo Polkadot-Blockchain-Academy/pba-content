@@ -39,15 +39,13 @@ Lets get to it
 
 <img rounded style="width: 1000px" src="assets/shallow-dive-asynchronous-backing/synchronous_backing_simplified.svg" />
 
-> How is this synchronous?
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
 Notes:
 
-- The dividing line between the left and right is when a candidate is backed on chain
-- Approvals, disputes, and finality don't immediately gate the production of farther candidates.
-  So we don't need to represent those steps in this model.
+- In synchronous backing: Backing for block `N+1` starts after inclusion for block `N` is complete. Backing and inclusion cannot take place simultaneously for different candidates of the same parachain and neither can outpace the other.
+- White arrows represent execution flow
+- The tasks within each of these purple circles take place during the time of a single relay chain block.
+- Why might each of these two groupings of tasks need its own relay block to execute?
+- Approvals, disputes, and finality not represented. Why?
 
 ---
 
@@ -61,14 +59,10 @@ Notes:
 <!-- .element: class="fragment" data-fragment-index="2" -->
 </div>
 
-> How is this asynchronous?
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
 Notes:
 
-- Our cache of parablock candidates allows us to pause just before that dividing line, on-chain backing
-- Why is backing asynchronous in this diagram?
+- Notice difference in white execution arrow. Backing repeats, looping over and over. How is this possible?
+- Our cache of backable parablock candidates allows inclusion to loop independently
 
 ---
 
@@ -143,6 +137,7 @@ Image version 1:
 
 Image version 3:
 
+- The execution context for a new parablock requires its parablock parent and relay parent
 - Whole process is a cycle of duration 12 seconds (2 relay blocks).
 - No part of this cycle can be started for a second candidate of the same parachain until the first is included.
 
@@ -194,7 +189,7 @@ Image version 3:
 
 Notes:
 
-Limitation example, upward messages remaining before the relay chain would have to drop incoming messages from our parachain
+Limitation example: upward messages remaining before the relay chain would have to drop incoming messages from our parachain
 
 ---
 
@@ -251,7 +246,7 @@ Notes:
 - Fragment trees are rooted in relay chain active leaves
 - Fragment trees built per scheduled parachain at each leaf
 - Fragment trees may have 0 or more fragments representing potential parablocks making up possible futures for a parachain's state.
-- Collation generation, passing, and seconding work has already been completed for each fragment.
+- Collation generation and seconding work has already been completed for each fragment.
 
 ---
 
@@ -265,8 +260,8 @@ Notes:
 
 Returning to our most basic diagram
 
-- Q: Which structure did I leave out the name of for simplicity, and where should that name go in our diagram?
-- Q: Which did I omit entirely?
+- Q: Which parablock storage structure did I leave out the name of for simplicity, and where should that name go in our diagram?
+- Q: Which parablock storage structure did I omit entirely?
 
 ---
 
@@ -278,7 +273,7 @@ Notes:
 
 - What is exotic core scheduling?
   - Multiple cores per parachain
-  - Overlapping leases of many lengths
+  - Overlapping bulk coretime leases of varying lengths
   - Lease + On-demand
 - How does asynchronous backing help?
   - The unincluded segment is necessary to build 2 or more parablocks in a single relay block
