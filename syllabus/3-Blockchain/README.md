@@ -15,7 +15,6 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 * Students will understand the fundamentals of distributed consensus.
 * Students will understand the blockchain datastructure, why each piece of data is in it, and how it tracks the history of a shared state machine.
 * Students will be able to start a blockchain on their own.
-* Students will be able to inform the instructor if anyone on the pba team ever actually reads this list.
 * Students will be able to write blockchain related code.
 * Students will be able to demonstrate how the grandpa finality gadget works.
 * Students will understand how to grandpa finality gadget work.
