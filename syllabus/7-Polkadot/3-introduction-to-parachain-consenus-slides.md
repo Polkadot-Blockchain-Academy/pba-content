@@ -14,7 +14,7 @@ Introduction
 
 # Polkadot
 
-## Core Tenets (In My Opinion)
+## Core Tenets
 
 - Polkadot is a decentralized open-source community
 
@@ -31,7 +31,7 @@ Polkadot is a decentralized open-source community. Hopefully at this point you g
 
 # Polkadot
 
-## Core Tenets (In My Opinion)
+## Core Tenets
 
 - Polkadot is a decentralized open-source community
 
@@ -46,7 +46,7 @@ Polkadot is a permissionless and ubiquitous computer. The key pieces to this wer
 
 # Polkadot
 
-## Core Tenets (In My Opinion)
+## Core Tenets
 
 - Polkadot is a decentralized open-source community
 
@@ -60,10 +60,10 @@ And to succeed in that mission Let's dive into the main topic for today - Parach
 
 ---
 
-# What is Parachains Consensus?
+# What is Parachain Consensus?
 
 Notes:
-We will be looking at what is parachain consensus?
+We will be looking at what is parachain consensus.
 
 ---
 
@@ -72,7 +72,7 @@ We will be looking at what is parachain consensus?
 <img style="width: 500px" src="./assets/execution-sharding/polkadot-components.svg"/>
 
 Notes:
-Game analogy. NPoS decides who plays the game, parachain consensus are the rules of the game. Governance helps us evolve the game over time so it's never stale and keeps up with the times.
+Parachain consensus sits among the core three protocol pillars in Polkadot. The way I like looking at it is that Parachain Consensus is like a game. NPoS decides who plays the game, parachain consensus are the rules of the game. Governance helps us evolve the game over time so it's never stale and keeps up with the times. And also if the game breaks and rules stop making sense we can change them.
 
 ---
 
@@ -81,7 +81,7 @@ Game analogy. NPoS decides who plays the game, parachain consensus are the rules
 NPoS, Parachains Consensus and Gov all live on the **Relay Chain**
 
 Notes:
-For now you can think of the Polkadot Relay Chain as normal blockchain and we will slowly build it up uncovering what it truly does
+For now you can think of the Polkadot Relay Chain as normal blockchain and we will slowly build it up uncovering what it truly does.
 
 ---
 
@@ -99,7 +99,9 @@ The first pillar worth exploring is NPoS. It is tightly connected to a frame pal
 We need to fairly elect a bounded number of players (validators) that will participate in the game (parachain consensus).
 
 Notes:
-So what's the goal of this pillar? Player election!
+So what's the goal of this pillar? As mentioned in the game analogy it is Player election!
+
+NPoS could be it's own lecture and if time allows we'll cover it in more details later or at least provide you with reading materials. For now I'll focus on the outcomes of NPoS.
 
 ---v
 
@@ -112,6 +114,9 @@ So what's the goal of this pillar? Player election!
 - The stake is evenly distributed between the active validators so they all have equal voting power in the upcoming game
 
 Notes:
+
+Read points
+
 There's no better way than to vote with your wallet and NPoS is all about this idea.
 
 ---v
@@ -120,13 +125,12 @@ There's no better way than to vote with your wallet and NPoS is all about this i
 
 ## NPoS Nominations
 
-- Most validator don't own the stake they use for the elections and they simply focus on being a validator-as-a-service operators
-- The stake used by those validators is provided by other tokens holders not willing to go through the trouble of owning a full-node on your own hardware
+- Most validators don't own the stake they use for the elections and they simply focus on being a validator-as-a-service operators
+- The stake used by those validators is provided by other tokens holders not willing to go through the trouble of owning a full-node on their own hardware
 - Those tokens holders **nominate** the validator essentially entrusting their own tokens to the validator to share parts of the profits, but they also share the dangers
 
 Notes:
-Picking the best nominators and validators is actually an NP-hard problem! Same as the knapsack problem. There is a clever scheme to try and solve it on chain for those interested read more here: <link>
-If you all will be more interested in the topics and there will be time we might do a short in-depth dive into NPoS and Phragmen elections.
+Picking the best nominators and validators is actually an NP-hard problem! Same as the knapsack problem. There is a clever scheme to try and solve it on chain for those interested read more here: https://wiki.polkadot.network/docs/learn-phragmen
 
 ---
 
@@ -176,8 +180,12 @@ Notes:
 - Scalability
 
 Notes:
-And security and decentralization but we'll dive into those on future lectures.
-Okay, so how does it achieve scalability? You all have been learning about substrate and frame and building your own little chains. And it is true that Polkadot's Relay Chain is a also a Substrate-based chain but there's more to it. It's a substrate chain capable of aggregating the state of other substrate chains and thus sharing it's own security with them. Parachain Consensus is what validates all those other blockchains and makes them unite in the relay chain. This is what we call sharding.
+Of course for those that were paying attention to previous lecture should also know that while improving scalability we don't want to sacrifice too much or the blockspace quality will diminish. So we will need to maintain a security and decentralization. Exactly how we balance those trade-offs will be in the next lecture.
+
+Okay, so how does it boost scalability? You all have been learning about substrate and frame and building your own little chains.
+And it is true that Polkadot's Relay Chain is a also a Substrate-based chain but there's more to it.
+
+It's a substrate chain capable of aggregating the state of other substrate chains and thus sharing it's own security with them (this is the moment you all remember the shared security talk from the moment ago). Parachain Consensus is what validates all those other blockchains and makes them unite in the relay chain. This is what we call sharding.
 
 ---v
 
@@ -187,10 +195,16 @@ Okay, so how does it achieve scalability? You all have been learning about subst
 
 **Sharding**
 
-Sharding crucially allows us to parallelize execution.
+Sharding crucially allows us to parallelize. 
 
 Notes:
-Sharding crucially allows us to parallelize execution. All those sovereign substrate blockchains can connect to the relay chain and entrust it with validation duties, while the chain itself can focus on the business logic and functionality. So all those little blockchains connected to the relay chain are called parachains. But actually does anyone know where this name comes from? ...
+In general when we say sharding we in fact talk about two quite distinct properties.
+
+Data sharding and execution sharding.
+
+In the next two talks we'll do a deep dive into execution sharding first and then data sharding. But what is relevant for us now is that sharding allows us to parallelize certain tasks and reduce data replication.
+
+All those sovereign substrate blockchains you were developing can in fact connect to the relay chain and entrust it with validation duties, while the chain itself can focus on the business logic and functionality. So all those little blockchains connected to the relay chain are called parachains, they are the shards of in Polkadot. But actually does anyone know where this name comes from? ...
 
 But let's zoom out for a second.
 
@@ -248,6 +262,7 @@ So now that the why is covered let's look at how it all comes together. There is
 </pba-flex>
 
 Notes:
+Parachain consensus is a game. It's a game that the elected validator play. Their goal is to extend and grow the parachains. By grow we just mean they they get more blocks so they can that their state can advance.
 
 ---v
 
@@ -280,6 +295,27 @@ Notes:
 </div>
 
 <br/>
+
+Notes:
+Of course validators are not doing it for free. They will be receiving rewards based on their efforts.
+
+Validators take candidate parachain blocks from outside
+Put parachain blocks in the relay chain
+Verify parachain blocks are correct (WASM)
+Repeat
+
+If the verification goes wrong punishments will follow for those that are guilty
+
+---v
+
+# Parachain Consensus
+
+## The Game
+
+<img style="width: 500px" src="./assets/execution-sharding/polkadot-architecture.svg"/>
+
+Notes:
+So just to make sure we are all on the same page. Parachain Consensus is roughly speaking all the data trickling down form the parachains into the relay chain, getting verified and filtered and then set in stone. Collect, verify, finalize, repeat.
 
 ---v
 
@@ -315,6 +351,9 @@ Notes:
 
 **The game works whenever <1/3 of validators misbehave.**
 
+Notes:
+And going back to the rules. THe whole game is designed to only work whenever less than 1/3 of validators misbehave. 1/3 comes from the GRANDPA protocol but we uphold the same assumption here and it is baked into the protocol.
+
 ---v
 
 # Parachain Consensus
@@ -323,6 +362,8 @@ Notes:
 
 Notes:
 Those were the simplified rules of the game but those rules will be encompassed by specific sub-protocols within Polkadot and lets take a loot at them now.
+
+We had the baby version, now let's get a bit more specific.
 
 ---v
 
@@ -333,7 +374,7 @@ Those were the simplified rules of the game but those rules will be encompassed 
 - Assignment: Group up validators.
 
 Notes:
-Initially we'll be grouping up and assigning the validators in the active set, those are the ones that NPoS gives us.
+Initially we'll be grouping up the validators in the active set into smaller groups called backing groups.
 
 ---v
 
@@ -358,7 +399,7 @@ Some other nodes will collect the user transactions and create collations.
 - Backing: Assign responsibility.
 
 Notes:
-Some validators will receive those collations and if they think they are correct they will vouch for them. Take on the responsibility for them.
+Some validators receives them and take responsibility for them.
 
 ---v
 
@@ -473,6 +514,6 @@ JAM is a further generalization and abstraction of Polkadot.
 That means that whatever Parachain Consensus does will still be very relevant in JAM as it will adopt many of it's features.
 
 Notes:
-JAM was a recently proposed potential next step for the Polkadot Network. Generally think of it as a generalization of the protocol. JAM can do everything the current Polkadot Relay Chain can and more. In general it is still an extremely fresh idea so we will not be covering in depth in the core lectures but you can expect some more information about later this week.
+JAM was a recently proposed potential next step for the Polkadot Network. Generally think of it as a generalization of the protocol. JAM can do everything the current Polkadot Relay Chain can and more. In general it is still an extremely fresh idea so we will not be covering in depth in the core lectures but you can expect some more information about that later this week.
 
 And I can also guarantee you one thing, many of the steps in parachain consensus like approval checking and disputes will be recreated and ported to JAM, so understanding them now gives you an awesome headstart to understanding what JAM truly aims to achieve.

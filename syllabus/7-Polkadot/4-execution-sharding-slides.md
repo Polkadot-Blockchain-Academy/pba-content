@@ -1,6 +1,6 @@
 ---
 title: Execution Sharding in Polkadot
-description: Details about the Approval-Voting and Disputes systems and how they work together to provide secure execution sharding in Polkadot through the means of escalation.
+description: In-depth look at execution sharding through the lenses of escalation mechanisms.
 duration: 60 minutes
 owner: Maaciej Zyszkiewicz
 ---
@@ -8,7 +8,7 @@ owner: Maaciej Zyszkiewicz
 # Execution Sharding in Polkadot
 
 Notes:
-Introduction
+
 
 ---
 
@@ -225,7 +225,7 @@ Backing groups are mapping 1 to 1 to specific **Execution Core**s, and these ass
 
 ## 0. Assignment - Execution Cores
 
-<img rounded style="width: 700px" src="./assets/execution-sharding/polkadot-architecture-simple.png" />
+<img rounded style="width: 700px" src="./assets/execution-sharding/rlc_vals.svg" />
 
 Each backing group is assigned to an **Execution Core**.
 
@@ -234,9 +234,31 @@ In that map the white ovals are the validators. They are grouped into backing gr
 
 ---
 
+## 0. Assignment - Execution Cores
+
+<img rounded style="width: 700px" src="./assets/execution-sharding/rlcb_paras.svg" />
+
+Each **Execution Core** will eventually serve a single parachain.
+
+Notes:
+Each **Execution Core** will eventually serve a single parachain. 
+
+---
+
 ## 0. Assignment - Rotations
 
-<img rounded style="width: 900px" src="./assets/execution-sharding/pairing_backing_groups_with_cores.svg" />
+<img rounded style="width: 800px" src="./assets/execution-sharding/pairing_backing_groups_with_cores.svg" />
+
+Once every few blocks the backing groups **rotate**.
+
+Notes:
+Once every few blocks the backing groups **rotate** around and they change the execution core they are serving. This makes it so even if a backing group is full of malicious they cannot wholly block a specific execution core for too long.
+
+---
+
+## 0. Assignment - Rotations
+
+<img rounded style="width: 700px" src="./assets/execution-sharding/rlc_vals_rotate.svg" />
 
 Once every few blocks the backing groups **rotate**.
 
@@ -254,7 +276,19 @@ Now we can move to the first official step of the parachains protocol. Collation
 
 ## 1. Collation - Collator Nodes
 
-<img rounded style="width: 700px" src="./assets/execution-sharding/polkadot-architecture-simple.png" />
+<img rounded style="width: 600px" src="./assets/execution-sharding/rlcb_paras.svg" />
+
+Validators in the backing group need to get the parachain transactions from somewhere. That's where **Collator Nodes** come in.
+
+Notes:
+Validators in the backing group need to get the parachain transactions from somewhere. That's where **Collator Nodes** come in.
+
+
+---
+
+## 1. Collation - Collator Nodes
+
+<img rounded style="width: 600px" src="./assets/execution-sharding/relay_labeled.svg" />
 
 Collators are **not** validators. They are parachain-specific nodes which produce parachain blocks by collecting (collating) transactions together.
 
@@ -290,9 +324,9 @@ Now we are at the next step. We just sent some collations to the validators in o
 
 ## 2. Backing - Backers
 
-<img rounded style="width: 700px" src="./assets/execution-sharding/polkadot-architecture-simple.png" />
+<img rounded style="width: 500px" src="./assets/execution-sharding/relay_labeled.svg" />
 
-Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators.
+Validators in the backing group are often called **backers** for those parablocks that are coming in to them from the collators.
 
 Notes:
 Validators in the backing group are often called backers for those parablocks that are coming in to them from the collators. That is the group we created in the assignment step. The few validators or backers (3 on the image) receive a bunch of parachain blocks / parablocks / collations / candidates (all the same thing).
@@ -451,10 +485,25 @@ Once a certain threshold of backers (3 of 5 in Polkadot) in the group approves t
 
 ---
 
+## 2. Backing - Execution Cores
+
+<img rounded style="width: 700px" src="./assets/execution-sharding/rlcb_paras.svg" />
+
+Backer Quorum -> Backable Candidate
+Backable Candidate mentioned on chain -> Backed Candidate
+
+Notes:
+WWe already have the quorum of backers so they believe this is a good candidate. We at that point call it a backable candidate, what we are lacking is an official commitment.
+The relay chain block author will need to mention one of the backable candidates for it to become backed.
+
+When a candidate is backed it enters the core, it occupies it. There can be only a single candidate on a core. Sometimes they are also called availability cores so let's look at availability now.
+
+---
+
 # 3. Availability
 
 Notes:
-Backers accepted the responsibility for the parablock but now there's some more work to be done.
+Backers accepted the responsibility for the parablock and it was committed on chain but now there's some more work to be done.
 
 ---
 
@@ -539,7 +588,9 @@ Validators that receive their chunks put some signed statements on chain to esse
 
 ## 3. Availability - Inclusion
 
-Once 2/3rds of the validators have signed availability statements and those land on chain, the parablock is considered **Included**.
+<img rounded style="width: 700px" src="./assets/execution-sharding/rlcb_paras.svg" />
+
+Once 2/3rds of the validators have signed availability statements and those land on chain, the parablock is considered **Included**. Then it frees the core.
 
 Notes:
 Inclusion happens on an individual core so we can have a single candidate included per core per relay-chain block. If something is included in a relay-chain block it means that this transaction happens in that block. That does not yet mean that the block it final. It's just included and not only mentioned as it was in backing. Before we reach finality there's one core property we need to ensure.
@@ -687,13 +738,15 @@ Fighting DoS should be like fighting a hydra. Even if you eliminate a few honest
 
 ## 4. Approval Checking - Summary
 
-<img rounded style="width: 1300px" src="./assets/execution-sharding/approval_flow.svg" />
+<img rounded style="width: 1300px" src="./assets/execution-sharding/approval_flow.svg"/>
 
 Notes:
 This is a flow chart from the perspective of an individual approval checker. First once we notice inclusion we generate the assignment. Then we wait for our turn but if the parablock got approved before that we call it a day, we locally mark it as approved for us and finish the process.
 In case our voice is still needed we reveal our assignment, recover data, do checks and send our statement. If we don't like the block we start a dispute with a dispute statement.
 
 ## Interesting this state machine either outputs or stalls. In case of stalling it might be because there is a dispute started in the dispute coordinator subsystem.
+
+---
 
 # 5. Disputes
 
