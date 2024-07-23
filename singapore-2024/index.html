@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Polkadot Blockchain Academy</title>
+  <link rel="stylesheet" href="././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="icon" href="./assets/favicon.svg" />
+  <link rel="shortcut icon" href="./assets/favicon.png" />
+  <style>
+    /* local variables */
+    html {
+      --font-size: 16px;
+      --container: 100em;
+      --size: 1.5rem;
+    }
+
+    /* general layout elements */
+    html,
+    body,
+    .site {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
+
+    html {
+      align-items: center;
+      font-size: var(--font-size);
+      color: var(--r-main-color);
+      background-color: var(--r-background-color);
+    }
+
+    ul {
+      margin: 0;
+    }
+
+    /* site layout */
+    .site {
+      max-width: var(--container);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      background-color: var(--r-selection-background-color);
+    }
+
+    .site-footer {
+      position: sticky;
+      bottom: 0;
+      background-color: var(--r-selection-background-color);
+    }
+
+    a:hover {
+      color: var(--r-link-color-dark) !important;
+    }
+
+    a span:first-of-type {
+      color: var(--r-heading-color);
+    }
+
+    h1 {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: var(--r-heading-letter-spacing);
+      font-family: var(--r-heading-font);
+      font-size: calc(var(--font-size) * 1.5);
+      text-shadow: var(--r-heading1-text-shadow);
+    }
+
+    .site-logo {
+      width: calc(var(--size) * 10);
+      margin-left: calc(var(--size) / 2);
+    }
+
+    .slide-list li::before {
+      color: var(--r-link-color);
+    }
+
+    .slide-list li {
+      /* Replacing the link-color-hover with the CYAN #00B2FF */
+      /* color: var(--r-link-color-hover); */
+      color: var(--r-hub-cyan);
+      display: flex;
+      align-items: center;
+    }
+
+    .slide-list li::before {
+      font-size: calc(var(--font-size) * 2);
+      content: "";
+      display: list-item;
+      line-height: 0;
+      color: var(--r-link-color-dark);
+    }
+
+    .slide-card-name {
+      font-family: var(--r-heading-font);
+      letter-spacing: var(--r-heading-letter-spacing);
+    }
+
+    .slide-card-path {
+      font-style: italic;
+      color: var(--r-link-color);
+      font-size: 0.7em;
+    }
+
+    a:hover .slide-card-path {
+      color: var(--r-hub-cyan);
+      transition: color 200ms ease-in-out;
+    }
+
+    .slide-list li a {
+      padding-top: calc(var(--size) / 3);
+      padding-bottom: calc(var(--size) / 3);
+      font-size: calc(var(--font-size) * 1.2);
+      color: var(--r-main-color);
+      text-decoration: none;
+      word-break: break-word;
+    }
+
+    .slide-list li a:hover {
+      color: var(--r-hub-cyan);
+    }
+
+    /* menu navigation bar, sticky */
+    .menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu--header {
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .menu--footer {
+      justify-content: center;
+      padding: calc(var(--font-size) * 0.5);
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .menu--footer .menu-item {
+      font-size: var(--font-size);
+      font-family: var(--r-heading-font);
+    }
+  </style>
+
+
+<body class="site">
+  <header class="site-header site-header--small">
+    <menu class="menu menu--header">
+      <li class="menu-item">
+        <img class="site-logo" src="./assets/img/0-Shared/logo/pba-logo-white.svg" />
+      </li>
+      <li class="menu-item">
+        <h1>PBA Slides</h1>
+      </li>
+    </menu>
+  </header>
+
+  <main class="site-main">
+    <ul class="slide-list">
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;1-Intro-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;1-Intro-slides.html" title="Introduction to Cryptography" class="slide-card">
+          <span class="slide-card-name">Introduction to Cryptography</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;1-Intro-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;10-Advanced_ZK_proofs-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;10-Advanced_ZK_proofs-slides.html" title="Advanced ZK Proofs" class="slide-card">
+          <span class="slide-card-name">Advanced ZK Proofs</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;10-Advanced_ZK_proofs-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;11-Cryptography_In_Context-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;11-Cryptography_In_Context-slides.html" title="Cryptography In Context" class="slide-card">
+          <span class="slide-card-name">Cryptography In Context</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;11-Cryptography_In_Context-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;2-Addresses-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;2-Addresses-slides.html" title="Addresses and Keys" class="slide-card">
+          <span class="slide-card-name">Addresses and Keys</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;2-Addresses-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;3-Hashes-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;3-Hashes-slides.html" title="Hash Functions" class="slide-card">
+          <span class="slide-card-name">Hash Functions</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;3-Hashes-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;4-Encryption-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;4-Encryption-slides.html" title="Encryption" class="slide-card">
+          <span class="slide-card-name">Encryption</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;4-Encryption-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;5-Basic_Signatures-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;5-Basic_Signatures-slides.html" title="Digital Signature Basics" class="slide-card">
+          <span class="slide-card-name">Digital Signature Basics</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;5-Basic_Signatures-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;6-Advanced_Signatures-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;6-Advanced_Signatures-slides.html" title="Advanced Digital Signatures" class="slide-card">
+          <span class="slide-card-name">Advanced Digital Signatures</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;6-Advanced_Signatures-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;7-Hash_Based_Data_Structures-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;7-Hash_Based_Data_Structures-slides.html" title="Hash Based Data Structures" class="slide-card">
+          <span class="slide-card-name">Hash Based Data Structures</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;7-Hash_Based_Data_Structures-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;8-Exotic_Primitives-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;8-Exotic_Primitives-slides.html" title="Exotic Primitives" class="slide-card">
+          <span class="slide-card-name">Exotic Primitives</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;8-Exotic_Primitives-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;9-ZK_Proofs-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;1-Cryptography&#x2F;9-ZK_Proofs-slides.html" title="ZK proofs" class="slide-card">
+          <span class="slide-card-name">ZK proofs</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;1-Cryptography&#x2F;9-ZK_Proofs-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;2-Economics&#x2F;1-Economics_Basics-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;2-Economics&#x2F;1-Economics_Basics-slides.html" title="Economics Basics" class="slide-card">
+          <span class="slide-card-name">Economics Basics</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;2-Economics&#x2F;1-Economics_Basics-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;2-Economics&#x2F;2-Game_Theory-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;2-Economics&#x2F;2-Game_Theory-slides.html" title="Game Theory Basics" class="slide-card">
+          <span class="slide-card-name">Game Theory Basics</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;2-Economics&#x2F;2-Game_Theory-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;2-Economics&#x2F;3-Price_Finding_Mechanisms-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;2-Economics&#x2F;3-Price_Finding_Mechanisms-slides.html" title="Price Finding Mechanisms" class="slide-card">
+          <span class="slide-card-name">Price Finding Mechanisms</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;2-Economics&#x2F;3-Price_Finding_Mechanisms-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;2-Economics&#x2F;4-Economics_of_Polkadot-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;2-Economics&#x2F;4-Economics_of_Polkadot-slides.html" title="The Economics of Polkadot" class="slide-card">
+          <span class="slide-card-name">The Economics of Polkadot</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;2-Economics&#x2F;4-Economics_of_Polkadot-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;1-Coordination_And_Centralization-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;1-Coordination_And_Centralization-slides.html" title="Coordination and Centralization - Past Present and Future" class="slide-card">
+          <span class="slide-card-name">Coordination and Centralization - Past Present and Future</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;1-Coordination_And_Centralization-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;2-P2P_Networks-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;2-P2P_Networks-slides.html" title="Peer-to-Peer (P2P) Networking" class="slide-card">
+          <span class="slide-card-name">Peer-to-Peer (P2P) Networking</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;2-P2P_Networks-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;2.5-State_Machines-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;2.5-State_Machines-slides.html" title="State Machines" class="slide-card">
+          <span class="slide-card-name">State Machines</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;2.5-State_Machines-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;3-Blockchain_Structure-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;3-Blockchain_Structure-slides.html" title="Blockchain Structure" class="slide-card">
+          <span class="slide-card-name">Blockchain Structure</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;3-Blockchain_Structure-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;4-Accounts_and_UTXOs-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;4-Accounts_and_UTXOs-slides.html" title="Accounting Models &amp; User Abstractions in Blockchains" class="slide-card">
+          <span class="slide-card-name">Accounting Models &amp; User Abstractions in Blockchains</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;4-Accounts_and_UTXOs-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;5-Consensus-Authoring-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;5-Consensus-Authoring-slides.html" title="Consensus Authoring" class="slide-card">
+          <span class="slide-card-name">Consensus Authoring</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;5-Consensus-Authoring-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;6-Econ_and_Game_Theory_in_Blockchain-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;6-Econ_and_Game_Theory_in_Blockchain-slides.html" title="Econ &amp; Game Theory in Blockchain" class="slide-card">
+          <span class="slide-card-name">Econ &amp; Game Theory in Blockchain</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;6-Econ_and_Game_Theory_in_Blockchain-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;7-Forks-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;7-Forks-slides.html" title="Blockchain Forks" class="slide-card">
+          <span class="slide-card-name">Blockchain Forks</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;7-Forks-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;8-Consensus_Finality-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;8-Consensus_Finality-slides.html" title="Consensus Finality" class="slide-card">
+          <span class="slide-card-name">Consensus Finality</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;8-Consensus_Finality-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;9-Light_Clients_and_Bridges-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;3-Blockchain&#x2F;9-Light_Clients_and_Bridges-slides.html" title="Light Clients and Bridges" class="slide-card">
+          <span class="slide-card-name">Light Clients and Bridges</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;3-Blockchain&#x2F;9-Light_Clients_and_Bridges-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;4-Governance&#x2F;Presentation-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;4-Governance&#x2F;Presentation-slides.html" title="Module 4 - Governance" class="slide-card">
+          <span class="slide-card-name">Module 4 - Governance</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;4-Governance&#x2F;Presentation-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;1-Coordination_and_Trust_in_Web3-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;1-Coordination_and_Trust_in_Web3-slides.html" title="Coordination and Trust in Web3" class="slide-card">
+          <span class="slide-card-name">Coordination and Trust in Web3</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;1-Coordination_and_Trust_in_Web3-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;2-Digital_Services_and_State_Machines-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;2-Digital_Services_and_State_Machines-slides.html" title="Digital Services as State Machines" class="slide-card">
+          <span class="slide-card-name">Digital Services as State Machines</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;2-Digital_Services_and_State_Machines-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;3-Platform_Agnostic_Bytecode-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;3-Platform_Agnostic_Bytecode-slides.html" title="Platform Agnostic Bytecode" class="slide-card">
+          <span class="slide-card-name">Platform Agnostic Bytecode</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;3-Platform_Agnostic_Bytecode-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;4-Quest_for_Infrastructure-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;4-Quest_for_Infrastructure-slides.html" title="The Quest for Infrastructure" class="slide-card">
+          <span class="slide-card-name">The Quest for Infrastructure</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;4-Quest_for_Infrastructure-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;5-EVM_Solidity_Vyper-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;5-EVM_Solidity_Vyper-slides.html" title="EVM, Solidity, and Vyper" class="slide-card">
+          <span class="slide-card-name">EVM, Solidity, and Vyper</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;5-EVM_Solidity_Vyper-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;6-Wasm_ink!-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;6-Wasm_ink!-slides.html" title="Wasm Smart Contracts in Ink!" class="slide-card">
+          <span class="slide-card-name">Wasm Smart Contracts in Ink!</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;6-Wasm_ink!-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;7-Testing_ink_contracts-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;7-Testing_ink_contracts-slides.html" title="Testing ink! Smart Contracts" class="slide-card">
+          <span class="slide-card-name">Testing ink! Smart Contracts</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;7-Testing_ink_contracts-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;8-Interacting_with_environment_from_ink_contracts-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;8-Interacting_with_environment_from_ink_contracts-slides.html" title="Interacting with the execution environment from ink! smart contracts" class="slide-card">
+          <span class="slide-card-name">Interacting with the execution environment from ink! smart contracts</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;8-Interacting_with_environment_from_ink_contracts-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;ContractsCompetition&#x2F;Ink_Game_Intro-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;ContractsCompetition&#x2F;Ink_Game_Intro-slides.html" title="ink! Workshop (First Day)" class="slide-card">
+          <span class="slide-card-name">ink! Workshop (First Day)</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;5-Smart_Contracts&#x2F;ContractsCompetition&#x2F;Ink_Game_Intro-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Intro_to_FRAME-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Intro_to_FRAME-slides.html" title="Introduction to FRAME" class="slide-card">
+          <span class="slide-card-name">Introduction to FRAME</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Intro_to_FRAME-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Pallet_Coupling-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Pallet_Coupling-slides.html" title="FRAME Pallet Coupling" class="slide-card">
+          <span class="slide-card-name">FRAME Pallet Coupling</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Pallet_Coupling-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Pallets_Traits-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Pallets_Traits-slides.html" title="FRAME Pallets &amp; Traits" class="slide-card">
+          <span class="slide-card-name">FRAME Pallets &amp; Traits</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;1-Intro_to_FRAME&#x2F;Pallets_Traits-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Calls-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Calls-slides.html" title="FRAME Calls" class="slide-card">
+          <span class="slide-card-name">FRAME Calls</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Calls-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Events_and_Errors-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Events_and_Errors-slides.html" title="Events and Errors" class="slide-card">
+          <span class="slide-card-name">Events and Errors</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Events_and_Errors-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;FRAME_Storage-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;FRAME_Storage-slides.html" title="FRAME Storage" class="slide-card">
+          <span class="slide-card-name">FRAME Storage</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;FRAME_Storage-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Pallet_Hooks-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Pallet_Hooks-slides.html" title="FRAME&#x2F;Pallet Hooks" class="slide-card">
+          <span class="slide-card-name">FRAME&#x2F;Pallet Hooks</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;2-FRAME_Basics&#x2F;Pallet_Hooks-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;3-FRAME_Runtime&#x2F;Construct_Runtime-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;3-FRAME_Runtime&#x2F;Construct_Runtime-slides.html" title="Construct Runtime" class="slide-card">
+          <span class="slide-card-name">Construct Runtime</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;3-FRAME_Runtime&#x2F;Construct_Runtime-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;3-FRAME_Runtime&#x2F;Origins-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;3-FRAME_Runtime&#x2F;Origins-slides.html" title="FRAME Origin" class="slide-card">
+          <span class="slide-card-name">FRAME Origin</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;3-FRAME_Runtime&#x2F;Origins-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;4-FRAME_Production&#x2F;Benchmarking-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;4-FRAME_Production&#x2F;Benchmarking-slides.html" title="FRAME Benchmarking" class="slide-card">
+          <span class="slide-card-name">FRAME Benchmarking</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;4-FRAME_Production&#x2F;Benchmarking-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;4-FRAME_Production&#x2F;Migrations_and_try_runtime-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;4-FRAME_Production&#x2F;Migrations_and_try_runtime-slides.html" title="Migrations and Try Runtime" class="slide-card">
+          <span class="slide-card-name">Migrations and Try Runtime</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;4-FRAME_Production&#x2F;Migrations_and_try_runtime-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Deep-Dive-Slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Deep-Dive-Slides.html" title="FRAME Deep Dive" class="slide-card">
+          <span class="slide-card-name">FRAME Deep Dive</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Deep-Dive-Slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Extras-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Extras-slides.html" title="FRAME Extras" class="slide-card">
+          <span class="slide-card-name">FRAME Extras</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Extras-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Miscellaneous_Slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Miscellaneous_Slides.html" title="Frame Miscellaneous" class="slide-card">
+          <span class="slide-card-name">Frame Miscellaneous</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;FRAME-Miscellaneous_Slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;Outer_Enum-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;Outer_Enum-slides.html" title="Outer Enum" class="slide-card">
+          <span class="slide-card-name">Outer Enum</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;Outer_Enum-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;Signed_Extensions-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;Signed_Extensions-slides.html" title="Signed Extensions" class="slide-card">
+          <span class="slide-card-name">Signed Extensions</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;FRAME&#x2F;5-FRAME_Extras&#x2F;Signed_Extensions-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Polkadot-SDK-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Polkadot-SDK-slides.html" title="Introduction to Polkadot SDK" class="slide-card">
+          <span class="slide-card-name">Introduction to Polkadot SDK</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Polkadot-SDK-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;1-Intro-to-Substrate-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;1-Intro-to-Substrate-slides.html" title="Introduction to Substrate" class="slide-card">
+          <span class="slide-card-name">Introduction to Substrate</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;1-Intro-to-Substrate-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;2-Wasm-Meta-Protocol-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;2-Wasm-Meta-Protocol-slides.html" title="Substrate Wasm meta-protocol" class="slide-card">
+          <span class="slide-card-name">Substrate Wasm meta-protocol</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;2-Wasm-Meta-Protocol-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;3-Merklized-Storage-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;3-Merklized-Storage-slides.html" title="Substrate Merklized Storage" class="slide-card">
+          <span class="slide-card-name">Substrate Merklized Storage</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;3-Merklized-Storage-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;4-Transaction-Pool-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;4-Transaction-Pool-slides.html" title="Substrate Transaction Pool" class="slide-card">
+          <span class="slide-card-name">Substrate Transaction Pool</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;4-Transaction-Pool-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-SCALE-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-SCALE-slides.html" title="SCALE Codec" class="slide-card">
+          <span class="slide-card-name">SCALE Codec</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-SCALE-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-Substrate-FRAME-Tips-Tricks-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-Substrate-FRAME-Tips-Tricks-slides.html" title="Substrate&#x2F;FRAME Tips and Tricks" class="slide-card">
+          <span class="slide-card-name">Substrate&#x2F;FRAME Tips and Tricks</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-Substrate-FRAME-Tips-Tricks-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-Substrate-Interactions-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-Substrate-Interactions-slides.html" title="Interacting With a Substrate Blockchain" class="slide-card">
+          <span class="slide-card-name">Interacting With a Substrate Blockchain</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Substrate&#x2F;9-Substrate-Interactions-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;1-Introduction-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;1-Introduction-slides.html" title="Introduction to XCM" class="slide-card">
+          <span class="slide-card-name">Introduction to XCM</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;1-Introduction-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;2-Primitives-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;2-Primitives-slides.html" title="XCM primitives" class="slide-card">
+          <span class="slide-card-name">XCM primitives</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;2-Primitives-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;3-Executor-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;3-Executor-slides.html" title="XCM Executor" class="slide-card">
+          <span class="slide-card-name">XCM Executor</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;3-Executor-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;4-Pallet-Xcm-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;4-Pallet-Xcm-slides.html" title="XCM Pallet" class="slide-card">
+          <span class="slide-card-name">XCM Pallet</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;4-Pallet-Xcm-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;5-Xcm-config-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;5-Xcm-config-slides.html" title="XCM Configuration" class="slide-card">
+          <span class="slide-card-name">XCM Configuration</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;5-Xcm-config-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;6-Xcm-simulator-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;6-Xcm-simulator-slides.html" title="XCM Simulator" class="slide-card">
+          <span class="slide-card-name">XCM Simulator</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;XCM&#x2F;6-Xcm-simulator-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Zombienet-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Zombienet-slides.html" title="Zombienet" class="slide-card">
+          <span class="slide-card-name">Zombienet</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;6-Polkadot-SDK&#x2F;Zombienet-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;1-decisions-of-polkadot-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;1-decisions-of-polkadot-slides.html" title="The Decisions of Polkadot" class="slide-card">
+          <span class="slide-card-name">The Decisions of Polkadot</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;1-decisions-of-polkadot-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;10-contributing-to-polkadot-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;10-contributing-to-polkadot-slides.html" title="Contributing to the Polkadot SDK" class="slide-card">
+          <span class="slide-card-name">Contributing to the Polkadot SDK</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;10-contributing-to-polkadot-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;11-XCMP-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;11-XCMP-slides.html" title="XCMP" class="slide-card">
+          <span class="slide-card-name">XCMP</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;11-XCMP-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;12-NPoS-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;12-NPoS-slides.html" title="Nominated Proof of Stake" class="slide-card">
+          <span class="slide-card-name">Nominated Proof of Stake</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;12-NPoS-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;13-Light-clients-and-unstoppable-apps-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;13-Light-clients-and-unstoppable-apps-slides.html" title="Light Clients and Unstoppable Apps" class="slide-card">
+          <span class="slide-card-name">Light Clients and Unstoppable Apps</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;13-Light-clients-and-unstoppable-apps-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;2-shared-security-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;2-shared-security-slides.html" title="What is Shared Security?" class="slide-card">
+          <span class="slide-card-name">What is Shared Security?</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;2-shared-security-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;3-introduction-to-parachain-consenus-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;3-introduction-to-parachain-consenus-slides.html" title="What is Parachains Consenus?" class="slide-card">
+          <span class="slide-card-name">What is Parachains Consenus?</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;3-introduction-to-parachain-consenus-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;4-execution-sharding-approvals-and-disputes-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;4-execution-sharding-approvals-and-disputes-slides.html" title="Execution Sharding in Polkadot" class="slide-card">
+          <span class="slide-card-name">Execution Sharding in Polkadot</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;4-execution-sharding-approvals-and-disputes-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;5-data-sharding-and-data-availability-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;5-data-sharding-and-data-availability-slides.html" title="Data Availability and Data Sharding" class="slide-card">
+          <span class="slide-card-name">Data Availability and Data Sharding</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;5-data-sharding-and-data-availability-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;6-cumulus-deep-dive-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;6-cumulus-deep-dive-slides.html" title="Cumulus Deep Dive" class="slide-card">
+          <span class="slide-card-name">Cumulus Deep Dive</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;6-cumulus-deep-dive-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;7-asynchronous-backing-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;7-asynchronous-backing-slides.html" title="Shallow Dive, Asynchronous Backing" class="slide-card">
+          <span class="slide-card-name">Shallow Dive, Asynchronous Backing</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;7-asynchronous-backing-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;8-agile-coretime-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;8-agile-coretime-slides.html" title="Agile Coretime" class="slide-card">
+          <span class="slide-card-name">Agile Coretime</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;8-agile-coretime-slides.html</span>
+        </a>
+      </li>
+      <li data-template=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;9-polkadot-ecosystem-economy-slides.html" >
+        <a href=".&#x2F;syllabus&#x2F;7-Polkadot&#x2F;9-polkadot-ecosystem-economy-slides.html" title="Polkadot Ecosystem and Economy" class="slide-card">
+          <span class="slide-card-name">Polkadot Ecosystem and Economy</span>
+          <span class="slide-card-path"><br />&nbsp;&nbsp;&nbsp;&nbsp;.&#x2F;syllabus&#x2F;7-Polkadot&#x2F;9-polkadot-ecosystem-economy-slides.html</span>
+        </a>
+      </li>
+    </ul>
+  </main>
+
+</body>
+
+</html>
