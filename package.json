@@ -13,7 +13,7 @@
     "tag:hong-kong": "git checkout tags/hong-kong-2024 && yarn && yarn run build && mv build hong-kong-2024 && git checkout main",
     "tag:singapore": "git checkout tags/singapore-2024 && yarn && yarn run build:all && yarn run move-files && mv build singapore-2024",
     "tag:current": "git checkout main && yarn && yarn run build:all && yarn run move-files && mv build current",
-    "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv hong-kong-2024 build && mv current singapore-2024",
+    "move-tags": "git checkout main && mv cambridge-2022 build && mv buenos-aires-2023 build && mv berkeley-2023 build && mv hong-kong-2024 build && mv singapore-2024 build",
     "move-files": "cp ./syllabus/4-Governance/Slides_Singapore.* ./build/syllabus/4-Governance/.",
     "move-frontpage": "cp -r ./frontpage/* ./build/.",
     "prepare-deployment": "git fetch --tags && yarn run clean && yarn run tag:cambridge && yarn run tag:buenos-aires && yarn run tag:berkeley && yarn run tag:hong-kong && yarn run tag:singapore && mkdir build && yarn run move-tags && yarn run move-frontpage",
