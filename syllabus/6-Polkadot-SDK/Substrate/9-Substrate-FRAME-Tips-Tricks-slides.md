@@ -383,7 +383,7 @@ If the interface is built with `disable-logging`, it omits all log messages.
 > false
 ```
 
-- Google "weird float behavior" fro more entertainment around this.
+- Google "weird float behavior" for more entertainment around this.
 
 ---v
 
