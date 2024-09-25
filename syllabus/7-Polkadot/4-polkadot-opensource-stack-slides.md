@@ -20,15 +20,32 @@ Based on well maintained open repositories listed on https://wiki.polkadot.netwo
 - [Parachain Template by OpenZeppelin](https://github.com/OpenZeppelin/polkadot-runtime-templates)
 - [Templates on Polkadot SDK](https://github.com/paritytech/polkadot-sdk/tree/master/templates)
 - [Templates on POP](https://github.com/r0gue-io/pop-cli)
+- [Tenplates by Tanssi](https://github.com/moondance-labs/tanssi)
+- [Open Runtime Module Library (ORML)](https://github.com/open-web3-stack/open-runtime-module-library)
 
 </pba-col>
 
 ---
 
+## Testing Tools
+
+<pba-col center>
+- [Testnet Faucet by Parity](https://faucet.polkadot.io/)
+- [Parachain Launch](https://github.com/open-web3-stack/parachain-launch)
+- [Zombienet](https://github.com/paritytech/zombienet)
+
+</pba-col>
+
+---
+
+
 ## Cross Chain Tooling
 
 <pba-col center>
 
+- [ParaSpell](https://github.com/paraspell/xcm-tools)
+- [XCM-SDK](https://github.com/moonbeam-foundation/xcm-sdk/)
+- [XCM-Tools (debugging XCM)](https://github.com/Moonsong-Labs/xcm-tools)
 - [BagPipes (formerly xcmsend)](https://github.com/XcmSend/app)
 - [Ocelloids SDK](https://github.com/sodazone/ocelloids-sdk)
 
@@ -72,6 +89,7 @@ Based on well maintained open repositories listed on https://wiki.polkadot.netwo
 
 <pba-col center>
 
+- [Gaming SDK for Substrate and Polkadot](https://github.com/SubstrateGaming/)
 - [Polkadot SDK for Unity](https://github.com/PolkadotPlay/Polkadot.Unity.SDK) - A powerful toolkit
   that integrates substrate seamless into Unity projects.
   ([AssetStore](https://assetstore.unity.com/packages/decentralization/infrastructure/polkadot-sdk-for-unity-273535),
