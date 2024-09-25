@@ -19,6 +19,7 @@ The curriculum is expected to change per cohort in the first run. You can find t
 - [Buenos Aires - January 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/buenos-aires-2023)
 - [Berkeley - July 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/berkeley-2023)
 - [Hong Kong - January 2024](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/hong-kong-2024)
+- [Singapore - June 2024](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/2024-singapore)
 
 ## Venue Suggestions
 
