@@ -32,6 +32,24 @@ This curriculum is designed to be taught as an in-person course with ~25-60 stud
 - Internet connection that can support >10Mbps while all students are connected
 - LAN connection that allows P2P connections to start a private blockchain network
 
+## Useful links
+
+- [Polkadot Blockchain Academy Page](https://polkadot.com/blockchain-academy)
+- [Alumni Hub](https://polkadot-blockchain-academy.github.io/alumni-hub)
+- [Twitter](https://x.com/AcademyPolkadot)
+- [Youtube](https://www.youtube.com/@polkadotblockchainacademy)
+
+## Video Lectures - Modules
+
+- [Cryptography](https://www.youtube.com/playlist?list=PL-w_i5kwVqblgwQfXbR-n8pC1QE1IaxBZ)
+- [Economics](https://www.youtube.com/playlist?list=PL-w_i5kwVqbn6GDAHq4uzhpDLPY1Ay8zO)
+- [Blockchain](https://www.youtube.com/playlist?list=PL-w_i5kwVqbmZ2p5b2Ml-Q410J_vy-pXR)
+- [Smart Contracts](https://www.youtube.com/playlist?list=PL-w_i5kwVqblMeWrQCAlWBpt-8wSmLRtc)
+- [Substrate](https://www.youtube.com/playlist?list=PL-w_i5kwVqbkRmfDn5nzeuU1S_FFW8dDg)
+- [FRAME](https://www.youtube.com/playlist?list=PL-w_i5kwVqbni1Ch2j_RwTIXiB-bwnYqq)
+- [Polkadot](https://www.youtube.com/playlist?list=PL-w_i5kwVqbn3HCZDHg6P5UCx8P2tF6-M)
+- [XCM](https://www.youtube.com/playlist?list=PL-w_i5kwVqbmHkxS_mJTfXdCZnXKF5lDP)
+
 ## Contributing
 
 Subject Matter Experts (SMEs) should explore [./CONTRIBUTING.md](./CONTRIBUTING.md) to learn how to use this repo.
