@@ -99,7 +99,7 @@ Based on well maintained open repositories listed on https://wiki.polkadot.netwo
 
 ---
 
-## JS/TS/Python/Rust APIs
+## JS/TS/Python/Rust & APIs
 
 <pba-col center>
 
