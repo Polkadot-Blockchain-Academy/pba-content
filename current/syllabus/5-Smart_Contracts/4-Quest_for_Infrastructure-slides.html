@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>The Quest for Infrastructure</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# The Quest for Infrastructure
+
+OR
+
+Where can I actually run these things!?
+</script></section><section ><section data-markdown><script type="text/template">
+# Quick Review of Smart Contracts
+</script></section><section data-markdown><script type="text/template">
+## Expression
+
+Write code instead of long confusing legalese
+</script></section><section data-markdown><script type="text/template">
+## Execution
+
+Let the computer run it instead of the judge interpreting it.
+</script></section></section><section  data-markdown><script type="text/template">
+# Quick Review of Service Providers
+
+They are the technicians that keep the infra running.
+
+They are the technicians that keep the infra running.
+
+They don't have any particular morals, certainly not the same ones you have.
+
+<aside class="notes"><p>We need people to keep the computers online and replace broken hardware and make sure the data is backed up etc.
+But those people should be just that, technicians.
+They are not elected officials or Judges or anything like that.
+So we don&#39;t want to accidentally let them fil that role.</p>
+<p>Many, probably even most, data center workers are perfectly good people not trying to scam anyone.
+The point is that any individual server operator could be evil and it will be easier to coordinate voluntarily if people don&#39;t have to trust the server operator to do it.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+# Where to Run the Contracts?
+
+<aside class="notes"><p>We know we need somewhere to run these things with no back door or trusted party.</p>
+<p>We have seen some hints so far. Let&#39;s check them out.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Diversity and Redundancy
+
+- Geographical - for natural disasters and terrorist attacks
+- Jurisdictional - to resist the incumbent governments - they are the ultimate server operators
+- Moral - so all compasses are represented in the network, and no group can impose hegemony
+- Of compute hardware - incase some is bugged or backdoored or prohibitively expensive
+
+<aside class="notes"><p>Web2 gets a lot of this right. At least they are good at the first two and preventing accidental data loss etc.
+There is a lot to be kept from web 2.
+Some digital services, or subsystems of digital services may never even need web3 upgrades.</p>
+<p>But indeed there is also some to be thrown out or improved.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## P2P Networking
+
+Replace the operator with a system where peers all have power.
+
+<aside class="notes"><p>We saw well how this worked out well in the file sharing and anonymous browsing domains (bit torrent,)</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Reproducible Execution
+
+- Computers are better than courts
+- PABs make distributed code execution practical
+
+<aside class="notes"><p>We saw even back in the early 2000s with java web applets that allowing more people to run the same program is hugely useful.</p>
+<p>A few decades later we have much better tech for this, and it is even more valuable.</p>
+<p>PABs make it practical for diverse parties all over the world to run the same software deterministically on their bespoke hardware in their unique environments.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Blockchain
+
+## Solves ALL Your Problems
+
+![Moses descending Mt Sainai where the Lord God inscribed Blockchain upon the stone tablets](./img/moses-blockchain.png)
+</script></section><section data-markdown><script type="text/template">
+## Solves Some Specific Problems
+
+Allows us to replace the central server operator with a P2P network and Consensus System
+
+<aside class="notes"><p>Actually it is a fallacy that blockchain solves all our problems.
+It actually solves some very specific coordination problems.
+It also brings some efficiency improvements to modern bureaucracies.
+It does not automatically make everyone believe the same things or magically arrive in happy unicorn bunny land.
+Tomorrow and Thursday will dig in on how the blockchain and its P2P network work together.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Blockchain Data structure
+
+![Blockchain data structure](./img/forks.svg)
+
+<aside class="notes"><p>We&#39;ll discuss two new blockchain related topics.
+First is the blockchain data structure which you can see here.
+This one is forked which is when things get really interesting, and when you need to invoke the second part</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Blockchain Consensus
+
+![Byzantine Generals Problem](./img/byzantine-generals.png)
+
+<aside class="notes"><p>Consensus deals with how we agree which version of the data structure is real.
+It is an interesting and complex topic, but we first need to learn a bit more about how the data structure allows us to track a shared story.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Reading Assignment
+
+For tomorrow please read the bitcoin whitepaper
+</script></section></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
