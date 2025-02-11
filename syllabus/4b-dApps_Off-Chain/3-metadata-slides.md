@@ -51,10 +51,10 @@ interface RuntimeMetadataV15 {
   types: Vec<LookupEntry>;
   pallets: Vec<PalletMetadata>;
   extrinsic: ExtrinsicMetadata;
-  ty: Type;
+  ty: Type; // not useful, it is the type of the runtime itself
   apis: Vec<RuntimeApiMetadata>;
   outer_enums: OuterEnums;
-  custom: CustomMetadata;
+  custom: CustomMetadata; // we won't enter this one, un-typed extra metadata
 }
 ```
 
@@ -104,3 +104,113 @@ enum TypeDef {
 Notes:
 
 Explain a bit every one. Don't focus particularly, it is just a quick summary.
+
+---
+
+## Metadata
+
+### Runtime APIs
+
+They allow to execute functions present in the runtime.
+
+```typescript
+interface RuntimeApiMetadata {
+  name: String;
+  methods: Vec<{
+    name: String;
+    inputs: Vec<{ name: String; ty: Type }>; // lookup index
+    output: Type; // as well!
+    docs: Vec<String>;
+  }>;
+  docs: Vec<String>;
+}
+```
+
+---v
+
+Example: `Metadata` APIs
+
+```json
+{
+  "name": "Metadata",
+  "methods": [
+    {
+      "name": "metadata",
+      "inputs": [],
+      "output": 862,
+      "docs": [
+        " Returns the metadata of a runtime."
+      ]
+    },
+    {
+      "name": "metadata_at_version",
+      "inputs": [
+        {
+          "name": "version",
+          "type": 4
+        }
+      ],
+      "output": 863,
+      "docs": [
+        " Returns the metadata at a given version.",
+        "",
+        " If the given `version` isn't supported, this will return `None`.",
+        " Use [`Self::metadata_versions`] to find out about supported metadata version of the runtime."
+      ]
+    },
+    {
+      "name": "metadata_versions",
+      "inputs": [],
+      "output": 121,
+      "docs": [
+        " Returns the supported metadata versions.",
+        "",
+        " This can be used to call `metadata_at_version`."
+      ]
+    }
+  ],
+  "docs": [
+    " The `Metadata` api trait that returns metadata for the runtime."
+  ]
+},
+```
+
+---
+
+## Metadata
+
+### Outer Enums
+
+They are sugar! One can build this type by himself by aggregating all pallets information.
+
+These types are handy though to decode any `call_data`, `event`, or module `error`.
+
+```typescript
+interface OuterEnums {
+  // lookup indices
+  call_enum_ty: Type;
+  event_enum_ty: Type;
+  error_enum_ty: Type;
+}
+```
+
+---
+
+## Metadata
+
+### Pallets
+
+TODO
+
+```typescript
+interface PalletMetadata {
+  name: String;
+  storage: Option<PalletStorageMetadata<T>>;
+  calls: Option<PalletCallMetadata<T>>;
+  event: Option<PalletEventMetadata<T>>;
+  constants: Vec<PalletConstantMetadata<T>>;
+  error: Option<PalletErrorMetadata<T>>;
+  index: u8;
+  docs: Vec<String>;
+}
+```
