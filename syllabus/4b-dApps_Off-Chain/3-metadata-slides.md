@@ -13,10 +13,9 @@ owner: Carlo Sala
 
 #### Content
 
-- Mod. 2 recap: What is the runtime (and its metadata)?
-- The metadata sets us apart of other blockchains.
-- Metadata parts.
-- Metadata issues.
+- Mod. 2 recap:
+  - What is the runtime (and its metadata)?
+  - The metadata sets us apart of other blockchains.
 
 ---
 
@@ -24,6 +23,12 @@ owner: Carlo Sala
 
 - The runtime is the business logic of Polkadot-based networks.
 - It defines the algorithm needed for determining the state of the next block.
+- It is part of the state, not part of the host.
+
+Notes:
+
+Compared to other blockchains (such as Ethereum) the logic to determine the next block state is not part of the
+state itself. Therefore, it can't be modified without a change in the host itself.
 
 ---
 
@@ -33,39 +38,69 @@ owner: Carlo Sala
   interactions, instead of "what" do they do.
 - It includes _enough_ information to perform any kind of interaction with the blockchain, as well as decoding its state.
 
----v
+---
 
-## Metadata shape
+## Metadata
+
+### Shape
 
 The metadata is versioned, and its current stable version is `15`.
 
-```rust
-struct RuntimeMetadataV15 {
-  types: Vec<LookupEntry>,
-  pallets: Vec<PalletMetadata>,
-  extrinsic: ExtrinsicMetadata,
-  ty: Type,
-  apis: Vec<RuntimeApiMetadata>,
-  outer_enums: OuterEnums,
-  custom: CustomMetadata,
+```typescript
+interface RuntimeMetadataV15 {
+  types: Vec<LookupEntry>;
+  pallets: Vec<PalletMetadata>;
+  extrinsic: ExtrinsicMetadata;
+  ty: Type;
+  apis: Vec<RuntimeApiMetadata>;
+  outer_enums: OuterEnums;
+  custom: CustomMetadata;
 }
 ```
 
 ---
 
-## Lookup
+## Metadata
+
+### Lookup
 
 The lookup of the metadata defines the shape of all types used in the runtime.
 
-```rust
-struct LookupEntry {
-  id: u32, // this one is unique, and sequential
-  ty: Type,
+<span style="font-size: 0.6em; opacity: 0.6">(This is already `scale-info`)</span>
+
+```typescript
+interface LookupEntry {
+  id: u32; // this one is unique, and sequential
+  path: Vec<String>; // where is it found in Rust code
+  type_params: Vec<TypeParameter>; // Rust generics
+  type_def: TypeDef; // THE JUICE!
+  docs: Vec<String>; // Rust docs
 }
 ```
 
-Let's dive in the `Type`!
+Notes:
 
----v
+Path and docs are self-descriptive. Type params only give information about the generics used in Rust.
 
-## Type
+---
+
+## Metadata
+
+### Lookup `type_def`
+
+```typescript
+enum TypeDef {
+  Composite, // struct
+  Variant, // enum
+  Sequence, // variable length
+  Array, // fixed length
+  Tuple,
+  Primitive, // essentially integers and booleans
+  Compact,
+  BitSequence,
+}
+```
+
+Notes:
+
+Explain a bit every one. Don't focus particularly, it is just a quick summary.
