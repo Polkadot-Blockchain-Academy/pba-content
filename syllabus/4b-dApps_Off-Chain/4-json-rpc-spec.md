@@ -17,6 +17,8 @@ Notes:
 
 https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 
+Concepts: Finalized, Pruned, Best, Fork
+
 ---
 
 # Recap
@@ -54,6 +56,10 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
   - transactionWatch
   - archive
 
+Notes:
+
+We will focus on chainHead
+
 ---
 
 # JSON-RPC Spec
@@ -71,6 +77,10 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
      …
    ]}
 ```
+
+Notes:
+
+Mention `id` field can be any string, used to correlate messages.
 
 ---
 
@@ -99,27 +109,32 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 # Follow
 
 - Parameters
-
   withRuntime: boolean
   ```ts
   { jsonrpc: "2.0", id: "1", method: "chainHead_v1_follow", params: [true] }
   ```
-  <span style="font-size: 0.7em; opacity: 0.7">(Pro tip: Always use `true`)</span>
-- Result: Subscription ID
+  <span class="fragment" style="font-size: 0.7em; opacity: 0.7">(Pro tip: Always use `true`)</span>
+- Result: Subscription ID <!-- .element: class="fragment" -->
   ```ts
   { jsonrpc: "2.0", id: "1", result: "B4GEopiw1w38Wkr…MxpkWH4JPd4S" }
   ```
-- Notifications
-```js
-{
-    jsonrpc: "2.0",
-    method: "chainHead_v1_followEvent",
-    params: {
-      subscription: "B4GEopiw1w38Wkr…MxpkWH4JPd4S",
-      result: {…}
-    }
-}
-```
+- Notifications <!-- .element: class="fragment" -->
+  ```js
+  {
+      jsonrpc: "2.0",
+      method: "chainHead_v1_followEvent",
+      params: {
+        subscription: "B4GEopiw1w38Wkr…MxpkWH4JPd4S",
+        result: {…}
+      }
+  }
+  ```
+
+Notes:
+
+Dig a bit into the `withRuntime` parameter, and why using `false` it's a bad idea 99% of the time.
+
+The notifications we will see will be the value of `result`, we omit the JSON-RPC wrapper and subscription parameter for simplicity.
 
 ---
 
@@ -139,7 +154,7 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 
 ---
 
-### New Block
+## New Block
 
 ```ts
 {
@@ -152,7 +167,7 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 
 ---
 
-### Best Block Changed
+## Best Block Changed
 
 ```ts
 {
@@ -163,7 +178,7 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 
 ---
 
-### Finalized
+## Finalized
 
 ```ts
 {
@@ -189,7 +204,7 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 
 Notes:
 
-https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
+Example of notifications emitted by a follow subscription based on this image.
 
 ---
 
@@ -202,10 +217,103 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 
 ---
 
-### Stop
+## Stop
 
 ```ts
 {
   event: "stop"
 }
 ```
+
+---
+
+# Operations
+
+- Query the chain
+
+- Send an operation request
+- Receive an Operation ID as a result
+- Receive a Follow Event with the Operation ID with the actual result
+
+---
+
+## Header
+
+- Parameters
+  ```ts
+  [followSubscription: string, hash: string]
+
+  { jsonrpc: "2.0", id: "1",
+    method: "chainHead_v1_header",
+    params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
+  }
+  ```
+- Result: SCALE-encoded header <!-- .element: class="fragment" -->
+  ```ts
+  { jsonrpc: "2.0", id: "1", result: "0x00…00" }
+  ```
+
+Notes:
+
+The only exception, as the header is guaranteed to be already in the node.
+
+---
+
+## Body
+
+- Parameters
+  ```ts
+  [followSubscription: string, hash: string]
+
+  { jsonrpc: "2.0", id: "1",
+    method: "chainHead_v1_body",
+    params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
+  }
+  ```
+- Result: Operation ID <!-- .element: class="fragment" -->
+  ```ts
+  { jsonrpc: "2.0", id: "1", result: "GhwhKA4yL3…Roc29d8e" }
+  ```
+- Notification: <!-- .element: class="fragment" -->
+  ```ts
+  {
+    event: "operationBodyDone",
+    operationId: "GhwhKA4yL3…Roc29d8e",
+    value: [
+      "0x00…00",
+      …
+      "0x00…00",
+    ]
+  }
+  ```
+
+Notes:
+
+The only exception, as the header is guaranteed to be already in the node.
+
+---
+
+## Runtime Call
+
+- Parameters
+  ```ts
+  [subscription: string, hash: string, fnName: string, params: string[]]
+
+  { jsonrpc: "2.0", id: "1",
+    method: "chainHead_v1_body",
+    params: [
+      "B4GEo…JPd4S",
+      "0x00…00",
+      "AccountNonceApi_account_nonce",
+      "0x00…00"
+    ]
+  }
+  ```
+- Notification: <!-- .element: class="fragment" -->
+  ```ts
+  {
+    event: "operationCallDone",
+    operationId: "GhwhKA4yL3…Roc29d8e",
+    output: "0x00…00"
+  }
+  ```
