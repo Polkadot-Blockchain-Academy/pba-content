@@ -463,6 +463,61 @@ connection.send(
 
 ---
 
+# Chain Storage
+
+- State transition function
+- How is the state structured? 🤔
+
+---v
+
+## High-level view
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Balance(ALICE)</td>
+      <td>123.21 DOT</td>
+    </tr>
+    <tr>
+      <td>Balance(BOB)</td>
+      <td>72.76 DOT</td>
+    </tr>
+    <tr>
+      <td>Assets(USDC, ALICE)</td>
+      <td>1785.32 USDC</td>
+    </tr>
+    <tr>
+      <td>Votes(BOB, MediumSpender)</td>
+      <td>[{ ref: 1234, vote: 'aye' }]</td>
+    </tr>
+  </tbody>
+</table>
+
+---v
+
+## Inner structure
+
+- It's still a key-value store!
+- But it's ✨Merklized✨
+
+---v
+
+## Merkle Tree Recap
+
+<img rounded src="./img/merkle-tree.png" />
+
+Notes:
+
+https://excalidraw.com/#json=udTXjn9JdUlGMx0UMv3fq,9EeDxmFCZW2IgCwMgSpsjQ
+
+---
+
 ## Storage
 
 - followSubscription: string
@@ -476,10 +531,6 @@ connection.send(
     - descendantsValues
     - descendantsHashes
 - childTrie
-
----
-
-### Chain storage recap
 
 ---
 
