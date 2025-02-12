@@ -293,6 +293,68 @@ The only exception, as the header is guaranteed to be already in the node.
 
 ---
 
+### JSON-RPC Spec Playground
+
+Notes:
+
+Show basic correlating messages, pinning / unpinning
+
+```ts
+import { chainSpec } from "polkadot-api/chains/westend2"
+import { getSmProvider } from "polkadot-api/sm-provider"
+import { start } from "polkadot-api/smoldot"
+
+const smoldot = start({
+  maxLogLevel: 0,
+})
+
+const provider = getSmProvider(smoldot.addChain({ chainSpec }))
+
+let id = 0
+const connection = provider((message) => {
+  const msg = JSON.parse(message)
+  ellipsisBody(msg)
+  console.log(msg)
+  if (
+    msg.method === "chainHead_v1_followEvent" &&
+    msg.params.result.event === "newBlock"
+  ) {
+    const reqId = id++
+    console.log("Request body", reqId)
+    connection.send(
+      JSON.stringify({
+        jsonrpc: "2.0",
+        id: reqId,
+        method: "chainHead_v1_body",
+        params: [msg.params.subscription, msg.params.result.blockHash],
+      }),
+    )
+  }
+})
+
+connection.send(
+  JSON.stringify({
+    jsonrpc: "2.0",
+    id: id++,
+    method: "chainHead_v1_follow",
+    params: [true],
+  }),
+)
+
+function ellipsisBody(res: any) {
+  if (
+    res.method === "chainHead_v1_followEvent" &&
+    res.params.result.event === "operationBodyDone"
+  ) {
+    res.params.result.value = res.params.result.value.map((v: string) =>
+      v.length > 32 ? v.slice(0, 32) + "…" : v,
+    )
+  }
+}
+```
+
+---
+
 ## Runtime Call
 
 - Parameters
@@ -317,3 +379,120 @@ The only exception, as the header is guaranteed to be already in the node.
     output: "0x00…00"
   }
   ```
+
+---
+
+### Fetch metadata playground
+
+Notes:
+
+```ts
+import { chainSpec } from "polkadot-api/chains/westend2"
+import { getSmProvider } from "polkadot-api/sm-provider"
+import { start } from "polkadot-api/smoldot"
+import { decAnyMetadata, u32 } from "@polkadot-api/substrate-bindings"
+import { toHex } from "polkadot-api/utils"
+
+const smoldot = start({
+  maxLogLevel: 0,
+})
+
+const provider = getSmProvider(smoldot.addChain({ chainSpec }))
+
+let id = 0
+const connection = provider((message) => {
+  const msg = JSON.parse(message)
+
+  if (msg.method === "chainHead_v1_followEvent") {
+    if (msg.params.result.event === "initialized") {
+      const lastFinalized = msg.params.result.finalizedBlockHashes.at(-1)
+      connection.send(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: `${id++}-call`,
+          method: "chainHead_v1_call",
+          params: [
+            msg.params.subscription,
+            lastFinalized,
+            "Metadata_metadata_at_version",
+            toHex(u32.enc(15)),
+          ],
+        }),
+      )
+      msg.params.result.finalizedBlockHashes.forEach((hash: string) =>
+        connection.send(
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: `${id++}-unpin`,
+            method: "chainHead_v1_unpin",
+            params: [msg.params.subscription, hash],
+          }),
+        ),
+      )
+    }
+    if (msg.params.result.event === "newBlock") {
+      connection.send(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: `${id++}-unpin`,
+          method: "chainHead_v1_unpin",
+          params: [msg.params.subscription, msg.params.result.blockHash],
+        }),
+      )
+    }
+
+    if (msg.params.result.event === "operationCallDone") {
+      const metadata = decAnyMetadata(msg.params.result.output)
+      console.log("received metadata")
+      console.log(metadata)
+    } else {
+      console.log(msg)
+    }
+  }
+})
+
+connection.send(
+  JSON.stringify({
+    jsonrpc: "2.0",
+    id: id++,
+    method: "chainHead_v1_follow",
+    params: [true],
+  }),
+)
+```
+
+---
+
+## Storage
+
+- followSubscription: string
+- hash: string
+- items: Array
+  - key: string
+  - type
+    - value
+    - hash
+    - closestDescendantMerkleValue
+    - descendantsValues
+    - descendantsHashes
+- childTrie
+
+---
+
+### Chain storage recap
+
+---
+
+### RFC-9
+
+---
+
+# Challenges
+
+- Correlating messages
+- Which state is the one we want?
+- Block pinning
+
+---
+
+## Best block state: Handling reorgs
