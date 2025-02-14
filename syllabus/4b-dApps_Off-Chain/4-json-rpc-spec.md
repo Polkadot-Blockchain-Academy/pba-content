@@ -89,12 +89,7 @@ Mention `id` field can be any string, used to correlate messages.
 - Subscription
   - `chainHead_v1_follow`
   - `chainHead_v1_unfollow`
-
----
-
-# Chain Head
-
-- Operations
+- Operations <!-- .element: class="fragment" -->
   - `chainHead_v1_header`
   - `chainHead_v1_body`
   - `chainHead_v1_storage`
@@ -516,9 +511,122 @@ Notes:
 
 https://excalidraw.com/#json=udTXjn9JdUlGMx0UMv3fq,9EeDxmFCZW2IgCwMgSpsjQ
 
+---v
+
+## Merkle Tree Recap
+
+<table>
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0x45…5f</td>
+      <td>123.21</td>
+    </tr>
+    <tr>
+      <td>0xe4…28</td>
+      <td>72.76</td>
+    </tr>
+    <tr>
+      <td>0x7f…41</td>
+      <td>{ ALICE: 0x45…5f, BOB: 0xe4…28 }</td>
+    </tr>
+    <tr>
+      <td>0x9a…a2</td>
+      <td>1785.32</td>
+    </tr>
+    <tr>
+      <td>0x92…af</td>
+      <td>{ ALICE: 0x9a…a2 }</td>
+    </tr>
+    <tr>
+      <td>0x50…ee</td>
+      <td>[{ ref: 1234, vote: 'aye' }]</td>
+    </tr>
+    <tr>
+      <td>0x2c…72</td>
+      <td>{ BOB: 0x50…ee }</td>
+    </tr>
+    <tr>
+      <td>0x36…c1</td>
+      <td>{ Balance: 0x7f…41, Assets: 0x92…af, Votes: 0x2c…72 }</td>
+    </tr>
+  </tbody>
+</table>
+
+Notes:
+
+Explain structure, then explain an example of how the storage is traversed.
+
+---v
+
+## But there's more!
+
+- It's important to keep the merkle tree balanced.
+- To avoid attacks, keys are hashed.
+- But if they are hashed
+  - It would be hard to query all the values for a given prefix
+  - It would be hard to know the original key for a given entry
+- Solution
+  - Hash parts of the key individually.
+  - Include the original value in the key*.
+
+"0x2e7…847{Balances}83a…231{BOB}"
+
+---v
+
+## Key concepts
+
+<pba-cols>
+<pba-col style="flex-shrink: 0">
+
+- Key
+- Value
+- Hash
+- Merkle value
+
+</pba-col>
+<pba-col>
+<img rounded src="./img/merkle-tree.png" style="width: 100%" />
+</pba-col>
+<pba-cols>
+
+---v
+
+<pba-cols>
+<pba-col style="flex-shrink: 0">
+
+## Can do
+
+- Access a value
+- Subtree differences
+- Get values by subtree
+- Get storage proofs
+
+</pba-col>
+<pba-col>
+
+## Can't do
+
+- Query values
+- Get key from a value
+
+</pba-col>
+<pba-cols>
+
+Notes:
+
+Explain that you can't query for specific values unless they are part of a subtree.
+
+E.g. the votes for a given referendum, as the storage is Votes -> Account -> Referendum
+
 ---
 
-## Storage
+# Storage
 
 - followSubscription: string
 - hash: string
@@ -532,18 +640,95 @@ https://excalidraw.com/#json=udTXjn9JdUlGMx0UMv3fq,9EeDxmFCZW2IgCwMgSpsjQ
     - descendantsHashes
 - childTrie
 
+---v
+
+## Storage
+
+- You can query multiple values.
+- The node might drop some of them.
+```ts
+  {
+    result: "started",
+    operationId: "…",
+    discardedItems: 5
+  }
+```
+- Just try later!
+
+---v
+
+## Storage
+
+```ts
+{
+  event: "operationStorageItems",
+  operationId: "…",
+  items: [{
+    key: "0x00…00",
+    value: "0x00…00",
+    hash: "0x00…00",
+    closestDescendantMerkleValue: "0x00…00",
+  }, …]
+}
+
+{
+  event: "operationStorageDone",
+  operationId: "…",
+}
+```
+
+---v
+
+## Storage
+
+```ts
+{
+  event: "operationWaitingForContinue",
+  operationId: "…"
+}
+
+// [followSubscription: string, operationId: string]
+{ jsonrpc: "2.0", id: "1",
+  method: "chainHead_v1_continue",
+  params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "…"]
+}
+```
+
 ---
 
-### RFC-9
+## Light-Client and RFC-0009
+
+[Improved light client requests networking protocol](https://github.com/polkadot-fellows/RFCs/blob/main/text/0009-improved-net-light-client-requests.md)
+
+Notes:
+
+tl;dr; Light Clients currently can't request the hashes, they must download the values. RFC-0009 adds more granularity
+
+- Check whether a key exists in the storage.
+- Check for storage changes between two blocks.
+- Query all descendants without needing round trips.
 
 ---
 
 # Challenges
 
-- Correlating messages
-- Which state is the one we want?
-- Block pinning
+---v
 
----
+## Correlating messages
 
-## Best block state: Handling reorgs
+- It's not a simple `fetch`.
+- Abstraction to correlate
+  - JSON-RPC message ID
+  - Follow Subscription
+  - Operation ID
+- `@polkadot-api/substrate-client`
+
+---v
+
+## Handling forks
+
+<img rounded src="./img/block-states.png" />
+
+---v
+
+## Block pinning
