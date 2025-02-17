@@ -16,6 +16,8 @@ owner: Carlo Sala
 - Mod. 2 recap:
   - What is the runtime (and its metadata)?
   - The metadata sets us apart of other blockchains.
+- Deep dive into metadata
+- Extrinsics
 
 ---
 
@@ -143,6 +145,10 @@ https://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm
 
 - _Second-class_ citizens
   - Types like balances (_"amount"_) or `AccountId32` are first-class citizens in the blockchains, yet in the Metadata they are not. Identifying them as what they are is a heuristic labour.
+
+---v
+
+#### Example: `AccountId32` and _Balance_
 
 ```json
 [
@@ -406,10 +412,10 @@ Every pallet can define an arbitrary number (including none) of **constants**, *
 interface PalletMetadata {
   name: String;
   constants: Vec<PalletConstantMetadata>;
+  event: Option<Type>;
+  error: Option<Type>;
+  calls: Option<Type>;
   storage: Option<PalletStorageMetadata>;
-  calls: Option<PalletCallMetadata>;
-  event: Option<PalletEventMetadata>;
-  error: Option<PalletErrorMetadata>;
   index: u8;
   docs: Vec<String>; // rust docs
 }
@@ -433,48 +439,76 @@ interface PalletConstantMetadata {
 }
 ```
 
----v
+---
 
 ## Metadata
 
-#### Constants
+#### Events
 
-Example: `System.Version`
+They are emitted by the runtime when executing certain actions.
+
+There are three types (called `phase`s):
+
+- Initialization: runtime _hooks_ before applying transactions
+- Apply Extrinsic: events emitted by applying transactions
+- Finalization: runtime _hooks_ after applying transactions
+
+They can also include topics, which generally are a vector of hashes. They can be useful to help identify the origin of
+the event (e.g. smart contracts).
+
+---
+
+## Metadata
+
+#### Errors
+
+Pallets can define errors to explain why an extrinsic had no success.
+
+- `System.ExtrinsicSuccess` 🎉
+- `System.ExtrinsicFailed` 🔴
+  - Inside its payoad we find the specific error.
+
+---
+
+## Metadata
+
+#### Calls
+
+They expose all transactions available in that pallet.
+
+We will dig into it during the day.
+
+---
+
+## Metadata
+
+Example: `System`
 
 ```json
 {
   "name": "System",
-  "storage": {…},
+  "storage": {…}, // let's follow up with it!
   "calls": 94,
   "events": 22,
   "constants": [
-    {
-      "name": "BlockLength",
-      "type": 505,
-      "value": "0x00003c000000500000005000",
-      "docs": [" The maximum length of a block (in bytes)."]
-    },
     {
       "name": "Version",
       "type": 508,
       "value": "0x20706f6c6b61646f743c7061726974792d706f6c6b61646f7400000000fc4d0f00000000005cc51ff1fa3f5d0cca01000000df6acb689907609b0500000037e397fc7c91f5e40200000040fe3ad401f8959a0600000017a6bc0d0062aeb30100000018ef58a3b67ba77001000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0b00000049eaaf1b548a0cb00300000091d5df18b0d2cf58020000002a5e924655399e6001000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a804000000f3ff14d5ab527059030000006ff52ee858e6c5bd0100000091b1c8b16328eb92010000009ffb505aa738d69c01000000fbc577b9d747efd6010000001a00000001",
       "docs": [" Get the chain's in-code version."]
     },
-    {
-      "name": "SS58Prefix",
-      "type": 91,
-      "value": "0x0000",
-      "docs": [
-        " The designated SS58 prefix of this chain.",
-        "",
-        " This replaces the \"ss58Format\" property declared in the chain spec. Reason is",
-        " that the runtime should know about the prefix in order to make use of it as",
-        " an identifier of the chain."
-      ]
-    }
+    {…}
   ],
   "errors": 512,
   "index": 0,
   "docs": []
 }
 ```
+
+---
+
+## Metadata
+
+#### Storage
+
+TODO
