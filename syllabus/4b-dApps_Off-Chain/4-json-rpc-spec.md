@@ -27,16 +27,19 @@ Concepts: Finalized, Pruned, Best, Fork
 
 - Client - Server RPC protocol with JSON
 - Request
+
 ```js
 { jsonrpc: "2.0", id: "{req_id}", method: "method_name", params: {…} }
 ```
 
 - Response
+
 ```js
 { jsonrpc: "2.0", id: "{req_id}", result: {…} }
 ```
 
 - Notification
+
 ```js
 { jsonrpc: "2.0", method: "method_name", params: {…} }
 ```
@@ -216,7 +219,7 @@ Example of notifications emitted by a follow subscription based on this image.
 
 ```ts
 {
-  event: "stop"
+  event: "stop";
 }
 ```
 
@@ -235,6 +238,7 @@ Example of notifications emitted by a follow subscription based on this image.
 ## Header
 
 - Parameters
+
   ```ts
   [followSubscription: string, hash: string]
 
@@ -243,6 +247,7 @@ Example of notifications emitted by a follow subscription based on this image.
     params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
   }
   ```
+
 - Result: SCALE-encoded header <!-- .element: class="fragment" -->
   ```ts
   { jsonrpc: "2.0", id: "1", result: "0x00…00" }
@@ -257,6 +262,7 @@ The only exception, as the header is guaranteed to be already in the node.
 ## Body
 
 - Parameters
+
   ```ts
   [followSubscription: string, hash: string]
 
@@ -265,6 +271,7 @@ The only exception, as the header is guaranteed to be already in the node.
     params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
   }
   ```
+
 - Result: Operation ID <!-- .element: class="fragment" -->
   ```ts
   { jsonrpc: "2.0", id: "1", result: "GhwhKA4yL3…Roc29d8e" }
@@ -295,37 +302,34 @@ Notes:
 Show basic correlating messages, pinning / unpinning
 
 ```ts
-import { chainSpec } from "polkadot-api/chains/westend2"
-import { getSmProvider } from "polkadot-api/sm-provider"
-import { start } from "polkadot-api/smoldot"
+import { chainSpec } from "polkadot-api/chains/westend2";
+import { getSmProvider } from "polkadot-api/sm-provider";
+import { start } from "polkadot-api/smoldot";
 
 const smoldot = start({
   maxLogLevel: 0,
-})
+});
 
-const provider = getSmProvider(smoldot.addChain({ chainSpec }))
+const provider = getSmProvider(smoldot.addChain({ chainSpec }));
 
-let id = 0
-const connection = provider((message) => {
-  const msg = JSON.parse(message)
-  ellipsisBody(msg)
-  console.log(msg)
-  if (
-    msg.method === "chainHead_v1_followEvent" &&
-    msg.params.result.event === "newBlock"
-  ) {
-    const reqId = id++
-    console.log("Request body", reqId)
+let id = 0;
+const connection = provider(message => {
+  const msg = JSON.parse(message);
+  ellipsisBody(msg);
+  console.log(msg);
+  if (msg.method === "chainHead_v1_followEvent" && msg.params.result.event === "newBlock") {
+    const reqId = id++;
+    console.log("Request body", reqId);
     connection.send(
       JSON.stringify({
         jsonrpc: "2.0",
         id: reqId,
         method: "chainHead_v1_body",
         params: [msg.params.subscription, msg.params.result.blockHash],
-      }),
-    )
+      })
+    );
   }
-})
+});
 
 connection.send(
   JSON.stringify({
@@ -333,17 +337,12 @@ connection.send(
     id: id++,
     method: "chainHead_v1_follow",
     params: [true],
-  }),
-)
+  })
+);
 
 function ellipsisBody(res: any) {
-  if (
-    res.method === "chainHead_v1_followEvent" &&
-    res.params.result.event === "operationBodyDone"
-  ) {
-    res.params.result.value = res.params.result.value.map((v: string) =>
-      v.length > 32 ? v.slice(0, 32) + "…" : v,
-    )
+  if (res.method === "chainHead_v1_followEvent" && res.params.result.event === "operationBodyDone") {
+    res.params.result.value = res.params.result.value.map((v: string) => (v.length > 32 ? v.slice(0, 32) + "…" : v));
   }
 }
 ```
@@ -353,6 +352,7 @@ function ellipsisBody(res: any) {
 ## Runtime Call
 
 - Parameters
+
   ```ts
   [subscription: string, hash: string, fnName: string, params: string[]]
 
@@ -366,6 +366,7 @@ function ellipsisBody(res: any) {
     ]
   }
   ```
+
 - Notification: <!-- .element: class="fragment" -->
   ```ts
   {
@@ -382,38 +383,33 @@ function ellipsisBody(res: any) {
 Notes:
 
 ```ts
-import { chainSpec } from "polkadot-api/chains/westend2"
-import { getSmProvider } from "polkadot-api/sm-provider"
-import { start } from "polkadot-api/smoldot"
-import { decAnyMetadata, u32 } from "@polkadot-api/substrate-bindings"
-import { toHex } from "polkadot-api/utils"
+import { chainSpec } from "polkadot-api/chains/westend2";
+import { getSmProvider } from "polkadot-api/sm-provider";
+import { start } from "polkadot-api/smoldot";
+import { decAnyMetadata, u32 } from "@polkadot-api/substrate-bindings";
+import { toHex } from "polkadot-api/utils";
 
 const smoldot = start({
   maxLogLevel: 0,
-})
+});
 
-const provider = getSmProvider(smoldot.addChain({ chainSpec }))
+const provider = getSmProvider(smoldot.addChain({ chainSpec }));
 
-let id = 0
-const connection = provider((message) => {
-  const msg = JSON.parse(message)
+let id = 0;
+const connection = provider(message => {
+  const msg = JSON.parse(message);
 
   if (msg.method === "chainHead_v1_followEvent") {
     if (msg.params.result.event === "initialized") {
-      const lastFinalized = msg.params.result.finalizedBlockHashes.at(-1)
+      const lastFinalized = msg.params.result.finalizedBlockHashes.at(-1);
       connection.send(
         JSON.stringify({
           jsonrpc: "2.0",
           id: `${id++}-call`,
           method: "chainHead_v1_call",
-          params: [
-            msg.params.subscription,
-            lastFinalized,
-            "Metadata_metadata_at_version",
-            toHex(u32.enc(15)),
-          ],
-        }),
-      )
+          params: [msg.params.subscription, lastFinalized, "Metadata_metadata_at_version", toHex(u32.enc(15))],
+        })
+      );
       msg.params.result.finalizedBlockHashes.forEach((hash: string) =>
         connection.send(
           JSON.stringify({
@@ -421,9 +417,9 @@ const connection = provider((message) => {
             id: `${id++}-unpin`,
             method: "chainHead_v1_unpin",
             params: [msg.params.subscription, hash],
-          }),
-        ),
-      )
+          })
+        )
+      );
     }
     if (msg.params.result.event === "newBlock") {
       connection.send(
@@ -432,19 +428,19 @@ const connection = provider((message) => {
           id: `${id++}-unpin`,
           method: "chainHead_v1_unpin",
           params: [msg.params.subscription, msg.params.result.blockHash],
-        }),
-      )
+        })
+      );
     }
 
     if (msg.params.result.event === "operationCallDone") {
-      const metadata = decAnyMetadata(msg.params.result.output)
-      console.log("received metadata")
-      console.log(metadata)
+      const metadata = decAnyMetadata(msg.params.result.output);
+      console.log("received metadata");
+      console.log(metadata);
     } else {
-      console.log(msg)
+      console.log(msg);
     }
   }
-})
+});
 
 connection.send(
   JSON.stringify({
@@ -452,8 +448,8 @@ connection.send(
     id: id++,
     method: "chainHead_v1_follow",
     params: [true],
-  }),
-)
+  })
+);
 ```
 
 ---
@@ -573,7 +569,7 @@ Explain structure, then explain an example of how the storage is traversed.
   - It would be hard to know the original key for a given entry
 - Solution
   - Hash parts of the key individually.
-  - Include the original value in the key*.
+  - Include the original value in the key\*.
 
 "0x2e7…847{Balances}83a…231{BOB}"
 
@@ -646,6 +642,7 @@ E.g. the votes for a given referendum, as the storage is Votes -> Account -> Ref
 
 - You can query multiple values.
 - The node might drop some of them.
+
 ```ts
   {
     result: "started",
@@ -653,6 +650,7 @@ E.g. the votes for a given referendum, as the storage is Votes -> Account -> Ref
     discardedItems: 5
   }
 ```
+
 - Just try later!
 
 ---v
