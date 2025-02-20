@@ -1,7 +1,7 @@
 ---
 title: Metadata
 description: TODO
-duration: 1.5 hours
+duration: 4 hours
 owner: Carlo Sala
 ---
 
@@ -9,7 +9,7 @@ owner: Carlo Sala
 
 ---
 
-## Runtime / Metadata
+## Metadata
 
 #### Content
 
@@ -511,4 +511,183 @@ Example: `System`
 
 #### Storage
 
-TODO
+Every pallet can **optionally** define storage entries. They have the following shape in the metadata:
+
+```typescript
+interface PalletStorageMetadata {
+  prefix: String;
+  entries: Vec<{
+    name: String;
+    modifier: "Optional" | "Default";
+    ty: Plain | Map;
+    default: Vec<u8>;
+    docs: Vec<String>;
+  }>;
+}
+
+// indicates no keys
+interface Plain {
+  value: Type;
+}
+
+interface Map {
+  hashers: Vec<StorageHasher>;
+  key: Type;
+  value: Type;
+}
+```
+
+---
+
+## Metadata
+
+Example: `System`
+
+```json
+{
+  "name": "System",
+  "storage": {
+    "prefix": "System",
+    "items": [
+      {
+        "name": "Account",
+        "modifier": 1,
+        "type": {
+          "tag": "map",
+          "value": {
+            "hashers": [
+              {
+                "tag": "Blake2128Concat"
+              }
+            ],
+            "key": 0,
+            "value": 3
+          }
+        },
+        "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080",
+        "docs": [" The full account information for a particular account ID."]
+      },
+      {
+        "name": "ExtrinsicCount",
+        "modifier": 0,
+        "type": {
+          "tag": "plain",
+          "value": 4
+        },
+        "fallback": "0x00",
+        "docs": [" Total extrinsics count for the current block."]
+      },
+      {…}
+    ]
+  },
+  {…}
+}
+```
+
+---
+
+## Extrinsic
+
+#### Content
+
+- What is an extrinsic?
+- Extrinsic v4 deep dive
+- Future: extrinsic v5
+
+---
+
+## Extrinsic
+
+An **extrinsic** is a request to the runtime to modify the state from outside of it.
+
+TL;DR: **extrinsic** == **transaction**
+
+---
+
+## Extrinsic
+
+#### Type and Versioning
+
+Every extrinsic starts with a version byte, inclunding the extrinsic kind and version.
+
+| Version |   Kind   |    Version Byte     |
+| :-----: | :------: | :-----------------: |
+|    4    | Unsigned |  4 (`0b0000_0100`)  |
+|    4    |  Signed  | 132 (`0b1000_0100`) |
+|    5    |   Bare   |  5 (`0b0000_0101`)  |
+|    5    | General  | 69 (`0b0100_0101`)  |
+
+<span style="font-size: 0.6em; opacity: 0.6">We will focus on version 4, and explain version 5 a bit ahead</span>
+
+---
+
+## Extrinsic
+
+#### Metadata
+
+```typescript
+interface ExtrinsicMetadata {
+  version: 4;
+  address_ty: Type;
+  call_ty: Type;
+  signature_ty: Type;
+  extra_ty: Type;
+  signed_extensions: Vec<{
+    identifier: String;
+    ty: Type;
+    additional_signed: Type;
+  }>;
+}
+```
+
+---
+
+## Extrinsic
+
+#### Signed extensions
+
+Signed extensions are appended to every signed extrinsic with information that is agnostic to the call itself. Examples:
+
+- Mortality (i.e. until which block the transaction should be valid)
+- Tip
+- Genesis hash
+- Nonce
+
+---v
+
+#### `additional_signed`
+
+Some of them are _implicit_. They can only be one single value to be valid. Therefore, they are not encoded in the
+extrinsic to save block space, yet they are signed. Examples:
+
+- Spec version
+- Genesis hash
+
+---v
+
+#### `extra`
+
+These are parts that need to be _explicit_, since multiple values might be valid. They are encoded in the extrinsic.
+Examples:
+
+- Tip
+- Nonce™
+- Mortality
+
+---
+
+## Extrinsic
+
+#### Extrinsic shape
+
+![Image](./img/extrinsic.svg)
+
+<span style="font-size: 0.6em; opacity: 0.6">It is _opaque_ encoded; i.e. prepended by its compact-encoded length</span>
+
+---
+
+## Sign Payload
+
+In order to sign an extrinsic, the payload to be signed by the algorithm is:
+
+![Image](./img/sign-payload.svg)
