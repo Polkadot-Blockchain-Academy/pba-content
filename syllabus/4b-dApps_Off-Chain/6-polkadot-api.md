@@ -120,6 +120,188 @@ interface JsonRpcConnection {
 
 ---v
 
-### Option #1
+### Solution #1
 
 - #YOLO #BreakEverything
+- Offer types for interactions
+- If the chain doesn't support it when running, too bad!
+- Polkadot-API: `client.getUnsafeApi()`
+- Polkadot-JS + Type Registry
+
+---v
+
+### Solution #2
+
+- Get a unique value for each interaction
+- Checksum based on the type for the interaction
+- If the checksum changes, then the interaction is not compatible
+
+---v
+
+### Solution #2
+
+<pba-cols>
+<pba-col>
+
+```ts
+Referenda.submit({
+  proposal_origin: Enum {
+    BigSpender,
+    MediumSpender,
+    SmallSpender,
+    WishForChange
+  },
+  proposal: Enum {
+    Inline(Binary),
+    Lookup(Binary, number)
+  },
+  enactment_moment: Enum {
+    After(number),
+    At(number)
+  }
+})
+```
+
+</pba-col>
+<pba-col>
+
+```ts
+hash(str) := str // For demo purposes
+Checksum(void) := hash("0")
+Checksum(number) := hash("1")
+Checksum(Binary) := hash("2")
+Checksum((a,b)) := hash("3(" +
+  ChkS(a) + ChkS(b) + ")")
+
+Checksum(Enum) := hash("4(" +
+  forEach variant {
+    name + Checksum(type)
+  } + ")"
+)
+
+Checksum(Struct) := hash("5(" +
+  forEach property {
+    name + Checksum(type)
+  } + ")"
+)
+```
+
+</pba-col>
+</pba-cols>
+
+```ts
+Checksum(proposal_origin) = "4(BigSpender0MediumSpender0SmallSpender0WishForChange0)"
+Checksum((Binary, number)) = "3(21)"
+Checksum(proposal) = "4(Inline2Lookup3(21))"
+Checksum(enactment_moment) = "4(After1At1)"
+Checksum(Referenda.submit) =
+ "5(proposal_origin4(BigSpender…Change0)proposal4(Inline2Lookup3(21))enactm…r1At1))"
+```
+
+---v
+
+### Solution #2
+
+- Checksum changes if anything changes at all
+- `polkadot-api@0.10.0`
+- Problem: Cases where changes should not affect it
+
+---v
+
+### Solution #3
+
+- Bundle type definitions
+- Compare metadata types on runtime
+
+```ts
+Referenda.submit({
+  proposal_origin: Enum {
+    BigSpender,
+    MediumSpender,
+    SmallSpender,
+    WishForChange,
+    CouncilElection
+  },
+  proposal: Enum {
+    Inline(Binary),
+    Lookup(Binary, number)
+  },
+  enactment_moment: Enum {
+    After(number),
+    At(number)
+  }
+})
+```
+
+---v
+
+### Solution #3
+
+- There's more!
+- We can compare based on the actual value
+- Compatibility levels
+  - Identical
+  - Backwards compatible
+  - Partial
+  - Incompatible
+- Different between "in" and "out"
+
+---v
+
+### Solution #3
+
+<table>
+  <thead>
+    <tr>
+      <th>Change</th>
+      <th>Sending</th>
+      <th>Receiving</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Add a property to a struct</td>
+      <td><span style="color: #fc8d62">Incompatible</span></td>
+      <td><span style="color: #80dbde">Backwards compatible</span></td>
+    </tr>
+    <tr>
+      <td>Add an <b>optional</b> property to a struct</td>
+      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td><span style="color: #80dbde">Backwards compatible</span></td>
+    </tr>
+    <tr>
+      <td>Remove a property from a struct</td>
+      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td><span style="color: #fc8d62">Incompatible</span></td>
+    </tr>
+    <tr>
+      <td>Make an optional property mandatory</td>
+      <td><span style="color: #8da0cb">Partial</span></td>
+      <td><span style="color: #80dbde">Backwards compatible</span></td>
+    </tr>
+    <tr>
+      <td>Add a variant to an Enum</td>
+      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td><span style="color: #8da0cb">Partial</span></td>
+    </tr>
+    <tr>
+      <td>Remove a variant from an Enum</td>
+      <td><span style="color: #8da0cb">Partial</span></td>
+      <td><span style="color: #80dbde">Backwards compatible</span></td>
+    </tr>
+    <tr>
+      <td>Change the type of an optional property</td>
+      <td><span style="color: #8da0cb">Partial</span></td>
+      <td><span style="color: #8da0cb">Partial</span></td>
+    </tr>
+    <tr>
+      <td>Change a u8 to a u128</td>
+      <td><span style="color: #fc8d62">Incompatible</span></td>
+      <td><span style="color: #fc8d62">Incompatible</span></td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Foo
