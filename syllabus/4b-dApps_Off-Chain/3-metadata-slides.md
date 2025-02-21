@@ -686,8 +686,25 @@ Examples:
 
 ---
 
-## Sign Payload
+## Extrinsic
+
+#### Sign Payload
 
 In order to sign an extrinsic, the payload to be signed by the algorithm is:
 
 ![Image](./img/sign-payload.svg)
+
+---
+
+## Extrinsic
+
+#### Future: `v5`
+
+Extrinsic `v5` will rely on extensions to define its origin. I.e. no `origin` or `signature` will be hardcoded.
+
+This increases the flexibility of the extrinsics, leaving the runtime (through extensions) decide how permission will
+the extrinsic be.
+
+![Image](./img/extrinsic-v5.svg)
+
+<span style="font-size: 0.6em; opacity: 0.6">Take it with a pinch of salt, it is still under RFC process (RFC#0124)</span>
