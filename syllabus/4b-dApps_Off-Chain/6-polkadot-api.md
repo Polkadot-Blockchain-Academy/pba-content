@@ -140,7 +140,7 @@ interface JsonRpcConnection {
 
 ### Solution #2
 
-<pba-cols>
+<pba-cols style="font-size: 0.8em">
 <pba-col>
 
 ```ts
@@ -190,12 +190,12 @@ Checksum(Struct) := hash("5(" +
 </pba-cols>
 
 ```ts
-Checksum(proposal_origin) = "4(BigSpender0MediumSpender0SmallSpender0WishForChange0)"
+Checksum(proposal_origin) = "4(BigSpender0MediumSpender0Sma…ender0WishForChange0)"
 Checksum((Binary, number)) = "3(21)"
 Checksum(proposal) = "4(Inline2Lookup3(21))"
 Checksum(enactment_moment) = "4(After1At1)"
 Checksum(Referenda.submit) =
- "5(proposal_origin4(BigSpender…Change0)proposal4(Inline2Lookup3(21))enactm…r1At1))"
+ "5(proposal_origin4(BigSpend…Change0)proposal4(Inline2Lookup3(21))enactm…r1At1))"
 ```
 
 ---v
@@ -304,4 +304,117 @@ Referenda.submit({
 
 ---
 
-## Foo
+## Descriptors
+
+```ts
+import { dot } from '@polkadot-api/descriptors'
+
+// ...
+
+const dotApi = client.getTypedApi(dot);
+
+const account = await dotApi.query.System.Account.getValue(ALICE)
+```
+
+---v
+
+## Descriptors
+
+- Typescript definitions
+```ts
+  function api.query.System.Account(id: AccountID): Promise<{
+    nonce: number,
+    data: {
+      free: bigint,
+      reserved: bigint,
+      frozen: bigint
+    }
+  }>
+```
+
+- Metadata types
+  - ~500 KB SCALE per each chain
+  - ~1.5 MB JSON
+  - React/Vue: less than 140 KB
+  - How to bundle efficiently?
+
+---v
+
+### Opportunities
+
+1. Lazy-loading
+2. Reduce information
+3. Whitelisting
+4. Common types
+
+---v
+
+### Lazy Loading
+
+- Let the dApp render first
+- Load descriptors in the background
+
+```ts
+// Static import
+import metadata from './metadata';
+
+// Dynamic import
+const metadataPromise = import('./metadata');
+```
+
+Notes:
+
+Challenges when dealing with promises.
+
+---v
+
+### Lazy Loading
+
+```ts
+import { dot } from '@polkadot-api/descriptors'
+
+// ...
+
+const dotApi = client.getTypedApi(dot);
+
+const account = await dotApi.query.System.Account.getValue(ALICE)
+```
+
+Notes:
+
+How can we let dev start interacting without having to first "await" the descriptors?
+
+---v
+
+### Reduce Information
+
+- Metadata is massive
+- We're only interested in data (lookup)
+- Some types can also be merged (u8, u16, u32, …)
+
+<img rounded src="./img/descriptors.png" />
+
+Notes:
+
+Checksum can be used to deduplicate types
+
+https://excalidraw.com/#json=6r98ZeK6wQ0dsmSon8Lon,ybCarw4wIswxi3Hin5ArlQ
+
+---v
+
+### Whitelisting
+
+- dApps don't use the full list of interactions
+- We can offer API to reduce bundle sizes
+
+---v
+
+### Common types
+
+- Multichain dApps
+- Runtimes are very similar
+- Combine all into one
+
+Notes:
+
+Tradeoff for dApps that are multichain but one at a time.
