@@ -69,15 +69,18 @@ Or even this!
 ---
 
 #### Bottom-up approach
+
 Start from the very beginning and go through the formulas 1 by 1
 
 Pros:
-  - straight forward to start
-  - works equally well if you have and don't have experience
+
+- straight forward to start
+- works equally well if you have and don't have experience
 
 Cons:
-  - you might get stuck
-  - depending on the language you might end up with insufficient architecture
+
+- you might get stuck
+- depending on the language you might end up with insufficient architecture
 
 ---v
 
@@ -86,11 +89,13 @@ Cons:
 Think high level about the client architecture first
 
 Pros:
-  - you MIGHT build a very efficient client
+
+- you MIGHT build a very efficient client
 
 Cons:
-  - requires a lot of experience
-  - extremely easy to get wrong
+
+- requires a lot of experience
+- extremely easy to get wrong
 
 ---v
 
@@ -149,6 +154,7 @@ Cons:
 <!-- .element: class="fragment" -->
 
 Notes:
+
 - Reading/loading JSON tests allows us to get some understanding of what's
   going to be needed and how things might need to be stitched together.
   While it seems super simple `JSON.parse` we've learned a ton just
@@ -168,6 +174,7 @@ Notes:
 - Next we were "fact-checking" these structures with the Gray Paper and documenting them.
 
 Notes:
+
 - By searching the structures in the Gray Paper we were gaining better knowledge about the structure of the paper.
 
 ---v
@@ -183,8 +190,9 @@ Notes:
 - **unknown-unknowns**: Things we are not even aware exist, so we cannot prepare for them.
 
 Notes:
+
 - While you gain understanding of the Gray Paper and the overall domain, you start to realize that there are things
-    that you have to do that you didn't even consider ealier. These unknown-unknowns turn into known-unknowns.
+  that you have to do that you didn't even consider ealier. These unknown-unknowns turn into known-unknowns.
 
 ---v
 
@@ -194,6 +202,7 @@ Notes:
 - Breadth-first
 
 Notes:
+
 - After we got enough **known-unknowns** we went into breadth-first mode
 - and parallelized the work.
 
@@ -206,6 +215,7 @@ Notes:
 - PVM
 
 Notes:
+
 - We figured implementing for JSON test vectors will be simple, so we initially
   went with things that we believed are going to be hard :)
 
@@ -217,6 +227,7 @@ Notes:
 - Invest in your own unit testing suite.
 
 Notes:
+
 - JSON test are work in progress and will change.
 
 ---
@@ -270,4 +281,5 @@ we are focusing on the performance as we go since our ambitions reach beyond M2.
 - TODO: Gray Paper links overlay (from-code annotations)
 
 ---
+
 # Questions?
