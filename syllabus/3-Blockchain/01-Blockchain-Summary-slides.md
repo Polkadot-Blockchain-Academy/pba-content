@@ -7,15 +7,15 @@ description: Overview of Blockchain
 
 - Importance of having trustless verifiable histories
 - Coordinating with people who you dont trust or know is still important
-    (Give example here)
-- Trust and Centralization 
+  (Give example here)
+- Trust and Centralization
 
 ---
 
 ### P2P Networking
 
 - Traditional networks are setup for centralization
-- P2P Networks decentralize  
+- P2P Networks decentralize
 
 ---
 
@@ -30,7 +30,7 @@ description: Overview of Blockchain
 ### Hash List Combined with State machine
 
 - Each block contains hash of previous block
-- Each block in the Hash list contains state machine information  
+- Each block in the Hash list contains state machine information
 - Now we have combined coordination and shared histories with a computer science concept
 
 ---
@@ -77,8 +77,8 @@ description: Overview of Blockchain
 ### Authoring
 
 - How to choose a leader?
-    - PoW bitcoin
-    - PoS systems
+  - PoW bitcoin
+  - PoS systems
 - Why need to choose a leader?
 - How to verify the leader did something correct?
 
@@ -87,8 +87,8 @@ description: Overview of Blockchain
 ### Finality
 
 - How to determine a point with which we will not dispute ever again?
-    - Voting, 2/3 honest assumption
-    - PoW utilizing probablistic finality (Likely you will never fork again from this block)
+  - Voting, 2/3 honest assumption
+  - PoW utilizing probablistic finality (Likely you will never fork again from this block)
 - What happens if finality is not reached?
 - Decoupling finality from authoring
 
@@ -107,7 +107,7 @@ description: Overview of Blockchain
 - "Instant Finality"
 - Possible missed slots..
 
---- 
+---
 
 ### Attacks on Consensus
 
