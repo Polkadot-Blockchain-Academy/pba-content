@@ -407,6 +407,10 @@ https://excalidraw.com/#json=6r98ZeK6wQ0dsmSon8Lon,ybCarw4wIswxi3Hin5ArlQ
 - dApps don't use the full list of interactions
 - We can offer API to reduce bundle sizes
 
+Notes:
+
+Explain current solution, possible alternative solutions (vite plugin, import-based, etc.)
+
 ---v
 
 ### Common types
@@ -418,3 +422,107 @@ https://excalidraw.com/#json=6r98ZeK6wQ0dsmSon8Lon,ybCarw4wIswxi3Hin5ArlQ
 Notes:
 
 Tradeoff for dApps that are multichain but one at a time.
+
+---
+
+## Signers
+
+---v
+
+## Signers
+
+- Polkadot-API creates a transaction
+- Who signs it? We need a private key!
+- Modular generic interface
+
+---v
+
+### Signers
+
+```ts
+  interface PolkadotSigner {
+    publicKey: Uint8Array;
+
+    signBytes(data: Uint8Array): Promise<Uint8Array>;
+
+    signTx(
+      callData: Uint8Array,
+      signedExtensions: Record<string, {
+        identifier: string;
+        value: Uint8Array;
+        additionalSigned: Uint8Array;
+      }>,
+      metadata: Uint8Array,
+      atBlockNumber: number,
+      hasher: (data: Uint8Array) => Uint8Array
+    ): Promise<Uint8Array>;
+  }
+```
+
+Notes:
+
+Explain broadly the interface
+
+---v
+
+### Polkadot Signer
+
+```ts
+// polkadot-api/signer
+function getPolkadotSigner(
+  publicKey: Uint8Array,
+  signingType: "Ecdsa" | "Ed25519" | "Sr25519",
+  sign: (input: Uint8Array) => Promise<Uint8Array> | Uint8Array,
+): PolkadotSigner
+```
+
+Notes:
+
+This is the basic signer. I have a function that can sign stuff, give me a polkadot signer that deals with signed extensions, etc.
+
+---v
+
+### Polkadot Signer
+
+```ts
+import {
+  entropyToMiniSecret,
+  mnemonicToEntropy,
+} from "@polkadot-labs/hdkd-helpers"
+import { sr25519CreateDerive } from "@polkadot-labs/hdkd"
+import { getPolkadotSigner } from "polkadot-api/signer"
+
+const alice_mnemonic =
+  "bottom drive obey lake curtain smoke basket hold race lonely fit walk"
+const entropy = mnemonicToEntropy(alice_mnemonic)
+const miniSecret = entropyToMiniSecret(entropy)
+const derive = sr25519CreateDerive(miniSecret)
+const alice = derive("//Alice")
+const aliceSigner = getPolkadotSigner(alice.publicKey, "Sr25519", alice.sign)
+```
+
+Notes:
+
+I have a private key from a mnemonic, how do I sign with PAPI?
+
+You don't. Modular design: you use whatever library can sign data, and use `getPolkadotSigner` to do what PAPI knows to do.
+
+---v
+
+### Polkadot-JS Signer
+
+---v
+
+### Ledger Signer
+
+---v
+
+### Meta signers
+
+Notes:
+
+Exercise: Implement proxy signer, hands-on.
+
+---
+
+## Ink
