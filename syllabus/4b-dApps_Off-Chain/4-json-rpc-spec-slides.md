@@ -204,6 +204,57 @@ Notes:
 
 Example of notifications emitted by a follow subscription based on this image.
 
+Show papi-console with the following logsRecorder:
+
+```ts
+/*
+import.meta.env.DEV && source.id !== "polkadot_people"
+    ? withLogFollowEvents(console.debug, provider)
+    : provider
+*/
+const withLogFollowEvents = (
+  logFn: (...args: string[]) => void,
+  provider: JsonRpcProvider,
+): JsonRpcProvider => {
+  const events = [
+    "initialized",
+    "newBlock",
+    "bestBlockChanged",
+    "finalized",
+    "stop",
+  ]
+
+  return (onMsg) => {
+    let followId = ""
+
+    const connection = provider((message) => {
+      onMsg(message)
+      if (
+        message.includes(`"id":"${followId}"`) ||
+        events.some((m) => message.includes(`"event":"${m}"`))
+      ) {
+        const { event, ...rest } = JSON.parse(message)?.params?.result || {}
+        logFn(`<< ${event}`, rest)
+      }
+    })
+
+    return {
+      send(message) {
+        if (message.includes(`"method":"chainHead_v1_follow"`)) {
+          const parsed = JSON.parse(message)
+          followId = parsed.id
+          logFn(`>> chainHead_v1_follow`, parsed.params)
+        }
+        connection.send(message)
+      },
+      disconnect() {
+        connection.disconnect()
+      },
+    }
+  }
+}
+```
+
 ---
 
 # Block Pinning
