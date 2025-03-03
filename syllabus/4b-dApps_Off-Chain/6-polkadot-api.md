@@ -511,18 +511,106 @@ You don't. Modular design: you use whatever library can sign data, and use `getP
 
 ### Polkadot-JS Signer
 
----v
+```ts
+import {
+  connectInjectedExtension,
+  getInjectedExtensions
+} from "polkadot-api/pjs-signer";
 
-### Ledger Signer
+const extensions = await getInjectedExtensions();
+const extension = await connectInjectedExtension(extensions[0]);
+const accounts = extension.getAccounts();
+
+console.log(accounts[0].address);
+const signer = accounts[0].polkadotSigner;
+```
+
+Notes:
+
+To get a signer from a PJs-based extension
 
 ---v
 
 ### Meta signers
 
+<img src="./img/meta-signer.svg" />
+
 Notes:
+
+The signer interface is composable: Write a signer that uses another signer
+
+Examples: Multisig, Proxy
 
 Exercise: Implement proxy signer, hands-on.
 
 ---
 
-## Ink
+<img style="width: 300px" src="../../assets/img/0-Shared/logo/ink-white.png" />
+
+---v
+
+### ink!
+
+- Smart contracts in Polkadot
+- Implemented in Rust
+- Exports WASM + Metadata
+
+---v
+
+### ink!
+
+- Constructor
+  - Function to deploy a contract
+- Message
+  - Perform an operation, or query info.
+- Events
+- Storage
+
+---v
+
+### Endpoints
+
+- Runtime API: Dry-run
+- Transaction: Perform some change
+
+---v
+
+### ink! + PAPI
+
+```ts
+  // pnpm papi ink add metadata.json
+
+  import { contracts } from "@polkadot-api/descriptors"
+
+  const inkClient = getInkClient(contracts.psp22)
+```
+
+Notes: At this level, PAPI inkClient only gives TS definitions for encoding/decoding messages
+
+---v
+
+### ink! + PAPI
+
+```ts
+// Takes in the message name
+const increaseAllowance = inkClient.message("PSP22::increase_allowance")
+
+// Encode the data for that message
+const messageData = increaseAllowance.encode({
+  delta_value: 100_000_000n,
+  spender: ADDRESS.bob,
+})
+
+const response = await typedApi.apis.ContractsApi.call(
+  ADDRESS.alice, // Origin
+  ADDRESS.psp22, // Contract address
+  0n, // Value
+  undefined, // GasLimit
+  undefined, // StorageDepositLimit
+  messageData,
+)
+```
+
+Notes:
+
+Exercise interact with a chain
