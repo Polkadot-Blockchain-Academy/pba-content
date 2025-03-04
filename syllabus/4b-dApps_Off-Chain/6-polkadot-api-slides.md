@@ -45,6 +45,24 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
 
 ---v
 
+### Polkadot-API
+
+```ts
+import { dot } from "@polkadot-api/descriptors"
+import { createClient } from "polkadot-api"
+import { getWsProvider } from "polkadot-api/ws-provider/web";
+
+const client = createClient(
+  getWsProvider("ws://…")
+);
+const typedApi = client.getTypedApi(dot);
+
+const ACCOUNT_ID = "15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5";
+const account = await typedApi.query.System.Account.getValue(ACCOUNT_ID)
+```
+
+---v
+
 ### CLI
 
 - Codegen
@@ -61,6 +79,36 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
 
 ---v
 
+### Observable Client
+
+
+```ts [|6|8-9|13-15|16-17|19-21]
+import { getObservableClient } from "@polkadot-api/observable-client"
+import { getWsProvider } from "@polkadot-api/ws-provider/web"
+import { createClient } from "@polkadot-api/substrate-client"
+import { firstValueFrom } from "rxjs"
+
+const client = getObservableClient(createClient(getWsProvider("ws://…")))
+
+const chainHead = client.chainHead$()
+const finalized = await firstValueFrom(chainHead.finalized$)
+
+const ACCOUNT_ID = "15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5"
+const account = await firstValueFrom(
+  chainHead.storage$(
+    finalized.hash,
+    "value",
+    (ctx) =>
+      ctx.dynamicBuilder.buildStorage("System", "Account").keys.enc(ACCOUNT_ID),
+    null,
+    (data, ctx) =>
+      data &&
+      ctx.dynamicBuilder.buildStorage("System", "Account").value.dec(data),
+  ),
+)
+```
+---v
+
 ### Metadata Builders
 
 - Codecs from metadata
@@ -69,6 +117,26 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
   - Runtime APIs
   - Transactions
   - Events
+
+---v
+
+### Metadata Builders
+
+```ts
+import { getDynamicBuilder, getLookupFn } from "@polkadot-api/metadata-builders"
+
+const metadata = getMetadataFromSource()
+const lookup = getLookupFn(metadata)
+const dynamicBuilder = getDynamicBuilder(lookup)
+
+const { keys, value, fallback } = dynamicBuilder.buildStorage("Pallet", "Entry")
+
+const { codec, location } = dynamicBuilder.buildCall("Pallet", "Name")
+
+const { args, value } = dynamicBuilder.buildRuntimeCall("Api", "Method");
+
+const codec = dynamicBuilder.buildDefinition(134);
+```
 
 ---v
 
@@ -96,6 +164,40 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
 
 ---v
 
+### Substrate Client
+
+```ts [|4|6-7|8-18|20-24]
+import { getWsProvider } from "@polkadot-api/ws-provider/web"
+import { createClient } from "@polkadot-api/substrate-client"
+
+const client = createClient(getWsProvider("ws://…"))
+
+const chainHead = client.chainHead(
+  true,
+  async (followEvt) => {
+    if (followEvt.type === "initialized") {
+      const finalized = followEvt.finalizedBlockHashes.at(-1)!
+
+      const result = await chainHead.storage(
+        finalized,
+        "value",
+        "0x{storage key}",
+        null,
+      )
+      console.log("SCALE result: " + result)
+
+      chainHead.unpin(followEvt.finalizedBlockHashes)
+    }
+    if (followEvt.type === "newBlock") {
+      chainHead.unpin([followEvt.blockHash])
+    }
+  },
+  console.error,
+)
+```
+
+---v
+
 ### JSON-RPC Providers
 
 ```ts
@@ -108,6 +210,14 @@ interface JsonRpcConnection {
   disconnect: () => void
 }
 ```
+
+---
+
+## Subscriptions
+
+Notes:
+
+TBD, explain about promises vs observables, digging into basics about observables, basic subscriptions: storage, tx events. Finalized vs Best, or combine both, it's cached. Advanced subscriptions: storage watchEntries.
 
 ---
 
@@ -261,43 +371,43 @@ Referenda.submit({
   <tbody>
     <tr>
       <td>Add a property to a struct</td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="0"><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="0"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Add an <b>optional</b> property to a struct</td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="1"><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="1"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Remove a property from a struct</td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="2"><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="2"><span style="color: #fc8d62">Incompatible</span></td>
     </tr>
     <tr>
       <td>Make an optional property mandatory</td>
-      <td><span style="color: #8da0cb">Partial</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="3"><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="3"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Add a variant to an Enum</td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
-      <td><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="4"><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="4"><span style="color: #8da0cb">Partial</span></td>
     </tr>
     <tr>
       <td>Remove a variant from an Enum</td>
-      <td><span style="color: #8da0cb">Partial</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="5"><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="5"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Change the type of an optional property</td>
-      <td><span style="color: #8da0cb">Partial</span></td>
-      <td><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="6"><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="6"><span style="color: #8da0cb">Partial</span></td>
     </tr>
     <tr>
       <td>Change a u8 to a u128</td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="7"><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="7"><span style="color: #fc8d62">Incompatible</span></td>
     </tr>
   </tbody>
 </table>

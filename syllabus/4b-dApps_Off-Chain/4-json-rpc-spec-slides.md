@@ -7,7 +7,7 @@ description: New JSON-RPC Spec in depth
 
 ---
 
-# Recap
+# Recap
 
 ## Block States
 
@@ -21,7 +21,7 @@ Concepts: Finalized, Pruned, Best, Fork
 
 ---
 
-# Recap
+# Recap
 
 ## JSON-RPC
 
