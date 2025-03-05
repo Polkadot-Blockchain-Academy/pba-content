@@ -32,13 +32,13 @@ Notes:
 
 ## Overview
 
---- 
+---
 
 # Pallet revive architecture
 
 ## Address mapping
 
---- 
+---
 
 # Pallet revive architecture
 
@@ -46,25 +46,25 @@ Notes:
 
 ## Dry-runs
 
---- 
+---
 
 # Pallet revive architecture
 
 ## Solidity ABI
 
---- 
+---
 
 # Pallet revive architecture
 
 ## Interfacing other pallets via pre-compiles
 
---- 
+---
 
 # Pallet revive architecture
 
 ## Fee payments
 
---- 
+---
 
 # Pallet revive architecture
 
@@ -72,10 +72,9 @@ Notes:
 
 ## Raw rust contract demo
 
---- 
+---
 
-
---- 
+---
 
 # Tooling
 
