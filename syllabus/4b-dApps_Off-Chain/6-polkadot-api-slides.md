@@ -215,9 +215,232 @@ interface JsonRpcConnection {
 
 ## Subscriptions
 
+---v
+
+### Pull vs Push
+
+<pba-cols style="font-size: 0.8em">
+<pba-col>
+
+```ts
+let lastValue = null;
+while (keepWatching) {
+  const value = await typedApi
+    .query.System.Account
+    .getValue(ACCOUNT_ID);
+
+  if (value !== lastValue) {
+    console.log("new value", value);
+  }
+  lastValue = value;
+
+  await waitMs(1000);
+}
+```
+
+</pba-col>
+<pba-col>
+
+```ts
+typedApi
+  .query.System.Account
+  .watchValue(ACCOUNT_ID)
+  .subscribe(value => {
+    console.log("new value", value);
+  })
+```
+
+</pba-col>
+</pba-cols>
+
+---v
+
+<pba-cols style="font-size: 0.8em">
+<pba-col>
+
+### Pull
+
+Consumer decides when to get the value
+
+</pba-col>
+<pba-col>
+
+### Push
+
+Producer notifies of new changes
+
+</pba-col>
+</pba-cols>
+
+---v
+
+### JSON-RPC Spec
+
+- ChainHead Events: <span class="fragment">Push-based</span>
+- Operations: <span class="fragment">Push/pull?</span>
+  - High-level: Pull <!-- .element: class="fragment" --->
+  - Low-level: Push <!-- .element: class="fragment" --->
+
 Notes:
 
-TBD, explain about promises vs observables, digging into basics about observables, basic subscriptions: storage, tx events. Finalized vs Best, or combine both, it's cached. Advanced subscriptions: storage watchEntries.
+Events (new block, finalized, etc) are push-based, the node notifies us when a new block is produced
+Operations depend on the level we're looking at.
+
+---v
+
+### Working Async
+
+- Push is asynchronous
+- Pull can be sync or async
+- Ancient JS (2014-) used callbacks for async code
+
+```ts
+// Ancient JS Pull
+api.query.System.Account.getValue(ACCOUNT_ID, (error, result) => {
+  if (error) {
+    return console.error("oh no!")
+  }
+  console.log("Result", result);
+})
+
+// Ancient JS Push
+api.query.System.Account.watchValue(ACCOUNT_ID, (value) => {
+  console.log("Value", value);
+}, error => console.error("oh no!"));
+```
+
+Notes:
+
+In our context, pull is async. If you need the storage, you have to make a request to the node to pull it out for you.
+
+---v
+
+### Enter Promises 🌈
+
+- Technically still using callbacks.
+- Common interface, allows composability.
+- Removes "callback hell"
+- 2017+ enhanced language: async/await
+- Works great for pull operations: fetch
+
+---v
+
+### And for push?
+
+😞 <!-- .element: class="fragment" --->
+
+<div class="fragment">
+
+Async generators?
+
+```ts
+// async generator API
+const account = api.query.System.Account.watchValue(ACCOUNT_ID)
+
+for await (const value of account) {
+  console.log(value);
+}
+```
+
+But that's pull!
+
+</div>
+
+---v
+
+### Enter Observables 🌈
+
+- Promise but for multiple values
+- Common interface, composable
+- Removes "callback hell"
+- Convertible to promises
+- TC-39 Stage 1 <span style="color: darkgray" class="fragment">(big copium)</span>
+- Meanwhile rxjs <!-- .element: class="fragment" -->
+
+---v
+
+### Observables 101
+
+```ts
+import { Observable } from 'rxjs';
+
+// Emit one value every second
+const observable$ = new Observable<number>(subscriber => {
+  let v = 0;
+
+  const token = setInterval(() => {
+    subscriber.next(v++);
+  }, 1000);
+
+  return () => clearInterval(token);
+});
+```
+
+---v
+
+### Observables 101
+
+```ts
+observable$.subscribe(value => {
+  console.log(value);
+});
+
+observable$.subscribe({
+  next: (value) => console.log(value),
+  error: (error) => console.error(error),
+  complete: () => console.log("completed")
+});
+```
+
+Notes:
+
+Showcase / demo how observables are cold by default
+
+---v
+
+### Composing Observables
+
+Operator: `(source: Observable<T>) => Observable<R>`
+
+```ts
+const map = <T, R>(mapFn: (value: T) => R) =>
+  (source: Observable<T>) => new Observable<R>(subscriber => {
+
+    const subscription = source
+      .subscribe({
+        next: v => subscriber.next(mapFn(v)),
+        error: e => subscriber.error(e),
+        complete: () => subscriber.complete()
+      });
+
+    return subscription;
+  })
+
+const multipliedBy2$ = observable$.pipe(
+  map(v => v * 2)
+);
+// Same as map(v => v * 2)(multipliedBy2$)
+```
+
+---v
+
+### Combining Observables
+
+- `combineLatest`, `merge`, `switchMap`, etc.
+- Endless list: https://rxjs.dev/guide/operators#creation-operators-1
+- Good resource: https://www.learnrxjs.io/learn-rxjs/operators
+
+
+---v
+
+### Polkadot-API
+
+Notes:
+
+Add an example using Polkadot-API combining multiple values
+Also which operations are promise-based
+finalized$ ?
+Explain watchEntries
 
 ---
 
