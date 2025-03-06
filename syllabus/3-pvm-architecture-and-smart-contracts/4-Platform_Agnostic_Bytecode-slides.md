@@ -149,7 +149,7 @@ The main goal of a PAB is to make the code **portable**, you should be able to c
 
 - Hardware Independence
 <!-- .element: class="fragment" data-fragment-index="1" -->
-- Efficiency
+- Efficiency: minimize overhead vs. native
 <!-- .element: class="fragment" data-fragment-index="2" -->
 - Tool Simplicity
 <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -157,13 +157,16 @@ The main goal of a PAB is to make the code **portable**, you should be able to c
 <!-- .element: class="fragment" data-fragment-index="4" -->
 - Sandboxing
 <!-- .element: class="fragment" data-fragment-index="5" -->
+- Deterministic execution
+<!-- .element: class="fragment" data-fragment-index="5" -->
 
 Notes:
 
 - Hardware Independence: It should not be tightly related to a specific architecture, otherwise the execution on different machine could be convoluted
-- Efficiency: the execution of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
+- Efficiency: the execution and compilation of a PAB should be efficient, the problem for a PAB is that in the execution time is also considered the "translation" to the machine's bytecode or the interpretation
 - Support as Compilation Target: The PAB should be possible to be compiled by as many as possible High Level languages
 - Tool Simplicity: If the tools that makes the PAB executable are extremely complex then nobody will use it
+- Deterministic execution: Same execution (always) on any platform
 
 ---v
 
@@ -207,7 +210,7 @@ Notes:
 
 Of course the security can be seen by various point of view and some examples are:
 
-- Compilation takes too much time -> compiling bomb
+- Compilation takes too much time -> "compiler bomb"
 - Access to the environment -> "buffer overflow" techniques
 
 Those things can't be addressed by the PAB itself but they can give good guidelines and code design to make an 100% secure implementation of the executor possible.
@@ -243,6 +246,9 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 # WebAssembly
 
+- Parachain validation function
+- Contracts (so far)
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 </pba-col>
@@ -255,19 +261,26 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 ---
 
+## WebAssembly and Polkadot
+
+<img style="width: 70%" src="img/wasm/polkadot.png" />
+
+---
+
 ## Wasm's key points
 
 <pba-flex center>
 
-- Hardware-independent
+- Hardware independent
   <!-- .element: class="fragment" data-fragment-index="1" -->
   - Binary instruction format for a stack-based virtual machine
+  - Altough with "locals" (registers) and higher level control flow elements
   <!-- .element: class="fragment" data-fragment-index="1" -->
 - Supported as compilation target by many languages
   <!-- .element: class="fragment" data-fragment-index="2" -->
   - Rust, C, C++ and many others
   <!-- .element: class="fragment" data-fragment-index="2" -->
-- Fast (with near-native performance)
+- Fast (with near-native performance when compiled - more later)
 <!-- .element: class="fragment" data-fragment-index="3" -->
 - Safe (executed in a sandboxed environment)
 <!-- .element: class="fragment" data-fragment-index="4" -->
@@ -344,98 +357,6 @@ There is another type of stack used in wasm and that's called: shadow stack, res
 
 ---
 
-## Wasm seems to be a perfect PAB, but
-
-- How does communication with the environment work?
-<!-- .element: class="fragment" data-fragment-index="1" -->
-- How the memory is managed?
-<!-- .element: class="fragment" data-fragment-index="2" -->
-- How is it executed?
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
-Notes:
-
-Assuming all the things we said before wasm seems to be perfect but how those things really works?
-
----
-
-## Communication with the Environment
-
-Let's call **Embedder** the program that will take the wasm blob as input and execute it
-
-<!-- .element: class="fragment" data-fragment-index="0" -->
-
-- the wasm blob may expect parameters from the embedder
-  - embedder -> wasm
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-- the embedder may act on a return value from the wasm
-  - wasm -> embedder
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
----v
-
-### Problem
-
-**Wasm has no ambient access to the computing environment in which code is executed**
-
-</br>
-
-### Solution
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-<img src="./img/pab/env_communication.svg" style="width: 70%">
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-Notes:
-
-- Every interaction with the environment can be done only by a set of functions, called **Host Functions**, provided by the embedder and imported in wasm
-- The embedder is able to call the functions defined in wasm blob, called **Runtime API**, and pass arguments through a shared memory
-
----
-
-## Memory
-
-In addition to the stack Wasm has also access to memory provided by the embedder, the **Linear Memory**.
-
-<!-- .element: class="fragment" data-fragment-index="0" -->
-
-</br>
-
-- This area will be used also used as a frontier for data sharing
-- To make everything secure the Embedder is doing incredibly convoluted things
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-Notes:
-
-From Wasm the Linear Memory is byte addressable
-Linear Memory can be manipulated using functions called 'store' and 'load'
-
-The Rust compiler uses for dynamic/heap memory and to pass non primitives values to functions by emulating an additional stack within the linear memory, this emulated stack (the shadow stack) is what we would understand as stack in other architectures
-
----v
-
-### Example
-
-<div class="r-stack">
-<img src="./img/pab/linear_memory_1.svg" style ="width: 70%">
-<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="./img/pab/linear_memory_2.svg" style ="width: 70%">
-<!-- .element: class="fragment" data-fragment-index="1" -->
-</div>
-
-Notes:
-
-Here's an example, wasm sees linear memory like a byte array and if it tries to access the second byte, it would use an index 1. When it's time to execute it the embedder will see this access and translate the linear memory access at index 1 to a standard memory access to base_linear_memory + 1.
-
-Buffer overflow? Wasm uses 32 bit, this makes impossible to have an offset bigger then 4GiB, this means that the embedder can leave those 4GiB free in its virtual memory to makes impossible to the wasm blob to access any environment information. Even if the offset is only positive there are embedded that are defining as protected the 2GiB before the BLM so that if for some reason the wasm code trick the embedder to treat the offset as a signed number that would cause an Operating System error.
-
----
-
 ## How Wasm is executed
 
 <pba-flex left>
@@ -459,13 +380,13 @@ JIT: The code is compiled only when needed, examples are functions that are comp
 SPC: This is a specific technique of compilation that is made in linear time, the compilation is done only passing once on the code
 Interpretation: The wasm blob is treated as any other interpreted language and executed in a Virtual Machine
 
----v
+---
 
 ### Wasmtime
 
-- It is a stand alone wasm environment
-- Wasmtime is built on the optimizing Cranelift code generator to quickly generate high-quality machine code either at runtime (JIT) or ahead-of-time (AOT)
-- It executes the compiled wasm blob in sandboxed environment while keeping everything extremely secure
+- Stand alone, sandboxed Wasm environment
+- Wasmtime is compiling Wasm code
+- Built on the optimizing Cranelift code generator to (quickly) generate high-quality machine code either at runtime (JIT) or ahead-of-time (AOT)
 
 <!--TODO: graphics-->
 
@@ -476,7 +397,7 @@ Notes:
 
 Cranelift is a fast, secure, relatively simple and innovative compiler backend. It takes an intermediate representation of a program generated by some frontend and compiles it to executable machine code
 
----v
+---
 
 #### Wasm lifecycle in Wasmtime
 
@@ -490,15 +411,15 @@ Cranelift is a fast, secure, relatively simple and innovative compiler backend. 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 </div>
 
----v
+---
 
 ### Wasmi
 
-- It is a wasm environment with support for embedded environment such as WebAssembly itself
-- Focus on simple, correct and deterministic WebAssembly execution
-- The technique of execution is interpretation but:
+- Wasm interpreter
+- Minimal compilation work but the interpreter is still very fast
   - The wasm code is transpiled to WasmI IR, another stack-based bytecode
   - The WasmI IR is then interpreted by a Virtual Machine
+- First approach for contracts on Polkadot (pallet-contracts)
 
 <!--TODO: graphics-->
 
@@ -510,7 +431,7 @@ paper explaining the efficiency of translating wasm to registry based code https
 
 Due to it's characteristics it is mainly used to execute SmartContracts on chain
 
----v
+---
 
 #### Wasm lifecycle in Wasmi
 
@@ -541,102 +462,38 @@ We have a double recursion of a PAB that embed itself
 
 ---
 
+### Wasmi
+
+- Why use something different for contracts? Why not use Wasmtime? 
+
+<!--TODO: graphics-->
+
+
 # Alternatives
 
----v
+---
 
 ## EVM
 
 - The **Ethereum Virtual Machine** executes a stack machine
-  - Interesting: here the bytecode was create to be executed in a blockchain, so instructions are not hardware-dependent but there are instruction tightly related to Cryptography and others blockchain instructions
+- See previous lecture
 
----v
+---
 
-## CosmWasm
+## Solana
 
-- Wasm is always used but with different tools
-- They use CosmWasm as Embedder and internally is used Wasmer, a Single Pass Compiler
-
----v
-
-## Solana eBPF
-
-- eBPF is used as PAB, but intrinsically eBPF has a lot of restrictions
-- Solana forked the eBPF backend of LLVM to makes every program to be compiled in eBPF
-- The Embedder is rBFP, a virtual machine for eBPF programs
+- Berkeley Packet Filter
+- eBPF used in Linux
+  - Allows untrusted code execution in kernel space
+  - Bytecode verifier prevents attacks
+  - For example: No unbounded loops allowed
+- Solana uses a eBPF variant for contracts (rBPF / Solana VM)
 
 Notes:
 
 https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
 
----v
-
-## RISC-V ?!
-
-- RISC-V is a new instruction-set architecture
-- main goals are:
-  - real ISA suitable for direct native hardware implementation
-  - avoids “over-architecting”
-
-</br>
-
-Being so simple and "Hardware-Independent" there are work in progress experiments to test if it is suitable to become the new polkadot smart contract language
-
-Notes:
-
-Discussion about using RISC-V as smart contract language: https://forum.polkadot.network/t/exploring-alternatives-to-wasm-for-smart-contracts/2434
-
-RISC-V Instruction Set Manual, Unprivileged ISA: https://github.com/riscv/riscv-isa-manual/releases/download/Ratified-IMAFDQC/riscv-spec-20191213.pdf
-
 ---
-
-## Activity: Compiling Rust to Wasm
-
-- Let's make a simple Rust crate that compiles to Wasm!
-- Clone the repo
-
----v
-
-### Activity: Compiling Rust to Wasm
-
-- A target triple consists of three strings separated by a hyphen, with a possible fourth string at the end preceded by a hyphen.
-- The first is the **architecture**, the second is the **"vendor"**, the third is the **OS type**, and the optional fourth is environment type.
-
-* `wasm32-unknown-emscripten`: Legacy, provides some kind of `std`-like environment
-* `wasm32-unknown-unknown` ✓ WebAssembly: Can compile anywhere, can run anywhere, no `std`
-* `wasm32-wasi` ✓ WebAssembly with WASI
-
----v
-
-### Rust -> Wasm Details
-
-```rust
-#[no_mangle] // don't re-name symbols while linking
-pub extern "C" fn add_one() { // use C-style ABI
-  ...
-}
-```
-
-and if a library:
-
-```
-[lib]
-crate-type = ["cdylib"]
-```
-
----v
-
-### Activity: Compiling Rust to Wasm
-
-```
-rustup target add wasm32-unknown-unknown
-
-cargo build --target wasm32-unknown-unknown --release
-
-wasmtime ./target/wasm32-unknown-unknown/release/wasm-crate.wasm --invoke <func_name> <arg1> <arg2> ...
-```
-
----v
 
 ## Additional Resources! 😋
 

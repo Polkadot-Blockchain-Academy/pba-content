@@ -10,13 +10,14 @@ duration: 30 minutes
 
 # Wasm shortcomings
 
-## Missing determinism
+## Compilation and short lived programs
 
 ---
 
 # Wasm shortcomings
 
-## Compilation and short lived programs
+## Missing determinism
+
 
 ---
 
