@@ -139,8 +139,8 @@ Where do transactions live?
 <pba-cols>
 <pba-col>
 
-- transactionWatch_v1_submitAndWatch(tx) => subId
-- transactionWatch_v1_unwatch(subId)
+- submitAndWatch(tx) => subId
+- unwatch(subId)
 
 </pba-col>
 <pba-col>
