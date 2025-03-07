@@ -45,6 +45,22 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
 
 ---v
 
+### Polkadot-API
+
+```ts
+import { dot } from "@polkadot-api/descriptors";
+import { createClient } from "polkadot-api";
+import { getWsProvider } from "polkadot-api/ws-provider/web";
+
+const client = createClient(getWsProvider("ws://…"));
+const typedApi = client.getTypedApi(dot);
+
+const ACCOUNT_ID = "15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5";
+const account = await typedApi.query.System.Account.getValue(ACCOUNT_ID);
+```
+
+---v
+
 ### CLI
 
 - Codegen
@@ -61,6 +77,36 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
 
 ---v
 
+### Observable Client
+
+<!-- prettier-ignore -->
+```ts [|6|8-9|13-15|16-17|19-20]
+import { getObservableClient } from "@polkadot-api/observable-client";
+import { getWsProvider } from "@polkadot-api/ws-provider/web";
+import { createClient } from "@polkadot-api/substrate-client";
+import { firstValueFrom } from "rxjs";
+
+const client = getObservableClient(createClient(getWsProvider("ws://…")));
+
+const chainHead = client.chainHead$();
+const finalized = await firstValueFrom(chainHead.finalized$);
+
+const ACCOUNT_ID = "15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5";
+const account = await firstValueFrom(
+  chainHead.storage$(
+    finalized.hash,
+    "value",
+    ctx =>
+      ctx.dynamicBuilder.buildStorage("System", "Account").keys.enc(ACCOUNT_ID),
+    null,
+    (data, ctx) => data &&
+      ctx.dynamicBuilder.buildStorage("System", "Account").value.dec(data)
+  )
+);
+```
+
+---v
+
 ### Metadata Builders
 
 - Codecs from metadata
@@ -69,6 +115,26 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
   - Runtime APIs
   - Transactions
   - Events
+
+---v
+
+### Metadata Builders
+
+```ts
+import { getDynamicBuilder, getLookupFn } from "@polkadot-api/metadata-builders";
+
+const metadata = getMetadataFromSource();
+const lookup = getLookupFn(metadata);
+const dynamicBuilder = getDynamicBuilder(lookup);
+
+const { keys, value, fallback } = dynamicBuilder.buildStorage("Pallet", "Entry");
+
+const { codec, location } = dynamicBuilder.buildCall("Pallet", "Name");
+
+const { args, value } = dynamicBuilder.buildRuntimeCall("Api", "Method");
+
+const codec = dynamicBuilder.buildDefinition(134);
+```
 
 ---v
 
@@ -96,18 +162,416 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
 
 ---v
 
+### Substrate Client
+
+<!-- prettier-ignore -->
+```ts [|4|6-7|8-18|20-24]
+import { getWsProvider } from "@polkadot-api/ws-provider/web";
+import { createClient } from "@polkadot-api/substrate-client";
+
+const client = createClient(getWsProvider("ws://…"));
+
+const chainHead = client.chainHead(
+  true,
+  async followEvt => {
+    if (followEvt.type === "initialized") {
+      const finalized = followEvt.finalizedBlockHashes.at(-1)!;
+
+      const result = await chainHead.storage(
+        finalized,
+        "value",
+        "0x{storage key}",
+        null,
+      );
+      console.log("SCALE result: " + result);
+
+      chainHead.unpin(followEvt.finalizedBlockHashes);
+    }
+    if (followEvt.type === "newBlock") {
+      chainHead.unpin([followEvt.blockHash]);
+    }
+  },
+  console.error
+);
+```
+
+---v
+
 ### JSON-RPC Providers
 
 ```ts
-type JsonRpcProvider = (onMessage: MessageCallback) => JsonRpcConnection
+type JsonRpcProvider = (onMessage: MessageCallback) => JsonRpcConnection;
 
-type MessageCallback = (message: string) => void
+type MessageCallback = (message: string) => void;
 
 interface JsonRpcConnection {
-  send: (message: string) => void
-  disconnect: () => void
+  send: (message: string) => void;
+  disconnect: () => void;
 }
 ```
+
+---
+
+## Subscriptions
+
+---v
+
+### Pull vs Push
+
+<pba-cols style="font-size: 0.8em">
+<pba-col>
+
+<!-- prettier-ignore -->
+```ts
+let lastValue = null;
+while (keepWatching) {
+  const value = await typedApi
+    .query.System.Account
+    .getValue(ACCOUNT_ID);
+
+  if (value !== lastValue) {
+    console.log("new value", value);
+  }
+  lastValue = value;
+
+  await waitMs(1000);
+}
+```
+
+</pba-col>
+<pba-col>
+
+<!-- prettier-ignore -->
+```ts
+typedApi
+  .query.System.Account
+  .watchValue(ACCOUNT_ID)
+  .subscribe(value => {
+    console.log("new value", value);
+  })
+```
+
+</pba-col>
+</pba-cols>
+
+---v
+
+<pba-cols style="font-size: 0.8em">
+<pba-col>
+
+### Pull
+
+Consumer decides when to get the value
+
+</pba-col>
+<pba-col>
+
+### Push
+
+Producer notifies of new changes
+
+</pba-col>
+</pba-cols>
+
+---v
+
+### JSON-RPC Spec
+
+- ChainHead Events: <span class="fragment">Push-based</span>
+- Operations: <span class="fragment">Push/pull?</span>
+  - High-level: Pull <!-- .element: class="fragment" --->
+  - Low-level: Push <!-- .element: class="fragment" --->
+
+Notes:
+
+Events (new block, finalized, etc) are push-based, the node notifies us when a new block is produced
+Operations depend on the level we're looking at.
+
+---v
+
+### Working Async
+
+- Push is asynchronous
+- Pull can be sync or async
+- Ancient JS (2014-) used callbacks for async code
+
+```ts
+// Ancient JS Pull
+api.query.System.Account.getValue(ACCOUNT_ID, (error, result) => {
+  if (error) {
+    return console.error("oh no!");
+  }
+  console.log("Result", result);
+});
+
+// Ancient JS Push
+api.query.System.Account.watchValue(
+  ACCOUNT_ID,
+  value => {
+    console.log("Value", value);
+  },
+  error => console.error("oh no!")
+);
+```
+
+Notes:
+
+In our context, pull is async. If you need the storage, you have to make a request to the node to pull it out for you.
+
+---v
+
+### Enter Promises 🌈
+
+- Technically still using callbacks.
+- Common interface, allows composability.
+- Removes "callback hell"
+- 2017+ enhanced language: async/await
+- Works great for pull operations: fetch
+
+---v
+
+### And for push?
+
+😞 <!-- .element: class="fragment" --->
+
+<div class="fragment">
+
+Async generators?
+
+```ts
+// async generator API
+const account = api.query.System.Account.watchValue(ACCOUNT_ID);
+
+for await (const value of account) {
+  console.log(value);
+}
+```
+
+But that's pull!
+
+</div>
+
+---v
+
+### Enter Observables 🌈
+
+- Promise but for multiple values
+- Common interface, composable
+- Removes "callback hell"
+- Convertible to promises
+- TC-39 Stage 1 <span style="color: darkgray" class="fragment">(big copium)</span>
+- Meanwhile rxjs <!-- .element: class="fragment" -->
+
+---v
+
+### Observables 101
+
+```ts
+import { Observable } from "rxjs";
+
+// Emit one value every second
+const observable$ = new Observable<number>(subscriber => {
+  let v = 0;
+
+  const token = setInterval(() => {
+    subscriber.next(v++);
+  }, 1000);
+
+  return () => clearInterval(token);
+});
+```
+
+---v
+
+### Observables 101
+
+```ts
+observable$.subscribe(value => {
+  console.log(value);
+});
+
+observable$.subscribe({
+  next: value => console.log(value),
+  error: error => console.error(error),
+  complete: () => console.log("completed"),
+});
+```
+
+Notes:
+
+Showcase / demo how observables are cold by default
+
+---v
+
+### Composing Observables
+
+Operator: `(source: Observable<T>) => Observable<R>`
+
+```ts
+const map =
+  <T, R>(mapFn: (value: T) => R) =>
+  (source: Observable<T>) =>
+    new Observable<R>(subscriber => {
+      const subscription = source.subscribe({
+        next: v => subscriber.next(mapFn(v)),
+        error: e => subscriber.error(e),
+        complete: () => subscriber.complete(),
+      });
+
+      return subscription;
+    });
+
+const multipliedBy2$ = observable$.pipe(map(v => v * 2));
+// Same as map(v => v * 2)(multipliedBy2$)
+```
+
+---v
+
+### Combining Observables
+
+- `combineLatest`, `merge`, `switchMap`, etc.
+- Endless list: https://rxjs.dev/guide/operators#creation-operators-1
+- Good resource: https://www.learnrxjs.io/learn-rxjs/operators
+
+---v
+
+### Observable ↔ Promise
+
+```ts
+import { firstValueFrom, lastValueFrom, from, defer } from "rxjs";
+const firstValue = await firstValueFrom(observable$);
+const lastValue = await lastValueFrom(observable$);
+
+const observable$ = from(fetch("…"));
+const observable$ = defer(() => fetch("…"));
+```
+
+Notes:
+
+It's important to keep in mind what these functions do: both firstValueFrom and lastValueFrom subscribe to the observable, and then unsubscribe.
+
+Difference between from and defer.
+
+---v
+
+### Polkadot Chains
+
+- Pull
+  - Constants (metadata)
+  - Runtime APIs
+  - Storage query
+- Push
+  - Blocks
+  - Storage watch
+  - Transactions
+
+Notes:
+
+Pull operations: Easier to offer promises
+Push: Observables all the way.
+
+- Blocks: finalized$
+
+Why transactions are "push"?
+
+---v
+
+### Combining streams
+
+Exercise: Find the referenda where a specific account voted in the same direction as the current outcome.
+
+- Account: 1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG
+- Track: 33
+
+Hints:
+
+- `query.ConvictionVoting.VotingFor.watchValue(account, track)`
+- `query.Referenda.ReferendumInfoFor.getValues([number][])`
+
+Notes:
+
+- Don't count delegations.
+- Don't count split votes or abstains.
+
+TODO Maybe find a better example. This one is interesting, but it's a shame it would need to do `watchValue[]` and that just adds boilerplate. Also, not a huge fan of the nesting and the hacks around conviction voting. Plus having to share the account which is just a random string…
+
+```ts
+const getDirectVotes = (voting: ConvictionVotingVoteVoting) => {
+  if (voting.type === "Delegating") return [];
+
+  return voting.value.votes
+    .map(([id, vote]) => {
+      if ("vote" in vote.value) {
+        const direction = vote.value.vote & 0x80 ? "aye" : "nay";
+        return { id, direction };
+      }
+      return null;
+    })
+    .filter(v => v !== null);
+};
+
+dotApi.query.ConvictionVoting.VotingFor.watchValue("1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG", 33)
+  .pipe(
+    map(getDirectVotes),
+    switchMap(async voting => {
+      const referenda = await dotApi.query.Referenda.ReferendumInfoFor.getValues(voting.map(v => [v.id]));
+
+      return referenda
+        .filter(v => v != null)
+        .filter((referendum, i) => {
+          const { direction } = voting[i];
+          if (referendum.type !== "Ongoing") {
+            return (direction === "aye" && referendum.type === "Approved") || direction === "nay";
+          }
+          const referendumDirection = referendum.value.tally.ayes > referendum.value.tally.nays ? "aye" : "nay";
+          return direction === referendumDirection;
+        })
+        .map((v, i) => ({
+          ...v,
+          id: voting[i].id,
+        }));
+    })
+  )
+  .subscribe(r => {
+    console.log(r);
+  });
+```
+
+---v
+
+### Watch Entries
+
+<img rounded src="./img/block-states.png" />
+
+`Observable<Array<[Key, Value]>>?` <!-- .element: class="fragment" -->
+
+Notes:
+
+Remind issue with multiple forks
+
+When watching entries, we might have a large list. When providing an Observable API it's important to note what has changed in specific.
+
+Also, it's expensive, and it might skip some blocks.
+
+---v
+
+### Watch Entries
+
+```ts
+watchEntries().subscribe(result => {
+  // Hash + number + parent
+  console.log(result.blockInfo);
+  // Array<{ args: Key, value: Value }>
+  console.log("deleted", result.deltas.deleted);
+  console.log("upserted", result.deltas.upserted);
+  // Array<{ args: Key, value: Value }>
+  console.log("values", result.values);
+});
+```
+
+Notes:
+
+Exercise - change the previous implementation to watch referenda from any track.
 
 ---
 
@@ -190,12 +654,11 @@ Checksum(Struct) := hash("5(" +
 </pba-cols>
 
 ```ts
-Checksum(proposal_origin) = "4(BigSpender0MediumSpender0Sma…ender0WishForChange0)"
-Checksum((Binary, number)) = "3(21)"
-Checksum(proposal) = "4(Inline2Lookup3(21))"
-Checksum(enactment_moment) = "4(After1At1)"
-Checksum(Referenda.submit) =
- "5(proposal_origin4(BigSpend…Change0)proposal4(Inline2Lookup3(21))enactm…r1At1))"
+Checksum(proposal_origin) = "4(BigSpender0MediumSpender0Sma…ender0WishForChange0)";
+Checksum((Binary, number)) = "3(21)";
+Checksum(proposal) = "4(Inline2Lookup3(21))";
+Checksum(enactment_moment) = "4(After1At1)";
+Checksum(Referenda.submit) = "5(proposal_origin4(BigSpend…Change0)proposal4(Inline2Lookup3(21))enactm…r1At1))";
 ```
 
 ---v
@@ -210,10 +673,11 @@ Checksum(Referenda.submit) =
 
 ### Solution #3
 
-- Bundle type definitions
-- Compare metadata types on runtime
+<pba-cols>
 
-```ts
+<pba-col>
+
+```ts [7]
 Referenda.submit({
   proposal_origin: Enum {
     BigSpender,
@@ -232,6 +696,21 @@ Referenda.submit({
   }
 })
 ```
+
+</pba-col>
+
+<pba-co class="fragment">
+
+- Bundle type definitions
+- Compare metadata types on runtime
+
+</pba-col>
+
+</pba-cols>
+
+Notes:
+
+For instance, how can we do it so that adding a new variant for an enum still makes it compatible?
 
 ---v
 
@@ -261,43 +740,43 @@ Referenda.submit({
   <tbody>
     <tr>
       <td>Add a property to a struct</td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="0"><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="0"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Add an <b>optional</b> property to a struct</td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="1"><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="1"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Remove a property from a struct</td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="2"><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="2"><span style="color: #fc8d62">Incompatible</span></td>
     </tr>
     <tr>
       <td>Make an optional property mandatory</td>
-      <td><span style="color: #8da0cb">Partial</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="3"><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="3"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Add a variant to an Enum</td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
-      <td><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="4"><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="4"><span style="color: #8da0cb">Partial</span></td>
     </tr>
     <tr>
       <td>Remove a variant from an Enum</td>
-      <td><span style="color: #8da0cb">Partial</span></td>
-      <td><span style="color: #80dbde">Backwards compatible</span></td>
+      <td class="fragment" data-fragment-index="5"><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="5"><span style="color: #80dbde">Backwards compatible</span></td>
     </tr>
     <tr>
       <td>Change the type of an optional property</td>
-      <td><span style="color: #8da0cb">Partial</span></td>
-      <td><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="6"><span style="color: #8da0cb">Partial</span></td>
+      <td class="fragment" data-fragment-index="6"><span style="color: #8da0cb">Partial</span></td>
     </tr>
     <tr>
       <td>Change a u8 to a u128</td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
-      <td><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="7"><span style="color: #fc8d62">Incompatible</span></td>
+      <td class="fragment" data-fragment-index="7"><span style="color: #fc8d62">Incompatible</span></td>
     </tr>
   </tbody>
 </table>
@@ -307,13 +786,13 @@ Referenda.submit({
 ## Descriptors
 
 ```ts
-import { dot } from '@polkadot-api/descriptors'
+import { dot } from "@polkadot-api/descriptors";
 
 // ...
 
 const dotApi = client.getTypedApi(dot);
 
-const account = await dotApi.query.System.Account.getValue(ALICE)
+const account = await dotApi.query.System.Account.getValue(ALICE);
 ```
 
 ---v
@@ -321,6 +800,7 @@ const account = await dotApi.query.System.Account.getValue(ALICE)
 ## Descriptors
 
 - Typescript definitions
+
 ```ts
   function api.query.System.Account(id: AccountID): Promise<{
     nonce: number,
@@ -356,10 +836,10 @@ const account = await dotApi.query.System.Account.getValue(ALICE)
 
 ```ts
 // Static import
-import metadata from './metadata';
+import metadata from "./metadata";
 
 // Dynamic import
-const metadataPromise = import('./metadata');
+const metadataPromise = import("./metadata");
 ```
 
 Notes:
@@ -371,13 +851,13 @@ Challenges when dealing with promises.
 ### Lazy Loading
 
 ```ts
-import { dot } from '@polkadot-api/descriptors'
+import { dot } from "@polkadot-api/descriptors";
 
 // ...
 
 const dotApi = client.getTypedApi(dot);
 
-const account = await dotApi.query.System.Account.getValue(ALICE)
+const account = await dotApi.query.System.Account.getValue(ALICE);
 ```
 
 Notes:
@@ -439,24 +919,27 @@ Tradeoff for dApps that are multichain but one at a time.
 
 ### Signers
 
-```ts
-  interface PolkadotSigner {
-    publicKey: Uint8Array;
+```ts [|2|4|6-19]
+interface PolkadotSigner {
+  publicKey: Uint8Array;
 
-    signBytes(data: Uint8Array): Promise<Uint8Array>;
+  signBytes(data: Uint8Array): Promise<Uint8Array>;
 
-    signTx(
-      callData: Uint8Array,
-      signedExtensions: Record<string, {
+  signTx(
+    callData: Uint8Array,
+    signedExtensions: Record<
+      string,
+      {
         identifier: string;
         value: Uint8Array;
         additionalSigned: Uint8Array;
-      }>,
-      metadata: Uint8Array,
-      atBlockNumber: number,
-      hasher: (data: Uint8Array) => Uint8Array
-    ): Promise<Uint8Array>;
-  }
+      }
+    >,
+    metadata: Uint8Array,
+    atBlockNumber: number,
+    hasher: (data: Uint8Array) => Uint8Array
+  ): Promise<Uint8Array>;
+}
 ```
 
 Notes:
@@ -472,8 +955,8 @@ Explain broadly the interface
 function getPolkadotSigner(
   publicKey: Uint8Array,
   signingType: "Ecdsa" | "Ed25519" | "Sr25519",
-  sign: (input: Uint8Array) => Promise<Uint8Array> | Uint8Array,
-): PolkadotSigner
+  sign: (input: Uint8Array) => Promise<Uint8Array> | Uint8Array
+): PolkadotSigner;
 ```
 
 Notes:
@@ -485,20 +968,17 @@ This is the basic signer. I have a function that can sign stuff, give me a polka
 ### Polkadot Signer
 
 ```ts
-import {
-  entropyToMiniSecret,
-  mnemonicToEntropy,
-} from "@polkadot-labs/hdkd-helpers"
-import { sr25519CreateDerive } from "@polkadot-labs/hdkd"
-import { getPolkadotSigner } from "polkadot-api/signer"
+import { entropyToMiniSecret, mnemonicToEntropy } from "@polkadot-labs/hdkd-helpers";
+import { sr25519CreateDerive } from "@polkadot-labs/hdkd";
+import { getPolkadotSigner } from "polkadot-api/signer";
 
-const alice_mnemonic =
-  "bottom drive obey lake curtain smoke basket hold race lonely fit walk"
-const entropy = mnemonicToEntropy(alice_mnemonic)
-const miniSecret = entropyToMiniSecret(entropy)
-const derive = sr25519CreateDerive(miniSecret)
-const alice = derive("//Alice")
-const aliceSigner = getPolkadotSigner(alice.publicKey, "Sr25519", alice.sign)
+const alice_mnemonic = "bottom drive obey lake curtain smoke basket hold race lonely fit walk";
+const entropy = mnemonicToEntropy(alice_mnemonic);
+const miniSecret = entropyToMiniSecret(entropy);
+const derive = sr25519CreateDerive(miniSecret);
+const alice = derive("//Alice");
+
+const aliceSigner = getPolkadotSigner(alice.publicKey, "Sr25519", alice.sign);
 ```
 
 Notes:
@@ -511,6 +991,7 @@ You don't. Modular design: you use whatever library can sign data, and use `getP
 
 ### Polkadot-JS Signer
 
+<!-- prettier-ignore -->
 ```ts
 import {
   connectInjectedExtension,
@@ -578,11 +1059,11 @@ Exercise: Implement proxy signer, hands-on.
 ### ink! + PAPI
 
 ```ts
-  // pnpm papi ink add metadata.json
+// pnpm papi ink add metadata.json
 
-  import { contracts } from "@polkadot-api/descriptors"
+import { contracts } from "@polkadot-api/descriptors";
 
-  const inkClient = getInkClient(contracts.psp22)
+const inkClient = getInkClient(contracts.psp22);
 ```
 
 Notes: At this level, PAPI inkClient only gives TS definitions for encoding/decoding messages
@@ -593,13 +1074,13 @@ Notes: At this level, PAPI inkClient only gives TS definitions for encoding/deco
 
 ```ts
 // Takes in the message name
-const increaseAllowance = inkClient.message("PSP22::increase_allowance")
+const increaseAllowance = inkClient.message("PSP22::increase_allowance");
 
 // Encode the data for that message
 const messageData = increaseAllowance.encode({
   delta_value: 100_000_000n,
   spender: ADDRESS.bob,
-})
+});
 
 const response = await typedApi.apis.ContractsApi.call(
   ADDRESS.alice, // Origin
@@ -607,8 +1088,8 @@ const response = await typedApi.apis.ContractsApi.call(
   0n, // Value
   undefined, // GasLimit
   undefined, // StorageDepositLimit
-  messageData,
-)
+  messageData
+);
 ```
 
 Notes:

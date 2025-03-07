@@ -7,7 +7,7 @@ description: New JSON-RPC Spec in depth
 
 ---
 
-# Recap
+# Recap
 
 ## Block States
 
@@ -21,7 +21,7 @@ Concepts: Finalized, Pruned, Best, Fork
 
 ---
 
-# Recap
+# Recap
 
 ## JSON-RPC
 
@@ -212,47 +212,35 @@ import.meta.env.DEV && source.id !== "polkadot_people"
     ? withLogFollowEvents(console.debug, provider)
     : provider
 */
-const withLogFollowEvents = (
-  logFn: (...args: string[]) => void,
-  provider: JsonRpcProvider,
-): JsonRpcProvider => {
-  const events = [
-    "initialized",
-    "newBlock",
-    "bestBlockChanged",
-    "finalized",
-    "stop",
-  ]
+const withLogFollowEvents = (logFn: (...args: string[]) => void, provider: JsonRpcProvider): JsonRpcProvider => {
+  const events = ["initialized", "newBlock", "bestBlockChanged", "finalized", "stop"];
 
-  return (onMsg) => {
-    let followId = ""
+  return onMsg => {
+    let followId = "";
 
-    const connection = provider((message) => {
-      onMsg(message)
-      if (
-        message.includes(`"id":"${followId}"`) ||
-        events.some((m) => message.includes(`"event":"${m}"`))
-      ) {
-        const { event, ...rest } = JSON.parse(message)?.params?.result || {}
-        logFn(`<< ${event}`, rest)
+    const connection = provider(message => {
+      onMsg(message);
+      if (message.includes(`"id":"${followId}"`) || events.some(m => message.includes(`"event":"${m}"`))) {
+        const { event, ...rest } = JSON.parse(message)?.params?.result || {};
+        logFn(`<< ${event}`, rest);
       }
-    })
+    });
 
     return {
       send(message) {
         if (message.includes(`"method":"chainHead_v1_follow"`)) {
-          const parsed = JSON.parse(message)
-          followId = parsed.id
-          logFn(`>> chainHead_v1_follow`, parsed.params)
+          const parsed = JSON.parse(message);
+          followId = parsed.id;
+          logFn(`>> chainHead_v1_follow`, parsed.params);
         }
-        connection.send(message)
+        connection.send(message);
       },
       disconnect() {
-        connection.disconnect()
+        connection.disconnect();
       },
-    }
-  }
-}
+    };
+  };
+};
 ```
 
 ---
@@ -288,21 +276,29 @@ const withLogFollowEvents = (
 
 ## Header
 
-- Parameters
+<ul>
+<li>
+  Parameters
 
-  ```ts
-  [followSubscription: string, hash: string]
+```ts
+[followSubscription: string, hash: string]
 
-  { jsonrpc: "2.0", id: "1",
-    method: "chainHead_v1_header",
-    params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
-  }
-  ```
+{ jsonrpc: "2.0", id: "1",
+  method: "chainHead_v1_header",
+  params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
+}
+```
 
-- Result: SCALE-encoded header <!-- .element: class="fragment" -->
-  ```ts
-  { jsonrpc: "2.0", id: "1", result: "0x00…00" }
-  ```
+</li>
+<li class="fragment">
+  Result: SCALE-encoded header
+
+```ts
+{ jsonrpc: "2.0", id: "1", result: "0x00…00" }
+```
+
+</li>
+</ul>
 
 Notes:
 
@@ -312,33 +308,45 @@ The only exception, as the header is guaranteed to be already in the node.
 
 ## Body
 
-- Parameters
+<ul>
+<li>
+  Parameters
 
-  ```ts
-  [followSubscription: string, hash: string]
+```ts
+[followSubscription: string, hash: string]
 
-  { jsonrpc: "2.0", id: "1",
-    method: "chainHead_v1_body",
-    params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
-  }
-  ```
+{ jsonrpc: "2.0", id: "1",
+  method: "chainHead_v1_body",
+  params: ["B4GEopiw1w38Wkr…MxpkWH4JPd4S", "0x00…00"]
+}
+```
 
-- Result: Operation ID <!-- .element: class="fragment" -->
-  ```ts
-  { jsonrpc: "2.0", id: "1", result: "GhwhKA4yL3…Roc29d8e" }
-  ```
-- Notification: <!-- .element: class="fragment" -->
-  ```ts
-  {
-    event: "operationBodyDone",
-    operationId: "GhwhKA4yL3…Roc29d8e",
-    value: [
-      "0x00…00",
-      …
-      "0x00…00",
-    ]
-  }
-  ```
+</li>
+<li class="fragment">
+  Result: Operation ID
+
+```ts
+{ jsonrpc: "2.0", id: "1", result: "GhwhKA4yL3…Roc29d8e" }
+```
+
+</li>
+<li class="fragment">
+  Notification
+
+```ts
+{
+  event: "operationBodyDone",
+  operationId: "GhwhKA4yL3…Roc29d8e",
+  value: [
+    "0x00…00",
+    …
+    "0x00…00",
+  ]
+}
+```
+
+</li>
+</ul>
 
 Notes:
 
@@ -402,30 +410,38 @@ function ellipsisBody(res: any) {
 
 ## Runtime Call
 
-- Parameters
+<ul>
+<li>
+  Parameters
 
-  ```ts
-  [subscription: string, hash: string, fnName: string, params: string[]]
+```ts
+[subscription: string, hash: string, fnName: string, params: string[]]
 
-  { jsonrpc: "2.0", id: "1",
-    method: "chainHead_v1_body",
-    params: [
-      "B4GEo…JPd4S",
-      "0x00…00",
-      "AccountNonceApi_account_nonce",
-      "0x00…00"
-    ]
-  }
-  ```
+{ jsonrpc: "2.0", id: "1",
+  method: "chainHead_v1_body",
+  params: [
+    "B4GEo…JPd4S",
+    "0x00…00",
+    "AccountNonceApi_account_nonce",
+    "0x00…00"
+  ]
+}
+```
 
-- Notification: <!-- .element: class="fragment" -->
-  ```ts
-  {
-    event: "operationCallDone",
-    operationId: "GhwhKA4yL3…Roc29d8e",
-    output: "0x00…00"
-  }
-  ```
+</li>
+<li class="fragment">
+  Notification
+
+```ts
+{
+  event: "operationCallDone",
+  operationId: "GhwhKA4yL3…Roc29d8e",
+  output: "0x00…00"
+}
+```
+
+</li>
+</ul>
 
 ---
 
