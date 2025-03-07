@@ -1,8 +1,8 @@
 ---
-title: Cumulus Deep Dive
-description: Cumulus, architecture and function
-duration: 1.25 hours
-owner: Bradley Olson
+title: State Sharding (Cumulus & Collators)
+description: Cumulus, architecture and function. Part 1/3 of parachains protocol
+duration: 1 hour
+owner: Maciej Zyszkiewicz (Bradley Olson originally)
 ---
 
 # Cumulus Deep Dive

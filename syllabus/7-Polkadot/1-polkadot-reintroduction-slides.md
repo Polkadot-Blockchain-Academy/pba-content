@@ -1,6 +1,6 @@
 ---
-title: What is Parachains Consenus?
-description: A high level overview of Parachains Consensus in Polkadot - the logic that aggregates and validates the state of all the parachains.
+title: Polkadot Re-Introduction
+description: A high level overview of Polkadot, summary of key parts and an introduction to parachains protocol
 duration: 45 min
 owner: Maciej Zyszkiewicz
 ---
