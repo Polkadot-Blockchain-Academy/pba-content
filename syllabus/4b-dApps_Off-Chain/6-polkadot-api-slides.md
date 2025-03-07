@@ -430,17 +430,155 @@ const multipliedBy2$ = observable$.pipe(
 - Endless list: https://rxjs.dev/guide/operators#creation-operators-1
 - Good resource: https://www.learnrxjs.io/learn-rxjs/operators
 
-
 ---v
 
-### Polkadot-API
+### Observable ↔ Promise
+
+```ts
+import { firstValueFrom, lastValueFrom, from, defer } from 'rxjs';
+const firstValue = await firstValueFrom(observable$);
+const lastValue = await lastValueFrom(observable$);
+
+const observable$ = from(fetch("…"));
+const observable$ = defer(() => fetch("…"));
+```
 
 Notes:
 
-Add an example using Polkadot-API combining multiple values
-Also which operations are promise-based
-finalized$ ?
-Explain watchEntries
+It's important to keep in mind what these functions do: both firstValueFrom and lastValueFrom subscribe to the observable, and then unsubscribe.
+
+Difference between from and defer.
+
+---v
+
+### Polkadot Chains
+
+- Pull
+  - Constants (metadata)
+  - Runtime APIs
+  - Storage query
+- Push
+  - Blocks
+  - Storage watch
+  - Transactions
+
+Notes:
+
+Pull operations: Easier to offer promises
+Push: Observables all the way.
+  - Blocks: finalized$
+
+Why transactions are "push"?
+
+---v
+
+### Combining streams
+
+Exercise: Find the referenda where a specific account voted in the same direction as the current outcome.
+
+- Account: 1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG
+- Track: 33
+
+Hints:
+- `query.ConvictionVoting.VotingFor.watchValue(account, track)`
+- `query.Referenda.ReferendumInfoFor.getValues([number][])`
+
+Notes:
+
+- Don't count delegations.
+- Don't count split votes or abstains.
+
+TODO Maybe find a better example. This one is interesting, but it's a shame it would need to do `watchValue[]` and that just adds boilerplate. Also, not a huge fan of the nesting and the hacks around conviction voting. Plus having to share the account which is just a random string…
+
+```ts
+const getDirectVotes = (voting: ConvictionVotingVoteVoting) => {
+  if (voting.type === "Delegating") return []
+
+  return voting.value.votes
+    .map(([id, vote]) => {
+      if ("vote" in vote.value) {
+        const direction = vote.value.vote & 0x80 ? "aye" : "nay"
+        return { id, direction }
+      }
+      return null
+    })
+    .filter((v) => v !== null)
+}
+
+dotApi.query.ConvictionVoting.VotingFor.watchValue(
+  "1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG",
+  33,
+)
+  .pipe(
+    map(getDirectVotes),
+    switchMap(async (voting) => {
+      const referenda =
+        await dotApi.query.Referenda.ReferendumInfoFor.getValues(
+          voting.map((v) => [v.id]),
+        )
+
+      return referenda
+        .filter((v) => v != null)
+        .filter((referendum, i) => {
+          const { direction } = voting[i]
+          if (referendum.type !== "Ongoing") {
+            return (
+              (direction === "aye" && referendum.type === "Approved") ||
+              direction === "nay"
+            )
+          }
+          const referendumDirection =
+            referendum.value.tally.ayes > referendum.value.tally.nays
+              ? "aye"
+              : "nay"
+          return direction === referendumDirection
+        })
+        .map((v, i) => ({
+          ...v,
+          id: voting[i].id,
+        }))
+    }),
+  )
+  .subscribe((r) => {
+    console.log(r)
+  })
+```
+
+---v
+
+### Watch Entries
+
+<img rounded src="./img/block-states.png" />
+
+`Observable<Array<[Key, Value]>>?` <!-- .element: class="fragment" -->
+
+Notes:
+
+Remind issue with multiple forks
+
+When watching entries, we might have a large list. When providing an Observable API it's important to note what has changed in specific.
+
+Also, it's expensive, and it might skip some blocks.
+
+---v
+
+### Watch Entries
+
+```ts
+watchEntries().subscribe(result => {
+  // Hash + number + parent
+  console.log(result.blockInfo);
+  // Array<{ args: Key, value: Value }>
+  console.log("deleted", result.deltas.deleted)
+  console.log("upserted", result.deltas.upserted)
+  // Array<{ args: Key, value: Value }>
+  console.log("values", result.values)
+})
+```
+
+Notes:
+
+Exercise - change the previous implementation to watch referenda from any track.
 
 ---
 
