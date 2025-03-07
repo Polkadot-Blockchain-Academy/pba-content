@@ -48,17 +48,15 @@ Warn that observable-client is opinionated and unstable, it's an implementationa
 ### Polkadot-API
 
 ```ts
-import { dot } from "@polkadot-api/descriptors"
-import { createClient } from "polkadot-api"
+import { dot } from "@polkadot-api/descriptors";
+import { createClient } from "polkadot-api";
 import { getWsProvider } from "polkadot-api/ws-provider/web";
 
-const client = createClient(
-  getWsProvider("ws://…")
-);
+const client = createClient(getWsProvider("ws://…"));
 const typedApi = client.getTypedApi(dot);
 
 const ACCOUNT_ID = "15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5";
-const account = await typedApi.query.System.Account.getValue(ACCOUNT_ID)
+const account = await typedApi.query.System.Account.getValue(ACCOUNT_ID);
 ```
 
 ---v
@@ -81,32 +79,32 @@ const account = await typedApi.query.System.Account.getValue(ACCOUNT_ID)
 
 ### Observable Client
 
+<!-- prettier-ignore -->
+```ts [|6|8-9|13-15|16-17|19-20]
+import { getObservableClient } from "@polkadot-api/observable-client";
+import { getWsProvider } from "@polkadot-api/ws-provider/web";
+import { createClient } from "@polkadot-api/substrate-client";
+import { firstValueFrom } from "rxjs";
 
-```ts [|6|8-9|13-15|16-17|19-21]
-import { getObservableClient } from "@polkadot-api/observable-client"
-import { getWsProvider } from "@polkadot-api/ws-provider/web"
-import { createClient } from "@polkadot-api/substrate-client"
-import { firstValueFrom } from "rxjs"
+const client = getObservableClient(createClient(getWsProvider("ws://…")));
 
-const client = getObservableClient(createClient(getWsProvider("ws://…")))
+const chainHead = client.chainHead$();
+const finalized = await firstValueFrom(chainHead.finalized$);
 
-const chainHead = client.chainHead$()
-const finalized = await firstValueFrom(chainHead.finalized$)
-
-const ACCOUNT_ID = "15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5"
+const ACCOUNT_ID = "15oF4uVJwmo4TdGW7VfQxNLavjCXviqxT9S1MgbjMNHr6Sp5";
 const account = await firstValueFrom(
   chainHead.storage$(
     finalized.hash,
     "value",
-    (ctx) =>
+    ctx =>
       ctx.dynamicBuilder.buildStorage("System", "Account").keys.enc(ACCOUNT_ID),
     null,
-    (data, ctx) =>
-      data &&
-      ctx.dynamicBuilder.buildStorage("System", "Account").value.dec(data),
-  ),
-)
+    (data, ctx) => data &&
+      ctx.dynamicBuilder.buildStorage("System", "Account").value.dec(data)
+  )
+);
 ```
+
 ---v
 
 ### Metadata Builders
@@ -123,15 +121,15 @@ const account = await firstValueFrom(
 ### Metadata Builders
 
 ```ts
-import { getDynamicBuilder, getLookupFn } from "@polkadot-api/metadata-builders"
+import { getDynamicBuilder, getLookupFn } from "@polkadot-api/metadata-builders";
 
-const metadata = getMetadataFromSource()
-const lookup = getLookupFn(metadata)
-const dynamicBuilder = getDynamicBuilder(lookup)
+const metadata = getMetadataFromSource();
+const lookup = getLookupFn(metadata);
+const dynamicBuilder = getDynamicBuilder(lookup);
 
-const { keys, value, fallback } = dynamicBuilder.buildStorage("Pallet", "Entry")
+const { keys, value, fallback } = dynamicBuilder.buildStorage("Pallet", "Entry");
 
-const { codec, location } = dynamicBuilder.buildCall("Pallet", "Name")
+const { codec, location } = dynamicBuilder.buildCall("Pallet", "Name");
 
 const { args, value } = dynamicBuilder.buildRuntimeCall("Api", "Method");
 
@@ -166,34 +164,35 @@ const codec = dynamicBuilder.buildDefinition(134);
 
 ### Substrate Client
 
+<!-- prettier-ignore -->
 ```ts [|4|6-7|8-18|20-24]
-import { getWsProvider } from "@polkadot-api/ws-provider/web"
-import { createClient } from "@polkadot-api/substrate-client"
+import { getWsProvider } from "@polkadot-api/ws-provider/web";
+import { createClient } from "@polkadot-api/substrate-client";
 
-const client = createClient(getWsProvider("ws://…"))
+const client = createClient(getWsProvider("ws://…"));
 
 const chainHead = client.chainHead(
   true,
-  async (followEvt) => {
+  async followEvt => {
     if (followEvt.type === "initialized") {
-      const finalized = followEvt.finalizedBlockHashes.at(-1)!
+      const finalized = followEvt.finalizedBlockHashes.at(-1)!;
 
       const result = await chainHead.storage(
         finalized,
         "value",
         "0x{storage key}",
         null,
-      )
-      console.log("SCALE result: " + result)
+      );
+      console.log("SCALE result: " + result);
 
-      chainHead.unpin(followEvt.finalizedBlockHashes)
+      chainHead.unpin(followEvt.finalizedBlockHashes);
     }
     if (followEvt.type === "newBlock") {
-      chainHead.unpin([followEvt.blockHash])
+      chainHead.unpin([followEvt.blockHash]);
     }
   },
-  console.error,
-)
+  console.error
+);
 ```
 
 ---v
@@ -201,13 +200,13 @@ const chainHead = client.chainHead(
 ### JSON-RPC Providers
 
 ```ts
-type JsonRpcProvider = (onMessage: MessageCallback) => JsonRpcConnection
+type JsonRpcProvider = (onMessage: MessageCallback) => JsonRpcConnection;
 
-type MessageCallback = (message: string) => void
+type MessageCallback = (message: string) => void;
 
 interface JsonRpcConnection {
-  send: (message: string) => void
-  disconnect: () => void
+  send: (message: string) => void;
+  disconnect: () => void;
 }
 ```
 
@@ -222,6 +221,7 @@ interface JsonRpcConnection {
 <pba-cols style="font-size: 0.8em">
 <pba-col>
 
+<!-- prettier-ignore -->
 ```ts
 let lastValue = null;
 while (keepWatching) {
@@ -241,6 +241,7 @@ while (keepWatching) {
 </pba-col>
 <pba-col>
 
+<!-- prettier-ignore -->
 ```ts
 typedApi
   .query.System.Account
@@ -298,15 +299,19 @@ Operations depend on the level we're looking at.
 // Ancient JS Pull
 api.query.System.Account.getValue(ACCOUNT_ID, (error, result) => {
   if (error) {
-    return console.error("oh no!")
+    return console.error("oh no!");
   }
   console.log("Result", result);
-})
+});
 
 // Ancient JS Push
-api.query.System.Account.watchValue(ACCOUNT_ID, (value) => {
-  console.log("Value", value);
-}, error => console.error("oh no!"));
+api.query.System.Account.watchValue(
+  ACCOUNT_ID,
+  value => {
+    console.log("Value", value);
+  },
+  error => console.error("oh no!")
+);
 ```
 
 Notes:
@@ -335,7 +340,7 @@ Async generators?
 
 ```ts
 // async generator API
-const account = api.query.System.Account.watchValue(ACCOUNT_ID)
+const account = api.query.System.Account.watchValue(ACCOUNT_ID);
 
 for await (const value of account) {
   console.log(value);
@@ -362,7 +367,7 @@ But that's pull!
 ### Observables 101
 
 ```ts
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 // Emit one value every second
 const observable$ = new Observable<number>(subscriber => {
@@ -386,9 +391,9 @@ observable$.subscribe(value => {
 });
 
 observable$.subscribe({
-  next: (value) => console.log(value),
-  error: (error) => console.error(error),
-  complete: () => console.log("completed")
+  next: value => console.log(value),
+  error: error => console.error(error),
+  complete: () => console.log("completed"),
 });
 ```
 
@@ -403,22 +408,20 @@ Showcase / demo how observables are cold by default
 Operator: `(source: Observable<T>) => Observable<R>`
 
 ```ts
-const map = <T, R>(mapFn: (value: T) => R) =>
-  (source: Observable<T>) => new Observable<R>(subscriber => {
-
-    const subscription = source
-      .subscribe({
+const map =
+  <T, R>(mapFn: (value: T) => R) =>
+  (source: Observable<T>) =>
+    new Observable<R>(subscriber => {
+      const subscription = source.subscribe({
         next: v => subscriber.next(mapFn(v)),
         error: e => subscriber.error(e),
-        complete: () => subscriber.complete()
+        complete: () => subscriber.complete(),
       });
 
-    return subscription;
-  })
+      return subscription;
+    });
 
-const multipliedBy2$ = observable$.pipe(
-  map(v => v * 2)
-);
+const multipliedBy2$ = observable$.pipe(map(v => v * 2));
 // Same as map(v => v * 2)(multipliedBy2$)
 ```
 
@@ -435,7 +438,7 @@ const multipliedBy2$ = observable$.pipe(
 ### Observable ↔ Promise
 
 ```ts
-import { firstValueFrom, lastValueFrom, from, defer } from 'rxjs';
+import { firstValueFrom, lastValueFrom, from, defer } from "rxjs";
 const firstValue = await firstValueFrom(observable$);
 const lastValue = await lastValueFrom(observable$);
 
@@ -466,7 +469,8 @@ Notes:
 
 Pull operations: Easier to offer promises
 Push: Observables all the way.
-  - Blocks: finalized$
+
+- Blocks: finalized$
 
 Why transactions are "push"?
 
@@ -480,6 +484,7 @@ Exercise: Find the referenda where a specific account voted in the same directio
 - Track: 33
 
 Hints:
+
 - `query.ConvictionVoting.VotingFor.watchValue(account, track)`
 - `query.Referenda.ReferendumInfoFor.getValues([number][])`
 
@@ -492,56 +497,44 @@ TODO Maybe find a better example. This one is interesting, but it's a shame it w
 
 ```ts
 const getDirectVotes = (voting: ConvictionVotingVoteVoting) => {
-  if (voting.type === "Delegating") return []
+  if (voting.type === "Delegating") return [];
 
   return voting.value.votes
     .map(([id, vote]) => {
       if ("vote" in vote.value) {
-        const direction = vote.value.vote & 0x80 ? "aye" : "nay"
-        return { id, direction }
+        const direction = vote.value.vote & 0x80 ? "aye" : "nay";
+        return { id, direction };
       }
-      return null
+      return null;
     })
-    .filter((v) => v !== null)
-}
+    .filter(v => v !== null);
+};
 
-dotApi.query.ConvictionVoting.VotingFor.watchValue(
-  "1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG",
-  33,
-)
+dotApi.query.ConvictionVoting.VotingFor.watchValue("1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG", 33)
   .pipe(
     map(getDirectVotes),
-    switchMap(async (voting) => {
-      const referenda =
-        await dotApi.query.Referenda.ReferendumInfoFor.getValues(
-          voting.map((v) => [v.id]),
-        )
+    switchMap(async voting => {
+      const referenda = await dotApi.query.Referenda.ReferendumInfoFor.getValues(voting.map(v => [v.id]));
 
       return referenda
-        .filter((v) => v != null)
+        .filter(v => v != null)
         .filter((referendum, i) => {
-          const { direction } = voting[i]
+          const { direction } = voting[i];
           if (referendum.type !== "Ongoing") {
-            return (
-              (direction === "aye" && referendum.type === "Approved") ||
-              direction === "nay"
-            )
+            return (direction === "aye" && referendum.type === "Approved") || direction === "nay";
           }
-          const referendumDirection =
-            referendum.value.tally.ayes > referendum.value.tally.nays
-              ? "aye"
-              : "nay"
-          return direction === referendumDirection
+          const referendumDirection = referendum.value.tally.ayes > referendum.value.tally.nays ? "aye" : "nay";
+          return direction === referendumDirection;
         })
         .map((v, i) => ({
           ...v,
           id: voting[i].id,
-        }))
-    }),
+        }));
+    })
   )
-  .subscribe((r) => {
-    console.log(r)
-  })
+  .subscribe(r => {
+    console.log(r);
+  });
 ```
 
 ---v
@@ -569,11 +562,11 @@ watchEntries().subscribe(result => {
   // Hash + number + parent
   console.log(result.blockInfo);
   // Array<{ args: Key, value: Value }>
-  console.log("deleted", result.deltas.deleted)
-  console.log("upserted", result.deltas.upserted)
+  console.log("deleted", result.deltas.deleted);
+  console.log("upserted", result.deltas.upserted);
   // Array<{ args: Key, value: Value }>
-  console.log("values", result.values)
-})
+  console.log("values", result.values);
+});
 ```
 
 Notes:
@@ -661,12 +654,11 @@ Checksum(Struct) := hash("5(" +
 </pba-cols>
 
 ```ts
-Checksum(proposal_origin) = "4(BigSpender0MediumSpender0Sma…ender0WishForChange0)"
-Checksum((Binary, number)) = "3(21)"
-Checksum(proposal) = "4(Inline2Lookup3(21))"
-Checksum(enactment_moment) = "4(After1At1)"
-Checksum(Referenda.submit) =
- "5(proposal_origin4(BigSpend…Change0)proposal4(Inline2Lookup3(21))enactm…r1At1))"
+Checksum(proposal_origin) = "4(BigSpender0MediumSpender0Sma…ender0WishForChange0)";
+Checksum((Binary, number)) = "3(21)";
+Checksum(proposal) = "4(Inline2Lookup3(21))";
+Checksum(enactment_moment) = "4(After1At1)";
+Checksum(Referenda.submit) = "5(proposal_origin4(BigSpend…Change0)proposal4(Inline2Lookup3(21))enactm…r1At1))";
 ```
 
 ---v
@@ -681,10 +673,11 @@ Checksum(Referenda.submit) =
 
 ### Solution #3
 
-- Bundle type definitions
-- Compare metadata types on runtime
+<pba-cols>
 
-```ts
+<pba-col>
+
+```ts [7]
 Referenda.submit({
   proposal_origin: Enum {
     BigSpender,
@@ -703,6 +696,21 @@ Referenda.submit({
   }
 })
 ```
+
+</pba-col>
+
+<pba-co class="fragment">
+
+- Bundle type definitions
+- Compare metadata types on runtime
+
+</pba-col>
+
+</pba-cols>
+
+Notes:
+
+For instance, how can we do it so that adding a new variant for an enum still makes it compatible?
 
 ---v
 
@@ -778,13 +786,13 @@ Referenda.submit({
 ## Descriptors
 
 ```ts
-import { dot } from '@polkadot-api/descriptors'
+import { dot } from "@polkadot-api/descriptors";
 
 // ...
 
 const dotApi = client.getTypedApi(dot);
 
-const account = await dotApi.query.System.Account.getValue(ALICE)
+const account = await dotApi.query.System.Account.getValue(ALICE);
 ```
 
 ---v
@@ -792,6 +800,7 @@ const account = await dotApi.query.System.Account.getValue(ALICE)
 ## Descriptors
 
 - Typescript definitions
+
 ```ts
   function api.query.System.Account(id: AccountID): Promise<{
     nonce: number,
@@ -827,10 +836,10 @@ const account = await dotApi.query.System.Account.getValue(ALICE)
 
 ```ts
 // Static import
-import metadata from './metadata';
+import metadata from "./metadata";
 
 // Dynamic import
-const metadataPromise = import('./metadata');
+const metadataPromise = import("./metadata");
 ```
 
 Notes:
@@ -842,13 +851,13 @@ Challenges when dealing with promises.
 ### Lazy Loading
 
 ```ts
-import { dot } from '@polkadot-api/descriptors'
+import { dot } from "@polkadot-api/descriptors";
 
 // ...
 
 const dotApi = client.getTypedApi(dot);
 
-const account = await dotApi.query.System.Account.getValue(ALICE)
+const account = await dotApi.query.System.Account.getValue(ALICE);
 ```
 
 Notes:
@@ -910,24 +919,27 @@ Tradeoff for dApps that are multichain but one at a time.
 
 ### Signers
 
-```ts
-  interface PolkadotSigner {
-    publicKey: Uint8Array;
+```ts [|2|4|6-19]
+interface PolkadotSigner {
+  publicKey: Uint8Array;
 
-    signBytes(data: Uint8Array): Promise<Uint8Array>;
+  signBytes(data: Uint8Array): Promise<Uint8Array>;
 
-    signTx(
-      callData: Uint8Array,
-      signedExtensions: Record<string, {
+  signTx(
+    callData: Uint8Array,
+    signedExtensions: Record<
+      string,
+      {
         identifier: string;
         value: Uint8Array;
         additionalSigned: Uint8Array;
-      }>,
-      metadata: Uint8Array,
-      atBlockNumber: number,
-      hasher: (data: Uint8Array) => Uint8Array
-    ): Promise<Uint8Array>;
-  }
+      }
+    >,
+    metadata: Uint8Array,
+    atBlockNumber: number,
+    hasher: (data: Uint8Array) => Uint8Array
+  ): Promise<Uint8Array>;
+}
 ```
 
 Notes:
@@ -943,8 +955,8 @@ Explain broadly the interface
 function getPolkadotSigner(
   publicKey: Uint8Array,
   signingType: "Ecdsa" | "Ed25519" | "Sr25519",
-  sign: (input: Uint8Array) => Promise<Uint8Array> | Uint8Array,
-): PolkadotSigner
+  sign: (input: Uint8Array) => Promise<Uint8Array> | Uint8Array
+): PolkadotSigner;
 ```
 
 Notes:
@@ -956,20 +968,17 @@ This is the basic signer. I have a function that can sign stuff, give me a polka
 ### Polkadot Signer
 
 ```ts
-import {
-  entropyToMiniSecret,
-  mnemonicToEntropy,
-} from "@polkadot-labs/hdkd-helpers"
-import { sr25519CreateDerive } from "@polkadot-labs/hdkd"
-import { getPolkadotSigner } from "polkadot-api/signer"
+import { entropyToMiniSecret, mnemonicToEntropy } from "@polkadot-labs/hdkd-helpers";
+import { sr25519CreateDerive } from "@polkadot-labs/hdkd";
+import { getPolkadotSigner } from "polkadot-api/signer";
 
-const alice_mnemonic =
-  "bottom drive obey lake curtain smoke basket hold race lonely fit walk"
-const entropy = mnemonicToEntropy(alice_mnemonic)
-const miniSecret = entropyToMiniSecret(entropy)
-const derive = sr25519CreateDerive(miniSecret)
-const alice = derive("//Alice")
-const aliceSigner = getPolkadotSigner(alice.publicKey, "Sr25519", alice.sign)
+const alice_mnemonic = "bottom drive obey lake curtain smoke basket hold race lonely fit walk";
+const entropy = mnemonicToEntropy(alice_mnemonic);
+const miniSecret = entropyToMiniSecret(entropy);
+const derive = sr25519CreateDerive(miniSecret);
+const alice = derive("//Alice");
+
+const aliceSigner = getPolkadotSigner(alice.publicKey, "Sr25519", alice.sign);
 ```
 
 Notes:
@@ -982,6 +991,7 @@ You don't. Modular design: you use whatever library can sign data, and use `getP
 
 ### Polkadot-JS Signer
 
+<!-- prettier-ignore -->
 ```ts
 import {
   connectInjectedExtension,
@@ -1049,11 +1059,11 @@ Exercise: Implement proxy signer, hands-on.
 ### ink! + PAPI
 
 ```ts
-  // pnpm papi ink add metadata.json
+// pnpm papi ink add metadata.json
 
-  import { contracts } from "@polkadot-api/descriptors"
+import { contracts } from "@polkadot-api/descriptors";
 
-  const inkClient = getInkClient(contracts.psp22)
+const inkClient = getInkClient(contracts.psp22);
 ```
 
 Notes: At this level, PAPI inkClient only gives TS definitions for encoding/decoding messages
@@ -1064,13 +1074,13 @@ Notes: At this level, PAPI inkClient only gives TS definitions for encoding/deco
 
 ```ts
 // Takes in the message name
-const increaseAllowance = inkClient.message("PSP22::increase_allowance")
+const increaseAllowance = inkClient.message("PSP22::increase_allowance");
 
 // Encode the data for that message
 const messageData = increaseAllowance.encode({
   delta_value: 100_000_000n,
   spender: ADDRESS.bob,
-})
+});
 
 const response = await typedApi.apis.ContractsApi.call(
   ADDRESS.alice, // Origin
@@ -1078,8 +1088,8 @@ const response = await typedApi.apis.ContractsApi.call(
   0n, // Value
   undefined, // GasLimit
   undefined, // StorageDepositLimit
-  messageData,
-)
+  messageData
+);
 ```
 
 Notes:
