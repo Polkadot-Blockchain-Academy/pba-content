@@ -235,12 +235,6 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
-
-<img rounded style="width: 300px" src="./img/ink/question-mark.svg" />
-
----
-
 <pba-cols>
 <pba-col center>
 
@@ -492,6 +486,10 @@ We have a double recursion of a PAB that embed itself
 Notes:
 
 https://forum.polkadot.network/t/ebpf-contracts-hackathon/1084
+
+## PolkaVM
+
+More to be said about that very soon!
 
 ---
 
