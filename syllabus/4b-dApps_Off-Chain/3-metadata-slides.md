@@ -70,7 +70,7 @@ The lookup of the metadata defines the shape of all types used in the runtime.
 
 <span style="font-size: 0.6em; opacity: 0.6">(This is already `scale-info`)</span>
 
-```typescript
+```typescript [|2|3,4,6|5]
 interface LookupEntry {
   id: u32; // this one is unique, and sequential
   path: Vec<String>; // where is it found in Rust code
@@ -150,7 +150,7 @@ https://en.wikipedia.org/wiki/Tarjan's_strongly_connected_components_algorithm
 
 #### Example: `AccountId32` and _Balance_
 
-```json
+```json [|2-17|18-27]
 [
   {
     "id": 0,
@@ -362,7 +362,7 @@ Use this slide to exemplify the "pointer" idea of the metadata.
 
 Example: `Metadata` APIs
 
-```json
+```json [|4-9|26-31|10-25]
 {
   "name": "Metadata",
   "methods": [
@@ -513,27 +513,23 @@ Example: `System`
 
 Every pallet can **optionally** define storage entries. They have the following shape in the metadata:
 
-```typescript
+```typescript [|2|3-13|4|5,14|6-13]
 interface PalletStorageMetadata {
   prefix: String;
   entries: Vec<{
     name: String;
     modifier: "Optional" | "Default";
-    ty: Plain | Map;
+    ty: Enum<{
+      Plain: { value: Type };
+      Map: {
+        hashers: Vec<StorageHasher>;
+        key: Type;
+        value: Type;
+      };
+    }>;
     default: Vec<u8>;
     docs: Vec<String>;
   }>;
-}
-
-// indicates no keys
-interface Plain {
-  value: Type;
-}
-
-interface Map {
-  hashers: Vec<StorageHasher>;
-  key: Type;
-  value: Type;
 }
 ```
 
@@ -702,8 +698,7 @@ In order to sign an extrinsic, the payload to be signed by the algorithm is:
 
 Extrinsic `v5` will rely on extensions to define its origin. I.e. no `origin` or `signature` will be hardcoded.
 
-This increases the flexibility of the extrinsics, leaving the runtime (through extensions) decide how permission will
-the extrinsic be.
+This increases the flexibility of the extrinsics, leaving the runtime (through extensions) decide the permission level.
 
 ![Image](./img/extrinsic-v5.svg)
 
