@@ -604,6 +604,14 @@ PVM bytecode is
 
 <img src="./img/pvm/benchmarks-2.png" style="width: 100%">
 
+# EVM vs. PVM
+
+- EVM is slower because it has to interpreted
+- EVM isn't a general purpose VM
+  - Pinky benchmarks not possible on EVM
+  - EVM doesn't run contracts written other languages, e.g. Rust
+
+
 ---
 
 # PVM beyond contracts
@@ -623,5 +631,12 @@ Notes:
 
 If we have enough time for it
 
-
 ---
+
+# Summary
+
+- PoklaVM solves blockchain specific pain points of Wasm
+  - Inderministic execution
+  - Compilation heavy-liftings moved off-chain
+- Fast
+- General purpose
