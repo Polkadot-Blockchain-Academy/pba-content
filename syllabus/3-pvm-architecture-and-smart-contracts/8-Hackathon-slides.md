@@ -35,7 +35,7 @@ Pick an exciting project idea, start researching on it and even start developein
 - Smart contract fuzzer
 - Formal verification framework for PVM contracts
 - Flashloans a la https://eips.ethereum.org/EIPS/eip-3156
-- A fun on-chain game to teach contracts (example https://github.com/use-ink/ink-workshop) 
+- A fun on-chain game to teach contracts (example https://github.com/use-ink/ink-workshop)
 - pump.fun style coin casino with bonding curves
 
 ## Timeline
