@@ -1,7 +1,7 @@
 ---
 title: PolkaVM
 description: PVM architecture
-duration: 30 minutes
+duration: 45 minutes
 ---
 
 # PolkaVM
@@ -41,7 +41,7 @@ Click-baity introduction slide
 
 ---
 
-## Determinism
+## Problem 1: Determinism
 
 - Wasm is not actually deterministic
 - Example: Unbounded stack
@@ -99,60 +99,49 @@ https://hackmd.io/@Ww6uNnIISmqGwXufqPYPOw/SklLYwb-T
 
 ---
 
-## Compilation
+## Problem 2: Compiling Wasm to machine code
 
-- Wasm code is hard to compile _efficiently_
-- Register allocation
-- High level control flow
-- Loss of semantic information
+Wasm contains high level control flow elements
 
 ---
-
-### Register allocation
-
-> In compiler optimization, register allocation is the process of assigning local automatic variables and expression results to a limited number of processor registers. 
-
-https://en.wikipedia.org/wiki/Register_allocation
-
-
-```wasm
-(func (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32)
-    local.get 0
-    local.get 1
-    ;; ..
-    local.get 8
-    ;; Informally:
-    ;;   Compiler needs to figure out which variable goes to which register
-    ;;
-    ;; For example adding two variables here requires them to be in
-    ;; in registers on a real computer
-)
-```
-
----
-
-###  Register allocation
-
-> **NP-Problem**
-> 
-> Chaitin et al. showed that register allocation is an NP-complete problem. 
-
-https://en.wikipedia.org/wiki/Register_allocation#Common_problems_raised_in_register_allocation
-
----
-
-###  Register allocation
-
-For those unfamiliar with the theory of computation, just read:
-
-_Register allocation is a difficult problem_
-
----
-
 
 ### High level control flow
 
-Let's do a quick experiment using ChatGPT
+Compilers use (expensive) algorithms to lower "high level" control flow elements
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+For example: loop statements
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+Into "low level" control flow elements
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+For example: (conditional) branch instructions
+
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+---
+
+### High level control flow
+
+Wasm knows many "high level" control flow elements!
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Not ideal for us because compilation is expensive :(
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
+
+### High level control flow
+
+Let's use ChatGPT for a little experiment
+
+---
 
 ### High level control flow
 
@@ -175,6 +164,7 @@ Prompt: "Write me fibonacci in webassembly text"
       )
     ..
 ```
+
 
 ---
 
@@ -277,50 +267,119 @@ fibonacci:
 
 ---
 
-### Compiler 101
+## Problem 2: Compiling Wasm to machine code
 
-1. Parse into Intermediate Representation (IR)
-   - Static Single-Asssignment (SSA)
-   - Control flow analysis on some tree-like data structure
-2. Optimizations
-3. Lowering into executable machine code
+Wasm reqruires us to do register allocation
 
 ---
 
-### Compiler 101
+### Register allocation
 
-- Compilers are fun topic and a deep rabbit hole
-- No time for this here
-- Take-away: Most of those things are _difficult problems_
-- Do you start to see a pattern?
+> In compiler optimization, register allocation is the process of assigning local automatic variables and expression results to a limited number of processor registers. 
+
+https://en.wikipedia.org/wiki/Register_allocation
+
+
+```wasm
+(func (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32)
+    local.get 0
+    local.get 1
+    ;; ..
+    local.get 8
+    ;; Informally:
+    ;;   Compiler needs to figure out which variable goes to which register
+    ;;
+    ;; For example adding two variables here requires them to be in
+    ;; in registers on a real computer
+)
+```
 
 ---
 
-## More problems
+###  Register allocation
 
-- Complexity of the Wasm spec
-- Compiler bombs:
-  - Optimizing compilers are not executing in linear time
-  - Metering slows us down even more
-- Open but our request were turned down in the past
-- `wasmtime` sandboxing security issues in past
+> **NP-Problem**
+> 
+> Chaitin et al. showed that register allocation is an NP-complete problem. 
+
+https://en.wikipedia.org/wiki/Register_allocation#Common_problems_raised_in_register_allocation
 
 ---
 
-## Wasm compilation: Take-aways
+###  Register allocation
 
-It really doesn't look good from a theoretical perspective:
-- Every Wasm contract needs to be compiled on every node executing it
-- A transaction involving a stack of many contracts being amplifies the problem
-- Caching
+For those unfamiliar with the theory of computation, just read:
+
+_Register allocation is a difficult problem_
+
+---
+
+## Compiling Wasm to machine code
+
+- What compilers do is computationally expensive
+- Compiling `polkadot-sdk` even the `LLVM` framework takes literal hours on cheaper laptops
+- Because Wasm _is_ a high level langauge (despite _assembly_ in the name):
+- The problems of compilation are inherited!
+
+---
+
+## Compiling Wasm to machine code
+
+Not really a problem for long-lived application like web-apps
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<img src="./img/pvm/this-is-fine.jpg">
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+
+---
+
+## Compiling Wasm to machine code
+
+- Every contract needs to be compiled on every node executing it!
+- Transactions often involving multiple contracts amplifies the problem
+- This doesn't look good from a theoretical perspective
+- Caching?
   - Harder than it seems on first glance
   - Doesn't entirely solve the problem
 
 ---
 
-# PVM Architecture
+## Wasm compilation: Take-aways
 
-The PolkaVM instruction set is based on RISC-V.
+__Theory:__ Wasm is faster than EVM
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+__Practice:__ By the time Wasm has finished compiling, EVM executed a token swap literally dozens to hundreds of times
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+
+---
+
+## Some more problems with Wasm
+
+- Complexity of the Wasm spec
+  - Tailored towards web2
+  - Spec is open but our request were turned down in the past
+- Compiler bombs:
+  - Optimizing compilers are not executing in linear time
+  - Which is bad because it opens a DOS attack vector
+  - Metered compilation slows down work that is already expensive
+
+---
+
+# PolkaVM (PVM)
+# Let's do better!
+
+---
+
+# PolkaVM
+
+PolkaVM is based on RISC-V.
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -367,15 +426,15 @@ Realizations:
 
 ---
 
-## RISC-V as PAB solves our Wasm problems!
+## RISC-V as PAB solves many Wasm problems
 
 - Determinism
   - We are not dictated by web2
   - Instead we can have our own requirements
-  - Solved simply because we can define it as requirement
+  - => Solved simply because we can define it as requirement
 - Compilation
   - It follows that RISC-V bytecode is (much!) simpler to compile 
-  - That is, minimizing the work done on-chain!
+  - => Minimze the work done on-chain!
 
 ---
 
@@ -391,7 +450,7 @@ Realizations:
 
 ---
 
-## On/off chain workload
+## RISC-V compilation vs. Wasm
 
 Prompt: "Write me a fibonacci in RISC-V"
 
@@ -418,7 +477,7 @@ fibonacci:
 ---
 
 <section>
-  <h3>Intuitively: What's less work to compile to x86</h3>
+  <h3>Intuitively: What's less work to compile to x86?</h3>
   <h3>Wasm or RISC-V?</h3>
   <table width="100%">
   <thead>
@@ -456,6 +515,9 @@ fibonacci:
             jg .loop
             mov rax, rbx
             ret
+        .base_case:
+            mov rax, rdi
+            ret
         </code></pre>
       </td>
       <td>
@@ -483,33 +545,27 @@ fibonacci:
 
 ---
 
-## JIT
+## The most important puzzle piece
 
-## Compiler
+- PVM is based on the rv64**e**mac (_embedded_) ISA
+  - The _embedded_ ISA is very similar to the standard ISA;
+  - Reduces the general purpose register (GPA) count to 16
+- Any computer will have 16 or more GPR (for the forseeable future)
+  - x86_64 has 16 GPRs
+  - aarch64 has 31 GPRs
+- What this allows:
+  - Instead of doing register allocation;
+  - **Compilation becomes a linear mapping of registers!**
 
-## Sandboxing
+---
+
+## This slide is important to understand
+
+<img src="./img/pvm/pvm-compilation-meme.jpg">
 
 ---
 
 # PVM Architecture
-
-## ELF linker
-
----
-# PVM Architecture
-
-## RISC-V
-
----
-# PVM Architecture
-
-## RISC-V
-
----
-
-# PVM Architecture
-
-## RISC-V
 
 ---
 
@@ -519,6 +575,11 @@ fibonacci:
 
 # PVM Demo
 
-## Doom (maybe on-chain with JAM)
+## Doom
+
+Notes:
+
+If we have enough time for it
+
 
 ---
