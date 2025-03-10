@@ -6,8 +6,11 @@ duration: 45 minutes
 
 # PolkaVM
 
-- From the past (Wasm) to the future (PVM)
-- "the next generation virtual machine for Polkadot and PolkaJam"
+## From the past (Wasm) to the future (PVM)
+
+> "the next generation virtual machine for Polkadot and PolkaJam"
+
+-- Jan Bujak, author of the first PolkaVM implementation
 
 ---
 
@@ -32,23 +35,24 @@ Click-baity introduction slide
 
 # Wasm: The obvious choice **for blockchains**?
 
----
-
-# Wasm shortcomings
-
-- Determinism
-- Compilation
+1. Indeterministic execution
+2. Compiling Wasm to machine code
 
 ---
 
-## Problem 1: Determinism
+## Problem #1: Indeterministic execution
 
-- Wasm is not actually deterministic
-- Example: Unbounded stack
+Executing Wasm code is not actually deterministic
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+Example: Unbounded stack
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
-## Determinism
+## Indeterministic execution
 
 What is the problem with the below snippet?
 
@@ -73,7 +77,7 @@ https://hackmd.io/@Ww6uNnIISmqGwXufqPYPOw/SklLYwb-T
 
 ---
 
-## Determinism
+## Indeterministic execution
 
 ```wasm
 (func (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32)
@@ -99,41 +103,41 @@ https://hackmd.io/@Ww6uNnIISmqGwXufqPYPOw/SklLYwb-T
 
 ---
 
-## Problem 2: Compiling Wasm to machine code
-
-Wasm contains high level control flow elements
-
----
-
-### High level control flow
-
-Compilers use (expensive) algorithms to lower "high level" control flow elements
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-For example: loop statements
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-Into "low level" control flow elements
-
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
-For example: (conditional) branch instructions
-
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
----
-
-### High level control flow
+## Problem #2: Compiling Wasm to machine code
 
 Wasm knows many "high level" control flow elements!
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
+Wasm doesn't know about register allocation or target architecture specific optimizations!
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
 Not ideal for us because compilation is expensive :(
 
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+
+
+---
+
+### High level control flow
+
+Compilers use (expensive) algorithms to:
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- lower "high level" control flow statements
+  - `loop`
+  - `if`
+
 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+- Into a bunch of "low level" control flow instructions
+  - (conditional) branch instructions
+  - location labels
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
@@ -145,7 +149,7 @@ Let's use ChatGPT for a little experiment
 
 ### High level control flow
 
-Prompt: "Write me fibonacci in webassembly text"
+Prompt: _Write me fibonacci in webassembly text_
 
 ```wasm
   (func $fibonacci (param $n i32) (result i32)
@@ -162,7 +166,7 @@ Prompt: "Write me fibonacci in webassembly text"
           (return (local.get $n))
         )
       )
-    ..
+      ..
 ```
 
 
@@ -170,7 +174,7 @@ Prompt: "Write me fibonacci in webassembly text"
 
 ### High level control flow
 
-Prompt: "Write me fibonacci in x86_64 assembly"
+Prompt: _Write me fibonacci in x86_64 assembly_
 
 ```asm
 fibonacci:
@@ -211,7 +215,7 @@ fibonacci:
               (return (local.get $n))
             )
           )
-        ..
+          ..
         )
         </code></pre>
       </td>
@@ -267,9 +271,9 @@ fibonacci:
 
 ---
 
-## Problem 2: Compiling Wasm to machine code
+## Register allocation
 
-Wasm reqruires us to do register allocation
+Executing Wasm requires us to do register allocation
 
 ---
 
@@ -308,24 +312,26 @@ https://en.wikipedia.org/wiki/Register_allocation#Common_problems_raised_in_regi
 
 ###  Register allocation
 
-For those unfamiliar with the theory of computation, just read:
+If you aren't familiar with the theory of computation, just read:
 
-_Register allocation is a difficult problem_
+_Register allocation is a difficult problem_ 
 
 ---
 
 ## Compiling Wasm to machine code
 
+- Wasm is almost a high level langauge (despite _assembly_ in the name)
 - What compilers do is computationally expensive
-- Compiling `polkadot-sdk` even the `LLVM` framework takes literal hours on cheaper laptops
-- Because Wasm _is_ a high level langauge (despite _assembly_ in the name):
-- The problems of compilation are inherited!
+- Can take literal hours on cheaper laptops
+  - `polkadot-sdk`
+  - `LLVM` framework
+- There is a blog post somewhere, telling the story of a web dev rewriting everything to Wasm, only to end up with even greater load times :)
 
 ---
 
 ## Compiling Wasm to machine code
 
-Not really a problem for long-lived application like web-apps
+Not really a problem for long-living application like web apps
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -356,7 +362,6 @@ __Theory:__ Wasm is faster than EVM
 __Practice:__ By the time Wasm has finished compiling, EVM executed a token swap literally dozens to hundreds of times
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
-
 
 ---
 
@@ -422,7 +427,9 @@ But a real CPU?
 Realizations:
 
 - RISC-V is simple
-- Can be seen as common denominator of widely used _real_ CPUs (x86, arm)
+- Practically a common denominator of widely used _real_ CPUs
+  - x86_64
+  - aarch64
 
 ---
 
@@ -452,7 +459,7 @@ Realizations:
 
 ## RISC-V compilation vs. Wasm
 
-Prompt: "Write me a fibonacci in RISC-V"
+Prompt: _Write me a fibonacci in RISC-V_
 
 ```
 fibonacci:
@@ -460,7 +467,6 @@ fibonacci:
     ble a0, t0, .base_case # If n <= 1, return n
     li t1, 0          # a = 0
     li t2, 1          # b = 1
-    
 .loop:
     add t3, t1, t2    # temp = a + b
     mv t1, t2         # a = b
@@ -469,7 +475,6 @@ fibonacci:
     bgt a0, t0, .loop # If n > 1, continue loop
     mv a0, t2         # Return b (Fibonacci(n))
     ret
-
 .base_case:
     ret
 ```
@@ -545,7 +550,7 @@ fibonacci:
 
 ---
 
-## The most important puzzle piece
+## The last puzzle piece
 
 - PVM is based on the rv64**e**mac (_embedded_) ISA
   - The _embedded_ ISA is very similar to the standard ISA;
@@ -555,21 +560,58 @@ fibonacci:
   - aarch64 has 31 GPRs
 - What this allows:
   - Instead of doing register allocation;
-  - **Compilation becomes a linear mapping of registers!**
+  - Compiling PVM bytecode is mostly a linear mapping of registers and instructions!
 
 ---
 
 ## This slide is important to understand
 
+<pba-cols>
+<pba-col center>
+
 <img src="./img/pvm/pvm-compilation-meme.jpg">
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+</pba-col>
+<pba-col center>
+
+PVM bytecode is
+- very close to machine code
+- cheap to compile **on-chain**
+- efficient to execute
+- heavily optimized **off-chain**
+
+
+</pba-col>
+</pba-cols>
 
 ---
 
-# PVM Architecture
+## PVM bytecode interpreter vs. JIT compiler
+
+<img src="./img/pvm/on-off-chain-compilation-2.svg">
 
 ---
 
 # PVM Benchmarks
+
+<img src="./img/pvm/benchmarks-1.png" style="width: 100%">
+
+---
+
+# PVM Benchmarks
+
+<img src="./img/pvm/benchmarks-2.png" style="width: 100%">
+
+---
+
+# PVM beyond contracts
+
+- Parachain Validation Function (PVF)
+- Join-accumulate-machine (JAM)
+  - https://github.com/gavofyork/graypaper
+  - https://graypaper.fluffylabs.dev/
 
 ---
 
