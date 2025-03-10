@@ -611,7 +611,6 @@ PVM bytecode is
   - Pinky benchmarks not possible on EVM
   - EVM doesn't run contracts written other languages, e.g. Rust
 
-
 ---
 
 # PVM beyond contracts
