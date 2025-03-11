@@ -2,7 +2,7 @@
 title: Polkadot Ecosystem and Economy
 description: A review of the parts of Polkadot which develop its ecosystem and economy.
 duration: 1 hour
-owner: Shawn Tabrizi
+owner: Maciej Zyszkiewicz (Shawn Tabrizi originally)
 ---
 
 # Ecosystem and Economy
