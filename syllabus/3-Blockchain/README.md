@@ -15,7 +15,6 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 * Students will understand the fundamentals of distributed consensus.
 * Students will understand the blockchain datastructure, why each piece of data is in it, and how it tracks the history of a shared state machine.
 * Students will be able to start a blockchain on their own.
-* Students will be able to inform the instructor if anyone on the pba team ever actually reads this list.
 * Students will be able to write blockchain related code.
 * Students will be able to demonstrate how the grandpa finality gadget works.
 * Students will understand how to grandpa finality gadget work.
@@ -34,10 +33,10 @@ The module is designed to 3 days of contact time lasting about 6-8 hours each da
 
 #### Morning
 
-- 🗣️ [Decentralized Systems: Goals and History](./1-Overview_Goals_History-slides.md)
-- 🎲 (Optional) [Manual Consensus Game](./Manual_Consenus_Activity.md)
+- 🗣️ [Coordination and Centralization: Past, Present, Future](./1-Coordination_And_Centralization-slides.md)
+- 🗣️ [P2P Networks](./2-P2P_Networks-slides.md)
 - ☕ Break
-- 🗣️ [P2P Networks and State Machines](./2-P2P_Networks_State_Machines-slides.md)
+- 🗣️ [State Machines](./2.5-State_Machines-slides.md)
 - ⌨️ Begin working on [Blockchain from Scratch](https://github.com/JoshOrndorff/blockchain-from-scratch/)
 
 #### Afternoon

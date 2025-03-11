@@ -63,7 +63,7 @@ corepack enable
 # Install Dependencies
 yarn
 # Run a slide server watching for file changes
-yarn dev
+yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
@@ -137,7 +137,7 @@ In [package.json](./package.json) we include a handy tool to format all markdown
 
 ```sh
 # This will format all `syllabus/*.md` files
-yarn fmt
+yarn lint:write
 ```
 
 If (and only if) formatting _breaks_ markdown from rendering correctly, you may use `<!-- prettier-ignore -->` preceding a block in markdown to skip formatting like this:
@@ -257,9 +257,6 @@ There are some great (but limited) options for anyone lacking the ability to do 
 
 - [REPL.it](https://replit.com/languages/rust) - This online IDE includes a low-powered machine to compile Rust on, but provides _real-time collaboration_ where multiple users can follow-the-leader and edit simultaneously.
   It also features github integrations to save and share progress.
-- [Substrate Playground](https://docs.substrate.io/playground/) - This is a Parity hosted very powerful build machine that anyone can access using a pre-compiled docker image of the base [substrate node template](https://github.com/substrate-developer-hub/substrate-node-template) to build on top of in an online VSCode-like IDE.
-  The session is limited to 2 hours per user, before all data is cleared. There is no simple way to capture your work though, so this is only to be used in simple examples of substrate to iterate very quickly.
-  _Note that it is unclear if 50+ students can access this at the same time, thus please let the TAs know if you plan to use this first!_
 
 ### Conceptual workshops and activities
 

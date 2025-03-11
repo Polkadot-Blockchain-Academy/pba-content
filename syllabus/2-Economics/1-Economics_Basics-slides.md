@@ -196,6 +196,7 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - For example: should you do a vacation at the beach in Spain for two weeks or travel through France for two weeks?
 - A rational agent would compile all the factors into a single dimension (utility or value) and maximizes for payout.
 
@@ -296,7 +297,8 @@ Notes:
 </ul>
 </pba-flex>
 
-Notes: 
+Notes:
+
 - Still, not always financial incentives - reputation scores
 - While automated agents existed for a while, they become much more accessible for everybody due to blockchain technology
 - Your electric car might soon have a wallet that automatically pays for charging at a red light.
@@ -439,8 +441,9 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - **Question**: Examples for each?
-  - High elasticity: luxury goods or with high substitutes, where buyers can easily adjust their consumption. Butter / Magerine 
+  - High elasticity: luxury goods or with high substitutes, where buyers can easily adjust their consumption. Butter / Magerine
   - Low elasticity: essential goods such as energy.
 
 ---
@@ -450,6 +453,7 @@ Notes:
 </div>
 
 Notes:
+
 - Which one represents low / high elasticity?
 
 ---
@@ -459,6 +463,7 @@ Notes:
 </div>
 
 Notes:
+
 - Inelastic: A rather big price change leads to little change in quantity.
 - Elastic: A rather big price change leads to a large change in quantity.
 
@@ -469,6 +474,7 @@ Notes:
 </div>
 
 Notes:
+
 - What are some examples?
 - Perfectly Elastic: Ice-Tea
 - Perfectly Inelastic: Insulin
@@ -552,8 +558,10 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - A monopoly is if only one seller exists
 - A monopolistic market is if there might be more sellers but one is dominant.
+
 ---
 
 ## Why discuss this?
@@ -607,8 +615,9 @@ Notes:
 </pba-flex>
 
 Notes:
+
 - Monopolies often form when large entities engage in price wars and undercut smaller businesses until they go bankrupt.
-- There are different types of monopolies: 
+- There are different types of monopolies:
   - Natural (high barrier of entry, e.g. railroads)
   - Geographic
   - Technological
@@ -619,6 +628,7 @@ Notes:
 ## Is the Government a Monopoly?
 
 Notes:
+
 - Legitimate use of Force
 - Provider of Public Goods
 - Regulation
@@ -635,6 +645,7 @@ Notes:
 <li class="fragment">This leads to sub-optimal pricing and sub-optimal society welfare: consumers either pay more than they should ("monopolist tax") or are excluded from market.</li>
 
 Notes:
+
 - There are three conditions for price discrimination to work:
   - The company needs to have sufficient market power
   - The company needs to be able to identify differences in demand.
@@ -645,6 +656,7 @@ Notes:
 ---
 
 ## Example: Antitrust case against Microsoft in 1990s
+
 <pba-flex center>
 <ul>
 <li class="fragment">Microsoft engaged in anti-competitive practices where they intertwined Windows OS with Internet Explorer.</li>
@@ -654,8 +666,8 @@ Notes:
 
 ## Monopoly: Advantages?
 
-
 Notes:
+
 - Economies of scale (specialisation)
 - Price stability
 - Potentially higher investments like R&D that benefit customers down the line.
@@ -1050,6 +1062,7 @@ Notes:
 > Andrew had 50 Microsoft stocks. He decided to sell 40 of them at a price of 350 USD, still keeping 10. He used his earnings to pay some bills and does not plan to buy any stocks back. In the following days he caught himself looking at the charts hoping the price would go down to less than 350 USD.
 
 Notes:
+
 - Not rational.
 - Regret aversion?
 - Sunk cost fallacy?
@@ -1089,6 +1102,7 @@ Notes:
 </span>
 
 Notes:
+
 - What biases could be happening here?
 - **Survivor bias**: is the logical error of concentrating on entities that passed a selection process while overlooking those that did not.
   This can lead to incorrect conclusions because of incomplete data.

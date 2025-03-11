@@ -4,7 +4,29 @@ description: In Introduction to Polkadot SDK
 duration: 120 mins
 ---
 
+## Meta
+
+Before Getting started
+
+- 👋🏻 Questions
+- ⏰ Slides
+- `@kianenigma` / `kian@parity.io`
+
+Note:
+
+meta questions for ice breaker:
+
+- how many ppl know substrate/frame already?
+- how many ppl feel like they are comfortable with rust
+- with rust generics, traits and associated types
+- how many ppl know what polkadot-sdk is?
+- how many ppl know jam already? do you have the question of why are we still learning all of this?
+
+---
+
 # Introduction to Polkadot SDK
+
+- Polkadot + Substrate + FRAME + XCM
 
 Note:
 
@@ -17,6 +39,14 @@ This lecture is about learning two things:
    3. XCM
 
 There will be amazing modules going into further details of each. This will be very high level.
+
+meta questions for ice breaker:
+
+- how many ppl know substrate/frame already?
+- how many ppl feel like they are comfortable with rust
+- with rust generics, traits and associated types
+- how many ppl know what polkadot-sdk is?
+- how many ppl know jam already? do you have the question of why are we still leaning all of this?
 
 ---
 
@@ -48,6 +78,7 @@ There will be amazing modules going into further details of each. This will be v
 
 ### Polkadot
 
+- O.G ETH2 Vision from 2015
 - Let's make this _sharded_, such that it can achieve execution sharding.
 
 Note:
@@ -60,7 +91,9 @@ The holy grain of what ETH 2.0 was meant to be.
 
 <img width="800px" rounded src="./img/multi-threaded.svg" />
 
-- Have we compromised security in any way in this model?
+Note:
+
+Have we compromised security in any way in this model?
 
 ---v
 
@@ -147,28 +180,35 @@ TODO: maybe turn into slides, maybe leave as notes for now.
 
 ### Polkadot SDK
 
-<img style="width: 800px;" src="../../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
+⛓️‍💥 Substrate 🤝 FRAME 🤝 Cumulus ⛓️‍💥
 
-All proudly™️ built with Substrate.
-
-1. the mighty Polkadot Relay Chain
-2. all the Polkadot Parachains to date.
-3. (less known) can be used to build any blockchain unrelated to Polkadot.
+<img width="800px" rounded src="./img/substrate-frame-cumulus.svg" >
 
 ---v
 
 ### Polkadot SDK
 
-Substrate 🤝 FRAME
-
-Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
-FRAME: An opinionated way to build that WASM protocol/runtime/STF.
+- Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
+- FRAME: An opinionated way to build that WASM protocol/runtime/STF.
+- Cumulus: Parachain turbocharger
 
 Note:
 
 **FRAME** is a subset of blockchain within Substrate that allow you to focus only on writing the
 state transition function aka. Runtime of your blockchain and not deal with the rest of the
 software. WASM.
+
+---v
+
+### Polkadot SDK
+
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
+
+All proudly™️ built with Substrate.
+
+1. the mighty Polkadot Relay Chain
+2. all the Polkadot Parachains to date.
+3. (less known) can be used to build any blockchain unrelated to Polkadot.
 
 ---v
 
@@ -205,7 +245,7 @@ but it can 100% ensure that the parachain will do exactly as stated in its WASM 
 
 ### Interoperability
 
-Polkadot's services to developers:
+Polkadot-SDK's services to developers:
 
 - Transport protocols for parachains/cores to send payloads to one
   another.
@@ -213,11 +253,16 @@ Polkadot's services to developers:
   - As a developer you won't deal with these! 😮‍💨
 - Language to compose messages and programs and send them over.
   - XCM
+    - Shared ideas between sovereign consensus systems.
+    - Asynchronous.
 
 Note:
 
-Consensus System: Moreover, the sender and recipient of these messages can be contracts, accounts, or any other
-abstract entities within chains, not just the chain itself.
+On "XCMP, HRMP, VMP, DMP": It is similar to building a website. You know HTTP and TCP and such
+exist, and you use them via an interface, but you don't need to know them by heart.
+
+Consensus System: Moreover, the sender and recipient of these messages can be contracts, accounts, or any
+other abstract entities within chains, not just the chain itself.
 
 Async and Sync: Disjoint consensus systems are in principle[^1] asynchronous by nature. This is an
 important concept to keep in mind.
@@ -246,11 +291,25 @@ About Polkadot SDK
 
 ---
 
+## Schedule
+
+(tentative)
+
+- 🤓 _Substrate_: Tuesday -> Thursday
+  - More theory, 2 ungraded activities
+- 🧑‍💻 _FRAME_: Thursday -> Thursday
+  - Main graded assignment
+  - Mix lecture and live-coding
+- 🚀 _XCM_: Friday + Saturday
+  - Hands-on
+
+---
+
 ## Additional Resources! 😋
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 
 Note:
 
