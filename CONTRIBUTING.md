@@ -63,7 +63,7 @@ corepack enable
 # Install Dependencies
 yarn
 # Run a slide server watching for file changes
-yarn dev
+yarn start
 ```
 
 This should open a new tab with a listing of all slide decks to choose from.
@@ -137,7 +137,7 @@ In [package.json](./package.json) we include a handy tool to format all markdown
 
 ```sh
 # This will format all `syllabus/*.md` files
-yarn fmt
+yarn lint:write
 ```
 
 If (and only if) formatting _breaks_ markdown from rendering correctly, you may use `<!-- prettier-ignore -->` preceding a block in markdown to skip formatting like this:
