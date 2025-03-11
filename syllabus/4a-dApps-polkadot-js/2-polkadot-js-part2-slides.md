@@ -341,8 +341,6 @@ Subxt offers a Rust-based alternative with strong type safety and efficient perf
 
 Substrate Connect focuses specifically on light client functionality, enabling truly decentralized applications that don't rely on centralized RPC endpoints.
 
-Many teams are also developing custom RPC clients tailored to their specific needs, especially for applications with unique requirements or performance constraints.
-
 Understanding the strengths and limitations of Polkadot-JS helps developers make informed decisions about when to use these alternatives and how to effectively migrate to them when appropriate.
 
 ---
