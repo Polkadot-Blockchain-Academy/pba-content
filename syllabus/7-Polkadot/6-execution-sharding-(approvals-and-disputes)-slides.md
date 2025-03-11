@@ -1,6 +1,6 @@
 ---
-title: Execution Sharding in Polkadot
-description: Details about the Approval-Voting and Disputes systems and how they work together to provide secure execution sharding in Polkadot through the means of escalation.
+title: Execution Sharding (Approvals & Disputes)
+description: Details about the Approval-Voting and Disputes systems and how they work together to provide secure execution sharding in Polkadot through the means of escalation. Part 3/3 of parachains protocol
 duration: 60 minutes
 owner: Maaciej Zyszkiewicz
 ---

@@ -1,8 +1,8 @@
 ---
-title: Data Availability and Data Sharding
-description: Data Availability Problem, Erasure coding, Data sharding.
+title: Data Availability (Backing & Availability)
+description: Data Availability Problem, Erasure coding, Data sharding.  Part 2/3 of parachains protocol
 duration: 1h
-owner: Bradley Olson
+owner: Maciej Zyszkiewicz (Bradley Olson originally)
 ---
 
 # Data Availability and Sharding

@@ -1,7 +1,8 @@
 ---
-title: Nominated Proof of Stake
+title: Polkadot Staking
 description: An introduction to Nominated Proof of Stake in Polkadot
 duration: 1 hour
+owner: Maciej Zyszkiewicz (Kian originally)
 ---
 
 # Nominated Proof of Stake
