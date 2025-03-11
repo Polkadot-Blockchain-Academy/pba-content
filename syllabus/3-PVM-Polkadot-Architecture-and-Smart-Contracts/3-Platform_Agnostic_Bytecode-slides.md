@@ -1,7 +1,7 @@
 ---
 title: Platform Agnostic Bytecode
 description: What are PABs and why they exist?
-duration: 1 hour
+duration: 20 minutes
 ---
 
 # Platform Agnostic Bytecode
@@ -278,8 +278,6 @@ Those things can't be addressed by the PAB itself but they can give good guideli
 <!-- .element: class="fragment" data-fragment-index="3" -->
 - Safe (executed in a sandboxed environment)
 <!-- .element: class="fragment" data-fragment-index="4" -->
-- Open (programs can interoperate with their environment)
-<!-- .element: class="fragment" data-fragment-index="5" -->
 
 </pba-flex>
 
@@ -358,9 +356,17 @@ There is another type of stack used in wasm and that's called: shadow stack, res
 There are multiple ways to execute wasm:
 
 - Ahead Of Time Compilation
+  - Program is stored in executable format on disk
+  - Thus it can be executed directly (after linking and loading)
 - Just in Time Compilation
+  - Program isn't stored in executable format
+  - Instead it's compiled into an executable format just before it is executed
 - Single Pass Compilation
+  - Same as JIT but tries to minimize work done during compilation
+  - Used in situations when JIT can't spend much time
 - Interpretation
+  - Program isn't store in executable format and never compiled into such
+  - Instead, the programs instruction are _interpreted_ one by one
 - ...
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -460,8 +466,17 @@ We have a double recursion of a PAB that embed itself
 
 - Why use something different for contracts? Why not use Wasmtime? 
 
-<!--TODO: graphics-->
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
+- Mainly because compilation is too slow and resulting code isn't deterministic.
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+- We'll investigate this in the next lecture.
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+---
 
 # Alternatives
 
