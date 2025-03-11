@@ -64,6 +64,17 @@ owner: Carlo Sala
 
 #### Governance - Referenda
 
+**Which problems were identified?**
+
+- State is split among different storage and constant entries; e.g. `Referenda.ReferendumInfoFor`, `Referenda.Tracks`. They
+  have to be matched and combined to get the full picture.
+- There are parts of the state that do not directly appear in the chain state (e.g. when a poll is expected to end) and
+  require some extra computation.
+
+---
+
+#### Governance - Referenda
+
 **What do we want to include in the SDK?**
 
 - Fetch referenda and get information about them (abstract storage) <!-- .element: class="fragment" -->
@@ -88,12 +99,43 @@ owner: Carlo Sala
 
 #### Governance - ConvictionVoting
 
+**Which problems were identified?**
+
+- Again, state is split among several entries. Besides that, every voting track goes on its own.
+- `Vote` type
+- Derived state: which votes can be removed, and when.
+
+---
+
+#### Governance - ConvictionVoting
+
 **Features:**
 
 - Get votes and delegations for an account. <!-- .element: class="fragment" -->
   - With enhanced information; e.g. unlock schedule of all votes.
 - Vote <!-- .element: class="fragment" -->
   - Abstract complex `Vote` type and conviction.
+
+---
+
+#### Governance - Bounties (and ChildBounties)
+
+**Which problems were identified?**
+
+- A bounty can be in a gazillion different states. <!-- .element: class="fragment" -->
+
+---v
+
+![Image](./img/bounties.svg)
+
+---
+
+#### Governance - Bounties (and ChildBounties)
+
+**Which problems were identified?**
+
+- A bounty can be in a gazillion different states.
+- There are many actions to bounties that are performed through referenda. <!-- .element: class="fragment" -->
 
 ---
 
