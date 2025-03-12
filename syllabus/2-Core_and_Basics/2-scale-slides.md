@@ -28,7 +28,7 @@ Designed for high-performance, copy-free data encoding and decoding in resource-
 
 ### Little-Endian
 
-<img src="../../../assets/img/5-Substrate/endian.png" />
+<img src="./endian.png" />
 
 ---
 
