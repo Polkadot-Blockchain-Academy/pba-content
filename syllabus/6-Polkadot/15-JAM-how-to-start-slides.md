@@ -38,7 +38,7 @@ of choice.
 
 #### Gray Paper - First impression
 
-<img rounded style="width: 80%;" src="assets/img/7-Polkadot/erasure-coding.jpg" />
+<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/erasure-coding.jpg" />
 
 Notes:
 As you probably already know, the main source of truth for JAM is the Gray Paper.
@@ -52,7 +52,7 @@ So when you start off the first thing you'll see is something like.
 
 #### The Gray Paper - Scary stuff
 
-<img rounded style="width: 80%;" src="assets/img/7-Polkadot/jam-block-encoding.png" />
+<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/jam-block-encoding.png" />
 
 Notes:
 If you go deeper, things might get a little bit more scary though! :)
@@ -61,7 +61,7 @@ If you go deeper, things might get a little bit more scary though! :)
 
 #### The Gray Paper - Even worse!
 
-<img rounded style="width: 80%;" src="assets/img/7-Polkadot/pvm-formula.png" />
+<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/pvm-formula.png" />
 
 Notes:
 Or even this!
