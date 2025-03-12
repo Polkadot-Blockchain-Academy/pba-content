@@ -1,22 +1,22 @@
 ---
-title: JAM - Transforming Math Formulas into Code 
+title: JAM - Transforming Math Formulas into Code
 description: How we can read the Graypaper and understand it by coding
 duration: 30+ mins
 ---
 
 ## What is this talk NOT About?
 
-* What is JAM 🚫 
-* Why JAM is useful 🚫
-* How JAM is different from Polkadot 🚫
+- What is JAM 🚫
+- Why JAM is useful 🚫
+- How JAM is different from Polkadot 🚫
 
 ---
 
 ## What is this talk About?
 
-* Hands-on approach ✅
-* Read (and understand) math formulas ✅
-* Implement JAM in actual code ✅
+- Hands-on approach ✅
+- Read (and understand) math formulas ✅
+- Implement JAM in actual code ✅
 
 ---
 
@@ -30,14 +30,14 @@ duration: 30+ mins
 
 <!--  .slide: data-visibility="hidden" -->
 
- - Polkadot Virtual Machine (PVM) - RISC-V
- - Erasure Coding DA
- - VRF Ring Signatures / Bandersnatch
- - In-core + on-chain 
- - Parallel Execution
-     - Each Core runs different computing jobs
-     - State components updated in parallel
- - Safrole and Grandpa - less forks
+- Polkadot Virtual Machine (PVM) - RISC-V
+- Erasure Coding DA
+- VRF Ring Signatures / Bandersnatch
+- In-core + on-chain
+- Parallel Execution
+  - Each Core runs different computing jobs
+  - State components updated in parallel
+- Safrole and Grandpa - less forks
 
 ---
 
@@ -45,7 +45,7 @@ duration: 30+ mins
 
 ---
 
-## PVM 
+## PVM
 
 <img width="1000px" src="../../assets/img/7-Polkadot/pvm-formula.png" />
 
@@ -58,7 +58,6 @@ duration: 30+ mins
 ---
 
 ## Bandersnatch
-
 
 <img width="1000px" src="../../assets/img/7-Polkadot/bandersnatch.png" />
 
@@ -107,16 +106,15 @@ struct State {
     ...
 }
 ```
----
 
+---
 
 ## State Transition Function
 
 <img width="600px" src="../../assets/img/7-Polkadot/jam-stf.png" />
 
-
 ```rust
-let new_state = state_transition(state, block) 
+let new_state = state_transition(state, block)
 
 fn state_transition(state: &State, block: Block) -> State {
   // Logic to update state with new block
@@ -126,8 +124,8 @@ fn state_transition(state: &State, block: Block) -> State {
 ---
 
 ## State Dependencies
-<img width="600px" src="../../assets/img/7-Polkadot/jam-stf-deps.png" />
 
+<img width="600px" src="../../assets/img/7-Polkadot/jam-stf-deps.png" />
 
 ```rust
 let timeslot_ = get_timeslot(h);
@@ -153,7 +151,9 @@ impl Encode for Vec<u8> {
 }
 
 ```
+
 ---
+
 ## Data Encoding
 
 <img width="600px" src="../../assets/img/7-Polkadot/jam-encoding2.png" />
@@ -173,8 +173,6 @@ impl<T: Encode> Encode for VariableSize<T> {
     }
 }
 ```
-
-
 
 ---
 
@@ -206,13 +204,14 @@ impl Encode for Extrinsic {
 ---
 
 ## PVM
+
 <img width="700px" src="../../assets/img/7-Polkadot/jam-pvm.png" />
 
 ```rust
 fn f(
-      n: u64, 
-      gas: u64, 
-      mut registers: Vec<u64>, 
+      n: u64,
+      gas: u64,
+      mut registers: Vec<u64>,
       memory: Memory
 ) -> (u64, Vec<u64>, Memory) {
   if n == GAS {
@@ -231,7 +230,3 @@ fn f(
 - Faster development
 - Functional alignment with math
 - Learn Elixir, as its functional features reduces learning curve
-
-
-
-
