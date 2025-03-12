@@ -144,6 +144,8 @@ Struct({
 });
 ```
 
+Notes:
+
 ---
 
 # SCALE: Complex types: Vectors
