@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Polkadot-API Getting Started</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Polkadot-API
+
+## Getting Started
+
+<aside class="notes"><p>During this module we will go deep through Polkadot-API, from a low-level, interacting with a JSON-RPC endpoint to a higher level like polkadot-api and then its SDKs.</p>
+<p>To unblock people from working on the assignment, here&#39;s a quick getting started with polkadot-api, which will let you connect with a chain and start interacting with it.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Polkadot-API
+
+Typescript library to interact with Polkadot-based chains
+
+https://papi.how/
+</script></section><section  data-markdown><script type="text/template">
+## Polkadot-API
+
+- 💡 Fully Typed
+- 🪶 Light-client first
+- 🚀 Performant and light-weight
+- 🧩 Modular
+
+<aside class="notes"><p>Full Typed: Not only the library itself, but the interactions with each chain. It even pulls the interaction docs as JSDocs to show them in intellisense.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Concepts
+
+<img rounded src="./img/high-lvl-overview.svg" />
+
+<aside class="notes"><p><a href="https://excalidraw.com/#json=SLLLnZdCrJdd1PYIurjGv,IwZlWHL0yw0GLMW6uMEnZw">https://excalidraw.com/#json=SLLLnZdCrJdd1PYIurjGv,IwZlWHL0yw0GLMW6uMEnZw</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Polkadot-API
+
+```sh
+npm install polkadot-api
+
+npx papi add dot -n polkadot
+```
+
+<aside class="notes"><p>Let&#39;s jump into live demo</p>
+<ul>
+<li>Basics<ul>
+<li>Installing papi</li>
+<li>Connecting to a chain (westend, will be needed for sending tx)</li>
+</ul>
+</li>
+<li>Operations<ul>
+<li>Query storage: System.account</li>
+<li>Runtime call: estimate fees with TransactionPaymentApi.queryInfo<ul>
+<li>Create extrinsic System.remark</li>
+</ul>
+</li>
+<li>Constant: Balances.ExistentialDeposit<ul>
+<li>introduce compatibility token</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Transactions<ul>
+<li>Connect to pjs extension</li>
+<li>Get signer from extension</li>
+<li>Submit a System.remark to westend</li>
+</ul>
+</li>
+<li>Compatibility<ul>
+<li>Remark the meaning of descriptors</li>
+<li>Show example of connecting to a different chain (polkadot) with the same wnd descriptors<ul>
+<li>System.Remark =&gt; works, but throws a payment</li>
+<li>Sudo =&gt; fails</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Devtools
+
+https://dev.papi.how/
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

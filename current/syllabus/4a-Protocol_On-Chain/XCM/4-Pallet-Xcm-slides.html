@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>XCM Pallet</title>
+  <link rel="icon" href="./../../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section ><section data-markdown><script type="text/template">
+
+# XCM Pallet
+</script></section><section data-markdown><script type="text/template">
+## What you'll learn
+
+How to link XCM and FRAME
+</script></section></section><section  data-markdown><script type="text/template">
+# How XCM can be used
+
+- Interacting directly with the executor by writing XCMs
+
+or
+
+- Packaging up all XCM-logic on extrinsics
+</script></section><section ><section data-markdown><script type="text/template">
+# The XCM Pallet
+
+We have now learnt about the XCVM and FRAME.
+
+The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
+
+**It allows us both to interact with the executor directly and provides useful extrinsics**.
+</script></section><section data-markdown><script type="text/template">
+## Some functionalities of the pallet
+
+- Executing XCMs locally.
+- Sending XCMs to a different location.
+- Transferring assets to a different consensus system
+- Version negotiation
+- Handling responses
+- Asset trapping
+</script></section></section><section  data-markdown><script type="text/template">
+# Executing XCMs locally
+
+<diagram class="mermaid limit size-40">
+<!-- prettier-ignore-start -->
+flowchart TD
+subgraph paraA[Parachain A              .]
+  executor --"success?"--> palletxcm
+  palletxcm("pallet-xcm") --"execute"--> executor("xcm-executor")
+end
+execute("execute(xcm)") --> palletxcm
+<!-- prettier-ignore-end -->
+</diagram>
+
+<aside class="notes"><p>It checks the origin to ensure that the configured <code>SendXcmOrigin</code> filter is not blocking the execution.
+It executes the message <strong>locally</strong> and returns the outcome as an event.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Sending XCMs
+
+<diagram class="mermaid" style="display: flex; width: 150%; justify-content: center; transform: translateX(-17%);">
+<!-- prettier-ignore-start -->
+flowchart LR
+subgraph paraA[Parachain A]
+palletxcma("pallet-xcm") --"deliver"--> routera("xcm-router")
+routera --> mqueuea("message queue")
+end
+
+subgraph paraB[Parachain B]
+mqueueb("message queue") --> executorb("xcm-executor")
+end
+
+send("send(xcm)") --> palletxcma
+mqueuea --> mqueueb
+
+<!-- prettier-ignore-end -->
+</diagram>
+
+<aside class="notes"><p>This extrinsic is a function to send a message to a destination.
+It checks the origin, the destination and the message.
+Then it lets the <code>XcmRouter</code> handle the forwarding of the message.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+# Cross-consensus transfers
+
+<aside class="notes"><p>The two ways of transferring assets between consensus systems are teleports and reserve transfers.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## 1. Asset teleportation
+
+<img rounded style="width: 500px;" src="./img/teleport.png">
+
+<aside class="notes"><p>Teleportation works by burning the assets on the source chain and minting them on the destination chain.
+This method is the simplest one, but requires a lot of trust, since failure to burn or mint on either side will affect the total issuance.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### 1.1. Example: System parachains?
+
+<diagram class="mermaid">
+graph LR
+    BridgeHub(Bridge Hub)--"Trust"-->AssetHub(Asset Hub)
+</diagram>
+</script></section><section data-markdown><script type="text/template">
+### 1.2. Example: Polkadot and Kusama?
+
+<diagram class="mermaid">
+graph LR
+    Polkadot(Polkadot)--"No trust"-->Kusama(Kusama)
+</diagram>
+</script></section><section data-markdown><script type="text/template">
+## 2. Reserve asset transfers
+
+<img rounded style="width: 400px;" src="./img/reserve-tx.png">
+
+<aside class="notes"><p>Reserve asset transfers are more complicated, since they bring in a third actor called the reserve chain.
+Chain A and B needn&#39;t trust each other, they only need to trust the reserve chain.
+The reserve chain holds the real assets, A and B deal only with derivatives.
+The transfer is made by burning derivatives from A, moving them from A&#39;s SA to B&#39;s SA in R, then minting on B.</p>
+<p>In some cases, the sender, A, can also be the reserve for a particular asset, in which case the process is simplified, there&#39;s no burning of derivatives.
+This usually happens with parachains&#39; native tokens.</p>
+<p>You always trust the issuer of the token to not mint infinite tokens.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### 2.1. Example: Parachain native tokens
+
+<diagram class="mermaid">
+graph LR
+    subgraph A [A = R]
+        Sender(Sender account)--"Move X real asset"-->BSovereignAccount(B's Sovereign Account)
+    end
+    A--"Mint X derivatives"-->B(B)
+</diagram>
+
+<aside class="notes"><p>Most parachains act as the reserve for their own token.
+To transfer their token to other chains, they move the real assets to a sovereign account and then tell the chain to mint equivalent derivatives.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### 2.2. Example: Polkadot to Kusama
+
+<diagram class="mermaid">
+graph LR
+    Polkadot(Polkadot)-->AssetHubP
+    subgraph AssetHubP [Asset Hub Polkadot]
+        Sender(Sender account)--"Move X real DOT"-->KusamaSovereignAccount("Kusama's sovereign account")
+    end
+    AssetHubP--"Mint X DOT derivatives"-->Kusama(Kusama)
+</diagram>
+
+<aside class="notes"><p>AssetHub Kusama acts as the reserve for KSM.
+Kusama doesn&#39;t trust Polkadot to teleport KSM to it, but it does trust its own reserve, the AssetHub.
+Polkadot has a sovereign account in Kusama&#39;s AssetHub with some amount of KSM.
+Whenever some user in Polkadot wants to get KSM on Kusama, they just give the DOT to Polkadot and the KSM are moved from one sovereign account to another.
+No new trust relationships are added.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## `transfer_assets`
+
+The XCM pallet provides an extrinsic that figures out
+whether the transfer is a teleport or reserve asset transfer all on its own.
+
+Does this by using the XCM configuration.
+</script></section></section><section  data-markdown><script type="text/template">
+# Version negotiation
+
+The XCM pallet stores the latest supported version for all known chains.
+
+The instructions `SubscribeVersion` and `UnsubscribeVersion` are used to subscribe to chains to know their versions.
+
+If the version of a destination is not known, the lowest known XCM version will be used, in order to be compatible.
+</script></section><section  data-markdown><script type="text/template">
+# Handling responses
+
+The XCM pallet allows creating query ids and awaiting for responses to XCMs.
+
+With an instruction like `ReportError`, you can know if your operation was successful or not.
+</script></section><section  data-markdown><script type="text/template">
+# Claiming trapped assets
+
+At the end of execution, if assets are left in the holding register, they are trapped.
+
+These assets live in a storage item under the XCM pallet\*.
+
+The pallet provides an extrinsic to claim them.
+
+<aside class="notes"><ul>
+<li>Only if the pallet is configured to be the asset trapper.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Summary
+
+<pba-flex center>
+
+- Learnt the link between XCM and FRAME.
+- Learnt what the XCM pallet does.
+</script></section><section  data-markdown><script type="text/template">
+# Workshop
+
+We're going to write our own version of some extrinsics from the XCM pallet.
+</script></section><section  data-markdown><script type="text/template">
+# Next steps
+
+What about XCM configuration? Is there a tool to test all this?
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+
+  <script src="./../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

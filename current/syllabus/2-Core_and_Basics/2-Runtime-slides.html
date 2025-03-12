@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Runtime</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Runtime
+</script></section><section  data-markdown><script type="text/template">
+# Runtime
+
+## What you will learn:
+
+- What is the Runtime?
+- Where is located?
+- How does it work?
+- Tradeoffs of having a dynamic STF.
+- Who does it cather to?
+- Types of Runtime APIs.
+</script></section><section  data-markdown><script type="text/template">
+# Runtime: Introduction
+
+## Runtime: What is it?
+
+- It's the logic of the State Transition Fuctions that defines the business logic of the chain.
+- It currently is WASM code that's stored on the state of the chain.
+- It's part of the state, and it also determines how this state changes 🤯.
+</script></section><section  data-markdown><script type="text/template">
+## Runtime: part of the state of the chain.
+
+- Why?
+  - In an ideal world it allows for forkless upgrades.<!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Runtime: part of the state of the chain.
+
+- How does it work
+
+  - Every time that the WASM changes, the node instantiates the new WASM.
+
+- Host Functions:
+
+  - When the WASM is instaniated, the node provides an environment so that the WASM can interact with the node.
+  - Eg: Access storage, Expensive cryptografic functions, etc.
+
+- Can a new WASM version require newer/different host functions?
+
+<aside class="notes"><ul>
+<li>Discuss implications of changing host functions.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tradeoffs of having a dynamic runtime.
+
+- The good: enables forkless upgrades.
+- The not so good:
+  - State migrations are complicated.
+  - Transactions can:
+    - Become invalid.
+    - Have a different outcome.
+  - Makes DApps and tooling more complicated.
+</script></section><section  data-markdown><script type="text/template">
+## Tradeoffs of having a dynamic runtime.
+
+- The good: enables forkless upgrades.
+- The not so good:
+  - State migrations are complicated.
+  - Transactions can:
+    - Become invalid.
+    - Have a different outcome.
+  - Makes DApps and tooling more complicated.
+</script></section><section  data-markdown><script type="text/template">
+## Runtime functions:
+
+| How it started                              |            How it's going            |
+| ------------------------------------------- | :----------------------------------: |
+| Core_initialize_block                       |        DryRunApi_dry_run_call        |
+| Core_execute_block                          |          Metadata_metadata           |
+| Block_builder_apply_extrinsic               | NominationPoolsApi_points_to_balance |
+| TaggedTransactionQueue_validate_transaction | Inflation_inflation_prediction_info  |
+
+<aside class="notes"><ul>
+<li>Discuss why it&#39;s a good idea to expose via runtime-apis functions that
+prevent DApps from re-implementing on-chain logic.</li>
+</ul>
+<h2 id="runtime-who-does-it-cather-to">Runtime: who does it cather to?</h2>
+<p>Runtime functions can be divided in 3 different groups:</p>
+<ul>
+<li>Functions that cather the node: applyng extrinsics, handling blocks, etc.</li>
+<li>Functions that cather DApps: by exposing logic that otherwise would have to be duplicated offchain.</li>
+<li>Functions that cather both: transaction validation transactions, calculating fees, etc.</li>
+</ul>
+<h2 id="non-host-specific-runtime-apis">Non Host-specific runtime-apis:</h2>
+<ul>
+<li>Metadata</li>
+<li>Fees</li>
+<li>Dry-Runs</li>
+<li>View Functions</li>
+</ul>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

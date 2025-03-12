@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Yo dawg, I heard yo like JAM</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# JAM<br/>
+</script></section><section  data-markdown><script type="text/template">
+#### What is this talk about?
+
+- Our approach to building JAM
+- It does not mean that it's the only one!
+
+<aside class="notes"><p>We want to share with you how we approached building JAM from scratch in TypeScript
+(crazy idea, I know) in hope to encourage you to do the same in your language
+of choice.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+#### How do you even start?
+
+- The Gray Paper
+- JAM Lectures (youtube)
+- The Gray Paper
+- Element Rooms (#jam:polkadot.io, #graypaper:polkadot.io)
+- The Gray Paper
+- Did I mention the Gray Paper already?
+
+<aside class="notes"><p>We want to share with you how we approached building JAM from scratch in TypeScript
+(crazy idea, I know) in hope to encourage you to do the same in your language
+of choice.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+#### Gray Paper - First impression
+
+<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/erasure-coding.jpg" />
+
+<aside class="notes"><p>As you probably already know, the main source of truth for JAM is the Gray Paper.
+It&#39;s a formal specification of the protocol, which uses a mix of a prose and math
+notation to describe the IMPORTANT (consensus-sensitive) details in a language
+agnostic way.</p>
+<p>So when you start off the first thing you&#39;ll see is something like.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### The Gray Paper - Scary stuff
+
+<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/jam-block-encoding.png" />
+
+<aside class="notes"><p>If you go deeper, things might get a little bit more scary though! :)</p>
+</aside></script></section><section data-markdown><script type="text/template">
+#### The Gray Paper - Even worse!
+
+<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/pvm-formula.png" />
+
+<aside class="notes"><p>Or even this!</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+#### Bottom-up approach
+
+Start from the very beginning and go through the formulas 1 by 1
+
+Pros:
+
+- straight forward to start
+- works equally well if you have and don't have experience
+
+Cons:
+
+- you might get stuck
+- depending on the language you might end up with insufficient architecture
+</script></section><section data-markdown><script type="text/template">
+### Top-down approach
+
+Think high level about the client architecture first
+
+Pros:
+
+- you MIGHT build a very efficient client
+
+Cons:
+
+- requires a lot of experience
+- extremely easy to get wrong
+</script></section><section data-markdown><script type="text/template">
+### Reality (our approach)
+
+- Alternate between bottom-up and top-down.
+
+- Points to consider:
+  - Team composition
+  - Understanding of the domain
+  - Understanding the language/technology
+</script></section></section><section  data-markdown><script type="text/template">
+#### Who are we?
+
+- JAM implementation in TypeScript
+  - `typeberry`
+
+<!-- .element: class="fragment" -->
+
+- JAM tooling (also TS)
+  - Gray Paper Reader <small>https://graypaper.fluffylabs.dev</small>
+  - PVM Debugger <small>https://pvm.fluffylabs.dev</small>
+
+<!-- .element: class="fragment" -->
+
+- Dev team:
+  - 2-4 core developers
+  - 2 frontend developers
+
+<!-- .element: class="fragment" -->
+</script></section><section ><section data-markdown><script type="text/template">
+### How did we start?
+
+- Reading the prose of Gray Paper.
+  - Getting the gist of what JAM is about.
+
+<!-- .element: class="fragment" -->
+
+- Working with raw bytes a lot
+  - `Bytes<N>` and `BytesBlob` helpers.
+
+<!-- .element: class="fragment" -->
+
+- Reading (not running!) JSON tests (w3f/jamtestvectors)
+  - Type-safe custom parser.
+
+<!-- .element: class="fragment" -->
+
+- Performance measurements from day 1
+  - Micro-benchmarks for "low-level" stuff.
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li>Reading/loading JSON tests allows us to get some understanding of what&#39;s
+going to be needed and how things might need to be stitched together.
+While it seems super simple <code>JSON.parse</code> we&#39;ve learned a ton just
+by trying to model the data structures in a typesafe way.</li>
+<li>Obviously the choice of the language dictates the steps that you need to
+tackle first. If you have support for bytes natively - why bother :)</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+#### TODO: Bytes code sample & unit tests
+</script></section></section><section ><section data-markdown><script type="text/template">
+#### Implementation as exploration
+
+- We started composing low-level primitives into more complex data structures based on the JSON test vectors.
+- Next we were "fact-checking" these structures with the Gray Paper and documenting them.
+
+<aside class="notes"><ul>
+<li>By searching the structures in the Gray Paper we were gaining better knowledge about the structure of the paper.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+#### TODO: Block code sample & unit tests
+</script></section></section><section ><section data-markdown><script type="text/template">
+#### In the search of unknown-unknowns
+
+- **known-knowns**: Things we are aware of and understand.
+- **known-unknowns**: Things we are aware of but don't fully understand.
+- **unknown-unknowns**: Things we are not even aware exist, so we cannot prepare for them.
+
+<aside class="notes"><ul>
+<li>While you gain understanding of the Gray Paper and the overall domain, you start to realize that there are things
+that you have to do that you didn&#39;t even consider ealier. These unknown-unknowns turn into known-unknowns.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### How to proceed?
+
+- Depth-first
+- Breadth-first
+
+<aside class="notes"><ul>
+<li>After we got enough <strong>known-unknowns</strong> we went into breadth-first mode</li>
+<li>and parallelized the work.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+### First "proper" tasks
+
+- Merkelization
+- Codec
+- PVM
+
+<aside class="notes"><ul>
+<li>We figured implementing for JSON test vectors will be simple, so we initially
+went with things that we believed are going to be hard :)</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### First tasks take aways
+
+- Don't rely just on JSON test vectors.
+- Invest in your own unit testing suite.
+
+<aside class="notes"><ul>
+<li>JSON test are work in progress and will change.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+### Benchmarking examples
+
+- What's the most performant way to represent a `Bytes<32>` in TypeScript?
+- We need data structures! `Set`, `Dictionary`
+- Hashing / Crypto - WASM gives us huge gains.
+
+<aside class="notes"><p>While it&#39;s not strictly necessary to be a perofrmant client for the first milestones
+we are focusing on the performance as we go since our ambitions reach beyond M2.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### TODO: benchmarking code samples
+</script></section></section><section  data-markdown><script type="text/template">
+### PVM take aways
+
+- Building an interpreter is fairly easy (common sense).
+- Making it fully compatbile with GP is hard (focus on the formulas).
+- Taking the intepreter to Polkadot-level performance - extremely hard.
+</script></section><section ><section data-markdown><script type="text/template">
+### PVM - alternative implementation
+
+- AssemblyScript - sub-set of TypeScript, can be compiled to WASM
+- Since optimizing stuff to WASM will be needed it was a fun experiment to learn AS via PVM.
+</script></section><section data-markdown><script type="text/template">
+### Second PVM - Why?
+
+- Fuzz testing between the two implementations found us a ton of bugs.
+- PVM debuggger was extremely handy in identifying differences.
+- More work, but extremely helpful to share experiences and PoVs.
+</script></section><section data-markdown><script type="text/template">
+### TODO: Game of life demo https://todr.me/anan-as/conway.html
+</script></section></section><section  data-markdown><script type="text/template">
+### Tracking changes
+
+- TODO: Gray Paper reader links
+- TODO: Gray Paper links overlay (from-code annotations)
+</script></section><section  data-markdown><script type="text/template">
+# Questions?
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
