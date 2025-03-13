@@ -63,6 +63,7 @@ The WASM repository provides WebAssembly versions of critical cryptographic func
 The WASM implementations offer better performance for cryptographic operations compared to pure JavaScript implementations, which is crucial for blockchain interactions. However, there are tradeoffs to consider:
 
 Advantages of WASM over Pure JavaScript:
+
 - Better Performance – WASM executes at near-native speeds, often 2x–10x faster than JavaScript
 - Optimized for Cryptography – Uses efficient integer operations and avoids JS floating-point limitations
 - No Garbage Collection Overhead – WASM has manual memory management, preventing GC-related slowdowns
@@ -70,6 +71,7 @@ Advantages of WASM over Pure JavaScript:
 - Better Security – Less exposure to JavaScript runtime vulnerabilities or side-channel attacks
 
 Potential Drawbacks of WASM:
+
 - Higher Startup Time – WASM modules take longer to instantiate and compile than JavaScript functions
 - Complexity – Requires writing in Rust, C, or C++, then compiling to WASM, adding extra build steps
 - Larger File Sizes – WASM binaries are often larger than equivalent JS code, which can impact load times
@@ -95,6 +97,7 @@ Notes:
 The `polkadot-js/common` repository is a monorepo that provides essential utilities for working with Substrate-based blockchains. It forms the foundation for most other Polkadot-JS tools and applications.
 
 Key components include:
+
 - Cryptographic utilities for key generation, hashing, and SS58 address encoding
 - Keyring utilities for managing keypairs, accounts, and transaction signing
 - A registry of network information for known Substrate chains
@@ -130,6 +133,7 @@ The API package is the central component for interacting with Substrate-based bl
 - Transaction Management: Provides comprehensive tools for creating, signing, and submitting extrinsics (transactions), including fee estimation and nonce management.
 
 Limitations include:
+
 - Limited light client support
 - Reliance on the older JSON-RPC interface
 - Challenges with static type support for dynamic chain metadata
@@ -141,10 +145,10 @@ Limitations include:
 ```typescript
 import { ApiPromise, WsProvider } from '@polkadot/api';
 
-async function main() {  
+async function main() {
     // Create the API instance
-    const api = await ApiPromise.create({ 
-      provider: new WsProvider('wss://rpc.polkadot.io') 
+    const api = await ApiPromise.create({
+      provider: new WsProvider('wss://rpc.polkadot.io')
     });
 
     // Get chain information
@@ -153,16 +157,16 @@ async function main() {
       api.rpc.system.name(),
       api.rpc.system.version()
     ]);
-    
+
     console.log(`Connected to ${chain} using ${nodeName} v${nodeVersion}`);
-    
+
     // Query account balance
     const ADDR = '13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB';
     const { data: balance } = await api.query.system.account(ADDR);
 
     console.log(`Treasury Balance: ${balance.free.toString()}`);
   }
-  
+
   main().catch(console.error);</code></pre>
 ```
 
@@ -170,35 +174,34 @@ Notes:
 
 This example demonstrates the basic usage of the Polkadot-JS API to connect to a node, retrieve chain information, and query an account balance. The code is straightforward and follows a promise-based pattern that will be familiar to JavaScript developers.
 
-
 ---
 
 ### API Example: Historical Queries
 
 ```typescript
-import { ApiPromise, WsProvider } from '@polkadot/api';
+import { ApiPromise, WsProvider } from "@polkadot/api";
 
-async function main() {  
-    const api = await ApiPromise.create({ 
-      provider: new WsProvider('wss://rpc.polkadot.io') 
-    });
+async function main() {
+  const api = await ApiPromise.create({
+    provider: new WsProvider("wss://rpc.polkadot.io"),
+  });
 
-    // Get a historical block hash
-    const blockHash = await api.rpc.chain.getBlockHash(1000000);
-    
-    // Create an API instance at that block
-    const apiAt = await api.at(blockHash);
-    
-    // Query historical state
-    const ADDR = '13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB';
-    const currentBalance = await api.query.system.account(ADDR);
-    const historicalBalance = await apiAt.query.system.account(ADDR);
+  // Get a historical block hash
+  const blockHash = await api.rpc.chain.getBlockHash(1000000);
 
-    console.log(`Current Balance: ${currentBalance.data.free.toString()}`);
-    console.log(`Balance at Block 1,000,000: ${historicalBalance.data.free.toString()}`);
-  }
-  
-  main().catch(console.error);
+  // Create an API instance at that block
+  const apiAt = await api.at(blockHash);
+
+  // Query historical state
+  const ADDR = "13UVJyLnbVp9RBZYFwFGyDvVd1y27Tt8tkntv6Q7JVPhFsTB";
+  const currentBalance = await api.query.system.account(ADDR);
+  const historicalBalance = await apiAt.query.system.account(ADDR);
+
+  console.log(`Current Balance: ${currentBalance.data.free.toString()}`);
+  console.log(`Balance at Block 1,000,000: ${historicalBalance.data.free.toString()}`);
+}
+
+main().catch(console.error);
 ```
 
 Notes:
@@ -230,6 +233,7 @@ Notes:
 The polkadot-js/phishing repository is a specialized component of the Polkadot-JS ecosystem focused on security and anti-phishing protection for users of Polkadot and Substrate-based blockchain applications.
 
 Key features include:
+
 - Phishing Site Database: Maintains a curated list of known phishing websites and malicious domains that target Polkadot, Kusama, and other related blockchain users.
 - Address Blacklists: Contains lists of suspicious or known malicious addresses that have been associated with scams or theft.
 - Community Maintenance: The repository is community-run, allowing for rapid response to new threats as they emerge.
@@ -258,6 +262,7 @@ Notes:
 The polkadot-js/tools repository provides a collection of useful command-line utilities and developer tools designed to facilitate working with Polkadot, Kusama, and other Substrate-based blockchains.
 
 Key components include:
+
 - CLI Utilities: Command-line interfaces for common operations like querying chain state, submitting transactions, and monitoring events without needing to build a full application.
 - Metadata Extraction: Tools for extracting, analyzing, and working with chain metadata, which is essential for understanding the capabilities and structure of different chains.
 - Monitor Applications: Utilities for monitoring node status, network performance, and blockchain metrics.
@@ -288,6 +293,7 @@ Notes:
 The polkadot-js/ui repository provides a collection of user interface components and utilities designed specifically for creating web applications that interact with Polkadot, Kusama, and other Substrate-based blockchains.
 
 Key features include:
+
 - React Components: A library of ready-to-use React components tailored for blockchain applications, including account selection and display, address formatting and visualization, transaction submission forms, and balance displays.
 - UI Utilities: Helper functions for formatting blockchain data in user-friendly ways, such as balance and token formatting, time and block number formatting, and data presentation helpers.
 - Identicon Generators: Various implementations of address visualization (identicons) to help users recognize addresses visually, supporting multiple styles including Polkadot's unique circular format.
@@ -319,6 +325,7 @@ Notes:
 The polkadot-js/apps repository houses the flagship application in the Polkadot-JS ecosystem - a comprehensive web-based interface for interacting with Polkadot, Kusama, and any Substrate-based blockchain. Often referred to as "Polkadot-JS Apps" or simply "the Apps," this is the official reference implementation UI for Substrate chains.
 
 Key features include:
+
 1. Complete Chain Dashboard: A feature-rich interface providing access to virtually all on-chain functionality including account management, transfers, staking, governance, and parachains.
 2. Multi-chain Support: Built to work seamlessly with any Substrate-based chain, automatically adapting its interface based on the connected chain's capabilities and metadata.
 3. Explorer Functions: Comprehensive block explorer functionality including block details, transaction history, events, and state queries.
@@ -352,6 +359,7 @@ Notes:
 The Polkadot{.js} Extension (from the polkadot-js/extension repository) provides a secure browser extension for managing accounts and signing transactions for Substrate-based blockchains.
 
 Key features include:
+
 - Secure Key Management: Stores private keys securely within the browser's extension storage, isolating them from potentially malicious websites.
 - dApp Integration: Provides an interface for websites to request accounts and transaction signatures without ever accessing the private keys.
 - Website Authorization: Implements a permission system where users must explicitly authorize websites to access their accounts.
@@ -411,4 +419,3 @@ By understanding the structure and capabilities of each component, developers ca
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions?
-

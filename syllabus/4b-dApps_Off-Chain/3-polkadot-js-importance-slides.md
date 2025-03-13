@@ -27,9 +27,9 @@ This widespread adoption is not just because of its maturity and feature set but
 ### Influence on Polkadot-Based Applications
 
 - Many existing tools and legacy systems depend on it
-    - chopsticks
-    - zombienet
-    - substrate-api-sidecar
+  - chopsticks
+  - zombienet
+  - substrate-api-sidecar
 - Future migrations to new tools require knowledge of Polkadot-JS
 
 Notes:

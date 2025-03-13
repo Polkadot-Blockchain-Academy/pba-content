@@ -70,7 +70,6 @@ This interface serves as an invaluable sandbox for testing and debugging chain f
 
 While more specialized and user-friendly interfaces exist for specific chains and use cases, none match the comprehensiveness of Polkadot.js Apps for development and debugging purposes.
 
-
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions?
