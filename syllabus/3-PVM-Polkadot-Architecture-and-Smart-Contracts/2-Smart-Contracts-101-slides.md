@@ -2,6 +2,7 @@
 title: Smart contracts fundamentals
 description: Introduction to fundamentals smart conctracts concepts
 duration: 30min
+url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/2-Smart-Contracts-101-slides.md
 ---
 
 ## Smart contracts fundamentals
@@ -26,11 +27,11 @@ Notes:
 
 ## Smart contracts & blockchain
 
-<section>
-  <pre><code>
-State n  ----->  STF(State n, [Tx1, Tx2, ...])  ----->  State n+1
-  </code></pre>
-</section>
+<pba-flex center>
+  <code style="background-color: transparent">
+State n  --->  STF(State n, [Tx1, Tx2, ...])  --->  State n+1
+  </code>
+</pba-flex>
 
 Notes:
 
@@ -47,7 +48,7 @@ Since all nodes execute the same transactions with the same rules, they all deri
 ### Bitcoin
 
 <section>
-<pre><code>
+<pre>
 State n                                                                     State n + 1
 -------                                                                     -----------
 
@@ -57,7 +58,7 @@ Bob:     1BTC     ──────▶     tx2: transfer(1BTC Charlie -> BOB), 
 Charlie: 2BTC                 ...                                           Charlie 1BTC
                            ])
 
-</code></pre>
+</pre>
 </section>
 
 Notes:
