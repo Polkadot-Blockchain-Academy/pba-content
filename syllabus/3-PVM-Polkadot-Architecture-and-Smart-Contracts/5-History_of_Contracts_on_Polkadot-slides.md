@@ -18,6 +18,7 @@ We'll trace the historical evolution of execution environments on Polkadot, focu
 Initially, Polkadot had two primary approaches to application execution:
 
 - **Runtime modules (pallets)**:
+
   - Native Substrate-based execution.
   - Maximum efficiency, full runtime customization.
   - Integrated directly into parachain runtime.
@@ -99,4 +100,3 @@ Historical lessons learned:
 Notes:
 
 ---
-
