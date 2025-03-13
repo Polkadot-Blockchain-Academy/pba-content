@@ -19,7 +19,7 @@ Duration: 30 minutes
 
 Notes:
 
-Polkadot-JS began as a personal project by its core maintainer at a time when Polkadot itself was still just a specification on paper. There was no actual blockchain to interact with, which makes the foresight of the developer even more remarkable.
+Polkadot-JS began as a personal project by its core maintainer at a time when Polkadot itself was still just a specification on paper.
 
 The developer started building the JavaScript implementation based purely on the specifications and their understanding of what would be needed for the future network. This forward-thinking approach allowed the tooling to evolve alongside the blockchain itself, rather than playing catch-up later.
 
@@ -34,29 +34,6 @@ This early start gave Polkadot-JS a unique advantage - it was able to grow and a
 "Cool, not sure how this fits in, but it helps the Polkadot ecosystem, so go on."
 
 </pba-flex>
-
-Notes:
-
-When the core maintainer approached Gavin Wood (Gav) about building a JavaScript runtime environment for Polkadot, the response was casual but encouraging: "Cool, not sure how this fits in, but it helps the Polkadot ecosystem, so go on."
-
----
-
-## Building Without a Backend
-
-- Developed against a theoretical API
-- Created mock implementations to test functionality
-- Designed with flexibility to adapt to final implementation
-- Evolved as Substrate and Polkadot developed
-
-Notes:
-
-One of the most remarkable aspects of Polkadot-JS's early development was that it was built without an actual backend to test against. The developer had to work with a theoretical API based on the specifications and design documents.
-
-To validate the functionality, mock implementations were created to simulate how the blockchain would behave. This required careful attention to the specifications and a deep understanding of the protocol's intended behavior.
-
-The code was designed with flexibility in mind, knowing that the actual implementation might differ from the initial specifications. This foresight proved valuable as both Substrate and Polkadot evolved during their development.
-
-As the actual blockchain implementations became available, Polkadot-JS adapted quickly, validating some design choices and refactoring others to match the reality of the network. This period of adjustment was crucial for ensuring that the JavaScript implementation accurately reflected the on-chain behavior.
 
 ---
 
