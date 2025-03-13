@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>pallet-revive architecture</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Architecture overview
+
+// TODO diagram of the architecture
+
+<aside class="notes"><ul>
+<li>Diagram of a Substrate chain equipped with pallet-revive</li>
+<li>Go through the different components<ul>
+<li>Gas estimate through Substrate JSON-RPC</li>
+<li>Tx submitted with a substrate-wallet</li>
+<li>Node, and Runtime details</li>
+</ul>
+</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+# ETH-RPC compatibility layer
+
+// TODO diagram of the architecture with ETH-RPC
+
+<aside class="notes"><p>There are two things we want to enable with this compatibility layer</p>
+<ul>
+<li>Make is easy for builder to port existing Dapp to Polkadot, and use battle tested ooling already developed by the EVM community.</li>
+<li>Make it easy for EVM to onboard, by supporting EVM wallets such as MetaMask.</li>
+</ul>
+<p>To get there, we need to speak the language of Ethereum, both on chain by running a compatible VM, but also by implementing Ethereum JSON-RPC specs, as all interactions with the chains are done through the RPC.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# pallet-revive
+
+<aside class="notes"><ul>
+<li>pallet-revive is the runtime module, that handle smart contracts transactions, and manage the storage used by these contracts.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## pallet-revive Config
+
+```rust
+impl pallet_revive::Config for Runtime {
+	type Time = Timestamp;
+	type Currency = Balances;
+	type RuntimeEvent = RuntimeEvent;
+	type RuntimeCall = RuntimeCall;
+	type CallFilter = Nothing;
+	type DepositPerItem = DepositPerItem;
+	type DepositPerByte = DepositPerByte;
+	type WeightPrice = pallet_transaction_payment::Pallet<Self>;
+	type WeightInfo = pallet_revive::weights::SubstrateWeight<Self>;
+	type AddressMapper = pallet_revive::AccountId32Mapper<Self>;
+	type RuntimeMemory = ConstU32<{ 128 * 1024 * 1024 }>;
+	type PVFMemory = ConstU32<{ 512 * 1024 * 1024 }>;
+	type UnsafeUnstableInterface = ConstBool<false>;
+	type UploadOrigin = EnsureSigned<Self::AccountId>;
+	type InstantiateOrigin = EnsureSigned<Self::AccountId>;
+	type RuntimeHoldReason = RuntimeHoldReason;
+	type CodeHashLockupDepositPercent = CodeHashLockupDepositPercent;
+	type ChainId = ConstU64<420_420_420>;
+	type NativeToEthRatio = ConstU32<1_000_000>; // 10^(18 - 12) Eth is 10^18, Native is 10^12.
+	type EthGasEncoder = ();
+	type FindAuthor = <Runtime as pallet_authorship::Config>::FindAuthor;
+}
+```
+
+<aside class="notes"><p>We won&#39;t go in depth about the config in this lecture, as this is something that will be covered by the upcoming classes on Frame, but will look at a few interesting bits specific to pallet-revive</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## Dispatch functions
+
+```rust=
+/// Makes a call to an account, optionally transferring some balance.
+#[pallet::call_index(1)]
+#[pallet::weight(T::WeightInfo::call().saturating_add(*gas_limit))]
+pub fn call(
+    origin: OriginFor<T>,
+    dest: H160,
+    #[pallet::compact] value: BalanceOf<T>,
+    gas_limit: Weight,
+    #[pallet::compact] storage_deposit_limit: BalanceOf<T>,
+    data: Vec<u8>,
+) -> DispatchResultWithPostInfo { /* ... */  }
+```
+</script></section><section data-markdown><script type="text/template">
+| pallet call                    | Description                                                                |
+| ------------------------------ | -------------------------------------------------------------------------- |
+| `call`                         | Makes a call to an account, optionally transferring some balance.          |
+| `instantiate`                  | Instantiates a contract from a previously deployed binary.                 |
+| `instantiate_with_code`        | Instantiates a new contract from the supplied code.                        |
+| `upload_code`                  | Uploads new code without instantiating a contract from it.                 |
+| `remove_code`                  | Removes the code stored under a hash and refunds the deposit to its owner. |
+| `map_account`                  | Registers the caller's account ID for use in contract interactions.        |
+| `unmap_account`                | Unregisters the caller's account ID and frees the deposit.                 |
+| `dispatch_as_fallback_account` | Dispatches a call with the origin set to the caller's fallback account.    |
+</script></section></section><section  data-markdown><script type="text/template">
+## VM API
+
+// TODO diagram of the PVM vm calling into the runtime API
+
+<aside class="notes"><ul>
+<li>Discuss how the VM interacts with the runtime</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## UAPI
+
+<aside class="notes"><p>// TODO quick look into the host function</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Rust contracts demo
+
+Demo: Build a simple contract in Rust using pallet-revive-uapi
+
+<aside class="notes"><ul>
+<li>Show how to build a simple contract in Rust</li>
+<li>Demo how to deploy it using Substrate JSON-RPC &amp; Polkadot JS</li>
+<li>Demo how to deploy it using the Eth JSON-RPC</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Debugging a contract with traces
+
+<aside class="notes"><ul>
+<li>Demo how to debug a contract using traces</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## Differences with EVM
+</script></section><section data-markdown><script type="text/template">
+### Address mapping
+
+// TODO
+</script></section><section data-markdown><script type="text/template">
+### Gas vs Benchmarked Weight
+
+// TODO
+</script></section><section data-markdown><script type="text/template">
+### Gas estimation and encoding in lower digits
+
+// TODO
+</script></section></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
