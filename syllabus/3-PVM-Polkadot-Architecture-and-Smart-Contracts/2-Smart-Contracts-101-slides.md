@@ -4,7 +4,7 @@ description: Introduction to fundamentals smart conctracts concepts
 duration: 30min
 ---
 
-# Smart contracts fundamentals
+## Smart contracts fundamentals
 
 Notes:
 The goal of the lecture is to define the basic definition of what a SC is
@@ -12,7 +12,7 @@ and explain the advantage and trade off of a smart contract chain
 
 ---
 
-# Why Smart contracts
+## Why Smart contracts
 
 Notes:
 Always start with the why!
@@ -22,7 +22,11 @@ TODO: explain why they are needed, give an example of what they solve
 
 ## Smart contracts & blockchain
 
-// TODO diagram of blockchain and state transition function
+<section>
+  <pre><code>
+State n  ----->  STF(State n, [Tx1, Tx2, ...])  ----->  State n+1
+  </code></pre>
+</section>
 
 Notes:
 
@@ -36,9 +40,21 @@ Since all nodes execute the same transactions with the same rules, they all deri
 
 ---v
 
-## Bitcoin
+### Bitcoin
 
-// TODO diagram of bitcoin state transition function
+<section>
+<pre><code>
+State n                                                                     State n + 1
+-------                                                                     -----------
+
+                           STF(State n, [
+Alice:   2ETH                 tx1: transfer(1BTC Alice -> BOB),             Alice:  1BTC
+Bob:     1BTC     ──────▶     tx2: transfer(1BTC Charlie -> BOB),  ─────▶   Bob:    3BTC
+Charlie: 2BTC                 ...                                           Charlie 1BTC
+                           ])
+
+</code></pre>
+</section>
 
 Notes:
 
@@ -48,10 +64,21 @@ The state transition function, will validate the transactions, and update the st
 
 ---v
 
-## Polkadot
+### Polkadot
 
-// TODO diagram of polkadot state transition function
-// Or dispatchable code example
+<section>
+<pre><code>
+State n                                                               State n + 1
+-------                                                               -----------
+                                     STF(State n, [
+Accounts { Alice: 1DOT, ... }           tx1: transfer(...),           Accounts { <state_n+1 }
+Assets:  { <state_n> }         ─────▶  tx2: stake(...),     ─────▶  Assets:  { <state_n+1> }
+Staking: { <state_n> }                  tx3: vote(...),               Staking: { <state_n+1> }
+OpenGov: { <state_n> }                  ...                           OpenGov: { <state_n+1> }
+...                                   ])                              ...
+
+</code></pre>
+</section>
 
 Notes:
 
@@ -78,9 +105,22 @@ Otherwise, only predefined transaction types (e.g., assets, governance, staking)
 
 ---
 
-## Smart contracts chain
+### Smart contracts chain
 
-// TODO diagram of a smart contract chain
+<section>
+<pre><code>
+State n                                                                                 State n + 1
+-------                                                                                 -----------
+
+Alice: 2ETH                      STF(State n, [                                         Alice: 2ETH
+Bob:   1ETH                        tx1: call(Alice -> Bob, 1ETH),                       Bob:   1ETH
+...                         ───▶  tx2: call(Alice -> 0x1, 1ETH, input: 0x1234),  ───▶  ...
+SC 0x1: 1ETH { <state_n> }         tx3: call(Alice -> 0x2, 0ETH, input: 0x4567),        SC 0x1: 1ETH { <state_n+1> }
+SC 0x2: 0ETH { <state_n> }         ...                                                  SC 0x2: 0ETH { <state_n+1> }
+                                ])
+
+</code></pre>
+</section>
 
 Notes:
 
@@ -104,35 +144,54 @@ When a user transfers USDC, the contract updates the sender’s balance by subtr
 
 ---
 
-## On-chain vs Off-chain
-
----v
-
-# Oracles – External Data Integration
-  * Enable hybrid on-chain/off-chain contracts
-  * Provide real-world data (e.g., prices, weather, events)
-🔹 Examples: Chainlink, Redstone
-
----v
-
-## Indexers
- * Allow fast and structured access to blockchain records
- * Improve UX for dApps by reducing raw node queries
- * Examples: The Graph, Subsquid
-
----v
-
-## Block Explorers
-  * Track transactions and smart contract states
-  * Enable transparency & debugging tools for developers
-  * Examples: Etherscan, Subscan, Blockscout
-
----
-
 ## Bytecode & Virtual Machines
 
-// TODO diagram of VM operating in the block chain
-
+<pre><code>
+             ┌────────────────┐
+             │      Code      │
+             │(.sol, .rs, ..) │
+             │                │
+             └────────┬───────┘
+                      │
+                      │ Compiler Produces
+                      │ Bytecode, ABI
+           ┌──────────┴─────────────┐
+           │                        │
+           │                        │
+           ▼                        ▼
+ ┌───────────────────┐    ┌───────────────────┐
+ │                   │    │                   │
+ │JSON-RPC           │    │JSON-RPC           │
+ │                   │    │                   │
+ │Deploy call        │    │Contract Call      │
+ │- bytecode         │    │- address          │
+ │- ABI encoded input│    │- ABI encoded input│
+ │                   │    │                   │
+ └───────────────────┘    └───────────────────┘
+┌───────────────────────────────────────────────┐
+│                                               │
+│         Execute                               │
+│                                               │
+│  ┌─────────────────────────────────────────┐  │
+│  │             Virtual Machine             │  │
+│  │                                         │  │
+│  └─────────────────────────────────────────┘  │
+│ ┌──────────────────────────────────────────┐  │
+│ │                                          │  │
+│ │KV Store:                                 │  │
+│ │                                          │  │
+│ │- ...                                     │  │
+│ │                                          │  │
+│ │- address:   0x12345                      │  │
+│ │- nonce:     0                            │  │
+│ │- balance    1ETH                         │  │
+│ │- bytecode   0x...                        │  │
+│ │- key1       value1                       │  │
+│ │- key2       value2                       │  │
+│ │                                          │  │
+│ └──────────────────────────────────────────┘  │
+└───────────────────────────────────────────────┘
+</code></pre>
 Notes:
 
 When we deploy a smart contract on-chain, we first compile it into bytecode, which can be executed by a virtual machine.
@@ -146,20 +205,12 @@ The state transition function of the blockchain runs the Virtual Machine to exec
 
 ---
 
-## Writing Smart contracts
+## Core Features of Smart Contracts
 
-
-Notes:
-Developers don’t typically write bytecode by hand. Instead, they write smart contracts in high-level languages, which are then compiled into bytecode.
-On EVM-compatible chains, the most widely used language is Solidity, that is compiled to bytecode using the `solc` compiler.
-Let's go through a simple `PiggyBank` solidity contract to illustrate it.
-
-Note that, If you send ETH directly to the contract (without calling a function like deposit), it will fail unless the contract has a receive or fallback function.
-Without one of these, any direct transfer (e.g., sendTransaction from a wallet) will be rejected with an error.
 
 ---h
 
-## Example Piggy Bank
+### A simple Example
 
 ```solidity
 // SPDX-License-Identifier: MIT
@@ -187,14 +238,19 @@ contract PiggyBank {
     }
 }
 ```
+
 Notes:
-- Give users a sneak peak into how a contract is deployed, the constructor code is executed
-- Then the owner can call the deposit function to deposit some balance
-- The view function `GetBalance` is a 'readonly' function that can be queried through a
+Developers don’t typically write bytecode by hand. Instead, they write smart contracts in high-level languages, which are then compiled into bytecode. On EVM-compatible chains, the most widely used language is Solidity, that is compiled to bytecode using the `solc` compiler. Let's go through a simple `PiggyBank` solidity contract to illustrate it.
+
+- When a contract is deployed, the constructor code is executed
+- The owner can call the deposit function to deposit some balance
+- The view function `GetBalance` is a 'readonly' function that can be queried through a JSON-RPC call
+- If you send ETH directly to the contract (without calling a function like deposit), it will fail unless the contract has a receive or fallback function.
+Without one of these, any direct transfer (e.g., sendTransaction from a wallet) will be rejected with an error.
 
 ---v
 
-## Immutability
+### Immutability
 
 Notes:
 Contracts are immutable by design, however in some circumstances, you might want to upgrade to fix a bug or add or
@@ -204,7 +260,7 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 
 ---v
 
-## Smart Contract Upgrade
+#### Smart Contract Upgrade
 
 - **Upgradability**: Immutable, unless using proxies
 - Governance Model: Typically managed by a contract owner or DAO governance
@@ -218,7 +274,7 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 
 ---v
 
-## Substrate Runtime Upgrade (Polkadot)
+#### Substrate Runtime Upgrade (Polkadot)
 
 - **Upgradability**: Achieved through a Wasm runtime upgrade
 - **Governance Model**: On-chain governance (OpenGov)
@@ -231,7 +287,52 @@ Overhead:
 
 ---
 
-## Gas
+### Composability
+
+
+Notes:
+Smart contracts on EVM-based chains are highly composable, meaning they can interact with each other to execute complex workflows. A contract call is always initiated by an Externally Owned Account (EOA) through a transaction.
+
+
+Methods for contract interaction include:
+
+- **Normal Call**:
+  - Contract A calls Contract B.
+  - Contract B is pushed to the call stack, executes, potentially updates its state, and may call other contracts.
+  - Contract B returns control to Contract A along with the result and status (reverted or successful).
+  An example for this would be a contract that calls another contract to transfer tokens.
+
+- **Static Call**:
+  - Contract A calls Contract B.
+  - Contract B executes but cannot make state changes.
+  An example for this would be a contract that reads data from another contract, e.g a price feed.
+
+- **Delegate Call**:
+  - Contract A calls Contract B in its execution context.
+  - Contract B can read and write to A's storage, akin to a library executing within A.
+  An example for this would be to use a Math library to perform calculations.
+
+A good mental model is to think of smart contracts as the API layer of web3. Your contract can tap into other contracts
+to access their functionality, read and write data and execute complex workflows. A good example of that are flash loans
+on the Aave protocol, where a contract can borrow funds from the protocol, execute a series of transactions and repay
+the loan in the same transaction.
+
+---v
+
+### Precompiled Contracts
+
+Notes:
+
+Another important feature of smart contracts is the ability to interact with precompiled contracts.
+A precompile contract is a contract whose code is defined in the client software directly.
+On Ethereum, that has a slow VM, it's used to perform computation intensive operations like elliptic curve cryptography,
+outside the EVM, to improve performance.
+In Substrate, a Smart-Contract pallet, can leverage this to expose other features of the runtime (like staking, xcm, governance, assets) to smart contracts
+
+
+---
+
+### Gas
 
 Notes:
 
@@ -261,9 +362,8 @@ This system ensures that no contract can consume unlimited resources, execution 
 ```
 ---v
 
-# Metered calls in EVM
+#### Metered calls in EVM
 
-// TODO link diagram of
 <img style="width: 1200px" src="./img/frontier/GasometerDiagram.png" />
 
 - Checks before each opcode to make sure gas can be paid
@@ -273,17 +373,29 @@ This system ensures that no contract can consume unlimited resources, execution 
 
 ---v
 
-# Weighted calls in substrate
+#### Weighted calls in substrate
 
-TODO illustrations
+```rust
+#[pallet::weight(T::WeightInfo::set_metadata(name.len() as u32, symbol.len() as u32))]
+pub fn set_metadata(
+    origin: OriginFor<T>,
+    id: T::AssetIdParameter,
+    name: Vec<u8>,
+    symbol: Vec<u8>,
+    decimals: u8,
+) -> DispatchResult {
+    let origin = ensure_signed(origin)?;
+    let id: T::AssetId = id.into();
+    Self::do_set_metadata(id, &origin, name, symbol, decimals)
+}
+```
 
 Notes:
-
 In Substrate, each call defines a pre-dispatch weight, which can depend on the input parameters. Accounts must pay the estimated execution fee upfront, and any excess is refunded after execution.
 
 ---v
 
-# Metered VM Execution vs. Weighted Calls in Substrate
+#### Metered VM Execution vs. Weighted Calls in Substrate
 
 | Feature                | EVM Chains                         | Substrate Chains                         |
 |------------------------|------------------------------------|------------------------------------------|
@@ -304,7 +416,7 @@ In Substrate-based chains, execution is handled differently
 - Instead of metering each instruction at runtime, calls have predefined weights based on computational complexity.
 - This approach enables more efficient execution compared to metered VM, as the chain doesn’t need to meter each instruction dynamically, reducing runtime overhead.
 
----V
+---
 
 ## Security
 
@@ -323,7 +435,7 @@ Even small logic errors or gas inefficiencies can be exploited for financial gai
 
 ---v
 
-## The famous reentrency DAO hack
+### The famous reentrency DAO hack
 
 ```solidity
 contract Dao {
@@ -391,9 +503,23 @@ see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
 | Method                      | Description                                     |
 |-----------------------------|-------------------------------------------------|
 | `eth_call`                  | Executes a read-only contract call.             |
-| `eth_sendRawTransaction`    | Sends a raw, signed transaction to the network. |
 | `eth_estimateGas`           | Estimates the gas required for a transaction.   |
+| `eth_sendRawTransaction`    | Sends a raw, signed transaction to the network. |
 | `eth_getTransactionReceipt` | Retrieves transaction execution details.        |
+
+Note:
+
+- There are two types of transactions in Ethereum: read-only and state-changing transactions.
+When you want to read data from a contract, you use `eth_call` to execute a read-only contract call.
+
+- When you want to send a transaction to the network, you will usually follow this flow:
+- Estimate the gas required for the transaction using `eth_estimateGas`.
+- Sign and submit the transaction using `eth_sendRawTransaction`.
+- Finally, you can poll `eth_getTransactionReceipt` with the transaction hash to retrieve the transaction execution details.
+
+The receipt is an important object, used by wallet and JS libraries, it will contain
+- The transaction status
+- Gas used, and logs generated during execution.
 
 ---v
 
@@ -406,7 +532,7 @@ see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
 
 ---h
 
-## Example sending a raw transaction
+### Example sending a raw transaction
 
 ```json
 curl
@@ -414,7 +540,7 @@ curl
 https://westend-asset-hub-eth-rpc.polkadot.io/
 -d '{
   "method":"eth_sendRawTransaction",
-  "params" ["0x..."],
+  "params" ["0x02f8b3018313c1..."],
   "id":2
   ,"jsonrpc":"2.0"
 }'
@@ -422,7 +548,7 @@ https://westend-asset-hub-eth-rpc.polkadot.io/
 
 ---v
 
-## Understanding EVM ABI
+## Structure of a Transaction
 
 ```sh
 # https://etherscan.io/getRawTx?tx=0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4
@@ -436,7 +562,6 @@ https://westend-asset-hub-eth-rpc.polkadot.io/
   "maxPriorityFeePerGas": "0x878415",
   "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
   "value": "0x0",
-  "accessList": [],
   "input": "0xa9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a70000000000000000000000000000000000000000000000000000000004cc7c30",
   "r": "0xc330502a046982553df56842433dfb1f318c980724bfd30be53e6461cea620ac",
   "s": "0x25217d80ae9538009b3b24ab83fdac6df67982b433f74488d2c14fee41ca2d79",
@@ -445,28 +570,112 @@ https://westend-asset-hub-eth-rpc.polkadot.io/
 }
 ```
 
+Notes:
+A few things to note in the transaction:
+- First of all the transaction is encoded using RLP (Recursive Length Prefix) encoding, the first byte is the type of the
+  transaction, and defines the format of the transaction, that can be decoded using rlp-decode.
+- The type here is 0x2, which means it is an EIP-1559 transaction, new fork can sometimes introduce new transaction type
+  to define new transaction format, this type field is used to distinguish between them.
+- The chainId defines the network on which the transaction is being sent, this makes sure that the transaction is not replayed on another network.
+- The nonce is a very important component of the transaction, it is used to prevent replay attacks, it is incremented for each transaction sent by an account, your transaction will only be executed if the nonce is the next in line.
+- gas, maxFeePerGas, maxPriorityFeePerGas are used to define the cost and fees generated for the transaction.
+- value is the amount of ether being sent in the transaction.
+- input is the ABI encoded data of the function being called, in this case, it is the transfer function of an ERC20 token, we will see how to decode this later.
+- r, s, v are the signature of the transaction, used to verify the transaction was signed by the sender.
+
+You will notice that the transaction does not have a 'from' field, this is because the origin can be recovered from the signature.
+
+
 ---v
 
-## Extracting function selector and arguments
+### ABI decoding
 
 ```sh
-❯ cast 4byte 0xa9059cbb
+INPUT="0xa9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a70000000000000000000000000000000000000000000000000000000004cc7c30"
+
+# Get the first 4 bytes (8 characters after '0x')
+FIRST_4_BYTES="0x${INPUT:2:8}"
+
+# Get the function signature using https://openchain.xyz/signatures
+cast 4byte $FIRST_4_BYTES
 transfer(address,uint256)
 
-❯ cast abi-decode -i "transfer(address,uint256)" 000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a70000000000000000000000000000000000000000000000000000000004cc7c30
+# Decode the input data using the function signature
+ALL_BUT_FIRST_4_BYTES=${INPUT:10}
+cast abi-decode -i "transfer(address,uint256)" $ALL_BUT_FIRST_4_BYTES
+```
+```sh
 0xBA04f1c1E4577165dD2297D3FbEdF956B0e4C8a7
 80510000 [8.051e7]
 ```
 
+Notes:
+Now that we have decoded the transaction, we can try to decode the input data
+- the first 4 bytes of the input data are the function signature, which is used to identify the function being called, in this case, it is the transfer function of an ERC20 token.
+- The rest of the input data is the parameters of the function, using the transfer function signature we can decode the input data to get the address and the amount being sent.
+
+
 ---v
 
-# Encoding ABI parameters
+### Encoding ABI parameters
 
-```hexdump
-<!-- cast abi-encode "myFunction((string, uint256))" "(hello, 42)" | xxd -r -p | xxd -c 32 -->
-00000000: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020  ...............................
-00000020: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0040  ...............................@
-00000040: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 002a  ...............................*
-00000060: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0005  ................................
-00000080: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  hello...........................
+```sh
+cast abi-encode "test((bool, string, address))" "(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" | xxd -r -p | xxd -c 32
+
 ```
+```hexdump
+
+00000000: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020  ...............................
+00000020: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001  ................................
+00000040: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060  ...............................`
+00000060: 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce 3606 eb48  ..............i..!.6...J....6..H
+00000080: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0005  ................................
+000000a0: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  hello...........................
+```
+
+Notes:
+
+We’ve covered decoding ABI-encoded data—now let’s look at the opposite process: encoding function call parameters.
+Using the function's ABI signature, we can encode the parameters using cast abi-encode.
+
+A few key things to note:
+- We are encoding a tuple containing a boolean, a string, and an address.
+- Since a tuple is dynamic, the first 32 bytes store an offset to where the actual data starts—here, 0x20.
+- The first tuple element (boolean) is at offset 0x20. Even though a bool is just 1 byte, like everything in the EVM, it is padded to 32 bytes.
+- The string is another dynamic type, so instead of being stored inline, its offset (0x60) is stored at 0x40.
+- The address is a fixed-size type, so it’s stored inline immediately after the offsets.
+- At offset 0x60, we find the length of the string, and right after that, the string content itself.
+
+
+
+
+## Smart Contract Ecosystem
+
+---v
+
+### Block Explorers
+  * Track transactions and smart contract states
+  * Enable transparency & debugging tools for developers
+  * Examples: Etherscan, Subscan, Blockscout
+
+---v
+
+### Oracles – External Data Integration
+  * Enable hybrid on-chain/off-chain contracts
+  * Examples: Chainlink, Redstone
+  * Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)
+  * Two models
+     - Push: Data is pushed by node operators at specific interval and made available to contracts
+     - Pull: Signed data package is attached to the transaction and verified by a contract on chain
+
+---v
+
+### Indexers
+ - Blockchain are write optimized, and querying data can be slow
+ - Indexers subscribe to the blockchain and store the data in a more queryable format
+ * Allow fast and structured access to blockchain records
+ * Improve UX for dApps by reducing raw node queries
+ * Examples: The Graph, Subsquid
+
+---
+
