@@ -12,11 +12,15 @@ and explain the advantage and trade off of a smart contract chain
 
 ---
 
-## Why Smart contracts
+## Why
 
 Notes:
-Always start with the why!
-TODO: explain why they are needed, give an example of what they solve
+- Always start with the why!
+- 2 things to answers here:
+  - One, The benefits of smart contracts as a technology: Smart Contracts are a huge improvement over traditional legal contracts, that are slow, expensive, and error-prone.
+  With smart contracts, you can automate the execution of agreements, enforce them automatically, and remove the need for intermediaries. E.g crop insurance.
+  - Two, For the Polkadot ecosystem, it's important to embrace a technology that is widely adopted by the Ethereum
+    community, so that we can leverage the tooling, and easily onramp existing dapps, but also users and developers.
 
 ---
 
