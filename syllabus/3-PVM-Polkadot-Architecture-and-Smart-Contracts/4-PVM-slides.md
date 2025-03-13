@@ -58,7 +58,6 @@ What is the problem with the below snippet?
 
 Hint: Think about the differences between how function arguments are passed in stack vs. register machines.
 
-
 ```wasm
 (func (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32)
     local.get 0
@@ -70,7 +69,7 @@ Hint: Think about the differences between how function arguments are passed in s
 )
 ```
 
-Note: 
+Note:
 
 https://forum.polkadot.network/t/deterministic-pvf-executor/4204
 https://hackmd.io/@Ww6uNnIISmqGwXufqPYPOw/SklLYwb-T
@@ -117,8 +116,6 @@ Not ideal for us because compilation is expensive :(
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-
-
 ---
 
 ### High level control flow
@@ -158,7 +155,7 @@ Prompt: _Write me fibonacci in webassembly text_
     (local $temp i32)
     (local.set $a (i32.const 0))
     (local.set $b (i32.const 1))
-    
+
     (loop $loop
       ;; if n <= 1, return n
       (if (i32.le_s (local.get $n) (i32.const 1))
@@ -168,7 +165,6 @@ Prompt: _Write me fibonacci in webassembly text_
       )
       ..
 ```
-
 
 ---
 
@@ -279,10 +275,9 @@ Executing Wasm requires us to do register allocation
 
 ### Register allocation
 
-> In compiler optimization, register allocation is the process of assigning local automatic variables and expression results to a limited number of processor registers. 
+> In compiler optimization, register allocation is the process of assigning local automatic variables and expression results to a limited number of processor registers.
 
 https://en.wikipedia.org/wiki/Register_allocation
-
 
 ```wasm
 (func (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32) (param i32)
@@ -300,21 +295,21 @@ https://en.wikipedia.org/wiki/Register_allocation
 
 ---
 
-###  Register allocation
+### Register allocation
 
 > **NP-Problem**
-> 
-> Chaitin et al. showed that register allocation is an NP-complete problem. 
+>
+> Chaitin et al. showed that register allocation is an NP-complete problem.
 
 https://en.wikipedia.org/wiki/Register_allocation#Common_problems_raised_in_register_allocation
 
 ---
 
-###  Register allocation
+### Register allocation
 
 If you aren't familiar with the theory of computation, just read:
 
-_Register allocation is a difficult problem_ 
+_Register allocation is a difficult problem_
 
 ---
 
@@ -339,7 +334,6 @@ Not really a problem for long-living application like web apps
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
-
 ---
 
 ## Compiling Wasm to machine code
@@ -355,11 +349,11 @@ Not really a problem for long-living application like web apps
 
 ## Wasm compilation: Take-aways
 
-__Theory:__ Wasm is faster than EVM
+**Theory:** Wasm is faster than EVM
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-__Practice:__ By the time Wasm has finished compiling, EVM executed a token swap literally dozens to hundreds of times
+**Practice:** By the time Wasm has finished compiling, EVM executed a token swap literally dozens to hundreds of times
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -378,6 +372,7 @@ __Practice:__ By the time Wasm has finished compiling, EVM executed a token swap
 ---
 
 # PolkaVM (PVM)
+
 # Let's do better!
 
 ---
@@ -440,7 +435,7 @@ Realizations:
   - Instead we can have our own requirements
   - => Solved simply because we can define it as requirement
 - Compilation
-  - It follows that RISC-V bytecode is (much!) simpler to compile 
+  - It follows that RISC-V bytecode is (much!) simpler to compile
   - => Minimze the work done on-chain!
 
 ---
@@ -577,11 +572,11 @@ fibonacci:
 <pba-col center>
 
 PVM bytecode is
+
 - very close to machine code
 - cheap to compile **on-chain**
 - efficient to execute
 - heavily optimized **off-chain**
-
 
 </pba-col>
 </pba-cols>

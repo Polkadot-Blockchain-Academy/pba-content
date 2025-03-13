@@ -10,7 +10,7 @@ duration: 30 minutes
 
 A half-day hackathon where students build hands on experience interacting with smart contracts on Polkadot.
 
---- 
+---
 
 ## Goal
 
@@ -59,6 +59,7 @@ Pick an exciting project idea, start researching on it and even start developein
 ## Timeline
 
 TODO: should be more fine grained
+
 - introduction ideally in the morning so over lunch they can already think about ideas and team forming
 - hackathon in the afternoon
 - selection of winners and presentation at the end

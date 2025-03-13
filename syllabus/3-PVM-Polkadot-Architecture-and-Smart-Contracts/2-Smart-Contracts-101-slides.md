@@ -15,10 +15,11 @@ and explain the advantage and trade off of a smart contract chain
 ## Why
 
 Notes:
+
 - Always start with the why!
 - 2 things to answers here:
   - One, The benefits of smart contracts as a technology: Smart Contracts are a huge improvement over traditional legal contracts, that are slow, expensive, and error-prone.
-  With smart contracts, you can automate the execution of agreements, enforce them automatically, and remove the need for intermediaries. E.g crop insurance.
+    With smart contracts, you can automate the execution of agreements, enforce them automatically, and remove the need for intermediaries. E.g crop insurance.
   - Two, For the Polkadot ecosystem, it's important to embrace a technology that is widely adopted by the Ethereum
     community, so that we can leverage the tooling, and easily onramp existing dapps, but also users and developers.
 
@@ -52,12 +53,14 @@ State n                                                                     Stat
 -------                                                                     -----------
 
                            STF(State n, [
-Alice:   2ETH                 tx1: transfer(1BTC Alice -> BOB),             Alice:  1BTC
-Bob:     1BTC     ──────▶     tx2: transfer(1BTC Charlie -> BOB),  ─────▶   Bob:    3BTC
-Charlie: 2BTC                 ...                                           Charlie 1BTC
-                           ])
+
+Alice: 2ETH tx1: transfer(1BTC Alice -> BOB), Alice: 1BTC
+Bob: 1BTC ──────▶ tx2: transfer(1BTC Charlie -> BOB), ─────▶ Bob: 3BTC
+Charlie: 2BTC ... Charlie 1BTC
+])
 
 </code></pre>
+
 </section>
 
 Notes:
@@ -82,6 +85,7 @@ OpenGov: { <state_n> }                  ...                           OpenGov: {
 ...                                   ])                              ...
 
 </code></pre>
+
 </section>
 
 Notes:
@@ -116,22 +120,23 @@ Otherwise, only predefined transaction types (e.g., assets, governance, staking)
 State n                                                                                 State n + 1
 -------                                                                                 -----------
 
-Alice: 2ETH                      STF(State n, [                                         Alice: 2ETH
-Bob:   1ETH                        tx1: call(Alice -> Bob, 1ETH),                       Bob:   1ETH
-...                         ───▶  tx2: call(Alice -> 0x1, 1ETH, input: 0x1234),  ───▶  ...
-SC 0x1: 1ETH { <state_n> }         tx3: call(Alice -> 0x2, 0ETH, input: 0x4567),        SC 0x1: 1ETH { <state_n+1> }
-SC 0x2: 0ETH { <state_n> }         ...                                                  SC 0x2: 0ETH { <state_n+1> }
-                                ])
+Alice: 2ETH STF(State n, [ Alice: 2ETH
+Bob: 1ETH tx1: call(Alice -> Bob, 1ETH), Bob: 1ETH
+... ───▶ tx2: call(Alice -> 0x1, 1ETH, input: 0x1234), ───▶ ...
+SC 0x1: 1ETH { <state_n> } tx3: call(Alice -> 0x2, 0ETH, input: 0x4567), SC 0x1: 1ETH { <state_n+1> }
+SC 0x2: 0ETH { <state_n> } ... SC 0x2: 0ETH { <state_n+1> }
+])
 
 </code></pre>
+
 </section>
 
 Notes:
 
 Now, we can finally define what a smart contract is.
 A smart contract is a special type of account that is not controlled by a keypair, but instead by the code it defines.
-A smart contract blockchain allows users to:
-        - Deploy contracts on-chain.
+A smart contract blockchain allows users to: - Deploy contracts on-chain.
+
 - Call these contracts to execute their logic.
 
 You can think of smart contracts as dormant programs stored on the blockchain at a specific address.
@@ -140,6 +145,7 @@ These programs remain inactive until they are triggered by a transaction.
 So you can think of a contract as "code on chain". One important aspect of smart contracts is that they are immutable. The code that defines a contract cannot be changed once it is deployed. This ensures that the contract’s behavior remains predictable and that users can trust the contract to execute
 
 Smart contracts are executed when:
+
 - A regular account submits a call transaction to interact with them.
 - Because smart contracts are highly composable, they can also interact with each other to execute complex workflows. This means that in addition to being called by regular accounts, they can also be triggered by other smart contracts, enabling powerful on-chain interoperability.
 
@@ -196,11 +202,13 @@ When a user transfers USDC, the contract updates the sender’s balance by subtr
 │ └──────────────────────────────────────────┘  │
 └───────────────────────────────────────────────┘
 </code></pre>
+
 Notes:
 
 When we deploy a smart contract on-chain, we first compile it into bytecode, which can be executed by a virtual machine.
 Different smart contract blockchains use different bytecode formats.
 For example:
+
 - On Ethereum contracts are compiled into EVM bytecode.
 - On Solana, programs are compiled into BPF bytecode.
 - On Polkadot Hub as we will explore later, we use PolkaVM bytecode
@@ -210,7 +218,6 @@ The state transition function of the blockchain runs the Virtual Machine to exec
 ---
 
 ## Core Features of Smart Contracts
-
 
 ---h
 
@@ -250,7 +257,7 @@ Developers don’t typically write bytecode by hand. Instead, they write smart c
 - The owner can call the deposit function to deposit some balance
 - The view function `GetBalance` is a 'readonly' function that can be queried through a JSON-RPC call
 - If you send ETH directly to the contract (without calling a function like deposit), it will fail unless the contract has a receive or fallback function.
-Without one of these, any direct transfer (e.g., sendTransaction from a wallet) will be rejected with an error.
+  Without one of these, any direct transfer (e.g., sendTransaction from a wallet) will be rejected with an error.
 
 ---v
 
@@ -285,7 +292,7 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 - Process:
   - Proposal submitted through OpenGov
   - Once approved, a runtime upgrade transaction is dispatched, and state is migrated as part of the upgrade
-Overhead:
+    Overhead:
   - Gas Costs: No gas cost (upgrade happens at the protocol level)
   - No performance overhead (new runtime code replaces the old one)
 
@@ -293,28 +300,28 @@ Overhead:
 
 ### Composability
 
-
 Notes:
 Smart contracts on EVM-based chains are highly composable, meaning they can interact with each other to execute complex workflows. A contract call is always initiated by an Externally Owned Account (EOA) through a transaction.
-
 
 Methods for contract interaction include:
 
 - **Normal Call**:
+
   - Contract A calls Contract B.
   - Contract B is pushed to the call stack, executes, potentially updates its state, and may call other contracts.
   - Contract B returns control to Contract A along with the result and status (reverted or successful).
-  An example for this would be a contract that calls another contract to transfer tokens.
+    An example for this would be a contract that calls another contract to transfer tokens.
 
 - **Static Call**:
+
   - Contract A calls Contract B.
   - Contract B executes but cannot make state changes.
-  An example for this would be a contract that reads data from another contract, e.g a price feed.
+    An example for this would be a contract that reads data from another contract, e.g a price feed.
 
 - **Delegate Call**:
   - Contract A calls Contract B in its execution context.
   - Contract B can read and write to A's storage, akin to a library executing within A.
-  An example for this would be to use a Math library to perform calculations.
+    An example for this would be to use a Math library to perform calculations.
 
 A good mental model is to think of smart contracts as the API layer of web3. Your contract can tap into other contracts
 to access their functionality, read and write data and execute complex workflows. A good example of that are flash loans
@@ -333,7 +340,6 @@ On Ethereum, that has a slow VM, it's used to perform computation intensive oper
 outside the EVM, to improve performance.
 In Substrate, a Smart-Contract pallet, can leverage this to expose other features of the runtime (like staking, xcm, governance, assets) to smart contracts
 
-
 ---
 
 ### Gas
@@ -344,9 +350,9 @@ You might be wondering—if a smart contract can execute any arbitrary logic, wh
 To prevent this and to protect the network from spam, virtual machines are metered. Every instruction executed by the VM has an associated gas cost, which represents the computational resources required to process it.
 
 When you submit a transaction or when a contract calls another contract, you must specify the maximum amount of gas you’re willing to pay for execution. The contract’s code will either:
+
 - Run to completion if there is enough gas.
 - Run out of gas and revert, undoing any changes made to the contract storage, but you will still pay for the gas that was consumed before the failure.
-
 
 Additionally, the blockchain itself imposes limits on gas usage:
 It defines a block gas limit, which sets the maximum amount of gas that can be used across all transactions in a single block.
@@ -364,6 +370,7 @@ This system ensures that no contract can consume unlimited resources, execution 
     }
 }
 ```
+
 ---v
 
 #### Metered calls in EVM
@@ -401,12 +408,12 @@ In Substrate, each call defines a pre-dispatch weight, which can depend on the i
 
 #### Metered VM Execution vs. Weighted Calls in Substrate
 
-| Feature                | EVM Chains                         | Substrate Chains                         |
-|------------------------|------------------------------------|------------------------------------------|
-| **Execution Model**    | Metered at runtime (Gas)           | Pre-weighted calls                       |
-| **Cost Calculation**   | Dynamic, based on execution        | Static, determined pre-dispatch          |
-| **Performance**        | Runtime overhead                   | More predictable, optimized execution    |
-| **Flexibility**        | Supports arbitrary computation     | Requires (benchmnarked) weights per call |
+| Feature              | EVM Chains                     | Substrate Chains                         |
+| -------------------- | ------------------------------ | ---------------------------------------- |
+| **Execution Model**  | Metered at runtime (Gas)       | Pre-weighted calls                       |
+| **Cost Calculation** | Dynamic, based on execution    | Static, determined pre-dispatch          |
+| **Performance**      | Runtime overhead               | More predictable, optimized execution    |
+| **Flexibility**      | Supports arbitrary computation | Requires (benchmnarked) weights per call |
 
 Notes:
 
@@ -417,6 +424,7 @@ Contract execution performance is **less predictable**, as total costs depend on
 Wallet usually need to dry-run the execution to define how much gas is required for the execution.
 
 In Substrate-based chains, execution is handled differently
+
 - Instead of metering each instruction at runtime, calls have predefined weights based on computational complexity.
 - This approach enables more efficient execution compared to metered VM, as the chain doesn’t need to meter each instruction dynamically, reducing runtime overhead.
 
@@ -489,6 +497,7 @@ contract Hacker{
     }
 }
 ```
+
 Note:
 see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
 
@@ -505,7 +514,7 @@ see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
 ### Common Ethereum JSON-RPC Methods
 
 | Method                      | Description                                     |
-|-----------------------------|-------------------------------------------------|
+| --------------------------- | ----------------------------------------------- |
 | `eth_call`                  | Executes a read-only contract call.             |
 | `eth_estimateGas`           | Estimates the gas required for a transaction.   |
 | `eth_sendRawTransaction`    | Sends a raw, signed transaction to the network. |
@@ -514,7 +523,7 @@ see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
 Note:
 
 - There are two types of transactions in Ethereum: read-only and state-changing transactions.
-When you want to read data from a contract, you use `eth_call` to execute a read-only contract call.
+  When you want to read data from a contract, you use `eth_call` to execute a read-only contract call.
 
 - When you want to send a transaction to the network, you will usually follow this flow:
 - Estimate the gas required for the transaction using `eth_estimateGas`.
@@ -522,6 +531,7 @@ When you want to read data from a contract, you use `eth_call` to execute a read
 - Finally, you can poll `eth_getTransactionReceipt` with the transaction hash to retrieve the transaction execution details.
 
 The receipt is an important object, used by wallet and JS libraries, it will contain
+
 - The transaction status
 - Gas used, and logs generated during execution.
 
@@ -529,10 +539,10 @@ The receipt is an important object, used by wallet and JS libraries, it will con
 
 ### Common Substrate JSON-RPC Methods
 
-| Method                      | Description                              |
-|-----------------------------|------------------------------------------|
-| `author_submitExtrinsic`    | Submits a signed transaction             |
-| `state_call`                | Calls a runtime API exposed by a pallet. |
+| Method                   | Description                              |
+| ------------------------ | ---------------------------------------- |
+| `author_submitExtrinsic` | Submits a signed transaction             |
+| `state_call`             | Calls a runtime API exposed by a pallet. |
 
 ---h
 
@@ -576,6 +586,7 @@ https://westend-asset-hub-eth-rpc.polkadot.io/
 
 Notes:
 A few things to note in the transaction:
+
 - First of all the transaction is encoded using RLP (Recursive Length Prefix) encoding, the first byte is the type of the
   transaction, and defines the format of the transaction, that can be decoded using rlp-decode.
 - The type here is 0x2, which means it is an EIP-1559 transaction, new fork can sometimes introduce new transaction type
@@ -588,7 +599,6 @@ A few things to note in the transaction:
 - r, s, v are the signature of the transaction, used to verify the transaction was signed by the sender.
 
 You will notice that the transaction does not have a 'from' field, this is because the origin can be recovered from the signature.
-
 
 ---v
 
@@ -608,6 +618,7 @@ transfer(address,uint256)
 ALL_BUT_FIRST_4_BYTES=${INPUT:10}
 cast abi-decode -i "transfer(address,uint256)" $ALL_BUT_FIRST_4_BYTES
 ```
+
 ```sh
 0xBA04f1c1E4577165dD2297D3FbEdF956B0e4C8a7
 80510000 [8.051e7]
@@ -615,9 +626,9 @@ cast abi-decode -i "transfer(address,uint256)" $ALL_BUT_FIRST_4_BYTES
 
 Notes:
 Now that we have decoded the transaction, we can try to decode the input data
+
 - the first 4 bytes of the input data are the function signature, which is used to identify the function being called, in this case, it is the transfer function of an ERC20 token.
 - The rest of the input data is the parameters of the function, using the transfer function signature we can decode the input data to get the address and the amount being sent.
-
 
 ---v
 
@@ -627,6 +638,7 @@ Now that we have decoded the transaction, we can try to decode the input data
 cast abi-encode "test((bool, string, address))" "(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" | xxd -r -p | xxd -c 32
 
 ```
+
 ```hexdump
 
 00000000: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020  ...............................
@@ -643,6 +655,7 @@ We’ve covered decoding ABI-encoded data—now let’s look at the opposite pro
 Using the function's ABI signature, we can encode the parameters using cast abi-encode.
 
 A few key things to note:
+
 - We are encoding a tuple containing a boolean, a string, and an address.
 - Since a tuple is dynamic, the first 32 bytes store an offset to where the actual data starts—here, 0x20.
 - The first tuple element (boolean) is at offset 0x20. Even though a bool is just 1 byte, like everything in the EVM, it is padded to 32 bytes.
@@ -650,36 +663,36 @@ A few key things to note:
 - The address is a fixed-size type, so it’s stored inline immediately after the offsets.
 - At offset 0x60, we find the length of the string, and right after that, the string content itself.
 
-
-
-
 ## Smart Contract Ecosystem
 
 ---v
 
 ### Block Explorers
-  * Track transactions and smart contract states
-  * Enable transparency & debugging tools for developers
-  * Examples: Etherscan, Subscan, Blockscout
+
+- Track transactions and smart contract states
+- Enable transparency & debugging tools for developers
+- Examples: Etherscan, Subscan, Blockscout
 
 ---v
 
 ### Oracles – External Data Integration
-  * Enable hybrid on-chain/off-chain contracts
-  * Examples: Chainlink, Redstone
-  * Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)
-  * Two models
-     - Push: Data is pushed by node operators at specific interval and made available to contracts
-     - Pull: Signed data package is attached to the transaction and verified by a contract on chain
+
+- Enable hybrid on-chain/off-chain contracts
+- Examples: Chainlink, Redstone
+- Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)
+- Two models
+  - Push: Data is pushed by node operators at specific interval and made available to contracts
+  - Pull: Signed data package is attached to the transaction and verified by a contract on chain
 
 ---v
 
 ### Indexers
- - Blockchain are write optimized, and querying data can be slow
- - Indexers subscribe to the blockchain and store the data in a more queryable format
- * Allow fast and structured access to blockchain records
- * Improve UX for dApps by reducing raw node queries
- * Examples: The Graph, Subsquid
+
+- Blockchain are write optimized, and querying data can be slow
+- Indexers subscribe to the blockchain and store the data in a more queryable format
+
+* Allow fast and structured access to blockchain records
+* Improve UX for dApps by reducing raw node queries
+* Examples: The Graph, Subsquid
 
 ---
-
