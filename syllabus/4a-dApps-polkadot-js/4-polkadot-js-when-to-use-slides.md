@@ -58,7 +58,7 @@ Even as new applications increasingly adopt newer tools, the legacy of Polkadot-
 
 ### For Comprehensive Development UIs
 
-- Polkadot.js Apps remains the most feature-complete UI for chain interaction (Check out UI's such as the PAPI console as well)
+- Polkadot.js Apps remains the most generalized UI for chain interaction
 - Provides a sandbox for testing chain functionality
 - Polkadot.js Extension for a airgapped developer first extension
 
