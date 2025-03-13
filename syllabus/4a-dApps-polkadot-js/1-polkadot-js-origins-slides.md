@@ -10,6 +10,8 @@ Duration: 30 minutes
 
 ## The Genesis Story
 
+<pba-flex center>
+
 <img rounded src="./img/first-commit.png" />
 
 - A personal side project before Polkadot existed
@@ -24,6 +26,8 @@ Polkadot-JS began as a personal project by its core maintainer at a time when Po
 The developer started building the JavaScript implementation based purely on the specifications and their understanding of what would be needed for the future network. This forward-thinking approach allowed the tooling to evolve alongside the blockchain itself, rather than playing catch-up later.
 
 This early start gave Polkadot-JS a unique advantage - it was able to grow and adapt organically with the protocol itself, incorporating feedback and adjusting to changes in real-time as the Polkadot vision materialized into working code.
+
+</pba-flex>
 
 ---
 
@@ -104,10 +108,14 @@ There's a constant balance between adding new features to support evolving use c
 
 ### Dynamic UI from Metadata
 
+<pba-flex center>
+
 - UI automatically adapts to chain's runtime modules
 - No pre-built support needed for new chains
 - Enables seamless interaction with any Substrate chain
 - Reflects runtime upgrades without UI changes
+
+</pba-flex>
 
 Notes:
 
@@ -163,10 +171,14 @@ Perhaps most importantly, Polkadot-JS supports the cross-chain communication cap
 
 ## Vision Alignment with Polkadot
 
+<pba-flex center>
+
 - Enabling cross-chain communication
 - Solving real-world problems, not just technical optimization
 - Building for practical use cases
 - Growing the ecosystem organically
+
+</pba-flex>
 
 Notes:
 
