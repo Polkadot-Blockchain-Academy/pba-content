@@ -140,7 +140,7 @@ Not ideal for us because compilation is expensive :(
 
 Notes:
 
-Compiling higher level control flow elements to efficient machine code 
+Compiling higher level control flow elements to efficient machine code
 involves multiple costly algorithms.
 
 Which is inefficient for short-lived contracts compiled on every node.
@@ -439,7 +439,7 @@ For us it is a problem! Contracts are short-lived and compiled on every node.
 
 Notes:
 
-A few more complaints about Wasm as contracts or blockchain runtime bytecode format. 
+A few more complaints about Wasm as contracts or blockchain runtime bytecode format.
 
 ---
 
