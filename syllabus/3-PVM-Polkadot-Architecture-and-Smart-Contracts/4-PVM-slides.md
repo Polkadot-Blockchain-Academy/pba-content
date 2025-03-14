@@ -18,7 +18,7 @@ duration: 45 minutes
 
 Polkadot is abandoning Wasm: Here's why!
 
-Note:
+Notes:
 
 Click-baity introduction slide
 
@@ -31,12 +31,24 @@ Click-baity introduction slide
 - Many production-grade implementation available
 - Faster than EVM
 
+Notes:
+
+On a first glance Wasm seems like an obvious choice for blockchains.
+For the reasons listened.
+
 ---
 
 # Wasm: The obvious choice **for blockchains**?
 
 1. Indeterministic execution
 2. Compiling Wasm to machine code
+
+Notes:
+
+However, the way Wasm is designed, in practice it's actually not the ideal choice.
+As it turns out, deterministic execution of Wasm code is implementation dependent.
+Additionally, compiling Wasm to efficient machine code is a hard problem,
+not ideal for a decentralized network that does a lot of code re-execution across nodes.
 
 ---
 
@@ -49,6 +61,10 @@ Executing Wasm code is not actually deterministic
 Example: Unbounded stack
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Notes:
+
+We analyze why Wasm code execution isn't deterministic based how it's stack works.
 
 ---
 
@@ -69,7 +85,7 @@ Hint: Think about the differences between how function arguments are passed in s
 )
 ```
 
-Note:
+Notes:
 
 https://forum.polkadot.network/t/deterministic-pvf-executor/4204
 https://hackmd.io/@Ww6uNnIISmqGwXufqPYPOw/SklLYwb-T
@@ -100,6 +116,12 @@ https://hackmd.io/@Ww6uNnIISmqGwXufqPYPOw/SklLYwb-T
 )
 ```
 
+Notes:
+
+The number of arguments is unbounded. The number of registers per platform is limited.
+As a consequence a combination of the Wasm compiler and CPU architecture used
+dictates the overflow behavior.
+
 ---
 
 ## Problem #2: Compiling Wasm to machine code
@@ -115,6 +137,13 @@ Wasm doesn't know about register allocation or target architecture specific opti
 Not ideal for us because compilation is expensive :(
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+
+Compiling higher level control flow elements to efficient machine code 
+involves multiple costly algorithms.
+
+Which is inefficient for short-lived contracts compiled on every node.
 
 ---
 
@@ -136,11 +165,19 @@ Compilers use (expensive) algorithms to:
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
+Notes:
+
+Some examples of code lowering.
+
 ---
 
 ### High level control flow
 
 Let's use ChatGPT for a little experiment
+
+Notes:
+
+We illustrate the cost of compiling Wasm to machine code.
 
 ---
 
@@ -271,6 +308,11 @@ fibonacci:
 
 Executing Wasm requires us to do register allocation
 
+Notes:
+
+A major issue for compiling stack machine code like Wasm code to
+register machine code.
+
 ---
 
 ### Register allocation
@@ -303,6 +345,20 @@ https://en.wikipedia.org/wiki/Register_allocation
 
 https://en.wikipedia.org/wiki/Register_allocation#Common_problems_raised_in_register_allocation
 
+Notes:
+
+The class of nondeterministic polynomial time (NP) problems are a set of decision problems
+where the answer is yes or no and this can be verified in polynomial time.
+
+Informally, finding a solution to such a problem is hard, requires a lot of computational work.
+Verifying a proof is little work.
+
+Example: Integer factorization (finding factors is hard for large numbers - proofing that two numbers are
+factors however is just a matter of a single multiplication).
+
+NP-Complete problems can simulate every other NP problem.
+They are considered the hardest of the NP problems.
+
 ---
 
 ### Register allocation
@@ -322,6 +378,10 @@ _Register allocation is a difficult problem_
   - `LLVM` framework
 - There is a blog post somewhere, telling the story of a web dev rewriting everything to Wasm, only to end up with even greater load times :)
 
+Notes:
+
+As we can see, compiling Wasm code to machine code is annoying.
+
 ---
 
 ## Compiling Wasm to machine code
@@ -334,6 +394,10 @@ Not really a problem for long-living application like web apps
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
+Notes:
+
+In the context of web2 however this isn't usually a big problem.
+
 ---
 
 ## Compiling Wasm to machine code
@@ -344,6 +408,10 @@ Not really a problem for long-living application like web apps
 - Caching?
   - Harder than it seems on first glance
   - Doesn't entirely solve the problem
+
+Notes:
+
+For us it is a problem! Contracts are short-lived and compiled on every node.
 
 ---
 
@@ -368,6 +436,10 @@ Not really a problem for long-living application like web apps
   - Optimizing compilers are not executing in linear time
   - Which is bad because it opens a DOS attack vector
   - Metered compilation slows down work that is already expensive
+
+Notes:
+
+A few more complaints about Wasm as contracts or blockchain runtime bytecode format. 
 
 ---
 
@@ -403,11 +475,20 @@ But a real CPU?
 
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
+Notes:
+
+I thought we are using PAB bytecodes? Let's explore why RISC-V can be used for that just fine.
+
 ---
 
 ## RISC-V
 
 <img src="./img/pvm/risc-v-microcontroller.jpg">
+
+Notes:
+
+This is an early example of a real hardware RISC-V based microcontroller.
+It's CPU is a RISC-V chip.
 
 ---
 
@@ -415,16 +496,9 @@ But a real CPU?
 
 <img src="./img/pvm/risc-v-ledcube.png">
 
----
+Notes:
 
-## RISC-V
-
-Realizations:
-
-- RISC-V is simple
-- Practically a common denominator of widely used _real_ CPUs
-  - x86_64
-  - aarch64
+This LED cube is controlled by that RISC-V microcontroller on the previous slide.
 
 ---
 
@@ -438,17 +512,48 @@ Realizations:
   - It follows that RISC-V bytecode is (much!) simpler to compile
   - => Minimze the work done on-chain!
 
+Notes:
+
+The main take-away is that if we have a PAB in the form of register machine code and
+without high level control flow elements, compilation get's a lot easier.
+
+---
+
+## RISC-V
+
+Realizations:
+
+- RISC-V is simple
+- Practically a common denominator of widely used _real_ CPUs
+  - x86_64
+  - aarch64
+
+Notes:
+
+RISC-V is close to either x86_64 and arm. Much closer than Wasm code anyways.
+
 ---
 
 ## RISC-V compilation
 
 <img src="./img/pvm/on-off-chain-compilation-1.svg">
 
+Notes:
+
+Let's look at what happens when we execute contract code.
+
 ---
 
 ## RISC-V compilation
 
 <img src="./img/pvm/on-off-chain-compilation-2.svg">
+
+Notes:
+
+Compilation is a lossy process. It's not ideal to compile into
+Wasm, it is a lossy translation from source code into some also high level IR.
+
+This moves compilation workloads on-chain. We should avoid this at all costs!
 
 ---
 
@@ -473,6 +578,10 @@ fibonacci:
 .base_case:
     ret
 ```
+
+Notes:
+
+Back to our experiment.
 
 ---
 
@@ -543,6 +652,11 @@ fibonacci:
   </table>
 </section>
 
+Notes:
+
+It should be obvious just from looking at this from a distance which one
+is easier to compile to a validator hardware CPU.
+
 ---
 
 ## The last puzzle piece
@@ -556,6 +670,11 @@ fibonacci:
 - What this allows:
   - Instead of doing register allocation;
   - Compiling PVM bytecode is mostly a linear mapping of registers and instructions!
+
+Notes:
+
+Non-embedded RISC-V would give us 32 GPRs. Which would require a lot of stack spilling
+on x86_64. We avoid that by using the embedded RISC-V ISA.
 
 ---
 
@@ -581,6 +700,11 @@ PVM bytecode is
 </pba-col>
 </pba-cols>
 
+Notes:
+
+With our observation made thus fur it get's obvious why RISC-V is a better
+choice for us than Wasm.
+
 ---
 
 ## PVM bytecode interpreter vs. JIT compiler
@@ -593,11 +717,30 @@ PVM bytecode is
 
 <img src="./img/pvm/benchmarks-1.png" style="width: 100%">
 
+Notes:
+
+Pinky is a NES emulator. The benchmark shows executing the emulator in various VMs.
+
 ---
 
 # PVM Benchmarks
 
 <img src="./img/pvm/benchmarks-2.png" style="width: 100%">
+
+Notes:
+
+There's nothing missing for the interpreter. It's just very fast because it has so little
+work to do in order to start executing.
+
+Conclusion is: PVM offers very fast execution (JIT compiler) but also very fast
+compilation (interpreter).
+
+Moreover, interpreter performance is still competitive and JIT compilation
+is still the fastest of all.
+
+In other words, PolkaVM easily crushes other existing solutions.
+
+Also note that we still have optimizations to implement in PVM.
 
 # EVM vs. PVM
 
@@ -614,6 +757,12 @@ PVM bytecode is
 - Join-accumulate-machine (JAM)
   - https://github.com/gavofyork/graypaper
   - https://graypaper.fluffylabs.dev/
+
+Notes:
+
+Deterministic compilation also benefits PVF.
+
+PolkaVM will be powering JAM, a major protocol overhaul over Polkadot.
 
 ---
 
@@ -634,3 +783,9 @@ If we have enough time for it
   - Compilation heavy-liftings moved off-chain
 - Fast
 - General purpose
+
+Notes:
+
+We decided to turn away from Wasm and fix the problems we discovered it with a new
+VM and bytecode format. Benchmarks for both execution and compilation perforamnce
+seem confirm our theoretical assumptions.
