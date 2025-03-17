@@ -27,11 +27,7 @@ Notes:
 
 ## Smart contracts & blockchain
 
-<pba-flex center>
-  <code style="background-color: transparent">
-State n  --->  STF(State n, [Tx1, Tx2, ...])  --->  State n+1
-  </code>
-</pba-flex>
+<img style="width: 90%"  src="img/smart-contracts-101/stf.png" />
 
 Notes:
 
@@ -47,7 +43,7 @@ Since all nodes execute the same transactions with the same rules, they all deri
 
 ### Bitcoin
 
-<img style="width: 100%; filter: invert(1);" src="img/smart-contracts-101/btc-stf.svg" />
+<img style="width: 90%"  src="img/smart-contracts-101/stf-btc.png" />
 
 Notes:
 
@@ -59,7 +55,7 @@ The state transition function, will validate the transactions, and update the st
 
 ### Polkadot
 
-<img style="width: 100%; filter: invert(1);" src="img/smart-contracts-101/polkadot-stf.svg" />
+<img style="width: 90%"  src="img/smart-contracts-101/stf-dot.png" />
 
 Notes:
 
@@ -88,7 +84,7 @@ Otherwise, only predefined transaction types (e.g., assets, governance, staking)
 
 ### Smart contracts chain
 
-<img style="width: 100%; filter: invert(1);" src="img/smart-contracts-101/evm-stf.svg" />
+<img style="width: 90%"  src="img/smart-contracts-101/stf-evm.png" />
 
 Notes:
 
