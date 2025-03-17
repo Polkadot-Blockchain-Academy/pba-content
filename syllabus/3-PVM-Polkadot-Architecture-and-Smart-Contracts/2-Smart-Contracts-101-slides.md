@@ -111,7 +111,7 @@ When a user transfers USDC, the contract updates the sender’s balance by subtr
 ## Bytecode & Virtual Machines
 
 
-<img style="width: 100%; filter: invert(1);" src="img/smart-contracts-101/bytecode-vm.png" />
+<img style="width: 100%; " src="img/smart-contracts-101/bytecode-vm.png" />
 
 Notes:
 
