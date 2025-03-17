@@ -490,6 +490,8 @@ Notes:
 This is an early example of a real hardware RISC-V based microcontroller.
 It's CPU is a RISC-V chip.
 
+This looks like fairly simple microcontroller and CPU. Keep this in mind!
+
 ---
 
 ## RISC-V
@@ -707,9 +709,182 @@ choice for us than Wasm.
 
 ---
 
+# PolkaVM `fibonacci` example
+
+```rust
+#![no_std]
+#![no_main]
+
+#[polkavm_derive::polkavm_export]
+extern "C" fn fibonacci(n: u64) -> u64 {
+    if n < 2 {
+        return n;
+    }
+
+    let mut last = 1;
+    let mut current = 1;
+
+    for _ in 2..n {
+        let last_temp = current;
+        current = current + last;
+        last = last_temp;
+    }
+
+    current
+}
+
+#[panic_handler]
+fn panic(_info: &core::panic::PanicInfo) -> ! {
+    unsafe {
+        core::arch::asm!("unimp", options(noreturn));
+    }
+}
+```
+
+Notes:
+
+Simple example of our beloved Fibonacci program.
+We can compile this down to PVM.
+
+---
+
+# PolkaVM `fibonacci` example
+
+<pba-cols>
+<pba-col center>
+
+```
+: @0 [export #0: 'fibonacci']
+ 0: a2 = a0 <u 0x2
+ 3: a2 = 0 if a1 != 0
+ 5: jump @2 if a2 == 0
+  : @1
+ 8: ret
+  : @2
+10: a2 = a0 ^ 0x2
+13: a2 = a2 | a1
+16: jump @4 if a2 != 0
+  : @3
+19: t0 = 0
+21: a4 = 0x1
+24: a0 = 0x1
+27: a1 = 0
+29: ret
+
+```
+
+</pba-col>
+<pba-col center>
+
+```
+  : @4
+31: sp = sp + 0xfffffff8
+34: u32 [sp + 0x4] = s0
+37: u32 [sp] = s1
+39: t1 = 0
+41: t2 = 0
+43: a5 = 0
+45: a3 = 0x2
+48: s0 = 0x1
+51: a2 = 0x1
+54: fallthrough
+  : @5
+55: a3 = a3 + 0x1
+58: a4 = a3 <u 0x1
+61: a5 = a5 + a4
+64: a4 = a2 + s0
+67: t0 = a4 <u a2
+```
+
+</pba-col>
+<pba-col center>
+
+```
+ 70: t1 = t1 + t2
+ 73: t0 = t0 + t1
+ 76: t1 = a3 <u a0
+ 79: s0 = a5 ^ a1
+ 82: s1 = a5 <u a1
+ 85: s1 = t1 if s0 == 0
+ 88: s0 = a2
+ 90: t1 = t2
+ 92: a2 = a4
+ 94: t2 = t0
+ 96: jump @5 if s1 != 0
+   : @6
+ 99: s0 = i32 [sp + 0x4]
+102: s1 = i32 [sp]
+104: sp = sp + 0x8
+107: a0 = a4
+109: a1 = t0
+111: ret
+```
+
+</pba-col>
+</pba-cols>
+
+Notes:
+
+The PVM bytecode looks like this. As said, close to RISC-V.
+But most importantly, it is simple and close to real CPU assembly.
+No high level control flow, variables already allocated to registers.
+
+---
+
+## PolkaVM interpreter vs. JIT compiler
+
+- The PVM JIT compiler is fast!
+- Compiling a PVM blob is faster than hashing it using `blake2b`.
+- But.. for contracts it is still a significant overhead!
+- Idea: Instead of compiling the PVM blob to native code, interpret it!
+  - Pro: Nearly instant code execution
+  - Con: Much slower than compiled code
+
+Notes:
+
+The PVM compiler is very fast. Hashing a code blob using one of the fastest (but still
+cryptographically secure hash algorithms is slower than compiling it!
+
+But even with the fastest possible JIT compiler, compilation overhead is still significant
+and for some workloads still slower than just interpreting it.
+
+The PVM solution: It can do both!
+
+---
+
 ## PVM bytecode interpreter vs. JIT compiler
 
-<img src="./img/pvm/on-off-chain-compilation-2.svg">
+<img src="./img/pvm/interpret-vs-compile-1.svg">
+
+Notes:
+
+Consider some imaginary contract workload. For example calulating Fibonacci numbers.
+
+Horizontal axis is the time it takes to execute the contract.
+
+Vertical axis is the parameter, the amount of iterations, the contract
+will calculate Fibonacci numbers.
+
+---
+
+## PVM bytecode interpreter vs. JIT compiler
+
+<img src="./img/pvm/interpret-vs-compile-2.svg">
+
+Notes:
+
+As we can see, the compiler has a fixed base cost (fixed non-zero y-intercept).
+
+This means we essentially have an optimization problem.
+
+If the user wants to calculate only a few Fibonacci numbers => use interpreter.
+For calculating many numbers => Paying the upfront cost for the compiler is amortized. 
+
+Example:
+
+For a simple token swap, prefer the interpreter.
+
+For a cryptographic computation, for example verifying a ZK proof, use the compiler.
 
 ---
 
