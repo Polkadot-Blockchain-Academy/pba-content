@@ -464,7 +464,7 @@ We have a double recursion of a PAB that embed itself
 
 ### Wasmi
 
-- Why use something different for contracts? Why not use Wasmtime? 
+- Why use something different for contracts? Why not use Wasmtime?
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
