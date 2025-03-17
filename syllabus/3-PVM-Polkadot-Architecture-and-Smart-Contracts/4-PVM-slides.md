@@ -878,7 +878,7 @@ As we can see, the compiler has a fixed base cost (fixed non-zero y-intercept).
 This means we essentially have an optimization problem.
 
 If the user wants to calculate only a few Fibonacci numbers => use interpreter.
-For calculating many numbers => Paying the upfront cost for the compiler is amortized. 
+For calculating many numbers => Paying the upfront cost for the compiler is amortized.
 
 Example:
 
