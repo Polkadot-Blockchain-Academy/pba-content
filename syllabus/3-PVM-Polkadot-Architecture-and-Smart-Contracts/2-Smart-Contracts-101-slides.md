@@ -352,8 +352,8 @@ Notes:
 
 #### Weighted calls in substrate
 
-```rust
-#[pallet::weight(T::WeightInfo::set_metadata(name.len() as u32, symbol.len() as u32))]
+<pre><code data-trim data-noescape data-line-numbers="1-8">
+#[pallet::weight(T::WeightInfo::set_metadata(name.len(), symbol.len()))]
 pub fn set_metadata(
     origin: OriginFor<T>,
     id: T::AssetIdParameter,
@@ -365,7 +365,7 @@ pub fn set_metadata(
     let id: T::AssetId = id.into();
     Self::do_set_metadata(id, &origin, name, symbol, decimals)
 }
-```
+</pre></code>
 
 Notes:
 In Substrate, each call defines a pre-dispatch weight, which can depend on the input parameters. Accounts must pay the estimated execution fee upfront, and any excess is refunded after execution.
@@ -563,42 +563,41 @@ Now that we have decoded the transaction, we can try to decode the input data
 
 ### Encoding ABI parameters
 
-```sh
+<pre><code data-trim data-noescape>
 cast calldata \
 "test((bool, string, address))" \
 "(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
 | xxd -r -p | xxd -c 32
-```
+</code></pre>
 
-```hexdump
-00000000: f8f3 4990 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ..I.............................
-00000020: 0000 0020 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ... ............................
-00000040: 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ................................
-00000060: 0000 0060 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce  ...`..............i..!.6...J....
-00000080: 3606 eb48 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  6..H............................
-000000a0: 0000 0005 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ....hello.......................
-000000c0: 0000 0000
-```
-
+<pre style="width: 150%"><code data-trim data-noescape>
+00: f8f3 4990 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+20: 0000 0020 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+40: 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+60: 0000 0060 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce
+80: 3606 eb48 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+a0: 0000 0005 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+c0: 0000 0000
+</code></pre>
 ---v
 
 ### Encoding ABI parameters
 
-```sh
+<pre><code data-trim data-noescape>
 cast abi-encode \
 "test((bool, string, address))" \
 "(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
 | xxd -r -p | xxd -c 32
-```
+</code></pre>
 
-```hexdump
-00000000: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020  ...............................
-00000020: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001  ................................
-00000040: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060  ...............................`
-00000060: 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce 3606 eb48  ..............i..!.6...J....6..H
-00000080: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0005  ................................
-000000a0: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  hello...........................
-```
+<pre style="width: 150%"><code data-trim data-noescape data-line-numbers="1 | 2 | 3 | 4 | 5 | 6" >
+00: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020
+20: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001
+40: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060
+60: 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce 3606 eb48
+80: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0005
+a0: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+</code></pre>
 
 Notes:
 We’ve covered decoding ABI-encoded data—now let’s look at the opposite process: encoding function call parameters.
