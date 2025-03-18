@@ -5,6 +5,13 @@ duration: 30min
 url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/2-Smart-Contracts-101-slides.md
 ---
 
+<style>
+    code {
+        overflow: hidden!important;
+        width: 120%!important;
+    }
+</style>
+
 ## Smart contracts fundamentals
 
 Notes:
@@ -134,7 +141,7 @@ The state transition function of the blockchain runs the Virtual Machine to exec
 
 ### A simple Example
 
-<pre><code data-trim data-noescape data-line-numbers="4-9 | 11-15 | 18-24">
+```solidity[4-9|11-15|18-24]
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -160,7 +167,7 @@ contract PiggyBank {
         require(success, "Transfer failed");
     }
 }
-</code></pre>
+```
 
 Notes:
 Developers don’t typically write bytecode by hand. Instead, they write smart contracts in high-level languages, which are then compiled into bytecode. On EVM-compatible chains, the most widely used language is Solidity, that is compiled to bytecode using the `solc` compiler. Let's go through a simple `PiggyBank` solidity contract to illustrate it.
@@ -317,13 +324,13 @@ This system ensures that no contract can consume unlimited resources, execution 
 
 ---v
 
-<pre><code data-trim data-noescape>
+```solidity
     while (true) {
         // ...
         // This loop will consume all gas and revert
     }
 }
-</pre></code>
+```
 
 ---v
 
@@ -352,7 +359,7 @@ Notes:
 
 #### Weighted calls in substrate
 
-<pre><code data-trim data-noescape data-line-numbers="1-8">
+```rust[1-8]
 #[pallet::weight(T::WeightInfo::set_metadata(name.len(), symbol.len()))]
 pub fn set_metadata(
     origin: OriginFor<T>,
@@ -365,7 +372,7 @@ pub fn set_metadata(
     let id: T::AssetId = id.into();
     Self::do_set_metadata(id, &origin, name, symbol, decimals)
 }
-</pre></code>
+```
 
 Notes:
 In Substrate, each call defines a pre-dispatch weight, which can depend on the input parameters. Accounts must pay the estimated execution fee upfront, and any excess is refunded after execution.
@@ -417,7 +424,7 @@ Even small logic errors or gas inefficiencies can be exploited for financial gai
 
 ### Reentrency bug
 
-<pre><code data-trim data-noescape data-line-numbers="7-10 | 11-12">
+```solidity[7-10|11-12]
 contract Vulnerable {
     mapping(address => uint256) public balances;
 
@@ -432,7 +439,7 @@ contract Vulnerable {
         balances[msg.sender] = 0;
     }
 }
-</code></pre>
+```
 
 Note:
 see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
@@ -508,6 +515,8 @@ curl https://westend-asset-hub-eth-rpc.polkadot.io \
 ```sh
 # https://etherscan.io/getRawTx?tx=0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4
 > cast decode-tx 0x02f8b3018313c17...
+```
+```json
 {
   "type": "0x2",
   "chainId": "0x1",
@@ -563,14 +572,14 @@ Now that we have decoded the transaction, we can try to decode the input data
 
 ### Encoding ABI parameters
 
-<pre><code data-trim data-noescape>
+```sh
 cast calldata \
 "test((bool, string, address))" \
 "(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
 | xxd -r -p | xxd -c 32
-</code></pre>
+```
 
-<pre style="width: 150%"><code data-trim data-noescape>
+```hexdump
 00: f8f3 4990 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
 20: 0000 0020 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
 40: 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
@@ -578,26 +587,26 @@ cast calldata \
 80: 3606 eb48 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
 a0: 0000 0005 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
 c0: 0000 0000
-</code></pre>
+```
 ---v
 
 ### Encoding ABI parameters
 
-<pre><code data-trim data-noescape>
+```sh
 cast abi-encode \
 "test((bool, string, address))" \
 "(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
 | xxd -r -p | xxd -c 32
-</code></pre>
+```
 
-<pre style="width: 150%"><code data-trim data-noescape data-line-numbers="1 | 2 | 3 | 4 | 5 | 6" >
+```hexdump[1 | 2 | 3 | 4 | 5 | 6]
 00: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020
 20: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001
 40: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060
 60: 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce 3606 eb48
 80: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0005
 a0: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
-</code></pre>
+```
 
 Notes:
 We’ve covered decoding ABI-encoded data—now let’s look at the opposite process: encoding function call parameters.
