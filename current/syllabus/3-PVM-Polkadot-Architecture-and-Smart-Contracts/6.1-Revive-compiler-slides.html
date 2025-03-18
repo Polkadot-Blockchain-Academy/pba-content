@@ -36,7 +36,12 @@
 - State-of-the-art LLVM compiler framework is the backend
 - Emits PVM blobs and ETH metadata
 - resolc executable + Wasm version
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>The incumbent smart contract languages is Solidity.
+The Ethereum Solidity compiler can only emit EVM bytecode.
+Instead of interpreting it as EVM bytecode, we can speed Solidity code up by
+compiling Solidity contracts to PVM bytecode.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Compilation process
 
 <img src="./img/resolc/compilation.svg">
@@ -68,7 +73,9 @@
 
 </pba-col>
 </pba-cols>
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>The revive resolc frontend executable is almost a drop-in replacement for solc.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## YUL IR
 
 Solidity example:
@@ -86,7 +93,9 @@ contract Flipper {
     }
 }
 ```
-</script></section><section  data-markdown><script type="text/template">
+
+<aside class="notes"><p>We will show what YUL IR is with a simple Solidity example.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## YUL IR
 
 YUL (harder for humans but easier for compilers):
@@ -111,6 +120,10 @@ object "Flipper_23" {
     }
 }
 ```
+
+Our simple flipper example looks like this in YUL IR (EVM dialiect).
+
+The revive compiler lowers this into LLVM IR.
 </script></section><section  data-markdown><script type="text/template">
 ## LLVM backend
 

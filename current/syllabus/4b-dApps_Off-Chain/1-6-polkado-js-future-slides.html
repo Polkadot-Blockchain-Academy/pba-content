@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Future of Polkadot-JS</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Future of Polkadot-JS
+</script></section><section  data-markdown><script type="text/template">
+## Future Directions
+
+<pba-flex center>
+
+- Continued maintenance for legacy support
+- Gradual transition to more modern tooling
+- Community-driven improvements
+- Reference implementation for new tools
+
+</pba-flex>
+
+<aside class="notes"><p>While newer tools are emerging to address some of Polkadot-JS&#39;s limitations, it will continue to be maintained for the foreseeable future due to its widespread adoption and the many systems that depend on it.</p>
+<p>The knowledge and patterns developed in Polkadot-JS will inform the next generation of Substrate development tools, ensuring that its legacy continues even as newer alternatives gain adoption.</p>
+<p>For developers entering the ecosystem today, understanding Polkadot-JS provides valuable context about how Substrate chains work, even if they ultimately build with newer tools.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Modern Alternatives
+
+<pba-flex center>
+
+- **PAPI** - Next-generation TypeScript SDK with improved modularity
+- **Subxt** - Rust-based SDK with strong type safety
+- **Substrate Connect** - Light client solution for browsers
+- **Custom RPC clients** - Specialized solutions for specific use cases
+
+</pba-flex>
+
+<aside class="notes"><p>As the ecosystem matures, several alternatives to Polkadot-JS are emerging, each addressing different limitations:</p>
+<p>PAPI (Polkadot API) is being developed as a more modular, modern TypeScript SDK with cleaner separation of concerns and better support for light clients. It aims to provide a more maintainable and extensible foundation for JavaScript/TypeScript applications.</p>
+<p>Subxt offers a Rust-based alternative with strong type safety and efficient performance. It&#39;s particularly well-suited for backend services and applications where performance is critical.</p>
+<p>Substrate Connect focuses specifically on light client functionality, enabling truly decentralized applications that don&#39;t rely on centralized RPC endpoints.</p>
+<p>Many teams are also developing custom RPC clients tailored to their specific needs, especially for applications with unique requirements or performance constraints.</p>
+<p>Understanding the strengths and limitations of Polkadot-JS helps developers make informed decisions about when to use these alternatives and how to effectively migrate to them when appropriate.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Migration Strategies
+
+<pba-flex center>
+
+- Incremental adoption of new tools for specific features
+- Gradual replacement of Polkadot-JS components
+- Hybrid approaches during transition
+- Leveraging common patterns and knowledge
+
+</pba-flex>
+
+<aside class="notes"><p>For existing applications using Polkadot-JS, migration to newer tools will likely be a gradual process:</p>
+<ol>
+<li><p>Incremental adoption: Start by using newer tools for specific features or components while maintaining Polkadot-JS for core functionality.</p>
+</li>
+<li><p>Component replacement: Replace individual Polkadot-JS components with their modern equivalents one at a time, starting with those that provide the greatest benefit.</p>
+</li>
+<li><p>Hybrid approaches: During transition, applications may use both Polkadot-JS and newer tools in parallel, especially for critical functions where redundancy provides safety.</p>
+</li>
+<li><p>Knowledge transfer: The patterns and concepts learned from working with Polkadot-JS remain valuable when working with newer tools, as many of the fundamental blockchain interaction patterns remain similar.</p>
+</li>
+</ol>
+<p>These strategies allow applications to benefit from newer tools while minimizing disruption and maintaining compatibility with existing systems.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Preserving the Legacy
+
+<pba-flex center>
+
+- Historical metadata support remains essential
+- Documentation of design decisions and patterns
+- Transfer of community knowledge
+- Learning from both successes and limitations
+
+</pba-flex>
+
+<aside class="notes"><p>As the ecosystem transitions to newer tools, it&#39;s important to preserve the valuable legacy of Polkadot-JS:</p>
+<p>The historical metadata support in Polkadot-JS remains unmatched and essential for applications that need to interact with the chain&#39;s history. This capability needs to be maintained or transferred to newer tools.</p>
+<p>Documentation of the design decisions, patterns, and approaches used in Polkadot-JS provides valuable context for future development. Understanding why certain choices were made helps prevent repeating past mistakes.</p>
+<p>The extensive community knowledge built around Polkadot-JS represents a significant asset. Facilitating the transfer of this knowledge to newer tools and approaches ensures that the community&#39;s expertise continues to benefit the ecosystem.</p>
+<p>Both the successes and limitations of Polkadot-JS offer important lessons for future development. By learning from both aspects, the next generation of tools can build on what worked well while addressing the challenges that emerged.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Key Takeaways
+
+<pba-flex center>
+
+- Polkadot-JS has been the cornerstone of Substrate development
+- Knowledge remains valuable even when using newer tools
+- Understanding limitations informs better design choices
+- Migration will be gradual and evolutionary
+- Historical support capabilities must be preserved
+
+</pba-flex>
+
+<aside class="notes"><p>Polkadot-JS has played a crucial role in the growth and development of the Polkadot ecosystem. While it has limitations, its comprehensive functionality and historical support make it an invaluable tool for many development scenarios.</p>
+<p>As the ecosystem evolves, developers should understand both when to use Polkadot-JS and when newer tools might be more appropriate for their specific use cases. This balanced understanding will ensure they can make the best technology choices while building on Substrate-based chains.</p>
+<p>The knowledge gained from working with Polkadot-JS – understanding chain metadata, transaction construction, and blockchain state management – transfers well to other tooling and provides a solid foundation for Substrate development regardless of the specific libraries used.</p>
+<p>Migration from Polkadot-JS to newer tools will be an evolutionary process rather than a revolutionary one, with both approaches coexisting for some time. This gradual transition allows the ecosystem to maintain stability while embracing innovation.</p>
+<p>Perhaps most importantly, the valuable capabilities that Polkadot-JS pioneered, particularly around historical data access, must be preserved and enhanced in newer tools to ensure continuity for critical applications.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions?
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

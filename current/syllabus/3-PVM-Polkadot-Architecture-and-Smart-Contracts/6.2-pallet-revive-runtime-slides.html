@@ -29,31 +29,42 @@
     <article class="slides">
       <section  data-markdown><script type="text/template">
 
-# Architecture overview
+## Architecture overview
 
-// TODO diagram of the architecture
+<img style="height: 90%; " src="img/pallet-revive/node-architecture.png" />
+</script></section><section  data-markdown><script type="text/template">
+## ETH-RPC compatibility layer
 
-<aside class="notes"><ul>
-<li>Diagram of a Substrate chain equipped with pallet-revive</li>
-<li>Go through the different components<ul>
-<li>Gas estimate through Substrate JSON-RPC</li>
-<li>Tx submitted with a substrate-wallet</li>
-<li>Node, and Runtime details</li>
-</ul>
-</li>
-</ul>
-</aside></script></section><section  data-markdown><script type="text/template">
-# ETH-RPC compatibility layer
-
-// TODO diagram of the architecture with ETH-RPC
+<img style="height: 90%; " src="img/pallet-revive/eth-rpc-architecture.png" />
 
 <aside class="notes"><p>There are two things we want to enable with this compatibility layer</p>
 <ul>
 <li>Make is easy for builder to port existing Dapp to Polkadot, and use battle tested ooling already developed by the EVM community.</li>
 <li>Make it easy for EVM to onboard, by supporting EVM wallets such as MetaMask.</li>
+<li>easy on ramp for existing project and developers, existing projects can start working with minimal efforts, take
+existing contracts or Dapps, rebuild them and deploy them to Polkadot and they will work right away. The cool things
+is that developers can use the tools that they knows and love (remix, hardhat, foundry) that have been buily over
+the years by the EVM community. On top of that these contract now can take of all the features of the Polkadot ecosystem.</li>
 </ul>
 <p>To get there, we need to speak the language of Ethereum, both on chain by running a compatible VM, but also by implementing Ethereum JSON-RPC specs, as all interactions with the chains are done through the RPC.</p>
+<p>As we covered previously, there has been a few attempts, to bring EVM compatibility to Substrate.
+There are two different approaches you can take.</p>
+<ul>
+<li>frontier opted to collocate the Eth compatibility in the Node</li>
+<li>We opted to build it as a separate binary, as a proxy layer to the Substrate node. This present a few benefits:<ul>
+<li>We can use the Omninode or any Substrate node implementation, if a Node operator decide to use a different Node
+implementation they can do so as this approach require no modification to the Node.</li>
+<li>We can iterate quickly on the compatibility layer, without having to wait for the Node to be updated.</li>
+</ul>
+</li>
+</ul>
 </aside></script></section><section  data-markdown><script type="text/template">
+## EVM flow
+
+<img style="height: 90%; " src="img/pallet-revive/eth-rpc-flow.png" />
+
+--
+
 # pallet-revive
 
 <aside class="notes"><ul>
@@ -106,6 +117,8 @@ pub fn call(
 ) -> DispatchResultWithPostInfo { /* ... */  }
 ```
 </script></section><section data-markdown><script type="text/template">
+## Dispatch functions
+
 | pallet call                    | Description                                                                |
 | ------------------------------ | -------------------------------------------------------------------------- |
 | `call`                         | Makes a call to an account, optionally transferring some balance.          |
@@ -116,49 +129,194 @@ pub fn call(
 | `map_account`                  | Registers the caller's account ID for use in contract interactions.        |
 | `unmap_account`                | Unregisters the caller's account ID and frees the deposit.                 |
 | `dispatch_as_fallback_account` | Dispatches a call with the origin set to the caller's fallback account.    |
-</script></section></section><section  data-markdown><script type="text/template">
+</script></section></section><section ><section data-markdown><script type="text/template">
 ## VM API
 
-// TODO diagram of the PVM vm calling into the runtime API
+<img style="height: 90%;" src="img/pallet-revive/vm-architecture.png" />
 
 <aside class="notes"><ul>
 <li>Discuss how the VM interacts with the runtime</li>
+<li>Mention the <code>define_env</code> macro, equivalent to the <code>construct_runtime</code> in Frame that define the host functions available to the VM.</li>
 </ul>
-</aside></script></section><section  data-markdown><script type="text/template">
+</aside></script></section><section data-markdown><script type="text/template">
+## define_env macro
+
+```rust
+#[define_env]
+pub mod env {
+  /// ...
+
+	/// Set the value at the given key in the contract storage.
+	#[stable]
+	#[mutating]
+	fn set_storage(
+		&mut self,
+		memory: &mut M,
+		flags: u32,
+		key_ptr: u32,
+		key_len: u32,
+		value_ptr: u32,
+		value_len: u32,
+	) -> Result<u32, TrapReason> {
+		self.set_storage(memory, flags, key_ptr, key_len, value_ptr, value_len)
+	}
+```
+</script></section><section data-markdown><script type="text/template">
 ## UAPI
 
-<aside class="notes"><p>// TODO quick look into the host function</p>
-</aside></script></section><section  data-markdown><script type="text/template">
-## Rust contracts demo
-
-Demo: Build a simple contract in Rust using pallet-revive-uapi
-
-<aside class="notes"><ul>
-<li>Show how to build a simple contract in Rust</li>
-<li>Demo how to deploy it using Substrate JSON-RPC &amp; Polkadot JS</li>
-<li>Demo how to deploy it using the Eth JSON-RPC</li>
-</ul>
-</aside></script></section><section  data-markdown><script type="text/template">
-## Debugging a contract with traces
+```rust
+#[polkavm_derive::polkavm_import(abi = self::abi)]
+extern "C" {
+  pub fn set_storage(
+    flags: u32,
+    key_ptr: *const u8,
+    key_len: u32,
+    value_ptr: *const u8,
+    value_len: u32,
+  ) -> ReturnCode;
+```
 
 <aside class="notes"><ul>
-<li>Demo how to debug a contract using traces</li>
+<li>The UAPI allow us to create a Rust RISCV contract, that can interact with the host functions defined in the runtime.</li>
 </ul>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section><section data-markdown><script type="text/template">
+## Activity: Build and deploy a Rust contract
+
+> Build the fibonacci contract using Rust and `pallet-revive-uapi`
+</script></section></section><section ><section data-markdown><script type="text/template">
 ## Differences with EVM
+</script></section><section data-markdown><script type="text/template">
+## Balance Decimals
+
+- In EVM, the smallest unit of value is 1 wei, which is 10^-18 ETH.
+- In Substrate, the smallest unit of value is 1 Planck, which is 10^-12 KSM or 10^-10 DOT.
+
+```rust
+pub trait Config: frame_system::Config {
+    //...
+    #[pallet::constant]
+    type NativeToEthRatio: Get<u32>;
+}
+```
+
+<aside class="notes"><p>In theory, EVM wallets are configurable, and should let you define the number of decimals you want to use.
+In practice, most wallets use 18 decimals, and we have to play nicely with them.
+Also everything that is passed by the contract as argument to any opcode is assumed to use 18 decimals.
+A transaction that attempt to use a value that can&#39;t be translated to a substrate value without a rounding error, will be rejected.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Address mapping
+
+- Most Substrate chain, including Asset Hub, use a 32 byte (AccountId32) address usually encoded in SS58 format.
+- EVM uses a 20 byte address (H160), usually encoded in hex format.
+
+```rust
+fn main() {
+    use sp_core::{crypto::AccountId32, H160};
+    println!("Substrate: {}", AccountId32::new([1u8; 32]));
+    // Substrate: 5C62Ck4UrFPiBtoCmeSrgF7x9yv9mn38446dhCpsi2mLHiFT
+
+    println!("EVM: {:?}", H160([1u8; 20]));
+    // EVM: 0x0101010101010101010101010101010101010101
+}
+```
+
+<aside class="notes"><p>Substrate uses 32 bytes address, while EVM uses 20 bytes address.
+Everything that is executed in the VM expect a 20 bytes address, we need to map the 32 bytes address to a 20 bytes address.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Address mapping
+
+```rust
+
+#[frame_support::pallet]
+pub mod pallet {
+  pub trait Config: frame_system::Config {
+    /// Use either valid type is [`address::AccountId32Mapper`] or [`address::H160Mapper`].
+    #[pallet::no_default]
+    type AddressMapper: AddressMapper<Self>;
+    // ...
+  }
+
+  #[pallet::storage]
+  pub(crate) type OriginalAccount<T: Config> = StorageMap<_, Identity, H160, AccountId32>;
+  // ...
+}
+
+pub trait AddressMapper<T: Config> {
+	fn to_address(account_id: &T::AccountId) -> H160;
+	fn to_account_id(address: &H160) -> T::AccountId;
+	fn map(account_id: &T::AccountId) -> DispatchResult;
+  // ...
+}
+```
 </script></section><section data-markdown><script type="text/template">
 ### Address mapping
 
-// TODO
-</script></section><section data-markdown><script type="text/template">
-### Gas vs Benchmarked Weight
+```rust
+//  alice_eth: 0x0101010101010101010101010101010101010101
+let alice_eth = H160([1u8; 20]);
 
-// TODO
+// alice_sub: 0101010101010101010101010101010101010101eeeeeeeeeeeeeeeeeeeeeeee (5C62Ck4U...)
+let alice_sub = <Runtime as Config>::AddressMapper::to_account_id(&alice_eth);
+
+// 👍 Convert back
+assert_eq!(alice_eth, <Runtime as Config>::AddressMapper::to_address(&alice_sub));
+```
+
+```rust
+// bob_sub: 0202020202020202020202020202020202020202020202020202020202020202 (5C7LYpP2 ...)
+let bob_sub = AccountId32::from([2u8; 32]);
+
+//  bob_eth: 0xaf32a8053c2d446446d7019359e210b82e53b8ba
+let bob_eth = <Runtime as Config>::AddressMapper::to_address(&bob_sub);
+
+// ❗ Original substrate accounts need a stateful mapping
+assert_ne!(bob_sub, <Runtime as Config>::AddressMapper::to_account_id(&bob_eth));
+
+// Map the account (this is a stateful operation)
+<Runtime as Config>::AddressMapper::map(&bob_sub).unwrap();
+
+// 👍 Convert back
+assert_eq!(bob_sub, <Runtime as Config>::AddressMapper::to_account_id(&bob_eth));
+```
+</script></section><section data-markdown><script type="text/template">
+## Gas vs Benchmarked Weight
+
+### Gas cost in EVM
+
+<img style="height: 90%; " src="img/pallet-revive/eip-1108.png" />
+</script></section><section data-markdown><script type="text/template">
+### Benchmarked weight in Substrate
+
+```rust
+	#[benchmark(pov_mode = Measured)]
+	fn bn128_add() {
+		let input = hex!("089142debb13c461f61523586a60732d8b69c5b38a3380a74da7b2961d867dbf2d5fc7bbc013c16d7945f190b232eacc25da675c0eb093fe6b9f1b4b4e107b3625f8c89ea3437f44f8fc8b6bfbb6312074dc6f983809a5e809ff4e1d076dd5850b38c7ced6e4daef9c4347f370d6d8b58f4b1d8dc61a3c59d651a0644a2a27cf");
+		let expected = hex!("0a6678fd675aa4d8f0d03a1feb921a27f38ebdcb860cc083653519655acd6d79172fd5b3b2bfdd44e43bcec3eace9347608f9f0a16f1e184cb3f52e6f259cbeb");
+		let mut call_setup = CallSetup::<T>::default();
+		let (mut ext, _) = call_setup.ext();
+
+		let result;
+
+		#[block]
+		{
+			result = pure_precompiles::Bn128Add::execute(ext.gas_meter_mut(), &input);
+		}
+
+		assert_eq!(result.unwrap().data, expected);
+	}
+```
 </script></section><section data-markdown><script type="text/template">
 ### Gas estimation and encoding in lower digits
 
-// TODO
-</script></section></section>
+- When sending tokens, wallets automatically retrieves the correct gas parameters by calling `eth_estimateGas`
+- The estimate encodes the gas limit, the gas price, and the storage deposit in a single value.
+
+<aside class="notes"><p>On a Substrate chain, the gas estimation is 2 dimensional (ref_time, pov), this is not a single value like in EVM.
+In pallet-revive, we also use a deposit for the storage used, to make sure that the chain isn&#39;t bloated with unused storage.</p>
+<p>To be compatible with EVM though, we need to fit these 3 numbers in a single value, the <code>gas_limit</code> of the transaction.
+To achieve that, we compress the ref_time, pv and storage deposit on the lowest digits of the gas_limit, using the
+binary square root of these values, and storing on the lowest 6 digits.</p>
+</aside></script></section></section>
     </article>
   </main>
 
