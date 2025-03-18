@@ -516,6 +516,7 @@ curl https://westend-asset-hub-eth-rpc.polkadot.io \
 # https://etherscan.io/getRawTx?tx=0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4
 > cast decode-tx 0x02f8b3018313c17...
 ```
+
 ```json
 {
   "type": "0x2",
@@ -588,6 +589,7 @@ cast calldata \
 a0: 0000 0005 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
 c0: 0000 0000
 ```
+
 ---v
 
 ### Encoding ABI parameters
