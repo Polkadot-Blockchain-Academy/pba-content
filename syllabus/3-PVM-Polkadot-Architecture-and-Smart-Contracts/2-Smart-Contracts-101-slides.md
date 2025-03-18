@@ -134,7 +134,7 @@ The state transition function of the blockchain runs the Virtual Machine to exec
 
 ### A simple Example
 
-```solidity
+<pre><code data-trim data-noescape data-line-numbers="4-9 | 11-15 | 18-24">
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -145,11 +145,12 @@ contract PiggyBank {
         owner = msg.sender;
     }
 
+    function getBalance() public view returns (uint256) {
+      return address(this).balance;
+    }
+
     function deposit() public payable {}
 
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
 
     function withdraw(uint256 withdrawAmount) public {
         require(msg.sender == owner, "You are not the owner");
@@ -159,7 +160,7 @@ contract PiggyBank {
         require(success, "Transfer failed");
     }
 }
-```
+</code></pre>
 
 Notes:
 Developers don’t typically write bytecode by hand. Instead, they write smart contracts in high-level languages, which are then compiled into bytecode. On EVM-compatible chains, the most widely used language is Solidity, that is compiled to bytecode using the `solc` compiler. Let's go through a simple `PiggyBank` solidity contract to illustrate it.
@@ -316,19 +317,29 @@ This system ensures that no contract can consume unlimited resources, execution 
 
 ---v
 
-```solidity
+<pre><code data-trim data-noescape>
     while (true) {
         // ...
         // This loop will consume all gas and revert
     }
 }
-```
+</pre></code>
 
 ---v
 
 #### Metered calls in EVM
 
-<img style="width: 1200px" src="./img/frontier/GasometerDiagram.png" />
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+flowchart LR
+    Start --> FetchNextOpcode[Fetch next opcode]
+    FetchNextOpcode --> LookupCost[Look up opcode cost]
+    LookupCost --> CheckGas{Enough gas?}
+    CheckGas -- No --> OutOfGas[Throw Out of Gas]
+    CheckGas -- Yes --> DeductGas[Deduct gas]
+    DeductGas --> ExecuteOpcode[Execute Opcode]
+    ExecuteOpcode --> FetchNextOpcode
+</diagram>
 
 Notes:
 
@@ -406,42 +417,22 @@ Even small logic errors or gas inefficiencies can be exploited for financial gai
 
 ### Reentrency bug
 
-```solidity
+<pre><code data-trim data-noescape data-line-numbers="7-10 | 11-12">
 contract Vulnerable {
     mapping(address => uint256) public balances;
 
     function withdraw() external {
         uint256 amount = balanceOf[msg.sender];
 
-        // 🔴 Sends ETH before updating balance
+        //❗ Sends ETH before updating balance
         (bool success, ) = msg.sender.call.value(amount)("");
         require(success, "Transfer failed.");
 
-        // 🔴 Balance Update after Transfer - Allows Reentrancy!
+        //❗ Balance Update after Transfer - Allows Reentrancy!
         balances[msg.sender] = 0;
     }
 }
-contract Dao {
-    mapping(address => uint256) public balances;
-
-    function deposit() public payable {
-        require(msg.value >= 1 ether, "Deposits must be no less than 1 Ether");
-        balances[msg.sender] += msg.value;
-    }
-
-    function withdraw() public {
-        uint256 amount = balances[msg.sender];
-        require(amount > 0, "No balance to withdraw");
-
-        // ❗Sends ETH before updating balance
-        (bool success, ) = msg.sender.call{value: amount}("");
-        require(success, "Transfer failed");
-
-        // ❗ Balance Update after Transfer - Allows Reentrancy!
-        balances[msg.sender] = 0;
-    }
-}
-```
+</code></pre>
 
 Note:
 see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
