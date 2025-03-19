@@ -20,7 +20,7 @@ and explain the advantage and trade off of a smart contract chain
 
 ---
 
-## Why
+# WHY?
 
 Notes:
 
@@ -30,6 +30,18 @@ Notes:
     With smart contracts, you can automate the execution of agreements, enforce them automatically, and remove the need for intermediaries. E.g crop insurance.
   - Two, For the Polkadot ecosystem, it's important to embrace a technology that is widely adopted by the Ethereum
     community, so that we can leverage the tooling, and easily onramp existing dapps, but also users and developers.
+
+---v
+
+## Crop Insurance contract
+
+<img style="width: 80%"  src="img/smart-contracts-101/crop_insurance.png" />
+
+---v
+
+## Ecosystem
+
+<img style="width: 80%"  src="img/smart-contracts-101/ecosystem.png" />
 
 ---
 
@@ -442,7 +454,7 @@ contract Vulnerable {
 ```
 
 Note:
-see https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/
+see <https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/>
 
 ---v
 
@@ -652,8 +664,8 @@ A few remarks:
 - Blockchain are write optimized, and querying data can be slow
 - Indexers subscribe to the blockchain and store the data in a more queryable format
 
-* Allow fast and structured access to blockchain records
-* Improve UX for dApps by reducing raw node queries
-* Examples: The Graph, Subsquid
+- Allow fast and structured access to blockchain records
+- Improve UX for dApps by reducing raw node queries
+- Examples: The Graph, Subsquid
 
 ---
