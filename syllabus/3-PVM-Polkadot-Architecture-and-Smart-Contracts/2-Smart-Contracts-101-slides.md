@@ -35,7 +35,7 @@ Notes:
 
 ## Crop Insurance contract
 
-<img style="width: 80%"  src="img/smart-contracts-101/crop_insurance.png" />
+<img style="width: 80%"  src="img/smart-contracts-101/crop-insurance.png" />
 
 ---v
 
@@ -45,7 +45,7 @@ Notes:
 
 ---
 
-## Smart contracts & blockchain
+## Blockchain
 
 <img style="width: 90%"  src="img/smart-contracts-101/stf.png" />
 
@@ -89,18 +89,12 @@ Assets & NFT pallets → Define fungible and non-fungible tokens and their opera
 Democracy pallet → Enables on-chain governance, allowing proposals to be submitted, voted on, and enacted when approved.
 Other pallets can introduce staking mechanisms, cross-chain messaging, DAOs, and more.
 
-Another key feature of Polkadot is runtime upgrades. The runtime logic can be updated without requiring a hard fork.
-A runtime upgrade is simply another transaction that updates the Wasm blob stored on-chain. Once this upgrade is applied, subsequent blocks execute the new logic.
-
-Not just anyone can execute a runtime upgrade though, these transactions require root privileges, which are only granted through governance approval via OpenGov voting.
-
-So to recap:
 Polkadot's state transition function can execute any business logic defined in the runtime.
 However, the runtime itself is not permissionless—it must be explicitly defined and deployed by the chain’s developers or governance
 To allow arbitrary logic execution, a Smart Contracts module must be embedded in the runtime.
 Otherwise, only predefined transaction types (e.g., assets, governance, staking) can be executed.
 
----
+---v
 
 ### Smart contracts chain
 
@@ -110,8 +104,10 @@ Notes:
 
 Now, we can finally define what a smart contract is.
 A smart contract is a special type of account that is not controlled by a keypair, but instead by the code it defines.
-A smart contract blockchain allows users to: - Deploy contracts on-chain.
+A smart contract blockchain allows users to do essentially 3 things:
 
+- Transfer value between accounts.
+- Deploy contracts on-chain.
 - Call these contracts to execute their logic.
 
 You can think of smart contracts as dormant programs stored on the blockchain at a specific address.
@@ -146,10 +142,6 @@ For example:
 The state transition function of the blockchain runs the Virtual Machine to execute the instructions in this compiled bytecode, and update the state of the chain.
 
 ---
-
-## Core Features of Smart Contracts
-
----v
 
 ### A simple Example
 
@@ -190,52 +182,115 @@ Developers don’t typically write bytecode by hand. Instead, they write smart c
 - If you send ETH directly to the contract (without calling a function like deposit), it will fail unless the contract has a receive or fallback function.
   Without one of these, any direct transfer (e.g., sendTransaction from a wallet) will be rejected with an error.
 
+---
+
+## Core Features of Smart Contracts
+
 ---v
 
-### Immutability
+### Gas
 
-<img rounded style="width: 500px"  src="img/smart-contracts-101/Immutability.jpg" />
+<pba-flex center>
+
+<img rounded style="width: 400px"  src="img/smart-contracts-101/gas.jpg" />
+
+```solidity
+    while (true) {
+        // ...
+        // This loop will consume all gas and revert
+    }
+}
+```
+
+<!-- .element: class="fragment" -->
+</pba-flex>
 
 Notes:
-Contracts are immutable by design, however in some circumstances, you might want to upgrade to fix a bug or add or
-improve existing features. There are several patterns to achieve this, one of the most common is the Proxy pattern.
-Essentially, the proxy pattern involves creating a proxy contract that delegates calls to an implementation contract.
-When you want to upgrade the contract, you deploy a new implementation contract and update the proxy to point to the new implementation.
+
+You might be wondering—if a smart contract can execute any arbitrary logic, what prevents it from defining an infinite loop that could stall the entire blockchain?
+To prevent this and to protect the network from spam, virtual machines are metered. Every instruction executed by the VM has an associated gas cost, which represents the computational resources required to process it.
+
+When you submit a transaction or when a contract calls another contract, you must specify the maximum amount of gas you’re willing to pay for execution. The contract’s code will either:
+
+- Run to completion if there is enough gas.
+- Run out of gas and revert, undoing any changes made to the contract storage, but you will still pay for the gas that was consumed before the failure.
+
+Additionally, the blockchain itself imposes limits on gas usage:
+It defines a block gas limit, which sets the maximum amount of gas that can be used across all transactions in a single block.
+It also defines a gas price, which determines how much fees will be paid for a given amount of gas.
+blockchains usually adjust gas prices dynamically based on network demand, ensuring fees reflect current congestion levels
+This system ensures that no contract can consume unlimited resources, execution remains bounded, and transaction fees dynamically adjust based on network demand.
 
 ---v
 
-#### Smart Contract Upgrade
+#### Metered calls in EVM
 
-- **Upgradability**: Immutable, unless using proxies
+<diagram class="mermaid">
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
+flowchart LR
+    Start --> FetchNextOpcode[Fetch next opcode]
+    FetchNextOpcode --> LookupCost[Look up opcode cost]
+    LookupCost --> CheckGas{Enough gas?}
+    CheckGas -- No --> OutOfGas[Throw Out of Gas]
+    CheckGas -- Yes --> DeductGas[Deduct gas]
+    DeductGas --> ExecuteOpcode[Execute Opcode]
+    ExecuteOpcode --> FetchNextOpcode
+</diagram>
 
-  - Governance Model: Typically managed by a contract owner or DAO governance
+Notes:
 
-- **Process**:
-
-  - Deploy a new contract implementation
-  - Update the proxy contract to point to the new version
-  - State Migration if needed
-
-- **Overhead**:
-  - Gas overhead due to delegate calls and proxy interactions
-  - Gas costs for state migration & new contract deployment
+- In pallet-revive the graph is slightly different, regular opcode are not metered but the VM injects gas metering
+  instructions per basic block
+- Checks before each opcode to make sure gas can be paid
+- Safe: prevents unpaid work from being done
+- Deterministic: results are unambiguous
+- Very inefficient: lots of branching and extra work
 
 ---v
 
-#### Substrate Runtime Upgrade (Polkadot)
+#### Weighted calls in substrate
 
-- **Upgradability**: Achieved through a Wasm runtime upgrade
+```rust[1-8]
+#[pallet::weight(T::WeightInfo::set_metadata(name.len(), symbol.len()))]
+pub fn set_metadata(
+    origin: OriginFor<T>,
+    id: T::AssetIdParameter,
+    name: Vec<u8>,
+    symbol: Vec<u8>,
+    decimals: u8,
+) -> DispatchResult {
+    let origin = ensure_signed(origin)?;
+    let id: T::AssetId = id.into();
+    Self::do_set_metadata(id, &origin, name, symbol, decimals)
+}
+```
 
-- **Governance Model**: On-chain governance (OpenGov)
+Notes:
+In Substrate, each call defines a pre-dispatch weight, which can depend on the input parameters. Accounts must pay the estimated execution fee upfront, and any excess is refunded after execution.
 
-- **Process**:
+---v
 
-  - Proposal submitted through OpenGov
-  - Once approved, a runtime upgrade transaction is dispatched, and state is migrated as part of the upgrade
+#### Metered VM Execution vs. Weighted Calls in Substrate
 
-- **Overhead**:
-  - Gas Costs: No gas cost (upgrade happens at the protocol level)
-  - No performance overhead (new runtime code replaces the old one)
+| Feature             | EVM                            | Substrate                                |
+| ------------------- | ------------------------------ | ---------------------------------------- |
+| **Execution Model** | Metered                        | Pre-weighted calls                       |
+| **Cost**            | Dynamic                        | Static, determined pre-dispatch          |
+| **Performance**     | Runtime overhead               | Optimized execution                      |
+| **Flexibility**     | Supports arbitrary computation | Requires (benchmnarked) weights per call |
+
+Notes:
+
+In VM-based blockchains, execution is metered using gas.
+This makes execution flexible but introduces runtime overhead due to dynamic metering.
+
+Contract execution performance is **less predictable**, as total costs depend on actual execution flow.
+Wallet usually need to dry-run the execution to define how much gas is required for the execution.
+
+In Substrate-based chains, execution is handled differently
+
+- Instead of metering each instruction at runtime, calls have predefined weights based on computational complexity.
+- This approach enables more efficient execution compared to metered VM, as the chain doesn’t need to meter each instruction dynamically, reducing runtime overhead.
 
 ---
 
@@ -244,7 +299,7 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 <img rounded style="width: 500px"  src="img/smart-contracts-101/composability.jpg" />
 
 Notes:
-Smart contracts on EVM-based chains are highly composable, meaning they can interact with each other to execute complex workflows. A contract call is always initiated by an Externally Owned Account (EOA) through a transaction.
+Smart contracts are highly composable, meaning they can interact with each other to execute complex workflows. A contract call is always initiated by an Externally Owned Account (EOA) through a transaction.
 
 ---v
 
@@ -312,106 +367,27 @@ On Ethereum, that has a slow VM, it's used to perform computation intensive oper
 outside the EVM, to improve performance.
 In Substrate, a Smart-Contract pallet, can leverage this to expose other features of the runtime (like staking, xcm, governance, assets) to smart contracts
 
----
+---v
 
-### Gas
+### Immutability
 
-<img rounded style="width: 500px"  src="img/smart-contracts-101/gas.jpg" />
+<img rounded style="width: 500px"  src="img/smart-contracts-101/Immutability.jpg" />
 
 Notes:
-
-You might be wondering—if a smart contract can execute any arbitrary logic, what prevents it from defining an infinite loop that could stall the entire blockchain?
-To prevent this and to protect the network from spam, virtual machines are metered. Every instruction executed by the VM has an associated gas cost, which represents the computational resources required to process it.
-
-When you submit a transaction or when a contract calls another contract, you must specify the maximum amount of gas you’re willing to pay for execution. The contract’s code will either:
-
-- Run to completion if there is enough gas.
-- Run out of gas and revert, undoing any changes made to the contract storage, but you will still pay for the gas that was consumed before the failure.
-
-Additionally, the blockchain itself imposes limits on gas usage:
-It defines a block gas limit, which sets the maximum amount of gas that can be used across all transactions in a single block.
-It also defines a gas price, which determines how much fees will be paid for a given amount of gas.
-blockchains usually adjust gas prices dynamically based on network demand, ensuring fees reflect current congestion levels
-This system ensures that no contract can consume unlimited resources, execution remains bounded, and transaction fees dynamically adjust based on network demand.
+Contracts are immutable by design, however in some circumstances, you might want to upgrade to fix a bug or add or
+improve existing features. There are several patterns to achieve this, one of the most common is the Proxy pattern.
+Essentially, the proxy pattern involves creating a proxy contract that delegates calls to an implementation contract.
+When you want to upgrade the contract, you deploy a new implementation contract and update the proxy to point to the new implementation.
 
 ---v
 
-```solidity
-    while (true) {
-        // ...
-        // This loop will consume all gas and revert
-    }
-}
-```
+#### Smart Contract vs. Substrate Upgrades
 
----v
-
-#### Metered calls in EVM
-
-<diagram class="mermaid">
-%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true }}}%%
-flowchart LR
-    Start --> FetchNextOpcode[Fetch next opcode]
-    FetchNextOpcode --> LookupCost[Look up opcode cost]
-    LookupCost --> CheckGas{Enough gas?}
-    CheckGas -- No --> OutOfGas[Throw Out of Gas]
-    CheckGas -- Yes --> DeductGas[Deduct gas]
-    DeductGas --> ExecuteOpcode[Execute Opcode]
-    ExecuteOpcode --> FetchNextOpcode
-</diagram>
-
-Notes:
-
-- Checks before each opcode to make sure gas can be paid
-- Safe: prevents unpaid work from being done
-- Deterministic: results are unambiguous
-- Very inefficient: lots of branching and extra work
-
----v
-
-#### Weighted calls in substrate
-
-```rust[1-8]
-#[pallet::weight(T::WeightInfo::set_metadata(name.len(), symbol.len()))]
-pub fn set_metadata(
-    origin: OriginFor<T>,
-    id: T::AssetIdParameter,
-    name: Vec<u8>,
-    symbol: Vec<u8>,
-    decimals: u8,
-) -> DispatchResult {
-    let origin = ensure_signed(origin)?;
-    let id: T::AssetId = id.into();
-    Self::do_set_metadata(id, &origin, name, symbol, decimals)
-}
-```
-
-Notes:
-In Substrate, each call defines a pre-dispatch weight, which can depend on the input parameters. Accounts must pay the estimated execution fee upfront, and any excess is refunded after execution.
-
----v
-
-#### Metered VM Execution vs. Weighted Calls in Substrate
-
-| Feature              | EVM Chains                     | Substrate Chains                         |
-| -------------------- | ------------------------------ | ---------------------------------------- |
-| **Execution Model**  | Metered at runtime (Gas)       | Pre-weighted calls                       |
-| **Cost Calculation** | Dynamic, based on execution    | Static, determined pre-dispatch          |
-| **Performance**      | Runtime overhead               | More predictable, optimized execution    |
-| **Flexibility**      | Supports arbitrary computation | Requires (benchmnarked) weights per call |
-
-Notes:
-
-In VM-based blockchains, execution is metered using gas.
-This makes execution flexible but introduces runtime overhead due to dynamic metering.
-
-Contract execution performance is **less predictable**, as total costs depend on actual execution flow.
-Wallet usually need to dry-run the execution to define how much gas is required for the execution.
-
-In Substrate-based chains, execution is handled differently
-
-- Instead of metering each instruction at runtime, calls have predefined weights based on computational complexity.
-- This approach enables more efficient execution compared to metered VM, as the chain doesn’t need to meter each instruction dynamically, reducing runtime overhead.
+|                   | Smart Contracts                                   | Substrate                              |
+| ----------------- | ------------------------------------------------ | --------------------------------------- |
+| **Upgradability** | Immutable (requires proxy)                       | Yes through Runtime Upgrade             |
+| **Governance**    | Contract owner / DAO                             | Sudo / On-chain OpenGov                 |
+| **Overhead**      | Gas costs for proxy & state migration            | No gas cost (protocol-level execution)  |
 
 ---
 
@@ -436,7 +412,7 @@ Even small logic errors or gas inefficiencies can be exploited for financial gai
 
 ### Reentrency bug
 
-```solidity[7-10|11-12]
+```solidity[1-2|4-12]
 contract Vulnerable {
     mapping(address => uint256) public balances;
 
@@ -460,7 +436,7 @@ see <https://blog.chain.link/reentrancy-attacks-and-the-dao-hack/>
 
 ### Activity: Reproduce the DAO hack
 
-> Reproduce the infamous DAO hack.
+> Deploy and execute the DAO hack on a local chain
 
 ---
 
@@ -502,8 +478,8 @@ The receipt is an important object, used by wallet and JS libraries, it will con
 
 | Method                   | Description                              |
 | ------------------------ | ---------------------------------------- |
-| `author_submitExtrinsic` | Submits a signed transaction             |
 | `state_call`             | Calls a runtime API exposed by a pallet. |
+| `author_submitExtrinsic` | Submits a signed transaction             |
 
 ---v
 
