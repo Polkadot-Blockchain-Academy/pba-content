@@ -383,11 +383,11 @@ When you want to upgrade the contract, you deploy a new implementation contract 
 
 #### Smart Contract vs. Substrate Upgrades
 
-|                   | Smart Contracts                                   | Substrate                              |
-| ----------------- | ------------------------------------------------ | --------------------------------------- |
-| **Upgradability** | Immutable (requires proxy)                       | Yes through Runtime Upgrade             |
-| **Governance**    | Contract owner / DAO                             | Sudo / On-chain OpenGov                 |
-| **Overhead**      | Gas costs for proxy & state migration            | No gas cost (protocol-level execution)  |
+|                   | Smart Contracts                       | Substrate                              |
+| ----------------- | ------------------------------------- | -------------------------------------- |
+| **Upgradability** | Immutable (requires proxy)            | Yes through Runtime Upgrade            |
+| **Governance**    | Contract owner / DAO                  | Sudo / On-chain OpenGov                |
+| **Overhead**      | Gas costs for proxy & state migration | No gas cost (protocol-level execution) |
 
 ---
 
@@ -503,7 +503,9 @@ curl https://westend-asset-hub-eth-rpc.polkadot.io \
 ```sh
 > cast decode-tx 0x02f8b3018313c17...
 ```
+
 <!--https://etherscan.io/getRawTx?tx=0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4-->
+
 ```json
 {
   "type": "0x2",
