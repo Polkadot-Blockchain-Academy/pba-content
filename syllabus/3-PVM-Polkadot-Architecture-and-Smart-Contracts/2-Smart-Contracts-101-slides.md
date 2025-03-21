@@ -501,10 +501,9 @@ curl https://westend-asset-hub-eth-rpc.polkadot.io \
 ## Structure of a Transaction
 
 ```sh
-# https://etherscan.io/getRawTx?tx=0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4
 > cast decode-tx 0x02f8b3018313c17...
 ```
-
+<!--https://etherscan.io/getRawTx?tx=0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4-->
 ```json
 {
   "type": "0x2",
@@ -522,6 +521,8 @@ curl https://westend-asset-hub-eth-rpc.polkadot.io \
   "v": "0x0",
 }
 ```
+
+<a target="_blank" href="https://etherscan.io/tx/0xcd58fbee0f90c4b7136a5af85876090dd1593e4580f840bcf0a7b9219772a5d4">Etherscan</a>
 
 Notes:
 A few things to note in the transaction:
@@ -543,12 +544,22 @@ You will notice that the transaction does not have a 'from' field, this is becau
 
 ### ABI decoding
 
-```sh
+```sh[1-7|8-13]
 INPUT="0xa9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a70000000000000000000000000000000000000000000000000000000004cc7c30"
 
-cast decode-calldata "transfer(address,uint256)" $INPUT
+# Get the selector for a function
+> cast keccak "transfer(address,uint256)" | cut -c 1-10 # or cast sig "..."
+
+0xa9059cbb
+
+# Lookup the function signature and input data
+> cast 4byte-decode $INPUT
+
+1) "transfer(address,uint256)"
 0xBA04f1c1E4577165dD2297D3FbEdF956B0e4C8a7
 80510000 [8.051e7]
+
+
 ```
 
 Notes:
@@ -589,7 +600,7 @@ cast abi-encode \
 | xxd -r -p | xxd -c 32
 ```
 
-```hexdump[1 | 2 | 3 | 4 | 5 | 6]
+```hexdump[1 | 2 | 3 | 5 | 6 | 4]
 00: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020
 20: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001
 40: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060
