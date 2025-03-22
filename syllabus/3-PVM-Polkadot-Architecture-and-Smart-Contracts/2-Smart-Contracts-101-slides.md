@@ -37,6 +37,9 @@ Notes:
 
 <img style="width: 80%"  src="img/smart-contracts-101/crop-insurance.png" />
 
+Notes:
+See https://www.owlexplains.com/en/podcast/ep-8-how-lemonade-is-using-smart-contracts-to-revolutionize-crop-insurance/
+
 ---v
 
 ## Ecosystem
@@ -565,10 +568,12 @@ INPUT="0xa9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a
 ```
 
 Notes:
-Now that we have decoded the transaction, we can try to decode the input data
+Now that we have decoded the transaction, let's look at how the input data is encoded
 
-- the first 4 bytes of the input data are the function signature, which is used to identify the function being called, in this case, it is the transfer function of an ERC20 token.
-- The rest of the input data is the parameters of the function, using the transfer function signature we can decode the input data to get the address and the amount being sent.
+- The first 4 bytes of the input data are the function selector
+- They are derived from the first 4 bytes of the keccak hash of the function signature.
+- The VM use the selector to lookup the address of the function being called (here the transfer function), and jump to it.
+- The rest of the input are the ABI encoded parameter of the function
 
 ---v
 
@@ -612,9 +617,15 @@ a0: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0
 ```
 
 Notes:
-We’ve covered decoding ABI-encoded data—now let’s look at the opposite process: encoding function call parameters.
-Using the function's ABI signature, we can encode the parameters using cast abi-encode.
-A few remarks:
+
+Once the selector is found, the VM will jump to the function and execute it.
+Let's look at how the parameters are encoded  using EVM ABI encoding standard.
+The ABI defines the standard way to interact with contracts both from outside the blockchain and for contract-to-contract interaction
+
+The EVM operates on 32-byte words, meaning that all storage, memory, and stack operations use 32-byte slots.
+Arguments are padded and aligned to 32 bytes, to make it easy to reas or load them from memory during execution.
+
+For this example signature the data is encoded as follows:
 
 - We are encoding a tuple containing a boolean, a string, and an address.
 - Since a tuple is dynamic, the first 32 bytes store an offset to where the actual data starts—here, 0x20.
