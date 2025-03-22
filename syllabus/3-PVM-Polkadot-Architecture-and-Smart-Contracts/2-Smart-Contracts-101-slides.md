@@ -619,7 +619,7 @@ a0: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0
 Notes:
 
 Once the selector is found, the VM will jump to the function and execute it.
-Let's look at how the parameters are encoded  using EVM ABI encoding standard.
+Let's look at how the parameters are encoded using EVM ABI encoding standard.
 The ABI defines the standard way to interact with contracts both from outside the blockchain and for contract-to-contract interaction
 
 The EVM operates on 32-byte words, meaning that all storage, memory, and stack operations use 32-byte slots.
