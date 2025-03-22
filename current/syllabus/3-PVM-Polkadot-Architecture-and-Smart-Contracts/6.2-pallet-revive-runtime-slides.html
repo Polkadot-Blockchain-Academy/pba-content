@@ -29,42 +29,69 @@
     <article class="slides">
       <section  data-markdown><script type="text/template">
 
+<style>
+    code {
+        overflow: hidden!important;
+    }
+</style>
+
+# pallet-revive architecture
+
+<aside class="notes"><p>In this lecture we will cover the architecture of pallat-revive,
+We will look at how the module works inside the substrate chain, as well as the EVM compatibility layer, that we built on top of it.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## Architecture overview
 
-<img style="height: 90%; " src="img/pallet-revive/node-architecture.png" />
-</script></section><section  data-markdown><script type="text/template">
+<img style="width: 75%" src="img/pallet-revive/node-architecture.png" />
+
+<aside class="notes"><p>Before we dive int the details of how our pallet works, let&#39;s step back and look at the overall architecture of a substrate node</p>
+<p>A node is essentially composed of 2 parts. The client and the runtime.</p>
+<p>The runtime defines the business logic of our chain, it is compiled to WASM and it&#39;s code is stored on chain and get
+upgraded every time there is a runtime upgrade. The runtime is where we find our smart contracts module among other useful pallets.</p>
+<p>The client is the Rust program that runs natively on your computer and handle all the general purpose blockchain administration tasks:
+communicating on the p2p network, answering JSON-RPC requests, ordering, prioritizing and validating the transaction pool and managing the database</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 ## ETH-RPC compatibility layer
 
 <img style="height: 90%; " src="img/pallet-revive/eth-rpc-architecture.png" />
 
-<aside class="notes"><p>There are two things we want to enable with this compatibility layer</p>
+<aside class="notes"><p>To enable Ethereum compatibility, we need to speak the language of Ethereum.
+This means implementing the Ethereum JSON-RPC API, which is the standard interface used by all Ethereum clients to interact with the chain.</p>
+<p>To achieve this, we built a proxy server that sits between the Ethereum client and the Substrate node.
+The proxy connects to the Substrate node via its JSON-RPC interface, subscribes to new blocks, and relays queries.</p>
+<p>Additionally, it: - Caches recent blocks to improve response time. - Maintains a lightweight database with indexes to track mappings between Ethereum transactions and their corresponding Substrate transactions.</p>
+<p>There have been multiple efforts to bring EVM compatibility to Substrate. - Frontier integrates the Ethereum API directly inside the Substrate node.</p>
 <ul>
-<li>Make is easy for builder to port existing Dapp to Polkadot, and use battle tested ooling already developed by the EVM community.</li>
-<li>Make it easy for EVM to onboard, by supporting EVM wallets such as MetaMask.</li>
-<li>easy on ramp for existing project and developers, existing projects can start working with minimal efforts, take
-existing contracts or Dapps, rebuild them and deploy them to Polkadot and they will work right away. The cool things
-is that developers can use the tools that they knows and love (remix, hardhat, foundry) that have been buily over
-the years by the EVM community. On top of that these contract now can take of all the features of the Polkadot ecosystem.</li>
+<li>Our approach decouples the Eth API by building it as a separate proxy layer, independent of the node.</li>
 </ul>
-<p>To get there, we need to speak the language of Ethereum, both on chain by running a compatible VM, but also by implementing Ethereum JSON-RPC specs, as all interactions with the chains are done through the RPC.</p>
-<p>As we covered previously, there has been a few attempts, to bring EVM compatibility to Substrate.
-There are two different approaches you can take.</p>
+<p>This present a few benefits:</p>
 <ul>
-<li>frontier opted to collocate the Eth compatibility in the Node</li>
-<li>We opted to build it as a separate binary, as a proxy layer to the Substrate node. This present a few benefits:<ul>
 <li>We can use the Omninode or any Substrate node implementation, if a Node operator decide to use a different Node
 implementation they can do so as this approach require no modification to the Node.</li>
 <li>We can iterate quickly on the compatibility layer, without having to wait for the Node to be updated.</li>
-</ul>
-</li>
 </ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ## EVM flow
 
 <img style="height: 90%; " src="img/pallet-revive/eth-rpc-flow.png" />
 
---
-
+<aside class="notes"><p>Now, let’s examine the flow of a transaction from an Ethereum client to the Substrate node.</p>
+<ul>
+<li>A user signs and submits a transaction from an Ethereum wallet like MetaMask.</li>
+<li>The proxy layer intercepts the transaction and wraps it into a pallet-revive runtime call, specifically an eth_transact call.
+Different types of transactions in Substrate:<ul>
+<li>Inherents – Unsigned transactions included by the block author.</li>
+<li>Signed and unsigned transactions – Regular transactions submitted by users.</li>
+</ul>
+</li>
+</ul>
+<p>In our case, we submit the Ethereum transaction as an unsigned transaction.</p>
+<ul>
+<li>We define a custom implementation of the Checkable trait in Substrate, that recover the signer of the transaction
+from the payload, and create a regular pallet_revive extrinsic out of it, with a signed origin and either an
+instantiate_with_code or a call dispatch call</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
 # pallet-revive
 
 <aside class="notes"><ul>
@@ -73,37 +100,52 @@ implementation they can do so as this approach require no modification to the No
 </aside></script></section><section  data-markdown><script type="text/template">
 ## pallet-revive Config
 
-```rust
+```rust[0|2-8|10-19|21-24]
 impl pallet_revive::Config for Runtime {
-	type Time = Timestamp;
-	type Currency = Balances;
-	type RuntimeEvent = RuntimeEvent;
-	type RuntimeCall = RuntimeCall;
-	type CallFilter = Nothing;
-	type DepositPerItem = DepositPerItem;
-	type DepositPerByte = DepositPerByte;
-	type WeightPrice = pallet_transaction_payment::Pallet<Self>;
-	type WeightInfo = pallet_revive::weights::SubstrateWeight<Self>;
-	type AddressMapper = pallet_revive::AccountId32Mapper<Self>;
-	type RuntimeMemory = ConstU32<{ 128 * 1024 * 1024 }>;
-	type PVFMemory = ConstU32<{ 512 * 1024 * 1024 }>;
-	type UnsafeUnstableInterface = ConstBool<false>;
-	type UploadOrigin = EnsureSigned<Self::AccountId>;
-	type InstantiateOrigin = EnsureSigned<Self::AccountId>;
-	type RuntimeHoldReason = RuntimeHoldReason;
-	type CodeHashLockupDepositPercent = CodeHashLockupDepositPercent;
-	type ChainId = ConstU64<420_420_420>;
-	type NativeToEthRatio = ConstU32<1_000_000>; // 10^(18 - 12) Eth is 10^18, Native is 10^12.
-	type EthGasEncoder = ();
-	type FindAuthor = <Runtime as pallet_authorship::Config>::FindAuthor;
+  type Time = Timestamp;
+  type Currency = Balances;
+  type RuntimeEvent = RuntimeEvent;
+  type RuntimeCall = RuntimeCall;
+  type FindAuthor = <Runtime as pallet_authorship::Config>::FindAuthor;
+  type WeightPrice = TransactionPayment;
+  type RuntimeHoldReason = RuntimeHoldReason;
+
+  type DepositPerItem = DepositPerItem;
+  type DepositPerByte = DepositPerByte;
+  type CodeHashLockupDepositPercent = CodeHashLockupDepositPercent;
+  type WeightInfo = pallet_revive::weights::SubstrateWeight<Self>;
+  type RuntimeMemory = ConstU32<{ 128 * 1024 * 1024 }>;
+  type PVFMemory = ConstU32<{ 512 * 1024 * 1024 }>;
+  type UnsafeUnstableInterface = ConstBool<false>;
+  type UploadOrigin = EnsureSigned<Self::AccountId>;
+  type InstantiateOrigin = EnsureSigned<Self::AccountId>;
+
+  type ChainId = ConstU64<420_420_420>;
+  type AddressMapper = pallet_revive::AccountId32Mapper<Self>;
+  type NativeToEthRatio = ConstU32<1_000_000>;
+  type EthGasEncoder = ();
+
 }
 ```
 
-<aside class="notes"><p>We won&#39;t go in depth about the config in this lecture, as this is something that will be covered by the upcoming classes on Frame, but will look at a few interesting bits specific to pallet-revive</p>
+<aside class="notes"><p>Let&#39;s take a quick peek at the config of pallet-revive.
+We won&#39;t go in depth about the config in this lecture, but let&#39;s look at a few interesting bits specific to pallet-revive</p>
+<ul>
+<li>As for any pallet, we depends on types from the runtime, like the <code>Time</code> type, the <code>Currency</code> type, the <code>FindAuthor</code> type, etc.</li>
+<li>Then we have some specific types for pallet-revive</li>
+<li><code>DepositPerItem</code> and <code>DepositPerByte</code> are the cost of storing data in the contract storage.</li>
+<li><code>CodeHashLockupDepositPercent</code> is the percentage of the deposit that is deposited when a contract with this hash is
+instantiated.</li>
+<li><code>WeightInfo</code> is the trait that define the weights for all the functions of the pallet.</li>
+<li><code>RuntimeMemory</code> and <code>PVFMemory</code> are constants that we use in our integrity tests to make sure that the memory has enough memory</li>
+<li>UnsafeUnstableInterface is used in development to enable unstable features</li>
+<li>UploadOrigin and InstantiateOrigin allow to constrain who can upload and instantiate a contract</li>
+<li>Finally we have Ethereum specific types, like the <code>ChainId</code>, the <code>AddressMapper</code>, the <code>NativeToEthRatio</code> and the <code>EthGasEncoder</code>, to work with Ethereum.</li>
+</ul>
 </aside></script></section><section ><section data-markdown><script type="text/template">
 ## Dispatch functions
 
-```rust=
+```rust[0|3|4-11]
 /// Makes a call to an account, optionally transferring some balance.
 #[pallet::call_index(1)]
 #[pallet::weight(T::WeightInfo::call().saturating_add(*gas_limit))]
@@ -116,7 +158,11 @@ pub fn call(
     data: Vec<u8>,
 ) -> DispatchResultWithPostInfo { /* ... */  }
 ```
-</script></section><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>Like any pallet, pallet-revive define a set of dispatch functions, that can be called by the users to submit transactions to the chain.
+Usually the weight of a dispatchable is fixed, but in pallet-revive, the weight is dynamic, and depend on the gas limit of the transaction.
+Antother interesting fact is that we return <code>DispatchResultWithPostInfo</code>, instead of <code>DispatchResult</code> to return the excess weight of the transaction.</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ## Dispatch functions
 
 | pallet call                    | Description                                                                |
@@ -136,36 +182,40 @@ pub fn call(
 
 <aside class="notes"><ul>
 <li>Discuss how the VM interacts with the runtime</li>
-<li>Mention the <code>define_env</code> macro, equivalent to the <code>construct_runtime</code> in Frame that define the host functions available to the VM.</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
-## define_env macro
+## Host & Guest
+
+<pba-cols>
+<pba-col>
 
 ```rust
+// Runtime Host implementation
+
 #[define_env]
 pub mod env {
-  /// ...
-
-	/// Set the value at the given key in the contract storage.
-	#[stable]
-	#[mutating]
-	fn set_storage(
-		&mut self,
-		memory: &mut M,
-		flags: u32,
-		key_ptr: u32,
-		key_len: u32,
-		value_ptr: u32,
-		value_len: u32,
-	) -> Result<u32, TrapReason> {
-		self.set_storage(memory, flags, key_ptr, key_len, value_ptr, value_len)
-	}
+ #[stable]
+ #[mutating]
+ fn set_storage(
+  &mut self,
+  memory: &mut M,
+  flags: u32,
+  key_ptr: u32,
+  key_len: u32,
+  value_ptr: u32,
+  value_len: u32,
+ ) -> Result<u32, TrapReason> {
+  // implementation
+ }
 ```
-</script></section><section data-markdown><script type="text/template">
-## UAPI
+
+</pba-col>
+<pba-col center>
 
 ```rust
-#[polkavm_derive::polkavm_import(abi = self::abi)]
+// Contract foreign function definition
+
+#[polkavm_import(abi = self::abi)]
 extern "C" {
   pub fn set_storage(
     flags: u32,
@@ -174,10 +224,28 @@ extern "C" {
     value_ptr: *const u8,
     value_len: u32,
   ) -> ReturnCode;
+
+
+
+
+
+
+
 ```
 
-<aside class="notes"><ul>
-<li>The UAPI allow us to create a Rust RISCV contract, that can interact with the host functions defined in the runtime.</li>
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p><code>#[define_env]</code> defines the list of system calls that the VM can make to the runtime.</p>
+<ul>
+<li>It generates the syscall dispatching logic, handling input and output passing through registers.</li>
+<li>It synchronizes the VM’s gas meter with the runtime’s gas meter, ensuring that execution cost is properly accounted for before and after each system call.</li>
+</ul>
+<p>In the same way, to define Rust guest polkavm contracts, we need to define the list of foreign functions that the
+contracts can call. They are defined in a dedicated crate <code>pallet-revive-uapi</code>.</p>
+<ul>
+<li>it exposes all the foreign functions that a contract can import.</li>
+<li>The #[polkavm_import] macro take care of converting the arguments and return values between the VM and the Rust runtime, by setting the registers A0 to A5</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
 ## Activity: Build and deploy a Rust contract
@@ -185,6 +253,8 @@ extern "C" {
 > Build the fibonacci contract using Rust and `pallet-revive-uapi`
 </script></section></section><section ><section data-markdown><script type="text/template">
 ## Differences with EVM
+</script></section><section data-markdown><script type="text/template">
+## Transaction hashes
 </script></section><section data-markdown><script type="text/template">
 ## Balance Decimals
 
@@ -210,8 +280,9 @@ A transaction that attempt to use a value that can&#39;t be translated to a subs
 - EVM uses a 20 byte address (H160), usually encoded in hex format.
 
 ```rust
+use sp_core::{crypto::AccountId32, H160};
+
 fn main() {
-    use sp_core::{crypto::AccountId32, H160};
     println!("Substrate: {}", AccountId32::new([1u8; 32]));
     // Substrate: 5C62Ck4UrFPiBtoCmeSrgF7x9yv9mn38446dhCpsi2mLHiFT
 
@@ -225,7 +296,7 @@ Everything that is executed in the VM expect a 20 bytes address, we need to map 
 </aside></script></section><section data-markdown><script type="text/template">
 ### Address mapping
 
-```rust
+```rust[0|4-9|16-20|11-12]
 
 #[frame_support::pallet]
 pub mod pallet {
@@ -242,16 +313,18 @@ pub mod pallet {
 }
 
 pub trait AddressMapper<T: Config> {
-	fn to_address(account_id: &T::AccountId) -> H160;
-	fn to_account_id(address: &H160) -> T::AccountId;
-	fn map(account_id: &T::AccountId) -> DispatchResult;
+ fn to_address(account_id: &T::AccountId) -> H160;
+ fn to_account_id(address: &H160) -> T::AccountId;
+ fn map(account_id: &T::AccountId) -> DispatchResult;
   // ...
 }
 ```
 </script></section><section data-markdown><script type="text/template">
 ### Address mapping
 
-```rust
+```rust[1-10| 12-21 | 14-18,23-27]
+// H160 -> AccountId32 -> H160
+
 //  alice_eth: 0x0101010101010101010101010101010101010101
 let alice_eth = H160([1u8; 20]);
 
@@ -260,9 +333,9 @@ let alice_sub = <Runtime as Config>::AddressMapper::to_account_id(&alice_eth);
 
 // 👍 Convert back
 assert_eq!(alice_eth, <Runtime as Config>::AddressMapper::to_address(&alice_sub));
-```
 
-```rust
+// AccountId32 -> H160 -> AccountId32
+
 // bob_sub: 0202020202020202020202020202020202020202020202020202020202020202 (5C7LYpP2 ...)
 let bob_sub = AccountId32::from([2u8; 32]);
 
@@ -279,33 +352,93 @@ assert_ne!(bob_sub, <Runtime as Config>::AddressMapper::to_account_id(&bob_eth))
 assert_eq!(bob_sub, <Runtime as Config>::AddressMapper::to_account_id(&bob_eth));
 ```
 </script></section><section data-markdown><script type="text/template">
-## Gas vs Benchmarked Weight
+## Gas Model
 
-### Gas cost in EVM
+**Ethereum**:
 
-<img style="height: 90%; " src="img/pallet-revive/eip-1108.png" />
-</script></section><section data-markdown><script type="text/template">
+- ⛽ Single dimensional `gas`
+- 📜 Gas costs are defined in the yellow paper and EIPs
+- 📈 Quadratic memory expansion cost
+
+**Polkadot**
+
+- 🚦 Multi dimensional: `ref_time`, `proof_size`, `storage_deposit`
+- 📏 Gas cost are measured in benchmarks, and updated frequently
+- 📊 Fixed memory expansion cost, with hard limits
+
+<aside class="notes"><p>In Ethereum, there is one dimensional resource: <code>gas</code>. The yellow paper, and the EIPs define the cost of each opcode and
+precompile in gas. The gas cost is a measure of the computational effort required to execute an operation or a contract.</p>
+<p>in pallet-revive, we have a multi-dimensional gas model, that includes the <code>ref_time</code>, the <code>proof_size</code>, and the <code>storage_deposit</code>.</p>
+<ul>
+<li><code>ref_time</code> measure the reference time of an operation</li>
+<li><code>proof_size</code> measure the size of the proof required to execute the operation, every time we load a contract for
+example, we need to add this contract to the proof, so that validators that are stateless can verify the execution of
+the block.</li>
+<li><code>storage_deposit</code>: To address state bloat, we charge a deposit from a transaction signer every time a contract it calls adds data to the blockchain&#39;s state. This deposit is transferred to the contract and held there. Otherwise, the contract cannot spend or use it. Whoever signs a transaction that removes storage will receive a refund proportional to the amount of storage removed.</li>
+</ul>
+<p>In Ethereum the gas costs are defined in the yellow paper and EIPs, they are not updated frequently, and each change require a hard fork.
+In pallet-revive, the gas costs are measured in benchmarks, they reflect the actual performance of the reference hardware. These benchmark are run and updated every time we make a new runtime.</p>
+<p>Finally, to avoid an OOM attack, Ethereum uses a quadratic memory expansion cost. This is calculated so limit the
+maximum amount of memory that can be allocated in a transaction given the block gas limit. This means that they are
+overchariing for memory to make sure the memory consumption is bounded.</p>
+<p>In pallet-revive, we have a fixed memory expansion cost, with hard limits. This is a more realistic model. The downside
+is that these limits can be too constraining, but this is something that we will adjust over time.</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Benchmarked weight in Substrate
 
-```rust
-	#[benchmark(pov_mode = Measured)]
-	fn bn128_add() {
-		let input = hex!("089142debb13c461f61523586a60732d8b69c5b38a3380a74da7b2961d867dbf2d5fc7bbc013c16d7945f190b232eacc25da675c0eb093fe6b9f1b4b4e107b3625f8c89ea3437f44f8fc8b6bfbb6312074dc6f983809a5e809ff4e1d076dd5850b38c7ced6e4daef9c4347f370d6d8b58f4b1d8dc61a3c59d651a0644a2a27cf");
-		let expected = hex!("0a6678fd675aa4d8f0d03a1feb921a27f38ebdcb860cc083653519655acd6d79172fd5b3b2bfdd44e43bcec3eace9347608f9f0a16f1e184cb3f52e6f259cbeb");
-		let mut call_setup = CallSetup::<T>::default();
-		let (mut ext, _) = call_setup.ext();
+```rust[0|10-13]
+ #[benchmark(pov_mode = Measured)]
+ fn bn128_add() {
+  let input = hex!("089142debb13c46...");
+  let expected = hex!("0a6678fd675a...");
+  let mut call_setup = CallSetup::<T>::default();
+  let (mut ext, _) = call_setup.ext();
 
-		let result;
+  let result;
 
-		#[block]
-		{
-			result = pure_precompiles::Bn128Add::execute(ext.gas_meter_mut(), &input);
-		}
+  #[block]
+  {
+   result = Bn128Add::execute(ext.gas_meter_mut(), &input);
+  }
 
-		assert_eq!(result.unwrap().data, expected);
-	}
+  assert_eq!(result.unwrap().data, expected);
+ }
 ```
 </script></section><section data-markdown><script type="text/template">
+### Current limits
+
+| Limit                                      | Maximum           |
+| ------------------------------------------ | ----------------- |
+| Call stack depth                           | 5                 |
+| Event topics                               | 4                 |
+| Event data payload size (including topics) | 416 bytes         |
+| Storage value size                         | 416 bytes         |
+| Transient storage variables                | 128 `uint` values |
+| Immutable variables                        | 16 `uint` values  |
+| Contract code blob size                    | ~100 kilobytes    |
+
+<aside class="notes"><p>Limits might be increased in the future. To guarantee existing contracts working as expected we will <em>never decrease</em> the limits.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## Existential Deposit
+
+<aside class="notes"><p>On Polkadot, an account must hold a minimum balance to exist. When it drops below this minimum amount, the account is deleted.
+We call this minimum amount the &quot;existential deposit&quot; (<code>ed</code>). It exists to prevent unused accounts from bloating the state. This is not the case on Ethereum, where
+accounts are never deleted once created, and there is no minimum balance an account must hold to retain its associated data structures (e.g., nonce) in state.
+Since contracts are accounts (more precisely, code that controls an account), they are also affected by this.</p>
+<p>This leads to a situation where every account on Polkadot has some portion of its currency that it cannot spend. This may confuse contracts and off-chain
+tools (e.g., wallets) written for Ethereum.</p>
+<p>Luckily, we can hide this fact from all participants so everything keeps working as expected. It&#39;s just something to be aware of:</p>
+<ul>
+<li>Every Ethereum RPC that returns a balance will subtract the existential deposit. This means that all returned balance is actually spendable, just as on Ethereum.</li>
+<li>Every EVM opcode that returns the balance of an account will do the same.</li>
+<li>When sending balance <code>x</code> to a new account, we actually send <code>x + ed</code>. This ensures that balance transfers of any amount will succeed and the receiver has <code>x</code> as available
+balance. The downside is that it might be unexpected for the sender to send more than <code>x</code>. To prevent confusion, we add the <code>ed</code> to the transaction fee if it needs to
+be paid. This way, the user is always aware of the total cost of a transaction. * This is also true when a contract sends balance to another contract. In this case, we always take the <code>ed</code> from the signer of the transaction and not the sending contract.
+This makes the additional send balance transparent to contracts. This is important since contract code is free to assume that exactly <code>x</code> is sent.
+If a call to a contract funds multiple new accounts, this will be reflected in the transaction fee, just like any other deposit made to cover storage costs
+(see <code>storage_deposit_limit</code> above).</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Gas estimation and encoding in lower digits
 
 - When sending tokens, wallets automatically retrieves the correct gas parameters by calling `eth_estimateGas`
