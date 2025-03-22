@@ -32,7 +32,7 @@ Pick an exciting project idea, start researching on it and even start developein
 - The project needs to have a business case behind (a way to generate revenue off of it).
 - You are working on a new idea; any submitted work must be developed during the hackathon exclusively.
 - You will submit the following:
-  - Short project descritption
+  - Short project description
   - Any research done and conclusions found
   - Some PoC code (doesn't need to be much more than template code but you should get hands on)
 
@@ -43,8 +43,8 @@ Pick an exciting project idea, start researching on it and even start developein
 - Anonymous voting for openGov
 - Liquid staking protocols
 - Oracle protocol with economic security mechanisms
-- New Smart contract language targetting PVM
-- Generative art plattform with on-chain algorithms fully on-chain.
+- New Smart contract language targeting PVM
+- Generative art platform with on-chain algorithms fully on-chain.
 - A dex router across parachains
 - DAO with anonymous voting (ZK proofing participation)
 - STARK verifier contract (for example risc0)
