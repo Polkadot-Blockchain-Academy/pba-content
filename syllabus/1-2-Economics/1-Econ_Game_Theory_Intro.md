@@ -6,9 +6,9 @@ duration: 1 hour lesson + 2 hours activities
 
 # Economics Basics
 
-## Please Fill out the Survey: 
-<img rounded style="width: 550px;" src="./img/survey_allais_schelling.png"><br/>
+## Please Fill out the Survey:
 
+<img rounded style="width: 550px;" src="./img/survey_allais_schelling.png"><br/>
 
 ---
 
@@ -67,7 +67,7 @@ Notes:
 
 - Focus on Individual Actors
   (companies or people)
-- Key Mathematical Tool: Game Theory 
+- Key Mathematical Tool: Game Theory
 
 </pba-flex>
 </pba-col class="fragment">
@@ -77,16 +77,17 @@ Notes:
 
 ## Game Theory: What is a "Game"?
 
-Abstract, Simplified model of ... 
+Abstract, Simplified model of ...
+
 - Set of rational Actors ("Participants", "Players")
 - Sets of Possible Actions taken by Players
-- Preferences for outcomes 
+- Preferences for outcomes
 
 Notes:
 
 - Abstract Modelling Pros & Cons:
-    - simple, easy to analyze, can help understand, compare ,...
-    - models vs reality: interactions outside of model, unexpected preferences
+  - simple, easy to analyze, can help understand, compare ,...
+  - models vs reality: interactions outside of model, unexpected preferences
 
 ---
 
@@ -119,7 +120,6 @@ Notes:
   </tr>
 </tbody>
 </table>
-
 
 ---
 
@@ -159,7 +159,6 @@ Notes:
 - This lesson focuses on static games of complete information.
 - When we look at auctions in lesson Price finding mechanisms, we will also consider games of incomplete information, both dynamic and static.
 
-
 ---
 
 ## Analyzing Static Games
@@ -195,7 +194,8 @@ The Prosecutors offer a deal:
 
 Notes:
 
-They are interrogated in different rooms, apart from each other.
+- They are interrogated in different rooms, apart from each other.
+
 ---
 
 ## Example: Prisoners Dilemma
@@ -204,7 +204,6 @@ Bonnie and Clyde have two options:
 
 - $C$: **Cooperate** with each other and say nothing
 - $D$: **Defect** and admit their crime
-
 
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
@@ -267,11 +266,10 @@ More on that later.
 
 ## Analyzing Static Games
 
-- Easy Case: Dominant Strategies 
+- Easy Case: Dominant Strategies
 - Harder Case: What if there are no Dominant Strategies?
 
 ---
-
 
 ## Example: The Travelers' Dilemma
 
@@ -286,7 +284,6 @@ More on that later.
 <img rounded style="width: 300px; height: 300px;" src="./img/fondue_set.png" />
 </div>
 
-
 ---
 
 ## The Travelers' Dilemma
@@ -298,7 +295,6 @@ More on that later.
 </ul>
 
 ---
-
 
 ## The Travelers' Dilemma
 
@@ -322,9 +318,7 @@ More on that later.
 
 ## The Travelers' Dilemma
 
-
 <img rounded style="height:500px; width:500px;" src="./img/form-qr.png" />
-
 
 <!-- https://forms.gle/UoCGdzU5VxKbjfV27 -->
 
@@ -352,7 +346,6 @@ More on that later.
 <li class="fragment">Equiv.: Nobody can gain anything from being the first to deviate</li>
 <li class="fragment">Every dominant strategy equilibrium is also a NE</li>
 </ul>
-
 
 ---
 
@@ -393,7 +386,7 @@ More on that later.
     <td class="tg-dij8">(1,2)</td>
   </tr>
 </tbody>
-</table> 
+</table>
 
 ---
 
@@ -410,7 +403,7 @@ More on that later.
 </ul>
 
 Notes:
-    Gas bei Gelb vs bei grün sofort los
+Gas bei Gelb vs bei grün sofort los
 
 ---
 
@@ -439,13 +432,14 @@ Notes:
     </ul>
 
 Notes:
- UMFRAGE
+UMFRAGE
 
 ---
 
 ## Exercise: Voting Game
 
-Switzerland is holding a vote on an Initiative. Assume that ... 
+Switzerland is holding a vote on an Initiative. Assume that ...
+
 <ul>
     <li class="fragment">75% of citizens oppose it, 25% support it</li>
     <li class="fragment">People are Lazy: If someones vote doesn't change the result, they'd rather not vote at all</li> 
@@ -488,33 +482,34 @@ Consider a sealed-bid, all-pay auction for a bank note worth CHF 100.
 ## Example: Rock, Paper, Scissors
 
 Notes:
-    und jetzt Pause?
+und jetzt Pause?
 
 ---
 
-## Solution: Randomized Strategies 
+## Solution: Randomized Strategies
 
 Two equivalent perspectives:
+
 <ul> 
     <li class="fragment">Players are fixed and choose their actions at random</li>
     <li class="fragment">Players are drawn at random, but have fixed actions</li> 
 </ul>
 
 Notes:
-    explain with RPS
+explain with RPS
 
 ---
 
 ## Solution: Randomized Strategies
 
 - Fact: Every Game is has a randomized NE ...
-- ... If we assume that: 
-    - Players have finitely many options
-    - Players want to maximize their *Expected Utility* 
+- ... If we assume that:
+  - Players have finitely many options
+  - Players want to maximize their _Expected Utility_
 
 ---
 
-##  Expected Utility
+## Expected Utility
 
 <ul>
     <li class="fragment">Expectation: Average, weighted by Probability</li>
@@ -529,7 +524,7 @@ Notes:
 </li>
 
 Notes:
-    go through prev. examples and show utility functions    
+go through prev. examples and show utility functions
 
 ---
 
@@ -569,7 +564,6 @@ Notes:
 
 > Recall: If actors want to maximize expected utility, </br>
 > then a randomized NE is guaranteed to exist
-
 
 Were you maximizing your expected Utility?
 
@@ -631,9 +625,7 @@ Were you maximizing your expected Utility?
     </li>
 </ul>
 
-
 ---
-
 
 # Workshop: Games
 
@@ -664,7 +656,6 @@ Notes:
 - There is no right or wrong here.
   It is your choice how to behave in this context!
 
-
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
@@ -681,10 +672,9 @@ Link will be distributed!
 
 ---
 
-
 ## Game 1: Discussion
 
-<ul> <li> What were your strategies here? </li> 
+<ul> <li> What were your strategies here? </li>
 
  <li class="fragment">The proposer has the following considerations:
     <ul>
@@ -695,7 +685,6 @@ Link will be distributed!
     </li>
     <li class="fragment">That means, the proposer offering something small and the responder always accepting is the only NE.</li>
 </ul>
-
 
 ---
 
@@ -713,6 +702,7 @@ Link will be distributed!
 # Game 2: Questions?
 
 ## Don't ask about strategies!
+
 ---
 
 ## Let's start!
@@ -724,6 +714,7 @@ Link will be distributed!
 # Game 2: Discussion
 
 ## What strategies did you use?
+
 ---
 
 # Game 3: Multi-Round Ultimatum Game, again!
@@ -741,11 +732,11 @@ Link will be distributed!
 ## How did your strategy change?
 
 ---
+
 ## Game 4: Prisoner's Dilemma
 
 - You play a Prisoner's Dilemma (groups of 2) over 10 rounds.
 - You can chat between rounds.
-
 
 |           |             | **_The other participant_** |                        |
 | --------- | ----------- | --------------------------- | ---------------------- |
