@@ -373,7 +373,6 @@ Circom demo.
 1. [Under the hood of zk-SNARKs](#zk-practice) <!-- .element: class="fragment" data-fragment-index="1" -->
 2. [Introduction to Plonk](#plonk) <!-- .element: class="fragment" data-fragment-index="2" -->
 3. [Polynomial commitment](#polynomial-commitment) <!-- .element: class="fragment" data-fragment-index="3" -->
-4. [Generating ZK-proofs using Circom and snarkjs](#circom-snarkjs) <!-- .element: class="fragment" data-fragment-index="4" -->
 
 </pba-flex>
 
@@ -490,7 +489,7 @@ SAGE demo
 
 - TODO: wired table
 
---- -->
+--- 
 
 # The Trace polynomial
 
@@ -504,7 +503,7 @@ SAGE demo
 
 # Naive Permutation check wtih zero test
 
----
+--- -->
 
 # Developing a wiring enforcement gadget/polynomial
 
@@ -519,8 +518,8 @@ SAGE demo
 - $\prod_{i \in \{1..39\}}f(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
 - We could perform a a zero test $\prod_{i \in \{1..39\}}f(i)$ but the degree is huge. <!-- .element: class="fragment" data-fragment-index="3" -->
 - Instead we introduce a new polynomial: <!-- .element: class="fragment" data-fragment-index="4" -->
-- $t(x) = \prod_{i in \{1..x+1}}f(i)$ <!-- .element: class="fragment" data-fragment-index="5" -->.
-- We have a nice recursion: $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$
+- $t(x) = \prod_{i \in \{1..x+1}}f(i)$. <!-- .element: class="fragment" data-fragment-index="5" -->
+- We have a nice recursion: $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$ <!-- .element: class="fragment" data-fragment-index="6" -->
 
 ---
 
@@ -529,7 +528,7 @@ SAGE demo
 - The observeration is that if you have the recursion:
   $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$
 - And you know $ t(39) = 1 $ then you know that:  <!-- .element: class="fragment" data-fragment-index="1" -->
-- $\prod\_{i \in \{1..39}}f(i).  <!-- .element: class="fragment" data-fragment-index="1" -->
+- $\prod\_{i \in \{1..39}}f(i)$.  <!-- .element: class="fragment" data-fragment-index="1" -->
 - We intepolate $t$ and it will have order 38 (vs 38 \* 13)$ <!-- .element: class="fragment" data-fragment-index="2" -->
 - We run a zero test on $t(x + 1) - t(x)f(x+1) = 0$ for $\{1,...,39\}$ <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -537,7 +536,7 @@ SAGE demo
 
 # Ratio check
 
-- We can run the product check to prove $\prod_{i in \{1..39\}}f(i)/g(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
+- We can run the product check to prove $\prod_{i \in \{1..39\}}f(i)/g(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
 - $t(x + 1) = t(x)f(x+1)/g(x + 1)$ <!-- .element: class="fragment" data-fragment-index="2" -->
 - We can only run a zero test polynomials. <!-- .element: class="fragment" data-fragment-index="3" -->
 - Run zero test on $t(x + 1)g(x + 1) - t(x)f(x+1)$. <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -548,18 +547,19 @@ SAGE demo
 
 - Now we want to use the ratio check to enforce the wiring we have.
 - note that let $\psi$ be a permutation which preserve $T$ i.e. we have $T(a) = T(\psi(a))$ then
-- ${(a, T(a))| for all a in \{1,..,39}} == {(\psi(a), T(a))| for all a \in \{1,...,39\}\}$
+- ${(a, T(a))| \forall a \in \{1,..,39}} == {(\psi(a), T(a))| \forall a \in \{1,...,39\}\}$
 - Then for any random $u_1, u_2$
-  $\prod\_{a\in\{1,..,39\}}\frac{u*1 - u_2 * a - T(a)}{u*1 - u_2 * \psi(a) - T(\psi(a))} = 1.
+  $\prod\_{a\in\{1,\dots,39\}}\frac{u_1 - u_2 * a - T(a)}{u_1 - u_2 * \psi(a) - T(\psi(a))} = 1$.
 
 ---
 
 # Proof of wiring being correct
 
 - The verifier runs a zero test on $T(x) - N$.
-- The verifier runs a zero test on $T(3x) - a(x)$, $T(3x+1) - b(x), $T(3x+2) - c(x)$
+- The verifier runs a zero test on $T(3x) - a(x), $T(3x+1) - b(x), $T(3x+2) - c(x)$
 - A Permutation check on $T(x)$ and $T(\psi(x))$ Which is a zero test on
-- $t(x + 1)(u_1 - u_2* (x+1) - T(x + 1)) - t(x)(u_1 - u_2 * (psi(x)+1) - T(psi(x)+1) = 0$
+- $t(x + 1)(u_1 - u_2* (x+1) - T(x + 1)) -$
+  $t(x)(u_1 - u_2 * (psi(x)+1) - T(psi(x)+1)) = 0$
 
 ---
 
@@ -588,9 +588,9 @@ SAGE demo
 - $f(x) = q(x) \times  \prod(x-1)..(x-13)$<!-- .element: class="fragment" data-fragment-index="2" -->
 - The prover commit to $f$ and $q$.<!-- .element: class="fragment" data-fragment-index="3" -->
 - The verifier ask the prover to provide them with $f(u)$ and $q(u)$ for some random point $u$<!-- .element: class="fragment" data-fragment-index="4" -->
-- It is very unlikely that the prover is able to lie about $f(u)$ and $q(u)$ given he has commited to $f$ and $q$.
-- The verifier computes $\prod(u-1)...(u-13)$<!-- .element: class="fragment" data-fragment-index="5" -->
-- The verifier verifies that $f(u) = q(u)\times \prod(u-1)...(u-13)$ and if so believes that the prover has a solution.<!-- .element: class="fragment" data-fragment-index="6" -->
+- It is very unlikely that the prover is able to lie about $f(u)$ and $q(u)$ given he has commited to $f$ and $q$.<!-- .element: class="fragment" data-fragment-index="5" -->
+- The verifier computes $\prod(u-1)...(u-13)$<!-- .element: class="fragment" data-fragment-index="6" -->
+- The verifier verifies that $f(u) = q(u)\times \prod(u-1)...(u-13)$ and if so believes that the prover has a solution.<!-- .element: class="fragment" data-fragment-index="7" -->
 
 ---
 
