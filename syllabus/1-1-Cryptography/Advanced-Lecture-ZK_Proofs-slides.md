@@ -80,7 +80,7 @@ NP problems are problems that might be hard to solve but are relatively easy to 
 _Example:_ Schnorr signatures are ZK Proofs
 
 - Prover sends $R=r \times G$ for random $r$
-- Verifier sends random $c$ 
+- Verifier sends random $c$
 - Prover replies with $s = (\textrm{Random blinding factor }r) -  \textrm{Private Key} \times c$
 - Verifier checks that $s \times G =R - c \times \textrm{Public Key}$ <!-- .element: class="fragment" data-fragment-index="0" -->
 - Non-interactive signature $(R,s)$ with $c=\textrm{Hash}(\textrm{Public Key} || R || \textrm{message})$ <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -165,6 +165,7 @@ Notes:
 ---
 
 # SNARK = PIOP + commitment + Fiat-Shamir
+
 - PIOP (Polynomial interactive oracle proof)
 - PIOP => ARK
 - PIOP + Poly Commitment => SARK
@@ -489,7 +490,7 @@ SAGE demo
 
 - TODO: wired table
 
---- 
+---
 
 # The Trace polynomial
 
@@ -527,8 +528,8 @@ SAGE demo
 
 - The observeration is that if you have the recursion:
   $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$
-- And you know $ t(39) = 1 $ then you know that:  <!-- .element: class="fragment" data-fragment-index="1" -->
-- $\prod\_{i \in \{1..39}}f(i)$.  <!-- .element: class="fragment" data-fragment-index="1" -->
+- And you know $ t(39) = 1 $ then you know that: <!-- .element: class="fragment" data-fragment-index="1" -->
+- $\prod\_{i \in \{1..39}}f(i)$. <!-- .element: class="fragment" data-fragment-index="1" -->
 - We intepolate $t$ and it will have order 38 (vs 38 \* 13)$ <!-- .element: class="fragment" data-fragment-index="2" -->
 - We run a zero test on $t(x + 1) - t(x)f(x+1) = 0$ for $\{1,...,39\}$ <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -630,9 +631,6 @@ Generate proof demo with snarkjs
 Verify the proof snarkjs
 
 --- -->
-
-
-
 
 ## Summary
 

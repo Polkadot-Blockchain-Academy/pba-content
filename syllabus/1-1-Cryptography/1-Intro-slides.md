@@ -293,7 +293,6 @@ Hashes can be useful for many applications:
 
 </pba-flex>
 
-
 ---
 
 ## Hash Function Properties
@@ -765,29 +764,6 @@ Merkle trees allow many proofs relevant to the rest of this course,<br />e.g. th
 
 ---
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Symmetric Cryptography
 
 <pba-flex center>
@@ -933,8 +909,6 @@ The ECB penguin shows what can go wrong when you encrypt a small piece of data, 
 
 Image sources: <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.png> and <https://github.com/robertdavidgraham/ecb-penguin/blob/master/Tux.ecb.png> and <https://upload.wikimedia.org/wikipedia/commons/5/58/Tux_secure.png>
 
-
-
 ---
 
 ## Asymmetric Cryptography
@@ -1021,12 +995,6 @@ Notes:
 
 Mixing paint example.
 Image Source: <https://upload.wikimedia.org/wikipedia/commons/4/46/Diffie-Hellman_Key_Exchange.svg>
-
-
-
-
-
-
 
 ---
 
@@ -1214,8 +1182,6 @@ Can be Deterministic but in Substrate is implemented as non-deterministic
 - Secp256k1 public keys are _33_ bytes, so their _hash_ is used to represent their holders.
 
 ---
-
-
 
 ### Certificates
 
@@ -1430,9 +1396,6 @@ Notes:
 - Monero uses ring signatures with smaller signer sets.
 - Ring signatures trade some _non-repudation_ for _privacy_.
 
-
-
-
 ---
 
 ## Practical Considerations
@@ -1473,8 +1436,6 @@ Notes:
 - In the case of signature-based certificates, as long as you have the signature, data, and originating public key, you can trust a certificate no matter where it came from. It could be posted on a public message board, sent to you privately, or etched into stone.
 
 ---
-
-
 
 ## Verifiable Random Functions<br/>(VRFs)
 
@@ -1808,7 +1769,6 @@ Image credit here: https://medium.com/clavestone/bitcoin-multisig-vs-shamirs-sec
 
 - Can reconstruct a secret if you lose it.
 - So can other people who collect enough shares.
-
 
 ---
 
