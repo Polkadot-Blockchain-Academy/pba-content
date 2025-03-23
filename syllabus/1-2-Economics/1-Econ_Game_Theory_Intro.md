@@ -247,10 +247,9 @@ Bonnie and Clyde have two options:
 ## Prisoners' Dilemma IRL
 
 <ul>
-<li class="fragment"><strong>Nuclear Arms Race:</strong> 
-<a href="https://www.history.com/topics/cold-war/arms-race">NATO and Russia</a> prefer no arms race to an arms race. Yet, having some arms is preferable to having no arms, irrespective of whether the other one is armed.
+<li class="fragment"><strong>Nuclear Arms Race:</strong> NATO and Russia prefer no arms race to an arms race. Yet, having some arms is preferable to having no arms, irrespective of whether the other one is armed.
 </li>
-<li class="fragment"><strong>OPEC:</strong> <a href="https://www.opec.org/opec_web/en/">Limiting oil supply</a> is in the best interest of all. However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
+<li class="fragment"><strong>OPEC:</strong> Limiting oil supply is in the best interest of all. However, given the high price that thus results, everyone has an incentive to increase individual oil supply to maximize profits.</li>
 <li class="fragment"><strong>Tax Havens:</strong> All Nations want to have enough Tax Income, but ... </li>
 <li class="fragment"><strong>Tragedy of the Commons:</strong> Pollution, Overfishing, etc</li>
 <li class="fragment"><strong>Collaboration vs Freeriding:</strong> e.g. Deserting Soldiers</li>
@@ -458,30 +457,6 @@ Switzerland is holding a vote on an Initiative. Assume that ...
     <li class="fragment">Does a NE occur in reality? Why? / Why not?</li> 
 </ul>
 
----
-
-<!-- TODO: evtl. das reintun,
-## Exercise: Stylized Public Good Game:
-
-<ul>
-<li class="fragment">$N$ players have 10 US dollars each, say, $N=4$.</li>
-<li class="fragment">Each player can choose how much to place into a project.</li>
-<li class="fragment">Funds in the project are magically multiplied by a factor $\alpha$, say, $\alpha=2$.</li>
-<li class="fragment">Finally, the funds in the project are split equally among all players.</li>
-<ul>
-  <li class="fragment">What would be best for the individual?</li>
-  <li class="fragment">What would be best for the collective?</li>
-<ul>
-</ul>
-
-Notes:
-
-- As long as $\alpha>1$, it's best for the collective to contribute as much money as possible, because the money in the project increases magically, so we end up with more money that we started with.
-- However, the problem is that everyone benefits from the project funds regardless of their individual contribution (it is a common good). If a player decreases their initial contribution by one dollar, their individual payoff decreases by $\alpha/N$ dollars, so as long as $\alpha<N$, it is best for each individual to contribute zero.
-- As a result, we can expect that no one will contribute anything, and the money-multiplying powers of the project will be unused. This opportunity cost is a tragedy of the commons.
-- Finally, if $\alpha\geq N$ then it would be individually better to contribute everything, and we would not have a tragedy of the commons.
-
--->
 ---
 
 ## Analyzing Static Games
@@ -805,7 +780,7 @@ Link will be distributed!
 
 Notes:
 
-- Based on https://ve42.co/Axelrod1980a and https://www.youtube.com/watch?v=mScpHTIi-kM
+- Based on ve42 dot co/Axelrod1980a and youtube dot com/watch?v=mScpHTIi-kM
 
 ---
 
