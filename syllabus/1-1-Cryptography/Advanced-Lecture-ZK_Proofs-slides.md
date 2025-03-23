@@ -1,5 +1,5 @@
 ---
-title: ZK proofs
+title: ZK proofs (Deep dive)
 description: Introduction to zero-knowledge proofs and zk-SNARKS
 duration: 2 hour
 ---
@@ -79,9 +79,13 @@ NP problems are problems that might be hard to solve but are relatively easy to 
 
 _Example:_ Schnorr signatures are ZK Proofs
 
-- $(s, e)$ such that $s = (\textrm{Random blinding factor }r) - \\ \textrm{Private Key} \times e$<!-- .element: class="fragment" data-fragment-index="0" -->
-- They show that the prover knows the private key such that $\textrm{private key} \times G = \textrm{Public Key}$ without revealing anything about it.<!-- .element: class="fragment" data-fragment-index="1" -->
-- The statement is the public key and the witness the private key.<!-- .element: class="fragment" data-fragment-index="2" -->
+- Prover sends $R=r \times G$ for random $r$
+- Verifier sends random $c$ 
+- Prover replies with $s = (\textrm{Random blinding factor }r) -  \textrm{Private Key} \times c$
+- Verifier checks that $s \times G =R - c \times \textrm{Public Key}$ <!-- .element: class="fragment" data-fragment-index="0" -->
+- Non-interactive signature $(R,s)$ with $c=\textrm{Hash}(\textrm{Public Key} || R || \textrm{message})$ <!-- .element: class="fragment" data-fragment-index="1" -->
+- They show that the prover knows the private key such that $\textrm{private key} \times G = \textrm{Public Key}$ without revealing anything about it.<!-- .element: class="fragment" data-fragment-index="2" -->
+- The statement is the public key and the witness the private key. <!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
@@ -102,7 +106,7 @@ $r\times s = N$ <!-- .element: class="fragment" data-fragment-index="1" -->
 ## ZK Proof properties
 
 - Completeness: If the claim is true, then it _must_ pass `verify(statement, proof) == true`
-- Statistical Knowledge Soundness: If the prover does not know the witness then `verify(statement, proof) == false` with high probability
+- Knowledge Soundness: If the prover does not know the witness then `verify(statement, proof) == false` with high probability
 - Zero Knowledge: the proof reveals nothing about the witness that was not revealed by the statement itself<!-- .element: class="fragment" data-fragment-index="0" -->
 - The common way of implementing zero knowledge protocol is by means of zk-SNARK<!-- .element: class="fragment" data-fragment-index="1" -->
 
@@ -150,20 +154,21 @@ Notes:
 - Translate our problem into an arithmetic circuit which should output zero if we know the solution.<!-- .element: class="fragment" data-fragment-index="0" -->
 - Make a polynomials which have roots in specific values using the solutions.<!-- .element: class="fragment" data-fragment-index="1" -->
 - Prove that we know the polynomial by evaluating it at random values and provig that we have evaluated it correctly.<!-- .element: class="fragment" data-fragment-index="2" -->
-- We talk about each step in detail in next lecture<!-- .element: class="fragment" data-fragment-index="3" -->
-- Most popular SNARKs uses polynomials, other SNARKs could use other mathematical structures such as vectors, etc<!-- .element: class="fragment" data-fragment-index="4" -->
+- Most popular SNARKs uses polynomials, other SNARKs could use other mathematical structures such as vectors, etc<!-- .element: class="fragment" data-fragment-index="3" -->
+
+- Use polynomial commitments instead of sending polynomials<!-- .element: class="fragment" data-fragment-index="4" -->
 
 Notes:
 
-- We can not send the polynomial as a proof: 1. it is too big (so not succinct) 2. reveals the secret solution.
+- We can not send the polynomial as a proof: 1. it is too big (so not succinct) 2. reveals the secret solution. Instead we use polynomial commitment schemes.
 
 ---
 
 # SNARK = PIOP + commitment + Fiat-Shamir
-
+- PIOP (Polynomial interactive oracle proof)
 - PIOP => ARK
-- PIOP + Commitment => SARK
-- PIOP + Commitment + Fiat-Shamir => SNARK
+- PIOP + Poly Commitment => SARK
+- PIOP + Poly Commitment + Fiat-Shamir => SNARK
 
 ---
 
@@ -432,7 +437,7 @@ $Q_l\times a + Q_r\times b + Q_o\times c + Q_m\times a\times b + Q_c = 0$
 
 - You can always encode a column of a table into a polynomial.<!-- .element: class="fragment" data-fragment-index="1" -->
 - $Q_l(x)$ such that $Q_l(1) = 0, Q_l(2) = 1, Q_l(3) = 1, Q_l(4) = -1 ,...$<!-- .element: class="fragment" data-fragment-index="2" -->
-  <img style="height: 300px; padding-left:100px" src="./img/gate-table-left-input-less-than-8-and-not-1.png" /><!-- .element: class="fragment" data-fragment-index="2" --> sa
+  <img style="height: 300px; padding-left:100px" src="./img/gate-table-left-input-less-than-8-and-not-1.png" /><!-- .element: class="fragment" data-fragment-index="2" -->
 - When you have one polynomial for each column then you can turn the whole table into a polynomial:<!-- .element: class="fragment" data-fragment-index="3" -->
   $Q_l(x)\times a(x) + Q_r(x)\times b(x) + Q_o(x)\times  c(x) + Q_m(x)\times a(x)\times b(x) + Q_c(x)$<!-- .element: class="fragment" data-fragment-index="4" -->
   $= 0$<!-- .element: class="fragment" data-fragment-index="4" -->
@@ -458,7 +463,7 @@ SAGE demo
 - if f(x) = 0 for x = 1,..,13 then
 - $f(x) = q(x) \times  (x-1)\times ...\times (x-13)$
 - $f(x)/q(x) = (x-1)...(x-13)$
-- How to verifier this.
+- How to verify this.
 
 ---
 
@@ -511,10 +516,10 @@ SAGE demo
 # Product check
 
 - We have a polynomial $f(x)$ and we want to prove that:<!-- .element: class="fragment" data-fragment-index="1" -->
-- $\prod_{i in \{1..39\}}f(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
-- We could perform a a zero test $\prod_{i in \{1..39\}}f(i)$ but the degree is huge. <!-- .element: class="fragment" data-fragment-index="3" -->
+- $\prod_{i \in \{1..39\}}f(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
+- We could perform a a zero test $\prod_{i \in \{1..39\}}f(i)$ but the degree is huge. <!-- .element: class="fragment" data-fragment-index="3" -->
 - Instead we introduce a new polynomial: <!-- .element: class="fragment" data-fragment-index="4" -->
-- $t(x) = $\prod_{i in \{1..x+1}}f(i)$ <!-- .element: class="fragment" data-fragment-index="5" -->.
+- $t(x) = \prod_{i in \{1..x+1}}f(i)$ <!-- .element: class="fragment" data-fragment-index="5" -->.
 - We have a nice recursion: $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$
 
 ---
@@ -522,9 +527,9 @@ SAGE demo
 # Product check
 
 - The observeration is that if you have the recursion:
-  $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$ <!-- .element: class="fragment" data-fragment-index="1" -->
-- And you know $ t(39) = 1 $ then you know that:
-- $\prod\_{i in \{1..39}}f(i).
+  $t(x + 1) = t(x)f(x+1)$ for $x \in \{1..39}$
+- And you know $ t(39) = 1 $ then you know that:  <!-- .element: class="fragment" data-fragment-index="1" -->
+- $\prod\_{i \in \{1..39}}f(i).  <!-- .element: class="fragment" data-fragment-index="1" -->
 - We intepolate $t$ and it will have order 38 (vs 38 \* 13)$ <!-- .element: class="fragment" data-fragment-index="2" -->
 - We run a zero test on $t(x + 1) - t(x)f(x+1) = 0$ for $\{1,...,39\}$ <!-- .element: class="fragment" data-fragment-index="3" -->
 
@@ -535,7 +540,7 @@ SAGE demo
 - We can run the product check to prove $\prod_{i in \{1..39\}}f(i)/g(i) = 1$.<!-- .element: class="fragment" data-fragment-index="2" -->
 - $t(x + 1) = t(x)f(x+1)/g(x + 1)$ <!-- .element: class="fragment" data-fragment-index="2" -->
 - We can only run a zero test polynomials. <!-- .element: class="fragment" data-fragment-index="3" -->
-- Run zero test on $t(x + 1)g(x + 1) - t(x)f(x+1)$.
+- Run zero test on $t(x + 1)g(x + 1) - t(x)f(x+1)$. <!-- .element: class="fragment" data-fragment-index="3" -->
 
 ---
 
