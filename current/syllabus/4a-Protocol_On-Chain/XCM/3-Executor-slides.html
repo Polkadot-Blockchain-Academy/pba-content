@@ -56,6 +56,7 @@ The program executes until it either runs to the end or hits an error, at which 
 
 - Holding
 - Origin
+- Fees
 - ErrorHandler
 - Appendix
 - ...
@@ -63,14 +64,14 @@ The program executes until it either runs to the end or hits an error, at which 
 <aside class="notes"><p>Registers are the state of the XCVM.
 They are transient, temporary.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-## The Origin Register
+### The Origin Register
 
 Contains an `Option<Location>` of the cross-consensus origin where the message originated from.
 
 <aside class="notes"><p>This <code>Location</code> can change over the course of program execution.</p>
 <p>It might be <code>None</code> because some instructions clear the origin register.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-## The Holding Register
+### The Holding Register
 
 Expresses a number of assets in control of the xcm execution that have no on-chain representation.
 
@@ -81,6 +82,10 @@ It can be seen as the register holding "unspent assets".
 <aside class="notes"><p>Some instructions, like <code>WithdrawAsset</code>, put funds in the holding register.
 Other instructions, like <code>DepositAsset</code>, take funds out of the holding register.</p>
 </aside></script></section><section data-markdown><script type="text/template">
+### The Fees Register
+
+Holds assets destined for fee payment.
+</script></section><section data-markdown><script type="text/template">
 ## Instructions
 
 Instructions might change a register, the state of the consensus system, or both.
@@ -95,7 +100,7 @@ Each instruction is fetched and executed in order.
 </script></section><section data-markdown><script type="text/template">
 ## Error handler and appendix
 
-Two interesting additions by the XCVM are the error handler and appendix.
+Two additions in the XCVM are the error handler and appendix.
 
 They contain more instructions that are executed if there's an error or unconditionally
 at the end of execution, accordingly.
@@ -129,7 +134,39 @@ This is, for example, how different chains can route different asset instruction
 pallets (pallet-balances vs pallet-assets).
 
 <aside class="notes"><p>The executor&#39;s state is transient, so any state changes to the underlying system need to happen in these configuration items.</p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Example (continued)
+</script></section><section data-markdown><script type="text/template">
+## Local XCM
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Local Instructions (simple).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Local Instructions (actual).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Local Instructions (step 1).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Local Instructions (step 2).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Local Instructions (step 3).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Local Instructions (final).png">
+</script></section><section data-markdown><script type="text/template">
+## Remote XCM
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Instructions (actual).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Remote Instructions (step 1).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Remote Instructions (step 2).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Remote Instructions (step 3).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Remote Instructions (step 4).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Remote Instructions (step 5).png">
+</script></section><section data-markdown><script type="text/template">
+<img src="img/Example Flow - Remote Instructions (final).png">
+</script></section></section><section  data-markdown><script type="text/template">
 # Summary
 
 <pba-flex center>
@@ -137,13 +174,9 @@ pallets (pallet-balances vs pallet-assets).
 - XCVM
 - XCM Executor
 </script></section><section  data-markdown><script type="text/template">
-# Workshop
-
-We'll create our own very simple implementation of the XCVM.
-</script></section><section  data-markdown><script type="text/template">
 # Next steps
 
-How does the XCM subsystem interact with FRAME.
+How does the XCM subsystem interact with FRAME?
 </script></section>
     </article>
   </main>

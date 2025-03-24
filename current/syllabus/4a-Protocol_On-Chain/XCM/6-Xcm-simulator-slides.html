@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <title>XCM Simulator</title>
+  <title>XCM Emulator</title>
   <link rel="icon" href="./../../../assets/favicon.svg" />
   <link rel="shortcut icon" href="./../../../assets/favicon.png" />
   <link rel="stylesheet" href="./../../../dist/reset.css" />
@@ -29,88 +29,95 @@
     <article class="slides">
       <section ><section data-markdown><script type="text/template">
 
-# XCM Simulator
+# XCM Emulator
 
-<aside class="notes"><p>The simulator offers a playground for applying all the knowledge we&#39;ve gained so far.
-You can use the past slides as reference for working with it.</p>
+<aside class="notes"><p>The emulator will let us use all the knowledge we&#39;ve gained so far.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## What you'll learn
 
-- How to setup a mock network with the XCM simulator
+- How to use the XCM emulator for testing your cross-chain interactions.
 </script></section></section><section  data-markdown><script type="text/template">
 # What is it?
 
-A collection of macros that create a mock network we can use to play around with XCM.
+A collection of macros that create a mock network we can use test our XCM configuration.
 </script></section><section ><section data-markdown><script type="text/template">
 # Creating a mock network
 </script></section><section data-markdown><script type="text/template">
 ## Runtimes
 
 We first need to create our runtimes, a relay chain and a minimum of a parachain.
-
-<aside class="notes"><p>To create those, we can look back at the FRAME lessons.</p>
-</aside></script></section><section data-markdown><script type="text/template">
-## `decl_test_relay_chain`
+</script></section><section data-markdown><script type="text/template">
+## Relay chains
 
 ```rust
-decl_test_relay_chain! {
+decl_test_relay_chains! {
   pub struct Relay {
-    Runtime = relay_chain::Runtime,
-    RuntimeCall = relay_chain::RuntimeCall,
-    RuntimeEvent = relay_chain::RuntimeEvent,
-    XcmConfig = relay_chain::XcmConfig,
-    MessageQueue = relay_chain::MessageQueue,
-    System = relay_chain::System,
-    new_ext = relay_ext(),
+    runtime = relay_runtime,
+    core = {
+      SovereignAccountOf: location_converter,
+    },
+    pallets = {
+      ...
+    },
+    genesis = genesis(),
+    on_init = {
+      ...
+    },
   }
 }
 ```
 
-<aside class="notes"><p>XCM simulator provides a macro for declaring a mock relay chain.</p>
+<aside class="notes"><p>XCM emulator provides a macro for declaring mock relay chains.</p>
 <p>We need to specify a couple of things:</p>
 <ul>
-<li>Runtime: The actual runtime of our relay chain.</li>
-<li>RuntimeCall, RuntimeEvent: Runtime aggregated types</li>
-<li>XcmConfig: The struct that contains our XCM configuration.</li>
-<li>MessageQueue, System: Specific pallets on our runtime.</li>
-<li>new_ext: A function that returns an instance of <code>TestExternalities</code>.
-We can initialize storage for our tests with this.</li>
+<li>runtime: The actual runtime of our relay chain.</li>
+<li>core: Some core functionality used by the emulator, things like handlers and converters.</li>
+<li>pallets: All pallets you want to use for tests.</li>
+<li>genesis: Genesis configuration for testing, you can register assets for example.</li>
+<li>on_init: You can call some <code>on_initialize</code>s here.</li>
 </ul>
 </aside></script></section><section data-markdown><script type="text/template">
-## `decl_test_parachain`
+## Parachains
 
 ```rust
-pub struct ParaA {
-  Runtime = parachain::Runtime,
-  XcmpMessageHandler = parachain::MessageQueue,
-  DmpMessageHandler = parachain::MessageQueue,
-  new_ext = para_ext(),
+decl_test_parachains! {
+  pub struct ParaA {
+    runtime = parachain_runtime,
+    core = {
+      ...
+    },
+    pallets = {
+      ...
+    },
+    genesis = genesis(),
+    on_init = {
+      ...
+    },
+  }
 }
 ```
 
-<aside class="notes"><p>XCM simulator provides a macro for declaring a mock parachain.</p>
-<p>We need to specify less things:</p>
-<ul>
-<li>Runtime: The actual runtime of our parachain.</li>
-<li>XcmpMessageHandler, DmpMessageHandler: The message handlers, always the message queue pallet.</li>
-<li>new_ext: A function that returns an instance of <code>TestExternalities</code>.</li>
-</ul>
+<aside class="notes"><p>XCM emulator provides a macro for declaring mock parachains.</p>
+<p>We need to specify the same things.</p>
 </aside></script></section><section data-markdown><script type="text/template">
-## `decl_test_network`
+## The entire network
 
 ```rust
-decl_test_network! {
+decl_test_networks! {
   pub struct MockNet {
     relay_chain = Relay,
     parachains = vec![
-      (1000, ParaA),
-      (2000, ParaB),
+      ParaA,
+      ParaB,
     ],
+    bridge = (),
   }
 }
 ```
 
-<aside class="notes"><p>We declare our network by specifying our relaychain and parachains.</p>
+<aside class="notes"><p>We declare our network by specifying our relay chain and parachains.
+We can also declare a bridge to test sending messages to different networks.
+In that case we also use <code>decl_test_bridges!</code> to define the bridges.</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
 # Simple Test
 
@@ -121,11 +128,11 @@ fn test_xcm() {
 
   ParaA::execute_with(|| {
     let message: Xcm<()> = <some_xcm>;
-    let destination = Location::new(1, Parachain(2000));
-    parachain::XcmPallet::send(
-      parachain::RuntimeOrigin::signed(<some_account>),
-      Box::new(VersionedLocation::V4(destination)),
-      Box::new(VersionedXcm::V4(message)),
+    let destination = Location::new(1, [Parachain(2001)]);
+    parachain_runtime::XcmPallet::execute(
+      parachain_runtime::RuntimeOrigin::signed(<some_account>),
+      Box::new(VersionedXcm::V5(message)),
+      Weight::from_parts(...), // Some max weight.
     );
   });
 
@@ -136,23 +143,21 @@ fn test_xcm() {
 ```
 
 <aside class="notes"><p>First we reset the state of the network.
-Then we create a message and call the XCM pallet&#39;s <code>send</code> extrinsic.
+Then we create a message and call the XCM pallet&#39;s <code>execute</code> extrinsic.
 We must wrap the location and XCM in a <code>Versioned*</code> type.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 # Next steps
 
-- XCM emulator
 - Zombienet
 - Chopsticks
 
-<aside class="notes"><p>The evolution of the simulator is the XCM emulator, it has more testing utilities.
-The simulator should be used as a playground, and the emulator as a tool for end-to-end tests.</p>
-<p>There&#39;s also zombienet for spawning a local network and testing against it with either typescript or a DSL.</p>
-<p>There&#39;s also chopsticks for forking a live chain and testing against it.</p>
+<aside class="notes"><p>In the realm of testing tools we also have Zombienet and Chopsticks.</p>
+<p>Zombienet for spawning a local network and testing against it with either typescript or a DSL.</p>
+<p>Chopsticks for forking a live chain and testing against it.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 # Workshop
 
-We'll now jump on the simulator, configure XCM and execute and send messages.
+We'll now jump on the emulator, configure XCM, execute and send messages.
 </script></section>
     </article>
   </main>

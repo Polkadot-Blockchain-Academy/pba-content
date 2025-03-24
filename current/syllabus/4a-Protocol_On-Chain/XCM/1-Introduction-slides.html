@@ -40,7 +40,7 @@
 - How XCMs are executed
 - The XCM Pallet
 - How to configure systems to work with XCM
-- How to simulate messages on a network
+- How to craft XCMs
 </script></section><section ><section data-markdown><script type="text/template">
 # The problem
 
@@ -54,7 +54,7 @@ Specialization allows chains to focus on their particular value proposition and 
 </script></section></section><section ><section data-markdown><script type="text/template">
 # The solution
 
-Message passing.
+Messaging.
 
 <aside class="notes"><p>In order for chains to use functionality from other chains,
 we need to pass messages from one chain to another.</p>
@@ -63,14 +63,15 @@ we need to pass messages from one chain to another.</p>
 
 <pba-flex center>
 
-- UMP: Upward Message Passing
-- DMP: Downward Message Passing
-- HRMP: Horizontal Relay-routed Message Passing
-- XCMP: Cross-Consensus Message Passing
+- UMP/DMP: Relay <-> Parachains
+- HRMP: Parachain <-> Parachain
+- Bridges: Polkadot <-> Ethereum and more
 
-<aside class="notes"><p>These are the current transport protocols we have in Polkadot.
+<aside class="notes"><p>UMP/DMP stands for Upward/Downward Message Passing.
 HRMP piggybacks on UMP and DMP to send messages to sibling parachains, so it uses the relay chain as a relayer.
-XCMP is not live.</p>
+These are the current transport protocols we have in Polkadot.
+An upgrade to HRMP is XCMP which won&#39;t use the relay chain at all.
+It&#39;s not live yet, still being researched and prototyped.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ## What?
 
@@ -112,12 +113,14 @@ Some use-cases don&#39;t require accounts.</li>
 </script></section><section data-markdown><script type="text/template">
 ## Language
 
-Cross-chain DSL. Each message is a script that allows expressing multiple actions.
+Cross-chain DSL.
+
+Each message is a script that allows expressing multiple actions.
 </script></section><section data-markdown><script type="text/template">
 ## Intentions
 
-Because blockchains are sovereign entities, the language only expresses what we _want_
-the receiver to do, it doesn't enforce it.
+Blockchains are sovereign entities, the language only expresses what we _want_
+the receiver to do, it can't enforce it.
 
 Verification can be done on another layer, e.g. checking the expected result with a light client.
 
@@ -138,20 +141,20 @@ XCM is a **versioned** language.
 
 Each system declares what version they support.
 
-It's currently in version 4.
+The latest is version 5.
 
 What goes in each version is defined via an RFC process.
 
 <aside class="notes"><p>This protects against runtime upgrades breaking everything.</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
-# ✉️ XCM vs XCMP
+# XCM vs Message Passing
 
 <img src="img/XCM Post truck.png">
 
 <aside class="notes"><p>XCM is akin to the post card from the post office.</p>
 <p>It is <em>not</em> a transport protocol.</p>
 <p>A post card doesn&#39;t send itself!</p>
-<p>As we mentioned, XCM != {UMP, DMP, HRMP, XCMP}.</p>
+<p>As we mentioned, XCM != {UMP, DMP, HRMP, XCMP, Bridges}.</p>
 <p>It cannot be used to actually &quot;send&quot; any message between systems; its utility is only in expressing what should be done by the receiver.
 Like many aspects core to Substrate, this separation of concerns empowers us to be far more generic and enable much more.
 A post card relies on the postal service to get itself sent towards its receivers, and that is what a messaging protocol does.</p>
@@ -180,6 +183,12 @@ We can also call them XCM programs, since they are executable.
 </script></section><section  data-markdown><script type="text/template">
 # Questions?
 </script></section><section  data-markdown><script type="text/template">
+# Example Flow
+
+<img src="img/Example Flow - Introduction.png">
+
+<aside class="notes"><p>We&#39;ll build towards this during this module.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 # Next steps
 
 We'll learn about the primitives that make up any XCM.
