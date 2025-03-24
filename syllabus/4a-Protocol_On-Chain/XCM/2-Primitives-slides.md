@@ -1,5 +1,5 @@
 ---
-title: XCM primitives
+title: XCM Primitives
 description: Locations, assets and instructions
 duration: 2 hours
 ---
@@ -118,12 +118,10 @@ enum NetworkId {
     ByFork { block_number: u64, block_hash: [u8; 32] },
     Polkadot,
     Kusama,
-    Westend,
-    Rococo,
-    Wococo,
     Ethereum { chain_id: u64 },
     BitcoinCore,
     BitcoinCash,
+    PolkadotBulletin,
 }
 ```
 
@@ -419,7 +417,7 @@ They are a mapping from a `Location` to an account id.
 
 <diagram class="mermaid">
 graph TD
-    Polkadot(Polkadot)-->A(A) & B(B)
+    Polkadot(Polkadot)-->A(AssetHub) & B(Collectives)
     A-->Alice(Alice)
     B-->AliceSA("Alice's sovereign account")
 </diagram>
@@ -436,7 +434,7 @@ When transferring between consensus systems, the sovereign account is the one th
 
 <diagram class="mermaid">
 graph TD
-    Polkadot(Polkadot)-->A(A) & B(B)
+    Polkadot(Polkadot)-->A(AssetHub) & B(Collectives)
     A-->Alice(Alice)
     B-->AliceSA("Alice's sovereign account")
     B-->ASA("Asset Hub's sovereign account")
@@ -529,11 +527,16 @@ Every XCM is a sequence of instructions.
 - Information
 - System Notification
 
+Notes:
+
+Most instructions are commands.
+We have a few trusted indications mainly for cross-chain transfers.
+Information instructions are meant to carry over information from other systems.
+System notifications notify when particular events happen, we have these for channels and versioning.
+
 ---v
 
-## Example: WithdrawAsset
-
-An instruction used to get assets from an account to use them during the execution of the message.
+### Instruction Examples
 
 <pba-flex center>
 
@@ -544,15 +547,30 @@ WithdrawAsset(Assets)
 Notes:
 
 This instruction is a command.
+Gets assets from an account to use them during the execution of the message.
+We'll see registers in the next lecture when we talk about the executor.
 It takes the assets from the account specified in the origin register and puts them in the holding register.
 
 ---v
 
-## Example: ReceiveTeleportedAsset
+### Instruction Examples
 
 <pba-flex center>
 
-Used for teleporting assets between two systems.
+```rust
+DepositAsset { assets: AssetFilter, beneficiary: Location }
+```
+
+Notes:
+
+Another command.
+Will deposit all assets matched by the `assets` filter to the account of `beneficiary`.
+
+---v
+
+### Instruction Examples
+
+<pba-flex center>
 
 ```rust
 ReceiveTeleportedAsset(Assets)
@@ -567,15 +585,29 @@ A lot of trust is needed between both systems.
 
 ---v
 
-## Example: QueryResponse
+### Instruction Examples
 
-Used for reporting information back to another system.
+<pba-flex center>
+
+```rust
+ReserveAssetDeposited(Assets)
+```
+
+Notes:
+
+Another trusted indication.
+Used for reserve asset transfers, the second type of cross-chain transfer we'll see in next lecture.
+It tells the current system that assets have been deposited to this system's sovereign account somewhere
+and derivatives matching them should be minted here.
+
+---v
+
+### Instruction Examples
 
 <pba-flex center>
 
 ```rust
 QueryResponse {
-    #[codec(compact)]
     query_id: QueryId,
     response: Response,
     max_weight: Weight,
@@ -612,4 +644,4 @@ We'll play around with these primitives.
 
 # Next steps
 
-How do these primitives get together to perform cross-consensus execution?
+We'll look at an example and how these primitives are used.

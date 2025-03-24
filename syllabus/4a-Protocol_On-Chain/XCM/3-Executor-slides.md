@@ -1,6 +1,6 @@
 ---
 title: XCM Executor
-description: How XCMs are executed
+description: How XCMs are executed.
 duration: 1 hour
 ---
 
@@ -39,6 +39,7 @@ The program executes until it either runs to the end or hits an error, at which 
 
 - Holding
 - Origin
+- Fees
 - ErrorHandler
 - Appendix
 - ...
@@ -50,7 +51,7 @@ They are transient, temporary.
 
 ---v
 
-## The Origin Register
+### The Origin Register
 
 Contains an `Option<Location>` of the cross-consensus origin where the message originated from.
 
@@ -62,7 +63,7 @@ It might be `None` because some instructions clear the origin register.
 
 ---v
 
-## The Holding Register
+### The Holding Register
 
 Expresses a number of assets in control of the xcm execution that have no on-chain representation.
 
@@ -74,6 +75,12 @@ Notes:
 
 Some instructions, like `WithdrawAsset`, put funds in the holding register.
 Other instructions, like `DepositAsset`, take funds out of the holding register.
+
+---v
+
+### The Fees Register
+
+Holds assets destined for fee payment.
 
 ---v
 
@@ -97,7 +104,7 @@ Each instruction is fetched and executed in order.
 
 ## Error handler and appendix
 
-Two interesting additions by the XCVM are the error handler and appendix.
+Two additions in the XCVM are the error handler and appendix.
 
 They contain more instructions that are executed if there's an error or unconditionally
 at the end of execution, accordingly.
@@ -142,6 +149,70 @@ The executor's state is transient, so any state changes to the underlying system
 
 ---
 
+# Example (continued)
+
+---v
+
+## Local XCM
+
+---v
+
+<img src="img/Example Flow - Local Instructions (simple).png">
+
+---v
+
+<img src="img/Example Flow - Local Instructions (actual).png">
+
+---v
+
+<img src="img/Example Flow - Local Instructions (step 1).png">
+
+---v
+
+<img src="img/Example Flow - Local Instructions (step 2).png">
+
+---v
+
+<img src="img/Example Flow - Local Instructions (step 3).png">
+
+---v
+
+<img src="img/Example Flow - Local Instructions (final).png">
+
+---v
+
+## Remote XCM
+
+---v
+
+<img src="img/Example Flow - Instructions (actual).png">
+
+---v
+
+<img src="img/Example Flow - Remote Instructions (step 1).png">
+
+---v
+
+<img src="img/Example Flow - Remote Instructions (step 2).png">
+
+---v
+
+<img src="img/Example Flow - Remote Instructions (step 3).png">
+
+---v
+
+<img src="img/Example Flow - Remote Instructions (step 4).png">
+
+---v
+
+<img src="img/Example Flow - Remote Instructions (step 5).png">
+
+---v
+
+<img src="img/Example Flow - Remote Instructions (final).png">
+
+---
+
 # Summary
 
 <pba-flex center>
@@ -151,12 +222,6 @@ The executor's state is transient, so any state changes to the underlying system
 
 ---
 
-# Workshop
-
-We'll create our own very simple implementation of the XCVM.
-
----
-
 # Next steps
 
-How does the XCM subsystem interact with FRAME.
+How does the XCM subsystem interact with FRAME?

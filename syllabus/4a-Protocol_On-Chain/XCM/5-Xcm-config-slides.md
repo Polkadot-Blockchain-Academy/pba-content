@@ -1,6 +1,6 @@
 ---
 title: XCM Configuration
-description: Introduction to configuring the XCM executor
+description: Introduction to configuring the XCM executor.
 duration: 1 hour
 ---
 
@@ -15,6 +15,8 @@ What can we configure?
 
 ## What you'll learn
 
+<pba-flex center>
+
 - Different configuration items available in the XCM executor.
 - The tools available to help you configure them.
 
@@ -26,10 +28,9 @@ What can we configure?
 
 - AssetTransactor
 - Barrier
-- LocationConverter
-- OriginConverter
 - IsReserve
 - IsTeleporter
+- LocationConverter
 - Weigher
 
 Notes:
@@ -43,34 +44,66 @@ These are all associated types on an `XcmConfig` struct.
 
 # Asset Transactor
 
+---v
+
 <pba-flex center>
 
-- Withdrawing
-- Depositing
+Assets can live in different pallets:
 
-Notes:
+- pallet-balances
+- pallet-assets
+- pallet-nfts
 
-Lets the executor handle withdrawing and depositing assets.
+You can even have multiple instances of these pallets!
+
+---v
+
+How does the XCM executor know where each asset lives?
+
+You configure it!
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
 
 ## Available adapters
 
+<pba-flex center>
+
 - Fungible(s) adapter: pallet-balances/pallet-assets
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - Nonfungible(s) adapter: pallet-uniques/pallet-nfts
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
+Although you can write your own logic for this, we have some available adapters
+in the `polkadot-sdk` repo in the `xcm-builder` crate.
 Each can be configured to support different assets.
-Of course you can write your own as well.
+
+---v
+
+## Example (continued)
+
+<img src="img/Example Flow - Asset Transactor.png">
+
+Notes:
+
+DOT lives in `pallet-balances`.
+USDT lives in an instance of `pallet-assets`.
+`AssetTransactor` is a sequence of transactors, we try them one by now until one
+matches the asset id.
+We'll see how we can configure these later.
 
 ---
 
 # Barrier
 
-We can receive any message from chains we are connected to.
+By default we can receive any message from chains we are connected to.
 
 Do we want to?
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
 
@@ -79,29 +112,80 @@ It's a firewall.
 
 ---v
 
+## A firewall for XCMs
+
+Chains can configure its barrier to immediately filter unwanted messages.
+
+---v
+
+<img src="img/Example Flow - Barrier (intro).png">
+
+Notes:
+
+Our example would need to pass the barrier to reach its destination and be executed.
+
+---v
+
+<img src="img/Example Flow - Barrier (wrong origin).png">
+
+Notes:
+
+We can filter messages from unwanted origins.
+We can also filter messages with unwanted instructions.
+For example, this "Random Action" doesn't have to be a transfer, could be trying to execute anything.
+
+---v
+
 ## Available barriers
 
 <pba-flex center>
 
-- TakeWeightCredit
 - AllowTopLevelPaidExecutionFrom
-- WithComputedOrigin
-- AllowUnpaidExecutionFrom
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - AllowExplicitUnpaidExecutionFrom
-- AllowKnownQueryResponses
-- AllowSubscriptionsFrom
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- ...
+<!-- .element: class="fragment" data-fragment-index="3" -->
 
 Notes:
 
-These are some of the most relevant barriers provided.
+These are two of the most relevant barriers provided.
+There are more.
+TODO: Would be good to have good documentation on barriers to link here.
 You can of course write your own and filter whatever you want.
 They come with some degree of customizability.
+
+---v
+
+### AllowTopLevelPaidExecutionFrom
+
+<img src="img/Example Flow - Barrier (no fees).png">
+
+Notes:
+
+As long as they include the `PayFees` instruction, meaning they intend to pay fees,
+this barrier will allow them to pass.
+
+---v
+
+### AllowExplicitUnpaidExecutionFrom
+
+<img src="img/Example Flow - Barrier (explicit unpaid).png">
+
+Notes:
+
+This barrier will allow messages from some origins when they use the `UnpaidExecution`
+instruction.
+These could be to allow messages from the system.
+It's used a lot between system chains.
 
 ---
 
 # LocationConverter
 
 Way to convert from `Location` to `AccountId`.
+
+This is how we get sovereign accounts.
 
 Notes:
 
@@ -116,34 +200,14 @@ This means pallets can have account, external locations can also have accounts.
 <pba-flex center>
 
 - AccountId32Aliases
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - HashedDescription
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
 The first just grabs an AccountId32 junction and gets the local account from it.
 The second is very generic and can be used to generate accounts for any type of junction.
-
----
-
-## OriginConverter
-
-Used for converting locations to FRAME origins.
-
----v
-
-## Available converters
-
-<pba-flex center>
-
-- SovereignSignedViaLocation
-- ParentAsSuperuser
-
-Notes:
-
-SovereignSignedViaLocation just creates a signed origin from the account derived by
-the location converter.
-
-ParentAsSuperuser creates a root origin if the message came from the parent.
 
 ---
 
@@ -153,19 +217,11 @@ Specifies reserve locations for particular assets.
 
 ---v
 
-## IsReserve and IsTeleporter: helpers
+<img src="img/Example Flow - IsReserve.png">
 
-<pba-flex center>
+---v
 
-- NativeAsset
-- Case<T>
-
-Notes:
-
-NativeAsset accepts any chain as a reserve or teleporter for their own native asset.
-
-Case<T> just takes a tuple of an `AssetFilter` and a `Location`.
-It specifies that location is a reserve or teleporter for those assets.
+<img src="img/Example Flow - IsTeleporter.png">
 
 ---
 
@@ -175,12 +231,14 @@ The weigher weighs XCMs, it assigns a weight to each instruction.
 
 ---v
 
-## Available weighers
+### Available weighers
 
 <pba-flex center>
 
 - FixedWeightBounds (testing)
+<!-- .element: class="fragment" data-fragment-index="1" -->
 - WeightInfoBounds (production)
+<!-- .element: class="fragment" data-fragment-index="2" -->
 
 Notes:
 
@@ -190,14 +248,24 @@ WeightInfoBounds uses benchmarks for assigning different weights to different in
 
 ---v
 
-## Weighing
+### Benchmarks!
 
 XCM instructions need to be weighed by each runtime!
 
 Different configuration items change the benchmarks.
 
+---v
+
+<img src="img/Example Flow - Weigher.png">
+
+Notes:
+
+If you're using `pallet-assets` for example, instructions that use the `AssetTransactor`
+will inevitably be more expensive.
+Always benchmark the worst case.
+
 ---
 
 # Next steps
 
-We'll look at the XCM simulator, a way to let us experiment configuring XCM and sending and executing messages.
+We'll look at the XCM emulator, a tool to let us experiment configuring XCM, sending and executing messages.
