@@ -31,10 +31,12 @@ description: Overview of Blockchain
 <img style="width: 600px" src="./img/stories_campire.png" />
 
 Notes:
+
 1. Importance of having trustless verifiable histories
 2. Coordinating with people who you dont trust or know is still important
 
-    (Say you are running grocery store, trusting the customer has the money, trusting the cashier is being honest and not keeping the money, trusting your producers are giving you grocery items that are fresh and not going to do harm to your customers)
+   (Say you are running grocery store, trusting the customer has the money, trusting the cashier is being honest and not keeping the money, trusting your producers are giving you grocery items that are fresh and not going to do harm to your customers)
+
 3. Trust and Centralization
 
 ---
@@ -46,8 +48,8 @@ Notes:
 - There is no force which can stop the system from operating(Unstoppable) <!-- .element: class="fragment" data-fragment-index="4" -->
 - The rules are the rules for everyone nobody is privledged.. <!-- .element: class="fragment" data-fragment-index="5" -->
 
-
 Notes:
+
 - Too often certain parties or people are not able to access the data or system from the record thus creating enclaves of privledged groups
 - History cannot be changed just because some authority or party wants to rewrite what has happened
 - No matter how strong the authority or force is. Nothing is able to "Shut it down"
@@ -69,7 +71,7 @@ Notes:
 
 Notes:
 A) This means a few Privledged nodes have special data access rights or access to the data
-B) Remember decentralizing allows for less ability for someone to be restricted from accessing the network 
+B) Remember decentralizing allows for less ability for someone to be restricted from accessing the network
 
 A government could go to the few nodes who provide access and tell them not to serve me information or handle my requests for things..
 
@@ -184,9 +186,9 @@ A) So i.e. I sent some money from Andrew to Larissa and now both of our accounts
 Notes:
 
 1. Can anyone think why we want a functional state machine? (We want to do things like interact with others and coordinate)
-2. Can anyone think of any other practical systems which can be labeled as a state machine? Car transmission, Vending Machine, Any system..  etc etc
+2. Can anyone think of any other practical systems which can be labeled as a state machine? Car transmission, Vending Machine, Any system.. etc etc
 3. Take a second with neighbor to come up with a practical state machine and what are the various states and ways to transition them
-(Lets share afterwards)
+   (Lets share afterwards)
 4. Before moving on lets remember why or why not would it be beneficial to have the state transition function(I.e. Pressing a button and changing states) Have a clear set of rules. I.E. Vending machine has a super user who can just take all of the soda out at any time, Car toll system can allow "certain" cars with privledge to bypass the fee etc etc.
 
 ---
@@ -458,7 +460,7 @@ Another desireable property that is sometimes too obvious to say.
 - Integrity - Stan, Kyle, and Kenny will eat at either Whistlin' Willies or Casa Bonita.
 
 </pba-col>
-</pba-cols> 
+</pba-cols>
 
 Notes:
 
@@ -467,13 +469,12 @@ Stan, Kyle, and Kenny want to have something yummy and spend time together.
 Cartman is secretly pursuing his own goals and doesn't care whether dinner is yummy.
 In fact he secretly hopes they won't decide at all so he can go home and eat KFC with his mom.
 
-Stan and Kyle both propose Whistlin' Willie's for dinner. 
+Stan and Kyle both propose Whistlin' Willie's for dinner.
 Kenny and Cartman propose Casa Bonita.
 
 In the end Kenny may not agree that Whistlin' Willie's is the best option for dinner, but he will agree that it is the legitimate group decision.
 
 ---
-
 
 ## Adversarial Conditions
 
@@ -548,7 +549,7 @@ The fork choice allows you, as a network participant, to decide which fork you c
 
 ---v
 
-## Assumptions Deterministic Finality 
+## Assumptions Deterministic Finality
 
 - 2/3 of all participants are honest <!-- .element: class="fragment" data-fragment-index="2" -->
 - Vote based on some heuristic <!-- .element: class="fragment" data-fragment-index="3" -->
@@ -557,7 +558,7 @@ The fork choice allows you, as a network participant, to decide which fork you c
 Notes:
 
 - Bitcoin has no deterministic end point or finality so how do you know when a transaction is final?
-(The amount of work to "Fake" the transaction costs more than the actual transaction..)
+  (The amount of work to "Fake" the transaction costs more than the actual transaction..)
 - What assumptions are made in bitcoin? (The fact that you spend energy to do something faulty would be dumb)
 
 ---
@@ -595,14 +596,14 @@ The basic idea is that anyone can lock up some tokens on chain (in the state mac
 
 ### Bridging
 
-- Bridging naively single signer 
+- Bridging naively single signer
 - Bridging a little better.. (Multisig of participants listening to both and the aggregate being trusted)
-- "Trustless" Bridging using light clients 
+- "Trustless" Bridging using light clients
 
 Notes:
-    
+
 1. One god Party who has all the funds or has ultimate say whether a transaction from Chain A or B is valid.
-This can even look like sending the funds to a one party who then sends the money to another party on another chain 
+   This can even look like sending the funds to a one party who then sends the money to another party on another chain
 2. Multisig of small party which requires a threshold who listens to both chains (And you trust that party is acting honestly)
 3. You verify the other chains state by listening and being a participant in their consensus
 
