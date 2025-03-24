@@ -268,7 +268,7 @@ Non-deterministic arithmetic circuits
 
 - Turn the problem into an arithmetic circuit (describe it only with +, -, x). <!-- .element: class="fragment" data-fragment-index="0" -->
 - Make polynomials from the circuit and your secret solution.<!-- .element: class="fragment" data-fragment-index="1" -->
-- But we are not aming at making you zk-Proof expert in one lecture.<!-- .element: class="fragment" data-fragment-index="2" -->
+- But we are not aiming at making you zk-Proof expert in one lecture.<!-- .element: class="fragment" data-fragment-index="2" -->
 
 ---
 
