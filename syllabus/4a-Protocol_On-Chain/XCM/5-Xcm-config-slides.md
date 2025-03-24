@@ -61,6 +61,7 @@ You can even have multiple instances of these pallets!
 How does the XCM executor know where each asset lives?
 
 You configure it!
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 ---v
@@ -101,6 +102,7 @@ We'll see how we can configure these later.
 By default we can receive any message from chains we are connected to.
 
 Do we want to?
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:
