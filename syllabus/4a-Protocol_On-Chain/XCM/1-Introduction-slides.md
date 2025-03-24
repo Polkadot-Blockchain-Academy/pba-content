@@ -17,7 +17,7 @@ duration: 45 minutes
 - How XCMs are executed
 - The XCM Pallet
 - How to configure systems to work with XCM
-- How to simulate messages on a network
+- How to craft XCMs
 
 ---
 
@@ -37,7 +37,7 @@ Specialization allows chains to focus on their particular value proposition and 
 
 # The solution
 
-Message passing.
+Messaging.
 
 Notes:
 
@@ -50,16 +50,17 @@ we need to pass messages from one chain to another.
 
 <pba-flex center>
 
-- UMP: Upward Message Passing
-- DMP: Downward Message Passing
-- HRMP: Horizontal Relay-routed Message Passing
-- XCMP: Cross-Consensus Message Passing
+- UMP/DMP: Relay <-> Parachains
+- HRMP: Parachain <-> Parachain
+- Bridges: Polkadot <-> Ethereum and more
 
 Notes:
 
-These are the current transport protocols we have in Polkadot.
+UMP/DMP stands for Upward/Downward Message Passing.
 HRMP piggybacks on UMP and DMP to send messages to sibling parachains, so it uses the relay chain as a relayer.
-XCMP is not live.
+These are the current transport protocols we have in Polkadot.
+An upgrade to HRMP is XCMP which won't use the relay chain at all.
+It's not live yet, still being researched and prototyped.
 
 ---v
 
@@ -116,14 +117,16 @@ Notes:
 
 ## Language
 
-Cross-chain DSL. Each message is a script that allows expressing multiple actions.
+Cross-chain DSL.
+
+Each message is a script that allows expressing multiple actions.
 
 ---v
 
 ## Intentions
 
-Because blockchains are sovereign entities, the language only expresses what we _want_
-the receiver to do, it doesn't enforce it.
+Blockchains are sovereign entities, the language only expresses what we _want_
+the receiver to do, it can't enforce it.
 
 Verification can be done on another layer, e.g. checking the expected result with a light client.
 
@@ -153,7 +156,7 @@ XCM is a **versioned** language.
 
 Each system declares what version they support.
 
-It's currently in version 4.
+The latest is version 5.
 
 What goes in each version is defined via an RFC process.
 
@@ -163,7 +166,7 @@ This protects against runtime upgrades breaking everything.
 
 ---
 
-# ✉️ XCM vs XCMP
+# XCM vs Message Passing
 
 <img src="img/XCM Post truck.png">
 
@@ -175,7 +178,7 @@ It is _not_ a transport protocol.
 
 A post card doesn't send itself!
 
-As we mentioned, XCM != {UMP, DMP, HRMP, XCMP}.
+As we mentioned, XCM != {UMP, DMP, HRMP, XCMP, Bridges}.
 
 It cannot be used to actually "send" any message between systems; its utility is only in expressing what should be done by the receiver.
 Like many aspects core to Substrate, this separation of concerns empowers us to be far more generic and enable much more.
@@ -213,6 +216,16 @@ More about their executable nature later.
 ---
 
 # Questions?
+
+---
+
+# Example Flow
+
+<img src="img/Example Flow - Introduction.png">
+
+Notes:
+
+We'll build towards this during this module.
 
 ---
 

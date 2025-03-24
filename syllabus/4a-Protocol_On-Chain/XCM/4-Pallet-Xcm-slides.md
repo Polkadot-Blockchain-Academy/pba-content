@@ -1,6 +1,6 @@
 ---
 title: XCM Pallet
-description: The XCM Pallet - The link between XCM and FRAME
+description: The link between XCM and FRAME.
 duration: 1 hour
 ---
 
@@ -10,11 +10,15 @@ duration: 1 hour
 
 ## What you'll learn
 
-How to link XCM and FRAME
+The link between XCM and FRAME.
+
+How to integrate XCM in your chains.
 
 ---
 
 # How XCM can be used
+
+<pba-flex center>
 
 - Interacting directly with the executor by writing XCMs
 
@@ -36,9 +40,11 @@ The XCM pallet is the bridge between the XCVM subsystem and the FRAME subsystem.
 
 ## Some functionalities of the pallet
 
+<pba-flex center>
+
 - Executing XCMs locally.
 - Sending XCMs to a different location.
-- Transferring assets to a different consensus system
+- Cross-Consensus Transfers.
 - Version negotiation
 - Handling responses
 - Asset trapping
@@ -93,108 +99,6 @@ Then it lets the `XcmRouter` handle the forwarding of the message.
 
 ---
 
-# Cross-consensus transfers
-
-Notes:
-
-The two ways of transferring assets between consensus systems are teleports and reserve transfers.
-
----v
-
-## 1. Asset teleportation
-
-<img rounded style="width: 500px;" src="./img/teleport.png">
-
-Notes:
-
-Teleportation works by burning the assets on the source chain and minting them on the destination chain.
-This method is the simplest one, but requires a lot of trust, since failure to burn or mint on either side will affect the total issuance.
-
----v
-
-### 1.1. Example: System parachains?
-
-<diagram class="mermaid">
-graph LR
-    BridgeHub(Bridge Hub)--"Trust"-->AssetHub(Asset Hub)
-</diagram>
-
----v
-
-### 1.2. Example: Polkadot and Kusama?
-
-<diagram class="mermaid">
-graph LR
-    Polkadot(Polkadot)--"No trust"-->Kusama(Kusama)
-</diagram>
-
----v
-
-## 2. Reserve asset transfers
-
-<img rounded style="width: 400px;" src="./img/reserve-tx.png">
-
-Notes:
-
-Reserve asset transfers are more complicated, since they bring in a third actor called the reserve chain.
-Chain A and B needn't trust each other, they only need to trust the reserve chain.
-The reserve chain holds the real assets, A and B deal only with derivatives.
-The transfer is made by burning derivatives from A, moving them from A's SA to B's SA in R, then minting on B.
-
-In some cases, the sender, A, can also be the reserve for a particular asset, in which case the process is simplified, there's no burning of derivatives.
-This usually happens with parachains' native tokens.
-
-You always trust the issuer of the token to not mint infinite tokens.
-
----v
-
-### 2.1. Example: Parachain native tokens
-
-<diagram class="mermaid">
-graph LR
-    subgraph A [A = R]
-        Sender(Sender account)--"Move X real asset"-->BSovereignAccount(B's Sovereign Account)
-    end
-    A--"Mint X derivatives"-->B(B)
-</diagram>
-
-Notes:
-
-Most parachains act as the reserve for their own token.
-To transfer their token to other chains, they move the real assets to a sovereign account and then tell the chain to mint equivalent derivatives.
-
----v
-
-### 2.2. Example: Polkadot to Kusama
-
-<diagram class="mermaid">
-graph LR
-    Polkadot(Polkadot)-->AssetHubP
-    subgraph AssetHubP [Asset Hub Polkadot]
-        Sender(Sender account)--"Move X real DOT"-->KusamaSovereignAccount("Kusama's sovereign account")
-    end
-    AssetHubP--"Mint X DOT derivatives"-->Kusama(Kusama)
-</diagram>
-
-Notes:
-
-AssetHub Kusama acts as the reserve for KSM.
-Kusama doesn't trust Polkadot to teleport KSM to it, but it does trust its own reserve, the AssetHub.
-Polkadot has a sovereign account in Kusama's AssetHub with some amount of KSM.
-Whenever some user in Polkadot wants to get KSM on Kusama, they just give the DOT to Polkadot and the KSM are moved from one sovereign account to another.
-No new trust relationships are added.
-
----v
-
-## `transfer_assets`
-
-The XCM pallet provides an extrinsic that figures out
-whether the transfer is a teleport or reserve asset transfer all on its own.
-
-Does this by using the XCM configuration.
-
----
-
 # Version negotiation
 
 The XCM pallet stores the latest supported version for all known chains.
@@ -227,6 +131,14 @@ Notes:
 
 ---
 
+# Example (continued)
+
+---v
+
+<img src="img/Example Flow - XCM Pallet.png">
+
+---
+
 # Summary
 
 <pba-flex center>
@@ -236,12 +148,6 @@ Notes:
 
 ---
 
-# Workshop
-
-We're going to write our own version of some extrinsics from the XCM pallet.
-
----
-
 # Next steps
 
-What about XCM configuration? Is there a tool to test all this?
+What about the XCM configuration we mentioned before?
