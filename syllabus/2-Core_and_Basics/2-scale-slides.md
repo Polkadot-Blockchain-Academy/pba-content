@@ -7,7 +7,9 @@ description: SCALE Codec
 
 ---
 
-## SCALE: Serialization
+# SCALE
+
+## Serialization
 
 - The process of translating a data structure or object state into a format that can be stored.<!-- .element: class="fragment" -->
 - Types of Serialization: Self-Describing vs Non Self-Describing<!-- .element: class="fragment" -->
@@ -15,7 +17,25 @@ description: SCALE Codec
 
 ---
 
+### Binary Data Recap
+
+- What is a byte?
+
+<!-- .element: class="fragment" -->
+
+- 8 bits => 0 - 255 => u8
+
+  <!-- .element: class="fragment" -->
+
+- Hexadecimal representation:
+
+<!-- .element: class="fragment" -->
+
+---
+
 ## SCALE
+
+## Stands for...
 
 - Simple<!-- .element: class="fragment" -->
 - Concatenated<!-- .element: class="fragment" -->
@@ -41,7 +61,7 @@ Designed for high-performance, copy-free data encoding and decoding in resource-
 
 ## Little-Endian vs Big-Endian Example:
 
-- How to encode the `15` decimal value as a `u32`:
+- How to encode the `255` decimal value as a `u32`:
 
   - Big-Endian: &nbsp;&nbsp; `0x 00 00 00 ff`
 
@@ -75,7 +95,7 @@ Nothing fancy here
 
 <!-- .element: class="fragment" -->
 
-- `0` => 1 byte, from 0 to 64 (2^6 - 1)
+- `0` => 1 byte, from 0 to 63 (2^6 - 1)
 
 <!-- .element: class="fragment" -->
 
