@@ -19,17 +19,14 @@ description: SCALE Codec
 
 ### Binary Data Recap
 
-- What is a byte?
+- What is a byte? <!-- .element: class="fragment" -->
+- 8 bits => 0 - 255 => u8 <!-- .element: class="fragment" -->
 
-<!-- .element: class="fragment" -->
+Hexadecimal representation: <!-- .element: class="fragment" -->
 
-- 8 bits => 0 - 255 => u8
-
-  <!-- .element: class="fragment" -->
-
-- Hexadecimal representation:
-
-<!-- .element: class="fragment" -->
+- 4 bits = "nibble" <!-- .element: class="fragment" -->
+- (0..15) => 0123456789abcdef <!-- .element: class="fragment" -->
+- 0110 1010 => 0x6a <!-- .element: class="fragment" -->
 
 ---
 
@@ -423,3 +420,20 @@ Array<u16,4> # [u16;4]
 ```
 
 <!-- .element: class="fragment" -->
+
+---
+
+### Implementations
+
+SCALE Codec has been many languages, including:
+
+- Rust: [`parity-scale-codec`](https://github.com/paritytech/parity-scale-codec)
+- TypeScript: [`scale-ts`](https://github.com/unstoppablejs/unstoppablejs/tree/main/packages/scale-ts#scale-ts)
+- Python: [`polkascan/py-scale-codec`](https://github.com/polkascan/py-scale-codec)
+- Golang: [`itering/scale.go`](https://github.com/itering/scale.go)
+- C: [`MatthewDarnell/cScale`](https://github.com/MatthewDarnell/cScale)
+- C++: [`soramitsu/scale-codec-cpp`](https://github.com/soramitsu/scale-codec-cpp)
+- AssemblyScript: [`LimeChain/as-scale-codec`](https://github.com/LimeChain/as-scale-codec)
+- Haskell: [`airalab/hs-web3`](https://github.com/airalab/hs-web3/tree/master/packages/scale)
+- Java: [`emeraldpay/polkaj`](https://github.com/emeraldpay/polkaj)
+- Ruby: [`wuminzhe/scale_rb`](https://github.com/wuminzhe/scale_rb)
