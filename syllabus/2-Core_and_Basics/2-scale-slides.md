@@ -21,11 +21,14 @@ description: SCALE Codec
 
 - What is a byte? <!-- .element: class="fragment" -->
 - 8 bits => 0 - 255 => u8 <!-- .element: class="fragment" -->
+- The smallest addressable unit of memory <!-- .element: class="fragment" -->
 
 Hexadecimal representation: <!-- .element: class="fragment" -->
 
-- 4 bits = "nibble" <!-- .element: class="fragment" -->
+- Base-16 number representation <!-- .element: class="fragment" -->
 - (0..15) => 0123456789abcdef <!-- .element: class="fragment" -->
+- The "0x" prefix is commonly used to denote hexadecimal notation <!-- .element: class="fragment" -->
+- Each hexadecimal symbol => 4 bits => 1 "nibble" => 1/2 byte <!-- .element: class="fragment" -->
 - 0110 1010 => 0x6a <!-- .element: class="fragment" -->
 
 ---
@@ -141,27 +144,27 @@ Nothing fancy here
 
 ## SCALE: Compact Examples
 
-- `1` &nbsp; -> `0b_000001_00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x04`<!-- .element: class="fragment" -->
+- `1` &nbsp; -> `0b 000001 00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x04`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `2` &nbsp; -> `0b_000010_00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x08`<!-- .element: class="fragment" -->
+- `2` &nbsp; -> `0b 000010 00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x08`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `3` &nbsp; -> `0b_000011_00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x0c`<!-- .element: class="fragment" -->
+- `3` &nbsp; -> `0b 000011 00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x0c`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `63` -> `0b_111111_00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-> `0xfc`<!-- .element: class="fragment" -->
+- `63` -> `0b 111111 00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-> `0xfc`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `64` -> `0b_000000_01_00000001` -> `0x0101`<!-- .element: class="fragment" -->
+- `64` -> `0b 000000 01 00000001` -> `0x0101`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `65` -> `0b_000001_01_00000001` -> `0x0501`<!-- .element: class="fragment" -->
+- `65` -> `0b 000001 01 00000001` -> `0x0501`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
@@ -178,11 +181,11 @@ Nothing fancy here
 
 A "complex" type is a codec that references other types.
 
-- Enum (AKA variants, tagged unions, discriminated union, etc).<!-- .element: class="fragment" -->
 - Tuples: Simply the concatenation of different types of codecs.<!-- .element: class="fragment" -->
 - Structs: Same as tuples, but the values are named.<!-- .element: class="fragment" -->
 - Vectors: A collection of a dynamic size of any other type.<!-- .element: class="fragment" -->
 - Arrays: A collection of static size of any other type.<!-- .element: class="fragment" -->
+- Enum: Discriminated unions (AKA variants, tagged unions...).<!-- .element: class="fragment" -->
 <li class="fragment">Specialized Enums:
 <ul>
   <li>Option: The first byte indicates whether there is a value or not.</li>
@@ -248,7 +251,7 @@ Enum({
 
 <!-- .element: class="fragment" -->
 
-- Option(u16) `0x00` -> `null`<!-- .element: class="fragment" -->
+- Option(u16) `0x00` -> `null / undefined / void / nil`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
@@ -268,11 +271,11 @@ Enum({
 
 <!-- .element: class="fragment" -->
 
-- Result({ ok: u8, error: bool }) `0x0101` -> `Error(true)`<!-- .element: class="fragment" -->
+- Result({ Ok: bool, Error: u8 }) `0x0101` -> `Error(1)`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- Result({ ok: u8, error: bool }) `0x0000` -> `Ok(0)`<!-- .element: class="fragment" -->
+- Result({ Ok: bool, error: u8 }) `0x0000` -> `Ok(false)`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
@@ -333,7 +336,7 @@ Let's decode:
 
 ## Vectors
 
-- A compact encoded number indicates the number of instances that follow.
+- A compact encoded value denotes the number of instances.
 
 <!-- .element: class="fragment" -->
 
@@ -351,11 +354,11 @@ Vector(u8);
 
 <!-- .element: class="fragment" -->
 
-- `[1]` => `0x0401`<!-- .element: class="fragment" -->
+- `[1]` => `0x04 01`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `[1, 0]` => `0x080100`<!-- .element: class="fragment" -->
+- `[1, 0]` => `0x08 01 00`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
@@ -388,10 +391,10 @@ encoded.
 
 ```sh
 Array<u8,4> # [u8;4]
-[2,1,3,0] => 0x02010300
+[2,1,3,0] => 0x 02 01 03 00
 
 Array<u16,2> # [u16;2]
-[258,3]   => 0x02010300
+[258,3]   => 0x 0201 0300
 
 Array<u16,4> # [u16;4]
 [2,1,3,0] => 0x 0200 0100 0300 0000
