@@ -75,9 +75,38 @@ Designed for high-performance, copy-free data encoding and decoding in resource-
 
 ## SCALE Basic Primitives
 
-- u8, u16, u32, u64, u128, u256<!-- .element: class="fragment" -->
-- i8, i16, i32, i64, i128, i256<!-- .element: class="fragment" -->
-- boolean (specialized u8)<!-- .element: class="fragment" -->
+<ul>
+<li class="fragment">
+u8, u16, u32, u64, u128, u256
+
+```sh
+20  u8  0x 14
+20  u16 0x 14 00
+256 u16 0x 00 01
+```
+
+</li>
+
+<li class="fragment">
+i8, i16, i32, i64, i128, i256
+
+```sh
+1    i8  0x 01
+-1   i8  0x ff
+-1   i16 0x ff ff
+-256 i16 0x 00 ff
+```
+
+</li>
+<li class="fragment">
+boolean (specialized u8)
+
+```sh
+true  0x01
+false 0x00
+```
+
+</li>
 
 Notes:
 
