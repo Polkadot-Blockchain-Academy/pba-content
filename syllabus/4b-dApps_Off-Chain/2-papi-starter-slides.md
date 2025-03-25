@@ -25,7 +25,7 @@ description: Getting started with Polkadot-API
   - Subscriptions <!-- .element: class="fragment" -->
   - Compatibility API <!-- .element: class="fragment" -->
   - Signers <!-- .element: class="fragment" -->
-  - Ink <!-- .element: class="fragment" -->
+  - Ink! <!-- .element: class="fragment" -->
 - PAPI SDKs <!-- .element: class="fragment" -->
 
 ---
@@ -41,10 +41,6 @@ description: Getting started with Polkadot-API
 - Research, considerations <!-- .element: class="fragment" -->
 
 Notes:
-
-- Not Met Expectations – The student either did not complete the assignment on time or submitted work that does not meet the required standards.
-- Met Expectations – The student successfully completed the assignment, adhering to the provided guidelines, with well-structured and competent code.
-- Exceeded Expectations – The student delivered a high-quality assignment, demonstrating excellent coding practices, incorporating optional challenges, and going beyond the expected outcome.
 
 Optional Add-ons many are related together, so you might choose to focus on on a specific area within the pallet.
 
