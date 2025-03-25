@@ -284,7 +284,7 @@ Struct({
 <!-- .element: class="fragment" -->
 
 ```js
-Vector(compact);
+Vector(u8);
 ```
 
 <!-- .element: class="fragment" -->
@@ -293,15 +293,25 @@ Vector(compact);
 
 <!-- .element: class="fragment" -->
 
-- `[1]` => `0x0404`<!-- .element: class="fragment" -->
+- `[1]` => `0x0401`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `[1, 0]` => `0x080400`<!-- .element: class="fragment" -->
+- `[1, 0]` => `0x080100`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
-- `[1, 0, 64]` => `0x0904000101`<!-- .element: class="fragment" -->
+```js
+Vector(compact);
+```
+
+<!-- .element: class="fragment" -->
+
+- `[1, 0]` => `0x08 04 00`<!-- .element: class="fragment" -->
+
+<!-- .element: class="fragment" -->
+
+- `[1, 0, 64]` => `0x0c 04 00 0101`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
