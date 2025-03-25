@@ -11,12 +11,12 @@ description: Runtime (AKA State Transition Function(s))
 
 ## What you will learn:
 
-- What is the Runtime?
-- Where is located?
-- How does it work?
-- Tradeoffs of having a dynamic STF.
-- Who does it cather to?
-- Types of Runtime APIs.
+- What is the Runtime?<!-- .element: class="fragment" -->
+- Where is located?<!-- .element: class="fragment" -->
+- How does it work?<!-- .element: class="fragment" -->
+- Tradeoffs of having a dynamic STF.<!-- .element: class="fragment" -->
+- Who does it cather to?<!-- .element: class="fragment" -->
+- Types of Runtime APIs.<!-- .element: class="fragment" -->
 
 ---
 
@@ -24,9 +24,9 @@ description: Runtime (AKA State Transition Function(s))
 
 ## Runtime: What is it?
 
-- It's the logic of the State Transition Fuctions that defines the business logic of the chain.
-- It currently is WASM code that's stored on the state of the chain.
-- It's part of the state, and it also determines how this state changes 🤯.
+- It's the logic of the State Transition Fuctions that defines the business logic of the chain.<!-- .element: class="fragment" -->
+- It currently is WASM code that's stored on the state of the chain.<!-- .element: class="fragment" -->
+- It's part of the state, and it also determines how this state changes 🤯.<!-- .element: class="fragment" -->
 
 ---
 
@@ -39,16 +39,16 @@ description: Runtime (AKA State Transition Function(s))
 
 ## Runtime: part of the state of the chain.
 
-- How does it work
+- How does it work<!-- .element: class="fragment" -->
 
-  - Every time that the WASM changes, the node instantiates the new WASM.
+  - Every time that the WASM changes, the node instantiates the new WASM.<!-- .element: class="fragment" -->
 
-- Host Functions:
+- Host Functions:<!-- .element: class="fragment" -->
 
-  - When the WASM is instaniated, the node provides an environment so that the WASM can interact with the node.
-  - Eg: Access storage, Expensive cryptografic functions, etc.
+  - When the WASM is instaniated, the node provides an environment so that the WASM can interact with the node.<!-- .element: class="fragment" -->
+  - Eg: Access storage, Expensive cryptografic functions, etc.<!-- .element: class="fragment" -->
 
-- Can a new WASM version require newer/different host functions?
+- Can a new WASM version require newer/different host functions?<!-- .element: class="fragment" -->
 
 Notes:
 
@@ -58,13 +58,11 @@ Notes:
 
 ## Tradeoffs of having a dynamic runtime.
 
-- The good: enables forkless upgrades.
-- The not so good:
-  - State migrations are complicated.
-  - Transactions can:
-    - Become invalid.
-    - Have a different outcome.
-  - Makes DApps and tooling more complicated.
+- The good: enables forkless upgrades.<!-- .element: class="fragment" -->
+- The not so good:<!-- .element: class="fragment" -->
+  - State migrations are complicated.<!-- .element: class="fragment" -->
+  - Transactions become invalid.<!-- .element: class="fragment" -->
+  - Makes DApps and tooling more complicated.<!-- .element: class="fragment" -->
 
 ---
 
@@ -94,17 +92,21 @@ Notes:
 - Discuss why it's a good idea to expose via runtime-apis functions that
   prevent DApps from re-implementing on-chain logic.
 
+---
+
 ## Runtime: who does it cather to?
 
 Runtime functions can be divided in 3 different groups:
 
-- Functions that cather the node: applyng extrinsics, handling blocks, etc.
-- Functions that cather DApps: by exposing logic that otherwise would have to be duplicated offchain.
-- Functions that cather both: transaction validation transactions, calculating fees, etc.
+- Functions that cather the node: applying extrinsics, handling blocks, etc.<!-- .element: class="fragment" -->
+- Functions that cather DApps: by exposing logic that otherwise would have to be duplicated offchain.<!-- .element: class="fragment" -->
+- Functions that cather both: transaction validation transactions, calculating fees, etc.<!-- .element: class="fragment" -->
+
+---
 
 ## Non Host-specific runtime-apis:
 
-- Metadata
-- Fees
-- Dry-Runs
-- View Functions
+- Metadata<!-- .element: class="fragment" -->
+- Fees<!-- .element: class="fragment" -->
+- Dry-Runs<!-- .element: class="fragment" -->
+- View Functions<!-- .element: class="fragment" -->

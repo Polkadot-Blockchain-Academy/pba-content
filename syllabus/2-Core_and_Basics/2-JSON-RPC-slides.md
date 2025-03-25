@@ -24,17 +24,24 @@ description: JSON-RPC Spec
 
 ## JSON-RPC 2.0
 
-- JSON-RPC is a stateless, transport agnostic, light-weight remote procedure call (RPC) protocol.
-
-- Defines basic data-structures and the rules around their processing. It is transport agnostic.
+- JSON-RPC is a stateless, transport agnostic, light-weight remote procedure call (RPC) protocol.<!-- .element: class="fragment" -->
+- Defines basic data-structures and the rules around their processing. It is transport agnostic.<!-- .element: class="fragment" -->
 
 ---
 
 ## JSON-RPC 2.0 - Request Object
 
 - Must have an `id` property
+
+<!-- .element: class="fragment" -->
+
 - Must have a `method`
+
+<!-- .element: class="fragment" -->
+
 - May have `params`
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -47,11 +54,25 @@ description: JSON-RPC Spec
 ## JSON-RPC 2.0 - Response
 
 - Must have an `id`
+
+<!-- .element: class="fragment" -->
+
 - Must have either a `result` or an `error`
+
+<!-- .element: class="fragment" -->
+
 - If it has an `error`, it must have the following properties:
   - `code`: number that indicates the type of error. Error codes from -32768 to -32000 are reserved for pre-defined errors.
   - `message`: string providing a short description.
   - `data`: optional data structure with additional information.
+
+<!-- .element: class="fragment" -->
+
+---
+
+## JSON-RPC 2.0 Examples
+
+https://www.jsonrpc.org/specification#examples
 
 ---
 
@@ -63,17 +84,11 @@ description: JSON-RPC Spec
 
 ---
 
-## JSON-RPC 2.0 Examples
-
-https://www.jsonrpc.org/specification#examples
-
----
-
 # Why a New JSON-RPC API?
 
-- Standardizing JSON-RPC requests across the Polkadot ecosystem
-- Removing inconsistencies
-- Providing better support for light clients and alternative runtimes
+- Standardizing JSON-RPC requests across the Polkadot ecosystem<!-- .element: class="fragment" -->
+- Removing inconsistencies<!-- .element: class="fragment" -->
+- Providing better support for light clients and alternative runtimes<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -82,26 +97,11 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-# Key Changes & Improvements
-
-- **Groups of functions:** Based on node capabilities
-- **Stability and versioning:** Allowing improvements without breaking contracts.
-- **Better Error Handling:** Clearer and documented errors.
-- **Load Balancer Friendly:** A load balancer can move a client from one server to another (and thus shut down servers that it doesn’t need anymore).
-
-**Notes:**
-
-- Method names have been changed to be more descriptive and standardized.
-- Errors are now structured in a way that makes debugging and handling failures easier.
-- The API reduces redundant calls, leading to lower latency and better efficiency.
-
----
-
 # JSON-RPC API Objectives
 
-- Accommodate multiple audiences
-- Ensure clarity, efficiency, and scalability
-- Address needs for security, reliability, and flexibility
+- Accommodate multiple audiences<!-- .element: class="fragment" -->
+- Ensure clarity, efficiency, and scalability<!-- .element: class="fragment" -->
+- Address needs for security, reliability, and flexibility<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -111,11 +111,47 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
+# Key Changes & Improvements
+
+- **Groups of functions:** Based on node capabilities
+
+<!-- .element: class="fragment" -->
+
+- **Stability and versioning:** Allowing improvements without breaking contracts.
+
+<!-- .element: class="fragment" -->
+
+- **Better Error Handling:** Clearer and documented errors.
+
+<!-- .element: class="fragment" -->
+
+- **Load Balancer Friendly:** A load balancer can move a client from one server to another (and thus shut down servers that it doesn’t need anymore).
+
+<!-- .element: class="fragment" -->
+
+**Notes:**
+
+- Method names have been changed to be more descriptive and standardized.
+
+- Errors are now structured in a way that makes debugging and handling failures easier.
+
+- The API reduces redundant calls, leading to lower latency and better efficiency.
+
+---
+
 # Grouping Functions & Node Capabilities
 
 - Functions are grouped using a prefix with a version number (e.g., `chainHead_v1_follow`)
+
+<!-- .element: class="fragment" -->
+
 - Node types: Full, Light, Archive, Plain databases
+
+<!-- .element: class="fragment" -->
+
 - Capability detection via the `rpc_methods` function
+
+<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -128,8 +164,16 @@ https://www.jsonrpc.org/specification#examples
 # Upgradability & Versioning
 
 - Groups are versioned and self-contained (e.g., `foo_v1`, `foo_v2`)
+
+<!-- .element: class="fragment" -->
+
 - Higher versions indicate preferred methods, while older versions become soft-deprecated
+
+<!-- .element: class="fragment" -->
+
 - Functions in newer versions don't overlap with older versions
+
+<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -142,8 +186,16 @@ https://www.jsonrpc.org/specification#examples
 # Unstable Functions
 
 - Marked with the `unstable` version prefix
+
+<!-- .element: class="fragment" -->
+
 - No stability guarantees—functions can change without warning
+
+<!-- .element: class="fragment" -->
+
 - Useful for experimental or debugging utilities
+
+<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -153,11 +205,13 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-# Audience: End-User Applications
+# Audience:
 
-- Focus on reading storage and submitting transactions
-- Encourage and support for light-clients
-- Minimize DoS attack vectors
+## End-User Applications
+
+- Focus on reading storage and submitting transactions<!-- .element: class="fragment" -->
+- Encourage and support for light-clients<!-- .element: class="fragment" -->
+- Minimize DoS attack vectors<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -167,11 +221,21 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-# Audience: Node Operators
+# Audience:
+
+## Node Operators
 
 - Focus on monitoring and administrative operations
+
+<!-- .element: class="fragment" -->
+
 - Stable functions for scripting and automation
+
+<!-- .element: class="fragment" -->
+
 - CLI-friendly tools (e.g., `websocat`)
+
+<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -181,11 +245,13 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-# Audience: Oracles & Bridges
+# Audience:
 
-- Automated interaction with the blockchain
-- Similar requirements as end-user applications
-- Focus on stability and reliability
+## Oracles & Bridges
+
+- Automated interaction with the blockchain<!-- .element: class="fragment" -->
+- Similar requirements as end-user applications<!-- .element: class="fragment" -->
+- Focus on stability and reliability<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -195,11 +261,13 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-# Audience: Archivers / Indexers
+# Audience:
 
-- Access to historical blockchain data
-- Focus on finalized blocks
-- Stable and easy-to-use functions
+## Archivers / Indexers
+
+- Access to historical blockchain data<!-- .element: class="fragment" -->
+- Focus on finalized blocks<!-- .element: class="fragment" -->
+- Stable and easy-to-use functions<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -223,7 +291,16 @@ https://www.jsonrpc.org/specification#examples
 # Questions & Discussion
 
 - Feel free to ask any questions!
+
+<!-- .element: class="fragment" -->
+
 - Check the full objectives: [Parity Spec Link](https://paritytech.github.io/json-rpc-interface-spec/objectives.html)
+
+<!-- .element: class="fragment" -->
+
+- Further reading: [New JSON-RPC API mega Q&A](https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048)
+
+<!-- .element: class="fragment" -->
 
 **Notes:**
 
