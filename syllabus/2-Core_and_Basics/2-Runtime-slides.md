@@ -98,7 +98,7 @@ Notes:
 
 Runtime functions can be divided in 3 different groups:
 
-- Functions that cather the node: applyng extrinsics, handling blocks, etc.<!-- .element: class="fragment" -->
+- Functions that cather the node: applying extrinsics, handling blocks, etc.<!-- .element: class="fragment" -->
 - Functions that cather DApps: by exposing logic that otherwise would have to be duplicated offchain.<!-- .element: class="fragment" -->
 - Functions that cather both: transaction validation transactions, calculating fees, etc.<!-- .element: class="fragment" -->
 

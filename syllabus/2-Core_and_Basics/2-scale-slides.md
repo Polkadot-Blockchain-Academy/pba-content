@@ -137,10 +137,10 @@ A "complex" type is a codec that references other types.
 - Structs: Same as tuples, but the values are named (only relevant on the context).<!-- .element: class="fragment" -->
 - Vectors: A collection of a dynamic size of any other type.<!-- .element: class="fragment" -->
 - Arrays: A collection of static size of any other type.<!-- .element: class="fragment" -->
-<li class="fragment">- Specialized Enums:
+<li class="fragment">Specialized Enums:
 <ul>
-  <li>- Option: The first byte indicates whether there is a value or not.</li>
-  <li>- Result: An Enum which always has 2 different tags, one for success and one for error.</li>
+  <li>Option: The first byte indicates whether there is a value or not.</li>
+  <li>Result: An Enum which always has 2 different tags, one for success and one for error.</li>
 </ul></li>
 - Specialized Vector: String -> Vector(u8)<!-- .element: class="fragment" -->
 - Opaque: A "meta-type" which is a "de-facto" standard, an specialized Vector of bytes.<!-- .element: class="fragment" -->
