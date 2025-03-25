@@ -318,6 +318,15 @@ Mention specialized vectors: string, bytes
 Exactly the same as `Vectors`, with the difference that their size is part of the codec definition, and thus is not
 encoded.
 
+```sh
+Array<u8,4> # [u8;4]
+[2,1,3,0] => 0x02010300
+
+Array<u16,2> # [u16;2]
+[258,3]   => 0x02010300
+[2,1,3,0] => 0x 0200 0100 0300 0000
+```
+
 ---
 
 # SCALE
@@ -329,5 +338,15 @@ encoded.
 <!-- .element: class="fragment" -->
 
 - Example: The body of a block is: `Vector(Opaque(Extrinsic))` => `Vector(Vector(u8))`
+
+<!-- .element: class="fragment" -->
+
+```sh
+# Vector<Extrinsic>
+{length}{ext_1}{ext_2}{ext_3}{…}
+
+# Vector<Opaque<Extrinsic>> => Vector<Vector<u8>>
+{length}{length_ext_1}{ext_1}{length_ext_2}{ext_2}{…}
+```
 
 <!-- .element: class="fragment" -->
