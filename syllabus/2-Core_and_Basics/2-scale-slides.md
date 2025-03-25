@@ -124,19 +124,19 @@ Nothing fancy here
 
 <!-- .element: class="fragment" -->
 
-- `0` => 1 byte, from 0 to 63 (2^6 - 1)
+- `0b 00` => 1 byte, from 0 to 63 (2^6 - 1)
 
 <!-- .element: class="fragment" -->
 
-- `1` => 2 bytes, from 64 to 16383 (2^14 - 1)
+- `0b 01` => 2 bytes, from 64 to 16383 (2^14 - 1)
 
 <!-- .element: class="fragment" -->
 
-- `2` => 4 bytes, from 16384 to 1073741823 (2^30 - 1)
+- `0b 10` => 4 bytes, from 16384 to 1073741823 (2^30 - 1)
 
 <!-- .element: class="fragment" -->
 
-- `4` => The remaing bits of the first byte indicate the length (+4)
+- `0b 11` => The remaing bits of the first byte indicate the length (+4)
 
 <!-- .element: class="fragment" -->
 
@@ -152,7 +152,7 @@ Nothing fancy here
 
 <!-- .element: class="fragment" -->
 
-- `3` &nbsp; -> `0b_000011_00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x09`<!-- .element: class="fragment" -->
+- `3` &nbsp; -> `0b_000011_00` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -> `0x0c`<!-- .element: class="fragment" -->
 
 <!-- .element: class="fragment" -->
 
@@ -183,7 +183,7 @@ A "complex" type is a codec that references other types.
 
 - Enum (AKA variants, tagged unions, discriminated union, etc).<!-- .element: class="fragment" -->
 - Tuples: Simply the concatenation of different types of codecs.<!-- .element: class="fragment" -->
-- Structs: Same as tuples, but the values are named (only relevant on the context).<!-- .element: class="fragment" -->
+- Structs: Same as tuples, but the values are named.<!-- .element: class="fragment" -->
 - Vectors: A collection of a dynamic size of any other type.<!-- .element: class="fragment" -->
 - Arrays: A collection of static size of any other type.<!-- .element: class="fragment" -->
 <li class="fragment">Specialized Enums:
@@ -192,7 +192,7 @@ A "complex" type is a codec that references other types.
   <li>Result: An Enum which always has 2 different tags, one for success and one for error.</li>
 </ul></li>
 - Specialized Vector: String -> Vector(u8)<!-- .element: class="fragment" -->
-- Opaque: A "meta-type" which is a "de-facto" standard, an specialized Vector of bytes.<!-- .element: class="fragment" -->
+- Opaque: A "meta-type" which is a de-facto standard (an specialized Vector of bytes).<!-- .element: class="fragment" -->
 
 ---
 
@@ -209,15 +209,15 @@ Enum({
 });
 ```
 
-- `0x000100` => `foo->1`
+- `0x000100` => `foo(1)`
 
 <!-- .element: class="fragment" -->
 
-- `0x0100` => `bar->false`
+- `0x0100` => `bar(false)`
 
 <!-- .element: class="fragment" -->
 
-- `0x02` => `baz`
+- `0x02` => `baz()`
 
 <!-- .element: class="fragment" -->
 
@@ -241,6 +241,46 @@ Enum({
 
 ---
 
+# SCALE Complex types: Option
+
+- `0x00`: there is no value
+
+<!-- .element: class="fragment" -->
+
+- `0x01`: there is a value.
+
+<!-- .element: class="fragment" -->
+
+- Option(u16) `0x00` -> `null`<!-- .element: class="fragment" -->
+
+<!-- .element: class="fragment" -->
+
+- Option(u16) `0x010001` -> `256`<!-- .element: class="fragment" -->
+
+<!-- .element: class="fragment" -->
+
+---
+
+# SCALE Complex types: Result
+
+- `0x00`: Ok
+
+<!-- .element: class="fragment" -->
+
+- `0x01`: Error
+
+<!-- .element: class="fragment" -->
+
+- Result({ ok: u8, error: bool }) `0x0101` -> `Error(true)`<!-- .element: class="fragment" -->
+
+<!-- .element: class="fragment" -->
+
+- Result({ ok: u8, error: bool }) `0x0000` -> `Ok(0)`<!-- .element: class="fragment" -->
+
+<!-- .element: class="fragment" -->
+
+---
+
 # SCALE Complex types
 
 ## Structs and Tuples
@@ -254,7 +294,7 @@ Enum({
 <!-- .element: class="fragment" -->
 
 ```js
-Tuple(Tuple(u8, u8, u8), boolean, Option(u32));
+Tuple(Tuple(u8, u8, u8), boolean, Option(u16));
 ```
 
 <!-- .element: class="fragment" -->
@@ -263,11 +303,32 @@ Tuple(Tuple(u8, u8, u8), boolean, Option(u32));
 Struct({
   color: Struct({ red: u8, green: u8, blue: u8 }),
   isReady: boolean,
-  price: Option(u32),
+  price: Option(u16),
 });
 ```
 
 <!-- .element: class="fragment" -->
+
+---
+
+# SCALE Complex types
+
+## Structs and Tuples
+
+```js
+Struct({
+  color: Struct({ red: u8, green: u8, blue: u8 }),
+  isReady: boolean,
+  price: Option(u16),
+});
+```
+
+### Exercise:
+
+Let's decode:
+
+- `0xff001001010001` -> `{color: {red:255, green:0, blue:16}, isReady:false, price:256}}`<!-- .element: class="fragment" -->
+- `0x0f10000000` -> `{color: {red:15, green:16, blue:0}, isReady:false, price:null}`<!-- .element: class="fragment" -->
 
 ---
 
@@ -334,6 +395,8 @@ Array<u8,4> # [u8;4]
 
 Array<u16,2> # [u16;2]
 [258,3]   => 0x02010300
+
+Array<u16,4> # [u16;4]
 [2,1,3,0] => 0x 0200 0100 0300 0000
 ```
 
