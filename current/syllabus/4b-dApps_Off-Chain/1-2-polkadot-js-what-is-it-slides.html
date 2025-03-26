@@ -333,15 +333,6 @@ main().catch(console.error);
 <p>The extension follows a security model similar to MetaMask and other Web3 wallets, where the extension maintains custody of private keys and websites can only request signatures for specific operations after receiving user permission.</p>
 <p>This clean separation of concerns is crucial for security in blockchain applications, as it prevents websites from directly accessing private keys while still allowing them to request the necessary signatures for blockchain operations.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
-### Ecosystem Integration
-
-<img rounded style="width: 800px" src="./img/polkadot-js-ecosystem-integration.png" />
-
-<aside class="notes"><p>This diagram illustrates how the various Polkadot-JS components work together to form a complete ecosystem for Substrate chain interaction. Each component has a specific role, but they are designed to work together seamlessly.</p>
-<p>At the foundation are the common utilities and WASM cryptography, which provide the basic building blocks for all other components. The API builds on these to provide the core blockchain interaction capabilities, while the UI components provide reusable interface elements.</p>
-<p>The extension secures user keys and provides signing capabilities, while the Apps interface brings everything together into a complete user experience. The phishing protection and developer tools support the ecosystem with security and development capabilities.</p>
-<p>This integrated design allows developers to use as much or as little of the ecosystem as needed for their specific applications, while ensuring compatibility and consistency across all components.</p>
-</aside></script></section><section  data-markdown><script type="text/template">
 ## Key Takeaways
 
 <pba-flex center>
