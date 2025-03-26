@@ -373,22 +373,6 @@ This clean separation of concerns is crucial for security in blockchain applicat
 
 ---
 
-### Ecosystem Integration
-
-<img rounded style="width: 800px" src="./img/polkadot-js-ecosystem-integration.png" />
-
-Notes:
-
-This diagram illustrates how the various Polkadot-JS components work together to form a complete ecosystem for Substrate chain interaction. Each component has a specific role, but they are designed to work together seamlessly.
-
-At the foundation are the common utilities and WASM cryptography, which provide the basic building blocks for all other components. The API builds on these to provide the core blockchain interaction capabilities, while the UI components provide reusable interface elements.
-
-The extension secures user keys and provides signing capabilities, while the Apps interface brings everything together into a complete user experience. The phishing protection and developer tools support the ecosystem with security and development capabilities.
-
-This integrated design allows developers to use as much or as little of the ecosystem as needed for their specific applications, while ensuring compatibility and consistency across all components.
-
----
-
 ## Key Takeaways
 
 <pba-flex center>
