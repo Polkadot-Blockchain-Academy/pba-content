@@ -2,20 +2,14 @@
 title: pallet-revive architecture
 description: Architecture of the pallet-revive smart contract module
 duration: 30min
-url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/6.2-pallet-revive-runtime-slides.md
+url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
 ---
-
-<style>
-    code {
-        overflow: hidden!important;
-    }
-</style>
 
 # pallet-revive architecture
 
 Notes:
 
-In this lecture we will cover the architecture of pallat-revive,
+In this lecture we will cover the architecture of pallet-revive,
 We will look at how the module works inside the substrate chain, as well as the EVM compatibility layer, that we built on top of it.
 
 ---
@@ -29,8 +23,8 @@ Before we dive int the details of how our pallet works, let's step back and look
 
 A node is essentially composed of 2 parts. The client and the runtime.
 
-The runtime defines the business logic of our chain, it is compiled to WASM and it's code is stored on chain and get
-upgraded every time there is a runtime upgrade. The runtime is where we find our smart contracts module among other useful pallets.
+The runtime defines the business logic of our chain, it is compiled to WASM and it's code is stored on chain and can
+get upgraded via runtime upgrade. The runtime is where we find our smart contracts module among other useful pallets.
 
 The client is the Rust program that runs natively on your computer and handle all the general purpose blockchain administration tasks:
 communicating on the p2p network, answering JSON-RPC requests, ordering, prioritizing and validating the transaction pool and managing the database
@@ -48,10 +42,14 @@ This means implementing the Ethereum JSON-RPC API, which is the standard interfa
 To achieve this, we built a proxy server that sits between the Ethereum client and the Substrate node.
 The proxy connects to the Substrate node via its JSON-RPC interface, subscribes to new blocks, and relays queries.
 
-Additionally, it: - Caches recent blocks to improve response time. - Maintains a lightweight database with indexes to track mappings between Ethereum transactions and their corresponding Substrate transactions.
+Additionally, it:
 
-There have been multiple efforts to bring EVM compatibility to Substrate. - Frontier integrates the Ethereum API directly inside the Substrate node.
+- Caches recent blocks to improve response time.
+- Maintains a lightweight database with indexes to track mappings between Ethereum transactions and their corresponding Substrate transactions.
 
+There have been multiple efforts to bring EVM compatibility to Substrate.
+
+- Frontier integrates the Ethereum API directly inside the Substrate node.
 - Our approach decouples the Eth API by building it as a separate proxy layer, independent of the node.
 
 This present a few benefits:
@@ -94,38 +92,136 @@ Notes:
 
 ## pallet-revive Config
 
-```rust[0|2-8|10-19|21-24]
-impl pallet_revive::Config for Runtime {
-  type Time = Timestamp;
-  type Currency = Balances;
-  type RuntimeEvent = RuntimeEvent;
-  type RuntimeCall = RuntimeCall;
-  type FindAuthor = <Runtime as pallet_authorship::Config>::FindAuthor;
-  type WeightPrice = TransactionPayment;
-  type RuntimeHoldReason = RuntimeHoldReason;
+```rust[0|32-48|69-87|104-122]
+pub trait Config: frame_system::Config {
+  /// The time implementation used to supply timestamps to contracts through `seal_now`.
+  type Time: Time;
 
-  type DepositPerItem = DepositPerItem;
-  type DepositPerByte = DepositPerByte;
-  type CodeHashLockupDepositPercent = CodeHashLockupDepositPercent;
-  type WeightInfo = pallet_revive::weights::SubstrateWeight<Self>;
-  type RuntimeMemory = ConstU32<{ 128 * 1024 * 1024 }>;
-  type PVFMemory = ConstU32<{ 512 * 1024 * 1024 }>;
-  type UnsafeUnstableInterface = ConstBool<false>;
-  type UploadOrigin = EnsureSigned<Self::AccountId>;
-  type InstantiateOrigin = EnsureSigned<Self::AccountId>;
+  /// The fungible in which fees are paid and contract balances are held.
+  type Currency: Inspect<Self::AccountId>
+    + Mutate<Self::AccountId>
+    + MutateHold<Self::AccountId, Reason = Self::RuntimeHoldReason>;
 
-  type ChainId = ConstU64<420_420_420>;
-  type AddressMapper = pallet_revive::AccountId32Mapper<Self>;
-  type NativeToEthRatio = ConstU32<1_000_000>;
-  type EthGasEncoder = ();
+  /// The overarching event type.
+  type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
+  /// The overarching call type.
+  type RuntimeCall: Parameter
+    + Dispatchable<RuntimeOrigin = Self::RuntimeOrigin, PostInfo = PostDispatchInfo>
+    + GetDispatchInfo;
+
+  /// Overarching hold reason.
+  type RuntimeHoldReason: From<HoldReason>;
+
+  /// Used to answer contracts' queries regarding the current weight price. This is **not**
+  /// used to calculate the actual fee and is only for informational purposes.
+  type WeightPrice: Convert<Weight, BalanceOf<Self>>;
+
+  /// Describes the weights of the dispatchables of this module and is also used to
+  /// construct a default cost schedule.
+  type WeightInfo: WeightInfo;
+
+  /// Find the author of the current block.
+  type FindAuthor: FindAuthor<Self::AccountId>;
+
+  /// The amount of balance a caller has to pay for each byte of storage.
+  ///
+  /// # Note
+  ///
+  /// It is safe to change this value on a live chain as all refunds are pro rata.
+  #[pallet::constant]
+  #[pallet::no_default_bounds]
+  type DepositPerByte: Get<BalanceOf<Self>>;
+
+  /// The amount of balance a caller has to pay for each storage item.
+  ///
+  /// # Note
+  ///
+  /// It is safe to change this value on a live chain as all refunds are pro rata.
+  #[pallet::constant]
+  #[pallet::no_default_bounds]
+  type DepositPerItem: Get<BalanceOf<Self>>;
+
+  /// The percentage of the storage deposit that should be held for using a code hash.
+  /// Instantiating a contract, protects the code from being removed. In order to prevent
+  /// abuse these actions are protected with a percentage of the code deposit.
+  #[pallet::constant]
+  type CodeHashLockupDepositPercent: Get<Perbill>;
+
+
+  /// Make contract callable functions marked as `#[unstable]` available.
+  ///
+  /// Contracts that use `#[unstable]` functions won't be able to be uploaded unless
+  /// this is set to `true`. This is only meant for testnets and dev nodes in order to
+  /// experiment with new features.
+  ///
+  /// # Warning
+  ///
+  /// Do **not** set to `true` on productions chains.
+  #[pallet::constant]
+  type UnsafeUnstableInterface: Get<bool>;
+
+  /// Origin allowed to upload code.
+  ///
+  /// By default, it is safe to set this to `EnsureSigned`, allowing anyone to upload contract
+  /// code.
+  #[pallet::no_default_bounds]
+  type UploadOrigin: EnsureOrigin<Self::RuntimeOrigin, Success = Self::AccountId>;
+
+  /// Origin allowed to instantiate code.
+  ///
+  /// # Note
+  ///
+  /// This is not enforced when a contract instantiates another contract. The
+  /// [`Self::UploadOrigin`] should make sure that no code is deployed that does unwanted
+  /// instantiations.
+  ///
+  /// By default, it is safe to set this to `EnsureSigned`, allowing anyone to instantiate
+  /// contract code.
+  #[pallet::no_default_bounds]
+  type InstantiateOrigin: EnsureOrigin<Self::RuntimeOrigin, Success = Self::AccountId>;
+
+  /// The amount of memory in bytes that parachain nodes allocate to the runtime.
+  ///
+  /// This is used in [`Pallet::integrity_test`] to make sure that the runtime has enough
+  /// memory to support this pallet if set to the correct value.
+  type RuntimeMemory: Get<u32>;
+
+  /// The amount of memory in bytes that relay chain validators allocate to the PoV.
+  ///
+  /// This is used in [`Pallet::integrity_test`] to make sure that the runtime has enough
+  /// memory to support this pallet if set to the correct value.
+  ///
+  /// This value is usually higher than [`Self::RuntimeMemory`] to account for the fact
+  /// that validators have to hold all storage items in PvF memory.
+  type PVFMemory: Get<u32>;
+
+  /// The [EIP-155](https://eips.ethereum.org/EIPS/eip-155) chain ID.
+  ///
+  /// This is a unique identifier assigned to each blockchain network,
+  /// preventing replay attacks.
+  #[pallet::constant]
+  type ChainId: Get<u64>;
+
+  /// Use either valid type is [`address::AccountId32Mapper`] or [`address::H160Mapper`].
+  #[pallet::no_default]
+  type AddressMapper: AddressMapper<Self>;
+
+  /// The ratio between the decimal representation of the native token and the ETH token.
+  #[pallet::constant]
+  type NativeToEthRatio: Get<u32>;
+
+  /// Encode and decode Ethereum gas values.
+  /// Only valid value is `()`. See [`GasEncoder`].
+  #[pallet::no_default_bounds]
+  type EthGasEncoder: GasEncoder<BalanceOf<Self>>;
 }
 ```
 
 Notes:
 
 Let's take a quick peek at the config of pallet-revive.
-We won't go in depth about the config in this lecture, but let's look at a few interesting bits specific to pallet-revive
+We won't go in depth on all types defined in the config, but let's look at a few interesting ones
 
 - As for any pallet, we depends on types from the runtime, like the `Time` type, the `Currency` type, the `FindAuthor` type, etc.
 - Then we have some specific types for pallet-revive
@@ -133,7 +229,7 @@ We won't go in depth about the config in this lecture, but let's look at a few i
 - `CodeHashLockupDepositPercent` is the percentage of the deposit that is deposited when a contract with this hash is
   instantiated.
 - `WeightInfo` is the trait that define the weights for all the functions of the pallet.
-- `RuntimeMemory` and `PVFMemory` are constants that we use in our integrity tests to make sure that the memory has enough memory
+- `RuntimeMemory` and `PVFMemory` are constants that we use in our integrity tests to make sure that the runtime has enough memory
 - UnsafeUnstableInterface is used in development to enable unstable features
 - UploadOrigin and InstantiateOrigin allow to constrain who can upload and instantiate a contract
 - Finally we have Ethereum specific types, like the `ChainId`, the `AddressMapper`, the `NativeToEthRatio` and the `EthGasEncoder`, to work with Ethereum.
@@ -167,11 +263,11 @@ Antother interesting fact is that we return `DispatchResultWithPostInfo`, instea
 
 | pallet call                    | Description                                                                |
 | ------------------------------ | -------------------------------------------------------------------------- |
-| `call`                         | Makes a call to an account, optionally transferring some balance.          |
-| `instantiate`                  | Instantiates a contract from a previously deployed binary.                 |
-| `instantiate_with_code`        | Instantiates a new contract from the supplied code.                        |
 | `upload_code`                  | Uploads new code without instantiating a contract from it.                 |
 | `remove_code`                  | Removes the code stored under a hash and refunds the deposit to its owner. |
+| `instantiate`                  | Instantiates a contract from a previously deployed binary.                 |
+| `instantiate_with_code`        | Instantiates a new contract from the supplied code.                        |
+| `call`                         | Makes a call to an account, optionally transferring some balance.          |
 | `map_account`                  | Registers the caller's account ID for use in contract interactions.        |
 | `unmap_account`                | Unregisters the caller's account ID and frees the deposit.                 |
 | `dispatch_as_fallback_account` | Dispatches a call with the origin set to the caller's fallback account.    |
@@ -259,20 +355,134 @@ contracts can call. They are defined in a dedicated crate `pallet-revive-uapi`.
 
 > Build the fibonacci contract using Rust and `pallet-revive-uapi`
 
+Notes:
+https://github.com/paritytech/rust-contract-template
+
 ---
 
-## Differences with EVM
+## Design Differences
+
+### Substrate & pallet-revive vs Ethereum
+
+Notes:
+In this section we will highlight some of the key differences between Substrate and Ethereum, and how we designed pallet-revive to be as compatible as possible with Ethereum.
 
 ---v
 
-## Transaction hashes
+## 1. Transaction hashes
+
+<img style="width: 60%; padding: 20px 0" src="img/pallet-revive/tx-hash.png" />
+
+> ‼️ The transaction hash is a unique identifier on Ethereum not Substrate
+
+---
+
+## 1. Transaction hashes
+
+| Index | Hash | Origin | Nonce | Call                | Results               |
+| ----- | ---- | ------ | ----- | ------------------- | --------------------- |
+| 0     | 0x01 | A      | 0     | Transfer 5 DOT to B | A reaped              |
+| 1     | 0x02 | B      | 4     | Transfer 7 DOT to A | A created (nonce = 0) |
+| 2     | 0x01 | A      | 0     | Transfer 5 DOT to B |                       |
+
+Notes:
+Imagine this contrived example with a reaped account. The first and last
+transactions are identical, and both valid.
+See <https://wiki.polkadot.network/docs/build-protocol-info#unique-identifiers-for-extrinsics>
 
 ---v
 
-## Balance Decimals
+## 2. Existential Deposit
 
-- In EVM, the smallest unit of value is 1 wei, which is 10^-18 ETH.
-- In Substrate, the smallest unit of value is 1 Planck, which is 10^-12 KSM or 10^-10 DOT.
+- Every Ethereum RPC / EVM opcode that returns a balance will subtract the existential deposit.
+- When sending balance `x` to a **new account**, we actually send `x + ed`.
+
+Notes:
+On Polkadot, an account must hold a minimum balance to exist. When it drops below this minimum amount, the account is deleted.
+We call this minimum amount the "existential deposit" (`ed`). It exists to prevent unused accounts from bloating the state. This is not the case on Ethereum, where
+accounts are never deleted once created, and there is no minimum balance an account must hold to retain its associated data structures (e.g., nonce) in state.
+Since contracts are accounts (more precisely, code that controls an account), they are also affected by this.
+
+This leads to a situation where every account on Polkadot has some portion of its currency that it cannot spend. This may confuse contracts and off-chain
+tools (e.g., wallets) written for Ethereum.
+
+Luckily, we can hide this fact from all participants so everything keeps working as expected. It's just something to be aware of:
+
+- Every Ethereum RPC that returns a balance will subtract the existential deposit. This means that all returned balance is actually spendable, just as on Ethereum.
+- Every EVM opcode that returns the balance of an account will do the same.
+- When sending balance `x` to a new account, we actually send `x + ed`. This ensures that balance transfers of any amount will succeed and the receiver has `x` as available
+  balance. The downside is that it might be unexpected for the sender to send more than `x`. To prevent confusion, we add the `ed` to the transaction fee if it needs to
+  be paid. This way, the user is always aware of the total cost of a transaction. \* This is also true when a contract sends balance to another contract. In this case, we always take the `ed` from the signer of the transaction and not the sending contract.
+  This makes the additional send balance transparent to contracts. This is important since contract code is free to assume that exactly `x` is sent.
+  If a call to a contract funds multiple new accounts, this will be reflected in the transaction fee, just like any other deposit made to cover storage costs
+  (see `storage_deposit_limit` above).
+
+---v
+
+## 3. Code deployment (Ethereum)
+
+<pba-flex>
+
+- The EVM executes the init code, which:
+  - runs the constructor with the passed arguments
+  - returns the runtime code, which gets stored on-chain
+  - The compiler will modify the contract’s runtime code before it is returned by replacing all references to immutables with the values assigned to them
+
+</pba-flex>
+
+<pba-flex>
+
+```sh
+❯ solc Hello.sol --combined-json bin,bin-runtime | jq ".contracts"
+```
+
+```json
+{
+  "Hello.sol:Hello": {
+    "bin": "6080604052348015600e575f5ffd5b50603e80601a5f395ff3fe60806040525f5ffdfea26469706673582212208e040e5268feafa994012e9cb5d525195f19af6c7241997e2ea91601f98f10d064736f6c634300081d0033",
+    "bin-runtime": "60806040525f5ffdfea26469706673582212208e040e5268feafa994012e9cb5d525195f19af6c7241997e2ea91601f98f10d064736f6c634300081d0033"
+  }
+}
+```
+
+</pba-flex>
+<!-- .element: class="fragment" -->
+
+---v
+
+## 3. Code deployment (pallet-revive)
+
+In pallet-revive, the code is uploaded and stored on-chain
+
+- The constructor doesn't return the runtime code.
+- The immutable variables are stored in a pallet storage map and read when the contract is called.
+- Multiple contracts can be instantiated by referencing the same code hash.
+
+---
+
+## 3. Code deployment (pallet-revive)
+
+```rust
+pub trait Config: frame_system::Config {
+  // ...
+
+  /// The percentage of the storage deposit that should be held for using a code hash.
+  /// Instantiating a contract, protects the code from being removed. In order to prevent
+  /// abuse these actions are protected with a percentage of the code deposit.
+  #[pallet::constant]
+  type CodeHashLockupDepositPercent: Get<Perbill>;
+}
+```
+
+</pba-col>
+</pba-cols>
+
+---v
+
+## 4. Balance Decimals
+
+- In EVM, the smallest unit of value is 1 wei, which is $10^{-18}$ETH.
+- In Substrate, the smallest unit of value is 1 Planck, which is $10^{-12}$ KSM or $10^{-10}$ DOT.
 
 ```rust
 pub trait Config: frame_system::Config {
@@ -290,7 +500,7 @@ A transaction that attempt to use a value that can't be translated to a substrat
 
 ---v
 
-### Address mapping
+## 5. Address mapping
 
 - Most Substrate chain, including Asset Hub, use a 32 byte (AccountId32) address usually encoded in SS58 format.
 - EVM uses a 20 byte address (H160), usually encoded in hex format.
@@ -313,7 +523,7 @@ Everything that is executed in the VM expect a 20 bytes address, we need to map 
 
 ---v
 
-### Address mapping
+## 5. Address mapping
 
 ```rust[0|4-9|16-20|11-12]
 
@@ -341,7 +551,7 @@ pub trait AddressMapper<T: Config> {
 
 ---v
 
-### Address mapping
+## 5. Address mapping
 
 ```rust[1-10| 12-21 | 14-18,23-27]
 // H160 -> AccountId32 -> H160
@@ -375,9 +585,9 @@ assert_eq!(bob_sub, <Runtime as Config>::AddressMapper::to_account_id(&bob_eth))
 
 ---v
 
-## Gas Model
+## 6. Gas Model
 
-**Ethereum**:
+**Ethereum**
 
 - ⛽ Single dimensional `gas`
 - 📜 Gas costs are defined in the yellow paper and EIPs
@@ -413,29 +623,6 @@ is that these limits can be too constraining, but this is something that we will
 
 ---v
 
-### Benchmarked weight in Substrate
-
-```rust[0|10-13]
- #[benchmark(pov_mode = Measured)]
- fn bn128_add() {
-  let input = hex!("089142debb13c46...");
-  let expected = hex!("0a6678fd675a...");
-  let mut call_setup = CallSetup::<T>::default();
-  let (mut ext, _) = call_setup.ext();
-
-  let result;
-
-  #[block]
-  {
-   result = Bn128Add::execute(ext.gas_meter_mut(), &input);
-  }
-
-  assert_eq!(result.unwrap().data, expected);
- }
-```
-
----v
-
 ### Current limits
 
 | Limit                                      | Maximum           |
@@ -454,40 +641,29 @@ Limits might be increased in the future. To guarantee existing contracts working
 
 ---
 
-## Existential Deposit
-
-Notes:
-On Polkadot, an account must hold a minimum balance to exist. When it drops below this minimum amount, the account is deleted.
-We call this minimum amount the "existential deposit" (`ed`). It exists to prevent unused accounts from bloating the state. This is not the case on Ethereum, where
-accounts are never deleted once created, and there is no minimum balance an account must hold to retain its associated data structures (e.g., nonce) in state.
-Since contracts are accounts (more precisely, code that controls an account), they are also affected by this.
-
-This leads to a situation where every account on Polkadot has some portion of its currency that it cannot spend. This may confuse contracts and off-chain
-tools (e.g., wallets) written for Ethereum.
-
-Luckily, we can hide this fact from all participants so everything keeps working as expected. It's just something to be aware of:
-
-- Every Ethereum RPC that returns a balance will subtract the existential deposit. This means that all returned balance is actually spendable, just as on Ethereum.
-- Every EVM opcode that returns the balance of an account will do the same.
-- When sending balance `x` to a new account, we actually send `x + ed`. This ensures that balance transfers of any amount will succeed and the receiver has `x` as available
-  balance. The downside is that it might be unexpected for the sender to send more than `x`. To prevent confusion, we add the `ed` to the transaction fee if it needs to
-  be paid. This way, the user is always aware of the total cost of a transaction. \* This is also true when a contract sends balance to another contract. In this case, we always take the `ed` from the signer of the transaction and not the sending contract.
-  This makes the additional send balance transparent to contracts. This is important since contract code is free to assume that exactly `x` is sent.
-  If a call to a contract funds multiple new accounts, this will be reflected in the transaction fee, just like any other deposit made to cover storage costs
-  (see `storage_deposit_limit` above).
-
----v
-
-### Gas estimation and encoding in lower digits
+## 7. Gas estimation and encoding in lower digits
 
 - When sending tokens, wallets automatically retrieves the correct gas parameters by calling `eth_estimateGas`
 - The estimate encodes the gas limit, the gas price, and the storage deposit in a single value.
 
+```rust
+pub trait Config: frame_system::Config {
+  /// Encode and decode Ethereum gas values.
+  /// Only valid value is `()`. See [`GasEncoder`].
+  type EthGasEncoder: GasEncoder<BalanceOf<Self>>;
+}
+```
+
 Notes:
 
 On a Substrate chain, the gas estimation is 2 dimensional (ref_time, pov), this is not a single value like in EVM.
-In pallet-revive, we also use a deposit for the storage used, to make sure that the chain isn't bloated with unused storage.
+n pallet-revive, we also use a deposit for the storage used, to make sure that the chain isn't bloated with unused storage.
 
 To be compatible with EVM though, we need to fit these 3 numbers in a single value, the `gas_limit` of the transaction.
 To achieve that, we compress the ref_time, pv and storage deposit on the lowest digits of the gas_limit, using the
 binary square root of these values, and storing on the lowest 6 digits.
+
+This what the `EthGasEncoder` trait does, it encode and decode the gas values in a single value.
+The only valid value here is the unit `()` where the trait is implemented. We could very well not add it to the config,
+but adding it here make it easier to use, without clutttering the call site where it is used with extra implementation
+bound
