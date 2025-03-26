@@ -609,14 +609,14 @@ Bock explorers:
 - Track transactions and smart contract states
 - Enable transparency & debugging tools for developers
 - Examples: Etherscan, Subscan, Blockscout
-Orcales:
+  Orcales:
 - Enable hybrid on-chain/off-chain contracts
 - Examples: Chainlink, Redstone
 - Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)
 - Two models
   - Push: Data is pushed by node operators at specific interval and made available to contracts
   - Pull: Signed data package is attached to the transaction and verified by a contract on chain
-Indexers:
+    Indexers:
 - Blockchain are write optimized, and querying data can be slow
 - Indexers subscribe to the blockchain and store the data in a more queryable format
 - Allow fast and structured access to blockchain records

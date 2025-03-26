@@ -2,7 +2,7 @@
 title: pallet-revive architecture
 description: Architecture of the pallet-revive smart contract module
 duration: 30min
-url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/6.2-pallet-revive-runtime-slides.md
+url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
 ---
 
 # pallet-revive architecture
@@ -361,6 +361,7 @@ https://github.com/paritytech/rust-contract-template
 ---
 
 ## Design Differences
+
 ### Substrate & pallet-revive vs Ethereum
 
 Notes:
@@ -443,6 +444,7 @@ Luckily, we can hide this fact from all participants so everything keeps working
   }
 }
 ```
+
 </pba-flex>
 <!-- .element: class="fragment" -->
 
@@ -451,6 +453,7 @@ Luckily, we can hide this fact from all participants so everything keeps working
 ## 3. Code deployment (pallet-revive)
 
 In pallet-revive, the code is uploaded and stored on-chain
+
 - The constructor doesn't return the runtime code.
 - The immutable variables are stored in a pallet storage map and read when the contract is called.
 - Multiple contracts can be instantiated by referencing the same code hash.
@@ -470,6 +473,7 @@ pub trait Config: frame_system::Config {
   type CodeHashLockupDepositPercent: Get<Perbill>;
 }
 ```
+
 </pba-col>
 </pba-cols>
 
