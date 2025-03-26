@@ -69,28 +69,22 @@ community, so that we can leverage the tooling, and easily onramp existing dapps
 <img style="width: 90%"  src="img/smart-contracts-101/stf.png" />
 
 <aside class="notes"><p>Before defining what a smart contract (SC) is, we need to understand the environment in which it operates: the blockchain.
-We won’t dive deep into what a blockchain is—that will be covered in detail during the PBA. For now, it&#39;s enough to define a blockchain as:
+We won’t dive deep into what a blockchain is, that will be covered in detail during the PBA. For now, it&#39;s enough to define a blockchain as:
 A distributed system where all participants (nodes) execute a common set of transactions contained in a block.
-These transactions are processed using a state transition function, which updates the blockchain’s state from block n to block n+1.
-The state transition function is defined by the protocol itself. Additionally, consensus mechanisms determine who gets to author the next block.</p>
-<p>Since all nodes execute the same transactions with the same rules, they all derive the same resulting state. This ensures that block n+1 is identical across all honest nodes in the network.</p>
+These transactions are processed using a state transition function, which updates the blockchain’s state from block n to block n+1.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### Bitcoin
 
 <img style="width: 90%"  src="img/smart-contracts-101/stf-btc.png" />
 
-<aside class="notes"><p>In Bitcoin, the state transition function primarily processes transactions, which are mostly transfer transactions.
-Accounts submit transactions, transactions are gossiped over the network, and will eventually be included in a block.
-The state transition function, will validate the transactions, and update the state of the ledger with these instructions ed ledger by moving ownership of coins from one address to</p>
+<aside class="notes"><p>In Bitcoin, the state transition function primarily processes transactions, which are mostly transfer transactions.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### Polkadot
 
 <img style="width: 90%"  src="img/smart-contracts-101/stf-dot.png" />
 
-<aside class="notes"><p>Unlike Bitcoin, Polkadot&#39;s state transition function is highly flexible and programmable.
-Blockchains built with Substrate run a WebAssembly (Wasm) runtime, which defines how the blockchain&#39;s state is updated.
-This runtime is built using Rust modules, called pallets, each defining specific transaction types.
-Because this state transition function is written in a Turing-complete language like Rust, it can execute complex logic beyond simple transfers.</p>
+<aside class="notes"><p>Blockchains built with Substrate run a WebAssembly (Wasm) runtime, which defines how the blockchain&#39;s state is updated.
+This runtime is built using Rust modules, called pallets, each defining specific transaction types.</p>
 <p>Different pallets allow developers to introduce specialized logic into their blockchain:
 Assets &amp; NFT pallets → Define fungible and non-fungible tokens and their operations.
 Democracy pallet → Enables on-chain governance, allowing proposals to be submitted, voted on, and enacted when approved.
@@ -113,28 +107,15 @@ A smart contract blockchain allows users to do essentially 3 things:</p>
 <li>Call these contracts to execute their logic.</li>
 </ul>
 <p>You can think of smart contracts as dormant programs stored on the blockchain at a specific address.
-These programs remain inactive until they are triggered by a transaction.</p>
-<p>So you can think of a contract as &quot;code on chain&quot;. One important aspect of smart contracts is that they are immutable. The code that defines a contract cannot be changed once it is deployed. This ensures that the contract’s behavior remains predictable and that users can trust the contract to execute</p>
-<p>Smart contracts are executed when:</p>
-<ul>
-<li>A regular account submits a call transaction to interact with them.</li>
-<li>Because smart contracts are highly composable, they can also interact with each other to execute complex workflows. This means that in addition to being called by regular accounts, they can also be triggered by other smart contracts, enabling powerful on-chain interoperability.</li>
-</ul>
-<p>For example, the USDC smart contract, is an ERC-20 token that maintains a mapping of balances, associating each user’s address with the amount of USDC they hold.
-When a user transfers USDC, the contract updates the sender’s balance by subtracting the amount, adds the same amount to the recipient’s balance, and stores the new state on-chain to ensure all nodes remain synchronized</p>
+These programs can access and store data on the blockchain, and execute logic based on the transactions they receive.</p>
+<p>For example, the USDC smart contract, is an ERC-20 token that maintains a mapping of balances, associating each user’s address with the amount of USDC they hold. When a user transfers USDC, the contract updates the sender’s balance by subtracting the amount, adds the same amount to the recipient’s balance, and stores the new state on-chain to ensure all nodes remain synchronized</p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
 ## Bytecode & Virtual Machines
 
 <img style="width: 100%; " src="img/smart-contracts-101/bytecode-vm.png" />
 
 <aside class="notes"><p>When we deploy a smart contract on-chain, we first compile it into bytecode, which can be executed by a virtual machine.
-Different smart contract blockchains use different bytecode formats.
-For example:</p>
-<ul>
-<li>On Ethereum contracts are compiled into EVM bytecode.</li>
-<li>On Solana, programs are compiled into BPF bytecode.</li>
-<li>On Polkadot Hub as we will explore later, we use PolkaVM bytecode</li>
-</ul>
+Different smart contract blockchains use different bytecode formats.</p>
 <p>The state transition function of the blockchain runs the Virtual Machine to execute the instructions in this compiled bytecode, and update the state of the chain.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
 ### A simple Example
@@ -144,7 +125,7 @@ For example:</p>
 pragma solidity ^0.8.0;
 
 contract PiggyBank {
-    address public owner;
+    address public immutable owner;
 
     constructor() {
         owner = msg.sender;
@@ -167,7 +148,8 @@ contract PiggyBank {
 }
 ```
 
-<aside class="notes"><p>Developers don’t typically write bytecode by hand. Instead, they write smart contracts in high-level languages, which are then compiled into bytecode. On EVM-compatible chains, the most widely used language is Solidity, that is compiled to bytecode using the <code>solc</code> compiler. Let&#39;s go through a simple <code>PiggyBank</code> solidity contract to illustrate it.</p>
+<aside class="notes"><p>On EVM-compatible chains, the most widely used language is Solidity, that is compiled to bytecode using the <code>solc</code> compiler.
+Let&#39;s go through a simple <code>PiggyBank</code> solidity contract to illustrate it.</p>
 <ul>
 <li>When a contract is deployed, the constructor code is executed</li>
 <li>The owner can call the deposit function to deposit some balance</li>
@@ -254,7 +236,7 @@ pub fn set_metadata(
 
 | Feature             | EVM                            | Substrate                                |
 | ------------------- | ------------------------------ | ---------------------------------------- |
-| **Execution Model** | Metered                        | Pre-weighted calls                       |
+| **Execution Model** | Metered                        | Pre-dispatch weights                     |
 | **Cost**            | Dynamic                        | Static, determined pre-dispatch          |
 | **Performance**     | Runtime overhead               | Optimized execution                      |
 | **Flexibility**     | Supports arbitrary computation | Requires (benchmnarked) weights per call |
@@ -300,7 +282,7 @@ An example for this would be a contract that reads data from another contract, e
 </li>
 <li><p><strong>Delegate Call</strong>:</p>
 <ul>
-<li>Contract A calls Contract B in its execution context.</li>
+<li>Contract A calls Contract B in its execution context. (Storage reads/writes affect A, not B)</li>
 <li>Contract B can read and write to A&#39;s storage, akin to a library executing within A.
 An example for this would be to use a Math library to perform calculations.</li>
 </ul>
@@ -372,7 +354,7 @@ contract Vulnerable {
     mapping(address => uint256) public balances;
 
     function withdraw() external {
-        uint256 amount = balanceOf[msg.sender];
+        uint256 amount = balances[msg.sender];
 
         //❗ Sends ETH before updating balance
         (bool success, ) = msg.sender.call.value(amount)("");
@@ -389,7 +371,9 @@ contract Vulnerable {
 ### Activity: Reproduce the DAO hack
 
 > Deploy and execute the DAO hack on a local chain
-</script></section></section><section ><section data-markdown><script type="text/template">
+
+<aside class="notes"><p>see <a href="https://github.com/paritytech/contracts-boilerplate">https://github.com/paritytech/contracts-boilerplate</a></p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## JSON-RPC
 
 - JSON-RPC is a **remote procedure call (RPC) protocol** using JSON for encoding requests and responses.
@@ -406,7 +390,7 @@ contract Vulnerable {
 | `eth_getTransactionReceipt` | Retrieves transaction execution details.        |
 
 <aside class="notes"><ul>
-<li><p>There are two types of transactions in Ethereum: read-only and state-changing transactions.
+<li><p>There are two types of transactions: read-only and state-changing transactions.
 When you want to read data from a contract, you use <code>eth_call</code> to execute a read-only contract call.</p>
 </li>
 <li><p>When you want to send a transaction to the network, you will usually follow this flow:</p>
@@ -476,7 +460,7 @@ curl https://westend-asset-hub-eth-rpc.polkadot.io \
 <ul>
 <li>First of all the transaction is encoded using RLP (Recursive Length Prefix) encoding, the first byte is the type of the
 transaction, and defines the format of the transaction, that can be decoded using rlp-decode.</li>
-<li>The type here is 0x2, which means it is an EIP-1559 transaction, new fork can sometimes introduce new transaction type
+<li>The type here is 0x2, which means it is an EIP-1559 transaction introduced by the London fork, new fork can sometimes introduce new transaction type
 to define new transaction format, this type field is used to distinguish between them.</li>
 <li>The chainId defines the network on which the transaction is being sent, this makes sure that the transaction is not replayed on another network.</li>
 <li>The nonce is a very important component of the transaction, it is used to prevent replay attacks, it is incremented for each transaction sent by an account, your transaction will only be executed if the nonce is the next in line.</li>
@@ -518,81 +502,61 @@ INPUT="0xa9059cbb000000000000000000000000ba04f1c1e4577165dd2297d3fbedf956b0e4c8a
 ### Encoding ABI parameters
 
 ```sh
-cast calldata \
-"test((bool, string, address))" \
-"(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
-| xxd -r -p | xxd -c 32
-```
-
-```hexdump
-00: f8f3 4990 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
-20: 0000 0020 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
-40: 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
-60: 0000 0060 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce
-80: 3606 eb48 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
-a0: 0000 0005 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
-c0: 0000 0000
-```
-</script></section><section data-markdown><script type="text/template">
-### Encoding ABI parameters
-
-```sh
 cast abi-encode \
-"test((bool, string, address))" \
-"(true, hello, 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48)" \
+  "test(bool, string, address)" \
+  "true"  "hello" "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48" \
 | xxd -r -p | xxd -c 32
 ```
 
-```hexdump[1 | 2 | 3 | 5 | 6 | 4]
-00: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0020
-20: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001
-40: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060
-60: 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce 3606 eb48
-80: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0005
-a0: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
+```hexdump[1 | 2 | 4 | 5 | 3]
+00: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0001
+20: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0060
+40: 0000 0000 0000 0000 0000 0000 a0b8 6991 c621 8b36 c1d1 9d4a 2e9e b0ce 3606 eb48
+60: 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0005
+80: 6865 6c6c 6f00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000
 ```
 
-<aside class="notes"><p>Once the selector is found, the VM will jump to the function and execute it.
-Let&#39;s look at how the parameters are encoded using EVM ABI encoding standard.
+<aside class="notes"><p>Let&#39;s look at how the parameters are encoded using EVM ABI encoding standard.
 The ABI defines the standard way to interact with contracts both from outside the blockchain and for contract-to-contract interaction</p>
 <p>The EVM operates on 32-byte words, meaning that all storage, memory, and stack operations use 32-byte slots.
-Arguments are padded and aligned to 32 bytes, to make it easy to reas or load them from memory during execution.</p>
+Arguments are padded and aligned to 32 bytes, to make it easy to read or load them from memory during execution.</p>
 <p>For this example signature the data is encoded as follows:</p>
 <ul>
-<li>We are encoding a tuple containing a boolean, a string, and an address.</li>
-<li>Since a tuple is dynamic, the first 32 bytes store an offset to where the actual data starts—here, 0x20.</li>
-<li>The first tuple element (boolean) is at offset 0x20. Even though a bool is just 1 byte, like everything in the EVM, it is padded to 32 bytes.</li>
-<li>The string is another dynamic type, so instead of being stored inline, its offset (0x60) is stored at 0x40.</li>
+<li>The first element is a bool. Even though a bool is just 1 byte, like everything in the EVM, it is padded to 32 bytes.</li>
+<li>The string is dynamic type, so instead of being stored inline, its offset (0x60) is stored next.</li>
 <li>The address is a fixed-size type, so it’s stored inline immediately after the offsets.</li>
 <li>At offset 0x60, we find the length of the string, and right after that, the string content itself.</li>
 </ul>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
-## Smart Contract Ecosystem
-</script></section><section data-markdown><script type="text/template">
-### Block Explorers
+<p>See <a href="https://docs.soliditylang.org/en/latest/abi-spec.html">https://docs.soliditylang.org/en/latest/abi-spec.html</a></p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Beyond Smart Contracts
 
-- Track transactions and smart contract states
-- Enable transparency & debugging tools for developers
-- Examples: Etherscan, Subscan, Blockscout
-</script></section><section data-markdown><script type="text/template">
-### Oracles – External Data Integration
+- 🔎 Block Explorers (e.g., Etherscan, Subscan)
+- 🔮 Oracles (e.g., Chainlink, Redstone)
+- 📊 Indexers (e.g., The Graph, Subsquid)
 
-- Enable hybrid on-chain/off-chain contracts
-- Examples: Chainlink, Redstone
-- Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)
-- Two models
-  - Push: Data is pushed by node operators at specific interval and made available to contracts
-  - Pull: Signed data package is attached to the transaction and verified by a contract on chain
-</script></section><section data-markdown><script type="text/template">
-### Indexers
-
-- Blockchain are write optimized, and querying data can be slow
-- Indexers subscribe to the blockchain and store the data in a more queryable format
-
-- Allow fast and structured access to blockchain records
-- Improve UX for dApps by reducing raw node queries
-- Examples: The Graph, Subsquid
-</script></section></section><section  data-markdown><script type="text/template"></script></section>
+<aside class="notes"><p>Bock explorers:</p>
+<ul>
+<li>Track transactions and smart contract states</li>
+<li>Enable transparency &amp; debugging tools for developers</li>
+<li>Examples: Etherscan, Subscan, Blockscout
+Orcales:</li>
+<li>Enable hybrid on-chain/off-chain contracts</li>
+<li>Examples: Chainlink, Redstone</li>
+<li>Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)</li>
+<li>Two models<ul>
+<li>Push: Data is pushed by node operators at specific interval and made available to contracts</li>
+<li>Pull: Signed data package is attached to the transaction and verified by a contract on chain
+Indexers:</li>
+</ul>
+</li>
+<li>Blockchain are write optimized, and querying data can be slow</li>
+<li>Indexers subscribe to the blockchain and store the data in a more queryable format</li>
+<li>Allow fast and structured access to blockchain records</li>
+<li>Improve UX for dApps by reducing raw node queries</li>
+<li>Examples: The Graph, Subsquid</li>
+</ul>
+</aside></script></section>
     </article>
   </main>
 
