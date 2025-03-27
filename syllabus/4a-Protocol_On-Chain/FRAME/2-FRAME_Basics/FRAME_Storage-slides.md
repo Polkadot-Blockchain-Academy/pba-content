@@ -920,8 +920,6 @@ You may have noticed we just used `assert_noop!` instead of `assert_err!`.
 ```rust
 /// Evaluate an expression, assert it returns an expected `Err` value and that
 /// runtime storage has not been mutated (i.e. expression is a no-operation).
-///
-/// Used as `assert_noop(expression_to_assert, expected_error_expression)`.
 #[macro_export]
 macro_rules! assert_noop {
 	(
@@ -930,7 +928,8 @@ macro_rules! assert_noop {
 	) => {
 		let h = $crate::storage_root($crate::StateVersion::V1);
 		$crate::assert_err!($x, $y);
-		assert_eq!(h, $crate::storage_root($crate::StateVersion::V1), "storage has been mutated");
+		assert_eq!(h, $crate::storage_root($crate::StateVersion::V1),
+			"storage has been mutated");
 	};
 }
 ```
@@ -1013,13 +1012,18 @@ fn bounded_vec() {
 Store items in storage as a key and value map.
 
 ```rust
-pub struct StorageMap<Prefix, Hasher, Key, Value, QueryKind = OptionQuery, OnEmpty = GetDefault, MaxValues = GetDefault>(_);
+pub struct StorageMap<Prefix, Hasher, Key, Value,
+	QueryKind = OptionQuery,
+	OnEmpty = GetDefault,
+	MaxValues = GetDefault>(_);
 ```
 
 Storage Key:
 
 ```rust
-Twox128(Prefix::pallet_prefix()) ++ Twox128(Prefix::STORAGE_PREFIX) ++ Hasher1(encode(key))
+Twox128(Prefix::pallet_prefix())
+	++ Twox128(Prefix::STORAGE_PREFIX)
+	++ Hasher1(encode(key))
 ```
 
 ---
@@ -1028,15 +1032,20 @@ Twox128(Prefix::pallet_prefix()) ++ Twox128(Prefix::STORAGE_PREFIX) ++ Hasher1(e
 
 ```rust
 #[pallet::storage]
-pub type Item9<T: Config> = StorageMap<_, Blake2_128, u32, u32>;
+pub type Item9<T: Config> = StorageMap<
+	_,          // Infer prefix from name
+	Blake2_128, // Hasher
+	u32,        // Key
+	i32         // Value
+>;
 ```
 
 ```rust
 #[test]
 fn storage_map() {
 	sp_io::TestExternalities::new_empty().execute_with(|| {
-		Item9::<T>::insert(0, 100);
-		assert_eq!(Item9::<T>::get(0), Some(100));
+		Item9::<T>::insert(0, -100);
+		assert_eq!(Item9::<T>::get(0), Some(-100));
 		assert_eq!(Item9::<T>::get(1), None);
 	});
 }
@@ -1055,9 +1064,9 @@ pub struct StorageMap<Prefix, Hasher, Key, Value, ...>(_);
 The storage key for a map uses the hash of the key. You can choose the storage hasher, these are the ones currently implemented:
 
 - Identity (no hash at all)
-- Blake2_128
+- Blake2_128 (cryptographic)
 - Blake2_256
-- Twox128
+- Twox128 (fast, but not cryptographic)
 - Twox256
 - Twox64Concat (special)
 - Blake2_128Concat (special)
@@ -1065,7 +1074,7 @@ The storage key for a map uses the hash of the key. You can choose the storage h
 ---
 
 ## Value Query: Balances
-
+<!-- unclear what the aim is, showing a more complex example? -->
 ```rust
 #[pallet::storage]
 pub type Item10<T: Config> = StorageMap<_, Blake2_128, T::AccountId, Balance, ValueQuery>;
@@ -1075,9 +1084,7 @@ pub type Item10<T: Config> = StorageMap<_, Blake2_128, T::AccountId, Balance, Va
 #[test]
 fn balance_map() {
 	sp_io::TestExternalities::new_empty().execute_with(|| {
-		// these would normally would be 32 byte addresses
-		let alice = 0u64;
-		let bob = 1u64;
+		let (alice, bob) = (0u64, 1u64); // these would normally be 32 byte addresses
 		Item10::<T>::insert(alice, 100);
 
 		let transfer = |from: u64, to: u64, amount: u128| -> Result<(), &'static str> {
@@ -1259,7 +1266,7 @@ fn better_balance_map() {
 			Item10::<T>::insert(i, u128::from(i * 100u64));
 			Item11::<T>::insert(i, u128::from(i * 100u64));
 		}
-		// cannot call iter for 10 because it cannot returns the keys
+		// cannot call iter for 10 because it cannot return the keys
 		let all_10: Vec<_> = Item10::<T>::iter_values().collect();
 		let all_11: Vec<_> = Item11::<T>::iter().collect();
 		println!("{:?}\n{:?}", all_10, all_11);
@@ -1308,7 +1315,7 @@ Now that we know that transparent hashers are extremely useful, there are really
 
 ## Which Hasher to Use?
 
-Basically, you should just always use `Blake2_128Concat` since it is hardest for a user to influence.The difference in time to execute is probably nominal (but not properly benchmarked afaik).
+Basically, you should just always use `Blake2_128Concat` since it is hardest for a user to influence. The difference in time to execute is probably nominal (but not properly benchmarked afaik).
 
 Some reasonable exceptions:
 
@@ -1320,7 +1327,7 @@ More info in the docs...
 ---
 
 ### Read the StorageMap Docs for API
-
+<!-- check whether this is up to date -->
 https://crates.parity.io/frame_support/pallet_prelude/struct.StorageMap.html
 
 ---
@@ -1465,21 +1472,45 @@ So what do you pick?
 
 The choice of storage depends on how your logic will access it.
 
-<div class="text-small">
+Let's look at some scenarios.
 
-- Scenario A: We need to manage millions of users, and support balance transfers.
+--- 
 
-  - We should obviously use a map! Balance transfers touch only 2 accounts at a time. 2 map reads is way more efficient than reading all million users to move the balance.
+## Scenario A
+We need to manage millions of users, and support balance transfers.
 
-- Scenario B: We need to get the 1,000 validators for the next era.
+---
 
-  - We should obviously use a bounded vector! We know there is an upper limit of validators, and we will need to read them all for our logic!
+## Scenario A
+We need to manage millions of users, and support balance transfers.
 
-- Scenario C: We need to store some metadata about the configuration of each validator.
 
-  - We should probably use a map! We will be duplicating some data from from the vector above, but the way we access configuration stuff usually is on a per-validator basis.
+-> We should obviously use a map! Balance transfers touch only 2 accounts at a time. 2 map reads is way more efficient than reading all million users to move the balance.
 
-</div>
+---
+
+## Scenario B
+We need to get the 1,000 validators for the next era.
+
+---
+
+## Scenario B
+We need to get the 1,000 validators for the next era.
+
+-> We should obviously use a bounded vector! We know there is an upper limit of validators, and we will need to read them all for our logic!
+
+---
+
+## Scenario C
+We need to store some metadata about the configuration of each validator.
+
+---
+
+## Scenario C
+We need to store some metadata about the configuration of each validator.
+
+-> We should probably use a map. We will be duplicating some data from the vector mentioned in B, but the way we access configuration usually is on a per-validator basis. So updating one validator's configuration does not have
+to touch the others.
 
 ---
 
