@@ -6,6 +6,11 @@ duration: 1 hour
 
 # 🪝 FRAME/Pallet Hooks 🪝
 
+You can not just execute logic in calls, but regularly on events.
+
+Notes:
+One of the distinctions from contracts that always need to be called.
+
 ---
 
 ## Hooks: All In One
@@ -59,18 +64,20 @@ Many of these functions receive the block number as an argument, but that can ea
 ## Hooks: `on_runtime_upgrade`
 
 - Called every time the `spec_version`/`spec_name` is bumped.
-- Why would might you be interested in implementing this?
+- Why might you be interested in implementing this?
+  - &shy;<!-- .element: class="fragment" --> **State Migration**, see dedicated lecture
+- &shy;<!-- .element: class="fragment" --> *Note*: Called before `on_initialize`, so the state might be subtly different from an extrinsic.
 
 Notes:
 
-Because very often runtime upgrades needs to be accompanied by some kind of state migration.
+Because very often runtime upgrades need to be accompanied by some kind of state migration.
 Has its own lecture, more over there.
 
 ---
 
 ## Hooks: `on_initialize`
 
-- Useful for any kind of **automatic** operation.
+- Useful for any kind of **automatic** and **necessary** operation.
 - The weight you return is interpreted as `DispatchClass::Mandatory`.
 
 ---v
@@ -92,15 +99,15 @@ fn on_initialize() -> Weight {
 
 ### Hooks: `On_Initialize`
 
-- &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order their `on_initialize` are called?
+- &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order are their `on_initialize` hooks called?
 - &shy;<!-- .element: class="fragment" --> Question: If your runtime panics `on_initialize`, how can you recover from it?
 - &shy;<!-- .element: class="fragment" --> Question: If your `on_initialize` consumes more than the maximum block weight?
 
 Notes:
 
 - The order comes from `construct_runtime!` macro.
-- Panic in mandatory hooks is fatal error. You are pretty much done.
-- Overweight blocks using mandatory hooks, are possible, ONLY in the context of solo-chains. Such a
+- Panic in mandatory hooks is fatal error. You are pretty much done. Most likely need to fork the chain.
+- Overweight blocks using mandatory hooks are possible, ONLY in the context of solo-chains. Such a
   block will take longer to produce, but it eventually will. If you have your eyes set on being a
   parachain developer, you should treat overweight blocks as fatal as well.
 
@@ -126,7 +133,9 @@ fn on_finalize() -> Weight {} // ❌
 
 ### Hooks: `on_finalize`
 
-> Generally, avoid using it unless if something REALLY needs to be happen at the end of the block.
+> Generally, avoid using it unless if something REALLY needs to happen at the end of the block.
+
+&shy;<!-- .element: class="fragment" --> *Tip*: Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1".
 
 Notes:
 
@@ -147,9 +156,9 @@ See https://github.com/paritytech/substrate/pull/14279 and related PRs
 
 ## Hooks: `on_idle`
 
-- **_Optional_** variant of `on_finalize`, also executed at the end of the block.
-- Small semantical difference: executes one pallet's hook, per block, randomly, rather than all
-  pallets'.
+- **_Optional_** variant of `on_finalize`, also executed at the end of the block, that uses left-over weight.
+- Small semantic difference: executes pallets' hooks randomly, rather than in `construct_runtime` order, and only
+if there is weight left.
 
 ---v
 
@@ -289,6 +298,7 @@ https://paritytech.github.io/substrate/master/node_template_runtime/struct.Runti
 
 ### Hooks: `genesis_build`
 
+<!-- check what the state of this is -->
 - Recent changes moving `genesis_build` to be used over a runtime API, rather than native runtime.
 - `#[cfg(feature = "std")]` in pallets will go away.
 
