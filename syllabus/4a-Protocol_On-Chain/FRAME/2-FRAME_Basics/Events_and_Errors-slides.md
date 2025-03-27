@@ -33,7 +33,7 @@ Not all extrinsics are valid. It could be for a number of reasons:
 
 ## Dispatch Result
 
-All pallet calls return at the end a `DispatchResult`.
+All pallet calls return a `DispatchResult` at the end.
 
 From: `substrate/frame/support/src/dispatch.rs`
 
@@ -122,7 +122,7 @@ So an error is at most just 5 bytes.
 
 ## Declaring Errors
 
-```rust [0|23-30|47-48]
+```rust [0|23-30|47-49]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 pub use pallet::*;
@@ -169,7 +169,8 @@ pub mod pallet {
 		#[pallet::call_index(0)]
 		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
 			let who = ensure_signed(origin)?;
-			let current_owner = CurrentOwner::<T>::get().ok_or(Error::<T>::NoOwner)?;
+			let current_owner = CurrentOwner::<T>::get()
+				.ok_or(Error::<T>::NoOwner)?;
 			ensure!(current_owner == who, Error::<T>::NotAuthorized);
 			CurrentOwner::<T>::put(new);
 			Self::deposit_event(Event::<T>::OwnerChanged);
@@ -189,10 +190,12 @@ When writing tests, you can use errors to make sure that your functions execute 
 #[test]
 fn errors_example() {
 	new_test_ext().execute_with(|| {
-		assert_noop!(TemplateModule::change_ownership(Origin::signed(1), 2), Error::<T>::NoOwner);
+		assert_noop!(TemplateModule::change_ownership(
+			Origin::signed(1), 2), Error::<T>::NoOwner);
 		CurrentOwner::<T>::put(1);
 		assert_ok!(TemplateModule::change_ownership(Origin::signed(1), 2));
-		assert_noop!(TemplateModule::change_ownership(Origin::signed(1), 2), Error::<T>::NotAuthorized);
+		assert_noop!(TemplateModule::change_ownership(
+			Origin::signed(1), 2), Error::<T>::NotAuthorized);
 	});
 }
 ```
@@ -319,15 +322,17 @@ https://github.com/paritytech/substrate/pull/10242
 
 When an extrinsic completes successfully, there is often some metadata you would like to expose to the outside world about what exactly happened during the execution.
 
-For example, there may be multiple different ways an extrinsic completes successfully, and you want the user to know what happened.
+For example, there may be multiple different ways an extrinsic completes successfully, and you want the user to know which exact way completed.
 
-Or maybe there is some significant state transition that you know users
+Or maybe there is some significant state transition that you know users will want to be notified about, e.g. the amount of locked balance.
+
+For this you can use events.
 
 ---
 
 ## Declaring and Emitting Events
 
-```rust [10-15|32-37|50]
+```rust [10-17|34-39|53]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 pub use pallet::*;
@@ -340,8 +345,10 @@ pub mod pallet {
 	/// Configure the pallet by specifying the parameters and types on which it depends.
 	#[pallet::config]
 	pub trait Config: frame_system::Config {
-		/// Because this pallet emits events, it depends on the runtime's definition of an event.
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+		/// Because this pallet emits events,
+		/// it depends on the runtime's definition of an event.
+		type RuntimeEvent: From<Event<Self>>
+			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -374,7 +381,8 @@ pub mod pallet {
 		#[pallet::call_index(0)]
 		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
 			let who = ensure_signed(origin)?;
-			let current_owner = CurrentOwner::<T>::get().ok_or(Error::<T>::NoOwner)?;
+			let current_owner = CurrentOwner::<T>::get()
+				.ok_or(Error::<T>::NoOwner)?;
 			ensure!(current_owner == who, Error::<T>::NotAuthorized);
 			CurrentOwner::<T>::put(new);
 			Self::deposit_event(Event::<T>::OwnerChanged);
@@ -487,16 +495,17 @@ pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
 
 ---
 
-## You Cannot Read Events
+## You Should Not Read Events
 
+- Events are meant for the outside world.
 - The events storage are an unbounded vector of individual events emitted by your pallets.
 - If you ever read this storage, you will introduce the whole thing into your storage proof!
-- Never write runtime logic which reads from or depends on events.
+- __Never write runtime logic which reads from or depends on events.__
 - Tests are okay.
 
 ---
 
-## You Cannot Read Events
+## You Should Not Read Events
 
 `frame/system/src/lib.rs`
 
@@ -582,7 +591,7 @@ fn events_example() {
 }
 ```
 
-Remember other pallets can deposit events too!
+Remember other pallets can deposit events, too!
 
 ---
 
@@ -590,5 +599,5 @@ Remember other pallets can deposit events too!
 
 - Events and Errors are two ways you can signal to users what is happening when they dispatch an extrinsic.
 - Events usually signify some successful thing happening.
-- Errors signify when something has gone bad (and all changes reverted).
-- Both are accessible by the end user when they occur.
+- Errors signify when something has gone bad (and all changes are reverted).
+- Both are accessible by and intended for the end user when they occur.
