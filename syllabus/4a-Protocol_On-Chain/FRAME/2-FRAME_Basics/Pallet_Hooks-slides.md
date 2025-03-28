@@ -18,9 +18,9 @@ One of the distinctions from contracts that always need to be called.
 - Onchain / STF
   - `on_runtime_upgrade`
   - `on_initialize`
-  - `poll` (WIP)
-  - `on_finalize`
+  - `on_poll`
   - `on_idle`
+  - `on_finalize`
 - Offchain:
   - `genesis_build`
   - `offchain_worker`
@@ -42,6 +42,7 @@ impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_initialize() -> Weight {}
   fn on_finalize() {}
   fn on_idle(remaining_weight: Weight) -> Weight {}
+  fn on_poll(weight: &mut WeightMeter) {}
   fn offchain_worker() {}
   fn integrity_test() {}
   #[cfg(feature = "try-runtime")]
@@ -82,7 +83,7 @@ Has its own lecture, more over there.
 
 ---v
 
-### Hooks: `On_Initialize`
+### Hooks: `on_initialize`
 
 - `Mandatory` Hooks should really be lightweight and predictable, with a bounded complexity.
 
@@ -97,7 +98,7 @@ fn on_initialize() -> Weight {
 
 ---v
 
-### Hooks: `On_Initialize`
+### Hooks: `on_initialize`
 
 - &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order are their `on_initialize` hooks called?
 - &shy;<!-- .element: class="fragment" --> Question: If your runtime panics `on_initialize`, how can you recover from it?
@@ -110,6 +111,22 @@ Notes:
 - Overweight blocks using mandatory hooks are possible, ONLY in the context of solo-chains. Such a
   block will take longer to produce, but it eventually will. If you have your eyes set on being a
   parachain developer, you should treat overweight blocks as fatal as well.
+
+---
+
+## Hooks: `on_poll`
+
+```rust
+fn on_poll(_n: BlockNumber, _weight: &mut WeightMeter)
+```
+
+- The non-mandatory version of `on_initialize`, i.e. it is not guaranteed to execute every block.
+- Runs after inherents.
+- Comes with a weight meter that needs to be adhered to. More on weights in the dedicated lecture.
+
+Notes:
+
+See https://github.com/paritytech/substrate/pull/14279 , https://github.com/paritytech/polkadot-sdk/pull/1781 and related PRs
 
 ---
 
@@ -140,17 +157,6 @@ fn on_finalize() -> Weight {} // ❌
 Notes:
 
 Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1"
-
----
-
-## Hooks: `poll`
-
-- The non-mandatory version of `on_initialize`.
-- In the making 👷
-
-Notes:
-
-See https://github.com/paritytech/substrate/pull/14279 and related PRs
 
 ---
 
