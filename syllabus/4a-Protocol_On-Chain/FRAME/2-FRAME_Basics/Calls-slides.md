@@ -119,7 +119,7 @@ impl<T> Parameter for T where T: Codec + EncodeLike + Clone + Eq + fmt::Debug + 
 
 ## Parameter Limits
 
-Most everything can be used as a call parameter, even a normal `Vec`, however, FRAME ensures that encoded block are smaller than a maximum block size, which inherently limits the extrinsic length.
+Most everything can be used as a call parameter, even a normal `Vec`, however, FRAME ensures that encoded blocks are smaller than a maximum block size, which inherently limits the extrinsic length.
 
 In Polkadot this is currently 5 MB.
 
@@ -153,7 +153,7 @@ However, you must follow one important rule...
 
 ## Calls MUST NOT Panic
 
-Under no circumstances (save, perhaps, storage getting into an irreparably damaged state) must this function panic.
+Under no circumstances (save when a state is reached that should never lead to a produced block) must this function panic.
 
 Allowing callers to trigger a panic from a call can allow users to attack your chain by bypassing fees or other costs associated with executing logic on the blockchain.
 
@@ -179,13 +179,13 @@ At any point in your call logic, you can return a `DispatchError`.
 ensure!(new_balance >= min_balance, Error::<T, I>::LiquidityRestrictions);
 ```
 
-When you do, thanks to transactional storage layers, all modified state will be reverted.
+When you do - thanks to transactional storage layers - all modified state will be reverted.
 
 ---
 
 ## Returning Success
 
-If everything in your pallet completed successfully, you simply return `Ok(())`, and all your state changes are committed, and the extrinsic is considered to have executed successfully.
+If everything in your call completed successfully, you simply return `Ok(())`, and all your state changes are committed, and the extrinsic is considered to have executed successfully.
 
 ---
 
@@ -218,9 +218,9 @@ Note that this also implies there can only be 256 calls per pallet due to the 1 
 
 ## Weight
 
-Each call must also include specify a call `weight`.
+Each call must also specify a call `weight`.
 
-We have another lecture on Weights and Benchmarking, but the high level idea is that this weight function tells us how complex the call is, and the fees that should be charged to the user.
+We have another lecture on Weights and Benchmarking, but the high level idea is that this weight function tells us how complex the execution of the call is, and thus the fees that should be charged to the user.
 
 ---
 

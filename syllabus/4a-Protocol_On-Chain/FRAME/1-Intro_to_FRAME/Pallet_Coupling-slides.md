@@ -32,6 +32,11 @@ Pallet coupling will teach you how to configure multiple pallets to interact wit
   - Pallets which are connected "loosely" with a trait / interface.
   - You can construct a runtime using any pallets which satisfy the required interfaces.
 
+Notes:
+
+- Tightly Coupled Pallets: Somewhat like inheritance
+- Loosely Coupled Pallets: Composition
+
 ---
 
 ## Tightly Coupled Pallets
@@ -170,7 +175,7 @@ Here you can see that this pallet requires some associated type `NativeBalance` 
 
 ## Trait Definition
 
-To begin loose coupling, you need to define a trait / interface that can be provided and depended on. A very common example is the `fungible::*` traits, which most often is implemented by `pallet_balances`.
+To begin loose coupling, you need to define a trait / interface that can be provided and depended on. A very common example is the `fungible::*` traits, which e.g. is implemented by `pallet_balances`.
 
 ```rust
 /// Trait for providing balance-inspection access to a fungible asset.
@@ -257,6 +262,23 @@ impl pallet_voting::Config for Runtime {
 
 This is the place where things are no longer "loosely" defined.
 
+Notes:
+
+- What new flexibility do you notice when remembering that we just define a trait implementation here?
+- Note that we're basically following the dependency injection pattern here.
+
+---
+
+## Time of Coupling
+
+Another way to distinguish loose vs tight is via the time of coupling:
+- Loose: dependency concretely specified when configuring the runtime
+- Tight: dependency concretely specified when coding the pallet
+
+So one question that will help you decide which to use:
+
+When do you need to drop down to know the exact types etc.?
+
 ---
 
 ## Challenges of Loose Coupling
@@ -273,9 +295,9 @@ When done right, it can be very powerful; like the ERC20 token format.
 
 Many new pallet developers also find loose coupling challenging because associated types are not concretely defined... on purpose.
 
-For example, note that the `fungible::*` trait has a generic `Balances` type.
+For example, note that the `fungible::*` trait has a generic `Balance` type.
 
-This allows pallet developers can configure most unsigned integers types (`u32`, `u64`, `u128`) as the `Balance` type for their chain, however, this also means that you need to be more clever when doing math or other operations with those generic types.
+This allows pallet developers to configure most unsigned integer types (`u32`, `u64`, `u128`) as the `Balance` type for their chain, however, this also means that you need to be more clever when doing math or other operations with those generic types.
 
 ---
 
