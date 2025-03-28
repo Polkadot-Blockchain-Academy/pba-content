@@ -1327,7 +1327,6 @@ More info in the docs...
 ---
 
 ### Read the StorageMap Docs for API
-<!-- check whether this is up to date -->
 https://crates.parity.io/frame_support/pallet_prelude/struct.StorageMap.html
 
 ---
