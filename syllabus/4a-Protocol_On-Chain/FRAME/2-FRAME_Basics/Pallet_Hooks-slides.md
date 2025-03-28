@@ -422,7 +422,7 @@ I am in fan of renaming this. If you are too, please comment here
 - A means for you to ensure correctness of your $STF$, after each transition.
 - &shy;<!-- .element: class="fragment" -->Entirely offchain, custom runtime-apis, conditional
   compilation.
-  - &shy;<!-- .element: class="fragment" -->Called from `try-runtime-cli`, which you will learn about next week, or anyone else
+  - &shy;<!-- .element: class="fragment" -->Called from `try-runtime-cli`, which you will learn about in another lecture.
 - &shy;<!-- .element: class="fragment" -->Examples from your assignment?
 
 Notes:
