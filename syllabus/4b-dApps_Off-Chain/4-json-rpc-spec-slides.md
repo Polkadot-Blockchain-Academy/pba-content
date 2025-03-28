@@ -796,4 +796,12 @@ tl;dr; Light Clients currently can't request the hashes, they must download the 
 
 ---v
 
+### Operation inaccessible
+
+---v
+
 ## Block pinning
+
+---v
+
+## Stop event recovery
