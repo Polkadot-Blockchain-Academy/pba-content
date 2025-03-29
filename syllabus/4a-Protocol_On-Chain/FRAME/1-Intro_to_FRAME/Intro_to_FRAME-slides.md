@@ -86,11 +86,15 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 <pba-flex center>
 
 - Writing the Sudo Pallet:
-- Without FRAME: 2210 lines of code.
-- With FRAME: 310 lines of code.
-- 7x Smaller.
+- Without FRAME: up to 3268 lines of code.
+- With FRAME: 318 lines of code.
+- ~10x Smaller.
 
 </pba-flex>
+
+Notes:
+Without FRAME number is based on expanded FRAME-based code.
+A fair comparison would be a frameless sudo pallet that might be shorter (but potentially less featurefull).
 
 ---
 
@@ -186,15 +190,15 @@ We will look more closely at each attribute throughout this module.
 
 ## See For Yourself
 
-- `wc -l` will show the number of lines of a file.
+- `tokei -f` will show the number of lines of a file.
 - `cargo expand` will expand the macros to "pure" Rust.
 
 ```sh
-➜  substrate git:(master) ✗ wc -l frame/sudo/src/lib.rs
-    310 frame/sudo/src/lib.rs
+➜  polkadot-sdk git:(master) ✗ tokei -f substrate/frame/sudo/src/{lib.rs,extension.rs,weights.rs}
+    Total 318
 
-➜  substrate git:(master) ✗ cargo expand -p pallet-sudo | wc -l
-    2210
+➜  polkadot-sdk git:(master) ✗ cargo expand -p pallet-sudo > sudo.rs; tokei -f sudo.rs
+    Total 3268
 ```
 
 ---
