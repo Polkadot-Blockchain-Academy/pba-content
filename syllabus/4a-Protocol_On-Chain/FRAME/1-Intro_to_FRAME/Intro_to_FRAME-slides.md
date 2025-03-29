@@ -254,7 +254,7 @@ pub fn execute_block(block: Block) { ... }
 - Initial Checks
 - Signature Verification
 - Execute Extrinsics
-  - `on_idle` and `on_finalize` hooks
+- `on_idle` and `on_finalize` hooks
 - Final Checks
 
 ---
@@ -352,11 +352,13 @@ impl pallet_timestamp::Config for Runtime {
 
 ---
 
-## Exercise: Proof of Existence Blockchain
+## Summary
 
-Let's get our hands dirty and use all of these pieces together!
-
-- use https://github.com/paritytech/polkadot-sdk-minimal-template
-- https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/guides/your_first_pallet/index.html
-  - This template has a node as well, but you are welcome to use the `pba-omni-node` with it.
-- Once done, run your pallet with the same omni-node, connect `polkadot.js.org/apps` to it and play around.
+- **FRAME**: A Rust framework that simplifies Substrate runtime development.
+- **Goals**: Improve modularity, flexibility & developer ergonomics while maintaining safety.
+- Core components:
+  - **Pallets**: Modular runtime components with storage, extrinsics, events, errors, and hooks.
+  - **FRAME System**: Foundational pallet providing basic blockchain types and functions.
+  - **FRAME Executive**: Coordinates runtime execution (initialization, checks, extrinsic processing).
+  - **Construct Runtime**: Combines pallets into a complete runtime
+- **Development approach**: Uses Rust macros to generate boilerplate code while keeping the developer interface clean.
