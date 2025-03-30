@@ -23,7 +23,7 @@ compiling Solidity contracts to PVM bytecode.
 
 ## Compilation process
 
-<img src="./img/resolc/compilation.svg">
+<img src="img/resolc/compilation.svg">
 
 Notes:
 
@@ -50,7 +50,7 @@ Notes:
 </pba-col>
 <pba-col center>
 
-<img src="./img/resolc/solidity.png">
+<img src="img/resolc/solidity.png">
 
 </pba-col>
 </pba-cols>
@@ -130,7 +130,7 @@ The revive compiler lowers this into LLVM IR.
 </pba-col>
 <pba-col center>
 
-<img src="./img/resolc/llvm.png">
+<img src="img/resolc/llvm.png">
 
 </pba-col>
 </pba-cols>
