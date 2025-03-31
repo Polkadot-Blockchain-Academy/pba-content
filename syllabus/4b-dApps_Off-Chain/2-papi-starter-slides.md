@@ -136,6 +136,11 @@ Let's jump into live demo
     - Create extrinsic System.remark
   - Constant: Balances.ExistentialDeposit
     - introduce compatibility token
+
+=> Find how much balance does the account holding the sudo key have.
+=> Find all the Proxy(any) accounts
+=> Find out if some account has configured the maximum amount of proxy delegates.
+
 - Transactions
   - Connect to pjs extension
   - Get signer from extension
