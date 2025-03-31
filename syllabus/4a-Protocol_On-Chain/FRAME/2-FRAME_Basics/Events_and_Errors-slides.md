@@ -500,7 +500,7 @@ pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
 - Events are meant for the outside world.
 - The events storage are an unbounded vector of individual events emitted by your pallets.
 - If you ever read this storage, you will introduce the whole thing into your storage proof!
-- __Never write runtime logic which reads from or depends on events.__
+- **Never write runtime logic which reads from or depends on events.**
 - Tests are okay.
 
 ---
