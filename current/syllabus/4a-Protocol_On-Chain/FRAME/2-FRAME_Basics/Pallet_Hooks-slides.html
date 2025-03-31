@@ -30,15 +30,19 @@
       <section  data-markdown><script type="text/template">
 
 # 🪝 FRAME/Pallet Hooks 🪝
-</script></section><section ><section data-markdown><script type="text/template">
+
+You can not just execute logic in calls, but regularly on events.
+
+<aside class="notes"><p>One of the distinctions from contracts that always need to be called.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
 ## Hooks: All In One
 
 - Onchain / STF
   - `on_runtime_upgrade`
   - `on_initialize`
-  - `poll` (WIP)
-  - `on_finalize`
+  - `on_poll`
   - `on_idle`
+  - `on_finalize`
 - Offchain:
   - `genesis_build`
   - `offchain_worker`
@@ -56,6 +60,7 @@ impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_initialize() -> Weight {}
   fn on_finalize() {}
   fn on_idle(remaining_weight: Weight) -> Weight {}
+  fn on_poll(weight: &mut WeightMeter) {}
   fn offchain_worker() {}
   fn integrity_test() {}
   #[cfg(feature = "try-runtime")]
@@ -74,17 +79,19 @@ impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 ## Hooks: `on_runtime_upgrade`
 
 - Called every time the `spec_version`/`spec_name` is bumped.
-- Why would might you be interested in implementing this?
+- Why might you be interested in implementing this?
+  - &shy;<!-- .element: class="fragment" --> **State Migration**, see dedicated lecture
+- &shy;<!-- .element: class="fragment" --> _Note_: Called before `on_initialize`, so the state might be subtly different from an extrinsic.
 
-<aside class="notes"><p>Because very often runtime upgrades needs to be accompanied by some kind of state migration.
+<aside class="notes"><p>Because very often runtime upgrades need to be accompanied by some kind of state migration.
 Has its own lecture, more over there.</p>
 </aside></script></section><section ><section data-markdown><script type="text/template">
 ## Hooks: `on_initialize`
 
-- Useful for any kind of **automatic** operation.
+- Useful for any kind of **automatic** and **necessary** operation.
 - The weight you return is interpreted as `DispatchClass::Mandatory`.
 </script></section><section data-markdown><script type="text/template">
-### Hooks: `On_Initialize`
+### Hooks: `on_initialize`
 
 - `Mandatory` Hooks should really be lightweight and predictable, with a bounded complexity.
 
@@ -97,20 +104,32 @@ fn on_initialize() -> Weight {
 
 <!-- .element: class="fragment" -->
 </script></section><section data-markdown><script type="text/template">
-### Hooks: `On_Initialize`
+### Hooks: `on_initialize`
 
-- &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order their `on_initialize` are called?
+- &shy;<!-- .element: class="fragment" --> Question: If you have 3 pallets, in which order are their `on_initialize` hooks called?
 - &shy;<!-- .element: class="fragment" --> Question: If your runtime panics `on_initialize`, how can you recover from it?
 - &shy;<!-- .element: class="fragment" --> Question: If your `on_initialize` consumes more than the maximum block weight?
 
 <aside class="notes"><ul>
 <li>The order comes from <code>construct_runtime!</code> macro.</li>
-<li>Panic in mandatory hooks is fatal error. You are pretty much done.</li>
-<li>Overweight blocks using mandatory hooks, are possible, ONLY in the context of solo-chains. Such a
+<li>Panic in mandatory hooks is fatal error. You are pretty much done. Most likely need to fork the chain.</li>
+<li>Overweight blocks using mandatory hooks are possible, ONLY in the context of solo-chains. Such a
 block will take longer to produce, but it eventually will. If you have your eyes set on being a
 parachain developer, you should treat overweight blocks as fatal as well.</li>
 </ul>
-</aside></script></section></section><section ><section data-markdown><script type="text/template">
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Hooks: `on_poll`
+
+```rust
+fn on_poll(_n: BlockNumber, _weight: &mut WeightMeter)
+```
+
+- The non-mandatory version of `on_initialize`, i.e. it is not guaranteed to execute every block.
+- Runs after inherents.
+- Comes with a weight meter that needs to be adhered to. More on weights in the dedicated lecture.
+
+<aside class="notes"><p>See <a href="https://github.com/paritytech/substrate/pull/14279">https://github.com/paritytech/substrate/pull/14279</a> , <a href="https://github.com/paritytech/polkadot-sdk/pull/1781">https://github.com/paritytech/polkadot-sdk/pull/1781</a> and related PRs</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
 ## Hooks: `on_finalize`
 
 - Extension of `on_initialize`, but at the end of the block.
@@ -129,22 +148,17 @@ fn on_finalize() -> Weight {} // ❌
 </script></section><section data-markdown><script type="text/template">
 ### Hooks: `on_finalize`
 
-> Generally, avoid using it unless if something REALLY needs to be happen at the end of the block.
+> Generally, avoid using it unless if something REALLY needs to happen at the end of the block.
+
+&shy;<!-- .element: class="fragment" --> _Tip_: Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1".
 
 <aside class="notes"><p>Sometimes, rather than thinking &quot;at the end of block N&quot;, consider writing code &quot;at the beginning of block N+1&quot;</p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
-## Hooks: `poll`
-
-- The non-mandatory version of `on_initialize`.
-- In the making 👷
-
-<aside class="notes"><p>See <a href="https://github.com/paritytech/substrate/pull/14279">https://github.com/paritytech/substrate/pull/14279</a> and related PRs</p>
-</aside></script></section><section ><section data-markdown><script type="text/template">
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Hooks: `on_idle`
 
-- **_Optional_** variant of `on_finalize`, also executed at the end of the block.
-- Small semantical difference: executes one pallet's hook, per block, randomly, rather than all
-  pallets'.
+- **_Optional_** variant of `on_finalize`, also executed at the end of the block, that uses left-over weight.
+- Small semantic difference: executes pallets' hooks randomly, rather than in `construct_runtime` order, and only
+  if there is weight left.
 </script></section><section data-markdown><script type="text/template">
 ## The Future: Moving Away From Mandatory Hooks
 
@@ -264,6 +278,8 @@ struct RuntimeGenesisConfig {
 </aside></script></section><section data-markdown><script type="text/template">
 ### Hooks: `genesis_build`
 
+<!-- check what the state of this is -->
+
 - Recent changes moving `genesis_build` to be used over a runtime API, rather than native runtime.
 - `#[cfg(feature = "std")]` in pallets will go away.
 
@@ -364,7 +380,7 @@ fn integrity_test() {
 - A means for you to ensure correctness of your $STF$, after each transition.
 - &shy;<!-- .element: class="fragment" -->Entirely offchain, custom runtime-apis, conditional
   compilation.
-  - &shy;<!-- .element: class="fragment" -->Called from `try-runtime-cli`, which you will learn about next week, or anyone else
+  - &shy;<!-- .element: class="fragment" -->Called from `try-runtime-cli`, which you will learn about in another lecture.
 - &shy;<!-- .element: class="fragment" -->Examples from your assignment?
 
 <aside class="notes"><p>What is a transition? Either a block, or single extrinsic</p>
