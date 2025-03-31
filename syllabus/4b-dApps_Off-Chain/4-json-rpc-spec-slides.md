@@ -632,7 +632,6 @@ Explain structure, then explain an example of how the storage is traversed.
 - It's important to keep the merkle tree balanced.
 - To avoid attacks, keys are hashed.
 - But if they are hashed
-  - It would be hard to query all the values for a given prefix
   - It would be hard to know the original key for a given entry
 - Solution
   - Hash parts of the key individually.
