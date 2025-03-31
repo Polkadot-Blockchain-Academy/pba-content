@@ -48,7 +48,7 @@ state itself. Therefore, it can't be modified without a change in the host itsel
 
 The metadata is versioned, and its current stable version is `15`.
 
-```typescript
+```typescript [|2|3|4|6|]
 interface RuntimeMetadataV15 {
   types: Vec<LookupEntry>;
   pallets: Vec<PalletMetadata>;
@@ -70,7 +70,7 @@ The lookup of the metadata defines the shape of all types used in the runtime.
 
 <span style="font-size: 0.6em; opacity: 0.6">(This is already `scale-info`)</span>
 
-```typescript [|2|3,4,6|5]
+```typescript [|2|3,4,6|5|]
 interface LookupEntry {
   id: u32; // this one is unique, and sequential
   path: Vec<String>; // where is it found in Rust code
@@ -91,7 +91,7 @@ where it is defined in rust.
 
 #### Lookup `type_def`
 
-```typescript
+```typescript [|2|3|4,5|6|7,8|]
 enum TypeDef {
   Composite, // struct
   Variant, // enum
@@ -321,7 +321,6 @@ These types are handy though to decode any `call_data`, `event`, or module `erro
 
 ```typescript
 interface OuterEnums {
-  // lookup indices
   call_enum_ty: Type;
   event_enum_ty: Type;
   error_enum_ty: Type;
@@ -346,8 +345,8 @@ interface RuntimeApiMetadata {
   name: String;
   methods: Vec<{
     name: String;
-    inputs: Vec<{ name: String; ty: Type }>; // lookup index
-    output: Type; // as well!
+    inputs: Vec<{ name: String; ty: Type }>;
+    output: Type;
     docs: Vec<String>;
   }>;
   docs: Vec<String>;
@@ -505,6 +504,44 @@ Example: `System`
 }
 ```
 
+---v
+
+## Metadata
+
+Example: `System` calls
+
+```json [|12-24|]
+{
+  "id": 96,
+  "path": ["frame_system", "pallet", "Call"],
+  "params": [
+    {
+      "name": "T"
+    }
+  ],
+  "def": {
+    "tag": "variant",
+    "value": [
+      {
+        "name": "remark",
+        "fields": [
+          {
+            "name": "remark",
+            "type": 14,
+            "typeName": "Vec<u8>",
+            "docs": []
+          }
+        ],
+        "index": 0,
+        "docs": ["Make some on-chain remark.", "", "Can be executed by every `origin`."]
+      },
+      {…}
+    ]
+  },
+  "docs": ["Contains a variant per dispatchable extrinsic that this pallet has."]
+}
+```
+
 ---
 
 ## Metadata
@@ -513,7 +550,7 @@ Example: `System`
 
 Every pallet can **optionally** define storage entries. They have the following shape in the metadata:
 
-```typescript [|2|3-13|4|5,14|6-13]
+```typescript [|2|4|5,14|6-13|]
 interface PalletStorageMetadata {
   prefix: String;
   entries: Vec<{
@@ -539,7 +576,7 @@ interface PalletStorageMetadata {
 
 Example: `System`
 
-```json
+```json [|24-33|6-23|]
 {
   "name": "System",
   "storage": {
