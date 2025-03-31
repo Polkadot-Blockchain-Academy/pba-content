@@ -284,6 +284,7 @@ frame_support::construct_runtime!(
 ### Pallet List: Pallet Parts
 
 New syntax doesn't have parts in the same way but offers customization:
+
 ```rust [2-3|6-7]
 #[runtime::pallet_index(1)]
 // can be optionally attached to a pallet to disable unsigned calls
@@ -292,7 +293,7 @@ pub type Timestamp = pallet_timestamp;
 #[runtime::pallet_index(2)]
 // can be optionally attached to a pallet to disable its calls
 #[runtime::disable_call]
-pub type Balances = pallet_balances; 
+pub type Balances = pallet_balances;
 ```
 
 ---

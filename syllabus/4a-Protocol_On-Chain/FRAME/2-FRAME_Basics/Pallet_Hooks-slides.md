@@ -67,7 +67,7 @@ Many of these functions receive the block number as an argument, but that can ea
 - Called every time the `spec_version`/`spec_name` is bumped.
 - Why might you be interested in implementing this?
   - &shy;<!-- .element: class="fragment" --> **State Migration**, see dedicated lecture
-- &shy;<!-- .element: class="fragment" --> *Note*: Called before `on_initialize`, so the state might be subtly different from an extrinsic.
+- &shy;<!-- .element: class="fragment" --> _Note_: Called before `on_initialize`, so the state might be subtly different from an extrinsic.
 
 Notes:
 
@@ -152,7 +152,7 @@ fn on_finalize() -> Weight {} // ❌
 
 > Generally, avoid using it unless if something REALLY needs to happen at the end of the block.
 
-&shy;<!-- .element: class="fragment" --> *Tip*: Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1".
+&shy;<!-- .element: class="fragment" --> _Tip_: Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1".
 
 Notes:
 
@@ -164,7 +164,7 @@ Sometimes, rather than thinking "at the end of block N", consider writing code "
 
 - **_Optional_** variant of `on_finalize`, also executed at the end of the block, that uses left-over weight.
 - Small semantic difference: executes pallets' hooks randomly, rather than in `construct_runtime` order, and only
-if there is weight left.
+  if there is weight left.
 
 ---v
 
@@ -305,6 +305,7 @@ https://paritytech.github.io/substrate/master/node_template_runtime/struct.Runti
 ### Hooks: `genesis_build`
 
 <!-- check what the state of this is -->
+
 - Recent changes moving `genesis_build` to be used over a runtime API, rather than native runtime.
 - `#[cfg(feature = "std")]` in pallets will go away.
 
