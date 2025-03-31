@@ -28,7 +28,7 @@ A runtime is really ✌️ things:
 
 ### Pallet <=> Runtime
 
-We build a runtime, using `construct_runtime`, typically twice:
+We build a runtime, using `construct_runtime`|`#[runtime]`, typically twice:
 
 1. Per pallet, there is a mock runtime.
 2. A real runtime elsewhere.
@@ -41,6 +41,11 @@ Benchmarking can then use both of these runtimes.
 
 ## `construct_runtime`: `Runtime` type
 
+<div class="flex-container text-small">
+<div class="left" style="max-width: 50%;">
+
+Legacy syntax:
+
 ```rust [1-100|2]
 frame_support::construct_runtime!(
   pub struct Runtime {
@@ -52,6 +57,31 @@ frame_support::construct_runtime!(
   }
 );
 ```
+
+</div>
+<div class="right" style="max-width: 50%; padding-left: 10px;">
+
+New syntax:
+
+```rust [1-100|5]
+#[frame_support::runtime]
+mod runtime {
+  #[runtime::runtime]
+  #[runtime::derive(RuntimeCall, RuntimeEvent, ...)]
+  pub struct Runtime;
+  #[runtime::pallet_index(0)]
+  pub type System = frame_system;
+  #[runtime::pallet_index(1)]
+  pub type Timestamp = pallet_timestamp;
+  #[runtime::pallet_index(2)]
+  pub type Balances = pallet_balances;
+  #[runtime::pallet_index(5)]
+  pub type <NameYouChoose> = path_to_crate;
+}
+```
+
+</div>
+</div>
 
 ---v
 
@@ -85,18 +115,48 @@ frame_system::Account::<Runtime>::get(42u32);
 
 ## `construct_runtime`: Pallet List
 
-```rust [3-7|8|1-100]
+<div class="flex-container text-small">
+<div class="left" style="max-width: 50%;">
+
+Legacy syntax:
+
+```rust [3-7|8]
 frame_support::construct_runtime!(
   pub struct Runtime {
-    System: frame_system,
-    Timestamp: pallet_timestamp,
+    System: frame_system = 0,
+    Timestamp: pallet_timestamp = 1,
     Balances: pallet_balances,
     Aura: pallet_aura,
-    Dpos: pallet_dpos,
+    Dpos: pallet_dpos = 42,
     <NameYouChoose>: path_to_crate,
   }
 );
 ```
+
+</div>
+<div class="right" style="max-width: 50%; padding-left: 10px;">
+
+New syntax:
+
+```rust [6-11|12-13]
+#[frame_support::runtime]
+mod runtime {
+  #[runtime::runtime]
+  #[runtime::derive(RuntimeCall, RuntimeEvent, ...)]
+  pub struct Runtime;
+  #[runtime::pallet_index(0)]
+  pub type System = frame_system;
+  #[runtime::pallet_index(1)]
+  pub type Timestamp = pallet_timestamp;
+  #[runtime::pallet_index(2)]
+  pub type Balances = pallet_balances;
+  #[runtime::pallet_index(5)]
+  pub type <NameYouChoose> = path_to_crate;
+}
+```
+
+</div>
+</div>
 
 ---v
 
@@ -132,7 +192,7 @@ System::account(42u32); // 🥳
 - Next crucial piece of information that is generated is:
 
 ```rust
-type AllPallets = (System, Balances, ..., Dpos);
+type AllPalletsWithSystem = (System, Balances, ..., Dpos);
 ```
 
 </div>
@@ -221,58 +281,30 @@ frame_support::construct_runtime!(
 
 ---v
 
-### Pallet List: Pallet Index
+### Pallet List: Pallet Parts
 
-```rust [3-5]
-frame_support::construct_runtime!(
-  pub struct Runtime {
-    System: frame_system::{Pallet, Call, Config, Storage, Event<T>} = 1,
-    Balances: pallet_balances = 0,
-    Dpos: pallet_dpos = 2,
-  }
-);
+New syntax doesn't have parts in the same way but offers customization:
+```rust [2-3|6-7]
+#[runtime::pallet_index(1)]
+// can be optionally attached to a pallet to disable unsigned calls
+#[runtime::disable_unsigned]
+pub type Timestamp = pallet_timestamp;
+#[runtime::pallet_index(2)]
+// can be optionally attached to a pallet to disable its calls
+#[runtime::disable_call]
+pub type Balances = pallet_balances; 
 ```
 
 ---
 
 ## `construct_runtime`: Final Thoughts
 
-- Order in the `construct_runtime` matters!
+- Order in the `construct_runtime` matters! (but not in `#[runtime]`)
 - Recall `integrity_test()` is called upon `construct_runtime`.
 
 ```sh
 test mock::__construct_runtime_integrity_test::runtime_integrity_tests ... ok
 ```
-
----v
-
-### Preview
-
-Of the next potential syntax:
-
-```rust
-#[frame::construct_runtime]
-mod runtime {
-  #[frame::runtime]
-  pub struct Runtime;
-
-  #[frame::executive]
-  pub struct Executive;
-
-  #[frame::pallets]
-  #[derive(RuntimeGenesisConfig, RuntimeCall, RuntimeOrigin)]
-  pub type AllPallets = (
-    System = frame_system = 0,
-    BalancesFoo = pallet_balances = 1,
-    BalancesBar = pallet_balances = 2,
-    Staking = pallet_staking = 42,
-  );
-}
-```
-
-Notes:
-
-See: https://github.com/paritytech/substrate/issues/13137
 
 ---
 
