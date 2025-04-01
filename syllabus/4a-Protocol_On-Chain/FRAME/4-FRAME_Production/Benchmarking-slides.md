@@ -176,7 +176,7 @@ mod benchmarks {
 - Ordinary least squared linear regression.
   - linregress crate
 - Supports multiple linear coefficients.
-  - Y = Ax + By + Cz + k
+  - `Y = Ax + By + Cz + k`
 - For constant time functions, we simply use the median value.
 
 </div>
@@ -386,6 +386,18 @@ let target = T::Lookup::lookup(target)?;
 
 ---
 
+## External Logic / Hooks
+
+```rust
+T::Slashed::on_unbalanced(T::Currency::slash_reserved(&target, deposit).0);
+```
+
+Here you adjust the balance.
+
+- What happens with slashed funds is configurable too!
+
+---
+
 ## Deterministic Storage Reads / Writes
 
 ```rust
@@ -407,9 +419,7 @@ let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
 for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
 ```
 
-enchmarkinghere you store balances!
-
-- What happens with slashed funds is configurable too!
+- There will be more or fewer writes depending on the number of subs.
 
 ---
 
@@ -515,7 +525,7 @@ let _ = T::Currency::make_free_balance_be(&target, BalanceOf::<T>::max_value());
 
 - Adds registrars to the runtime storage.
 - Set up an account with the appropriate funds.
-- Note this is just like writing runtime tests!
+- Note this is just like writing runtime tests.
 
 ---
 
@@ -574,19 +584,26 @@ Ok(())
 
 ## Executing the Benchmark
 
+Build the runtime.
+
 ```sh
-./target/production/substrate benchmark pallet \
-	--chain=dev \				# Configurable Chain Spec
-	--steps=50 \				# Number of steps across component ranges
-	--repeat=20 \				# Number of times we repeat a benchmark
-	--pallet=pallet_identity \	# Select the pallet
-	--extrinsic=* \				# Select the extrinsic(s)
-	--wasm-execution=compiled \ # Always used `wasm-time`
-	--heap-pages=4096 \			# Not really needed, adjusts memory
-	--output=./frame/identity/src/weights.rs \	# Output results into a Rust file
-	--header=./HEADER-APACHE2 \	# Custom header file to include with template
+cargo build -p my-runtime --release --features runtime-benchmarks
+```
+
+Run the omni-bencher with the built runtime.
+
+```sh
+frame-omni-bencher v1 benchmark pallet
+	--runtime runtime.wasm \       # Specify runtime wasm path
+	--pallet "pallet_identity" \   # Specify pallet to benchmark
+	--extrinsic ""                 # Specify extrinsics to benchmark
+	--output "identity_weights.rs" # Output results into a Rust file
+	--header=./HEADER-APACHE2 \    # Custom header file to include with template
 	--template=./.maintain/frame-weight-template.hbs # Handlebar template
 ```
+
+Notes:
+`--extrinsic ""` runs the benchmarks for all extrinsics in the pallet.
 
 ---
 
@@ -646,13 +663,13 @@ Source of graph: https://www.shawntabrizi.com/substrate-graph-benchmarks/old/
 /// The range of component `x` is `[0, 100]`.
 fn kill_identity(r: u32, s: u32, x: u32, ) -> Weight {
 	// Minimum execution time: 68_794 nanoseconds.
-	Weight::from_ref_time(52_114_486 as u64)
+	Weight::from_parts(6_000_000, 1554)
 		// Standard Error: 4_808
-		.saturating_add(Weight::from_ref_time(153_462 as u64).saturating_mul(r as u64))
+		.saturating_add(Weight::from_parts(153_462, 0).saturating_mul(r as u64))
 		// Standard Error: 939
-		.saturating_add(Weight::from_ref_time(1_084_612 as u64).saturating_mul(s as u64))
+		.saturating_add(Weight::from_parts(1_084_612, 0).saturating_mul(s as u64))
 		// Standard Error: 939
-		.saturating_add(Weight::from_ref_time(170_112 as u64).saturating_mul(x as u64))
+		.saturating_add(Weight::from_parts(170_112, 0).saturating_mul(x as u64))
 		.saturating_add(T::DbWeight::get().reads(3 as u64))
 		.saturating_add(T::DbWeight::get().writes(3 as u64))
 		.saturating_add(T::DbWeight::get().writes((1 as u64).saturating_mul(s as u64)))
