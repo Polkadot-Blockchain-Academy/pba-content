@@ -86,7 +86,7 @@ Ask what is the shortest amount of bytes that a call can have.
 ## Signed extensions
 
 - Signed extensions are functions that get executed for all transactions, prior to the execution of the call-data. <!-- .element: class="fragment" --->
-- The play 2 important roles: <!-- .element: class="fragment" --->
+- They play 2 important roles: <!-- .element: class="fragment" --->
   1. Perform checks to determine whether the transaction is valid. <!-- .element: class="fragment" --->
   2. Provide transversal logic to the execution of a transaction.<!-- .element: class="fragment" --->
 - Important: the evaluation of the call-data is not taken into account for determining the validity of a transaction.<!-- .element: class="fragment" --->
