@@ -1074,7 +1074,9 @@ The storage key for a map uses the hash of the key. You can choose the storage h
 ---
 
 ## Value Query: Balances
+
 <!-- unclear what the aim is, showing a more complex example? -->
+
 ```rust
 #[pallet::storage]
 pub type Item10<T: Config> = StorageMap<_, Blake2_128, T::AccountId, Balance, ValueQuery>;
@@ -1327,6 +1329,7 @@ More info in the docs...
 ---
 
 ### Read the StorageMap Docs for API
+
 https://crates.parity.io/frame_support/pallet_prelude/struct.StorageMap.html
 
 ---
@@ -1473,27 +1476,30 @@ The choice of storage depends on how your logic will access it.
 
 Let's look at some scenarios.
 
---- 
+---
 
 ## Scenario A
+
 We need to manage millions of users, and support balance transfers.
 
 ---
 
 ## Scenario A
-We need to manage millions of users, and support balance transfers.
 
+We need to manage millions of users, and support balance transfers.
 
 -> We should obviously use a map! Balance transfers touch only 2 accounts at a time. 2 map reads is way more efficient than reading all million users to move the balance.
 
 ---
 
 ## Scenario B
+
 We need to get the 1,000 validators for the next era.
 
 ---
 
 ## Scenario B
+
 We need to get the 1,000 validators for the next era.
 
 -> We should obviously use a bounded vector! We know there is an upper limit of validators, and we will need to read them all for our logic!
@@ -1501,11 +1507,13 @@ We need to get the 1,000 validators for the next era.
 ---
 
 ## Scenario C
+
 We need to store some metadata about the configuration of each validator.
 
 ---
 
 ## Scenario C
+
 We need to store some metadata about the configuration of each validator.
 
 -> We should probably use a map. We will be duplicating some data from the vector mentioned in B, but the way we access configuration usually is on a per-validator basis. So updating one validator's configuration does not have

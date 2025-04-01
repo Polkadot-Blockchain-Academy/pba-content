@@ -272,6 +272,7 @@ Notes:
 ## Time of Coupling
 
 Another way to distinguish loose vs tight is via the time of coupling:
+
 - Loose: dependency concretely specified when configuring the runtime
 - Tight: dependency concretely specified when coding the pallet
 

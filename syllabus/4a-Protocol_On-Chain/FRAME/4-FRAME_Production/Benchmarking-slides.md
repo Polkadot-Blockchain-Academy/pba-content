@@ -391,10 +391,10 @@ let target = T::Lookup::lookup(target)?;
 ```rust
 T::Slashed::on_unbalanced(T::Currency::slash_reserved(&target, deposit).0);
 ```
+
 Here you adjust the balance.
 
 - What happens with slashed funds is configurable too!
-
 
 ---
 
@@ -583,11 +583,15 @@ Ok(())
 ---
 
 ## Executing the Benchmark
+
 Build the runtime.
+
 ```sh
 cargo build -p my-runtime --release --features runtime-benchmarks
 ```
+
 Run the omni-bencher with the built runtime.
+
 ```sh
 frame-omni-bencher v1 benchmark pallet
 	--runtime runtime.wasm \       # Specify runtime wasm path
