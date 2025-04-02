@@ -69,6 +69,37 @@ const account = await typedApi.query.System.Account.getValue(ACCOUNT_ID);
 
 ---v
 
+### Metadata Builders
+
+- Codecs from metadata
+  - Lookup
+  - Storage
+  - Runtime APIs
+  - Transactions
+  - Events
+
+---v
+
+### Metadata Builders
+
+```ts
+import { getDynamicBuilder, getLookupFn } from "@polkadot-api/metadata-builders";
+
+const metadata = getMetadataFromSource();
+const lookup = getLookupFn(metadata);
+const dynamicBuilder = getDynamicBuilder(lookup);
+
+const { keys, value, fallback } = dynamicBuilder.buildStorage("Pallet", "Entry");
+
+const { codec, location } = dynamicBuilder.buildCall("Pallet", "Name");
+
+const { args, value } = dynamicBuilder.buildRuntimeCall("Api", "Method");
+
+const codec = dynamicBuilder.buildDefinition(134);
+```
+
+---v
+
 ### Observable Client
 
 - Internal detail
@@ -103,37 +134,6 @@ const account = await firstValueFrom(
       ctx.dynamicBuilder.buildStorage("System", "Account").value.dec(data)
   )
 );
-```
-
----v
-
-### Metadata Builders
-
-- Codecs from metadata
-  - Lookup
-  - Storage
-  - Runtime APIs
-  - Transactions
-  - Events
-
----v
-
-### Metadata Builders
-
-```ts
-import { getDynamicBuilder, getLookupFn } from "@polkadot-api/metadata-builders";
-
-const metadata = getMetadataFromSource();
-const lookup = getLookupFn(metadata);
-const dynamicBuilder = getDynamicBuilder(lookup);
-
-const { keys, value, fallback } = dynamicBuilder.buildStorage("Pallet", "Entry");
-
-const { codec, location } = dynamicBuilder.buildCall("Pallet", "Name");
-
-const { args, value } = dynamicBuilder.buildRuntimeCall("Api", "Method");
-
-const codec = dynamicBuilder.buildDefinition(134);
 ```
 
 ---v
@@ -210,6 +210,22 @@ interface JsonRpcConnection {
 }
 ```
 
+---v
+
+### JSON-RPC Providers
+
+Create a `withLogsRecorder`
+
+```ts
+export function withLogsRecorder(
+  persistLog: (msg: string) => void,
+  // Provider wrapped
+  provider: JsonRpcProvider
+): JsonRpcProvider {
+  // TODO
+}
+```
+
 ---
 
 ## Subscriptions
@@ -279,8 +295,9 @@ Producer notifies of new changes
 
 - ChainHead Events: <span class="fragment">Push-based</span>
 - Operations: <span class="fragment">Push/pull?</span>
-  - High-level: Pull <!-- .element: class="fragment" --->
   - Low-level: Push <!-- .element: class="fragment" --->
+  - High-level: Pull <!-- .element: class="fragment" --->
+  - Higher-level: Push 🤯 <!-- .element: class="fragment" --->
 
 Notes:
 
@@ -369,12 +386,17 @@ But that's pull!
 ```ts
 import { Observable } from "rxjs";
 
-// Emit one value every second
+// Emit one value every second up to 10
 const observable$ = new Observable<number>(subscriber => {
   let v = 0;
 
   const token = setInterval(() => {
-    subscriber.next(v++);
+    const valueToEmit = v;
+    v++;
+    subscriber.next(valueToEmit);
+    if (valueToEmit === 10) {
+      subscriber.complete();
+    }
   }, 1000);
 
   return () => clearInterval(token);
@@ -427,11 +449,62 @@ const multipliedBy2$ = observable$.pipe(map(v => v * 2));
 
 ---v
 
+### Composing Observables
+
+Pipe-ing
+
+```ts
+import { interval, map, take } from "rxjs";
+
+// Create an observable of the first 10 even numbers, one second at a time.
+const even$ = interval(1000).pipe(
+  map(v => v * 2),
+  take(10)
+);
+```
+
+---v
+
 ### Combining Observables
 
 - `combineLatest`, `merge`, `switchMap`, etc.
 - Endless list: https://rxjs.dev/guide/operators#creation-operators-1
 - Good resource: https://www.learnrxjs.io/learn-rxjs/operators
+
+---v
+
+### Combining Observables
+
+switchMap
+
+```ts
+const switchMap =
+  <T, R>(mapFn: (value: T) => Observable<R>) =>
+  (source: Observable<T>) =>
+    new Observable<R>(subscriber => {
+      // TODO
+
+      const subscription = source.subscribe({
+        next: v => {
+          const innerObservable = mapFn(v);
+
+          // TODO
+        },
+        error: e => subscriber.error(e),
+        complete: () => subscriber.complete(),
+      });
+
+      return () => {
+        // TODO
+      };
+    });
+
+const bounty$ = selectedBountyId$.pipe(
+  switchMap(id => {
+    return from(typedApi.query.Bounties.Bounty.getValue(id));
+  })
+);
+```
 
 ---v
 
@@ -780,6 +853,10 @@ For instance, how can we do it so that adding a new variant for an enum still ma
     </tr>
   </tbody>
 </table>
+
+---v
+
+## Practice: Runtime Upgrade 🚀
 
 ---
 

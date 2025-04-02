@@ -357,7 +357,7 @@ Example: Integer factorization (finding factors is hard for large numbers - proo
 factors however is just a matter of a single multiplication).
 
 NP-Complete problems can simulate every other NP problem.
-They are considered the hardest of the NP problems.
+They are considered the hardest of the NP problems: It follows that if they can simulate any other NP problem, solving them is at least as difficult as solving the most difficult NP problem.
 
 ---
 

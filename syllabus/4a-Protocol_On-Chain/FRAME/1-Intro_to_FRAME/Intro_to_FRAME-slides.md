@@ -86,11 +86,15 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 <pba-flex center>
 
 - Writing the Sudo Pallet:
-- Without FRAME: 2210 lines of code.
-- With FRAME: 310 lines of code.
-- 7x Smaller.
+- Without FRAME: up to 3268 lines of code.
+- With FRAME: 318 lines of code.
+- ~10x Smaller.
 
 </pba-flex>
+
+Notes:
+Without FRAME number is based on expanded FRAME-based code.
+A fair comparison would be a frameless sudo pallet that might be shorter (but potentially less featurefull).
 
 ---
 
@@ -186,15 +190,15 @@ We will look more closely at each attribute throughout this module.
 
 ## See For Yourself
 
-- `wc -l` will show the number of lines of a file.
+- `tokei -f` will show the number of lines of a file.
 - `cargo expand` will expand the macros to "pure" Rust.
 
 ```sh
-➜  substrate git:(master) ✗ wc -l frame/sudo/src/lib.rs
-    310 frame/sudo/src/lib.rs
+➜  polkadot-sdk git:(master) ✗ tokei -f substrate/frame/sudo/src/{lib.rs,extension.rs,weights.rs}
+    Total 318
 
-➜  substrate git:(master) ✗ cargo expand -p pallet-sudo | wc -l
-    2210
+➜  polkadot-sdk git:(master) ✗ cargo expand -p pallet-sudo > sudo.rs; tokei -f sudo.rs
+    Total 3268
 ```
 
 ---
@@ -250,7 +254,7 @@ pub fn execute_block(block: Block) { ... }
 - Initial Checks
 - Signature Verification
 - Execute Extrinsics
-  - `on_idle` and `on_finalize` hooks
+- `on_idle` and `on_finalize` hooks
 - Final Checks
 
 ---
@@ -348,11 +352,13 @@ impl pallet_timestamp::Config for Runtime {
 
 ---
 
-## Exercise: Proof of Existence Blockchain
+## Summary
 
-Let's get our hands dirty and use all of these pieces together!
-
-- use https://github.com/paritytech/polkadot-sdk-minimal-template
-- https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/guides/your_first_pallet/index.html
-  - This template has a node as well, but you are welcome to use the `pba-omni-node` with it.
-- Once done, run your pallet with the same omni-node, connect `polkadot.js.org/apps` to it and play around.
+- **FRAME**: A Rust framework that simplifies Substrate runtime development.
+- **Goals**: Improve modularity, flexibility & developer ergonomics while maintaining safety.
+- Core components:
+  - **Pallets**: Modular runtime components with storage, extrinsics, events, errors, and hooks.
+  - **FRAME System**: Foundational pallet providing basic blockchain types and functions.
+  - **FRAME Executive**: Coordinates runtime execution (initialization, checks, extrinsic processing).
+  - **Construct Runtime**: Combines pallets into a complete runtime
+- **Development approach**: Uses Rust macros to generate boilerplate code while keeping the developer interface clean.
