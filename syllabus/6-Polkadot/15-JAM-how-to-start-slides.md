@@ -4,14 +4,15 @@ description: How did we approach building JAM?
 duration: 45+ mins
 ---
 
-# JAM<br/>
+# Not about JAM
 
 ---
 
 #### What is this talk about?
 
-- Our approach to building JAM
-- It does not mean that it's the only one!
+Our aproach <br />
+to learning how <br />
+to implement JAM
 
 Notes:
 We want to share with you how we approached building JAM from scratch in TypeScript
@@ -38,7 +39,15 @@ of choice.
 
 #### Gray Paper - First impression
 
-<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/erasure-coding.jpg" />
+<img
+  alt="Gray Paper prose with a bunch of formulas."
+  rounded
+  style="width: 80%;"
+  src="../../assets/img/7-Polkadot/erasure-coding.jpg"
+/>
+
+Gray Paper is a description of the protocol using language-agnostic,
+mathematical notation.
 
 Notes:
 As you probably already know, the main source of truth for JAM is the Gray Paper.
@@ -50,18 +59,32 @@ So when you start off the first thing you'll see is something like.
 
 ---v
 
-#### The Gray Paper - Scary stuff
+#### Gray Paper - The scary stuff
 
-<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/jam-block-encoding.png" />
+<img
+  alt="A scary-looking formula from the Gray Paper describing encoding of a JAM block."
+  rounded
+  style="width: 80%;"
+  src="../../assets/img/7-Polkadot/jam-block-encoding.png"
+/>
+
+Block encoding description.
 
 Notes:
 If you go deeper, things might get a little bit more scary though! :)
 
 ---v
 
-#### The Gray Paper - Even worse!
+#### Gray Paper - Even worse (!)
 
-<img rounded style="width: 80%;" src="../../assets/img/7-Polkadot/pvm-formula.png" />
+<img
+  alt="A large formula with dozens of greek symbols."
+  rounded
+  style="width: 80%;"
+  src="../../assets/img/7-Polkadot/pvm-formula.png"
+/>
+
+A recursive step-by-step invocation function describing PVM.
 
 Notes:
 Or even this!
@@ -72,15 +95,14 @@ Or even this!
 
 Start from the very beginning and go through the formulas 1 by 1
 
-Pros:
+<!-- .element: class="fragment" -->
 
-- straight forward to start
-- works equally well if you have and don't have experience
+- ✅ straightforward to start
+- ✅ works equally well if you do and don't have experience
+- ❌ you might get stuck
+- ❌ depending on the language you might end up with inefficient architecture
 
-Cons:
-
-- you might get stuck
-- depending on the language you might end up with insufficient architecture
+<!-- .element: class="fragment" -->
 
 ---v
 
@@ -88,14 +110,13 @@ Cons:
 
 Think high level about the client architecture first
 
-Pros:
+<!-- .element: class="fragment" -->
 
-- you MIGHT build a very efficient client
+- ✅ you MIGHT build a very efficient client
+- ❌ requires a lot of experience
+- ❌ extremely easy to get wrong
 
-Cons:
-
-- requires a lot of experience
-- extremely easy to get wrong
+<!-- .element: class="fragment" -->
 
 ---v
 
@@ -113,42 +134,31 @@ Cons:
 #### Who are we?
 
 - JAM implementation in TypeScript
-  - `typeberry`
-
-<!-- .element: class="fragment" -->
-
 - JAM tooling (also TS)
-  - Gray Paper Reader <small>https://graypaper.fluffylabs.dev</small>
-  - PVM Debugger <small>https://pvm.fluffylabs.dev</small>
-
-<!-- .element: class="fragment" -->
 
 - Dev team:
-  - 2-4 core developers
+  - 1 dev with blockchain background
+  - 1-3 TS devs with no prior blockchain background
   - 2 frontend developers
-
-<!-- .element: class="fragment" -->
 
 ---
 
-### How did we start?
+### How did we actually start?
 
-- Reading the prose of Gray Paper.
+- 📖 Reading the prose of Gray Paper.
+
   - Getting the gist of what JAM is about.
 
-<!-- .element: class="fragment" -->
-
-- Working with raw bytes a lot
+- 🤖 Figured, we will be working with raw bytes a lot
   - `Bytes<N>` and `BytesBlob` helpers.
 
 <!-- .element: class="fragment" -->
 
-- Reading (not running!) JSON tests (w3f/jamtestvectors)
+- 💾 Reading (not running!) JSON tests (w3f/jamtestvectors)
+
   - Type-safe custom parser.
 
-<!-- .element: class="fragment" -->
-
-- Performance measurements from day 1
+- ⏱️ Performance measurements from day 1
   - Micro-benchmarks for "low-level" stuff.
 
 <!-- .element: class="fragment" -->
@@ -164,42 +174,169 @@ Notes:
 
 ---v
 
-#### TODO: Bytes code sample & unit tests
+#### `Bytes` helpers
+
+```ts
+export class Bytes<T extends number> extends BytesBlob {
+  readonly length: T;
+  ...
+  static fromBlob<N extends number>(len: N, v: Uint8Array): Bytes<N> {...}
+  static fromNumbers<N extends number>(len: N, v: number[]): Bytes<N> {...}
+  static zero<N extends number>(len: N): Bytes<N> {...}
+  static fill<N extends number>(len: N, input: U8): Bytes<N> {...}
+  static parseBytes<N extends number>(len: N, v: string): Bytes<N> {...}
+
+  /** Compare the sequence to another one. */
+  isEqualTo(other: Bytes<T>): boolean {
+    check(this.length === other.length, "Comparing incorrectly typed bytes!");
+    return u8ArraySameLengthEqual(this.raw, other.raw);
+  }
+}
+```
+
+---v
+
+### Benchmarking examples
+
+- 🤔 What's the most performant way to represent a `Bytes<32>` in TypeScript?
+- 🤠 We need data structures! `Set`, `Dictionary`
+- 🚄 Hashing / Crypto - WASM gives us huge gains.
+
+Notes:
+While it's not strictly necessary to be a performant client for the first milestones
+we are focusing on the performance as we go since our ambitions reach beyond M2/MN2.
+
+---v
+
+### Benchmarking
+
+```ts
+type ArrayHash = Uint8Array;
+type NumberHash = number[];
+type StringHash = string[];
+type PackedNumberHash = number[];
+type BigIntHash = bigint[];
+```
+
+Which one is the fastest?
+
+---v
+
+# OBVIOUSLY IT DEPENDS!
+
+- comparison?
+- ordering?
+- memory consumption?
+- string-parsing?
+- worker-threads passing?
+
+The trade-offs of time-investement might be completely different for your
+language of choice. But the optimisation goal always matters.
 
 ---
 
 #### Implementation as exploration
 
-- We started composing low-level primitives into more complex data structures based on the JSON test vectors.
-- Next we were "fact-checking" these structures with the Gray Paper and documenting them.
+- While re-reading the Gray Paper we started composing the low-level structures
+  and modeling the initial (very rough) architecture.
+- Some other structures were composed based on the W3F JSON test vectors
+  and later fact-checked with the Gray Paper.
+
+<br />
+
+- ✅ GP-navigation skills
+- ✅ Detecting language-specific caveats
+- ✅ Just start coding.
 
 Notes:
 
-- By searching the structures in the Gray Paper we were gaining better knowledge about the structure of the paper.
+By searching the structures in the Gray Paper we were gaining better knowledge
+about the structure of the paper.
 
 ---v
 
-#### TODO: Block code sample & unit tests
+### Header code sample
+
+```ts
+export class Header extends WithDebug {
+  ...
+  /**
+   * `H_p`: Hash of the parent header.
+   *
+   * In case of the genesis block, the hash will be zero.
+   */
+  parentHeaderHash: HeaderHash = Bytes.zero(HASH_SIZE).asOpaque();
+  /** `H_r`: The state trie root hash before executing that block. */
+  priorStateRoot: StateRootHash = Bytes.zero(HASH_SIZE).asOpaque();
+  /** `H_x`: The hash of block extrinsic. */
+  extrinsicHash: ExtrinsicHash = Bytes.zero(HASH_SIZE).asOpaque();
+  /** `H_t`: JAM time-slot index. */
+  timeSlotIndex: TimeSlot = tryAsTimeSlot(0);
+  ...
+}
+```
+
+---v
+
+#### Block code sample
+
+```ts
+/**
+ * The block consists of the header and some external input data (extrinsic).
+ *
+ * `B = (H, E)`
+ * https://graypaper.fluffylabs.dev/#/579bd12/089900089900
+ */
+export class Block extends WithDebug {
+  ...
+  constructor(
+    /** `H`: Block header. */
+    public readonly header: Header,
+    /** `E`: Extrinsic data. */
+    public readonly extrinsic: Extrinsic,
+  ) { ... }
+}
+```
+
+---v
+
+#### Gray Paper Reader
+
+<img
+  alt="Gray Paper Reader with code references annotations."
+  rounded
+  style="width: 80%;"
+  src="../../assets/img/7-Polkadot/jam-graypaper-reader.png"
+/>
 
 ---
 
 #### In the search of unknown-unknowns
 
-- **known-knowns**: Things we are aware of and understand.
-- **known-unknowns**: Things we are aware of but don't fully understand.
-- **unknown-unknowns**: Things we are not even aware exist, so we cannot prepare for them.
+- 😎 known-knowns: Things we are aware of and understand.
+- 😱 known-**unknowns**: Things we are aware of but don't fully understand.
+- 🤯 **unknown-unknowns**: Things we are not even aware exist, so we cannot prepare
+  for them.
 
 Notes:
 
-- While you gain understanding of the Gray Paper and the overall domain, you start to realize that there are things
-  that you have to do that you didn't even consider ealier. These unknown-unknowns turn into known-unknowns.
+While you gain understanding of the Gray Paper and the overall domain, you start
+to realize that there are things that you have to do that you didn't even consider
+ealier. These unknown-unknowns turn into known-unknowns.
 
 ---v
 
 ### How to proceed?
 
-- Depth-first
-- Breadth-first
+1. Depth-first mode:
+   1. Pick a known-know.
+   1. Research it and uncover known-**\*unknowns**.
+   1. Add them to the list.
+   1. If you have enough items on the list:
+      - go to (2) otherwise go deeper.
+2. Breadth-first mode:
+   1. Parallelize the work
+   1. Go back to (1.) if you run out of tasks.
 
 Notes:
 
@@ -210,9 +347,14 @@ Notes:
 
 ### First "proper" tasks
 
-- Merkelization
 - Codec
+- Merkleization
 - PVM
+- State transitions
+- Running test vectors **\***
+
+Gav's notes on this: <br />
+https://hackmd.io/@polkadot/jamprize#Advice
 
 Notes:
 
@@ -221,45 +363,24 @@ Notes:
 
 ---v
 
-### First tasks take aways
+### First tasks - take aways
 
-- Don't rely just on JSON test vectors.
-- Invest in your own unit testing suite.
-
-Notes:
-
-- JSON test are work in progress and will change.
-
----
-
-### Benchmarking examples
-
-- What's the most performant way to represent a `Bytes<32>` in TypeScript?
-- We need data structures! `Set`, `Dictionary`
-- Hashing / Crypto - WASM gives us huge gains.
+- ❌ Don't rely ONLY on JSON test vectors.
+- ✅ Invest in your own unit testing suite.
 
 Notes:
-While it's not strictly necessary to be a perofrmant client for the first milestones
-we are focusing on the performance as we go since our ambitions reach beyond M2.
 
----v
-
-### TODO: benchmarking code samples
-
----
-
-### PVM take aways
-
-- Building an interpreter is fairly easy (common sense).
-- Making it fully compatbile with GP is hard (focus on the formulas).
-- Taking the intepreter to Polkadot-level performance - extremely hard.
+- JSON tests are work in progress and will change.
 
 ---
 
 ### PVM - alternative implementation
 
 - AssemblyScript - sub-set of TypeScript, can be compiled to WASM
-- Since optimizing stuff to WASM will be needed it was a fun experiment to learn AS via PVM.
+- Since optimizing stuff to WASM will be needed it was a fun experiment
+  to learn AS via PVM.
+
+Game of life demo: https://todr.me/anan-as/conway.html
 
 ---v
 
@@ -269,16 +390,17 @@ we are focusing on the performance as we go since our ambitions reach beyond M2.
 - PVM debuggger was extremely handy in identifying differences.
 - More work, but extremely helpful to share experiences and PoVs.
 
+PVM debugger demo: https://pvm.fluffylabs.dev
+
 ---v
 
-### TODO: Game of life demo https://todr.me/anan-as/conway.html
+### PVM take aways
 
----
+- 🤠 Building an interpreter is fairly easy (common sense).
+- 🫣 Making it fully compatbile with GP is harder (focus on the formulas).
+- ☠️ Polkadot-level performance (recompiler) - seems very time-consuming.
 
-### Tracking changes
-
-- TODO: Gray Paper reader links
-- TODO: Gray Paper links overlay (from-code annotations)
+**\*** There is a Non-PVM Validating Node Path though.
 
 ---
 
