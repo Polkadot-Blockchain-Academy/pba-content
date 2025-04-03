@@ -412,7 +412,7 @@ PVM debugger demo: https://pvm.fluffylabs.dev
 - ⁉️  PVM JAM-Client-Plugin support?
   - Non-core code: RPC, indexers, protocol extensions, etc.
 - ⁉️  What components does our Web3 stack miss?
-  - IMHO "This project does not need crypto" should not be the answer
+  - Should "Your project is just a web2 database?" be the answer?
 
 ---
 
