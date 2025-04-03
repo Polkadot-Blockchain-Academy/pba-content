@@ -404,4 +404,16 @@ PVM debugger demo: https://pvm.fluffylabs.dev
 
 ---
 
+
+### Open ideas
+
+- ⁉️  WASM to PVM recompiler?
+  - AssemblyScript JAM SDK!
+- ⁉️  PVM JAM-Client-Plugin support?
+  - Non-core code: RPC, indexers, protocol extensions, etc.
+- ⁉️  What components does our Web3 stack miss?
+  - IMHO "This project does not need crypto" should not be the answer
+
+---
+
 # Questions?
