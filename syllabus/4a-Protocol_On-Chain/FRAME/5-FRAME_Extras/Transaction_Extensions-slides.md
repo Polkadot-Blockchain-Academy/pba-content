@@ -148,59 +148,44 @@ extensions is applied to **all transactions**, throughout the runtime.
 
 ```rust
 struct Foo(u32, u32);
-impl SignedExtension for Foo {
-  type AdditionalSigned = u32;
-  fn additional_signed(&self) -> Result<Self::AdditionalSigned, TransactionValidityError> {
+impl TransactionExtension for Foo {
+  type Implicit = u32;
+  fn implicit(&self) -> Result<Self::Implicit, TransactionValidityError> {
     Ok(42u32)
   }
+  /* snip */
 }
 
 pub struct UncheckedExtrinsic<Address, Call, Signature, (Foo)>
 {
-	pub signature: Option<(Address, Signature, Extra)>,
+	pub preamble: Preamble<(Address, Signature, Extension)>,
 	pub function: Call,
 }
 ```
 
-- 2 u32 are decoded as, `42u32` is expected to be in the signature payload.
+- Two `u32` are decoded as `self`, `42u32` is expected to be in the signature payload.
 
 Notes:
 
-Here's the `check` function of `CheckedExtrinsic` extensively documented to demonstrate this:
+Here's the `check` function of `CheckedExtrinsic` to hint at this:
 
 ```rust
-// SignedPayload::new
-pub fn new(call: Call, extra: Extra) -> Result<Self, TransactionValidityError> {
-	// asks all signed extensions to give their additional signed data..
-	let additional_signed = extra.additional_signed()?;
-	// this essentially means: what needs to be signed in the signature of the transaction is:
-	// 1. call
-	// 2. signed extension data itself
-	// 3. any additional signed data.
-	let raw_payload = (call, extra, additional_signed);
-	Ok(Self(raw_payload))
-}
-
 // UncheckedExtrinsic::check
 fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityError> {
-	Ok(match self.signature {
-		Some((signed, signature, extra)) => {
-			let signed = lookup.lookup(signed)?;
-			// this is the payload that we expect to be signed, as explained above.
-			let raw_payload = SignedPayload::new(self.function, extra)?;
-			// encode the signed payload, and check it against the signature.
-			if !raw_payload.using_encoded(|payload| signature.verify(payload, &signed)) {
-				return Err(InvalidTransaction::BadProof.into())
-			}
-
-			// the extra is passed again to `CheckedExtrinsic`, see in the next section.
-			let (function, extra, _) = raw_payload.deconstruct();
-			CheckedExtrinsic { signed: Some((signed, extra)), function }
-		},
-		// we don't care about signed extensions at all.
-		None => CheckedExtrinsic { signed: None, function: self.function },
-	})
-}
+		Ok(match self.preamble {
+			Preamble::Signed(signed, signature, tx_ext) => {
+				let signed = lookup.lookup(signed)?;
+				// The `Implicit` is "implicitly" included in the payload.
+				let raw_payload = SignedPayload::new(self.function, tx_ext)?;
+				if !raw_payload.using_encoded(|payload| signature.verify(payload, &signed)) {
+					return Err(InvalidTransaction::BadProof.into())
+				}
+				let (function, tx_ext, _) = raw_payload.deconstruct();
+				CheckedExtrinsic { format: ExtrinsicFormat::Signed(signed, tx_ext), function }
+			},
+			/* snip */
+		})
+	}
 ```
 
 ---
@@ -208,7 +193,8 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 ## Transaction Pool Validation
 
 - Each pallet also has `#[pallet::validate_unsigned]`.
-- This kind of overlaps with creating a signed extension and implementing `validate_unsigned`.
+- This kind of overlaps with creating a transaction extension and implementing `bare_validate`.
+- Substrate is in the process of migrating to transaction extensions.
 
 Notes:
 
@@ -222,84 +208,77 @@ https://github.com/paritytech/substrate/issues/4419
 - Recall that transaction pool validation should be minimum effort and static.
 - In `executive`, we only do the following:
   - check signature.
-  - call `Extra::validate`/`Extra::validate_unsigned`
+  - call `TransactionExtension::validate`/`TransactionExtension::bare_validate`
   - call `ValidateUnsigned::validate`, if unsigned.
-  - NOTE dispatching ✅!
 
 Notes:
 
 > Transaction queue is not part of the consensus system. Validation of transaction are _free_. Doing
 > too much work in validation of transactions is essentially opening a door to be DOS-ed.
 
----v
-
-### Transaction Pool Validation
-
-- Crucially, you should make sure that you re-execute anything that you do in transaction pool validation in dispatch as well:
-
-```rust
-/// Do any pre-flight stuff for a signed transaction.
-///
-/// Make sure to perform the same checks as in [`Self::validate`].
-fn pre_dispatch() -> Result<Self::Pre, TransactionValidityError>;
-```
-
-- Because conditions that are not stateless might change over time!
-
 ---
 
 ## Post Dispatch
 
-- The dispatch result, plus generic type (`type Pre`) returned from `pre_dispatch` is passed to `post_dispatch`.
-- See [`impl Applyable for CheckedExtrinsic`](https://github.com/paritytech/substrate/blob/a47f200eebeb88a5bde6f1ed2be9728b82536dde/primitives/runtime/src/generic/checked_extrinsic.rs#L69) for more info.
+- The dispatch result, plus generic type (`type Pre`) returned from `prepare` is passed to `post_dispatch`.
 
 ---
 
-## Notable Signed Extensions
+## Notable Transaction Extensions
 
-- These are some of the default signed extensions that come in FRAME.
+- These are some of the default transaction extensions that come in FRAME.
 - See if you can predict how they are made!
 
 ---v
 
-### `ChargeTransactionPayment`
+### `ChargeAssetTxPayment`
 
-Charge payments, refund if `Pays::Yes`.
+Charge payments, refund if `Pays::No`.
 
 ```rust
-type Pre = (
-  // tip
-  BalanceOf<T>,
-  // who paid the fee - this is an option to allow for a Default impl.
-  Self::AccountId,
-  // imbalance resulting from withdrawing the fee
-  <<T as Config>::OnChargeTransaction as OnChargeTransaction<T>>::LiquidityInfo,
-);
+pub enum Pre<T: Config> {
+	Charge {
+		tip: BalanceOf<T>,
+		// who paid the fee
+		who: T::AccountId,
+		// imbalance resulting from withdrawing the fee
+		initial_payment: InitialPayment<T>,
+		// asset_id for the transaction payment
+		asset_id: Option<ChargeAssetIdOf<T>>,
+		// weight used by the extension
+		weight: Weight,
+	},
+	NoCharge {
+		// weight initially estimated by the extension, to be refunded
+		refund: Weight,
+	},
+}
 ```
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### `check_genesis`
+### `CheckGenesis`
 
 Wants to make sure you are signing against the right chain.
 
-Put the genesis hash in `additional_signed`.
+Put the genesis hash in `implicit`.
 
 <!-- .element: class="fragment" -->
 
-`check_spec_version` and `check_tx_version` work very similarly.
+`CheckSpecVersion` and `CheckTxVersion` work very similarly.
 
 <!-- .element: class="fragment" -->
 
 ---v
 
-### `check_non_zero_sender`
+### `CheckNonZeroSender`
 
 - interesting story: any account can sign on behalf of the `0x00` account.
 - discovered by [@xlc](https://github.com/xlc).
-- uses `pre_dispatch` and `validate` to ensure the signing account is not `0x00`.
+- uses `validate` to ensure the signing account is not `0x00`.
+  - Note: used to check in both `validate` and `pre_dispatch` in the old `SignedExtension`.
 
 Notes:
 
@@ -307,10 +286,10 @@ https://github.com/paritytech/substrate/issues/10413
 
 ---v
 
-### `check_nonce`
+### `CheckNonce`
 
-- `pre_dispatch`: check nonce and actually update it.
-- `validate`: check the nonce, DO NOT WRITE ANYTHING, set `provides` and `requires`.
+- `validate`: check the nonce, DO NOT WRITE ANYTHING, returns `provides` and `requires`.
+- `prepare`: check nonce and actually update it.
 
 <!-- .element: class="fragment" -->
 
@@ -326,11 +305,11 @@ https://github.com/paritytech/substrate/issues/10413
 
 ---v
 
-### `check_weight`
+### `CheckWeight`
 
 - Check there is enough weight in `validate`.
-- Check there is enough weight, and update the consumed weight in `pre_dispatch`.
-- Updated consumed weight in `post_dispatch`.
+- Calculate and update the consumed weight in `prepare`.
+- Adjust consumed weight in `post_dispatch` based on unspent weight.
 
 <!-- .element: class="fragment" -->
 
@@ -338,25 +317,25 @@ https://github.com/paritytech/substrate/issues/10413
 
 ## Big Picture: Pipeline of Extension
 
-- Signed extensions (or at least the `pre_dispatch` and `validate` part) remind me of the extension
-  system of `express.js`, if any of you know what that is
+- Transaction extensions remind me of other pipelines in computer graphics or data processing where you pass data from one stage to another.
 
----v
 
+
+<!-- TODO: update 
 ## Big Picture: Pipeline of Extension
 
 <img rounded src="../../../../assets/img/5-Substrate/dev-5-x-signed-extensions.svg" />
-
+-->
 ---
 
 ## Exercises
 
-- Walk over the notable signed extensions above and riddle each other about how they work.
-- SignedExtensions are an important part of the transaction encoding. Try and encode a correct
+- Walk over the notable transaction extensions above and riddle each other about how they work.
+- TransactionExtensions are an important part of the transaction encoding. Try and encode a correct
   transaction against a template runtime in any language that you want, using only a scale-codec
   library.
-- SignedExtensions that logs something on each transaction
-- SignedExtension that keeps a counter of all transactions
-- SignedExtensions that keeps a counter of all successful/failed transactions
-- SignedExtension that tries to refund the transaction from each account as long as they submit less
+- TransactionExtension that logs something on each transaction
+- TransactionExtension that keeps a counter of all transactions
+- TransactionExtension that keeps a counter of all successful/failed transactions
+- TransactionExtension that tries to refund the transaction from each account as long as they submit less
   than 1tx/day.
