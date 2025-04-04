@@ -114,7 +114,7 @@ where Call: Dispatchable,
 
 Notes:
 
-TODO: how `TransactionValidity` is `combined_with` is super important here, but probably something to cover more in 4.3 and recap here.
+TODO: how `TransactionValidity` is `combined_with` is super important here, but probably something to cover more somewhere else and recap here.
 
 ---v
 
@@ -144,7 +144,7 @@ extensions is applied to **all transactions**, throughout the runtime.
 
 ---
 
-## TODO: Encoding
+## Encoding
 
 ```rust
 struct Foo(u32, u32);
@@ -165,27 +165,29 @@ pub struct UncheckedExtrinsic<Address, Call, Signature, (Foo)>
 
 - Two `u32` are decoded as `self`, `42u32` is expected to be in the signature payload.
 
-Notes:
+---v
+
+## Encoding
 
 Here's the `check` function of `CheckedExtrinsic` to hint at this:
 
 ```rust
 // UncheckedExtrinsic::check
 fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityError> {
-		Ok(match self.preamble {
-			Preamble::Signed(signed, signature, tx_ext) => {
-				let signed = lookup.lookup(signed)?;
-				// The `Implicit` is "implicitly" included in the payload.
-				let raw_payload = SignedPayload::new(self.function, tx_ext)?;
-				if !raw_payload.using_encoded(|payload| signature.verify(payload, &signed)) {
-					return Err(InvalidTransaction::BadProof.into())
-				}
-				let (function, tx_ext, _) = raw_payload.deconstruct();
-				CheckedExtrinsic { format: ExtrinsicFormat::Signed(signed, tx_ext), function }
-			},
-			/* snip */
-		})
-	}
+  Ok(match self.preamble {
+    Preamble::Signed(signed, signature, tx_ext) => {
+      let signed = lookup.lookup(signed)?;
+      // The `Implicit` is "implicitly" included in the payload.
+      let raw_payload = SignedPayload::new(self.function, tx_ext)?;
+      if !raw_payload.using_encoded(|payload| signature.verify(payload, &signed)) {
+        return Err(InvalidTransaction::BadProof.into())
+      }
+      let (function, tx_ext, _) = raw_payload.deconstruct();
+      CheckedExtrinsic { format: ExtrinsicFormat::Signed(signed, tx_ext), function }
+    },
+    /* snip */
+  })
+}
 ```
 
 ---
@@ -319,13 +321,6 @@ https://github.com/paritytech/substrate/issues/10413
 
 - Transaction extensions remind me of other pipelines in computer graphics or data processing where you pass data from one stage to another.
 
-
-
-<!-- TODO: update 
-## Big Picture: Pipeline of Extension
-
-<img rounded src="../../../../assets/img/5-Substrate/dev-5-x-signed-extensions.svg" />
--->
 ---
 
 ## Exercises
