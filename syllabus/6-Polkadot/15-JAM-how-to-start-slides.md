@@ -404,14 +404,13 @@ PVM debugger demo: https://pvm.fluffylabs.dev
 
 ---
 
-
 ### Open ideas
 
-- ⁉️  WASM to PVM recompiler?
+- ⁉️ WASM to PVM recompiler?
   - AssemblyScript JAM SDK!
-- ⁉️  PVM JAM-Client-Plugin support?
+- ⁉️ PVM JAM-Client-Plugin support?
   - Non-core code: RPC, indexers, protocol extensions, etc.
-- ⁉️  What components does our Web3 stack miss?
+- ⁉️ What components does our Web3 stack miss?
   - Should "Your project is just a web2 database?" be the answer?
 
 ---
