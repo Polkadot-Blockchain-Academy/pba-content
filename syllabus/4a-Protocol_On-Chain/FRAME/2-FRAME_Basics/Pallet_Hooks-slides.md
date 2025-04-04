@@ -170,7 +170,7 @@ Sometimes, rather than thinking "at the end of block N", consider writing code "
 
 ## The Future: Moving Away From Mandatory Hooks
 
-- `on_initialize` -> `poll`
+- `on_initialize` -> `on_poll`
 - `on_finalize` -> `on_idle`
 - New primitives for multi-block migrations
 - New primitives for optional service work via extrinsics.
