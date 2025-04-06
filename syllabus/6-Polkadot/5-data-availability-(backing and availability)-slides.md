@@ -129,7 +129,7 @@ More on this in the scheduling lecture (Agile Coretime)
 
 Notes:
 Each parachain, parathread or a task in the polkadot ecosystem gets matched with a speciifc execution core when it can produce a block.
-We will explore this process in depth in the scheduling lecture. 
+We will explore this process in depth in the scheduling lecture.
 
 ---v
 
@@ -140,7 +140,7 @@ We will explore this process in depth in the scheduling lecture.
 Collators once they build the parablock need to check who are the validators that are currently assigned to their execution core and send the collations to them over the p2p network.
 
 Notes:
-Collators once they build the parablock (often referred to as candidate parablocks or just candidates) need to check who are the validators that are currently assigned to their execution core and send the collations to them. 
+Collators once they build the parablock (often referred to as candidate parablocks or just candidates) need to check who are the validators that are currently assigned to their execution core and send the collations to them.
 
 ---
 
@@ -348,7 +348,7 @@ Backers accepted the responsibility for the parablock but now there's some more 
 
 # (No) Data Availability
 
-Imagine a situation where a backer discards the PoV once he succesfully backs it and no one else keeps it as well. 
+Imagine a situation where a backer discards the PoV once he succesfully backs it and no one else keeps it as well.
 
 He already checked, why would he need to keep it?
 
@@ -384,7 +384,7 @@ Normally a parachain block author would send the collation to the relay chain fo
 Notes:
 So the attack scenario goes like this. The attack is selected as parachain block author.
 
-They build the collation but they selectively send it only to the relay chain validators and ignore other collators. The relay chain will process the parablock and potentially accept and finalize it. 
+They build the collation but they selectively send it only to the relay chain validators and ignore other collators. The relay chain will process the parablock and potentially accept and finalize it.
 
 Other collators in that situation cannot build new blocks because they dont have the exact transactions in that blocks. What ends up on the relay chain is only a hash of them. So they cannot just read it from the relay chain.
 
@@ -401,12 +401,11 @@ Then in worst case this information can be requested by collators to reconstruct
 
 ## (Centralised) Data Availability
 
-So PoV need to be recoverable from the validators. 
+So PoV need to be recoverable from the validators.
 
 Can we just make backers keep them?
 
 ---v
-
 
 # (Centralised) Data Availability
 
@@ -421,7 +420,7 @@ Can we just make backers keep them?
 ## Malicious Backer Attack
 
 - You can prove data being incorrect
-- You cannot prove someone refusing to send you data 
+- You cannot prove someone refusing to send you data
 
 Notes:
 The problem is we cannot trust the backers to distribute it fairly. They can just ignore honest nodes when we need they the data and this can be heavily exploited.
@@ -449,7 +448,7 @@ If the malicious backer is the only entity controlling the PoVs then other nodes
 <img src="assets/data-availability-and-sharding/DA_Relay_2.svg" style="width: 70%" />
 
 Notes:
-If we create a data storage that is not controlled by the attacker then they cannot selectively distribute PoVs. Everyone that needs to check something can check something. 
+If we create a data storage that is not controlled by the attacker then they cannot selectively distribute PoVs. Everyone that needs to check something can check something.
 
 ---
 
@@ -458,6 +457,7 @@ If we create a data storage that is not controlled by the attacker then they can
 Naive approach would be to make every validator store every PoV.
 
 DOES NOT SCALE
+
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
 Notes:

@@ -112,7 +112,7 @@ Next one is Composability which can be closely married with interoperability. In
 
 Notes:
 
-The goal of the next 2 days will be mainly spent understanding how we achieve that last two tenets: Performance and Resilience. 
+The goal of the next 2 days will be mainly spent understanding how we achieve that last two tenets: Performance and Resilience.
 
 Performance is a big one. We all want a bigger variety of applications hosted on blockchain but this cannot be done unless we provide more throughput and lower latency. Just like web2 systems need to scale their architecture we had to innovate and evolve ours. No longer can every validator EXECUTE and STORE everything and for that we will explore how Polkadot is sharded. In fact we will be exploring both STATE SHARDING and EXECUTION SHARDING in the upcoming lectures.
 
@@ -123,7 +123,7 @@ Do notice that decentralisation is not a core principle, we only care about dece
 # Blockchain Landscape
 
 Notes:
-Let's zoom out for a second and remind ourselves how Polkadot overall aims to compare to the blockchain landscape and what it aims to bring to the table. This is my own take on the history but I will try and highlight some core innovations, strenghts and weaknesses of all the different solutions so we can appreciate and understand all the trade-offs. 
+Let's zoom out for a second and remind ourselves how Polkadot overall aims to compare to the blockchain landscape and what it aims to bring to the table. This is my own take on the history but I will try and highlight some core innovations, strenghts and weaknesses of all the different solutions so we can appreciate and understand all the trade-offs.
 
 ---v
 
@@ -145,7 +145,7 @@ Let's zoom out for a second and remind ourselves how Polkadot overall aims to co
 </pba-cols>
 
 Notes:
-We started with single simple state machine blockchains like Bitcoin. Every node hat to fully sync up and store the state and reexecute all the state transitions. Nevertheless it initially didn't require much hardware and was easy to host so a well diversified networks of nodes quickly arose. 
+We started with single simple state machine blockchains like Bitcoin. Every node hat to fully sync up and store the state and reexecute all the state transitions. Nevertheless it initially didn't require much hardware and was easy to host so a well diversified networks of nodes quickly arose.
 
 The state transition function was immutable. It was just moving balances left and right so it was all essentially a giant ledger.
 
@@ -243,11 +243,10 @@ It topoligically looks like all other monolithic but just a lot more sparse and 
 </pba-col>
 </pba-cols>
 
-
 Notes:
 Now we can take a look at solutions that realised a single state machine is not scalable. To scale we need to delegate, separate, split and shard.
 
-One solution like that is Cosmos which features a framework for building blockchains and they provide a shared communication language between chains. Although the chains in the cosmos world all have different security guarantees and different rules and while they can speak the same messaging language it is up to the chains to ensure the message gets to the other chains and is respected there. 
+One solution like that is Cosmos which features a framework for building blockchains and they provide a shared communication language between chains. Although the chains in the cosmos world all have different security guarantees and different rules and while they can speak the same messaging language it is up to the chains to ensure the message gets to the other chains and is respected there.
 
 In this solution cosmos blockchains are like separate islands, they technically speak the same language but they are so remote and independent it is difficult to fascilitate safe and regular communication. Each island is responsible for their own security and resources needed for maintaining security are spread between the islands.
 
@@ -402,7 +401,7 @@ Polkadot is at its core a sharded network. The state and execution is separated 
 
 You can think of the polkadot rolay chain as a layer 0 solution. It's like a mothership for all the smaller shards connecting to it.
 
-Additionally Polkadot not only provides a messaging language BUT it also comes with a messaging protocol over which those messages can be sent and received. 
+Additionally Polkadot not only provides a messaging language BUT it also comes with a messaging protocol over which those messages can be sent and received.
 
 ---v
 
@@ -437,7 +436,7 @@ Notes:
 There will be 4 main actors that we will be discussing. First and foremost we have the Validators. When we say the validators we mean the physical nodes of the Polkadot Relay Chain. They are the general purpose super-validators that allow all the parachains to come together and meet at the relay chain. They are also the block producers of the relay chain.
 
 There is a subflavour of a validator worth mentioning here. Validators are a wide set but only some of them are elected to perform their duties in the active validator set. Usually when we say validator we mean an active validator currently selected by the staking system. The staking elections take place every day but we will discuss that in the next lecture.
- 
+
 ---v
 
 ## Main Actors
@@ -484,7 +483,7 @@ For every lecture or subprotocol we'll be discussing I will try and provide a ge
 
 # Core Technologies of Polkadot
 
-Notes: 
+Notes:
 Now that we enumerated all the actors it's time for more lists. You all already worked a bunch with various technologies that are foundational to Polkadot but I wanted to make a short glossary of the key pieces. So what core technologies used to power Polkadot today?
 
 ---v
@@ -501,7 +500,7 @@ Now that we enumerated all the actors it's time for more lists. You all already 
 1. [...]
 1. [...]
 
-Notes: 
+Notes:
 Some of them you are already very familiar with. Substrate is our framework for building modular blockchains and WASM is the go-to runtime featured in Substrate. Substrate and Wasm together gives us monolithic and proggrammable blockchains to play with.
 
 Governance which was already discussed at depth is for the evolutions of the system. Runtimes can be changed over time and system parameters can be adjusted. Governance is also crucial for rescue operations in emergency situations.
@@ -558,7 +557,6 @@ In future we will be transition to a newer variant called Sassafras but we will 
 
 Notes:
 
-
 ---v
 
 # Core Technologies of Polkadot
@@ -605,7 +603,7 @@ Notes:
 1. Finality: GRANDPA, BEEFY
 1. Scheduling: CoreTime
 
-Notes: 
+Notes:
 
 ---v
 
@@ -624,7 +622,7 @@ Notes:
 1. Encoding: SCALE
 1. Networking: LibP2P/LiteP2P
 
-Notes: 
+Notes:
 This isn't a comprehensive list of all the technologies but there are some more generic ones in the backend connected to databases, networking and encoding like RocksDB, SCALE, and LibP2P.
 
 ---
@@ -642,7 +640,7 @@ This isn't a comprehensive list of all the technologies but there are some more 
 1. JAM & Future
 
 Notes:
-Now it's time to have a generak overview of the topics and lectures I have planned specifically for this module. 
+Now it's time to have a generak overview of the topics and lectures I have planned specifically for this module.
 
 We will be primarily covering the relay chain protocol aspects. You can think of the relay chain protocol as a big game. Staking is what selects the player for the game. Block production is who gets to make the next move. All the other lectures are trying to explain the rules of them game. To be precise the next ext three lectures of State Sharding, Data Availability and Execution Sharding are all parts of the ELVES protocol. This is how Polkadot scales and guarantees shared security to its rollups.
 
@@ -653,7 +651,7 @@ Finality is a bonus rule to the game that gives us a lot of new features. And sc
 ## Why are we learning it?
 
 Notes:
-And I want to make something clear. We will be diving deep into the protocol. This is stuff that's not the easiest but I don't believe you all are here to learn the easy stuff. 
+And I want to make something clear. We will be diving deep into the protocol. This is stuff that's not the easiest but I don't believe you all are here to learn the easy stuff.
 
 Different parts of what we'll be learning will be useful to different people. Some will build light clients, some wallets, some will join parity, others will optimize execution for parachains. There will be something for everyone.
 

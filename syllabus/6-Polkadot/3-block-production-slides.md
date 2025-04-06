@@ -7,12 +7,12 @@ owner: Maciej Zyszkiewicz (Joshy originally)
 
 # Block Production
 
-Notes: 
+Notes:
 In this lecture we’ll be covering what is block authoring as well as how it interacts with various consensus styles.
 
 ---
 
-# Block Production 
+# Block Production
 
 ## Agenda
 
@@ -28,7 +28,7 @@ In this lecture we’ll be covering what is block authoring as well as how it in
 
 ---
 
-# Block Production 
+# Block Production
 
 ## Actors
 
@@ -58,7 +58,7 @@ We will not be focusing on proof of work or simillar authoring mechanisms on thi
 
 ---
 
-# Block Production 
+# Block Production
 
 ## Prerequisites
 
@@ -72,7 +72,7 @@ Additionally all the validators have something at stake. We can leverage that st
 
 ---
 
-# Block Production 
+# Block Production
 
 ## Throttling
 
@@ -93,7 +93,7 @@ To slow down production we introduce the idea of a timeslot. Timeslot correspond
 
 ---v
 
-# Block Production 
+# Block Production
 
 ## Throttling
 
@@ -130,7 +130,7 @@ Reminder that elections happe every 24h, so every day our validator set can dras
 
 ---
 
-# Block Production 
+# Block Production
 
 ## Aura
 
@@ -151,7 +151,7 @@ So now that we have our 14_400 timeslots it is time to figure out who authors wh
 
 ---v
 
-# Block Production 
+# Block Production
 
 ## Aura
 
@@ -178,18 +178,18 @@ So we need a solution that is a bit more secretive in how it chooses the validat
 
 ---
 
-# Block Production 
+# Block Production
 
 ## BABE
 
 ### (Blind Assignment for Block Extension)
 
-Notes: 
+Notes:
 And this is where BABE comes in. Babe stands for Blind Assignment for Block Extension so you can already see in the name that it will be trying to be more secretive with the blind part. What we want to achieve is some obfuscation and secrecy hiding who is the next author. It will be someone from the active set, that is our anonymity set but who exactly should be hidden for as long as possible.
 
 ---v
 
-# Block Production 
+# Block Production
 
 ## BABE
 
@@ -213,7 +213,7 @@ And this is where BABE comes in. Babe stands for Blind Assignment for Block Exte
 Notes:
 BABE uses VRFs to achieve its blind assignment. I hope that you all remember what are verifiable random functions. They are random generators where you usually use some entropy context and your private key to generate some outputs which are later verifiable with your corresponding public key. A very useful primitive.
 
-So in Babe every validator generates a VRF output for every slot they see in the future. But they keep those outputs hidden. Then if their random number is below a specific constant threshold it means that they will be able to publish their number and claim the slow to author a block. 
+So in Babe every validator generates a VRF output for every slot they see in the future. But they keep those outputs hidden. Then if their random number is below a specific constant threshold it means that they will be able to publish their number and claim the slow to author a block.
 
 Untill you publish your result and prove it noone else knew you would win. This makes it so the attackers don;t even know who to DDoS.
 
@@ -221,7 +221,7 @@ This is exactly like Proof of Work whre they are looking for a small hash, but i
 
 ---v
 
-# Block Production 
+# Block Production
 
 ## BABE
 
@@ -241,7 +241,7 @@ Does anyone see an obvious issue with this approach of rolling the dice and clai
 
 ---v
 
-# Block Production 
+# Block Production
 
 ## BABE
 
@@ -265,7 +265,7 @@ And on top of that it is possible that sometimes we will get multiple validators
 
 ---v
 
-# Block Production 
+# Block Production
 
 ## BABE
 
@@ -292,7 +292,7 @@ In reality VRF thresholds are configured so that around 25% of the slots have a 
 
 ---
 
-# Block Production 
+# Block Production
 
 ## Safrole
 
@@ -301,7 +301,7 @@ And finally we can take a look at the newest iteration of the block authoring me
 
 ---v
 
-# Block Production 
+# Block Production
 
 ## Safrole
 
@@ -311,7 +311,7 @@ And finally we can take a look at the newest iteration of the block authoring me
 
 ---
 
-# Block Production 
+# Block Production
 
 ## Equivocations
 
@@ -331,4 +331,4 @@ An our case equivocation will be strickly referring to giving conflicting statem
 
 The same malicious behaviour can be done by block authors. An author can technically claim as slot and then author multiple blocks and try to double spend. Other nodes will be importing the blocks and if they detect two blocks from the same author on the same slot they will report him for equivocation. This is very easily provable as long as we have access to the two different blocks.
 
-This proof be permisionlessly provided on chain and will be verified and then trigger slashes to the offending validators. 
+This proof be permisionlessly provided on chain and will be verified and then trigger slashes to the offending validators.

@@ -103,7 +103,7 @@ This solution is quite sleek because there is no well defined authority list. Th
 
 There are unfortunately some tradeoffs in the PoW design. It’s an endless arms race wasting more hardware and more energy to secure the network. And unfortunately better hardware does not mean that bitcoin gets better performance. Performance capabilities are completely disjoint from the hardware.
 
-There were some alternatives though and one of them was... 
+There were some alternatives though and one of them was...
 
 ---
 
@@ -177,7 +177,7 @@ As PoW was getting more and more popular its downsides were becoming more and mo
 
 The short explainer is that…
 
-In proof of work the more money to buy hardware you had the more influence you had. So at this point might as well skip the hardware step and just verify how much money you have. 
+In proof of work the more money to buy hardware you had the more influence you had. So at this point might as well skip the hardware step and just verify how much money you have.
 
 ---v
 
@@ -208,7 +208,7 @@ But you are still an individual. You can use the power for good and be rewarded 
 
 ---v
 
-# Proof of Stake 
+# Proof of Stake
 
 ## Slashes
 
@@ -250,7 +250,7 @@ Slashing is quite interesting because in PoW you could argue there wasnt an expl
 Notes:
 So some core characteristics of all PoS approaches are for instance much much lower energy usage. Blockchains that moved to PoS from PoW often reduce their energy usage to less than 1% of the original.
 
-PoS additionally does something which is rarely talked about. It decouples throughput scaling with security scaling. In bitcoin better hardware just meant being more secure. In PoS better hardware is generally better throughput. 
+PoS additionally does something which is rarely talked about. It decouples throughput scaling with security scaling. In bitcoin better hardware just meant being more secure. In PoS better hardware is generally better throughput.
 
 Security is derived from the total value locked of the tokens being staked. So as the ecoystem grows the economic security grows naturally with it. No hardware adjustments are usually needed. And when we talk about economic security we mean how much resources or money it would take to get enough stake to attack or control the network.
 
@@ -320,7 +320,7 @@ And in this lecture we are solely focused on the part of selecting the authoriti
 
 Notes: There are a few different ways to approach the elections. Out main goal is to narrow down from a wide set of authority candidates into a smaller well bounded list of active authorities.
 
-The first msot naive approach is a classic PoS, but w ealso have more complex variants like Delegeated Pos and Nominated PoS. 
+The first msot naive approach is a classic PoS, but w ealso have more complex variants like Delegeated Pos and Nominated PoS.
 
 Classic PoS is something akin to initial Ethereum PoS systems, while DPoS is like Tron, EOS and other. NPoS is used in Polkadot and we'll be slowly building towards it.
 
@@ -393,7 +393,7 @@ If we were to implement such a protocol very very quickly people would start cre
 </pba-cols>
 
 Notes:
-delegated proof of stake. In DPoS we have 3 distinct groups. The Validator Candidates, Active Validators, those are the election winners and the delegators which doing the voting with their stake. 
+delegated proof of stake. In DPoS we have 3 distinct groups. The Validator Candidates, Active Validators, those are the election winners and the delegators which doing the voting with their stake.
 
 The votes are generally 1:1. If you have some stake you pick a node operator you think will do a good job. The rewards are usually shared between the stake providers and hardware operators.
 
@@ -479,7 +479,8 @@ Next once we have all the nominations there is an algorithm that tries to comput
 
 Notes:
 So to summarize You name up to `N` nominees, and an _algorithm_, computed or verified onchain , decides
-  the **winners** and **how to distribute the stake among them**.
+the **winners** and **how to distribute the stake among them**.
+
 - Voters are called **Nominators**.
 
 ---v
@@ -498,7 +499,7 @@ As a nominator, you are free to express your desire to back non-winners. If you 
 
 Has a much higher chance to make sure staked tokens won't get wasted. This leads to a higher stake utilization rate.
 
-Can optimize other criteria other than "who had more votes". 
+Can optimize other criteria other than "who had more votes".
 
 ---v
 
@@ -587,6 +588,7 @@ pub struct ElectionScore {
   pub sum_stake_squared: u128,
 }
 ```
+
 Notes:
 We need some objective and deterministic ways of comparing and judging solutions.
 
@@ -611,7 +613,7 @@ I will give an example why we care about the minimal stake so much.
 
 Imagine we have 3 validators. A total stake is thousand which lets assume is a lot of money.
 
-Now let's compare two examples. One where the stake is evenly distributed and one where some validators have a much higher stake. The protocol to properly function needs to maintain 2/3 honest nodes. So that means that to perform the attack you need to control 1/3 of the nodes. 
+Now let's compare two examples. One where the stake is evenly distributed and one where some validators have a much higher stake. The protocol to properly function needs to maintain 2/3 honest nodes. So that means that to perform the attack you need to control 1/3 of the nodes.
 
 The system is a secure as it is to attack the weakest 1/3rd of the nodes.
 
@@ -667,7 +669,7 @@ Verifying them is luckily linear and this will be crucial in the next steps.
 
 https://wiki.polkadot.network/learn/learn-phragmen/
 
-Notes: 
+Notes:
 For those super curious check this resources with some exaples of how exactly phragmen creates the staking solutions in Polkadot.
 
 ---
@@ -739,6 +741,7 @@ Notes:
 ---
 
 # Polkadot Staking
+
 # How economically secure is it?
 
 More validators does not always mean more secure.
@@ -777,6 +780,7 @@ https://nakaflow.io/
 ---
 
 # Polkadot Staking
+
 ## Future
 
 - Staking Migration (moving from RLC to a Polkadot Hub System Chain)
@@ -786,6 +790,7 @@ https://nakaflow.io/
 ---
 
 # Polkadot Staking
+
 ## Usefool Tools
 
 Staking Dashboard: https://staking.polkadot.cloud/#/overview
@@ -797,9 +802,10 @@ Validator Insights: https://apps.turboflakes.io/?chain=polkadot#/insights
 ### Further Reading
 
 Starting:
+
 - Staking Guide: https://wiki.polkadot.network/learn/learn-staking/
 - Advanced Staking Concepts: https://wiki.polkadot.network/learn/learn-staking-advanced/
-Advanced:
+  Advanced:
 - [A verifiably secure and proportional committee election rule](https://arxiv.org/abs/2004.12990)
 - 4.1 in [Overview of Polkadot and its Design Considerations](https://arxiv.org/abs/2005.13456)
 - [Proportional Justified Representation](https://arxiv.org/abs/1611.09928)

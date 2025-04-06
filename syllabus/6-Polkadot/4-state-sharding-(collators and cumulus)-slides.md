@@ -34,7 +34,7 @@ Our actors here are collators which are parachain nodes and validators which are
 
 ---
 
-# State Sharding 
+# State Sharding
 
 ## Agenda
 
@@ -77,10 +77,9 @@ There are 5 main subprotocols in ELVES. On this lecture we will diving into the 
 Notes:
 First a quick reminder to bring everyone up to speed. What is tate in a blockchain context?
 
-Blockchains were often described as big ledgers. This analogy was pretty dismissive of the execution layer of blockchains but it was pretty accurate when it comes to the state layer. 
+Blockchains were often described as big ledgers. This analogy was pretty dismissive of the execution layer of blockchains but it was pretty accurate when it comes to the state layer.
 
 State is all aggregated status of all the data, variables, balances, accounts, smart contracts etc in the blockchain system. If Alice has 10 tokens on her account then this information is a part of the state. State is ofc more than balances. All the blockchain programmables bits, like wasm runtimes, smart contracts etc are also in the state. They are blobs we can interact with.
-
 
 ---v
 
@@ -93,7 +92,7 @@ State is all aggregated status of all the data, variables, balances, accounts, s
 - [...]
 
 Notes:
-State can also be modified by TXs and extrinsics. So if for instance Alice sends 5 DOT to Bob it modifies the bit of state that corresponds to Alice, subtracts 5 from it and moves the 5 to Bob's State. Transactions are effectively operations on the state, they allow us to modify it. Hence we often call executing them state transitions. 
+State can also be modified by TXs and extrinsics. So if for instance Alice sends 5 DOT to Bob it modifies the bit of state that corresponds to Alice, subtracts 5 from it and moves the 5 to Bob's State. Transactions are effectively operations on the state, they allow us to modify it. Hence we often call executing them state transitions.
 
 ---v
 
@@ -126,8 +125,7 @@ That is also why everyone needs to keep track of all the state. Because to apply
 </pba-cols>
 
 Notes:
-So in a world with no state sharding all the nodes store all the data entries. 
-
+So in a world with no state sharding all the nodes store all the data entries.
 
 ---v
 
@@ -188,7 +186,7 @@ If we would have a million items to store and a thousand nodes then we already n
 </pba-cols>
 
 Notes:
-But data replication is not inherently bad. It is in fact really really good, it provides decentralisation and safety so we don't want to get rid of it. But just by limiting data replication we can achieve simillar security guarantees AND drastically reduce the storage overhead. 
+But data replication is not inherently bad. It is in fact really really good, it provides decentralisation and safety so we don't want to get rid of it. But just by limiting data replication we can achieve simillar security guarantees AND drastically reduce the storage overhead.
 
 ---v
 
@@ -320,7 +318,7 @@ And why do collations get sent over to the relay chain? To get validated of cour
 </pba-flex>
 
 Notes:
-Well a parachain block is just a bunch of transactions altering the state. 
+Well a parachain block is just a bunch of transactions altering the state.
 
 SWITCH
 
@@ -461,7 +459,7 @@ But we still need the hashes of them to have a proper merkle proof. So we need t
 
 ---
 
-# State Sharding 
+# State Sharding
 
 ## Parachain STF
 
@@ -740,7 +738,7 @@ reference: https://paritytech.github.io/polkadot/book/pvf-prechecking.html
 
 ## References
 
-1. 🦸 [Bradley Olson](https://github.com/bradleyolson64) original lecturer 
+1. 🦸 [Bradley Olson](https://github.com/bradleyolson64) original lecturer
 1. 🦸 [Gabriele Miotti](https://github.com/gabriele-0201), who was a huge help putting together these slides
 1. https://github.com/paritytech/cumulus/blob/master/docs/overview.md
 
