@@ -5,291 +5,295 @@ duration: 1 hour
 owner: Maciej Zyszkiewicz (Bradley Olson originally)
 ---
 
-# Cumulus Deep Dive
+# State Sharding
+
+## Collators and Cumulus
 
 Notes:
-
-Cumulus is the glue which attaches substrate based chains to Polkadot, converting them into parachains.
+Today we'll be covering State Sharding in Polkadot. To understand it we'll be diving deeper into collator nodes as well as a Polkadot-sdk tool called cumulus.
 
 ---
 
-### Outline
+# State Sharding
+
+## Actors
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Collators</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/actors.png" />
+</pba-col>
+</pba-cols>
+
+Notes:
+Our actors here are collators which are parachain nodes and validators which are relay chain elected nodes.
+
+---
+
+# State Sharding 
+
+## Agenda
+
+- Elves Overview
+- State
+- State Shards
+- Collator Networks
+- Collations
+- Cumulus
+
+---
+
+# ELVES
 
 <pba-flex center>
 
-1. What is Cumulus?
-1. Cumulus and Para-Relay Communication
-<!-- .element: class="fragment" data-fragment-index="1" -->
-1. How Cumulus Keeps a Parachain Node Informed
-<!-- .element: class="fragment" data-fragment-index="2" -->
-1. Collation Generation and Advertisement
-<!-- .element: class="fragment" data-fragment-index="3" -->
-1. How Cumulus Collations Enable Parablock Validation
-<!-- .element: class="fragment" data-fragment-index="4" -->
-1. How Cumulus Enables Runtime Upgrades
-<!-- .element: class="fragment" data-fragment-index="5" -->
-
-</pba-flex>
-
----
-
-## What is Cumulus
-
-A collection of code libraries extending a Substrate FRAME chain so that it can interface with the Polkadot API, run relay chain based consensus, and submit parachain blocks for validation.
-
----
-
-<div class="r-stack">
-<img src="assets/cumulus-deep-dive/spc_1.svg" style="width: 70%" />
-<img src="assets/cumulus-deep-dive/spc_2.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="assets/cumulus-deep-dive/spc_3.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="2" -->
-</div>
-
-Notes:
-
-- Substrate is a blockchain building framework
-- But only "solo" chains
-- Split into runtime/node side
-- Polkadot is built using substrate
-- Cumulus extends substrate to allow any substrate chain to operate as a parachain
-- Polkadot provides APIs to collators
-
----
-
-## Review, Collators and Collations
-
-<pba-flex center>
-
-> What is a collator?
-
-> What is a collation?
-
-> What is the PoV?
+1. **Collation: Collect transactions.**
+1. Backing: Assign responsibility.
+1. Availability: Preserve data.
+1. Approval Checking: Verify correctness.
+1. Disputes: Resolve escalations.
 
 </pba-flex>
 
 Notes:
+So today's lecture is part of a 3 lecture sequence describing the ELVES protocol. ELVES is a research paper published by W3F that is describing how polkadot achieves state and execution sharding and how it does it securely.
 
-- Collator:
-  - Part of consensus authority set
-  - Author and submit collations
-- Collation: Info necessary for validators to process and validate a parachain block.
-- Collations include: upward and horizontal messages, new validation code, resulting head data, proof of validity, processed downward messages, and hrmp_watermark (relay block up to which all hrmp messages have been processed)
-- PoV: Information necessary to mimic parachain state and transactions for the purpose of executing a single parachain block.
-  Will revisit in more detail.
+There are 5 main subprotocols in ELVES. On this lecture we will diving into the Collation side of things. This is everything that happens on the parachain side which is a single Polkadot shard or rollup.
 
 ---
 
-## Cumulus' Key Processes
+# State Sharding
 
-- Follow relay "new best head" to update para "new best head"
-- Follow relay finalized block to update para finalized block
-<!-- .element: class="fragment" data-fragment-index="1" -->
-- Request parablocks not shared by peers from relay (data recovery)
-<!-- .element: class="fragment" data-fragment-index="2" -->
-- Collation generation and announcement
-<!-- .element: class="fragment" data-fragment-index="3" -->
+## What is State?
+
+- Status of all the accounts, balances, variables in a blockchain
+- [...]
+- [...]
 
 Notes:
+First a quick reminder to bring everyone up to speed. What is tate in a blockchain context?
 
-- New best head: New block at the head of the fork most preferred by BABE
-  - Decending from finalized block
-  - Slightly more complicated form of "longest chain" selection
+Blockchains were often described as big ledgers. This analogy was pretty dismissive of the execution layer of blockchains but it was pretty accurate when it comes to the state layer. 
 
----
+State is all aggregated status of all the data, variables, balances, accounts, smart contracts etc in the blockchain system. If Alice has 10 tokens on her account then this information is a part of the state. State is ofc more than balances. All the blockchain programmables bits, like wasm runtimes, smart contracts etc are also in the state. They are blobs we can interact with.
 
-## Cumulus and Para-Relay Communication
 
-<div class="r-stack">
-<img src="assets/cumulus-deep-dive/para-relay_communication_1.svg" style="width: 1100px" />
-<img src="assets/cumulus-deep-dive/para-relay_communication_2.svg" style="width: 1100px" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
-</div>
+---v
 
----
+# State Sharding
 
-## Handling Incoming Relay Information
+## What is State?
 
-Before addressing collation generation let's first address the other three key Cumulus processes.
-These drive parachain consensus and ensure the availability of parachain blocks.
-
-<br/>
-Together they keep parachain nodes up to date such that collating is possible.
-
----
-
-### Parachain Consensus
-
-Parachain consensus is modified to:
-
-<pba-flex center>
-
-- Achieve sequencing consensus
-- Leave finality to the relay chain
-
-</pba-flex>
+- Status of all the accounts, balances, variables in a blockchain
+- State is modified by transactions/extrinsics
+- [...]
 
 Notes:
+State can also be modified by TXs and extrinsics. So if for instance Alice sends 5 DOT to Bob it modifies the bit of state that corresponds to Alice, subtracts 5 from it and moves the 5 to Bob's State. Transactions are effectively operations on the state, they allow us to modify it. Hence we often call executing them state transitions. 
 
-- Sequencing consensus: Decide on an accepted ordering of blocks and of transactions within a block
-- Sequencing consensus requires that we update our knowledge of the new best head of the parachain.
-  That way nodes are in agreement about which block to build on top of.
-- Cumulus sequencing consensus is modular and changeable
-- Sequencing options: Aura consensus, tendermint style consensus
+---v
 
----
+# State Sharding
 
-### Key Process 1: Import Driven Block Authoring
+## What is State?
 
-Collators are responsible for authoring new blocks. Prior to the rollout of asynchronous backing, they did so when importing relay blocks.
-Honest Collators will choose to author blocks descending from the best head.
-
-```rust[3|4-8|11]
-// Greatly simplified
-loop {
-    let imported = import_relay_chain_blocks_stream.next().await;
-
-    if relay_chain_awaits_parachain_candidate(imported) {
-        let pov = match parachain_trigger_block_authoring(imported) {
-            Some(p) => p,
-            None => continue,
-        };
-
-        relay_chain_distribute_pov(pov)
-    }
-}
-```
-
-<!-- .element: class="fragment" data-fragment-index="1" -->
+- Status of all the accounts, balances, variables in a blockchain
+- State is modified by transactions/extrinsics
+- State is usually stored by ALL nodes that participate in consensus
 
 Notes:
-
-- With asynchronous backing, parachain block authoring is untethered from relay block import, though still ultimately reliant on it.
-
----
-
-### Key Process 2: Finality Updates
-
-To facilitate shared security, parachains inherit their finality from the relay chain.
-
-<br/>
-
-```rust[3|4-8|11]
-// Greatly simplified
-loop {
-    let finalized = finalized_relay_chain_blocks_stream.next().await;
-
-    let finalized_parachain_block =
-      match get_parachain_block_from_relay_chain_block(finalized) {
-        Some(b) => b,
-        None => continue,
-    };
-
-    set_finalized_parachain_block(finalized_parachain_block);
-}
-```
+That is also why everyone needs to keep track of all the state. Because to apply the transactions we need to have the relevant state. So in most blockchains and I really mean nearly ALL of them. The state is simply and naively just duplicated between ALL the nodes in the network.
 
 ---
 
-### Key Process 3: Ensuring Block Availability
+# (No) State Sharding
 
-As a part of the parachains protocol, Polkadot makes parachain blocks available for 24 hours after they are backed.
-<br/><br/>
-
-<pba-flex center>
-
-- Why is this needed?
-  - Approvals
-  - Malicious collator
-
-</pba-flex>
-<br/><br/>
-
-> What role does cumulus play?
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Imagine no state sharding</li>
+    <li>All nodes need to store all the state</li>
+    <li>O(n^2) storage complexity</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/state.png" />
+</pba-col>
+</pba-cols>
 
 Notes:
+So in a world with no state sharding all the nodes store all the data entries. 
 
-- When Cumulus learns of a new parachain block via a receipt on the relay chain, it is responsible for deciding how long to wait before deciding that the block is missing and then requesting it from Polkadot DA.
 
----
+---v
 
-#### Brief Aside, Candidate Receipt
+# (No) State Sharding
 
-The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Receipt** to represent the freshly validated block and its outputs
-
-Notes:
-
-- The Candidate Receipt contains mainly hashes so its main use is to verify the correctness of known PoVs
-- The Candidate Receipt only references a PoV, it does not substitute it
-
----
-
-### Malicious collator example
-
-<div class="r-stack">
-<img src="assets/cumulus-deep-dive/malicious_collator_1.svg" style="width: 900px" />
-<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="assets/cumulus-deep-dive/malicious_collator_2.svg" style="width: 900px" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
-<img src="assets/cumulus-deep-dive/malicious_collator_3.svg" style="width: 900px" />
-<!-- .element: class="fragment" data-fragment-index="2" -->
-</div>
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Imagine no state sharding</li>
+    <li>All nodes need to store all the state</li>
+    <li>O(n^2) storage complexity</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 600px" src="./img/fully_connected_7_nodes.png" />
+</pba-col>
+</pba-cols>
 
 Notes:
+if we have a thousand items in the state and want to have a thousand nodes. That is already a milion things to store across the whole network. It is effectively quadratic in storage complexity.
 
-- On a Parachain, a block only needs to be accepted by the relay chain validators to be part of the canonical chain,
-- The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network
-- So, the relay chain could expect some parent block for the next block that no one is aware of
+---v
 
----
+# (No) State Sharding
 
-## Availability Outcome
-
-<img src="assets/cumulus-deep-dive/malicious_collator_4.svg" style="width: 70%" />
-
----
-
-# Key Process 4: Collation Generation and Advertisement
-
----
-
-## Collation Generation
-
-<pba-flex center>
-
-1. Relay node imports block in which parachain's avail. core was vacated
-1. CollationGeneration requests a collation from the collator
-<!-- .element: class="fragment" data-fragment-index="1" -->
-1. Parachain consensus decides whether it's this collator's turn to author
-<!-- .element: class="fragment" data-fragment-index="2" -->
-1. Collator proposes, seals, and imports a new block
-<!-- .element: class="fragment" data-fragment-index="3" -->
-1. Collator bundles the new block and information necessary to process and validate it, a collation!
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
-</pba-flex>
-
----
-
-## Collation Distribution
-
-<img src="assets/cumulus-deep-dive/para-relay_communication_1.svg" style="width: 1100px" />
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Imagine no state sharding</li>
+    <li>All nodes need to store all the state</li>
+    <li>O(n^2) storage complexity</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 600px" src="./img/fully_connected_20_nodes.png" />
+</pba-col>
+</pba-cols>
 
 Notes:
-
-- New parablocks are communicated simultaneously in two ways
-  - A collation is sent to the collator's tethered relay node to be processed in the `CollationGeneration` subsystem. There it is repackaged before being forwarded to backers.
-  - An advertisement of the new parablock candidate is gossiped to parachain node import queues
+If we would have a million items to store and a thousand nodes then we already need over a billion of items stored across the network. This is not sustainable and it can lead to centralisation if it imposes higher and higher hardware requirements.
 
 ---
 
-# How Cumulus Collations Enable Parablock Validation
+# State Sharding
+
+## Data replication
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Data replication is good...</li>
+    <li>but only in moderation</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/state.png" />
+</pba-col>
+</pba-cols>
+
+Notes:
+But data replication is not inherently bad. It is in fact really really good, it provides decentralisation and safety so we don't want to get rid of it. But just by limiting data replication we can achieve simillar security guarantees AND drastically reduce the storage overhead. 
+
+---v
+
+# State Sharding
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>State is split into multiple shards (rollups/parachains)</li>
+    <li>Collators store and manage parachain state</li>
+    <li>Validators do NOT store parachain state</li>
+    <li>Validators only store hashes of parachain state and their runtimes</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/state.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+The polkadot network instead of storing it's state in a single monolithic storage decided to split and silo it's storage.
+And this is partially where parachains even come from. Each small silo for a state is their own little blockchain that has it's own sovereign state.
+
+The nodes of each parachain AKA collators are responsible with storing and managing the parachain state. Relay chain validators only store a hash of the parachain state.
+
+Additionally the relay chain also has some state in it, but the general direction is that we want to minimize the state on the relay chain. The relay chain should be completely transactionless and generally unavailable to the end-users. It is a meta-layer to be used by rollups and people. This initiative is often called the Minimal Relay Chain.
+
+---v
+
+# State Sharding
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Relay chain stores the minimum allowed amount of state</li>
+    <li>Ideally there are no transactions at all on the relay chain</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/state.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+Additionally the relay chain also has some state in it, but the general direction is that we want to minimize the state on the relay chain. The relay chain should be completely transactionless and generally unavailable to the end-users. It is a meta-layer to be used by rollups and people. This initiative is often called the Minimal Relay Chain.
 
 ---
 
-### What is Runtime Validation?
+# State Sharding
+
+## Parachains
+
+- Parachain Runtime (WASM STF)
+- Collator Network
+- State
+
+Notes:
+Now that we've mentioned parachains again it might be time to talk about them a bit more.
+Parachains are generally just sovereign blockchain networks. Most of them are built with Substrate and Frame. Each parachain features a distinct and custom built wasm runtime (that is the state transition funciton), a collator network and a sovereign parachain state over which they preside.
+
+---v
+
+# State Sharding
+
+## Collator Networks
+
+- Choose your own block production engine (usually Aura)
+- Customise your collator incentives
+- Permissioned vs permissionless?
+
+Notes:
+How exactly a collator network should look like is left nearly completely up to the specific parachain and its governance.
+
+The network can decide on things like, what block parachain block authoring to use. Most default to Aura since most of the security will come from the relay chain at later stages anyway.
+
+Parachains also control how to incentivise collators. Some of them run their own staking systems where collators get rewarded for their work. Others prefer it keep things more centralised and under control. Substrate and cumulus allows you to pick from a wide variety of options, everything from a centrally controlled chain run on beefy collators to, decetralised chains is on the table.
+
+---v
+
+# State Sharding
+
+## Collator Duties
+
+- Store parachain state
+- Accept transactions to TX pool
+- Build parachain blocks (a collation of transactions)
+- Send the collations to the relay chain validators
+
+Notes:
+But the one thing all of them need to do no matter what consenus, incentivisation or topology they use is to eventually keep building parachain blocks. Collators are most importantly collecting aggregating and sequencing all parachain transactions into parachain blocks. We often call parachain blocks parablocks. The parablock together with some extra data is sent over to the relay chain.
+
+---
+
+# State Sharding
+
+## Collation Validation
+
+Notes:
+And why do collations get sent over to the relay chain? To get validated of course. The parachains use the rely chain as an auditing layer to inherit its economic security. How relay chain achieves consensus on the validity of collations is a topic for next the next 2 lectures but let's take a look how an singular collation could be verified by a singular other node. No consensus yet, just a local check.
+
+---v
+
+# State Sharding
+
+## Collation Validation
 
 <pba-flex center>
 
@@ -297,7 +301,7 @@ Notes:
 
 <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- Constraint: The relay chain must be able to execute runtime validation of a parachain block without access to the entirety of that parachain's state
+- Constraint: The relay chain validators must be able to execute runtime validation of a parachain block without access to the entirety of that parachain's state
 
 <!-- .element: class="fragment" data-fragment-index="2" -->
 
@@ -313,17 +317,156 @@ Notes:
 
 <pba-flex center>
 
-- The building blocks to make this possible, the PVF and PoV, are delivered within collations
+</pba-flex>
 
+Notes:
+Well a parachain block is just a bunch of transactions altering the state. 
+
+SWITCH
+
+Here we can see a state transition occuring as a consequence of the transactions.
+
+So if someone has access to the previous state, and appplies the the transactions using the WASM runtime which is the state transition function then they receive the output state. If all the transitions are legal then the resulting state is also legal.
+
+SWITCH
+
+But remember that relay chain validators do NOT store parachain state. So imagine telling your bank to send 100 dollars to Bob, but the bank does not even know how much money you have. Is that a legal transaction? Hard to say we dont know how much you have.
+
+So to answer how we deal with it let's dive into the code and do some inspecting.
+
+---v
+
+# State Sharding
+
+## Collation
+
+```rust[1|8-9|10-11]
+pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
+	/// Messages destined to be interpreted by the Relay chain itself.
+	pub upward_messages: UpwardMessages,
+	/// The horizontal messages sent by the parachain.
+	pub horizontal_messages: HorizontalMessages,
+	/// New validation code.
+	pub new_validation_code: Option<ValidationCode>,
+	/// The head-data produced as a result of execution.
+	pub head_data: HeadData,
+	/// Proof of storage to verify the state transition of the parachain.
+	pub proof_of_validity: MaybeCompressedPoV,
+	/// The number of messages processed from the DMQ.
+	pub processed_downward_messages: u32,
+	/// The mark which specifies the block number up to which all inbound HRMP messages are processed.
+	pub hrmp_watermark: BlockNumber,
+}
+```
+
+Notes:
+Here we have the actual struct used to represent a collation. There is a lot of stuff here but dont worry.
+
+SWITCH
+
+Right now we only care about a few items here. First is head_data. That is the promise of what we should get when we execute the parachain block.
+
+SWITCH
+
+Most importantly there is something called a proof of validity. If we'd inspect this field further eventually we would get here:
+
+---v
+
+# State Sharding
+
+## Collation
+
+```rust [6|9-10|11-12]
+/// The parachain block that is created by a collator.
+///
+/// This is send as PoV (proof of validity block) to the relay-chain validators. There it will be
+/// passed to the parachain validation Wasm blob to be validated.
+#[derive(codec::Encode, codec::Decode, Clone)]
+pub struct ParachainBlockData<B: BlockT> {
+    /// The header of the parachain block.
+    header: B::Header,
+    /// The extrinsics of the parachain block.
+    extrinsics: alloc::vec::Vec<B::Extrinsic>,
+    /// The data that is required to emulate the storage accesses executed by all extrinsics.
+    storage_proof: sp_trie::CompactProof,
+}
+```
+
+Notes:
+To the Parachain block data which is the decoded PoV.
+
+Switch
+
+And as expected we have a list of all transactions here, that's in the extrinsics field
+
+Switch
+
+but we also have a storage proof. Hmmm what's that?
+
+---v
+
+# State Sharding
+
+## Collation Storage Proof
+
+- Makes up most of the information in a collation
+- Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- It enables the construction of a sparse in-memory merkle trie
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- State root can then be compared to that from parent header
 <!-- .element: class="fragment" data-fragment-index="3" -->
 
-</pba-flex>
+Notes:
+So that field contatins partial parachain state. All the fields being touched by executions we are validating, so read or modified need to be included in the storage proof.
+
+Storage proof in fact makes up most of the collation. Extrinsic calls are usually quite light.
+
+With the storage proof we can reconstruct a small part of the state that is relevant to our current state transition function and ignore other bits. But of course we cannot just trust collators so all the state items are provided as a merkle proof that we compare to the state root from the parent block.
+
+---v
+
+# State Sharding
+
+## Collation Storage Proof Creation
+
+<div class="r-stack">
+<img src="assets/cumulus-deep-dive/pov_witness_data_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="assets/cumulus-deep-dive/pov_witness_data_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
+<br/>
+
+- Only includes the data modified in this block along with hashes of the data from the rest of the trie
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- This makes up the majority of the data in a collation (max 10MB)
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+Notes:
+Let's see an example. Imagine this is our state merkle trie. And imagine Alice from A sends some funds to Bob and Charlie.
+
+The other leafs are also state items but we neither read them or modify them so they are not needed to verify the transactions.
+
+SWITCH
+
+But we still need the hashes of them to have a proper merkle proof. So we need to supply the hashes in the green nodes which together with our data will fully reconstruct the blue node which is the state merkle root. The red leafs were omitted. So we are saving a lot of bandwitdh by not sending them. Usually we only touch a small subset for the whle state sp the savings are quite big.
+
+- orange: Data values modified in this block
+- green: Hash of the siblings node required for the pov
+- white: Hash of the nodes that are constructed with orange and green nodes
+- red: Unneeded hash
+- blue: Head of the trie, hash present in the previous block header
 
 ---
 
-#### Parachain Validation Function - PVF
+# State Sharding 
+
+## Parachain STF
 
 - The current STF of each Parachain is stored on the Relay Chain, wrapped as a PVF
+- New state transitions that occur on a parachain must be validated against the PVF
 
 ```rust [6]
 /// A struct that carries code of a parachain validation function and its hash.
@@ -338,13 +481,12 @@ pub struct Pvf {
 
 <br/>
 
-- New state transitions that occur on a parachain must be validated against the PVF
+- PVF ≈ STF = Parachain Runtime = WASM Blob = Parachain's Code
 
 Notes:
+Luckily at least the State transition function is stored on the relay chain. From the perspective of the relay chain it is often called PVF - Parachain Validation Function but that is effectively just a wrapper over the state transition function. Reminder that state transition function is just the WASM blob, the parachain runtime or parachain code. We are terrible at naming things, I know.
 
-The code is hashed and saved in the storage of the relay chain.
-
----
+---v
 
 #### Why PVF Rather than STF?
 
@@ -376,7 +518,7 @@ Notes:
 The function `validate_block` needed to interpret all the extra information in a PoV required for validation.
 This extra information is unique to each parachain and opaque to the relay chain.
 
----
+---v
 
 #### Validation Path Visualized
 
@@ -388,7 +530,7 @@ This extra information is unique to each parachain and opaque to the relay chain
 Notes:
 The input of the runtime validation process is the PoV, and the function called in the PVF is 'validate_block'. Validate block converts the PoV into necessary inputs on top of which a parachain's STF can be run. The output created is called a CandidateReceipt.
 
----
+---v
 
 #### What Does validate_block Actually Do?
 
@@ -406,7 +548,7 @@ The input of the runtime validation process is the PoV, and the function called 
 
 </pba-flex>
 
----
+---v
 
 #### Validate Block in Code
 
@@ -433,11 +575,9 @@ Notes:
 1. We construct the sparse in-memory database from the storage proof and then ensure that the storage root matches the storage root in the `parent_head`.
 2. Replace host functions
 3. Execute block
-4. Create output. We check whether the `storage_root` and other outputs resulting from validation matched the commitments made by the collator.
+4. Create output. We check whether the `storage_root` and other outputs resulting from validation matched the commitments made by the collator
 
-But where does `storage_proof` come from?
-
----
+---v
 
 ##### Host Function Replacement Visualized
 
@@ -448,103 +588,61 @@ But where does `storage_proof` come from?
 <!-- .element: class="fragment" data-fragment-index="1" -->
 </div>
 
+---v
+
+# State Sharding
+
+## All Together
+
+<img style="width: 900px" src="./assets/execution-sharding/parachain-validation-multiple.svg" />
+
 ---
 
-### Collation Revisited
+# State Sharding
 
-```rust[1|2-9,12-15|10-11]
-pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
-	/// Messages destined to be interpreted by the Relay chain itself.
-	pub upward_messages: UpwardMessages,
-	/// The horizontal messages sent by the parachain.
-	pub horizontal_messages: HorizontalMessages,
-	/// New validation code.
-	pub new_validation_code: Option<ValidationCode>,
-	/// The head-data produced as a result of execution.
-	pub head_data: HeadData,
-	/// Proof to verify the state transition of the parachain.
-	pub proof_of_validity: MaybeCompressedPoV,
-	/// The number of messages processed from the DMQ.
-	pub processed_downward_messages: u32,
-	/// The mark which specifies the block number up to which all inbound HRMP messages are processed.
-	pub hrmp_watermark: BlockNumber,
-}
-```
+## Solochains disclaimer
 
 Notes:
+So you all learned substrate and frame. You can all build substrate chains. And I want to give you a reminder that Substrate is not opinionated about building just for Polkadot. Substrate chains can exist as completely independent blockchains where they try to ensure their own economic security. Substrate chains dont have to be parachains, but if they would like to be, then the transition is super easy
 
-Code highlighting:
-
-- CandidateCommitments: Messages passed upwards, Downward messages processed, New code, `head_data` (checked against validation outputs)
-- PoV (the validation input)
+and this is where cumulus comes in.
 
 ---
 
-### Witness Data (Storage Proof)
+# State Sharding
 
-- Makes up most if the information in a PoV
-- Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
-<!-- .element: class="fragment" data-fragment-index="1" -->
-- It enables the construction of a sparse in-memory merkle trie
-<!-- .element: class="fragment" data-fragment-index="2" -->
-- State root can then be compared to that from parent header
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
----
-
-### Example of Witness Data Construction
-
-<div class="r-stack">
-<img src="assets/cumulus-deep-dive/pov_witness_data_1.svg" style="width: 70%" />
-<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
-<img src="assets/cumulus-deep-dive/pov_witness_data_2.svg" style="width: 70%" />
-<!-- .element: class="fragment" data-fragment-index="1" -->
-</div>
-
-<br/>
-
-- Only includes the data modified in this block along with hashes of the data from the rest of the trie
-<!-- .element: class="fragment" data-fragment-index="2" -->
-- This makes up the majority of the data in a collation (max 5MiB)
-<!-- .element: class="fragment" data-fragment-index="3" -->
+## Cumulus
 
 Notes:
+So we've discussed all the duties of collators but we ofc dont expect every parachain to reimplement them from scratch. Most of that come built in with Cumulus.
 
-- orange: Data values modified in this block
-- green: Hash of the siblings node required for the pov
-- white: Hash of the nodes that are constructed with orange and green nodes
-- red: Unneeded hash
-- blue: Head of the trie, hash present in the previous block header
+---v
 
----
+# State Sharding
 
-#### Witness Data in Validation
+## Cumulus
 
-```rust [4]
-// Very simplified
-fn validate_block(input: InputParams) -> Output {
-    // First let's initialize the state
-    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+<img style="width: 1200px" src="./img/glue.drawio.png" />
 
-    replace_host_functions();
+Notes:
+Cumulus is an extension tool to Substrate. It is a bunch of libraries, scripts and tools that can take in your classic substrate chain and turn it into a polkadot compatible parachain. Cumulus is like the glue between substrate parachains and the Polkadot relay chain.
 
-    // Run `execute_block` on top of the state
-    with_state(state, || {
-        execute_block(input.block).expect("Block is invalid")
-    })
+So most teams working on parachains in Polkadot develop their parachain purely in substrate just like a solo-chain but then they use cumulus to do the heavy-lifting of integrating with the relay chain.
 
-    // Create the output of the result
-    create_output()
-}
-```
+---v
 
-- Now we know where the **storage_proof** (witness data) comes from!
-- into_state constructs our storage trie
-<!-- .element: class="fragment" data-fragment-index="1" -->
-- Host functions rewritten to access this new storage
-<!-- .element: class="fragment" data-fragment-index="2" -->
+# State Sharding
 
----
+## Cumulus' Key Processes
+
+- Follow relay relay chain progression
+- Collation generation and announcement
+- Request parablocks not shared by peers from relay (data recovery)
+
+Notes:
+We discussed a lot of the responsibilities of collators but those are in fact mostly handled by Cumulus. Cumulus has triggers and hooks for building parachain blocks and it also has the integrations to announce them to the relay chain. Additionally Cumulus follows the relay chain to notice any relay chain forks or to find the new best relay chain head.
+
+---v
 
 ## Cumulus and Parachain Runtime Upgrades
 
@@ -572,7 +670,7 @@ fn validate_block(input: InputParams) -> Output {
 
 </pba-flex>
 
----
+---v
 
 ### Solution
 
@@ -595,7 +693,7 @@ Notes:
 
 https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade
 
----
+---v
 
 ##### PVF Pre-Checking Process
 
@@ -628,8 +726,21 @@ reference: https://paritytech.github.io/polkadot/book/pvf-prechecking.html
 
 ---
 
+# State Sharding
+
+## Summary
+
+- State is divided into shards called parachains
+- Shard state is managed by the collators
+- Collators aggregate parachain TXs and build parachain blocks
+- Parachain blocks together with state proofs get sent to validators
+- Cumulus transforms Substrate Chains into Parachains
+
+---
+
 ## References
 
+1. 🦸 [Bradley Olson](https://github.com/bradleyolson64) original lecturer 
 1. 🦸 [Gabriele Miotti](https://github.com/gabriele-0201), who was a huge help putting together these slides
 1. https://github.com/paritytech/cumulus/blob/master/docs/overview.md
 
