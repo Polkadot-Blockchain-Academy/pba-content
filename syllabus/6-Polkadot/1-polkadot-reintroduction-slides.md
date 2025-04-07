@@ -5,474 +5,682 @@ duration: 45 min
 owner: Maciej Zyszkiewicz
 ---
 
-# Polkadot
+# Polkadot Re-Introduction
 
 Notes:
 Introduction
 
+---
+
+# Polkadot Re-Introduction
+
+## Agenda
+
+- Core Tenets
+- Blockchain Landscape Overview
+- Actors in the Polkadot Network
+- Core Polkadot Technologies Glossary
+- Polkadot Module Agenda Overview
+
+Notes:
+
+---
+
+# Core Tenets
+
+- [...]
+
+- [...]
+
+- [...]
+
+- [...]
+
+- [...]
+
+Notes:
+Before we jump into the main topic let me make a few comments on what are the core tenets of Polkadot. Even tho Polkadot is changing over the years and the protocol evolves those values where accurate when the network first launched, are accurate today and will still be accurate when JAM launches.
+
 ---v
 
-# Polkadot
+# Core Tenets
 
-## Core Tenets (In My Opinion)
+- **Accessibility**
 
-- Polkadot is a decentralized open-source community
+- [...]
+
+- [...]
 
 - [...]
 
 - [...]
 
 Notes:
-Before we jump into the main topic let me make a few comments on what I believe are the core tenets of Polkadot. The first one is that
+The first one is that Polkadot needs to be accesible which should be apparent with the open-source nature of the community. Negligible barriers to innovation, being easy, fast and cheap are the core properties here.
 
-Polkadot is a decentralized open-source community. Hopefully at this point you got somewhat convinced about this one. Sitting here in the PBA which is funded by the biggest DAO in the digital world. And I'm sure the Governance module also reinforced that idea.
+Hopefully all of you being here in this room learning about Polkadot is a bit of a proof of our values, that access to the protocol and the knowledge of it should be easily accessible.
+
+Remember that all of you are here on this free course because the world largest DAO, Polkadot OpenGov funds it. The eocystsem tries to make itself as accessible as possible. And spread of knowledge is a core component here.
 
 ---v
 
-# Polkadot
+# Core Tenets
 
-## Core Tenets (In My Opinion)
+- Accessibility
 
-- Polkadot is a decentralized open-source community
+- **Generality**
 
-- Polkadot is a permissionless and ubiquitous computer
+- [...]
+
+- [...]
 
 - [...]
 
 Notes:
-Polkadot is a permissionless and ubiquitous computer. The key pieces to this were supplied by the customizable and programmable substrate/frame chains so something you got to experience in details over the last few weeks. They are fully adjustable state transition machines that can be deployed online.
+Polkadot is a ubiquitous computer and every good computer needs to provide some generality. The key pieces to this were supplied by the customizable and programmable substrate/frame chains so something you got to experience in details over the last few weeks. They are fully adjustable state transition machines that can be deployed online. And they will play an intergral role as building blocks for the Polkadot Ecosystem.
 
 ---v
 
-# Polkadot
+# Core Tenets
 
-## Core Tenets (In My Opinion)
+- Accessibility
 
-- Polkadot is a decentralized open-source community
+- Generality
 
-- Polkadot is a permissionless and ubiquitous computer
+- **Composability/Interoperability**
 
-- Polkadot is a scalable, heterogeneous, sharded, multi-chain network
+- [...]
+
+- [...]
 
 Notes:
-The goal of the next 2 days will be understanding how we achieve that last tenet. Understanding how Polkadot scales, manages its heterogeneity, shards and connects all those chains into a single network.
-And to succeed in that mission Let's dive into the main topic for today - Parachain Consensus.
+Next one is Composability which can be closely married with interoperability. In Polkadot individual parachains are fully coherent and composable within themselves but to interact between the parachain boundaries you need XCM which grants us native bridging beween the chains. All of that allows various sub-ecosystems to thrive together.
+
+---v
+
+# Core Tenets
+
+- Accessibility
+
+- Generality
+
+- Composability/Interoperability
+
+- **Performance**
+
+- **Resilience**
+
+Notes:
+
+The goal of the next 2 days will be mainly spent understanding how we achieve that last two tenets: Performance and Resilience.
+
+Performance is a big one. We all want a bigger variety of applications hosted on blockchain but this cannot be done unless we provide more throughput and lower latency. Just like web2 systems need to scale their architecture we had to innovate and evolve ours. No longer can every validator EXECUTE and STORE everything and for that we will explore how Polkadot is sharded. In fact we will be exploring both STATE SHARDING and EXECUTION SHARDING in the upcoming lectures.
+
+Do notice that decentralisation is not a core principle, we only care about decentralisation because we believe it provides true resilience. It's not decentralisation for the sake of decentralisation.
 
 ---
 
-# What is Parachains Consensus?
+# Blockchain Landscape
 
 Notes:
-We will be looking at what is parachain consensus?
+Let's zoom out for a second and remind ourselves how Polkadot overall aims to compare to the blockchain landscape and what it aims to bring to the table. This is my own take on the history but I will try and highlight some core innovations, strenghts and weaknesses of all the different solutions so we can appreciate and understand all the trade-offs.
+
+---v
+
+# Blockchain Landscape
+
+## Simple Monolithic - (Bitcoin etc)
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Shared single state</li>
+    <li>Everyone executes everything</li>
+    <li>Shared single and constant state transition function</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 500px" src="./assets/introduction/decentralised.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+We started with single simple state machine blockchains like Bitcoin. Every node hat to fully sync up and store the state and reexecute all the state transitions. Nevertheless it initially didn't require much hardware and was easy to host so a well diversified networks of nodes quickly arose.
+
+The state transition function was immutable. It was just moving balances left and right so it was all essentially a giant ledger.
+
+And I often here the complaint that blockchains are jsut giant ledgers and it certainly was true in the past. BUt modern blockchains are so so much more than that. They are closer to virtual computers than ledgers.
+
+---v
+
+# Blockchain Landscape
+
+## General Monolithic - (Ethereum 1.0 etc)
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Shared single state</li>
+    <li>Everyone executes everything</li>
+    <li><b>Programmable logic (smart contracts)</b></li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 500px" src="./assets/introduction/decentralised.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+And that was all started with Ethereum. The big innovation was that it was programmable. The state transition function was no longer immutable but instead effectively turing complete. This opened up a lot more demand for blockchain throughput but original Ethereum did really not address this demand. Everything was being reexecuted by every single validator.
+
+This was still a world where each blockchain to communicate with another needed to develop a brand new bridging technique supporting both landscapes.
+
+---v
+
+# Blockchain Landscape
+
+## Supercharged Monolithic - (Solana etc)
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Shared single state</li>
+    <li>Everyone executes everything</li>
+    <li>Programmable logic (smart contracts)</li>
+    <li>[...]</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 500px" src="./assets/introduction/decentralised.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+Then there came solutions that tried to quickly boost the throughput. The easiest solution to achieve it was to throw money at it. So all the core state, execution and generality components are the same as previously but the hardware just gets super beefy and expensive.
+
+---v
+
+# Blockchain Landscape
+
+## Supercharged Monolithic - (Solana etc)
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Shared single state</li>
+    <li>Everyone executes everything</li>
+    <li>Programmable logic (smart contracts)</li>
+    <li><b>Just on super expensive hardware</b></li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 500px" src="./assets/introduction/centralised.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+Each validator and node is required to use this very expensive hardware which technically allows the monolithic solution to "scale". This solution comes with major trade-offs because running a node gets so expensive only a single operator or maybe a few can afford it which generally sacrifices on the core tenets of blockchain.
+
+It topoligically looks like all other monolithic but just a lot more sparse and centralised.
+
+---v
+
+# Blockchain Landscape
+
+## Fragmented Networks - Cosmos
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li><b>State split between subnetworks</b></li>
+    <li><b>Fragmented economic security</b></li>
+    <li><b>Execution separated and encapsulated within subnetworks</b></li>
+    <li>Programmable logic (usually)</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./assets/introduction/cosmos.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+Now we can take a look at solutions that realised a single state machine is not scalable. To scale we need to delegate, separate, split and shard.
+
+One solution like that is Cosmos which features a framework for building blockchains and they provide a shared communication language between chains. Although the chains in the cosmos world all have different security guarantees and different rules and while they can speak the same messaging language it is up to the chains to ensure the message gets to the other chains and is respected there.
+
+In this solution cosmos blockchains are like separate islands, they technically speak the same language but they are so remote and independent it is difficult to fascilitate safe and regular communication. Each island is responsible for their own security and resources needed for maintaining security are spread between the islands.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 250px" src="./assets/introduction/transformation_8.drawio.svg" />
+
+Notes:
+And finally we can take a look at Polkadot. Polkadot since day 1 of its inception was centered around sharding. A single monolithic blockchain cannot scale unless it compromises on core blockchain principles.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/scalability-trilemma.svg" />
+
+Notes:
+and at this point I'm sure you all are very familiar with the blockchain trilemma.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_1.drawio.svg" />
+
+Notes:
+So on a high level Polkadot also decided to split the state into smaller subnetworks.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_2.drawio.svg" />
+
+Notes:
+Each subnetwork or shard with a fully programmable runtime logic thanks to substrate and wasm.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_2b.drawio.svg" />
+
+Notes:
+but then Instead of fully separating the execution and security layers Polkadot instead chooses to start pooling them together. Combining forces.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_3.drawio.svg" />
+
+Notes:
+From the diagram here you can start noticing that there is a region forming that is crossection between all of the islands. The islands are no longer separated, individual beings, they have something in common.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_4.drawio.svg" />
+
+Notes:
+And the more and more subnetworks we add the emergent existence of this central core becomes more and more obvious.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_5.drawio.svg" />
+
+Notes:
+So lets crystalize it a bit. Some nodes remain unique and specialised for the subnetwork while others aim to remain very generic and sitting in the middle. The middle section is not just one node but a full on family of general compute nodes able to fully sync up with every other subnetwork in the ecosystem.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/polkadot_small.drawio.svg" />
+
+Notes:
+The universal nodes in the middle will be a unifying force bringing together all the subnetworks into a single cohesive structure. We will be looking into more and more detail of what is this central structure, but some of you might already now it as the Polkadot Beacon Chain, or Polkadot Relay Chain. This is the auditing layer of Polkadot that is the source of its security and interoperability.
+
+And looking at this diagram it should already be pretty straightforward to see what the Polkadot logo actually represents. Just by adding a bit of color...
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_7.drawio.svg" />
+
+Notes:
+And we can arrive to our familiar design.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 500px" src="./assets/introduction/transformation_8.drawio.svg" />
+
+Notes:
+Pause
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Sharded state</li>
+    <li><b>Shared security</b></li>
+    <li><b>Sharded execution</b></li>
+    <li>Programmable logic</li>
+    <li>Built in bridging</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 500px" src="./assets/introduction/polkadot_large.drawio.svg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+Let's summarize and zoom out for a second.
+
+Polkadot is at its core a sharded network. The state and execution is separated into subnetworks, but the security is pooled and not separated. Individual subnetworks are of course fully programmable with wasm runtimes.
+
+You can think of the polkadot rolay chain as a layer 0 solution. It's like a mothership for all the smaller shards connecting to it.
+
+Additionally Polkadot not only provides a messaging language BUT it also comes with a messaging protocol over which those messages can be sent and received.
+
+---v
+
+# Blockchain Landscape
+
+## Sharded Networks - Polkadot
+
+<img style="width: 700px" src="./assets/introduction/polkadot_large_labeled.drawio.svg" />
+
+Notes:
+In this module we will be mainly focusing on the role of responsibilities of the central nodes. They are the Polkadot validators hosting the Polkadot Relay Chain.
+
+The subnetworks are called parachains, parallel chains -> parachains. And the nodes for parachains are called collators. They are akin to sequencers in other ecosystems and parachains are like rollups or L2 solutions.
 
 ---
 
-# Three Pillars of Polkadot
-
-<img style="width: 500px" src="./assets/execution-sharding/polkadot-components.svg"/>
+## Main Actors
 
 Notes:
-Game analogy. NPoS decides who plays the game, parachain consensus are the rules of the game. Governance helps us evolve the game over time so it's never stale and keeps up with the times.
+So let's do a quick summary of the different actors we'll be seeing in this module. Think of the Polkadot Protocol as a game with different teams and roles and the actors here as players.
+
+---v
+
+## Main Actors
+
+- **Validators**
+- [...]
+- [...]
+- [...]
+
+Notes:
+There will be 4 main actors that we will be discussing. First and foremost we have the Validators. When we say the validators we mean the physical nodes of the Polkadot Relay Chain. They are the general purpose super-validators that allow all the parachains to come together and meet at the relay chain. They are also the block producers of the relay chain.
+
+There is a subflavour of a validator worth mentioning here. Validators are a wide set but only some of them are elected to perform their duties in the active validator set. Usually when we say validator we mean an active validator currently selected by the staking system. The staking elections take place every day but we will discuss that in the next lecture.
+
+---v
+
+## Main Actors
+
+- Validators
+- **Collators**
+- [...]
+- [...]
+
+Notes:
+Another crucial actor is a collator. Collators are parachain or rollup nodes. They are nodes specialized in supporting their own subnetworks. Ther main job managing parachain state and gathering together transactions to then send them over to the relay chain for audting. They also need to manage physical hardware to perform all those duties.
+
+---v
+
+## Main Actors
+
+- Validators
+- Collators
+- **Nominators**
+- [...]
+
+Notes:
+Nominators are a bit more ephemeral. They generally are not physical nodes but abstract account holding some funds. They are all the DOT tokenholders participating in the staking protocol to elect validators. You can think of them as the stakers.
+
+Trivia, validators are often also nominators of themselves.
+
+---v
+
+## Main Actors
+
+- Validators
+- Collators
+- Nominators
+- Users
+
+Notes:
+Users here are a bit of a blanket statement, but I generally mean the people or entities that submit transactions or extrinsics. This might be a proxy or a UI interface that submits it in the end but from the perspective of the protocol we don't care that much.
+
+Disclaimer: This is not en exhaustive list and there are some extra actors as well as various subflavours of the presented here roles. For instance some nodes don't store the fully blockchain history while others don't and we call them archival nodes. There are also light clients and simillar. My aim here is to show you the 4 core roles we'll see in the protocol.
+
+For every lecture or subprotocol we'll be discussing I will try and provide a general outline of what actors will be participating in it.
 
 ---
 
-# Polkadot Relay Chain
-
-NPoS, Parachains Consensus and Gov all live on the **Relay Chain**
+# Core Technologies of Polkadot
 
 Notes:
-For now you can think of the Polkadot Relay Chain as normal blockchain and we will slowly build it up uncovering what it truly does
+Now that we enumerated all the actors it's time for more lists. You all already worked a bunch with various technologies that are foundational to Polkadot but I wanted to make a short glossary of the key pieces. So what core technologies used to power Polkadot today?
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. [...]
+1. [...]
+1. [...]
+1. [...]
+1. [...]
+1. [...]
+
+Notes:
+Some of them you are already very familiar with. Substrate is our framework for building modular blockchains and WASM is the go-to runtime featured in Substrate. Substrate and Wasm together gives us monolithic and proggrammable blockchains to play with.
+
+Governance which was already discussed at depth is for the evolutions of the system. Runtimes can be changed over time and system parameters can be adjusted. Governance is also crucial for rescue operations in emergency situations.
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. Authority: Nominated Proof of Stake
+1. [...]
+1. [...]
+1. [...]
+1. [...]
+1. [...]
+
+Notes:
+Then we have something a bit newer. The authority modules which essentialy need to decide who gets to be in the temporary priviliged set of relay chain validator nodes running the show. We are using a Nominated Proof of Stake system and we'll dive into it in the next lecture. It's a more energy efficient alternative to Proof of Work, and a more democratic one than Proof of Authority.
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. Authority: Nominated Proof of Stake
+1. Block Production: BABE/SASSAFRAS
+1. [...]
+1. [...]
+1. [...]
+1. [...]
+
+Notes:
+Next is block production. Once NPoS selected us some relay chain validator then we need to figure out between them who makes the next block. And Polkadot Relay Chain is just a substrate blockchain in the end. Someone needs to author the relay chain Block and this is where BABE comes in.
+
+In future we will be transition to a newer variant called Sassafras but we will cover that in the Block Production lectures.
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. Authority: Nominated Proof of Stake
+1. Block Production: BABE/SASSAFRAS
+1. Sharding: ELVES
+1. [...]
+1. [...]
+1. [...]
+
+Notes:
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. Authority: Nominated Proof of Stake
+1. Block Production: BABE/SASSAFRAS
+1. Sharding: ELVES
+1. Shard Interoperability: XCMP + XCM
+1. [...]
+1. [...]
+
+Notes:
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. Authority: Nominated Proof of Stake
+1. Block Production: BABE/SASSAFRAS
+1. Sharding: ELVES
+1. Shard Interoperability: XCMP + XCM
+1. Finality: GRANDPA, BEEFY
+1. [...]
+
+Notes:
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. Authority: Nominated Proof of Stake
+1. Block Production: BABE/SASSAFRAS
+1. Sharding: ELVES
+1. Shard Interoperability: XCMP + XCM
+1. Finality: GRANDPA, BEEFY
+1. Scheduling: CoreTime
+
+Notes:
+
+---v
+
+# Core Technologies of Polkadot
+
+1. Framework: Substrate
+1. VM: WASM/PolkaVM
+1. Governance: OpenGov
+1. Authority: Nominated Proof of Stake
+1. Block Production: BABE/SASSAFRAS
+1. Sharding: ELVES
+1. Shard Interoperability: XCMP + XCM
+1. Finality: GRANDPA, BEEFY
+1. Scheduling: CoreTime
+1. Database: RocksDB
+1. Encoding: SCALE
+1. Networking: LibP2P/LiteP2P
+
+Notes:
+This isn't a comprehensive list of all the technologies but there are some more generic ones in the backend connected to databases, networking and encoding like RocksDB, SCALE, and LibP2P.
 
 ---
 
-# NPoS
+# Polkadot Module Agenda
+
+1. Re-Introduction
+1. Staking
+1. Block Production
+1. State Sharding
+1. Data Availability
+1. Execution Sharding
+1. Confirmations and Finality
+1. Scheduling
+1. JAM & Future
 
 Notes:
-The first pillar worth exploring is NPoS. It is tightly connected to a frame pallet called staking that lives in the relay chain runtime
+Now it's time to have a generak overview of the topics and lectures I have planned specifically for this module.
+
+We will be primarily covering the relay chain protocol aspects. You can think of the relay chain protocol as a big game. Staking is what selects the player for the game. Block production is who gets to make the next move. All the other lectures are trying to explain the rules of them game. To be precise the next ext three lectures of State Sharding, Data Availability and Execution Sharding are all parts of the ELVES protocol. This is how Polkadot scales and guarantees shared security to its rollups.
+
+Finality is a bonus rule to the game that gives us a lot of new features. And scheduling is just some organizational janitorial stuff.
 
 ---v
 
-# NPoS
-
-## What's the goal of this pillar?
-
-We need to fairly elect a bounded number of players (validators) that will participate in the game (parachain consensus).
+## Why are we learning it?
 
 Notes:
-So what's the goal of this pillar? Player election!
+And I want to make something clear. We will be diving deep into the protocol. This is stuff that's not the easiest but I don't believe you all are here to learn the easy stuff.
 
----v
+Different parts of what we'll be learning will be useful to different people. Some will build light clients, some wallets, some will join parity, others will optimize execution for parachains. There will be something for everyone.
 
-# NPoS
+And in general If all you care about is building a simple dapp that moves the balances left and right you might not need to have such an in-depth knowledge, just a bit of solidity is enough.
 
-## NPoS Elections
+But if you ever want to innovate and build something new, then you need to learn what the boundaries are before pushing them further. And the boundaries in blockchain mainly arise from the protocol itself.
 
-- Every 24h (era) an algorithmic election is held and a set of 300 validators is chosen - they will be the **active validator set**.
-- Active set of validators is backed by ~50% of the total DOT supply
-- The stake is evenly distributed between the active validators so they all have equal voting power in the upcoming game
-
-Notes:
-There's no better way than to vote with your wallet and NPoS is all about this idea.
-
----v
-
-# NPoS
-
-## NPoS Nominations
-
-- Most validator don't own the stake they use for the elections and they simply focus on being a validator-as-a-service operators
-- The stake used by those validators is provided by other tokens holders not willing to go through the trouble of owning a full-node on your own hardware
-- Those tokens holders **nominate** the validator essentially entrusting their own tokens to the validator to share parts of the profits, but they also share the dangers
-
-Notes:
-Picking the best nominators and validators is actually an NP-hard problem! Same as the knapsack problem. There is a clever scheme to try and solve it on chain for those interested read more here: <link>
-If you all will be more interested in the topics and there will be time we might do a short in-depth dive into NPoS and Phragmen elections.
-
----
-
-# Parachain Consensus
-
-Notes:
-But for now let's move to the Parachain Consensus. This is the heart of the relay chain that distinguishes it from other blockchains. This is the secret sauce.
-
----v
-
-# Parachain Consensus
-
-## What's the goal?
-
-Notes:
-What's the goal? What does it try to accomplish? Well it's blockchain and there's one thing we really, really want to see in blockchains.
-
----v
-
-# Parachain Consensus
-
-## What's the goal?
-
-- Scalability
-
-Notes:
-
----v
-
-# Parachain Consensus
-
-## What's the goal?
-
-- Scalability
-- Scalability
-
-Notes:
-
----v
-
-# Parachain Consensus
-
-## What's the goal?
-
-- Scalability
-- Scalability
-- Scalability
-
-Notes:
-And security and decentralization but we'll dive into those on future lectures.
-Okay, so how does it achieve scalability? You all have been learning about substrate and frame and building your own little chains. And it is true that Polkadot's Relay Chain is a also a Substrate-based chain but there's more to it. It's a substrate chain capable of aggregating the state of other substrate chains and thus sharing it's own security with them. Parachain Consensus is what validates all those other blockchains and makes them unite in the relay chain. This is what we call sharding.
-
----v
-
-# Parachain Consensus
-
-## What's the goal?
-
-**Sharding**
-
-Sharding crucially allows us to parallelize execution.
-
-Notes:
-Sharding crucially allows us to parallelize execution. All those sovereign substrate blockchains can connect to the relay chain and entrust it with validation duties, while the chain itself can focus on the business logic and functionality. So all those little blockchains connected to the relay chain are called parachains. But actually does anyone know where this name comes from? ...
-
-But let's zoom out for a second.
-
----v
-
-# Parachain Consensus
-
-## Zooming out
-
-<img style="width: 500px" src="./assets/execution-sharding/polkadot-architecture.svg"/>
-
-Notes:
-This is how Polkadot's relay chain and it's parachains can be visualized. This is just a single relay chain block slice. All those little blocks around the large circle are parachain blocks - parablocks. What I want you to take away from this picture is that Polkadot is a fundamentally just like a mothership for all those little parachains. And if they are fully capable and sovereign chains, then this makes Polkadot a layer 0 solution.
-
----v
-
-# Parachain Consensus
-
-## Zooming out
-
-Polkadot is a layer 0 protocol
-
-Notes:
-Polkadot a layer 0 blockchain. A blockchain of blockchains, a platform for other platforms to build and flourish.
-
-And also Polkadot being a layer 0 is why I often think that a truly widely adopted and successful Polkadot does not mean people recognize the name, it means you recognize the project building on top of Polkadot. Marketing Polkadot is nice but I strongly believe that end consumers don't need to know about it just like AWS doesn't advertise to the mom and pops, they target builders.
-
----v
-
-# Parachain Consensus
-
-## Why do we learn it?
-
-To fully utilize what Polkadot offers you need to learn its quirks.
-
-Notes:
-And I hope that this also makes it clearer why we will be learning those more in-depth core protocol elements. Because if you all are the next generation of builders then only if you understand what Polkadot truly offers, what are its strengths and weaknesses you will be able to build the next application that truly uses it's potential to the fullest. Because there are things that you can only build on Polkadot and nowhere else.
-
-So now that the why is covered let's look at how it all comes together. There is a lot of moving parts in the parachains consensus but let's start familiarizing ourselves with them. In the upcoming lectures we will be diving deeper into each individual step so don't worry if you miss something.
-
----v
-
-# Parachain Consensus
-
-## The Game
-
-<div style="font-size: 0.8em">
-
-<pba-flex left>
-
-**Primary Goal:**
-
-- Grow registered parachains and post only valid updates to the Relay Chain
-
-</pba-flex>
-
-Notes:
-
----v
-
-# Parachain Consensus
-
-## The Game
-
-<div style="font-size: 0.8em">
-
-<pba-flex left>
-
-**Primary Goal:**
-
-- Grow registered parachains and post only valid updates to the Relay Chain
-
-</pba-flex>
-
-<pba-flex left>
-
-**Rules:**
-
-</pba-flex>
-
-- Validators are incentivized to attest to new parachain blocks
-- Whichever Validator makes the next Relay Chain block includes some attested parachain blocks
-- Validators are slashed if they attest to incorrect parachain blocks
-  - incorrect means "not according to the parachain's Wasm code"
-- Validators check each others' work to initiate the slashing procedure
-
-</div>
-
-<br/>
-
----v
-
-# Parachain Consensus
-
-## The Game
-
-<div style="font-size: 0.8em">
-
-<pba-flex left>
-
-**Primary Goal:**
-
-- Grow registered parachains and post only valid updates to the Relay Chain
-
-</pba-flex>
-
-<pba-flex left>
-
-**Rules:**
-
-</pba-flex>
-
-- Validators are incentivized to attest to new parachain blocks
-- Whichever Validator makes the next Relay Chain block includes some attested parachain blocks
-- Validators are slashed if they attest to incorrect parachain blocks
-  - incorrect means "not according to the parachain's Wasm code"
-- Validators check each others' work to initiate the slashing procedure
-
-</div>
-
-<br/>
-
-**The game works whenever <1/3 of validators misbehave.**
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-Notes:
-Those were the simplified rules of the game but those rules will be encompassed by specific sub-protocols within Polkadot and lets take a loot at them now.
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-- Assignment: Group up validators.
-
-Notes:
-Initially we'll be grouping up and assigning the validators in the active set, those are the ones that NPoS gives us.
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-- Assignment: Group up validators.
-- Collation: Collect transactions.
-
-Notes:
-Some other nodes will collect the user transactions and create collations.
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-- Assignment: Group up validators.
-- Collation: Collect transactions.
-- Backing: Assign responsibility.
-
-Notes:
-Some validators will receive those collations and if they think they are correct they will vouch for them. Take on the responsibility for them.
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-- Assignment: Group up validators.
-- Collation: Collect transactions.
-- Backing: Assign responsibility.
-- Availability: Distribute data.
-
-Notes:
-All the data connected to the collation is distributed between the validators in a compressed form.
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-- Assignment: Group up validators.
-- Collation: Collect transactions.
-- Backing: Assign responsibility.
-- Availability: Distribute data.
-- Approval Checking: Verify correctness.
-
-Notes:
-Validators perform the final correctness checks
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-- Assignment: Group up validators.
-- Collation: Collect transactions.
-- Backing: Assign responsibility.
-- Availability: Distribute data.
-- Approval Checking: Verify correctness.
-- Disputes: Resolve escalations.
-
-Notes:
-And if something doesn't feel right they start an official dispute. Think of it as starting the alarm bells and calling in for help.
-
----v
-
-# Parachain Consensus
-
-## Overview
-
-- Assignment: Group up validators.
-- Collation: Collect transactions.
-- Backing: Assign responsibility.
-- Availability: Distribute data.
-- Approval Checking: Verify correctness.
-- Disputes: Resolve escalations.
-- Finality: Solidify state.
-
-Notes:
-But if everything went smoothly the verified collations will get finalized by GRANDPA
-
----
-
-# Governance
-
-Notes:
-Up to this point maybe it wasn't clear but there are a lot of number that seem pretty arbitrary. For instance remember that the active validator set was 300? Why not 350? Who decided that? And most importantly who can change it? In Polkadot that's the token holders!
-
----v
-
-# Governance
-
-## OpenGov
-
-Polkadot has on-chain governance by stakeholder referendum, voting on subjects such as:
-
-<pba-flex center>
-
-- Forkless upgrades of the network
-- Administration of the Treasury funds
-- Configuration of the Parachains protocol
-- Configuration of fees
-- Rescue & recovery operations
-- All other mechanisms of control over the platform
-
-</pba-flex>
-
-Notes:
-Token holders can vote and adjust the parameters of the protocol. Everything like the number of validators to the minimum staking, existential deposit etc can be adjusted. So The parachain consensus, this have played by the validators can adapt if it needs it. And even more importantly because the Relay Chain itself uses a runtime architecture we can even issue governance enable runtime upgrades of the relay chain to expand upon it even further. This is a bit of a double-edged sword since not all change is good change.
-
-https://polkadot.network/features/opengov/
+If you want to build the next uniswap, cryptokitties, next moonbeam or hyperbridge then we have to understand the protocol.
 
 ---
 
 # JAM
 
-## Polkadot 2.0
-
 Notes:
-Who here has heard of JAM?
+now let's give a short disclaimer about JAM. I am not focusing on it but it's worth making a stance and how it connects to what I'll be talking about.
 
 ---v
 
 # JAM
 
-## Polkadot 2.0
+## Polkadot 3.0
 
 JAM is a further generalization and abstraction of Polkadot.
 
-That means that whatever Parachain Consensus does will still be very relevant in JAM as it will adopt many of it's features.
+JAM can do everything the current Polkadot Relay Chain can and more stuff on top of it.slightly different. That means that whatever Polkadot does now will still be very relevant in JAM.
 
 Notes:
-JAM was a recently proposed potential next step for the Polkadot Network. Generally think of it as a generalization of the protocol. JAM can do everything the current Polkadot Relay Chain can and more. In general it is still an extremely fresh idea so we will not be covering in depth in the core lectures but you can expect some more information about later this week.
+JAM was proposed as a potential next step for the Polkadot Network. Generally think of it as a generalization of the protocol. JAM can do everything the current Polkadot Relay Chain can and more stuff on top of it.
 
-And I can also guarantee you one thing, many of the steps in parachain consensus like approval checking and disputes will be recreated and ported to JAM, so understanding them now gives you an awesome headstart to understanding what JAM truly aims to achieve.
+So many of the steps in parachain consensus like finality, block production, approval checking and disputes will be recreated and ported to JAM, so understanding them now gives you an awesome headstart to understanding what JAM truly aims to achieve.
+
+---

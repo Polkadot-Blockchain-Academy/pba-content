@@ -37,7 +37,7 @@ and exposes it's most important resources, execution cores. Essentially it's an 
 <img style="width: 500px" src="./assets/coretime/rfc_1.png"/>
 
 Notes:
-The coretime I will be presenting today is still in development. The blueprint for it was outlined in the Fellowship RFC 1 and 5 (links in notes) and it is mostly staying true to it but implementation details can be different here and there. Nevertheless the spirit will remain unchanged.
+The coretime I will be presenting today is still in development but more than 90% of it has been delivered. The blueprint for it was outlined in the Fellowship RFC 1 and 5 (links in notes) and it is mostly staying true to it but implementation details can be different here and there. Nevertheless the spirit will remain unchanged.
 
 https://github.com/polkadot-fellows/RFCs/blob/main/text/0001-agile-coretime.md
 https://github.com/polkadot-fellows/RFCs/blob/main/text/0005-coretime-interface.md
@@ -764,6 +764,14 @@ This Increases the strain on collators as they not only have to produce multiple
 
 ---
 
+# Elastic Scaling
+
+- 1 core = 2s ref time with 6s block time and 1.6mb/s DA
+- 3 cores = 6s ref time with 2s block time and 5mb/s DA
+- 12 cores = 6s ref time with 0.5s block time and 20mb/s DA
+
+---
+
 # Renewals
 
 Notes:
@@ -850,16 +858,6 @@ To a much more free market model where blockspace can be freely allocated, inter
 # The Coretime Chain
 
 Bulk Auctions and vast majority of the low level interfaces live not on the relay chain but a brand new Coretime Broker Chain
-
----
-
-# Current State of Coretime
-
-- Bulk Auctions are live in Kusama (including renewals)
-- 2 cores were already sold last month in Kusama using Lastic
-- On-Demand Coretime is available on testes for experimentation and will soon be ready to go
-- Elastic Scaling is tested internally for now but the MVP is nearing completion
-- Interlacing is functional in Kusama but some bugs are still getting ironed out
 
 ---
 

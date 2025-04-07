@@ -5,483 +5,330 @@ duration: 30min
 owner: Maciej Zyszkiewicz (Joshy originally)
 ---
 
-# Consensus: Authoring
-
----v
-
-### Consensus is...
-
-...a decision making process that strives to achieve acceptance of a decision by all participants.
-
----v
-
-## Blockchain Consensus is...
-
-...a decentralized consensus system to reach agreement over a shared history of a state machine.
-
----v
-
-## Blockspace
-
-![Blockspace machine](./img/blockspace-machine.svg)
-
-Blockchain consensus systems produce a resource called blockspace.
-
-Strong incentive alignments and strong guarantees make for high quality blockspace.
+# Block Production
 
 Notes:
-
-As we discussed blockspace represents the right to contribute to the shared history. This is a valuable resource that is offered to users as a product. We will discuss the selling of this resource in a later lecture on allocation and fees. The consensus system used plays a large role in determining the quality of the blockspace.
+In this lecture we’ll be covering what is block authoring as well as how it interacts with various consensus styles.
 
 ---
 
-## Forks Review
+# Block Production
 
-<img style="width: 500px" src="./img/forks-some-invalid.svg" />
+## Agenda
 
-There are going to be forks. We need to decide which one is the real one.
+- Authoring Overview
 
-We can rule some forks out to reduce the problem space. Then we are left to decide which is canonical.
+- AURA
 
-Notes:
+- GRANDPA
 
-Forks represent alternate courses that history could take. They arise every time there is a difference of opinion.
+- Safrole
 
-You can think of them at a social level. Court cases, arguments, wars. Ideally we can resolve them peacefully
-
-You can think of them at a very low physics-y level. Every time an electron encounters a potential barrier it either reflects of tunnels. When consensus is high-quality, the result is as objective as the outcome of a physical process.
+- Equivocations
 
 ---
 
-## Five Aspects of Consensus
+# Block Production
 
-<pba-flex center>
+## Actors
 
-- State machine validity
-- Arbitrary / Political validity
-- Authorship throttling
-- Fork choice heuristic
-- Finality
-
-</pba-flex>
-
-Notes:
-
-The first two aspects are relatively simple and I'll discuss them briefly right now. The third and fourth are the main topic of this lecture. The fifth is covered in detail two lectures from now in great detail.
-
-The first three aspects are about ruling possibilities out. The fourth and fifth are about deciding between any remaining possibilities.
-
----v
-
-## State Machine Validity
-
-Some forks can be ruled out simply because they contain invalid state transitions.
-
-![Invalid state transition](./img/invalid-state-transition.svg)
-
-Notes:
-
-Example spending more money than you have. Noting your present location such that you would have traveled faster than speed of light since last record. Calling a smart contract with invalid parameters.
-
----v
-
-## Arbitrary / Political Validity
-
-Similar to state machine validity.<br/>
-Examples:
-
-<pba-flex>
-
-- Blocks that are too big
-- Blocks that have "hack" transactions
-- Empty blocks
-- Block with Even state roots
-
-</pba-flex>
-
-![Invalid state transition](./img/politically-invalid-state-transition.svg)
-
-Notes:
-
-This concept is similar to the previous slide. In some sense this is even the same. This allows us to rule out some forks just for not having properties that we like. Or for having properties that we dislike.
-
-Not everyone will agree on these properties ad that leads to long-term network splits.
+- Validators
 
 ---
 
-## Authorship Throttling
+# Block Production
 
-Real-world blockchains impose additional restrictions on who can author blocks. Why?
+## Overview
 
-![Unthrottled authoring leads to fork chaos](./img/fork-chaos.svg)
-
-Notes:
-
-These blockchains are supposed to be permissionless right? At least many of them are. Some are even very hardcore about that goal. So why would we want to restrict the authoring.
-Answer: So the nodes are not overwhelmed. Unthrottled authoring leads to fork chaos. If anyone authored at any moment there would be blocks raining down left and right. It would be impossible to check them all. It would be DOS central. So we need some organization / order to the process.
-
----v
-
-## Leader Election
-
-We need to elect a small set (or ideally a single) entity who are allowed to author next.
-
-In pre-blockchain consensus this was called the "leader", and still often is.
+- Leader election problem
+- Most fundemental validator/miner duty
+- Leads to extending the blockchain
+- Unthrottled block authoring would like to a fork chaos
 
 Notes:
+First we are gonna start with a quick overview. Block authoring is the most primitive and fundemental validaot responsibility there is.
 
-By electing a few leaders, we are able to throttle the authoring.
+In fact in Bitcoin and most proof of work chains it was the only responsibility. There was nothing else than collecting transactions and authoring a block that contains them. This would in turn extend the blockchain. Someone always has to author the block.
 
----v
+We could technically allow anyone to author anytime, but this would lead to a forkful chaos. Chaos like that would be borderline imppossible to manage. All nodes couldnt import all the blocks, reexcuting them localy can be expensive so we need to slow things down.
 
-## Liveness
+So the main issue we'll be solving is ordering and throttling of authoring.
 
-The ability of the system to keep authoring new blocks
-
-Notes:
-
-Before we go on, I want to introduce the concept of liveness. It is a desireable property that consensus systems want to have. Systems that have better liveness properties offer higher quality blockspace. Chains without liveness guarantees become stalled.
+We will not be focusing on proof of work or simillar authoring mechanisms on this lecture, instead we will be exploring the authoring methods used in Polkadot and its ecosystem. As you remember from the previous lecture we already are given a few nice primitives from staking.
 
 ---
 
-## Proof of Work
+# Block Production
 
-Satoshi's Big invention.
+## Prerequisites
 
-Solve a Pre-image search - earn the right to author.
-
----v
-
-## Proof of Work: Pros
-
-<pba-flex center>
-
-- Permissionless (or so we thought)
-- Requires an external scarce resource: Energy
-- Blind: Nobody knows the next author until the moment they publish their block
-- Expensive to author competing forks - Clear incentive
-
-</pba-flex>
+- Well bounded set of validators
+- All validators have stake exposure
 
 Notes:
+As one of the prerequisite the staking system already yielded us a small bounded set of authorities and the job of the block authoring module is to further narrow it down into individual block authoring spaced over time.
 
-On the surface one big strength of PoW is that anyone can spin up a node and join at any time without anyone's permission. This is clearly how it was described in the whitepaper. In practice, many systems now have such a high hashrate that your home computer is useless. It is now permissioned by who can afford and acquire the right hardware.
-
-The reliance on an external resource is good in some sense because it is an objective measure of the market's valuation of the consensus system. This helps valuate the blockspace.
-
-The blindness is a good property because it makes it impossible to perform a targeted attack (DOS or physical) on the next leader to stall the network.
-
-Some attacks rely on the leader authoring two competing forks and gossiping them to different parts of the network. With PoW, it costs energy for every block you author. This makes it expensive to perform such attacks. This provides an economic incentive for authors to only author blocks on the "correct" fork.
-
----v
-
-## Proof of Work: Cons
-
-<pba-flex center>
-
-- Energy Intensive
-- Irregular block time
-- Not so permissionless
-
-</pba-flex>
-
-Notes:
-
-Energy consumption is more often considered a negative property. Sometimes called proof of _waste_. I won't go that far, but in a world where climate change is a reality, it is certainly not ideal to be spending so much energy if we can get away with far less.
-
-Worth noting that some PoW schemes (eg Monero's) strive to minimize the energy impact by choosing algorithms that are "asic resistant". While these are decidedly better than Bitcoin's, they do not fundamentally solve the problem. Just alleviate it somewhat in practice.
-
-Secondly, the block time is only probabilistically known. When waiting for block to be authored, there are sometimes spurts of blocks followed by long stretches without any.
-
-Although it seems permissionless on its face, in practice, to be a bitcoin miner you need to have expensive specialized hardware.
-
----v
-
-## Why Author at All?
-
-- Altruism - You feel good about making the world a better place
-- Your Transitions - Because you want to get your own transitions in
-- Explicit incentives - Eg block reward
-
-Notes:
-
-If it costs energy to author blocks, why would anyone want to author to begin with?
-
-Mining only when you want to get your transaction in seems like a good idea to me. People who don't want to self author, can pay other a fee to do it for them. This is the purpose of transaction fees. Most chains have transaction fees specified in the transactions themselves which go to the author
-
-Some networks also add an explicit incentives such as a 50BTC reward per block.
+Additionally all the validators have something at stake. We can leverage that stake to potentially punish them and reward them proportionally.
 
 ---
 
-## Proof of Authority
+# Block Production
 
-Traditional class of solutions.
+## Throttling
 
-Divide time into slots.
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>Split the 24h authority term period into 6s timeslots</li>
+    <li>Ideally there should be 1 block per timeslot</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 700px" src="./img/timeslot.drawio.svg" />
+</pba-col>
+</pba-cols>
 
-Certain identities are allowed to author in each slot.
-
-Prove your identity with a signature.
+Notes:
+To slow down production we introduce the idea of a timeslot. Timeslot corresponds to specific amount of real world time, for instance 6s in Polkadot. We assume that all nodes have access to a commonly synchronised clock. Then based on their clocks we expect that in every time slot there will be a single block created.
 
 ---v
 
-## Proof of Authority: Pros
+# Block Production
 
-<pba-flex center>
+## Throttling
 
-- Low energy consumption
-- Stable block time
-
-</pba-flex>
+<table border="1" cellspacing="0" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Polkadot</th>
+      <th>Time</th>
+      <th>Slots</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Slot</td>
+      <td>6 seconds</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Session/Epoch</td>
+      <td>4 hours</td>
+      <td>2_400</td>
+    </tr>
+    <tr>
+      <td>Era</td>
+      <td>24 hours</td>
+      <td>14_400</td>
+    </tr>
+  </tbody>
+</table>
 
 Notes:
-
-Stable block time is a property of high-quality block space. It allows applications that consume the blockspace to have expectations about throughput. In PoW you will occasionally have long periods without a block which can negatively affect applications.
-
----v
-
-## Proof of Authority: Cons
-
-<pba-flex center>
-
-- Permissioned
-- No external resource to aid valuation
-- Incentives for honesty are not always clear
-
-</pba-flex>
-
-Notes:
-
-Does anything bad happen if they misbehave? Not inherently. We will need an incentive for that.
+Timeslots are then further grouped into bigger time slices. For instance 4h which are used to schedule validator duties other than block authoring.
+Reminder that elections happe every 24h, so every day our validator set can drastically change.
 
 ---
 
-# Some PoA Schemes
-
-Reminder: PoA is a family of leader election schemes
-
----v
+# Block Production
 
 ## Aura
 
-The simple one.
-
-Everyone takes turns in order.
-
-```rust
-authority(slot) = authorities[slot % authorities.len()];
-```
-
-Notes:
-
-Pros:
-
-- Simple
-- Single leader elected in each slot
-
-Cons:
-
-- Not blind - welcome targeted attacks
-
----v
-
-## Babe
-
-**B**lind **A**ssignment for **B**lockchain **E**xtension
-
-- In each slot, compute a VRF output.
-- If it is below a threshold, you are eligible to author.
-<!-- .element: class="fragment" data-fragment-index="2" -->
-- If eligible, author a block showing VRF proof
-<!-- .element: class="fragment" data-fragment-index="3" -->
-- If NOT eligible, do nothing
-<!-- .element: class="fragment" data-fragment-index="4" -->
-
-Notes:
-
-Pros:
-
-- No fixed order helps alleviate DOS attacks
-
-Cons:
-
-- Some slots have no authors - There is a workaround for this
-- Other slots have multiple authors which leads to forks. There is no workaround for this
-
----v
-
-## Sassafras
-
 <pba-cols>
 <pba-col>
-<img style="width: 500px" src="./img/Sassafras-albidum.jpg" />
+  <ul>
+    <li>Just a round-robin scheme</li>
+    <li>Problems?</li>
+  </ul>
 </pba-col>
 <pba-col>
-
-Single blind VRF-based leader election
-
-🙈TBH, IDK how it works internally. <!-- .element: class="fragment" data-fragment-index="2" -->
-
-But Jeff does! <!-- .element: class="fragment" data-fragment-index="3" -->
-
+<img style="width: 400px" src="./img/aura.png" />
 </pba-col>
 </pba-cols>
 
 Notes:
-
-- Has most of the Pros of PoW (except for the external resource based valuation hint)
-- Has all the Pros of PoA
-
-<!-- TODO style: fix rounded img css issue here -->
+So now that we have our 14_400 timeslots it is time to figure out who authors when. And the first and most naive solution is just to do a round robin. Pick any atribtrary ordering and everyone takes turns. We have much more timeslots than validators so a full lopp will complete a few times so noone will be omitted.
 
 ---v
 
-## Sassafras Analogy
+# Block Production
+
+## Aura
 
 <pba-cols>
 <pba-col>
-<img src="./img/jeff.jpeg" />
+  <ul>
+    <li>Just a round-robin scheme</li>
+    <li>Problems?</li>
+      <ul>
+        <li>Next authority is known well in advance</li>
+        <li>Makes it easy to pinpoint DDoS and censor</li>
+    </ul>
+  </ul>
 </pba-col>
 <pba-col>
-
-> Sassafras is kinda cards against humanity
-
-</pba-col>
-</pba-cols>
----v
-
-## Sassafras Analogy
-
-<img width="400px" style="float: left; padding: 1px;" src="./img/caa_black.png" />
-<img width="400px" style="float: left; padding: 1px;" src="./img/caa_white_1.png" />
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<img width="400px" style="float: left; padding: 1px;" src="./img/caa_white_2.png" />
-<!-- .element: class="fragment" data-fragment-index="3" -->
-
----v
-
-## Sassafras Analogy
-
-<pba-cols>
-<pba-col>
-<img src="./img/jeff.jpeg" />
-</pba-col>
-<pba-col>
-<blockquote style="font-size: 80%">Ring VRF outputs are "cards".  You anonymously "play" the best aka smallest cards in your hand.</blockquote>
-<!-- .element: class="fragment" data-fragment-index="2" -->
-<blockquote style="font-size: 80%">Those cards are sorted, not by funniness since they're just numbers, but by the number.</blockquote>
-<!-- .element: class="fragment" data-fragment-index="3" -->
-<blockquote style="font-size: 80%">The order in which they wind up is the block production order.</blockquote>
-<!-- .element: class="fragment" data-fragment-index="4" -->
-<blockquote style="font-size: 80%">You claim the ones that're yours by doing a non-ring VRF with identical outputs.</blockquote>
-<!-- .element: class="fragment" data-fragment-index="5" -->
+<img style="width: 400px" src="./img/aura.png" />
 </pba-col>
 </pba-cols>
 
----v
-
-# Proof of Stake
-
-It's just PoA in disguise 🤯
-
-Uses an economic staking game to select the authorities.
-
-Restores the permissionlessness to at least PoW levels.
-
-Restores clear economic incentives
-
 Notes:
+The main problem is that it is apparent and public who the next author will be. You don't have to guess and can plan to for instance DDoS them exactly when they are authoring. DDoSing the whole active set is not viable but DDoSing a single author once in a while is totally doable. This could be abused to censor and manipulate the chain or affect the randomness aggregators.
 
-There is an economic game called staking as part of the state machine that allows selecting the authorities who will participate in the PoA scheme. Actually there isn't just _one_ way to do it, there are many. Kian will talk a lot more about this and about the way it is done in Polkadot later. I'll just give the flavor now.
-
-The basic idea is that anyone can lock up some tokens on chain (in the state machine). The participants with the most tokens staked are elected as the authorities. There is a state transition that allows reporting authority misbehavior (eg authoring competing blocks at the same height), and the authority loses their tokens. There are often block rewards too like PoW.
-
----v
-
-## 💒 Consensus 🪢 State Machine
-
-- Loose coupling between consensus and state machine is common
-- Eg Block rewards, slashing, authority election
-- In PoW there is a difficulty adjustment algorithm
-
-In Substrate there is a concept of a **Runtime API** - Consensus can read information from state machine.
-
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-Notes:
-
-So far I've presented consensus as orthogonal to the state machine. This is mostly true. But in practice it is extremely common for there to be some loose coupling. We already saw an example when we talked about block rewards. The consensus authors are rewarded with tokens (in the state machine) for authoring blocks. Now we see that they can have tokens slashed (in state machine) for breaking consensus protocol. And we see that even the very authorities can be elected in the state machine.
+So we need a solution that is a bit more secretive in how it chooses the validators.
 
 ---
 
-# Fork Choice Heuristics
+# Block Production
 
-Each node's preference for which fork is best
+## BABE
 
-<pba-flex center>
-
-- Longest chain rule
-- Most accumulated work
-- Most blocks authored by Alice
-- Most total transactions (or most gas)
-
-<img style="width: 500px" src="./img/reorgs-1.svg" />
-
-</pba-flex>
+### (Blind Assignment for Block Extension)
 
 Notes:
-
-The fork choice allows you, as a network participant, to decide which fork you consider best for now. It is not binding. Your opinion can change as you see more blocks appear on the network
+And this is where BABE comes in. Babe stands for Blind Assignment for Block Extension so you can already see in the name that it will be trying to be more secretive with the blind part. What we want to achieve is some obfuscation and secrecy hiding who is the next author. It will be someone from the active set, that is our anonymity set but who exactly should be hidden for as long as possible.
 
 ---v
 
-## Reorganizations
+# Block Production
 
-<img style="width: 500px" src="./img/reorgs-1.svg" />
+## BABE
 
-<img style="width: 500px" src="./img/reorgs-2.svg" /> <!-- .element: class="fragment" data-fragment-index="2" -->
-
-Dropped transactions re-enter tx pool and re-appear in new blocks shortly <!-- .element: class="fragment" data-fragment-index="3" -->
+<pba-cols>
+<pba-col>
+  <ul>
+    <li>One VRF output per validator per slot</li>
+    <li>Outputs are kept hidden</li>
+    <li>If the output is below a set threshold: </li>
+      <ul>
+    <li>publish output to claim the slot</li>
+    <li>author the corresponding block</li>
+  </ul>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/vrf.png" />
+</pba-col>
+</pba-cols>
 
 Notes:
+BABE uses VRFs to achieve its blind assignment. I hope that you all remember what are verifiable random functions. They are random generators where you usually use some entropy context and your private key to generate some outputs which are later verifiable with your corresponding public key. A very useful primitive.
 
-Having seen more blocks appear, we now have a different opinion about what chain is best. This is known as a reorg. Re-orgs are nearly inevitable. There area ways to make sure they don't happen at all, but there are significant costs to preventing them entirely. Typically short reorgs are not a big problem, but deep reorgs are.
+So in Babe every validator generates a VRF output for every slot they see in the future. But they keep those outputs hidden. Then if their random number is below a specific constant threshold it means that they will be able to publish their number and claim the slow to author a block.
 
-You can experience this in a social way too.
+Untill you publish your result and prove it noone else knew you would win. This makes it so the attackers don;t even know who to DDoS.
 
-- Imagine that you are waiting for a colleague to submit a paper. You believe they have submitted it yesterday, but it turns out that they didn't submit it until today or won't submit it until tomorrow. Might be annoying, but not world shattering (usually)
-- Imagine that you believe the colleague submitted the paper months ago and the paper has been published. You have applied on a job having listed the publication
+This is exactly like Proof of Work whre they are looking for a small hash, but in BABE the validators get only a single try instead of endlesslly computing the hashes. You either get it or dont. No need to waste energy.
 
 ---v
 
-## Double Spends
+# Block Production
 
-<img style="width: 800px" src="./img/double-spend-1.svg" />
+## BABE
+
+<pba-cols>
+<pba-col>
+    <b>Any problems with that approach?</b>
+  <ul>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/vrf.png" />
+</pba-col>
+</pba-cols>
 
 Notes:
-
-The name comes from bitcoin, but the attack generalizes. It exploits the existence of forks. Attacker has to get two conflicting transactions into two forks. And convince a counterparty to believe one chain long enough to take an off-chain action before they see the reorg.
+Does anyone see an obvious issue with this approach of rolling the dice and claiming slots?
 
 ---v
 
-## Double Spends
+# Block Production
 
-<img style="width: 800px" src="./img/double-spend-2.svg" />
+## BABE
+
+<pba-cols>
+<pba-col>
+    <b>Any problems with that approach?</b>
+  <ul>
+    <li>Sometimes two validators can claim the same slot</li>
+    <li>Sometimes no validators claim the slot</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/vrf.png" />
+</pba-col>
+</pba-cols>
+
+Notes:
+The main problem is that sometimes simply no validator will get a random value below the threshold. This would cause the blockchain to skip a slot which is very undesirable. We want a nice and consistent block time.
+
+And on top of that it is possible that sometimes we will get multiple validators claiming a slot if many of them got lucky. This would in turn cause a fork. We can deal with them in the long run but they waste a lot of computation and add extra complexity.
+
+---v
+
+# Block Production
+
+## BABE
+
+<pba-cols>
+<pba-col>
+    
+  <ul>
+    <li><b>BABE uses Aura as plan B</b></li>
+    <li>For every slot we try and find a VRF winner and we call those <b>primaries</b></li>
+    <li>If no primary is present default to AURA and select a <b>secondary</b> author</li>
+  </ul>
+</pba-col>
+<pba-col>
+<img style="width: 600px" src="./img/fusion.jpg" />
+</pba-col>
+</pba-cols>
+
+Notes:
+To deal with the eventuality BABE introduces AURA as a backup plan. We still try to get a VRF winner every slot and those are called primaries. But if it fails and no priamry is selected we default to aura to subbly a backup validator called a secondary.
+
+This combination leads to preserving the security benefits of BABE while benefitting for the predictability and efficiency of AURA. It injects just enough randomness to make censorship and DDoSing very difficult.
+
+In reality VRF thresholds are configured so that around 25% of the slots have a primary author.
 
 ---
 
-## Five Aspects of Consensus
+# Block Production
 
-<pba-flex center>
-
-- State machine validity
-- Arbitrary / Political validity
-- Authorship throttling
-- Fork choice heuristic
-- Finality
-
-</pba-flex>
+## Safrole
 
 Notes:
+And finally we can take a look at the newest iteration of the block authoring mechanism and it's called Safrole. Safrole is not something that is being used in Polkadot today but it will is planned to release together with JAM.
 
-We just discussed the first four aspects. Finality will be discussed in an upcoming lesson
+---v
+
+# Block Production
+
+## Safrole
+
+- Aims to (mostly) elimate forks
+- Reduce the reliance on AURA
+- Keep complete privacy for ALL block authors
+
+---
+
+# Block Production
+
+## Equivocations
+
+<pba-cols>
+<pba-col>
+    <b>Ambigious or conflicting statements</b>
+</pba-col>
+<pba-col>
+<img style="width: 400px" src="./img/equiv.png" />
+</pba-col>
+</pba-cols>
+
+Notes:
+We discussed how the protocol operates and if everything goes according to plan validators will start authoring their blocks. Unfortunately there some validators might now want to paly along with the rules. The main malicious behavaiour they can exhibit is called an equiovcation.
+
+An our case equivocation will be strickly referring to giving conflicting statements. Imagine you have a single phone number. You met Alice and Bob and given them your numbers. But you give them two different numbers. At this point we dont even need to check what exact numbers you've given them. As long as we know they were two different numbers we know you lied at some point. You equivocated.
+
+The same malicious behaviour can be done by block authors. An author can technically claim as slot and then author multiple blocks and try to double spend. Other nodes will be importing the blocks and if they detect two blocks from the same author on the same slot they will report him for equivocation. This is very easily provable as long as we have access to the two different blocks.
+
+This proof be permisionlessly provided on chain and will be verified and then trigger slashes to the offending validators.
