@@ -24,7 +24,7 @@ duration: 1 hour
 
 ## What we will learn?
 
-The goal of the lecture is present Zombienet (<span class="colored">v1/v2</span>) and familiarize with the process of setup, spawn and test in both version.
+The goal of the lecture is present Zombienet (<span class="colored"><a href="" target="_blank">v1</a>/<a href="" target="_blank">v2</a></span>) and familiarize with the process of setup, spawn and test in both version.
 
 ---
 
@@ -96,12 +96,12 @@ Integration tests are always <span class="colored">complex</span>:
 </pba-col>
 <pba-col>
 
-##### Multiple envs
+##### Multiple providers
 
 - **Local**
 - **k8s**
 - **podman**
-- **docker**
+- **docker** (v2)
 
 </pba-col>
 <pba-col>
@@ -152,7 +152,7 @@ Test
 
 ---
 
-## Zombienet Options
+## Zombienet Options (v1)
 
 <pba-flex center>
 
@@ -186,6 +186,34 @@ curl -L https://github.com/paritytech/zombienet/releases/download/v1.3.106/zombi
 
 # make executable
 chmod +x zombienet
+```
+
+---
+
+## Zombienet Options (v2)
+
+<pba-flex center>
+
+- As binary ([zombie-cli](https://crates.io/crates/zombie-cli))
+- As library ([zombienet-sdk](https://crates.io/crates/zombienet-sdk))
+- From source ([zombienet-sdk](https://github.com/paritytech/zombienet-sdk) repo)
+
+</pba-flex>
+
+Notes:
+
+- As binary: just install with cargo install zombie-cli
+- As library from crate.io
+
+  code is available in GitHub with the instructions on how to build and run Zombienet.
+  (https://github.com/paritytech/zombienet)
+
+---v
+
+### Install Zombie-cli
+
+```sh
+cargo install zombie-cli
 ```
 
 ---
@@ -668,9 +696,9 @@ We are currenlty using zombienet (v1) as part of our `CI` in polkadot-sdk:
 
 ## The road ahead...
 
-🚧 🚧 <span class="colored"><b>Zombienet v2</b> (a.k.a [SDK](https://github.com/paritytech/zombienet-sdk))</span> is currently _around the corner_ ([PoC of migration](https://github.com/paritytech/polkadot-sdk/pull/4140)) 🚧 🚧
+🚧 🚧 <span class="colored"><b>Zombienet v2</b> (a.k.a [SDK](https://github.com/paritytech/zombienet-sdk))</span> is currently _around the corner_  🚧 🚧
 
-The [SDK](https://github.com/paritytech/zombienet-sdk) will provide a set of building blocks that users can combine to spawn and interact with the network and also a fluent API for crafting different topologies and assertions for the running network.
+The [SDK](https://github.com/paritytech/zombienet-sdk) provides a set of building blocks that users can combine to spawn and interact with the network and also a fluent API for crafting different topologies and assertions for the running network.
 
 Notes:
 
@@ -816,6 +844,17 @@ let mut blocks = client.blocks().subscribe_finalized().await.unwrap().take(3);
 while let Some(block) = blocks.next().await {
     println!("Block #{}", block.unwrap().header().number);
 }
+
+---
+
+### Still spawning through the _cli_
+
+You can still spawn the network from a `toml` definition using the new [zombie-cli](https://crates.io/zombie-cli), which is compatible with the network definition of v1.
+
+```sh
+
+RUST_LOG=zombienet=debug zombie-cli spawn -p native config.toml
+```
 
 ---
 
