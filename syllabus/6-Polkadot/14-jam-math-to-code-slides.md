@@ -3,6 +3,11 @@ title: JAM - Transforming Math Formulas into Code
 description: How we can read the Graypaper and understand it by coding
 duration: 40+ mins
 ---
+### Transforming Math Formulas into Code
+
+<img width="700px" src="../../assets/img/7-Polkadot/jam-cartoon.jpg" />
+
+---
 
 ## What is this talk NOT About?
 
@@ -23,6 +28,11 @@ duration: 40+ mins
 ## JAM Crypto Innovations
 
 <img width="1000px" src="../../assets/img/7-Polkadot/jam-comparison.png" />
+
+---
+
+<img width="1000px" src="../../assets/img/7-Polkadot/jam-knife.png" />
+
 
 ---
 
