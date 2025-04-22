@@ -11,4 +11,4 @@ description: Governance slides link
 # Polkadot OpenGov
 
 <p>All presentations can be found at the links below:</p>
-<p><a href="https://github.com/Polkadot-Blockchain-Academy/pba-content/blob/main/assets/opengov_pba_lucerne_2025.pdf" target="_blank">PDF format</a></p>
+<p><a href="https://github.com/Polkadot-Blockchain-Academy/pba-content/blob/main/assets/opengov_pba_lucerne_2025_fin.pdf" target="_blank">PDF format</a></p>

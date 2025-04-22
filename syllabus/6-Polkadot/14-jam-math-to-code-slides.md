@@ -3,6 +3,7 @@ title: JAM - Transforming Math Formulas into Code
 description: How we can read the Graypaper and understand it by coding
 duration: 40+ mins
 ---
+
 ### Transforming Math Formulas into Code
 
 <img width="700px" src="../../assets/img/7-Polkadot/jam-cartoon.jpg" />
@@ -32,7 +33,6 @@ duration: 40+ mins
 ---
 
 <img width="1000px" src="../../assets/img/7-Polkadot/jam-knife.png" />
-
 
 ---
 
@@ -75,7 +75,7 @@ duration: 40+ mins
 
 ## Disclaimer ⚠️
 
-- I learnt **Rust** 16 months ago in PBA Hong Kong. 
+- I learnt **Rust** 16 months ago in PBA Hong Kong.
 - 12 months ago I decided to build JAM in **Elixir**
 
 ---
@@ -168,6 +168,7 @@ impl Encode for Vec<u8> {
 }
 
 ```
+
 ---
 
 ## Data Encoding
@@ -189,7 +190,9 @@ impl<T: Encode> Encode for VariableSize<T> {
     }
 }
 ```
+
 ---
+
 ## Data Encoding (Elixir)
 
 <img width="600px" src="../../assets/img/7-Polkadot/jam-encoding1.png" />
@@ -229,6 +232,7 @@ impl Encode for Extrinsic {
 ```
 
 ---
+
 ## Block Encoding (Elixir)
 
 <img width="700px" src="../../assets/img/7-Polkadot/jam-block-encoding.png" />
@@ -236,8 +240,8 @@ impl Encode for Extrinsic {
 ```Elixir
   def e(%Block{extrinsic: e, header: h}), do: e({h, e})
 
-  def e(%Block.Extrinsic{} = ex), 
-    do: e({vs(ex.tickets), ex.disputes, vs(ex.preimages), 
+  def e(%Block.Extrinsic{} = ex),
+    do: e({vs(ex.tickets), ex.disputes, vs(ex.preimages),
      vs(ex.assurances), vs(ex.guarantees)
     })
 ```
