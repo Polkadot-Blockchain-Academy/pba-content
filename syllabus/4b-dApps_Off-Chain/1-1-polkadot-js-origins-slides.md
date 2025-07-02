@@ -4,7 +4,7 @@ description: Exploring the history, development, and ecosystem influence of Polk
 Duration: 30 minutes
 ---
 
-# The Origins and Evolution of Polkadot-JS and more
+# The Origins and Evolution of Polkadot-JS
 
 ---
 
