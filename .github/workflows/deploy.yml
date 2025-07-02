@@ -19,6 +19,11 @@ jobs:
       - name: Build
         working-directory: "."
         run: yarn run prepare-deployment
+      - name: Stash changes if any
+        run: |
+          if ! git diff --quiet || ! git diff --cached --quiet; then
+            git stash push -m "Automated stash before deployment"
+          fi
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
