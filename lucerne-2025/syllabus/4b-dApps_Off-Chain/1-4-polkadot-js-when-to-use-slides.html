@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>When Might You Want to Use Polkadot-JS?</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+## When Might You Want to Use Polkadot-JS?
+</script></section><section  data-markdown><script type="text/template">
+### Historical Metadata Queries
+
+- Essential for analyzing past chain state
+- Comprehensive support for all historical runtime versions
+- Crucial for block explorers and data analysis tools
+
+<aside class="notes"><p>One of the standout features of Polkadot-JS is its comprehensive support for historical metadata. This makes it the tool of choice for applications that need to analyze or display data from any point in the chain&#39;s history.</p>
+<p>Block explorers, data analysis tools, and historical auditing applications all benefit from this capability. No other tool currently provides the same level of historical compatibility, making Polkadot-JS irreplaceable for these use cases.</p>
+<p>As chains evolve and undergo runtime upgrades, the structure of their data and the methods for interacting with them change. Polkadot-JS maintains backward compatibility with all these changes, allowing developers to decode and interpret data from any block height.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### As a Reference or Utility
+
+- Useful for learning Substrate interactions before implementing custom solutions
+- Provides working examples of common blockchain operations
+- Source code serves as documentation for Substrate interaction patterns
+
+<aside class="notes"><p>Even when building custom solutions, Polkadot-JS serves as an invaluable reference. Its source code effectively documents how to interact with Substrate chains at a low level, making it easier to understand the underlying protocols and data structures. That being said, there are definitely exceptions (rpc interface, extension interface, etc).</p>
+<p>Many developers start by prototyping their applications with Polkadot-JS before implementing more specialized solutions. This approach allows them to validate their concepts quickly before investing in custom development.</p>
+<p>The various utilities provided by Polkadot-JS, particularly in the @polkadot/util and @polkadot/util-crypto packages, remain useful even when building applications that don&#39;t use the full API. These well-tested utilities save developers from having to reimplement common cryptographic and formatting functions.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Legacy System Maintenance
+
+- Many existing tools still rely on Polkadot-JS
+- Understanding the library is crucial for maintaining these systems
+- Required for debugging issues in Polkadot-JS-dependent applications
+
+<aside class="notes"><p>A significant portion of the Polkadot ecosystem was built with Polkadot-JS, and these systems will continue to require maintenance for years to come. Understanding Polkadot-JS is essential for developers tasked with maintaining or updating these existing applications.</p>
+<p>When issues arise in these systems, debugging often requires a deep knowledge of how Polkadot-JS interacts with the blockchain. Without this understanding, diagnosing and fixing problems becomes significantly more challenging.</p>
+<p>Even as new applications increasingly adopt newer tools, the legacy of Polkadot-JS will persist in the ecosystem for the foreseeable future, ensuring that expertise in this library remains valuable.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### For Comprehensive Development UIs
+
+- Polkadot.js Apps remains the most generalized UI for chain interaction
+- Provides a sandbox for testing chain functionality
+- Polkadot.js Extension for a airgapped developer first extension
+
+<aside class="notes"><p>The Polkadot.js Apps interface remains one of the most comprehensive UIs for interacting with Substrate-based chains. It provides access to virtually every aspect of chain functionality, from basic transfers to complex governance operations.</p>
+<p>This interface serves as an invaluable sandbox for testing and debugging chain functionality. Developers can use it to verify that their on-chain logic works as expected before integrating it into their own applications.</p>
+<p>While more specialized and user-friendly interfaces exist for specific chains and use cases, none match the comprehensiveness of Polkadot.js Apps for development and debugging purposes.</p>
+<!-- .slide: data-background-color="#4A2439" -->
+
+<h1 id="questions">Questions?</h1>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

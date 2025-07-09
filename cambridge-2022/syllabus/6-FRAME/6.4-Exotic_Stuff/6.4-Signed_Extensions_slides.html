@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Signed Extensions</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section ><section data-markdown><script type="text/template">
+
+# Signed Extensions
+</script></section><section data-markdown><script type="text/template">
+- In this lecture you will learn above one of the most advance FRAME concepts, _Signed Extensions_.
+  They allow for a multitude of custom features to be added to FRAME transactions.
+</script></section></section><section ><section data-markdown><script type="text/template">
+## History
+
+- Signed Extensions originally where added to implement tipping in a reasonable way.
+
+> Originally, your dumb instructor (@kianenigma) had the idea of hard-coding it into the
+> `UncheckedExtrinsic`, until @gavofyork jumped in with the idea of signed extensions.
+> [Tipped Transaction Type. by kianenigma · Pull Request #2930 · paritytech/substrate](https://github.com/paritytech/substrate/pull/2930/files) > [Extensible transactions (and tips) by gavofyork · Pull Request #3102 · paritytech/substrate](https://github.com/paritytech/substrate/pull/3102/files)
+</script></section><section data-markdown><script type="text/template">
+- In essence, they are a generic way to **extend** the transaction. Moreover, if they have
+  additional payload, it is signed, therefore _`SignedExtension`_.
+</script></section></section><section  data-markdown><script type="text/template">
+## Anatomy
+
+A signed extension can be either combination of the following things:
+
+1. Some additional data that is attached to the transaction.
+   - The tip!
+2. Some hooks that are executed before and after the transaction is executed.
+   - Before each transaction is executed, it must pay its fee upfront.
+3. Some additional validation logic that is used to validate the transaction, and give feedback to
+   the pool.
+   - Set priority of transaction priority based on some metric!
+
+- Some additional data that must be present in the signed payload of each transaction
+  - Spec version is part of all transaction!
+</script></section><section  data-markdown><script type="text/template">
+## Let's Peek at the Trait
+
+<aside class="notes"><p>just a breeze over the trait.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tuple of Signed Extension
+
+- Is also a signed extension itself!
+
+> Look at the tuple implementation.
+
+- Main takeaways:
+  - `type AdditionalSigned = (SE1::AdditionalSigned, SE2::AdditionalSigned)`,
+  - `type Pre = (SE1::Pre, SE2::Pre)`,
+  - all of hooks:
+    - Executes each individually, combines results
+
+<aside class="notes"><p>TODO: we need a lecture in module 4 around <code>impl_for_tuples</code>.
+TODO: how <code>TransactionValidity</code> is <code>combined_with</code> is super important here, but probably something
+to cover more in 4.3 and recap here.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## Usage In The Runtime
+
+- Each runtime has a bunch of signed extensions. They can be grouped as a tuple
+
+```rust
+pub type SignedExtra = (
+	frame_system::CheckNonZeroSender<Runtime>,
+	frame_system::CheckSpecVersion<Runtime>,
+	frame_system::CheckTxVersion<Runtime>,
+	frame_system::CheckGenesis<Runtime>,
+	pallet_asset_tx_payment::ChargeAssetTxPayment<Runtime>,
+);
+```
+</script></section><section data-markdown><script type="text/template">
+> Recall that a tuple of `SignedExtension` is itself a `SignedExtension`.
+
+> We will get to this later as well, but recall that SignedExtensions are not a _FRAME/Pallet_
+> concept per se. FRAME just implements them. This also implies that everything regarding signed
+> extensions is applied to **all transactions**, throughout the runtime.
+
+- This type is passed to the `UncheckedExtrinsic` and `CheckedExtrinsic`. Let's go into each and see
+  what each do with these extensions!
+</script></section></section><section  data-markdown><script type="text/template">
+## `UncheckedExtrinsic`: Decoding.
+
+- The first important detail is that when `UncheckedExtrinsic` is being decoded, if it has a
+  signature, then it decodes the signed extension as well.
+
+  For example:
+
+  ```rust
+  struct Foo(u32, u32);
+  impl SignedExtension for Foo { .. }
+  ```
+
+  implies that two `u32`s are added to the end of the signature field of **all transactions**.
+</script></section><section  data-markdown><script type="text/template">
+## `UncheckedExtrinsic`: Checking.
+
+- Taken from `fn check`:
+
+```rust
+// SignedPayload::new
+pub fn new(call: Call, extra: Extra) -> Result<Self, TransactionValidityError> {
+	// asks all signed extensions to give their additional signed data..
+	let additional_signed = extra.additional_signed()?;
+	// this essentially means: what needs to be signed in the signature of the transaction is:
+	// 1. call
+	// 2. signed extension data itself
+	// 3. any additional signed data.
+	let raw_payload = (call, extra, additional_signed);
+	Ok(Self(raw_payload))
+}
+
+// UncheckedExtrinsic::check
+fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityError> {
+	Ok(match self.signature {
+		Some((signed, signature, extra)) => {
+			let signed = lookup.lookup(signed)?;
+			// this is the payload that we expect to be signed, as explained above.
+			let raw_payload = SignedPayload::new(self.function, extra)?;
+			// encode the signed payload, and check it against the signature.
+			if !raw_payload.using_encoded(|payload| signature.verify(payload, &signed)) {
+				return Err(InvalidTransaction::BadProof.into())
+			}
+
+			// the extra is passed again to `CheckedExtrinsic`, see in the next section.
+			let (function, extra, _) = raw_payload.deconstruct();
+			CheckedExtrinsic { signed: Some((signed, extra)), function }
+		},
+		// we don't care about signed extensions at all.
+		None => CheckedExtrinsic { signed: None, function: self.function },
+	})
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## `UncheckedExtrinsic`
+
+- in `fn validate` of `Applyable`, we use `validate` of signed extensions
+  - Also for unsigned
+  - Historical: `ValidateUnsigned` and `SignedExtension` have an overlap, someday the former
+    might become deprecated. TODO: find the github issue about this.
+- in `fn apply` of `Applyable`, we
+  - `pre_dispatch` or `pre_dispatch_unsigned` accordingly.
+  - `post_dispatch` accordingly
+    - TODO: `type Pre` and passing data to post-dispatch needs its own section.
+</script></section><section  data-markdown><script type="text/template">
+## Recap: Transaction Queue Validation
+
+- `fn validate` of `Applyable` is actually used in --you guessed it-- the Executive module for transaction validation.
+
+> walk over the `fn validate_transaction` in executive, which is used directly in the runtime API.
+
+- See how it is doing the minimum amount of validation, NOT dispatching anything.
+
+> Transaction queue is not part of the consensus system. Validation of transaction are _free_. Doing
+> too much work in validation of transactions is essentially opening a door to be DOS-ed.
+</script></section><section  data-markdown><script type="text/template">
+## Putting It All Together: `ChargeTransactionPayment`
+
+- Let's now walk over this
+</script></section><section ><section data-markdown><script type="text/template">
+## Notable Signed Extensions
+
+- These are some of the default signed extensions that come in FRAME
+- See if you can predict how they are made!
+</script></section><section data-markdown><script type="text/template">
+### `check_genesis`
+
+Wants to make sure you are signing against the right chain.
+
+Put the genesis hash in `additional_signed`.
+
+<!-- .element: class="fragment" -->
+
+`check_spec_version` and `check_tx_version` work very similarly.
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### `check_non_zero_sender`
+
+- interesting story: any account can sign on behalf of the `0x00` account.
+- discovered by XLC
+- TODO: link to examples being signed with this, and the first one.
+
+- uses `pre_dispatch` and `validate` to ensure the signing account is not `0x00`.
+</script></section><section data-markdown><script type="text/template">
+### `check_nonce`
+
+- `pre_dispatch`: check nonce and actually update it.
+- `validate`: check the nonce, DO NOT WRITE ANYTHING, set `provides` and `requires`.
+
+  - remember that:
+    - `validate` is only for lightweight checks, no read/write.
+    - anything you write to storage is reverted anyhow. TODO: fact check this statement
+</script></section><section data-markdown><script type="text/template">
+### `check_weight`
+
+- Check there is enough weight in `validate`.
+- Check there is enough weight, and update the consumed weight in `pre_dispatch`.
+- Updated consumed weight in `post_dispatch`.
+</script></section></section><section  data-markdown><script type="text/template">
+## Big Picture: Pipeline of Extension
+
+- Signed extensions (or at least the `pre_dispatch` and `validate` part) remind me of the extension
+  system of `express.js`, if any of you know what that is
+
+TODO: figure
+</script></section><section  data-markdown><script type="text/template">
+## Exercises
+
+- Walk over the notable signed extensions above and riddle each other about how they work.
+- SignedExtensions are an important part of the transaction encoding. Try and encode a correct
+  transaction against a template runtime in any language that you want, using only a scale-codec
+  library.
+- SignedExtensions that logs something on each transaction
+- SignedExtension that keeps a counter of all transactions
+- SignedExtensions that keeps a counter of all successful/failed transactions
+- SignedExtension that tries to refund the transaction from each account as long as they submit less
+  than 1tx/day.
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

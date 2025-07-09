@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>JSON-RPC Spec Transactions</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# JSON-RPC Spec
+
+## Transactions
+</script></section><section  data-markdown><script type="text/template">
+## Transactions
+</script></section><section ><section data-markdown><script type="text/template">
+## JSON-RPC Transaction
+
+- transaction_v1_broadcast(tx) -> id
+- transaction_v1_stop(id)
+
+Simple? <!-- .element: class="fragment" --->
+
+<aside class="notes"><p>Not so much</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Challenges
+
+- Creating the transaction
+- Transaction validation
+- Tracking transactions
+- Transaction states
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Transactions
+</script></section><section data-markdown><script type="text/template">
+## Transaction types
+
+<img rounded src="./img/transactions.svg" />
+
+<aside class="notes"><p><a href="https://excalidraw.com/#json=Mv0Y4f-NgpogwQkoTLHfq,JSVgtIc_-tbxSHfuDbZocA">https://excalidraw.com/#json=Mv0Y4f-NgpogwQkoTLHfq,JSVgtIc_-tbxSHfuDbZocA</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Extrinsic V4
+
+#### Signed
+
+[0x84 | Address | Signature | Extra | CallData]
+
+#### Unsigned
+
+[0x04 | CallData]
+</script></section><section data-markdown><script type="text/template">
+## Signature
+
+- What is being signed?
+  - Call data
+  - Signed extensions
+</script></section><section data-markdown><script type="text/template">
+## Call Data
+
+- The information needed to execute the call.
+- Shape:
+  - First byte: the index of the pallet.
+  - Second byte: the index of the call (inside the pallet).
+  - Remaining bytes: the encoded parameters of the call.
+
+<aside class="notes"><p>Ask what is the shortest amount of bytes that a call can have.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Signed extensions
+
+- Signed extensions are functions that get executed for all transactions, prior to the execution of the call-data. <!-- .element: class="fragment" --->
+- They play 2 important roles: <!-- .element: class="fragment" --->
+  1. Perform checks to determine whether the transaction is valid. <!-- .element: class="fragment" --->
+  2. Provide transversal logic to the execution of a transaction.<!-- .element: class="fragment" --->
+- Important: the evaluation of the call-data is not taken into account for determining the validity of a transaction.<!-- .element: class="fragment" --->
+- Signed extensions are currently not weighted. Therefore, they must be very cheap to compute.<!-- .element: class="fragment" --->
+
+<aside class="notes"><ul>
+<li>Example: can a transfer that exceeds the free-balance be a valid transaction? Would that tx be valid?</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Signed extensions - Examples:
+
+<ul>
+<li class="fragment">
+
+`CheckGenesis`: ensures that the transaction belongs to this chain.
+
+</li>
+<li class="fragment">
+
+`CheckSpecVersion`: ensures that the transaction was created for this runtime version.
+
+</li>
+<li class="fragment">
+
+`CheckTxVersion`: ensures that we are using the correct tx version.
+
+</li>
+<li class="fragment">
+
+`CheckMetadataHash`: ensures that the signer device used the correct metadata to display the transaction information to the user/signer.
+
+</li>
+<li class="fragment">
+
+`CheckMortality`: determines the range of blocks in which the transaction can be included into a block.
+
+</li>
+<li class="fragment">
+
+`CheckNonce`: prevents replay attacks.
+
+</li>
+<li class="fragment">
+
+`ChargeTransactionPayment`: Handles the logic for charging the fees for the execution of the transaction, it also sets
+the tip for the validator.
+
+</li>
+</ul>
+</script></section><section data-markdown><script type="text/template">
+## Signed Extensions: Extra
+
+- Each signed extensions has 2 different kinds of arguments:<!-- .element: class="fragment" --->
+  - Implicitly known data.<!-- .element: class="fragment" --->
+  - "Extraneous" data, which must be included in the "extra" field (so that the signature can be verified).<!-- .element: class="fragment" --->
+- Examples:<!-- .element: class="fragment" --->
+  - The genesis hash, the spec version, the tx version, etc: is known by the chain.<!-- .element: class="fragment" --->
+  - The "nonce", the "asset", the "tip" are extraneous data. Therefore, it must be included in the "extra" field.<!-- .element: class="fragment" --->
+  - "CheckMortality": the "period" and the "phase" are extraneous, the block hash is implicit data.<!-- .element: class="fragment" --->
+
+<aside class="notes"><p>explain how the block has can be derived from the period and the phase, explain how inmortal transactions work.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Transaction States
+</script></section><section data-markdown><script type="text/template">
+## Transaction Validation
+
+- The validity of a transaction is determined against a particular block.
+
+  - A transaction could be valid against one block, but invalid against a "sibling fork" of the same height.
+
+- Realistically speaking, there are 3 different kinds of validity states:
+  1. Valid: the transaction can be included into the next block.
+  2. Invalid: the transaction will "never" be able to be included into a block (and thus, not be broadcasted).
+  3. "Future" Valid: the transaction can not yet be included into a block, but it may be included in the future. Ie: nonce
+     too high.
+
+<aside class="notes"><ul>
+<li>Go through different validation states, what they mean</li>
+<li>Transactions valid in a future block.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Transaction Result
+
+- Once a transaction is included in a block, then the call-data has been evaluated and we can know its outcome.
+- A failed transaction is a valid transaction that was included into a block, but did not succeed.
+
+<aside class="notes"><ul>
+<li>Extrinsic Failed / Extrinsic success</li>
+<li>Difference between failed vs invalid</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Broadcasting
+
+- Once a transaction is deemed as valid it can be broadcasted.
+- Broadcasting is a "fire and forget" operation. There is no response.
+- Once a transaction is deemed as invalid, we must immediatelly stop broadcasting it.
+
+<aside class="notes"><p>Explain what it means to broadcast - it&#39;s not cancellable</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## Putting it all together
+
+# Transaction Tracking
+</script></section><section data-markdown><script type="text/template">
+## Transaction Tracking
+
+<img rounded src="./img/block-states.png" />
+</script></section><section data-markdown><script type="text/template">
+## Transaction Life Cycle:
+
+For each transaction:
+
+- Validate beforehand against finalized block.
+- Broadcast if it's valid.
+- Track it inside incoming blocks, until there is a finalized block where the transaction is either:
+  - Included
+  - Invalid
+
+Once we find a block where the transaction is either included or invalid, we consider that the transaction is "settled"
+on that block. Which implies that we don't have to run any checks for its descendant blocks.
+</script></section><section data-markdown><script type="text/template">
+## Transaction Tracking:
+
+- For every "new block" event:
+
+  - Is this block the descendant of a "settled block"?
+    - Yes: Ignore.
+    - No: Is the transaction present in the body?
+      - No: Is it valid in this block?
+        - Yes: Ignore.
+        - No: Flag the tx for this block as "settled invalid".
+      - Yes:
+        - Check if the transaction was successful.
+        - Flag the tx for this block as "settled successful/unsuccessful"
+</script></section><section data-markdown><script type="text/template">
+## Transaction Tracking:
+
+- For every "finalized" event:
+  - Is this a "settled" block (or the descendant of a "settled" block)?
+    - Yes: Stop broadcasting and report the outcome to the user.
+    - No: Ignore
+</script></section><section data-markdown><script type="text/template">
+## JSON-RPC TransactionWatch
+
+<pba-cols>
+<pba-col>
+
+- submitAndWatch(tx) => subId
+- unwatch(subId)
+
+</pba-col>
+<pba-col>
+
+- validated
+- bestChainBlockIncluded
+- finalized
+- error
+- invalid
+- dropped
+
+</pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+## Problem
+
+- TransactionWatch is detached from ChainHead
+- Might receive blocks that
+  - ChainHead hasn't received
+  - ChainHead did receive but now unpinned
+- Useful only to know if it has been included.
+- But can't get any other info: events, storage, etc.
+</script></section></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

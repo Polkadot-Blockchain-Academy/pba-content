@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Collective Decision Making</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Collective Decision Making
+</script></section><section  data-markdown><script type="text/template">
+## Collective Decision Making
+
+In this lecture we will see:
+
+- The main goals of a decision making mechanism.
+- Common issues, and ways to solve them.
+- Some of the most common voting mechanisms
+- Desirable criteria with which to compare them
+- A comparison of some proof-of-stake mechanisms
+</script></section><section  data-markdown><script type="text/template">
+## Collective Decisions
+
+An umbrella term that contains voting mechanisms,
+governance processes, policy making, budget allocation, etc.
+</script></section><section  data-markdown><script type="text/template">
+## Collective Decisions
+
+- A way to gather the opinions of a heterogenous collective.
+- A way to aggregate their preferences in a concise way.
+- A way to reach a _decision_ as a collective.
+
+<aside class="notes"><ul>
+<li>In this lecture we will study some of the different ways in which people can make decisions as a unit.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Why?
+
+- A prerequisite for the formation of countries,
+  companies, dynasties, and strong institutions in general.
+- Agile decision-making mechanisms allow the collective
+  to react to external changes: war, trade, migration.
+- Internally, they provide clarity and enable stability
+  and progress: money, laws, private property.
+</script></section><section  data-markdown><script type="text/template">
+## Why?
+
+- A blockchain network may be highly automated,
+  but remains a human collective at its core.
+- It requires well designed decision-making mechanisms
+  to ensure its continued strength and relevance over time.
+- In turn, blockchain is bringing innovations and renewed
+  interest to the theory of collective decision making.
+- We should consider a project's decision making mechanisms
+  as part of it economics and security analysis.
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain Applications
+
+- Who gets to participate in consensus?
+- How are new functionalities / policies decided upon?
+- How to handle emergencies?
+</script></section><section  data-markdown><script type="text/template">
+## Examples of mechanisms
+
+- Dictator or king (unelected)
+- Tyrant (elected)
+- Random dictator: select a person at random
+  and let them make the decision
+- Unelected committee (Zurich guilds)
+- Elected committee (representative democracy)
+- Vote delegation (e.g. to political parties or people)
+- Direct democracy: everybody participates in every decision
+
+<aside class="notes"><ul>
+<li>Can you think of other examples</li>
+<li>In middle ages, city of Zurich was run by guilds (merchants, farmers, tailors).
+Women or anyone outside these guilds had no say</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Goals
+
+The three key goals of any decision making process are:
+
+<widget-text left>
+
+|                  |                                                                                              |
+| :--------------: | :------------------------------------------------------------------------------------------: |
+|   **Utility**    | - the decision maximizes society's welfare<br> - it represents well the people's preferences |
+|  **Legitimacy**  |            - decision is fair<br>- people trust the process, feel empowered by it            |
+| **Practicality** |                      - process is simple to understand<br> - it is fast                      |
+|                  |                                                                                              |
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Discussion
+</script></section><section  data-markdown><script type="text/template">
+## Discussion
+
+Examples:
+
+- A dictator is practical.
+  Is it legitimate?
+- Is an elected tyrant legitimate?
+- When is a random dictator a good idea?
+- Direct democracy is legitimate.
+  Why not always use this?
+- Which mechanism maximizes utility?
+- Which is best in case of war?
+
+<aside class="notes"><ul>
+<li>So what&#39;s wrong with a king or dictator? Not legitimate? It used to be.</li>
+<li>An elected tyrant is sometimes considered legitimate also.</li>
+<li>Direct democracy is unfortunately slow</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Direct Democracy
+
+In an emergency, the practicality goal becomes more relevant.
+
+Hence, in an blockchain network we may use direct democracy to decide on software upgrades, but it is a good idea to have a way to fast-track decisions in case of an emergency, such as if a bug or vulnerability is detected.
+</script></section><section  data-markdown><script type="text/template">
+## Direct Democracy
+
+Does direct democracy maximize utility? **Probably not.**
+
+**Paradox of voting:** For a rational, self-interested voter, the costs of voting will normally exceed the expected benefits.
+This is because there is a minimal chance that any single vote changes the collective decision.
+Hence most of the time the individual benefit of voting is zero.
+
+This is an example of a _common good_ game: it's globally optimal if everyone votes, but it's personally optimal not to vote.
+</script></section><section  data-markdown><script type="text/template">
+## Rational ignorance
+
+Refraining from acquiring knowledge when the cost of educating oneself on an issue exceeds the expected potential benefit that the knowledge would provide.
+
+As a result, most people will not vote judiciously, or not at all.
+Whether or not someone votes can be bias-able.
+</script></section><section  data-markdown><script type="text/template">
+## Voting Paradox
+
+> 40% of the population supports a new proposal, while 60% rejects it.
+> However, a company who will profit from the decision lobbies for the 'aye'.
+> 50% of supporters decide to vote, while only 30% of detractors vote.
+> As a result, the proposal passes.
+</script></section><section  data-markdown><script type="text/template">
+## Solutions to the voting paradox
+
+- **Representative democracy**: elect a committee, whose members
+  represent well the preferences of the passive people.
+
+- **Delegated voting (liquid democracy)**: give your voting power
+  to a person who understands the issue well, so you don't have to.
+</script></section><section  data-markdown><script type="text/template">
+## Mechanism Capture
+
+Does having a dictator maximize utility? Also **probably not**.
+
+When a constituent manages to consistently
+impose its opinion in the decision making mechanism.
+This special interest is prioritized over the interest
+of the collective, leading to a decrease of general welfare.
+
+<aside class="notes"><ul>
+<li>By constituent we mean some sub collective, like a geographical area, a guild, political party, etc.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Mechanism Capture
+
+<img style="width: 900px; margin-right: 150px;" src="../../../assets/img/2-Economics//2.4-expected-influence.jpg"/>
+
+<!-- TODO: Fix image (ask Alfonso) -->
+</script></section><section  data-markdown><script type="text/template">
+## Mechanism Capture
+
+- A mechanism with a dictator or a tyrant is captured by definition.
+- Having a majority vote can also lead to capture,
+  if the minority's opinion is always ignored.
+  Known as "tyranny of the majority".
+- Interestingly, a random dictator mechanism is the most resilient
+  to capture, when we take expected values.
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain Security
+
+- Validators (participants of consensus) form a critical governance body.
+- Consensus security requires that a supermajority of them are honest.
+- Honest behavior is a Nash equilibrium, **unless** sufficiently many validators coordinate on an attack.
+- Hence if a group of validators is large enough and cohesive enough, they may turn **adversarial**.
+- Therefore, the security goal consists of minimizing the chance of **capture** of the validator set.
+</script></section><section  data-markdown><script type="text/template">
+## Recap
+
+- Main goals are utility, legitimacy and practicality
+- In case of emergency, practicality may become more relevant
+- Direct democracy is legitimate, not so practical
+- Dictatorship is practical, not legitimate
+- Probably neither extreme maximizes utility
+- Security in consensus relies on avoiding capture
+</script></section><section  data-markdown><script type="text/template">
+## Voting Mechanisms
+
+- One of the most popular types of collective decision making nowadays.
+- There are _candidates_ to choose from: people, policies, goods, etc.
+- There are _voters_ who declare _preferences_ through _ballots_.
+- A mechanism takes these ballots as input, and outputs a single candidate as the _winner_.
+- Lots of _criteria_ to judge the mechanism.
+
+<aside class="notes"><ul>
+<li>Voting mechanisms are some of the most popular ways to make collective decisions, and have been for centuries.
+Why do you think that is? They are used for the election of leaders, for decision making within a governance body, choosing the winners in contests, among friends to decide on a restaurant, or in a family to name a dog.</li>
+<li>Without a doubt, one of the most desirable criteria for a collective decision making mechanism is <em>simplicity</em>, meaning that it should be easy to understand and participate for the population.
+This is probably a big pro for voting mechanisms.</li>
+<li>In the next slides we will explore some of the most popular voting mechanisms, along with some of the most popular criteria used to compare them.</li>
+<li>What criteria do you think are most intuitive and desirable for a mechanism? Fairness? Proportionality? Utility? How would you define these terms precisely?</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Voting Mechanisms
+
+We will see the following notions:
+
+- _Single-vote mechanisms:_ plurality, two-round, instant run-off.
+- _Ranked-vote mechanisms:_ Borda count, ranked-pairs.
+- Vote splitting, strategic voting.
+- Monotonicity and participation criteria.
+- Condorcet winner and Condorcet criterion.
+- Arrow's impossibility theorem.
+</script></section><section  data-markdown><script type="text/template">
+## Single-vote mechanisms
+
+Mechanisms where each voter gets to vote on _one_ candidate.
+
+- **Plurality voting:** The candidate with the most votes wins, even if it does not receive an absolute majority of votes.
+- **Two-round voting:** Top two candidates are voted on again.
+  The candidate with most votes in the second round wins.
+- **Instant run-off:** Perform mutiple rounds.
+  Eliminate one candidate with least votes each round.
+  Last one to be eliminated wins.
+
+<aside class="notes"><ul>
+<li>These are some of the most popular voting mechanisms.
+They are certainly among the simplest ones.</li>
+<li>Plurality is also known as first past the post.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Voting Mechanisms
+
+<widget-columns>
+<widget-column>
+
+- **Plurality:** **8 votes for A,** 5 votes for B, 7 votes for C.
+- **Two-round and instant run-off:**
+  - 1st round: **8 votes for A,** 5 votes for B, **7 votes for C**.
+  - 2nd round: 8 votes for A, **12 votes for C**.
+
+</widget-column>
+
+<widget-column>
+
+|          | 1st | 2nd | 3rd |
+| -------- | --- | --- | --- |
+| 8 voters | A   | B   | C   |
+| 7 voters | C   | B   | A   |
+| 5 voters | B   | C   | A   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Are they equivalent? No.
+Look at the example above where there are three candidates A, B and C, and 20 voters with three types of preferences.</li>
+<li>In plurality voting, we would only register the first column, and elect A with 8 votes.</li>
+<li>In two-round and instant run-off, candidates A and C would go to second round, where the 5 voters in the last row would change their vote from B to C, and candidate C would win with 12 votes.</li>
+<li>In general, several seemingly reasonable mechanisms result in different winners for the same collection of voters&#39; preferences.
+This is why we need to look more closely into what properties we want out of a mechanism.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Voting Mechanisms
+
+<widget-columns>
+<widget-column>
+
+- **Vote splitting:** Imagine B and C are similar,
+  and most people prefer either over A.
+- Known issue in plurality.
+  Two-round and instant run-off help alleviate it.
+
+</widget-column>
+<widget-column>
+
+|          | 1st | 2nd | 3rd |
+| -------- | --- | --- | --- |
+| 8 voters | A   | B   | C   |
+| 7 voters | C   | B   | A   |
+| 5 voters | B   | C   | A   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Which of these mechanisms is better? Here is an argument against plurality voting.</li>
+<li>Imagine that candidates B and C are very similar.
+In the example, we see that a majority of the population prefers either of them to A, but since their votes are split, both candidates would lose out to A in plurality voting.</li>
+<li>This issue is known as <em>vote splitting</em>.
+Two-round voting helps reduces its effect.</li>
+<li>In electoral systems that implement plurality voting, vote splitting is sometimes used as a weapon by the less popular party (in our example, A), who strategically nominates a candidate similar to their rival to split their votes.
+In turn, a common defense against vote splitting is to form alliances.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Monotonicity Criterion
+
+- A voter raising their preference for the winning candidate, or lowering their preference for a losing candidate, should not change the winner.
+- Otherwise, mechanism is susceptible to **strategic voting**.
+- Plurality is monotonic, but two-round voting is **not**.
+
+<aside class="notes"><ul>
+<li>Conversely, here is an argument against two-round voting.</li>
+<li>Monotonicity is one of the most intuitive criteria that we would expect from a voting rule.
+It says that the winning candidate should be stable relative to monotonic changes of the voter&#39;s preferences.
+In particular, if a voter raises their preference for the current winner, or lowers their preference for other candidates, then the winner should not change.</li>
+<li>Failure of this criterion means that the mechanism is susceptible to strategic voting, because a rational voter may be better off hiding their real preferences.</li>
+<li>We will see now that two-round voting is not monotonic.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Monotonicity Criterion
+
+<widget-columns>
+<widget-column>
+
+- **Two-round:**
+  - 1st round: **8 votes for A**, 6 votes for B, **7 votes for C**.
+  - 2nd round: **11 votes for A**, 10 votes for C.
+
+</widget-column>
+<widget-column>
+
+|          | 1st | 2nd | 3rd |
+| -------- | --- | --- | --- |
+| 6 voters | A   | B   | C   |
+| 2 voters | A   | C   | B   |
+| 3 voters | B   | A   | C   |
+| 3 voters | B   | C   | A   |
+| 5 voters | C   | B   | A   |
+| 2 voters | C   | A   | B   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>In this example, there are 21 voters, with 6 types of preferences.</li>
+<li>In two-round voting, A and C go to the second round, where A wins 11 against 10.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Monotonicity Criterion
+
+<widget-columns>
+<widget-column>
+
+- Bottom-row voters _raise their preference for A_.
+- **Two-round:**
+  - 1st round: **10 votes for A**, **6 votes for B**, 5 votes for C.
+  - 2nd round: 10 votes for A, **11 votes for B**.
+
+</widget-column>
+<widget-column>
+
+|          | 1st   | 2nd   | 3rd |
+| -------- | ----- | ----- | --- |
+| 6 voters | A     | B     | C   |
+| 2 voters | A     | C     | B   |
+| 3 voters | B     | A     | C   |
+| 3 voters | B     | C     | A   |
+| 5 voters | C     | B     | A   |
+| 2 voters | **A** | **C** | B   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>But now suppose the 2 voters in the bottom row raise their preference for A.
+They simply swap the positions of A and C in their ranking.</li>
+<li>Now C doesn&#39;t make it to the second round.
+In the second round, now B wins 11 to 10 against A.</li>
+<li>Hence, two-round voting is not monotonic.
+If the bottom-row voters want candidate A to win, they are better off marking C as their top preference.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ranked-vote Mechanisms
+
+<widget-columns>
+<widget-column>
+
+Mechanisms where each voter ranks _all_ candidates.
+
+- In 1770, Jean-Charles de Borda showed plurality voting
+  may elect a candidate that would lose out
+  to _every other candidate_ in a head-to-head election.
+
+</widget-column>
+<widget-column>
+
+|          | 1st | 2nd | 3rd |
+| -------- | --- | --- | --- |
+| 8 voters | A   | B   | C   |
+| 7 voters | C   | B   | A   |
+| 5 voters | B   | C   | A   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Are there monotonic mechanisms better than plurality voting? Yes!</li>
+<li>But they require more information from the voters: they need to rank all the candidates.</li>
+<li>The unfair nature of plurality voting was pointed out in 1770 by French mathematician Jean-Charles de Borda, in a presentation at the French Royal Academy of Sciences.</li>
+<li>He proved that plurality voting can elect the least favorite candidate: one that would be defeated by every other candidate in a head-to-head election.</li>
+<li>Going back to our first example, recall that A was the winner in plurality voting, yet if A and B go head-to-head, A loses 8 to 12, and if A and C go head-to-head, again A loses 8 to 12.</li>
+<li>Finally, if B and C go head-to-head, B would win 15 to 5, so in a sense B is the overall winner of pair-wise elections.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Borda Count
+
+<widget-columns>
+<widget-column>
+
+- Each voter gives a rank of all $k$ candidates
+- Interpreted as if giving $k-1, k-2, \cdots, 1, 0$ points
+- Add up all points, select candidate with most points.
+
+</widget-column>
+<widget-column>
+
+|          | 2 points | 1 point | 0 points |
+| -------- | -------- | ------- | -------- |
+| 8 voters | A        | B       | C        |
+| 7 voters | C        | B       | A        |
+| 5 voters | B        | C       | A        |
+
+<widget-text style="font-size: .8em;">
+
+16 points for A, **25 points for B**, 19 points for C.
+
+**Notice:** Borda count is monotone.
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Borda proposed a new election mechanism, known today as the Borda count, that can be thought of as a generalization of two-round voting.</li>
+<li>If there are $k$ candidates, this is interpreted as if the a voter gives $k-1$ points to their favorite candidate, $k-2$ points to their second favorite candidate, and so on until their least favorite candidate gets zero points.
+Then, we elect the candidate that received the most points overall.</li>
+<li>This is equivalent to running a <em>tournament</em> of all possible pair-wise elections, counting the number of times each candidate wins, and electing the candidate with the most wins.</li>
+<li>In our example, we see that B wins, as expected.
+We highlight that for the same example, the winner was A under plurality, C under two-round, and B under Borda count.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Borda Count
+
+<widget-columns>
+<widget-column>
+
+- **Condorcet winner:** A candidate that would win
+  head-to-head against every other candidate.
+- **Condorcet criterion:** If there is a Condorcet winner,
+  the mechanism should elect it.
+
+</widget-column>
+<widget-column>
+
+|          | 2 points | 1 point | 0 points |
+| -------- | -------- | ------- | -------- |
+| 3 voters | A        | B       | C        |
+| 2 voters | B        | C       | A        |
+
+<widget-text style="font-size: .8em;">
+
+Borda count: 6 points for A, **7 points for B**, 2 points for C.
+
+**Notice**: Borda count **fails** the Condorcet criterion.
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Surprisingly, the Borda count fails on a fairly intuitive criterion.</li>
+<li>In this example, there are 5 voters, and 3 of them vote for A as their top candidate, which is an absolute majority.
+Hence, A would win head-to-head against every other candidate.</li>
+<li>A is a &quot;Condorcet winner&quot;, named so after French mathematician Marquis de Condorcet, who in the late 18th century raised a similar example as a critique to Borda&#39;s mechanism.
+Condorcet was one of the first philosophers to apply mathematics to social sciences.</li>
+<li>It is worth mentioning that in practice, when there is Condorcet winner, the Borda count usually selects it, especially in large elections with many voters and many candidates.
+In fact, Borda count is considered one of the best mechanisms out there.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tournament Graph
+
+<widget-columns>
+<widget-column>
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-tournament-graph.jpg"/>
+
+</widget-column>
+<widget-column>
+
+|          | 1st | 2nd | 3rd |
+| -------- | --- | --- | --- |
+| 3 voters | A   | B   | C   |
+| 2 voters | B   | C   | A   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>There are, however, mechanisms similar to Borda&#39;s that pass the Condorcet criterion.</li>
+<li>But before we present one, let&#39;s explore more closely Borda&#39;s idea of simulating a tournament where each pair of candidates runs head-to-head.</li>
+<li>This can be represented with a graph, where the vertices are preferences, and the arcs are the voter&#39;s pairwise preferences pointing to the winner.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tournament Graph w/ Net Arcs
+
+<widget-columns>
+<widget-column>
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-tournament-graph-netarc.jpg"/>
+
+</widget-column>
+<widget-column>
+
+|          | 1st | 2nd | 3rd |
+| -------- | --- | --- | --- |
+| 3 voters | A   | B   | C   |
+| 2 voters | B   | C   | A   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Now, for each pair of candidates, let&#39;s replace all arcs with a single arc pointing towards the winner of that head-to-head election, with an arc weight equal to the difference between votes in favor and votes against.
+We call these <em>net arcs</em>.</li>
+<li>Borda considers the difference of weights of the incoming arc and the outgoing arc.
+This difference is 4 for B, so it wins.</li>
+<li>However, the arc from B to A means that a majority of people prefer A over B, so we can argue that A should win.</li>
+<li>On the other hand, A has no outgoing arcs, meaning there is no other candidate that a majority of people prefer over A.
+Hence A is the Condorcet winner.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Tournament Graph w/ Net Arcs
+
+<widget-columns>
+<widget-column>
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-tournament-graph-netarc.jpg"/>
+
+</widget-column>
+<widget-column>
+
+|          | 1st | 2nd | 3rd | 4th |
+| -------- | --- | --- | --- | --- |
+| 4 voters | A   | B   | C   | D   |
+| 8 voters | A   | D   | B   | C   |
+| 7 voters | B   | C   | A   | D   |
+| 7 voters | C   | D   | B   | A   |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Clearly, there can be at most one Condorcet winner.
+But sometimes there is none.</li>
+<li>In this new example, we obtain the following net arcs.
+For example, there are 4+8=12 voters that prefer A over B, and 7+7=14 voters that prefer B over A, so their net arc points to B and has a weight of 14-12=2.</li>
+<li>We see there is no Condorcet winner.
+In particular, candidates B, C and D form a cycle, meaning that a majority of people prefer B over C, D over B, and C over D.
+This is known as the <em>Condorcet paradox</em>.
+Same for A, B and D.</li>
+<li>How can we define a mechanism that always elects the Condorcet winner when there is one, and elects a reasonable candidate otherwise?</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ranked-pairs Voting
+
+- Compute net arcs and sort them from high to low.
+- For each net arc, either
+  - _discard it_ if it introduces a cycle, or
+  - _confirm it_ otherwise.
+- Winner is unique vertex without outgoing arcs.
+
+<aside class="notes"><ul>
+<li>The ranked-pairs mechanism was introduced fairly recently, in 1987 by Nicolaus Tideman.</li>
+<li>It computes all net arcs, as before, then sorts them by weight, and gives preference to heavier arcs.</li>
+<li>Starting with heavier arcs, it discards those arcs that would introduce a cycle with previous arcs.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ranked-pairs Voting
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-ranked-pair-voting-1.jpg"/>
+
+<aside class="notes"><ul>
+<li>In our example, we start by confirming the arcs of weight 12.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ranked-pairs Voting
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-ranked-pair-voting-2.jpg"/>
+
+<aside class="notes"><ul>
+<li>Then confirm the arc of weight 10.</li>
+<li>Then, the BD arc would introduce the cycle CBD, so we discard it.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ranked-pairs Voting
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-ranked-pair-voting-2.jpg"/>
+
+<aside class="notes"><ul>
+<li>Finally, the last two arcs can be confirmed.</li>
+<li>We see that the winner is B, as it only has incoming arcs.</li>
+<li>In fact, this mechanism produces a full rank of the candidates.
+In the example we obtain the rank $B&gt;C&gt;A&gt;D$, which is compatible with all surviving arcs.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Ranked-pairs Voting
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+- Introduced by Nicolaus Tideman in 1987.
+- Observes monotonicity and Condorcet criteria.
+- Produces a fully sorted list of winners.
+- Gives rules for breaking ties between net arcs.
+
+<aside class="notes"><ul>
+<li>This rule can be shown to observe the Condorcet criterion as well as monotonicity.</li>
+<li>As said before, it actually fully sorts the list of candidates.</li>
+<li>The original paper gives some involved rules for breaking ties between net arcs of equal weight, but we won&#39;t get into details.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Participation Criterion
+
+Abstaining from voting cannot help a voter's preferred candidate to win.
+
+- Ranked-pairs **fails** this criterion.
+- Both Borda count and plurality observe it.
+
+<aside class="notes"><ul>
+<li>However, there is no perfect mechanism.
+Here is an argument against ranked-pairs.</li>
+<li>Participation is one of the most intuitive criteria: a strategic voter should not be better off by not participating.</li>
+<li>Yet this is the case for ranked-pair voting, as we prove now.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Participation Criterion
+
+<widget-columns>
+<widget-column>
+
+- 4 voters in top row decide to abstain from voting
+
+</widget-column>
+<widget-column>
+
+|              | 1st   | 2nd   | 3rd   | 4th   |
+| ------------ | ----- | ----- | ----- | ----- |
+| ~~4 voters~~ | ~~A~~ | ~~B~~ | ~~C~~ | ~~D~~ |
+| 8 voters     | A     | D     | B     | C     |
+| 7 voters     | B     | C     | A     | D     |
+| 7 voters     | C     | D     | B     | A     |
+
+</widget-column>
+</widget-columns>
+
+<aside class="notes"><ul>
+<li>Recall the winner was B in the last example.</li>
+<li>Now suppose the 4 voters in the top row decide to abstain from voting, and notice their top preference was A.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Participation Criterion
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-participation-criterion-1.jpg"/>
+
+<aside class="notes"><ul>
+<li>We obtain the following graph.
+None of the arcs changed direction, only the weights changed.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Participation Criterion
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-participation-criterion-2.jpg"/>
+
+<aside class="notes"><ul>
+<li>We confirm these 3 net arcs of weight 8.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Participation Criterion
+
+<img style="width: 500px; margin-right: 150px;" src="../../../assets/img/2-Economics/2.4-participation-criterion-3.jpg"/>
+
+<aside class="notes"><ul>
+<li>And then we need to discard the other three net arcs as they all introduce cycles.</li>
+<li>We see that the winner is now A.</li>
+<li>The full list of winners is $A&gt;D&gt;B&gt;C$.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Recap
+
+- No voting mechanism is perfect.
+- Borda count and ranked-pairs are arguably more fair.
+- But plurality and two-round voting are simpler.
+- Simplicity seems to be important in practice.
+</script></section><section  data-markdown><script type="text/template">
+## Arrow's Theorem
+
+There is no ranked-vote mechanism that outputs a rank of the candidates, and observes all of the following criteria:
+
+- Non-dictatorship
+- Universal domain
+- Pareto condition
+- Irrelevance of independent alternatives
+
+<aside class="notes"><ul>
+<li>To conclude the section, we mention one of the most important results in voting theory, proved by Kenneth Arrow in 1951.
+It displays the impossibility of having a ranked-vote mechanism that observes four fairly reasonable criteria at the same time.</li>
+<li>Non-dictatorship means the mechanism cannot consist of simply declaring one of the voters as dictator and outputting their personal ranked preferences, ignoring all other voters&#39; preferences.</li>
+<li>Universal domain means there are no restrictions on the rank that each voter may give as input.</li>
+<li>Pareto condition means that if every voter prefers candidate A over B, then the output rank should also place A higher than B.</li>
+<li>Finally, irrelevance of independent alternatives means that the relative ranking of two candidates A and B in the output (i.e., whether A is higher or lower than B) should depend only on the relative ranking of A and B of each voter, and not on the voters&#39; ranking of other candidates.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#000" -->
+
+# Break
+
+<aside class="notes"><p>10 minutes</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Discussion
+</script></section><section  data-markdown><script type="text/template">
+## Discussion
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+We mentioned that the main goals of a collective decision-making process are utility, legitimacy and practicality.
+Can you think of real life scenarios where these goals clash?
+
+<aside class="notes"><ul>
+<li>We saw that ranked-based voting seems to be more fair (utility), but it is less simple to participate (practicality), which is probably why it&#39;s not so popular</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Discussion
+
+<widget-text style="padding: 0 3em 0 3em; font-size: smaller;" center>
+
+_Thought experiment:_ In a country that runs referendums periodically, the turnout is only 2%, and those who vote tend to be older people, while young people almost never vote.
+
+The president changes the voting mechanism, so that in every referendum, 5% of the population elected uniformly at random is allowed to vote, while the remaining 95% of the population is forbidden to do so.
+As a result, every person is only allowed to participate in one out of 20 referendums on average.
+
+It is now observed that 80% of the people allowed to vote actually vote, so that the global turnout grows from 2% to 4%.
+Moreover, the previously observed correlation between age and willingness to vote decreases considerably.
+
+**Would you support this new mechanism?**
+
+<aside class="notes"><ul>
+<li>Is this new mechanism more or less legitimate?</li>
+<li>Does it have higher utility?</li>
+<li>Is it practical?</li>
+<li>I think it has higher utility but less legitimacy</li>
+<li>It could be an issue to have a population sampling that is verifiably random and unbiased.
+This affects practicality and legitimacy.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## A Holy Grail
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+One of the "holy grails" of voting theory is finding a voting mechanism that simultaneously offer _local privacy_ and _global transparency_.
+This means that no one should be able to see another person's ballot, but everyone should be able to see the results or decisions that follow from these ballots and verify that they were computed correctly.
+While there is a lot of active research in this topic, there is no fully satisfactory solution yet.
+
+Suppose that such a mechanism is finally created using cryptography; however, it requires every voter to use a private key and be trained in the basics of cryptography.
+A nation's president proposes to use such a mechanism, but the overwhelming feedback from the population to the idea is negative, because people don't trust digital voting or cryptography.
+
+**What goals are at odds here? What would you do as president?**
+</script></section><section  data-markdown><script type="text/template">
+## Proof of Work
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+In a proof-of-work (PoW) based network, the nodes that participate in consensus and produce blocks are called _miners_.
+Anyone is free to become a miner, and the frequency with which a node gets to participate is proportional to the node's computing power.
+
+We can think of this as a collective decision making mechanism based on _random dictatorship_, to establish the content of blocks and the distribution of new minted tokens.
+This mechanism has some very interesting properties.
+For instance, it is strategy-free, and fair in expectation in terms of decision making power.
+
+**Why do you think this mechanism is not used more often in real life?**
+
+**Under what conditions is it sensible to apply this mechanism?**
+
+</widget-text>
+</script></section><section  data-markdown><script type="text/template">
+## Proof of Stake
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+In a Proof-of-stake (PoS) based blockchain network, _validators_ are the nodes that participate in the consensus protocol and produce blocks.
+While it is possible to have a "pure" PoS mechanism where every token holder can participate in consensus directly (imitating PoW), most high-profile projects bound the number of validators that get to be active at any given moment.
+
+Instead, these project opt for "representative democracy" and let token holders express their preferences for the set of active validators.
+Examples of blockchain projects that do this are: Polkadot, Cardano, Cosmos, EOS, Tezos and Tron.
+
+**What do you think are the main reasons behind this choice?**
+
+<aside class="notes"><ul>
+<li>Mostly for operational reasons</li>
+<li>As the validator set size increases, the communication costs grow quickly (superlinearly), while the increase in security grows slowly past a certain point.</li>
+<li>It is not sensible to run nodes for only sporadic participation.
+Validators would naturally tend to form pools anyway, to decrease the variance of their revenue, and profit from economies of scale.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Secure Validators
+
+We saw that it's critically important for security to ensure that the set of validators is not captured by an adversary.
+Suppose we succeed, so that a super majority of validators participate in consensus honestly.
+
+A priori, the mechanism for electing validators can be completely independent of the mechanism for deciding on upgrades.
+However, some projects merge them together.
+In particular, consider a project that on any referendum, delegates the voting power of all the passive stakeholders to the set of validators.
+
+<center>
+
+**Does this constitute _capture_ of the governance body?**
+
+**Can you think of examples where the interests of validators are markedly different from the interests of the collective?**
+
+</center>
+
+<aside class="notes"><ul>
+<li>Yes, for instance if we vote to increase the staking rewards, all validators would support it, but this negatively affects stakeholders would are using their stake in other ways.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#000" -->
+
+# Break
+
+<aside class="notes"><p>10 minutes</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Workshop
+</script></section><section  data-markdown><script type="text/template">
+## Workshop
+
+<widget-text style="padding: 0 3em 0 3em" center>
+
+Form groups of 3 to 5 people and discuss the following exercise.
+There are 3 exercises in total.
+For each one, you will discuss with your group for 5 minutes,
+and then we will discuss our collective thoughts in class.
+</script></section><section  data-markdown><script type="text/template">
+## PoS Mechanisms
+
+We compare some proof-of-stake (PoS) protocols that let token holders vote for their favorite validator candidates, and then run a multi-winner election mechanism to elect a set of $k$ validators.
+
+In this election, the voting power of each voter is proportional to the number of tokens they own (their "stake"), so that if a voter owns 10 tokens, this is equivalent to there being 10 voters with a single token each and with identical ballots.
+</script></section><section  data-markdown><script type="text/template">
+## Proportional Representation
+
+If we elect $k$ winners, and a voter owns at least a fraction $1/k$ of all the tokens participating in the election, then one of the winners must be a candidate approved by that voter.
+</script></section><section  data-markdown><script type="text/template">
+## Proportional Representation
+
+<widget-text style="font-size: smaller;">
+
+In other words, any voter with enough tokens is guaranteed to be represented in the winning committee by one of their approved candidates.
+Polkadot runs a multi-winner election with approval votes, with an election mechanism called **Phragmen** that achieves this criterion.
+
+The [EOS network](https://eos.io/) also runs a multi-winner election with approval votes, but with a different election mechanism called **multi-winner approval voting**: for each candidate X, let their score be the sum of tokens of all the voters that approve of A; then, elect the $k$ candidates with highest score.
+For example if Alice has 10 tokens and votes for candidates X and Y, and Bob has 15 tokens and votes for candidates Y and Z, then A has a score of 10, B has a score of 25, and C has a score of 15.
+
+Prove that multi-winner approval voting violates the criterion of proportional representation.
+In particular, find an example where a user has over $1/k$ of all the tokens yet is not represented in the winning set.
+In fact, for any $k$, you may find an example where all of the winning candidates only represent a single voter who controls a minority of the tokens.
+
+<center>
+
+**What's the significance of the proportional representation criterion (or lack thereof) for the security of a blockchain network?**
+
+</center>
+</script></section><section  data-markdown><script type="text/template">
+## Plurality Concerns
+
+On the other hand, the Cosmos network runs a multi-winner election with single-vote ballots.
+The election mechanism used is $k$-plurality: the score of a candidate X is the sum of tokens of all the voters that voted for X, and we elect the $k$ candidates with highest score.
+In other words, $k$-plurality is the natural extension of plurality to multi-winner elections.
+$k$-plurality satisfies proportional representation, but inherits many of the issues known to affect plurality.
+</script></section><section  data-markdown><script type="text/template">
+## Plurality Concerns
+
+<widget-text style="padding: 0 3em 0 3em;">
+
+For example, it encourages a tactical voting technique known as _compromising_.
+Voters are under pressure to vote for one of the few candidates most likely to win even if their true preference is none of them, as otherwise they run the risk of not being represented at all.
+In turn, this leads to very few candidates consolidating more and more vote support over time, in detriment to less popular candidates who perhaps are generally considered to be more competent (i.e., it's a coordination game).
+How do you imagine this issue can affect the blockchain application?
+</script></section><section  data-markdown><script type="text/template">
+## Plurality Concerns
+
+<widget-text style="font-size: smaller;">
+
+Does the concentration of votes over few validators affect the security of the network?
+
+To answer this question, recall that a blockchain network typically gives an economic incentive (staking rewards) to winning validators, and to the users who voted for them, but it gives no incentive to unrepresented users.
+
+Another issue known about $k$-plurality is _wasted votes_: if voters vote mostly truthfully, the fact that they only get to vote for a single candidate means that even if we elect the $k$ most popular candidates, the winners may only represent a minority of the voters, while a large majority is unrepresented because their votes are split among too many candidates How do you imagine this issue can affect the blockchain network? To answer this question, recall that in PoS we use tokens as protection against a Sybil attack by an adversary; in other words, a malicious entity may control a large number of validator candidates, but it should be very difficult to get them elected in terms of the numbers of tokens that need to vote for them.
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

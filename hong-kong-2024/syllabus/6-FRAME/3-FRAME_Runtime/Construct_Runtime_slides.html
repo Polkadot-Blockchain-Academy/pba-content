@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Construct Runtime</title>
+  <link rel="icon" href="./../../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# `construct_runtime!` and Testing 🔨
+</script></section><section  data-markdown><script type="text/template">
+# Part 1: Runtime Construction
+</script></section><section  data-markdown><script type="text/template">
+<img style="height: 600px" src="../../../assets/img/6-FRAME/frame1.svg" />
+</script></section><section ><section data-markdown><script type="text/template">
+## Pallet <=> Runtime
+
+A runtime is really ✌️ things:
+
+1. A struct that implements `Config` of all pallets.
+2. A type that helps `Executive` implement `RuntimeApis`.
+</script></section><section data-markdown><script type="text/template">
+### Pallet <=> Runtime
+
+We build a runtime, using `construct_runtime`, typically twice:
+
+1. Per pallet, there is a mock runtime.
+2. A real runtime elsewhere.
+
+<aside class="notes"><p>Benchmarking can then use both of these runtimes.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## `construct_runtime`: `Runtime` type
+
+```rust [1-100|2]
+frame_support::construct_runtime!(
+  pub struct Runtime {
+    System: frame_system,
+    Timestamp: pallet_timestamp,
+    Balances: pallet_balances,
+    Aura: pallet_aura,
+    Dpos: pallet_dpos,
+  }
+);
+```
+</script></section><section data-markdown><script type="text/template">
+### `Runtime` type
+
+- It implements [A LOT OF STUFF](https://paritytech.github.io/substrate/master/kitchensink_runtime/struct.Runtime.html)!
+- But most importantly, the `Config` trait of all of your pallets 🫵🏻.
+
+```rust
+impl frame_system::Config for Runtime { .. }
+impl pallet_timestamp::Config for Runtime { .. }
+impl pallet_dpos::Config for Runtime { .. }
+```
+</script></section><section data-markdown><script type="text/template">
+### `<T: Config>` ==> `Runtime`
+
+> Anywhere in your pallet code that you have `<T: Config>` can now be replaced with `Runtime`.
+
+```rust[1-2|3-4|5-6]
+// a normal pub function defined in
+frame_system::Pallet::<Runtime>::block_number();
+// a storage getter of a map.
+frame_system::Pallet::<Runtime>::account(42u32);
+// A storage type.
+frame_system::Account::<Runtime>::get(42u32);
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+## `construct_runtime`: Pallet List
+
+```rust [3-7|8|1-100]
+frame_support::construct_runtime!(
+  pub struct Runtime {
+    System: frame_system,
+    Timestamp: pallet_timestamp,
+    Balances: pallet_balances,
+    Aura: pallet_aura,
+    Dpos: pallet_dpos,
+    <NameYouChoose>: path_to_crate,
+  }
+);
+```
+</script></section><section data-markdown><script type="text/template">
+### Pallet List
+
+- Crucially, under the hood, this generates:
+
+```rust
+type System = frame_system::Pallet<Runtime>;
+type Balances = pallet_balances::Pallet<Runtime>;
+..
+type DPos = pallet_dpos::Pallet<Runtime>;
+```
+
+- Recall that `Runtime` implements `<T: Config>` of all pallets.
+</script></section><section data-markdown><script type="text/template">
+### Pallet List
+
+```rust
+frame_system::Pallet::<Runtime>::block_number(); // 🤮
+System::block_number(); // 🥳
+
+frame_system::Pallet::<Runtime>::account(42u32); // 🤮
+System::account(42u32); // 🥳
+```
+</script></section><section data-markdown><script type="text/template">
+### Pallet List
+
+- Next crucial piece of information that is generated is:
+
+```rust
+type AllPallets = (System, Balances, ..., Dpos);
+```
+
+</div>
+
+- This is used in `Executive` to dispatch pallet hooks.
+
+```rust
+<AllPallets as OnInitialize>::on_initialize();
+<AllPallets as OnInitialize>::on_finalize();
+```
+
+</div>
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Question: What will be the order of <code>fn on_initialize()</code>?
+There&#39;s also <code>type AllPalletsWithoutSystem</code> and some other variants that are no longer</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Pallet List + Outer Enums
+
+- Generates some outer types:
+
+  - `RuntimeCall`
+  - `RuntimeEvent`
+  - `RuntimeOrigin`
+  - `RuntimeGenesisConfig`
+
+<aside class="notes"><p>See the lecture on individual item, and the &quot;Outer Enum&quot; lecture.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Pallet List: `RuntimeCall` Example
+
+```rust
+// somewhere in your pallet, called `my_pallet`
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+  fn transfer(origin: OriginFor<T>, from: T::AccountId, to: T::AccountId, amount: u128);
+  fn update_runtime(origin: OriginFor<T>, new_code: Vec<u8>);
+}
+```
+
+```rust
+// expanded in your pallet
+enum Call {
+  transfer { from: T::AccountId, to: T::AccountId, amount: u128 },
+  update_runtime { new_code: Vec<u8> },
+}
+```
+
+<!-- .element: class="fragment" -->
+
+```rust
+// in your outer runtime
+enum RuntimeCall {
+  System(frame_system::Call),
+  MyPallet(my_pallet::Call),
+}
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Pallet List: Pallet Parts
+
+```rust [1-100|3-5]
+frame_support::construct_runtime!(
+  pub struct Runtime {
+    System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
+    Balances: pallet_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
+    Dpos: pallet_dpos,
+  }
+);
+```
+
+- Omitting them will exclude them from the metadata, or the "outer/runtime types"
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Pallet List: Pallet Index
+
+```rust [3-5]
+frame_support::construct_runtime!(
+  pub struct Runtime {
+    System: frame_system::{Pallet, Call, Config, Storage, Event<T>} = 1,
+    Balances: pallet_balances = 0,
+    Dpos: pallet_dpos = 2,
+  }
+);
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+## `construct_runtime`: Final Thoughts
+
+- Order in the `construct_runtime` matters!
+- Recall `integrity_test()` is called upon `construct_runtime`.
+
+```sh
+test mock::__construct_runtime_integrity_test::runtime_integrity_tests ... ok
+```
+</script></section><section data-markdown><script type="text/template">
+### Preview
+
+Of the next potential syntax:
+
+```rust
+#[frame::construct_runtime]
+mod runtime {
+  #[frame::runtime]
+  pub struct Runtime;
+
+  #[frame::executive]
+  pub struct Executive;
+
+  #[frame::pallets]
+  #[derive(RuntimeGenesisConfig, RuntimeCall, RuntimeOrigin)]
+  pub type AllPallets = (
+    System = frame_system = 0,
+    BalancesFoo = pallet_balances = 1,
+    BalancesBar = pallet_balances = 2,
+    Staking = pallet_staking = 42,
+  );
+}
+```
+
+<aside class="notes"><p>See: <a href="https://github.com/paritytech/substrate/issues/13137">https://github.com/paritytech/substrate/issues/13137</a></p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+# Part 2: Testing
+</script></section><section ><section data-markdown><script type="text/template">
+## Testing and Mocks
+
+A test requires a mock runtime, so we need to do a full `construct_runtime` 😱
+
+.. but luckily, most types can be mocked 😮‍💨
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Testing and Mocks
+
+- `u32` account id.
+- `u128` balance.
+- `u32` block number.
+- ...
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Testing: `Get<_>`
+
+- Next, we want to supply some value to those `Get<_>` associated types.
+
+```rust
+#[pallet::config]
+pub trait Config: frame_system::Config {
+  type MaxVoters: Get<u32>;
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Testing: `Get<_>`
+
+```rust
+parameter_types! {
+  pub const MyMaxVoters: u32 = 16;
+}
+```
+
+```rust
+impl pallet_template::Config for Runtime {
+  type MaxVoters = MyMaxVoters;
+}
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Testing: `Get<_>`
+
+- Or, if your value is always constant:
+
+```rust
+impl pallet_dpos::Config for Runtime {
+  type MaxVoters = frame_support::traits::ConstU32<16>;
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Testing: `Get<_>`
+
+- Or, if you want to torture yourself:
+
+```rust
+pub struct MyMaxVoters;
+impl Get<u32> for MyMaxVoters {
+  fn get() -> u32 {
+    100
+  }
+}
+
+impl pallet_dpos::Config for Runtime {
+  type MaxVoters = MyMaxVoters;
+}
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Testing: Genesis and Builder
+
+- Next, if you want to feed some data into your pallet's genesis state, we must first setup the
+  genesis config correctly.
+
+```rust
+#[pallet::genesis_config]
+#[derive(frame_support::DefaultNoBound)]
+pub struct GenesisConfig<T: Config> {
+	pub voters: Vec<(T::AccountId, Option<Vote>)>,
+}
+
+#[pallet::genesis_build]
+impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
+  fn build(&self) {
+    for (voter, maybe_vote) in &self.voters {
+      // do stuff.
+    }
+  }
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Testing and Mocks: Genesis and Builder
+
+- Then, we build a builder pattern to construct the genesis config.
+
+```rust
+#[derive(Default)]
+pub struct Builder {
+  pub voters: Vec<(u64, Option<Vote>)>,
+}
+```
+
+```rust
+impl Builder {
+  pub fn add_voter(mut self, who: u64) -> Self {
+    self.voters.push((who, None));
+    self
+  }
+}
+```
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Testing and Mocks: Genesis and Builder
+
+- Finally:
+
+```rust
+impl Builder {
+  pub fn build(self) -> TestExternalities {
+    let system = frame_system::GenesisConfig::<Runtime>::default();
+    let template_module = crate::GenesisConfig { voters: self.voters, ..Default::default() };
+    RuntimeGenesisConfig { system, template_module }.build_storage().unwrap().into()
+  }
+
+  pub fn build_and_execute(self, f: impl FnOnce()) {
+    let mut ext = self.build();
+    ext.execute_with(f);
+    // any post checks can come here.
+  }
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Testing and Mocks
+
+- Finally, this allows you to write a test like this:
+
+```rust
+#[test]
+fn test_stuff() {
+  let mut ext = Builder::default()
+    .add_voter_with_vote(2, Vote::Aye)
+    .add_voter(3)
+    build_and_execute(|| {
+      // do stuff
+    });
+}
+```
+</script></section></section><section  data-markdown><script type="text/template">
+## Testing: static `parameter_types!`
+
+- What if you want to change that `MyMaxVoters`?
+
+<div>
+
+```rust
+parameter_types! {
+  pub static MyMaxVoters: u32 = 100;
+}
+```
+
+```rust
+MyMaxVoters::set(200);
+MyMaxVoters::get();
+```
+
+<!-- .element: class="fragment" -->
+
+</div>
+</script></section><section ><section data-markdown><script type="text/template">
+## Test ing: Progressing Blocks
+
+- Often times, in your test, you want mimic the progression of an empty block.
+- De-nada! We can fake everything in tests 🤠
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Progressing Blocks
+
+```rust
+pub fn next_block() {
+  let now = System::block_number();
+  Dpos::on_finalize(now);
+  System::on_finalize(now);
+
+  System::set_block_number(now + 1);
+
+  System::on_initialize(now + 1)
+  Dpos::on_initialize(now + 1);
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Progressing Blocks
+
+```rust
+pub fn next_block() {
+  let now = System::block_number();
+  AllPallets::on_finalize(now);
+
+  System::set_block_number(now + 1);
+
+  AllPallets::on_initialize(now + 1)
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Progressing Blocks
+
+````rust
+```rust
+#[test]
+fn test() {
+  let mut ext = Builder::default()
+    .add_validator(1)
+    .set_minimum_delegation(200)
+    .build();
+  ext.execute_with(|| {
+    // initial stuff
+    next_block();
+
+    // dispatch some call
+    assert!(some_condition);
+
+    next_block();
+
+    // repeat..
+  });
+}
+````
+
+```
+</script></section></section><section  data-markdown><script type="text/template">
+## Additional Resources 😋
+
+> Check speaker notes (click "s" 😉)
+
+<aside class="notes"><ul>
+<li>This PR was actually an outcome Cambridge PBA: <a href="https://github.com/paritytech/substrate/pull/11932">https://github.com/paritytech/substrate/pull/11932</a></li>
+<li><a href="https://github.com/paritytech/substrate/pull/11818">https://github.com/paritytech/substrate/pull/11818</a></li>
+<li><a href="https://github.com/paritytech/substrate/pull/10043">https://github.com/paritytech/substrate/pull/10043</a></li>
+<li>On usage of macros un Substrate: <a href="https://github.com/paritytech/substrate/issues/12331">https://github.com/paritytech/substrate/issues/12331</a></li>
+<li>Disscussion on advance testing: <a href="https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356">https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356</a></li>
+<li>Reserve topic: Reading events.</li>
+<li>Reserve-topic: try-state.</li>
+</ul>
+<h3 id="original-lecture-script">Original Lecture Script</h3>
+<p>this is your bridge from a pallet into a runtime.</p>
+<p>a runtime amalgamator is composed of the following:</p>
+<ol>
+<li>all pallet&#39;s <code>Config</code> implemented by a <code>struct Runtime</code>;</li>
+<li>construct <code>Executive</code> and use it to implement all the runtime APIs</li>
+<li>Optionally, some boilerplate to setup benchmarking.</li>
+<li>invoke <code>construct_runtime!</code>.</li>
+<li>Alias for each pallet.</li>
+</ol>
+<p>The <code>construct_runtime!</code> itself does a few things under the hood:</p>
+<ol>
+<li>crate <code>struct Runtime</code>.</li>
+<li>amalgamate <code>enum RuntimeCall</code>; // passed inwards to some pallets that want to store calls.</li>
+<li>amalgamate <code>enum RuntimeEvent</code>; // passed inwards to all pallets.</li>
+<li>amalgamate <code>enum RuntimeOrigin</code> (this is a fixed struct, not an amalgamation);</li>
+<li>Create a very important type alias:</li>
+</ol>
+<ul>
+<li><code>type AllPallets</code> / <code>type AllPalletsWithoutSystem</code></li>
+</ul>
+<ol>
+<li>run <code>integrity_test()</code>.</li>
+</ol>
+<blockquote>
+<p>Note that there is no such thing as <code>RuntimeError</code>. Errors are not amalgamated, they just are. This should be in the error lecture.</p>
+</blockquote>
+<ul>
+<li>Ordering in <code>construct_runtime</code> matters.</li>
+<li>Pallet parts can be optional in <code>construct_runtime!</code>.
+```</li>
+</ul>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+
+  <script src="./../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Hooks, Inherents</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Hooks, Inherents
+</script></section><section  data-markdown><script type="text/template">
+## Hooks: All In One
+
+All defined in `trait Hooks`
+([source](https://github.com/paritytech/substrate/blob/33c518ebbe43d38228ac47e793e4d1c76738a56d/frame/support/src/traits/hooks.rs#L214)).
+
+1. `on_initialize`
+2. `on_finalize`
+3. `on_idle`
+4. `on_runtime_upgrade`
+5. `offchain_worker`
+6. `integrity_test`
+
+7. Plus, `GenesisConfig`.
+</script></section><section ><section data-markdown><script type="text/template">
+## Hooks: `on_initialize`
+
+- Useful for any kind of **automatic** operation.
+
+- The weight you return is interpreted as `DispatchClass::Mandatory`.
+
+- Called before any transaction.
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `On_Initialize`
+
+- `Mandatory` Hooks should really be lightweight and predictable, with a bounded complexity.
+
+```rust
+fn on_initialize() -> Weight {
+  // any user can create one entry in `MyMap` 😱🔫.
+  <MyMap<T>>::iter().for_each(do_stuff);
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `On_Initialize`
+
+- Question: If you have 3 pallets, in which order they are called?
+
+<!-- .element: class="fragment" -->
+
+- Question: If your runtime panics on_initialize, how can you recover from it?
+
+<!-- .element: class="fragment" -->
+
+- Question: If your hook consumes more than the maximum block weight?
+
+<!-- .element: class="fragment" -->
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Hooks: `on_finalize`
+
+Its weight needs to be known in advance. Therefore, less preferred compared to `on_initialize`.
+
+Similar to `on_initialize`, `on_finalize` is also **mandatory**. This is also why its weight is
+registered at the beginning of the block.
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `on_finalize`
+
+> Generally, avoid using it unless if something REALLY needs to be happen at the end of the block.
+
+Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1"
+</script></section></section><section  data-markdown><script type="text/template">
+## Hooks: `on_idle`
+
+- **_Optional_** variant of `on_finalize`, also executed at the end of the block.
+</script></section><section  data-markdown><script type="text/template">
+## Hooks: `on_runtime_upgrade`
+
+Called once per every time that the runtime version changes, before anything else.
+
+Your one and only chance to migrate the state if needed.
+
+Has its own lecture!
+</script></section><section ><section data-markdown><script type="text/template">
+## Hooks: `offchain_worker`
+
+**Fully offchain application**:
+
+- Read chain state via RPC.
+- submit desired side effects back to the chain as transactions.
+
+**Runtime Offchain Worker**:
+
+- Code lives onchain, upgradable only in synchrony with the whole runtime 👎
+- Ergonomic and fast state access 👍
+- State writes are ignored 🤷
+- Can submit transactions back to the chain as well ✅
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `offchain_worker`
+
+Called per block **IMPORT** (!= _sync_)
+
+has a totally separate thread pool than the normal execution.
+
+Threads can **overlap**, each is reading the state of its corresponding block, and you can great
+[`lock`s](https://github.com/paritytech/substrate/blob/49b06901eb65f2c61ff0934d66987fd955d5b8f5/frame/election-provider-multi-phase/src/lib.rs#L789)\_ if needed to make sure there is no overlap.
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `offchain_worker`
+
+<image src="../../../assets/img/6-FRAME/ocw.svg" style="height: 500px">
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `offchain_worker`
+
+Offchain workers have their own **special host functions**: http, dedicated storage, time, etc.
+
+Offchain workers have the same **execution limits** as WASM (limited memory, custom allocator).
+
+<aside class="notes"><p>Word on allocator limit in Substrate WASM execution (subject to change).</p>
+<ul>
+<li>Max single allocation limited</li>
+<li>Max total allocation limited.</li>
+</ul>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Hooks: `integrity_test`
+
+Called upon `construct_runtime!` only.
+
+Best to make sure all the inputs coming into your pallet as `type Foo: Get<u32> = ..` are sensible!
+
+> Panic, panic all you want in here.
+
+```rust
+fn integrity_test() {
+  assert!(
+    T::MaxPointsToBalance::get() > 0,
+    "Minimum points to balance ratio must be greater than 0"
+  );
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Hooks: Others
+
+These are all the `#[pallet::hooks]` that you can have.
+
+..but there is one more FRAME topics that is hook-like: `GenesisConfig`
+
+Let's have a quick look.
+</script></section><section ><section data-markdown><script type="text/template">
+## Hooks: `genesis_build`
+
+Each pallet can define a `struct GenesisConfig` --> `<PalletName>Config`.
+
+```rust
+construct_runtime!(
+  pub enum Runtime where
+  Block = Block,
+  NodeBlock = opaque::Block,
+  UncheckedExtrinsic = UncheckedExtrinsic
+  {
+    System: frame_system,
+    PalletA: pallet_a,
+  }
+);
+```
+
+```rust
+struct GenesisConfig {
+  SystemConfig: pallet_system::GenesisConfig,
+  PalletAConfig: pallet_a::GenesisConfig::
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `genesis_build`
+
+```rust
+// in your pallet
+#[pallet::genesis_config]
+pub struct GenesisConfig<T: Config> {
+  pub max_pools: Option<u32>,
+  pub max_members: Option<u32>,
+}
+
+#[cfg(feature = "std")]
+impl<T: Config> Default for GenesisConfig<T> {
+  fn default() -> Self {
+    Self {
+      max_pools: Some(16),
+      max_members: Some(16 * 32),
+    }
+  }
+}
+
+#[pallet::genesis_build]
+impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
+  fn build(&self) {
+    // self.max_pools, self.max_members
+  }
+}
+
+
+// Somewhere in the client, while building a chain spec:
+NominationPoolsConfig {
+  max_pools: 42,
+  max_members: 24,
+}
+//This will then be put into your JSON/raw chain-spec.
+```
+</script></section><section data-markdown><script type="text/template">
+### Hooks: `genesis_build`
+
+```rust
+// Somewhere in the client, while building a chain spec:
+// This will then be put into your JSON/raw chain-spec.
+NominationPoolsConfig {
+  max_pools: 42,
+  max_members: 24,
+}
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+### Hooks: Recap
+
+<image src="../../../assets/img/6-FRAME/flow.svg" style="height: 550px">
+
+Question: Where/when is the offchain worker called?
+</script></section><section data-markdown><script type="text/template">
+### Hooks: Recap
+
+offchain worker is not really a part of the consensus code in the runtime, client can technically
+call it whenever it wants
+</script></section></section><section  data-markdown><script type="text/template">
+## Further Reading, Recap.
+
+> Hooks are **very powerful** tools to write state transition, but with them it comes a lot of responsibility as well.
+
+- [OnPostInherents](https://github.com/paritytech/substrate/pull/10128).
+- [Offchain workers talk](https://www.youtube.com/watch?v=rwzvRi1JkWU).
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

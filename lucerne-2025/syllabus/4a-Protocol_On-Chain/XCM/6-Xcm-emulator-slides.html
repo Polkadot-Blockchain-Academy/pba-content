@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>XCM Emulator</title>
+  <link rel="icon" href="./../../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section ><section data-markdown><script type="text/template">
+
+# XCM Emulator
+
+<aside class="notes"><p>The emulator will let us use all the knowledge we&#39;ve gained so far.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## What you'll learn
+
+- How to use the XCM emulator for testing your cross-chain interactions.
+</script></section></section><section  data-markdown><script type="text/template">
+# What is it?
+
+A collection of macros that create a mock network we can use test our XCM configuration.
+</script></section><section ><section data-markdown><script type="text/template">
+# Creating a mock network
+</script></section><section data-markdown><script type="text/template">
+## Runtimes
+
+We first need to create our runtimes, a relay chain and a minimum of a parachain.
+</script></section><section data-markdown><script type="text/template">
+## Relay chains
+
+```rust
+decl_test_relay_chains! {
+  pub struct Relay {
+    runtime = relay_runtime,
+    core = {
+      SovereignAccountOf: location_converter,
+    },
+    pallets = {
+      ...
+    },
+    genesis = genesis(),
+    on_init = {
+      ...
+    },
+  }
+}
+```
+
+<aside class="notes"><p>XCM emulator provides a macro for declaring mock relay chains.</p>
+<p>We need to specify a couple of things:</p>
+<ul>
+<li>runtime: The actual runtime of our relay chain.</li>
+<li>core: Some core functionality used by the emulator, things like handlers and converters.</li>
+<li>pallets: All pallets you want to use for tests.</li>
+<li>genesis: Genesis configuration for testing, you can register assets for example.</li>
+<li>on_init: You can call some <code>on_initialize</code>s here.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Parachains
+
+```rust
+decl_test_parachains! {
+  pub struct ParaA {
+    runtime = parachain_runtime,
+    core = {
+      ...
+    },
+    pallets = {
+      ...
+    },
+    genesis = genesis(),
+    on_init = {
+      ...
+    },
+  }
+}
+```
+
+<aside class="notes"><p>XCM emulator provides a macro for declaring mock parachains.</p>
+<p>We need to specify the same things.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## The entire network
+
+```rust
+decl_test_networks! {
+  pub struct MockNet {
+    relay_chain = Relay,
+    parachains = vec![
+      ParaA,
+      ParaB,
+    ],
+    bridge = (),
+  }
+}
+```
+
+<aside class="notes"><p>We declare our network by specifying our relay chain and parachains.
+We can also declare a bridge to test sending messages to different networks.
+In that case we also use <code>decl_test_bridges!</code> to define the bridges.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+# Simple Test
+
+```rust
+#[test]
+fn test_xcm() {
+  MockNet::reset();
+
+  ParaA::execute_with(|| {
+    let message: Xcm<()> = <some_xcm>;
+    let destination = Location::new(1, [Parachain(2001)]);
+    parachain_runtime::XcmPallet::execute(
+      parachain_runtime::RuntimeOrigin::signed(<some_account>),
+      Box::new(VersionedXcm::V5(message)),
+      Weight::from_parts(...), // Some max weight.
+    );
+  });
+
+  ParaB::execute_with(|| {
+    // Message arrives, do some asserts.
+  })
+}
+```
+
+<aside class="notes"><p>First we reset the state of the network.
+Then we create a message and call the XCM pallet&#39;s <code>execute</code> extrinsic.
+We must wrap the location and XCM in a <code>Versioned*</code> type.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Next steps
+
+- Zombienet
+- Chopsticks
+
+<aside class="notes"><p>In the realm of testing tools we also have Zombienet and Chopsticks.</p>
+<p>Zombienet for spawning a local network and testing against it with either typescript or a DSL.</p>
+<p>Chopsticks for forking a live chain and testing against it.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Workshop
+
+We'll now jump on the emulator, configure XCM, execute and send messages.
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+
+  <script src="./../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Parachain Availability</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Parachain Availability
+</script></section><section  data-markdown><script type="text/template">
+## Parachain Availability
+
+<image src="../../../assets/img/5-Polkadot/bs_impl_arch.svg" style="width: 1400px" >
+</script></section><section  data-markdown><script type="text/template">
+## Path of a Parachain Block
+
+<widget-text center>
+
+- Backing <!-- .element: class="fragment" -->
+- Availability <!-- .element: class="fragment" -->
+- Approval <!-- .element: class="fragment" -->
+- (Disputes) <!-- .element: class="fragment" -->
+</script></section><section  data-markdown><script type="text/template">
+## Path of a Parachain Block
+
+<image src="../../../assets/img/5-Polkadot/bs_block_prod.svg" style="width: 800px">
+</script></section><section  data-markdown><script type="text/template">
+## Polkadot.js
+
+<image src="../../../assets/img/5-Polkadot/bs_polkadot_js_bitfields.png" style="height: 600px">
+
+Part of the `InherentData.enter`
+</script></section><section  data-markdown><script type="text/template">
+## Polkadot.js
+
+<image src="../../../assets/img/5-Polkadot/bs_polkadot_js_inclusion.png" style="width: 600px">
+</script></section><section  data-markdown><script type="text/template">
+## Availability Revisited
+
+<widget-text center>
+
+- What does availability mean?
+- Why do we need availability?
+- Why not to just distribute the PoV?
+- How large is a PoV?
+  - Network Bandwidth
+  - Storage on chain
+
+<aside class="notes"><ul>
+<li>Allow retrieval of the PoV from the block producer</li>
+<li>Availability is when we can reconstruct the PoV</li>
+<li>Availability is when we (a validator) have retrieved the chunk for our index, by extension we can then query a sufficient number of validators to recover the original data</li>
+<li>Every validator queries the respective validator index for their chunk, given we know by means of bitfield distribution they have their chunk</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Bitfields
+</script></section><section  data-markdown><script type="text/template">
+## Bitfields
+
+<image src="../../../assets/img/5-Polkadot/bs-bitfield-chunk-req.svg" style="width: 700px">
+</script></section><section  data-markdown><script type="text/template">
+## Bitfields
+
+<image src="../../../assets/img/5-Polkadot/bs-bitfield-gossip.svg" style="width: 700px">
+</script></section><section  data-markdown><script type="text/template">
+## Bitfields
+
+- **Compressed representation** - Gossiped availability bitfields, the candidates that are available from the point of view of _one validator_ in the backing group
+- The number of bits equivalent to the number of `AvailabilityCore`s
+- Submitted on-chain
+</script></section><section  data-markdown><script type="text/template">
+## Bitfields
+
+<image src="../../../assets/img/5-Polkadot/5.4-availability-gossip.svg" style="width: 1000px">
+</script></section><section  data-markdown><script type="text/template">
+## Availability Core
+
+<widget-text center>
+
+- Concept of parachain/thread processing units
+- speculative scheduling
+</script></section><section  data-markdown><script type="text/template">
+## Block Availability
+
+<widget-text center>
+
+- `CandidatePendingAvailability.availability_votes`
+- Each bit determines if a validator voted for a particular candidate's availability record to be present
+- The number of bits is equivalent to the number of `Validator`s in the backing group
+</script></section><section  data-markdown><script type="text/template">
+## Block Availability
+
+<image src="../../../assets/img/5-Polkadot/5.4-relay-block-construction-I.svg" style="width: 1000px">
+</script></section><section  data-markdown><script type="text/template">
+## Block Availability
+
+<image src="../../../assets/img/5-Polkadot/5.4-relay-block-construction-II.svg" style="width: 1000px">
+</script></section><section  data-markdown><script type="text/template">
+## Erasure Coding
+
+Goals:
+
+- Allow to reconstruct the original data from `k` out of `n` chunks, losing `t` chunks at most.
+</script></section><section  data-markdown><script type="text/template">
+## Proceedings
+
+<image src="../../../assets/img/5-Polkadot/bs-erasure-encoding-abstract.svg" style="width: 1000px">
+</script></section><section  data-markdown><script type="text/template">
+## Proceedings
+
+<widget-text center>
+
+- Galois (Extension) Field (static, shared) $\mathbb{F}/p$
+- Generator Polynomial (static, shared)
+</script></section><section  data-markdown><script type="text/template">
+## Proceedings
+
+<!-- prettier-ignore -->
+\begin{align}
+p_x(a) &= \sum^k_{i=1} x_i a^{i-1}\\\\
+C(x) &= (p_x(a_1),.. p_x(a_n))\\\\
+C(x) &: \mathbb{F}^k \rightarrow \mathbb{F}^n\\\\
+\end{align}
+</script></section><section  data-markdown><script type="text/template">
+## Proceedings
+
+$A = \begin{bmatrix}1 & \cdots & 1 & \cdots & 1\\\\ a_1 & \cdots & a_k & \cdots & a_n\\\\ a_1^2 & \cdots & a_k^2 & \cdots & a_n^2\\\\ \vdots & & \vdots & & \vdots\\\\ a_1^{k-1} & \cdots & a_k^{k-1} & \cdots & a_n^{k-1}\end{bmatrix}$
+
+<aside class="notes"><ul>
+<li>$C(x)$ is a linear mapping</li>
+<li>linear code</li>
+<li>$A$ is the generator matrix</li>
+<li>non-systematic</li>
+<li>DFFT if $a_i$ = $\alpha_i$</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Decoding
+
+Matrix inversion
+
+<aside class="notes"><ul>
+<li>DFFT (only if $\alpha$ is a primitive root of $\mathbb{F}/p$ where $p$ prime and no errors in the chunks received)</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Malicious Actors
+
+- Altered chunk data?
+- Would cause a PoV / PVF run to fail!
+
+Solution: Supply a merkle proof with each chunk <!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li>Use syndromes, more complexity in the decoder, limited error correction and ability</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Erasure Coding - Reality
+
+Matrix inversion / multiplication too slow $O(n^3)$
+</script></section><section  data-markdown><script type="text/template">
+## Erasure Coding - Reality
+
+<widget-text center>
+
+- $\mathbb{F}_2^{16}$ (an extension field without primitive roots)
+- `u16` as extension field element representation
+- no more multiplicative FFT possible
+
+<aside class="notes"><ul>
+<li>binary representation allows for fast field operations</li>
+<li>not a multiplicative ring anymore</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Erasure Coding - Reality
+
+<image src="../../../assets/img/5-Polkadot/bs-erasure-encoding-polkadot.svg" style="width: 1200px">
+
+<aside class="notes"><ul>
+<li>binary representation allows for fast field operations</li>
+<li>not a multiplicative ring anymore</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Polkadot Implementation
+
+Novel Polynomial Basis (paper by Sian-Jheng Lin et. al.):
+
+<https://github.com/paritytech/reed-solomon-novelpoly>
+</script></section><section  data-markdown><script type="text/template">
+## Availability Date Erasure Chunk
+
+<image src="../../../assets/img/5-Polkadot/bs-erasure-encoding-data-layout.svg" style="width: 1000px">
+</script></section><section  data-markdown><script type="text/template">
+## Availability Date Erasure Chunk
+
+<image src="../../../assets/img/5-Polkadot/bs-erasure-encoding-data-layout-2.svg" style="width: 1000px">
+</script></section><section  data-markdown><script type="text/template">
+## Availability Date Erasure Chunk
+
+<image src="../../../assets/img/5-Polkadot/bs-erasure-encoding-data-layout-3.svg" style="width: 1000px">
+
+<aside class="notes"><ul>
+<li>Extended the properties from field elements to $n$-field elements</li>
+<li>merkle proof only required across the entire availability chunks</li>
+<li>Any problems? (data size, max encodable size)</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#8D3AED" -->
+
+# Questions
+
+<aside class="notes"><ul>
+<li>Storage?</li>
+<li>Network Bandwidth?</li>
+<li>Compute required across validators? Who has the hardest time? How to improve?</li>
+<li>...</li>
+</ul>
+</aside></script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

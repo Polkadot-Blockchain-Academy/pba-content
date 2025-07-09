@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Introduction to Cryptography</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Introduction to Cryptography
+</script></section><section  data-markdown><script type="text/template">
+## Goals for this lesson
+
+<pba-flex center>
+
+- Understand the goals of cryptography
+- Understand some network and contextual assumptions
+- Learn what expectations cryptography upholds
+- Learn the primitives
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Cryptography Landscape
+
+<img style="height: 700px; padding-left:100px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg" />
+
+<aside class="notes"><p>What is covered in this course is all connected subjects.
+We will not cover any details for hybrid or interactive protocols in the course.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Operating Context
+
+##### _The internet is a public space._
+
+We communicate over public channels.
+Adversaries may want to:
+
+<pba-flex center>
+
+- Read messages not intended for them
+- Impersonate others
+- Tamper with messages
+
+</pba-flex>
+
+<aside class="notes"><p>Use e-mail as an example of an flawed system.</p>
+<p>Some examples include:</p>
+<ul>
+<li>An attacker may impersonate your boss, trying to get you to send them money</li>
+<li>An attacker may change a message sent over a network, e.g. an instruction to transfer 100 EUR to 10000 EUR</li>
+</ul>
+<p>Probably best for the teacher to ask students to participate with examples of application messages,
+not just person-to-person messages.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Operating Context
+
+##### _Resources are constrained._
+
+- **Network, storage, computation, etc.**: We don't want to send, store, or operate on the same data, but we want guarantees about it, e.g. that we agree on a message's contents.
+- **Privacy**: We must assume that all channels can be monitored, and thus closed channels are heavily constrained (i.e. assumed to not exist).
+</script></section><section  data-markdown><script type="text/template">
+## Open vs. Closed Channels
+
+_Cryptography based on public systems is more sound._
+
+**Kerckhoff's Principle:** Security should not rely on secret _methods_,<br/>but rather on secret _information_.
+
+<aside class="notes"><p>There is no such thing as a &quot;closed channel&quot; :)</p>
+<ul>
+<li>Methods can be reverse engineered.
+After that, the communication channel is completely insecure.
+For example, CSS protection for DVDs.</li>
+<li>We always work with public, open protocols.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Cryptographic Guarantees\*
+
+<pba-flex center>
+
+- Secure communication
+- Data accessibility
+- Message authenticity
+- Data integrity
+- Non-repudiation (later)
+
+</pba-flex>
+
+<aside class="notes"><p>Cryptography is one of the (most important) tools we have to build tools that are <em>guaranteed</em> to work correctly.
+This is regardless of who (human, machine, or otherwise) is using them and their intentions (good or bad).</p>
+<p>Why an asterisk?
+There generally are no perfect &amp; absolute guarantees here, but for most practical purposes the bounds on where these fail are good enough to serve our needs as engineers and users.
+Do note the assumptions and monitor their validity over time (like quantum tech).</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Data Accessibility
+
+A party may gain access to information<br/>if and only if they know some secret (a key).
+
+<aside class="notes"><p>The ability to decrypt some data and reveal its underlying information directly implies knowledge of some secret, potentially unknown to the originator of the information.
+Supplying the original information (aka plain text message) can be used in a &quot;challenge game&quot; mechanism as one means of proving knowledge of the secret without compromising it.</p>
+<p>Mention use of the term &quot;plaintext&quot;.</p>
+<p>Allegory: A private document stored on server where sysadmin has <em>access</em> can be subpoenaed, violating assumed Attorney-Client Privilege on the document.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Message Authenticity
+
+Like physical signatures, cryptography may be used to give a reasonable expectation of a message's provenance (origin), in order to give the users the **credible** expectation that the stated origin is authentic.
+
+<aside class="notes"><ul>
+<li>Digital signatures should be difficult (practically speaking: impossible) to forge.</li>
+<li>Digital signatures should verify that the signer knows some secret, without revealing the secret itself.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Data Integrity
+
+Physical signatures provide weak authenticity guarantees<br/>(i.e. they are quite easy to forge), and no integrity guarantees.
+</script></section><section  data-markdown><script type="text/template">
+## Data Integrity
+
+<img style="width: 900px;" src="../../../assets/img/1-Cryptography/Data-Integrity.png" />
+
+<aside class="notes"><p>For example, if you change the year on your university diploma, the dean&#39;s signature is still valid.
+Digital signatures provide a guarantee that the signed information has not been tampered with.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## One-Way Functions
+
+One-way functions form the basis of both<br/>**(cryptographic) hashing** and **asymmetric cryptography**.
+
+- Functions for which we know fast algorithms to compute
+- But for which we believe to be hard to invert
+- And for which there may be some secret which makes it easy
+
+<aside class="notes"><p>There are a lot of assumptions about why these functions are hard to invert, but we cannot rigorously prove it.
+We often express inversion problems in terms of mathematical games or oracles.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Hash Functions
+
+**Motivation:** We often want a succinct representation of some data with the expectation that we are referring to the same data.
+A "fingerprint".
+
+<aside class="notes"><p>The following slides serve as an intro.
+Many terms may be glossed over, and covered in detail later.
+There are lessons later in this module dedicated to hashes and hash-based data structures._</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Hash Function Applications
+
+Hashes can be useful for many applications:
+
+<pba-flex center>
+
+- Representation of larger data object<br/>(history, commitment, file)
+- Keys in a database
+- Digital signatures
+- Key derivation
+- Pseudorandom functions
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Cryptographic vs. Non-Cryptographic
+
+Cryptographic hash functions provide stronger guarantees<br/>on the last three properties.
+
+But non-cryptographic hash functions are much faster.
+
+<aside class="notes"><p>Substrate uses both (more on that later).</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Symmetric Cryptography
+
+Symmetric encryption assumes all parties begin with some shared secret information, a potentially very difficult requirement.<br/>The shared secret can then be used to protect further communications from others who do not know this secret.
+
+In essence, it gives a way of _extending_ a shared secret over time.
+</script></section><section  data-markdown><script type="text/template">
+## Symmetric Encryption
+
+For example, the Enigma cipher in WW2. A _channel_ was initiated by sharing a secret ("key") between two participants. Using the cipher, those participants could then exchange information securely.
+
+However, since the key contained only limited _entropy_ ("information"), enough usage of it eventually compromised the secret and allowed the allies to decode messages. Even altering it once per day was not enough.
+</script></section><section  data-markdown><script type="text/template">
+## Asymmetric Cryptography
+
+- In asymmetric cryptography, we devise a means to transform one value (the "secret") into some corresponding counterpart (the "public" key), preserving certain properties.
+
+- We believe that this is a one-way function (that there is no easy/fast inverse of this function).
+
+- Aside from preserving certain properties, we believe this counterpart (the "public key") reveals no information about the secret.
+</script></section><section  data-markdown><script type="text/template">
+## Asymmetric Encryption
+
+- _Using only the public key_, information can be transformed ("encrypted") such that only those with knowledge of the secret are able to inverse and regain the original information.
+</script></section><section  data-markdown><script type="text/template">
+## Digital Signatures
+
+- _Using the secret key_, information can be transformed ("signed") such that anyone with knowledge of the information and the counterpart public key is able to affirm the operation.
+
+- Digital signatures provide message authenticity and integrity guarantees.
+
+- _The next two lessons are dedicated to digital signatures,<br/>this is strictly an intro._
+</script></section><section  data-markdown><script type="text/template">
+## Digital Signatures
+
+**signing function**: a pure function which operates on some<br/>_message data_ and some _secret_ to yield a _signature_.
+
+A **signature** _proves_ that the signer had knowledge of the secret,<br/>without revealing the secret itself.
+
+The signature cannot be used to create other signatures.
+
+<aside class="notes"><p>A <strong>signing function</strong> is a pure function which operates on some <em>message data</em> (which may or may not be small, depending on the function) and some <em>secret</em> (a small piece of information known only to the operator).
+The result of this function is a small piece of data called a <em>signature</em>.</p>
+<p>It has a special property: it proves (beyond reasonable doubt) that the signer (i.e. operator of the signing function) had knowledge of the secret and utilized this knowledge with the specific <em>message</em> data, yet it does not reveal the secret itself, nor can knowledge of the signature be used to create other signatures (e.g. for alternative message data).</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Non-repudiation
+
+Only those with knowledge of some secret information<br/>could have produced a valid signature.
+
+The signer cannot claim that the signature was forged, unless they can defend a claim that the secret was compromised prior to signing.<br/>
+Symmetric cryptography does not provide this guarantee: someone else knows the secret.
+</script></section><section  data-markdown><script type="text/template">
+## Practical Considerations
+
+**Symmetric cryptography** is much faster, but requires more setup (key establishment) and trust (someone else knows the secret).
+
+**Asymmetric cryptography** is slow, but typically preserves specific algebraic relationships, which then permit more diverse if fragile protocols.
+</script></section><section  data-markdown><script type="text/template">
+## Hybrid Cryptography
+
+Hybrid cryptography composes new mechanisms from different cryptographic primitives.
+
+For example:
+
+- Symmetric encryption can provide speed, and often confidentiality,
+- Hash functions can reduce the size of data while preserving identity,
+- And asymmetric can dictate relations among the participants.
+</script></section><section  data-markdown><script type="text/template">
+## Certifications
+
+Certifications are used to make attestations about public key relationships.
+
+Typically in the form of a _signature_ on:
+
+- One or more cryptographically strong identifiers (e.g. public keys, hashes).
+- Information about its ownership, its use and any other properties that the signer is capable of attesting/authorizing/witnessing.
+- _(Meta-)information_ about this information itself, such as how long it is valid for and external considerations which would invalidate it.
+
+<aside class="notes"><ul>
+<li>Real application is the hierarchy of SSL certs.<ul>
+<li>Root keys -&gt; State level entities -&gt; Smaller entities.</li>
+</ul>
+</li>
+<li>Web of Trust &amp; GPG cross-signing</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Entropy, Randomness, and Key Size
+
+- Entropy: Amount of non-redundant information contained within some data.
+- Randomness: Unpredictability of some information. Less random implies lower entropy.
+- Key size: Upper limit of possible entropy contained in a key. Keys with less random (more predictable) data have less entropy than this upper bound.
+- One-time pad: A key of effectively infinite size. If it is perfectly random (i.e. has maximal entropy), then the cipher is theoretically unbreakable.
+
+<aside class="notes"><p>Mention the upcoming &quot;many time pad&quot; activity, that exploits using a one time pad multiple times.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Randomness Generation
+
+```rust
+fn roll_die() -> u32 {
+  // Guaranteed random: it was achieved through a real-life die-roll.
+  4u32
+}
+```
+
+- Pseudo-random sequences
+- Physical data collection (e.g. cursor movement, LSB of microphone)
+- Specialised hardware (e.g. low-level noise on silicon gates, quantum-amplifiers)
+</script></section><section  data-markdown><script type="text/template">
+## Summary
+
+Cryptography is much more than encryption.
+
+<pba-flex center>
+
+- Communicate on public networks, in the open
+- Access information
+- Have expectations about a message's authenticity and integrity
+- Prove knowledge of some secret information
+- Represent large amounts of data succinctly
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+
+<img style="height: 600px" src="../../../assets/img/1-Cryptography/crypto-mind-map.svg" />
+
+##### _What insights did you gain?_
+
+<aside class="notes"><p>Class discussion.
+Last slide.</p>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Lecture Template Slides</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Lecture Title
+</script></section><section  data-markdown><script type="text/template">
+### Outline
+
+<!--
+You can reference slides within this presentation like [this other slide](#at-the-end-of-this-lecture-you-will-be-able-to) by use of the header title.
+
+Please make your lecture precise.
+
+- Limit the main points in a lecture to five or fewer.
+- Create effective visuals, analogies, demonstrations, and examples to reinforce the main points.
+  {TAs and the Parity design team can assist! Please let us know marking an item here as `TODO`}
+- Emphasize your objectives and key points in the beginning, as you get to them, and as a summary at the end.
+
+-->
+
+<pba-flex center>
+
+1. [Pre-requisites](#pre-requisites)
+1. [Major topic A](#major-topic-a)
+1. Major topic B
+1. [Exercise X](#exercise-title)
+1. Major topic C
+1. [Conclusion](#conclusion)
+1. [Next Steps](#next-steps)
+1. [References](#references)
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Pre-requisites
+
+No background in X is necessary.
+
+However, the following are expected:
+
+<pba-flex center>
+
+- Y
+- Z
+- \\(\alpha\\)
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+### _At the end of this lecture, you will be able to:_
+
+<!-- TODO: fill this in  -->
+
+<pba-flex center>
+
+- Describe ...
+- Navigate ...
+- Justify ...
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Major topic A
+
+<pba-flex center>
+
+- Use some bullets
+- To make a few points
+
+</pba-flex>
+
+More context here.
+
+And even more here... and more and more...
+
+<aside class="notes"><p>Speaker view ONLY notes</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# An Important Point
+
+### _Make it clear_ <!-- .element: class="fragment" -->
+
+<aside class="notes"><p>Stuff you should remember to say</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Exercise Title
+
+### _Describe it here_
+</script></section><section  data-markdown><script type="text/template">
+## Exercise Instructions
+
+<!--
+Detail what you want students to do in your exercise
+Most exercises are less than 15 minuets in length.
+-->
+
+<pba-flex center>
+
+1. Uno
+1. Dos
+1. Tres
+
+</pba-flex>
+
+<aside class="notes"><p>Make sure to include things here to say to students, perhaps a hint or two.
+Realize that students will be able to view the speaker&#39;s notes, as they will have access to them on their devices.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Conclusion
+
+<!-- Summarize what we just learned, and put it in the bigger picture of what the Academy and Web3 are all about. -->
+</script></section><section  data-markdown><script type="text/template">
+## Next Steps
+
+<!--
+Compile a list of:
+- topics not covered here but students should consider learning about independently
+- examples of the concepts covered in this lesson applied to a project, to case-study
+- useful resources related to the lesson
+
+- Reference other slides/materials by relative directory in this repo, like the [copy-paste slide templates](../../content-templates/slides/copy-paste-reveal-template-slides.md)
+-->
+
+<pba-flex center>
+
+1. Eins
+1. Zwei
+1. Drei
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## References
+
+<!--
+Compile an **annotated** list of URLs to source material referenced in making these lessons.
+Ideally this is exhaustive, it can be cleaned up before delivery to students, but must include _why_ a reference is used.
+For example:
+
+- [ss58-registry](https://github.com/paritytech/ss58-registry) - A list of known SS58 account types as an enum, typically used by the Polkadot, Kusama or Substrate ecosystems.
+- [wiki on parathreads](https://wiki.polkadot.network/docs/learn-parathreads) - A description of the parathread model.
+-->
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

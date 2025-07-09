@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Parachain Configuration for XCM</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Parachain Configuration for XCM
+</script></section><section  data-markdown><script type="text/template">
+## XCM Configurations
+
+Now go through and explain the various XCM configurations and hooks that can be manipulated by the user, and how that may affect XCM behavior
+
+This then leads naturally into a concept like fee payments, which is entirely a configuration, for things like:
+
+- What assets are supported for fees (configurable)
+- How much each asset is worth in terms of weight (configurable)
+- What happens to unused weight (configurable)
+- Other mechanisms for being given weight (for example a stipend for certain chains, or entirely free)
+- Barrier conditions
+</script></section><section  data-markdown><script type="text/template">
+### XCM Version Negotiation
+
+<!--
+
+TODO add slide somewhere about this. Basically scaffold gav's second blog
+
+https://medium.com/polkadot-network/xcm-part-ii-versioning-and-compatibility-b313fc257b83
+
+-->
+</script></section><section  data-markdown><script type="text/template">
+## Lesson 3: Parachain Configuration for XCM
+
+> {Likely} Instructor: RT Eng.? Shawn?
+
+### Why is this topic Important?
+
+### Prerequisite Knowledge or Skills
+
+### Learning Outcome
+
+- Understand and correctly configure XCM (pallet, executor, ...) for a parachain (exectutor and pallet) based on buisness needs
+- Barriers & filters
+- Asset transactors
+
+### Learning Objectives
+
+### Core Ideas to Convey
+
+- XCM builder module (makes configuration easier)
+- Barriers & filters
+- Asset transactors
+- Weight Traders
+- wildcards? {maybe out of scope}
+
+### Activities and Exercises
+
+- Transfer native tokens from ChainA → ChainB **on Rococo** {no setup needed, }
+  - Teleport
+  - Reserve Asset
+  - Explain what to use these given a scenario:
+    - Within a chain itself `Here`
+    - ParaA → ParaB
+    - Relay Chain Native token to ParaA (not common good chain)
+    - ... others?
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

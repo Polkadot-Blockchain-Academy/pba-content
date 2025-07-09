@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Substrate Overview</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Substrate Overview
+</script></section><section  data-markdown><script type="text/template">
+## Substrate Overview
+
+At the end of this lecture, you will be able to:
+
+- Describe the high level architecture of a Substrate node.
+- Navigate the Substrate codebase.
+- Justify why Substrate claims to be an extensible, modular framework.
+</script></section><section  data-markdown><script type="text/template">
+### What is Substrate?
+
+Substrate is a Rust framework for building modular and extensible blockchains.
+</script></section><section  data-markdown><script type="text/template">
+### Why Substrate?
+
+Building a blockchain is hard.
+
+Like... really hard.
+
+<aside class="notes"><p>In general you shouldn&#39;t do it. You will probably get it wrong.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Why Rust?
+
+Check out: https://www.parity.io/blog/why-rust
+
+<div class="flex-container">
+<div class="left">
+
+- Rust is Safe
+- Rust is Fast
+- Rust is Lightweight
+- Rust is Idiomatic
+- Rust is Fun (?)
+
+</div>
+<div class="right">
+
+<img src="../../../assets/img/4-Substrate/rust-crab.svg" />
+
+</div>
+</script></section><section  data-markdown><script type="text/template">
+### Substrate Architecture
+
+At a very high level, a Substrate node has two parts:
+
+1. The Client - A Wasm executor.
+2. A Wasm runtime.
+
+<img style="width: 700px; border: solid 5px #fff;" src="../../../assets/img/4-Substrate/empty-client-runtime.svg">
+
+<aside class="notes"><p>About the naming of runtime: its not the traditional sense of &quot;runtime&quot;.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## What is the Runtime?
+
+The runtime contains all of the business logic for executing the **state transition function** of the blockchain.
+</script></section><section  data-markdown><script type="text/template">
+### Turing-Complete State Machine
+
+- Turing completeness basically means you can implement any computer algorithm.
+- Besides limitations from execution time, memory size, or storage limitations... the runtime is a turing-complete state machine.
+- The state machine itself is broken into two components:
+  - The state itself
+  - The state transition function
+</script></section><section  data-markdown><script type="text/template">
+### State Transition Function
+
+Things that "transition the state":
+
+- Messages from the "outside world".
+  - For example transactions from users.
+- Automated on-chain logic.
+
+<aside class="notes"><p>We&#39;ll be revisiting these concepts later in this module.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Runtime as a VM
+
+The Runtime is designed as a Virtual Machine within the Substrate client.
+
+### Why?
+
+- Runtime code must execute deterministically.
+- Runtime code should be sandboxed.
+
+<br>
+
+### VMs enable this.
+
+<aside class="notes"><p>VMs handle &quot;undefined behavior&quot;. Once translation from source to Wasm happens, the binary code is fixed. Thus if any undefined behavior is invoked the behavior will be identical, even if wrong / unintended.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### The runtime is always a Wasm binary.
+
+<aside class="notes"><p>This decision is extremely important for so many reasons we will touch on throughout the course.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Wasm
+
+- Wasm is short for WebAssembly
+- It is a binary instruction format for a stack-based virtual machine.
+- Originally built for the web as a faster and better alternative to technologies like JavaScript.
+- The open standards for WebAssembly are developed by W3C groups.
+
+<img style="width: 400px;" src="../../../assets/img/4-Substrate/browser-icons.png" alt="Wasm Logo">
+</script></section><section  data-markdown><script type="text/template">
+### Why Substrate chose Wasm?
+
+<div class="flex-container">
+<div class="left">
+
+- Compact: Designed to be easily transferred over the web.
+- Sandboxable: Keeps Wasm Safe, as capabilities have to be exposed explicitly to the Wasm environment.
+- Deterministic(-ish): assuming all outputs are defined given some instruction set.
+- Performance: direct mapping of operations to machine code.
+- Well Supported: WASM is on its way to become a core component of the web, just like JavaScript did.
+
+</div>
+
+<div class="right">
+
+<img style="width: 400px;" src="../../../assets/img/4-Substrate/WebAssembly.png" alt="Wasm Logo">
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+## Substrate Wasm Assumptions
+
+- We use the WebAssembly MVP (versus the 1.0 specification).
+- Uses the `wasm32-unknown-unknown` target
+- The maximum amount of addressable bytes is 4 GiB
+  - Substrate only allows the runtime 128 MB
+- Avoid using `std` libraries in the runtime
+  - Prevents most "footguns".
+
+<aside class="notes"><p>It is <em>technically possible</em> to use <code>std</code> however even some <code>std</code> crates that can compile to <code>wasm32-unknown-unknown</code> may lead to compile errors (for example <code>std::time::Instant::now()</code>).
+Therefore, it&#39;s best practice to only use <code>no_std</code> inside a node&#39;s runtime.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Wasm Execution
+
+Substrate currently provides two Wasm Executors:
+
+1. Wasmi
+
+   - Wasm execution via interpretation (vs compilation)
+   - About 100x slower than native execution
+   - For example used for smart contract execution
+
+2. Wasmtime
+
+   - Compiles the Wasm (which makes it vulnerable to compiler bombs)
+   - About 2x slower than native execution
+   - For example used for runtime execution
+
+<aside class="notes"><p>So the key difference here is that the compilation of the code is unsafe because you can attack an optimizing compiler. You can input some code for compilation that just takes forever to compile (compiler bombs). There is no difference on safety in the actual execution apart from interpreters being more simple and hence less likely to have bugs.</p>
+<p>So compilation can be safe. But only if you can do it in linear time. And that prevents most optimizations which makes the produced code slow. And it is questionable and surely depend on the contract in question whether the compilation time can be recuperated if you need to compile it every time it is run.
+When we have fuel metering we could port the code generation of wasmtime to the runtime and cache the produced native code on-chain. Cause with fuel metering we are immune against compiler bombs.</p>
+<p>Then we could have near native speed for contracts.</p>
+<p>Of course we could port the code generation of a linear time compiler to the runtime and have the same without fuel metering. However, there is none except wasmer. And they were acquired by NEAR. It was always a shady project but now I don&#39;t want to rely on it at all. Everything except wasmtime is a huge liability.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Runtime Assumptions
+
+To make a Substrate compatible runtime, our only assumptions are:
+
+- It exposes a specific Runtime APIs.
+- It has access to specific client-side host functions.
+
+<img style="width: 700px; border: solid 5px #fff;" src="../../../assets/img/4-Substrate/simple-runtime-interface.svg">
+
+<aside class="notes"><p>We will learn more about Runtime interfaces in lesson 4.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### The Client
+
+- This is simply the natively compiled binary which runs on your computer.
+- It has access to do much more things then the restrictive Wasm VM environment.
+- Generally, determinism is not important at this level.
+  - Allows multiple implementations to be created.
+  - Allows for compilation to different targets.
+</script></section><section  data-markdown><script type="text/template">
+## Client Assumptions
+
+The client also has high level assumptions:
+
+- The performance of the client should the same.
+
+  - Most relevant for block producers (which do the most work).
+  - Usually this means similar computer hardware and binaries.
+  - This ensures blockchains reach consensus in a similar amount of time.
+
+- Also the same requirements for providing Host Functions and accessing Runtime APIs.
+
+<aside class="notes"><p>In Polkadot, there is a standard hardware that we expect all nodes to use.
+More on this when we touch on Benchmarking.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Client Components
+
+<div class="flex-container">
+<div class="left">
+
+- Networking
+- Database
+- Transaction Queue
+- Consensus
+- Telemetry
+- Runtime
+- Tools
+- And more!
+
+</div>
+<div class="right">
+
+<img src="../../../assets/img/4-Substrate/substrate-client-wasm.svg" style="width:700px;"/>
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+### Wasm is stored on chain!
+
+<aside class="notes"><p>The state transition function of the blockchain it part of it&#39;s own state!</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Problems with Hard Forks
+
+Not everyone updates their client software in time.
+
+<img src="../../../assets/img/4-Substrate/hard-fork.svg" />
+
+<aside class="notes"><p>This leads to security problems, coordination issues, decision making issues, and much more....</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Upgrading the Substrate Runtime
+
+<img style="width: 1000px;" src="../../../assets/img/4-Substrate/upgrade-start.svg" />
+</script></section><section  data-markdown><script type="text/template">
+### Upgrading the Substrate Runtime
+
+<img style="width: 1000px;" src="../../../assets/img/4-Substrate/upgrade-complete.svg" />
+</script></section><section  data-markdown><script type="text/template">
+### Upgrading the Substrate Runtime
+
+<img style="width: 1000px;" src="../../../assets/img/4-Substrate/upgrade-options.svg" />
+</script></section><section  data-markdown><script type="text/template">
+### Game Console Analogy
+
+<div class="flex-container">
+<div class="left">
+
+<img src="../../../assets/img/4-Substrate/nintendo-console-2.png" style="width:400px;"/>
+
+Substrate Client
+
+</div>
+<div class="right">
+
+<img src="../../../assets/img/4-Substrate/nintendo-game.png" style="width:400px;"/>
+
+Substrate Runtime
+
+</div>
+</div>
+</script></section><section  data-markdown><script type="text/template">
+### Technical Freedom vs Ease
+
+<img style="width: 1000px;" src="../../../assets/img/4-Substrate/freedom-ease.svg"/>
+</script></section><section  data-markdown><script type="text/template">
+### License
+
+Substrate Primitives (`sp-*`), Frame (`frame-*`) and the pallets (`pallets-*`), binaries (`/bin`) and all other utilities are licensed under [Apache 2.0](LICENSE-APACHE2).
+
+Substrate Client (`/client/*` / `sc-*`) is licensed under [GPL v3.0 with a classpath linking exception](LICENSE-GPL3).
+
+- Apache2 allows teams full freedom over what and how they release, and giving licensing clarity to commercial teams.
+
+- GPL3 ensures any deeper improvements made to Substrate's core logic (e.g. Substrate's internal consensus, crypto or database code) to be contributed back so everyone can benefit.
+</script></section><section  data-markdown><script type="text/template">
+## Exercise 1
+
+<div class="flex-container">
+<div class="left">
+
+1. Clone and open [Substrate](https://github.com/paritytech/substrate/).
+1. Locate the different components we've just learnt about.
+
+</div>
+<div class="right">
+
+- Identify the `sc-*` crates
+- Identify the `sp-*` crates
+- Rust does not allow cyclic dependencies
+- What is in the: - `bin` folder - `client` folder - `frame` folder - `primitives` folder - `utils` folder
+
+<div>
+
+<aside class="notes"><p>This can be a 10 - 15 min exercise.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Exercise 2
+
+Goal: identify how Substrate is used as a library in Polkadot.
+
+- Check out [a visualization of the Substrate codebase](https://octo-repo-visualization.vercel.app/?repo=paritytech%2Fsubstrate) and compare it to [Polkadot's](https://octo-repo-visualization.vercel.app/?repo=paritytech%2Fpolkadot).
+- Can you tell what parts are unique to Substrate and which are unique to Polkadot?
+</script></section><section  data-markdown><script type="text/template">
+## Workshops and Activities
+
+- [Scavenger Hunt Activity](./4.1-Workshops_and_Activities/4.1-Substrate_Overview_Workshop.md) (20 minutes)
+- [Cyclic Dependency Workshop](./4.1-Workshops_and_Activities/4.1-Substrate_Overview_Workshop.md) (45 minutes)
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

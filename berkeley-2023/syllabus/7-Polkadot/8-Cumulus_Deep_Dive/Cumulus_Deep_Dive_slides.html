@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Cumulus Deep Dive</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Cumulus Deep Dive
+
+<aside class="notes"><p>Cumulus is the glue which attaches substrate based chains to Polkadot, converting them into parachains.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Outline
+
+<pba-flex center>
+
+1. What is Cumulus?
+1. Cumulus and Para-Relay Communication
+<!-- .element: class="fragment" data-fragment-index="1" -->
+1. How Cumulus Keeps a Parachain Node Informed
+<!-- .element: class="fragment" data-fragment-index="2" -->
+1. Collation Generation and Advertisement
+<!-- .element: class="fragment" data-fragment-index="3" -->
+1. How Cumulus Collations Enable Parablock Validation
+<!-- .element: class="fragment" data-fragment-index="4" -->
+1. How Cumulus Enables Runtime Upgrades
+<!-- .element: class="fragment" data-fragment-index="5" -->
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## What is Cumulus
+
+A collection of code libraries extending a Substrate FRAME chain so that it can interface with the Polkadot API, run relay chain based consensus, and submit parachain blocks for validation.
+</script></section><section  data-markdown><script type="text/template">
+<div class="r-stack">
+<img src="../assets/spc_1.svg" style="width: 70%" />
+<img src="../assets/spc_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="../assets/spc_3.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
+
+<aside class="notes"><ul>
+<li>Substrate is a framework for building blockchains</li>
+<li>But only &quot;solo&quot; chains</li>
+<li>Split into runtime/node side</li>
+<li>Both Polkadot and Cumulus extend substrate</li>
+<li>Polkadot provides APIs to collators</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Review, Collators and Collations
+
+<pba-flex center>
+
+> What is a collator?
+
+> What is a collation?
+
+> What is the PoV?
+
+</pba-flex>
+
+<aside class="notes"><ul>
+<li>Collator:<ul>
+<li>Part of consensus authority set</li>
+<li>Author and submit collations</li>
+</ul>
+</li>
+<li>Collation: Info necessary for validators to process and validate a parachain block.</li>
+<li>Collations include: upward and horizontal messages, new validation code, resulting head data, proof of validity, processed downward messages, and hrmp_watermark (relay block up to which all hrmp messages have been processed)</li>
+<li>PoV: The smallest bundle of information sufficient to validate a block.
+Will revisit in more detail.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Cumulus' Key Processes
+
+- Follow relay "new best head" to update para "new best head"
+- Follow relay finalized block to update para finalized block
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Request parablocks not shared by peers from relay (data recovery)
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- Collation generation and announcement
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<aside class="notes"><ul>
+<li>New best head: New block at the head of the fork most preferred by BABE</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Cumulus and Para-Relay Communication
+
+<div class="r-stack">
+<img src="../assets/para-relay_communication_1.svg" style="width: 1100px" />
+<img src="../assets/para-relay_communication_2.svg" style="width: 1100px" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
+<aside class="notes"><ul>
+<li>How do these communication channels service our key processes?</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Handling Incoming Relay Information
+
+Before addressing collation generation let's first address the other three key Cumulus processes.
+These drive parachain consensus and ensure the availability of parachain blocks.
+
+<br/>
+Together they keep parachain nodes up to date such that collating is possible.
+
+<aside class="notes"><p>To recap, these key processes are:</p>
+<ul>
+<li>Follow relay &quot;new best head&quot; to update para &quot;new best head&quot;</li>
+<li>Follow relay finalized block to update para finalized block</li>
+<li>Request parablocks not shared by peers from relay (data recovery)</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Consensus Mechanism
+
+Parachain consensus is modified to:
+
+<pba-flex center>
+
+- Achieve sequencing consensus
+- Leave finality to the relay chain
+
+</pba-flex>
+
+<aside class="notes"><ul>
+<li>Sequencing consensus: Decide on an accepted ordering of blocks and of transactions within a block</li>
+<li>Sequencing consensus requires that we update our knowledge of the new best head of the parachain.
+That way nodes are in agreement about which block to build on top of.</li>
+<li>Sequencing options: Aura consensus, tendermint style consensus</li>
+<li>When a parablock is included in a relay block that becomes finalized, that parablock is finalized by extension.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Import Driven Block Authoring
+
+Collators are responsible for authoring new blocks, and they do so when importing relay blocks.
+Honest Collators will choose to author blocks descending from the best head.
+
+```rust[|4-8]
+// Greatly simplified
+loop {
+    let imported = import_relay_chain_blocks_stream.next().await;
+
+    if relay_chain_awaits_parachain_candidate(imported) {
+        let pov = match parachain_trigger_block_authoring(imported) {
+            Some(p) => p,
+            None => continue,
+        };
+
+        relay_chain_distribute_pov(pov)
+    }
+}
+```
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+<aside class="notes"><ul>
+<li><code>parachain_trigger_block_authoring</code> itself can decide if it wants to build a block.</li>
+<li>e.g. the parachain having a block time of 30 seconds</li>
+<li>With asynchronous backing, parachain block authoring is untethered from relay block import.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Finality
+
+To facilitate shared security, parachains inherit their finality from the relay chain.
+
+<br/>
+
+```rust[|4-8]
+// Greatly simplified
+loop {
+    let finalized = finalized_relay_chain_blocks_stream.next().await;
+
+    let finalized_parachain_block =
+      match get_parachain_block_from_relay_chain_block(finalized) {
+        Some(b) => b,
+        None => continue,
+    };
+
+    set_finalized_parachain_block(finalized_parachain_block);
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+### Ensuring Block Availability
+
+As a part of the parachains protocol, Polkadot makes parachain blocks available for several hours after they are backed.
+<br/><br/>
+
+<pba-flex center>
+
+- Why is this needed?
+  - Approvals
+  - Malicious collator
+
+</pba-flex>
+
+<aside class="notes"><ul>
+<li>Approvers need the PoV to validate</li>
+<li>Can&#39;t just trust backers to distribute the PoV faithfully</li>
+<li>Malicious or faulty collators may advertise collations to validators without sharing them with other parachain nodes.</li>
+<li>Cumulus is responsible for requesting missing blocks in the latter case</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+#### Brief Aside, Candidate Receipt
+
+The PoV is too big to be included on-chain when a parablock is backed, so validators instead produce a constant size **Candidate Block Receipt** to represent the freshly validated block and its outputs
+
+<aside class="notes"><p>The Candidate Receipt contains mainly Hashes so the only valuable use is to be used to verify the correctness of known PoVs
+The Candidate Receipt only references a PoV, it does not substitute it</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Malicious collator example
+
+<div class="r-stack">
+<img src="../assets/malicious_collator_1.svg" style="width: 900px" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/malicious_collator_2.svg" style="width: 900px" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="../assets/malicious_collator_3.svg" style="width: 900px" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
+
+<aside class="notes"><ul>
+<li>On a Parachain, a block only needs to be accepted by the relay chain validators to be part of the canonical chain,</li>
+<li>The problem is that a collator can send a block to the relay chain without distributing it in the Parachain network</li>
+<li>So, the relay chain could expect some parent block for the next block that no one is aware of</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### The Availability Process
+
+<pba-flex center>
+
+- Erasure coding is applied to the PoV, breaking it into chunks
+- 3x original PoV size, vs 300x to store copies
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- 1/3 of chunks sufficient to assemble PoV
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- 2/3 of validators must claim to have their chunks
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Availability Outcome
+
+<img src="../assets/malicious_collator_4.svg" style="width: 70%" />
+</script></section><section  data-markdown><script type="text/template">
+# Collation Generation and Advertisement
+</script></section><section  data-markdown><script type="text/template">
+## Collation Generation
+
+The last of our key processes
+
+<pba-flex center>
+
+1. Relay node imports block in which parachain's avail. core was vacated
+1. `CollationGeneration` requests a collation from the collator
+<!-- .element: class="fragment" data-fragment-index="1" -->
+1. Parachain consensus decides whether this collator can author
+<!-- .element: class="fragment" data-fragment-index="2" -->
+1. Collator proposes, seals, and imports a new block
+<!-- .element: class="fragment" data-fragment-index="3" -->
+1. Collator bundles the new block and information necessary to process and validate it, a **collation!**
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+
+<aside class="notes"><ul>
+<li>Aura is current default parachain consensus, but this consensus is modular and changeable</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Collation Distribution
+
+<img src="../assets/para-relay_communication_1.svg" style="width: 1100px" />
+
+<aside class="notes"><p>A subset of Para-Relay communication</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+#### From Collator to Relay Node and Parachain Nodes
+
+- Sent from Collator, which owns both `CollatorService` and `ParachainConsensus`
+- Sent to tethered relay node `CollationGeneration` subsystem to be repackaged and forwarded to validators
+- Sent to parachain node import queues
+
+```rust[1|5]
+let result_sender = self.service.announce_with_barrier(block_hash);
+
+tracing::info!(target: LOG_TARGET, ?block_hash, "Produced proof-of-validity candidate.",);
+
+Some(CollationResult { collation, result_sender: Some(result_sender) })
+```
+</script></section><section  data-markdown><script type="text/template">
+# How Cumulus Collations Enable Parablock Validation
+</script></section><section  data-markdown><script type="text/template">
+### What is Runtime Validation?
+
+<pba-flex center>
+
+- The relay chain ensures that every parachain block follows the rules defined by that parachain's current code.
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- Constraint: The relay chain must be able to execute runtime validation of a parachain block without access to the entirety of that parachain's state
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+</pba-flex>
+
+<div class="r-stack">
+<img src="../assets/runtime_validation_1.svg" style="width: 60%" />
+<img src="../assets/runtime_validation_2.svg" style="width: 60%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<img src="../assets/runtime_validation_3.svg" style="width: 60%" />
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</div>
+
+<pba-flex center>
+
+- Building Blocks to make this possible, the PVF and PoV, are delivered within collations
+
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+#### Parachain Validation Function - PVF
+
+- The current STF of each Parachain is stored on the Relay Chain, wrapped as a PVF
+
+```rust [6]
+/// A struct that carries code of a parachain validation function and its hash.
+///
+/// Should be cheap to clone.
+#[derive(Clone)]
+pub struct Pvf {
+    pub(crate) code: Arc<Vec<u8>>,
+    pub(crate) code_hash: ValidationCodeHash,
+}
+```
+
+<br/>
+
+- New state transitions that occur on a parachain must be validated against the PVF
+
+<aside class="notes"><p>The code is hashed and saved in the storage of the relay chain.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+#### Why PVF Rather than STF?
+
+<pba-cols>
+<pba-col center>
+
+<img src="../assets/cumulus_sketch_4.svg" width = "100%"/>
+
+</pba-col>
+<pba-col center>
+
+- The PVF is not just a copy paste of the parachain Runtime
+
+<br/>
+
+- The PVF contains an extra function, `validate_block`
+
+<br/>
+
+**WHY!?**
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p>PVF not only contains the runtime but also a function <code>validate_block</code> needed to interpret all the extra information in a PoV required for validation.
+This extra information is unique to each parachain and opaque to the relay chain.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+#### Validation Path Visualized
+
+<div class="r-stack">
+<img src="../assets/collation_path_1.svg" style="width: 70%" />
+<img src="../assets/collation_path_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
+<aside class="notes"><p>The input of the runtime validation process is the PoV and the function called in the PVF is &#39;validate_block&#39;, this will use the PoV to be able to call the effective runtime and then create an output representing the state transition, which is called a CandidateReceipt.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+#### What Does validate_block Actually Do?
+
+<pba-flex center>
+
+- The parachain runtime expects to run in conjunction with a parachain client
+- But validation is occurring in a relay chain node
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- We need to implement the API the parachain client exposes to the runtime, known as host functions
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- The host functions most importantly allow the runtime to query its state, so we need a light weight replacement for the parachain's state sufficient for the execution of this single block
+<!-- .element: class="fragment" data-fragment-index="3" -->
+- `validate_block` prepares said state and host functions
+<!-- .element: class="fragment" data-fragment-index="4" -->
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+#### Validate Block in Code
+
+```rust [2|3-4|6|8-11]
+// Very simplified
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+    replace_host_functions();
+
+    // Run Substrate's `execute_block` on top of the state
+    with_state(state, || {
+        execute_block(input.block).expect("Block is invalid")
+    })
+
+    // Create the output of the result
+    create_output()
+}
+```
+
+<br/>
+
+> But where does `storage_proof` come from?
+
+<aside class="notes"><p>We construct the sparse in-memory database from the storage proof and
+then ensure that the storage root matches the storage root in the <code>parent_head</code>.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+##### Host Function Replacement Visualized
+
+<div class="r-stack">
+<img src="../assets/replace_host_function_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/replace_host_function_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+</script></section><section  data-markdown><script type="text/template">
+### Collation Revisited
+
+```rust[1|2-5|12-15|6-7|8-11]
+pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
+	/// Messages destined to be interpreted by the Relay chain itself.
+	pub upward_messages: UpwardMessages,
+	/// The horizontal messages sent by the parachain.
+	pub horizontal_messages: HorizontalMessages,
+	/// New validation code.
+	pub new_validation_code: Option<ValidationCode>,
+	/// The head-data produced as a result of execution.
+	pub head_data: HeadData,
+	/// Proof to verify the state transition of the parachain.
+	pub proof_of_validity: MaybeCompressedPoV,
+	/// The number of messages processed from the DMQ.
+	pub processed_downward_messages: u32,
+	/// The mark which specifies the block number up to which all inbound HRMP messages are processed.
+	pub hrmp_watermark: BlockNumber,
+}
+```
+
+<aside class="notes"><p>Code highlighting:</p>
+<ul>
+<li>CandidateCommitments: Messages passed upwards, Downward messages processed, New code (checked against validation outputs)</li>
+<li>head_data &amp; PoV (the validation inputs)</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Proof of Validity (Witness Data)
+
+- Acts as a replacement for the parachain's pre-state for the purpose of validating a single block
+- It allows the reconstruction of a sparse in-memory merkle trie
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- State root can then be compared to that from parent header
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</script></section><section  data-markdown><script type="text/template">
+### Example of Witness Data Construction
+
+<div class="r-stack">
+<img src="../assets/pov_witness_data_1.svg" style="width: 70%" />
+<!-- .element: class="fragment fade-out" data-fragment-index="1" -->
+<img src="../assets/pov_witness_data_2.svg" style="width: 70%" />
+<!-- .element: class="fragment" data-fragment-index="1" -->
+</div>
+
+<br/>
+
+- Only includes the data modified in this block along with hashes of the data from the rest of the trie
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- This makes up the majority of the data in a collation (max 5MiB)
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<aside class="notes"><p>orange: Data values modified in this block
+green: Hash of the siblings node required for the pov
+white: Hash of the nodes that are constructed with orange and green nodes
+red: Unneeded hash
+blue: Head of the trie, hash present in the previous block header</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+#### Parablock Validation in Summary
+
+```rust [2|3-4|6]
+// Very simplified
+fn validate_block(input: InputParams) -> Output {
+    // First let's initialize the state
+    let state = input.storage_proof.into_state().expect("Storage proof invalid");
+
+    replace_host_functions();
+
+    // Run `execute_block` on top of the state
+    with_state(state, || {
+        execute_block(input.block).expect("Block is invalid")
+    })
+
+    // Create the output of the result
+    create_output()
+}
+```
+
+- Now we know where the **storage_proof** comes from!
+- **into_state** constructs our storage trie
+<!-- .element: class="fragment" data-fragment-index="1" -->
+- Host functions written to access this new storage
+<!-- .element: class="fragment" data-fragment-index="2" -->
+</script></section><section  data-markdown><script type="text/template">
+## Cumulus and Parachain Runtime Upgrades
+
+<pba-flex center>
+
+- Every Substrate blockchain supports runtime upgrades
+<!-- .element: class="fragment" data-fragment-index="0" -->
+
+##### Problem
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+- What happens if PVF compilation takes too long?
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+  - Approval no-shows
+  - In disputes neither side may reach super-majority
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+> Updating a Parachain runtime is not as easy as updating a standalone blockchain runtime
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+### Solution
+
+The relay chain needs a fairly hard guarantee that PVFs can be compiled within a reasonable amount of time.
+
+<!-- .element: class="fragment" data-fragment-index="0" -->
+
+<br/>
+
+- Collators execute a runtime upgrade but it is not applied
+- Collators send the new runtime code to the relay chain in a collation
+- The relay chain executes the **PVF Pre-Checking Process**
+- The first parachain block to be included after the end of the process applies the new runtime
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+> Cumulus follows the relay chain, waiting for a go ahead signal to apply the runtime change
+
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+<aside class="notes"><p><a href="https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade">https://github.com/paritytech/cumulus/blob/master/docs/overview.md#runtime-upgrade</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+##### PVF Pre-Checking Process
+
+- The relay chain keeps track of all the new PVFs that need to be checked
+- Each validator checks if the compilation of a PVF is valid and does not require too much time, then it votes
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+  - binary vote: accept or reject
+  <!-- .element: class="fragment" data-fragment-index="1" -->
+- Super majority concludes the vote
+<!-- .element: class="fragment" data-fragment-index="2" -->
+- The state of the new PVF is updated on the relay chain
+<!-- .element: class="fragment" data-fragment-index="3" -->
+
+<aside class="notes"><p>reference: <a href="https://paritytech.github.io/polkadot/book/pvf-prechecking.html">https://paritytech.github.io/polkadot/book/pvf-prechecking.html</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## References
+
+1. 🦸 [Gabriele Miotti](https://github.com/gabriele-0201), who was a huge help putting together these slides
+1. https://github.com/paritytech/cumulus/blob/master/docs/overview.md
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+
+  <script src="./../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

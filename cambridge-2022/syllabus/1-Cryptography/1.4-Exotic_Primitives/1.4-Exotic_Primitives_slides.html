@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Exotic Primitives</title>
+    <link rel="shortcut icon" href="./../../../favicon.ico" />
+    <link rel="stylesheet" href="./../../../dist/reset.css" />
+    <link rel="stylesheet" href="./../../../dist/reveal.css" />
+    <link rel="stylesheet" href="./../../../assets/styles/polkadot-theme.css" id="theme" />
+    <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+    <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/polkadot-theme-base.css" />
+    <link rel="stylesheet" href="./../../.././assets/styles/PBA-theme.css" />
+    <link rel="stylesheet" href="./../../.././plugin/design-system/index.css" />
+
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <a href="">
+        <img class="watermark-logo" src="./../../../assets/img/0-Shared/logo/PBA-logo-white.svg" alt="PBA Logo">
+      </a>
+      <img class="watermark-icon" src="./../../../assets/img/0-Shared/logo/DOT-pink.svg" alt="DOT">
+    </header>
+    <main class="site-reveal reveal">
+      <article class="slides">
+        <section  data-markdown><script type="text/template">
+
+# Exotic Primitives
+</script></section><section  data-markdown><script type="text/template">
+# Outline
+
+1. [Verifiable Random Functions (VRFs)](#verifiable-random-functions-vrfs)
+1. [Erasure coding](#erasure-coding)
+1. [ZK Proofs](#zk-proofs)
+</script></section><section  data-markdown><script type="text/template">
+# Verifiable Random Functions<br>(VRFs)
+</script></section><section  data-markdown><script type="text/template">
+## Verifiable Random Functions<br>(VRFs)
+
+<widget-center>
+
+- Used to obtain <ins>private randomness</ins>, that is <ins>publicly verifiable</ins>
+
+- A variation on a signature scheme:
+  - still have private/public key pairs, input as message
+  - in addition to signature, we get an output
+</script></section><section  data-markdown><script type="text/template">
+## VRF Interface
+
+- `sign(sk, input) -> signature`
+
+- `verify(pk, signature) -> option output`
+
+- `eval(sk,input) -> output`
+</script></section><section  data-markdown><script type="text/template">
+## VRF Output properties
+
+- Output is a deterministic function of _key_ and _input_
+  - i.e. eval should be deterministic
+- It should be pseudo-random
+- But until the VRF is revealed, only the holder of the secret key knows the output
+</script></section><section  data-markdown><script type="text/template">
+## VRF Usage
+
+- Choose input after key, then the key holder cannot influence the output
+- The output then is effectively a random number known only to the key holder
+- But they can later reveal it, by publishing the VRF proof (signature)
+
+<aside class="notes"><p>The signature proves that this is the output associated to their input and public key.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## VRF Example
+
+- Playing a card game in a distributed and trustless way
+- For player A to draw a card, the players agree on a new random number x
+- A's card is determined by
+  `eval(sk_A,x) mod 52`
+- To play the card, A publishes the signature
+</script></section><section  data-markdown><script type="text/template">
+## VRF Extensions
+
+- Threshold VRFs / Common coin
+
+  - generate the same random number if $t$ out of $n$ people participate
+
+- RingVRFs
+  - the VRF output could be from any one of a group of public keys.
+
+<aside class="notes"><p>Common coins were used in consensus before blockchains were a thing.
+Dfinity based their consensus on this.
+But this needs a DKG, and it&#39;s unclear if a decentralized protocol can do those easily.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Erasure Coding
+</script></section><section  data-markdown><script type="text/template">
+## Erasure Coding
+
+- Turn data into pieces (with some redundancy) so it can be reconstructed even if some pieces are missing.
+
+- A message of $k$ symbols is turned into a coded message of $n$ symbols and can be recovered from any $k$ of these $n$ symbols
+</script></section><section  data-markdown><script type="text/template">
+## Erasure Coding Classical use
+
+- Used for noisy channels
+- If a few bits of the coded data are randomly flipped, we can still recover the original data
+- Typically $n$ is not much bigger than $k$
+</script></section><section  data-markdown><script type="text/template">
+## Use in Decentralized Systems
+
+- We have data we want to keep publicly available
+
+  - but not have everyone store
+  - but we don't trust everyone who is storing pieces
+
+- Typically we use $n$ much bigger than $k$
+</script></section><section  data-markdown><script type="text/template">
+# ZK Proofs
+</script></section><section  data-markdown><script type="text/template">
+## ZK Proofs
+
+How do we do private operations on a public blockchain and have everyone know that they were done correctly?
+
+<aside class="notes"><p>(we are working on substrate support for these and will use them for protocols)</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## What is a ZK Proof?
+
+- A prover wants to convince a verifier that something is true without revealing why it is true.
+
+- They can be interactive protocols, but mostly we'll be dealing with the non-interactive variety.
+</script></section><section  data-markdown><script type="text/template">
+## What can we show?
+
+- NP relation: `function(statement, witness) -> bool`
+
+- Prover knows a witness for a statement:
+
+  - they want to show that they know it (_a proof of knowledge_)
+
+  - ... without revealing anything about the witness (_ZK_)
+</script></section><section  data-markdown><script type="text/template">
+## ZK Proof Interface
+
+- NP relation: `function(statement, witness) -> bool`
+
+* `prove(statement, witness) -> proof`
+
+* `verify(statement, proof) -> bool`
+</script></section><section  data-markdown><script type="text/template">
+_Example:_ Schnorr signatures are ZK Proofs
+
+- They show that the prover knows the private key (the discrete log of the public key) without revealing anything about it.
+- The statement is the public key and the witness the private key.
+</script></section><section  data-markdown><script type="text/template">
+- **Proof of knowledge** - if you can compute correct proofs of a statement, you should be able to compute a witness for it.
+
+- **Zero knowledge** - the proof reveals nothing about the witness that was not revealed by the statement itself.
+</script></section><section  data-markdown><script type="text/template">
+## What can we show?
+
+- NP relation: `function(statement, witness) -> bool`
+
+  - they want to show that they know it (_a proof of knowledge_)
+
+  - ... without revealing anything about the witness (_ZK_)
+
+- with a small proof even if the witness is large (_succinctness_)
+</script></section><section  data-markdown><script type="text/template">
+- There are many schemes to produce succinct ZK proofs of knowledge (_ZK-SNARKs_) for every NP relation.
+</script></section><section  data-markdown><script type="text/template">
+## ZK Proof Scaling
+
+A small amount of data, a ZK proof, and execution time can be used to show properties of a much larger dataset which the verifier doesn't need to know.
+</script></section><section  data-markdown><script type="text/template">
+## Scaling via ZK Proofs in Blockchain
+
+- Large amount of data - a blockchain
+- Verifier is e.g. an app on a mobile phone
+
+<aside class="notes"><p>e.g. Mina do a blockchain with a constant size proof (of correctness of execution and consensus) using recursive SNARKs.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Scaling via ZK Proofs in Blockchain
+
+- The verifier is a blockchain, with very expensive data and computation costs
+
+- Layer 2s using ZK rollups
+
+<aside class="notes"><p>Of which Ethereum has many, ZKsync, ZKEVM etc.
+Polkadot already scales better!</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Privacy
+
+A user has private data, but we can show publicly that this private data is correctly used.
+
+Example: private cryptocurrency
+
+- Keep amounts secret
+  - but show they are positive!
+- Keep who pays who secret
+
+<aside class="notes"><p>You can do some of keeping amounts secret without ZK-SNARKs, but the positive part is difficult.
+To do everything well, ZK-SNARKs are needed in e.g. ZCash and its many derivatives e.g. Manta.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Practical Considerations
+
+- Very powerful primitive
+
+- Useful for both scaling and privacy
+
+- One can design many protocols with ZK Proofs that wouldn't otherwise be possible
+</script></section><section  data-markdown><script type="text/template">
+## Downside
+
+- Slow prover time for general computation
+- To be fast, need to hand optimize
+- Very weird computation model: Non-deterministic arithmetic circuits
+</script></section><section  data-markdown><script type="text/template">
+## Downsides Conclusion?
+
+- So if you want to use this for a component, expect a team of skilled people to work for at least a year on it...
+- But if you are watching this 5 years later, people have built tools to make it less painful.
+</script></section><section  data-markdown><script type="text/template">
+## Summary
+
+- VRF: Private randomness that is later publicly verifiable
+- Erasure Coding: Making data robust against losses with redundancy
+- ZK Proofs: Just magic, but expensive magic
+</script></section>
+      </article>
+    </main>
+
+    <script src="./../../../dist/reveal.js"></script>
+    <script src="./../../../plugin/markdown/markdown.js"></script>
+    <script src="./../../../plugin/highlight/highlight.js"></script>
+    <script src="./../../../plugin/zoom/zoom.js"></script>
+    <script src="./../../../plugin/notes/notes.js"></script>
+    <script src="./../../../plugin/math/math.js"></script>
+
+    <script type="module">
+      import DesignSystem from "./../../../plugin/design-system/design-system.js"
+
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath,
+          DesignSystem
+        ]
+      };
+
+      // options from URL query string
+      const queryOptions = Reveal().getQueryHash() || {};
+
+      const options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+      options.baseUrl = '';
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Build a Parachain</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Build a Parachain
+</script></section><section  data-markdown><script type="text/template">
+## Agenda
+
+- Build a simple collator without Cumulus
+- Introduction to Cumulus and how to build a Parachain
+- Workshop: Manually registering a parachain
+- Workshop: How to acquire a parachain slot
+</script></section><section  data-markdown><script type="text/template">
+## Before we begin:
+
+```sh
+# We will need a polkadot binary, e.g.
+git clone https://github.com/paritytech/polkadot/
+cd polkadot
+cargo build --release
+
+# Compile this in advance to save time:
+git clone https://github.com/Polkadot-Blockchain-Academy/cumuless-parachain-PBA-BA-2023
+cd cumuless-parachain-PBA-BA-2023
+# Ma a branch *for yourself*
+git checkout -b <YOUR GITHUB USERNAME HERE>
+cargo build --release
+```
+</script></section><section  data-markdown><script type="text/template">
+## Build Simple Parachain
+
+We're going to build a simple parachain without Cumulus!
+
+<pba-flex center>
+
+- PVF
+- Collator
+
+<pba-flex>
+
+<aside class="notes"><p>This will be a parachain built without using FRAME.
+There will be only one collator and no collator selection logic.
+No message processing.
+No transactions.
+No runtime upgrades.
+No parachain full nodes.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Parachain requirements
+
+A parachain needs two things:
+
+<pba-flex center>
+
+1. A Wasm runtime with `validate_block` function exposed
+1. Node side that can sync relay chain blocks and talk to the relay chain
+
+<pba-flex>
+
+<aside class="notes"><p>Talking to the relay chain means speaking the networking protocol of Polkadot to distribute the PoV.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Minimal parachain runtime (PVF)
+
+```rust
+#![no_std]
+#![cfg_attr(
+	not(feature = "std"),
+	feature(core_intrinsics, lang_items, core_panic_info, alloc_error_handler)
+)]
+
+// Make the Wasm binary available.
+#[cfg(feature = "std")]
+include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
+
+#[cfg(feature = "std")]
+/// Wasm binary unwrapped. If built with `BUILD_DUMMY_Wasm_BINARY`, the function panics.
+pub fn wasm_binary_unwrap() -> &'static [u8] {
+	Wasm_BINARY.expect(
+		"Development wasm binary is not available. Testing is only \
+						supported with the flag disabled.",
+	)
+}
+
+#[cfg(not(feature = "std"))]
+#[panic_handler]
+#[no_mangle]
+pub fn panic(_info: &core::panic::PanicInfo) -> ! {
+	core::intrinsics::abort()
+}
+
+#[cfg(not(feature = "std"))]
+#[alloc_error_handler]
+#[no_mangle]
+pub fn oom(_: core::alloc::Layout) -> ! {
+	core::intrinsics::abort();
+}
+
+#[cfg(not(feature = "std"))]
+#[no_mangle]
+pub extern "C" fn validate_block(_params: *const u8, _len: usize) -> u64 {
+	loop {}
+}
+```
+
+<aside class="notes"><p>The panic and oom handlers are Rust-specific things you don&#39;t need to worry about.
+If we actually include an infinite loop into the <code>validate_block</code> function, a parablock will never be backed/included by the relay chain validators.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Parachain node side
+
+<pba-flex center>
+
+- Our node will sync relay chain blocks
+- When importing the new best block,<br/>we'll connect to the backing group
+- Then we'll advertise our block ("collation")<br/>to a validator in the group
+- The validator will request the collation<br/>from us using `collator-protocol`
+- Now it's in the hands of validators<br/>to include our block
+
+<pba-flex>
+
+<aside class="notes"><p>Validators are shuffled into small backing groups, which rotate
+regularly with <code>group_rotation_frequency</code>.
+Currently, collators can only produce the next block after their previous
+block has been included by the relay chain (remember <code>CandidateIncluded</code>).
+Since inclusion happens in the next block after candidate being backed,
+this means collators can only produce blocks every 12s. Async backing
+will change that.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Collator-protocol
+
+Polkadot contains the implementation of the both collator and validator
+side of the collator protocol.
+
+```rust
+/// What side of the collator protocol is being engaged
+pub enum ProtocolSide {
+	/// Validators operate on the relay chain.
+	Validator {
+		/// The keystore holding validator keys.
+		keystore: SyncCryptoStorePtr,
+		/// An eviction policy for inactive peers or validators.
+		eviction_policy: CollatorEvictionPolicy,
+	},
+	/// Collators operate on a parachain.
+	Collator(
+		PeerId,
+		CollatorPair,
+		IncomingRequestReceiver<request_v1::CollationFetchingRequest>,
+	),
+}
+```
+
+<aside class="notes"><p>We&#39;re going to use Polkadot as a library configured for the collator side.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Time to look into the code
+
+Our PBA parachain is a trimmed down version of:
+
+- https://github.com/paritytech/polkadot/tree/master/parachain/test-parachains/adder
+</script></section><section  data-markdown><script type="text/template">
+## Exercise
+
+Make the state of the Parachain a fixed sized 2d field (e.g. 25x25) that evolves at each block according to Game of Life and print the state at each block.
+
+- https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+- https://rosettacode.org/wiki/Conway%27s_Game_of_Life#Rust
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+## Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+
+  <script src="./../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Blockchain Structure</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Blockchain Structure
+
+![An opaque blockchain structure](./img/opaque-blockchain.svg)
+</script></section><section  data-markdown><script type="text/template">
+## Shared Story
+
+A Blockchain **cryptographically guarantees** that a history of events has not been tampered with.
+This allows interested parties to have a **shared history**.
+</script></section><section ><section data-markdown><script type="text/template">
+## Hash Linked List
+
+![Blockchain with payload shown](./img/hash-linked-1.svg)
+
+<aside class="notes"><p>This is a simplified blockchain. Each block has a pointer to the parent block as well as a payload.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Hash Linked List
+
+![Blockchain with payload shown and parent hash calculated](./img/hash-linked-2.svg)
+
+<aside class="notes"><p>The pointer is a cryptographic hash of the parent block. This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Hash Linked List
+
+![Blockchain with payload and parent hash included](./img/hash-linked-3.svg)
+
+<aside class="notes"><p>This ensures data integrity throughout the entire history of the chain. This is the simplest form that a blockchain could take and indeed it allows us to agree on a shared history.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Genesis Block
+
+![Beginning of blockchain. Genesis block's "parent" is 0x0000](./img/hash-linked-genesis.svg)
+
+<aside class="notes"><p>The first block in the chain is typically called a the &quot;Genesis block&quot; named after the first book in the judaeo-christian mythology - The beginning of our shared story. The parent hash is chosen to be some specific value. Typically we use the all-zero hash, although any fixed widely agreed-upon value would also do.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## State Machines (Again)
+
+A state machine defines:
+
+<pba-flex center>
+
+- Set of valid states
+- Rules for transitioning between states
+
+</pba-flex>
+
+<img style="width: 900px;" src="./img/state-machine-general.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Blockchain meet State Machine
+
+![Blockchain where payload is state machine transition](./img/blockchain-meet-state-machine.svg)
+
+<aside class="notes"><p>The simplest way to join a blockchain to a state machine is to to make the blockchain&#39;s payload a state machine transition.
+By doing so, we effectively track the history of a state machine in a cryptographically guaranteed way.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Where do the States Live?
+
+Somewhere else!
+
+![Blockchain with state shown outside of the blocks](./img/blockchain-with-state-outside.svg)
+
+<aside class="notes"><p>There is a state associated with each block. But typically the state is NOT stored in the block. This state information is redundant because it can always be obtained by just re-executing the history of the transitions.
+It is possible to store the state in the blocks, but the redundancy is undesirable. It wastes disk space for anyone who wants to store the history of the chain. Storing the state in the block is not done by any moderately popular blockchain today.
+If you <em>want</em> to store the states, you are welcome to do so. Software that does this is known as an Archive node or an indexer. But it is stored separately from the block
+...Pause...
+One more time to make sure it sinks in: The state is NOT in the block.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### State Roots
+
+A cryptographic anchor to the state
+
+![State roots cryptographically tie the block to its state](./img/blockchain-with-state-roots.svg)
+
+<aside class="notes"><p>Some data redundancy can be good to help avoid corruption etc. It is common for a block to contain a cryptographic fingerprint of
+the state. This is known as a state root. You think of it as a hash of the state. In practice, the state is typically built into a Merkle tree like structure and the tree root is included. Not all blockchains do this. Notably bitcoin doesn&#39;t. But most do. We&#39;ll go into details about exactly how this state root is calculated for Substrate in the next two modules, but for now we just consider the state root to be some kind of cryptographic fingerprint.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## Forks
+
+![forks represent alternate histories](./img/forks.svg)
+
+A state machine can have different possible histories. These are called forks.
+
+<aside class="notes"><p>You can think of them like alternate realities. We need to decide which of the many possible forks is ultimately the &quot;real&quot; one. This is the core job of consensus and we will talk about it in two upcoming lessons in this module.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Invalid Transitions
+
+![Not all transitions are valid. Forks containing them need not be considered](./img/forks-some-invalid.svg)
+
+<aside class="notes"><p>Before we even get to hardcore consensus, we can rule out <em>some</em> possibilities based on the state machine itself</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## Realistic Blockchain Structure
+
+<img width="600px" src="./img/header-body.svg" />
+
+- Header: Summary of minimal important information about this block
+- Body: A batched list of state transitions
+
+<aside class="notes"><p>The header is a minimal amount of information. In some ways it is like metadata.
+The body contains the real &quot;payload&quot;. It is almost always a batch of state transitions.
+There are many name aliases for what is included in the body:</p>
+<ul>
+<li>Transitions</li>
+<li>Transactions</li>
+<li>Extrinsics</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Blocks in Substrate
+
+```rust
+/// Abstraction over a Substrate block.
+pub struct Block<Header, Extrinsic: MaybeSerialize> {
+	/// The block header.
+	pub header: Header,
+	/// The accompanying extrinsics.
+	pub extrinsics: Vec<Extrinsic>,
+}
+```
+
+<aside class="notes"><p>This example is from Substrate and as such it strives to be a general and flexible format, we will cover Substrate in more depth in the next module. This is representative of nearly all real-world blockchains</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## Headers
+
+Exact content varies per blockchain.
+Always contains the parent hash.
+Headers are the _actual_ hash-linked list, not entire blocks.
+
+<aside class="notes"><p>The parent hash links blocks together (cryptographically linked list). The other info is handy for other infrastructure and applications (more on that later).</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Header Examples
+
+<pba-cols>
+<pba-col>
+
+<pba-flex center>
+
+**Bitcoin**
+
+</pba-flex>
+
+- Version
+- Previous Hash
+- Tx Merkle Root
+- Time
+- N_Bits
+- Nonce
+
+</pba-col>
+<pba-col>
+
+<pba-flex center>
+
+**Ethereum**
+
+</pba-flex>
+
+- Time
+- Block Number
+- Base Fee
+- Difficulty
+- Mix Hash
+- Parent Hash
+- State Root
+- Nonce
+
+</pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+## Substrate Header
+
+- Parent hash
+- Number
+- State root
+- Extrinsics root
+- Consensus Digest
+
+<aside class="notes"><p>Extrinsics root is a crypto link to the body of the block. It is very similar to the state root.
+Consensus Digest is information necessary for the consensus algorithm to determine a block&#39;s validity. It varies widely with the consensus algorithm used and we will discuss it in two upcoming lectures.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Substrate Header (Full Picture)
+
+![Header is cryptographically linked to parent, body, and state](./img/headers-link-state-body.svg)
+</script></section></section><section  data-markdown><script type="text/template">
+## Extrinsics
+
+Packets from the outside world with _zero_ or more signatures attached.
+
+- Function calls to the STF
+- Some functions require signatures (e.g., transfer some tokens)
+- Others don't, but usually have some validation means
+</script></section><section ><section data-markdown><script type="text/template">
+## Nodes
+
+Software agents that participate in blockchain network.<br/>
+May perform these jobs:
+
+<pba-cols>
+<pba-col>
+<pba-flex center>
+
+- Gossip blocks
+- Execute and Validate blocks
+- Store blocks
+- Store states
+- Gossip transactions
+
+</pba-flex>
+</pba-col>
+<pba-col>
+<pba-flex center>
+
+- Maintain a transaction pool
+- Author blocks
+- Store block headers
+- Answer user requests for data (RPC)
+
+</pba-flex>
+</pba-col>
+</pba-cols>
+<aside class="notes"><p>Many nodes only perform a subset of these tasks</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Types of Nodes
+
+<pba-flex center>
+
+- Full Nodes
+- Light Nodes (aka Light clients)
+- Authoring nodes
+- Archive nodes
+- RPC nodes
+
+</pba-flex>
+</script></section></section><section  data-markdown><script type="text/template">
+## Transaction Pool
+
+Contains transactions that are not yet in blocks.
+
+Constantly prioritizing and re-prioritizing transactions.
+
+Operates as a blockspace market.
+
+<aside class="notes"><p>Sometimes known as mempool (thanks bitcoin 🙄)
+Authoring nodes determine the order of upcoming transactions. In some sense they can see the future.</p>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

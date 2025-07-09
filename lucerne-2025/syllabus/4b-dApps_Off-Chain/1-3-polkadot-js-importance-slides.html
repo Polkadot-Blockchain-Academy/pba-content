@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Why is a Base Understanding of Polkadot-JS Important?</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+## Why is a Base Understanding of Polkadot-JS Important?
+</script></section><section  data-markdown><script type="text/template">
+### Polkadot-JS as the Old Industry Standard
+
+- One of the earliest and most comprehensive SDKs for Polkadot
+- Widespread adoption as result of years of continued development
+- Foundation of ecosystem tooling and infrastructure
+
+<aside class="notes"><p>Polkadot-JS has firmly established itself as the old industry standard for interacting with the Polkadot and Kusama networks. As one of the earliest and most comprehensive SDKs for Polkadot, it has been designed and continuously updated to support almost every iteration of the network&#39;s evolving metadata, runtime upgrades, and structural changes.</p>
+<p>It has become a fundamental building block for anyone developing on Polkadot, and its widespread use has set the baseline for how developers build, integrate, and deploy Polkadot-based applications. This widespread adoption comes as result of years of continued development and maintenance, which has turned the project into a mature set of developer tools.</p>
+<p>This widespread adoption is not just because of its maturity and feature set but because Polkadot-JS simplifies the complex task of interacting with a decentralized, multi-chain network. It once served as the go-to library for developers needing to query chain data, send transactions, and handle Polkadot-specific logic.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Influence on Polkadot-Based Applications
+
+- Many existing tools and legacy systems depend on it
+  - chopsticks
+  - zombienet
+  - substrate-api-sidecar
+- Future migrations to new tools require knowledge of Polkadot-JS
+
+<aside class="notes"><p>Without a solid base understanding of how Polkadot-JS works, it becomes difficult to effectively develop or maintain applications within the Polkadot ecosystem. Because it&#39;s the first point of contact for interacting with Polkadot and Kusama, many other blockchains and ecosystems look to Polkadot-JS for inspiration in their own SDKs and development frameworks.</p>
+<p>By understanding Polkadot-JS, developers can more easily transfer their knowledge to other ecosystems or even contribute to the continued evolution of Polkadot-JS itself.</p>
+<p>Even as newer tools emerge, understanding the patterns and approaches used in Polkadot-JS helps developers better understand how to interface with Substrate-based chains and provides valuable context for the design decisions made in newer tools.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Efficient Problem-Solving and Debugging
+
+- Understanding its behavior and design is key to troubleshooting
+- Knowledge of limitations helps avoid repeating design mistakes
+- Provides insight into Substrate architecture and data structures
+
+<aside class="notes"><p>Given that Polkadot-JS is foundational to many applications in the Polkadot ecosystem, understanding its behavior and design is key to troubleshooting and resolving issues. Whether it&#39;s debugging failed transactions, understanding chain synchronization problems, or diagnosing issues with the structure of events and extrinsics, a deep knowledge of Polkadot-JS enables developers to quickly pinpoint the source of problems and fix them efficiently.</p>
+<p>Since Polkadot-JS is the tool used for many underlying blockchain interactions, errors and issues that arise in other applications or tools often trace back to how Polkadot-JS is being utilized.</p>
+<p>Understanding the limitations and flaws of Polkadot-JS also helps avoid these mistakes when developing new solutions. Using Polkadot-JS as the base on which to build a new, more efficient and flexible solution works better when keeping in mind these limitations.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Knowledge Transfer to Future Tools
+
+- Understanding Polkadot-JS helps with migration to newer tools like PAPI
+- Core concepts of chain interaction remain consistent across tools
+- Historical context provides insight into why newer tools make different choices
+
+<aside class="notes"><p>As the ecosystem evolves and newer tools like PAPI (Polkadot API) emerge, understanding Polkadot-JS becomes even more valuable. The knowledge of how Polkadot-JS interacts with Substrate chains transfers directly to these newer tools, making the transition smoother.</p>
+<p>The core concepts of chain interaction - connecting to nodes, querying state, constructing and submitting transactions - remain consistent across different tools, though the implementation details may change.</p>
+<p>Understanding why Polkadot-JS made certain design choices, and where those choices led to limitations, provides valuable context for appreciating the different approaches taken by newer tools. This historical perspective helps developers make more informed decisions about which tools to use for different projects and use cases.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions?
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

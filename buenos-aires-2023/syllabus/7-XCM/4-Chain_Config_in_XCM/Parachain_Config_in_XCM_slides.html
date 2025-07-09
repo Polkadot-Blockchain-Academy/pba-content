@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Parachain XCM Configuration</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Parachain XCM Configuration
+</script></section><section  data-markdown><script type="text/template">
+## _At the end of this lecture, you will be able to:_
+
+<pba-flex center>
+
+- Understand the different XCM configurable parts for a chain
+- Construct different XCM configurations for chains with different needs
+- Understand how Versioning is handled across chains
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## 🛠️ Configurables in `XcmConfig`
+
+- Common vs configurable implementation in `xcm-executor`
+
+- Configurable parts are defined in the `xcm-executor` config!
+
+<aside class="notes"><p>EXERCISE: ask the class to raise hands and postulate on what they think should be configurable.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## 🛠️ Configurables in `XcmConfig`
+
+```rust [0|1|9|11|17|19|21|23|25|27|29|31]
+pub type LocationToAccountId = ?;
+
+pub struct XcmConfig;
+impl Config for XcmConfig {
+  type RuntimeCall = RuntimeCall;
+  // How we route the XCM outside this chain
+  type XcmSender = XcmRouter;
+  // How we withdraw/deposit assets
+  type AssetTransactor = ?;
+  // How we convert a ML to a FRAME dispatch origin
+  type OriginConverter = ?;
+  // Who we trust as reserve chains
+  type IsReserve = ?;
+  // Who do we trust as teleporters
+  type IsTeleporter = ?;
+  // How we invert locations
+  type LocationInverter = ?;
+  // Pre-execution filters
+  type Barrier = ?;
+  // How we weigh a message
+  type Weigher = ?;
+  // How we charge for fees
+  type Trader = ?;
+  // How we handle responses
+  type ResponseHandler = ?;
+  // How we handle asset traps
+  type AssetTrap = ?;
+  // How we handle asset claims
+  type AssetClaims = ?;
+  // How we handle version subscriptions
+  type SubscriptionService = ?;
+}
+
+```
+
+<aside class="notes"><ul>
+<li><p>Means of converting a multilocation into an accountId
+Used later for: OriginConverter , <code>AssetTransactor</code></p>
+</li>
+<li><p><code>xcm-builder</code> and <code>xcm-pallet</code> are your friends!</p>
+</li>
+<li><p><code>xcm-builder</code> is a polkadot module that contains a set of pre-defined structures to be set in some of the configurable sides of XCM.</p>
+</li>
+<li><p><code>xcm-pallet</code> is a pallet that not only allows sending and executing XCM messages, but rather it also implements several of the configuration traits and thus can be used perform several XCM configuration actions.</p>
+</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## 🛠️ XcmRouter in `XcmConfig`
+
+- `XcmRouter` defines the means of routing a XCM to a destination.
+- `ParentAsUmp` routes XCM to relay chain through UMP.
+- `XcmpQueue` routes XCM to other parachains through XCMP.
+
+```rust
+pub type XcmRouter = (
+	// Two routers - use UMP to communicate with the relay chain:
+	cumulus_primitives_utility::ParentAsUmp<ParachainSystem, PolkadotXcm>,
+	// ..and XCMP to communicate with the sibling chains.
+	XcmpQueue,
+);
+```
+
+<aside class="notes"><ul>
+<li>If the destination location matches the form of <code>Multilocation { parents: 1, interior: Here }</code>, the message will be routed through UMP.
+The UMP channel is available by default.</li>
+<li>If the destination matches the form of <code>Multilocation { parents: 1, interior: X1(Parachain(para_id)) }</code>, the message will be routed through XCMP.
+As of today, an HRMP channel should be established before the message can be routed.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## 🛠️ XcmRouter in `XcmConfig`
+
+- `XcmRouter` will ask for implementations of the `SendXcm` trait.
+- `wrap_version`, in this case, adds versioning to the message.
+
+<div style="font-size:smaller">
+
+```rust [6|9|12]
+pub struct ParentAsUmp<T, W>(PhantomData<(T, W)>);
+impl<T: UpwardMessageSender, W: WrapVersion> SendXcm for ParentAsUmp<T, W> {
+	fn send_xcm(dest: impl Into<MultiLocation>, msg: Xcm<()>) -> Result<(), SendError> {
+		let dest = dest.into();
+
+		if dest.contains_parents_only(1) {
+			// An upward message for the relay chain.
+			let versioned_xcm =
+				W::wrap_version(&dest, msg).map_err(|()| SendError::DestinationUnsupported)?;
+			let data = versioned_xcm.encode();
+
+			T::send_upward_message(data).map_err(|e| SendError::Transport(e.into()))?;
+
+			Ok(())
+		} else {
+			// Anything else is unhandled. This includes a message this is meant for us.
+			Err(SendError::CannotReachDestination(dest, msg))
+		}
+	}
+}
+```
+
+<div>
+</script></section></section><section  data-markdown><script type="text/template">
+### 🤔 Grab your chain's requirements before starting
+
+Questions that you should have answers for:
+
+- _Is my chain going to transfer just the native token?_
+  _Is my chain going to receive several other kinds of assets?_
+
+- _Is my chain going to allow free execution?_
+  _Maybe only limited to some parachains/relay chain?_
+
+- _Is my chain a 20 byte account chain?_
+  _a 32 byte account chain?_
+
+- _How will my chain accept fee payment?_
+  _In one asset?_
+  _In several?_
+
+<aside class="notes"><ul>
+<li>Some of the answers to these questions might imply you need to use your own custom primitives.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Our starting example setup requirements
+
+1. Parachain that does not charge for relay incoming messages.
+1. Parachain that trusts the relay as the reserve chain for the relay chain tokens.
+1. Parachain that mints in `pallet-balances` when it receives relay chain tokens.
+1. Parachain that uses 32 byte accounts.
+1. Users can execute XCMs locally.
+</script></section><section  data-markdown><script type="text/template">
+### 🤝 `IsReserve` and `IsTeleporter`
+
+- They define filters for accepting `ReserveAssetDeposited` and `ReceiveTeleportedAsset` respectively.
+- Filters are applied for specific `MultiAsset-MultiLocation` pairs.
+
+```rust
+/// Combinations of (Asset, Location) pairs which we trust as reserves.
+type IsReserve: ContainsPair<MultiAsset, MultiLocation>;
+
+/// Combinations of (Asset, Location) pairs which we trust as teleporters.
+type IsTeleporter: ContainsPair<MultiAsset, MultiLocation>;
+```
+
+<aside class="notes"><ul>
+<li>For our test excercise, it is sufficient to set this <code>IsReserve</code> to <code>Everything</code>.</li>
+<li>In your production network, you will need to match these values to your reserve/teleporting trust assumptions.</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- Defines how we convert a multilocation into a local accountId.
+- Useful when we want to withdraw/deposit tokens from a multilocation defined origin
+- Useful when we want to dispatch as signed origins from a multilocation defined origin.
+
+<img src="../../../assets/img/7-XCM/location_to_account_id_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+
+<aside class="notes"><ul>
+<li>This will define how we convert a multilocation into a local accountId.</li>
+<li>This is useful when we want to withdraw/deposit tokens from a multilocation defined origin or when we want to dispatch as signed origins from a multilocation defined origin.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `Account32Hash`: Hashes the multilocation and takes the lowest 32 bytes as account.
+
+```rust
+fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+  // Blake2(b"multiloc"+ multilocation)
+  Ok(("multiloc", location.borrow()).using_encoded(blake2_256).into())
+}
+```
+
+<div>
+
+<aside class="notes"><ul>
+<li>This is the most generic form of converting a multilocation to an accountId.</li>
+<li>There are no restrictions in the multilocation input.
+If you use this with other converters, make sure this will be the last option, as otherwise the more restrictive ones will not apply.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `ParentIsPreset`: Converts the parent multilocation into an account of the form `b'Parent' + trailing 0s`
+
+```rust
+fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+  if location.borrow().contains_parents_only(1) {
+    Ok(b"Parent"
+      .using_encoded(|b| AccountId::decode(&mut TrailingZeroInput::new(b)))
+      .expect("infinite length input; no invalid inputs for type; qed"))
+  } else {
+    Err(())
+  }
+}
+```
+
+<aside class="notes"><ul>
+<li>This converter is typically used in parachains to make sure the parent origin has an associated account.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `ChildParachainConvertsVia`: Converts the **child** parachain multilocation into an account of the form `b'para' + para_id_as_u32 + trailing 0s`
+
+<aside class="notes"><ul>
+<li><p>Here child means a parachain from the relay&#39;s perspective</p>
+</li>
+<li><p>This converter is <strong>typically used in the relay chain</strong> to make sure the child parachain origins have an associated account.</p>
+</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `SiblingParachainConvertsVia`: Convert the **sibling** parachain multilocation into an account of the form `b'sibl' + para_id_as_u32 + trailing 0s`
+
+```rust
+fn convert_ref(location: impl Borrow<MultiLocation>) -> Result<AccountId, ()> {
+  match location.borrow() {
+    MultiLocation { parents: 1, interior: X1(Parachain(id)) } =>
+      Ok(ParaId::from(*id).into_account_truncating()),
+    _ => Err(()),
+  }
+}
+```
+
+<aside class="notes"><ul>
+<li>Here sibling means a parachain from another parachain&#39;s perspective</li>
+<li>This converter is <strong>typically used in parachains</strong> to make sure the sibling parachain origins have an associated account.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📁 `LocationToAccountId` via `xcm-builder`
+
+- `AccountId32Aliases`: Converts a local `AccountId32` multilocation into a `AccountID` of 32 bytes.
+
+<div style="font-size:smaller">
+
+```rust
+pub struct AccountId32Aliases<Network, AccountId>(PhantomData<(Network, AccountId)>);
+impl<Network: Get<NetworkId>, AccountId: From<[u8; 32]> + Into<[u8; 32]> + Clone>
+  Convert<MultiLocation, AccountId> for AccountId32Aliases<Network, AccountId>
+{
+  fn convert(location: MultiLocation) -> Result<AccountId, MultiLocation> {
+    // Converts if networkId matches Any or <Network>
+    let id = match location {
+      MultiLocation {
+        parents: 0,
+        interior: X1(AccountId32 { id, network: NetworkId::Any }),
+      } => id,
+      MultiLocation { parents: 0, interior: X1(AccountId32 { id, network }) }
+        if network == Network::get() =>
+        id,
+      _ => return Err(location),
+    };
+    Ok(id.into())
+  }
+  /* snip */
+}
+```
+
+<div>
+
+<aside class="notes"><ul>
+<li>Typically used for chains that want to enable local xcm execution, and which have 32 byte accounts.</li>
+<li>We have a requirement of users being able to execute local XCM, and as such we need to be able to Withdraw/Deposit from their accounts
+<strong>This structure fulfills one of our requirements</strong></li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+### 🪙 `asset-transactors` via `xcm-builder`
+
+- Define how we are going to withdraw and deposit assets
+- Heavily dependant on the assets we want our chain to transfer
+
+<img src="../../../assets/img/7-XCM/asset_transactor_withdraw.svg" alt="Withdraw location to accountId" style="width: 900px;">
+
+<aside class="notes"><ul>
+<li>The relay chain is a clear example of a chain that handles a <strong>single token</strong>.</li>
+<li>Statemine on the contrary acts as an asset-reserve chain, and it needs to handle <strong>several assets</strong></li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🪙 `asset-transactors` via `xcm-builder`
+
+- `CurrencyAdapter`: Single currency `asset-transactor`.
+  Used for withdrawing/depositing the native token of the chain.
+
+<div style="font-size:smaller">
+
+```rust
+impl
+ TransactAsset
+  for CurrencyAdapter<Currency, Matcher, AccountIdConverter, AccountId, CheckedAccount>
+{
+  /* snip */
+  fn deposit_asset(what: &MultiAsset, who: &MultiLocation) -> Result {
+    // Check we handle this asset.
+    let amount: u128 =
+      Matcher::matches_fungible(&what).ok_or(Error::AssetNotFound)?.saturated_into();
+    // Convert multilocation to accountId
+    let who =
+      AccountIdConverter::convert_ref(who).map_err(|()| Error::AccountIdConversionFailed)?;
+    // Convert amount to balance
+    let balance_amount =
+      amount.try_into().map_err(|_| Error::AmountToBalanceConversionFailed)?;
+    // Deposit currency on the account
+    let _imbalance = Currency::deposit_creating(&who, balance_amount);
+    Ok(())
+  }
+}
+```
+
+</div>
+
+<aside class="notes"><ul>
+<li><strong>Matcher</strong>: Matches the multiAsset against some filters and returns the amount to be deposited/withdrawn</li>
+<li><strong>AccountIdConverter</strong>: Means of converting a multilocation into an account</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🪙 `asset-transactors` via `xcm-builder`
+
+- `FungiblesAdapter`: Used for depositing/withdrawing from a set of defined fungible tokens.
+  An example of these would be `pallet-assets` tokens.
+
+<aside class="notes"><ul>
+<li>For our example, it suffices to uses <code>CurrencyAdapter</code>, as all we are going to do is mint in a single currency (Balances) whenever we receive the relay token.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+### 📍 `origin-converter` via `xcm-builder`
+
+- Defines how to convert an XCM origin, defined by a MultiLocation, into a frame dispatch origin.
+- Used mainly in the `Transact` instruction.
+
+<aside class="notes"><ul>
+<li><code>Transact</code> needs to dispatch from a frame dispatch origin.
+However the xcm-executor works with xcm-origins which are defined by MultiLocations.</li>
+<li><code>origin-converter</code> is the component that converts one into the other</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📍 `origin-converter` via `xcm-builder`
+
+- `SovereignSignedViaLocation`: Converts the multilocation origin (typically, a parachain origin) into a signed origin.
+
+```rust [0|6|18|20|22]
+pub struct SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>(
+  PhantomData<(LocationConverter, RuntimeOrigin)>,
+);
+impl<
+    // Converts a multilocation into account
+    LocationConverter: Convert<MultiLocation, RuntimeOrigin::AccountId>,
+    RuntimeOrigin: OriginTrait,
+  > ConvertOrigin<RuntimeOrigin>
+  for SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>
+where
+  RuntimeOrigin::AccountId: Clone,
+{
+  fn convert_origin(
+    origin: impl Into<MultiLocation>,
+    kind: OriginKind,
+  ) -> Result<RuntimeOrigin, MultiLocation> {
+    let origin = origin.into();
+    if let OriginKind::SovereignAccount = kind {
+      // Convert multilocation to account
+      let location = LocationConverter::convert(origin)?;
+      // Return signed origin using the account
+      Ok(RuntimeOrigin::signed(location).into())
+    } else {
+      Err(origin)
+    }
+  }
+}
+```
+
+<aside class="notes"><ul>
+<li><code>LocationConverter </code> once again defines how to convert a multilocation into an accountId.</li>
+<li>It basically grants access to dispatch as Signed origin after the conversion.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📍 `origin-converter` via `xcm-builder`
+
+- `SignedAccountId32AsNative`: Converts a local 32 byte account multilocation into a signed origin using the same 32 byte account.
+
+```rust [0|18|19-22|24]
+pub struct SignedAccountId32AsNative<
+  Network,
+  RuntimeOrigin
+>(PhantomData<(Network, RuntimeOrigin)>);
+impl<Network: Get<NetworkId>, RuntimeOrigin: OriginTrait>
+  ConvertOrigin<RuntimeOrigin>
+for SignedAccountId32AsNative<Network, RuntimeOrigin>
+where
+  RuntimeOrigin::AccountId: From<[u8; 32]>,
+{
+  fn convert_origin(
+    origin: impl Into<MultiLocation>,
+    kind: OriginKind,
+  ) -> Result<RuntimeOrigin, MultiLocation> {
+    let origin = origin.into();
+    match (kind, origin) {
+      (
+        OriginKind::Native,
+        MultiLocation {
+		  parents: 0,
+		  interior: X1(Junction::AccountId32 { id, network })
+		},
+      ) if matches!(network, NetworkId::Any) || network == Network::get() =>
+        Ok(RuntimeOrigin::signed(id.into())),
+      (_, origin) => Err(origin),
+    }
+  }
+}
+```
+
+<aside class="notes"><ul>
+<li>Matches a local accountId32 multilocation to a signed origin.</li>
+<li>Note the difference <code>OriginKind</code> filter: this is not an account controlled by another consensus system, but rather a Native dispatch.</li>
+<li><strong>This structure fulfills one of our requirements</strong></li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 📍 `origin-converter` via `xcm-builder`
+
+- `ParentAsSuperuser`: Converts the parent origin into the root origin.
+
+- `SignedAccountKey20AsNative`: Converts a local 20 byte account multilocation into a signed origin using the same 20 byte account.
+
+<aside class="notes"><ul>
+<li><code>ParentAsSuperuser</code> can be used in common-good chains as they do not have a local root origin and instead allow the relay chain root origin to act as the root origin.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+### 🚧 `Barrier` via `xcm-builder`
+
+- Barriers specify whether or not an XCM is allowed to be executed on the local consensus system.
+- They are checked before the actual xcm instruction execution
+
+<aside class="notes"><ul>
+<li>Barriers should not involve any heavy computation.
+<strong>At the point at which barriers are checked nothing has yet been paid for its execution</strong>.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🚧 `Barrier` via `xcm-builder`
+
+Physical vs Computed origin
+
+- Physical origin: the consensus system that built this particular XCM and sent it to the recipient
+- Computed origin: the entity that ultimately instructed the consensus system to build the XCM
+
+<img src="../../../assets/img/7-XCM/physical_vs_computed_origin.svg" alt="Physical vs Computed origin">
+
+**Must make sure which origin a barrier should apply to!**
+
+Those that filter on the origin (e.g. `AllowTopLevelPaidExecutionFrom<T>`) would most likely be operating upon the _computed origin_.
+</script></section><section data-markdown><script type="text/template">
+### 🚧 `Barrier` via `xcm-builder`
+
+Barriers that operate upon **computed origins** must be put inside of `WithComputedOrigin`:
+
+```rust
+pub struct WithComputedOrigin<InnerBarrier, LocalUniversal, MaxPrefixes>(
+  PhantomData<(InnerBarrier, LocalUniversal, MaxPrefixes)>,
+);
+```
+</script></section><section data-markdown><script type="text/template">
+### 🚧 `Barrier` via `xcm-builder`
+
+- `TakeWeightCredit`: Subtracts the maximum weight the message can consume from the available weight credit.
+  Usually configured for local `xcm-execution`
+
+- `AllowTopLevelPaidExecutionFrom<T>`: For origins contained in `T`, it makes sure the first instruction puts asset into the holding register (`TeleportAsset`, `WithdrawAsset`, `ClaimAsset`, `ReserveAssetDeposit`), followed by a `BuyExecution` instruction capable of buying sufficient weight.
+  **Critical to avoid free DOS**.
+
+<aside class="notes"><ul>
+<li><p>A chain without <code>AllowTopLevelPaidExecutionFrom</code> could potentially receive several heavy-computation instructions without paying for it.
+Checking that the first instructions are indeed paying for execution helps to quick-discard them.</p>
+</li>
+<li><p>While <code>BuyExecution</code> is crucial for messages coming from other consensus systems, local XCM execution fees are paid as any other substrate extrinsic.</p>
+</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🚧 `Barrier` via `xcm-builder`
+
+- `AllowUnpaidExecutionFrom<T>`: Allows free execution if `origin` is contained in `T`.
+  Useful for chains that "trust" each other (e.g., Statemine or any system parachain with the relay)
+
+```rust
+/// Allows execution from any origin that is contained in `T`
+/// (i.e. `T::Contains(origin)`) without any payments.
+/// Use only for executions from trusted origin groups.
+pub struct AllowUnpaidExecutionFrom<T>(PhantomData<T>);
+impl<T: Contains<MultiLocation>> ShouldExecute for AllowUnpaidExecutionFrom<T> {
+  fn should_execute<RuntimeCall>(
+    origin: &MultiLocation,
+    _message: &mut Xcm<RuntimeCall>,
+    _max_weight: Weight,
+    _weight_credit: &mut Weight,
+  ) -> Result<(), ()> {
+    ensure!(T::contains(origin), ());
+    Ok(())
+  }
+}
+```
+
+<aside class="notes"><ul>
+<li><p><strong>This fulfills our requirements</strong></p>
+</li>
+<li><p>To meet our example use case, we only need the relay to have free execution.</p>
+</li>
+<li><p>XCMv3 adds a new <code>AllowExplicitUnpaidExecutionFrom</code>, which not only checks the origin but also that the <strong>first instruction is the new <code>UnpaidExecution</code> instruction</strong>.</p>
+</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🚧 `Barrier` via `xcm-builder`
+
+- `AllowKnownQueryResponses`: Allows the execution of the message if it is a `QueryResponse` message and the `ResponseHandler` is expecting such response
+
+- `AllowSubscriptionsFrom<T>`: If the `origin` that sent the message is contained in `T`, it allows the execution of the message if it contains only a `SubscribeVersion` or `UnsubscribeVersion` instruction.
+</script></section></section><section ><section data-markdown><script type="text/template">
+### 🏋️ `Weigher` via `xcm-builder`
+
+- Specifies how instructions are weighed
+- `FixedWeightInfoBounds`: Apply a constant weight value to all instructions except for `Transact`, `SetErrorHandler` and `SetAppendix`.
+- `WeightInfoBounds`: Apply instruction-specific weight (ideally, benchmarked values) except for `Transact`, `SetErrorHandler` and `SetAppendix`.
+
+<aside class="notes"><p>Benchmarking can easily be done with the <code>pallet-xcm-benchmarks</code> module.
+Note that the benchmarks need to reflect what your runtime is doing, so fetching the weights done for another runtime can potentially turn into users abusing your system.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🏋️ `Weigher` via `xcm-builder`
+
+- `Transact` weight is defined by `require_weight_at_most` value.
+- `SetErrorHandler` and `SetAppendix`, besides their own weight, need to account for the XCM instructions they will execute.
+
+<div style="font-size:smaller">
+
+```rust [0|6|7
+  fn instr_weight_with_limit(
+		instruction: &Instruction<C>,
+		instrs_limit: &mut u32,
+	) -> Result<Weight, ()> {
+		use xcm::GetWeight;
+		let instr_weight = match instruction {
+			Transact { require_weight_at_most, .. } => *require_weight_at_most,
+			SetErrorHandler(xcm) | SetAppendix(xcm) => Self::weight_with_limit(xcm, instrs_limit)?,
+			_ => Weight::zero(),
+		};
+		instruction.weight().checked_add(&instr_weight).ok_or(())
+	}
+```
+
+<div>
+</script></section></section><section ><section data-markdown><script type="text/template">
+### 🔧 `WeightTrader` via `xcm-builder`
+
+- Specifies how to charge for weight inside the xcm execution.
+- Used in the `BuyExecution` instruction
+- Used in the `RefundSurplus` instruction
+</script></section><section data-markdown><script type="text/template">
+### 🔧 `WeightTrader` via `xcm-builder`
+
+- `FixedRateOfFungible`: Converts weight to fee at a fixed rate and charges in a specific fungible asset
+
+```rust [0|7|17|19-21|28-30]|34
+pub struct FixedRateOfFungible<T: Get<(AssetId, u128)>, R: TakeRevenue>(
+  Weight,
+  u128,
+  PhantomData<(T, R)>,
+);
+impl<
+  T: Get<(AssetId, u128)>,
+  R: TakeRevenue
+> WeightTrader for FixedRateOfFungible<T, R> {
+  /* snip */
+  fn buy_weight(
+	&mut self,
+	weight: Weight,
+	payment: Assets
+  ) -> Result<Assets, XcmError> {
+    // get the assetId and amount per second to charge
+    let (id, units_per_second) = T::get();
+    // Calculate the amount to charge for the weight bought
+    let amount =
+	  units_per_second * (weight as u128)
+	  / (WEIGHT_REF_TIME_PER_SECOND as u128);
+
+    if amount == 0 {
+      return Ok(payment)
+    }
+
+    // Take amount from payment
+    let unused =
+      payment.checked_sub((id, amount).into())
+	  .map_err(|_| XcmError::TooExpensive)?;
+
+    self.0 = self.0.saturating_add(weight);
+    self.1 = self.1.saturating_add(amount);
+    Ok(unused)
+  }
+  /* snip */
+}
+```
+
+<aside class="notes"><ul>
+<li>It is crucial that we return the unused portion of the tokens, as these need to be refunded back in to the holding register.</li>
+<li>We keep how much it has been bought to be able to refund later on.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🔧 `WeightTrader` via `xcm-builder`
+
+- `UsingComponents`: uses `TransactionPayment` pallet to set the right price for weight.
+
+<aside class="notes"><ul>
+<li><code>TransactionPayment</code> pallet already defines how to convert weight to fee.
+We do not need to define a rate in this case.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+### 🔃 `LocationInverter` via `xcm-builder`
+
+- Knowing how to go from a `source` location to a `target` location, it calculates how to go from `target` to `source`.
+
+- Xcm-builder provides the `LocationInverter<Ancestry>` struct.
+  **Ancestry** indicates how to go from `root` (the top-level consensus system) to your chain.
+
+##### Example:
+
+- **Ancestry**: `para_1000`
+- **Source to target**: `../para_2/account32_default`
+- **Target to source**: `../../para_1000`
+</script></section><section data-markdown><script type="text/template">
+### 🔃 `LocationInverter` via `xcm-builder`
+
+**_Important_**
+
+**`LocationInverter` configuration will disappear in XcmV3!**.
+Instead, xcmV3 has the notion of `UniversalLocation`, which is similar to the `Ancestry` concept.
+However, **`Ancestry` referred to the location of the chain within the top-level local consensus system**.
+`UniversalLocation` refers to the location of the chain within `Universal Consensus`, including the top-level consensus system.
+
+Example for parachain 1000 in Kusama:
+
+- **Ancestry**: `para_1000`
+- **UniversalLocation**: `GlobalConsensus(Kusama)/para_1000`
+</script></section></section><section ><section data-markdown><script type="text/template">
+### 🎨 `pallet-xcm`
+
+- Main connection between the FRAME subsystem and the XCM subsystem.
+- **`pallet-xcm` allows us to send/execute XCM and interact with the `xcm-executor`**.
+- Configurable to filter executions/teleporting or sending among others.
+</script></section><section data-markdown><script type="text/template">
+### 🎨 Key roles of `pallet-xcm`
+
+<pba-flex center>
+
+1. Allows to interact with the `xcm-executor` by executing xcm messages.
+   These can be filtered through the `XcmExecuteFilter`.
+1. Provides an easier interface to do `reserveTransferAssets` and `TeleportAssets`.
+   The origins capable of doing these actions can be filtered by `XcmTeleportFilter` and `XcmReserveTransferFilter`.
+1. Handles XCM version negotiation duties.
+1. Handles asset-trap/claim duties.
+1. Allows sending arbitrary messages to other chains for certain origins.
+   The origins that are allowed to send message can be filtered through `SendXcmOrigin`.
+
+</pba-flex>
+
+<aside class="notes"><ul>
+<li>Even when <code>palletXcm</code> allows any FRAME origin to send XCMs, it distinguishes root calls vs any other origin calls.
+In the case of the latter, it appends the <code>DescendOrigin</code> instruction to make sure non-root origins cannot act on behalf of the parachain.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🎨 `pallet-xcm`
+
+```rust [0|5|10-12|15|20|23]
+impl pallet_xcm::Config for Runtime {
+  type RuntimeEvent = RuntimeEvent;
+  // Who can send XCM messages?
+  // How are origins handled?
+  type SendXcmOrigin = EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+  // How do we route messages?
+  type XcmRouter = XcmRouter;
+  // Who can execute XCMs/teleport assets/reserve-transfer assets?
+  // How are origins handled?
+  type ExecuteXcmOrigin = EnsureXcmOrigin<
+    RuntimeOrigin,
+	LocalOriginToLocation
+  >;
+  // Who and what messages are allowed to be executed?
+  type XcmExecuteFilter = Everything;
+  // The XCM executor itself
+  type XcmExecutor = XcmExecutor;
+  // Who and what kind of assets are allowed to be teleported
+  // via the `teleport_asset` extrinsic?
+  type XcmTeleportFilter = Everything;
+  // Who and what kind of assets are allowed to be transferred
+  // as a reserve asset via the `reserve_transfer_assets` extrinsic?
+  type XcmReserveTransferFilter = Everything;
+  type Weigher = XcmWeigher;
+  type LocationInverter = LocationInverter<Ancestry>;
+  type RuntimeOrigin = RuntimeOrigin;
+  type RuntimeCall = RuntimeCall;
+  const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
+  // What XCM version do we advertise as supported
+  type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
+}
+```
+</script></section></section><section ><section data-markdown><script type="text/template">
+### 🛄 Asset Trap/Claims with PalletXcm
+
+- `AssetTrap` determines what to do with assets that remain in the holding register after the XCM instructions are executed.
+- `AssetClaim` determines how to reclaim assets that were trapped.
+
+```rust
+impl Config for XcmConfig {
+  /* snip */
+  type AssetClaim = PalletXcm;
+  type AssetTrap = PalletXcm;
+  /* snip */
+}
+```
+
+<aside class="notes"><ul>
+<li>Any situation in which the holding register contains assets after the execution of the XCM message would lead to asset trapping.</li>
+<li>This is handled in the <code>post_execute</code> function of the xcm-executor.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### 🛄 Asset Trap/Claims with `PalletXcm`
+
+- **`PalletXcm` asset trapper**: Trapped assets are stored in the `AssetTraps` storage item and indexed by `BlakeTwo256((origin, assets))`
+
+- **`PalletXcm` asset claimer**: `PalletXcm` also allows for claiming trapped assets, providing that:
+  - the origin claiming the assets is identical to the one that trapped them.
+  - the `multiAsset` being claimed is identical to the one that was trapped
+
+<aside class="notes"><ul>
+<li>Each map element on <code>AssetTraps</code> holds a counter of how many times such origin has trapped such <code>multiAsset</code>.</li>
+<li>Every time such <code>multiAsset</code> gets reclaimed, the counter decrements by one.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## 🗣️ version negotiation with `pallet-xcm`
+
+XCM is an **extensible message format**.
+
+Versioning allows chains to communicate as XCM evolves.
+
+```rust
+pub enum VersionedXcm {
+    V0(v0::Xcm),
+    V1(v1::Xcm),
+    V2(v2::Xcm),
+}
+```
+
+<aside class="notes"><ul>
+<li>V0 and V1 were removed with the addition of XCM v3.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## 🗣️ version negotiation with `pallet-xcm`
+
+But chains need to be aware of the version supported by each other.
+`SubscribeVersion` and `QueryResponse` play a key role here:
+
+```rust
+enum Instruction {
+  /* snip */
+  SubscribeVersion {
+        query_id: QueryId,
+        max_response_weight: u64,
+  },
+  QueryResponse {
+        query_id: QueryId,
+        response: Response,
+        max_weight: u64,
+  },
+  /* snip */
+}
+```
+
+<aside class="notes"><ul>
+<li><code>query_id</code> would be identical in the <code>SubscribeVersion</code> and <code>QueryResponse</code> instructions.</li>
+<li>Likewise, <code>max_response_weight</code> should also match <code>max_weight</code> in the response</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## 🗣️ version negotiation with `pallet-xcm`
+
+- `ResponseHandler`: The component in charge of handling response messages from other chains.
+- `SubscriptionService`: The component in charge of handling version subscription notifications from other chains
+
+```rust
+ impl Config for XcmConfig {
+  /* snip */
+  type ResponseHandler = PalletXcm;
+  type SubscriptionService = PalletXcm;
+ }
+```
+
+<aside class="notes"><ul>
+<li><code>PalletXcm</code> keeps track of the versions of each chain when it receives a response.</li>
+<li>It also keeps track of which chains it needs to notify whenever we change our version</li>
+</ul>
+</aside></script></section></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

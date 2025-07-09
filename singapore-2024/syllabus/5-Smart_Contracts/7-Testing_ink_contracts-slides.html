@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Testing ink! Smart Contracts</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+<img rounded style="width: 600px;" src="./img/ink/ink-logo-with-squid-white.svg" />
+
+# Testing ink! Smart Contracts
+</script></section><section  data-markdown><script type="text/template">
+## How to validate contract behavior?
+
+<br/>
+
+- linter/static checks
+- common vulnerability patterns
+- unit testing
+- end-to-end testing
+- quasi-end-to-end testing
+- fuzzing
+- ...
+</script></section><section  data-markdown><script type="text/template">
+## How to validate contract behavior?
+
+<br/>
+
+- linter/static checks
+- common vulnerability patterns
+- <font color="#e6007a">unit testing</font>
+- <font color="#e6007a">end-to-end testing</font>
+- <font color="#e6007a">quasi-end-to-end testing</font>
+- fuzzing
+- ...
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain node onion
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain node onion
+
+<br/>
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/ink-testing-blockchain-is-an-onion.png" />
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain node onion
+
+<img style="margin-top: 10px" width="600" src="./img/ink/blockchain-onion-1.svg" />
+
+- networking
+- block production, dissemination, finalization
+- storage management
+- off-chain maintenance, querying, indexing
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain node onion
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-2.svg" />
+
+- computing new state based on the previous one and a single transaction
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain node onion
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-3.svg" />
+
+- executing contract calls
+</script></section><section  data-markdown><script type="text/template">
+## Blockchain node onion
+
+<br/>
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/blockchain-onion-3.svg" />
+</script></section><section  data-markdown><script type="text/template">
+## The stack
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="1000" src="./img/ink/testing-contract-stack.svg" />
+</script></section><section  data-markdown><script type="text/template">
+## Case study
+
+<br/>
+
+- an on-chain round-based game
+- a rectangular grid to be colored
+- in every round a player can color a single cell with their specific color (they choose the coordinates)
+- after a fixed number of rounds the game ends and the player with the most cells of their color wins
+</script></section><section  data-markdown><script type="text/template">
+## Case study
+
+<br/>
+
+https://github.com/Polkadot-Blockchain-Academy/ink-testing-strategies/
+</script></section><section  data-markdown><script type="text/template">
+## Unit tests
+
+<br/>
+
+Just like classic component testing.
+</script></section><section  data-markdown><script type="text/template">
+## Unit tests
+
+<br/>
+
+```rust
+#[ink::test]
+fn check_dummy_playing() {
+    let mut player = MyPlayer::new((4, 4), 0);
+
+    for turn in 0..16 {
+        let (x, y) = player.my_turn().expect("should return coordinates");
+        assert_eq!(x, turn % 4);
+        assert_eq!(y, turn / 4 % 4);
+    }
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Unit tests: possibilities
+
+<br/>
+
+```rust [1-3]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Unit tests: possibilities
+
+<br/>
+
+```rust [5-9]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Unit tests: possibilities
+
+<br/>
+
+```rust [11-22]
+#[ink::test]
+fn erc20_transfer_works() {
+  let mut erc20 = Erc20::new(100);
+
+  assert_eq!(erc20.balance_of(BOB), 0);
+  // Alice transfers 10 tokens to Bob.
+  assert_eq!(erc20.transfer(BOB, 10), Ok(()));
+  // Bob owns 10 tokens.
+  assert_eq!(erc20.balance_of(BOB), 10);
+
+  let emitted_events = ink::env::test::recorded_events().collect::<Vec<_>>();
+  assert_eq!(emitted_events.len(), 2);
+
+  // Check first transfer event related to ERC-20 instantiation.
+  assert_transfer_event(
+    &emitted_events[0], None, Some(ALICE), 100,
+  );
+  // Check the second transfer event relating to the actual transfer.
+  assert_transfer_event(
+    &emitted_events[1], Some(ALICE), Some(BOB), 10,
+  );
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## E2E tests
+
+<br/>
+
+Full flow execution.
+</script></section><section  data-markdown><script type="text/template">
+## E2E pipeline: traps, traps everywhere
+
+<div style="font-size: 0.6em">
+
+1. Preparing and encoding transaction data (_client side_)
+1. Signing the transaction (_client side_)
+1. Sending transaction to a node (_client side_)
+1. Block and event subscribing (_client side_)
+1. Transaction pool processing (<font color="#e6007a">_node side_</font>)
+1. Block building (<font color="#e6007a">_node side_</font>)
+1. Block dissemination (<font color="#e6007a">_node side_</font>)
+1. Import queue processing (<font color="#e6007a">_node side_</font>)
+1. Block finalizing (<font color="#e6007a">_node side_</font>)
+1. Block execution (<font color="#e6007a">_node side_</font>)
+1. Transaction execution (<font color="#c2ff33">_runtime side_</font>)
+1. Event emitting (<font color="#e6007a">_node side_</font>)
+1. Event capturing (_client side_)
+1. Event processing (_client side_)
+1. State fetching via RPC calling (_client side_)
+1. State report (<font color="#e6007a">_node side_</font>)
+1. State validation (_client side_)
+
+</div>
+</script></section><section  data-markdown><script type="text/template">
+## E2E pipeline: traps, traps everywhere
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/ink-testing-trap.gif" />
+</script></section><section  data-markdown><script type="text/template">
+## E2E pipeline: fear, fear everywhere
+
+<img style="margin-top: 100px;margin-bottom: 50px" width="800" src="./img/ink/ink-testing-fear.png" />
+</script></section><section  data-markdown><script type="text/template">
+## E2E pipeline: traps, traps everywhere
+
+<div style="font-size: 0.6em">
+
+1. **Preparing and encoding transaction data (_client side_)**
+1. Signing the transaction (_client side_)
+1. Sending transaction to a node (_client side_)
+1. Block and event subscribing (_client side_)
+1. Transaction pool processing (<font color="#e6007a">_node side_</font>)
+1. Block building (<font color="#e6007a">_node side_</font>)
+1. Block dissemination (<font color="#e6007a">_node side_</font>)
+1. Import queue processing (<font color="#e6007a">_node side_</font>)
+1. Block finalizing (<font color="#e6007a">_node side_</font>)
+1. Block execution (<font color="#e6007a">_node side_</font>)
+1. **Transaction execution (<font color="#c2ff33">_runtime side_</font>)**
+1. Event emitting (<font color="#e6007a">_node side_</font>)
+1. Event capturing (_client side_)
+1. Event processing (_client side_)
+1. State fetching via RPC calling (_client side_)
+1. State report (<font color="#e6007a">_node side_</font>)
+1. **State validation (_client side_)**
+
+</div>
+</script></section><section  data-markdown><script type="text/template">
+## Test core
+
+<br/>
+
+1. Preparing and encoding transaction data (<font color="#c2ff33">**given**</font>)
+1. Transaction execution (<font color="#c2ff33">**when**</font>)
+1. State validation (<font color="#c2ff33">**then**</font>)
+</script></section><section  data-markdown><script type="text/template">
+## quasi-E2E tests
+
+<br/>
+
+Interact directly with runtime, skipping node layer.
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="300" src="./img/ink/ink-testing-blind.png" />
+</script></section><section  data-markdown><script type="text/template">
+## quasi-E2E tests with `drink!`
+
+<br/>
+
+https://github.com/inkdevhub/drink
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="300" src="./img/ink/ink-testing-drink-potion.png" />
+</script></section><section  data-markdown><script type="text/template">
+## `drink!` test
+
+<br/>
+
+```rust
+#[drink::test]
+fn flipping() -> Result<(), Box<dyn Error>> {
+    let contract = BundleProvider::Flipper.bundle()?;
+    let init_value: bool = Session::<MinimalRuntime>::new()?
+        .deploy_bundle_and(contract, "new", &["true"], NO_SALT, NO_ENDOWMENT)?
+        .call_and("flip", NO_ARGS, NO_ENDOWMENT)?
+        .call_and("flip", NO_ARGS, NO_ENDOWMENT)?
+        .call_and("flip", NO_ARGS, NO_ENDOWMENT)?
+        .call_and("get", NO_ARGS, NO_ENDOWMENT)?
+        .record()
+        .last_call_return_decoded()?
+        .expect("Call was successful");
+
+    assert_eq!(init_value, false);
+
+    Ok(())
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Local playing with contracts using `drink-cli`
+
+<video height="450" controls>
+  <source src="./img/ink/ink-testing-drink-cli.mp4" type="video/mp4">
+</video>
+</script></section><section  data-markdown><script type="text/template">
+## Takeaways
+
+<br/>
+
+- **Always test your contracts!**
+- Unit tests in the initial dev phase and for complex methods.
+- drink! during development and for long-running simulations.
+- E2E suite for the final product.
+
+<img style="margin-top: 50px;margin-bottom: 50px" width="500" src="./img/ink/ink-testing-takeaway.png" />
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

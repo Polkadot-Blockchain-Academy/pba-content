@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Accounting Models & User Abstractions in Blockchains</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Accounting Models & User Abstractions in Blockchains
+</script></section><section  data-markdown><script type="text/template">
+## Overview
+
+- Cryptography, Signatures, Hash functions, Hash based Data Structures
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+- Economics/Game Theory
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+- Blockchain structure
+  <!-- .element: class="fragment" data-fragment-index="4" -->
+</script></section><section  data-markdown><script type="text/template">
+## Where do we go from here?
+
+- We have some base elements, ideas, and concepts
+  <!-- .element: class="fragment" data-fragment-index="2" -->
+- Now, let's put them together into something cool..
+  <!-- .element: class="fragment" data-fragment-index="3" -->
+</script></section><section  data-markdown><script type="text/template">
+## What are we talking about?
+
+<pba-cols>
+<pba-col style="font-size:smaller">
+
+- Now that we have this structured decentralized tamper proof state machine..
+- Let's think of ways we can formulate a state and a state transition in terms of representing users
+
+</pba-col>
+
+<img rounded style="width: 400px; height 400px; float:right; margin-right:5px" src="./img/3.2-thinking-cartoon.png" />
+</script></section><section  data-markdown><script type="text/template">
+## State User Model
+
+![State User Model](img/utxo_state_1.svg)
+</script></section><section  data-markdown><script type="text/template">
+## State User Model
+
+![State User Model](img/utxo_state_2.svg)
+</script></section><section  data-markdown><script type="text/template">
+## How to represent Joshy and Andrew?
+
+![Representation](img/utxo_state_1.svg)
+</script></section><section  data-markdown><script type="text/template">
+## User Representation
+
+![User Representation](img/utxo_state_3.svg)
+</script></section><section  data-markdown><script type="text/template">
+## How to send from Joshy to Andrew? What do you need?
+
+![Transfer](img/utxo_state_4.svg)
+
+<aside class="notes"><p>What would be catastrophic if we got wrong??</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## What if we want to spend this?
+
+![Spend](img/utxo_state_5.svg)
+
+<aside class="notes"><p>Why do we say spend here and not modify?</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Input
+
+![Input](img/utxo_transaction_1.svg)
+</script></section><section  data-markdown><script type="text/template">
+## Transaction
+
+![Transaction](img/utxo_transaction_2.svg)
+
+<aside class="notes"><p>Why do we not send all of the 70 to Andrew?</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## How to verify this state change is valid?
+
+- We can actually spend this thing signature verification!
+- Sum of the inputs is >= sum of the outputs
+- No coins are worth 0
+- Has this already been spent before?
+
+<aside class="notes"><p>Which did I forget??</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Our new state
+
+![New State](img/utxo_state_6.svg)
+</script></section><section  data-markdown><script type="text/template">
+## How do we generalize beyond money?
+
+![Generalization](img/utxo_state_7.svg)
+</script></section><section  data-markdown><script type="text/template">
+## How do we generalize beyond money?
+
+![Generalization](img/utxo_state_8.svg)
+
+<aside class="notes"><p>How are we going to verify now that the state transition is valid?</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Transaction
+
+![Transaction](img/utxo_transaction_3.svg)
+</script></section><section  data-markdown><script type="text/template">
+## Transaction
+
+![Transaction](img/utxo_transaction_4.svg)
+</script></section><section  data-markdown><script type="text/template">
+## Is this a good model? Why or why not? Let's discuss
+
+- Scalability
+- Privacy
+- General Computation
+</script></section><section  data-markdown><script type="text/template">
+## Is there a different way?
+
+![Different Way](img/utxo_state_7.svg)
+
+<aside class="notes"><p>Now ease them to the solution of Accounts</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Accounts
+
+![Accounts](img/accounts_state_1.svg)
+
+<aside class="notes"><p>Now ease them to the solution of Accounts</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## State Transition Accounts
+
+![State Transition Accounts](img/accounts_transaction_1.svg)
+</script></section><section  data-markdown><script type="text/template">
+## State Transition Accounts
+
+![State Transition Accounts](img/accounts_transaction_2.svg)
+</script></section><section  data-markdown><script type="text/template">
+## How do we verify and handle this transaction?
+
+- Verify enough funds are in Joshy's account
+- Verify this amount + Andrews amount don't exceed the max value
+- Check the nonce of the transaction
+- Do the actual computation of output values
+
+<aside class="notes"><p>Did I forget any?</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## State Transition Accounts
+
+![State Transition Accounts](img/accounts_transaction_3.svg)
+</script></section><section  data-markdown><script type="text/template">
+## What did we do differently in Accounts vs UTXO model?
+
+<aside class="notes"><p>Verify as opposed to determining the outcome. Not submitting output state in transaction</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Account Arbitrary Data
+
+![Account Arbitrary Data](img/accounts_state_2.svg)
+</script></section><section  data-markdown><script type="text/template">
+## Is this a good model? Why or why not? Lets Discuss
+
+- Scalability
+- Privacy
+- General Computation
+
+<aside class="notes"><p>Parallelization? Storage space, privacy solutions?</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Small shill... Tuxedo 👔
+
+> <https://github.com/Off-Narrative-Labs/Tuxedo>
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions?
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

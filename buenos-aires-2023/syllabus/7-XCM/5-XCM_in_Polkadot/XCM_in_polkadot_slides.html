@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>XCM in the Polkadot</title>
+  <link rel="shortcut icon" href="./../../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# XCM in Polkadot
+</script></section><section  data-markdown><script type="text/template">
+## _At the end of this lecture, you will be able to:_
+
+<pba-flex center>
+
+- Understand the configuration of the Rococo chain
+- Send real-world messages between parachain A <-> Rococo
+- Identify potential errors on XCM messages
+</script></section><section  data-markdown><script type="text/template">
+## 🤔 Considerations
+
+- There should be no trust assumption between chains unless explicitly requested.
+- We cannot assume chains will not act maliciously
+- Spamming XCM messages creates a DoS problem
+</script></section><section  data-markdown><script type="text/template">
+## 🛠️ Rococo Configuration
+
+- Barriers
+- Teleport filtering
+- Trusted reserves
+- Asset transactors
+- Fee payment
+- Proper XCM Instruction Weighting
+- Location to Account/FRAME Origin conversions
+
+<aside class="notes"><p>From now on, we will use the Rococo runtime as a reference.
+Rococo is a testnet for
+Polkadot and Kusama that we will use in to test our XCM messages.
+Most of the Rococo configuration
+is identical to that in Polkadot.</p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## 🚧 XCM `Barrier` in Rococo
+
+```rust
+/// The barriers one of which must be passed for an XCM message to be executed.
+pub type Barrier = (
+  // Weight that is paid for may be consumed.
+  TakeWeightCredit,
+  // If the message is one that immediately attempts to pay for execution, then allow it.
+  AllowTopLevelPaidExecutionFrom<Everything>,
+  // Messages coming from system parachains need not pay for execution.
+  AllowUnpaidExecutionFrom<IsChildSystemParachain<ParaId>>,
+  // Expected responses are OK.
+  AllowKnownQueryResponses<XcmPallet>,
+  // Subscriptions for version tracking are OK.
+  AllowSubscriptionsFrom<Everything>,
+);
+```
+</script></section><section data-markdown><script type="text/template">
+## 🚧 XCM `Barrier in Rococo
+
+- `TakeWeightCredit` and `AllowTopLevelPaidExecutionFrom` are used to prevent spamming for local/remote XCM execution.
+- `AllowUnpaidExecutionFrom` lets a system parachain have free execution in the relay.
+- `AllowKnownQueryResponses` and `AllowSubscriptionsFrom`, as we know already, are mostly used for versioning.
+
+<aside class="notes"><ul>
+<li>Child system parachains are parachains that contain core polkadot features, and they will get a paraId of less than 1000.
+They are allocated by Polkadot governance and get free execution.</li>
+<li><code>AllowKnownQueryResponses</code> will check pallet-xcm storage to know whether the response is expected. -<code>AllowSubscriptionsFrom</code> determines that any origin is able to subscribe for version changes.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## 🤝 Trusted teleporters in Rococo
+
+```rust [0|2|6-8|18-22]
+parameter_types! {
+  pub const RocLocation: MultiLocation = Here.into();
+  pub const Rococo: MultiAssetFilter =
+    Wild(AllOf { fun: WildFungible, id: Concrete(RocLocation::get()) });
+
+  pub const Statemine: MultiLocation = Parachain(1000).into();
+  pub const Contracts: MultiLocation = Parachain(1002).into();
+  pub const Encointer: MultiLocation = Parachain(1003).into();
+
+  pub const RococoForStatemine: (MultiAssetFilter, MultiLocation) =
+    (Rococo::get(), Statemine::get());
+  pub const RococoForContracts: (MultiAssetFilter, MultiLocation) =
+    (Rococo::get(), Contracts::get());
+  pub const RococoForEncointer: (MultiAssetFilter, MultiLocation) =
+    (Rococo::get(), Encointer::get());
+}
+
+pub type TrustedTeleporters = (
+  xcm_builder::Case<RococoForStatemine>,
+  xcm_builder::Case<RococoForContracts>,
+  xcm_builder::Case<RococoForEncointer>,
+);
+```
+</script></section><section data-markdown><script type="text/template">
+## 🤝 Trusted teleporters in Rococo
+
+- Teleporting involves trust between chains.
+- 1000 (Statemint) and 1001 (Contracts) and 1002 (Encointer) are allowed to teleport tokens represented by the **Here**
+- **Here** represents the relay token
+
+```rust
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+  type IsTeleporter = TrustedTeleporters;
+  /* snip */
+}
+```
+
+<aside class="notes"><ul>
+<li>Statemine, Rococo and Encointer are able to teleport the relay chain token</li>
+<li>Any other chain sending a <code>ReceiveTeleportedAsset</code> or any other token being teleported will be rejected with <code>UntrustedTeleportLocation</code>.</li>
+</ul>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## 💱Trusted reserves in Rococo
+
+- Rococo does not recognize any chain as reserve
+- Rococo prevents reception of any **ReserveAssetDeposited** message
+
+```rust
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+  type IsReserve = ();
+  /* snip */
+}
+```
+
+<aside class="notes"><ul>
+<li>Trusting other parachains (e.g., common good parachains) to be reserves of the relay native token would cause rare situations with the total issuance.
+For instance, users could drain reserves of the sovereign account with teleported funds.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## 📁 `LocationToAccountId` in Rococo
+
+- Conversion between a multilocation to an AccountId is a key component to withdraw/deposit assets and issue `Transact` operations.
+- Parachain origins will be converted to their corresponding sovereign account.
+- Local 32 byte origins will be converted to a 32 byte defined AccountId.
+
+```rust
+pub type LocationConverter = (
+  // We can convert a child parachain using the standard `AccountId` conversion.
+  ChildParachainConvertsVia<ParaId, AccountId>,
+  // We can directly alias an `AccountId32` into a local account.
+  AccountId32Aliases<RococoNetwork, AccountId>,
+);
+```
+
+<aside class="notes"><ul>
+<li>Any other origin that is not a parachain origin or a local 32 byte account origin will not be convertible to an accountId.</li>
+<li>Question class what happens if a message coming from a parachain starts with <code>DescendOrigin</code>?
+XcmV2 will reject it at the barrier level (Since <strong><em>AllowTopLevelPaidExecutionFrom</em></strong> expects the first instruction to be one of <strong><em>ReceiveTeleportedAsset</em></strong> , <strong><em>WithdrawAsset</em></strong> , <strong><em>ReserveAssetDeposited</em></strong> or <strong><em>ClaimAsset</em></strong> - XcmV3 will pass the barrier as <strong><em>AllowTopLevelPaidExecutionFrom</em></strong> is inside <strong><em>WithComputedOrigin</em></strong>.</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## 🪙 Asset Transactors in Rococo
+
+<div style="font-size: smaller">
+
+```rust
+pub type LocalAssetTransactor = XcmCurrencyAdapter<
+  // Use this currency:
+  Balances,
+  // Use this currency when it is a fungible asset
+  // matching the given location or name:
+  IsConcrete<RocLocation>,
+  // We can convert the MultiLocations
+  // with our converter above:
+  LocationConverter,
+  // Our chain's account ID type
+  // (we can't get away without mentioning it explicitly):
+  AccountId,
+  // It's a native asset so we keep track of the teleports
+  // to maintain total issuance.
+  CheckAccount,
+>;
+
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+  type AssetTransactor = LocalAssetTransactor;
+  /* snip */
+}
+```
+</script></section><section data-markdown><script type="text/template">
+## 🪙 `asset-transactors` in Rococo
+
+- Single asset-transactor in Rococo
+- Asset-transactor is matching the **Here** multilocation id to the Currency defined in **Balances**, which refers to **_pallet-balances_**
+- Essentially, this is configuring XCM such that the native token (DOT) is associated with the multilocation **Here**.
+
+<aside class="notes"><ul>
+<li>Rococo is tracking teleports in the <strong>CheckAccount</strong>, which is defined in <strong>palletXcm</strong>.
+This aims at maintaining the total issuance even if assets have been teleported to another chain.</li>
+</ul>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+## 📍`origin-converter` in Rococo
+
+```rust
+type LocalOriginConverter = (
+  // Converts to a signed origin with "LocationConverter"
+  SovereignSignedViaLocation<LocationConverter, RuntimeOrigin>,
+  // Converts a child parachain multilocation to a parachain origin
+  ChildParachainAsNative<parachains_origin::Origin, RuntimeOrigin>,
+  // Converts a local 32 byte multilocation to a signed
+  // origin
+  SignedAccountId32AsNative<WestendNetwork, RuntimeOrigin>,
+  // Converts system parachain origins into root origin
+  ChildSystemParachainAsSuperuser<ParaId, RuntimeOrigin>,
+);
+```
+
+```rust
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+  type OriginConverter = LocalOriginConverter;
+  /* snip */
+}
+```
+</script></section><section data-markdown><script type="text/template">
+## 📍`origin-converter` in Rococo
+
+- Defines ways in which we can convert a multilocation to a dispatch origin, typically used by the `Transact` instruction:
+- Child parachain origins are converted to signed origins through **_LocationConverter_** (`OriginKind == Sovereign`).
+- Child parachains can also be converted to native parachain origins (`OriginKind == Native`).
+- Local 32 byte origins are converted to signed 32 byte origins (`OriginKind == Native`).
+
+<aside class="notes"><ul>
+<li>There exists the concept of a &quot;parachain dispatch origin&quot; which is used for very specific functions (like, e.g., opening a channel with another chain).
+This gets checked with the <em>ensure_parachain!</em> macro.</li>
+<li>System parachains are able to dispatch as root origins, as they can bee seen as an extension to the rococo runtime itself.</li>
+</ul>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+### 🏋️ `Weigher` in Rococo
+
+- Uses `WeightInfoBounds` with benchmarked values with `pallet-xcm-benchmarks`
+- Full list of weights can be seen [here](https://github.com/paritytech/polkadot/tree/master/runtime/rococo/src/weights/xcm)
+
+```rust
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+type Weigher = WeightInfoBounds<
+		crate::weights::xcm::RococoXcmWeight<RuntimeCall>,
+		RuntimeCall,
+		MaxInstructions,
+	>;
+ /* snip */
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## 🔧 `WeightTrader` in Rococo
+
+- Weight is converted to fee with the **_WeightToFee_** type.
+- The asset in which we charge for fee is **_RocLocation_**.
+  This means we can only pay for xcm execution in the **native currency**
+- Fees will go to the block author thanks to **_ToAuthor_**
+
+```rust
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+  type Trader = UsingComponents<
+    WeightToFee,
+	RocLocation,
+	AccountId,
+	Balances,
+	ToAuthor<Runtime>>;
+  /* snip */
+}
+```
+
+<aside class="notes"><ul>
+<li><p>Trying to buyExecution with any other token that does not match the specified AssetId (in this case, <code>RocLocation</code>, which represents the native token) <strong>will fail</strong>.</p>
+</li>
+<li><p><strong><em>WeightToFee</em></strong> contains an associated function that will be used to convert the required amount of weight into an amount of tokens used for execution payment.</p>
+</li>
+</ul>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## 🎨 `XcmPallet` in Rococo
+
+```rust
+impl pallet_xcm::Config for Runtime {
+  /* snip */
+  type XcmRouter = XcmRouter;
+  type SendXcmOrigin =
+    xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+  // Anyone can execute XCM messages locally.
+  type ExecuteXcmOrigin =
+    xcm_builder::EnsureXcmOrigin<RuntimeOrigin, LocalOriginToLocation>;
+  type XcmExecuteFilter = Everything;
+  type XcmExecutor = xcm_executor::XcmExecutor<XcmConfig>;
+  // Anyone is able to use teleportation
+  // regardless of who they are and what they want to teleport.
+  type XcmTeleportFilter = Everything;
+  // Anyone is able to use reserve transfers
+  // regardless of who they are and what they want to transfer.
+  type XcmReserveTransferFilter = Everything;
+  /* snip */
+}
+```
+</script></section><section data-markdown><script type="text/template">
+## 🎨 XcmPallet in Rococo
+
+- No filter on messages for Execution, Teleporting or Reserve transferring.
+- Only origins defined by **_LocalOriginToLocation_** are allowed to send/execute arbitrary messages.
+- **_LocalOriginToLocation_** defined to allow council and regular account 32 byte signed origin calls
+
+```rust
+pub type LocalOriginToLocation = (
+  // We allow an origin from the Collective pallet to be used in XCM
+  // as a corresponding Plurality of the `Unit` body.
+  CouncilToPlurality,
+  // And a usual Signed origin to be used in XCM as a corresponding AccountId32
+  SignedToAccountId32<RuntimeOrigin, AccountId, RococoNetwork>,
+);
+```
+
+<aside class="notes"><ul>
+<li><p><strong><em>LocalOrigin</em></strong> allows to go from a frame dispatch origin to a multilocation.
+This is necessary because <strong>we enter the xcm-executor with xcm origins, not with frame dispatch origins</strong>.
+Note that this is an extrinsic in a frame pallet, and thus, <strong>we call it with frame origins</strong>.</p>
+</li>
+<li><p>Council decisions are converted to <code>Plurality</code> junction multilocations.</p>
+</li>
+<li><p>Signed origins are converted to <code>AccountId32</code> junction multilocations.</p>
+</li>
+</ul>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## 🛠️ Statemine Xcm Config
+
+Statemine is a common-good parachain that allows hosting arbitrary assets.
+
+You can visit the whole xcm configuration [here](https://github.com/paritytech/cumulus/blob/master/parachains/runtimes/assets/statemine/src/xcm_config.rs)
+</script></section><section ><section data-markdown><script type="text/template">
+## 🪙 Statemine Asset Transactors
+
+```rust
+parameter_types! {
+  pub const KsmLocation:  MultiLocation = MultiLocation::parent();
+}
+
+/// Means for transacting the native currency on this chain.
+pub type CurrencyTransactor = CurrencyAdapter<
+  // Use this currency:
+  Balances,
+  // Use this currency when it is a fungible asset
+  // matching the given location or name:
+  IsConcrete<KsmLocation>,
+  // Convert an XCM MultiLocation into a local account id:
+  LocationToAccountId,
+  // Our chain's account ID type
+  // (we can't get away without mentioning it explicitly):
+  AccountId,
+  // We don't track any teleports of `Balances`.
+  (),
+>;
+```
+
+<aside class="notes"><ul>
+<li>From Statemine&#39;s point of view, the relay token is represented as <strong><em>MultiLocation { parents:1, interior: Here }</em></strong>.</li>
+<li>The <strong><em>Balances</em></strong> pallet is being used to mint teleported assets.</li>
+<li>Teleports are not tracked in any checking account.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## 🪙 Statemine Asset Transactors
+
+<div style="font-size: smaller">
+
+```rust
+/// Means for transacting assets besides the native currency on this chain.
+pub type FungiblesTransactor = FungiblesAdapter<
+  // Use this fungibles implementation:
+  Assets,
+  // Use this currency when it is a fungible asset
+  // matching the given location or name:
+  ConvertedConcreteAssetId<
+    AssetId, Balance,
+	AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
+	JustTry,
+  >,
+  // Convert an XCM MultiLocation into a local account id:
+  LocationToAccountId,
+  // Our chain's account ID type
+  // (we can't get away without mentioning it explicitly):
+  AccountId,
+  // We only want to allow teleports of known assets.
+  // We use non-zero issuance as an indication that this asset is known.
+  parachains_common::impls::NonZeroIssuance<AccountId, Assets>,
+  // The account to use for tracking teleports.
+  CheckingAccount,
+>;
+```
+
+</div>
+
+<aside class="notes"><ul>
+<li>An asset with id <code>Id</code> are represented by <code>X2(PalletInstance(pallet_assets_index), GeneralIndex(Id)</code> thanks to <strong><em>AsPrefixedGeneralIndex</em></strong>.</li>
+<li>Asset teleports <strong>are</strong> being tracked in <strong><em>CheckingAccount</em></strong>.
+The reason is that Statemine is the reserve chain for those assets.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## 🪙 Statemine Asset Transactors
+
+- **FungiblesTransactor** refers to the way in which assets created in Statemine are Withdrawn/Deposited in the xcm-executor.
+- It is critical that Statemine assets are sendable to other chains!
+- **CurrencyTransactor** refers to the way in which teleports from the relay chain are handled.
+- Every time we receive a token with the parent multilocation, we mint in Balances.
+
+```rust
+/// Prepended junction to Id
+pub AssetsPalletLocation: MultiLocation =
+		PalletInstance(<Assets as PalletInfoAccess>::index() as u8).into();
+
+/// Means for transacting assets on this chain.
+pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor);
+```
+</script></section></section><section  data-markdown><script type="text/template">
+## 🤝 Statemine Trusted Teleporters
+
+- **NativeAsset**: Only allowed if the token multilocation matches the origin.
+- This is the case for the relay token, `origin_multilocation == asset_multilocation`.
+
+```rust
+pub struct XcmConfig;
+impl xcm_executor::Config for XcmConfig {
+  /* snip */
+  type IsTeleporter = NativeAsset;
+}
+```
+
+```rust
+impl FilterAssetLocation for NativeAsset {
+  fn filter_asset_location(asset: &MultiAsset, origin: &MultiLocation) -> bool {
+    matches!(asset.id, Concrete(ref id) if id == origin)
+  }
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## 🚧 Statemine `Barrier`
+
+Similar to Rococo, but unpaid execution is allowed from the relay chain
+
+```rust
+pub type Barrier = DenyThenTry<
+  DenyReserveTransferToRelayChain,
+  (
+    TakeWeightCredit,
+    AllowTopLevelPaidExecutionFrom<Everything>,
+    // Parent and its exec plurality get free execution
+    AllowUnpaidExecutionFrom<ParentOrParentsExecutivePlurality>,
+	// Expected responses are OK.
+	AllowKnownQueryResponses<PolkadotXcm>,
+	// Subscriptions for version tracking are OK.
+	AllowSubscriptionsFrom<ParentOrSiblings>,
+  ),
+>;
+```
+
+<aside class="notes"><ul>
+<li>The relay chain has free execution</li>
+<li><code>DenyThenTry&lt;A, B&gt;</code> denies the execution if A is true, else evaluates B for allowance</li>
+<li><code>DenyReserveTransferToRelayChain</code> prevents sending a <code>InitiateReserveWithdraw</code>, <code>DepositReserveAsset</code> or <code>TransferReserveAsset</code> instruction to the relay.</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Debugging XCM
+</script></section><section  data-markdown><script type="text/template">
+## 🧐 Debugging XCM message failures
+
+Involves knowledge of the chain XCM configuration!
+
+Common steps to debug:
+
+1. Identify what the error means which will help you identify the context in which the error happened.
+1. Look in the xcm codebase to check where this error might have been thrown.
+   Was it thrown in the barrier?
+   Or in any specific instruction?
+1. Retrieve the failed received XCM.
+1. Check the chain XCM configuration to verify what could have failed.
+</script></section><section ><section data-markdown><script type="text/template">
+## 🕵️‍♂️ Identifying the error kind
+
+Look at the `ump.ExecutedUpward` event:
+
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/failed-ump.png" alt="Ump failure" />
+</script></section><section data-markdown><script type="text/template">
+## 🕵️‍♂️ Identifying the error kind
+
+- `UntrustedReserveLocation`: a `ReserveAssetDeposited` was received from a location we don't trust as reserve.
+- `UntrustedTeleportLocation`: a `ReceiveTeleportedAsset` was received from a location we don't trust as teleporter.
+- `AssetNotFound`: the asset to be withdrawn/deposited is not handled by the asset transactor.
+  Usually happens when the multilocation representing an asset does not match to those handled by the chain.
+</script></section><section data-markdown><script type="text/template">
+## 🕵️‍♂️ Identifying the error kind
+
+- `FailedToTransactAsset`: the withdraw/deposit of the asset cannot be processed, typically it's because the account does not hold such asset, or because we cannot convert the multilocation to an account.
+- `FailedToDecode`: tied to the `Transact` instruction, in which the byte-blob representing the dispatchable cannot be decoded.
+- `MaxWeightInvalid`: the weight specified in the `Transact` instruction is not sufficient to cover for the weight of the transaction.
+- `TooExpensive`: Typically tied to `BuyExecution`, means that the amount of assets used to pay for fee is insufficient.
+</script></section><section data-markdown><script type="text/template">
+## 🕵️‍♂️ Identifying the error kind
+
+- `Barrier`: One of the barriers failed, we need to check the barriers individually.
+- `UnreachableDestination`: Arises when the supported XCM version of the destination chain is unknown.
+  When the local chain sends an XCM to the destination chain for the very first time, it does not know about the XCM version of the destination.
+  In such a case, the safe XCM version is used instead.
+  However, if it is not set, then this error will be thrown.
+</script></section></section><section ><section data-markdown><script type="text/template">
+## 🔨 Decoding SCALE-encoded messages
+
+- **RelayChain**:
+  - XCM can be retrieved in the `paraInherent.enter` inherent
+  - The candidate for a specific parachain contains the ump messages sent to the relay.
+  - **UMP messages are usually executed one block after they are received**
+- **Parachain**:
+  - XCM can be retrieved in the `parachainSystem.setValidationData` inherent.
+  - **DMP and HRPM messages are usually executed in the block they are received**, at least, as long as the available weight permits.
+</script></section><section data-markdown><script type="text/template">
+## 🔨 Decoding SCALE-encoded messages
+
+But all we see is a **SCALE-encoded message** which does not give us much information.
+To solve this:
+
+- We build a SCALE-decoder to retrieve the xcm message (the hard way).
+- We rely on subscan/polkaholic to see the XCM message received.
+</script></section><section data-markdown><script type="text/template">
+## 🔨 Subscan XCM retrieval
+
+<img rounded style="width: 800px;" src="../../../assets/img/7-XCM/subscan_xcm.png" alt="Subscan XCM tab" />
+</script></section></section>
+    </article>
+  </main>
+
+  <script src="./../../../dist/reveal.js"></script>
+
+  <script src="./../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../plugin/notes/notes.js"></script>
+  <script src="./../../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

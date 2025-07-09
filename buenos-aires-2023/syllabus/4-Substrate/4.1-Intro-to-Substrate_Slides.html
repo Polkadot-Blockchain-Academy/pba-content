@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Introduction to Substrate</title>
+  <link rel="shortcut icon" href="./../../assets/favicon.ico" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+      alt="PBA Logo">
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Introduction to Substrate
+</script></section><section ><section data-markdown><script type="text/template">
+## What is Substrate?
+
+Substrate is a **Rust framework** for **building blockchains** in a modular and extensible way.
+</script></section><section data-markdown><script type="text/template">
+### Why Substrate?
+
+<img rounded width="1000px" src="../../assets/img/4-Substrate/dev-4-1-substrate-website.gif" />
+
+<aside class="notes"><p>Highlight the multi-chain part.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Why Substrate?
+
+<img rounded width="1000px" src="../../assets/img/4-Substrate/dev-4.1-maximalism.png" />
+
+<aside class="notes"><p>Polkadot is the biggest bet in this ecosystem against chain maximalism, and Substrate plays a big
+role in this scenario.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Why Substrate?
+
+- ⛓️ Future is multi-chain.
+- 😭 Building a blockchain is hard and prone to mistakes.
+<!-- .element: class="fragment" -->
+- 🧠 The need for a framework to build various blockchains is crucial for this future.
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate 💭
+
+The **pre-substrate** way of thinking:
+
+- Writing blockchains is hard.
+- Coordination of upgrades in blockchains is hard.
+- We are going to spend maximal resources at making sure we get it right.
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate 💭
+
+The **substrate** way of thinking:
+
+- It all starts with a deep acknowledgment that **society and technology will evolve**.
+- _It is only a matter of time until the "right choice" of today turns into a mistake in the future._
+</script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate 💭
+
+Outcomes of this:
+
+- Rust as a language.
+- Upgradeability through a Wasm meta-protocol.
+- Generic.
+
+<aside class="notes"><p>Think about how each of these links back to &quot;whatever you decide today will be a mistake soon&quot;.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate: Rust as a language
+
+- Memory safety is a fundamental issue in most major system-level programming languages.
+
+- 😭 `segfault`
+- 😇 You **cannot** make certain mistakes in Rust.
+</script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate: Rust as a language
+
+- 🏎️ Most Rust abstractions are **zero-cost**. Rust has no "runtime". It as fast as a binary can be.
+
+<img rounded width="900px" src="../../assets/img/4-Substrate/dev-4-1-speed.png" />
+
+<aside class="notes"><p>this is not 100% accurate though, rust has a small runtime that is the panic handler etc. Rust for
+Rustacean&#39;s chapter on no_std covers this very well.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate: Upgradeability
+
+- 💪🏻 Substrate is HIGHLY upgradable.
+- 🕸️ Encoding the **application logic** of the chain as Wasm, and storing it onchain, such that it can be upgraded on the fly.
+
+<aside class="notes"><p>make a good pause here and let them digest this.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate: Generic
+
+- Multiple consensus engines (BABE/Grandpa/AURA)
+- Multiple network protocols (QUIC, TCP)
+- Multiple database implementations (ParityDB, RocksDB)
+- Multiple ledger-state formats (UTXO, Account-based)
+</script></section><section data-markdown><script type="text/template">
+### Core Philosophies of Substrate: Generic
+
+- **AlephZero**: Custom consensus, DAG-based, 1s block time.
+- **Moonbeam**: Ethereum compatible, build with substrate.
+- **HydraDX**: Custom transaction pool logic to match DEX orders.
+- **Kulupu**: Proof of work, custom hashing.
+
+<aside class="notes"><p>Substrate has been coded, from the ground up, such that it is easy to have multiple implementations
+for certain functions. Heavy use of traits and generics is the key to achieve this. As noted,
+Substrate has a lot of APIs, and optional implementations. You are bound to the API, but not the
+particular implementation.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+### Substrate Architecture
+
+<img src="../../assets/img/4-Substrate/dev-4-1-substrate.svg" />
+</script></section><section ><section data-markdown><script type="text/template">
+## The Runtime
+
+<div>
+
+- The runtime contains all of the **application logic** of your chain.
+
+...
+
+</div>
+<!-- .element: class="fragment" -->
+<div>
+
+- In a more _fancy_ term, the runtime is the **state transition function**.
+
+...
+
+</div>
+<!-- .element: class="fragment" -->
+
+- In a more _technical_ term, the definition of **how your blockchain executes blocks**.
+
+<!-- .element: class="fragment" -->
+
+> (Wasm) Runtime ~ STF ~ Application/Business Logic
+
+<!-- .element: class="fragment" -->
+
+<aside class="notes"><ul>
+<li>Among the definitions of the Wasm runtime, let&#39;s recap what the state transition is.</li>
+<li>The block execution definition will be described more in the Wasm-meta lecture.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### State Transition
+
+- **State:** The entire set of data that we want to come to consensus about.
+- **Transition:** Done via the runtime, the piece of logic that dictates how the state changes.
+</script></section><section data-markdown><script type="text/template">
+### State Transition
+
+<img style="width: 1200px;" src="../../assets/img/4-Substrate/dev-4-1-state.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Positive Consequences of _Wasm_ Runtime 🔥
+
+- 🤖 deterministic execution
+- 🧱 sandboxing (more relevant in Polkadot)
+- 🌈 Easier client development, including light clients.
+- 😎 forkless upgrade!
+</script></section><section data-markdown><script type="text/template">
+### 🤖 Deterministic Execution
+
+- The need for determinism in a blockchain runtime is _absolute_.
+</script></section><section data-markdown><script type="text/template">
+### 🧱 Sandboxing
+
+- Substrate uses the same Wasm machinery for executing:
+
+1. Smart contracts
+1. Parachain runtime (i.e. PVF)
+</script></section><section data-markdown><script type="text/template">
+### 🌈 Easier Client Development
+
+- A Substrate client written in a different language needs to ONLY implement the host/client side.
+- Then, possibly ALL SUBSTRATE BASED CHAINS will get a new client.
+
+- Same story for a DApp that you write.
+</script></section><section data-markdown><script type="text/template">
+### 😎 Forkless Upgrade:
+
+<img style="width: 1400px;" src="../../assets/img/4-Substrate/dev-4-1-forkless-1.svg" />
+</script></section><section data-markdown><script type="text/template">
+### 😎 Forkless Upgrade:
+
+<img style="width: 1400px;" src="../../assets/img/4-Substrate/dev-4-1-forkless-2.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Negative Consequences of _Wasm_ Runtime 🥲
+
+- 😩 Constrained resources (memory, speed, syscalls).
+- 🤔 Client diversification != state-transition diversification
+
+<aside class="notes"><ul>
+<li>4GB of memory, which we limit even further in the substrate allocator.</li>
+<li>Can be slower than native, depending on the executor.</li>
+<li>Limited access to the host host env, all needs to be done through syscalls.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+### What is Wasm Anyways?
+
+> WebAssembly (abbreviated Wasm) is a _binary instruction format_ for a _stack-based virtual
+> machine_. Wasm is designed as a _portable compilation_ target for programming languages, enabling
+> deployment on the web for client and server applications.
+</script></section><section data-markdown><script type="text/template">
+### What is Wasm Anyways?
+
+<img style="width: 1400px;" src="../../assets/img/4-Substrate/dev-4-1-wasm-langs.svg" />
+</script></section><section data-markdown><script type="text/template">
+### What is Wasm Anyways?
+
+<pba-cols>
+<pba-col>
+
+- Wasm ❤️ Web
+- Streaming and rapid compilation.
+- Designed with the concept of host in mind.
+  Sandboxed, permissioned sys-calls.
+
+> Anyone remember "Java Applets"?
+
+</pba-col>
+<pba-col>
+
+<img style="height: 700px;" src="../../assets/img/4-Substrate/dev-4-1-wasm.svg" />
+
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p>People actually tried sticking things like JVM into the browser (<em>Java Applets</em>), but it didn&#39;t work.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### How to Write a Wasm Runtime?
+
+- Any language that can compile to Wasm and exposes a fixed set of functions, to be used by the client.
+- ... But, of course, Substrate comes with a framework to make this developer-friendly, **FRAME™️**.
+</script></section></section><section ><section data-markdown><script type="text/template">
+## The Client
+
+Everything else you need in a blockchain, except the runtime/STF/Application-logic we just spoke of.
+</script></section><section data-markdown><script type="text/template">
+### The Client
+
+- Compiled to native.
+- Less need for determinism.
+- Has access to anything a normal native binary does (memory, disk, syscalls etc.)
+- Does all the other shared things that most blockchains want
+  - Database, Networking, Mempool, Consensus..
+</script></section><section data-markdown><script type="text/template">
+### The Client
+
+<img style="width: 1400px;" src="../../assets/img/4-Substrate/dev-4-3-full.svg" />
+
+<aside class="notes"><p>Walk over each component and explain what role they play. Nomenclature stuff.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### The Client: Consensus 🤔
+
+- Yes, consensus is not a core part of a blockchain runtime.
+  It is not application logic.
+  It is not something you want to customize.
+
+- The consensus protocol is to your runtime what HTTP is to Facebook.
+
+<aside class="notes"><p>comments from Joshy:</p>
+<p>I think this is important.</p>
+<p>The runtime is the application you want to run.
+Consensus is outside of this application helping us agree what the official state of this runtime is.
+Last wave I used this analogy.</p>
+<p>Imagine a writers room for some TV show.
+Writers are sitting around coming up with potential plot points for future episodes.
+Any of their ideas could work.
+But eventually they need to agree what the next episode to air actually will be.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### The Client: Database 🤔
+
+- The client is in charge of storing the data, but has **no meaningful way to interpret it**.
+- The database, from the client's PoV, is a _untyped_, _opaque_, key-value storage.
+- The runtime knows which key means what.
+
+> A few exceptions exist, like `:code` being the key for the Wasm blob.
+</script></section><section data-markdown><script type="text/template">
+### The Client: Database 🤔
+
+<pba-cols>
+<pba-col>
+
+Because the runtime can change independently!
+
+</pba-col>
+<pba-col>
+
+<img style="width: 1000px" src="../../assets/img/4-Substrate/dev-4-1-state-opaqueu.svg" />
+
+</pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+### SMOLDOT: Compile the Client to Wasm
+
+<pba-cols>
+<pba-col>
+
+A marvel of universe 🤯.
+
+- (light) Substrate\* client compiled to Wasm, by the browser.
+- Itself executing another Wasm blob, the aforementioned runtime.
+
+</pba-col>
+<pba-col>
+
+<img style="width: 600px;" src="../../assets/img/4-Substrate/dev-4-1-smoldot.svg" />
+
+</pba-col>
+</pba-cols>
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Communication Paths
+
+<img style="width: 1400px" src="../../assets/img/4-Substrate/dev-4-1-comms.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Communication Paths
+
+<img style="width: 1400px" src="../../assets/img/4-Substrate/dev-4-1-comms-format.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Example: SCALE vs JSON
+
+- SCALE is an efficient, non-descriptive, binary encoding format, used EXTENSIVELY in the Substrate ecosystem.
+</script></section><section data-markdown><script type="text/template">
+### Example: SCALE vs JSON
+
+```rust
+use parity_scale_codec::{Encode};
+
+#[derive(Encode)]
+struct Example {
+	number: u8,
+	is_cool: bool,
+	optional: Option<u32>,
+}
+
+fn main() {
+	let my_struct = Example {
+		number: 42,
+		is_cool: true,
+		optional: Some(69),
+	};
+	println!("{:?}", my_struct.encode());
+	// [42, 1, 1, 69, 0, 0, 0]
+	println!("{:?}", my_struct.encode().len());
+	// 7
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Example: SCALE vs JSON
+
+```rust
+use serde::{Serialize};
+
+#[derive(Serialize)]
+struct Example {
+	number: u8,
+	is_cool: bool,
+	optional: Option<u32>,
+}
+
+fn main() {
+	let my_struct = Example {
+		number: 42,
+		is_cool: true,
+		optional: Some(69),
+	};
+	println!("{:?}", serde_json::to_string(&my_struct).unwrap());
+	// "{\"number\":42,\"is_cool\":true,\"optional\":69}"
+	println!("{:?}", serde_json::to_string(&my_struct).unwrap().len());
+	// 42
+}
+```
+</script></section></section><section  data-markdown><script type="text/template">
+### Substrate: The Gaming Console of Blockchains!
+
+<pba-cols>
+<pba-col>
+
+<img src="../../assets/img/4-Substrate/nintendo-console-2.png" style="width:400px;" />
+
+Substrate Client
+
+</pba-col>
+<pba-col>
+
+<img src="../../assets/img/4-Substrate/nintendo-game.png" style="width:400px;" />
+
+Substrate Runtime
+
+</pba-col>
+</pba-cols>
+
+<aside class="notes"><p><a href="https://www.cleanpng.com/png-game-boy-advance-deviantart-video-game-consoles-2183359/">https://www.cleanpng.com/png-game-boy-advance-deviantart-video-game-consoles-2183359/</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Substrate: VHDL and FPGA analogy.
+</script></section><section  data-markdown><script type="text/template">
+## Substrate and Polkadot
+
+<img style="width: 1400px;" src="../../assets/img/4-Substrate/dev-4-1-polkadot.svg" />
+</script></section><section ><section data-markdown><script type="text/template">
+## Substrate and Smart Contracts
+
+<img style="width: 1000px;" src="../../assets/img/4-Substrate/dev-4-1-contracts.svg" />
+</script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+- So a SMOLDOT instance, syncing a substrate based chain which has pallet-contracts is ...🤔
+</script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+<pba-cols>
+<pba-col center>
+
+<img style="width: 600px;" src="https://media.tenor.com/Oc4nf8N08jIAAAAM/mind-blow-galaxy.gif">
+
+</pba-col>
+<pba-col>
+
+- The browser is executing:
+- a Wasm blob (smoldot)
+- that executes a Wasm blob (runtime)
+- that executes a Wasm blob (contract)
+
+</pba-col>
+</pba-cols>
+</script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+<img style="width: 1000px;" src="../../assets/img/4-Substrate/dev-4-1-ink.jpeg">
+</script></section><section data-markdown><script type="text/template">
+### Substrate and Smart Contracts
+
+- So when should you write with a smart contract (Ink!) and when a Runtime (FRAME)?
+
+<aside class="notes"><p>I was asked this yesterday as well. My latest answer is: if you don&#39;t need any of the customizations
+that a blockchain client/runtime gives to you, and the performance of a shared platform is okay for
+you, then go with a smart contract. If you need more, you need a &quot;runtime&quot; (some kind of chian,
+parachain or solo)</p>
+<p>An example of customization is that a runtime has access to <code>on_initialize</code> etc.</p>
+<p>Also, a contract can not have fee-less transactions.</p>
+<p>Also, a contract usually depends on a token for gas, while a runtime can be in principle token-less
+fee-less.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Technical Freedom vs Ease
+
+<img style="width: 1000px;" src="../../assets/img/4-Substrate/dev-4-1-freedom.svg" />
+</script></section><section  data-markdown><script type="text/template">
+## Rest of This Module! 😈
+
+<pba-cols>
+<pba-col>
+
+##### Lecture
+
+- Day 0:
+  - **Introduction**
+  - Folder structure.
+- Day 1:
+  - **Wasm Meta-Protocol**
+  - SCALE, JSON-RPC
+- Day 2:
+  - **Storage**
+  - Substrate CLI, TX-Pool
+
+</pba-col>
+<pba-col>
+
+##### Activity
+
+- Day 0:
+  - Compiling Rust to Wasm
+- Day 1:
+  - FRAME-less Activity
+- Day 2:
+  - FRAME-less Activity
+
+</pba-col>
+</pba-cols>
+</script></section><section  data-markdown><script type="text/template">
+## Additional Resources! 😋
+
+> Check speaker notes (click "s" 😉)
+
+<aside class="notes"><ul>
+<li><p>Read more about why we use Rust at Parity: <a href="https://www.parity.io/blog/why-rust">https://www.parity.io/blog/why-rust</a></p>
+</li>
+<li><p>An interesting question on JVM/Wasm: <a href="https://stackoverflow.com/questions/58131892/why-the-jvm-cannot-be-used-in-place-of-webassembly">https://stackoverflow.com/questions/58131892/why-the-jvm-cannot-be-used-in-place-of-webassembly</a></p>
+</li>
+<li><p>Rust safety: <a href="https://stanford-cs242.github.io/f18/lectures/05-1-rust-memory-safety.html">https://stanford-cs242.github.io/f18/lectures/05-1-rust-memory-safety.html</a></p>
+</li>
+<li><p><a href="https://www.reddit.com/r/rust/comments/5y3cxb/how_many_security_exploits_would_rust_prevent/">https://www.reddit.com/r/rust/comments/5y3cxb/how_many_security_exploits_would_rust_prevent/</a></p>
+</li>
+<li><p>The substrate clients should still have some level of <em>determinism in their performance</em>. If
+authority nodes have extremely varied performances, they could start finalizing different forks.</p>
+</li>
+<li><p>There have been attempts at writing FRAME alternatives, namely assemblyscript. <a href="https://github.com/LimeChain/as-substrate-runtime">https://github.com/LimeChain/as-substrate-runtime</a></p>
+</li>
+<li><p>Think about the differences between a runtime and a smart contract.</p>
+<ul>
+<li>A runtime is in some sense a smart contract as well, but not a user-deployed one.</li>
+<li><a href="https://en.wikipedia.org/wiki/Smart_contract">https://en.wikipedia.org/wiki/Smart_contract</a></li>
+<li><a href="https://www.futurelearn.com/info/courses/defi-exploring-decentralised-finance-with-blockchain-technologies/0/steps/251885#:~:text=to%20the%201990s.-,Writing%20in%201994%2C%20the%20computer%20scientist%20Nick%20Szabo%20defined%20a,of%20artificial%20intelligence%20is%20implied">https://www.futurelearn.com/info/courses/defi-exploring-decentralised-finance-with-blockchain-technologies/0/steps/251885#:~:text=to%20the%201990s.-,Writing%20in%201994%2C%20the%20computer%20scientist%20Nick%20Szabo%20defined%20a,of%20artificial%20intelligence%20is%20implied</a>.</li>
+</ul>
+</li>
+<li><p>Substrate Primitives (<code>sp-*</code>), Frame (<code>frame-*</code>) and the pallets (<code>pallets-*</code>), binaries (<code>/bin</code>)
+and all other utilities are licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache
+2.0</a>.</p>
+</li>
+</ul>
+<p>Substrate Client (<code>/client/*</code> / <code>sc-*</code>) is licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL
+v3.0</a> with a <a href="https://www.gnu.org/software/classpath/license.html">classpath linking
+exception</a>.</p>
+<ul>
+<li><p>Apache2 allows teams full freedom over what and how they release, and giving licensing clarity to
+commercial teams.</p>
+</li>
+<li><p>GPL3 ensures any deeper improvements made to Substrate&#39;s core logic (e.g. Substrate&#39;s internal
+consensus, crypto or database code) to be contributed back so everyone can benefit.</p>
+</li>
+<li><p>Currently, the Wasm binary spec v1 is used, read more about the new version here: <a href="https://webassembly.github.io/spec/core/binary/index.html">https://webassembly.github.io/spec/core/binary/index.html</a></p>
+</li>
+</ul>
+<h3 id="feedback-after-lecture">Feedback After Lecture:</h3>
+<ul>
+<li><p>Emphasize more: SMALDOT is not the <em>substrate client itself compiled to Wasm</em>, it is another
+codebase, which can do most of the things that substrate client can do.</p>
+</li>
+<li><p>Wasm runtime can allocate memory, it just does&#39;t have an allocator itself out of the box.</p>
+</li>
+<li><p>State is not IN THE BLOCK, each state has AN ASSOCIATED BLOCK.</p>
+</li>
+</ul>
+</aside></script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
