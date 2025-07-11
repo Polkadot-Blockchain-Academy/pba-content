@@ -20,7 +20,15 @@ description: Runtime (AKA State Transition Function(s))
 
 ---
 
-# Runtime: Introduction
+## Context
+
+![Image](./runtime_intro.svg)
+
+Notes:
+
+https://excalidraw.com/#json=iOS40oD64cN2a5KAtqkyG,7pY8ug1NYwlh5IsadKjAVA
+
+---
 
 ## Runtime: What is it?
 
@@ -110,3 +118,11 @@ Runtime functions can be divided in 3 different groups:
 - Fees<!-- .element: class="fragment" -->
 - Dry-Runs<!-- .element: class="fragment" -->
 - View Functions<!-- .element: class="fragment" -->
+
+---
+
+# Let's deploy a runtime upgrade 🚀
+
+---v
+
+https://github.com/paritytech/polkadot-sdk-minimal-template
