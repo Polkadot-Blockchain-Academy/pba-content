@@ -11,15 +11,26 @@ description: JSON-RPC Spec
 
 ## What you will learn:
 
-- What is JSON-RPC (v2)<!-- .element: class="fragment" -->
-  - Its stateless design<!-- .element: class="fragment" -->
-  - Conventions to make it stateful<!-- .element: class="fragment" -->
-- Do nodes have to expose JSON-RPC APIs?<!-- .element: class="fragment" -->
-- Legacy JSON-RPC APIs (Hands-on)<!-- .element: class="fragment" -->
-  - Summary of probems<!-- .element: class="fragment" -->
-- Modern JSON-RPC: Introduction and goals<!-- .element: class="fragment" -->
-  - Overview of the new JSON-RPCs APIs<!-- .element: class="fragment" -->
-  - Hands-on examples <!-- .element: class="fragment" -->
+- What is JSON-RPC (v2)
+  - Its stateless design
+  - Conventions to make it stateful
+
+<!-- .element: class="fragment" -->
+
+- Do nodes have to expose JSON-RPC APIs?
+
+<!-- .element: class="fragment" -->
+
+- Legacy JSON-RPC APIs (Hands-on)
+  - Summary of probems
+
+<!-- .element: class="fragment" -->
+
+- Modern JSON-RPC: Introduction and goals
+  - Overview of the new JSON-RPCs APIs
+  - Hands-on examples
+
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -32,42 +43,58 @@ description: JSON-RPC Spec
 
 ## JSON-RPC 2.0 - Request Object
 
-- Must have an `id` property
-
-<!-- .element: class="fragment" -->
-
-- Must have a `method`
-
-<!-- .element: class="fragment" -->
-
-- May have `params`
-
-<!-- .element: class="fragment" -->
+```ts
+{
+  id: number | string | null,
+  method: string,
+  params?: Array<any> | Record<string, any>
+}
+```
 
 ---
 
 ## JSON-RPC 2.0 - Notification Object
 
-- Like `Request` but without an `id`
+```ts
+{
+  method: string,
+  params?: Array<any> | Record<string, any>
+}
+```
+
+Notes:
+
+Like `Request` but without an `id`
 
 ---
 
 ## JSON-RPC 2.0 - Response
 
-- Must have an `id`
+##### Success
 
-<!-- .element: class="fragment" -->
+```ts
+{
+  id: number | string | null,
+  result: any
+}
+```
 
-- Must have either a `result` or an `error`
+##### Error
 
-<!-- .element: class="fragment" -->
+```ts
+{
+  id: number | string | null,
+  error: {
+    code: number,
+    message: string,
+    data?: any
+  }
+}
+```
 
-- If it has an `error`, it must have the following properties:
-  - `code`: number that indicates the type of error. Error codes from -32768 to -32000 are reserved for pre-defined errors.
-  - `message`: string providing a short description.
-  - `data`: optional data structure with additional information.
+Notes:
 
-<!-- .element: class="fragment" -->
+`code`: number that indicates the type of error. Error codes from -32768 to -32000 are reserved for pre-defined errors.
 
 ---
 
@@ -77,11 +104,49 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-## JSON-RPC 2.0 For stateful connections and subscriptions
+## Stateful connections and subscriptions
 
-- The client acts as a server<!-- .element: class="fragment" -->
-- The server acts as a client<!-- .element: class="fragment" -->
-- Use opaque ids that are only relevant in the context of their connection<!-- .element: class="fragment" -->
+![Image](./jsonrpc-clientserver-0.svg)
+
+Notes:
+
+https://excalidraw.com/#json=d-_ZoxX3cx8MJYiniJ0uS,i8WuAaK0yuV1kUT3TbDbIQ
+
+JSON-RPC is designed on a client-server model of request/responses, as it is transport-agonstic and this way it can support transports that don't have server->client notifications.
+
+If we want those kind of communications, to support things like subscriptions, we can just compose it by flipping the client/server roles (as long as the transport we use allows it).
+
+---
+
+## Stateful connections and subscriptions
+
+![Image](./jsonrpc-clientserver-1.svg)
+
+---
+
+## Stateful connections and subscriptions
+
+```ts
+>> { id: 0, method: "subscribe_to_news", params: { cb: "news_update" } }
+<< { id: 0, result: "news-sub-1" }
+…
+<< { method: "news_update", params: { title: "PBA dev compiles runtime in under 4 hours. Community demands to know their secrets" } }
+```
+
+---
+
+# JSON-RPC in Polkadot
+
+- "Legacy" API <!-- .element: class="fragment" -->
+- New JSON-RPC Spec API <!-- .element: class="fragment" -->
+
+Notes:
+
+Initially, the JSON-RPC methods to interact with a chain were all created ad-hoc, with no proper spec.
+
+This created many inconstistencies across different methods, others that do the same behaviour but differently, and also incompatibilities with light clients.
+
+There was a turning point when they decided to write a proper spec with a set of methods that tailor multiple actors.
 
 ---
 
