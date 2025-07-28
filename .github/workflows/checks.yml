@@ -12,15 +12,22 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x, 20.x]
+    env:
+      CI: true
+      NODE_OPTIONS: --max-old-space-size=4096
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn
-      - run: yarn build
-      - run: yarn lint
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn build
+      - name: Lint
+        run: yarn lint
 
   all:
     # This job ensures that all jobs above (now we have just build) are successful.
