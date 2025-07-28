@@ -17,3 +17,4 @@ jobs:
           use-verbose-mode: 'yes'
           config-file: '.github/workflows/mlc_config.json'
           check-modified-files-only: 'yes'
+          base-branch: 'main'
