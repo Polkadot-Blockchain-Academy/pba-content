@@ -10,8 +10,8 @@ jobs:
   markdown-link-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: gaurav-nelson/github-action-markdown-link-check@d53a906aa6b22b8979d33bc86170567e619495ec
+      - uses: actions/checkout@v4
+      - uses: gaurav-nelson/github-action-markdown-link-check@d53a906aa6b22b8979d33bc86170567e619495ec
       with:
         # links that are okay (http status returns 200) will not be shown
         use-quiet-mode: 'yes'
