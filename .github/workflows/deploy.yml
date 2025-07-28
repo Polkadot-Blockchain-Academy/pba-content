@@ -7,24 +7,41 @@ on:
     branches: [main]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      NODE_OPTIONS: --max-old-space-size=4096
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: yarn run prepare-deployment
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-files
+          path: build
+          retention-days: 1
+
   gh-deploy:
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
         with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org
-      - run: yarn install
-      - name: Build
-        working-directory: "."
-        run: yarn run prepare-deployment
-      - name: Stash changes if any
-        run: |
-          if ! git diff --quiet || ! git diff --cached --quiet; then
-            git stash push -m "Automated stash before deployment"
-          fi
+          name: build-files
+          path: build
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
           folder: build
+          clean: true
