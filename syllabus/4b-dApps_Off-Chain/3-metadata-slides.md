@@ -48,12 +48,11 @@ state itself. Therefore, it can't be modified without a change in the host itsel
 
 The metadata is versioned, and its current stable version is `15`.
 
-```typescript [|2|3|4|6|]
+```typescript [|2|3|4|5|]
 interface RuntimeMetadataV15 {
   types: Vec<LookupEntry>;
   pallets: Vec<PalletMetadata>;
   extrinsic: ExtrinsicMetadata;
-  ty: Type; // not useful, it is the type of the runtime itself
   apis: Vec<RuntimeApiMetadata>;
   outer_enums: OuterEnums;
   custom: CustomMetadata; // we won't enter this one, un-typed extra metadata
@@ -340,13 +339,14 @@ Examples:
 - Fee estimation
 - Metadata
 
-```typescript
+```typescript [|2|3-9|4|5|6|]
 interface RuntimeApiMetadata {
   name: String;
   methods: Vec<{
     name: String;
     inputs: Vec<{ name: String; ty: Type }>;
     output: Type;
+    deprecationInfo: DeprecationInfo;
     docs: Vec<String>;
   }>;
   docs: Vec<String>;
@@ -361,15 +361,16 @@ Use this slide to exemplify the "pointer" idea of the metadata.
 
 Example: `Metadata` APIs
 
-```json [|4-9|26-31|10-25]
+```json [|4-10|28-34|11-27]
 {
   "name": "Metadata",
   "methods": [
     {
       "name": "metadata",
       "inputs": [],
-      "output": 862,
-      "docs": [" Returns the metadata of a runtime."]
+      "output": 907,
+      "docs": [" Returns the metadata of a runtime."],
+      "deprecationInfo": { "tag": "NotDeprecated" }
     },
     {
       "name": "metadata_at_version",
@@ -379,22 +380,26 @@ Example: `Metadata` APIs
           "type": 4
         }
       ],
-      "output": 863,
+      "output": 908,
       "docs": [
         " Returns the metadata at a given version.",
         "",
         " If the given `version` isn't supported, this will return `None`.",
         " Use [`Self::metadata_versions`] to find out about supported metadata version of the runtime."
-      ]
+      ],
+      "deprecationInfo": { "tag": "NotDeprecated" }
     },
     {
       "name": "metadata_versions",
       "inputs": [],
-      "output": 121,
-      "docs": [" Returns the supported metadata versions.", "", " This can be used to call `metadata_at_version`."]
+      "output": 597,
+      "docs": [" Returns the supported metadata versions.", "", " This can be used to call `metadata_at_version`."],
+      "deprecationInfo": { "tag": "NotDeprecated" }
     }
   ],
-  "docs": [" The `Metadata` api trait that returns metadata for the runtime."]
+  "docs": [" The `Metadata` api trait that returns metadata for the runtime."],
+  "version": 2,
+  "deprecationInfo": { "tag": "NotDeprecated" }
 }
 ```
 
@@ -405,18 +410,132 @@ Example: `Metadata` APIs
 #### Pallets
 
 Every pallet can define an arbitrary number (including none) of **constants**, **calls**, **events**, **errors**,
-**storage queries**. We will walk every one of them.
+**storage queries**, **view functions**. We will walk every one of them.
 
-```typescript
+```typescript [|2|3|4-6|7|8|9|]
 interface PalletMetadata {
   name: String;
   constants: Vec<PalletConstantMetadata>;
-  event: Option<Type>;
-  error: Option<Type>;
-  calls: Option<Type>;
+  event: Option<{ ty: Type; deprecationInfo: DeprecationInfo }>;
+  error: Option<{ ty: Type; deprecationInfo: DeprecationInfo }>;
+  calls: Option<{ ty: Type; deprecationInfo: DeprecationInfo }>;
   storage: Option<PalletStorageMetadata>;
+  associatedTypes: { name: String; ty: Type; docs: Vec<String> };
+  viewFunctions: Vec<ViewFunctionMetadata>;
   index: u8;
   docs: Vec<String>; // rust docs
+  deprecationInfo: DeprecationInfo;
+}
+```
+
+---
+
+## Metadata
+
+#### Associated Types
+
+Associated types expose FRAME generics used to build the runtime.
+They are implementation details, only heuristics available.
+
+---v
+
+```json [|19-23]
+{
+  "name": "System",
+  "associatedTypes": [
+    {
+      "name": "RuntimeCall",
+      "type": 106,
+      "docs": [" The aggregated `RuntimeCall` type."]
+    },
+    {
+      "name": "Nonce",
+      "type": 4,
+      "docs": [" This stores the number of previous transactions associated with a sender account."]
+    },
+    {
+      "name": "Hash",
+      "type": 13,
+      "docs": [" The output of the `Hashing` function."]
+    },
+    {
+      "name": "Hashing",
+      "type": 553,
+      "docs": [" The hashing system (algorithm) being used in the runtime (e.g. Blake2)."]
+    },
+    {
+      "name": "AccountId",
+      "type": 0,
+      "docs": [" The user account identifier type for the runtime."]
+    },
+    {
+      "name": "Block",
+      "type": 608,
+      "docs": [
+        " The Block type used by the runtime. This is used by `construct_runtime` to retrieve the",
+        " extrinsics or other block specific data as needed."
+      ]
+    },
+    {
+      "name": "AccountData",
+      "type": 5,
+      "docs": [
+        " Data to be associated with an account (other than nonce/transaction counter, which this",
+        " pallet does regardless)."
+      ]
+    }
+  ]
+}
+```
+
+---v
+
+```json
+{
+  "id": 553,
+  "path": ["sp_runtime", "traits", "BlakeTwo256"],
+  "params": [],
+  "def": {
+    "tag": "composite",
+    "value": []
+  },
+  "docs": []
+}
+```
+
+---
+
+## Metadata
+
+#### View Functions
+
+They are exactly the same as Runtime APIs, but tightly coupled to pallets.
+Meant to abstract storage and complex logic of the runtime.
+
+---v
+
+```json [|4-20|]
+{
+  "name": "Proxy",
+  "viewFns": [
+    {
+      "id": "0x1809d78346727a0ef58c0fa03bafa323cbc51488d92a1aa7137b03bfb50efc17",
+      "name": "check_permissions",
+      "inputs": [
+        {
+          "name": "call",
+          "type": 106
+        },
+        {
+          "name": "proxy_type",
+          "type": 79
+        }
+      ],
+      "output": 8,
+      "docs": [" Check if a `RuntimeCall` is allowed for a given `ProxyType`."],
+      "deprecationInfo": { "tag": "NotDeprecated" }
+    }
+  ]
 }
 ```
 
@@ -435,6 +554,7 @@ interface PalletConstantMetadata {
   ty: Type;
   value: Vec<u8>;
   docs: Vec<String>;
+  deprecationInfo: DeprecationInfo;
 }
 ```
 
@@ -487,20 +607,31 @@ Example: `System`
 {
   "name": "System",
   "storage": {…}, // let's follow up with it!
-  "calls": 94,
-  "events": 22,
+  "calls": { "type": 106, "deprecationInfo": [] },
+  "events": { "type": 22, "deprecationInfo": [] },
   "constants": [
     {
       "name": "Version",
-      "type": 508,
-      "value": "0x20706f6c6b61646f743c7061726974792d706f6c6b61646f7400000000fc4d0f00000000005cc51ff1fa3f5d0cca01000000df6acb689907609b0500000037e397fc7c91f5e40200000040fe3ad401f8959a0600000017a6bc0d0062aeb30100000018ef58a3b67ba77001000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0b00000049eaaf1b548a0cb00300000091d5df18b0d2cf58020000002a5e924655399e6001000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a804000000f3ff14d5ab527059030000006ff52ee858e6c5bd0100000091b1c8b16328eb92010000009ffb505aa738d69c01000000fbc577b9d747efd6010000001a00000001",
-      "docs": [" Get the chain's in-code version."]
+      "type": 517,
+      "value": "0x18726f636f636f487061726974792d726f636f636f2d76322e3000000000798c0f000000000054df6acb689907609b050000006ff52ee858e6c5bd0100000091b1c8b16328eb92020000009ffb505aa738d69c0100000037e397fc7c91f5e402000000ccd9de6396c899ca0100000040fe3ad401f8959a06000000d2bc9897eed08f1503000000f78b278be53f454c02000000af2c0297a23e6d3d0d00000049eaaf1b548a0cb00500000091d5df18b0d2cf5802000000ed99c5acb25eedf503000000cbca25e39f14238702000000687ad44ad37f03c201000000ab3c0572291feb8b01000000bc9d89904f5b923f0100000037c8bb1350a9a2a8040000002a5e924655399e6001000000fbc577b9d747efd6010000002609be83ac4468dc010000001a00000001",
+      "docs": [" Get the chain's in-code version."],
+      "deprecationInfo": { "tag": "NotDeprecated" }
     },
     {…}
   ],
-  "errors": 512,
+  "errors": { "type": 521, "deprecationInfo": [] },
+  "associatedTypes": [
+    {
+      "name": "Hashing",
+      "type": 443,
+      "docs": [" The hashing system (algorithm) being used in the runtime (e.g. Blake2)."]
+    },
+    {…}
+  ],
+  "viewFns": [],
   "index": 0,
-  "docs": []
+  "docs": [],
+  "deprecationInfo": { "tag": "NotDeprecated" }
 }
 ```
 
@@ -566,6 +697,7 @@ interface PalletStorageMetadata {
     }>;
     default: Vec<u8>;
     docs: Vec<String>;
+    deprecationInfo: DeprecationInfo;
   }>;
 }
 ```
@@ -576,7 +708,7 @@ interface PalletStorageMetadata {
 
 Example: `System`
 
-```json [|24-33|6-23|]
+```json [|25-35|6-24|]
 {
   "name": "System",
   "storage": {
@@ -598,7 +730,8 @@ Example: `System`
           }
         },
         "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080",
-        "docs": [" The full account information for a particular account ID."]
+        "docs": [" The full account information for a particular account ID."],
+        "deprecationInfo": { "tag": "NotDeprecated" }
       },
       {
         "name": "ExtrinsicCount",
@@ -608,7 +741,8 @@ Example: `System`
           "value": 4
         },
         "fallback": "0x00",
-        "docs": [" Total extrinsics count for the current block."]
+        "docs": [" Total extrinsics count for the current block."],
+        "deprecationInfo": { "tag": "NotDeprecated" }
       },
       {…}
     ]
@@ -625,7 +759,7 @@ Example: `System`
 
 - What is an extrinsic?
 - Extrinsic v4 deep dive
-- Future: extrinsic v5
+- Future: extrinsic v5 <span style="font-size: 0.7em; opacity: 0.7">(and present!)</span>
 
 ---
 
@@ -660,15 +794,16 @@ Every extrinsic starts with a version byte, inclunding the extrinsic kind and ve
 
 ```typescript
 interface ExtrinsicMetadata {
-  version: 4;
+  version: Vec<u8>;
   address_ty: Type;
   call_ty: Type;
   signature_ty: Type;
-  extra_ty: Type;
-  signed_extensions: Vec<{
+  transaction_extensions_by_version: Vec<[u8, Vec<u32>]>;
+  // aka `signed_extensions`
+  transaction_extensions: Vec<{
     identifier: String;
     ty: Type;
-    additional_signed: Type;
+    implicit: Type; // aka `additional_signed`
   }>;
 }
 ```
@@ -688,7 +823,7 @@ Signed extensions are appended to every signed extrinsic with information that i
 
 ---v
 
-#### `additional_signed`
+#### `implicit`
 
 Some of them are _implicit_. They can only be one single value to be valid. Therefore, they are not encoded in the
 extrinsic to save block space, yet they are signed. Examples:
