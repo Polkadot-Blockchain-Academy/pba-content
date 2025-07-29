@@ -108,3 +108,62 @@ Ideas:
 
 - Canvas
 - Auction
+
+---
+
+# Revive
+
+"Quasi-compatibility" with Solidity contracts
+
+---
+
+## Pre ink!v6
+
+- ink!v5- contracts compiled to WASM
+- Pallet Contracts was used to execute them
+- They worked, but were isolated into specialized chains
+
+---
+
+<section data-background-image="./img/plaza.webp" data-background-size="contain" data-background-opacity="0.3">
+
+## Plaza
+
+Integrate everything into a single Hub
+
+- Assets (USDC, USDT, WETH, WBTC, …)
+- Balances
+- Smart Contracts (ink! and solidity via PVM)
+- Staking
+- Governance
+- Bridges
+
+</section>
+
+---
+
+## Revive
+
+- Main goal: Bring existing Ethereum contracts into Polkadot
+- Contracts work with Ethereum-like addresses (H160)
+  - 20 bytes (160 bits) represented as hex
+- SS58 -> H160
+  - Last 20 bytes of `Keccak(publicKey)`
+  - SS58 Accounts must be mapped beforehand
+- H160 -> SS58
+  - Public key = `pad(H160, k, 32)`
+  - Used for contract balance and supporting ETH signers.
+
+---
+
+## Precompiles
+
+<img src="./img/precompiles.svg" />
+
+Notes:
+
+https://excalidraw.com/#json=gK6duspahkkDb2ub3bU83,w-G5vKnDfAVMRv3RsYhVMQ
+
+---
+
+# Using a Precompile
