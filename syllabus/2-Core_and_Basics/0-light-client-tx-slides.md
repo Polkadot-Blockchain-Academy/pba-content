@@ -73,9 +73,9 @@ These block headers tell
 A block is split into two main parts:
 
 - Block Header
-	- Parent Hash, Block Number, State Root, Extrinsic Root, Digest
+  - Parent Hash, Block Number, State Root, Extrinsic Root, Digest
 - Block Body
-	- Vector of Extrinsics
+  - Vector of Extrinsics
 
 The block hash representing a unique block is simply the hash of the data inside the header. Since we already include the Extrinsic Root inside the block header, we need not know the block body to get the block hash.
 
@@ -234,7 +234,7 @@ TODO
 - Defined by: https://github.com/paritytech/frame-metadata
 - Automatically generated if you use FRAME macros.
 - Output can be turned into JSON, which is easiest for human readability:
-	- https://dev.papi.how/metadata/json
+  - https://dev.papi.how/metadata/json
 
 ---
 
