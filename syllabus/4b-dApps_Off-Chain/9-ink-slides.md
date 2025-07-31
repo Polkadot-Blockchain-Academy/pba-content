@@ -167,3 +167,34 @@ https://excalidraw.com/#json=gK6duspahkkDb2ub3bU83,w-G5vKnDfAVMRv3RsYhVMQ
 ---
 
 # Using a Precompile
+
+Notes:
+
+burn2play or similar
+
+---
+
+# Solidity on Polkadot
+
+- `revive`: Solidity -> PolkaVM compiler
+- Pallet Revive: Runs PVM Contracts, maps SS58 <-> H160 Addresses
+  - New work to have REVM running in pallet revive.
+- Tooling support
+  - Existing Ethereum tooling through custom RPC
+  - Polkadot tooling through regular pallet calls
+
+---
+
+# Solidity on Polkadot
+
+<img src="./img/revive-eth.svg" />
+
+Notes:
+
+ABI uses a different encoding than SCALE. This also applies when interacting with a polkadot client: The transaction is SCALE-encoded, but the "data" parameter is of type "bytes". This is ABI-encoded data when interacting with a solidty contract, and SCALE-encoded data when interacting with an ink! contract.
+
+https://excalidraw.com/#json=ij82a-at2IrUyRktTXL5U,aFzJN3KLP57kclPK2OVStw
+
+---
+
+# Let's play with Solidity
