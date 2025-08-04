@@ -151,7 +151,7 @@ the tip for the validator.
   - The "nonce", the "asset", the "tip" are extraneous data. Therefore, it must be included in the "extra" field.<!-- .element: class="fragment" --->
   - "CheckMortality": the "period" and the "phase" are extraneous, the block hash is implicit data.<!-- .element: class="fragment" --->
 
-Notes: explain how the block has can be derived from the period and the phase, explain how inmortal transactions work.
+Notes: explain how the block has can be derived from the period and the phase, explain how immortal transactions work.
 
 ---
 
@@ -168,7 +168,7 @@ Notes: explain how the block has can be derived from the period and the phase, e
 - Realistically speaking, there are 3 different kinds of validity states:
   1. Valid: the transaction can be included into the next block.
   2. Invalid: the transaction will "never" be able to be included into a block (and thus, not be broadcasted).
-  3. "Future" Valid: the transaction can not yet be included into a block, but it may be included in the future. Ie: nonce
+  3. "Future" Valid: the transaction can not yet be included into a block, but it may be included in the future. I.e. nonce
      too high.
 
 Notes:
@@ -194,7 +194,7 @@ Notes:
 
 - Once a transaction is deemed as valid it can be broadcasted.
 - Broadcasting is a "fire and forget" operation. There is no response.
-- Once a transaction is deemed as invalid, we must immediatelly stop broadcasting it.
+- Once a transaction is deemed as invalid, we must immediately stop broadcasting it.
 
 Notes:
 
