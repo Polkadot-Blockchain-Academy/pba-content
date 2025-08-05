@@ -228,7 +228,7 @@ Everything is synchronous, yet it can also have unexpected effects.
 
 ---
 
-## Subscriptions
+## Let's dive Async
 
 ---v
 
@@ -423,6 +423,8 @@ Notes:
 
 Showcase / demo how observables are cold by default
 
+Notice how the cold behaviour also helps avoid re-entrant subscriptions by design. They become relevant only when creating shared observables.
+
 ---v
 
 ### Composing Observables
@@ -610,38 +612,15 @@ dotApi.query.ConvictionVoting.VotingFor.watchValue("1jbZxCFeNMRgVRfggkknf8sTWzrV
   });
 ```
 
----v
-
-### Watch Entries
-
-<img rounded src="./img/block-states.png" />
-
-`Observable<Array<[Key, Value]>>?` <!-- .element: class="fragment" -->
-
-Notes:
-
-Remind issue with multiple forks
-
-When watching entries, we might have a large list. When providing an Observable API it's important to note what has changed in specific.
-
-Also, it's expensive, and it might skip some blocks.
+TODO more non-papi exercises
 
 ---v
 
-### Watch Entries
+### Common Pain Points
 
-```ts
-watchEntries().subscribe(result => {
-  // Hash + number + parent
-  console.log(result.blockInfo);
-  // Array<{ args: Key, value: Value }>
-  console.log("deleted", result.deltas.deleted);
-  console.log("upserted", result.deltas.upserted);
-  // Array<{ args: Key, value: Value }>
-  console.log("values", result.values);
-});
-```
-
-Notes:
-
-Exercise - change the previous implementation to watch referenda from any track.
+- Repeated computations
+  - With `combineLatest`
+- Value-not-yet-there
+  - With `withLatestFrom`
+- Backpressure
+  - Handling fast producers
