@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Ink!</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+<img style="width: 300px" src="../../assets/img/0-Shared/logo/ink-white.png" />
+</script></section><section  data-markdown><script type="text/template">
+## ink!
+
+- Smart contracts in Polkadot
+- Implemented in Rust
+- Exports PolkaVM + Metadata
+</script></section><section  data-markdown><script type="text/template">
+## Smart Contracts
+
+<img src="./img/smartcontracts-1.svg" />
+
+<aside class="notes"><p><a href="https://excalidraw.com/#json=yQC2mtGUS-ngozXnv3LWY,_QUAy86R85h-16dNNVbhEQ">https://excalidraw.com/#json=yQC2mtGUS-ngozXnv3LWY,_QUAy86R85h-16dNNVbhEQ</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Smart Contracts
+
+<img src="./img/smartcontracts-2.svg" />
+</script></section><section  data-markdown><script type="text/template">
+## Smart Contracts
+
+- Contract storage
+- Constructor
+- Transactions
+  - Called "messages" instead
+- Events
+
+<aside class="notes"><p>There are deposits associated when instantiating a contract and adding more values to storage.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Lifecycle
+
+<img src="./img/sc-lifecycle.svg" />
+
+<aside class="notes"><p><a href="https://excalidraw.com/#json=zKnc7S6Mm8gMyYf8leLGB,mP3Q22jaxfWu-SNsb9EIXQ">https://excalidraw.com/#json=zKnc7S6Mm8gMyYf8leLGB,mP3Q22jaxfWu-SNsb9EIXQ</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Endpoints
+
+- Runtime API: Dry-run
+- Transaction: Perform some change
+</script></section><section  data-markdown><script type="text/template">
+## ink! + PAPI
+
+```ts
+// pnpm papi ink add metadata.json
+
+import { contracts } from "@polkadot-api/descriptors";
+
+const inkClient = getInkClient(contracts.psp22);
+```
+
+<aside class="notes"><p>At this level, PAPI inkClient only gives TS definitions for encoding/decoding messages</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## ink! + PAPI
+
+```ts
+// Takes in the message name
+const increaseAllowance = inkClient.message("PSP22::increase_allowance");
+
+// Encode the data for that message
+const messageData = increaseAllowance.encode({
+  delta_value: 100_000_000n,
+  spender: ADDRESS.bob,
+});
+
+const response = await typedApi.apis.ReviveApi.call(
+  ADDRESS.alice, // Origin
+  ADDRESS.psp22, // Contract address
+  0n, // Value
+  undefined, // GasLimit
+  undefined, // StorageDepositLimit
+  messageData
+);
+```
+</script></section><section  data-markdown><script type="text/template">
+# Let's create our own!
+
+<aside class="notes"><p>Ideas:</p>
+<ul>
+<li>Canvas</li>
+<li>Auction</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Revive
+
+"Quasi-compatibility" with Solidity contracts
+</script></section><section  data-markdown><script type="text/template">
+## Pre ink!v6
+
+- ink!v5- contracts compiled to WASM
+- Pallet Contracts was used to execute them
+- They worked, but were isolated into specialized chains
+</script></section><section  data-markdown><script type="text/template">
+<section data-background-image="./img/plaza.webp" data-background-size="contain" data-background-opacity="0.3">
+
+## Plaza
+
+Integrate everything into a single Hub
+
+- Assets (USDC, USDT, WETH, WBTC, …)
+- Balances
+- Smart Contracts (ink! and solidity via PVM)
+- Staking
+- Governance
+- Bridges
+
+</section>
+</script></section><section  data-markdown><script type="text/template">
+## Revive
+
+- Main goal: Bring existing Ethereum contracts into Polkadot
+- Contracts work with Ethereum-like addresses (H160)
+  - 20 bytes (160 bits) represented as hex
+- SS58 -> H160
+  - Last 20 bytes of `Keccak(publicKey)`
+  - SS58 Accounts must be mapped beforehand
+- H160 -> SS58
+  - Public key = `pad(H160, k, 32)`
+  - Used for contract balance and supporting ETH signers.
+</script></section><section  data-markdown><script type="text/template">
+## Precompiles
+
+<img src="./img/precompiles.svg" />
+
+<aside class="notes"><p><a href="https://excalidraw.com/#json=gK6duspahkkDb2ub3bU83,w-G5vKnDfAVMRv3RsYhVMQ">https://excalidraw.com/#json=gK6duspahkkDb2ub3bU83,w-G5vKnDfAVMRv3RsYhVMQ</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Using a Precompile
+
+<aside class="notes"><p>burn2play or similar</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Solidity on Polkadot
+
+- `revive`: Solidity -> PolkaVM compiler
+- Pallet Revive: Runs PVM Contracts, maps SS58 <-> H160 Addresses
+  - New work to have REVM running in pallet revive.
+- Tooling support
+  - Existing Ethereum tooling through custom RPC
+  - Polkadot tooling through regular pallet calls
+</script></section><section  data-markdown><script type="text/template">
+# Solidity on Polkadot
+
+<img src="./img/revive-eth.svg" />
+
+<aside class="notes"><p>ABI uses a different encoding than SCALE. This also applies when interacting with a polkadot client: The transaction is SCALE-encoded, but the &quot;data&quot; parameter is of type &quot;bytes&quot;. This is ABI-encoded data when interacting with a solidty contract, and SCALE-encoded data when interacting with an ink! contract.</p>
+<p><a href="https://excalidraw.com/#json=ij82a-at2IrUyRktTXL5U,aFzJN3KLP57kclPK2OVStw">https://excalidraw.com/#json=ij82a-at2IrUyRktTXL5U,aFzJN3KLP57kclPK2OVStw</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+# Let's play with Solidity
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
