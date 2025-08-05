@@ -56,24 +56,111 @@ DOT is the native token of the Polkadot Network.
 DOT tokens can be in one of the following states:
 
 1. Transferable
-2. Frozen (Locked)
-3. Held (Reserved)
+2. Reserved (held)
+3. Frozen (locked)
 
 </div>
 
 </div>
-</script></section><section  data-markdown><script type="text/template">
-## Frozen vs Held Balance
+</script></section><section ><section data-markdown><script type="text/template">
+## Reserved vs Frozen Balance
 
-- Old terms "Reserved" and "Locked" are on their way out...
 - DOT in both states belong to the user... but cannot be spent / transferred.
-- Held balances stack on top of one another.
-  - Useful for user deposits, or other use cases where there is sybil concerns.
-  - Ex: Deposit for storing data on-chain,
-- Frozen balances can overlap each other.
-  - Useful when you want to use the same tokens for multiple use cases.
-  - Ex: Using the same tokens for both staking and voting in governance.
-</script></section><section  data-markdown><script type="text/template">
+- Reserved balances stack on top of one another (no overlay).
+  - Example: Staking and deposits for storing data on-chain (identities, proxies, multisig, OpenGov).
+- Frozen balances can overlay with each other, and with reserved balances.
+  - Example: Vested transfers and OpenGov votes.
+</script></section><section data-markdown><script type="text/template">
+## Reserved vs Frozen Balance
+
+<br />
+
+- Free: 100 DOT
+- Frozen (locked): 0 DOT
+- Reserved (held): 0 DOT
+- Spendable: 99 DOT
+- Untouchable: 1 DOT (ED)
+
+<br />
+
+<div>
+
+<image src="./img/balance-example-1.png" style="width: 1000px;">
+
+</div>
+</script></section><section data-markdown><script type="text/template">
+## Reserved vs Frozen Balance (Staking)
+
+<br />
+
+- Free: 40 DOT
+- Frozen (locked) : 0 DOT
+- Reserved (held): 60 DOT
+- Spendable: 39 DOT (Free - ED)
+- Untouchable: 1 DOT (ED)
+
+<br />
+
+<div>
+
+<image src="./img/balance-example-2.png" style="width: 1000px;">
+
+</div>
+</script></section><section data-markdown><script type="text/template">
+## Reserved vs Frozen Balance (Proxy)
+
+<br />
+
+- Free: 20 DOT
+- Frozen (locked) : 0 DOT
+- Reserved (held): 80 DOT
+- Spendable: 19 DOT (Free - ED)
+- Untouchable: 1 DOT (ED)
+
+<br />
+
+<div>
+
+<image src="./img/balance-example-3.png" style="width: 1000px;">
+
+</div>
+</script></section><section data-markdown><script type="text/template">
+## Reserved vs Frozen Balance (Voting)
+
+<br />
+
+- Free: 20 DOT
+- Frozen (locked): 20 DOT
+- Reserved (held): 80 DOT
+- Spendable: 19 DOT (Free - ED)
+- Untouchable: 1 DOT (ED)
+
+<br />
+
+<div>
+
+<image src="./img/balance-example-4.png" style="width: 1000px;">
+
+</div>
+</script></section><section data-markdown><script type="text/template">
+## Reserved vs Frozen Balance (More Voting)
+
+<br />
+
+- Free: 20 DOT
+- Frozen (locked): 85 DOT
+- Reserved (held): 80 DOT
+- Spendable: 15 DOT (Free - untouchable)
+- Untouchable: 5 DOT (frozen in excess of reserved, and ED overlays with frozen but not reserved)
+
+<br />
+
+<div>
+
+<image src="./img/balance-example-5.png" style="width: 1000px;">
+
+</div>
+</script></section></section><section  data-markdown><script type="text/template">
 ## Storage Bloat
 
 One blockchain scaling problem is storage bloat over time.
@@ -125,12 +212,12 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 <div class="text-left col-span-2">
 
-The DOT token serves multiple purposes to help the Polkadot network function:
+The DOT token serves multiple purposes to help the Polkadot Network function:
 
-- Purchasing Blockspace
+- Purchasing Coretime
 - Staking
 - On-Chain Decision Making
-- Value Bearing for Trading / Using
+- Pay for fees and deposits on Relay Chain and System Chains
 
 </div>
 </div>
@@ -147,24 +234,17 @@ The DOT token serves multiple purposes to help the Polkadot network function:
 
 <div class="text-left">
 
-DOT is currently configured to have a fixed inflation rate of 10% per year.
+DOT is currently configured to have a fixed inflation of 120M DOT per year.
 
-Newly minted tokens are distributed to the treasury and stakers (validators / nominators).
+This mean that inflation rate is decreasing over time.
+
+Newly minted tokens are distributed to the treasury and stakers in 15/85 proportion.
 
 RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
 
 </div>
 
 </div>
-</script></section><section  data-markdown><script type="text/template">
-## Ideal Staking Rate
-
-- We cannot force / tell users how to use their tokens.
-  - So we encourage "ideal" behavior by associating DOT token usage to how inflation is distributed.
-  - There’s a function that redirects staking inflation to the Treasury, instead of the stakers, when `ideal_rate != staking_rate`.
-  - Token holders are financially incentivized to maximize their staking returns, and thus distribute their tokens appropriately.
-- Ideal Staking Rate is in the process of being adjusted since the introduction of coretime sales:
-  - https://forum.polkadot.network/t/adjusting-polkadots-ideal-staking-rate-calculation/3897
 </script></section><section  data-markdown><script type="text/template">
 ## DOT Inflation vs Staking
 
