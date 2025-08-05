@@ -135,7 +135,7 @@ owner: Carlo Sala
 **Which problems were identified?**
 
 - A bounty can be in a gazillion different states.
-- There are many actions to bounties that are performed through referenda. <!-- .element: class="fragment" -->
+- There are many actions to bounties that are performed through referenda.
 
 ---
 
@@ -145,3 +145,47 @@ owner: Carlo Sala
 
 - Abstract state of bounties (or child bounties), and expose only relevant actions to the state. <!-- .element: class="fragment" -->
 - Find referenda that change the state of the bounty. <!-- .element: class="fragment" -->
+
+---
+
+## PAPI SDKs
+
+#### Accounts
+
+- Simplify common flows for account management. <!-- .element: class="fragment" -->
+- Speed up dApp development. <!-- .element: class="fragment" -->
+
+---
+
+#### Accounts - Linked Accounts
+
+**Issue:**
+
+- Difficulty to identify account types (e.g. multisigs, proxies, etc) <!-- .element: class="fragment" -->
+
+**Solution:**
+
+- The SDK identifies an account type and its underlying tree. <!-- .element: class="fragment" -->
+
+---
+
+#### Accounts - Identity
+
+- Fetching account's identity is common among the majority of dApps.
+- Abstract away `pallet-identity`, making sure the right retrieval flow is used.
+
+---
+
+#### Accounts - Multisigs and Proxies
+
+- First approach: couple it to signers. <!-- .element: class="fragment" -->
+- Best approach: SDK. <!-- .element: class="fragment" -->
+  - Abstract specific pallet logic without coupling it to signer. <!-- .element: class="fragment" -->
+  - Increase maintainability. <!-- .element: class="fragment" -->
+  - Offer as well the coupled signer. <!-- .element: class="fragment" -->
+
+---
+
+#### Bonus - Remote Proxy
+
+Let's dive into the code!
