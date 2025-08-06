@@ -431,6 +431,7 @@ Notice how the cold behaviour also helps avoid re-entrant subscriptions by desig
 
 Operator: `(source: Observable<T>) => Observable<R>`
 
+<!-- prettier-ignore -->
 ```ts
 const map =
   <T, R>(mapFn: (value: T) => R) =>
@@ -445,7 +446,9 @@ const map =
       return subscription;
     });
 
-const multipliedBy2$ = observable$.pipe(map(v => v * 2));
+const multipliedBy2$ = observable$.pipe(
+  map(v => v * 2)
+);
 // Same as map(v => v * 2)(multipliedBy2$)
 ```
 
@@ -467,7 +470,7 @@ const even$ = interval(1000).pipe(
 
 ---v
 
-### Combining Observables
+### Operators
 
 - `combineLatest`, `merge`, `switchMap`, etc.
 - Endless list: https://rxjs.dev/guide/operators#creation-operators-1
@@ -475,21 +478,17 @@ const even$ = interval(1000).pipe(
 
 ---v
 
-### Combining Observables
-
-switchMap
+### Operators
 
 ```ts
-const switchMap =
-  <T, R>(mapFn: (value: T) => Observable<R>) =>
+const take =
+  <T, R>(amount: number) =>
   (source: Observable<T>) =>
     new Observable<R>(subscriber => {
       // TODO
 
       const subscription = source.subscribe({
         next: v => {
-          const innerObservable = mapFn(v);
-
           // TODO
         },
         error: e => subscriber.error(e),
@@ -500,13 +499,11 @@ const switchMap =
         // TODO
       };
     });
-
-const bounty$ = selectedBountyId$.pipe(
-  switchMap(id => {
-    return from(typedApi.query.Bounties.Bounty.getValue(id));
-  })
-);
 ```
+
+Notes:
+
+"firehose" problem.
 
 ---v
 
@@ -551,68 +548,23 @@ Why transactions are "push"?
 
 ---v
 
-### Combining streams
+### Flattening observables
 
-Exercise: Find the referenda where a specific account voted in the same direction as the current outcome.
-
-- Account: 1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG
-- Track: 33
-
-Hints:
-
-- `query.ConvictionVoting.VotingFor.watchValue(account, track)`
-- `query.Referenda.ReferendumInfoFor.getValues([number][])`
+`switchMap` vs `mergeMap` vs `concatMap` vs `exhaustMap`
 
 Notes:
 
-- Don't count delegations.
-- Don't count split votes or abstains.
+Another practice, with simulated scenarios:
 
-TODO Maybe find a better example. This one is interesting, but it's a shame it would need to do `watchValue[]` and that just adds boilerplate. Also, not a huge fan of the nesting and the hacks around conviction voting. Plus having to share the account which is just a random string…
-
-```ts
-const getDirectVotes = (voting: ConvictionVotingVoteVoting) => {
-  if (voting.type === "Delegating") return [];
-
-  return voting.value.votes
-    .map(([id, vote]) => {
-      if ("vote" in vote.value) {
-        const direction = vote.value.vote & 0x80 ? "aye" : "nay";
-        return { id, direction };
-      }
-      return null;
-    })
-    .filter(v => v !== null);
-};
-
-dotApi.query.ConvictionVoting.VotingFor.watchValue("1jbZxCFeNMRgVRfggkknf8sTWzrVKbzLvRuLWvSyg9bByRG", 33)
-  .pipe(
-    map(getDirectVotes),
-    switchMap(async voting => {
-      const referenda = await dotApi.query.Referenda.ReferendumInfoFor.getValues(voting.map(v => [v.id]));
-
-      return referenda
-        .filter(v => v != null)
-        .filter((referendum, i) => {
-          const { direction } = voting[i];
-          if (referendum.type !== "Ongoing") {
-            return (direction === "aye" && referendum.type === "Approved") || direction === "nay";
-          }
-          const referendumDirection = referendum.value.tally.ayes > referendum.value.tally.nays ? "aye" : "nay";
-          return direction === referendumDirection;
-        })
-        .map((v, i) => ({
-          ...v,
-          id: voting[i].id,
-        }));
-    })
-  )
-  .subscribe(r => {
-    console.log(r);
-  });
-```
-
-TODO more non-papi exercises
+- Live search
+  - A new input change should cancel the previous request
+- Image upload
+  - Images can be uploaded in parallel
+  - Simplify: Just track how many were sent and how many were confirmed
+- Publish a post
+  - Avoid sending new posts while it's being saved.
+- Send transactions one after the other
+  - Made-up scenario is that only one transaction can be active at a moment.
 
 ---v
 
@@ -624,3 +576,7 @@ TODO more non-papi exercises
   - With `withLatestFrom`
 - Backpressure
   - Handling fast producers
+
+Notes:
+
+exercise with case https://github.com/ReactiveX/rxjs/discussions/6605
