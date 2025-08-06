@@ -204,6 +204,56 @@ The most bloat-ful storage on most blockchains are user accounts:
 
 ---
 
+## DOT Inflation
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<image src="../../assets/img/7-Polkadot/eco/inflation.svg" style="width: 500px;">
+
+</div>
+
+<div class="text-left">
+
+DOT is currently configured to have a fixed inflation of 120M DOT per year.
+
+This means that inflation rate is decreasing over time.
+
+Newly minted tokens are distributed to the treasury and stakers in 15/85 proportion.
+
+RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
+
+</div>
+
+</div>
+
+---v
+
+## DOT Inflation Chart
+
+<image src="./img/dot-inflation.png" style="width: 1000px;">
+
+---
+
+## Blockspace
+
+.. is an umbrella term!
+
+Blockspace is the capacity of a blockchain to finalize and commit operations. It represents a blockchain's security, computing, and storage capabilities as an end product. 
+
+Blockspace is not measured the same on any chain; there is no standard unit for blockspace. In Bitcoin, blockspace is based on transaction size, in Ethereum, on how much computation is used (gas), and in Polkadot, on how much time is taken to execute a task on a virtual core (coretime).
+
+---v
+
+## Blockspace Properties
+
+- Flexibility: What can you do with blockspace? What can you store on the state?
+- Security: How easy is to revert that state of the chain? 
+- Availability: How easy is to get your hands on blockspace?
+
+---
+
 ## DOT is a Utility Token
 
 <div class="grid grid-cols-3">
@@ -220,99 +270,50 @@ The DOT token serves multiple purposes to help the Polkadot Network function:
 
 - Purchasing Coretime
 - Staking
-- On-Chain Decision Making
-- Pay for fees and deposits on Relay Chain and System Chains
+- Voting in Governance
+- Paying for fees and deposits on Relay Chain and System Chains
 
 </div>
 </div>
 
 ---
 
-## DOT Inflation
+## DOT Utility: Purchasing Coretime
 
-<div class="grid grid-cols-2">
+Polkadot is a decentralized computer that provides secure and verifiable computation.
 
-<div>
+Polkadot schedules rollup data processing on a virtual multi-core CPU.
 
-<image src="../../assets/img/7-Polkadot/eco/inflation.svg" style="width: 500px;">
-
-</div>
-
-<div class="text-left">
-
-DOT is currently configured to have a fixed inflation of 120M DOT per year.
-
-This mean that inflation rate is decreasing over time.
-
-Newly minted tokens are distributed to the treasury and stakers in 15/85 proportion.
-
-RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
-
-</div>
-
-</div>
-
----
-
-## DOT Inflation vs Staking
-
-<image src="../../assets/img/7-Polkadot/staking-rate.png" style="width: 900px;">
-
-> Blue: Inflation vs Staking Rate
->
-> Green: APY of Stakers vs Staking Rate
->
-> Black: Total Inflation vs Staking Rate
-
-Notes:
-
-Blue line shows that:
-
-- When there is too little being staked, validators are encouraged to stake more.
-- When there is too much being staked, validators are encouraged to stake less.
-
-Green line shows that validator APY goes down whenever more validators enter the staking system, that is unavoidable, but specifically past the ideal staking rate, the decrease in APY sharply decreases.
-
-Black line shows that inflation for for the whole network is fixed at 10%.
-
-The gap between the blue line and the black line shows the amount of inflation that is forwarded to the treasury, as compared to given to validators.
-Event at the ideal staking rate, some percentage of the inflation is guaranteed to go to the treasury.
-
----
-
-## DOT Utility: Purchasing Blockspace
-
-Polkadot provides many utilities, but arguably its most important utility is providing flexible, secure, and scalable blockspace.
-
-Developers can purchase this blockspace **only** with the DOT token.
+Rollup Chains can access Polkadot's computation via virtual cores by purchasing coretime **only** with the DOT token.
 
 <br />
 
-> If you believe that flexible and secure blockspace has value, then you agree that DOT also has value.
+> If you believe that flexible, secure and available blockspace has value, then you agree that DOT also has value.
 
 ---
 
 ## Evolution of the Blockspace Marketplace
 
-<div class="grid grid-cols-3">
+<div class="grid grid-cols-2">
 
 <div>
 
-<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/original-scheduling.png" />
+<image src="./img/polkadot-v1-cores.png" style="width: 600px;">
 
 </br></br>
 
-<img style="width: 400px;" src="../../assets/img/7-Polkadot/decisions/exotic-scheduling.png" />
+<image src="./img/polkadot-v2-cores.png" style="width: 600px;">
 
 </div>
 
-<div class="col-span-2">
+<div class="col-span-1">
 
-- Initially blockspace was only sold in 2 year slots, in the form of Parachain auctions.
-- We recently transitioned to agile coretime which allows more flexible access to blockspace.
-  - Coretime sales use periodic dutch auctions.
-- JAM will continue to increase the flexibility of allocating and distributing blockspace.
-- Exactly how blockspace is allocated and sold will continue to evolve over time.
+<br />
+
+- Coretime allows agile scheduling of Polkadot's computation under the assumption that cores are a resource available for anyone to use.
+- Coretime can be split or interlaced allowing concurrent computation on the same core.
+- A rollup can be scheduled on multiple cores leveraging parallel computation.
+- Coretime sales use periodic Dutch auctions.
 
 </div>
 
