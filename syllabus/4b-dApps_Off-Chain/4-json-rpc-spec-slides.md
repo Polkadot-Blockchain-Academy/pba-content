@@ -19,6 +19,8 @@ https://excalidraw.com/#json=rV-hfREHgg-bLmhQtMb0o,jc3goNcep8O8tg_HANnz5A
 
 Concepts: Finalized, Pruned, Best, Fork
 
+Show live blocks with a dev console
+
 ---
 
 # Recap
@@ -89,7 +91,7 @@ Mention `id` field can be any string, used to correlate messages.
 
 # Chain Head
 
-- Subscription
+- Subscription <!-- .element: class="fragment" -->
   - `chainHead_v1_follow`
   - `chainHead_v1_unfollow`
 - Operations <!-- .element: class="fragment" -->
@@ -202,46 +204,9 @@ The notifications we will see will be the value of `result`, we omit the JSON-RP
 
 Notes:
 
-Example of notifications emitted by a follow subscription based on this image.
+Example of notifications coming through by using a raw JSON-RPC provider.
 
-Show papi-console with the following logsRecorder:
-
-```ts
-/*
-import.meta.env.DEV && source.id !== "polkadot_people"
-    ? withLogFollowEvents(console.debug, provider)
-    : provider
-*/
-const withLogFollowEvents = (logFn: (...args: string[]) => void, provider: JsonRpcProvider): JsonRpcProvider => {
-  const events = ["initialized", "newBlock", "bestBlockChanged", "finalized", "stop"];
-
-  return onMsg => {
-    let followId = "";
-
-    const connection = provider(message => {
-      onMsg(message);
-      if (message.includes(`"id":"${followId}"`) || events.some(m => message.includes(`"event":"${m}"`))) {
-        const { event, ...rest } = JSON.parse(message)?.params?.result || {};
-        logFn(`<< ${event}`, rest);
-      }
-    });
-
-    return {
-      send(message) {
-        if (message.includes(`"method":"chainHead_v1_follow"`)) {
-          const parsed = JSON.parse(message);
-          followId = parsed.id;
-          logFn(`>> chainHead_v1_follow`, parsed.params);
-        }
-        connection.send(message);
-      },
-      disconnect() {
-        connection.disconnect();
-      },
-    };
-  };
-};
-```
+i.e. follow and look at what happens.
 
 ---
 
@@ -261,6 +226,12 @@ const withLogFollowEvents = (logFn: (...args: string[]) => void, provider: JsonR
   event: "stop";
 }
 ```
+
+Notes:
+
+Two reasons: block pinning or lost blockchain continuity.
+
+Show example with follow(false)
 
 ---
 
@@ -354,57 +325,54 @@ The only exception, as the header is guaranteed to be already in the node.
 
 ---
 
-### JSON-RPC Spec Playground
+### Correlating JSON-RPC Spec operations
 
 Notes:
 
 Show basic correlating messages, pinning / unpinning
 
 ```ts
-import { chainSpec } from "polkadot-api/chains/westend2";
-import { getSmProvider } from "polkadot-api/sm-provider";
-import { start } from "polkadot-api/smoldot";
+function correlationExercise(provider: JsonRpcProvider) {
+  let id = 0;
 
-const smoldot = start({
-  maxLogLevel: 0,
-});
+  let followId: string = "";
+  const connection = provider(msgStr => {
+    const msg = JSON.parse(msgStr);
 
-const provider = getSmProvider(smoldot.addChain({ chainSpec }));
+    if (msg.id === followRequestId) {
+      followId = ""; // TODO
+    }
 
-let id = 0;
-const connection = provider(message => {
-  const msg = JSON.parse(message);
-  ellipsisBody(msg);
-  console.log(msg);
-  if (msg.method === "chainHead_v1_followEvent" && msg.params.result.event === "newBlock") {
-    const reqId = id++;
-    console.log("Request body", reqId);
-    connection.send(
-      JSON.stringify({
-        jsonrpc: "2.0",
-        id: reqId,
-        method: "chainHead_v1_body",
-        params: [msg.params.subscription, msg.params.result.blockHash],
-      })
-    );
-  }
-});
+    // TODO
+  });
 
-connection.send(
-  JSON.stringify({
-    jsonrpc: "2.0",
-    id: id++,
-    method: "chainHead_v1_follow",
-    params: [true],
-  })
-);
+  const followRequestId = id++;
+  connection.send(
+    JSON.stringify({
+      id: followRequestId,
+      jsonrpc: "2.0",
+      method: "chainHead_v1_follow",
+      params: [true],
+    })
+  );
 
-function ellipsisBody(res: any) {
-  if (res.method === "chainHead_v1_followEvent" && res.params.result.event === "operationBodyDone") {
-    res.params.result.value = res.params.result.value.map((v: string) => (v.length > 32 ? v.slice(0, 32) + "…" : v));
-  }
+  return {
+    getBody(hash: string): Promise<string[]> {
+      connection.send(
+        JSON.stringify({
+          // TODO
+        })
+      );
+
+      // TODO
+    },
+  };
 }
+
+const client = correlationExercise(provider);
 ```
+
+After solving, show how substrate-client helps.
 
 ---
 
@@ -418,7 +386,7 @@ function ellipsisBody(res: any) {
 [subscription: string, hash: string, fnName: string, params: string[]]
 
 { jsonrpc: "2.0", id: "1",
-  method: "chainHead_v1_body",
+  method: "chainHead_v1_call",
   params: [
     "B4GEo…JPd4S",
     "0x00…00",
@@ -574,6 +542,8 @@ Notes:
 
 https://excalidraw.com/#json=udTXjn9JdUlGMx0UMv3fq,9EeDxmFCZW2IgCwMgSpsjQ
 
+On a blackboard show how a change effects the tree.
+
 ---v
 
 ## Merkle Tree Recap
@@ -675,7 +645,7 @@ Explain structure, then explain an example of how the storage is traversed.
 ## Can't do
 
 - Query values
-- Get key from a value
+- Get keys from a value
 
 </pba-col>
 <pba-cols>
@@ -690,16 +660,20 @@ E.g. the votes for a given referendum, as the storage is Votes -> Account -> Ref
 
 # Storage
 
+---v
+
+## Storage
+
 - followSubscription: string
 - hash: string
 - items: Array
-  - key: string
   - type
     - value
     - hash
     - closestDescendantMerkleValue
     - descendantsValues
     - descendantsHashes
+  - key: string
 - childTrie
 
 ---v
@@ -793,6 +767,10 @@ tl;dr; Light Clients currently can't request the hashes, they must download the 
 
 <img rounded src="./img/block-states.png" />
 
+Notes:
+
+Explain / show challenges with forks and reorgs (and specially with watchEntries)
+
 ---v
 
 ### Operation inaccessible
@@ -804,3 +782,7 @@ tl;dr; Light Clients currently can't request the hashes, they must download the 
 ---v
 
 ## Stop event recovery
+
+Notes:
+
+Blackboard the logic to recover from stop event.
