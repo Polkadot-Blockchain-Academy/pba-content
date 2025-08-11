@@ -23,7 +23,7 @@ description: Transaction Extensions, Transaction Priority.
 
 ## Anatomy
 
-A transaction extension can either or both of the following things:
+A transaction extension can be either or both of the following things:
 
 - Some additional data that is attached to the transaction.
   - The tip!
@@ -41,13 +41,13 @@ A transaction extension can either or both of the following things:
 ### Anatomy
 
 - Some additional validation logic that is used to validate the transaction, and give feedback to the pool.
-  - Set priority of transaction priority based on some metric!
+  - Set priority of the transaction based on some metric!
 
 <!-- .element: class="fragment" -->
 
 - Some additional data that must be present in the signed payload of each transaction.
   - Data that the sender has, the chain also has, it is not communicated itself, but it is part of the signature payload.
-  - Spec version and genesis hash is part of all transaction's signature payload!
+  - Spec version and genesis hash is part of all transactions' signature payload!
 
 <!-- .element: class="fragment" -->
 
@@ -139,7 +139,7 @@ type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, 
 Notes:
 
 We will get to this later as well, but recall that TransactionExtensions are not a _FRAME/Pallet_
-concept per se. FRAME just implements them. This also implies that everything regarding signed
+concept per se. FRAME just implements them. This also implies that everything regarding transaction
 extensions is applied to **all transactions**, throughout the runtime.
 
 ---
