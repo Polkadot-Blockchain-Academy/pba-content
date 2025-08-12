@@ -678,3 +678,51 @@ Additional functions and information needed to validate an extrinsic.
 TODO: more with signed extensions
 
 ---
+
+# Submit and Track Transaction
+
+---
+
+## Submitting the Extrinsic
+
+- The light client will then call the RPC `author_submitAndWatchExtrinsic` over a WebSocket connection.
+- This will accept the extrinsic payload AND return a subscription id to track the progress of the extrinsic.
+- From that point forward, the node will push updates back to the light client, with the `SubscriptionId`.
+
+See: https://github.com/paritytech/jsonrpsee
+
+---
+
+## Transaction Pool
+
+TODO
+
+---
+
+## Transaction Gossipping
+
+TODO
+
+---
+
+## Signed Extension Verification
+
+TODO
+
+---
+
+## Transaction Priority
+
+---
+
+## Client and Runtime
+
+TODO
+
+---
+
+## Double Encoded
+
+TODO
+
+---
