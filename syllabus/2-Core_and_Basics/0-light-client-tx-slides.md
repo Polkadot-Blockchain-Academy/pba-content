@@ -589,8 +589,92 @@ Final:
 
 ---
 
-## Signing the Transfer Extrinsic
+## Signed Extensions
 
+Additional functions and information needed to validate an extrinsic.
 
+```json
+"signedExtensions": [
+{
+	"identifier": "CheckNonZeroSender",
+	"type": 874,
+	"additionalSigned": 36
+},
+{
+	"identifier": "CheckSpecVersion",
+	"type": 875,
+	"additionalSigned": 4
+},
+{
+	"identifier": "CheckTxVersion",
+	"type": 876,
+	"additionalSigned": 4
+},
+{
+	"identifier": "CheckGenesis",
+	"type": 877,
+	"additionalSigned": 13
+},
+{
+	"identifier": "CheckMortality",
+	"type": 878,
+	"additionalSigned": 13
+},
+{
+	"identifier": "CheckNonce",
+	"type": 880,
+	"additionalSigned": 36
+},
+{
+	"identifier": "CheckWeight",
+	"type": 881,
+	"additionalSigned": 36
+},
+{
+	"identifier": "ChargeTransactionPayment",
+	"type": 882,
+	"additionalSigned": 36
+},
+{
+	"identifier": "PrevalidateAttests",
+	"type": 883,
+	"additionalSigned": 36
+},
+{
+	"identifier": "CheckMetadataHash",
+	"type": 884,
+	"additionalSigned": 34
+}
+]
+```
+
+---
+
+## Specific Signed Extensions Explained Simply
+
+```
+[F] - Functional check, no data needed.
+[H] - Hidden in signature, reintroduced by runtime.
+[I] - Directly included, plus some functional logic.
+```
+
+<div class="text-small">
+
+1. `CheckNonZeroSender`: [F] Ensures that we do not allow calls from the all `0` address.
+2. `CheckSpecVersion`: [H] Verifies the transaction was created for the current runtime specification.
+3. `CheckTxVersion`: [H] Confirms the runtime can understand the transaction payload.
+4. `CheckGenesis`: [H] Makes sure the transaction is valid only for a specific blockchain.
+5. `CheckMortality`: [I] Guarantees a transaction is only valid for a limited time, preventing replays.
+6. `CheckNonce`: [I] Enables transaction ordering and prevents transaction replay.
+7. `CheckWeight`: [F] Checks transaction's weight fits in the block.
+8. `ChargeTransactionPayment`: [I] Allows tips and deducts the final transaction fee.
+9. `PrevalidateAttests`: [F] Specifically used for Ethereum ICO claims of DOT.
+10. `CheckMetadataHash`: [H] Ensures the transaction was created using the appropriate metadata.
+
+</div>
+
+---
+
+TODO: more with signed extensions
 
 ---
