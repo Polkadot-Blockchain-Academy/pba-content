@@ -698,21 +698,51 @@ See: https://github.com/paritytech/jsonrpsee
 
 ---
 
-## Transaction Pool
+## Stages of the Subscription
 
-TODO
+```rust
+pub enum TransactionStatus<Hash, BlockHash> {
+  /// Transaction is part of the future queue.
+  Future,
+  /// Transaction is part of the ready queue.
+  Ready,
+  /// The transaction has been broadcast to the given peers.
+  Broadcast(Vec<String>),
+  /// Transaction has been included in block with given hash
+  /// at the given position.
+  InBlock((BlockHash, TxIndex)),
+  /// Transaction has been finalized by a finality-gadget, e.g. GRANDPA.
+  Finalized((BlockHash, TxIndex)),
+  /* -- more variants not included -- */
+}
+```
 
 ---
 
-## Transaction Gossipping
+## Transaction Pool Basic Validation
 
-TODO
+The transaction pool first does low cost, fast to validate operations coming from signed extension logic:
+
+- Is the included signature valid?
+- Is the provided nonce valid?
+- Is the provided era still ongoing?
+- Does the user have enough balance to pay the transaction fee?
+- Is the transaction targeting the correct chain?
+- etc...
+
+Most of these checks happen via runtime logic.
+
+Once these checks pass, an subscription update is sent with the `Ready` status.
 
 ---
 
-## Signed Extension Verification
+## Transaction Gossipping (Broadcast)
 
-TODO
+Once the transaction is determined to be valid, the node starts gossipping it to peers.
+
+Another subscription update is sent with `Broadcast`, and a list of peers it was sent to.
+
+The basic validation and gossiping process will repeat throughout the network.
 
 ---
 
@@ -720,9 +750,17 @@ TODO
 
 ---
 
+## Block Inclusion
+
+The transaction will make its way into a block producing node, and eventually included in the new block.
+
+---
+
 ## Client and Runtime
 
-TODO
+At this point all of the execution is happening inside the Runtime via Runtime APIs.
+
+TODO: Add image
 
 ---
 
@@ -731,3 +769,66 @@ TODO
 TODO
 
 ---
+
+## Block Creation Runtime API
+
+There are a set of Runtime APIs specifically for **creating** a block, which allows you to apply and execute extrinsics one by one, allowing us to construct and calculate the results of a valid block.
+
+```rust
+	impl sp_block_builder::BlockBuilder<Block> for Runtime {
+		fn apply_extrinsic(extrinsic: <Block as BlockT>::Extrinsic) -> ApplyExtrinsicResult {
+			Executive::apply_extrinsic(extrinsic)
+		}
+
+		fn finalize_block() -> <Block as BlockT>::Header {
+			Executive::finalize_block()
+		}
+
+		fn inherent_extrinsics(data: sp_inherents::InherentData) -> Vec<<Block as BlockT>::Extrinsic> {
+			data.create_extrinsics()
+		}
+
+		fn check_inherents(
+			block: Block,
+			data: sp_inherents::InherentData,
+		) -> sp_inherents::CheckInherentsResult {
+			data.check_extrinsics(&block)
+		}
+	}
+
+	impl sp_api::Core<Block> for Runtime {
+		fn version() -> RuntimeVersion {
+			VERSION
+		}
+
+		fn execute_block(block: Block) {
+			Executive::execute_block(block)
+		}
+
+		fn initialize_block(header: &<Block as BlockT>::Header) -> sp_runtime::ExtrinsicInclusionMode {
+			Executive::initialize_block(header)
+		}
+	}
+```
+
+---
+
+## Block Import Runtime API
+
+Once the new block has been constructed, it is gossiped to peers, and each node imports the block by re-executing it, and verifying the results, like the new state root.
+
+```rust
+	impl sp_api::Core<Block> for Runtime {
+		fn version() -> RuntimeVersion {
+			VERSION
+		}
+
+		fn execute_block(block: Block) {
+			Executive::execute_block(block)
+		}
+
+		fn initialize_block(header: &<Block as BlockT>::Header) -> sp_runtime::ExtrinsicInclusionMode {
+			Executive::initialize_block(header)
+		}
+	}
+```
