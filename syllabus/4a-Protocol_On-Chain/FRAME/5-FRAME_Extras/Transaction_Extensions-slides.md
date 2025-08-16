@@ -7,17 +7,229 @@ description: Transaction Extensions, Transaction Priority.
 
 ---v
 
+# Transaction Extensions
+## Or: Lifecycle of a Transaction
+
+---v
+
+## Summary
+
 - In this lecture you will learn above one of the more advanced FRAME concepts, _Transaction Extensions_.
 
-* They allow for a multitude of custom features to be added to FRAME transactions.
+- They allow for a multitude of custom features to be added to FRAME transactions.
+
+- They allow hooking into and configuring the transaction lifecycle in the transaction pool and block execution.
+
+---
+
+## Recap: Transaction Pool
+
+The transaction pool has two jobs:
+1. Transaction Validation
+2. Transaction Ordering
+
+---v
+
+### 1. Transaction Validation
+
+Moving transactions from one list to the other.
+
+<diagram class="mermaid" style="display: flex; width: 80%">
+graph LR
+    W["🤠 Wild West"] --"😈"--> T["🗑️"]
+    W --"😇 ⌛️"--> R["✅ Ready"]
+    W --"😇 ⏳"--> F["⏰ Future"]
+</diagram>
+
+Notes:
+Greatly simplified from the actual tx pool of course. Feel free to check it out.
+
+---v
+
+### 1. Transaction Validation
+
+- Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+- Transaction validation should be **cheap** to perform.
+- Transaction pool is entirely an **offchain operation**.
+  - --> No state change
+
+Notes:
+
+Important, must pause and ask!
+
+- Why is it from the runtime? because the transaction format is opaque and the node doesn't even know what to do with it.
+- Why does it have to be cheap? wild west, unpaid, DoS!
+- Pesky question: but be aware that from the runtime's perspective, the node could be malicious. The runtime cannot trust the node to obey.
+  ** THE RUNTIME MUST RE-VALIDATE TRANSACTIONS LATER in block building and import as well **
+
+---v
+
+### Shower Thought: Runtime vs STF
+
+<img style="width: 1100px;" src="../../Substrate/img/tx-pool/peter-parker-glasses-off.png" />
+
+---v
+
+### Shower Thought: Runtime vs STF
+
+<img style="width: 1100px;" src="../../Substrate/img/tx-pool/peter-parker-glasses-on.png" />
+
+---v
+
+### 1. Transaction Validation
+
+```rust[1-100|5-6|8-9|11-12|14-100|1-100]
+pub type TransactionValidity = Result<ValidTransaction, TransactionValidityError>;
+
+/// This is going into `Ready` or `Future`
+pub struct ValidTransaction {
+  /// If in "Ready", what is the priority?
+  pub priority: u64,
+
+  /// For how long is this valid?
+  pub longevity: u64,
+
+  /// Should we propagate it?
+  pub propagate: bool,
+
+  /// Does this require any other tag to be present in ready?
+  ///
+  /// This determines "Ready" or "Future".
+  pub requires: Vec<Tag>,
+  /// Does this provide any tags?
+  pub provides: Vec<Tag>,
+}
+
+type Tag = Vec<u8>
+```
+
+Notes:
+
+So some code in our Runtime will have to provide this data!
+
+---v
+
+### 2. Transaction Ordering
+
+- `provides` and `requires` is a very flexible mechanism; it allows you to:
+  - Specify if a transaction is "Ready" or "Future"
+  - Within each, what transactions should ge before which.
+
+<diagram class="mermaid" style="display: flex; width: 40%">
+graph LR
+    W["🤠 Wild West"] --"😈"--> T["🗑️"]
+    W --"😇 ⌛️"--> R["✅ Ready"]
+    W --"😇 ⏳"--> F["⏰ Future"]
+</diagram>
+
+Note: it essentially forms a graph.
+
+---v
+
+### 2. Transaction Ordering: `priority`
+
+From the **Ready pool**, when all requirements are met, then `priority` dictates the order.
+
+Further tie breakers:
+
+2. ttl: shortest `longevity` goes first
+3. time in the queue: longest to have waited goes first
+
+<!-- .element: class="fragment" -->
+
+Note:
+
+https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146
 
 ---
 
 ## History
 
 - Transaction Extensions are an evolution of Signed Extensions.
-- See [the introducing PR](https://github.com/paritytech/polkadot-sdk/pull/3685)
-- In essence, they are a generic way to **extend** the transaction.
+  - See [the introducing PR](https://github.com/paritytech/polkadot-sdk/pull/3685).
+- In essence, they are
+  - used to provide ordering and validity information for a transaction as discussed earlier.
+  - a generic way to **extend** the transaction.
+
+---
+
+## Flow
+
+<diagram class="mermaid" style="display: flex; width: 90%">
+graph TD
+    subgraph "Transaction Extension Pipeline"
+        A[Transaction Input] --> B[Extension 1]
+        B --> C[Extension 2]
+        C --> D[Extension N]
+        D --> E[Call Dispatch]
+        E --> F[Post Dispatch Pipeline]
+    end
+
+    subgraph "Extension Data Types"
+        G[Implicit Data<br/>Runtime-derived] --> H[Val Data<br/>validate to prepare]
+        H --> I[Pre Data<br/>prepare to post_dispatch]
+    end
+
+    subgraph "Extension Phases"
+        J[1. implicit]
+        K[2. validate]
+        L[3. prepare]
+        M[4. post_dispatch]
+        
+        J --> K
+        K --> L
+        L --> M
+    end
+
+    subgraph "Data Flow Through Phases"
+        N[Origin In] --> K
+        O[Inherited Implication] --> K
+        K --> P[ValidTransaction + Val + Origin Out]
+        P --> L
+        L --> Q[Pre Data]
+        Q --> M
+        M --> R[Weight Refund]
+    end
+
+    subgraph "Pipeline Composition Tuples"
+        S[Ext A] --> T[Ext B]
+        T --> U[Ext C]
+        
+        S1[Origin0] --> S
+        S --> S2[Origin1]
+        S2 --> T
+        T --> T2[Origin2]
+        T2 --> U
+        U --> U2[Origin_final]
+        
+        I1[Implication0] --> S
+        S --> I2[Implication1 + A data]
+        I2 --> T
+        T --> I3[Implication2 + B data]
+        I3 --> U
+    end
+
+    subgraph "Implication Structure"
+        V[Base Implication<br/>Call + Version] --> W[Explicit Implications<br/>Extension Data]
+        W --> X[Implicit Implications<br/>Runtime-derived]
+        Y[ImplicationParts] --> V
+        Y --> W  
+        Y --> X
+    end
+
+    A --> J
+    B -.-> S
+    F --> M
+    G -.-> J
+    
+    classDef phase fill:#4a148c,stroke:#fff,stroke-width:2px,color:#fff
+classDef data fill:#6a1b9a,stroke:#e1bee7,stroke-width:2px,color:#fff
+classDef flow fill:#7b1fa2,stroke:#ce93d8,stroke-width:2px,color:#fff
+    
+    class J,K,L,M phase
+    class G,H,I,V,W,X,Y data
+    class N,O,P,Q,R,S1,S2,T2,U2,I1,I2,I3 flow
+</diagram>
 
 ---
 
