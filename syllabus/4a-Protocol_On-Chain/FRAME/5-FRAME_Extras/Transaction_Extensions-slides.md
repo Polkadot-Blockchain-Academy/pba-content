@@ -61,7 +61,7 @@ Greatly simplified from the actual tx pool of course. Feel free to check it out.
 - Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
 - Transaction validation should be **cheap** to perform.
 - Transaction pool is entirely an **offchain operation**.
-  - --> No state change
+  - → No state change
 
 Notes:
 
@@ -170,6 +170,11 @@ There are two flows with respect to the transaction extensions:
 1. The flow of execution of a transaction through the whole lifecycle.
 2. The flow of the transaction *within* one stage through the different implementations of that stage.
 
+Notes:
+Big Picture: Pipeline of Extensions
+
+- Transaction extensions remind me of other pipelines in computer graphics or data processing where you pass data from one stage to another.
+
 ---v
 
 ## Flow: Transaction Lifecycle
@@ -192,7 +197,7 @@ graph LR
     C --> D
     D --> E
     
-    B -.->|Val +\nValidTransaction| C
+    B -.->|Val + Origin\nValidTransaction| C
     C -.->|Pre + Origin| D
     C -.->|Pre| E
     D -.->|DispatchResult| E
@@ -216,37 +221,24 @@ As an example here is the flow of a pipeline of extensions through the `prepare`
 %%{init: {'themeVariables': {'fontSize': '32px'}}}%%
 graph LR
     subgraph " "
-        A[Transaction Picked\nfor Execution]
+        A[Transaction Picked\nfor Dispatch]
     end
-    A --> B["Extension 1"]
-    B --> C["Extension 2"]
-    C --> D["Extension N"]
-    D --> E["Call Dispatch"]
-    E --> F["Post Dispatch Pipeline"]
+    A --> B[Extension 1:\nprepare]
+    B --> C[Extension 2:\nprepare]
+    C --> D[Extension N:\nprepare]
+    D --> E[Call Dispatch]
+    E --> F[Post Dispatch\nPipeline]
     
-    G["Origin0"]
-    H["Origin1"] 
-    I["Origin2"]
-    J["OriginN"]
-    K["Pre1, Pre2, PreN"]
-    
-    A -.-> G
-    G -.-> B
-    B --> H
-    H -.-> C
-    C --> I
-    I -.-> D
-    D --> J
-    J -.-> E
-    D --> K
-    K -.-> F
+    A -.->|Origin0| B
+    B -.->|Origin1| C
+    C -.->|Origin2| D
+    D -.->|OriginN| E
+    D -.->|Pre1, Pre2, PreN| F
 
     classDef pipeline fill:#4a148c,stroke:#fff,stroke-width:3px,color:#fff
-    classDef data fill:#6a1b9a,stroke:#e1bee7,stroke-width:2px,color:#fff
     classDef flow fill:#7b1fa2,stroke:#ce93d8,stroke-width:3px,color:#fff
     
     class B,C,D,E,F pipeline
-    class G,H,I,J,K data
     class A flow
 </diagram>
 
@@ -338,7 +330,7 @@ where Call: Dispatchable,
 ### Anatomy: The Functions
 
 - `validate` does not mutate state.
-  - --> writing to storage in here will be reverted and wastes resources
+  - → writing to storage in here will be reverted and wastes resources
 - `prepare` does write, prepares the state to exectue with.
 - `post_dispatch` cleans up (e.g refunds).
 
@@ -502,12 +494,6 @@ Notes:
 
 ---
 
-## Post Dispatch
-
-- The dispatch result, plus generic type (`type Pre`) returned from `prepare` is passed to `post_dispatch`.
-
----
-
 ## Notable Transaction Extensions
 
 - These are some of the default transaction extensions that come in FRAME.
@@ -560,13 +546,9 @@ Put the genesis hash in `implicit`.
 ### `CheckNonZeroSender`
 
 - interesting story: any account can sign on behalf of the `0x00` account.
-- discovered by [@xlc](https://github.com/xlc).
+- discovered by [@xlc](https://github.com/xlc). ([Fix PR](https://github.com/paritytech/substrate/issues/10413))
 - uses `validate` to ensure the signing account is not `0x00`.
-  - Note: used to check in both `validate` and `pre_dispatch` in the old `SignedExtension`.
-
-Notes:
-
-https://github.com/paritytech/substrate/issues/10413
+  - used to check in both `validate` and `pre_dispatch` in the old `SignedExtension`.
 
 ---v
 
@@ -589,6 +571,26 @@ https://github.com/paritytech/substrate/issues/10413
 
 ---v
 
+### `CheckNonce`
+
+❌ Incorrect Ordering
+```
+TX                Account, Nonce
+tx 2 -> requires: [alice,  2]       provides: [alice, 1]
+tx 1 -> requires: [alice,  0]       provides: [alice, 1]
+tx 3 -> requires: [bob,    0]       provides: [bob,   1]
+```
+
+✅ Correct Ordering
+```
+TX                Account, Nonce
+tx 1 -> requires: [alice,  0]       provides: [alice, 1]
+tx 3 -> requires: [bob,    0]       provides: [bob,   1]
+tx 2 -> requires: [alice,  2]       provides: [alice, 1]
+```
+
+---v
+
 ### `CheckWeight`
 
 - Check there is enough weight in `validate`.
@@ -599,9 +601,19 @@ https://github.com/paritytech/substrate/issues/10413
 
 ---
 
-## Big Picture: Pipeline of Extensions
+## Wrapping Up: Key Takeaways
 
-- Transaction extensions remind me of other pipelines in computer graphics or data processing where you pass data from one stage to another.
+**Transaction Extensions** are the runtime's way to customize transaction behavior while keeping the node agnostic about transaction format.
+
+- **Four-Stage Lifecycle**: `validate` → `prepare` → call dispatch → `post_dispatch`
+  - `validate`: Lightweight checks, no state writes, provides pool ordering info (`priority`, `requires`/`provides` tags)
+  - `prepare`: State preparation before execution
+  - `post_dispatch`: Cleanup and refunds after execution
+
+- **Pipeline Architecture**: Extensions execute in sequence, passing data between stages
+  - Tuple of extensions = combined extension
+  - Stage data (`Pre`) and `Origin` flow from one extension to the next
+
 
 ---
 
