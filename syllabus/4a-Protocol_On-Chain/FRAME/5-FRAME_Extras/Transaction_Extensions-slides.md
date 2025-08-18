@@ -12,13 +12,23 @@ description: Transaction Extensions, Transaction Priority.
 
 ---v
 
+## Motivation
+
+We want to handle different aspects of executing a transaction for every transaction coming into the pool, but want to
+
+1. have the node know as little about the transaction format as is possible
+2. while allowing the runtime to customize the behavior as much as is possible.
+
+---v
+
 ## Summary
 
 - In this lecture you will learn above one of the more advanced FRAME concepts, _Transaction Extensions_.
+  - The goal is to gain a deeper understanding of the transaction lifecycle and when, whether & how to use transaction extensions.
 
-- They allow for a multitude of custom features to be added to FRAME transactions.
+- Transaction extensions allow for a multitude of custom features to be added to FRAME transactions.
 
-- They allow hooking into and configuring the transaction lifecycle in the transaction pool and block execution.
+- They allow hooking into and configuring the transaction lifecycle in the transaction pool and the block execution.
 
 ---
 
@@ -148,87 +158,96 @@ https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853
 - Transaction Extensions are an evolution of Signed Extensions.
   - See [the introducing PR](https://github.com/paritytech/polkadot-sdk/pull/3685).
 - In essence, they are
-  - used to provide ordering and validity information for a transaction as discussed earlier.
-  - a generic way to **extend** the transaction.
+  - used to provide ordering and validity information for a transaction (as discussed earlier).
+  - a generic way to **extend** the logic executed for every transaction.
 
 ---
 
 ## Flow
 
-<diagram class="mermaid" style="display: flex; width: 90%">
-graph TD
-    subgraph "Transaction Extension Pipeline"
-        A[Transaction Input] --> B[Extension 1]
-        B --> C[Extension 2]
-        C --> D[Extension N]
-        D --> E[Call Dispatch]
-        E --> F[Post Dispatch Pipeline]
-    end
+There are two flows with respect to the transaction extensions:
 
-    subgraph "Extension Data Types"
-        G[Implicit Data<br/>Runtime-derived] --> H[Val Data<br/>validate to prepare]
-        H --> I[Pre Data<br/>prepare to post_dispatch]
-    end
+1. The flow of execution of a transaction through the whole lifecycle.
+2. The flow of the transaction *within* one stage through the different implementations of that stage.
 
-    subgraph "Extension Phases"
-        J[1. implicit]
-        K[2. validate]
-        L[3. prepare]
-        M[4. post_dispatch]
-        
-        J --> K
-        K --> L
-        L --> M
-    end
+---v
 
-    subgraph "Data Flow Through Phases"
-        N[Origin In] --> K
-        O[Inherited Implication] --> K
-        K --> P[ValidTransaction + Val + Origin Out]
-        P --> L
-        L --> Q[Pre Data]
-        Q --> M
-        M --> R[Weight Refund]
-    end
+## Flow: Transaction Lifecycle
 
-    subgraph "Pipeline Composition Tuples"
-        S[Ext A] --> T[Ext B]
-        T --> U[Ext C]
-        
-        S1[Origin0] --> S
-        S --> S2[Origin1]
-        S2 --> T
-        T --> T2[Origin2]
-        T2 --> U
-        U --> U2[Origin_final]
-        
-        I1[Implication0] --> S
-        S --> I2[Implication1 + A data]
-        I2 --> T
-        T --> I3[Implication2 + B data]
-        I3 --> U
-    end
+The flow of data through the different stages of execution.
 
-    subgraph "Implication Structure"
-        V[Base Implication<br/>Call + Version] --> W[Explicit Implications<br/>Extension Data]
-        W --> X[Implicit Implications<br/>Runtime-derived]
-        Y[ImplicationParts] --> V
-        Y --> W  
-        Y --> X
+<diagram class="mermaid" style="display: flex">
+%%{init: {'themeVariables': {'fontSize': '32px'}}}%%
+graph LR
+    subgraph " "
+        A[implicit]
     end
+    B[1. validate]
+    C[2. prepare] 
+    D[3. Call Dispatch]
+    E[4. post_dispatch]
 
-    A --> J
-    B -.-> S
-    F --> M
-    G -.-> J
+    A -.->|Implicit| B
+    B --> C
+    C --> D
+    D --> E
     
+    B -.->|Val +\nValidTransaction| C
+    C -.->|Pre + Origin| D
+    C -.->|Pre| E
+    D -.->|DispatchResult| E
+
     classDef phase fill:#4a148c,stroke:#fff,stroke-width:2px,color:#fff
-classDef data fill:#6a1b9a,stroke:#e1bee7,stroke-width:2px,color:#fff
-classDef flow fill:#7b1fa2,stroke:#ce93d8,stroke-width:2px,color:#fff
+    classDef data fill:#6a1b9a,stroke:#e1bee7,stroke-width:2px,color:#fff
+    classDef flow fill:#7b1fa2,stroke:#ce93d8,stroke-width:2px,color:#fff
+    classDef special fill:#ff6b35,stroke:#fff,stroke-width:3px,color:#fff
     
-    class J,K,L,M phase
-    class G,H,I,V,W,X,Y data
-    class N,O,P,Q,R,S1,S2,T2,U2,I1,I2,I3 flow
+    class A flow
+    class B,C,D,E phase
+</diagram>
+
+---v
+
+## Flow: Within One Stage
+
+As an example here is the flow of a pipeline of extensions through the `prepare` implementations.
+
+<diagram class="mermaid" style="display: flex">
+%%{init: {'themeVariables': {'fontSize': '32px'}}}%%
+graph LR
+    subgraph " "
+        A[Transaction Picked\nfor Execution]
+    end
+    A --> B["Extension 1"]
+    B --> C["Extension 2"]
+    C --> D["Extension N"]
+    D --> E["Call Dispatch"]
+    E --> F["Post Dispatch Pipeline"]
+    
+    G["Origin0"]
+    H["Origin1"] 
+    I["Origin2"]
+    J["OriginN"]
+    K["Pre1, Pre2, PreN"]
+    
+    A -.-> G
+    G -.-> B
+    B --> H
+    H -.-> C
+    C --> I
+    I -.-> D
+    D --> J
+    J -.-> E
+    D --> K
+    K -.-> F
+
+    classDef pipeline fill:#4a148c,stroke:#fff,stroke-width:3px,color:#fff
+    classDef data fill:#6a1b9a,stroke:#e1bee7,stroke-width:2px,color:#fff
+    classDef flow fill:#7b1fa2,stroke:#ce93d8,stroke-width:3px,color:#fff
+    
+    class B,C,D,E,F pipeline
+    class G,H,I,J,K data
+    class A flow
 </diagram>
 
 ---
@@ -314,11 +333,59 @@ where Call: Dispatchable,
 }
 ```
 
+---v
+
+### Anatomy: The Functions
+
+- `validate` does not mutate state.
+  - --> writing to storage in here will be reverted and wastes resources
+- `prepare` does write, prepares the state to exectue with.
+- `post_dispatch` cleans up (e.g refunds).
+
+---v
+
+### Anatomy: Example Implementation
+
+```rust
+// A minimal example showing the trait implementation
+#[derive(Clone, PartialEq, Eq, Debug, Encode, Decode, TypeInfo)]
+pub struct SimpleLogging;
+
+impl<Call> TransactionExtension<Call> for SimpleLogging 
+where Call: Dispatchable,
+{
+    type Implicit = ();
+    type Val = ();
+    type Pre = ();
+    
+    const IDENTIFIER: &'static str = "SimpleLogging";
+    
+    fn weight(&self, _call: &Call) -> Weight {
+        Weight::from_parts(1000, 0) // minimal weight
+    }
+    
+    fn validate(/* params */) -> Result<(ValidTransaction, Self::Val, Origin), TransactionValidityError> {
+        log::info!("Transaction validated");
+        Ok((Default::default(), (), origin))
+    }
+    
+    fn prepare(/* params */) -> Result<Self::Pre, TransactionValidityError> {
+        log::info!("Transaction prepared");
+        Ok(())
+    }
+    
+    fn post_dispatch(/* params */) -> Result<(), TransactionValidityError> {
+        log::info!("Transaction executed");
+        Ok(())
+    }
+}
+```
+
 ---
 
-## Grouping Transaction Extension
+## Grouping Transaction Extensions
 
-- Is also a transaction extension itself!
+- A tuple of extensions is also a transaction extension itself!
 - You can look at the implementation yourself.. but the TLDR is:
   - Executes each individually
   - Passes resulting `Origin` from one to the next
@@ -343,7 +410,7 @@ pub type TxExtension = (
 	pallet_asset_tx_payment::ChargeAssetTxPayment<Runtime>,
 );
 
-type UncheckedExtrinsic = generic::UncheckedExtrinsic<Address, Call, Signature, TxExtension>;
+type UncheckedExt = generic::UncheckedExtrinsic<Address, Call, Signature, TxExtension>;
 ```
 
 - Transaction extensions might originate from a pallet, but are applied to ALL EXTRINSICS 😮‍💨!
@@ -363,6 +430,8 @@ struct Foo(u32, u32);
 impl TransactionExtension for Foo {
   type Implicit = u32;
   fn implicit(&self) -> Result<Self::Implicit, TransactionValidityError> {
+    let (a, b) = self;
+    ensure!(a + b == 42, IndeterminateImplicit);
     Ok(42u32)
   }
   /* snip */
@@ -406,6 +475,7 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 
 ## Transaction Pool Validation
 
+Notes on `ValidateUnsigned`:
 - Each pallet also has `#[pallet::validate_unsigned]`.
 - This kind of overlaps with creating a transaction extension and implementing `bare_validate`.
 - Substrate is in the process of migrating to transaction extensions.
@@ -529,7 +599,7 @@ https://github.com/paritytech/substrate/issues/10413
 
 ---
 
-## Big Picture: Pipeline of Extension
+## Big Picture: Pipeline of Extensions
 
 - Transaction extensions remind me of other pipelines in computer graphics or data processing where you pass data from one stage to another.
 
