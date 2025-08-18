@@ -23,7 +23,7 @@ We want to handle different aspects of executing a transaction for every transac
 
 ## Summary
 
-- In this lecture you will learn above one of the more advanced FRAME concepts, _Transaction Extensions_.
+- In this lecture you will learn above one of the more advanced FRAME concepts, [_Transaction Extensions_](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_frame/traits/trait.TransactionExtension.html).
   - The goal is to gain a deeper understanding of the transaction lifecycle and when, whether & how to use transaction extensions.
 
 - Transaction extensions allow for a multitude of custom features to be added to FRAME transactions.
@@ -598,6 +598,28 @@ tx 2 -> requires: [alice,  2]       provides: [alice, 1]
 - Adjust consumed weight in `post_dispatch` based on unspent weight.
 
 <!-- .element: class="fragment" -->
+
+---v
+
+## Feeless Transaction Extension
+
+- Idea: If some condition meets, do not charge any fee.
+- Motivation: Without this every pallet needs to define a new `TransactionExtension`.
+- [Issue #1725](https://github.com/paritytech/polkadot-sdk/issues/1725)
+
+```rust
+#[pallet::feeless_if(|origin: &OriginFor<T>, ticket: &Ticket| -> bool {
+    let account = ensure_signed(origin.clone())?;
+    some_conditions_here(&account, &ticket)
+})]
+fn some_extrinsic() { ... }
+
+pub type TxExtension = (
+	pallet_skip_feeless_payment::SkipCheckIfFeeless<Runtime,
+		pallet_asset_conversion_tx_payment::ChargeAssetTxPayment<Runtime>,
+	>,
+);
+```
 
 ---
 
