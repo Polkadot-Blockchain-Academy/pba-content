@@ -8,6 +8,7 @@ description: Transaction Extensions, Transaction Priority.
 ---v
 
 # Transaction Extensions
+
 ## Or: Lifecycle of a Transaction
 
 ---v
@@ -24,6 +25,7 @@ We want to handle different aspects of executing a transaction for every transac
 ## Summary
 
 - In this lecture you will learn above one of the more advanced FRAME concepts, [_Transaction Extensions_](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_frame/traits/trait.TransactionExtension.html).
+
   - The goal is to gain a deeper understanding of the transaction lifecycle and when, whether & how to use transaction extensions.
 
 - Transaction extensions allow for a multitude of custom features to be added to FRAME transactions.
@@ -35,6 +37,7 @@ We want to handle different aspects of executing a transaction for every transac
 ## Recap: Transaction Pool
 
 The transaction pool has two jobs:
+
 1. Transaction Validation
 2. Transaction Ordering
 
@@ -168,7 +171,7 @@ https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853
 There are two flows with respect to the transaction extensions:
 
 1. The flow of execution of a transaction through the whole lifecycle.
-2. The flow of the transaction *within* one stage through the different implementations of that stage.
+2. The flow of the transaction _within_ one stage through the different implementations of that stage.
 
 Notes:
 Big Picture: Pipeline of Extensions
@@ -196,7 +199,7 @@ graph LR
     B --> C
     C --> D
     D --> E
-    
+
     B -.->|Val + Origin\nValidTransaction| C
     C -.->|Pre + Origin| D
     C -.->|Pre| E
@@ -206,9 +209,10 @@ graph LR
     classDef data fill:#6a1b9a,stroke:#e1bee7,stroke-width:2px,color:#fff
     classDef flow fill:#7b1fa2,stroke:#ce93d8,stroke-width:2px,color:#fff
     classDef special fill:#ff6b35,stroke:#fff,stroke-width:3px,color:#fff
-    
+
     class A flow
     class B,C,D,E phase
+
 </diagram>
 
 ---v
@@ -237,9 +241,10 @@ graph LR
 
     classDef pipeline fill:#4a148c,stroke:#fff,stroke-width:3px,color:#fff
     classDef flow fill:#7b1fa2,stroke:#ce93d8,stroke-width:3px,color:#fff
-    
+
     class B,C,D,E,F pipeline
     class A flow
+
 </diagram>
 
 ---
@@ -343,29 +348,29 @@ where Call: Dispatchable,
 #[derive(Clone, PartialEq, Eq, Debug, Encode, Decode, TypeInfo)]
 pub struct SimpleLogging;
 
-impl<Call> TransactionExtension<Call> for SimpleLogging 
+impl<Call> TransactionExtension<Call> for SimpleLogging
 where Call: Dispatchable,
 {
     type Implicit = ();
     type Val = ();
     type Pre = ();
-    
+
     const IDENTIFIER: &'static str = "SimpleLogging";
-    
+
     fn weight(&self, _call: &Call) -> Weight {
         Weight::from_parts(1000, 0) // minimal weight
     }
-    
+
     fn validate(/* params */) -> Result<(ValidTransaction, Self::Val, Origin), TransactionValidityError> {
         log::info!("Transaction validated");
         Ok((Default::default(), (), origin))
     }
-    
+
     fn prepare(/* params */) -> Result<Self::Pre, TransactionValidityError> {
         log::info!("Transaction prepared");
         Ok(())
     }
-    
+
     fn post_dispatch(/* params */) -> Result<(), TransactionValidityError> {
         log::info!("Transaction executed");
         Ok(())
@@ -468,6 +473,7 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 ## Transaction Pool Validation
 
 Notes on `ValidateUnsigned`:
+
 - Each pallet also has `#[pallet::validate_unsigned]`.
 - This kind of overlaps with creating a transaction extension and implementing `bare_validate`.
 - Substrate is in the process of migrating to transaction extensions.
@@ -574,6 +580,7 @@ Put the genesis hash in `implicit`.
 ### `CheckNonce`
 
 ❌ Incorrect Ordering
+
 ```
 TX                Account, Nonce
 tx 2 -> requires: [alice,  2]       provides: [alice, 1]
@@ -582,6 +589,7 @@ tx 3 -> requires: [bob,    0]       provides: [bob,   1]
 ```
 
 ✅ Correct Ordering
+
 ```
 TX                Account, Nonce
 tx 1 -> requires: [alice,  0]       provides: [alice, 1]
@@ -628,6 +636,7 @@ pub type TxExtension = (
 **Transaction Extensions** are the runtime's way to customize transaction behavior while keeping the node agnostic about transaction format.
 
 - **Four-Stage Lifecycle**: `validate` → `prepare` → call dispatch → `post_dispatch`
+
   - `validate`: Lightweight checks, no state writes, provides pool ordering info (`priority`, `requires`/`provides` tags)
   - `prepare`: State preparation before execution
   - `post_dispatch`: Cleanup and refunds after execution
@@ -635,7 +644,6 @@ pub type TxExtension = (
 - **Pipeline Architecture**: Extensions execute in sequence, passing data between stages
   - Tuple of extensions = combined extension
   - Stage data (`Pre`) and `Origin` flow from one extension to the next
-
 
 ---
 
