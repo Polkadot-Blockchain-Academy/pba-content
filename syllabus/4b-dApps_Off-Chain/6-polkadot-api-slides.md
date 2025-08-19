@@ -100,6 +100,22 @@ const codec = dynamicBuilder.buildDefinition(134);
 
 ---v
 
+### Typed Codecs
+
+Access dynamic builder codecs directly from the top-level client.
+
+```ts
+import { dot } from "@polkadot-api/descriptors";
+import { getTypedCodecs } from "polkadot-api";
+
+const codecs = await getTypedCodecs(dot);
+
+const xcmMsgV5 = codecs.tx.XcmPallet.send.inner.message.inner.V5;
+const xcmLocationV5 = codecs.tx.XcmPallet.send.inner.dest.inner.V5;
+```
+
+---v
+
 ### Observable Client
 
 - Internal detail
@@ -143,8 +159,8 @@ const account = await firstValueFrom(
 - Known codecs for Substrate
   - SS58 Format
   - Block header
-  - Metadata v14
-  - Metadata v15
+  - Metadata v14-16
+  - Extrinsic
 - Other known utilities
   - Storage hashers
   - Multisig account
@@ -212,6 +228,48 @@ interface JsonRpcConnection {
 
 ---v
 
+#### Provider Enhancers
+
+Having the provider decoupled from PAPI internals enables: <!-- .element: class="fragment" -->
+
+- Interoperability with other clients. <!-- .element: class="fragment" -->
+- Composability and ability to enhance them. <!-- .element: class="fragment" -->
+
+and... <!-- .element: class="fragment" -->
+
+#### LEGACY PROVIDER! 🚀 <!-- .element: class="fragment" -->
+
+---v
+
+#### Legacy Provider
+
+It exposes a chainHead compliant RPC server... <!-- .element: class="fragment" -->
+
+...while using the legacy APIs! <!-- .element: class="fragment" -->
+
+<ul>
+<li class="fragment">Support for <em>old</em> chains.</li>
+<li class="fragment">Bypass flaky Polkadot SDK implementation.</li>
+<li class="fragment">No need to rewrite the whole client, keep it in the right abstraction layer.</li>
+</ul>
+
+---v
+
+#### WS Provider
+
+`JsonRpcProvider` with other relevant stuff.
+
+```ts
+type WsJsonRpcProvider = JsonRpcProvider & {
+  switch: (uri?: string, protocol?: string[]) => void;
+  getStatus: () => StatusChange;
+};
+```
+
+But still, a compilant provider! <!-- .element: class="fragment" -->
+
+---v
+
 ### JSON-RPC Providers
 
 Create a `withLogsRecorder`
@@ -229,323 +287,6 @@ export function withLogsRecorder(
 ---
 
 ## Subscriptions
-
----v
-
-### Pull vs Push
-
-<pba-cols style="font-size: 0.8em">
-<pba-col>
-
-<!-- prettier-ignore -->
-```ts
-let lastValue = null;
-while (keepWatching) {
-  const value = await typedApi
-    .query.System.Account
-    .getValue(ACCOUNT_ID);
-
-  if (value !== lastValue) {
-    console.log("new value", value);
-  }
-  lastValue = value;
-
-  await waitMs(1000);
-}
-```
-
-</pba-col>
-<pba-col>
-
-<!-- prettier-ignore -->
-```ts
-typedApi
-  .query.System.Account
-  .watchValue(ACCOUNT_ID)
-  .subscribe(value => {
-    console.log("new value", value);
-  })
-```
-
-</pba-col>
-</pba-cols>
-
----v
-
-<pba-cols style="font-size: 0.8em">
-<pba-col>
-
-### Pull
-
-Consumer decides when to get the value
-
-</pba-col>
-<pba-col>
-
-### Push
-
-Producer notifies of new changes
-
-</pba-col>
-</pba-cols>
-
----v
-
-### JSON-RPC Spec
-
-- ChainHead Events: <span class="fragment">Push-based</span>
-- Operations: <span class="fragment">Push/pull?</span>
-  - Low-level: Push <!-- .element: class="fragment" --->
-  - High-level: Pull <!-- .element: class="fragment" --->
-  - Higher-level: Push 🤯 <!-- .element: class="fragment" --->
-
-Notes:
-
-Events (new block, finalized, etc) are push-based, the node notifies us when a new block is produced
-Operations depend on the level we're looking at.
-
----v
-
-### Working Async
-
-- Push is asynchronous
-- Pull can be sync or async
-- Ancient JS (2014-) used callbacks for async code
-
-```ts
-// Ancient JS Pull
-api.query.System.Account.getValue(ACCOUNT_ID, (error, result) => {
-  if (error) {
-    return console.error("oh no!");
-  }
-  console.log("Result", result);
-});
-
-// Ancient JS Push
-api.query.System.Account.watchValue(
-  ACCOUNT_ID,
-  value => {
-    console.log("Value", value);
-  },
-  error => console.error("oh no!")
-);
-```
-
-Notes:
-
-In our context, pull is async. If you need the storage, you have to make a request to the node to pull it out for you.
-
----v
-
-### Enter Promises 🌈
-
-- Technically still using callbacks.
-- Common interface, allows composability.
-- Removes "callback hell"
-- 2017+ enhanced language: async/await
-- Works great for pull operations: fetch
-
----v
-
-### And for push?
-
-😞 <!-- .element: class="fragment" --->
-
-<div class="fragment">
-
-Async generators?
-
-```ts
-// async generator API
-const account = api.query.System.Account.watchValue(ACCOUNT_ID);
-
-for await (const value of account) {
-  console.log(value);
-}
-```
-
-But that's pull!
-
-</div>
-
----v
-
-### Enter Observables 🌈
-
-- Promise but for multiple values
-- Common interface, composable
-- Removes "callback hell"
-- Convertible to promises
-- TC-39 Stage 1 <span style="color: darkgray" class="fragment">(big copium)</span>
-- Meanwhile rxjs <!-- .element: class="fragment" -->
-
----v
-
-### Observables 101
-
-```ts
-import { Observable } from "rxjs";
-
-// Emit one value every second up to 10
-const observable$ = new Observable<number>(subscriber => {
-  let v = 0;
-
-  const token = setInterval(() => {
-    const valueToEmit = v;
-    v++;
-    subscriber.next(valueToEmit);
-    if (valueToEmit === 10) {
-      subscriber.complete();
-    }
-  }, 1000);
-
-  return () => clearInterval(token);
-});
-```
-
----v
-
-### Observables 101
-
-```ts
-observable$.subscribe(value => {
-  console.log(value);
-});
-
-observable$.subscribe({
-  next: value => console.log(value),
-  error: error => console.error(error),
-  complete: () => console.log("completed"),
-});
-```
-
-Notes:
-
-Showcase / demo how observables are cold by default
-
----v
-
-### Composing Observables
-
-Operator: `(source: Observable<T>) => Observable<R>`
-
-```ts
-const map =
-  <T, R>(mapFn: (value: T) => R) =>
-  (source: Observable<T>) =>
-    new Observable<R>(subscriber => {
-      const subscription = source.subscribe({
-        next: v => subscriber.next(mapFn(v)),
-        error: e => subscriber.error(e),
-        complete: () => subscriber.complete(),
-      });
-
-      return subscription;
-    });
-
-const multipliedBy2$ = observable$.pipe(map(v => v * 2));
-// Same as map(v => v * 2)(multipliedBy2$)
-```
-
----v
-
-### Composing Observables
-
-Pipe-ing
-
-```ts
-import { interval, map, take } from "rxjs";
-
-// Create an observable of the first 10 even numbers, one second at a time.
-const even$ = interval(1000).pipe(
-  map(v => v * 2),
-  take(10)
-);
-```
-
----v
-
-### Combining Observables
-
-- `combineLatest`, `merge`, `switchMap`, etc.
-- Endless list: https://rxjs.dev/guide/operators#creation-operators-1
-- Good resource: https://www.learnrxjs.io/learn-rxjs/operators
-
----v
-
-### Combining Observables
-
-switchMap
-
-```ts
-const switchMap =
-  <T, R>(mapFn: (value: T) => Observable<R>) =>
-  (source: Observable<T>) =>
-    new Observable<R>(subscriber => {
-      // TODO
-
-      const subscription = source.subscribe({
-        next: v => {
-          const innerObservable = mapFn(v);
-
-          // TODO
-        },
-        error: e => subscriber.error(e),
-        complete: () => subscriber.complete(),
-      });
-
-      return () => {
-        // TODO
-      };
-    });
-
-const bounty$ = selectedBountyId$.pipe(
-  switchMap(id => {
-    return from(typedApi.query.Bounties.Bounty.getValue(id));
-  })
-);
-```
-
----v
-
-### Observable ↔ Promise
-
-```ts
-import { firstValueFrom, lastValueFrom, from, defer } from "rxjs";
-const firstValue = await firstValueFrom(observable$);
-const lastValue = await lastValueFrom(observable$);
-
-const observable$ = from(fetch("…"));
-const observable$ = defer(() => fetch("…"));
-```
-
-Notes:
-
-It's important to keep in mind what these functions do: both firstValueFrom and lastValueFrom subscribe to the observable, and then unsubscribe.
-
-Difference between from and defer.
-
----v
-
-### Polkadot Chains
-
-- Pull
-  - Constants (metadata)
-  - Runtime APIs
-  - Storage query
-- Push
-  - Blocks
-  - Storage watch
-  - Transactions
-
-Notes:
-
-Pull operations: Easier to offer promises
-Push: Observables all the way.
-
-- Blocks: finalized$
-
-Why transactions are "push"?
 
 ---v
 
