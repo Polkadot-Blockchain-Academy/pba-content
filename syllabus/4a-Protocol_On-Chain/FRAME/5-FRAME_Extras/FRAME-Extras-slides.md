@@ -22,3 +22,4 @@ These are topics where it can be easier to just learn by looking through the cod
 ---
 
 ## Pallet Instances
+
