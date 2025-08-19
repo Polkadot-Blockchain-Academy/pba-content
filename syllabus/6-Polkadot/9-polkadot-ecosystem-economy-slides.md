@@ -915,6 +915,7 @@ https://forum.polkadot.network/
 - Polkadot Technical Fellowship (on-chain)
 - Polkadot Alliance (on-chain)
 - Polkadot Ambassadors (on-chain)
+- PBA Alumni Voting DAO
 - ChaosDAO
 - Kus DAO
 
