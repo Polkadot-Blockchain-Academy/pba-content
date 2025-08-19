@@ -541,10 +541,6 @@ The conviction multiplier increases the vote multiplier by one every time the nu
 
 <img src="./img/voting-locks-1.png" style="width: 700px;">
 
-</br></br>
-
-<img src="./img/voting-locks-2.png" style="width: 700px;">
-
 </div>
 
 <div class="col-span-1">
@@ -567,10 +563,6 @@ The conviction multiplier increases the vote multiplier by one every time the nu
 <div>
 
 <img src="./img/delegation-locks-1.png" style="width: 700px;">
-
-</br></br>
-
-<img src="./img/delegation-locks-2.png" style="width: 700px;">
 
 </div>
 
@@ -698,16 +690,17 @@ While this list is not exhaustive, some of the verticals we have seen appear in 
 
 <div class="col-span-3">
 
-- Smart Contract Chains: Moonbeam, Astar, Hub
+- Smart Contract Chains: Moonbeam, Astar, Polkadot Hub
 - Decentralized Finance (DeFi): Hydration
+- Liquid Staking Derivatives (LSD): Bifrost
 - Decentralized Social (DeSo): Frequency
 - Decentralized Identity (DID): Kilt
-- Tokenization (RWAs): Xcavate
 
 </div>
 
 <div class="col-span-2">
 
+- Tokenization (RWAs): Xcavate
 - Gaming: Mythical Games, Gavun Wud, Pinknomics
 - NFTs (Music, Art, etc...): Hub, KodaDot
 - Bridges: Snowbridge, Hyperbridge
@@ -720,6 +713,110 @@ While this list is not exhaustive, some of the verticals we have seen appear in 
 Notes:
 
 https://substrate.io/ecosystem/projects/
+
+---v
+
+## Hydration Network
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<img src="./img/hydration.png" style="width: 700px;">
+
+</div>
+
+<div class="col-span-1">
+
+<br />
+
+- swap, trade OTC, yield DCA, trade DCA, bonds
+- lending and borrowing
+- strategies (gigaDOT, gigaETH)
+- cross-chain, staking, referrals, memepad
+
+---v
+
+## Bifrost
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<img src="./img/bifrost.png" style="width: 700px;">
+
+</div>
+
+<div class="col-span-1">
+
+<br />
+
+- vStaking
+- farm
+- swap
+- cross-chain
+
+---v
+
+## MeWe
+
+
+<div>
+
+<img src="./img/mewe.png" style="width: 900px;">
+
+</div>
+
+---v
+
+## Gaming - Mythical
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<img src="./img/mythical.png" style="width: 700px;">
+
+</div>
+
+<div class="col-span-1">
+
+<br />
+
+- Blankos
+- NFL Rivals
+- FIFA Rivals
+- Pudgy Party
+
+---v
+
+## Gaming - FlappyWUD
+
+<div>
+
+<img src="./img/flappywud.png" style="width: 900px;">
+
+</div>
+
+---v
+
+## Gaming - WUD Universe
+
+<div class="grid grid-cols-2">
+
+<div>
+
+<img src="./img/wud-universe.png" style="width: 700px;">
+
+</div>
+
+<div class="col-span-1">
+
+<br />
+
+- Gamified Proof-of-Personhood (PoP)
+- Made with nested, interactive and dynamic NFTs
+- A tool to showcase Polkadot. It's an identity people could build to show their view of Polkadot via their cabin. You wanna show Polkadot in a nutshell, just share your cabin.
 
 ---
 
@@ -806,6 +903,34 @@ The most popular ones at the moment:
 Notes:
 
 https://forum.polkadot.network/
+
+---
+
+## Just a few DAOs..
+
+<div class="grid grid-cols-5">
+
+<div class="col-span-3">
+
+- Polkadot Technical Fellowship (on-chain)
+- Polkadot Alliance (on-chain)
+- Polkadot Ambassadors (on-chain)
+- ChaosDAO
+- Kus DAO
+
+</div>
+
+<div class="col-span-2">
+
+- Hungarian Polkadot DAO
+- Le Nexus
+- Polkadotters
+- Saxemberg
+- Dotcast
+
+</div>
+
+</div>
 
 ---
 
