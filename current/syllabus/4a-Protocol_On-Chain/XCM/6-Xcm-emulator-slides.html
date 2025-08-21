@@ -84,9 +84,17 @@ decl_test_parachains! {
   pub struct ParaA {
     runtime = parachain_runtime,
     core = {
+      XcmpMessageHandler: parachain_runtime::XcmpQueue,
+			LocationToAccountId: parachain_runtime::configs::xcm_config::LocationToAccountId,
+			ParachainInfo: parachain_runtime::ParachainInfo,
+			MessageOrigin: cumulus_primitives_core::AggregateMessageOrigin,
       ...
     },
     pallets = {
+      System: parachain_runtime::System,
+			Balances: parachain_runtime::Balances,
+			ForeignAssets: parachain_runtime::ForeignAssets,
+			PolkadotXcm: parachain_runtime::PolkadotXcm,
       ...
     },
     genesis = genesis(),
@@ -118,26 +126,103 @@ decl_test_networks! {
 <aside class="notes"><p>We declare our network by specifying our relay chain and parachains.
 We can also declare a bridge to test sending messages to different networks.
 In that case we also use <code>decl_test_bridges!</code> to define the bridges.</p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
-# Simple Test
-
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Using the mock network
+</script></section><section data-markdown><script type="text/template">
 ```rust
+$crate::paste::paste! {
+	pub trait [<$name ParaPallet>] {
+		$(
+			type $pallet_name;
+		)*
+	}
+
+	impl<N: $crate::Network> [<$name ParaPallet>] for $name<N> {
+		$(
+			type $pallet_name = $pallet_path;
+		)*
+	}
+}
+```
+
+<aside class="notes"><p>This one&#39;s a mouthfull because it&#39;s a procedural macro.
+Given <code>ParaA</code>, it will create a struct <code>ParaAParaPallet</code>, which we usually alias to <code>ParaAPallet</code>,
+that has all the pallets we specified when creating the mock network as associated types.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+```rust
+pub trait Chain: TestExt {
+	type Network: Network;
+	type Runtime: SystemConfig;
+	type RuntimeCall: Clone + Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>;
+	type RuntimeOrigin;
+	type RuntimeEvent;
+	type System;
+	type OriginCaller;
+
+	fn account_id_of(seed: &str) -> AccountId {
+		get_public_from_string_or_panic::<sr25519::Public>(seed).into()
+	}
+
+	fn account_data_of(account: AccountIdOf<Self::Runtime>) -> AccountData<Balance>;
+
+	fn events() -> Vec<<Self as Chain>::RuntimeEvent>;
+}
+```
+
+<aside class="notes"><p>The <code>Relay</code>, <code>ParaA</code> and <code>ParaB</code> that we created in the previous step implement this trait
+and we can use it to access all their aggregated enums and get events from them.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+# Example test
+
+```rust[|1-2|3|5|6-13|15-22|23-25|28-29|30-32|34-43|45-48]
 #[test]
-fn test_xcm() {
+fn example_test() {
   MockNet::reset();
 
   ParaA::execute_with(|| {
+    // Initialize state.
+    let sender = /* ... */;
+    let initial_balance = /* ... */;
+    type Balances = <ParaA as ParaAPallet>::Balances;
+    assert_ok!(<Balances as fungible::Mutate<_>>::mint_into(
+      &sender,
+      initial_balance
+    ));
+
     let message: Xcm<()> = <some_xcm>;
     let destination = Location::new(1, [Parachain(2001)]);
-    parachain_runtime::XcmPallet::execute(
-      parachain_runtime::RuntimeOrigin::signed(<some_account>),
+    assert_ok!(<ParaA as ParaAPallet>::XcmPallet::execute(
+      <ParaA as Chain>::RuntimeOrigin::signed(<some_account>),
       Box::new(VersionedXcm::V5(message)),
       Weight::from_parts(...), // Some max weight.
-    );
+    ));
+
+    let expected_balance = /* ... */;
+    let final_balance = <Balances as fungible::Inspect<_>>::balance(&sender);
+    assert_eq!(final_balance, expected_balance);
   });
 
+  // Calling `execute_with` makes the chain process incoming messages.
   ParaB::execute_with(|| {
-    // Message arrives, do some asserts.
+    // You can print all events!
+    let events = <ParaB as Chain>::events();
+    dbg!(&events);
+
+    // And assert them.
+    type RuntimeEvent = <ParaB as Chain>::RuntimeEvent;
+    assert_expected_events!(
+      ParaB,
+      vec![
+        RuntimeEvent::MessageQueue(
+          pallet_message_queue::Event::Processed { success: true, .. }
+        ) => {},
+      ],
+    );
+
+    let receiver = /* ... */;
+    let asset_id = /* ... */;
+    type ForeignAssets = <ParaB as ParaBPallet>::ForeignAssets;
+    let receiver_balance = <ForeignAssets as fungibles::Inspect<_>>::balance(asset_id, &receiver);
   })
 }
 ```
@@ -146,19 +231,17 @@ fn test_xcm() {
 Then we create a message and call the XCM pallet&#39;s <code>execute</code> extrinsic.
 We must wrap the location and XCM in a <code>Versioned*</code> type.</p>
 </aside></script></section><section  data-markdown><script type="text/template">
+# Real examples
+
+<aside class="notes"><p>Go to the Polkadot SDK repo and look at the cumulus emulated tests: <a href="https://github.com/paritytech/polkadot-sdk/tree/master/cumulus/parachains/integration-tests/emulated/tests/assets/asset-hub-westend/src/tests">https://github.com/paritytech/polkadot-sdk/tree/master/cumulus/parachains/integration-tests/emulated/tests/assets/asset-hub-westend/src/tests</a>.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
 # Next steps
 
-- Zombienet
-- Chopsticks
+Chopsticks
 
-<aside class="notes"><p>In the realm of testing tools we also have Zombienet and Chopsticks.</p>
-<p>Zombienet for spawning a local network and testing against it with either typescript or a DSL.</p>
-<p>Chopsticks for forking a live chain and testing against it.</p>
-</aside></script></section><section  data-markdown><script type="text/template">
-# Workshop
-
-We'll now jump on the emulator, configure XCM, execute and send messages.
-</script></section>
+<aside class="notes"><p>Chopsticks is for forking a live chain and testing against it.
+Lets you spawn a network via typescript code and write tests using it.</p>
+</aside></script></section>
     </article>
   </main>
 
