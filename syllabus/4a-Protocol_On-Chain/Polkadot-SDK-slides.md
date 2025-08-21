@@ -179,32 +179,51 @@ fn main() {
 
 ---
 
-## Still Not a Smart Contract Platform
+## Pallet vs Smart Contract
 
 <pba-cols>
 <pba-col>
 
-### Smart Contracts
-- Deploy to existing chain
-- Limited by platform
-- Pay rent forever
-- Share resources
-- Can't customize consensus
+### Smart Contract 📱
+```solidity
+// Runs ON the blockchain
+contract Token {
+    mapping(address => uint) balances;
+    
+    function transfer() {
+        // Limited by platform
+    }
+}
+```
+
+- **App** on blockchain
+- **Sandboxed** execution
+- **Limited** capabilities
+- **Pay gas** per call
 
 </pba-col>
 <pba-col>
 
-### Substrate Chains
-- **Your own blockchain**
-- **Full customization**
-- **No platform limits**
-- **Dedicated resources**
-- **Choose your consensus**
+### FRAME Pallet ⚙️
+```rust
+// Part OF the blockchain
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+    fn transfer() {
+        // Can change consensus!
+    }
+}
+```
 
-*"With great power comes great responsibility"*
+- **Core infrastructure**
+- **Direct access** to everything
+- **Unlimited** capabilities
+- **Define the fees**
 
 </pba-col>
 </pba-cols>
+
+**Analogy**: Smart Contract = iOS App, Pallet = iOS Feature
 
 ---
 
@@ -251,6 +270,40 @@ construct_runtime! {
 ```
 
 **Key Insight**: Runtime is just data in the blockchain!
+
+</pba-flex>
+
+---
+
+## State Transition Function (STF)
+
+<pba-flex center>
+
+### The Heart of Any Blockchain
+
+```text
+STF(State, Transaction) → State'
+```
+
+### Concrete Example
+
+```rust
+// Current State
+Balances: { Alice: 100, Bob: 50 }
+
+// Transaction
+Transfer { from: Alice, to: Bob, amount: 30 }
+
+// New State (after STF)
+Balances: { Alice: 70, Bob: 80 }
+```
+
+**Runtime = Implementation of STF**
+
+Everything else (networking, consensus, database) just ensures all nodes agree on:
+1. Current state
+2. Order of transactions
+3. Resulting state
 
 </pba-flex>
 
@@ -347,6 +400,26 @@ Rare but important:
 
 ---
 
+## Why Do We Need FRAME?
+
+<pba-flex center>
+
+### Writing Runtime Code is Complex
+
+Without abstractions, you need to:
+- Manually encode/decode storage
+- Route function calls
+- Manage state roots
+- Track storage changes
+- Generate metadata
+- Handle errors properly
+
+**Tomorrow's frameless exercise will show you this pain!** 😅
+
+</pba-flex>
+
+---
+
 ## Enter FRAME
 
 **Framework for Runtime Aggregation of Modularized Entities**
@@ -354,19 +427,25 @@ Rare but important:
 <pba-cols>
 <pba-col>
 
-### Without FRAME
+### Without FRAME (You'll try this!)
 ```rust
-// 1000s of lines of boilerplate
-impl_storage! {
-    // Manual storage management
+// Manual everything...
+fn execute_block(block: Block) {
+    // Decode each extrinsic
+    for ext in block.extrinsics {
+        let call = decode_call(ext)?;
+        match call {
+            Call::Transfer(from, to, amt) => {
+                // Manual storage reads
+                let from_bal = read_storage(from);
+                let to_bal = read_storage(to);
+                // Manual checks & updates
+                write_storage(from, from_bal - amt);
+                write_storage(to, to_bal + amt);
+            }
+        }
+    }
 }
-impl_dispatch! {
-    // Manual call routing  
-}
-impl_metadata! {
-    // Manual metadata
-}
-// ... and much more
 ```
 
 </pba-col>
@@ -374,16 +453,16 @@ impl_metadata! {
 
 ### With FRAME
 ```rust
-#[pallet::storage]
-pub type MyValue<T> = StorageValue<_, u32>;
-
 #[pallet::call]
 impl<T: Config> Pallet<T> {
-    pub fn do_something(
+    pub fn transfer(
         origin: OriginFor<T>,
-        value: u32,
+        to: T::AccountId,
+        #[pallet::compact] amount: T::Balance,
     ) -> DispatchResult {
-        MyValue::<T>::put(value);
+        let from = ensure_signed(origin)?;
+        // FRAME handles everything!
+        T::Currency::transfer(&from, &to, amount)?;
         Ok(())
     }
 }
@@ -436,6 +515,34 @@ pub mod pallet {
 ```
 
 **That's it!** Storage, events, calls - all handled by FRAME
+
+</pba-flex>
+
+---
+
+## Mental Model: What is a Pallet?
+
+<pba-flex center>
+
+### A Pallet is a Rust Module That:
+
+1. **Defines Storage** - What state does it manage?
+2. **Defines Calls** - What actions can users take?
+3. **Defines Events** - What happened that others should know?
+4. **Has Configuration** - What does it need from the runtime?
+
+### Think of Pallets as Blockchain "Features"
+
+```text
+Balances Pallet    → Feature: Native Token
+Staking Pallet     → Feature: Proof of Stake  
+Democracy Pallet   → Feature: On-chain Governance
+NFTs Pallet       → Feature: Non-fungible Assets
+Your Pallet       → Feature: Your Innovation!
+```
+
+**FRAME** = The framework that makes writing pallets easy
+**Runtime** = Collection of pallets working together
 
 </pba-flex>
 
