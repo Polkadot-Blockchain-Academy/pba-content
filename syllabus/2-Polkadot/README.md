@@ -1,4 +1,4 @@
-# Module 7: Polkadot, Jam & Future
+# Module 2: Polkadot, Jam & Future
 
 # Schedule
 
@@ -18,14 +18,3 @@
 1. Confirmations and Finality [Maciej]
 1. Agile Coretime [Maciej]
 1. Ecosystem and Economy [Maciej]
-
-## Day 2 POLKADOT 3.0 JAM & Future
-
-### Morning
-
-1. ???
-
-### Afternoon
-
-1. ???
-
