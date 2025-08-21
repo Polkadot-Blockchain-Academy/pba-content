@@ -1,30 +1,20 @@
 # Module 3: Polkadot Architecture, PVM and smart contracts
 
-#### Prerequisites:
+#### Prerequisites
+
 Install:
-- https://github.com/paritytech/revive/releases
-- https://github.com/ethereum/solidity/
 
-## Learning Outcomes
-
-TODO
-
-## Hands on activities
-
-- Hackathon
+- <https://github.com/paritytech/revive/releases>
+- <https://github.com/ethereum/solidity/>
 
 ## Schedule
 
-### Morning
+### Day 1: Afternoon
 
-1. Polkadot Architecture [erin]
 2. Smart Contracts general introduction [pg]
 3. EVM contracts [pg]
-4. Platform agnostic Bytecode [cyrill]
-5. PVM [cyrill]
-6. History of Contracts on Polkadot, Plaza, Hub [erin]
-7. revive stack [pg: pallet] [cyrill: compiler]
+7. revive stack [pg]
 
-### Afternoon
+### Day 2
 
 - Hackathon
