@@ -247,9 +247,9 @@ TODO
 Using the Metadata we can see the following:
 
 - System is pallet index 0.
-	- With storage Prefix "System".
+  - With storage Prefix "System".
 - There is a storage item called "Account".
-	- With storage prefix is "Account"
+  - With storage prefix is "Account"
 - It uses hasher `Blake2128Concat`.
 - It has a key using "type 0".
 - It has a value using "type 3".
@@ -266,11 +266,7 @@ Under the `lookup` section of the metadata, we can see all the Type Information,
 {
   "0": {
     "id": 0,
-    "path": [
-      "sp_core",
-      "crypto",
-      "AccountId32"
-    ],
+    "path": ["sp_core", "crypto", "AccountId32"],
     "params": [],
     "def": {
       "tag": "composite",
@@ -361,10 +357,7 @@ We need to also understand the types of the returned value, and how to deseriali
 {
   "3": {
     "id": 3,
-    "path": [
-      "frame_system",
-      "AccountInfo"
-    ],
+    "path": ["frame_system", "AccountInfo"],
     "params": [
       {
         "name": "Nonce",
@@ -427,11 +420,7 @@ We need to also understand the types of the returned value, and how to deseriali
   },
   "5": {
     "id": 5,
-    "path": [
-      "pallet_balances",
-      "types",
-      "AccountData"
-    ],
+    "path": ["pallet_balances", "types", "AccountData"],
     "params": [
       {
         "name": "Balance",
@@ -516,7 +505,7 @@ Using the storage key we want, at a specific block hash, we get a result like:
     "0x80ffff80cc70e7072048b0f48ce7c9304cac762153936a52b1c2a601872bc688a89fff6d80b79173db08a3a50f9ebafa05ac6b0eb9c5123b2bf9dfc6b328bd7ee11dfe5af580a950c1537efafa4c2aea6eaca379ff37b83d58a43d39cec90ef651c89519f90b80a2cc18b84484c8912042e9f6c3123aea3547a2785395015373efe52bb6cd2a1580cf506f4c71cba517308ed0023d1d5095c8ca00563f337a63622fb5626cebae8a804c8b25016ce9479481484d767fc2b847697e16519f14a2d3991187af140f2c5080109ad293e4e5ce1b81a0c6e466cf6e78657ae7fe21f3aeb08a9e77105def9d3d80544392b8eff9834281a0661cc6669362ebfa6adf6e406a9b075695070a817c0d809d34a72e4550b5d9575259fd7fb1619cc3dc656a08732bd0b0e81b7c4fc3622a801a79985abb32c29c9b8b899c2a539b1110e0ba8ae92377e88963d15a7b06469a80d736d734350608abe23dfd0dabde28fda330a12b5a38c74cb16463d30c0d0c1580e6b952d3eb8e8abb1743545c2f71a0cc9306988cc9d14f224c3ea47ed3e9eeb7801b331084d90342d4b9d239cde72090215bddf210e9a64dfda130d84b09ec2c7580570a6f0a1ba5c9ba8043100b629823a8b07bae5c6cbb8ad18114e5539e7be5db8036343a2e2905c865a560ceb8b75b8f523912c3d67d5a5a3a4d7649754901881e806f2000490f44762c006e5d190310c682f42e6571bf2bdee74c5f3d105c1a61e4",
     "0x80ffff80f66f7d8b4d0129c2023e0790051382c63856cbd4fef81ced27e7b8e01bf652e2802aa6446c883890efe6334b63e1b63811ef63c9f10e56146eb92c829c043f209280557d667d5b72e66c89528d5d9f0e217860b6da7422033d4e7dd7a2f294e536a780a1d9ded3577f705f1412cae7a8a8151c83a1a094df8b59c59b87b63bd5e9fabd80e577a54776912bf5a2291ead45d8362432bde785630f15e2c2a43347b72693e28031e96f21602d0d8cee9caa33f2aed7fdc55dff08fb41043e5bc94ea3c4a9cf7b804ca3cc93c3e40f9c5b3be4ad4c207a5b5c011572985441c32e821c2b799e879080b883d82d277c7e5fe004946999984fe0af9ccb94cab5dcd4fc0bc45e4906286880889f43ce9f186d389f8d7cfc93728c9166c056c3c16e8ebcd39c8f3f4d15abeb8058d3377db476957ef132dcd9225b2c770e1d8258981fa2e90388f3d686a72695800fba99b9cceb0170342bd94370bbf104a2f52fa4c89712b4349166a556cb81ba80ef13f5f64361e8610130f7cfca7c373e72c368e2f1f3236ae591e0b192f7f2bf80c4d6671286c16191e4681f32634021008262b197bd74ab06316f6217ccd6595c802f076e5c9645ecad58d577c58483851f9fa5d365b3598c4049e853f8459fd0b3802ba1d6d021ff61ca27ce51f55cfe5eee261de49fcc14f87be88da5bfc0c0b585807b93ba6c7cadcb9d814e782a86650ec91b6c076915e0e84e379c655b8f7b4c04",
     "0x9eaa394eea5630e07c48ae0c9558cef7399f8040b6e571bb88c919dbb532a170b1432934cd91fd851ad7eb198d979de9882d7f8070948170255450f97fff46dae5a1a64a56ba13e5ac76cb920be37f783675d7cf505f0e7b9012096b41c4eb3aaf947f6ea4290800004c5f0684a022a34dd8bfa2baaf44f172b710040180c70e4f7eb66b8cc0232f03f079a1937bc13fb3734dc0f1c7966af58b4cf45bc880126f6e8f9215e0e73a09efa7de7a12506f823abc3ac71a0077cd753640e9166a80b7afcaaa4831f61d51dc405f9cf361ef73fdbefe2debc426ec0aa1ac9e65ac0f80ac7bf64c5400450cf68789645778ff10562ff95d7bfae93f051a8e037702887c4c5f021aab032aaa6e946ca50ad39ab6660304017c5f09cce9c888469bb1a0dceaa129672ef834c6663d0020706f6c6b61646f74",
-    "0x9f099d880ec681799c0cf30e8886371da9ffff80390c36d994280a925ea8f9fe4e649a98a27b7b96f9d29f737699acdf2d95a8ba8092e74f0ccdaf09e632c57f0bee707e1639506ae00ff85443a0a42a00f114853c8004d665fc4a709ce8313c59522eb026ab012bbeac82af356975f6ad83c41d71738011c4fbbd0601987a449d68da7ac091cc0bc93fb435f50131a7579cdfbf35742a80ec5e1519d0e2b39d84e47b343e693376d5a7304997560818f1e8a5aabf22c813803cc4dbc4d5f838d380af0e00efd83eb7c2f5d73f5ed1b0b0c4fa0fbd46bf0b128038e5e0be466594e416f1842539c00e74f6001a51d49cf0417b83d5c5f0e3096480c0bdffae2524d296a3e750c1d7f039750c260d5822ac23b79143242ed5c5b27c80ff5c8959273753911d81f14e949c38020afdd5fe1ff91ddf311342c68919910180e3d6f4604817ea2da2767c5b4ec26bbb7c78e1eab1b629c98548c68ed2db8b5680b3e13553e53325f68da16dcbda7f2f08e32a6a10431040e754deb8aa16f0c858804e63e9d616bee1d03d61ba17d732e654b7d3f263bfd671f6a9073b3cc321139e807e77ec3f7652a205b685df91239274e769c073b4f2d0d6fa529206952116cf2180b678af79c99ae5f2b83fe563c4f0042446d27dc57fcd4699a00572ea3e9560c3804847aa862cef5a41028d869ce7b6a9f0ea765c01688f557bb525ba5da42ba9948028f3d4234f5b919e350b16716e3a67577d6e2cfc4e095dd00fdbc6fbbeba8b97",
+    "0x9f099d880ec681799c0cf30e8886371da9ffff80390c36d994280a925ea8f9fe4e649a98a27b7b96f9d29f737699acdf2d95a8ba8092e74f0ccdaf09e632c57f0bee707e1639506ae00ff85443a0a42a00f114853c8004d665fc4a709ce8313c59522eb026ab012bbeac82af356975f6ad83c41d71738011c4fbbd0601987a449d68da7ac091cc0bc93fb435f50131a7579cdfbf35742a80ec5e1519d0e2b39d84e47b343e693376d5a7304997560818f1e8a5aabf22c813803cc4dbc4d5f838d380af0e00efd83eb7c2f5d73f5ed1b0b0c4fa0fbd46bf0b128038e5e0be466594e416f1842539c00e74f6001a51d49cf0417b83d5c5f0e3096480c0bdffae2524d296a3e750c1d7f039750c260d5822ac23b79143242ed5c5b27c80ff5c8959273753911d81f14e949c38020afdd5fe1ff91ddf311342c68919910180e3d6f4604817ea2da2767c5b4ec26bbb7c78e1eab1b629c98548c68ed2db8b5680b3e13553e53325f68da16dcbda7f2f08e32a6a10431040e754deb8aa16f0c858804e63e9d616bee1d03d61ba17d732e654b7d3f263bfd671f6a9073b3cc321139e807e77ec3f7652a205b685df91239274e769c073b4f2d0d6fa529206952116cf2180b678af79c99ae5f2b83fe563c4f0042446d27dc57fcd4699a00572ea3e9560c3804847aa862cef5a41028d869ce7b6a9f0ea765c01688f557bb525ba5da42ba9948028f3d4234f5b919e350b16716e3a67577d6e2cfc4e095dd00fdbc6fbbeba8b97"
   ]
 }
 ```
@@ -547,16 +536,16 @@ See: `pub struct UncheckedExtrinsic`
 From the Metadata, we can see:
 
 - A pallet called "Balances".
-	- With pallet "index 5". (check field, not order in the JSON)
+  - With pallet "index 5". (check field, not order in the JSON)
 - With Calls of "type 126".
-	- This shows us the list of available Calls.
-	- One of which is `transfer_keep_alive`,
-		- With "call index 3". (check field, not order in the JSON)
-	- With two parameters:
-		1. `dest` with type `AccountIdLookupOf`
-			- Which allows various address formats as input.
-		2. `value` with type `T::Balance`
-			- Which is `compact` + `u128`
+  - This shows us the list of available Calls.
+  - One of which is `transfer_keep_alive`,
+    - With "call index 3". (check field, not order in the JSON)
+  - With two parameters:
+    1. `dest` with type `AccountIdLookupOf`
+       - Which allows various address formats as input.
+    2. `value` with type `T::Balance`
+       - Which is `compact` + `u128`
 
 ---
 
