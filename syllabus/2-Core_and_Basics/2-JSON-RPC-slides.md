@@ -14,11 +14,12 @@ description: JSON-RPC Spec
 - What is JSON-RPC (v2)<!-- .element: class="fragment" -->
   - Its stateless design<!-- .element: class="fragment" -->
   - Conventions to make it stateful<!-- .element: class="fragment" -->
-- (Substrate) JSON-RPC Spec<!-- .element: class="fragment" -->
-  - Objectives<!-- .element: class="fragment" -->
-  - Versioning<!-- .element: class="fragment" -->
-  - Groups of functions<!-- .element: class="fragment" -->
-  - Overview<!-- .element: class="fragment" -->
+- Do nodes have to expose JSON-RPC APIs?<!-- .element: class="fragment" -->
+- Legacy JSON-RPC APIs (Hands-on)<!-- .element: class="fragment" -->
+  - Summary of probems<!-- .element: class="fragment" -->
+- Modern JSON-RPC: Introduction and goals<!-- .element: class="fragment" -->
+  - Overview of the new JSON-RPCs APIs<!-- .element: class="fragment" -->
+  - Hands-on examples <!-- .element: class="fragment" -->
 
 ---
 
@@ -84,74 +85,62 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-# Why a New JSON-RPC API?
+# Do nodes have to expose JSON-RPC APIs?
 
-- Standardizing JSON-RPC requests across the Polkadot ecosystem<!-- .element: class="fragment" -->
-- Removing inconsistencies<!-- .element: class="fragment" -->
-- Providing better support for light clients and alternative runtimes<!-- .element: class="fragment" -->
+- Different kinds of nodes, and differet kinds of usages:<!-- .element: class="fragment" -->
 
-**Notes:**
+  - Light-node<!-- .element: class="fragment" -->
+  - Full-node<!-- .element: class="fragment" -->
+  - Archive-node<!-- .element: class="fragment" -->
 
-- The previous JSON-RPC implementation had inconsistencies that made it harder for developers to maintain compatibility across parachains.
-- A key motivation was to improve support for lightweight clients, which require a more optimized and reliable data-fetching mechanism.
-
----
-
-# JSON-RPC API Objectives
-
-- Accommodate multiple audiences<!-- .element: class="fragment" -->
-- Ensure clarity, efficiency, and scalability<!-- .element: class="fragment" -->
-- Address needs for security, reliability, and flexibility<!-- .element: class="fragment" -->
+- Different kinds of consumers<!-- .element: class="fragment" -->
+  - Dapps<!-- .element: class="fragment" -->
+  - Indexers<!-- .element: class="fragment" -->
+  - Wallets<!-- .element: class="fragment" -->
+  - Bridges<!-- .element: class="fragment" -->
+  - Monitoring systems, node-admins, etc<!-- .element: class="fragment" -->
 
 **Notes:**
 
-- The JSON-RPC API is designed to cater to a diverse range of audiences, from application developers to node operators.
-- It aims to provide a robust and efficient interface for blockchain interaction while maintaining security and clarity.
-- The interface emphasizes performance and standardization, ensuring efficient communication across various use cases.
+- First ask users to list the different kinds of nodes that they are aware off.
+- Ask them about different kinds of usages for different kinds of nodes.
+- Explain why it makes sense to have different groups of functions depending on the type of node.
 
 ---
 
-# Key Changes & Improvements
-
-- **Groups of functions:** Based on node capabilities
-
-<!-- .element: class="fragment" -->
-
-- **Stability and versioning:** Allowing improvements without breaking contracts.
-
-<!-- .element: class="fragment" -->
-
-- **Better Error Handling:** Clearer and documented errors.
-
-<!-- .element: class="fragment" -->
-
-- **Load Balancer Friendly:** A load balancer can move a client from one server to another (and thus shut down servers that it doesn’t need anymore).
-
-<!-- .element: class="fragment" -->
+# Legacy JSON-RPC APIs (Hands-on)
 
 **Notes:**
 
-- Method names have been changed to be more descriptive and standardized.
-
-- Errors are now structured in a way that makes debugging and handling failures easier.
-
-- The API reduces redundant calls, leading to lower latency and better efficiency.
+- Start by googling "polkadot json-rpc" and explaining why what we got into the results is very sad.
+- Go to: https://polkadot.js.org/docs/substrate/rpc/
+  - Briefly explain why that is a complete cluster-fuck
+  - From the terminal try the `getHeader` API, show the returned payload and discuss the implications
+  - From the terminal: use `substribeAllHeads` and explain the implications from a load-balancer stand-point
+  - From the terminal: `state_call` vs `state_getMetadata`, why does `state_getMetadata` exist?
 
 ---
 
-# Grouping Functions & Node Capabilities
+## Summary of problems
 
-- Functions are grouped using a prefix with a version number (e.g., `chainHead_v1_follow`)
+- Poorly documented<!-- .element: class="fragment" -->
+- "Leaky": many endpoins are tightly-coupled to specific runtimes<!-- .element: class="fragment" -->
+- Bad defaults: uses the best-block as the default block<!-- .element: class="fragment" -->
+- Not "load-balancer-friendly": the server can't signal the client that a subscription is done.<!-- .element: class="fragment" -->
+- Not "light-client friendly"<!-- .element: class="fragment" -->
+- Can't be versioned<!-- .element: class="fragment" -->
 
-<!-- .element: class="fragment" -->
+**Notes:**
 
-- Node types: Full, Light, Archive, Plain databases
+---
 
-<!-- .element: class="fragment" -->
+# Modern JSON-RPC: Introduction and goals
 
-- Capability detection via the `rpc_methods` function
-
-<!-- .element: class="fragment" -->
+- Properly speced out<!-- .element: class="fragment" -->
+- Different clients/consumers => different groups of functions<!-- .element: class="fragment" -->
+- Minimal surface API<!-- .element: class="fragment" -->
+- Load-balancer friendly: subscriptions can be terminated by the server<!-- .element: class="fragment" -->
+- DoS attacks resilience<!-- .element: class="fragment" -->
 
 **Notes:**
 
@@ -161,148 +150,21 @@ https://www.jsonrpc.org/specification#examples
 
 ---
 
-# Upgradability & Versioning
+## Overview of the new JSON-RPCs APIs
 
-- Groups are versioned and self-contained (e.g., `foo_v1`, `foo_v2`)
-
-<!-- .element: class="fragment" -->
-
-- Higher versions indicate preferred methods, while older versions become soft-deprecated
-
-<!-- .element: class="fragment" -->
-
-- Functions in newer versions don't overlap with older versions
-
-<!-- .element: class="fragment" -->
+- https://paritytech.github.io/json-rpc-interface-spec/
 
 **Notes:**
 
-- Upgrading function groups ensures that newer functions are clearly distinct from older ones.
-- This separation simplifies development and reduces confusion when interacting with nodes of different capabilities.
-- Developers can choose which version to rely on, knowing the functional boundaries.
+- Go the the spec and explain the contracts between the old and the new:
+- Properly speced, errors well defined, cancelable subscriptions, etc
+- Versions and groups of functions, etc
+- ChainHead deep-dive
 
 ---
 
-# Unstable Functions
-
-- Marked with the `unstable` version prefix
-
-<!-- .element: class="fragment" -->
-
-- No stability guarantees—functions can change without warning
-
-<!-- .element: class="fragment" -->
-
-- Useful for experimental or debugging utilities
-
-<!-- .element: class="fragment" -->
+## Hands-on examples
 
 **Notes:**
 
-- Unstable functions are meant for experimental use and may evolve or be removed at any time.
-- They are helpful for developers needing temporary functions for debugging or testing.
-- Applications should avoid relying on unstable functions for critical features.
-
----
-
-# Audience:
-
-## End-User Applications
-
-- Focus on reading storage and submitting transactions<!-- .element: class="fragment" -->
-- Encourage and support for light-clients<!-- .element: class="fragment" -->
-- Minimize DoS attack vectors<!-- .element: class="fragment" -->
-
-**Notes:**
-
-- End-user applications, like wallets, should prioritize using locally-run nodes to enhance security and decentralization.
-- Light clients, which don't hold full blockchain storage, are encouraged for better usability.
-- The API design mitigates potential DoS vulnerabilities while ensuring precise and efficient operations.
-
----
-
-# Audience:
-
-## Node Operators
-
-- Focus on monitoring and administrative operations
-
-<!-- .element: class="fragment" -->
-
-- Stable functions for scripting and automation
-
-<!-- .element: class="fragment" -->
-
-- CLI-friendly tools (e.g., `websocat`)
-
-<!-- .element: class="fragment" -->
-
-**Notes:**
-
-- Node operators require tools to monitor and manage nodes efficiently.
-- Stability in API functions is essential for reliable scripting and automation.
-- Tools like `websocat` facilitate interaction with JSON-RPC through WebSockets.
-
----
-
-# Audience:
-
-## Oracles & Bridges
-
-- Automated interaction with the blockchain<!-- .element: class="fragment" -->
-- Similar requirements as end-user applications<!-- .element: class="fragment" -->
-- Focus on stability and reliability<!-- .element: class="fragment" -->
-
-**Notes:**
-
-- Oracles and bridges require reliable and automated blockchain interaction.
-- Although automated, their operational needs align with those of end-user-facing applications.
-- Ensuring security and stability is paramount.
-
----
-
-# Audience:
-
-## Archivers / Indexers
-
-- Access to historical blockchain data<!-- .element: class="fragment" -->
-- Focus on finalized blocks<!-- .element: class="fragment" -->
-- Stable and easy-to-use functions<!-- .element: class="fragment" -->
-
-**Notes:**
-
-- Archivers need to access and analyze past blockchain states, focusing on finalized data.
-- The API ensures stability and ease of use, simplifying data retrieval for archival purposes.
-- Performance is less critical, but stability and reliability are key.
-
----
-
-# Overview:
-
-- chainhead<!-- .element: class="fragment" -->
-- archive<!-- .element: class="fragment" -->
-- chainSpec<!-- .element: class="fragment" -->
-- sudo\_\*<!-- .element: class="fragment" -->
-- transaction<!-- .element: class="fragment" -->
-- transactionWatch<!-- .element: class="fragment" -->
-
----
-
-# Questions & Discussion
-
-- Feel free to ask any questions!
-
-<!-- .element: class="fragment" -->
-
-- Check the full objectives: [Parity Spec Link](https://paritytech.github.io/json-rpc-interface-spec/objectives.html)
-
-<!-- .element: class="fragment" -->
-
-- Further reading: [New JSON-RPC API mega Q&A](https://forum.polkadot.network/t/new-json-rpc-api-mega-q-a/3048)
-
-<!-- .element: class="fragment" -->
-
-**Notes:**
-
-- Encourage the audience to ask questions about their specific use cases or integration concerns.
-- Refer to the full objectives document for detailed insights and ongoing updates.
+- Go to the termminal and walk them through the prepared scripts
