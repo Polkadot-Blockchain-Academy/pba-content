@@ -194,7 +194,7 @@ impl Dispatchable for Call {
   fn dispatch(self, origin: _) -> Result<_, _> {
     match self {
       Call::System(system_call) => system_call.dispatch(),
-      Call::SimplePallet(simple_pallet_call) => system_pallet_call.dispatch(),
+      Call::SimplePallet(simple_pallet_call) => simple_pallet_call.dispatch(),
     }
   }
 }
