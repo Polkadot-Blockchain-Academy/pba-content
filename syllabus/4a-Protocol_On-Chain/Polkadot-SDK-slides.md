@@ -1,692 +1,318 @@
 ---
 title: Introduction to Polkadot SDK
-description: Building blockchains with Substrate and FRAME
-duration: 60 minutes
+description: In Introduction to Polkadot SDK
+duration: 120 mins
+---
+
+## Meta
+
+Before Getting started
+
+- 👋🏻 Questions
+- ⏰ Slides
+- `@kianenigma` / `kian@parity.io`
+
+Note:
+
+meta questions for ice breaker:
+
+- how many ppl know substrate/frame already?
+- how many ppl feel like they are comfortable with rust
+- with rust generics, traits and associated types
+- how many ppl know what polkadot-sdk is?
+- how many ppl know jam already? do you have the question of why are we still learning all of this?
+
 ---
 
 # Introduction to Polkadot SDK
 
-Building Production Blockchains with Substrate & FRAME
+- Polkadot + Substrate + FRAME + XCM
+
+Note:
+
+This lecture is about learning two things:
+
+1. Polkadot
+2. Polkadot SDK
+   1. Substrate
+   2. FRAME
+   3. XCM
+
+There will be amazing modules going into further details of each. This will be very high level.
+
+meta questions for ice breaker:
+
+- how many ppl know substrate/frame already?
+- how many ppl feel like they are comfortable with rust
+- with rust generics, traits and associated types
+- how many ppl know what polkadot-sdk is?
+- how many ppl know jam already? do you have the question of why are we still leaning all of this?
 
 ---
 
-## What We'll Cover
+## Learning Outcomes
 
-<pba-flex center>
-
-1. Why Rust for blockchains?
-2. Why building blockchains is hard
-3. The Substrate solution
-4. Runtime architecture & upgradability
-5. FRAME: Making it manageable
-6. Your path forward
-
-</pba-flex>
+1. Understand what Polkadot is as a developer platform.
+2. Understand the pieces of the Software Development Kit (SDK) of this platform
 
 ---
 
-## Why Rust? 🦀
+## Polkadot
 
-<pba-cols>
-<pba-col>
+- As a platform for developers.
+- Polkadot stems from Ethereum. A single threaded smart contract blockchain.
 
-### The Numbers Don't Lie
+---v
 
-**Microsoft Study (2019)**:
-- 70% of security vulnerabilities are memory safety issues
-- Rust eliminates entire classes of bugs:
-  - Buffer overflows
-  - Use after free
-  - Data races
-  - Null pointer dereferencing
+### Polkadot
 
-</pba-col>
-<pba-col>
+<img width="800px" rounded src="./img/single-threaded.svg" />
 
-### Perfect for Blockchains
+---v
 
-✅ **Memory safe** without garbage collection
-✅ **Deterministic** execution
-✅ **Zero-cost abstractions**
-✅ **Fearless concurrency**
-✅ **Great WASM support**
+### Polkadot
 
-*"If it compiles, it works"* - mostly true!
+<img width="800px" rounded src="./img/single-threaded-eth.svg" />
 
-</pba-col>
-</pba-cols>
+---v
 
----
+### Polkadot
 
-## Real World Impact
+- O.G ETH2 Vision from 2015
+- Let's make this _sharded_, such that it can achieve execution sharding.
 
-<pba-flex center>
+Note:
 
-### Google's Android Team (2022)
+The holy grain of what ETH 2.0 was meant to be.
 
-> "Memory safety vulnerabilities dropped from 76% to 35% after adopting Rust"
+---v
 
-### In Blockchain Context
+### Polkadot
 
-- **Solana**: ~500k lines of Rust
-- **Polkadot**: ~1M lines of Rust
-- **Critical bugs**: Dramatically lower than C++ chains
+<img width="800px" rounded src="./img/multi-threaded.svg" />
 
-</pba-flex>
+Note:
 
----
+Have we compromised security in any way in this model?
 
-## Building a Blockchain is HARD
+---v
 
-<pba-flex center>
+### Polkadot
 
-To build a production blockchain, you need expertise in **8 disciplines**:
+<img width="800px" rounded src="./img/multi-threaded-dot.svg" />
 
-</pba-flex>
+Note: Polkadot achieves perfect shared security and sharded execution. The primitives that can
+progress an input in parallel is called a "Core", much like a normal CPU.
 
----
+---v
 
-## The 8 Disciplines of Blockchain
+### Polkadot
 
-<pba-cols>
-<pba-col>
+<img width="800px" rounded src="./img/dot-heterogenous.svg" />
 
-### Infrastructure Layer
-1. **🌐 Networking**: P2P, libp2p, gossip protocols
-2. **🔐 Cryptography**: Hashing, signatures, VRFs
-3. **🤝 Consensus**: BFT, longest chain, finality
-4. **💾 Database**: State management, pruning
+Note:
 
-</pba-col>
-<pba-col>
+Let's make it heterogenous. The state transition function of these shards need NOT be the same. WASM
+is used.
 
-### Application Layer
-5. **⚙️ Execution**: VM design, WASM, metering
-6. **💰 Economics**: Fees, rewards, slashing
-7. **🗳️ Governance**: Upgrades, parameter changes
-8. **🛠️ Dev Experience**: Finally, your business logic!
+---v
 
-</pba-col>
-</pba-cols>
+### Polkadot
 
-Each discipline = months/years to master 😱
+<img width="800px" rounded src="./img/dot-parachain.svg" />
 
----
+Note:
 
-## The Traditional Approach
+The beautify of a heterogenous system is that we are no longer bound to running a single chain, and
+therefore smart contracts. We can run anything we want. We can run a whole blockchain as a shard.
 
-<pba-cols>
-<pba-col>
+---v
 
-### Option 1: Fork & Modify
+### Polkadot
 
-```bash
-git clone https://github.com/bitcoin/bitcoin
-# or
-git clone https://github.com/ethereum/go-ethereum
-```
+<img width="800px" rounded src="./img/dot-parachain-auction.svg" />
 
-**Problems**:
-- Inherit all technical debt
-- Hard to upgrade
-- Limited by original design
-- Merge conflicts forever
+Note:
 
-</pba-col>
-<pba-col>
+Finally, let's make the deployment of those shards flexible and permissionless. We arrive at
+Polkadot what it is today.
 
-### Option 2: Build from Scratch
+---v
 
-```rust
-fn main() {
-    // TODO: Implement blockchain
-    println!("Good luck!");
-}
-```
+### Polkadot
 
-**Problems**:
-- Years of development
-- Reinvent every wheel
-- Security vulnerabilities
-- Never reach production
+> Polkadot 1.0 is a platform to launch blockchains that can progress in parallel, whilst absolutely
+> sharing the security of Polkadot Relay Chain.
 
-</pba-col>
-</pba-cols>
+Terminology:
+
+- Polkadot Relay Chain
+- Parachain
+- Execution Core
+
+Note:
+
+Polkadot initially allowed parachains to compete for deployment on Polkadot via auctioned slots.
+Winners get access to a Core for a long long time. Now, it is moving toward a more agile system where
+parachains can purchase cores on-demand.
+
+In some sense, Polkadot is moving towards a general purpose computer, exposing its Core as the
+primary primitive. Whether they are used to build a Parachain or not, it does not care. The future
+of Polkadot is the World Computer vision.
+
+TODO: maybe turn into slides, maybe leave as notes for now.
 
 ---
 
-## Enter Substrate
+## Polkadot SDK
 
-<pba-flex center>
+> .. So how do we build one of these parachains?
 
-> **Substrate** handles disciplines 1-7, so you can focus on #8
+---v
 
-```text
-┌─────────────────────────────────────────┐
-│            Your Business Logic          │ ← You work here!
-├─────────────────────────────────────────┤
-│                FRAME                    │ ← We'll learn this
-├─────────────────────────────────────────┤
-│              Substrate Core             │ ← Given to you
-│  (Networking, Consensus, Database...)   │
-└─────────────────────────────────────────┘
-```
+### Polkadot SDK
 
-**Before**: Build entire blockchain
-**After**: Build just your features
+- Building a blockchain is damn painful hard.
+- This is why Polkadot has pivoted for years to build a modular and extensible blockchain framework
+  called _Substrate_ and _FRAME_.
 
-</pba-flex>
+---v
 
----
+### Polkadot SDK
 
-## Pallet vs Smart Contract
+⛓️‍💥 Substrate 🤝 FRAME 🤝 Cumulus ⛓️‍💥
 
-<pba-cols>
-<pba-col>
+<img width="800px" rounded src="./img/substrate-frame-cumulus.svg" >
 
-### Smart Contract 📱
-```solidity
-// Runs ON the blockchain
-contract Token {
-    mapping(address => uint) balances;
-    
-    function transfer() {
-        // Limited by platform
-    }
-}
-```
+---v
 
-- **App** on blockchain
-- **Sandboxed** execution
-- **Limited** capabilities
-- **Pay gas** per call
+### Polkadot SDK
 
-</pba-col>
-<pba-col>
+- Substrate: Un-opinionated primitives for building blockchains based on a WASM meta-protocol.
+- FRAME: An opinionated way to build that WASM protocol/runtime/STF.
+- Cumulus: Parachain turbocharger
 
-### FRAME Pallet ⚙️
-```rust
-// Part OF the blockchain
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-    fn transfer() {
-        // Can change consensus!
-    }
-}
-```
+Note:
 
-- **Core infrastructure**
-- **Direct access** to everything
-- **Unlimited** capabilities
-- **Define the fees**
+**FRAME** is a subset of blockchain within Substrate that allow you to focus only on writing the
+state transition function aka. Runtime of your blockchain and not deal with the rest of the
+software. WASM.
 
-</pba-col>
-</pba-cols>
+---v
 
-**Analogy**: Smart Contract = iOS App, Pallet = iOS Feature
+### Polkadot SDK
+
+<img style="width: 800px;" src="../../assets/img/5-Substrate/dev-4-1-polkadot.svg" />
+
+All proudly™️ built with Substrate.
+
+1. the mighty Polkadot Relay Chain
+2. all the Polkadot Parachains to date.
+3. (less known) can be used to build any blockchain unrelated to Polkadot.
+
+---v
+
+### Polkadot SDK
+
+Cumulus augments Substrate to make it Polkadot-compatible.
 
 ---
 
-## The Power of Pallets
+## Interoperability
 
-<pba-flex center>
+Underrated truth about interoperability of blockchains:
 
-Instead of building everything, **mix and match pre-built components**:
+_🚀 Shared security puts communication on steroids 🚀_
 
-```rust
-construct_runtime! {
-    System: frame_system,            // ✅ Core blockchain logic
-    Timestamp: pallet_timestamp,     // ✅ Time management
-    Balances: pallet_balances,       // ✅ Token logic
-    Staking: pallet_staking,         // ✅ Proof of Stake
-    Democracy: pallet_democracy,     // ✅ Governance
-    
-    YourPallet: your_custom_logic,   // 🎯 Your innovation!
-}
-```
+Note:
 
-**Audited, production-tested code = safer, faster, cheaper**
+Shared Security is GREAT, but it would be even more FAN-TAS-TIQUE is if these parachains could
+communicate with each other.
 
-</pba-flex>
+https://x.com/TheDotsMagazine/status/1790755070490857778
 
----
+Chains can trust the execution of each other to a much higher extent. But note that it is still not
+100% guarantee. The Relay Chain cannot guarantee that a parachain won't upgrade itself to go rogue,
+but it can 100% ensure that the parachain will do exactly as stated in its WASM blob.
 
-## Runtime Architecture
+---v
 
-<pba-flex center>
+### Interoperability
 
-```text
-┌─────────────────────────┐
-│      Client/Node        │ ← Long-lived, hard to upgrade
-│  - P2P Networking       │
-│  - Block Production     │
-│  - Storage Database     │
-├─────────────────────────┤ ← Host API boundary
-│       Runtime           │ ← Your logic lives here!
-│  - Business Logic       │
-│  - State Transition     │
-│  - Stored as WASM       │
-└─────────────────────────┘
-```
+<img width="800px" rounded src="./img/dot-parachain-message.svg" />
 
-**Key Insight**: Runtime is just data in the blockchain!
+---v
 
-</pba-flex>
+### Interoperability
 
----
+Polkadot-SDK's services to developers:
 
-## State Transition Function (STF)
+- Transport protocols for parachains/cores to send payloads to one
+  another.
+  - XCMP, HRMP, VMP, DMP 😶‍🌫️
+  - As a developer you won't deal with these! 😮‍💨
+- Language to compose messages and programs and send them over.
+  - XCM
+    - Shared ideas between sovereign consensus systems.
+    - Asynchronous.
 
-<pba-flex center>
+Note:
 
-### The Heart of Any Blockchain
+On "XCMP, HRMP, VMP, DMP": It is similar to building a website. You know HTTP and TCP and such
+exist, and you use them via an interface, but you don't need to know them by heart.
 
-```text
-STF(State, Transaction) → State'
-```
+Consensus System: Moreover, the sender and recipient of these messages can be contracts, accounts, or any
+other abstract entities within chains, not just the chain itself.
 
-### Concrete Example
+Async and Sync: Disjoint consensus systems are in principle[^1] asynchronous by nature. This is an
+important concept to keep in mind.
 
-```rust
-// Current State
-Balances: { Alice: 100, Bob: 50 }
-
-// Transaction
-Transfer { from: Alice, to: Bob, amount: 30 }
-
-// New State (after STF)
-Balances: { Alice: 70, Bob: 80 }
-```
-
-**Runtime = Implementation of STF**
-
-Everything else (networking, consensus, database) just ensures all nodes agree on:
-1. Current state
-2. Order of transactions
-3. Resulting state
-
-</pba-flex>
+[^1]:
+    Technically, if two parachains are co-scheduled in the same core in the same block, they
+    could have synchronous communication. But they cannot count on this. So at the programming
+    model, one must assume everything is always asynchronous.
 
 ---
 
-## The Magic of WASM
+## Lecture Recap
 
-<pba-cols>
-<pba-col>
+About Polkadot
 
-### Traditional Blockchain
-```text
-Need upgrade?
-→ Convince all nodes
-→ Hard fork
-→ Pray everyone updates
-→ Chain splits if they don't
-```
+- Heterogenous Sharded Execution, Shared Security.
+- Parachain
+- Core
+- Exposing Cores: Auctions -> On-Demand -> World Computer
 
-</pba-col>
-<pba-col>
+About Polkadot SDK
 
-### Substrate Chain
-```rust
-// It's just a transaction!
-#[pallet::call]
-fn set_code(
-    origin: OriginFor<T>,
-    new_code: Vec<u8>,
-) -> DispatchResult {
-    ensure_root(origin)?;
-    // Update WASM code
-    storage::put(CODE_KEY, new_code);
-    Ok(())
-}
-```
-
-</pba-col>
-</pba-cols>
+- Substrate
+- FRAME
+- XCM
 
 ---
 
-## Analogy: Gaming Console 🎮
+## Schedule
 
-<pba-cols>
-<pba-col>
+(tentative)
 
-### Traditional (Hard Fork)
-
-<img style="width: 400px" src="./img/console-upgrade.png" />
-
-Buy new console for new games
-
-</pba-col>
-<pba-col>
-
-### Substrate (Runtime Upgrade)
-
-<img style="width: 400px" src="./img/game-cartridge.png" />
-
-Same console, just change the game!
-
-</pba-col>
-</pba-cols>
-
-The "console" (node) rarely changes, but "games" (runtime) upgrade seamlessly
+- 🤓 _Substrate_: Tuesday -> Thursday
+  - More theory, 2 ungraded activities
+- 🧑‍💻 _FRAME_: Thursday -> Thursday
+  - Main graded assignment
+  - Mix lecture and live-coding
+- 🚀 _XCM_: Friday + Saturday
+  - Hands-on
 
 ---
 
-## When Do Nodes Need Upgrading?
+## Additional Resources! 😋
 
-<pba-flex center>
+> Check speaker notes (click "s" 😉)
 
-### Host API Changes
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 
-Rare but important:
-- New crypto primitives
-- Performance improvements  
-- Bug fixes in node software
+Note:
 
-### Everything Else?
-
-**Just runtime upgrades!** No node coordination needed
-
-```rust
-// Recent Polkadot stats:
-// Runtime upgrades: ~100
-// Required node upgrades: ~10
-```
-
-90% of upgrades are forkless! 🎉
-
-</pba-flex>
-
----
-
-## Why Do We Need FRAME?
-
-<pba-flex center>
-
-### Writing Runtime Code is Complex
-
-Without abstractions, you need to:
-- Manually encode/decode storage
-- Route function calls
-- Manage state roots
-- Track storage changes
-- Generate metadata
-- Handle errors properly
-
-**Tomorrow's frameless exercise will show you this pain!** 😅
-
-</pba-flex>
-
----
-
-## Enter FRAME
-
-**Framework for Runtime Aggregation of Modularized Entities**
-
-<pba-cols>
-<pba-col>
-
-### Without FRAME (You'll try this!)
-```rust
-// Manual everything...
-fn execute_block(block: Block) {
-    // Decode each extrinsic
-    for ext in block.extrinsics {
-        let call = decode_call(ext)?;
-        match call {
-            Call::Transfer(from, to, amt) => {
-                // Manual storage reads
-                let from_bal = read_storage(from);
-                let to_bal = read_storage(to);
-                // Manual checks & updates
-                write_storage(from, from_bal - amt);
-                write_storage(to, to_bal + amt);
-            }
-        }
-    }
-}
-```
-
-</pba-col>
-<pba-col>
-
-### With FRAME
-```rust
-#[pallet::call]
-impl<T: Config> Pallet<T> {
-    pub fn transfer(
-        origin: OriginFor<T>,
-        to: T::AccountId,
-        #[pallet::compact] amount: T::Balance,
-    ) -> DispatchResult {
-        let from = ensure_signed(origin)?;
-        // FRAME handles everything!
-        T::Currency::transfer(&from, &to, amount)?;
-        Ok(())
-    }
-}
-```
-
-</pba-col>
-</pba-cols>
-
----
-
-## FRAME in Action
-
-<pba-flex center>
-
-### A Complete Pallet in ~50 Lines
-
-```rust
-#[frame_support::pallet]
-pub mod pallet {
-    use frame_support::pallet_prelude::*;
-    
-    #[pallet::pallet]
-    pub struct Pallet<T>(_);
-    
-    #[pallet::config]
-    pub trait Config: frame_system::Config {
-        type RuntimeEvent: From<Event<Self>>;
-    }
-    
-    #[pallet::storage]
-    pub type Counter<T> = StorageValue<_, u32, ValueQuery>;
-    
-    #[pallet::event]
-    #[pallet::generate_deposit(pub(super) fn deposit_event)]
-    pub enum Event<T: Config> {
-        CounterIncremented { new_value: u32 },
-    }
-    
-    #[pallet::call]
-    impl<T: Config> Pallet<T> {
-        #[pallet::weight(10_000)]
-        pub fn increment(origin: OriginFor<T>) -> DispatchResult {
-            ensure_signed(origin)?;
-            let new_value = Counter::<T>::mutate(|v| { *v += 1; *v });
-            Self::deposit_event(Event::CounterIncremented { new_value });
-            Ok(())
-        }
-    }
-}
-```
-
-**That's it!** Storage, events, calls - all handled by FRAME
-
-</pba-flex>
-
----
-
-## Mental Model: What is a Pallet?
-
-<pba-flex center>
-
-### A Pallet is a Rust Module That:
-
-1. **Defines Storage** - What state does it manage?
-2. **Defines Calls** - What actions can users take?
-3. **Defines Events** - What happened that others should know?
-4. **Has Configuration** - What does it need from the runtime?
-
-### Think of Pallets as Blockchain "Features"
-
-```text
-Balances Pallet    → Feature: Native Token
-Staking Pallet     → Feature: Proof of Stake  
-Democracy Pallet   → Feature: On-chain Governance
-NFTs Pallet       → Feature: Non-fungible Assets
-Your Pallet       → Feature: Your Innovation!
-```
-
-**FRAME** = The framework that makes writing pallets easy
-**Runtime** = Collection of pallets working together
-
-</pba-flex>
-
----
-
-## Real Production Examples
-
-<pba-cols>
-<pba-col>
-
-### Built with Substrate
-
-- **Polkadot & Kusama**
-- **Chainlink**
-- **Compound Gateway**
-- **Acala**
-- **Moonbeam**
-- **Astar**
-
-100+ production chains
-
-</pba-col>
-<pba-col>
-
-### Use Cases
-
-- DeFi protocols
-- Gaming chains
-- Identity systems
-- Supply chain
-- IoT networks
-- Private chains
-
-*If you can imagine it, you can build it*
-
-</pba-col>
-</pba-cols>
-
----
-
-## Your Learning Path
-
-<pba-flex center>
-
-### This Week at PBA
-
-1. **Today**: Understand the architecture
-2. **Day 1-2**: Master FRAME basics
-3. **Day 3-4**: Advanced patterns
-4. **Weekend**: Build your own pallet!
-
-### Key Skills You'll Gain
-
-✅ Design pallets with proper abstractions
-✅ Use modern balance management (holds/freezes)
-✅ Implement governance & upgrades
-✅ Write secure, efficient runtime code
-
-</pba-flex>
-
----
-
-## The Bigger Picture
-
-<pba-cols>
-<pba-col>
-
-### Substrate Gives You
-
-- Battle-tested infrastructure
-- Modular architecture
-- Forkless upgrades
-- Rich pallet ecosystem
-- Rust's safety guarantees
-
-</pba-col>
-<pba-col>
-
-### You Focus On
-
-- Your unique value proposition
-- Business logic
-- User experience
-- Going to market faster
-- Innovation, not reimplementation
-
-</pba-col>
-</pba-cols>
-
----
-
-## Why This Matters
-
-<pba-flex center>
-
-### The Old Way
-> "It took us 3 years and $10M to launch our blockchain"
-
-### The Substrate Way  
-> "We went from idea to mainnet in 6 months with 3 developers"
-
-**Real quote from a Substrate team** 🚀
-
-</pba-flex>
-
----
-
-## Summary
-
-<pba-flex center>
-
-1. **Rust** eliminates entire classes of bugs (70% reduction!)
-2. **Building blockchains requires 8 disciplines** - it's genuinely hard
-3. **Substrate** handles 7/8 disciplines for you
-4. **WASM runtime** enables forkless upgrades
-5. **FRAME** makes the remaining work manageable
-6. **Production ready** - 100+ live chains prove it
-
-</pba-flex>
-
----
-
-## What's Next?
-
-<pba-flex center>
-
-### Immediate Next Steps
-
-1. **Calls, Events & Errors** - How FRAME pallets work
-2. **Frameless Exercise** - Appreciate what FRAME does
-3. **Balance Management** - Modern token handling
-4. **Build something!** - Theory → Practice
-
-### Remember
-
-You're not just learning a framework...
-**You're joining a revolution in blockchain development!** 🚀
-
-</pba-flex>
-
----
-
-<!-- .slide: data-background-color="#000" -->
-
-# Questions?
-
-Let's build the future of Web3 together 🦀
+https://blog.kianenigma.nl/posts/tech/polkadot-s-build-horizon/
+https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/index.html
+https://wiki.polkadot.network/

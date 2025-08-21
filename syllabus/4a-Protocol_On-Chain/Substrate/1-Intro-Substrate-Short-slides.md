@@ -463,16 +463,12 @@ Notes:
 ## Recap
 - Substrate is a modular framework to build fast, secure, future-proof blockchain.
 - Substrate Node architecture.
-
----v
-
-## What was not covered
-- Interoperability (XCM)
-- Cumulus
-- SCALE
+- Forkless Upgrades
 
 ---
 
-# Questions?
+## Additional Resources! 😋
 
-Ready to build the future? 🚀
+> Check speaker notes (click "s" 😉)
+
+<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
