@@ -393,6 +393,28 @@ Another good analogy: Node is the FPGA, and FRAME/Wasm is the VHDL.
 
 ---
 
+## When Do Nodes Need Upgrading?
+
+<pba-flex center>
+
+### Host API Changes
+
+- New crypto primitives
+- Performance improvements
+- Bug fixes in node software
+
+---v
+
+## Everthing else?
+
+Forkless Runtime Upgrades 🎉
+65 times since Polkadot went live (May 2020)
+
+Notes:
+https://polkadot.subscan.io/event?page=1&time_dimension=date&module=system&event_id=codeupdated&page_size=25
+
+---
+
 ## Governance Baked In 🗳️
 
 <pba-flex center>
@@ -447,206 +469,9 @@ Notes:
 ## What was not covered
 - Interoperability (XCM)
 - Cumulus
+- SCALE
 
 ---
-
-## Runtime Development
-
-Substrate does all the hard lifting.
-
-So, as a developer, you can focus on the runtime logic.
-
-But runtime logic can also have a lot of functionality.
-
-- Balance
-- Staking
-- Voting
-- Dex
-
-And all of them need a way to interact with it via
-- Input functions
-- Storage
-- 
-
-
-We make it as easy as possible:
-- **FRAME** for abstractions
-- **Pallets** for modularity
-
-
----
-
-## Enter FRAME 🖼️
-
-<pba-flex center>
-
-### Framework for Runtime Aggregation of Modularized Entities
-
-A way to build blockchain logic without the pain
-
-</pba-flex>
-
----
-
-## What are Pallets? 🧩
-
-<pba-cols>
-<pba-col>
-
-### Like Smart Contracts... But Better
-
-- 📦 **Modular** functionality
-- 🔧 **Configurable** behavior
-- 🔄 **Reusable** across chains
-- ⚡ **Direct** runtime access
-
-</pba-col>
-<pba-col>
-
-### With Superpowers
-
-```rust
-#[pallet::hooks]
-impl<T: Config> Hooks for Pallet<T> {
-    // Run code every block!
-    fn on_initialize(n: BlockNumber) {
-        // Smart contracts can't do this!
-    }
-}
-```
-
-</pba-col>
-</pba-cols>
-
----
-
-## The Orchestrator: Executive 🎭
-
-<pba-flex center>
-
-### Brings It All Together
-
-```rust
-pub struct Executive;
-
-impl Executive {
-    // 1. Initialize block
-    // 2. Execute transactions
-    // 3. Finalize block
-    // 4. Apply state changes
-}
-```
-
-**The conductor of your blockchain orchestra**
-
-</pba-flex>
-
----
-
-## Building Your Runtime
-
-<pba-flex center>
-
-### Mix and Match Pallets
-
-```rust
-construct_runtime! {
-    System: frame_system,          // ✅ Core functionality
-    Balances: pallet_balances,     // ✅ Handle tokens
-    Staking: pallet_staking,       // ✅ Proof of stake
-    Democracy: pallet_democracy,   // ✅ Governance
-    
-    YourPallet: your_creation,     // 🎯 Your innovation!
-}
-```
-
-### Configure → Compile → Deploy
-
-**Voilà! Production-grade blockchain** 🚀
-
-</pba-flex>
-
----
-
-## This Week's Journey 🗺️
-
-<pba-cols>
-<pba-col>
-
-### You'll Learn
-- **Day 1**: FRAME basics
-- **Day 2**: Storage & balances
-- **Day 3**: Advanced patterns
-- **Day 4**: Migrations & testing
-- **Weekend**: Build!
-
-</pba-col>
-<pba-col>
-
-### You'll Build
-- Custom pallets
-- Token systems
-- Governance logic
-- Your own ideas!
-
-</pba-col>
-</pba-cols>
-
----
-
-## The Frameless Exercise 💪
-
-<pba-flex center>
-
-### Tomorrow You'll Experience
-
-Building **without** FRAME's help:
-- Manual storage encoding
-- Raw dispatch handling
-- Direct state management
-
-### Why?
-
-**To appreciate what FRAME does for you!**
-
-</pba-flex>
-
----
-
-## The Promise 🤝
-
-<pba-flex center>
-
-### By Week's End, You'll Be Able To:
-
-Build production blockchains that are:
-- ⚡ **Fast** - Leveraging Substrate's performance
-- 🔒 **Secure** - Using battle-tested components
-- 🎯 **Specialized** - For your specific use case
-- 🚀 **Easy** - Thanks to FRAME abstractions
-
-</pba-flex>
-
----
-
-## Your Path Forward
-
-<pba-flex center>
-
-1. **Today**: Grasp the big picture
-2. **This Week**: Master the tools
-3. **Next Month**: Ship your chain
-4. **Next Year**: Join the 100+ production chains
-
-### The Future is Multi-Chain
-
-**And you're building it!** 🏗️
-
-</pba-flex>
-
----
-
-<!-- .slide: data-background-color="#000" -->
 
 # Questions?
 
