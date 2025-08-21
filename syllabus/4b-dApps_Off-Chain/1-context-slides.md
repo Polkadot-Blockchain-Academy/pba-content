@@ -65,7 +65,7 @@ Depending on timeline, we might have days where we might have some extra class t
 
 ## Today
 
-- Context
+- Context (why PJS didn't age well)
 - Getting started - Polkadot-api
 - Dev Tools
 - Assignment description
@@ -78,7 +78,7 @@ To unblock you from working on the assignment, here's a quick getting started wi
 
 ---
 
-## Context
+## Context (why PJS didn't age well)
 
 ---v
 
@@ -144,3 +144,37 @@ Notes:
 Pre metadata 14, each interaction (storage, tx, etc) was defined and had a "type" property.
 
 But that type was just a string with a type name, which could be anything. This lead to the creation of the type registry.
+
+---v
+
+## Adhoc RPCs
+
+> When Polkadot/Substrate was first started, the set of JSON-RPC functions was simply copy-pasted from Ethereum (given that their implementations already existed in the Parity Ethereum client), then expanded in a cowboy-y way without being given proper thoughts.
+
+@tomaka - New JSON-RPC API mega Q&A - Forum post
+
+---v
+
+## PJS: the monolith
+
+- Tightly coupled architecture <!-- .element: class="fragment" -->
+- Leaky APIs at all levels: <!-- .element: class="fragment" -->
+  - Convoluted JSON-RPC Provider <!-- .element: class="fragment" -->
+  - Adhoc SignPayload interface, coupled to PJS internals <!-- .element: class="fragment" -->
+  - PJS leaks its type-registry <!-- .element: class="fragment" -->
+- Large bundle size
+
+Notes:
+
+---v
+
+## PJS: Unable to evolve
+
+- PJS type-registry should have vanished upon Metadata V14
+- Virtually impossible to abandon legacy RPCs
+- Treats parachains as second class citizens
+- Probably won't be able to fully support extrinsic v5
+
+---v
+
+## Poorly designed APIs (Hands on)
