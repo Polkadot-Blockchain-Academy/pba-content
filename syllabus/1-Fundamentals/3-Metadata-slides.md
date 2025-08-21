@@ -21,7 +21,23 @@ description: FRAME Metadata
 
 ---
 
-# FRAME Metadata: Introduction
+## What is FRAME?
+
+Rust framework for easily building Substrate runtimes.
+
+_**F**ramework for **R**untime **A**ggregation and **M**odularized **E**ntities_
+
+---
+
+## Frame
+
+![Image](./frame.svg)
+
+Notes:
+
+https://excalidraw.com/#json=Zz_9IUNReoyhCjYU1SG-1,CuUlGTxkMszqa0jkwQZzHw
+
+---
 
 ## FRAME Metadata: What is it?
 
@@ -138,3 +154,7 @@ Notes:
   information. `metadata_metadata` runtime API will always return metadata v14.
 - Metadata v15: exposes runtime-apis, outters, and better types for extrinsic.<!-- .element: class="fragment" -->
 - Metadata v16: is able to highlight deprecated methods, supports extrinsic v5 and versioned transaction-extensions.<!-- .element: class="fragment" -->
+
+---
+
+# Let's explore!
