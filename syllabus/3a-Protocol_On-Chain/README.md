@@ -1,4 +1,4 @@
-# Module 6: Polkadot SDK
+# Module 3a: Polkadot SDK
 
 ## Substrate
 

@@ -1,4 +1,4 @@
-# Module 3: Polkadot Architecture, PVM and smart contracts
+# Module 4: Polkadot Architecture, PVM and smart contracts
 
 #### Prerequisites
 
