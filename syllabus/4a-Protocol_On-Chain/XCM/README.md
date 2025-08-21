@@ -18,24 +18,30 @@ concepts needed to get hacking.
 
 #### Morning
 
-Lecture 1 - Presentation (45 minutes)
-Lecture 2 - Primitives (2 hours)
-Workshop - Fundamentals 1, 2 and 3 (1 hour)
+Lecture 1 - Presentation (30 minutes)
+Lecture 2 - Primitives (1 hour 30 minutes)
+Lecture 2.5 - XCTransfers (30 minutes)
+Lecture 3 - XCM executor (1 hour 30 minutes)
 
 #### Afternoon
 
-Lecture 3 - XCM Executor (1 hour)
-Workshop - Fundamentals 4 (1 hour)
-Lecture 4 - Pallet XCM (1 hour)
-Workshop - Fundamentals 5 (1 hour)
+Workshop - Fundamentals (1 hour)
+Workshop - Execution (2 hours 30 minutes)
 
 ### Day 2
 
 #### Morning
 
-Lecture 5 - XCM configuration and XCM simulator (2 hours)
-Lecture 6 - ??? (2 hours)
+Lecture 4 - XCM pallet (1 hour)
+Lecture 5 - XCM configuration (3 hours)
 
 #### Afternoon
 
-Workshop - Simulator (4 hours)
+Workshop - Configuration (2 hours)
+
+### Day 3
+
+#### Morning
+
+Lecture 6 - XCM emulator (2 hours)
+Lecture 7 - Chopsticks (2 hours)
