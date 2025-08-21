@@ -4,18 +4,7 @@ description: Working with Fungible Tokens in FRAME pallets
 duration: 2 hours
 ---
 
-# Fungible Traits in FRAME
-
----
-
-## What is Fungible?
-
-An asset where each unit is interchangeable and has the same value as any other unit of the same kind.
-
-The fungible traits in FRAME provide a safe, standardized way to handle native tokens. 
-
-Common terms:
-> Token, Balance, Currency
+# Balance Management in FRAME
 
 ---
 
@@ -37,9 +26,8 @@ Working with balances is fundamental to blockchain development:
 1. Core concepts: Existential Deposit
 1. Core concepts: Holds vs Freezes
 1. The fungible trait
-1. Hands-on: Staking scenario
-1. Hands-on: Voting scenario  
-1. Hands-on: Storage deposits
+1. Considerations
+1. Live Coding  
 
 </pba-flex>
 
@@ -47,10 +35,24 @@ Working with balances is fundamental to blockchain development:
 
 ## Why Existential Deposit
 
-- Account occupies some state in storage.
-- ED forces accounts to keep a minimum balance, or dusted.
+- Account occupies some state in storage. 
+- ED forces accounts to keep a minimum balance, or dusted. 
 
-What happens if we don't have ED? 
+<br>
+
+What would happen if we do not enforce ED? <!-- .element: class="fragment" -->
+
+---
+
+## What is Fungible?
+
+> An asset where each unit is interchangeable and has the same value as any other unit of the same kind.
+
+---v
+
+## What is Fungible?
+
+The fungible traits in FRAME provide a safe, standardized way to handle balances in the pallet.
 
 ---
 
@@ -63,6 +65,14 @@ You might encounter these in older codebases:
 ```rust
 use frame_support::traits::{Currency, ReservableCurrency, LockableCurrency};
 ```
+
+</pba-flex>
+
+---v
+
+## Note on Legacy Code
+
+<pba-flex center>
 
 These traits are deprecated. For new code:
 - Use the modern `fungible` traits
@@ -142,28 +152,16 @@ Use for:
 
 ## Scenarios
 
-No Hold or Freeze
-
-- Free: 100 DOT
-- Frozen: 0 DOT
-- Reserved (held): 0 DOT
-- Spendable: 99 DOT
-- Untouchable: 1 DOT (ED)
-
-<img src="https://wiki.polkadot.com/assets/balance-example-1.png">
----v
-
-## Scenarios
-
 1) 100 Free; No Hold or Freeze
 
+<img src="https://wiki.polkadot.com/assets/balance-example-1.png">
+
+Notes:
 - Free: 100 DOT
 - Frozen (locked): 0 DOT
 - Reserved (held): 0 DOT
 - Spendable: 99 DOT
 - Untouchable: 1 DOT (ED)
-
-<img src="https://wiki.polkadot.com/assets/balance-example-1.png">
 
 ---v
 
@@ -171,39 +169,44 @@ No Hold or Freeze
 
 2) 60 Staked
 
+<img src="https://wiki.polkadot.com/assets/balance-example-2.png">
+
+Notes:
 - Free: 40 DOT
 - Frozen (locked) : 0 DOT
 - Reserved (held): 60 DOT
 - Spendable: 39 DOT (Free - ED)
 - Untouchable: 1 DOT (ED)
 
-<img src="https://wiki.polkadot.com/assets/balance-example-2.png">
 ---v
 
 ## Scenarios
 
 3) 20 Proxy Deposit
 
+<img src="https://wiki.polkadot.com/assets/balance-example-3.png">
+
+Notes:
 - Free: 100 DOT
 - Frozen: 0 DOT
 - Reserved (held): 0 DOT
 - Spendable: 99 DOT
 - Untouchable: 1 DOT (ED)
 
-<img src="https://wiki.polkadot.com/assets/balance-example-3.png">
 ---v
 
 ## Scenarios
 
 4) 20 Vote
 
+<img src="https://wiki.polkadot.com/assets/balance-example-4.png">
+
+Notes:
 - Free: 20 DOT
 - Frozen (locked): 20 DOT
 - Reserved (held): 80 DOT
 - Spendable: 19 DOT (Free - ED)
 - Untouchable: 1 DOT (ED)
-
-<img src="https://wiki.polkadot.com/assets/balance-example-4.png">
 
 ---
 
