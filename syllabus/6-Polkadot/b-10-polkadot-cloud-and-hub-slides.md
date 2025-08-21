@@ -7,4 +7,3 @@ owner: Maciej Zyszkiewicz
 
 <p>This presentation is available in a PDF format here:</p>
 <p><a href="https://github.com/Polkadot-Blockchain-Academy/pba-content/blob/main/assets/Introduction_to_Permisionless_Cloud_with_Polkadot.pdf" target="_blank">PDF format</a></p>
-

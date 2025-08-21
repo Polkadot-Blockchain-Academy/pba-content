@@ -381,6 +381,7 @@ And finally we can take a look at the newest iteration of the block authoring me
 ## Safrole
 
 Two main difficulties:
+
 - When ordering them tickets need to be anonymous
 - When ordering tickets they need to be validated
 

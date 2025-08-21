@@ -10,7 +10,7 @@ owner: Maciej Zyszkiewicz
 Notes:
 Introduction
 
-Welcome everyone to the second module in this PBA. This module will be centered around the Polkadot protocol, what is today and what it will be in the future. 
+Welcome everyone to the second module in this PBA. This module will be centered around the Polkadot protocol, what is today and what it will be in the future.
 
 ---
 
@@ -40,7 +40,7 @@ So something like this. Because this is a much more accurate representation of P
 - Polkadot Module Agenda Overview
 
 Notes:
-In this specific lecture we will quickly go through some core values of the Polkadot ecosystem and then we'll try and understand where does Polkadot place within the wide web3 world. 
+In this specific lecture we will quickly go through some core values of the Polkadot ecosystem and then we'll try and understand where does Polkadot place within the wide web3 world.
 We will also list all the actors and technologies relevant to the protocol and its current implementation.
 Then we'll have a quick overview of waht else can you expect from me in the upcoming days.
 
@@ -442,7 +442,7 @@ The subnetworks are called parachains, parallel chains -> parachains. And the no
 
 ## Sharded Networks - Ethereum (2.0)
 
-Optimistic Rollups & ZK Rollups 
+Optimistic Rollups & ZK Rollups
 
 <img style="width: 1100px" src="./assets/introduction/rollups.png" />
 

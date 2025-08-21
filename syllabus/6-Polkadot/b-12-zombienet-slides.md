@@ -6,9 +6,11 @@ owner: Maciej Zyszkiewicz (Originally Javier Viola)
 ---
 
 ---
+
 title: Zombienet
 description: Zombienet workshop
 duration: 1 hour
+
 ---
 
 <style>

@@ -3,7 +3,6 @@ title: Confirmations and Finality
 description: Finality providing methods and mechanisms for blockchains
 duration: 1 hour
 owner: Maciej Zyszkiewicz (Joshy originally)
-
 ---
 
 # Confirmations and Finality
@@ -32,7 +31,6 @@ How does BTC answer this question?
 - There could _already_ be a longer chain<br/>that you just haven't heard of.
 
 <pba-flex>
-
 
 Notes:
 
@@ -472,7 +470,7 @@ Notes:
 
 ## Availability
 
-- Block is not fully secured yet, but 
+- Block is not fully secured yet, but
 - If it will be invalid there will be high slashes
 
 ---v

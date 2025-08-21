@@ -552,7 +552,7 @@ Luckily at least the State transition function is stored on the relay chain. Fro
 </pba-cols>
 
 Notes:
-So why PVF rather than just STF? THe PVF is a wrapper that exposes one extra function called validate_block. Validated block creates a sandbox envrionment in which it reruns the parablock. 
+So why PVF rather than just STF? THe PVF is a wrapper that exposes one extra function called validate_block. Validated block creates a sandbox envrionment in which it reruns the parablock.
 
 ---v
 

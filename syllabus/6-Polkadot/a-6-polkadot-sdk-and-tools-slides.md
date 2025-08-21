@@ -10,6 +10,7 @@ owner: Maciej Zyszkiewicz
 ---
 
 # Polkadot SDK & Tools
+
 ## Polkadot Ecosystem Disclaimer
 
 ---
@@ -130,4 +131,3 @@ Stack Exchange: https://substrate.stackexchange.com/
 Polkadot Forum: https://forum.polkadot.network/
 
 Kusamarian YT Coverage: https://www.youtube.com/@TheKusamarian
-
