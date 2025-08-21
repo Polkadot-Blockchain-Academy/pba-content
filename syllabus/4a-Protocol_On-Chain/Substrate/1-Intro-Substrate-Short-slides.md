@@ -1,10 +1,10 @@
 ---
-title: Introduction to Substrate & FRAME
-description: Building blockchains with Substrate and FRAME
-duration: 60 minutes
+title: Introduction to Substrate
+description: Overview of Substrate framework
+duration: 30 minutes
 ---
 
-# Introduction to Substrate & FRAME
+# Introduction to Substrate
 
 ---
 
@@ -12,7 +12,7 @@ duration: 60 minutes
 
 <pba-flex center>
 
-### They Enable
+<h4 style="color: var(--substrate-host); top: 0">  They Enable </h4>
 <!-- .element: class="fragment" -->
 
 - 🤝 Trust without middlemen<!-- .element: class="fragment" -->
@@ -30,30 +30,37 @@ duration: 60 minutes
 
 ## Building One is HARD 😰
 
-<pba-flex center>
-
-### You Need Expertise in 8 Disciplines
+You Need Expertise in (roughly) 8 Disciplines
 <!-- .element: class="fragment" -->
+
+<br>
+<pba-cols>
+<pba-col>
 
 - 🌐 Networking <!-- .element: class="fragment" -->
 - 🔐 Cryptography <!-- .element: class="fragment" -->
 - 🤝 Consensus <!-- .element: class="fragment" -->
 - 💾 Database <!-- .element: class="fragment" -->
+
+</pba-col>
+<pba-col>
+
 - ⚙️ Execution <!-- .element: class="fragment" -->
 - 💰 Economics <!-- .element: class="fragment" -->
 - 🗳️ Governance <!-- .element: class="fragment" -->
 - 🛠️ Application <!-- .element: class="fragment" -->
 
+</pba-col>
+</pba-cols>
+
 **Each discipline = Years to master**
 <!-- .element: class="fragment" -->
-
-</pba-flex>
 
 ---
 
 ## So How Do You Build a Blockchain?
 
-### Option 1: Fork & Modify 🍴<!-- .element: class="fragment" -->
+Option 1: Fork & Modify 🍴<!-- .element: class="fragment" -->
 
 - 📚 Inherit all technical debt <!-- .element: class="fragment" -->
 - 🔒 Stuck with original design <!-- .element: class="fragment" -->
@@ -64,7 +71,7 @@ duration: 60 minutes
 
 ## So How Do You Build a Blockchain?
 
-### Option 2: Build from Scratch 🏗️
+Option 2: Build from Scratch 🏗️
 
 - ⏰ Years of development <!-- .element: class="fragment" -->
 - 💸 Millions in funding <!-- .element: class="fragment" -->
@@ -73,11 +80,12 @@ duration: 60 minutes
 
 ---
 
-## A History of Blockchain Disasters 💥
+## A History of Blockchain Disasters
 
 <pba-flex center>
 
-#### Bitcoin Overflow (2010)
+<h4 style="color: var(--substrate-host); top: 0"> Bitcoin Overflow (2010) </h4>
+
 - 184 billion BTC created
 - Integer overflow bug
 - Emergency fix required
@@ -89,11 +97,12 @@ Notes:
 https://en.bitcoin.it/wiki/Value_overflow_incident
 
 ---v
-## A History of Blockchain Disasters 💥
+## A History of Blockchain Disasters
 
 <pba-flex center>
 
-### The DAO Hack (2016)
+<h4 style="color: var(--substrate-host); top: 0"> The DAO Hack (2016) </h4>
+
 - $60M stolen
 - Ethereum hard fork
 - Community split forever
@@ -105,11 +114,12 @@ https://www.gemini.com/cryptopedia/the-dao-hack-makerdao
 
 ---v
 
-## A History of Blockchain Disasters 💥
+## A History of Blockchain Disasters
 
 <pba-flex center>
 
-### Parity Wallet (2017)
+<h4 style="color: var(--substrate-host); top: 0"> Parity Wallet (2017) </h4>
+
 - $30M stolen
 - $115M frozen permanently
 - Simple library bug
@@ -121,11 +131,12 @@ Notes:
 https://tc.gts3.org/cs8803/2023-spring/student_presentations/team7.pdf
 ---v
 
-## A History of Blockchain Disasters 💥
+## A History of Blockchain Disasters
 
 <pba-flex center>
 
-### Solana Halts (2020+)
+<h4 style="color: var(--substrate-host); top: 0"> Solana Halts (2020+) </h4>
+
 - Multiple downtimes
 - Consensus failures
 
@@ -146,8 +157,7 @@ https://www.helius.dev/blog/solana-outages-complete-history
 
 What if we could...
 - ✅ Reuse battle-tested components <!-- .element: class="fragment" -->
-- ✅ Customize what makes you unique <!-- .element: class="fragment" -->
-- ✅ Skip the infrastructure headaches <!-- .element: class="fragment" -->
+- ✅ Pick & Choose components <!-- .element: class="fragment" -->
 - ✅ Focus on your innovation <!-- .element: class="fragment" -->
 
 </pba-flex>
@@ -405,10 +415,12 @@ Another good analogy: Node is the FPGA, and FRAME/Wasm is the VHDL.
 
 ---v
 
-## Everthing else?
+## Everything else?
 
-Forkless Runtime Upgrades 🎉
-65 times since Polkadot went live (May 2020)
+<pba-flex center>
+
+- Forkless Runtime Upgrades 🎉
+- 65+ times since Polkadot went live (May 2020)
 
 Notes:
 https://polkadot.subscan.io/event?page=1&time_dimension=date&module=system&event_id=codeupdated&page_size=25
@@ -426,9 +438,9 @@ https://polkadot.subscan.io/event?page=1&time_dimension=date&module=system&event
 
 <br><br>
 
-**The chain governs itself**
-
 </pba-flex>
+
+**The chain governs itself** <!-- .element: class="fragment" -->
 
 ---
 
@@ -445,9 +457,9 @@ https://polkadot.subscan.io/event?page=1&time_dimension=date&module=system&event
 
 <br><br>
 
-**Like LEGO for blockchains**
-
 </pba-flex>
+
+**Like LEGO for blockchains** <!-- .element: class="fragment" -->
 
 ---
 
@@ -471,4 +483,4 @@ Notes:
 
 > Check speaker notes (click "s" 😉)
 
-<img width="300px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />

@@ -1,5 +1,5 @@
 ---
-title: Introduction to Substrate
+title: Introduction to Substrate (Long)
 description: Substrate Overview for Web3 engineers
 duration: 60 minutes
 ---
