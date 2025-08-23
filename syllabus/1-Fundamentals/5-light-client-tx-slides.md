@@ -355,6 +355,29 @@ TODO Could have some schema with the full state, then the proof and then two que
 
 ---
 
+### Merkle Proof: More Specific
+
+<div class="flex-container">
+<div class="left">
+
+<img src="./img/merkle-proof-better.svg" style="filter: invert();"/>
+
+Notice how much data is NOT needed!
+
+</div>
+
+<div class="right">
+
+- The only data you need for the merkle proof are represented by <span style="background-color: #00ffff; color: black;">light blue</span> nodes.
+- The <span style="background-color: #0f0f0f;">dark grey</span> nodes are data which exists in the full trie, but is not needed for the proof.
+- The <span style="background-color: #fff; color: #000;">white nodes</span> are hashes we can calculate using the blue nodes, so also not needed in the proof.
+- The <span style="background-color: #ff00ff;">pink node</span> is the merkle root, which should be known in advance to all parties.
+
+</div>
+</div>
+
+---
+
 ### Two Kinds of Keys
 
 The next slides will try to have you understand the difference and existence of:
@@ -917,113 +940,136 @@ https://github.com/shawntabrizi/polkadot-storage-read-proof
 
 We need to also understand the types of the returned value, and how to deserialize it.
 
+<div class="flex-container">
+<div class="left text-small" style="max-width: 600px;">
+
 ```json
-{
-  "3": {
-    "id": 3,
-    "path": ["frame_system", "AccountInfo"],
-    "params": [
+"3": {
+  "id": 3,
+  "path": ["frame_system", "AccountInfo"],
+  "params": [
+    {
+      "name": "Nonce",
+      "type": 4
+    },
+    {
+      "name": "AccountData",
+      "type": 5
+    }
+  ],
+  "def": {
+    "tag": "composite",
+    "value": [
       {
-        "name": "Nonce",
-        "type": 4
+        "name": "nonce",
+        "type": 4,
+        "typeName": "Nonce",
+        "docs": []
       },
       {
-        "name": "AccountData",
-        "type": 5
-      }
-    ],
-    "def": {
-      "tag": "composite",
-      "value": [
-        {
-          "name": "nonce",
-          "type": 4,
-          "typeName": "Nonce",
-          "docs": []
-        },
-        {
-          "name": "consumers",
-          "type": 4,
-          "typeName": "RefCount",
-          "docs": []
-        },
-        {
-          "name": "providers",
-          "type": 4,
-          "typeName": "RefCount",
-          "docs": []
-        },
-        {
-          "name": "sufficients",
-          "type": 4,
-          "typeName": "RefCount",
-          "docs": []
-        },
-        {
-          "name": "data",
-          "type": 5,
-          "typeName": "AccountData",
-          "docs": []
-        }
-      ]
-    },
-    "docs": []
-  },
-  "4": {
-    "id": 4,
-    "path": [],
-    "params": [],
-    "def": {
-      "tag": "primitive",
-      "value": {
-        "tag": "u32",
-        "value": null
-      }
-    },
-    "docs": []
-  },
-  "5": {
-    "id": 5,
-    "path": ["pallet_balances", "types", "AccountData"],
-    "params": [
+        "name": "consumers",
+        "type": 4,
+        "typeName": "RefCount",
+        "docs": []
+      },
       {
-        "name": "Balance",
-        "type": 6
+        "name": "providers",
+        "type": 4,
+        "typeName": "RefCount",
+        "docs": []
+      },
+      {
+        "name": "sufficients",
+        "type": 4,
+        "typeName": "RefCount",
+        "docs": []
+      },
+      {
+        "name": "data",
+        "type": 5,
+        "typeName": "AccountData",
+        "docs": []
       }
-    ],
-    "def": {
-      "tag": "composite",
-      "value": [
-        {
-          "name": "free",
-          "type": 6,
-          "typeName": "Balance",
-          "docs": []
-        },
-        {
-          "name": "reserved",
-          "type": 6,
-          "typeName": "Balance",
-          "docs": []
-        },
-        {
-          "name": "frozen",
-          "type": 6,
-          "typeName": "Balance",
-          "docs": []
-        },
-        {
-          "name": "flags",
-          "type": 7,
-          "typeName": "ExtraFlags",
-          "docs": []
-        }
-      ]
-    },
-    "docs": []
-  }
+    ]
+  },
+  "docs": []
+},
+```
+
+</div>
+
+<div class="right text-small" style="max-width: 600px;">
+
+```json
+"4": {
+  "id": 4,
+  "path": [],
+  "params": [],
+  "def": {
+    "tag": "primitive",
+    "value": {
+      "tag": "u32",
+      "value": null
+    }
+  },
+  "docs": []
+},
+"5": {
+  "id": 5,
+  "path": ["pallet_balances", "types", "AccountData"],
+  "params": [
+    {
+      "name": "Balance",
+      "type": 6
+    }
+  ],
+  "def": {
+    "tag": "composite",
+    "value": [
+      {
+        "name": "free",
+        "type": 6,
+        "typeName": "Balance",
+        "docs": []
+      },
+      {
+        "name": "reserved",
+        "type": 6,
+        "typeName": "Balance",
+        "docs": []
+      },
+      {
+        "name": "frozen",
+        "type": 6,
+        "typeName": "Balance",
+        "docs": []
+      },
+      {
+        "name": "flags",
+        "type": 7,
+        "typeName": "ExtraFlags",
+        "docs": []
+      }
+    ]
+  },
+  "docs": []
+},
+"6": {
+  "id": 6,
+  "path": [],
+  "params": [],
+  "def": {
+    "tag": "primitive",
+    "value": {
+      "tag": "u128"
+    }
+  },
+  "docs": []
 }
 ```
+
+</div>
+</div>
 
 ---
 
