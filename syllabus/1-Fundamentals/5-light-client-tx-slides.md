@@ -1100,13 +1100,17 @@ We can use this value type, and the returned hex value to construct a human read
 
 ## Full Extrinsic Payload
 
+The extrinsic payload will encode a lot of information:
+
 ```
 Extrinsic Version
 	++ Preamble (Address, Signature, Signed Extensions)
 	++ Function Call
 ```
 
-See: `pub struct UncheckedExtrinsic`
+You can find this in the code by searching:
+
+`pub struct UncheckedExtrinsic`
 
 ---
 
@@ -1130,18 +1134,18 @@ From the Metadata, we can see:
 
 ## Construct the Transfer Call
 
-```
+```text
 pallet_index ++ call_index ++ parameters
 ```
 
-```
+```text
 pallet_index = 0x05
 call_index = 0x03
 ```
 
 Param 1:
 
-```
+```text
 AccountId Index = 0x00
 
 Bob = 5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
@@ -1150,13 +1154,13 @@ Bob = 5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
 
 Param 2:
 
-```
+```text
 Balance = 12345 = 0xe5c0
 ```
 
 Final:
 
-```
+```text
 0x0503008eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48e5c0
 ```
 
@@ -1164,60 +1168,20 @@ Final:
 
 ## Signed Extensions
 
-Additional functions and information needed to validate an extrinsic.
+Additional functions and information needed to validate an extrinsic, also found in the metadata.
 
 ```json
 "signedExtensions": [
-{
-	"identifier": "CheckNonZeroSender",
-	"type": 874,
-	"additionalSigned": 36
-},
-{
-	"identifier": "CheckSpecVersion",
-	"type": 875,
-	"additionalSigned": 4
-},
-{
-	"identifier": "CheckTxVersion",
-	"type": 876,
-	"additionalSigned": 4
-},
-{
-	"identifier": "CheckGenesis",
-	"type": 877,
-	"additionalSigned": 13
-},
-{
-	"identifier": "CheckMortality",
-	"type": 878,
-	"additionalSigned": 13
-},
-{
-	"identifier": "CheckNonce",
-	"type": 880,
-	"additionalSigned": 36
-},
-{
-	"identifier": "CheckWeight",
-	"type": 881,
-	"additionalSigned": 36
-},
-{
-	"identifier": "ChargeTransactionPayment",
-	"type": 882,
-	"additionalSigned": 36
-},
-{
-	"identifier": "PrevalidateAttests",
-	"type": 883,
-	"additionalSigned": 36
-},
-{
-	"identifier": "CheckMetadataHash",
-	"type": 884,
-	"additionalSigned": 34
-}
+  { "identifier": "CheckNonZeroSender", "type": 874, "additionalSigned": 36 },
+  { "identifier": "CheckSpecVersion", "type": 875, "additionalSigned": 4 },
+  { "identifier": "CheckTxVersion", "type": 876, "additionalSigned": 4 },
+  { "identifier": "CheckGenesis", "type": 877, "additionalSigned": 13 },
+  { "identifier": "CheckMortality", "type": 878, "additionalSigned": 13 },
+  { "identifier": "CheckNonce", "type": 880, "additionalSigned": 36 },
+  { "identifier": "CheckWeight", "type": 881, "additionalSigned": 36 },
+  { "identifier": "ChargeTransactionPayment", "type": 882, "additionalSigned": 36 },
+  { "identifier": "PrevalidateAttests", "type": 883, "additionalSigned": 36 },
+  { "identifier": "CheckMetadataHash", "type": 884, "additionalSigned": 34 }
 ]
 ```
 
@@ -1245,6 +1209,35 @@ Additional functions and information needed to validate an extrinsic.
 10. `CheckMetadataHash`: [H] Ensures the transaction was created using the appropriate metadata.
 
 </div>
+
+---
+
+## Hidden Data: Simplified
+
+Suppose we want to submit a message for a specific chain like Polkadot.
+
+Everyone knows the Polkadot Genesis Hash is:
+
+```0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3```
+
+We can construct a message like:
+
+```rust
+// Simplified idea of a signature
+Blake2_256(
+  "hello, world!",
+  "0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3",
+) = 0x4429c519aac4859ac0f7783dc42f230264959edcbcb8d70d9d784907bcb98c76
+```
+
+Then we only send to the node the message, and the final hash / signature:
+
+```rust
+message: "hello, world!"
+hash / signature: "0x4429c519aac4859ac0f7783dc42f230264959edcbcb8d70d9d784907bcb98c76"
+```
+
+And the node can re-inject the genesis hash, calculate, and ensure the final hash / signature matches.
 
 ---
 
