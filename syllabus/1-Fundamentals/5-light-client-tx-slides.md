@@ -1166,9 +1166,11 @@ Final:
 
 ---
 
-## Signed Extensions
+## Transaction Extensions
 
 Additional functions and information needed to validate an extrinsic, also found in the metadata.
+
+Some of this is specifically included in the signature, which are called "Signed Extensions".
 
 ```json
 "signedExtensions": [
@@ -1241,11 +1243,22 @@ And the node can re-inject the genesis hash, calculate, and ensure the final has
 
 ---
 
-TODO: more with signed extensions
+## Final Signed Payload
+
+To create the signature, we will sign:
+
+- Call Payload
+- All Extension Data
+  - Era, Nonce, Tip, Spec Version, Transaction Version, Genesis Hash, Block Hash, etc...
+  - But remember we only include into the extrinsic payload what is not "hidden".
+
+If the final payload is larger than 256 bytes (which is almost always is), we will hash the payload, and sign the hash instead, saving compute complexity.
+
+See: `struct SignedPayload`.
 
 ---
 
-# Submit and Track Transaction
+# Part 4: Submit and Track Transaction
 
 ---
 
@@ -1282,7 +1295,7 @@ pub enum TransactionStatus<Hash, BlockHash> {
 
 ## Transaction Pool Basic Validation
 
-The transaction pool first does low cost, fast to validate operations coming from signed extension logic:
+The transaction pool first does low cost, fast to validate operations coming from transaction extension logic:
 
 - Is the included signature valid?
 - Is the provided nonce valid?
@@ -1299,15 +1312,15 @@ Once these checks pass, an subscription update is sent with the `Ready` status.
 
 ## Transaction Gossipping (Broadcast)
 
-Once the transaction is determined to be valid, the node starts gossipping it to peers.
-
-Another subscription update is sent with `Broadcast`, and a list of peers it was sent to.
-
-The basic validation and gossiping process will repeat throughout the network.
+- Once the transaction is determined to be valid, the node starts gossipping it to peers.
+- Another subscription update is sent with `Broadcast`, and a list of peers it was sent to.
+- The basic validation and gossiping process will repeat throughout the network.
 
 ---
 
 ## Transaction Priority
+
+TODO
 
 ---
 
@@ -1371,6 +1384,12 @@ There are a set of Runtime APIs specifically for **creating** a block, which all
 		}
 	}
 ```
+
+---
+
+## Extrinsic Dispatch
+
+TODO
 
 ---
 
