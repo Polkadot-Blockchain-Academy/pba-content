@@ -22,6 +22,7 @@ duration: 30 minutes
 - 🔮 Programmable Money (DeFi) <!-- .element: class="fragment" -->
 
 ### But...
+
 <!-- .element: class="fragment" -->
 
 </pba-flex>
@@ -31,6 +32,7 @@ duration: 30 minutes
 ## Building One is HARD 😰
 
 You Need Expertise in (roughly) 8 Disciplines
+
 <!-- .element: class="fragment" -->
 
 <br>
@@ -54,6 +56,7 @@ You Need Expertise in (roughly) 8 Disciplines
 </pba-cols>
 
 **Each discipline = Years to master**
+
 <!-- .element: class="fragment" -->
 
 ---
@@ -97,6 +100,7 @@ Notes:
 https://en.bitcoin.it/wiki/Value_overflow_incident
 
 ---v
+
 ## A History of Blockchain Disasters
 
 <pba-flex center>
@@ -125,7 +129,6 @@ https://www.gemini.com/cryptopedia/the-dao-hack-makerdao
 - Simple library bug
 
 </pba-flex>
-
 
 Notes:
 https://tc.gts3.org/cs8803/2023-spring/student_presentations/team7.pdf
@@ -156,6 +159,7 @@ https://www.helius.dev/blog/solana-outages-complete-history
 <pba-flex center>
 
 What if we could...
+
 - ✅ Reuse battle-tested components <!-- .element: class="fragment" -->
 - ✅ Pick & Choose components <!-- .element: class="fragment" -->
 - ✅ Focus on your innovation <!-- .element: class="fragment" -->
@@ -181,12 +185,12 @@ Under the same trust umbrella → Shared Security <!-- .element: class="fragment
 
 ---
 
-
 ## So We Built Substrate
 
 <pba-flex center>
 
 ### A Blockchain Framework That:
+
 - ✅ Handles the hard parts
 - ✅ Lets you customize everything
 - ✅ Battle-tested in production
@@ -204,6 +208,7 @@ Future proof (forkless upgrade and modular) discussed later.
 <pba-flex center>
 
 ### Polkadot Ecosystem
+
 - Polkadot relay chain
 - Moonbeam (EVM based)
 - HydraDX
@@ -218,6 +223,7 @@ Future proof (forkless upgrade and modular) discussed later.
 <pba-flex center>
 
 ### Standalone Chains
+
 - BitTensor
 - Midnight
 - Avail
@@ -241,6 +247,7 @@ What will you build? 🚀
 <pba-col>
 
 ### Strong
+
 - Memory safe
 - Thread safe
 - No null pointers
@@ -250,6 +257,7 @@ What will you build? 🚀
 <pba-col>
 
 ### Popular
+
 - Most loved language (8 years)
 - Growing ecosystem
 - Great tooling
@@ -259,6 +267,7 @@ What will you build? 🚀
 <pba-col>
 
 ### Secure
+
 - 70% fewer bugs
 - Compile-time guarantees
 - Perfect for blockchain
@@ -271,6 +280,7 @@ What will you build? 🚀
 ## But Can We Do Better? 🤔
 
 Notes:
+
 - Forkless Upgrades
 - Governance Baked In
 - Modular
@@ -296,6 +306,7 @@ Notes:
 😰 Coordination nightmare <!-- .element: class="fragment" -->
 
 ---v
+
 ## Upgrading the Chain ✨
 
 <h4 style="color: var(--substrate-host); top: 0"> Substrate Chains </h4>
@@ -468,11 +479,14 @@ https://polkadot.subscan.io/event?page=1&time_dimension=date&module=system&event
 <img style="width: 1400px;" src="../../../assets/img/5-Substrate/dev-4-3-full.svg" />
 
 Notes:
+
 - Consensus not part of STF
 - State is untyped key-value storage. Runtime can interpret it.
+
 ---
 
 ## Recap
+
 - Substrate is a modular framework to build fast, secure, future-proof blockchain.
 - Substrate Node architecture.
 - Forkless Upgrades

@@ -16,7 +16,6 @@ Working with balances is fundamental to blockchain development:
 - Common use-case: staking, voting, deposits
 - Critical to get right for security and correctness
 
-
 ---
 
 ## Agenda
@@ -27,7 +26,7 @@ Working with balances is fundamental to blockchain development:
 1. Core concepts: Holds vs Freezes
 1. The fungible trait
 1. Considerations
-1. Live Coding  
+1. Live Coding
 
 </pba-flex>
 
@@ -35,8 +34,8 @@ Working with balances is fundamental to blockchain development:
 
 ## Why Existential Deposit
 
-- Account occupies some state in storage. 
-- ED forces accounts to keep a minimum balance, or dusted. 
+- Account occupies some state in storage.
+- ED forces accounts to keep a minimum balance, or dusted.
 
 <br>
 
@@ -75,6 +74,7 @@ use frame_support::traits::{Currency, ReservableCurrency, LockableCurrency};
 <pba-flex center>
 
 These traits are deprecated. For new code:
+
 - Use the modern `fungible` traits
 - They provide better safety and clearer semantics
 - We'll focus exclusively on the modern approach
@@ -126,6 +126,7 @@ https://wiki.polkadot.com/learn/learn-account-balances/
 - **Taken out of free balance**
 
 Use for:
+
 - Staking bonds
 - Storage deposits
 - Collateral
@@ -141,6 +142,7 @@ Use for:
 - **Total balance cannot drop below this.**
 
 Use for:
+
 - Voting locks
 - Vesting schedules
 - Minimum balance requirements
@@ -152,11 +154,12 @@ Use for:
 
 ## Scenarios
 
-1) 100 Free; No Hold or Freeze
+1. 100 Free; No Hold or Freeze
 
 <img src="https://wiki.polkadot.com/assets/balance-example-1.png">
 
 Notes:
+
 - Free: 100 DOT
 - Frozen (locked): 0 DOT
 - Reserved (held): 0 DOT
@@ -167,11 +170,12 @@ Notes:
 
 ## Scenarios
 
-2) 60 Staked
+2. 60 Staked
 
 <img src="https://wiki.polkadot.com/assets/balance-example-2.png">
 
 Notes:
+
 - Free: 40 DOT
 - Frozen (locked) : 0 DOT
 - Reserved (held): 60 DOT
@@ -182,11 +186,12 @@ Notes:
 
 ## Scenarios
 
-3) 20 Proxy Deposit
+3. 20 Proxy Deposit
 
 <img src="https://wiki.polkadot.com/assets/balance-example-3.png">
 
 Notes:
+
 - Free: 100 DOT
 - Frozen: 0 DOT
 - Reserved (held): 0 DOT
@@ -197,11 +202,12 @@ Notes:
 
 ## Scenarios
 
-4) 20 Vote
+4. 20 Vote
 
 <img src="https://wiki.polkadot.com/assets/balance-example-4.png">
 
 Notes:
+
 - Free: 20 DOT
 - Frozen (locked): 20 DOT
 - Reserved (held): 80 DOT
