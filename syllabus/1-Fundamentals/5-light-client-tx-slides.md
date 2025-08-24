@@ -1411,9 +1411,240 @@ we probably also ban the peer who sent us that transaction? but have to learn.
 
 ---
 
-## Transaction Priority
+## Transaction Pool Ordering
 
-TODO
+In the `ValidTransaction` struct contains parameters `provides` and `requires`, which allows us to:
+
+  - Specify if a transaction is "Ready" or "Future".
+  - Determine what transactions should ge before which.
+
+Transactions will not be `Ready` until another transaction `provides` what it `requires`, if anything.
+
+Note: it essentially forms a graph.
+
+Order mostly matters within the ready pool. I am not sure if the code maintains an order in `future` as well. In any
+case, not a big big deal.
+
+---
+
+### Transaction Ordering: Quiz Time (1)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  A,
+  provides: vec![],
+  requires: vec![]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+    <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+---
+
+### Transaction Ordering: Quiz Time (2)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  B,
+  provides: vec![2],
+  requires: vec![1]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+---
+
+### Transaction Ordering: Quiz Time (3)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  C,
+  provides: vec![3],
+  requires: vec![2]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    </td>
+    <td>
+      <pre>(C, pr: vec![3], rq: vec![2])</pre>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+---
+
+### Transaction Ordering: Quiz Time (4)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  D,
+  provides: vec![1],
+  requires: vec![]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(D, pr: vec![1], rq: vec![])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(C, pr: vec![3], rq: vec![2])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+Note: The oder in this slide matters and it is top to bottom.
+
+---
+
+### 2. Transaction Ordering: `priority`
+
+- From the `Ready` pool, when all requirements are met, then `priority` dictates the order.
+- Priority is assigned by runtime logic, and can be controlled by runtime engineers!
+- Beyond priority, there are further tie breakers:
+  1. ttl: shortest `longevity` goes first
+  2. time in the queue: longest to have waited goes first
+
+Note:
+
+https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146
+
+---
+
+### 2. Transaction Ordering: `priority`
+
+> How can the pool be a pure FIFO?
+
+Notes:
+
+All priorities set to 0.
+
+---
+
+### 2. Transaction Ordering: `nonce`
+
+Purposes of a nonce:
+
+1. Ordering
+2. Replay protection
+3. Double spend protection
 
 ---
 
