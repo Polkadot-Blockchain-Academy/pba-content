@@ -1614,7 +1614,7 @@ Note: The oder in this slide matters and it is top to bottom.
 
 ---
 
-### 2. Transaction Ordering: `priority`
+### Further Transaction Ordering: `priority` and more...
 
 - From the `Ready` pool, when all requirements are met, then `priority` dictates the order.
 - Priority is assigned by runtime logic, and can be controlled by runtime engineers!
@@ -1628,17 +1628,7 @@ https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853
 
 ---
 
-### 2. Transaction Ordering: `priority`
-
-> How can the pool be a pure FIFO?
-
-Notes:
-
-All priorities set to 0.
-
----
-
-### 2. Transaction Ordering: `nonce`
+### Nonce
 
 Purposes of a nonce:
 
