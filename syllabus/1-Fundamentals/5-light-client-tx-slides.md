@@ -345,16 +345,6 @@ Raw data we want to store is represented with the data icons at the bottom, all 
 </div>
 </div>
 
-Notes:
-
-- Message is that proof is just enough trie content (can be a bag of node or some ordered node that needs to be complete with hashing as in compact proof TODO should we make a slide for compact proof and generally proof serialization?) to build a subset/subpart of the full state trie.
-
-This incomplete trie will then be accessed and used identically as the full state trie, but if access is not part of the proof, then the action is not finishing: Proof Incomplete case.
-
-Invalid proof are proof where the hashing don't match (can be see as multiple trie).
-
-TODO Could have some schema with the full state, then the proof and then two query on the proof: one that access data available and one that fail because incomplete : Probably already exists in storage deep dive
-
 ---
 
 ### Merkle Proof: More Specific
@@ -504,47 +494,6 @@ Merkle provides the recursive **hashing** of children nodes into the parent.
   - possible value
 - KVDB key = Hash([Trie Node])
 
----v
-
-### Anatomy of a node
-
-Radix tree node:
-
-```
-  [partialkey ++ n children ++ maybe_value]
-```
-
-Merklized:
-
-```
-  [partialkey ++ n children hash ++ maybe_value_hash]
-```
-
-Node encoding variants:
-
-```
-- Branch: [Header ++ partial_key ++ maybe_value_hash ++ n_children_hash]
-- Leaf: [Header ++ partial_key ++ value_hash]
-- Value: [Value]
-```
-
-Notes:
-
-- radix
-
-Add constraint that terminal node always contains a value
-
-- merklized
-
-Note that merklizing this pretty common data structure just means replacing/enriching the pointers to child with a hash.
-
-Then of course persisting nodes in some way and lazy loading by hash (unless keeping all in memory or rebuilding on flight: not substrate).
-
-variant should be as compact as possible.
-
-Additional subtleties that if content under hash is smaller than it s hash, then it is written in the parent node instead of hash
--> for either value or children
-
 ---
 
 ### Given a value you want to store in the database (an encoded trie node), it will always have the same database key, because the key is simply the hash.
@@ -559,23 +508,7 @@ Rocks db implementation details, the key is dirty with some prefix.
 
 ---
 
-### Child Trie
-
-<div class="image-container">
-
-<img src="./img/child-trie.svg" />
-
-<div class="bottom-left black-box text-small">
-
-- Allows us to get a merkle root for some subset of data.
-- We aim to allow child tries to be a different trie format in the future.
-
-</div>
-</div>
-
----
-
-### Pruning
+### Pruning (1)
 
 <div class="image-container">
 
@@ -591,7 +524,7 @@ Rocks db implementation details, the key is dirty with some prefix.
 
 ---
 
-### Pruning
+### Pruning (2)
 
 <div class="image-container">
 
@@ -606,13 +539,13 @@ Rocks db implementation details, the key is dirty with some prefix.
 
 ---
 
-### Pruning
+### Pruning (3)
 
 <img src="./img/pruning-3.svg" />
 
 ---
 
-### Pruning
+### Pruning (4)
 
 <div class="image-container">
 
@@ -621,6 +554,22 @@ Rocks db implementation details, the key is dirty with some prefix.
 <div class="top-left" style="width: 30%">
 
 - Eventually, we prune the old data.
+
+</div>
+</div>
+
+---
+
+### Child Trie
+
+<div class="image-container">
+
+<img src="./img/child-trie.svg" />
+
+<div class="bottom-left black-box text-small">
+
+- Allows us to get a merkle root for some subset of data.
+- We aim to allow child tries to be a different trie format in the future.
 
 </div>
 </div>
@@ -662,13 +611,6 @@ A slide showing an unbalance trie could be nice:
 - a branch with some random
   odule and a constant in it : 2 nodes for prefix, + 2 nodes to access the constant. -> 4 nodes to access
 - the wasm runtime at :code -> only 2 nodes
-
-<!-- TODO broken content? -->
-
-So choice of key (even if mainly made for you by the runtime storage macro) is very important.
-And having an unbalance may sound like a bad thing, but it is not.
-
-TODO could be moved as a slide before.
 
 ---
 
@@ -747,6 +689,8 @@ Not sure it is worth going to far on cache strategy, but may be relevant to ment
 
 </div>
 </div>
+
+We are realizing that binaries tries are better for the current bottlenecks: networking.
 
 Notes:
 
@@ -869,14 +813,16 @@ Twox128(Prefix::pallet_prefix())
 	++ Hasher1(encode(key))
 ```
 
-```text
+```rust
 Twox128("System") = 0x26aa394eea5630e07c48ae0c9558cef7
 Twox128("Account") = 0xb99d880ec681799c0cf30e8886371da9
-encoded(5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY) = 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
-Blake2128Concat(0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d) = 0xde1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
+encoded("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY")
+  = 0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
+Blake2128Concat(0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d)
+  = 0xde1e86a9a8c739864cf3cc5ec2bea59fd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d
 ```
 
-Simple hashing tool:
+Simple hashing tool (and other utilities):
 
 https://www.shawntabrizi.com/substrate-js-utilities/
 
@@ -1650,9 +1596,9 @@ The transaction will make its way into a block producing node, and eventually in
 
 ## Client and Runtime
 
-At this point all of the execution is happening inside the Runtime via Runtime APIs.
+Once the transaction is included in the block, we need to execute the state transition function.
 
-TODO: Add image
+At this point all of the execution is happening inside the Runtime via Runtime APIs.
 
 ---
 
