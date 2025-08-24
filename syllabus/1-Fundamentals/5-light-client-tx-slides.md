@@ -9,16 +9,18 @@ description: End to End Transaction Flow with a Light Client
 
 In this presentation we will cover the end to end flow of a transaction.
 
-- Starting with a light client.
-- Being processed by a node.
-- Updating the state of the blockchain.
-- And finally state update being verified by the light client.
+1. Starting with a light client.
+2. Learning about merkle proofs.
+3. Trustlessly reading data on-chain.
+4. Constructing an extrinsic.
+5. Submitting and tracking transactions.
+6. Updating the state of the blockchain.
 
 Along the way, we will remind you and touch on details you should already be familiar with.
 
 ---
 
-# Part 0: What is a Light Client?
+# Part 1: What is a Light Client?
 
 ---
 
@@ -192,7 +194,7 @@ How would it do that?
 
 ---
 
-# Part 1: Verifiable Storage Proofs
+# Part 2: Verifiable Storage Proofs
 
 ---
 
@@ -757,7 +759,7 @@ What works in memory as simple data structure, also work as a db over disk and a
 
 ---
 
-# Part 2: Light Client Reads Storage
+# Part 3: Light Client Reads Storage
 
 ---
 
@@ -1094,7 +1096,7 @@ We can use this value type, and the returned hex value to construct a human read
 
 ---
 
-# Part 3: Light Client Constructs a Transfer Extrinsic
+# Part 4: Light Client Constructs a Transfer Extrinsic
 
 ---
 
@@ -1258,7 +1260,7 @@ See: `struct SignedPayload`.
 
 ---
 
-# Part 4: Submit and Track Transaction
+# Part 5: Submit and Track Transaction
 
 ---
 
@@ -1287,13 +1289,48 @@ pub enum TransactionStatus<Hash, BlockHash> {
   InBlock((BlockHash, TxIndex)),
   /// Transaction has been finalized by a finality-gadget, e.g. GRANDPA.
   Finalized((BlockHash, TxIndex)),
+  /// Transaction is no longer valid in the current state.
+  Invalid,
   /* -- more variants not included -- */
 }
 ```
 
 ---
 
-## Transaction Pool Basic Validation
+## Purpose of Transaction Pool Validation
+
+Moving transactions from one list to the other.
+
+<diagram class="mermaid" style="display: flex; width: 80%">
+graph LR
+    W["🤠 Wild West"] --"😈"--> T["🗑️"]
+    W --"😇 ⌛️"--> R["✅ Ready"]
+    W --"😇 ⏳"--> F["⏰ Future"]
+</diagram>
+
+---
+
+### Transaction Validation Logic
+
+- Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+- Transaction validation should be **cheap** to perform.
+- Transaction pool is entirely an **offchain operation**.
+  - No state change
+
+Once these checks pass, an subscription update is sent with the `Ready` or `Future` status.
+
+Notes:
+
+Important, must pause and ask!
+
+- Why is it from the runtime? because the transaction format is opaque and the node doesn't even know what to do with it.
+- Why does it have to be cheap? wild west, unpaid, DoS!
+- Pesky question: but be aware that from the runtime's perspective, the node could be malicious. The runtime cannot trust the node to obey.
+  ** THE RUNTIME MUST RE-VALIDATE TRANSACTIONS LATER in block building and import as well **
+
+---
+
+## Basic Transaction Pool Validation
 
 The transaction pool first does low cost, fast to validate operations coming from transaction extension logic:
 
@@ -1304,15 +1341,71 @@ The transaction pool first does low cost, fast to validate operations coming fro
 - Is the transaction targeting the correct chain?
 - etc...
 
-Most of these checks happen via runtime logic.
+---
 
-Once these checks pass, an subscription update is sent with the `Ready` status.
+### The `validate_transaction` Function
+
+The runtime API.
+
+```rust[1-100|6]
+impl TaggedTransactionQueue<Block> for Runtime {
+  fn validate_transaction(
+    source: TransactionSource,
+    tx: <Block  as BlockT>::Extrinsic,
+    block_hash: <Block as BlockT>::Hash,
+  ) -> TransactionValidity {
+    ..
+  }
+}
+```
+
+---
+
+### Representation of `TransactionValidity`
+
+```rust[1-100|5-6|8-9|11-12|14-100|1-100]
+pub type TransactionValidity = Result<ValidTransaction, TransactionValidityError>;
+
+/// This is going into `Ready` or `Future`
+pub struct ValidTransaction {
+  /// If in "Ready", what is the priority?
+  pub priority: u64,
+
+  /// For how long is this validity?
+  pub longevity: u64,
+
+  /// Should be propagate it?
+  pub propagate: bool,
+
+  /// Does this require any other tag to be present in ready?
+  ///
+  /// This determines "Ready" or "Future".
+  pub requires: Vec<Tag>,
+  /// Does this provide any tags?
+  pub provides: Vec<Tag>,
+}
+
+type Tag = Vec<u8>
+```
+
+---
+
+### Banning Invalid Transactions
+
+- If a transaction is discovered to be invalid, **its hash** is banned for a fixed duration of time.
+- Default in substrate is `Duration::from_secs(60 * 30)`, can be configured via CLI.
+
+Notes:
+
+See: https://github.com/paritytech/substrate/pull/11786
+
+we probably also ban the peer who sent us that transaction? but have to learn.
 
 ---
 
 ## Transaction Gossipping (Broadcast)
 
-- Once the transaction is determined to be valid, the node starts gossipping it to peers.
+- If a transaction is determined to be valid, the node starts gossipping it to peers.
 - Another subscription update is sent with `Broadcast`, and a list of peers it was sent to.
 - The basic validation and gossiping process will repeat throughout the network.
 
@@ -1327,6 +1420,10 @@ TODO
 ## Block Inclusion
 
 The transaction will make its way into a block producing node, and eventually included in the new block.
+
+---
+
+# Part 6: The State Transition Function
 
 ---
 
