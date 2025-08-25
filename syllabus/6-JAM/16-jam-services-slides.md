@@ -42,6 +42,7 @@ What can we build on JAM?
 Notes:
 
 Explain each symbol:
+
 - `s` is the storage, from bytes to bytes.
 - `p` are the preimages, from hash to bytes.
 - `l` are the preimage requests, from hash and length to times when they have been requested/provided.
@@ -100,6 +101,7 @@ They're the code that authorizes a particular **work** to be processed.
 Good news: you just need to implement `refine` and `accumulate`!
 
 Bad news: you need to implement `refine` and `accumulate`.
+
 <!-- .element: class="fragment" -->
 
 ---v
