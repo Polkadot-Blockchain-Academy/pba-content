@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>LCTX 4 - Submit and Track Transaction</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Light Client Transaction
+
+#### Part 4: Submit and Track Transaction
+</script></section><section  data-markdown><script type="text/template">
+## Submitting the Extrinsic
+
+- The light client will then call the RPC `author_submitAndWatchExtrinsic` over a WebSocket connection.
+- This will accept the extrinsic payload AND return a subscription id to track the progress of the extrinsic.
+- From that point forward, the node will push updates back to the light client, with the `SubscriptionId`.
+
+See: https://github.com/paritytech/jsonrpsee
+</script></section><section  data-markdown><script type="text/template">
+## Stages of the Subscription
+
+```rust
+pub enum TransactionStatus<Hash, BlockHash> {
+  /// Transaction is part of the future queue.
+  Future,
+  /// Transaction is part of the ready queue.
+  Ready,
+  /// The transaction has been broadcast to the given peers.
+  Broadcast(Vec<String>),
+  /// Transaction has been included in block with given hash
+  /// at the given position.
+  InBlock((BlockHash, TxIndex)),
+  /// Transaction has been finalized by a finality-gadget, e.g. GRANDPA.
+  Finalized((BlockHash, TxIndex)),
+  /// Transaction is no longer valid in the current state.
+  Invalid,
+  /* -- more variants not included -- */
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+## Purpose of Transaction Pool Validation
+
+Moving transactions from one list to the other.
+
+<diagram class="mermaid" style="display: flex; width: 80%">
+graph LR
+    W --"😇 ⏳"--> F["⏰ Future"]
+    W --"😇 ⌛️"--> R["✅ Ready"]
+    W["🤠 Wild West"] --"😈"--> T["🗑️ Invalid"]
+</diagram>
+</script></section><section  data-markdown><script type="text/template">
+### Transaction Validation Logic
+
+- Transaction validity is exclusively outside of the transaction pool, and is **100% determined by the Runtime**.
+- Transaction validation should be **cheap** to perform.
+- Transaction pool is entirely an **offchain operation**.
+  - No state change
+
+Once these checks pass, an subscription update is sent with the `Ready` or `Future` status.
+
+<aside class="notes"><p>Important, must pause and ask!</p>
+<ul>
+<li>Why is it from the runtime? because the transaction format is opaque and the node doesn&#39;t even know what to do with it.</li>
+<li>Why does it have to be cheap? wild west, unpaid, DoS!</li>
+<li>Pesky question: but be aware that from the runtime&#39;s perspective, the node could be malicious. The runtime cannot trust the node to obey.
+** THE RUNTIME MUST RE-VALIDATE TRANSACTIONS LATER in block building and import as well **</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Basic Transaction Pool Validation
+
+The transaction pool first does low cost, fast to validate operations coming from transaction extension logic:
+
+- Is the included signature valid?
+- Is the provided nonce valid?
+- Is the provided era still ongoing?
+- Does the user have enough balance to pay the transaction fee?
+- Is the transaction targeting the correct chain?
+- etc...
+</script></section><section  data-markdown><script type="text/template">
+### The `validate_transaction` Function
+
+The runtime API.
+
+```rust[1-100|6]
+impl TaggedTransactionQueue<Block> for Runtime {
+  fn validate_transaction(
+    source: TransactionSource,
+    tx: <Block  as BlockT>::Extrinsic,
+    block_hash: <Block as BlockT>::Hash,
+  ) -> TransactionValidity {
+    ..
+  }
+}
+```
+</script></section><section  data-markdown><script type="text/template">
+### Representation of `TransactionValidity`
+
+```rust[1-100|5-6|8-9|11-12|14-100|1-100]
+pub type TransactionValidity = Result<ValidTransaction, TransactionValidityError>;
+
+/// This is going into `Ready` or `Future`
+pub struct ValidTransaction {
+  /// If in "Ready", what is the priority?
+  pub priority: u64,
+
+  /// For how long is this validity?
+  pub longevity: u64,
+
+  /// Should be propagate it?
+  pub propagate: bool,
+
+  /// Does this require any other tag to be present in ready?
+  ///
+  /// This determines "Ready" or "Future".
+  pub requires: Vec<Tag>,
+  /// Does this provide any tags?
+  pub provides: Vec<Tag>,
+}
+
+type Tag = Vec<u8>
+```
+</script></section><section  data-markdown><script type="text/template">
+### Banning Invalid Transactions
+
+- If a transaction is discovered to be invalid, **its hash** is banned for a fixed duration of time.
+- Default in substrate is `Duration::from_secs(60 * 30)`, can be configured via CLI.
+
+<aside class="notes"><p>See: <a href="https://github.com/paritytech/substrate/pull/11786">https://github.com/paritytech/substrate/pull/11786</a></p>
+<p>we probably also ban the peer who sent us that transaction? but have to learn.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Transaction Gossipping (Broadcast)
+
+- If a transaction is determined to be valid, the node starts gossipping it to peers.
+- Another subscription update is sent with `Broadcast`, and a list of peers it was sent to.
+- The basic validation and gossiping process will repeat throughout the network.
+</script></section><section  data-markdown><script type="text/template">
+## Transaction Pool Ordering
+
+In the `ValidTransaction` struct contains parameters `provides` and `requires`, which allows us to:
+
+- Specify if a transaction is "Ready" or "Future".
+- Determine what transactions should go before others.
+
+Transactions will not be `Ready` until another transaction `provides` what it `requires`, if anything.
+
+<aside class="notes"><p>it essentially forms a graph.</p>
+<p>Order mostly matters within the ready pool. I am not sure if the code maintains an order in <code>future</code> as well. In any
+case, not a big big deal.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Nonce
+
+The nonce helps with transaction ordering and more!
+
+1. Ordering
+2. Replay protection
+3. Double spend protection
+</script></section><section  data-markdown><script type="text/template">
+### `Provides` and `Requires` Examples
+
+- A transaction in Bitcoin-like chain will:
+
+  - `provide` generated UTXOs.
+  - `require` UTXOs it is still awaiting for.
+
+- A transaction in account-based chain will:
+  - `provide` a `(sender, nonce)` as one tag.
+  - `require` `(sender, nonce - 1)`.
+</script></section><section  data-markdown><script type="text/template">
+### Transaction Ordering: Quiz Time (1)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  A,
+  provides: vec![],
+  requires: vec![]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+    <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+</script></section><section  data-markdown><script type="text/template">
+### Transaction Ordering: Quiz Time (2)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  B,
+  provides: vec![2],
+  requires: vec![1]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+</script></section><section  data-markdown><script type="text/template">
+### Transaction Ordering: Quiz Time (3)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  C,
+  provides: vec![3],
+  requires: vec![2]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+    </td>
+  </tr>
+  <tr>
+    <td>
+    </td>
+    <td>
+      <pre>(C, pr: vec![3], rq: vec![2])</pre>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+</script></section><section  data-markdown><script type="text/template">
+### Transaction Ordering: Quiz Time (4)
+
+<pba-cols>
+<pba-col>
+
+```
+(
+  D,
+  provides: vec![1],
+  requires: vec![]
+)
+```
+
+</pba-col>
+
+<pba-col>
+<table>
+<thead>
+  <tr>
+    <th>Ready</th>
+    <th>Future</th>
+  </tr>
+</thead>
+<tbody class="fragment">
+  <tr>
+    <td>
+      <pre>(A, pr: vec![], rq: vec![])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(D, pr: vec![1], rq: vec![])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <pre>(C, pr: vec![3], rq: vec![2])</pre>
+    </td>
+    <td>
+    </td>
+  </tr>
+</tbody>
+</table>
+</pba-col>
+
+</pba-cols>
+
+<aside class="notes"><p>The oder in this slide matters and it is top to bottom.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+### Further Transaction Ordering: `priority` and more...
+
+- From the `Ready` pool, when all requirements are met, then `priority` dictates the order.
+- Priority is assigned by runtime logic, and can be controlled by runtime engineers!
+- Beyond priority, there are further tie breakers:
+  1. ttl: shortest `longevity` goes first
+  2. time in the queue: longest to have waited goes first
+
+<aside class="notes"><p><a href="https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146">https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Block Inclusion
+
+The transaction will make its way into a block producing node, and eventually included in the new block.
+</script></section><section  data-markdown><script type="text/template">
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
