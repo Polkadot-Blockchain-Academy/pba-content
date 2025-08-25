@@ -147,12 +147,12 @@ Light Clients will recieve new blocks from a full node..
 
 ## GRANDPA Justification
 
-The Justification includes signatures from current block producers.
+The Justification includes signatures from current block producers / validators.
 
 <img style="width: 600px" src="./img/grandpa.png"/>
 
 - Signatures show that they believe some chain of blocks are part of the cannonical chain, and should be finalized.
-- As soon as the Justification contains 2/3 of the validator signatures, the block is finalized.
+- As soon as the Justification contains 2/3 + 1 of the validator signatures, the block is finalized.
 
 
 ---
