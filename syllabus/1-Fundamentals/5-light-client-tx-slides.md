@@ -1277,6 +1277,8 @@ Some of this is specifically included in the signature, which are called "Signed
 
 ## Hidden Data: Simplified
 
+<div class="text-small">
+
 Suppose we want to submit a message for a specific chain like Polkadot.
 
 Everyone knows the Polkadot Genesis Hash is:
@@ -1303,6 +1305,8 @@ hash / signature: "0x4429c519aac4859ac0f7783dc42f230264959edcbcb8d70d9d784907bcb
 ```
 
 And the node can re-inject the genesis hash, calculate, and ensure the final hash / signature matches.
+
+</div>
 
 ---
 
