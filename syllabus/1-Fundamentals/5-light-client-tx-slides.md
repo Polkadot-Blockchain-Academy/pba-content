@@ -135,9 +135,9 @@ For a light client, the digest is very important.
 
 ## 1. Confirming Finality
 
-Light Clients will recieve new blocks from a full node..
+Light Clients will receive new blocks from a full node..
 
-> But why should it trust that this block is accurate and part of the cannonical chain?
+> But why should it trust that this block is accurate and part of the canonical chain?
 
 - The full node will share a **GRANDPA Justification**.
   - This is not part of the block, but something gossiped as part of the networking and consensus protocol.
@@ -151,7 +151,7 @@ The Justification includes signatures from current block producers / validators.
 
 <img style="width: 600px" src="./img/grandpa.png"/>
 
-- Signatures show that they believe some chain of blocks are part of the cannonical chain, and should be finalized.
+- Signatures show that they believe some chain of blocks are part of the canonical chain, and should be finalized.
 - As soon as the Justification contains 2/3 + 1 of the validator signatures, the block is finalized.
 
 
@@ -291,7 +291,6 @@ Built with:
   - Talks with the full node.
   - Syncs block headers.
   - Verifies finality justifications.
-  - Communicates with the full node.
 - A Polkadot API (like PAPI):
   - Talks with the light client engine.
   - Runtime metadata and data types.
@@ -599,7 +598,7 @@ Merkle provides the recursive **hashing** of children nodes into the parent.
 
 <br>
 
-- The Trie key path is set by you, for e.g. `:CODE`.
+- The Trie key path is set by you, for example `:CODE`.
   - Arbitrary Length!
 - Trie Node:
   - header
@@ -964,7 +963,7 @@ We have no proof this data is actually in the state of the blockchain.
 
 ## Request a Proof from the Full Node
 
-So we should instead use `state_getReadProof`, which returns the both the value and the data needed for a merkle proof of that value.
+So we should instead use `state_getReadProof`, which returns both the value and the data needed for a merkle proof of that value.
 
 Using the storage key we want, `at` a specific block hash, we get:
 
@@ -1476,7 +1475,7 @@ we probably also ban the peer who sent us that transaction? but have to learn.
 In the `ValidTransaction` struct contains parameters `provides` and `requires`, which allows us to:
 
   - Specify if a transaction is "Ready" or "Future".
-  - Determine what transactions should ge before which.
+  - Determine what transactions should go before others.
 
 Transactions will not be `Ready` until another transaction `provides` what it `requires`, if anything.
 
@@ -1917,7 +1916,7 @@ We already know the extrinsic payload will contain information like:
 
 The runtime will also inject data called the `Origin`, which in basic terms, tells us where the extrinsic originated from.
 
-Most commonly this is `Signed(SomeAddess)`.
+Most commonly this is `Signed(SomeAddress)`.
 
 ---
 
@@ -2020,7 +2019,7 @@ If there are any doubts about the after effects of your finalized transaction:
 - Using the block hash, you query the events emitted in that block.
   - This is also a storage query.
   - Look for `ExtrinsicSuccess` event for your extrinsic.
-- Look at the storage, and check that Alice and Bob has their balances updated.
+- Look at the storage, and check that Alice and Bob have had their balances updated.
 
 We again can use the `state_getReadProof` to be able to verify the state.
 
