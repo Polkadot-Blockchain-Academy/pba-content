@@ -22,86 +22,6 @@ Along the way, we will remind you and touch on details you should already be fam
 
 ---
 
-## Scenario
-
-<img src="./img/scenario.svg" />
-
-<table style="width: 100%; table-layout: fixed;">
-  <thead>
-    <tr>
-      <th style="width: 30%;">Light Client App</th>
-      <th style="width: 40%;">Full Node</th>
-      <th style="width: 30%;">Authoring Node</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <ul>
-          <li>Queries Metadata</li>
-          <li>Queries State</li>
-          <li>Constructs Transaction</li>
-          <li>Verifies State</li>
-        </ul>
-      </td>
-      <td>
-        <ul>
-          <li>Provides Metadata</li>
-          <li>Provides State and Proof</li>
-          <li>Provides Subscription</li>
-          <li>Gossips Transaction</li>
-          <li>Imports Block</li>
-        </ul>
-      </td>
-      <td>
-        <ul>
-          <li>Creates and Executes a New Block</li>
-          <li>Gossips the New Block</li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## Building a Light Client Application
-
-<div class="flex-container">
-<div class="left-small">
-
-<img style="width: 300px;" src="./img/light-client-app.svg" />
-
-</div>
-
-<div class="right text-small">
-
-Think of a decentralized application running directly on your phone.
-
-Built with:
-
-- Your favorite mobile development framework.
-- A Light Client Engine (like Smoldot):
-  - Talks with the full node.
-  - Syncs block headers.
-  - Verifies finality justifications.
-  - Communicates with the full node.
-- A Polkadot API (like PAPI):
-  - Talks with the light client engine.
-  - Runtime metadata and data types.
-  - SCALE encoding/decoding.
-  - Transaction construction.
-  - State layout and queries.
-
-</div>
-</div>
-
----
-
-#### For simplicity, we will call the whole decentralized application "the light client".
-
----
-
 # Part 1: What is a Light Client?
 
 ---
@@ -213,7 +133,7 @@ For a light client, the digest is very important.
 
 ---
 
-## Confirming Finality
+## 1. Confirming Finality
 
 Light Clients will recieve new blocks from a full node..
 
@@ -227,7 +147,7 @@ Light Clients will recieve new blocks from a full node..
 
 ## GRANDPA Justification
 
-The justification includes signatures from current block producers.
+The Justification includes signatures from current block producers.
 
 <img style="width: 600px" src="./img/grandpa.png"/>
 
@@ -240,7 +160,7 @@ The justification includes signatures from current block producers.
 ## From the Perspective of Light Clients
 
 - Light Clients are responsible for keeping track of the current validator set.
-- They are able to individually verify the signatures of each validator in the justification.
+- They are able to individually verify the signatures of each validator in the Justification.
 
 > By matching the **block hash** with the **signatures** from validators, they are then able to trust all the contents of the block header given to them by the full node!
 
@@ -248,35 +168,38 @@ The justification includes signatures from current block producers.
 
 ---
 
-## Block Author
+## 2. Verifying Block Authorship
 
-Within the header itself are signatures and data from the block author who made the block.
+- Within the header itself are signatures and data from the block author who made the block.
+- Inside the digest is a **seal**, which is simply a signature from the block author for the block hash.
+- There is also a secret VRF which the block author reveals to show they are allowed to produce a block during that slot.
 
-Inside the digest is a **seal**, which is simply a signature from the block author for the block hash.
+> All of this can again be independently verified by the nodes on the network, including light clients.
 
-There is also a secret VRF which the block author reveals to show they are allowed to produce a block during that slot.
-
-All of this can again be independently verified by the nodes on the network, including light clients.
+**Less trust, more truth!**
 
 ---
 
-## Following the Validator Set
+## 3. Following the Validator Set
 
-Verifying the Justification assumes the light client knows the current validator set. Since it does not actually execute the blocks, it cannot simply query for that information.
-
-Instead, this information is constantly updated in the block digest along with the other consensus critical data.
-
+- Verifying the Justification assumes the light client knows the current validator set.
+  - Since it does not actually execute the blocks, it cannot simply query for that information.
+- This information is constantly updated in the block digest along with the other consensus critical data.
+  - Logs like `ScheduledChange` or `ForcedChange` signal when the validator set will be updated.
 ---
 
 ## Updating the Validator Set
 
-The genesis block defines the initial state of the blockchain, including the initial validator set.
+Let's look more specifically at updating the validator set:
 
-From there, based on the state transition function of the blockchain, a new validator set might be queued for some future block.
+- The genesis block defines the initial state of the blockchain, including the initial validator set.
+- Based on the state transition function of the blockchain, a new validator set might be queued for some future block.
+- This will be "pre-announced" in the digest with the new validator set, for some point in the future.
+  - Importantly, this will be **signed by the current validator set!**.
 
-This will be pre-announced in the digest, and signed by the current validator set, showing that a new validator set will be active in the future.
+> With this announcement included in the digest, and backed by the GRANDPA Justification, light clients can always know who the active validators are, even as they change.
 
-With this announcement included in the digest, and backed by the GRANDPA Justification, light clients can always know who the active validators are, even as they change.
+**Less trust, more truth!**
 
 ---
 
@@ -286,8 +209,8 @@ As you can see, Light Clients are able to remain trustless within the blockchain
 
 With this, it becomes simple to verify:
 
-- a transaction has been included in the chain, from the extrinsics root.
-- the state of the chain, from the state root.
+- A transaction has been included in the chain, from the extrinsics root.
+- The state of the chain, from the state root.
 
 And remember, the State Transition Function (Wasm) itself is stored on chain, but the light client is not expected to execute it.
 
@@ -297,9 +220,91 @@ And remember, the State Transition Function (Wasm) itself is stored on chain, bu
 
 So we have seen so far, in general, how a light client would trustlessly follow the canonical version of the blockchain.
 
+<img src="./img/scenario.svg" />
+
 But let's assume the light client wants to interact with the chain. Something simple like a balance transfer from Alice to Bob.
 
 How would it do that?
+
+---
+
+## Scenario
+
+<img src="./img/scenario.svg" />
+
+<table style="width: 100%; table-layout: fixed;">
+  <thead>
+    <tr>
+      <th style="width: 30%;">Light Client App</th>
+      <th style="width: 40%;">Full Node</th>
+      <th style="width: 30%;">Authoring Node</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <ul>
+          <li>Queries Metadata</li>
+          <li>Queries State</li>
+          <li>Constructs Transaction</li>
+          <li>Verifies State</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>Provides Metadata</li>
+          <li>Provides State and Proof</li>
+          <li>Provides Subscription</li>
+          <li>Gossips Transaction</li>
+          <li>Imports Block</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>Creates and Executes a New Block</li>
+          <li>Gossips the New Block</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## The Light Client Application
+
+<div class="flex-container">
+<div class="left-small">
+
+<img style="width: 300px;" src="./img/light-client-app.svg" />
+
+</div>
+
+<div class="right text-small">
+
+Think of a decentralized application running directly on your phone.
+
+Built with:
+
+- Your favorite mobile development framework.
+- A Light Client Engine (like Smoldot):
+  - Talks with the full node.
+  - Syncs block headers.
+  - Verifies finality justifications.
+  - Communicates with the full node.
+- A Polkadot API (like PAPI):
+  - Talks with the light client engine.
+  - Runtime metadata and data types.
+  - SCALE encoding/decoding.
+  - Transaction construction.
+  - State layout and queries.
+
+</div>
+</div>
+
+---
+
+#### For simplicity, we will call the whole decentralized application "the light client".
 
 ---
 
