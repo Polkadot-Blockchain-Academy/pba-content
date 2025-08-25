@@ -7,6 +7,8 @@ description: End to End Transaction Flow with a Light Client
 
 ---
 
+# Overview
+
 In this presentation we will cover the end to end flow of a transaction.
 
 1. Starting with a light client.
@@ -50,7 +52,7 @@ If you have a blockchain which can directly run on a phone, it is likely not per
 
 ---
 
-So does the trustless decentralized future exclude mobile devices and other similar lower power hardware?
+###  So does the trustless decentralized future exclude mobile devices and other similar lower power hardware?
 
 ---
 
@@ -211,21 +213,21 @@ https://github.com/paritytech/trie
 <div class="flex-container">
 <div class="left text-small">
 
-Raw data we want to store is represented with the data icons at the bottom, all the other black nodes are hashes.
-
 <img style="filter: invert(1);" src="./img/merkle-tree.svg">
 
+> Raw data we want to store is represented with the data icons at the bottom, all the other white nodes are hashes.
 
 </div>
 
 <div class="right text-small">
 
+Starting from the bottom to the top of the diagram:
 
-1. collect all the data you want to place in the merkle tree structure
-2. find the hash of each piece of data
-3. take two hash nodes and hash them into a new hash node
-4. repeat this process for the new nodes until there is a single hash
-5. the final hash is the merkle root hash
+1. Collect all the data you want to place in the merkle tree structure.
+2. Find the hash of each piece of data.
+3. Take two hash nodes and hash them into a new hash node.
+4. Repeat this process for the new nodes until there is a single hash.
+5. The final hash is the merkle root hash.
 
 </div>
 </div>
@@ -1249,9 +1251,9 @@ Moving transactions from one list to the other.
 
 <diagram class="mermaid" style="display: flex; width: 80%">
 graph LR
-    W["🤠 Wild West"] --"😈"--> T["🗑️"]
-    W --"😇 ⌛️"--> R["✅ Ready"]
     W --"😇 ⏳"--> F["⏰ Future"]
+    W --"😇 ⌛️"--> R["✅ Ready"]
+    W["🤠 Wild West"] --"😈"--> T["🗑️ Invalid"]
 </diagram>
 
 ---
