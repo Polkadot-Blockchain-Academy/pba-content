@@ -54,7 +54,7 @@ If you have a blockchain which can directly run on a phone, it is likely not per
 
 ---
 
-###  So does the trustless decentralized future exclude mobile devices and other similar lower power hardware?
+### So does the trustless decentralized future exclude mobile devices and other similar lower power hardware?
 
 ---
 
@@ -154,7 +154,6 @@ The Justification includes signatures from current block producers / validators.
 - Signatures show that they believe some chain of blocks are part of the canonical chain, and should be finalized.
 - As soon as the Justification contains 2/3 + 1 of the validator signatures, the block is finalized.
 
-
 ---
 
 ## From the Perspective of Light Clients
@@ -186,6 +185,7 @@ The Justification includes signatures from current block producers / validators.
   - Since it does not actually execute the blocks, it cannot simply query for that information.
 - This information is constantly updated in the block digest along with the other consensus critical data.
   - Logs like `ScheduledChange` or `ForcedChange` signal when the validator set will be updated.
+
 ---
 
 ## Updating the Validator Set
@@ -1281,7 +1281,9 @@ Suppose we want to submit a message for a specific chain like Polkadot.
 
 Everyone knows the Polkadot Genesis Hash is:
 
-```0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3```
+```rust
+0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3
+```
 
 We can construct a message like:
 
@@ -1474,8 +1476,8 @@ we probably also ban the peer who sent us that transaction? but have to learn.
 
 In the `ValidTransaction` struct contains parameters `provides` and `requires`, which allows us to:
 
-  - Specify if a transaction is "Ready" or "Future".
-  - Determine what transactions should go before others.
+- Specify if a transaction is "Ready" or "Future".
+- Determine what transactions should go before others.
 
 Transactions will not be `Ready` until another transaction `provides` what it `requires`, if anything.
 
@@ -1499,6 +1501,7 @@ The nonce helps with transaction ordering and more!
 ### `Provides` and `Requires` Examples
 
 - A transaction in Bitcoin-like chain will:
+
   - `provide` generated UTXOs.
   - `require` UTXOs it is still awaiting for.
 
@@ -1788,7 +1791,6 @@ A key concept that we will touch on over and over is the separation of the clien
 </pba-col>
 
 </pba-cols>
-
 
 ---
 
