@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>JAM services</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# JAM services
+</script></section><section ><section data-markdown><script type="text/template">
+# What we'll learn
+
+<pba-flex center>
+
+- ❌ How to build a JAM client
+- ✅ How to build JAM services
+</script></section><section data-markdown><script type="text/template">
+<pba-flex center>
+
+Not about **building JAM** but about building **ON TOP** of JAM.
+</script></section><section data-markdown><script type="text/template">
+<pba-flex center>
+
+"To understand how Jam breaks up its service code is to understand Jam’s fundamental proposition of generality and scalability."
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Services
+
+What can we build on JAM?
+</script></section><section data-markdown><script type="text/template">
+## The service account
+
+![Service accounts according to the GP](../../assets/img/7-Polkadot/gp-0.7.1-service-account.png)
+
+<aside class="notes"><p>Explain each symbol:</p>
+<ul>
+<li><code>s</code> is the storage, from bytes to bytes.</li>
+<li><code>p</code> are the preimages, from hash to bytes.</li>
+<li><code>l</code> are the preimage requests, from hash and length to times when they have been requested/provided.</li>
+<li><code>f</code> is the gratis storage offset.</li>
+<li><code>c</code> is the code hash.</li>
+<li><code>b</code> is the balance.</li>
+<li><code>g</code> and <code>m</code> are gas limits.</li>
+<li><code>r</code> is the time slot at creation of the service.</li>
+<li><code>a</code> is the time slot of the most recent accumulation.</li>
+<li><code>p</code> is the parent service.</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Similarities with smart contracts
+
+<pba-flex center>
+
+- Anyone can create one
+- They have their own **code**, **storage** and **balance**
+</script></section><section data-markdown><script type="text/template">
+## Differences with smart contracts
+
+<pba-flex center>
+
+- They have only two entrypoints: `refine` and `accumulate`
+- `refine` is stateless and runs in-core
+- `accumulate` is stateful and runs on-chain
+- They have to procure `coretime`
+
+<aside class="notes"><p>In the latest version of the GP to date, 0.7.1, <code>on_transfer</code> was removed in favor of a <code>transfer</code> host function in the <code>accumulate</code> entrypoint.</p>
+<p>The <code>accumulate</code> code might more closely resemble a smart contract since it&#39;s executed by everyone in the network and has access to all the state.</p>
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
+# Authorizers
+</script></section><section data-markdown><script type="text/template">
+They're the code that authorizes a particular **work** to be processed.
+</script></section><section data-markdown><script type="text/template">
+![Services and authorizers](../../assets/img/7-Polkadot/jam-services-and-authorizers.png)
+</script></section></section><section ><section data-markdown><script type="text/template">
+# Soo, how do I make something?
+</script></section><section data-markdown><script type="text/template">
+Good news: you just need to implement `refine` and `accumulate`!
+
+Bad news: you need to implement `refine` and `accumulate`.
+
+<!-- .element: class="fragment" -->
+</script></section><section data-markdown><script type="text/template">
+## PVM assembly
+
+<pba-flex center>
+
+```assembly
+%stack_size = 4096
+%rw_data_size = 12
+%rw_data = 00 00 00 00 00 00 00 00 00 00 00 00
+
+// ===== JAM entrypoints =====
+jump @refine // Index 0
+fallthrough
+fallthrough
+fallthrough
+jump @accumulate // Index 5
+
+pub @accumulate:
+  // Counter
+  a1 = 0
+  // Accumulator
+  a2 = 0
+@target:
+  // Fetch
+  a3 = u8 [a1 + 0xfeff0003]
+  // Accumulate
+  a2 = a2 + a3
+  // Increase counter
+  a1 = a1 + 1
+  // Condition
+  jump @target if a1 <u 4
+  // Change state
+  u8 [0xfeff0010] = 3
+  a1 = 1224
+  a2 = 2335
+  a3 = 3446
+  a4 = 4557
+  // 'write' host function
+  ecalli 3
+  // Return
+  a0 = a2
+  trap
+```
+
+<aside class="notes"><p>This is basically like writing evm opcodes or wat.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+## PolkaVM Examples
+
+<pba-flex center>
+
+https://hackmd.io/@polkadot/jamsdk
+
+<aside class="notes"><p>We created a repository with everything needed to compile C and C++ code to PVM blobs.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+<pba-flex center>
+
+```c++
+#include "host.hpp"
+#include <stdint.h> // Use the C header as we don't have a C++ STL.
+
+POLKAVM_IMPORT(uint32_t, get_third_number);
+
+// Demonstrate that this is C++ by using templates:
+template<typename To, typename From>
+To convert(From v) {
+	return static_cast<To>(v);
+}
+
+uint32_t entry(uint32_t a, uint32_t b) {
+	auto v = a * b + get_third_number();
+
+	return convert<uint32_t>(v);
+}
+
+POLKAVM_EXPORT(uint32_t, entry, uint32_t, uint32_t);
+```
+</script></section><section data-markdown><script type="text/template">
+There must be a better way...
+</script></section></section><section ><section data-markdown><script type="text/template">
+## JAM SDK
+
+https://hackmd.io/@polkadot/jamsdk
+</script></section><section data-markdown><script type="text/template">
+## Null authorizer
+
+```rust
+#![cfg_attr(any(target_arch = "riscv32", target_arch = "riscv64"), no_std)]
+
+extern crate alloc;
+use alloc::string::String;
+use jam_pvm_common::{is_authorized::*, *};
+use jam_types::*;
+
+#[allow(dead_code)]
+struct Authorizer;
+jam_pvm_common::declare_authorizer!(Authorizer);
+
+impl jam_pvm_common::Authorizer for Authorizer {
+	fn is_authorized(param: AuthConfig, package: WorkPackage, core_index: CoreIndex) -> AuthTrace {
+		info!(
+			"Null Authorizer, [{core_index}], {} gas, {param} param, {} token",
+			gas(),
+			package.authorization
+		);
+		if package.authorization.0 != param.0 {
+			panic!("Authorization failed")
+		}
+		let m = String::from_utf8_lossy(&package.authorization);
+		alloc::format!("Auth=<{m}>").as_bytes().to_vec().into()
+	}
+}
+```
+</script></section><section data-markdown><script type="text/template">
+## Bootstrap service
+
+For creating new services!
+
+<aside class="notes"><p>Let&#39;s take a look at this one.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+# CoreVM
+
+For building programs!
+</script></section><section  data-markdown><script type="text/template">
+# CoreChains
+
+For building blockchains!
+</script></section><section  data-markdown><script type="text/template">
+# CorePlay
+
+For building actors!
+</script></section><section  data-markdown><script type="text/template">
+# Ideas
+
+<aside class="notes"><ul>
+<li>Simple currency</li>
+<li>Bridge</li>
+</ul>
+</aside></script></section><section  data-markdown><script type="text/template">
+<pba-flex center>
+
+What will **YOU** build on JAM?
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
