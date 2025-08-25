@@ -141,7 +141,7 @@ Light Clients will recieve new blocks from a full node..
 
 - The full node will share a **GRANDPA Justification**.
   - This is not part of the block, but something gossiped as part of the networking and consensus protocol.
-  - Justification gossip happens in rounds, allowing the validators to give up to date votes on their latest view of the blockchain.
+  - Justification gossip happens in rounds, allowing the validators to give up-to-date votes on their latest view of the blockchain.
 
 ---
 
@@ -823,7 +823,7 @@ What works in memory as simple data structure, also work as a db over disk and a
 
 ## Fetching the Metadata
 
-The first thing the light client will do is fetch the up to date metadata of the chain.
+The first thing the light client will do is fetch the up-to-date metadata of the chain.
 
 Remember that in the Polkadot ecosystem, chains can constantly upgrade and update their state transition function, changing the functionality of the chain and even what extrinsics are available.
 
