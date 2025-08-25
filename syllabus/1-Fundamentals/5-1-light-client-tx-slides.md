@@ -3,12 +3,6 @@ title: LCTX 1 - What is a Light Client?
 description: End to End Transaction Flow with a Light Client
 ---
 
-# Light Client Transaction
-
-Part 1
-
----
-
 ## Overview
 
 In this presentation we will cover the end to end flow of a transaction.
@@ -23,7 +17,9 @@ Along the way, we will remind you and touch on details you should already be fam
 
 ---
 
-# Part 1: What is a Light Client?
+# Light Client Transaction
+
+#### Part 1: What is a Light Client?
 
 ---
 

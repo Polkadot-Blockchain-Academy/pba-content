@@ -5,11 +5,7 @@ description: End to End Transaction Flow with a Light Client
 
 # Light Client Transaction
 
-Part 2
-
----
-
-# Part 2: Verifiable Storage Proofs
+#### Part 2: Verifiable Storage Proofs
 
 ---
 

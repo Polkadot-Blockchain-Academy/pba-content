@@ -5,11 +5,7 @@ description: End to End Transaction Flow with a Light Client
 
 # Light Client Transaction
 
-Part 3
-
----
-
-# Part 3: Light Client Reads and Transacts
+#### Part 3: Light Client Reads and Transacts
 
 ---
 

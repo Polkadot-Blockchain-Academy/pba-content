@@ -5,11 +5,7 @@ description: End to End Transaction Flow with a Light Client
 
 # Light Client Transaction
 
-Part 5
-
----
-
-# Part 5: The State Transition Function
+#### Part 5: The State Transition Function
 
 ---
 

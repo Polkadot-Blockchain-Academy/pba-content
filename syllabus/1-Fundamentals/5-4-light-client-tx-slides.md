@@ -5,11 +5,7 @@ description: End to End Transaction Flow with a Light Client
 
 # Light Client Transaction
 
-Part 4
-
----
-
-# Part 4: Submit and Track Transaction
+#### Part 4: Submit and Track Transaction
 
 ---
 
