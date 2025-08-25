@@ -1375,6 +1375,28 @@ case, not a big big deal.
 
 ---
 
+### Nonce
+
+The nonce helps with transaction ordering and more!
+
+1. Ordering
+2. Replay protection
+3. Double spend protection
+
+---
+
+### `Provides` and `Requires` Examples
+
+- A transaction in Bitcoin-like chain will:
+  - `provide` generated UTXOs.
+  - `require` UTXOs it is still awaiting for.
+
+- A transaction in account-based chain will:
+  - `provide` a `(sender, nonce)` as one tag.
+  - `require` `(sender, nonce - 1)`.
+
+---
+
 ### Transaction Ordering: Quiz Time (1)
 
 <pba-cols>
@@ -1573,16 +1595,6 @@ Note: The oder in this slide matters and it is top to bottom.
 Note:
 
 https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853cb9a86cd/substrate/client/transaction-pool/src/graph/ready.rs#L146
-
----
-
-### Nonce
-
-Purposes of a nonce:
-
-1. Ordering
-2. Replay protection
-3. Double spend protection
 
 ---
 
@@ -1797,11 +1809,19 @@ Most commonly this is `Signed(SomeAddess)`.
 
 ---
 
+# Extrinsic "Things"
+
+- Weight / Gas
+- Fees
+-
+
+---
+
 ## Function Execution
 
-There is really nothing interesting to say about function execution. It is just your Rust code executing with the parameters passed in from the extrinsic.
+Rust simply executing with the parameters passed in from the extrinsic.
 
-It is worth noting that the only reason an extrinsic is able to trigger the execution of some code is because there is a dispatch pipeline.
+> It is worth noting that the only reason an extrinsic is able to trigger the execution of some code is because there is a dispatch pipeline.
 
 As a runtime developer, you can really do anything:
 
@@ -1837,10 +1857,10 @@ MyValue::set(value);
 <div class="left-small">
 	<table class="storage-layer-table">
 	<tr><td class="ends">Developer</td></tr>
-	<tr><td>Runtime Storage API</td></tr>
-	<tr><td>Storage Overlays</td></tr>
-	<tr><td>Patricia-Merkle Trie</td></tr>
-	<tr><td>Key-Value Database</td></tr>
+	<tr><td style="background-color: lightcoral;">Runtime Storage API</td></tr>
+	<tr><td style="background-color: orange;">Storage Overlays</td></tr>
+	<tr><td style="background-color: lightgreen;">Patricia-Merkle Trie</td></tr>
+	<tr><td style="background-color: lightblue;">Key-Value Database</td></tr>
 	<tr><td class="ends">Computer</td></tr>
 	</table>
 </div>
