@@ -1,6 +1,6 @@
 ---
 title: LCTX 2 - Verifiable Storage Proofs
-description: Part 2
+description: End to End Transaction Flow with a Light Client
 ---
 
 # Light Client Transaction

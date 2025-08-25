@@ -1,6 +1,6 @@
 ---
 title: LCTX 4 - Submit and Track Transaction
-description: Part 4
+description: End to End Transaction Flow with a Light Client
 ---
 
 # Light Client Transaction
