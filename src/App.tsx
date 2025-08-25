@@ -20,7 +20,7 @@ export const App = () => {
         </menu>
       </header>
       <div className="accordion">
-        {Object.entries(someJson).map(r => <Accordion title={replaceText(r[0])} content={r[1]} path={"syllabus/" + r[0]}/>)}
+        {Object.entries(someJson.syllabus || someJson).map(r => <Accordion title={replaceText(r[0])} content={r[1]} path={"syllabus/" + r[0]}/>)}
       </div>
     </>
   )
