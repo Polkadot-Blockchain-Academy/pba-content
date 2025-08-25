@@ -7,7 +7,7 @@ description: End to End Transaction Flow with a Light Client
 
 ---
 
-# Overview
+## Overview
 
 In this presentation we will cover the end to end flow of a transaction.
 
@@ -1809,14 +1809,6 @@ Most commonly this is `Signed(SomeAddess)`.
 
 ---
 
-# Extrinsic "Things"
-
-- Weight / Gas
-- Fees
--
-
----
-
 ## Function Execution
 
 Rust simply executing with the parameters passed in from the extrinsic.
@@ -1896,3 +1888,34 @@ Once all extrinsics are executed, and the new block has been constructed, it is 
 		}
 	}
 ```
+
+---
+
+## Finalization
+
+Block production (BABE/SAFROLE) is separated from finalization (GRANDPA), ensuring the network stays **live**, even when there are networking issues.
+
+<img style="width: 1000px" src="./img/grandpa.png"/>
+
+2/3 + 1 validators can finalize a chain of blocks.
+
+---
+
+## Final State Verification
+
+If there are any doubts about the after effects of your finalized transaction:
+
+- Using the block hash, you query the events emitted in that block.
+  - This is also a storage query.
+  - Look for `ExtrinsicSuccess` event for your extrinsic.
+- Look at the storage, and check that Alice and Bob has their balances updated.
+
+We again can use the `state_getReadProof` to be able to verify the state.
+
+#### Less trust, more truth!
+
+---
+
+<img width="400px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
+
+# Any questions?
