@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>Balance Management in FRAME</title>
+  <link rel="icon" href="./../../../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../../../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../../../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <header class="site-header">
+    <!-- This logo is a link only on the watching server, not the production build -->
+    <a href="">
+      <img style="height: 2.5vw;" class="watermark-logo" src="./../../../../assets/img/0-Shared/logo/pba-logo-white.svg"
+        alt="PBA Logo">
+    </a>
+  </header>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+# Balance Management in FRAME
+</script></section><section  data-markdown><script type="text/template">
+## Why?
+
+Working with balances is fundamental to blockchain development:
+
+- Every pallet interacts with tokens in some way
+- Common use-case: staking, voting, deposits
+- Critical to get right for security and correctness
+</script></section><section  data-markdown><script type="text/template">
+## Agenda
+
+<pba-flex center>
+
+1. Core concepts: Existential Deposit
+1. Core concepts: Holds vs Freezes
+1. The fungible trait
+1. Considerations
+1. Live Coding
+
+</pba-flex>
+</script></section><section  data-markdown><script type="text/template">
+## Why Existential Deposit
+
+- Account occupies some state in storage.
+- ED forces accounts to keep a minimum balance, or dusted.
+
+<br>
+
+What would happen if we do not enforce ED? <!-- .element: class="fragment" -->
+</script></section><section ><section data-markdown><script type="text/template">
+## What is Fungible?
+
+> An asset where each unit is interchangeable and has the same value as any other unit of the same kind.
+</script></section><section data-markdown><script type="text/template">
+## What is Fungible?
+
+The fungible traits in FRAME provide a safe, standardized way to handle balances in the pallet.
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Note on Legacy Code
+
+<pba-flex center>
+
+You might encounter these in older codebases:
+
+```rust
+use frame_support::traits::{Currency, ReservableCurrency, LockableCurrency};
+```
+
+</pba-flex>
+</script></section><section data-markdown><script type="text/template">
+## Note on Legacy Code
+
+<pba-flex center>
+
+These traits are deprecated. For new code:
+
+- Use the modern `fungible` traits
+- They provide better safety and clearer semantics
+- We'll focus exclusively on the modern approach
+
+</pba-flex>
+</script></section></section><section  data-markdown><script type="text/template">
+## Core Concepts: Balance Arithmetic
+
+<pba-flex center>
+
+```text
+┌─────────────────────────────────────┐
+│         Total Balance               │
+│  ┌─────────────┬─────────────────┐  │
+│  │   Free      │     Held        │  │
+│  │  Balance    │    Balance      │  │
+│  └─────────────┴─────────────────┘  │
+└─────────────────────────────────────┘
+
+Spendable = free - max(frozen - reserved, ED)
+```
+
+</pba-flex>
+
+<aside class="notes"><p><a href="https://wiki.polkadot.com/learn/learn-account-balances/">https://wiki.polkadot.com/learn/learn-account-balances/</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Mental Model
+
+- Holds are taken out of total balance
+- Freezes determine minimum total balance account needs.
+</script></section><section  data-markdown><script type="text/template">
+## Holds vs Freezes
+
+<pba-cols>
+<pba-col>
+
+### Holds 📌
+
+- **Stack** (cumulative)
+- **Slashable**
+- **Named reasons**
+- **Taken out of free balance**
+
+Use for:
+
+- Staking bonds
+- Storage deposits
+- Collateral
+
+</pba-col>
+<pba-col>
+
+### Freezes 🧊
+
+- **Overlap** (take maximum)
+- **Not slashable**
+- **Named reasons**
+- **Total balance cannot drop below this.**
+
+Use for:
+
+- Voting locks
+- Vesting schedules
+- Minimum balance requirements
+
+</pba-col>
+</pba-cols>
+</script></section><section ><section data-markdown><script type="text/template">
+## Scenarios
+
+1. 100 Free; No Hold or Freeze
+
+<img src="https://wiki.polkadot.com/assets/balance-example-1.png">
+
+<aside class="notes"><ul>
+<li>Free: 100 DOT</li>
+<li>Frozen (locked): 0 DOT</li>
+<li>Reserved (held): 0 DOT</li>
+<li>Spendable: 99 DOT</li>
+<li>Untouchable: 1 DOT (ED)</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Scenarios
+
+2. 60 Staked
+
+<img src="https://wiki.polkadot.com/assets/balance-example-2.png">
+
+<aside class="notes"><ul>
+<li>Free: 40 DOT</li>
+<li>Frozen (locked) : 0 DOT</li>
+<li>Reserved (held): 60 DOT</li>
+<li>Spendable: 39 DOT (Free - ED)</li>
+<li>Untouchable: 1 DOT (ED)</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Scenarios
+
+3. 20 Proxy Deposit
+
+<img src="https://wiki.polkadot.com/assets/balance-example-3.png">
+
+<aside class="notes"><ul>
+<li>Free: 100 DOT</li>
+<li>Frozen: 0 DOT</li>
+<li>Reserved (held): 0 DOT</li>
+<li>Spendable: 99 DOT</li>
+<li>Untouchable: 1 DOT (ED)</li>
+</ul>
+</aside></script></section><section data-markdown><script type="text/template">
+## Scenarios
+
+4. 20 Vote
+
+<img src="https://wiki.polkadot.com/assets/balance-example-4.png">
+
+<aside class="notes"><ul>
+<li>Free: 20 DOT</li>
+<li>Frozen (locked): 20 DOT</li>
+<li>Reserved (held): 80 DOT</li>
+<li>Spendable: 19 DOT (Free - ED)</li>
+<li>Untouchable: 1 DOT (ED)</li>
+</ul>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Live Coding
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../../../dist/reveal.js"></script>
+
+  <script src="./../../../../plugin/markdown/markdown.js"></script>
+  <script src="./../../../../plugin/highlight/highlight.js"></script>
+  <script src="./../../../../plugin/zoom/zoom.js"></script>
+  <script src="./../../../../plugin/notes/notes.js"></script>
+  <script src="./../../../../plugin/math/math.js"></script>
+
+  <script src="./../../../../assets/plugin/mermaid.js"></script>
+  <script src="./../../../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>
