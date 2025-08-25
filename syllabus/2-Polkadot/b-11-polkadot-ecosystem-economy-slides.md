@@ -240,7 +240,7 @@ RFC for Flexible Inflation: https://github.com/polkadot-fellows/RFCs/pull/89
 
 .. is an umbrella term!
 
-Blockspace is the capacity of a blockchain to finalize and commit operations. It represents a blockchain's security, computing, and storage capabilities as an end product. 
+Blockspace is the capacity of a blockchain to finalize and commit operations. It represents a blockchain's security, computing, and storage capabilities as an end product.
 
 Blockspace is not measured the same on any chain; there is no standard unit for blockspace. In Bitcoin, blockspace is based on transaction size, in Ethereum, on how much computation is used (gas), and in Polkadot, on how much time is taken to execute a task on a virtual core (coretime).
 
@@ -249,7 +249,7 @@ Blockspace is not measured the same on any chain; there is no standard unit for 
 ## Blockspace Properties
 
 - Flexibility: What can you do with blockspace? What can you store on the state?
-- Security: How easy is to revert that state of the chain? 
+- Security: How easy is to revert that state of the chain?
 - Availability: How easy is to get your hands on blockspace?
 
 ---
@@ -547,7 +547,6 @@ The conviction multiplier increases the vote multiplier by one every time the nu
 
 <br />
 
-
 - DOT tokens are frozen for votes.
 - You can reuse your frozen tokens across multiple proposals.
 - You can use reserved balance (staking) for voting.
@@ -759,7 +758,6 @@ https://substrate.io/ecosystem/projects/
 ---v
 
 ## MeWe
-
 
 <div>
 
