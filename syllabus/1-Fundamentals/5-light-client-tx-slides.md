@@ -1858,6 +1858,8 @@ This is also called **double encoding** because you simply encode any type one m
 
 ## Block Creation Runtime API
 
+<div class="text-small">
+
 There are a set of Runtime APIs specifically for **creating** a block, which allows you to apply and execute extrinsics one by one, allowing us to construct and calculate the results of a valid block.
 
 ```rust
@@ -1881,21 +1883,9 @@ There are a set of Runtime APIs specifically for **creating** a block, which all
 			data.check_extrinsics(&block)
 		}
 	}
-
-	impl sp_api::Core<Block> for Runtime {
-		fn version() -> RuntimeVersion {
-			VERSION
-		}
-
-		fn execute_block(block: Block) {
-			Executive::execute_block(block)
-		}
-
-		fn initialize_block(header: &<Block as BlockT>::Header) -> sp_runtime::ExtrinsicInclusionMode {
-			Executive::initialize_block(header)
-		}
-	}
 ```
+
+</div>
 
 ---
 
