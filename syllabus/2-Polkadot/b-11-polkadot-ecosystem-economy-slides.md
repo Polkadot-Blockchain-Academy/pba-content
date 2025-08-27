@@ -17,10 +17,6 @@ Unfortunately this presentation could never be fully exhaustive, but perhaps it 
 
 ---
 
-# Economy
-
----
-
 ## The DOT Token
 
 <div class="grid grid-cols-2">
