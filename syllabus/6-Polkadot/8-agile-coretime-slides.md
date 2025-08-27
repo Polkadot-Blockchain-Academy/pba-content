@@ -800,7 +800,7 @@ See that spike around 2021? Gas fees went from 20-30 to 700. Imagine you suddenl
 
 Renewals are a special sort of treatment for teams that value long-term stability extremely highly.
 
-If you don't interlace or split your coretime region and you fully utilize it then you can renew it for the same price you bought it for + small percentage (4% currently).
+If you don't interlace or split your coretime region and you fully utilize it then you can renew it for the same price you bought it for + small percentage (3% currently).
 
 ---v
 
