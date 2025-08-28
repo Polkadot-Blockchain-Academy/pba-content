@@ -493,8 +493,23 @@ Notes:
 
 ---
 
-## Additional Resources! 😋
+### Repository Structure
 
-> Check speaker notes (click "s" 😉)
+#### [`polkadot-sdk`](https://github.com/paritytech/polkadot-sdk)
 
-<img width="300px" rounded src="../../../assets/img/5-Substrate/thats_all_folks.png" />
+- Substrate + FRAME + XCM
+- Cumulus
+- Bridges
+- Polkadot Node
+
+**This is a big repo, please clone and run `cargo build` on it after this lecture**
+
+<br/>
+
+#### [`polkadot-fellowship/runtime`](https://github.com/polkadot-fellows/runtimes)
+
+- Polkadot Runtimes
+
+Notes:
+
+https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/polkadot_sdk/index.html
