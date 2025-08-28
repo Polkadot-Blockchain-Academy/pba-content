@@ -24,7 +24,7 @@ Working with balances is fundamental to blockchain development:
 
 1. Core concepts: Existential Deposit
 1. Core concepts: Holds vs Freezes
-1. The fungible trait
+1. Fungible traits
 1. Considerations
 1. Live Coding
 
@@ -152,68 +152,118 @@ Use for:
 
 ---
 
-## Scenarios
-
-1. 100 Free; No Hold or Freeze
-
-<img src="https://wiki.polkadot.com/assets/balance-example-1.png">
+## Examples
 
 Notes:
-
-- Free: 100 DOT
-- Frozen (locked): 0 DOT
-- Reserved (held): 0 DOT
-- Spendable: 99 DOT
-- Untouchable: 1 DOT (ED)
-
----v
-
-## Scenarios
-
-2. 60 Staked
-
-<img src="https://wiki.polkadot.com/assets/balance-example-2.png">
-
-Notes:
-
-- Free: 40 DOT
-- Frozen (locked) : 0 DOT
-- Reserved (held): 60 DOT
-- Spendable: 39 DOT (Free - ED)
-- Untouchable: 1 DOT (ED)
-
----v
-
-## Scenarios
-
-3. 20 Proxy Deposit
-
-<img src="https://wiki.polkadot.com/assets/balance-example-3.png">
-
-Notes:
-
-- Free: 100 DOT
-- Frozen: 0 DOT
-- Reserved (held): 0 DOT
-- Spendable: 99 DOT
-- Untouchable: 1 DOT (ED)
-
----v
-
-## Scenarios
-
-4. 20 Vote
-
-<img src="https://wiki.polkadot.com/assets/balance-example-4.png">
-
-Notes:
-
-- Free: 20 DOT
-- Frozen (locked): 20 DOT
-- Reserved (held): 80 DOT
-- Spendable: 19 DOT (Free - ED)
-- Untouchable: 1 DOT (ED)
+https://wiki.polkadot.com/learn/learn-account-balances/
+And PJS.
 
 ---
 
-## Live Coding
+## Providers & Consumers
+
+- Providers: Reasons this account SHOULD exist.
+  - Account has money (ED).
+  - Pot Account.
+- Consumers: Modules currently USING this account.
+  - Prevents accounts from being reaped until this is ZERO.
+
+---
+
+## Fungible::Inspect
+
+- Balance Inspection
+- Reducible Balance
+
+Notes:
+https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/regular.rs#L46
+
+---
+
+## Fungible::Mutate
+
+- Extends Inspect.
+- Mint
+- Transfer
+
+---
+
+## Fungible::InspectHold
+
+- Hold Inspection
+
+Notes:
+https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/hold.rs#L44
+
+---
+
+## Fungible::MutateHold
+
+- Allows placing a fungible asset on Hold.
+- Requires a named reason.
+
+---v
+
+## Fungible::MutateHold
+
+```rust
+#[pallet::composite_enum]
+	pub enum HoldReason {
+		/// Funds on stake by a nominator or a validator.
+		#[codec(index = 0)]
+		Staking,
+	}
+```
+
+Notes:
+https://paritytech.github.io/polkadot-sdk/master/frame_support/pallet_macros/attr.composite_enum.html
+
+---
+
+## Fungible::InspectFreeze
+
+---
+
+## Fungible::MutateFreeze
+
+---
+
+## Considerations
+
+> Some sort of cost taken from account temporarily in order to offset the cost to the chain of holding some data footprint in state.
+
+---v
+
+## Footprint
+
+- Number of blobs
+- Size of blobs
+
+Note:
+https://paritytech.github.io/polkadot-sdk/master/frame_support/traits/struct.Footprint.html
+
+---v
+
+## Footprint -> Balance
+
+- LinearStoragePrice
+- ConstantStoragePrice
+
+Notes:
+Implementations in substrate/frame/support/src/traits/storage.rs
+
+---
+
+## Consideration Trait
+
+- New
+- Update
+- Drop
+
+---
+
+## Example Usage
+
+- PreImage pallet
+
+---
