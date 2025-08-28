@@ -255,7 +255,40 @@ impl<T: Config> Pallet<T> {
 In this case, the weight function name is assumed to match the call name for all calls.
 
 <aside class="notes"><p><a href="https://github.com/paritytech/substrate/pull/13932">https://github.com/paritytech/substrate/pull/13932</a></p>
-</aside></script></section><section  data-markdown><script type="text/template">
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## Dev Mode
+
+```rust [1]
+#[frame_support::pallet(dev_mode)]
+pub mod pallet {
+    #[pallet::pallet]
+    pub struct Pallet<T>(_);
+
+    #[pallet::call]
+    impl<T: Config> Pallet<T> {
+        pub fn transfer(
+            origin: OriginFor<T>,
+            dest: AccountIdLookupOf<T>,
+            #[pallet::compact] value: T::Balance,
+        ) -> DispatchResult {
+            //...
+            Ok(())
+        }
+    }
+}
+```
+</script></section><section data-markdown><script type="text/template">
+## Dev Mode
+
+- NEVER use in production
+- Loosens some restrictions:
+  - No weight
+  - No call indices
+  - Unbounded Storage
+  - No Storage Hasher
+
+<aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/frame_support/attr.pallet.html#dev-mode-palletdev_mode">https://paritytech.github.io/polkadot-sdk/master/frame_support/attr.pallet.html#dev-mode-palletdev_mode</a></p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions

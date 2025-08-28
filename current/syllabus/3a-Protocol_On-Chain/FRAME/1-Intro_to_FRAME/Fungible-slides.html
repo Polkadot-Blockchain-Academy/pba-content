@@ -45,7 +45,7 @@ Working with balances is fundamental to blockchain development:
 
 1. Core concepts: Existential Deposit
 1. Core concepts: Holds vs Freezes
-1. The fungible trait
+1. Fungible traits
 1. Considerations
 1. Live Coding
 
@@ -153,65 +153,89 @@ Use for:
 
 </pba-col>
 </pba-cols>
-</script></section><section ><section data-markdown><script type="text/template">
-## Scenarios
+</script></section><section  data-markdown><script type="text/template">
+## Examples
 
-1. 100 Free; No Hold or Freeze
+<aside class="notes"><p><a href="https://wiki.polkadot.com/learn/learn-account-balances/">https://wiki.polkadot.com/learn/learn-account-balances/</a>
+And PJS.</p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Providers & Consumers
 
-<img src="https://wiki.polkadot.com/assets/balance-example-1.png">
+- Providers: Reasons this account SHOULD exist.
+  - Account has money (ED).
+  - Pot Account.
+- Consumers: Modules currently USING this account.
+  - Prevents accounts from being reaped until this is ZERO.
+</script></section><section  data-markdown><script type="text/template">
+## Fungible::Inspect
 
-<aside class="notes"><ul>
-<li>Free: 100 DOT</li>
-<li>Frozen (locked): 0 DOT</li>
-<li>Reserved (held): 0 DOT</li>
-<li>Spendable: 99 DOT</li>
-<li>Untouchable: 1 DOT (ED)</li>
-</ul>
-</aside></script></section><section data-markdown><script type="text/template">
-## Scenarios
+- Balance Inspection
+- Reducible Balance
 
-2. 60 Staked
+<aside class="notes"><p><a href="https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/regular.rs#L46">https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/regular.rs#L46</a></p>
+</aside></script></section><section  data-markdown><script type="text/template">
+## Fungible::Mutate
 
-<img src="https://wiki.polkadot.com/assets/balance-example-2.png">
+- Extends Inspect.
+- Mint
+- Transfer
+</script></section><section  data-markdown><script type="text/template">
+## Fungible::InspectHold
 
-<aside class="notes"><ul>
-<li>Free: 40 DOT</li>
-<li>Frozen (locked) : 0 DOT</li>
-<li>Reserved (held): 60 DOT</li>
-<li>Spendable: 39 DOT (Free - ED)</li>
-<li>Untouchable: 1 DOT (ED)</li>
-</ul>
-</aside></script></section><section data-markdown><script type="text/template">
-## Scenarios
+- Hold Inspection
 
-3. 20 Proxy Deposit
+<aside class="notes"><p><a href="https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/hold.rs#L44">https://github.com/paritytech/polkadot-sdk/blob/3dfbdf4a454f35238500779e503e1ec32ba7fc63/substrate/frame/support/src/traits/tokens/fungible/hold.rs#L44</a></p>
+</aside></script></section><section ><section data-markdown><script type="text/template">
+## Fungible::MutateHold
 
-<img src="https://wiki.polkadot.com/assets/balance-example-3.png">
+- Allows placing a fungible asset on Hold.
+- Requires a named reason.
+</script></section><section data-markdown><script type="text/template">
+## Fungible::MutateHold
 
-<aside class="notes"><ul>
-<li>Free: 100 DOT</li>
-<li>Frozen: 0 DOT</li>
-<li>Reserved (held): 0 DOT</li>
-<li>Spendable: 99 DOT</li>
-<li>Untouchable: 1 DOT (ED)</li>
-</ul>
-</aside></script></section><section data-markdown><script type="text/template">
-## Scenarios
+```rust
+#[pallet::composite_enum]
+	pub enum HoldReason {
+		/// Funds on stake by a nominator or a validator.
+		#[codec(index = 0)]
+		Staking,
+	}
+```
 
-4. 20 Vote
-
-<img src="https://wiki.polkadot.com/assets/balance-example-4.png">
-
-<aside class="notes"><ul>
-<li>Free: 20 DOT</li>
-<li>Frozen (locked): 20 DOT</li>
-<li>Reserved (held): 80 DOT</li>
-<li>Spendable: 19 DOT (Free - ED)</li>
-<li>Untouchable: 1 DOT (ED)</li>
-</ul>
+<aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/frame_support/pallet_macros/attr.composite_enum.html">https://paritytech.github.io/polkadot-sdk/master/frame_support/pallet_macros/attr.composite_enum.html</a></p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
-## Live Coding
-</script></section>
+## Fungible::InspectFreeze
+</script></section><section  data-markdown><script type="text/template">
+## Fungible::MutateFreeze
+</script></section><section ><section data-markdown><script type="text/template">
+## Considerations
+
+> Some sort of cost taken from account temporarily in order to offset the cost to the chain of holding some data footprint in state.
+</script></section><section data-markdown><script type="text/template">
+## Footprint
+
+- Number of blobs
+- Size of blobs
+
+<aside class="notes"><p><a href="https://paritytech.github.io/polkadot-sdk/master/frame_support/traits/struct.Footprint.html">https://paritytech.github.io/polkadot-sdk/master/frame_support/traits/struct.Footprint.html</a></p>
+</aside></script></section><section data-markdown><script type="text/template">
+## Footprint -> Balance
+
+- LinearStoragePrice
+- ConstantStoragePrice
+
+<aside class="notes"><p>Implementations in substrate/frame/support/src/traits/storage.rs</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+## Consideration Trait
+
+- New
+- Update
+- Drop
+</script></section><section  data-markdown><script type="text/template">
+## Example Usage
+
+- PreImage pallet
+</script></section><section  data-markdown><script type="text/template"></script></section>
     </article>
   </main>
 
