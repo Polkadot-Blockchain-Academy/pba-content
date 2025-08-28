@@ -31,7 +31,7 @@ A key concept that we will touch on over and over is the separation of the clien
 
 ## Substrate Architecture
 
-<img src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+<img src="../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
 
 ---
 
@@ -51,7 +51,7 @@ A key concept that we will touch on over and over is the separation of the clien
 
 <pba-col center>
 
-<img width="600px" src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+<img width="600px" src="../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
 
 </pba-col>
 </pba-cols>
@@ -73,7 +73,7 @@ A key concept that we will touch on over and over is the separation of the clien
 
 <pba-col center>
 
-<img width="600px" src="../../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
+<img width="600px" src="../../assets/img/5-Substrate/dev-4-1-substrate.svg" />
 
 </pba-col>
 
@@ -86,14 +86,14 @@ A key concept that we will touch on over and over is the separation of the clien
 <pba-cols>
 <pba-col>
 
-<img src="../../../assets/img/5-Substrate/nintendo-console-2.png" style="width:400px;" />
+<img src="../../assets/img/5-Substrate/nintendo-console-2.png" style="width:400px;" />
 
 Substrate Node: A Wasm Executor
 
 </pba-col>
 <pba-col>
 
-<img src="../../../assets/img/5-Substrate/nintendo-game.png" style="width:400px;" />
+<img src="../../assets/img/5-Substrate/nintendo-game.png" style="width:400px;" />
 
 Substrate's Runtime: A Wasm Blob
 
