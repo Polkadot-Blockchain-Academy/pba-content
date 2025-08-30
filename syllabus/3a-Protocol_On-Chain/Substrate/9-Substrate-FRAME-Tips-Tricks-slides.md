@@ -12,9 +12,18 @@ Notes:
 
 ---
 
-# Part 0 FRAMELess Assignment Retro
+# FRAMELess Assignment
 
----v
+- Solution.
+- Test.
+- Interaction via RPC.
+- Code Upgrade.
+
+---
+
+# Part 1: Best Practices in Rust
+
+---
 
 ## Formatter
 
@@ -68,7 +77,7 @@ if ext.function.tip.is_some() {
 
 ---
 
-# Part 1 Substrate Stuff
+# Part 2 Substrate Stuff
 
 ---
 
@@ -334,7 +343,7 @@ log::debug!(target: "bar", "hello world! ({})", 10u32);
 
 ### Logging And Prints In The Runtime.
 
-- But `log` crate doesn't doo much in itself! it needs two additional steps to work:
+- But `log` crate doesn't do much in itself! it needs two additional steps to work:
 
 1. `// $ RUST_LOG=foo=debug,bar=trace cargo run`
 2. `sp_tracing::try_init_simple()`
@@ -413,7 +422,7 @@ impl Mul<u32> for Percent {
 ```rust
 use sp_arithmetic::Perbill;
 
-let p = Perbill::from_part_parts(1_000_000_000u32 / 4);
+let p = Perbill::from_parts(1_000_000_000u32 / 4);
 let p = Perbill::from_percent(25);
 let p = Perbill::from_rational(1, 4);
 
@@ -601,7 +610,7 @@ T is u32 or larger.
 
 ---
 
-# Part 2: FRAME Stuff
+# Part 3: FRAME Stuff
 
 ---
 
