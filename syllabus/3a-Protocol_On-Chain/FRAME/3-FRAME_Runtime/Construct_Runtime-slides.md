@@ -15,6 +15,9 @@ instructors: ["Kian Paimani"]
 
 <img style="height: 600px" src="../../../../assets/img/6-FRAME/frame1.svg" />
 
+<img style="height: 60px; position: absolute; left: 56% " src="../../../../assets/icons/polkadot/line/Arrow Up.svg" />
+<!-- .element: class="fragment" -->
+
 ---
 
 ## Pallet <=> Runtime
@@ -28,12 +31,14 @@ A runtime is really ✌️ things:
 
 ### Pallet <=> Runtime
 
-We build a runtime, using `construct_runtime`|`#[runtime]`, typically twice:
+We build a runtime - using `construct_runtime!` XOR `#[runtime]` - typically twice:
 
 1. Per pallet, there is a mock runtime.
 2. A real runtime elsewhere.
 
 Note:
+
+Elsewhere meaning in a `runtime/lib.rs`.
 
 Benchmarking can then use both of these runtimes.
 
@@ -83,6 +88,9 @@ mod runtime {
 </div>
 </div>
 
+Note:
+Note the differences between the 2 versions, e.g. indices no longer being optional.
+
 ---v
 
 ### `Runtime` type
@@ -96,6 +104,9 @@ impl pallet_timestamp::Config for Runtime { .. }
 impl pallet_dpos::Config for Runtime { .. }
 ```
 
+Notes:
+Which means that the Runtime is configured at the type level at compile time.
+
 ---v
 
 ### `<T: Config>` ==> `Runtime`
@@ -103,7 +114,7 @@ impl pallet_dpos::Config for Runtime { .. }
 > Anywhere in your pallet code that you have `<T: Config>` can now be replaced with `Runtime`.
 
 ```rust[1-2|3-4|5-6]
-// a normal pub function defined in
+// a normal pub function defined in the pallet
 frame_system::Pallet::<Runtime>::block_number();
 // a storage getter of a map.
 frame_system::Pallet::<Runtime>::account(42u32);
@@ -361,6 +372,8 @@ impl pallet_template::Config for Runtime {
 
 <!-- .element: class="fragment" -->
 
+Note: `parameter_types` generates `impl Get for MyMaxVoters`
+
 ---v
 
 ### Testing: `Get<_>`
@@ -482,7 +495,7 @@ fn test_stuff() {
 
 ---
 
-## Testing: static `parameter_types!`
+## Testing: Adjustable `parameter_types!`
 
 - What if you want to change that `MyMaxVoters`?
 
@@ -502,6 +515,25 @@ MyMaxVoters::get();
 <!-- .element: class="fragment" -->
 
 </div>
+
+Note: This is _testing only_ and will create a static variable that you can adjust for your tests.
+
+---v
+
+## Testing: Adjustable `parameter_types!`
+
+```rust
+parameter_types! {
+  pub storage MyMaxVoters: u32 = 100;
+}
+```
+
+```rust
+MyMaxVoters::set(200);
+MyMaxVoters::get();
+```
+
+Note: This uses the given name as a storage key, so be careful with collisions!
 
 ---
 

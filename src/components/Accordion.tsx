@@ -20,8 +20,8 @@ export const Accordion = ({ title, content, path }: AccordionInterface) => {
       </div>
       {isActive && <div className="accordion-draw">{
         Object.entries(content).map(r => {
-          const text = replaceText(r[0])
-          if (Object.values(r[1])[0] === undefined) {
+          const text = typeof r[1] === 'string' ? r[1] : replaceText(r[0])
+          if (typeof r[1] === 'string') {
             return (
               <a href={path + "/" + r[0] + "-slides.html"}>
                 <div className="accordion-content">{text}</div>
