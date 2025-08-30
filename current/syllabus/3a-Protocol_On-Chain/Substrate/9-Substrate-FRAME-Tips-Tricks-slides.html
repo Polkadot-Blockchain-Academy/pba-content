@@ -35,9 +35,16 @@
 <li>A random collection of things that you should probably know about.</li>
 <li>These are relevant for coding in FRAME and Substrate.</li>
 </ul>
-</aside></script></section><section ><section data-markdown><script type="text/template">
-# Part 0 FRAMELess Assignment Retro
-</script></section><section data-markdown><script type="text/template">
+</aside></script></section><section  data-markdown><script type="text/template">
+# FRAMELess Assignment
+
+- Solution.
+- Test.
+- Interaction via RPC.
+- Code Upgrade.
+</script></section><section  data-markdown><script type="text/template">
+# Part 1: Best Practices in Rust
+</script></section><section ><section data-markdown><script type="text/template">
 ## Formatter
 
 `rustfmt` It is a good thing, please use it!
@@ -82,7 +89,7 @@ if ext.function.tip.is_some() {
 
 <!-- .element: class="fragment" -->
 </script></section></section><section  data-markdown><script type="text/template">
-# Part 1 Substrate Stuff
+# Part 2 Substrate Stuff
 </script></section><section ><section data-markdown><script type="text/template">
 ## `<Type as Trait>::AssociatedType`
 
@@ -305,7 +312,7 @@ log::debug!(target: "bar", "hello world! ({})", 10u32);
 </script></section><section data-markdown><script type="text/template">
 ### Logging And Prints In The Runtime.
 
-- But `log` crate doesn't doo much in itself! it needs two additional steps to work:
+- But `log` crate doesn't do much in itself! it needs two additional steps to work:
 
 1. `// $ RUST_LOG=foo=debug,bar=trace cargo run`
 2. `sp_tracing::try_init_simple()`
@@ -368,7 +375,7 @@ impl Mul<u32> for Percent {
 ```rust
 use sp_arithmetic::Perbill;
 
-let p = Perbill::from_part_parts(1_000_000_000u32 / 4);
+let p = Perbill::from_parts(1_000_000_000u32 / 4);
 let p = Perbill::from_percent(25);
 let p = Perbill::from_rational(1, 4);
 
@@ -526,7 +533,7 @@ T is u32 or larger.
 
 <!-- .element: class="fragment" -->
 </script></section></section><section  data-markdown><script type="text/template">
-# Part 2: FRAME Stuff
+# Part 3: FRAME Stuff
 </script></section><section ><section data-markdown><script type="text/template">
 ## `trait Get`
 
