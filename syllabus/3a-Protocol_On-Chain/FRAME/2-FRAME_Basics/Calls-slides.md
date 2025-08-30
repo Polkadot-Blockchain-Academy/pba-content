@@ -277,6 +277,44 @@ https://github.com/paritytech/substrate/pull/13932
 
 ---
 
+## Dev Mode
+
+```rust [1]
+#[frame_support::pallet(dev_mode)]
+pub mod pallet {
+    #[pallet::pallet]
+    pub struct Pallet<T>(_);
+
+    #[pallet::call]
+    impl<T: Config> Pallet<T> {
+        pub fn transfer(
+            origin: OriginFor<T>,
+            dest: AccountIdLookupOf<T>,
+            #[pallet::compact] value: T::Balance,
+        ) -> DispatchResult {
+            //...
+            Ok(())
+        }
+    }
+}
+```
+
+---v
+
+## Dev Mode
+
+- NEVER use in production
+- Loosens some restrictions:
+  - No weight
+  - No call indices
+  - Unbounded Storage
+  - No Storage Hasher
+
+Notes:
+https://paritytech.github.io/polkadot-sdk/master/frame_support/attr.pallet.html#dev-mode-palletdev_mode
+
+---
+
 <!-- .slide: data-background-color="#4A2439" -->
 
 # Questions

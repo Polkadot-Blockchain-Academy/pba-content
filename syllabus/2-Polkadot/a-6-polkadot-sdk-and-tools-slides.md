@@ -23,7 +23,7 @@ https://polkadot.com/
 
 # Polkadot SDK
 
-<img style="height: 400px;" src="../../assets/img/0-shared/intro-polkadot-sdk-1.png" />
+<img style="height: 400px;" src="./img/intro-polkadot-sdk-1.png" />
 
 Repo: https://github.com/paritytech/polkadot-sdk
 
