@@ -126,8 +126,8 @@ async function generatePDFWithPlaywright(browser, slideFile, port) {
     const context = await browser.newContext();
     const page = await context.newPage();
     
-    // Navigate to the presentation with print-pdf parameter
-    const url = `http://localhost:${port}/${slideFile}?print-pdf`;
+    // Navigate to the presentation with print-pdf and showNotes parameters
+    const url = `http://localhost:${port}/${slideFile}?print-pdf&showNotes=separate-page`;
     
     await page.goto(url, {
       waitUntil: 'networkidle',
@@ -140,24 +140,64 @@ async function generatePDFWithPlaywright(browser, slideFile, port) {
     // Wait a bit more for all content to render
     await page.waitForTimeout(3000);
     
-    // Check if slides are in print mode
-    const isPrintMode = await page.evaluate(() => {
-      const reveal = document.querySelector('.reveal');
-      return reveal && reveal.classList.contains('print-pdf');
+    // Configure reveal.js for better PDF output with speaker notes
+    await page.evaluate(() => {
+      if (window.Reveal) {
+        window.Reveal.configure({ 
+          pdfMaxPagesPerSlide: 1,
+          pdfSeparateFragments: false,
+          showNotes: 'separate-page', // Include speaker notes on separate pages
+          controls: false,
+          progress: false,
+          center: true
+        });
+        
+        // Remove any overlay elements that might obscure content
+        const overlays = document.querySelectorAll('.reveal .overlay, .reveal .pause-overlay');
+        overlays.forEach(el => el.style.display = 'none');
+        
+        // Fix any absolute positioned elements that might create rectangles
+        const controls = document.querySelector('.reveal .controls');
+        if (controls) controls.style.display = 'none';
+        
+        const progressBar = document.querySelector('.reveal .progress');
+        if (progressBar) progressBar.style.display = 'none';
+      }
     });
     
-    if (!isPrintMode) {
-      // Try to trigger print mode manually
-      await page.evaluate(() => {
-        if (window.Reveal) {
-          window.Reveal.configure({ 
-            pdfMaxPagesPerSlide: 1,
-            pdfSeparateFragments: false
-          });
+    await page.waitForTimeout(2000);
+    
+    // Add CSS to ensure clean PDF output
+    await page.addStyleTag({
+      content: `
+        @media print {
+          .reveal .controls,
+          .reveal .progress,
+          .reveal .playback,
+          .reveal .pause-overlay,
+          .reveal .overlay {
+            display: none !important;
+          }
+          
+          /* Ensure speaker notes are visible */
+          .reveal .speaker-notes {
+            display: block !important;
+            page-break-before: always;
+          }
+          
+          /* Fix any rectangles/overlays */
+          .reveal .slide-background {
+            background: white !important;
+          }
+          
+          /* Ensure code blocks are properly visible */
+          .reveal pre {
+            box-shadow: none !important;
+            border: 1px solid #ddd !important;
+          }
         }
-      });
-      await page.waitForTimeout(2000);
-    }
+      `
+    });
     
     // Generate PDF with proper settings
     await page.pdf({
@@ -170,7 +210,8 @@ async function generatePDFWithPlaywright(browser, slideFile, port) {
         left: '10mm',
         right: '10mm'
       },
-      preferCSSPageSize: false // Use our format instead of CSS page size
+      preferCSSPageSize: false, // Use our format instead of CSS page size
+      displayHeaderFooter: false
     });
     
     await context.close();
