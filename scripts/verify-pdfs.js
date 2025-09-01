@@ -56,13 +56,14 @@ async function extractPDFText(pdfPath) {
 
 // Extract text from web presentation
 async function extractWebText(browser, slideFile, port) {
+  let page = null;
   try {
-    const page = await browser.newPage();
+    page = await browser.newPage();
     const url = `http://localhost:${port}/${slideFile}`;
     
     await page.goto(url, {
       waitUntil: 'networkidle',
-      timeout: 30000
+      timeout: 60000
     });
     
     // Wait for reveal.js to load
@@ -108,6 +109,13 @@ async function extractWebText(browser, slideFile, port) {
     };
   } catch (error) {
     logError(`Failed to extract web content: ${error.message}`);
+    if (page) {
+      try {
+        await page.close();
+      } catch (e) {
+        // Page already closed
+      }
+    }
     return null;
   }
 }
@@ -223,7 +231,7 @@ async function verifyPDFs() {
   });
   logSuccess('Server started');
   
-  const browser = await chromium.launch({ headless: true });
+  let browser = await chromium.launch({ headless: true });
   logSuccess('Browser launched');
   
   log('');
@@ -232,8 +240,33 @@ async function verifyPDFs() {
   
   const results = [];
   const sampleSize = pdfFiles.length; // Check ALL PDFs
+  const BATCH_SIZE = 10; // Process in batches to avoid resource exhaustion
+  let filesProcessed = 0;
   
   for (let i = 0; i < sampleSize; i++) {
+    // Check if browser is still connected, restart if needed
+    if (!browser.isConnected()) {
+      logWarning('Browser disconnected, restarting...');
+      try {
+        browser = await chromium.launch({ headless: true });
+        logSuccess('Browser restarted');
+      } catch (error) {
+        logError(`Failed to restart browser: ${error.message}`);
+        break;
+      }
+    }
+    
+    // Restart browser every BATCH_SIZE files to prevent memory issues
+    if (filesProcessed > 0 && filesProcessed % BATCH_SIZE === 0) {
+      logInfo(`Processed ${filesProcessed} files, restarting browser to free memory...`);
+      try {
+        await browser.close();
+        browser = await chromium.launch({ headless: true });
+        logSuccess('Browser restarted');
+      } catch (error) {
+        logWarning(`Failed to restart browser: ${error.message}`);
+      }
+    }
     const pdfPath = pdfFiles[i];
     const slideFile = slideFiles.find(slide => {
       const relativePath = path.relative('syllabus', slide);
@@ -246,9 +279,31 @@ async function verifyPDFs() {
     const relativePath = path.relative('syllabus', slideFile);
     log(`Verifying: ${relativePath}`, 'cyan');
     
-    // Extract content
-    const pdfData = await extractPDFText(pdfPath);
-    const webData = await extractWebText(browser, slideFile, PORT);
+    // Extract content with timeout protection
+    let pdfData = null;
+    let webData = null;
+    
+    try {
+      pdfData = await extractPDFText(pdfPath);
+    } catch (error) {
+      logError(`Failed to extract PDF content: ${error.message}`);
+    }
+    
+    try {
+      // Add per-file timeout
+      const webDataPromise = extractWebText(browser, slideFile, PORT);
+      const timeoutPromise = new Promise((resolve) => {
+        setTimeout(() => resolve(null), 45000); // 45 second timeout per file
+      });
+      
+      webData = await Promise.race([webDataPromise, timeoutPromise]);
+      
+      if (webData === null) {
+        logWarning('Web content extraction timed out');
+      }
+    } catch (error) {
+      logError(`Failed to extract web content: ${error.message}`);
+    }
     
     // Compare
     const result = compareContent(pdfData, webData, relativePath);
@@ -266,11 +321,24 @@ async function verifyPDFs() {
         log(`    - ${issue}`, 'yellow');
       });
     }
+    
+    filesProcessed++;
   }
   
   // Cleanup
-  await browser.close();
-  server.kill();
+  try {
+    if (browser && browser.isConnected()) {
+      await browser.close();
+    }
+  } catch (error) {
+    logWarning(`Failed to close browser: ${error.message}`);
+  }
+  
+  try {
+    server.kill();
+  } catch (error) {
+    logWarning(`Failed to stop server: ${error.message}`);
+  }
   
   // Summary
   log('');

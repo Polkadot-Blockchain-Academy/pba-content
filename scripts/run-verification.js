@@ -29,7 +29,7 @@ function runVerification() {
         verifyProcess.kill('SIGKILL');
         resolve(1);
       }, 5000);
-    }, 120000); // 2 minute timeout
+    }, 600000); // 10 minute timeout
 
     // Clear timeout if process exits normally
     verifyProcess.on('exit', () => {
