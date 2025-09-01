@@ -135,3 +135,10 @@ yarn remove-notes <module> # Remove speaker notes from slides (e.g., yarn remove
 - Prettier formatting enforced via CI
 - Link checking in CI using markdown-link-check
 - Repository supports both local development and static deployment
+
+## Known Issues & Solutions
+### PDF Verification Timeouts
+- The verification script has a 10-minute timeout (600 seconds) in `scripts/run-verification.js`
+- Browser restarts every 10 files to prevent memory exhaustion
+- Individual file verification has a 45-second timeout to prevent hanging
+- If verification fails with "Target page, context or browser has been closed", the browser likely crashed or timed out
