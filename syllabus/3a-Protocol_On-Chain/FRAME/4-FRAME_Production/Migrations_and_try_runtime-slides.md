@@ -17,9 +17,9 @@ teaching-assistants: [".."]
 
 ### _At the end of this lecture, you will be able to:_
 
-- Justify when runtime migrations are needed.
-- Write a the full a runtime upgrade that includes migrations, end-to-end.
-- Test runtime upgrades before executing on a network using `try-runtime` and `remote-externalities`.
+- WHEN: runtime migrations are needed.
+- HOW: to write a runtime migration, end-to-end.
+- VERIFY: Test your runtime upgrades with `try-runtime` and `remote-externalities`.
 
 ---
 
