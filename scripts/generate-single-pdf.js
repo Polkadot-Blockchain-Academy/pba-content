@@ -79,21 +79,20 @@ async function generatePDF() {
             display: none !important;
           }
           
-          /* Ensure speaker notes are visible */
+          /* Ensure speaker notes are visible with proper styling */
           .reveal .speaker-notes {
             display: block !important;
             page-break-before: always;
-          }
-          
-          /* Fix any rectangles/overlays */
-          .reveal .slide-background {
             background: white !important;
+            color: black !important;
           }
           
-          /* Ensure code blocks are properly visible */
+          /* Keep original slide backgrounds - DO NOT FORCE WHITE */
+          /* The slides have dark backgrounds with light text by design */
+          
+          /* Remove shadows from code blocks but keep original colors */
           .reveal pre {
             box-shadow: none !important;
-            border: 1px solid #ddd !important;
           }
         }
       `
