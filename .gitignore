@@ -81,3 +81,9 @@ dist-ssr
 *.sw?
 
 src/syllabus.json
+
+# Generated PDFs
+pdfs/
+pdfs-test/
+test-*.pdf
+pdf-generation.log
