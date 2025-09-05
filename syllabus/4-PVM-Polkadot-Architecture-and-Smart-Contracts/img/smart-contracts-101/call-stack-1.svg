@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200px" height="600px" viewBox="0 0 1200 600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Call types</title>
+
+    <defs>
+        <style>
+            .contract-text {
+                font-family: Helvetica, sans-serif;
+                font-size: 14px;
+                font-weight: bold;
+                fill: #ffffff;
+            }
+            .code-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                fill: #ffffff;
+            }
+            .title-text {
+                font-family: Helvetica, sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                fill: #ffffff;
+            }
+            .stack-frame {
+                fill: rgba(121, 22, 243, 0.8);
+                stroke: #7916F3;
+                stroke-width: 2;
+            }
+            .eoa-style {
+                fill: rgba(255, 165, 0, 0.8);
+                stroke: #FF8C00;
+                stroke-width: 2;
+            }
+            .arrow {
+                fill: #ffffff;
+                stroke: #ffffff;
+                stroke-width: 2;
+            }
+            .keyword {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: normal;
+                fill: #569cd6;
+            }
+            .type {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: normal;
+                fill: #4ec9b0;
+            }
+            .function {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: normal;
+                fill: #dcdcaa;
+            }
+            .comment {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: normal;
+                fill: #6a9955;
+                font-style: italic;
+            }
+            .bracket {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 12px;
+                font-weight: normal;
+                fill: #ffd700;
+            }
+        </style>
+    </defs>
+
+    <!-- Left side: Call Stack Visualization -->
+    <g id="call-stack">
+        <text x="150" y="70" class="title-text">Call Stack</text>
+
+        <!-- EOA (Externally Owned Account) -->
+        <rect x="50" y="100" width="300" height="60" rx="8" class="eoa-style"/>
+        <text x="60" y="120" class="contract-text">EOA (User Wallet)</text>
+        <text x="60" y="140" class="code-text">0x1234...5678</text>
+
+        <!-- Arrow from EOA to Contract A -->
+        <g class="arrow">
+            <path d="M200 160 L200 180" stroke-linecap="round"/>
+            <path d="M195 175 L200 180 L205 175" fill="#ffffff"/>
+            <text x="220" y="170" class="function">A.a()</text>
+        </g>
+
+        <!-- Contract A Stack Frame -->
+        <rect x="50" y="180" width="300" height="80" rx="8" class="stack-frame"/>
+        <text x="60" y="200" class="contract-text">Contract A</text>
+        <text x="60" y="215" class="code-text">0xaa...aa</text>
+        <text x="60" y="235" class="code-text">Context: msg.sender = 0x1234...5678</text>
+        <text x="60" y="250" class="code-text">Storage: A's storage</text>
+    </g>
+
+    <!-- Right side: Solidity Code -->
+    <g id="solidity-code">
+        <text x="700" y="70" class="title-text">Call types</text>
+
+        <!-- Contract A Code -->
+        <rect x="450" y="90" width="700" height="300" rx="8" fill="rgba(121, 22, 243, 0.2)" stroke="#7916F3" stroke-width="1"/>
+        <text x="470" y="110" class="title-text">Contract A</text>
+
+        <text x="470" y="140"><tspan class="keyword">contract</tspan><tspan class="code-text"> A </tspan><tspan class="bracket">{</tspan></text>
+        <text x="490" y="160"><tspan class="type">mapping</tspan><tspan class="bracket">(</tspan><tspan class="type">address</tspan><tspan class="code-text"> => </tspan><tspan class="type">uint256</tspan><tspan class="bracket">)</tspan><tspan class="keyword"> public</tspan><tspan class="code-text"> balances;</tspan></text>
+        <text x="470" y="180" class="code-text"></text>
+        <text x="490" y="200"><tspan class="keyword">function</tspan><tspan class="function"> a</tspan><tspan class="bracket">()</tspan><tspan class="keyword"> external</tspan><tspan class="bracket"> {</tspan></text>
+
+        <text x="510" y="220" class="comment">// Function a() logic here...</text>
+
+        <!-- Highlight call to B -->
+        <rect x="505" y="235" width="500" height="15" rx="2" fill="rgba(255, 255, 255, 0.3)"/>
+        <text x="510" y="245"><tspan class="function">B</tspan><tspan class="bracket">(</tspan><tspan class="type">address</tspan><tspan class="bracket">(</tspan><tspan class="code-text">0xbb...bb</tspan><tspan class="bracket">)).</tspan><tspan class="function">b</tspan><tspan class="bracket">();</tspan><tspan class="comment"> // Call to contract B</tspan></text>
+
+        <text x="490" y="265" class="bracket">}</text>
+        <text x="470" y="285" class="bracket">}</text>
+
+        <!-- Current State -->
+        <rect x="450" y="420" width="700" height="120" rx="8" fill="rgba(0, 0, 0, 0.3)" stroke="#555" stroke-width="1"/>
+        <text x="470" y="445" class="title-text">Current frame</text>
+        <text x="470" y="470" class="code-text">• msg.sender: 0x1234...5678 (EOA)</text>
+        <text x="470" y="490" class="code-text">• msg.value: 0 ETH</text>
+        <text x="470" y="510" class="code-text">• Storage context: Contract A</text>
+        <text x="470" y="530" class="code-text">• Call depth: 1</text>
+    </g>
+
+    <!-- Bottom comment -->
+    <text x="600" y="580" class="code-text" text-anchor="middle" font-style="italic" fill="#cccccc">User initiates a() call to Contract A</text>
+</svg>

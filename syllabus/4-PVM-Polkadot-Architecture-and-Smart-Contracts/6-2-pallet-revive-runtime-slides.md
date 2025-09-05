@@ -2,7 +2,7 @@
 title: pallet-revive architecture
 description: Architecture of the pallet-revive smart contract module
 duration: 30min
-url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
+url: http://localhost:1948/syllabus/4-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
 ---
 
 # pallet-revive architecture
@@ -92,11 +92,8 @@ Notes:
 
 ## pallet-revive Config
 
-```rust[0|32-48|69-87|104-122]
+```rust[0|26-30|32-107|109-131]
 pub trait Config: frame_system::Config {
-  /// The time implementation used to supply timestamps to contracts through `seal_now`.
-  type Time: Time;
-
   /// The fungible in which fees are paid and contract balances are held.
   type Currency: Inspect<Self::AccountId>
     + Mutate<Self::AccountId>
@@ -113,16 +110,25 @@ pub trait Config: frame_system::Config {
   /// Overarching hold reason.
   type RuntimeHoldReason: From<HoldReason>;
 
-  /// Used to answer contracts' queries regarding the current weight price. This is **not**
-  /// used to calculate the actual fee and is only for informational purposes.
-  type WeightPrice: Convert<Weight, BalanceOf<Self>>;
-
   /// Describes the weights of the dispatchables of this module and is also used to
   /// construct a default cost schedule.
   type WeightInfo: WeightInfo;
 
+  /// Used to answer contracts' queries regarding the current weight price. This is **not**
+  /// used to calculate the actual fee and is only for informational purposes.
+  type WeightPrice: Convert<Weight, BalanceOf<Self>>;
+
+  /// The time implementation used to supply timestamps to contracts through `seal_now`.
+  type Time: Time;
+
   /// Find the author of the current block.
   type FindAuthor: FindAuthor<Self::AccountId>;
+
+  /// Type that allows the runtime authors to add new host functions for a contract to call.
+  ///
+  /// Pass in a tuple of types that implement [`precompiles::Precompile`].
+  type Precompiles: precompiles::Precompiles<Self>;
+
 
   /// The amount of balance a caller has to pay for each byte of storage.
   ///
@@ -147,7 +153,6 @@ pub trait Config: frame_system::Config {
   /// abuse these actions are protected with a percentage of the code deposit.
   #[pallet::constant]
   type CodeHashLockupDepositPercent: Get<Perbill>;
-
 
   /// Make contract callable functions marked as `#[unstable]` available.
   ///
@@ -210,6 +215,10 @@ pub trait Config: frame_system::Config {
   /// The ratio between the decimal representation of the native token and the ETH token.
   #[pallet::constant]
   type NativeToEthRatio: Get<u32>;
+
+  /// Allow EVM bytecode to be uploaded and instantiated.
+  #[pallet::constant]
+  type AllowEVMBytecode: Get<bool>;
 
   /// Encode and decode Ethereum gas values.
   /// Only valid value is `()`. See [`GasEncoder`].
@@ -375,7 +384,7 @@ In this section we will highlight some of the key differences between Substrate 
 
 > ‼️ The transaction hash is a unique identifier on Ethereum not Substrate
 
----
+---v
 
 ## 1. Transaction hashes
 
@@ -458,7 +467,7 @@ In pallet-revive, the code is uploaded and stored on-chain
 - The immutable variables are stored in a pallet storage map and read when the contract is called.
 - Multiple contracts can be instantiated by referencing the same code hash.
 
----
+---v
 
 ## 3. Code deployment (pallet-revive)
 
@@ -639,7 +648,7 @@ Notes:
 
 Limits might be increased in the future. To guarantee existing contracts working as expected we will _never decrease_ the limits.
 
----
+---v
 
 ## 7. Gas estimation and encoding in lower digits
 
@@ -667,3 +676,7 @@ This what the `EthGasEncoder` trait does, it encode and decode the gas values in
 The only valid value here is the unit `()` where the trait is implemented. We could very well not add it to the config,
 but adding it here make it easier to use, without clutttering the call site where it is used with extra implementation
 bound
+
+---
+
+# Questions?
