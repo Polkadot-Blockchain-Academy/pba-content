@@ -208,7 +208,6 @@ pub trait Config: frame_system::Config {
   #[pallet::constant]
   type ChainId: Get<u64>;
 
-  /// Use either valid type is [`address::AccountId32Mapper`] or [`address::H160Mapper`].
   #[pallet::no_default]
   type AddressMapper: AddressMapper<Self>;
 
@@ -539,7 +538,6 @@ Everything that is executed in the VM expect a 20 bytes address, we need to map 
 #[frame_support::pallet]
 pub mod pallet {
   pub trait Config: frame_system::Config {
-    /// Use either valid type is [`address::AccountId32Mapper`] or [`address::H160Mapper`].
     #[pallet::no_default]
     type AddressMapper: AddressMapper<Self>;
     // ...
@@ -636,13 +634,13 @@ is that these limits can be too constraining, but this is something that we will
 
 | Limit                                      | Maximum           |
 | ------------------------------------------ | ----------------- |
-| Call stack depth                           | 5                 |
+| Call stack depth                           | 25                |
 | Event topics                               | 4                 |
 | Event data payload size (including topics) | 416 bytes         |
 | Storage value size                         | 416 bytes         |
 | Transient storage variables                | 128 `uint` values |
 | Immutable variables                        | 16 `uint` values  |
-| Contract code blob size                    | ~100 kilobytes    |
+| Contract code blob size                    | 1MiB              |
 
 Notes:
 

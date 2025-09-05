@@ -1,163 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="1200px" height="600px" viewBox="0 0 1200 600" version="1.1" xmlns="http://www.w3.org/2000/svg">
     <title>Call types</title>
-    
-    <defs>
-        <style>
-            .contract-text {
-                font-family: Helvetica, sans-serif;
-                font-size: 14px;
-                font-weight: bold;
-                fill: #ffffff;
-            }
-            .code-text {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
-                fill: #ffffff;
-            }
-            .title-text {
-                font-family: Helvetica, sans-serif;
-                font-size: 18px;
-                font-weight: bold;
-                fill: #ffffff;
-            }
-            .stack-frame {
-                fill: rgba(121, 22, 243, 0.8);
-                stroke: #7916F3;
-                stroke-width: 2;
-            }
-            .delegate-frame {
-                fill: rgba(121, 22, 243, 0.8);
-                stroke: #7916F3;
-                stroke-width: 2;
-            }
-            .eoa-style {
-                fill: rgba(255, 165, 0, 0.8);
-                stroke: #FF8C00;
-                stroke-width: 2;
-            }
-            .arrow {
-                fill: #ffffff;
-                stroke: #ffffff;
-                stroke-width: 2;
-            }
-            .keyword {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
-                font-weight: normal;
-                fill: #569cd6;
-            }
-            .type {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
-                font-weight: normal;
-                fill: #4ec9b0;
-            }
-            .function {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
-                font-weight: normal;
-                fill: #dcdcaa;
-            }
-            .comment {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
-                font-weight: normal;
-                fill: #6a9955;
-                font-style: italic;
-            }
-            .bracket {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: 12px;
-                font-weight: normal;
-                fill: #ffd700;
-            }
-        </style>
-    </defs>
 
     
     <!-- Left side: Call Stack Visualization -->
     <g id="call-stack">
-        <text x="150" y="70" class="title-text">Call Stack</text>
+        <text x="150" y="70" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Call Stack</text>
         
         <!-- EOA (Externally Owned Account) -->
-        <rect x="50" y="100" width="300" height="60" rx="8" class="eoa-style"/>
-        <text x="60" y="120" class="contract-text">EOA (User Wallet)</text>
-        <text x="60" y="140" class="code-text">0x1234...5678</text>
+        <rect x="50" y="100" width="300" height="60" rx="8" fill="#FFA500" fill-opacity="0.8" stroke="#FF8C00" stroke-width="2"/>
+        <text x="60" y="120" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">EOA (User Wallet)</text>
+        <text x="60" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0x1234...5678</text>
         
         <!-- Arrow from EOA to Contract A -->
-        <g class="arrow">
-            <path d="M200 160 L200 180" stroke-linecap="round"/>
+        <g>
+            <path d="M200 163 L200 180" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
             <path d="M195 175 L200 180 L205 175" fill="#ffffff"/>
-            <text x="220" y="170" class="function">A.a()</text>
         </g>
         
         <!-- Contract A Stack Frame -->
-        <rect x="50" y="180" width="300" height="70" rx="8" class="stack-frame" fill="rgba(121, 22, 243, 0.3)"/>
-        <text x="60" y="200" class="contract-text">Contract A</text>
-        <text x="60" y="215" class="code-text">0xaabb...ccdd</text>
-        <text x="60" y="235" class="code-text">Context: msg.sender = EOA, Storage: A's</text>
+        <rect x="50" y="183" width="300" height="80" rx="8" fill="#7916F3" fill-opacity="0.3" stroke="#7916F3" stroke-width="2"/>
+        <text x="60" y="203" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Contract A</text>
+        <text x="60" y="218" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0x0...0a</text>
+        <text x="60" y="238" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Context: msg.sender = 0x1234...5678</text>
+        <text x="60" y="253" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Storage: A's storage</text>
         
         <!-- Arrow from Contract A to Contract B -->
-        <g class="arrow">
-            <path d="M200 250 L200 270" stroke-linecap="round"/>
-            <path d="M195 265 L200 270 L205 265" fill="#ffffff"/>
-            <text x="220" y="265" class="function">B.b()</text>
+        <g>
+            <path d="M200 266 L200 283" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M195 278 L200 283 L205 278" fill="#ffffff"/>
         </g>
         
         <!-- Contract B Stack Frame -->
-        <rect x="50" y="270" width="300" height="70" rx="8" class="stack-frame" fill="rgba(121, 22, 243, 0.4)"/>
-        <text x="60" y="290" class="contract-text">Contract B</text>
-        <text x="60" y="305" class="code-text">0xffee...ddcc</text>
-        <text x="60" y="325" class="code-text">Context: msg.sender = A, Storage: B's</text>
+        <rect x="50" y="286" width="300" height="80" rx="8" fill="#7916F3" fill-opacity="0.4" stroke="#7916F3" stroke-width="2"/>
+        <text x="60" y="306" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Contract B</text>
+        <text x="60" y="321" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0x0...0b</text>
+        <text x="60" y="341" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Context: msg.sender = Contract A</text>
+        <text x="60" y="356" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Storage: B's storage</text>
         
         <!-- Arrow from Contract B to Contract C (delegate) -->
-        <g class="arrow">
-            <path d="M200 350 L200 380" stroke-linecap="round"/>
-            <path d="M195 375 L200 380 L205 375" fill="#ffffff"/>
-            <text x="220" y="365" class="function">delegatecall(C)</text>
+        <g>
+            <path d="M200 369 L200 386" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M195 381 L200 386 L205 381" fill="#ffffff"/>
         </g>
         
         <!-- Contract C Delegate Frame (SAME CONTEXT as B) -->
-        <rect x="50" y="390" width="300" height="80" rx="8" class="delegate-frame"/>
-        <text x="60" y="410" class="contract-text">Contract C - Library</text>
-        <text x="60" y="425" class="code-text">0x1111...2222 (code address)</text>
-        <text x="60" y="440" class="code-text">Context: msg.sender = A (preserved!)</text>
-        <text x="60" y="455" class="code-text">Storage: B's storage (shared!)</text>
+        <rect x="50" y="389" width="300" height="80" rx="8" fill="#7916F3" fill-opacity="0.8" stroke="#7916F3" stroke-width="2"/>
+        <text x="60" y="409" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Contract C</text>
+        <text x="60" y="424" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0x0...0c (code address)</text>
+        <text x="60" y="444" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Context: msg.sender = A (preserved!)</text>
+        <text x="60" y="459" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Storage: B's storage (shared!)</text>
     </g>
     
     <!-- Right side: Solidity Code -->
     <g id="solidity-code">
-        <text x="700" y="70" class="title-text">Call types</text>
+        <text x="700" y="70" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Call types</text>
         
         <!-- Contract C Code (currently executing via delegate call) -->
-        <rect x="450" y="90" width="700" height="300" rx="8" fill="rgba(121, 22, 243, 0.2)" stroke="#7916F3" stroke-width="1"/>
-        <text x="470" y="125" class="title-text">abstract contract C - Library</text>
+        <rect x="450" y="90" width="700" height="300" rx="8" fill="#7916F3" fill-opacity="0.2" stroke="#7916F3" stroke-width="1"/>
+        <text x="459" y="110" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Contract C</text>
         
-        <text x="480" y="155"><tspan class="keyword">abstract contract</tspan><tspan class="code-text"> C </tspan><tspan class="bracket">{</tspan></text>
-        <text x="500" y="175" class="comment">// This library function executes in B's context</text>
-        <text x="480" y="195" class="code-text"></text>
-        <text x="500" y="215"><tspan class="keyword">function</tspan><tspan class="function"> calculateHash</tspan><tspan class="bracket">(</tspan><tspan class="type">bytes memory</tspan><tspan class="code-text"> data</tspan><tspan class="bracket">)</tspan><tspan class="keyword"> external</tspan><tspan class="bracket"> {</tspan></text>
+        <text x="459" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">contract</text>
+        <text x="521" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff"> C </text>
+        <text x="544" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">{</text>
+        <text x="490" y="160" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic">// This library function executes in B's context</text>
+        <text x="490" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">function</text>
+        <text x="562" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa"> c</text>
+        <text x="578" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">()</text>
+        <text x="602" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6"> external</text>
+        <text x="674" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700"> {</text>
         
-        <!-- Highlight current execution -->
-        <rect x="515" y="230" width="450" height="15" rx="2" fill="rgba(255, 255, 255, 0.3)"/>
-        <text x="520" y="240" class="comment">// This modifies Contract B's storage!</text>
-        
-        <text x="520" y="260"><tspan class="type">bytes32</tspan><tspan class="code-text"> hash = </tspan><tspan class="function">keccak256</tspan><tspan class="bracket">(</tspan><tspan class="code-text">data</tspan><tspan class="bracket">);</tspan></text>
-        <text x="520" y="280" class="comment">// B's storage variables are modified</text>
-        <text x="520" y="300"><tspan class="code-text">data = hash;</tspan><tspan class="comment"> // B's data variable</tspan></text>
-        <text x="500" y="320" class="bracket">}</text>
-        <text x="480" y="340" class="bracket">}</text>
+        <text x="499" y="220" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic">// Function c() logic here...</text>
+
+        <text x="479" y="300" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
+        <text x="459" y="320" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
         
         <!-- Current State -->
-        <rect x="450" y="480" width="700" height="120" rx="8" fill="rgba(0, 0, 0, 0.3)" stroke="#555" stroke-width="1"/>
-        <text x="480" y="510" class="title-text">Current frame (Delegate Call)</text>
-        <text x="480" y="535" class="code-text">• msg.sender: 0xaabb...ccdd (Contract A - preserved!)</text>
-        <text x="480" y="555" class="code-text">• msg.value: Original value (preserved!)</text>
-        <text x="480" y="575" class="code-text">• Storage context: Contract B (C modifies B's storage!)</text>
-        <text x="480" y="595" class="code-text">• Call depth: 3 (executing C's code in B's context)</text>
+        <rect x="450" y="420" width="700" height="120" rx="8" fill="#000000" fill-opacity="0.3" stroke="#555555" stroke-width="1"/>
+        <text x="459" y="445" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Current frame (Delegate Call)</text>
+        <text x="459" y="470" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• msg.sender: 0x0...0a (Contract A - preserved!)</text>
+        <text x="459" y="490" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• msg.value: Original value (preserved!)</text>
+        <text x="459" y="510" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• Storage context: Contract B (C modifies B's storage!)</text>
+        <text x="459" y="530" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• Call depth: 3 (executing C's code in B's context)</text>
     </g>
     
     <!-- Bottom comment -->
-    <text x="600" y="580" class="code-text" text-anchor="middle" font-style="italic" fill="#cccccc">Contract B makes delegate call to Contract C - C's code executes in B's storage context</text>
+    <text x="600" y="580" font-family="JetBrains Mono, Courier, monospace" font-size="12" text-anchor="middle" font-style="italic" fill="#cccccc">Contract B makes delegate call to Contract C - C's code executes in B's storage context</text>
 </svg>

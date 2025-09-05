@@ -13,17 +13,16 @@
 
         <!-- Arrow from EOA to Contract A -->
         <g>
-            <path d="M200 160 L200 180" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M200 163 L200 180" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
             <path d="M195 175 L200 180 L205 175" fill="#ffffff"/>
-            <text x="220" y="170" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa">A.a()</text>
         </g>
 
         <!-- Contract A Stack Frame -->
-        <rect x="50" y="180" width="300" height="80" rx="8" fill="#7916F3" fill-opacity="0.8" stroke="#7916F3" stroke-width="2"/>
-        <text x="60" y="200" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Contract A</text>
-        <text x="60" y="215" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0xaa...aa</text>
-        <text x="60" y="235" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Context: msg.sender = 0x1234...5678</text>
-        <text x="60" y="250" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Storage: A's storage</text>
+        <rect x="50" y="183" width="300" height="80" rx="8" fill="#7916F3" fill-opacity="0.8" stroke="#7916F3" stroke-width="2"/>
+        <text x="60" y="203" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Contract A</text>
+        <text x="60" y="218" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0x0...0a</text>
+        <text x="60" y="238" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Context: msg.sender = 0x1234...5678</text>
+        <text x="60" y="253" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Storage: A's storage</text>
     </g>
 
     <!-- Right side: Solidity Code -->
@@ -32,44 +31,44 @@
 
         <!-- Contract A Code -->
         <rect x="450" y="90" width="700" height="300" rx="8" fill="#7916F3" fill-opacity="0.2" stroke="#7916F3" stroke-width="1"/>
-        <text x="470" y="110" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Contract A</text>
+        <text x="459" y="110" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Contract A</text>
 
-        <text x="470" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">contract</text>
-        <text x="532" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff"> A </text>
-        <text x="555" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">{</text>
-        <text x="490" y="160" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#4ec9b0">mapping(address => uint256)</text>
-        <text x="718" y="160" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6"> public</text>
-        <text x="778" y="160" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff"> balances;</text>
-        <text x="490" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">function</text>
-        <text x="562" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa"> a</text>
-        <text x="578" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">()</text>
-        <text x="602" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6"> external</text>
-        <text x="674" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700"> {</text>
+        <text x="459" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">contract</text>
+        <text x="521" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff"> A </text>
+        <text x="544" y="140" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">{</text>
+        <text x="479" y="160" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#4ec9b0">mapping(address => uint256)</text>
+        <text x="707" y="160" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6"> public</text>
+        <text x="767" y="160" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff"> balances;</text>
+        <text x="479" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">function</text>
+        <text x="551" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa"> a</text>
+        <text x="567" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">()</text>
+        <text x="591" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6"> external</text>
+        <text x="663" y="200" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700"> {</text>
 
-        <text x="510" y="220" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic">// Function a() logic here...</text>
+        <text x="499" y="220" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic">// Function a() logic here...</text>
 
         <!-- Highlight call to B -->
-        <rect x="505" y="235" width="500" height="15" rx="2" fill="#ffffff" fill-opacity="0.3"/>
-        <text x="510" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa">B</text>
-        <text x="522" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">(</text>
-        <text x="530" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#4ec9b0">address</text>
-        <text x="582" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">(</text>
-        <text x="590" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0xbb...bb</text>
-        <text x="658" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">)).</text>
-        <text x="682" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa">b</text>
-        <text x="694" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">();</text>
-        <text x="726" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic"> // Call to contract B</text>
+        <rect x="494" y="235" width="500" height="15" rx="2" fill="#ffffff" fill-opacity="0.3"/>
+        <text x="499" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa">B</text>
+        <text x="511" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">(</text>
+        <text x="519" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#4ec9b0">address</text>
+        <text x="571" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">(</text>
+        <text x="579" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0x0...0b</text>
+        <text x="639" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">)).</text>
+        <text x="663" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa">b</text>
+        <text x="675" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">();</text>
+        <text x="715" y="245" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic"> // Call to contract B</text>
 
-        <text x="490" y="265" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
-        <text x="470" y="285" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
+        <text x="479" y="265" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
+        <text x="459" y="285" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
 
         <!-- Current State -->
         <rect x="450" y="420" width="700" height="120" rx="8" fill="#000000" fill-opacity="0.3" stroke="#555555" stroke-width="1"/>
-        <text x="470" y="445" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Current frame</text>
-        <text x="470" y="470" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• msg.sender: 0x1234...5678 (EOA)</text>
-        <text x="470" y="490" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• msg.value: 0 ETH</text>
-        <text x="470" y="510" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• Storage context: Contract A</text>
-        <text x="470" y="530" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• Call depth: 1</text>
+        <text x="459" y="445" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff">Current frame</text>
+        <text x="459" y="470" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• msg.sender: 0x1234...5678 (EOA)</text>
+        <text x="459" y="490" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• msg.value: 0 ETH</text>
+        <text x="459" y="510" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• Storage context: Contract A</text>
+        <text x="459" y="530" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">• Call depth: 1</text>
     </g>
 
     <!-- Bottom comment -->
