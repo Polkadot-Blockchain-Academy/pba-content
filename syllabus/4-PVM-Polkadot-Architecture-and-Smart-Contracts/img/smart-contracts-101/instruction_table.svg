@@ -5,12 +5,12 @@
         <g id="instruction_table" fill-rule="nonzero">
             <g id="arithmetic-logic">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(21.7391, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(21.7391, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="Arithmetic">
                         <tspan x="0" y="15">Arithmetic</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(21.7391, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(21.7391, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="ADD,-SUB,-MUL,-DIV,…">
                         <tspan x="0" y="14">ADD, SUB, MUL, DIV,…</tspan>
                     </text>
@@ -18,12 +18,12 @@
             </g>
             <g id="arithmetic-logic-copy-3" transform="translate(262, 0)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="Contract">
                         <tspan x="0" y="15">Contract</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="CALL,-CREATE,-DELEGA">
                         <tspan x="0" y="14">CALL, CREATE, DELEGATECALL</tspan>
                     </text>
@@ -31,12 +31,12 @@
             </g>
             <g id="arithmetic-logic-copy-6" transform="translate(0, 184)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="Memory">
                         <tspan x="0" y="15">Memory</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="MLOAD,-MSTORE,-MSIZE">
                         <tspan x="0" y="14">MLOAD, MSTORE, MSIZE, …</tspan>
                     </text>
@@ -44,12 +44,12 @@
             </g>
             <g id="arithmetic-logic-copy-7" transform="translate(0, 276)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="Stack">
                         <tspan x="0" y="15">Stack</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="PUSH,-POP,-DUP,-SWAP">
                         <tspan x="0" y="14">PUSH, POP, DUP, SWAP, …</tspan>
                     </text>
@@ -57,12 +57,12 @@
             </g>
             <g id="arithmetic-logic-copy-8" transform="translate(524, 184)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="System">
                         <tspan x="0" y="15">System</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="ADDRESS,-CALLER,-…">
                         <tspan x="0" y="14">ADDRESS, CALLER, …</tspan>
                     </text>
@@ -70,12 +70,12 @@
             </g>
             <g id="arithmetic-logic-copy-9" transform="translate(524, 92)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="Tx-info">
                         <tspan x="0" y="15">Tx info</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="ORIGIN,-GASPRICE,-…">
                         <tspan x="0" y="14">ORIGIN, GASPRICE, …</tspan>
                     </text>
@@ -83,12 +83,12 @@
             </g>
             <g id="arithmetic-logic-copy-4" transform="translate(0, 368)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="Control-flow">
                         <tspan x="0" y="15">Control flow</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="JUMP,-JUMPI,-REVERT,">
                         <tspan x="0" y="14">JUMP, JUMPI, REVERT,…</tspan>
                     </text>
@@ -96,12 +96,12 @@
             </g>
             <g id="arithmetic-logic-copy-5" transform="translate(262, 92)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica" font-size="16" font-weight="normal">
+                <g id="Arithmetic-Logic" transform="translate(20.0803, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="normal">
                     <text id="Host">
                         <tspan x="0" y="15">Host</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(20.0803, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="SLOAD,-STORE,-LOG,-…">
                         <tspan x="0" y="14">SLOAD, STORE, LOG, …</tspan>
                     </text>
@@ -109,12 +109,12 @@
             </g>
             <g id="arithmetic-logic-copy" transform="translate(0, 92)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(21.7391, 14.1176)" fill="#FFFFFF" font-family="Helvetica-Bold, Helvetica" font-size="16" font-weight="bold">
+                <g id="Arithmetic-Logic" transform="translate(21.7391, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="bold">
                     <text id="Bitwise">
                         <tspan x="0" y="15">Bitwise</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(21.7391, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(21.7391, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="AND,-OR,-XOR,-NOT,…">
                         <tspan x="0" y="14">AND, OR, XOR, NOT,…</tspan>
                     </text>
@@ -122,12 +122,12 @@
             </g>
             <g id="arithmetic-logic-copy-2" transform="translate(524, 0)">
                 <rect id="bg" fill="#7916F3" x="0" y="0" width="250" height="80" rx="9"></rect>
-                <g id="Arithmetic-Logic" transform="translate(21.7391, 14.1176)" fill="#FFFFFF" font-family="Helvetica-Bold, Helvetica" font-size="16" font-weight="bold">
+                <g id="Arithmetic-Logic" transform="translate(21.7391, 14.1176)" fill="#FFFFFF" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="bold">
                     <text id="Block">
                         <tspan x="0" y="15">Block</tspan>
                     </text>
                 </g>
-                <g id="Instructions" transform="translate(21.7391, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" opacity="0.8">
+                <g id="Instructions" transform="translate(21.7391, 43.2941)" fill="#FFFFFF" fill-opacity="0.8" font-family="JetBrains Mono, Courier, monospace" font-size="14" font-weight="normal" opacity="0.8">
                     <text id="COINBASE,-TIMESTAMP,">
                         <tspan x="0" y="14">COINBASE, TIMESTAMP, …</tspan>
                     </text>
