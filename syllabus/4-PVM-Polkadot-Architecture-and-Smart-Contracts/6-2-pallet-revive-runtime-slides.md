@@ -253,9 +253,9 @@ We won't go in depth on all types defined in the config, but let's look at a few
 pub fn call(
     origin: OriginFor<T>,
     dest: H160,
-    #[pallet::compact] value: BalanceOf<T>,
+    value: BalanceOf<T>,
     gas_limit: Weight,
-    #[pallet::compact] storage_deposit_limit: BalanceOf<T>,
+    storage_deposit_limit: BalanceOf<T>,
     data: Vec<u8>,
 ) -> DispatchResultWithPostInfo { /* ... */  }
 ```
@@ -272,13 +272,11 @@ Antother interesting fact is that we return `DispatchResultWithPostInfo`, instea
 | pallet call                    | Description                                                                |
 | ------------------------------ | -------------------------------------------------------------------------- |
 | `upload_code`                  | Uploads new code without instantiating a contract from it.                 |
-| `remove_code`                  | Removes the code stored under a hash and refunds the deposit to its owner. |
 | `instantiate`                  | Instantiates a contract from a previously deployed binary.                 |
 | `instantiate_with_code`        | Instantiates a new contract from the supplied code.                        |
 | `call`                         | Makes a call to an account, optionally transferring some balance.          |
 | `map_account`                  | Registers the caller's account ID for use in contract interactions.        |
 | `unmap_account`                | Unregisters the caller's account ID and frees the deposit.                 |
-| `dispatch_as_fallback_account` | Dispatches a call with the origin set to the caller's fallback account.    |
 
 ---
 
@@ -364,7 +362,103 @@ contracts can call. They are defined in a dedicated crate `pallet-revive-uapi`.
 > Build the fibonacci contract using Rust and `pallet-revive-uapi`
 
 Notes:
-https://github.com/paritytech/rust-contract-template
+<https://github.com/paritytech/rust-contract-template>
+
+---
+
+## Precompile
+
+```rust
+pub trait Precompile {
+ /// Your runtime.
+ type T: Config;
+ /// The Solidity ABI definition of this pre-compile.
+ type Interface: SolInterface;
+ /// Defines at which addresses this pre-compile exists.
+ const MATCHER: AddressMatcher;
+ /// Entry point for your pre-compile
+ fn call(
+  address: &[u8; 20],
+  input: &Self::Interface,
+  env: &mut impl Ext<T = Self::T>,
+ ) -> Result<Vec<u8>, Error>;
+}
+```
+
+---v
+
+## Example the ERC20 Asset precompile
+
+```rust[0|1-8|9-19|21-37]
+alloy_core::sol!{
+  interface IERC20 {
+      event Transfer(address indexed from, address indexed to, uint256 value);
+      function transfer(address to, uint256 value) external returns (bool);
+      // ..
+  }
+};
+
+/// An ERC20 precompile.
+pub struct ERC20<Runtime>(PhantomData<Runtime>);
+
+impl<Runtime> Precompile for ERC20<Runtime>
+  where Runtime: pallet_asset::Config + pallet_revive::Config,
+{
+  type T = Runtime;
+  type Interface = IERC20::IERC20Calls;
+
+  // Match all addresses 0xaaaaaaaa00000000000000000000000000010000
+  const MATCHER: AddressMatcher = AddressMatcher::Prefix(0x1);
+
+  fn call(
+    address: &[u8; 20],
+    input: &Self::Interface,
+    env: &mut impl Ext<T = Self::T>,
+  ) -> Result<Vec<u8>, Error> {
+    // extract the asset_id encoded in the first 4 bytes
+    let asset_id = extract_asset_id_from_address(address)?.into();
+
+    // Execute the call using the public function of pallet-asset
+    match input {
+      IERC20Calls::transfer(call) => Self::transfer(asset_id, call, env),
+      IERC20Calls::totalSupply(_) => Self::total_supply(asset_id, env),
+      IERC20Calls::balanceOf(call) => Self::balance_of(asset_id, call, env),
+      IERC20Calls::allowance(call) => Self::allowance(asset_id, call, env),
+      IERC20Calls::approve(call) => Self::approve(asset_id, call, env),
+      IERC20Calls::transferFrom(call) => Self::transfer_from(asset_id, call, env),
+    }
+  }
+}
+```
+
+---v
+
+## Precompile on Asset Hub
+
+```rust
+impl pallet_revive::Config for Runtime {
+  // ...
+ type Precompiles = (
+  ERC20<Self, InlineIdConfig<0x120>, TrustBackedAssetsInstance>,
+  ERC20<Self, InlineIdConfig<0x320>, PoolAssetsInstance>,
+  XcmPrecompile<Self>,
+ );
+  // ...
+}
+```
+
+---v
+
+## USDC ERC20 precompile on Asset Hub
+
+- USDC is defined in `pallet-asset` with id 1337 (0x539)
+- Precompile address: `0x0000053900000000000000000000000001200000`
+
+```bash
+# Transferring 100 USDC token to $RECIPIENT_ADDRESS
+cast send 0x0000053900000000000000000000000001200000 \
+  "transfer(address,uint256)" $RECIPIENT_ADDRESS 100000000
+```
 
 ---
 
@@ -489,14 +583,14 @@ pub trait Config: frame_system::Config {
 
 ## 4. Balance Decimals
 
-- In EVM, the smallest unit of value is 1 wei, which is $10^{-18}$ETH.
-- In Substrate, the smallest unit of value is 1 Planck, which is $10^{-12}$ KSM or $10^{-10}$ DOT.
+- 1 ETH = 1000000000000000000 wei ($10^{18}$)
+- 1 KSM = 1000000000000 planck ($10^{12}$)
+- 1 DOT = 10000000000 planck ($10^{10}$)
 
 ```rust
 pub trait Config: frame_system::Config {
-    //...
-    #[pallet::constant]
     type NativeToEthRatio: Get<u32>;
+    // ...
 }
 ```
 
@@ -505,6 +599,7 @@ In theory, EVM wallets are configurable, and should let you define the number of
 In practice, most wallets use 18 decimals, and we have to play nicely with them.
 Also everything that is passed by the contract as argument to any opcode is assumed to use 18 decimals.
 A transaction that attempt to use a value that can't be translated to a substrate value without a rounding error, will be rejected.
+Fixed by <https://github.com/paritytech/polkadot-sdk/pull/9101>
 
 ---v
 

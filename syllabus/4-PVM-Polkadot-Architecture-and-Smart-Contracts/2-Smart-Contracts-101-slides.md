@@ -124,8 +124,6 @@ Different smart contract blockchains use different bytecode formats.
 
 The state transition function of the blockchain runs the Virtual Machine to execute the instructions in this compiled bytecode, and update the state of the chain.
 
-
-
 ---v
 
 ### Bytecode Execution Example
@@ -223,11 +221,19 @@ The RETURN instruction pops the offset (0) and size (32) from the stack, then re
 
 <img style="width: 80%; height: auto;" src="img/smart-contracts-101/instruction_table.svg" />
 
+Notes:
+
+- We have the most obvious instructions (Arithmetic and Bitwise) for adding and comparing values
+- Instructions to interact with memory to store and load values
+- Control instructions to jump to different locations in the code and not just have simple sequential instructions
+- Contract instructions to call or instantiate other contracts
+- And finally instructions to get information about the current block and the transaction context
+
 ---
 
 ### A simple Example
 
-```solidity[4-9|11-15|18-24]
+```solidity[4-9|11-13|15-24]
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -634,6 +640,16 @@ A few things to note in the transaction:
 - value is the amount of ether being sent in the transaction.
 - input is the ABI encoded data of the function being called, in this case, it is the transfer function of an ERC20 token, we will see how to decode this later.
 - r, s, v are the signature of the transaction, used to verify the transaction was signed by the sender.
+
+yParity refers to whether the y-coordinate of the recovered public key point is
+   even (0) or odd (1).
+
+  In elliptic curve cryptography, when you recover a public key from a signature,
+   there are two possible y-coordinates for any given x-coordinate on the curve.
+  The yParity bit tells you which one to use:
+
+- yParity = 0: Use the even y-coordinate
+- yParity = 1: Use the odd y-coordinate
 
 You will notice that the transaction does not have a 'from' field, this is because the origin can be recovered from the signature.
 

@@ -22,7 +22,7 @@
     <g id="stack-section">
         <rect x="50" y="50" width="200" height="300" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
         <text x="60" y="35" class="title-text">Stack</text>
-        
+
         <!-- Stack item: 10 -->
         <rect x="60" y="70" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.7)"/>
         <text x="70" y="90" class="stack-text">10</text>
@@ -39,11 +39,11 @@
         <rect x="550" y="50" width="220" height="300" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
         <text x="560" y="35" class="title-text">Bytecode</text>
 
-        <text x="570" y="78" class="bytecode-text" fill="#888888">PUSH1, 10</text>
-
         <!-- Highlight current instruction -->
-        <rect x="560" y="90" width="200" height="25" rx="4" fill="#7916F3"/>
-        <text x="570" y="108" class="bytecode-text" fill="#ffffff">PUSH1, 20</text>
+        <rect x="560" y="60" width="200" height="25" rx="4" fill="#7916F3"/>
+        <text x="570" y="78" class="bytecode-text" fill="#ffffff">PUSH1, 10</text>
+
+        <text x="570" y="108" class="bytecode-text">PUSH1, 20</text>
         <text x="570" y="138" class="bytecode-text">ADD</text>
         <text x="570" y="168" class="bytecode-text">PUSH1, 0x00</text>
         <text x="570" y="198" class="bytecode-text">MSTORE</text>
@@ -53,5 +53,5 @@
     </g>
 
     <!-- Centered italic comment at bottom -->
-    <text x="400" y="380" class="stack-text" text-anchor="middle" font-style="italic" fill="#cccccc">Push 20 onto stack</text>
+    <text x="400" y="380" class="stack-text" text-anchor="middle" font-style="italic" fill="#cccccc">Push 10 onto stack</text>
 </svg>
