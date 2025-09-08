@@ -109,7 +109,7 @@ A smart contract blockchain allows users to do essentially 3 things:</p>
 <p>You can think of smart contracts as dormant programs stored on the blockchain at a specific address.
 These programs can access and store data on the blockchain, and execute logic based on the transactions they receive.</p>
 <p>For example, the USDC smart contract, is an ERC-20 token that maintains a mapping of balances, associating each user’s address with the amount of USDC they hold. When a user transfers USDC, the contract updates the sender’s balance by subtracting the amount, adds the same amount to the recipient’s balance, and stores the new state on-chain to ensure all nodes remain synchronized</p>
-</aside></script></section></section><section  data-markdown><script type="text/template">
+</aside></script></section></section><section ><section data-markdown><script type="text/template">
 ## Bytecode & Virtual Machines
 
 <img style="width: 100%; " src="img/smart-contracts-101/bytecode-vm.png" />
@@ -117,10 +117,83 @@ These programs can access and store data on the blockchain, and execute logic ba
 <aside class="notes"><p>When we deploy a smart contract on-chain, we first compile it into bytecode, which can be executed by a virtual machine.
 Different smart contract blockchains use different bytecode formats.</p>
 <p>The state transition function of the blockchain runs the Virtual Machine to execute the instructions in this compiled bytecode, and update the state of the chain.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-initial.svg" />
+
+<aside class="notes"><p>We&#39;ll execute a simple program that adds 10 + 20 and returns the result.
+Initially, both stack and memory are empty, and we&#39;re ready to start executing the bytecode.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-0.svg" />
+
+<aside class="notes"><p>After executing PUSH1, 10, the value 10 is now on the stack. The next instruction to execute is PUSH1, 20.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-1.svg" />
+
+<aside class="notes"><p>After executing PUSH1, 20, both 10 and 20 are now on the stack with 20 on top. The next instruction to execute is ADD.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-2.svg" />
+
+<aside class="notes"><p>After executing ADD, the top two values (20 and 10) were popped, added together (30), and the result pushed back. The next instruction is PUSH1, 0x00.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-3.svg" />
+
+<aside class="notes"><p>The ADD instruction pops the top two values (20 and 10), adds them together (20 + 10 = 30), and pushes the result back onto the stack. The stack now contains [30].</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-4.svg" />
+
+<aside class="notes"><p>The PUSH1, 0x00 instruction pushes the memory offset 0 onto the stack. The stack now contains [0, 30] with 0 at the top.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-5.svg" />
+
+<aside class="notes"><p>The MSTORE instruction pops the top two values from the stack (offset 0 and value 30) and stores the value 30 at memory position 0. The stack is now empty, and memory contains [0: 30].</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-6.svg" />
+
+<aside class="notes"><p>The PUSH1, 0x20 instruction pushes the return data size (32 bytes in decimal) onto the stack. The stack now contains [32].</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-7.svg" />
+
+<aside class="notes"><p>The PUSH1, 0x00 instruction pushes the return data offset (0) onto the stack. The stack now contains [0, 32] with 0 at the top.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-8.svg" />
+
+<aside class="notes"><p>The RETURN instruction pops the offset (0) and size (32) from the stack, then returns 32 bytes of data starting from memory offset 0. The program returns the value 30, which is the result of our calculation 10 + 20.</p>
+</aside></script></section></section><section  data-markdown><script type="text/template">
+### Typical Instruction Set (EVM)
+
+<img style="width: 80%; height: auto;" src="img/smart-contracts-101/instruction_table.svg" />
+
+<aside class="notes"><ul>
+<li>We have the most obvious instructions (Arithmetic and Bitwise) for adding and comparing values</li>
+<li>Instructions to interact with memory to store and load values</li>
+<li>Control instructions to jump to different locations in the code and not just have simple sequential instructions</li>
+<li>Contract instructions to call or instantiate other contracts</li>
+<li>And finally instructions to get information about the current block and the transaction context</li>
+</ul>
 </aside></script></section><section  data-markdown><script type="text/template">
 ### A simple Example
 
-```solidity[4-9|11-15|18-24]
+```solidity[4-9|11-13|15-24]
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -139,7 +212,7 @@ contract PiggyBank {
 
 
     function withdraw(uint256 withdrawAmount) public {
-        require(msg.sender == owner, "You are not the owner");
+        require(
         require(address(this).balance >= withdrawAmount, "Insufficient balance");
 
         (bool success, ) = payable(msg.sender).call{value: withdrawAmount}("");
@@ -293,18 +366,18 @@ to access their functionality, read and write data and execute complex workflows
 on the Aave protocol, where a contract can borrow funds from the protocol, execute a series of transactions and repay
 the loan in the same transaction.</p>
 </aside></script></section></section><section ><section data-markdown><script type="text/template">
-### Call types
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-1.svg" />
 
-<img style="height: 90%"  src="img/smart-contracts-101/call-stack-1.png" />
-</script></section><section data-markdown><script type="text/template">
-### Call types
+<aside class="notes"><p>An Externally Owned Account (EOA) initiates a transaction to Contract A. The contract executes with the EOA as msg.sender and uses its own storage context.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-2.svg" />
 
-<img style="height: 90%"  src="img/smart-contracts-101/call-stack-2.png" />
-</script></section><section data-markdown><script type="text/template">
-### Call types
+<aside class="notes"><p>Contract A makes a normal call to Contract B. Contract B executes with Contract A as msg.sender and uses its own separate storage context. This creates a new execution frame on the call stack.</p>
+</aside></script></section><section data-markdown><script type="text/template">
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-3.svg" />
 
-<img style="height: 90%"  src="img/smart-contracts-101/call-stack-3.png" />
-</script></section><section data-markdown><script type="text/template">
+<aside class="notes"><p>Contract A makes a delegate call to Contract B. Contract B&#39;s code executes but preserves the original msg.sender (EOA) and uses Contract A&#39;s storage context. This allows libraries to modify the calling contract&#39;s storage.</p>
+</aside></script></section><section data-markdown><script type="text/template">
 ### Precompiled Contracts
 
 <img rounded style="width: 500px"  src="img/smart-contracts-101/precompiles.jpg" />
@@ -317,7 +390,7 @@ In Substrate, a Smart-Contract pallet, can leverage this to expose other feature
 </aside></script></section><section data-markdown><script type="text/template">
 ### Immutability
 
-<img rounded style="width: 500px"  src="img/smart-contracts-101/Immutability.jpg" />
+<img rounded style="width: 500px"  src="img/smart-contracts-101/immutability.jpg" />
 
 <aside class="notes"><p>Contracts are immutable by design, however in some circumstances, you might want to upgrade to fix a bug or add or
 improve existing features. There are several patterns to achieve this, one of the most common is the Proxy pattern.
@@ -469,6 +542,15 @@ to define new transaction format, this type field is used to distinguish between
 <li>input is the ABI encoded data of the function being called, in this case, it is the transfer function of an ERC20 token, we will see how to decode this later.</li>
 <li>r, s, v are the signature of the transaction, used to verify the transaction was signed by the sender.</li>
 </ul>
+<p>yParity refers to whether the y-coordinate of the recovered public key point is
+even (0) or odd (1).</p>
+<p>In elliptic curve cryptography, when you recover a public key from a signature,
+there are two possible y-coordinates for any given x-coordinate on the curve.
+The yParity bit tells you which one to use:</p>
+<ul>
+<li>yParity = 0: Use the even y-coordinate</li>
+<li>yParity = 1: Use the odd y-coordinate</li>
+</ul>
 <p>You will notice that the transaction does not have a &#39;from&#39; field, this is because the origin can be recovered from the signature.</p>
 </aside></script></section><section data-markdown><script type="text/template">
 ### ABI decoding
@@ -529,32 +611,47 @@ Arguments are padded and aligned to 32 bytes, to make it easy to read or load th
 </ul>
 <p>See <a href="https://docs.soliditylang.org/en/latest/abi-spec.html">https://docs.soliditylang.org/en/latest/abi-spec.html</a></p>
 </aside></script></section></section><section  data-markdown><script type="text/template">
-## Beyond Smart Contracts
+# Questions?
 
-- 🔎 Block Explorers (e.g., Etherscan, Subscan)
-- 🔮 Oracles (e.g., Chainlink, Redstone)
-- 📊 Indexers (e.g., The Graph, Subsquid)
-
-<aside class="notes"><p>Bock explorers:</p>
+<aside class="notes"><h2 id="beyond-smart-contracts">Beyond Smart Contracts</h2>
 <ul>
-<li>Track transactions and smart contract states</li>
-<li>Enable transparency &amp; debugging tools for developers</li>
-<li>Examples: Etherscan, Subscan, Blockscout
-Orcales:</li>
-<li>Enable hybrid on-chain/off-chain contracts</li>
-<li>Examples: Chainlink, Redstone</li>
-<li>Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)</li>
-<li>Two models<ul>
+<li><p>🔎 Block Explorers (e.g., Etherscan, Subscan)</p>
+</li>
+<li><p>🔮 Oracles (e.g., Chainlink, Redstone)</p>
+</li>
+<li><p>📊 Indexers (e.g., The Graph, Subsquid)
+Bock explorers:</p>
+</li>
+<li><p>Track transactions and smart contract states</p>
+</li>
+<li><p>Enable transparency &amp; debugging tools for developers</p>
+</li>
+<li><p>Examples: Etherscan, Subscan, Blockscout
+Orcales:</p>
+</li>
+<li><p>Enable hybrid on-chain/off-chain contracts</p>
+</li>
+<li><p>Examples: Chainlink, Redstone</p>
+</li>
+<li><p>Deliver real-world data on-chain for smart contracts (e.g., price feeds, weather, events)</p>
+</li>
+<li><p>Two models</p>
+<ul>
 <li>Push: Data is pushed by node operators at specific interval and made available to contracts</li>
 <li>Pull: Signed data package is attached to the transaction and verified by a contract on chain
 Indexers:</li>
 </ul>
 </li>
-<li>Blockchain are write optimized, and querying data can be slow</li>
-<li>Indexers subscribe to the blockchain and store the data in a more queryable format</li>
-<li>Allow fast and structured access to blockchain records</li>
-<li>Improve UX for dApps by reducing raw node queries</li>
-<li>Examples: The Graph, Subsquid</li>
+<li><p>Blockchain are write optimized, and querying data can be slow</p>
+</li>
+<li><p>Indexers subscribe to the blockchain and store the data in a more queryable format</p>
+</li>
+<li><p>Allow fast and structured access to blockchain records</p>
+</li>
+<li><p>Improve UX for dApps by reducing raw node queries</p>
+</li>
+<li><p>Examples: The Graph, Subsquid</p>
+</li>
 </ul>
 </aside></script></section>
     </article>
