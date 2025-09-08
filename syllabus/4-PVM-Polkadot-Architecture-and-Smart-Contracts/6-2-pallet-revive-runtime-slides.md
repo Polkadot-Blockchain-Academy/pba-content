@@ -269,14 +269,14 @@ Antother interesting fact is that we return `DispatchResultWithPostInfo`, instea
 
 ## Dispatch functions
 
-| pallet call                    | Description                                                                |
-| ------------------------------ | -------------------------------------------------------------------------- |
-| `upload_code`                  | Uploads new code without instantiating a contract from it.                 |
-| `instantiate`                  | Instantiates a contract from a previously deployed binary.                 |
-| `instantiate_with_code`        | Instantiates a new contract from the supplied code.                        |
-| `call`                         | Makes a call to an account, optionally transferring some balance.          |
-| `map_account`                  | Registers the caller's account ID for use in contract interactions.        |
-| `unmap_account`                | Unregisters the caller's account ID and frees the deposit.                 |
+| pallet call             | Description                                                         |
+| ----------------------- | ------------------------------------------------------------------- |
+| `upload_code`           | Uploads new code without instantiating a contract from it.          |
+| `instantiate`           | Instantiates a contract from a previously deployed binary.          |
+| `instantiate_with_code` | Instantiates a new contract from the supplied code.                 |
+| `call`                  | Makes a call to an account, optionally transferring some balance.   |
+| `map_account`           | Registers the caller's account ID for use in contract interactions. |
+| `unmap_account`         | Unregisters the caller's account ID and frees the deposit.          |
 
 ---
 
@@ -289,7 +289,7 @@ Notes:
 The big elephant in the room here, is that we are not using EVM bytecode but Polkavm bytecode.
 
 - The reason behind this choice is that EVM is a stack machine. This means that arguments to functions are passed on a stack.
-PolkaVM is based on RISC-V which is a register machine.
+  PolkaVM is based on RISC-V which is a register machine.
 - This means it passes arguments in a finite set of registers.
 
 The main benefit of this is that translating the bytecode into the underlying hardware is much more efficient as those are all register machines.
@@ -302,7 +302,6 @@ We include a PolkaVM interpreter within the runtime itself.
 A later update will deliver a full PolkaVM JIT running inside the client.
 note that we will still keep the interpreter available so that we can use the most appropriate backend for each workload. For example, for contract invocations
 that just execute very little code the interpreter will still be faster as it can start executing code right away (lazy interpretation).
-
 
 ### Reduced Word Size
 
@@ -765,6 +764,7 @@ Limits might be increased in the future. To guarantee existing contracts working
 ## 7. Gas mapping
 
 - **Different resource types**
+
   - Weight = measure of block space
   - Storage deposit = measure of disk space
 
@@ -785,18 +785,15 @@ This creates a complex engineering challenge in maintaining Ethereum compatibili
 
 ## 7. Gas mapping
 
-
 - Current solution: Encode Weight + Storage deposit into the least significant bytes of the Eth gas
-
 
 - Upcoming solution: Map Weight Gas by using a ratio
 
 Notes:
 
-Currently, we are mapping Weight + Storage deposit into the least significant bytes of the Eth gas with low precision. While the higher bytes are chosen in a way that gas * gas_price displays an accurate estimated fee. This works because the low bytes don't influence the displayed price significantly.
+Currently, we are mapping Weight + Storage deposit into the least significant bytes of the Eth gas with low precision. While the higher bytes are chosen in a way that gas \* gas_price displays an accurate estimated fee. This works because the low bytes don't influence the displayed price significantly.
 
 This is the design chosen by Acala. It has one flaw: It can break apart when wallets fiddle with the returned gas estimation as the mapping is not linear. We expected that this could happen but thought it should be okay since it worked by Acala. And it is by far the easiest solution to implement. But as it turned out: It is a massive problem as most Dapps and wallets add some security margin to the estimated gas
-
 
 Solution:
 
@@ -804,7 +801,7 @@ Gas is a Substrate Balance
 The general idea is that the gas estimation returned is in “fee space”. Meaning it is a substrate Balance rather than a Weight. This allows us to simply add the storage deposit which is already a balance.
 
 Map Weight Gas by using a ratio
-The idea is that we just assume that ref_time and proof_size are consumed at a fixed ratio. Meaning that for each gas supplied we allow alpha * gas amount of ref_time and beta * gas amount of proof_size. No matter what the original values were. We also don’t pick a custom ratio but rely on the ratio already defined in the pallet_tx_payment config (WeightToFee).
+The idea is that we just assume that ref_time and proof_size are consumed at a fixed ratio. Meaning that for each gas supplied we allow alpha _ gas amount of ref_time and beta _ gas amount of proof_size. No matter what the original values were. We also don’t pick a custom ratio but rely on the ratio already defined in the pallet_tx_payment config (WeightToFee).
 
 ---
 

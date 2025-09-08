@@ -636,11 +636,11 @@ A few things to note in the transaction:
 - r, s, v are the signature of the transaction, used to verify the transaction was signed by the sender.
 
 yParity refers to whether the y-coordinate of the recovered public key point is
-   even (0) or odd (1).
+even (0) or odd (1).
 
-  In elliptic curve cryptography, when you recover a public key from a signature,
-   there are two possible y-coordinates for any given x-coordinate on the curve.
-  The yParity bit tells you which one to use:
+In elliptic curve cryptography, when you recover a public key from a signature,
+there are two possible y-coordinates for any given x-coordinate on the curve.
+The yParity bit tells you which one to use:
 
 - yParity = 0: Use the even y-coordinate
 - yParity = 1: Use the odd y-coordinate
@@ -724,7 +724,7 @@ Notes:
 - 🔎 Block Explorers (e.g., Etherscan, Subscan)
 - 🔮 Oracles (e.g., Chainlink, Redstone)
 - 📊 Indexers (e.g., The Graph, Subsquid)
-Bock explorers:
+  Bock explorers:
 
 - Track transactions and smart contract states
 - Enable transparency & debugging tools for developers
