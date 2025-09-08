@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200px" height="600px" viewBox="0 0 1200 600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Bytecode Execution Example</title>
+    
+    <defs>
+        <!-- Animation definitions -->
+        <style>
+            .stack-item, .memory-item, .bytecode-line {
+                opacity: 0;
+            }
+            .highlight {
+                fill: #7916F3;
+                stroke: #ffffff;
+                stroke-width: 2;
+            }
+            .stack-text, .memory-text, .bytecode-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px;
+                fill: #ffffff;
+            }
+            .title-text {
+                font-family: Helvetica, sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                fill: #ffffff;
+            }
+            .section-text {
+                font-family: Helvetica, sans-serif;
+                font-size: 16px;
+                font-weight: normal;
+                fill: #ffffff;
+            }
+        </style>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1200" height="600" fill="#1a1a1a"/>
+    
+    <!-- Left side: Stack and Memory -->
+    <g id="left-side">
+        <!-- Stack Section -->
+        <g id="stack-section">
+            <rect x="50" y="50" width="200" height="400" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
+            <text x="150" y="35" class="title-text" text-anchor="middle">Stack</text>
+            
+            <!-- Stack items (animated) -->
+            <g id="stack-items">
+                <!-- Stack item 5: Empty initially -->
+                <rect id="stack-5" x="60" y="60" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.5)" class="stack-item">
+                    <animate attributeName="opacity" values="0;1;1;1;1;1;1;1;0" dur="16s" begin="0s"/>
+                </rect>
+                <text id="stack-5-text" x="150" y="80" class="stack-text" text-anchor="middle">
+                    <animate attributeName="opacity" values="0;1;1;1;1;1;1;1;0" dur="16s" begin="0s"/>
+                    0 (offset)
+                </text>
+                
+                <!-- Stack item 4: -->
+                <rect id="stack-4" x="60" y="100" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.5)" class="stack-item">
+                    <animate attributeName="opacity" values="0;0;0;0;0;0;1;1;0" dur="16s" begin="0s"/>
+                </rect>
+                <text id="stack-4-text" x="150" y="120" class="stack-text" text-anchor="middle">
+                    <animate attributeName="opacity" values="0;0;0;0;0;0;1;1;0" dur="16s" begin="0s"/>
+                    32 (size)
+                </text>
+                
+                <!-- Stack item 3: 30 result -->
+                <rect id="stack-3" x="60" y="140" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.5)" class="stack-item">
+                    <animate attributeName="opacity" values="0;0;0;1;0;0;0;0;0" dur="16s" begin="0s"/>
+                </rect>
+                <text id="stack-3-text" x="150" y="160" class="stack-text" text-anchor="middle">
+                    <animate attributeName="opacity" values="0;0;0;1;0;0;0;0;0" dur="16s" begin="0s"/>
+                    30
+                </text>
+                
+                <!-- Stack item 2: 20 -->
+                <rect id="stack-2" x="60" y="180" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.5)" class="stack-item">
+                    <animate attributeName="opacity" values="0;0;1;0;0;0;0;0;0" dur="16s" begin="0s"/>
+                </rect>
+                <text id="stack-2-text" x="150" y="200" class="stack-text" text-anchor="middle">
+                    <animate attributeName="opacity" values="0;0;1;0;0;0;0;0;0" dur="16s" begin="0s"/>
+                    20
+                </text>
+                
+                <!-- Stack item 1: 10 -->
+                <rect id="stack-1" x="60" y="220" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.5)" class="stack-item">
+                    <animate attributeName="opacity" values="0;1;1;0;0;0;0;0;0" dur="16s" begin="0s"/>
+                </rect>
+                <text id="stack-1-text" x="150" y="240" class="stack-text" text-anchor="middle">
+                    <animate attributeName="opacity" values="0;1;1;0;0;0;0;0;0" dur="16s" begin="0s"/>
+                    10
+                </text>
+            </g>
+        </g>
+        
+        <!-- Memory Section -->
+        <g id="memory-section">
+            <rect x="300" y="50" width="250" height="400" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
+            <text x="425" y="35" class="title-text" text-anchor="middle">Memory</text>
+            
+            <!-- Memory slots -->
+            <g id="memory-items">
+                <!-- Memory slot 0 -->
+                <rect id="memory-0" x="310" y="60" width="230" height="30" rx="4" fill="rgba(121, 22, 243, 0.5)" class="memory-item">
+                    <animate attributeName="opacity" values="0;0;0;0;0;1;1;1;1" dur="16s" begin="0s"/>
+                </rect>
+                <text id="memory-0-addr" x="320" y="80" class="stack-text">
+                    <animate attributeName="opacity" values="0;0;0;0;0;1;1;1;1" dur="16s" begin="0s"/>
+                    0x00:
+                </text>
+                <text id="memory-0-value" x="480" y="80" class="stack-text" text-anchor="end">
+                    <animate attributeName="opacity" values="0;0;0;0;0;1;1;1;1" dur="16s" begin="0s"/>
+                    30
+                </text>
+            </g>
+        </g>
+    </g>
+    
+    <!-- Right side: Bytecode -->
+    <g id="right-side">
+        <rect x="600" y="50" width="550" height="500" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
+        <text x="875" y="35" class="title-text" text-anchor="middle">Bytecode Execution</text>
+        
+        <!-- Bytecode lines -->
+        <g id="bytecode-lines">
+            <!-- PUSH1, 10 -->
+            <rect id="highlight-0" x="610" y="75" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="0s"/>
+            </rect>
+            <text x="620" y="92" class="bytecode-text">PUSH1, 10    // Push 10 onto stack            Stack: [10],     Memory: []</text>
+            
+            <!-- PUSH1, 20 -->
+            <rect id="highlight-1" x="610" y="105" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="2s"/>
+            </rect>
+            <text x="620" y="122" class="bytecode-text">PUSH1, 20    // Push 20 onto stack           Stack: [20, 10], Memory: []</text>
+            
+            <!-- ADD -->
+            <rect id="highlight-2" x="610" y="135" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="4s"/>
+            </rect>
+            <text x="620" y="152" class="bytecode-text">ADD          // Add top two stack items     Stack: [30],     Memory: []</text>
+            
+            <!-- PUSH1, 0x00 -->
+            <rect id="highlight-3" x="610" y="165" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="6s"/>
+            </rect>
+            <text x="620" y="182" class="bytecode-text">PUSH1, 0x00  // Push memory offset 0        Stack: [0, 30],  Memory: []</text>
+            
+            <!-- MSTORE -->
+            <rect id="highlight-4" x="610" y="195" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="8s"/>
+            </rect>
+            <text x="620" y="212" class="bytecode-text">MSTORE       // Store result at memory 0     Stack: [],       Memory: [0: 30]</text>
+            
+            <!-- PUSH1, 0x20 -->
+            <rect id="highlight-5" x="610" y="225" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="10s"/>
+            </rect>
+            <text x="620" y="242" class="bytecode-text">PUSH1, 0x20  // Push return size (32 bytes)  Stack: [32],     Memory: [0: 30]</text>
+            
+            <!-- PUSH1, 0x00 -->
+            <rect id="highlight-6" x="610" y="255" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="12s"/>
+            </rect>
+            <text x="620" y="272" class="bytecode-text">PUSH1, 0x00  // Push return offset (0)       Stack: [0, 32],  Memory: [0: 30]</text>
+            
+            <!-- RETURN -->
+            <rect id="highlight-7" x="610" y="285" width="530" height="25" rx="4" fill="transparent" class="highlight">
+                <animate attributeName="fill" values="transparent;#7916F3;transparent" dur="2s" begin="14s"/>
+            </rect>
+            <text x="620" y="302" class="bytecode-text">RETURN       // Return 32 bytes from offset 0</text>
+        </g>
+        
+        <!-- Current State Display -->
+        <g id="current-state">
+            <rect x="610" y="350" width="530" height="150" rx="9" fill="rgba(121, 22, 243, 0.2)" stroke="#7916F3" stroke-width="1"/>
+            <text x="875" y="375" class="section-text" text-anchor="middle">Current State</text>
+            
+            <text id="state-stack" x="620" y="400" class="stack-text">Stack: []</text>
+            <text id="state-memory" x="620" y="425" class="stack-text">Memory: []</text>
+            <text id="state-instruction" x="620" y="450" class="stack-text">Instruction: PUSH1, 10</text>
+            
+            <!-- Animate state changes -->
+            <animate 
+                attributeName="opacity" 
+                values="0;1" 
+                dur="1s" 
+                begin="0s"/>
+        </g>
+    </g>
+    
+    <!-- Animation script embedded in SVG -->
+    <script type="text/javascript">
+        <![CDATA[
+        // Update current state text during animation
+        const stateStack = document.getElementById('state-stack');
+        const stateMemory = document.getElementById('state-memory');
+        const stateInstruction = document.getElementById('state-instruction');
+        
+        const states = [
+            { stack: 'Stack: []', memory: 'Memory: []', instruction: 'Instruction: PUSH1, 10' },
+            { stack: 'Stack: [10]', memory: 'Memory: []', instruction: 'Instruction: PUSH1, 20' },
+            { stack: 'Stack: [20, 10]', memory: 'Memory: []', instruction: 'Instruction: ADD' },
+            { stack: 'Stack: [30]', memory: 'Memory: []', instruction: 'Instruction: PUSH1, 0x00' },
+            { stack: 'Stack: [0, 30]', memory: 'Memory: []', instruction: 'Instruction: MSTORE' },
+            { stack: 'Stack: []', memory: 'Memory: [0: 30]', instruction: 'Instruction: PUSH1, 0x20' },
+            { stack: 'Stack: [32]', memory: 'Memory: [0: 30]', instruction: 'Instruction: PUSH1, 0x00' },
+            { stack: 'Stack: [0, 32]', memory: 'Memory: [0: 30]', instruction: 'Instruction: RETURN' },
+        ];
+        
+        function updateState(index) {
+            if (states[index]) {
+                stateStack.textContent = states[index].stack;
+                stateMemory.textContent = states[index].memory;
+                stateInstruction.textContent = states[index].instruction;
+            }
+        }
+        
+        // Update state every 2 seconds
+        for (let i = 0; i < states.length; i++) {
+            setTimeout(() => updateState(i), i * 2000);
+        }
+        ]]>
+    </script>
+</svg>
