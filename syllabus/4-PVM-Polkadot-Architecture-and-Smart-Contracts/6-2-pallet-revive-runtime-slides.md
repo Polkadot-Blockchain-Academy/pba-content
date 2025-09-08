@@ -801,7 +801,7 @@ Gas is a Substrate Balance
 The general idea is that the gas estimation returned is in “fee space”. Meaning it is a substrate Balance rather than a Weight. This allows us to simply add the storage deposit which is already a balance.
 
 Map Weight Gas by using a ratio
-The idea is that we just assume that ref_time and proof_size are consumed at a fixed ratio. Meaning that for each gas supplied we allow alpha _ gas amount of ref_time and beta _ gas amount of proof_size. No matter what the original values were. We also don’t pick a custom ratio but rely on the ratio already defined in the pallet_tx_payment config (WeightToFee).
+The idea is that we just assume that ref*time and proof_size are consumed at a fixed ratio. Meaning that for each gas supplied we allow alpha * gas amount of ref*time and beta * gas amount of proof_size. No matter what the original values were. We also don’t pick a custom ratio but rely on the ratio already defined in the pallet_tx_payment config (WeightToFee).
 
 ---
 
