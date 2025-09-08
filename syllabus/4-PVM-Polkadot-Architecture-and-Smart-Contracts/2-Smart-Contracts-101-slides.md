@@ -252,7 +252,7 @@ contract PiggyBank {
 
 
     function withdraw(uint256 withdrawAmount) public {
-        require(
+        require(msg.sender == owner, "You are not the owner");
         require(address(this).balance >= withdrawAmount, "Insufficient balance");
 
         (bool success, ) = payable(msg.sender).call{value: withdrawAmount}("");
