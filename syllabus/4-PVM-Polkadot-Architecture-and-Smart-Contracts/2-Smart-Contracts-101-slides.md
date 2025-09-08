@@ -252,7 +252,7 @@ contract PiggyBank {
 
 
     function withdraw(uint256 withdrawAmount) public {
-        require(msg.sender == owner, "You are not the owner");
+        require(
         require(address(this).balance >= withdrawAmount, "Insufficient balance");
 
         (bool success, ) = payable(msg.sender).call{value: withdrawAmount}("");
@@ -426,8 +426,6 @@ the loan in the same transaction.
 
 ---
 
-### Call types
-
 <img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-1.svg" />
 
 Notes:
@@ -435,16 +433,12 @@ An Externally Owned Account (EOA) initiates a transaction to Contract A. The con
 
 ---v
 
-### Call types
-
 <img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-2.svg" />
 
 Notes:
 Contract A makes a normal call to Contract B. Contract B executes with Contract A as msg.sender and uses its own separate storage context. This creates a new execution frame on the call stack.
 
 ---v
-
-### Call types
 
 <img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-3.svg" />
 
@@ -721,13 +715,15 @@ See <https://docs.soliditylang.org/en/latest/abi-spec.html>
 
 ---
 
+# Questions?
+
+Notes:
+
 ## Beyond Smart Contracts
 
 - 🔎 Block Explorers (e.g., Etherscan, Subscan)
 - 🔮 Oracles (e.g., Chainlink, Redstone)
 - 📊 Indexers (e.g., The Graph, Subsquid)
-
-Notes:
 Bock explorers:
 
 - Track transactions and smart contract states

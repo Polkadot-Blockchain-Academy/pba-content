@@ -57,7 +57,7 @@
             <rect x="50" y="380" width="300" height="80" rx="8" fill="#7916F3" fill-opacity="0.8" stroke="#7916F3" stroke-width="2"/>
             <text x="60" y="400" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffffff">Contract C</text>
             <text x="60" y="415" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">0x0...0c (code address)</text>
-            <text x="60" y="435" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Context: msg.sender = B</text>
+            <text x="60" y="435" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Context: msg.sender = Contract B</text>
             <text x="60" y="450" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff">Storage: B's storage</text>
         </g>
     </g>
@@ -72,17 +72,16 @@
         <text x="463" y="150" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">contract</text>
         <text x="525" y="150" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffffff"> C </text>
         <text x="548" y="150" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">{</text>
-        <text x="483" y="170" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic">// This library function executes in B's context</text>
-        <text x="483" y="210" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">function</text>
-        <text x="555" y="210" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa"> c</text>
-        <text x="571" y="210" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">()</text>
-        <text x="595" y="210" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6"> external</text>
-        <text x="667" y="210" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700"> {</text>
+        <text x="483" y="190" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6">function</text>
+        <text x="555" y="190" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#dcdcaa"> c</text>
+        <text x="571" y="190" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">()</text>
+        <text x="595" y="190" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#569cd6"> external</text>
+        <text x="667" y="190" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700"> {</text>
 
-        <text x="503" y="230" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic">// Function c() logic here...</text>
+        <text x="503" y="210" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#6a9955" font-style="italic">// Function c() logic here...</text>
 
-        <text x="483" y="310" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
-        <text x="463" y="330" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
+        <text x="483" y="230" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
+        <text x="463" y="250" font-family="JetBrains Mono, Courier, monospace" font-size="12" fill="#ffd700">}</text>
 
         <!-- Current State -->
         <rect x="450" y="420" width="700" height="120" rx="8" fill="#000000" fill-opacity="0.3" stroke="#555555" stroke-width="1"/>

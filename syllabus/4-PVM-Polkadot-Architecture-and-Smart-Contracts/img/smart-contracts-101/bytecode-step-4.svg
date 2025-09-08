@@ -22,20 +22,16 @@
     <g id="stack-section">
         <rect x="50" y="50" width="200" height="300" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
         <text x="60" y="35" class="title-text">Stack</text>
-
-        <!-- Stack item: 0 (memory offset, top) -->
-        <rect x="60" y="70" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.7)"/>
-        <text x="70" y="90" class="stack-text">0</text>
-
-        <!-- Stack item: 30 (value, bottom) -->
-        <rect x="60" y="110" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.7)"/>
-        <text x="70" y="130" class="stack-text">30</text>
     </g>
 
     <!-- Memory Section -->
     <g id="memory-section">
         <rect x="300" y="50" width="200" height="300" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
         <text x="310" y="35" class="title-text">Memory</text>
+
+        <!-- Memory slot 0 with value 30 -->
+        <rect x="310" y="70" width="180" height="30" rx="4" fill="rgba(121, 22, 243, 0.7)"/>
+        <text x="320" y="90" class="stack-text">0: 30</text>
     </g>
 
     <!-- Bytecode Section -->
