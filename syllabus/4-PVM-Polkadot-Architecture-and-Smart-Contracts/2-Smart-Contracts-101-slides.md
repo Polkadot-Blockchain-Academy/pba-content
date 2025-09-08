@@ -2,7 +2,7 @@
 title: Smart contracts fundamentals
 description: Introduction to fundamentals smart conctracts concepts
 duration: 45min
-url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/2-Smart-Contracts-101-slides.md
+url: http://localhost:1948/syllabus/4-PVM-Polkadot-Architecture-and-Smart-Contracts/2-Smart-Contracts-101-slides.md#
 ---
 
 <style>
@@ -124,11 +124,116 @@ Different smart contract blockchains use different bytecode formats.
 
 The state transition function of the blockchain runs the Virtual Machine to execute the instructions in this compiled bytecode, and update the state of the chain.
 
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-initial.svg" />
+
+Notes:
+We'll execute a simple program that adds 10 + 20 and returns the result.
+Initially, both stack and memory are empty, and we're ready to start executing the bytecode.
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-0.svg" />
+
+Notes:
+After executing PUSH1, 10, the value 10 is now on the stack. The next instruction to execute is PUSH1, 20.
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-1.svg" />
+
+Notes:
+After executing PUSH1, 20, both 10 and 20 are now on the stack with 20 on top. The next instruction to execute is ADD.
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-2.svg" />
+
+Notes:
+After executing ADD, the top two values (20 and 10) were popped, added together (30), and the result pushed back. The next instruction is PUSH1, 0x00.
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-3.svg" />
+
+Notes:
+The ADD instruction pops the top two values (20 and 10), adds them together (20 + 10 = 30), and pushes the result back onto the stack. The stack now contains [30].
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-4.svg" />
+
+Notes:
+The PUSH1, 0x00 instruction pushes the memory offset 0 onto the stack. The stack now contains [0, 30] with 0 at the top.
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-5.svg" />
+
+Notes:
+The MSTORE instruction pops the top two values from the stack (offset 0 and value 30) and stores the value 30 at memory position 0. The stack is now empty, and memory contains [0: 30].
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-6.svg" />
+
+Notes:
+The PUSH1, 0x20 instruction pushes the return data size (32 bytes in decimal) onto the stack. The stack now contains [32].
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-7.svg" />
+
+Notes:
+The PUSH1, 0x00 instruction pushes the return data offset (0) onto the stack. The stack now contains [0, 32] with 0 at the top.
+
+---v
+
+### Bytecode Execution Example
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/bytecode-step-8.svg" />
+
+Notes:
+The RETURN instruction pops the offset (0) and size (32) from the stack, then returns 32 bytes of data starting from memory offset 0. The program returns the value 30, which is the result of our calculation 10 + 20.
+
+---
+
+### Typical Instruction Set (EVM)
+
+<img style="width: 80%; height: auto;" src="img/smart-contracts-101/instruction_table.svg" />
+
+Notes:
+
+- We have the most obvious instructions (Arithmetic and Bitwise) for adding and comparing values
+- Instructions to interact with memory to store and load values
+- Control instructions to jump to different locations in the code and not just have simple sequential instructions
+- Contract instructions to call or instantiate other contracts
+- And finally instructions to get information about the current block and the transaction context
+
 ---
 
 ### A simple Example
 
-```solidity[4-9|11-15|18-24]
+```solidity[4-9|11-13|15-24]
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -147,7 +252,7 @@ contract PiggyBank {
 
 
     function withdraw(uint256 withdrawAmount) public {
-        require(msg.sender == owner, "You are not the owner");
+        require(
         require(address(this).balance >= withdrawAmount, "Insufficient balance");
 
         (bool success, ) = payable(msg.sender).call{value: withdrawAmount}("");
@@ -321,21 +426,24 @@ the loan in the same transaction.
 
 ---
 
-### Call types
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-1.svg" />
 
-<img style="height: 90%"  src="img/smart-contracts-101/call-stack-1.png" />
-
----v
-
-### Call types
-
-<img style="height: 90%"  src="img/smart-contracts-101/call-stack-2.png" />
+Notes:
+An Externally Owned Account (EOA) initiates a transaction to Contract A. The contract executes with the EOA as msg.sender and uses its own storage context.
 
 ---v
 
-### Call types
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-2.svg" />
 
-<img style="height: 90%"  src="img/smart-contracts-101/call-stack-3.png" />
+Notes:
+Contract A makes a normal call to Contract B. Contract B executes with Contract A as msg.sender and uses its own separate storage context. This creates a new execution frame on the call stack.
+
+---v
+
+<img style="width: 100%; height: auto;" src="img/smart-contracts-101/call-stack-3.svg" />
+
+Notes:
+Contract A makes a delegate call to Contract B. Contract B's code executes but preserves the original msg.sender (EOA) and uses Contract A's storage context. This allows libraries to modify the calling contract's storage.
 
 ---v
 
@@ -355,7 +463,7 @@ In Substrate, a Smart-Contract pallet, can leverage this to expose other feature
 
 ### Immutability
 
-<img rounded style="width: 500px"  src="img/smart-contracts-101/Immutability.jpg" />
+<img rounded style="width: 500px"  src="img/smart-contracts-101/immutability.jpg" />
 
 Notes:
 Contracts are immutable by design, however in some circumstances, you might want to upgrade to fix a bug or add or
@@ -527,6 +635,16 @@ A few things to note in the transaction:
 - input is the ABI encoded data of the function being called, in this case, it is the transfer function of an ERC20 token, we will see how to decode this later.
 - r, s, v are the signature of the transaction, used to verify the transaction was signed by the sender.
 
+yParity refers to whether the y-coordinate of the recovered public key point is
+even (0) or odd (1).
+
+In elliptic curve cryptography, when you recover a public key from a signature,
+there are two possible y-coordinates for any given x-coordinate on the curve.
+The yParity bit tells you which one to use:
+
+- yParity = 0: Use the even y-coordinate
+- yParity = 1: Use the odd y-coordinate
+
 You will notice that the transaction does not have a 'from' field, this is because the origin can be recovered from the signature.
 
 ---v
@@ -597,14 +715,16 @@ See <https://docs.soliditylang.org/en/latest/abi-spec.html>
 
 ---
 
+# Questions?
+
+Notes:
+
 ## Beyond Smart Contracts
 
 - 🔎 Block Explorers (e.g., Etherscan, Subscan)
 - 🔮 Oracles (e.g., Chainlink, Redstone)
 - 📊 Indexers (e.g., The Graph, Subsquid)
-
-Notes:
-Bock explorers:
+  Bock explorers:
 
 - Track transactions and smart contract states
 - Enable transparency & debugging tools for developers

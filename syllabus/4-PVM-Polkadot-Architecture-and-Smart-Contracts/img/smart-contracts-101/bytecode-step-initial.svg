@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="400px" viewBox="0 0 800 400" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <title>Bytecode Initial State - Before Execution</title>
+
+    <defs>
+        <style>
+            .stack-text, .memory-text, .bytecode-text {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 14px;
+                fill: #ffffff;
+            }
+            .title-text {
+                font-family: Helvetica, sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                fill: #ffffff;
+            }
+        </style>
+    </defs>
+
+    <!-- Stack Section -->
+    <g id="stack-section">
+        <rect x="50" y="50" width="200" height="300" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
+        <text x="60" y="35" class="title-text">Stack</text>
+    </g>
+
+    <!-- Memory Section -->
+    <g id="memory-section">
+        <rect x="300" y="50" width="200" height="300" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
+        <text x="310" y="35" class="title-text">Memory</text>
+    </g>
+
+    <!-- Bytecode Section -->
+    <g id="bytecode-section">
+        <rect x="550" y="50" width="220" height="300" rx="9" fill="rgba(121, 22, 243, 0.3)" stroke="#7916F3" stroke-width="2"/>
+        <text x="560" y="35" class="title-text">Bytecode</text>
+
+        <text x="570" y="78" class="bytecode-text">PUSH1, 10</text>
+        <text x="570" y="108" class="bytecode-text">PUSH1, 20</text>
+        <text x="570" y="138" class="bytecode-text">ADD</text>
+        <text x="570" y="168" class="bytecode-text">PUSH1, 0x00</text>
+        <text x="570" y="198" class="bytecode-text">MSTORE</text>
+        <text x="570" y="228" class="bytecode-text">PUSH1, 0x20</text>
+        <text x="570" y="258" class="bytecode-text">PUSH1, 0x00</text>
+        <text x="570" y="288" class="bytecode-text">RETURN</text>
+    </g>
+
+</svg>
