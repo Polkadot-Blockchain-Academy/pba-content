@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000px" height="600px" viewBox="0 0 1000 600" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>evm-instruction-set</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-25, -25)">
+            <g id="evm-instruction-set" transform="translate(25, 25)">
+                
+                <!-- Title -->
+                <text id="Title" font-family="Helvetica" font-size="24" font-weight="bold" fill="#FFFFFF">
+                    <tspan x="300" y="40">Typical Instruction Set (EVM)</tspan>
+                </text>
+                
+                <!-- Row 1 -->
+                <g id="arithmetic-logic" transform="translate(50, 80)">
+                    <rect id="bg" fill="#7916F3" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="Arithmetic-Logic" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="20" y="30">Arithmetic/Logic</tspan>
+                    </text>
+                    <text id="Instructions" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.8">
+                        <tspan x="20" y="60">ADD</tspan>
+                        <tspan x="20" y="80">LT</tspan>
+                        <tspan x="20" y="100">OR</tspan>
+                    </text>
+                </g>
+                
+                <g id="cryptographic" transform="translate(290, 80)">
+                    <rect id="bg" fill="#7916F3" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="Cryptographic" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="20" y="30">Cryptographic</tspan>
+                    </text>
+                    <text id="Instructions" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.8">
+                        <tspan x="20" y="60">KECCAK</tspan>
+                    </text>
+                </g>
+                
+                <g id="system" transform="translate(530, 80)">
+                    <rect id="bg" fill="#7916F3" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="System" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="20" y="30">System</tspan>
+                    </text>
+                    <text id="Instructions" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.8">
+                        <tspan x="20" y="60">ADDRESS</tspan>
+                        <tspan x="20" y="80">BALANCE</tspan>
+                        <tspan x="20" y="100">GASPRICE</tspan>
+                    </text>
+                </g>
+                
+                <g id="storage-stack" transform="translate(770, 80)">
+                    <rect id="bg" fill="#7916F3" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="Storage-Stack" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="20" y="30">Storage/Stack</tspan>
+                    </text>
+                    <text id="Instructions" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.8">
+                        <tspan x="20" y="60">MLOAD</tspan>
+                        <tspan x="20" y="80">SSTORE</tspan>
+                        <tspan x="20" y="100">PUSH1</tspan>
+                    </text>
+                </g>
+                
+                <!-- Row 2 -->
+                <g id="control-flow" transform="translate(50, 250)">
+                    <rect id="bg" fill="#7916F3" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="Control-Flow" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="20" y="30">Control Flow</tspan>
+                    </text>
+                    <text id="Instructions" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.8">
+                        <tspan x="20" y="60">JUMP</tspan>
+                        <tspan x="20" y="80">CALL</tspan>
+                        <tspan x="20" y="100">REVERT</tspan>
+                    </text>
+                </g>
+                
+                <g id="chain-specific" transform="translate(290, 250)">
+                    <rect id="bg" fill="#7916F3" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="Chain-Specific" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="20" y="30">Chain Specific</tspan>
+                    </text>
+                    <text id="Instructions" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.8">
+                        <tspan x="20" y="60">LOG1</tspan>
+                    </text>
+                </g>
+                
+                <g id="lifecycle" transform="translate(530, 250)">
+                    <rect id="bg" fill="#7916F3" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="Lifecycle" font-family="Helvetica" font-size="16" font-weight="bold" fill="#FFFFFF">
+                        <tspan x="20" y="30">Lifecycle</tspan>
+                    </text>
+                    <text id="Instructions" font-family="JetBrainsMono-Regular, JetBrains Mono" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.8">
+                        <tspan x="20" y="60">CREATE</tspan>
+                        <tspan x="20" y="80">SELFDESTRUCT</tspan>
+                    </text>
+                </g>
+                
+                <!-- Note about floating point -->
+                <g id="note" transform="translate(770, 250)">
+                    <rect id="bg" fill="#FFA500" x="0" y="0" width="220" height="140" rx="9"></rect>
+                    <text id="Note-Text" font-family="Helvetica" font-size="14" font-weight="normal" fill="#FFFFFF">
+                        <tspan x="20" y="30">No floating point</tspan>
+                        <tspan x="20" y="50">instructions</tspan>
+                        <tspan x="20" y="80">Not deterministic</tspan>
+                    </text>
+                </g>
+                
+                <!-- Additional info -->
+                <text id="Info" font-family="Helvetica" font-size="14" font-weight="normal" fill="#FFFFFF" fill-opacity="0.7">
+                    <tspan x="50" y="450">Each instruction has a specific gas cost and operates on the EVM's 256-bit word size</tspan>
+                    <tspan x="50" y="470">Instructions are grouped by functionality to provide comprehensive smart contract execution</tspan>
+                </text>
+                
+            </g>
+        </g>
+    </g>
+</svg>

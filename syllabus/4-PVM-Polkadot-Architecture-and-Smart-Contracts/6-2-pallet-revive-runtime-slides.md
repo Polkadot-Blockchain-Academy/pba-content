@@ -2,7 +2,7 @@
 title: pallet-revive architecture
 description: Architecture of the pallet-revive smart contract module
 duration: 30min
-url: http://localhost:1948/syllabus/3-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
+url: http://localhost:1948/syllabus/4-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
 ---
 
 # pallet-revive architecture
@@ -92,11 +92,8 @@ Notes:
 
 ## pallet-revive Config
 
-```rust[0|32-48|69-87|104-122]
+```rust[0|78-92|109-131]
 pub trait Config: frame_system::Config {
-  /// The time implementation used to supply timestamps to contracts through `seal_now`.
-  type Time: Time;
-
   /// The fungible in which fees are paid and contract balances are held.
   type Currency: Inspect<Self::AccountId>
     + Mutate<Self::AccountId>
@@ -113,16 +110,25 @@ pub trait Config: frame_system::Config {
   /// Overarching hold reason.
   type RuntimeHoldReason: From<HoldReason>;
 
-  /// Used to answer contracts' queries regarding the current weight price. This is **not**
-  /// used to calculate the actual fee and is only for informational purposes.
-  type WeightPrice: Convert<Weight, BalanceOf<Self>>;
-
   /// Describes the weights of the dispatchables of this module and is also used to
   /// construct a default cost schedule.
   type WeightInfo: WeightInfo;
 
+  /// Used to answer contracts' queries regarding the current weight price. This is **not**
+  /// used to calculate the actual fee and is only for informational purposes.
+  type WeightPrice: Convert<Weight, BalanceOf<Self>>;
+
+  /// The time implementation used to supply timestamps to contracts through `seal_now`.
+  type Time: Time;
+
   /// Find the author of the current block.
   type FindAuthor: FindAuthor<Self::AccountId>;
+
+  /// Type that allows the runtime authors to add new host functions for a contract to call.
+  ///
+  /// Pass in a tuple of types that implement [`precompiles::Precompile`].
+  type Precompiles: precompiles::Precompiles<Self>;
+
 
   /// The amount of balance a caller has to pay for each byte of storage.
   ///
@@ -147,7 +153,6 @@ pub trait Config: frame_system::Config {
   /// abuse these actions are protected with a percentage of the code deposit.
   #[pallet::constant]
   type CodeHashLockupDepositPercent: Get<Perbill>;
-
 
   /// Make contract callable functions marked as `#[unstable]` available.
   ///
@@ -203,13 +208,16 @@ pub trait Config: frame_system::Config {
   #[pallet::constant]
   type ChainId: Get<u64>;
 
-  /// Use either valid type is [`address::AccountId32Mapper`] or [`address::H160Mapper`].
   #[pallet::no_default]
   type AddressMapper: AddressMapper<Self>;
 
   /// The ratio between the decimal representation of the native token and the ETH token.
   #[pallet::constant]
   type NativeToEthRatio: Get<u32>;
+
+  /// Allow EVM bytecode to be uploaded and instantiated.
+  #[pallet::constant]
+  type AllowEVMBytecode: Get<bool>;
 
   /// Encode and decode Ethereum gas values.
   /// Only valid value is `()`. See [`GasEncoder`].
@@ -245,9 +253,9 @@ We won't go in depth on all types defined in the config, but let's look at a few
 pub fn call(
     origin: OriginFor<T>,
     dest: H160,
-    #[pallet::compact] value: BalanceOf<T>,
+    value: BalanceOf<T>,
     gas_limit: Weight,
-    #[pallet::compact] storage_deposit_limit: BalanceOf<T>,
+    storage_deposit_limit: BalanceOf<T>,
     data: Vec<u8>,
 ) -> DispatchResultWithPostInfo { /* ... */  }
 ```
@@ -261,26 +269,52 @@ Antother interesting fact is that we return `DispatchResultWithPostInfo`, instea
 
 ## Dispatch functions
 
-| pallet call                    | Description                                                                |
-| ------------------------------ | -------------------------------------------------------------------------- |
-| `upload_code`                  | Uploads new code without instantiating a contract from it.                 |
-| `remove_code`                  | Removes the code stored under a hash and refunds the deposit to its owner. |
-| `instantiate`                  | Instantiates a contract from a previously deployed binary.                 |
-| `instantiate_with_code`        | Instantiates a new contract from the supplied code.                        |
-| `call`                         | Makes a call to an account, optionally transferring some balance.          |
-| `map_account`                  | Registers the caller's account ID for use in contract interactions.        |
-| `unmap_account`                | Unregisters the caller's account ID and frees the deposit.                 |
-| `dispatch_as_fallback_account` | Dispatches a call with the origin set to the caller's fallback account.    |
+| pallet call             | Description                                                         |
+| ----------------------- | ------------------------------------------------------------------- |
+| `upload_code`           | Uploads new code without instantiating a contract from it.          |
+| `instantiate`           | Instantiates a contract from a previously deployed binary.          |
+| `instantiate_with_code` | Instantiates a new contract from the supplied code.                 |
+| `call`                  | Makes a call to an account, optionally transferring some balance.   |
+| `map_account`           | Registers the caller's account ID for use in contract interactions. |
+| `unmap_account`         | Unregisters the caller's account ID and frees the deposit.          |
 
 ---
 
-## VM API
+## pallet-revive & VM
 
 <img style="height: 90%;" src="img/pallet-revive/vm-architecture.png" />
 
 Notes:
 
-- Discuss how the VM interacts with the runtime
+The big elephant in the room here, is that we are not using EVM bytecode but Polkavm bytecode.
+
+- The reason behind this choice is that EVM is a stack machine. This means that arguments to functions are passed on a stack.
+  PolkaVM is based on RISC-V which is a register machine.
+- This means it passes arguments in a finite set of registers.
+
+The main benefit of this is that translating the bytecode into the underlying hardware is much more efficient as those are all register machines.
+
+We chose the number of registers carefully so that they are smaller than in hardhare instruction set such as x86
+This allow us to reduce the NP-hard register allocation problem to a simple 1to1 mapping
+This is the secret ingredient to PolkaVM's fast compilation times.
+
+We include a PolkaVM interpreter within the runtime itself.
+A later update will deliver a full PolkaVM JIT running inside the client.
+note that we will still keep the interpreter available so that we can use the most appropriate backend for each workload. For example, for contract invocations
+that just execute very little code the interpreter will still be faster as it can start executing code right away (lazy interpretation).
+
+### Reduced Word Size
+
+EVM uses a word size of 256bit. Which means that **every** arithmetic operation has to be performed on those big numbers. This makes any meaningful
+number crunching really slow as it has to be translated to a lot of native instructions. PolkaVM uses a word size of 64bit which is natively supported
+by the underlying hardware. That said, when translating Solidity contracts via YUL (#Revive) we will still end up with 256bit arithmetic as YUL is too low-level
+to automatically convert the integer types. However, it is perfectly possible to write contracts in a different language and call that seamlessly
+from Solidity. We imagine a system where business logic is written in Solidity but the underlying architecture in faster languages, akin to Python where
+most of the heavy lifting is done by C modules.
+
+Our solution is Ethereum-compatible: You can write your contracts in Solidity and interact with the node
+using Ethereum JSON RPC alongside an Ethereum wallet like MetaMask. Under the hood, we recompile the
+contracts from YUL (EVM assembly) to RISC-V to run them using [PolkaVM](https://wiki.polkadot.network/docs/learn-jam-chain#polkadot-virtual-machine-pvm) instead of EVM.
 
 ---v
 
@@ -356,7 +390,102 @@ contracts can call. They are defined in a dedicated crate `pallet-revive-uapi`.
 > Build the fibonacci contract using Rust and `pallet-revive-uapi`
 
 Notes:
-https://github.com/paritytech/rust-contract-template
+<https://github.com/paritytech/rust-contract-template>
+
+---
+
+## Precompile
+
+```rust
+pub trait Precompile {
+ /// Your runtime.
+ type T: Config;
+ /// The Solidity ABI definition of this pre-compile.
+ type Interface: SolInterface;
+ /// Defines at which addresses this pre-compile exists.
+ const MATCHER: AddressMatcher;
+ /// Entry point for your pre-compile
+ fn call(
+  address: &[u8; 20],
+  input: &Self::Interface,
+  env: &mut impl Ext<T = Self::T>,
+ ) -> Result<Vec<u8>, Error>;
+}
+```
+
+---v
+
+## Example the ERC20 Asset precompile
+
+```rust[0|1-8|9-19|21-37]
+alloy_core::sol!{
+  interface IERC20 {
+      function transfer(address to, uint256 value) external returns (bool);
+      // ..
+  }
+};
+
+/// An ERC20 precompile.
+pub struct ERC20<Runtime>(PhantomData<Runtime>);
+
+impl<Runtime> Precompile for ERC20<Runtime>
+  where Runtime: pallet_asset::Config + pallet_revive::Config,
+{
+  type T = Runtime;
+  type Interface = IERC20::IERC20Calls;
+
+  // Match all addresses 0xaaaaaaaa00000000000000000000000000010000
+  const MATCHER: AddressMatcher = AddressMatcher::Prefix(0x1);
+
+  fn call(
+    address: &[u8; 20],
+    input: &Self::Interface,
+    env: &mut impl Ext<T = Self::T>,
+  ) -> Result<Vec<u8>, Error> {
+    // extract the asset_id encoded in the first 4 bytes
+    let asset_id = extract_asset_id_from_address(address)?.into();
+
+    // Execute the call using the public function of pallet-asset
+    match input {
+      IERC20Calls::transfer(call) => Self::transfer(asset_id, call, env),
+      IERC20Calls::totalSupply(_) => Self::total_supply(asset_id, env),
+      IERC20Calls::balanceOf(call) => Self::balance_of(asset_id, call, env),
+      IERC20Calls::allowance(call) => Self::allowance(asset_id, call, env),
+      IERC20Calls::approve(call) => Self::approve(asset_id, call, env),
+      IERC20Calls::transferFrom(call) => Self::transfer_from(asset_id, call, env),
+    }
+  }
+}
+```
+
+---v
+
+## Precompile on Asset Hub
+
+```rust
+impl pallet_revive::Config for Runtime {
+  // ...
+ type Precompiles = (
+  ERC20<Self, InlineIdConfig<0x120>, TrustBackedAssetsInstance>,
+  ERC20<Self, InlineIdConfig<0x320>, PoolAssetsInstance>,
+  XcmPrecompile<Self>,
+ );
+  // ...
+}
+```
+
+---v
+
+## USDC ERC20 precompile on Asset Hub
+
+- USDC is defined in `pallet-asset` with id 1337 (0x539)
+- Precompile address: `0x0000053900000000000000000000000001200000`
+
+```bash
+# Transferring 100 USDC token to $RECIPIENT_ADDRESS
+cast send 0x0000053900000000000000000000000001200000 \
+  "transfer(address,uint256)" $RECIPIENT_ADDRESS 100000000
+```
 
 ---
 
@@ -373,17 +502,20 @@ In this section we will highlight some of the key differences between Substrate 
 
 <img style="width: 60%; padding: 20px 0" src="img/pallet-revive/tx-hash.png" />
 
+- `https://etherscan.io/tx/<tx-hash>`
+- `https://polkadot.subscan.io/extrinsic/<block>-<tx-index>`
+
 > ‼️ The transaction hash is a unique identifier on Ethereum not Substrate
 
----
+---v
 
 ## 1. Transaction hashes
 
-| Index | Hash | Origin | Nonce | Call                | Results               |
-| ----- | ---- | ------ | ----- | ------------------- | --------------------- |
-| 0     | 0x01 | A      | 0     | Transfer 5 DOT to B | A reaped              |
-| 1     | 0x02 | B      | 4     | Transfer 7 DOT to A | A created (nonce = 0) |
-| 2     | 0x01 | A      | 0     | Transfer 5 DOT to B |                       |
+| Origin | Nonce | Call                | Results               |
+| ------ | ----- | ------------------- | --------------------- |
+| A      | 0     | Transfer 5 DOT to B | A reaped              |
+| B      | 4     | Transfer 7 DOT to A | A created (nonce = 0) |
+| A      | 0     | Transfer 5 DOT to B |                       |
 
 Notes:
 Imagine this contrived example with a reaped account. The first and last
@@ -458,7 +590,7 @@ In pallet-revive, the code is uploaded and stored on-chain
 - The immutable variables are stored in a pallet storage map and read when the contract is called.
 - Multiple contracts can be instantiated by referencing the same code hash.
 
----
+---v
 
 ## 3. Code deployment (pallet-revive)
 
@@ -481,14 +613,14 @@ pub trait Config: frame_system::Config {
 
 ## 4. Balance Decimals
 
-- In EVM, the smallest unit of value is 1 wei, which is $10^{-18}$ETH.
-- In Substrate, the smallest unit of value is 1 Planck, which is $10^{-12}$ KSM or $10^{-10}$ DOT.
+- 1 ETH = 1000000000000000000 ($10^{18}$ wei)
+- 1 KSM = 1000000000000 ($10^{12}$ planck)
+- 1 DOT = 10000000000 ($10^{10}$ planck)
 
 ```rust
 pub trait Config: frame_system::Config {
-    //...
-    #[pallet::constant]
     type NativeToEthRatio: Get<u32>;
+    // ...
 }
 ```
 
@@ -497,6 +629,7 @@ In theory, EVM wallets are configurable, and should let you define the number of
 In practice, most wallets use 18 decimals, and we have to play nicely with them.
 Also everything that is passed by the contract as argument to any opcode is assumed to use 18 decimals.
 A transaction that attempt to use a value that can't be translated to a substrate value without a rounding error, will be rejected.
+Fixed by <https://github.com/paritytech/polkadot-sdk/pull/9101>
 
 ---v
 
@@ -530,14 +663,13 @@ Everything that is executed in the VM expect a 20 bytes address, we need to map 
 #[frame_support::pallet]
 pub mod pallet {
   pub trait Config: frame_system::Config {
-    /// Use either valid type is [`address::AccountId32Mapper`] or [`address::H160Mapper`].
     #[pallet::no_default]
     type AddressMapper: AddressMapper<Self>;
     // ...
   }
 
   #[pallet::storage]
-  pub(crate) type OriginalAccount<T: Config> = StorageMap<_, Identity, H160, AccountId32>;
+  type OriginalAccount<T: Config> = StorageMap<_, Identity, H160, AccountId32>;
   // ...
 }
 
@@ -589,27 +721,15 @@ assert_eq!(bob_sub, <Runtime as Config>::AddressMapper::to_account_id(&bob_eth))
 
 **Ethereum**
 
-- ⛽ Single dimensional `gas`
 - 📜 Gas costs are defined in the yellow paper and EIPs
 - 📈 Quadratic memory expansion cost
 
 **Polkadot**
 
-- 🚦 Multi dimensional: `ref_time`, `proof_size`, `storage_deposit`
 - 📏 Gas cost are measured in benchmarks, and updated frequently
 - 📊 Fixed memory expansion cost, with hard limits
 
-Notes:
-In Ethereum, there is one dimensional resource: `gas`. The yellow paper, and the EIPs define the cost of each opcode and
-precompile in gas. The gas cost is a measure of the computational effort required to execute an operation or a contract.
-
-in pallet-revive, we have a multi-dimensional gas model, that includes the `ref_time`, the `proof_size`, and the `storage_deposit`.
-
-- `ref_time` measure the reference time of an operation
-- `proof_size` measure the size of the proof required to execute the operation, every time we load a contract for
-  example, we need to add this contract to the proof, so that validators that are stateless can verify the execution of
-  the block.
-- `storage_deposit`: To address state bloat, we charge a deposit from a transaction signer every time a contract it calls adds data to the blockchain's state. This deposit is transferred to the contract and held there. Otherwise, the contract cannot spend or use it. Whoever signs a transaction that removes storage will receive a refund proportional to the amount of storage removed.
+Note:
 
 In Ethereum the gas costs are defined in the yellow paper and EIPs, they are not updated frequently, and each change require a hard fork.
 In pallet-revive, the gas costs are measured in benchmarks, they reflect the actual performance of the reference hardware. These benchmark are run and updated every time we make a new runtime.
@@ -627,43 +747,62 @@ is that these limits can be too constraining, but this is something that we will
 
 | Limit                                      | Maximum           |
 | ------------------------------------------ | ----------------- |
-| Call stack depth                           | 5                 |
+| Call stack depth                           | 25                |
 | Event topics                               | 4                 |
 | Event data payload size (including topics) | 416 bytes         |
 | Storage value size                         | 416 bytes         |
 | Transient storage variables                | 128 `uint` values |
 | Immutable variables                        | 16 `uint` values  |
-| Contract code blob size                    | ~100 kilobytes    |
+| Contract code blob size                    | 1MiB              |
 
 Notes:
 
 Limits might be increased in the future. To guarantee existing contracts working as expected we will _never decrease_ the limits.
 
----
+---v
 
-## 7. Gas estimation and encoding in lower digits
+## 7. Gas mapping
 
-- When sending tokens, wallets automatically retrieves the correct gas parameters by calling `eth_estimateGas`
-- The estimate encodes the gas limit, the gas price, and the storage deposit in a single value.
+- **Different resource types**
 
-```rust
-pub trait Config: frame_system::Config {
-  /// Encode and decode Ethereum gas values.
-  /// Only valid value is `()`. See [`GasEncoder`].
-  type EthGasEncoder: GasEncoder<BalanceOf<Self>>;
-}
-```
+  - Weight = measure of block space
+  - Storage deposit = measure of disk space
+
+- **Fee accuracy**
+  - Gas estimation × gas price = accurate fee
 
 Notes:
 
-On a Substrate chain, the gas estimation is 2 dimensional (ref_time, pov), this is not a single value like in EVM.
-n pallet-revive, we also use a deposit for the storage used, to make sure that the chain isn't bloated with unused storage.
+What makes gas mapping particularly challenging is the intersection of these two problems:
 
-To be compatible with EVM though, we need to fit these 3 numbers in a single value, the `gas_limit` of the transaction.
-To achieve that, we compress the ref_time, pv and storage deposit on the lowest digits of the gas_limit, using the
-binary square root of these values, and storing on the lowest 6 digits.
+**Fee Accuracy**: The gas returned from gas estimation, when multiplied with the current gas price, needs to be an accurate fee. This means even though gas is a u256, we can't just naively encode our much smaller resources into different parts of that integer. The fee displayed in the wallet wouldn't make sense to users.
 
-This what the `EthGasEncoder` trait does, it encode and decode the gas values in a single value.
-The only valid value here is the unit `()` where the trait is implemented. We could very well not add it to the config,
-but adding it here make it easier to use, without clutttering the call site where it is used with extra implementation
-bound
+**Resource Type Mismatch**: Weight is a measure of block space consumption, but storage deposit is a measure of disk space usage. Conflating the two (charging storage consumption from block space) as done by Ethereum and also Frontier is highly problematic. Block space prices vary with chain utilization - an attacker could consume a lot of disk space during low congestion periods, paying almost nothing, forcing the chain to store that state forever.
+
+This creates a complex engineering challenge in maintaining Ethereum compatibility while preserving Polkadot's more sophisticated resource accounting model.
+
+---v
+
+## 7. Gas mapping
+
+- Current solution: Encode Weight + Storage deposit into the least significant bytes of the Eth gas
+
+- Upcoming solution: Map Weight Gas by using a ratio
+
+Notes:
+
+Currently, we are mapping Weight + Storage deposit into the least significant bytes of the Eth gas with low precision. While the higher bytes are chosen in a way that gas \* gas_price displays an accurate estimated fee. This works because the low bytes don't influence the displayed price significantly.
+
+This is the design chosen by Acala. It has one flaw: It can break apart when wallets fiddle with the returned gas estimation as the mapping is not linear. We expected that this could happen but thought it should be okay since it worked by Acala. And it is by far the easiest solution to implement. But as it turned out: It is a massive problem as most Dapps and wallets add some security margin to the estimated gas
+
+Solution:
+
+Gas is a Substrate Balance
+The general idea is that the gas estimation returned is in “fee space”. Meaning it is a substrate Balance rather than a Weight. This allows us to simply add the storage deposit which is already a balance.
+
+Map Weight Gas by using a ratio
+The idea is that we just assume that ref*time and proof_size are consumed at a fixed ratio. Meaning that for each gas supplied we allow alpha * gas amount of ref*time and beta * gas amount of proof_size. No matter what the original values were. We also don’t pick a custom ratio but rely on the ratio already defined in the pallet_tx_payment config (WeightToFee).
+
+---
+
+# Questions?
