@@ -35,7 +35,7 @@ Here are a few tries:
 - *A more equitable version of the internet.*
 - *Resilient public digital infrastructure.*
 
-> The best way is to look at the problems Web3 is trying to solve…
+> The best way is to look at the problems Web3 is trying to solve...
 
 ---
 
@@ -45,7 +45,7 @@ Here are a few tries:
 - With the increasing globalization caused by technology, the reach of central authorities is greater than ever.
 - Computers play a critical role in providing public digital infrastructure.
 - We could create a world more resilient from these powers, if the worlds public digital infrastructure were itself more decentralized and resilient.
-- Web3 describes that resilient public digital infrastructure.
+- **Web3 describes that resilient public digital infrastructure.**
 
 ---
 
@@ -131,6 +131,12 @@ LLM Generated:
 
 </pba-col>
 </pba-cols>
+
+---
+
+## The World Today
+
+<iframe width="854" height="480" src="https://www.youtube.com/embed/dsl_sKYywEI?si=gR5NSOav9qlKW9uR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
@@ -260,7 +266,7 @@ It's a computer formed by a decentralized network of participants whose job is t
 <div class="right">
 
 - Most blockchains are just building DLTs.
-	- Bitcoin, XRP, BNB, Solana, etc…
+	- Bitcoin, XRP, BNB, Solana, etc...
 - The Web3 version of a spreadsheet.
 	- Excel was designed for storing data.
 	- Lambda functions gave Excel turing completeness and programmability.
@@ -325,7 +331,7 @@ Now we can start to see why some blockchain products seem so different.
 - It is important to remember we are discussing a “virtual machine” rather than a physical one.
 - Applications generally do not have visibility of the decentralized/distributed nature of the computer.
 - The fact that the World Computer runs across many real computers gives it many Web3 properties.
-	- Even more when the network is permissionless, open, borderless, etc…
+	- Even more when the network is permissionless, open, borderless, etc...
 - The glue which turns many computers into one is the “Consensus algorithm”, which achieves byzantine fault tolerance.
 
 </div>
@@ -399,20 +405,26 @@ We can simply hypothesize about the other parts of a computing world which are u
 
 The World Computer has many properties, appealing to different audiences:
 
-- A Distributed Computer
+<div class="text-small">
+
+- **A Distributed Computer**
 	- a distributed computer is one which has natural fallback, and can provide incredible uptime and replication guarantees.
-- A Verifiable Computer
+- **A Verifiable Computer**
 	- a verifiable computer is one where people need not require trust in the platform or the other users they interact with.
-- A Resilient Computer
+- **A Resilient Computer**
 	- a resilient computer is one where applications and services need not worry about the restrictions / laws of any particular nation, and can launch unstoppable applications.
-- A Financial Computer
+- **A Financial Computer**
 	- a platform which natively integrates global finances into your platform, and enables direct integration between you and your customers.
+
+</div>
 
 ---
 
 ## Costs of the World Computer
 
 The World Computer will not replace your personal computer; it's a new type of machine for a different class of problems.
+
+<div class="text-small">
 
 - It is inherently slower and more expensive.
 	- Every calculation must be independently verified by thousands of nodes across the globe.
@@ -423,4 +435,400 @@ The World Computer will not replace your personal computer; it's a new type of m
 	- The history of the computer will reflect all of the actions of the past.
 - It shifts the security burden entirely to the user.
 	- Full sovereignty.
-- There is no "forgot password" link, support hotline, etc…
+- There is no "forgot password" link, support hotline, etc...
+
+</div>
+
+---
+
+## The Polkadot World Computer
+
+<div class="flex-container">
+
+<div class="left-small">
+
+<img style="width: 500px;" src="./img/jam-computer.png" />
+
+</div>
+<div class="right">
+
+- Decentralized Hardware: JAM
+	- Decentralized CPU
+		- PolkaVM (Multi-Core w/ Execution Sharding)
+	- Decentralized Permanent Storage
+		- Merkelized Blockchain State (ParityDB/NOMT)
+	- Decentralized Memory
+		- Distributed Decentralized Data Lake
+- Operating System
+	- CoreVM
+- Consensus
+	- ELVES
+
+</div>
+</div>
+
+---
+
+# What does Web3 look like?
+
+---
+
+## Web3: Evolution or Revolution?
+
+Both!
+
+- Web3 is a technological **evolution**.
+	- We should not expect to rebuild or replace a majority of the Web 2.0 internet.
+	- Most of it works, and works well!
+	- Only fix what is broken.
+- Web3 is a social **revolution**.
+	- We should expect Web3 to fundamentally change the way people interact in our physical and digital world.
+	- A shift in power, social structures, global access, etc...
+
+---
+
+## Web3 Does Not Replace Web2
+
+- Likely most of the internet will continue to run on Web2 systems:
+	- More cost efficient.
+	- More scalable.
+	- More corporate control.
+- But there are ways Web3 systems can make the internet better...
+
+---
+
+## Web2 Companies Want Web3
+
+Web3 should be appealing to most Web2 Companies:
+
+- Companies often do NOT want to be responsible for personally identifiable information.
+	- Most use Federated Identity Management and Single Sign-On
+- Companies want to maximize profits, often by reducing middlemen.
+	- Payments, Subscriptions, Secondary-Sales, Global Access, etc...
+- Companies want deeper integration with their customers.
+- Companies want to provide verifiable guarantees to their customers.
+- Companies want to use resilient infrastructure with 24/7 uptime.
+
+---
+
+## Web2 Users Want Web3
+
+Web3 should be appealing to most users:
+
+- Users want verifiable infrastructure.
+- Users want resilient infrastructure.
+- Users want privacy.
+- Users want control of their data.
+- Users want global, borderless access.
+- Users don’t want to be censored.
+
+---
+
+## The Biggest Risk to Global Web3 Adoption
+
+- Web3 promises:
+	- Self-Sovereignty
+	- Self-Custody
+	- Unstoppable Applications
+	- Uncensorable Usage
+- But in fact, do most people want this?
+
+> The biggest risk to global Web3 adoption is the complacency and dependency of the average person on the exact centralized parties we hope to upend.
+
+---
+
+## Let’s look at the existing web (top sites)
+
+<pba-cols style="font-size: 18px;">
+<pba-col>
+
+1. Google (google.com): Search Engine
+1. YouTube (youtube.com): Video Sharing
+1. Facebook (facebook.com): Social Network
+1. Instagram (instagram.com): Photo Sharing
+1. ChatGPT (chatgpt.com): AI Assistant
+1. X (x.com): Microblogging
+1. WhatsApp (whatsapp.com): Messaging App
+1. Wikipedia (wikipedia.org): Online Encyclopedia
+1. Reddit (reddit.com): Discussion Forum
+1. Yahoo Japan (yahoo.co.jp): Japanese Portal
+1. Yahoo (yahoo.com): Web Portal
+1. Yandex (yandex.ru): Russian Search
+1. TikTok (tiktok.com): Short Videos
+1. Amazon (amazon.com): Online Shopping
+1. Baidu (baidu.com): Chinese Search
+1. bet.br (bet.br): Sports Betting
+1. Microsoft Online (microsoftonline.com): Cloud Services
+1. LinkedIn (linkedin.com): Professional Network
+1. Pornhub (pornhub.com): Adult Content
+1. Netflix (netflix.com): Streaming Service
+
+</pba-col>
+<pba-col>
+
+1. Naver (naver.com): Korean Portal
+1. Live (live.com): Email Service
+1. Zen News (dzen.ru): News Portal
+1. Office (office.com): Productivity Suite
+1. Bing (bing.com): Search Engine
+1. Temu (temu.com): Online Shopping
+1. Pinterest (pinterest.com): Image Sharing
+1. Bilibili (bilibili.com): Anime Streaming
+1. XVideos (xvideos.com): Adult Content
+1. Microsoft (microsoft.com): Tech Company
+1. Twitch (twitch.tv): Game Streaming
+1. XHamster (xhamster.com): Adult Content
+1. VK (vk.com): Russian Social
+1. Mail.ru (mail.ru): Russian Email
+1. Yahoo! News Japan (news.yahoo.co.jp): News Portal
+1. SharePoint (sharepoint.com): Collaboration Tool
+1. Fandom (fandom.com): Fan Communities
+1. Globo (globo.com): Brazilian News
+1. Canva (canva.com): Design Tool
+1. Weather.com (weather.com): Weather Forecasts
+
+</pba-col>
+</pba-cols>
+
+---
+
+## The trivial case: Money, Payments, Finance
+
+- For the purposes of these next slides, we will assume that it is obvious that finance on any of these platforms could be made decentralized and use Web3 technologies.
+	- Subscription Payments
+	- Purchases
+	- Revenue Sharing
+	- Cross-Border Payments
+- This is basically a proven, and desired product.
+- So let’s look beyond this.
+
+---
+
+## Example: Online Search for Web3
+
+The same:
+
+- Crawlers, Indexing, Ranking, etc... you can’t really decentralize the core of search engines.
+- Shift to AI models who can understand the intention of your search query.
+
+Web3:
+
+- A verifiable search index, represented.
+- Transparent curation of your search results.
+- Token curated registries, managed by different DAOs / entities.
+- A shift from advertisements to micro-payments to the sites you use.
+- With the shift to AI, verifiable training data for the models you use.
+
+---
+
+## Example: Video Streaming for Web3
+
+<div class="text-small">
+
+The same:
+
+- Most videos hosted on centralized, Web2 servers.
+
+Web3:
+
+- Web3 based accounts
+- Occasionally, a video might be hosted on Web3 infrastructure for:
+	- Global / Borderless access
+	- Censorship Resistance
+	- Proof of Existence
+- Transparent algorithms / controllable curation for suggested videos.
+- Additional revenue sharing via micropayments:
+	- Providing subtitles / closed captions
+	- High quality comments / engagement
+- Methods for creators to form sovereign communities with their audience.
+
+</div>
+
+---
+
+## Example: Social Media for Web3
+
+The same:
+
+- Maybe some dedicated front-ends.
+- Uncontroversial content hosting.
+
+Web3:
+
+- Own your own identity, and the social graph you create.
+- Bring it with you across platform agnostic protocols.
+- Direct monetization of the creator economy.
+- Ability to create communities that actually wield power and finance.
+
+---
+
+## Example: Online Shopping for Web3
+
+The same:
+
+- Delivery pipelines, physical logistics, etc...
+
+Web3:
+
+- Decentralized, curated catalogs.
+- Proof of purchase.
+- More direct to consumer sales.
+- Verifiable reputation systems, for buyers and sellers.
+- Supply chain management for products sold; authenticity.
+
+---
+
+# Products for the World Computer
+
+---
+
+## Can I run X on the World Computer?
+
+I have been asked before:
+
+- Can I run Docker?
+- Can I run Firefox?
+- Can I run Doom?
+- Can I run Photoshop?
+
+**Yes!**
+
+But should you? 🤔
+
+---
+
+## Create A Hammer, Everything Becomes a Nail
+
+Things like the Substrate and Parachains really influenced how people thought about building applications for Web3.
+
+Unfortunately this was wrong.
+
+Realizations:
+
+- Many Web3 applications may not want to be a blockchain.
+	- Instead, they want the properties that Web3 systems provide.
+- Many blockchains aren’t really Web3.
+	- Just people selling a token around centralization
+- Many L2s should/would rather be Web3 applications.
+	- They are looking for flexibility, scalability, and resilience.
+	- They are just frustrated with directly accessing / using the L1.
+
+---
+
+## Resilient, Distributed Ledgers
+
+- It’s kind of obvious in retrospect, the first natural product for a decentralized computer is the Distributed Leger.
+- Many existing blockchains and DLTs, made a whole “application specific computer” to run their ledger.
+- A decentralized computer could host a ledger, and enable so much more.
+- It is likely the Polkadot and Kusama Relay Chain will run on the World Computer.
+
+---
+
+## All of the Basic “Blockchain Apps”
+
+Things want to use a distributed ledger, but without needing their own blockchain.
+
+- Decentralized Identity
+- Decentralized Physical Infrastructure
+- Decentralized Finance
+- Metaverse
+- Sustainability
+- etc...
+
+---
+
+## Ephemeral Applications
+
+JAM introduces a new set of applications which can be ephemeral, and only use the DA:
+
+- Person-to-Person Sales
+	- Temporary escrow before transfer, but doesn’t need permanent state.
+- On-Chain Video Games
+	- “Polkadot Plays Pokemon”.
+- Disappearing Global Chat
+
+---
+
+## Proof of Personhood
+
+Open and resilient systems providing **Sybil Resistance**, while maintaining privacy and verifiability.
+
+In this future, basic transactions will be free.
+
+> “As More People Use AI, We'll Need Unique Proof of Personhood.”
+>
+> Eddy Lazzarin, CTO of a16z crypto (From a16z big ideas for 2025)
+
+---
+
+## Publicly Verifiable Voting Systems
+
+Secure, direct-voting systems where anyone can verify the results without needing to trust a central authority.
+
+Where decisions can be made for both our **on-chain digital metaverse**, and our **off-chain real world**.
+
+Where results are secured by cryptography and math, rather than the existing incumbents.
+
+---
+
+## Network States
+
+Societies built without physical borders, united by shared values, digital coordination, and economic alignment.
+
+Web3 will provide these groups **resilience**, as they organize, govern, and grow entirely online...
+
+Then shape the real world.
+
+---
+
+# The Future for Polkadot
+
+---
+
+## Polkadot has always felt different
+
+The goal to build a decentralized world computer has walked us along a path of blockchains and distributed ledger technology, but that path goes on, and beyond the technologies we are familiar with today.
+
+- Distributed Ledger Technology
+- Bitcoin
+- Blockchain
+- Ethereum
+- Polkadot
+- JAM
+- Decentralized Computer
+- And beyond...
+
+---
+
+## Polkadot as a Community, not a Product
+
+<div class="text-small">
+
+- We are currently limiting ourselves in believing Polkadot is just for parachains.
+	- Scaling for L2s
+	- Hosting other blockchains / distributed ledgers
+	- Building infra for the already small pool of people who are building blockchains
+		- And are specifically willing to build entirely using our SDK
+- Instead, we must look at Polkadot as a vision for the future, a mission to build that future, and community who can execute that mission.
+	- Like our runtimes and governance, this community can evolve, and as we understand our own technology better, so can our mission and vision.
+	- Polkadot was a blockchain-of-blockchains, the original ETH 2.0, a platform for ledgers.
+	- Polkadot can become a decentralized, ubiquitous world computer.
+		- Able to execute anything, and everything, with resilience.
+
+</div>
+
+---
+
+## Polkadot’s Mission Does Not End with Blockchain Tech
+
+- One can argue that JAM is mostly NOT a blockchain anymore.
+	- Distributed Decentralized Data Lake
+	- P2P Networking Stack
+	- PolkaVM Computation Stack
+- To achieve our vision, we need to keep building the different parts of the decentralized computer, and eventually scale to the decentralized cloud.
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Questions
