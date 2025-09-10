@@ -42,8 +42,8 @@ A tool for creating systems which are:
 
 - Shared Security
 - Programmability Layers
-	- Smart Contracts
-	- Modular Runtime
+  - Smart Contracts
+  - Modular Runtime
 - Execution Sharding
 - Data Sharding
 - Blockchain Rollups
@@ -93,9 +93,9 @@ It is hard to describe Web3 to new people with a single punchy line.
 
 Here are a few tries:
 
-- *Less trust, more truth.*
-- *A more equitable version of the internet.*
-- *Resilient public digital infrastructure.*
+- _Less trust, more truth._
+- _A more equitable version of the internet._
+- _Resilient public digital infrastructure._
 
 > The best way is to look at the problems Web3 is trying to solve...
 
@@ -189,6 +189,7 @@ Exposed global surveillance programs conducted by the NSA and its allies, showin
 <!-- .element: class="fragment" -->
 
 > **Web3 describes that resilient public digital infrastructure.**
+
 <!-- .element: class="fragment" -->
 
 ---
@@ -299,7 +300,7 @@ It's a computer formed by a decentralized network of participants whose job is t
 - Ethereum claimed to be a computer because it was “turing complete”.
 - Turing completeness is a poor test of being a “useful computer”.
 - Most smart contract blockchains have achieved turing completeness, but are not designed as a computer.
-	- They are also arguably not very turing complete because of execution limits.
+  - They are also arguably not very turing complete because of execution limits.
 - So what are they?
 
 </div>
@@ -308,7 +309,6 @@ It's a computer formed by a decentralized network of participants whose job is t
 ---
 
 ## Distributed Ledger Technology
-
 
 <div class="flex-container">
 
@@ -322,11 +322,11 @@ It's a computer formed by a decentralized network of participants whose job is t
 <div class="right">
 
 - Most blockchains are used to build DLTs.
-	- Bitcoin, XRP, BNB, Solana, etc...
+  - Bitcoin, XRP, BNB, Solana, etc...
 - The Web3 version of a spreadsheet.
-	- Excel was designed for storing data.
-	- Lambda functions gave Excel turing completeness and programmability.
-		- Equivalent to Smart contracts.
+  - Excel was designed for storing data.
+  - Lambda functions gave Excel turing completeness and programmability.
+    - Equivalent to Smart contracts.
 - Can be scripted, and can emulate a computer, but is not designed for this.
 - All intermediate state and functions result in updates to the ledger.
 - Building apps for DLTs, feels like building apps in Excel: **you can do it, but it doesn’t feel right.**
@@ -426,7 +426,7 @@ There is a **growing divide** in the mindset of blockchain development.
 - It is important to remember we are discussing a “virtual machine” rather than a physical one.
 - Applications generally do not have visibility of the decentralized/distributed nature of the computer.
 - The fact that the World Computer runs across many real computers gives it many Web3 properties.
-	- Even more when the network is permissionless, open, borderless, etc...
+  - Even more when the network is permissionless, open, borderless, etc...
 - The glue which turns many computers into one is the “Consensus algorithm”, which achieves byzantine fault tolerance.
 
 </div>
@@ -441,18 +441,18 @@ Many components of the decentralized computer can be compared to a physical comp
 <div class="text-small">
 
 - Distributed, Decentralized Hard Drive
-	- Introduced by Bitcoin: Merklized Blockchain State
+  - Introduced by Bitcoin: Merklized Blockchain State
 - Decentralized Single-Core Processor
-	- Introduced by Ethereum: EVM
-	- Other VM options exist today, as do other physical processor choices.
+  - Introduced by Ethereum: EVM
+  - Other VM options exist today, as do other physical processor choices.
 - Decentralized, Threaded, Single-Core Processor
-	- Introduced(?) by Solana: Some parallel transactions, but not sharded execution.
+  - Introduced(?) by Solana: Some parallel transactions, but not sharded execution.
 - Decentralized Multi-Core Processor
-	- Introduced by Polkadot: Execution Sharding
+  - Introduced by Polkadot: Execution Sharding
 - Decentralized Memory (Non-Persistent Storage)
-	- Introduced (naively) by Polkadot: PVF Data Availability, not easily accessible for general use.
-	- Introduced (externally) by teams like Celestia: Very slow, like USB thumb drive as RAM.
-	- Introduced (properly) by JAM: General purpose decentralized distributed data lake.
+  - Introduced (naively) by Polkadot: PVF Data Availability, not easily accessible for general use.
+  - Introduced (externally) by teams like Celestia: Very slow, like USB thumb drive as RAM.
+  - Introduced (properly) by JAM: General purpose decentralized distributed data lake.
 
 </div>
 
@@ -465,13 +465,13 @@ Some components in the decentralized computer have no parallel to the physical c
 <div class="text-small">
 
 - Consensus Layer
-	- Required to achieve “consensus” across the computer.
-		- Includes the properties of Economic Security and Finality / Canonicalization.
-		- Proof of Work, ELVES, ZK Rollup, Optimistic Rollup.
+  - Required to achieve “consensus” across the computer.
+    - Includes the properties of Economic Security and Finality / Canonicalization.
+    - Proof of Work, ELVES, ZK Rollup, Optimistic Rollup.
 - Economic / Incentives Layer
-	- Used to allow the computer to access and influence the physical world.
+  - Used to allow the computer to access and influence the physical world.
 - On-Chain Governance
-	- Used to allow the physical world to access and influence the computer.
+  - Used to allow the physical world to access and influence the computer.
 
 </div>
 
@@ -484,14 +484,14 @@ We can simply hypothesize about the other parts of a computing world which are u
 <div class="text-small">
 
 - Decentralized GPUs
-	- highly parallel, optimized for performing many simple operations at once
+  - highly parallel, optimized for performing many simple operations at once
 - Privacy Solutions
-	- Mixnets
-	- ZK Privacy Layers
+  - Mixnets
+  - ZK Privacy Layers
 - Internet
-	- Trustless Bridges
+  - Trustless Bridges
 - Data Centers
-	- The “Grid”: Omniledger + Bridges
+  - The “Grid”: Omniledger + Bridges
 - More?
 
 ---
@@ -507,13 +507,13 @@ The World Computer has many properties, appealing to different audiences:
 <div class="text-small">
 
 - **A Distributed Computer**
-	- a distributed computer is one which has natural fallback, and can provide incredible uptime and replication guarantees.
+  - a distributed computer is one which has natural fallback, and can provide incredible uptime and replication guarantees.
 - **A Verifiable Computer**
-	- a verifiable computer is one where people need not require trust in the platform or the other users they interact with.
+  - a verifiable computer is one where people need not require trust in the platform or the other users they interact with.
 - **A Resilient Computer**
-	- a resilient computer is one where applications and services need not worry about the restrictions / laws of any particular nation, and can launch unstoppable applications.
+  - a resilient computer is one where applications and services need not worry about the restrictions / laws of any particular nation, and can launch unstoppable applications.
 - **A Financial Computer**
-	- a platform which natively integrates global finances into your platform, and enables direct integration between you and your customers.
+  - a platform which natively integrates global finances into your platform, and enables direct integration between you and your customers.
 
 </div>
 
@@ -526,15 +526,15 @@ The World Computer will not replace your personal computer; it's a new type of m
 <div class="text-small">
 
 - **It is inherently slower and more expensive.**
-	- Every calculation must be independently verified by thousands of nodes across the globe.
+  - Every calculation must be independently verified by thousands of nodes across the globe.
 - **It is a finite public resource.**
-	- Access isn't always guaranteed to everyone, and when there is competition, you need to pay.
-	- However, we hope to scale to a point where everyone gets some amount of basic access.
+  - Access isn't always guaranteed to everyone, and when there is competition, you need to pay.
+  - However, we hope to scale to a point where everyone gets some amount of basic access.
 - **It is permanent and immutable by design.**
-	- The history of the computer will reflect all of the actions of the past.
+  - The history of the computer will reflect all of the actions of the past.
 - **It shifts the security burden entirely to the user.**
-	- Full sovereignty.
-	- There is no "forgot password" link, support hotline, etc...
+  - Full sovereignty.
+  - There is no "forgot password" link, support hotline, etc...
 
 </div>
 
@@ -576,7 +576,7 @@ But should you? 🤔
 
 Things like the Substrate and Parachains really influenced how people thought about building applications for Web3.
 
-> *Every application should have its own application specific chain!*
+> _Every application should have its own application specific chain!_
 
 Unfortunately this was wrong.
 
@@ -585,12 +585,12 @@ Unfortunately this was wrong.
 ## Realizations for the Web3 Future
 
 - Many Web3 applications may not want to be a blockchain.
-	- Instead, they want the **properties** that Web3 systems provide.
+  - Instead, they want the **properties** that Web3 systems provide.
 - Many blockchains aren’t really Web3.
-	- Just people selling a token around centralization
+  - Just people selling a token around centralization
 - Many L2s should/would rather be Web3 applications.
-	- They are looking for flexibility, scalability, and resilience.
-	- They are just frustrated with directly accessing / using the L1.
+  - They are looking for flexibility, scalability, and resilience.
+  - They are just frustrated with directly accessing / using the L1.
 
 ---
 
@@ -599,16 +599,16 @@ Unfortunately this was wrong.
 - It’s kind of obvious in retrospect, the first natural product for a decentralized computer is the Distributed Leger.
 - Many existing blockchains and DLTs, made a whole “application specific computer” to run their ledger.
 - **A decentralized computer could host a ledger, and enable so much more.**
-	- It is likely the Polkadot Relay Chain and Kusama Relay Chain will run on the World Computer.
+  - It is likely the Polkadot Relay Chain and Kusama Relay Chain will run on the World Computer.
 
 ---
 
 ## Web3 Does Not Replace Web2
 
 - Likely most of the internet will continue to run on Web2 systems:
-	- More cost efficient.
-	- More scalable.
-	- More corporate control.
+  - More cost efficient.
+  - More scalable.
+  - More corporate control.
 - But there are ways Web3 systems can make the internet better...
 
 ---
@@ -681,13 +681,14 @@ Unfortunately this was wrong.
 ---
 
 ## The trivial case for everyone:
+
 ## Money, Payments, Finance
 
 - For the purposes of these next slides, we will assume that it is obvious that finance on any of these platforms could be made decentralized and use Web3 technologies.
-	- Subscription Payments
-	- Purchases
-	- Revenue Sharing
-	- Cross-Border Payments
+  - Subscription Payments
+  - Purchases
+  - Revenue Sharing
+  - Cross-Border Payments
 - This is basically a proven, and desired product.
 - So let’s look beyond this.
 
@@ -699,15 +700,15 @@ Unfortunately this was wrong.
 
 **Web2 Foundation:**
 
-* The development of core AI models will likely remain in the hands of specialized, centralized teams.
-* User-friendly interfaces will abstract away the underlying complexity.
+- The development of core AI models will likely remain in the hands of specialized, centralized teams.
+- User-friendly interfaces will abstract away the underlying complexity.
 
 **Web3 Enhancements:**
 
-* **Verifiable Training Data:** Cryptographic proof of the exact data set used to train an AI model.
-* **Provable Inference:** Proof that a specific AI model was run with specific inputs to generate a result.
-* **DAO Governance:** Community ownership and control over the development and use of AI models.
-* **Data Bounties:** A transparent market for users to be compensated for providing high-quality data.
+- **Verifiable Training Data:** Cryptographic proof of the exact data set used to train an AI model.
+- **Provable Inference:** Proof that a specific AI model was run with specific inputs to generate a result.
+- **DAO Governance:** Community ownership and control over the development and use of AI models.
+- **Data Bounties:** A transparent market for users to be compensated for providing high-quality data.
 
 </div>
 
@@ -719,16 +720,16 @@ Unfortunately this was wrong.
 
 **Web2 Foundation:**
 
-* The core infrastructure of crawling, indexing, and ranking remains largely centralized for efficiency.
-* The shift continues toward AI models that understand user intent.
+- The core infrastructure of crawling, indexing, and ranking remains largely centralized for efficiency.
+- The shift continues toward AI models that understand user intent.
 
 **Web3 Enhancements:**
 
-* **Verifiable Index:** Cryptographic proof of the search index's contents and integrity.
-* **Transparent Curation:** User control over the algorithms that rank and filter results.
-* **DAO-Managed Registries:** Token-curated lists allow communities to govern what content is prioritized.
-* **New Economic Model:** A shift from an ad-based model to direct micropayments for valuable content.
-* **Verifiable AI:** Proof of the data used to train the AI models that power search.
+- **Verifiable Index:** Cryptographic proof of the search index's contents and integrity.
+- **Transparent Curation:** User control over the algorithms that rank and filter results.
+- **DAO-Managed Registries:** Token-curated lists allow communities to govern what content is prioritized.
+- **New Economic Model:** A shift from an ad-based model to direct micropayments for valuable content.
+- **Verifiable AI:** Proof of the data used to train the AI models that power search.
 
 </div>
 
@@ -740,14 +741,14 @@ Unfortunately this was wrong.
 
 **Web2 Foundation:**
 
-* Sleek front-end applications and the hosting of non-controversial content will likely remain centralized for the best user experience.
+- Sleek front-end applications and the hosting of non-controversial content will likely remain centralized for the best user experience.
 
 **Web3 Enhancements:**
 
-* **Own Your Identity & Graph:** Your profile and connections follow as you move between platforms.
-* **Protocol-Agnostic:** A single social graph can be accessed by countless different apps and front-ends.
-* **Direct Monetization:** No more platform cuts; the creator economy becomes a true p2p economy.
-* **Community Empowerment:** Create and govern communities with real financial power and treasuries.
+- **Own Your Identity & Graph:** Your profile and connections follow as you move between platforms.
+- **Protocol-Agnostic:** A single social graph can be accessed by countless different apps and front-ends.
+- **Direct Monetization:** No more platform cuts; the creator economy becomes a true p2p economy.
+- **Community Empowerment:** Create and govern communities with real financial power and treasuries.
 
 </div>
 
@@ -759,15 +760,15 @@ Unfortunately this was wrong.
 
 **Web2 Foundation:**
 
-* For performance / cost, most video content will likely remain hosted on traditional centralized servers.
+- For performance / cost, most video content will likely remain hosted on traditional centralized servers.
 
 **Web3 Enhancements:**
 
-* **Sovereign Identity:** Users log in with their Web3 accounts, not corporate accounts.
-* **Resilient Hosting:** Key videos can use decentralized storage for censorship resistance and global access.
-* **Transparent Algorithms:** User-controlled curation and discovery, free from opaque corporate influence.
-* **Value-Added Micropayments:** Reward users directly for quality comments, subtitles, or engagement.
-* **Creator DAOs:** Tools for creators to build sovereign communities and economies with their audience.
+- **Sovereign Identity:** Users log in with their Web3 accounts, not corporate accounts.
+- **Resilient Hosting:** Key videos can use decentralized storage for censorship resistance and global access.
+- **Transparent Algorithms:** User-controlled curation and discovery, free from opaque corporate influence.
+- **Value-Added Micropayments:** Reward users directly for quality comments, subtitles, or engagement.
+- **Creator DAOs:** Tools for creators to build sovereign communities and economies with their audience.
 
 </div>
 
@@ -779,15 +780,15 @@ Unfortunately this was wrong.
 
 **Web2 Foundation:**
 
-* The real-world logistics of delivery, warehousing, and physical supply chains will not be decentralized.
+- The real-world logistics of delivery, warehousing, and physical supply chains will not be decentralized.
 
 **Web3 Enhancements:**
 
-* **Decentralized Marketplaces:** Curated product catalogs managed by communities or DAOs.
-* **Verifiable Reputation:** Tamper-proof review systems for both buyers and sellers, across all platforms.
-* **Digital Proof of Purchase:** NFTs that act as receipts for warranties, returns, and proof of ownership.
-* **Supply Chain Verifiability:** Track a product from its origin to your doorstep, ensuring authenticity.
-* **Direct-to-Consumer:** Brands can engage and sell directly to their audience with lower fees.
+- **Decentralized Marketplaces:** Curated product catalogs managed by communities or DAOs.
+- **Verifiable Reputation:** Tamper-proof review systems for both buyers and sellers, across all platforms.
+- **Digital Proof of Purchase:** NFTs that act as receipts for warranties, returns, and proof of ownership.
+- **Supply Chain Verifiability:** Track a product from its origin to your doorstep, ensuring authenticity.
+- **Direct-to-Consumer:** Brands can engage and sell directly to their audience with lower fees.
 
 </div>
 
@@ -799,16 +800,16 @@ Unfortunately this was wrong.
 
 **Web2 Foundation:**
 
-* Recognized journalists are still the ultimate source of news and oracles of new data.
-* Most articles will still be hosted on performant Web2 servers.
+- Recognized journalists are still the ultimate source of news and oracles of new data.
+- Most articles will still be hosted on performant Web2 servers.
 
 **Web3 Enhancements:**
 
-* **Verifiable Identity:** Cryptographically prove the identity and reputation of authors and publications.
-* **Censorship Resistance:** Protect journalists / publications from de-platforming or government takedowns.
-* **Immutable Record:** Prove an article's authenticity and prevent it from being silently edited or deleted.
-* **New Funding Models:** Move beyond ads with article micropayments or reader-governed funding DAOs.
-* **Transparent Fact-Checking:** On-chain systems for verifying sources and tracking corrections.
+- **Verifiable Identity:** Cryptographically prove the identity and reputation of authors and publications.
+- **Censorship Resistance:** Protect journalists / publications from de-platforming or government takedowns.
+- **Immutable Record:** Prove an article's authenticity and prevent it from being silently edited or deleted.
+- **New Funding Models:** Move beyond ads with article micropayments or reader-governed funding DAOs.
+- **Transparent Fact-Checking:** On-chain systems for verifying sources and tracking corrections.
 
 </div>
 
@@ -820,16 +821,16 @@ Unfortunately this was wrong.
 
 **Web2 Foundation:**
 
-* The front-end user experience will remain a sleek, centralized application for performance.
-* Live elements, such as video streams for live dealers, will continue to use traditional web technologies.
+- The front-end user experience will remain a sleek, centralized application for performance.
+- Live elements, such as video streams for live dealers, will continue to use traditional web technologies.
 
 **Web3 Enhancements:**
 
-* **Provably Fair Games:** All game logic (card shuffles, dice rolls) is executed by verifiable random functions.
-* **Self-Custody of Funds:** Users play directly from their wallets, ensuring sovereign control of their funds.
-* **Instant & Automated Payouts:** Payments are executed automatically the moment a game concludes.
-* **DAO-Governed House:** The "house" itself can be a DAO, allowing players to become stakeholders.
-* **Permissionless Global Access:** Access to everyone, bypassing traditional geo-blocks and gatekeeping.
+- **Provably Fair Games:** All game logic (card shuffles, dice rolls) is executed by verifiable random functions.
+- **Self-Custody of Funds:** Users play directly from their wallets, ensuring sovereign control of their funds.
+- **Instant & Automated Payouts:** Payments are executed automatically the moment a game concludes.
+- **DAO-Governed House:** The "house" itself can be a DAO, allowing players to become stakeholders.
+- **Permissionless Global Access:** Access to everyone, bypassing traditional geo-blocks and gatekeeping.
 
 </div>
 
@@ -853,9 +854,9 @@ Things want to use a distributed ledger, but without needing their own blockchai
 JAM introduces a new set of applications which can be ephemeral, and only use the DA:
 
 - Person-to-Person Sales
-	- Temporary escrow before transfer, but doesn’t need permanent state.
+  - Temporary escrow before transfer, but doesn’t need permanent state.
 - On-Chain Video Games
-	- “Polkadot Plays Pokemon”.
+  - “Polkadot Plays Pokemon”.
 - Disappearing Global Chat
 
 ---
@@ -871,12 +872,12 @@ JAM introduces a new set of applications which can be ephemeral, and only use th
 Both!
 
 - Web3 is a technological **evolution**.
-	- We should not expect to rebuild or replace a majority of the Web 2.0 internet.
-	- Most of it works, and works well!
-	- Only fix what is broken.
+  - We should not expect to rebuild or replace a majority of the Web 2.0 internet.
+  - Most of it works, and works well!
+  - Only fix what is broken.
 - Web3 is a social **revolution**.
-	- We should expect Web3 to fundamentally change the way people interact in our physical and digital world.
-	- A shift in power, social structures, global access, etc...
+  - We should expect Web3 to fundamentally change the way people interact in our physical and digital world.
+  - A shift in power, social structures, global access, etc...
 
 ---
 
@@ -918,11 +919,11 @@ Resilience against:
 Web3 should be appealing to most companies:
 
 - Companies often do NOT want to be responsible for personally identifiable information.
-<!-- .element: class="fragment" -->
-	- Most use Federated Identity Management and Single Sign-On
+  <!-- .element: class="fragment" -->
+      - Most use Federated Identity Management and Single Sign-On
 - Companies want to maximize profits, often by reducing middlemen.
-<!-- .element: class="fragment" -->
-	- Payments, Subscriptions, Secondary-Sales, Global Access, etc...
+  <!-- .element: class="fragment" -->
+      - Payments, Subscriptions, Secondary-Sales, Global Access, etc...
 - Companies want deeper integration with their customers.
 <!-- .element: class="fragment" -->
 - Companies want to provide verifiable guarantees to their customers.
@@ -1065,7 +1066,6 @@ That path continues beyond the technologies we are familiar with today.
 
 ---
 
-
 ## A Limited View of Polkadot
 
 We limit ourselves by believing Polkadot is just for parachains:
@@ -1073,9 +1073,9 @@ We limit ourselves by believing Polkadot is just for parachains:
 - Scaling for L2s
 - Hosting other blockchains / distributed ledgers
 - Building infra for the already small pool of people who are building blockchains
-	- And are specifically willing to build entirely using our SDK
+  - And are specifically willing to build entirely using our SDK
 
-Polkadot was *the* blockchain-of-blockchains, but it can be so much more!
+Polkadot was _the_ blockchain-of-blockchains, but it can be so much more!
 
 ---
 
@@ -1106,16 +1106,16 @@ To achieve our vision, we need to keep building the different parts of the decen
 <div class="text-small">
 
 - **Decentralized Hardware**
-	- **Decentralized CPU**
-		- PolkaVM (Multi-Core w/ Execution Sharding)
-	- **Decentralized Permanent Storage**
-		- Merkelized Blockchain State (ParityDB/NOMT)
-	- **Decentralized Memory**
-		- Distributed Decentralized Data Lake
+  - **Decentralized CPU**
+    - PolkaVM (Multi-Core w/ Execution Sharding)
+  - **Decentralized Permanent Storage**
+    - Merkelized Blockchain State (ParityDB/NOMT)
+  - **Decentralized Memory**
+    - Distributed Decentralized Data Lake
 - **Operating System**
-	- CoreVM
+  - CoreVM
 - **Consensus**
-	- ELVES
+  - ELVES
 
 </div>
 </div>
