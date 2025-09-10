@@ -642,12 +642,12 @@ Web3 should be appealing to most users:
 
 ## Top Sites by Category
 
-- Search Engines
+- AI Tooling
+- Online Search
 - Social Networks
 - Video Streaming
 - Online Shopping
 - Online News
-- AI Tooling
 - Online Gambling
 
 ---
@@ -665,117 +665,145 @@ Web3 should be appealing to most users:
 
 ---
 
-## Example: Online Gambling
-
-This is already a solved problem?
-
----
-
-## Example: Online Search for Web3
-
-The same:
-
-- Crawlers, Indexing, Ranking, etc... you can’t really decentralize the core of search engines.
-- Shift to AI models who can understand the intention of your search query.
-
-Web3:
-
-- A verifiable search index, represented.
-- Transparent curation of your search results.
-- Token curated registries, managed by different DAOs / entities.
-- A shift from advertisements to micro-payments to the sites you use.
-- With the shift to AI, verifiable training data for the models you use.
-
----
-
-## Example: Video Streaming for Web3
+## Example: AI Tooling with Web3
 
 <div class="text-small">
 
-The same:
+**Web2 Foundation:**
 
-- Most videos hosted on centralized, Web2 servers.
+* The development of core AI models will likely remain in the hands of specialized, centralized teams.
+* User-friendly interfaces will abstract away the underlying complexity.
 
-Web3:
+**Web3 Enhancements:**
 
-- Web3 based accounts
-- Occasionally, a video might be hosted on Web3 infrastructure for:
-	- Global / Borderless access
-	- Censorship Resistance
-	- Proof of Existence
-- Transparent algorithms / controllable curation for suggested videos.
-- Additional revenue sharing via micropayments:
-	- Providing subtitles / closed captions
-	- High quality comments / engagement
-- Methods for creators to form sovereign communities with their audience.
+* **Verifiable Training Data:** Cryptographic proof of the exact data set used to train an AI model.
+* **Provable Inference:** Proof that a specific AI model was run with specific inputs to generate a result.
+* **DAO Governance:** Community ownership and control over the development and use of AI models.
+* **Data Bounties:** A transparent market for users to be compensated for providing high-quality data.
 
 </div>
 
 ---
 
-## Example: Social Networks for Web3
+## Example: Online Search with Web3
 
-The same:
+<div class="text-small">
 
-- Maybe some dedicated front-ends.
-- Uncontroversial content hosting.
+**Web2 Foundation:**
 
-Web3:
+* The core infrastructure of crawling, indexing, and ranking remains largely centralized for efficiency.
+* The shift continues toward AI models that understand user intent.
 
-- Own your own identity, and the social graph you create.
-- Bring it with you across platform agnostic protocols.
-- Direct monetization of the creator economy.
-- Ability to create communities that actually wield power and finance.
+**Web3 Enhancements:**
 
----
+* **Verifiable Index:** Cryptographic proof of the search index's contents and integrity.
+* **Transparent Curation:** User control over the algorithms that rank and filter results.
+* **DAO-Managed Registries:** Token-curated lists allow communities to govern what content is prioritized.
+* **New Economic Model:** A shift from an ad-based model to direct micropayments for valuable content.
+* **Verifiable AI:** Proof of the data used to train the AI models that power search.
 
-## Example: Online Shopping for Web3
-
-The same:
-
-- Delivery pipelines, physical logistics, etc...
-
-Web3:
-
-- Decentralized, curated catalogs.
-- Proof of purchase.
-- More direct to consumer sales.
-- Verifiable reputation systems, for buyers and sellers.
-- Supply chain management for products sold; authenticity.
+</div>
 
 ---
 
-## Example: Online News
+## Example: Social Networks with Web3
 
-The same:
+<div class="text-small">
 
-- Content creation; the act of journalism.
-- Most articles will still be hosted on Web2 servers for performance.
+**Web2 Foundation:**
 
-Web3:
+* Sleek front-end applications and the hosting of non-controversial content will likely remain centralized for the best user experience.
 
-- Verifiable author identity and reputation.
-- Censorship resistance for journalists and publications.
-- Proof of authenticity; articles can't be silently altered or deleted.
-- New funding models: micropayments for articles, reader-funded DAOs.
-- Transparent fact-checking and source verification systems.
+**Web3 Enhancements:**
+
+* **Own Your Identity & Graph:** Your profile and connections follow as you move between platforms.
+* **Protocol-Agnostic:** A single social graph can be accessed by countless different apps and front-ends.
+* **Direct Monetization:** No more platform cuts; the creator economy becomes a true p2p economy.
+* **Community Empowerment:** Create and govern communities with real financial power and treasuries.
+
+</div>
 
 ---
 
-## Example: AI Tooling
+## Example: Video Streaming with Web3
 
-The same:
+<div class="text-small">
 
-- Core model development by centralized teams.
-- User-friendly interfaces to access the tools.
+**Web2 Foundation:**
 
-Web3:
+* For performance / cost, most video content will likely remain hosted on traditional centralized servers.
 
-- Verifiable training data; proof of what data a model was trained on.
-- Provable inference; cryptographic proof that a specific model was run to get a result.
-- Decentralized compute for model training and inference, reducing costs.
-- Ownership and governance of AI models by DAOs.
-- Users can be paid for contributing their data to training sets.
+**Web3 Enhancements:**
+
+* **Sovereign Identity:** Users log in with their Web3 accounts, not corporate accounts.
+* **Resilient Hosting:** Key videos can use decentralized storage for censorship resistance and global access.
+* **Transparent Algorithms:** User-controlled curation and discovery, free from opaque corporate influence.
+* **Value-Added Micropayments:** Reward users directly for quality comments, subtitles, or engagement.
+* **Creator DAOs:** Tools for creators to build sovereign communities and economies with their audience.
+
+</div>
+
+---
+
+## Example: Online Shopping with Web3
+
+<div class="text-small">
+
+**Web2 Foundation:**
+
+* The real-world logistics of delivery, warehousing, and physical supply chains will not be decentralized.
+
+**Web3 Enhancements:**
+
+* **Decentralized Marketplaces:** Curated product catalogs managed by communities or DAOs.
+* **Verifiable Reputation:** Tamper-proof review systems for both buyers and sellers, across all platforms.
+* **Digital Proof of Purchase:** NFTs that act as receipts for warranties, returns, and proof of ownership.
+* **Supply Chain Verifiability:** Track a product from its origin to your doorstep, ensuring authenticity.
+* **Direct-to-Consumer:** Brands can engage and sell directly to their audience with lower fees.
+
+</div>
+
+---
+
+## Example: Online News with Web3
+
+<div class="text-small">
+
+**Web2 Foundation:**
+
+* Recognized journalists are still the ultimate source of news and oracles of new data.
+* Most articles will still be hosted on performant Web2 servers.
+
+**Web3 Enhancements:**
+
+* **Verifiable Identity:** Cryptographically prove the identity and reputation of authors and publications.
+* **Censorship Resistance:** Protect journalists / publications from de-platforming or government takedowns.
+* **Immutable Record:** Prove an article's authenticity and prevent it from being silently edited or deleted.
+* **New Funding Models:** Move beyond ads with article micropayments or reader-governed funding DAOs.
+* **Transparent Fact-Checking:** On-chain systems for verifying sources and tracking corrections.
+
+</div>
+
+---
+
+## Example: Online Gambling with Web3
+
+<div class="text-small">
+
+**Web2 Foundation:**
+
+* The front-end user experience will remain a sleek, centralized application for performance.
+* Live elements, such as video streams for live dealers, will continue to use traditional web technologies.
+
+**Web3 Enhancements:**
+
+* **Provably Fair Games:** All game logic (card shuffles, dice rolls) is executed by verifiable random functions.
+* **Self-Custody of Funds:** Users play directly from their wallets, ensuring sovereign control of their funds.
+* **Instant & Automated Payouts:** Payments are executed automatically the moment a game concludes.
+* **DAO-Governed House:** The "house" itself can be a DAO, allowing players to become stakeholders.
+* **Permissionless Global Access:** Access to everyone, bypassing traditional geo-blocks and gatekeeping.
+
+</div>
 
 ---
 
