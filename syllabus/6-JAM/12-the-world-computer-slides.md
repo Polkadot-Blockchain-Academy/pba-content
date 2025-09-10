@@ -74,10 +74,10 @@ Let’s completely reframe all of our thoughts about what it is we are building.
 Let’s talk about:
 
 1. Web3
-1. The World Computer
+1. Origins of the World Computer
 1. Components of the World Computer
-1. The Transition to Web3
 1. Products for the World Computer
+1. The Transition to Web3
 
 ---
 
@@ -534,201 +534,6 @@ The World Computer will not replace your personal computer; it's a new type of m
 
 ---
 
-# The Transition to Web3
-
----
-
-## Web3: Evolution or Revolution?
-
-Both!
-
-- Web3 is a technological **evolution**.
-	- We should not expect to rebuild or replace a majority of the Web 2.0 internet.
-	- Most of it works, and works well!
-	- Only fix what is broken.
-- Web3 is a social **revolution**.
-	- We should expect Web3 to fundamentally change the way people interact in our physical and digital world.
-	- A shift in power, social structures, global access, etc...
-
----
-
-## The heart of the difference between Web2 and Web3 lies in resilience.
-
-Resilience against:
-
-<pba-cols>
-<pba-col>
-
-- Censorship
-- Single points of failure
-- Hacks and security breaches
-- Network outages
-- Data manipulation
-
-</pba-col>
-<pba-col>
-
-- Regulatory overreach
-- Corruption or collusion
-- Ownership disputes
-- Monopolization
-- and more…
-
-</pba-col>
-</pba-cols>
-
----
-
-## History Will Repeat Itself!
-
-<img style="filter: invert();" src="./img/computer-timeline.svg">
-
----
-
-## Web3 Does Not Replace Web2
-
-- Likely most of the internet will continue to run on Web2 systems:
-	- More cost efficient.
-	- More scalable.
-	- More corporate control.
-- But there are ways Web3 systems can make the internet better...
-
----
-
-## Companies Should Want Web3
-
-Web3 should be appealing to most companies:
-
-- Companies often do NOT want to be responsible for personally identifiable information.
-<!-- .element: class="fragment" -->
-	- Most use Federated Identity Management and Single Sign-On
-- Companies want to maximize profits, often by reducing middlemen.
-<!-- .element: class="fragment" -->
-	- Payments, Subscriptions, Secondary-Sales, Global Access, etc...
-- Companies want deeper integration with their customers.
-<!-- .element: class="fragment" -->
-- Companies want to provide verifiable guarantees to their customers.
-<!-- .element: class="fragment" -->
-- Companies want to use resilient infrastructure with 24/7 uptime.
-<!-- .element: class="fragment" -->
-
----
-
-## Users Should Want Web3
-
-Web3 should be appealing to most users:
-
-- Users want verifiable infrastructure.
-<!-- .element: class="fragment" -->
-- Users want resilient infrastructure.
-<!-- .element: class="fragment" -->
-- Users want privacy.
-<!-- .element: class="fragment" -->
-- Users want control of their data.
-<!-- .element: class="fragment" -->
-- Users want global, borderless access.
-<!-- .element: class="fragment" -->
-- Users don’t want to be censored.
-<!-- .element: class="fragment" -->
-
----
-
-## The World Should Want Web3
-
-Web3 promises a pathway away from centralized governments and authorities which result in corruption.
-
-1. Proof of Personhood
-2. Publicly Verifiable Voting System
-3. Network States
-
----
-
-## Proof of Personhood
-
-<div class="flex-container">
-<div class="left">
-
-Open and resilient systems providing **Sybil Resistance**, while maintaining privacy and verifiability.
-
-In this future, **basic transactions will be free.**
-
-</div>
-<div class="right-small">
-
-<img style="width: 200px; transform: scaleX(-1);" src="./img/personhood.png">
-
-</div>
-</div>
-
-> “As More People Use AI, We'll Need Unique Proof of Personhood.”
->
-> Eddy Lazzarin, CTO of a16z crypto (From a16z big ideas for 2025)
-
----
-
-## Publicly Verifiable Voting Systems
-
-<div class="flex-container">
-<div class="left">
-
-Secure, direct-voting systems where anyone can verify the results without needing to trust a central authority.
-
-<br />
-
-Where decisions can be made for our **on-chain digital metaverse** and our **off-chain real world**.
-
-<br />
-
-Where results are secured by cryptography and math, rather than the existing incumbents.
-
-</div>
-<div class="right-small">
-
-<img style="width: 400px; transform: scaleX(-1);" src="./img/voting.png">
-
-</div>
-</div>
-
----
-
-## Network States
-
-<div class="flex-container">
-<div class="left">
-
-Societies built without physical borders, united by shared values, digital coordination, and economic alignment.
-
-<br />
-
-Web3 will provide these groups **resilience**, as they organize, govern, and grow entirely online...
-
-<br />
-
-> **Then allow them to shape the real world.**
-
-</div>
-<div class="right-small">
-
-<img style="width: 400px; transform: scaleX(-1);" src="./img/network-states.png">
-
-</div>
-</div>
-
----
-
-## The Biggest Risk to Global Web3 Adoption
-
-- Web3 promises:
-	- Self-Sovereignty
-	- Self-Custody
-	- Unstoppable Applications
-	- Uncensorable Usage
-- But in fact, do most people want this?
-
-> The biggest risk to global Web3 adoption is the complacency and dependency of the average person on the exact centralized parties we hope to upend.
-
----
-
 # Products for the Web3 Computer
 
 ---
@@ -787,6 +592,16 @@ Unfortunately this was wrong.
 - Many existing blockchains and DLTs, made a whole “application specific computer” to run their ledger.
 - **A decentralized computer could host a ledger, and enable so much more.**
 	- It is likely the Polkadot Relay Chain and Kusama Relay Chain will run on the World Computer.
+
+---
+
+## Web3 Does Not Replace Web2
+
+- Likely most of the internet will continue to run on Web2 systems:
+	- More cost efficient.
+	- More scalable.
+	- More corporate control.
+- But there are ways Web3 systems can make the internet better...
 
 ---
 
@@ -1034,6 +849,196 @@ JAM introduces a new set of applications which can be ephemeral, and only use th
 - On-Chain Video Games
 	- “Polkadot Plays Pokemon”.
 - Disappearing Global Chat
+
+---
+
+
+# The Transition to Web3
+
+---
+
+## Web3: Evolution or Revolution?
+
+Both!
+
+- Web3 is a technological **evolution**.
+	- We should not expect to rebuild or replace a majority of the Web 2.0 internet.
+	- Most of it works, and works well!
+	- Only fix what is broken.
+- Web3 is a social **revolution**.
+	- We should expect Web3 to fundamentally change the way people interact in our physical and digital world.
+	- A shift in power, social structures, global access, etc...
+
+---
+
+## The heart of the difference between Web2 and Web3 lies in resilience.
+
+Resilience against:
+
+<pba-cols>
+<pba-col>
+
+- Censorship
+- Single points of failure
+- Hacks and security breaches
+- Network outages
+- Data manipulation
+
+</pba-col>
+<pba-col>
+
+- Regulatory overreach
+- Corruption or collusion
+- Ownership disputes
+- Monopolization
+- and more…
+
+</pba-col>
+</pba-cols>
+
+---
+
+## History Will Repeat Itself!
+
+<img style="filter: invert();" src="./img/computer-timeline.svg">
+
+---
+
+## Companies Should Want Web3
+
+Web3 should be appealing to most companies:
+
+- Companies often do NOT want to be responsible for personally identifiable information.
+<!-- .element: class="fragment" -->
+	- Most use Federated Identity Management and Single Sign-On
+- Companies want to maximize profits, often by reducing middlemen.
+<!-- .element: class="fragment" -->
+	- Payments, Subscriptions, Secondary-Sales, Global Access, etc...
+- Companies want deeper integration with their customers.
+<!-- .element: class="fragment" -->
+- Companies want to provide verifiable guarantees to their customers.
+<!-- .element: class="fragment" -->
+- Companies want to use resilient infrastructure with 24/7 uptime.
+<!-- .element: class="fragment" -->
+
+---
+
+## Users Should Want Web3
+
+Web3 should be appealing to most users:
+
+- Users want verifiable infrastructure.
+<!-- .element: class="fragment" -->
+- Users want resilient infrastructure.
+<!-- .element: class="fragment" -->
+- Users want privacy.
+<!-- .element: class="fragment" -->
+- Users want control of their data.
+<!-- .element: class="fragment" -->
+- Users want global, borderless access.
+<!-- .element: class="fragment" -->
+- Users don’t want to be censored.
+<!-- .element: class="fragment" -->
+
+---
+
+## The World Should Want Web3
+
+Web3 promises a pathway away from centralized governments and authorities which result in corruption.
+
+1. Proof of Personhood
+2. Publicly Verifiable Voting System
+3. Network States
+
+---
+
+## Proof of Personhood
+
+<div class="flex-container">
+<div class="left">
+
+Open and resilient systems providing **Sybil Resistance**, while maintaining privacy and verifiability.
+
+In this future, **basic transactions will be free.**
+
+</div>
+<div class="right-small">
+
+<img style="width: 200px; transform: scaleX(-1);" src="./img/personhood.png">
+
+</div>
+</div>
+
+> “As More People Use AI, We'll Need Unique Proof of Personhood.”
+>
+> Eddy Lazzarin, CTO of a16z crypto (From a16z big ideas for 2025)
+
+---
+
+## Publicly Verifiable Voting Systems
+
+<div class="flex-container">
+<div class="left">
+
+Secure, direct-voting systems where anyone can verify the results without needing to trust a central authority.
+
+<br />
+
+Where decisions can be made for our **on-chain digital metaverse** and our **off-chain real world**.
+
+<br />
+
+Where results are secured by cryptography and math, rather than the existing incumbents.
+
+</div>
+<div class="right-small">
+
+<img style="width: 400px; transform: scaleX(-1);" src="./img/voting.png">
+
+</div>
+</div>
+
+---
+
+## Network States
+
+<div class="flex-container">
+<div class="left">
+
+Societies built without physical borders, united by shared values, digital coordination, and economic alignment.
+
+<br />
+
+Web3 will provide these groups **resilience**, as they organize, govern, and grow entirely online...
+
+<br />
+
+> **Then allow them to shape the real world.**
+
+</div>
+<div class="right-small">
+
+<img style="width: 400px; transform: scaleX(-1);" src="./img/network-states.png">
+
+</div>
+</div>
+
+---
+
+## So What is the Problem?
+
+Web3 promises:
+
+- Self-Sovereignty
+- Self-Custody
+- Unstoppable Applications
+- Uncensorable Usage
+
+But in fact, do most people want this?
+
+---
+
+## The biggest risk to global Web3 adoption is the complacency and dependency of the average person on the exact centralized parties we hope to upend.
 
 ---
 
