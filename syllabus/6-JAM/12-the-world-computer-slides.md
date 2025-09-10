@@ -627,7 +627,20 @@ Web3 should be appealing to most users:
 
 ---
 
-## The trivial case: Money, Payments, Finance
+## Top Sites by Category
+
+- Search Engines
+- Social Networks
+- Video Streaming
+- Online Shopping
+- News & Information Portals
+- AI Tooling
+- Online Gambling & Betting
+
+---
+
+## The trivial case for everyone:
+## Money, Payments, Finance
 
 - For the purposes of these next slides, we will assume that it is obvious that finance on any of these platforms could be made decentralized and use Web3 technologies.
 	- Subscription Payments
@@ -819,9 +832,21 @@ JAM introduces a new set of applications which can be ephemeral, and only use th
 
 ## Proof of Personhood
 
+<div class="flex-container">
+<div class="left">
+
+
 Open and resilient systems providing **Sybil Resistance**, while maintaining privacy and verifiability.
 
 In this future, basic transactions will be free.
+
+</div>
+<div class="right-small">
+
+<img style="width: 200px; transform: scaleX(-1);" src="./img/personhood.png">
+
+</div>
+</div>
 
 > “As More People Use AI, We'll Need Unique Proof of Personhood.”
 >
@@ -831,21 +856,44 @@ In this future, basic transactions will be free.
 
 ## Publicly Verifiable Voting Systems
 
+<div class="flex-container">
+<div class="left">
+
+
 Secure, direct-voting systems where anyone can verify the results without needing to trust a central authority.
 
 Where decisions can be made for both our **on-chain digital metaverse**, and our **off-chain real world**.
 
 Where results are secured by cryptography and math, rather than the existing incumbents.
 
+</div>
+<div class="right-small">
+
+<img style="width: 400px; transform: scaleX(-1);" src="./img/voting.png">
+
+</div>
+</div>
+
 ---
 
 ## Network States
+
+<div class="flex-container">
+<div class="left">
 
 Societies built without physical borders, united by shared values, digital coordination, and economic alignment.
 
 Web3 will provide these groups **resilience**, as they organize, govern, and grow entirely online...
 
-Then shape the real world.
+> **Then shape the real world.**
+
+</div>
+<div class="right-small">
+
+<img style="width: 400px; transform: scaleX(-1);" src="./img/network-states.png">
+
+</div>
+</div>
 
 ---
 

@@ -40,6 +40,11 @@
 	order: 2;
 }
 
+.right-small {
+	order: 2;
+	flex-shrink: 2;
+}
+
 .centered * {
 	position: relative;
 	left: 50%;
