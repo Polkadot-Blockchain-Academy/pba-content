@@ -7,7 +7,67 @@ description: Develop an understanding of the Ubiquitous World Computer.
 
 ---
 
-## Goals
+## What have we learned so far?
+
+Through the PBA-X and PBA Campus, we have covered a lot!
+
+---
+
+## Blockchain Technology
+
+A way for two or more untrusted parties to interact with each other in provable ways without relying on middlemen.
+
+A tool for creating systems which are:
+
+- Verifiable
+- Public
+- Distributed
+- Open
+- Resilient
+
+---
+
+## The Building Blocks of Blockchains
+
+- Cryptography
+- Peer-to-Peer Networking
+- Merklized Database
+- Data Availability
+- Byzantine-Fault-Tolerant Consensus
+- Economic Game Theory
+
+---
+
+## Scaling Blockchain Systems
+
+- Shared Security
+- Programmability Layers
+	- Smart Contracts
+	- Modular Runtime
+- Execution Sharding
+- Data Sharding
+- Blockchain Rollups
+- On-Chain Governance
+
+---
+
+## The Great Mistake
+
+Blockchain is not a product in and of itself.
+
+The world does not want or need "more blockchains".
+
+It is simply a tool that can be used to create resilient products.
+
+---
+
+## So what should we build with this tool?
+
+To understand this, we must tke all the knowledge we have, and rebuild our understanding of the problems at hand.
+
+---
+
+## Goals for this Presentation
 
 Let’s completely reframe all of our thoughts about what it is we are building.
 
@@ -56,12 +116,16 @@ Here are a few tries:
 
 ### Global Financial Crisis (2008)
 
+<img style="width: 200px;" src="./img/crisis.png">
+
 The collapse of major financial institutions like Lehman Brothers and the subsequent bailouts revealed the fragility of centralized banking systems and the risks of opaque financial practices.
 
 </pba-col>
 <pba-col>
 
 ### Wikileaks Censorship (2010)
+
+<img style="width: 200px;" src="./img/censorship.png">
 
 Governments and financial institutions cut off funding channels to WikiLeaks, blocking donations via traditional systems like PayPal and credit cards.
 
@@ -70,73 +134,24 @@ Governments and financial institutions cut off funding channels to WikiLeaks, bl
 
 ### Snowden Revelations (2013)
 
+<img style="width: 200px;" src="./img/snowden.png">
+
 Exposed global surveillance programs conducted by the NSA and its allies, showing how governments and centralized entities were collecting and storing vast amounts of private data without consent.
 
 </pba-col>
 </pba-cols>
 
-And so much more...
+---
 
+<img src="./img/newspaper-mosaic.png" />
 
 ---
 
-## Why we need Web3: 10 Historical Events
+## ...and History is in the Making.
 
-LLM Generated:
+<iframe width="854" height="480" src="https://www.youtube.com/embed/dsl_sKYywEI?si=gR5NSOav9qlKW9uR?cc_load_policy=1&cc_lang_pref=en" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-<pba-cols style="font-size: 20px;">
-<pba-col>
-
-1. The **2008 financial crisis** underscored the need for transparent and permissionless financial systems, which is the goal of DeFi.
-1. The **Facebook-Cambridge Analytica scandal** revealed how centralized platforms exploit user data, highlighting the need for decentralized identity and user data ownership.
-1. The **financial blockade of WikiLeaks** by major payment processors demonstrated how centralized entities can censor access to funds, proving the case for permissionless cryptocurrencies.
-1. The **Robinhood/GameStop trading halts** showed how centralized brokers can intervene in markets, emphasizing the need for decentralized exchanges (DEXs) with transparent rules.
-1. The arbitrary **de-platforming and demonetization of creators by platforms** like YouTube illustrates the need for censorship-resistant social networks where users own their audience.
-
-</pba-col>
-<pba-col>
-
-1. Massive **data breaches at Equifax and Yahoo** exposed the vulnerability of centralizing sensitive information, arguing for systems where users control their own private data.
-1. **Government-led internet shutdowns** in countries like Turkey and Egypt prove the fragility of centralized networks and the need for decentralized, censorship-resistant communication.
-1. **High platform fees** on sites like Substack and Patreon show how intermediaries extract value, highlighting the need for direct creator-to-fan monetization with lower costs.
-1. **Opaque algorithms on centralized platforms** that manipulate user feeds underscore the need for open systems where users can control their own information and engagement.
-1. **Twitter's suppression of links** to its competitor Substack is a clear example of a dominant platform stifling competition, showing the need for a neutral social protocol.
-
-</pba-col>
-</pba-cols>
-
----
-
-## Why we need Web3: 10 Everyday Things
-
-LLM Generated:
-
-<pba-cols style="font-size: 20px;">
-<pba-col>
-
-1. Your social media feed is controlled by a secret algorithm that prioritizes engagement over your well-being or exposure to a balanced viewpoint.
-1. Every time you use a "free" online service, your personal data is being collected, packaged, and sold to advertisers without you getting a share of the profit.
-1. A creator you follow on a major platform suddenly loses their income overnight because of an arbitrary change in monetization or content policy.
-1. You are required to create a new account and password for every single online service, leading to dozens of insecure credentials scattered across centralized databases.
-1. Your bank or a payment app can freeze your account or block a transaction based on their internal risk models, with little transparency or immediate recourse.
-
-</pba-col>
-<pba-col>
-
-1. You "purchase" a digital item like an ebook, movie, or in-game skin, but you don't truly own it and can't resell it or move it to another platform.
-1. News organizations and independent journalists are constantly at risk of being de-ranked, demonetized, or censored by centralized platforms that control information flow.
-1. Making an international payment involves multiple intermediary banks, each taking a fee and adding days of delay to the transaction.
-1. Developers are forced to build on platforms like the App Store or Google Play, where the platform owner takes a large cut (e.g., 30%) and can remove the app at will.
-1. Your digital identity is fragmented across dozens of companies, with none of them giving you a complete, portable, and verifiable record of your own online life.
-
-</pba-col>
-</pba-cols>
-
----
-
-## The World Today
-
-<iframe width="854" height="480" src="https://www.youtube.com/embed/dsl_sKYywEI?si=gR5NSOav9qlKW9uR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+> Bill Gates (Microsoft), Sam Altman (OpenAI), Tim Cook (Apple), Mark Zuckerberg (Meta), Safra Catz (Oracle), and Sundar Pichai (Google) pander to United States President Donald Trump.
 
 ---
 
