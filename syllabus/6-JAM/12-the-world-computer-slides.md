@@ -333,6 +333,43 @@ Now we can start to see why some blockchain products seem so different.
 
 ---
 
+## Two Different Mindsets
+
+There is a **growing divide** in the mindset of blockchain development.
+
+<pba-cols class="text-small">
+<pba-col>
+
+#### Long Term Thinking
+
+- Scalable Decentralization
+- Light Clients
+- Trustless Bridges
+- Utility Derived Tokens
+- Sustainable Economics
+- Changing the Status Quo
+- Rich Metadata
+- etc...
+
+</pba-col>
+<pba-col>
+
+#### Short Term Results
+
+- Small Validator Sets
+- Expensive / High Powered Nodes
+- N of M Multisigs
+- Speculative Tokens / Gambling
+- VC Controlled Dumps
+- Pandering to Incumbents
+- Blind Signing
+- etc…
+
+</pba-col>
+</pba-cols>
+
+---
+
 # Components of the World Computer
 
 ---
@@ -423,6 +460,10 @@ We can simply hypothesize about the other parts of a computing world which are u
 
 ---
 
+## The building blocks of Blockchain, are simply the components of a Decentralized Computer.
+
+---
+
 ## Who does the World Computer appeal to?
 
 The World Computer has many properties, appealing to different audiences:
@@ -448,45 +489,17 @@ The World Computer will not replace your personal computer; it's a new type of m
 
 <div class="text-small">
 
-- It is inherently slower and more expensive.
+- **It is inherently slower and more expensive.**
 	- Every calculation must be independently verified by thousands of nodes across the globe.
-- It is a finite public resource.
+- **It is a finite public resource.**
 	- Access isn't always guaranteed to everyone, and when there is competition, you need to pay.
 	- However, we hope to scale to a point where everyone gets some amount of basic access.
-- It is permanent and immutable by design.
+- **It is permanent and immutable by design.**
 	- The history of the computer will reflect all of the actions of the past.
-- It shifts the security burden entirely to the user.
+- **It shifts the security burden entirely to the user.**
 	- Full sovereignty.
-- There is no "forgot password" link, support hotline, etc...
+	- There is no "forgot password" link, support hotline, etc...
 
-</div>
-
----
-
-## The Polkadot World Computer
-
-<div class="flex-container">
-
-<div class="left-small">
-
-<img style="width: 500px;" src="./img/jam-computer.png" />
-
-</div>
-<div class="right">
-
-- Decentralized Hardware: JAM
-	- Decentralized CPU
-		- PolkaVM (Multi-Core w/ Execution Sharding)
-	- Decentralized Permanent Storage
-		- Merkelized Blockchain State (ParityDB/NOMT)
-	- Decentralized Memory
-		- Distributed Decentralized Data Lake
-- Operating System
-	- CoreVM
-- Consensus
-	- ELVES
-
-</div>
 </div>
 
 ---
@@ -701,6 +714,39 @@ Web3:
 ---
 
 # Products for the World Computer
+
+---
+
+## A World Computer Built with Polkadot
+
+<div class="flex-container">
+
+<div class="left-small">
+
+<img style="width: 500px;" src="./img/jam-computer.png" />
+
+</div>
+<div class="right">
+
+<br />
+
+<div class="text-small">
+
+- **Decentralized Hardware: JAM**
+	- **Decentralized CPU**
+		- PolkaVM (Multi-Core w/ Execution Sharding)
+	- **Decentralized Permanent Storage**
+		- Merkelized Blockchain State (ParityDB/NOMT)
+	- **Decentralized Memory**
+		- Distributed Decentralized Data Lake
+- **Operating System**
+	- CoreVM
+- **Consensus**
+	- ELVES
+
+</div>
+</div>
+</div>
 
 ---
 
