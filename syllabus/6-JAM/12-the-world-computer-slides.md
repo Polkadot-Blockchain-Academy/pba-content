@@ -76,7 +76,7 @@ Let’s talk about:
 1. Web3
 1. The World Computer
 1. Components of the World Computer
-1. The Web3 Internet
+1. The Transition to Web3
 1. Products for the World Computer
 
 ---
@@ -534,7 +534,7 @@ The World Computer will not replace your personal computer; it's a new type of m
 
 ---
 
-# What does the Web3 Internet look like?
+# The Transition to Web3
 
 ---
 
@@ -552,6 +552,12 @@ Both!
 
 ---
 
+## History Will Repeat Itself!
+
+<img style="filter: invert();" src="./img/computer-timeline.svg">
+
+---
+
 ## Web3 Does Not Replace Web2
 
 - Likely most of the internet will continue to run on Web2 systems:
@@ -559,6 +565,33 @@ Both!
 	- More scalable.
 	- More corporate control.
 - But there are ways Web3 systems can make the internet better...
+
+---
+
+## The heart of the difference between Web2 and Web3 lies in resilience.
+
+Resilience against:
+
+<pba-cols>
+<pba-col>
+
+- Censorship
+- Single points of failure
+- Hacks and security breaches
+- Network outages
+- Data manipulation
+
+</pba-col>
+<pba-col>
+
+- Regulatory overreach
+- Corruption or collusion
+- Ownership disputes
+- Monopolization
+- and more…
+
+</pba-col>
+</pba-cols>
 
 ---
 
@@ -614,6 +647,63 @@ Web3 should be appealing to most users:
 ---
 
 # Products for the Web3 Computer
+
+---
+
+## Can I run X on the World Computer?
+
+I have been asked before:
+
+<div class="flex-container">
+<div class="left-small">
+
+<img style="width: 500px;" src="./img/doom.png" />
+
+</div>
+<div class="right">
+
+- Can I run Docker?
+- Can I run Firefox?
+- Can I run Doom?
+- Can I run Photoshop?
+
+</div>
+</div>
+
+**Yes!**
+
+But should you? 🤔
+
+---
+
+## Create A Hammer, Everything Becomes a Nail
+
+Things like the Substrate and Parachains really influenced how people thought about building applications for Web3.
+
+> *Every application should have its own application specific chain!*
+
+Unfortunately this was wrong.
+
+---
+
+## Realizations for the Web3 Future
+
+- Many Web3 applications may not want to be a blockchain.
+	- Instead, they want the **properties** that Web3 systems provide.
+- Many blockchains aren’t really Web3.
+	- Just people selling a token around centralization
+- Many L2s should/would rather be Web3 applications.
+	- They are looking for flexibility, scalability, and resilience.
+	- They are just frustrated with directly accessing / using the L1.
+
+---
+
+## Resilient, Distributed Ledgers
+
+- It’s kind of obvious in retrospect, the first natural product for a decentralized computer is the Distributed Leger.
+- Many existing blockchains and DLTs, made a whole “application specific computer” to run their ledger.
+- **A decentralized computer could host a ledger, and enable so much more.**
+	- It is likely the Polkadot Relay Chain and Kusama Relay Chain will run on the World Computer.
 
 ---
 
@@ -871,63 +961,6 @@ Web3 should be appealing to most users:
 
 ---
 
-## Can I run X on the World Computer?
-
-I have been asked before:
-
-<div class="flex-container">
-<div class="left-small">
-
-<img style="width: 500px;" src="./img/doom.png" />
-
-</div>
-<div class="right">
-
-- Can I run Docker?
-- Can I run Firefox?
-- Can I run Doom?
-- Can I run Photoshop?
-
-</div>
-</div>
-
-**Yes!**
-
-But should you? 🤔
-
----
-
-## Create A Hammer, Everything Becomes a Nail
-
-Things like the Substrate and Parachains really influenced how people thought about building applications for Web3.
-
-> *Every application should have its own application specific chain!*
-
-Unfortunately this was wrong.
-
----
-
-## Realizations for the Web3 Future
-
-- Many Web3 applications may not want to be a blockchain.
-	- Instead, they want the **properties** that Web3 systems provide.
-- Many blockchains aren’t really Web3.
-	- Just people selling a token around centralization
-- Many L2s should/would rather be Web3 applications.
-	- They are looking for flexibility, scalability, and resilience.
-	- They are just frustrated with directly accessing / using the L1.
-
----
-
-## Resilient, Distributed Ledgers
-
-- It’s kind of obvious in retrospect, the first natural product for a decentralized computer is the Distributed Leger.
-- Many existing blockchains and DLTs, made a whole “application specific computer” to run their ledger.
-- **A decentralized computer could host a ledger, and enable so much more.**
-	- It is likely the Polkadot Relay Chain and Kusama Relay Chain will run on the World Computer.
-
----
-
 ## All of the Basic “Blockchain Apps”
 
 Things want to use a distributed ledger, but without needing their own blockchain.
@@ -1065,12 +1098,6 @@ The goal to build a decentralized world computer has walked us along a path of b
 	- P2P Networking Stack
 	- PolkaVM Computation Stack
 - To achieve our vision, we need to keep building the different parts of the decentralized computer, and eventually scale to the decentralized cloud.
-
----
-
-## History Will Repeat Itself!
-
-<img style="filter: invert();" src="./img/computer-timeline.svg">
 
 ---
 
