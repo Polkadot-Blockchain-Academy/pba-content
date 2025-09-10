@@ -99,6 +99,34 @@ Here are a few tries:
 
 ---
 
+## The Driving Force
+
+The world we live in has problems:
+
+<div class="flex-container">
+<div class="left">
+
+- Financial Corruption
+- Political Control
+- Digital Servitude
+- Erosion of Sovereignty
+- Systemic Fragility
+- and more…
+
+</div>
+<div class="right">
+
+<img style="width: 400px;" src="./img/world.png" />
+
+</div>
+</div>
+
+These problems all stem from the same place:
+
+> **The growing power of central authorities.**
+
+---
+
 ## History has shown us that we cannot trust centralized authorities.
 
 <pba-cols class="text-small">
@@ -506,7 +534,7 @@ The World Computer will not replace your personal computer; it's a new type of m
 
 ---
 
-# What does Web3 look like?
+# What does the Web3 Internet look like?
 
 ---
 
@@ -582,6 +610,10 @@ Web3 should be appealing to most users:
 - But in fact, do most people want this?
 
 > The biggest risk to global Web3 adoption is the complacency and dependency of the average person on the exact centralized parties we hope to upend.
+
+---
+
+# Products for the Web3 Computer
 
 ---
 
@@ -807,10 +839,6 @@ Web3 should be appealing to most users:
 
 ---
 
-# Products for the World Computer
-
----
-
 ## A World Computer Built with Polkadot
 
 <div class="flex-container">
@@ -873,12 +901,16 @@ But should you? 🤔
 
 Things like the Substrate and Parachains really influenced how people thought about building applications for Web3.
 
+> *Every application should have its own application specific chain!*
+
 Unfortunately this was wrong.
 
-Realizations:
+---
+
+## Realizations for the Web3 Future
 
 - Many Web3 applications may not want to be a blockchain.
-	- Instead, they want the properties that Web3 systems provide.
+	- Instead, they want the **properties** that Web3 systems provide.
 - Many blockchains aren’t really Web3.
 	- Just people selling a token around centralization
 - Many L2s should/would rather be Web3 applications.
@@ -891,8 +923,8 @@ Realizations:
 
 - It’s kind of obvious in retrospect, the first natural product for a decentralized computer is the Distributed Leger.
 - Many existing blockchains and DLTs, made a whole “application specific computer” to run their ledger.
-- A decentralized computer could host a ledger, and enable so much more.
-- It is likely the Polkadot and Kusama Relay Chain will run on the World Computer.
+- **A decentralized computer could host a ledger, and enable so much more.**
+	- It is likely the Polkadot Relay Chain and Kusama Relay Chain will run on the World Computer.
 
 ---
 
