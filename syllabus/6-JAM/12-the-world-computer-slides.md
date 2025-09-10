@@ -836,31 +836,6 @@ Unfortunately this was wrong.
 
 ---
 
-## All of the Basic “Blockchain Apps”
-
-Things want to use a distributed ledger, but without needing their own blockchain.
-
-- Decentralized Identity
-- Decentralized Physical Infrastructure
-- Decentralized Finance
-- Metaverse
-- Sustainability
-- etc...
-
----
-
-## Ephemeral Applications
-
-JAM introduces a new set of applications which can be ephemeral, and only use the DA:
-
-- Person-to-Person Sales
-  - Temporary escrow before transfer, but doesn’t need permanent state.
-- On-Chain Video Games
-  - “Polkadot Plays Pokemon”.
-- Disappearing Global Chat
-
----
-
 <!-- .slide: data-background-color="#4A2439" -->
 
 # The Transition to Web3
