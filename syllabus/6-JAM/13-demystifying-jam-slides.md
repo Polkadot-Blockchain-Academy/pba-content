@@ -6,4 +6,4 @@ duration: 40+ mins
 
 ### Demystifying JAM
 
-All lecture's material can be found in the following link https://blog.kianenigma.com/posts/tech/demystifying-jam/
+All lecture's material can be found in the following link https://blog.kianenigma.com/posts/tech/demystifying-jam/presentation-pba/
