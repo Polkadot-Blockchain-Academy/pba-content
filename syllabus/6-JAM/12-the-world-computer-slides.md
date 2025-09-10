@@ -532,30 +532,41 @@ Both!
 
 ---
 
-## Web2 Companies Want Web3
+## Web2 Companies Should Want Web3
 
 Web3 should be appealing to most Web2 Companies:
 
 - Companies often do NOT want to be responsible for personally identifiable information.
+<!-- .element: class="fragment" -->
 	- Most use Federated Identity Management and Single Sign-On
 - Companies want to maximize profits, often by reducing middlemen.
+<!-- .element: class="fragment" -->
 	- Payments, Subscriptions, Secondary-Sales, Global Access, etc...
 - Companies want deeper integration with their customers.
+<!-- .element: class="fragment" -->
 - Companies want to provide verifiable guarantees to their customers.
+<!-- .element: class="fragment" -->
 - Companies want to use resilient infrastructure with 24/7 uptime.
+<!-- .element: class="fragment" -->
 
 ---
 
-## Web2 Users Want Web3
+## Web2 Users Should Want Web3
 
 Web3 should be appealing to most users:
 
 - Users want verifiable infrastructure.
+<!-- .element: class="fragment" -->
 - Users want resilient infrastructure.
+<!-- .element: class="fragment" -->
 - Users want privacy.
+<!-- .element: class="fragment" -->
 - Users want control of their data.
+<!-- .element: class="fragment" -->
 - Users want global, borderless access.
+<!-- .element: class="fragment" -->
 - Users don’t want to be censored.
+<!-- .element: class="fragment" -->
 
 ---
 
