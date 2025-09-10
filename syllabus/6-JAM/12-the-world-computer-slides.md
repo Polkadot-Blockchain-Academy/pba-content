@@ -81,6 +81,8 @@ Let’s talk about:
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 # Web3
 
 ---
@@ -245,6 +247,8 @@ Web3 is:
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 # Origins of the World Computer
 
 ---
@@ -400,6 +404,8 @@ There is a **growing divide** in the mindset of blockchain development.
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
+
 # Components of the World Computer
 
 ---
@@ -534,7 +540,9 @@ The World Computer will not replace your personal computer; it's a new type of m
 
 ---
 
-# Products for the Web3 Computer
+<!-- .slide: data-background-color="#4A2439" -->
+
+# Products for the World Computer
 
 ---
 
@@ -852,6 +860,7 @@ JAM introduces a new set of applications which can be ephemeral, and only use th
 
 ---
 
+<!-- .slide: data-background-color="#4A2439" -->
 
 # The Transition to Web3
 
@@ -1042,51 +1051,52 @@ But in fact, do most people want this?
 
 ---
 
-# The Future for Polkadot
+<!-- .slide: data-background-color="#4A2439" -->
+
+# The Future of Polkadot
 
 ---
 
 ## Polkadot has always felt different
 
-The goal to build a decentralized world computer has walked us along a path of blockchains and distributed ledger technology, but that path goes on, and beyond the technologies we are familiar with today.
+The goal to build a decentralized world computer has led us along a path of blockchains and distributed ledger technology.
 
-- Distributed Ledger Technology
-- Bitcoin
-- Blockchain
-- Ethereum
-- Polkadot
-- JAM
-- Decentralized Computer
-- And beyond...
+That path continues beyond the technologies we are familiar with today.
+
+---
+
+
+## A Limited View of Polkadot
+
+We limit ourselves by believing Polkadot is just for parachains:
+
+- Scaling for L2s
+- Hosting other blockchains / distributed ledgers
+- Building infra for the already small pool of people who are building blockchains
+	- And are specifically willing to build entirely using our SDK
+
+Polkadot was *the* blockchain-of-blockchains, but it can be so much more!
 
 ---
 
 ## Polkadot as a Community, not a Product
 
-<div class="text-small">
+Instead, we must look at Polkadot as **a vision** for the future, **a mission** to build that future, and **a community** who can execute that mission.
 
-- We are currently limiting ourselves in believing Polkadot is just for parachains.
-	- Scaling for L2s
-	- Hosting other blockchains / distributed ledgers
-	- Building infra for the already small pool of people who are building blockchains
-		- And are specifically willing to build entirely using our SDK
-- Instead, we must look at Polkadot as a vision for the future, a mission to build that future, and community who can execute that mission.
-	- Like our runtimes and governance, this community can evolve, and as we understand our own technology better, so can our mission and vision.
-	- Polkadot was a blockchain-of-blockchains, the original ETH 2.0, a platform for ledgers.
-	- Polkadot can become a decentralized, ubiquitous world computer.
-		- Able to execute anything, and everything, with resilience.
+The Polkadot Network can become a decentralized Web3 Cloud:
 
-</div>
+> Able to execute anything, and everything, with resilience.
 
 ---
 
-
 ## A World Computer Built with Polkadot
+
+To achieve our vision, we need to keep building the different parts of the decentralized computer, and eventually scale to the decentralized cloud.
 
 <div class="flex-container">
 <div class="left-small">
 
-<img style="width: 500px;" src="./img/jam-computer.png" />
+<img style="width: 400px;" src="./img/jam-computer.png" />
 
 </div>
 <div class="right">
@@ -1095,7 +1105,7 @@ The goal to build a decentralized world computer has walked us along a path of b
 
 <div class="text-small">
 
-- **Decentralized Hardware: JAM**
+- **Decentralized Hardware**
 	- **Decentralized CPU**
 		- PolkaVM (Multi-Core w/ Execution Sharding)
 	- **Decentralized Permanent Storage**
@@ -1113,14 +1123,22 @@ The goal to build a decentralized world computer has walked us along a path of b
 
 ---
 
+## What is JAM?
 
-## Polkadot’s Mission Does Not End with Blockchain Tech
+- JAM is **NOT** another blockchain.
+- JAM is the specification for a new World Computer.
+- JAM uses all of the knowledge gained from building the Relay Chain.
+- JAM learns from all the mistakes that the Relay Chain made.
 
-- One can argue that JAM is mostly NOT a blockchain anymore.
-	- Distributed Decentralized Data Lake
-	- P2P Networking Stack
-	- PolkaVM Computation Stack
-- To achieve our vision, we need to keep building the different parts of the decentralized computer, and eventually scale to the decentralized cloud.
+> JAM is the backbone for the future of Polkadot.
+
+---
+
+## If we want a better world,
+
+<img src="./img/polkadot-computer.png" />
+
+## we need a better World Computer.
 
 ---
 
