@@ -595,9 +595,9 @@ Resilience against:
 
 ---
 
-## Web2 Companies Should Want Web3
+## Companies Should Want Web3
 
-Web3 should be appealing to most Web2 Companies:
+Web3 should be appealing to most companies:
 
 - Companies often do NOT want to be responsible for personally identifiable information.
 <!-- .element: class="fragment" -->
@@ -614,7 +614,7 @@ Web3 should be appealing to most Web2 Companies:
 
 ---
 
-## Web2 Users Should Want Web3
+## Users Should Want Web3
 
 Web3 should be appealing to most users:
 
@@ -630,6 +630,89 @@ Web3 should be appealing to most users:
 <!-- .element: class="fragment" -->
 - Users don’t want to be censored.
 <!-- .element: class="fragment" -->
+
+---
+
+## The World Should Want Web3
+
+Web3 promises a pathway away from centralized governments and authorities which result in corruption.
+
+1. Proof of Personhood
+2. Publicly Verifiable Voting System
+3. Network States
+
+---
+
+## Proof of Personhood
+
+<div class="flex-container">
+<div class="left">
+
+Open and resilient systems providing **Sybil Resistance**, while maintaining privacy and verifiability.
+
+In this future, **basic transactions will be free.**
+
+</div>
+<div class="right-small">
+
+<img style="width: 200px; transform: scaleX(-1);" src="./img/personhood.png">
+
+</div>
+</div>
+
+> “As More People Use AI, We'll Need Unique Proof of Personhood.”
+>
+> Eddy Lazzarin, CTO of a16z crypto (From a16z big ideas for 2025)
+
+---
+
+## Publicly Verifiable Voting Systems
+
+<div class="flex-container">
+<div class="left">
+
+Secure, direct-voting systems where anyone can verify the results without needing to trust a central authority.
+
+<br />
+
+Where decisions can be made for our **on-chain digital metaverse** and our **off-chain real world**.
+
+<br />
+
+Where results are secured by cryptography and math, rather than the existing incumbents.
+
+</div>
+<div class="right-small">
+
+<img style="width: 400px; transform: scaleX(-1);" src="./img/voting.png">
+
+</div>
+</div>
+
+---
+
+## Network States
+
+<div class="flex-container">
+<div class="left">
+
+Societies built without physical borders, united by shared values, digital coordination, and economic alignment.
+
+<br />
+
+Web3 will provide these groups **resilience**, as they organize, govern, and grow entirely online...
+
+<br />
+
+> **Then allow them to shape the real world.**
+
+</div>
+<div class="right-small">
+
+<img style="width: 400px; transform: scaleX(-1);" src="./img/network-states.png">
+
+</div>
+</div>
 
 ---
 
@@ -929,38 +1012,6 @@ Unfortunately this was wrong.
 
 ---
 
-## A World Computer Built with Polkadot
-
-<div class="flex-container">
-<div class="left-small">
-
-<img style="width: 500px;" src="./img/jam-computer.png" />
-
-</div>
-<div class="right">
-
-<br />
-
-<div class="text-small">
-
-- **Decentralized Hardware: JAM**
-	- **Decentralized CPU**
-		- PolkaVM (Multi-Core w/ Execution Sharding)
-	- **Decentralized Permanent Storage**
-		- Merkelized Blockchain State (ParityDB/NOMT)
-	- **Decentralized Memory**
-		- Distributed Decentralized Data Lake
-- **Operating System**
-	- CoreVM
-- **Consensus**
-	- ELVES
-
-</div>
-</div>
-</div>
-
----
-
 ## All of the Basic “Blockchain Apps”
 
 Things want to use a distributed ledger, but without needing their own blockchain.
@@ -983,73 +1034,6 @@ JAM introduces a new set of applications which can be ephemeral, and only use th
 - On-Chain Video Games
 	- “Polkadot Plays Pokemon”.
 - Disappearing Global Chat
-
----
-
-## Proof of Personhood
-
-<div class="flex-container">
-<div class="left">
-
-
-Open and resilient systems providing **Sybil Resistance**, while maintaining privacy and verifiability.
-
-In this future, basic transactions will be free.
-
-</div>
-<div class="right-small">
-
-<img style="width: 200px; transform: scaleX(-1);" src="./img/personhood.png">
-
-</div>
-</div>
-
-> “As More People Use AI, We'll Need Unique Proof of Personhood.”
->
-> Eddy Lazzarin, CTO of a16z crypto (From a16z big ideas for 2025)
-
----
-
-## Publicly Verifiable Voting Systems
-
-<div class="flex-container">
-<div class="left">
-
-
-Secure, direct-voting systems where anyone can verify the results without needing to trust a central authority.
-
-Where decisions can be made for both our **on-chain digital metaverse**, and our **off-chain real world**.
-
-Where results are secured by cryptography and math, rather than the existing incumbents.
-
-</div>
-<div class="right-small">
-
-<img style="width: 400px; transform: scaleX(-1);" src="./img/voting.png">
-
-</div>
-</div>
-
----
-
-## Network States
-
-<div class="flex-container">
-<div class="left">
-
-Societies built without physical borders, united by shared values, digital coordination, and economic alignment.
-
-Web3 will provide these groups **resilience**, as they organize, govern, and grow entirely online...
-
-> **Then shape the real world.**
-
-</div>
-<div class="right-small">
-
-<img style="width: 400px; transform: scaleX(-1);" src="./img/network-states.png">
-
-</div>
-</div>
 
 ---
 
@@ -1090,6 +1074,40 @@ The goal to build a decentralized world computer has walked us along a path of b
 </div>
 
 ---
+
+
+## A World Computer Built with Polkadot
+
+<div class="flex-container">
+<div class="left-small">
+
+<img style="width: 500px;" src="./img/jam-computer.png" />
+
+</div>
+<div class="right">
+
+<br />
+
+<div class="text-small">
+
+- **Decentralized Hardware: JAM**
+	- **Decentralized CPU**
+		- PolkaVM (Multi-Core w/ Execution Sharding)
+	- **Decentralized Permanent Storage**
+		- Merkelized Blockchain State (ParityDB/NOMT)
+	- **Decentralized Memory**
+		- Distributed Decentralized Data Lake
+- **Operating System**
+	- CoreVM
+- **Consensus**
+	- ELVES
+
+</div>
+</div>
+</div>
+
+---
+
 
 ## Polkadot’s Mission Does Not End with Blockchain Tech
 
