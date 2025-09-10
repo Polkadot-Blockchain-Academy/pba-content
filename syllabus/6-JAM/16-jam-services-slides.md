@@ -94,7 +94,7 @@ They're the code that authorizes a particular **work** to be processed.
 
 ---
 
-# Soo, how do I make something?
+# How to build services
 
 ---v
 
@@ -110,7 +110,7 @@ Bad news: you need to implement `refine` and `accumulate`.
 
 <pba-flex center>
 
-```assembly
+```assembly[|6|10|12-16|17-25|26-35]
 %stack_size = 4096
 %rw_data_size = 12
 %rw_data = 00 00 00 00 00 00 00 00 00 00 00 00
@@ -146,49 +146,11 @@ pub @accumulate:
   ecalli 3
   // Return
   a0 = a2
-  trap
 ```
 
 Notes:
 
-This is basically like writing evm opcodes or wat.
-
----v
-
-## PolkaVM Examples
-
-<pba-flex center>
-
-https://hackmd.io/@polkadot/jamsdk
-
-Notes:
-
-We created a repository with everything needed to compile C and C++ code to PVM blobs.
-
----v
-
-<pba-flex center>
-
-```c++
-#include "host.hpp"
-#include <stdint.h> // Use the C header as we don't have a C++ STL.
-
-POLKAVM_IMPORT(uint32_t, get_third_number);
-
-// Demonstrate that this is C++ by using templates:
-template<typename To, typename From>
-To convert(From v) {
-	return static_cast<To>(v);
-}
-
-uint32_t entry(uint32_t a, uint32_t b) {
-	auto v = a * b + get_third_number();
-
-	return convert<uint32_t>(v);
-}
-
-POLKAVM_EXPORT(uint32_t, entry, uint32_t, uint32_t);
-```
+This is basically like writing evm opcodes or wat (web assembly text format).
 
 ---v
 
@@ -244,30 +206,127 @@ Let's take a look at this one.
 
 ---
 
-# CoreVM
+## JamBrains Service SDK
 
-For building programs!
+<pba-flex center>
+
+https://github.com/jambrains/service-sdk
+
+Notes:
+
+We are working on our one service sdk.
+We are starting with C to have a stable foundation and then we'll move on to C++.
+Props to Oliver for this.
+
+---v
+
+<pba-flex center>
+
+```c[|6|14-21|23-30|32-37|39-42|44-50]
+#pragma once
+
+#include <stdint.h>
+#include "jb_service_types.h"
+
+uint64_t jb_host_gas();
+
+#define JB_FETCH_DISCRIMINATOR_CHAIN_PARAMS 0
+#define JB_FETCH_DISCRIMINATOR_CHAIN_ENTROPY32 1
+
+/// W_10 register discriminator for the  fetch host call.
+typedef uint64_t jb_fetch_discriminator_t;
+
+uint64_t jb_host_fetch(
+  uint8_t *maybe_buffer,
+  uint64_t offset,
+  uint64_t buffer_len,
+  jb_fetch_discriminator_t discriminator,
+  uint64_t w_11,
+  uint64_t w_12
+);
+
+uint64_t jb_host_read(
+  uint64_t service_id,
+  uint8_t const* const key_ptr,
+  uint64_t key_len,
+  uint8_t* out_ptr,
+  uint64_t out_offset,
+  uint64_t out_len
+);
+
+uint64_t jb_host_write(
+  uint8_t const* const key_ptr,
+  uint64_t key_len,
+  uint8_t const* const value_ptr,
+  uint64_t value_len
+);
+
+void jb_host_info(
+  uint64_t service_id,
+  jb_service_info_t* out_ptr
+);
+
+void jb_host_log(
+  uint64_t level,
+  uint8_t const* const target,
+  uint64_t target_len,
+  uint8_t const* const msg,
+  uint64_t msg_len
+);
+```
+
+---v
+
+## DEMO
+
+Notes:
+
+Go to https://github.com/JamBrains/service-sdk/ and do the PBA demo.
 
 ---
 
 # CoreChains
 
+<pba-flex center>
+
 For building blockchains!
+
+---v
+
+<pba-flex center>
+
+Still under development.
+Will be necessary for switching from the relay chain to jam.
+
+---
+
+# CoreVM
+
+For building programs!
+
+<pba-flex center>
+
+---v
+
+<pba-flex center>
+
+Acts like a docker for jam.
+Allows you to write **regular programs**.
 
 ---
 
 # CorePlay
 
+<pba-flex center>
+
 For building actors!
 
----
+---v
 
-# Ideas
+<pba-flex center>
 
-Notes:
-
-- Simple currency
-- Bridge
+Still an idea.
+Allows you to synchronously compose multiple actors when they want to interact with each other.
 
 ---
 
