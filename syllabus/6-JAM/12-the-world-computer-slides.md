@@ -133,7 +133,9 @@ Exposed global surveillance programs conducted by the NSA and its allies, showin
 
 ---
 
-<img src="./img/newspaper-mosaic.png" />
+## History Will Repeat Itself
+
+<img style="width: 1000px;" src="./img/newspaper-mosaic2.png" />
 
 ---
 
@@ -644,9 +646,9 @@ Web3 should be appealing to most users:
 - Social Networks
 - Video Streaming
 - Online Shopping
-- News & Information Portals
+- Online News
 - AI Tooling
-- Online Gambling & Betting
+- Online Gambling
 
 ---
 
@@ -660,6 +662,12 @@ Web3 should be appealing to most users:
 	- Cross-Border Payments
 - This is basically a proven, and desired product.
 - So let’s look beyond this.
+
+---
+
+## Example: Online Gambling
+
+This is already a solved problem?
 
 ---
 
@@ -705,7 +713,7 @@ Web3:
 
 ---
 
-## Example: Social Media for Web3
+## Example: Social Networks for Web3
 
 The same:
 
@@ -737,6 +745,40 @@ Web3:
 
 ---
 
+## Example: Online News
+
+The same:
+
+- Content creation; the act of journalism.
+- Most articles will still be hosted on Web2 servers for performance.
+
+Web3:
+
+- Verifiable author identity and reputation.
+- Censorship resistance for journalists and publications.
+- Proof of authenticity; articles can't be silently altered or deleted.
+- New funding models: micropayments for articles, reader-funded DAOs.
+- Transparent fact-checking and source verification systems.
+
+---
+
+## Example: AI Tooling
+
+The same:
+
+- Core model development by centralized teams.
+- User-friendly interfaces to access the tools.
+
+Web3:
+
+- Verifiable training data; proof of what data a model was trained on.
+- Provable inference; cryptographic proof that a specific model was run to get a result.
+- Decentralized compute for model training and inference, reducing costs.
+- Ownership and governance of AI models by DAOs.
+- Users can be paid for contributing their data to training sets.
+
+---
+
 # Products for the World Computer
 
 ---
@@ -744,7 +786,6 @@ Web3:
 ## A World Computer Built with Polkadot
 
 <div class="flex-container">
-
 <div class="left-small">
 
 <img style="width: 500px;" src="./img/jam-computer.png" />
@@ -778,10 +819,21 @@ Web3:
 
 I have been asked before:
 
+<div class="flex-container">
+<div class="left-small">
+
+<img style="width: 500px;" src="./img/doom.png" />
+
+</div>
+<div class="right">
+
 - Can I run Docker?
 - Can I run Firefox?
 - Can I run Doom?
 - Can I run Photoshop?
+
+</div>
+</div>
 
 **Yes!**
 
@@ -953,6 +1005,12 @@ The goal to build a decentralized world computer has walked us along a path of b
 	- P2P Networking Stack
 	- PolkaVM Computation Stack
 - To achieve our vision, we need to keep building the different parts of the decentralized computer, and eventually scale to the decentralized cloud.
+
+---
+
+## History Will Repeat Itself!
+
+<img style="filter: invert();" src="./img/computer-timeline.svg">
 
 ---
 
