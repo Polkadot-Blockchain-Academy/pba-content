@@ -6,7 +6,7 @@ duration: 30 mins
 
 # JAM
 
-## Disclaimers & CoreVM Demo 
+## Disclaimers & CoreVM Demo
 
 ---
 
@@ -49,22 +49,22 @@ duration: 30 mins
 # JAM Motivations
 
 - Protocol clean-up
-- Client diversification  <!-- .element: class="fragment" data-fragment-index="1" -->
+- Client diversification <!-- .element: class="fragment" data-fragment-index="1" -->
 - Backwards compatibility <!-- .element: class="fragment" data-fragment-index="2" -->
-- Protocol generalisation  <!-- .element: class="fragment" data-fragment-index="3" -->
-    - More Open DA  <!-- .element: class="fragment" data-fragment-index="4" -->
-    - Less compute opinionation (not just parachains)  <!-- .element: class="fragment" data-fragment-index="5" -->
-- Improved synchronous composability  <!-- .element: class="fragment" data-fragment-index="6" -->
+- Protocol generalisation <!-- .element: class="fragment" data-fragment-index="3" -->
+  - More Open DA <!-- .element: class="fragment" data-fragment-index="4" -->
+  - Less compute opinionation (not just parachains) <!-- .element: class="fragment" data-fragment-index="5" -->
+- Improved synchronous composability <!-- .element: class="fragment" data-fragment-index="6" -->
 
 ---
 
 # JAM Services
 
 - JAM Chain
-    - Bootstrap Service <!-- .element: class="fragment" data-fragment-index="1" -->
-    - CoreChains Service (Docker for parachains) <!-- .element: class="fragment" data-fragment-index="2" -->
-    - CoreVM Service (Docker for generic computation) <!-- .element: class="fragment" data-fragment-index="3" -->
-    - CorePlay Service (Smart contract manager service) <!-- .element: class="fragment" data-fragment-index="4" -->
+  - Bootstrap Service <!-- .element: class="fragment" data-fragment-index="1" -->
+  - CoreChains Service (Docker for parachains) <!-- .element: class="fragment" data-fragment-index="2" -->
+  - CoreVM Service (Docker for generic computation) <!-- .element: class="fragment" data-fragment-index="3" -->
+  - CorePlay Service (Smart contract manager service) <!-- .element: class="fragment" data-fragment-index="4" -->
 
 ---
 
@@ -141,8 +141,8 @@ What actually happens here?
 # Unpacking Doom
 
 - Binary upload
-	- The Doom binary (with assets) is uploaded via jamt vm new
-	- Stored on-chain as an immutable preimage
+  - The Doom binary (with assets) is uploaded via jamt vm new
+  - Stored on-chain as an immutable preimage
 
 ---v
 
@@ -150,8 +150,8 @@ What actually happens here?
 
 - Binary upload
 - Builder start-up
-    - Builder generates packages referencing the binary + VM state (instruction counter, registers, memory pages)
-	- Sent to CoreVM service for execution
+  - Builder generates packages referencing the binary + VM state (instruction counter, registers, memory pages)
+  - Sent to CoreVM service for execution
 
 ---v
 
@@ -160,9 +160,9 @@ What actually happens here?
 - Binary upload
 - Builder start-up
 - Execution
-    - Service executes binary step-by-step (“refine”), handles interrupts
-	- Produces video/audio frames, console output
-	- Stops when gas runs out or unhandled interrupt
+  - Service executes binary step-by-step (“refine”), handles interrupts
+  - Produces video/audio frames, console output
+  - Stops when gas runs out or unhandled interrupt
 
 ---v
 
@@ -172,9 +172,8 @@ What actually happens here?
 - Builder start-up
 - Execution
 - Data dump
-    - When execution stops or is interrupted service exports modified memory pages
-	- Accumulate verifies correctness: imported pages must be known, outputs consistent
-
+  - When execution stops or is interrupted service exports modified memory pages
+  - Accumulate verifies correctness: imported pages must be known, outputs consistent
 
 ---v
 
@@ -185,8 +184,8 @@ What actually happens here?
 - Execution
 - Data dump
 - Monitor
-    - Fetches exported segments
-    - Renders frames, audio, console messages (with ~6s slot delay)
+  - Fetches exported segments
+  - Renders frames, audio, console messages (with ~6s slot delay)
 
 ---v
 
@@ -198,8 +197,8 @@ What actually happens here?
 - Data dump
 - Monitor
 - Builder again
-    - Builder consumes output, imports new memory pages
-    - Generates next package → continues execution loop
+  - Builder consumes output, imports new memory pages
+  - Generates next package → continues execution loop
 
 ---v
 
@@ -218,4 +217,3 @@ Nightly build uses CoreVM which is a bit old. As such it has a delay of 3 slots 
 ---
 
 # Questions
-
