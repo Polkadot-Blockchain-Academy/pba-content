@@ -552,22 +552,6 @@ Both!
 
 ---
 
-## History Will Repeat Itself!
-
-<img style="filter: invert();" src="./img/computer-timeline.svg">
-
----
-
-## Web3 Does Not Replace Web2
-
-- Likely most of the internet will continue to run on Web2 systems:
-	- More cost efficient.
-	- More scalable.
-	- More corporate control.
-- But there are ways Web3 systems can make the internet better...
-
----
-
 ## The heart of the difference between Web2 and Web3 lies in resilience.
 
 Resilience against:
@@ -592,6 +576,22 @@ Resilience against:
 
 </pba-col>
 </pba-cols>
+
+---
+
+## History Will Repeat Itself!
+
+<img style="filter: invert();" src="./img/computer-timeline.svg">
+
+---
+
+## Web3 Does Not Replace Web2
+
+- Likely most of the internet will continue to run on Web2 systems:
+	- More cost efficient.
+	- More scalable.
+	- More corporate control.
+- But there are ways Web3 systems can make the internet better...
 
 ---
 
