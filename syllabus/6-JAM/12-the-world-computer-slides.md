@@ -136,7 +136,7 @@ These problems all stem from the same place:
 
 ### Global Financial Crisis (2008)
 
-<img style="width: 200px;" src="./img/crisis.png">
+<img style="width: 200px;" src="./img/crisis.png" />
 
 The collapse of major financial institutions like Lehman Brothers and the subsequent bailouts revealed the fragility of centralized banking systems and the risks of opaque financial practices.
 
@@ -145,7 +145,7 @@ The collapse of major financial institutions like Lehman Brothers and the subseq
 
 ### Wikileaks Censorship (2010)
 
-<img style="width: 200px;" src="./img/censorship.png">
+<img style="width: 200px;" src="./img/censorship.png" />
 
 Governments and financial institutions cut off funding channels to WikiLeaks, blocking donations via traditional systems like PayPal and credit cards.
 
@@ -154,7 +154,7 @@ Governments and financial institutions cut off funding channels to WikiLeaks, bl
 
 ### Snowden Revelations (2013)
 
-<img style="width: 200px;" src="./img/snowden.png">
+<img style="width: 200px;" src="./img/snowden.png" />
 
 Exposed global surveillance programs conducted by the NSA and its allies, showing how governments and centralized entities were collecting and storing vast amounts of private data without consent.
 
@@ -885,7 +885,7 @@ Resilience against:
 
 ## History Will Repeat Itself!
 
-<img style="filter: invert();" src="./img/computer-timeline.svg">
+<img style="filter: invert();" src="./img/computer-timeline.svg" />
 
 ---
 
@@ -949,7 +949,7 @@ In this future, **basic transactions will be free.**
 </div>
 <div class="right-small">
 
-<img style="width: 200px; transform: scaleX(-1);" src="./img/personhood.png">
+<img style="width: 200px; transform: scaleX(-1);" src="./img/personhood.png" />
 
 </div>
 </div>
@@ -978,7 +978,7 @@ Where results are secured by cryptography and math, rather than the existing inc
 </div>
 <div class="right-small">
 
-<img style="width: 400px; transform: scaleX(-1);" src="./img/voting.png">
+<img style="width: 400px; transform: scaleX(-1);" src="./img/voting.png" />
 
 </div>
 </div>
@@ -1003,7 +1003,7 @@ Web3 will provide these groups **resilience**, as they organize, govern, and gro
 </div>
 <div class="right-small">
 
-<img style="width: 400px; transform: scaleX(-1);" src="./img/network-states.png">
+<img style="width: 400px; transform: scaleX(-1);" src="./img/network-states.png" />
 
 </div>
 </div>
