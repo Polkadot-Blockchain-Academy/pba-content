@@ -885,7 +885,7 @@ Resilience against:
 
 ## History Will Repeat Itself!
 
-<img style="filter: invert();" src="./img/computer-timeline.svg">
+<img style="filter: invert();" src="./img/computer-timeline.svg" />
 
 ---
 
