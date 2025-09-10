@@ -99,16 +99,6 @@ Here are a few tries:
 
 ---
 
-## A Simple Set of Conjectures
-
-- Central authorities will always (eventually) abuse their powers.
-- With the increasing globalization caused by technology, the reach of central authorities is greater than ever.
-- Computers play a critical role in providing public digital infrastructure.
-- We could create a world more resilient from these powers, if the worlds public digital infrastructure were itself more decentralized and resilient.
-- **Web3 describes that resilient public digital infrastructure.**
-
----
-
 ## History has shown us that we cannot trust centralized authorities.
 
 <pba-cols class="text-small">
@@ -151,7 +141,23 @@ Exposed global surveillance programs conducted by the NSA and its allies, showin
 
 <iframe width="854" height="480" src="https://www.youtube.com/embed/dsl_sKYywEI?si=gR5NSOav9qlKW9uR?cc_load_policy=1&cc_lang_pref=en" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-> Bill Gates (Microsoft), Sam Altman (OpenAI), Tim Cook (Apple), Mark Zuckerberg (Meta), Safra Catz (Oracle), and Sundar Pichai (Google) pander to United States President Donald Trump.
+> Bill Gates (Microsoft), Sam Altman (OpenAI), Tim Cook (Apple), Mark Zuckerberg (Meta), Safra Catz (Oracle), and Sundar Pichai (Google) pander to United States President Donald Trump. (September 4, 2025)
+
+---
+
+## A Simple Set of Conjectures
+
+- Central authorities will always (eventually) abuse their powers.
+<!-- .element: class="fragment" -->
+- With the increasing globalization caused by technology, the reach of central authorities is greater than ever.
+<!-- .element: class="fragment" -->
+- Computers play a critical role in providing public digital infrastructure.
+<!-- .element: class="fragment" -->
+- We could create a world more resilient from these powers, if the worlds public digital infrastructure were itself more decentralized and resilient.
+<!-- .element: class="fragment" -->
+
+> **Web3 describes that resilient public digital infrastructure.**
+<!-- .element: class="fragment" -->
 
 ---
 
@@ -234,10 +240,11 @@ It's a computer formed by a decentralized network of participants whose job is t
 </div>
 <div class="right">
 
-- The origins of Web3 and the World Computer come from the same place: Dr. Gavin Wood.
+- The origins of Web3 and the World Computer come from the same place: **Dr. Gavin Wood**.
 - Our ability to picture what exactly that looked like has changed as the tools and technology around us has matured.
 - Likely it will continue to evolve.
-- **But is Ethereum actually a good measure of what a World Computer would look like?**
+
+> **Is Ethereum actually a good measure of what a World Computer would look like?**
 
 </div>
 </div>
@@ -258,7 +265,7 @@ It's a computer formed by a decentralized network of participants whose job is t
 - Ethereum claimed to be a computer because it was “turing complete”.
 - Turing completeness is a poor test of being a “useful computer”.
 - Most smart contract blockchains have achieved turing completeness, but are not designed as a computer.
-- They are also arguably not very turing complete because of execution limits.
+	- They are also arguably not very turing complete because of execution limits.
 - So what are they?
 
 </div>
@@ -280,7 +287,7 @@ It's a computer formed by a decentralized network of participants whose job is t
 </div>
 <div class="right">
 
-- Most blockchains are just building DLTs.
+- Most blockchains are used to build DLTs.
 	- Bitcoin, XRP, BNB, Solana, etc...
 - The Web3 version of a spreadsheet.
 	- Excel was designed for storing data.
