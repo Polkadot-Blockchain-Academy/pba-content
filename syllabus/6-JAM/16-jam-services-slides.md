@@ -106,6 +106,32 @@ The `accumulate` code might more closely resemble a smart contract since it's ex
 
 ---
 
+# Data availability
+
+<pba-flex center>
+
+Decentralized Distributed Data Lake
+
+---v
+
+<img src="./img/Cores in JAM - 2.excalidraw.png" />
+
+---v
+
+<img src="./img/Cores in JAM - 6.excalidraw.png" />
+
+---v
+
+<img src="./img/Cores in JAM - 7.excalidraw.png" />
+
+Notes:
+
+Any service can write and read from it.
+The data here stays for a while, not permanent.
+It's all erasure coded.
+
+---
+
 # Host functions
 
 ---v
