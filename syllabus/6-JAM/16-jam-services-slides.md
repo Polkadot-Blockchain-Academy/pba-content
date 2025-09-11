@@ -86,23 +86,23 @@ The `accumulate` code might more closely resemble a smart contract since it's ex
 
 ---v
 
-<img src="./img/Cores in JAM - 1.excalidraw.png">
+<img src="./img/Cores in JAM - 1.excalidraw.png" />
 
 ---v
 
-<img src="./img/Cores in JAM - 2.excalidraw.png">
+<img src="./img/Cores in JAM - 2.excalidraw.png" />
 
 ---v
 
-<img src="./img/Cores in JAM - 3.excalidraw.png">
+<img src="./img/Cores in JAM - 3.excalidraw.png" />
 
 ---v
 
-<img src="./img/Cores in JAM - 4.excalidraw.png">
+<img src="./img/Cores in JAM - 4.excalidraw.png" />
 
 ---v
 
-<img src="./img/Cores in JAM - 5.excalidraw.png">
+<img src="./img/Cores in JAM - 5.excalidraw.png" />
 
 ---
 
