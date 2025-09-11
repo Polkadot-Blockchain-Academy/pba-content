@@ -82,6 +82,88 @@ The `accumulate` code might more closely resemble a smart contract since it's ex
 
 ---
 
+# Refine and accumulate
+
+---v
+
+<img src="./img/Cores in JAM - 1.excalidraw.png">
+
+---v
+
+<img src="./img/Cores in JAM - 2.excalidraw.png">
+
+---v
+
+<img src="./img/Cores in JAM - 3.excalidraw.png">
+
+---v
+
+<img src="./img/Cores in JAM - 4.excalidraw.png">
+
+---v
+
+<img src="./img/Cores in JAM - 5.excalidraw.png">
+
+---
+
+# Host functions
+
+---v
+
+## General
+
+<pba-flex center>
+
+<ul>
+  <li>Gas</li>
+  <li>Fetch</li>
+  <li>Lookup</li>
+  <li>Read</li>
+  <li>Write</li>
+  <li>Info</li>
+</ul>
+
+---v
+
+## Refine
+
+<pba-flex center>
+
+<ul>
+  <li>Historical lookup</li>
+  <li>Export</li>
+  <li>Machine</li>
+  <li>Peek</li>
+  <li>Poke</li>
+  <li>Pages</li>
+  <li>Invoke</li>
+  <li>Expunge</li>
+</ul>
+
+---v
+
+## Accumulate
+
+<pba-flex center>
+
+<ul>
+  <li>Bless</li>
+  <li>Assign</li>
+  <li>Designate</li>
+  <li>Checkpoint</li>
+  <li>New</li>
+  <li>Upgrade</li>
+  <li>Transfer</li>
+  <li>Eject</li>
+  <li>Query</li>
+  <li>Solicit</li>
+  <li>Forget</li>
+  <li>Yield</li>
+  <li>Provide</li>
+</ul>
+
+---
+
 # Authorizers
 
 ---v
