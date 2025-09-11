@@ -166,6 +166,36 @@ What actually happens here?
 
 ---v
 
+# Continuations
+
+<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_1.png" />
+
+---v
+
+# Continuations
+
+<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_2.png" />
+
+---v
+
+# Continuations
+
+<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_3.png" />
+
+---v
+
+# Continuations
+
+<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_4.png" />
+
+---v
+
+# Continuations
+
+<img style="width: 700px;" src="../../assets/img/0-Shared/CoreVM_5.png" />
+
+---v
+
 # Unpacking Doom
 
 - Binary upload
@@ -213,6 +243,20 @@ What actually happens here?
 
 Notes:
 Nightly build uses CoreVM which is a bit old. As such it has a delay of 3 slots and it doesn’t have access to the file system. In the newer version there is no need to bundle the binary with the game assets, you can simply upload the whole directory as a preimage and then access it as a file tree directly from the program (i.e. the same way as any application accesses files).
+
+---v
+
+# Unpacking Doom
+
+<img style="width: 1200px;" src="../../assets/img/0-Shared/doom.png" />
+
+---v
+
+# Unpacking Doom
+
+When and where is it actually played?
+
+<img style="width: 700px;" src="../../assets/img/0-Shared/client_server.png" />
 
 ---
 
