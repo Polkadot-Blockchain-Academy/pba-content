@@ -393,6 +393,22 @@ Go to https://github.com/JamBrains/service-sdk/ and do the PBA demo.
 
 ---
 
+# Apps on top of services
+
+<pba-flex center>
+
+Most apps on the Jam world computer will not be services.
+
+Services are low-level, analogous to operating systems on the Jam computer.
+
+<!-- .element: class="fragment" -->
+
+They will be apps built **ON TOP** of services **ON TOP** of Jam.
+
+<!-- .element: class="fragment" -->
+
+---
+
 # CoreChains
 
 <pba-flex center>
@@ -404,6 +420,7 @@ For building blockchains!
 <pba-flex center>
 
 Still under development.
+
 Will be necessary for switching from the relay chain to jam.
 
 ---
