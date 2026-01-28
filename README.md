@@ -20,6 +20,8 @@ The curriculum is expected to change per cohort in the first run. You can find t
 - [Berkeley - July 2023](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/berkeley-2023)
 - [Hong Kong - January 2024](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/hong-kong-2024)
 - [Singapore - June 2024](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/2024-singapore)
+- [Lucerne - 2025](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/lucerne-2025)
+- [Bali - August 2025](https://github.com/Polkadot-Blockchain-Academy/pba-content/tree/bali-2025)
 
 ## Venue Suggestions
 
@@ -34,10 +36,9 @@ This curriculum is designed to be taught as an in-person course with ~25-60 stud
 
 ## Useful links
 
-- [Polkadot Blockchain Academy Page](https://polkadot.com/blockchain-academy)
-- [Alumni Hub](https://polkadot-blockchain-academy.github.io/alumni-hub)
+- [Polkadot Blockchain Academy Page](https://polkadot.academy/)
 - [Twitter](https://x.com/AcademyPolkadot)
-- [Youtube](https://www.youtube.com/@polkadotblockchainacademy)
+- [Youtube](https://www.youtube.com/@PolkadotBlockchainAcademyTV)
 
 ## Video Lectures - Modules
 
