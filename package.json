@@ -34,7 +34,7 @@
     "lint-fix:agenda": "prettier --config .prettierrc.cjs --write '**/*.tsx'"
   },
   "dependencies": {
-    "glob": "^10.3.10",
+    "glob": "^10.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "reveal-md": "^5.5.2"
