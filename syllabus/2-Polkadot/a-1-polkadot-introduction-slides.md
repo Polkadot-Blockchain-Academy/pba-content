@@ -861,6 +861,9 @@ And one extra things is Polkadot Core Scheduling mechanism, this is essentially 
 
 # Core Technologies of Polkadot
 
+<div class="grid grid-cols-3">
+<div class="col-span-2">
+
 1. Framework: Substrate
 1. VM: WASM/PolkaVM
 1. Governance: OpenGov
@@ -870,11 +873,18 @@ And one extra things is Polkadot Core Scheduling mechanism, this is essentially 
 1. Shard Interoperability: XCMP + XCM
 1. Finality: GRANDPA, BEEFY
 1. Scheduling: Agile Coretime
-1. Database: RocksDB
+
+</div>
+<div>
+
+10. Database: RocksDB
 1. Encoding: SCALE
 1. Networking: LibP2P/LiteP2P
-1. APIs: Polkadot.JS / Polkadot API (PAPI)
+1. APIs: PAPI
 1. Smart Contracts: Ink! / Solidity
+
+</div>
+</div>
 
 Notes:
 This isn't a comprehensive list of all the technologies but there are some more generic ones in the backend connected to databases, networking and encoding like RocksDB, SCALE, and LibP2P.
