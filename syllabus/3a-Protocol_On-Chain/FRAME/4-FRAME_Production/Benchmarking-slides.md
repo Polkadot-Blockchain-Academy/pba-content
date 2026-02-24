@@ -4,6 +4,8 @@ description: How to benchmark Pallets in FRAME.
 duration: 2 hours
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # FRAME Benchmarking
 
 ## Lesson 1
@@ -766,7 +768,7 @@ Ok(Some(T::WeightInfo::kill_identity(
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions
 
@@ -1234,6 +1236,6 @@ Example:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

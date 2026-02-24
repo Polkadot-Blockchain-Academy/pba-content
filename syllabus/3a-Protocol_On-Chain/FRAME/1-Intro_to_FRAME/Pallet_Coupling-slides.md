@@ -4,6 +4,8 @@ description: A look into how multiple pallets interact.
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # 🤝 Pallet Coupling 🤝
 
 ([Reference in `polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/frame_pallet_coupling/index.html))
@@ -302,7 +304,7 @@ This allows pallet developers to configure most unsigned integer types (`u32`, `
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions
 

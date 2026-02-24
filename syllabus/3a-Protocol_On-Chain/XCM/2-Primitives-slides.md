@@ -4,6 +4,8 @@ description: Locations, assets and instructions
 duration: 2 hours
 ---
 
+<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # XCM Primitives
 
 ---v

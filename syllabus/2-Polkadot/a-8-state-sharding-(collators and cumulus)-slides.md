@@ -5,6 +5,8 @@ duration: 1 hour
 owner: Maciej Zyszkiewicz
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # State Sharding
 
 ## Collators and Cumulus
@@ -782,6 +784,6 @@ reference: https://paritytech.github.io/polkadot/book/pvf-prechecking.html
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

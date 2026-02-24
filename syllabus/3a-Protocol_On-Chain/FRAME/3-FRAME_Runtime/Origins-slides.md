@@ -4,6 +4,8 @@ description: Deep dive into FRAME Origins
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Origin
 
 ---
@@ -370,6 +372,6 @@ You should assume any transaction which is not from the `Signed` origin is feele
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

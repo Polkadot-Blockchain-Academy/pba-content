@@ -4,6 +4,8 @@ description: Introduction to configuring the XCM executor.
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # XCM Config
 
 Notes:

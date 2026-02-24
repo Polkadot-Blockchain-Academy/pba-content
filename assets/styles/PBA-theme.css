@@ -155,17 +155,17 @@
 	--r-main-font-size: 35px;
 	--r-main-font: "Work Sans";
 	--r-main-color: #fff;
-	--r-background-color: #140526;
-	--r-code-background-color: #000000;
+	--r-background-color: #000000;
+	--r-code-background-color: #1a1a1a;
 	--r-block-margin: 0em 30px 15px 30px;
 	--r-heading-margin: 0em 0em 20px 0em;
 	--r-heading-font: "Unbounded";
-	--r-heading-color: #d92f78;
+	--r-heading-color: #FFFFFF;
 	--r-heading-line-height: 1.5em;
 	--r-heading-letter-spacing: 0.02em;
 	--r-heading-text-transform: none;
 	--r-heading-text-shadow: none;
-	--r-heading-font-weight: normal;
+	--r-heading-font-weight: 700;
 	--r-heading1-text-shadow: none;
 	--r-heading1-size: 2em;
 	--r-heading2-size: 1.35em;
@@ -175,16 +175,16 @@
 	/* custom PBA var */
 	--r-code-font-size: 0.75em;
 	--r-link-color: #ccc;
-	--r-link-color-decoration: #d92f78;
-	--r-color-controls: #d92f78;
+	--r-link-color-decoration: #FFFFFF;
+	--r-color-controls: #FFFFFF;
 	--r-link-color-dark: #;
-	--r-link-color-hover: #8d3aed;
-	--r-selection-background-color: #8d3aed;
+	--r-link-color-hover: #cccccc;
+	--r-selection-background-color: #333333;
 	--r-selection-color: #fff;
 	--r-padding: 24px;
 
 	/* POLKADOT MAIN COLORS */
-	--r-hub-cyan: #00B2FF;
+	--r-hub-cyan: #888888;
 	--r-hub-purple: #552BBF;
 	--r-hub-pink: #E6007A;
 	--r-hub-lime: #D3FF33;
@@ -209,7 +209,7 @@ html {
 }
 
 .reveal-viewport {
-	background: #111;
+	background: #000;
 	background-color: var(--r-background-color);
 }
 

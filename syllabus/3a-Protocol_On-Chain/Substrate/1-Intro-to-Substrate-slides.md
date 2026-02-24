@@ -4,6 +4,8 @@ description: Overview of Substrate framework
 duration: 30 minutes
 ---
 
+<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Introduction to Substrate
 
 ---

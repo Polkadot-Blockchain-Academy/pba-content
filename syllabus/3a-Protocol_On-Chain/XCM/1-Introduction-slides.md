@@ -4,6 +4,8 @@ description: What it is, why it's necessary, what we'll cover
 duration: 45 minutes
 ---
 
+<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # XCM
 
 ---

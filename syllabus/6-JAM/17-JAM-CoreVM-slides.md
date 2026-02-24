@@ -4,6 +4,8 @@ description: Tech progression from Polkadot 2.0 to JAM and then a corevm demo sh
 duration: 30 mins
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # JAM
 
 ## Disclaimers & CoreVM Demo
