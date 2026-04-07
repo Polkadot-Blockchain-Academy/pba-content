@@ -21,7 +21,7 @@ Remember that in the Polkadot ecosystem, chains can constantly upgrade and updat
 
 To get the metadata itself, we must query the Runtime via the State Transition Function Code.
 
-The Runtime exposes an API: `state_getMetadata`, which will return a SCALE encoded blob with all the data you need to know about the blockchain.
+The Runtime exposes a Runtime API: `Metadata_metadata()`, which will return a SCALE encoded blob with all the data you need to know about the blockchain. This can be accessed via the JSON-RPC method `state_getMetadata`.
 
 ---
 
@@ -42,7 +42,7 @@ Using the Metadata we can see the following:
 - System is pallet index 0.
   - With storage Prefix "System".
 - There is a storage item called "Account".
-  - With storage prefix is "Account"
+  - With storage prefix "Account"
 - It uses hasher `Blake2128Concat`.
 - It has a key using "type 0".
 - It has a value using "type 3".
@@ -354,7 +354,7 @@ The extrinsic payload will encode a lot of information:
 
 ```
 Extrinsic Version
-	++ Preamble (Address, Signature, Signed Extensions)
+	++ Preamble (Address, Signature, Transaction Extensions)
 	++ Function Call
 ```
 
@@ -418,33 +418,43 @@ Final:
 
 ## Transaction Extensions
 
-Additional functions and information needed to validate an extrinsic, also found in the metadata.
+Transaction Extensions provide additional functions and information needed to validate an extrinsic, also found in the metadata.
 
-Some of this is specifically included in the signature, which are called "Signed Extensions".
+Each extension can include explicit data (sent on-chain) and implicit data (derived by the runtime). We will cover the `TransactionExtension` trait in detail in the FRAME module.
 
-```json
-"signedExtensions": [
-  { "identifier": "CheckNonZeroSender", "type": 874, "additionalSigned": 36 },
-  { "identifier": "CheckSpecVersion", "type": 875, "additionalSigned": 4 },
-  { "identifier": "CheckTxVersion", "type": 876, "additionalSigned": 4 },
-  { "identifier": "CheckGenesis", "type": 877, "additionalSigned": 13 },
-  { "identifier": "CheckMortality", "type": 878, "additionalSigned": 13 },
-  { "identifier": "CheckNonce", "type": 880, "additionalSigned": 36 },
-  { "identifier": "CheckWeight", "type": 881, "additionalSigned": 36 },
-  { "identifier": "ChargeTransactionPayment", "type": 882, "additionalSigned": 36 },
-  { "identifier": "PrevalidateAttests", "type": 883, "additionalSigned": 36 },
-  { "identifier": "CheckMetadataHash", "type": 884, "additionalSigned": 34 }
-]
+```rust
+pub type TxExtension = (
+  frame_system::CheckNonZeroSender<Runtime>,
+  frame_system::CheckSpecVersion<Runtime>,
+  frame_system::CheckTxVersion<Runtime>,
+  frame_system::CheckGenesis<Runtime>,
+  frame_system::CheckMortality<Runtime>,
+  frame_system::CheckNonce<Runtime>,
+  frame_system::CheckWeight<Runtime>,
+  pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
+  claims::PrevalidateAttests<Runtime>,
+  frame_metadata_hash_extension::CheckMetadataHash<Runtime>,
+);
 ```
 
 ---
 
-## Specific Signed Extensions Explained Simply
+## Future: v5 General Extrinsic Format
+
+The `UncheckedExtrinsic` also supports a newer v5 "General" format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions (e.g. `VerifySignature`).
+
+This enables advanced use cases like **meta-transactions**, where someone submits a transaction on behalf of another account.
+
+> Standard Polkadot transactions currently use the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort.
+
+---
+
+## Specific Transaction Extensions Explained Simply
 
 ```
 [F] - Functional check, no data needed.
-[H] - Hidden in signature, reintroduced by runtime.
-[I] - Directly included, plus some functional logic.
+[H] - Implicit data, not sent on-chain, reintroduced by runtime.
+[I] - Explicit data, directly included in the extrinsic.
 ```
 
 <div class="text-small">
@@ -501,14 +511,14 @@ And the node can re-inject the genesis hash, calculate, and ensure the final has
 
 ## Final Signed Payload
 
-To create the signature, we will sign:
+To create a signature, the signer will sign over:
 
 - Call Payload
-- All Extension Data
+- All Extension Data (both explicit and implicit)
   - Era, Nonce, Tip, Spec Version, Transaction Version, Genesis Hash, Block Hash, etc...
-  - But remember we only include into the extrinsic payload what is not "hidden".
+  - But remember we only include into the extrinsic payload what is not implicit.
 
-If the final payload is larger than 256 bytes (which is almost always is), we will hash the payload, and sign the hash instead, saving compute complexity.
+If the final payload is larger than 256 bytes (which it almost always is), we hash the payload first, and sign the hash instead, saving compute complexity.
 
 See: `struct SignedPayload`.
 

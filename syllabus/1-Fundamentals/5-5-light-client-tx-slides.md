@@ -106,7 +106,7 @@ Substrate's Runtime: A Wasm Blob
 
 - **Runtime APIs**: APIs used when the Client calls the Runtime.
   - Logic which is commonly upgraded and customized.
-  - Ex: Block Execution, Signed Extensions, etc...
+  - Ex: Block Execution, Transaction Extensions, etc...
 - **Host Functions**: APIs used when the Runtime calls the Client.
   - Logic which generally needs higher performance computation.
   - Ex: Batch Signature Verification, Storage, etc...
@@ -160,7 +160,7 @@ There are a set of Runtime APIs specifically for **creating** a block, which all
 		}
 
 		fn check_inherents(
-			block: Block,
+			block: <Block as BlockT>::LazyBlock,
 			data: sp_inherents::InherentData,
 		) -> sp_inherents::CheckInherentsResult {
 			data.check_extrinsics(&block)
@@ -269,7 +269,8 @@ Once all extrinsics are executed, and the new block has been constructed, it is 
 			VERSION
 		}
 
-		fn execute_block(block: Block) {
+		// LazyBlock: same as Block, but decodes extrinsics lazily for efficiency.
+		fn execute_block(block: Block::LazyBlock) {
 			Executive::execute_block(block)
 		}
 

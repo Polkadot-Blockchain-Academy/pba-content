@@ -62,7 +62,7 @@ graph LR
 - Transaction pool is entirely an **offchain operation**.
   - No state change
 
-Once these checks pass, an subscription update is sent with the `Ready` or `Future` status.
+Once these checks pass, a subscription update is sent with the `Ready` or `Future` status.
 
 Notes:
 
@@ -378,7 +378,7 @@ The nonce helps with transaction ordering and more!
 
 </pba-cols>
 
-Note: The oder in this slide matters and it is top to bottom.
+Note: The order in this slide matters and it is top to bottom.
 
 ---
 
