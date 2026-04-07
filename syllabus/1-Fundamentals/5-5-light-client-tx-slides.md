@@ -3,6 +3,8 @@ title: LCTX 5 - The State Transition Function
 description: End to End Transaction Flow with a Light Client
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Light Client Transaction
 
 #### Part 5: The State Transition Function
@@ -307,7 +309,7 @@ We again can use the `state_getReadProof` to be able to verify the state.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 <img width="400px" rounded src="../../assets/img/5-Substrate/thats_all_folks.png" />
 

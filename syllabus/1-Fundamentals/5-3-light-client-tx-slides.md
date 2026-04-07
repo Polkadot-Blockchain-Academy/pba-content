@@ -3,6 +3,8 @@ title: LCTX 3 - Light Client Reads and Transacts
 description: End to End Transaction Flow with a Light Client
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Light Client Transaction
 
 #### Part 3: Light Client Reads and Transacts
@@ -524,6 +526,6 @@ See: `struct SignedPayload`.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions
