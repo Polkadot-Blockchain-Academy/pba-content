@@ -1044,7 +1044,6 @@ Replacing his thoughts on “currencies” and “bitcoin” to a more general �
 - A neutral [blockchain] can be used for any political system, whether it is the political system you like or not.
 - A neutral [blockchain] isn’t anymore of a libertarian [blockchain] than it is communist [blockchain]. It is just a [blockchain].
 
-
 ---
 
 <!-- .slide: data-background-color="#4A2439" -->
