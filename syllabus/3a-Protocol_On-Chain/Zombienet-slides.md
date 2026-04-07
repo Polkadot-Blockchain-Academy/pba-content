@@ -4,6 +4,8 @@ description: Zombienet workshop
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 <style>
     .colored {
         color: var(--r-link-color);
@@ -117,7 +119,7 @@ Integration tests are always <span class="colored">complex</span>:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Phases
 
@@ -190,7 +192,7 @@ chmod +x zombienet
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Let’s spawn a new network!
 
@@ -334,7 +336,7 @@ para-2000-genesis-state
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" data-visibility="hidden" -->
+<!-- .slide: data-background-color="#000000" data-visibility="hidden" -->
 
 # Activity
 
@@ -411,7 +413,7 @@ https://github.com/pepoviola/zombienet-presentation-examples/blob/main/examples/
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" data-visibility="hidden" -->
+<!-- .slide: data-background-color="#000000" data-visibility="hidden" -->
 
 # Activity
 
@@ -486,7 +488,7 @@ Zombienet <span class="colored">providers</span> allow to <span class="colored-g
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions?
 
@@ -819,7 +821,7 @@ while let Some(block) = blocks.next().await {
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Demos
 
@@ -843,7 +845,7 @@ We encourage everyone to test it, provide feedback, ask question and contribute.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions?
 

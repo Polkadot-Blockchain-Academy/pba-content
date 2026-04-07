@@ -5,6 +5,8 @@ duration: 1 hour
 owner: Filippo (Maciej Zyszkiewicz & Shawn Tabrizi originally)
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Ecosystem and Economy
 
 ---
@@ -961,7 +963,7 @@ https://polkadot.js.org/apps/?rpc=wss%3A%2F%2Fkusama-rpc.polkadot.io#/fellowship
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions
 

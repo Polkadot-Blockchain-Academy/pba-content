@@ -4,6 +4,8 @@ description: A review of common Pallets & Traits.
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # FRAME Pallets & Traits
 
 ---
@@ -203,6 +205,6 @@ https://www.youtube.com/watch?v=_FwqB4FwWXk&list=PLOyWqupZ-WGsfnlpkk0KWX3uS4yg6Z
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

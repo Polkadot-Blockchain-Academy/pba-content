@@ -4,6 +4,8 @@ description: Working with Fungible Tokens in FRAME pallets
 duration: 2 hours
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Balance Management in FRAME
 
 ---

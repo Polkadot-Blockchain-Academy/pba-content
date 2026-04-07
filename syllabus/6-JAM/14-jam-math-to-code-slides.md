@@ -4,6 +4,8 @@ description: How we can read the Graypaper and understand it by coding
 duration: 40+ mins
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 ### Transforming Math Formulas into Code
 
 <img width="700px" src="../../assets/img/7-Polkadot/jam-cartoon.jpg" />

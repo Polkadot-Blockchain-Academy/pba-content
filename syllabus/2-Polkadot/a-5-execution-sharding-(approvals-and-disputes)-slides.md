@@ -5,6 +5,8 @@ duration: 1 hour
 owner: Maaciej Zyszkiewicz
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Execution Sharding in Polkadot
 
 Notes:
@@ -565,6 +567,6 @@ Orchestra ensures that the message to the other subsystem only arrives after it 
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

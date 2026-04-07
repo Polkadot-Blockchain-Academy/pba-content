@@ -4,6 +4,8 @@ description: How did we approach building JAM?
 duration: 45+ mins
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Not about JAM
 
 ---

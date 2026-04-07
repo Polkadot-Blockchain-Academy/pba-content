@@ -3,6 +3,8 @@ title: The World Computer
 description: Develop an understanding of the Ubiquitous World Computer.
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # The World Computer
 
 ---
@@ -81,7 +83,7 @@ Let’s talk about:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Web3
 
@@ -248,7 +250,7 @@ Web3 is:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Origins of the World Computer
 
@@ -404,7 +406,7 @@ There is a **growing divide** in the mindset of blockchain development.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Components of the World Computer
 
@@ -540,7 +542,7 @@ The World Computer will not replace your personal computer; it's a new type of m
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Products for the World Computer
 
@@ -836,7 +838,7 @@ Unfortunately this was wrong.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # The Transition to Web3
 
@@ -1046,7 +1048,7 @@ Replacing his thoughts on “currencies” and “bitcoin” to a more general �
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # The Future of Polkadot
 
@@ -1136,6 +1138,6 @@ To achieve our vision, we need to keep building the different parts of the decen
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

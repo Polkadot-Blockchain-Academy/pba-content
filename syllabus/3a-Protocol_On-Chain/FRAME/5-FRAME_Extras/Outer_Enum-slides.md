@@ -4,6 +4,8 @@ description: FRAME Outer Enum Web3 Engineers.
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Outer Enum
 
 ([Reference in `polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/frame_runtime_types/index.html#composite-enums))
@@ -322,6 +324,6 @@ pub trait Config: frame_system::Config {
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

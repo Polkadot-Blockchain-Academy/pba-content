@@ -3,6 +3,8 @@ title: Substrate Merklized Storage
 duration: 90mins
 ---
 
+<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Substrate Storage
 
 ---

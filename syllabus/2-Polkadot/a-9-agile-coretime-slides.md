@@ -5,6 +5,8 @@ duration: 1 hour
 owner: Maciej Zyszkiewicz
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Agile Coretime
 
 Notes:
