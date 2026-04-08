@@ -60,9 +60,8 @@ Every student ships, **solo**, a project with exactly these components:
   - a **TUI** (ratatui, textual, ink, etc.), or
   - an **MCP server** (yes, this counts as a frontend - it is how an AI agent "drives" your backend; this category is hot right now and reviewers are paying attention to it).
 
-### 3.3 Mandatory integrations
+### 3.3 Mandatory integration
 
-- **Polkadot Desktop interaction.** Your project must include at least one meaningful interaction through Polkadot Desktop - signing, connecting, dispatching, whatever fits. This is non-negotiable.
 - **Web deploy on Bulletin Chain + DotNS.** Every project ships a web presence hosted on Bulletin Chain and reachable via a DotNS name. For web-app frontends, this *is* your app. For CLI++ frontends (TUI or MCP server), you still ship a web presence - at minimum a product / landing page describing what the project does, how to install it, and how to use it. No project is exempt. The point is that every student touches the decentralized deploy path end-to-end.
 
 ### 3.4 Scope rule
