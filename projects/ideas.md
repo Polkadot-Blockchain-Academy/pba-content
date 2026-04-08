@@ -62,7 +62,37 @@ Not a game itself - a backend that games can plug into for verifiable leaderboar
 
 ---
 
-## 4. Wildcards
+## 4. Pallet Design Showcases
+
+> Projects where the heart of the work is designing a non-trivial Substrate pallet from first principles - economic mechanism, state transitions, edge cases, benchmarks. Each must still ship a frontend (web or CLI++) so it satisfies the rubric. These are the heaviest backend ideas in the bank - pick one if you want to flex pallet design specifically.
+
+### 4.1 Direct Delegation Proof of Stake
+A pallet that manages validators (self-registered candidates) and delegators (any account staking tokens behind a validator). Every N blocks, top-K winners become the active set. Block rewards split between the producer and their backers.
+- **Paths**: Pallet + Web (staking dashboard); Pallet + TUI.
+- **Why**: Staking is the canonical Substrate exercise. A clean implementation with a real frontend is a strong portfolio piece.
+- **Scope note**: Cut slashing and delegation chains from the MVP. Get the happy path + one good benchmark before reaching for either. Frontend should at minimum let a user delegate, undelegate, and see the active set.
+
+### 4.2 Stateful Multisig
+A pallet that lets users create and manage multisigs with a unique on-chain address per multisig, and run the full transaction lifecycle (propose → vote → execute), plus member add/remove and a clean teardown path. North star: the original Gnosis Safe.
+- **Paths**: Pallet + Web (multisig management UI); Pallet + TUI.
+- **Why**: A real product with a real audience. Stateful multisigs are something Polkadot itself wants, and the UX surface is deep.
+- **Scope note**: Frontend matters here - a multisig with a bad UI is unusable. Pick this one if you actually enjoy frontend work too. Don't try to migrate from Polkadot's stateless multisig as part of the MVP; that's a stretch goal at best.
+
+### 4.3 Free Transaction Pallet
+A pallet that lets users lock tokens to earn "weight credits" and spend them on fee-free transactions within a rolling time window, with a global per-period cap to prevent spam.
+- **Paths**: Pallet + Web (a demo app that exercises the free-tx path - e.g. a faucet, mint flow, or free-claim feature); Pallet + CLI++.
+- **Why**: A useful primitive on its own. The interesting design space is the rate-limit and fallback semantics.
+- **Scope note**: This is the most "systems primitive" of the four - the frontend story is **not** "a UI for free transactions," it's "an actual app that uses the pallet to give users free transactions." Pick the demo app with care; reviewers should walk away believing the primitive is useful.
+
+### 4.4 Multi-Token Treasury
+A pallet managing a multi-asset treasury with governance-gated spending tracks, sensible handling of insufficient balances and existential deposits across assets.
+- **Paths**: Pallet + Web (treasury dashboard / governance UI); Pallet + TUI.
+- **Why**: Treasury mechanics are a real Polkadot need, and this exercises governance APIs and asset handling at the same time.
+- **Scope note**: Don't try to build a price oracle or DOT↔USD conversion in MVP; pick fixed token denominations and one or two spending tracks.
+
+---
+
+## 5. Wildcards
 
 Your idea doesn't have to fit a category above. Some of the best projects in programs like this are genuinely weird things a student cared about. If you have one, bring it to a faculty conversation early and we'll help you shape it.
 

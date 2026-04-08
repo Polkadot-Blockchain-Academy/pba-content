@@ -154,6 +154,20 @@ These are the tells. Do not let them show up in your repo.
 
 At your 5-minute demo, we may ask you: *"walk me through this file - why is it structured this way?"* You need to be able to answer that question about any file in your repo. If you cannot, you did not ship it - the AI did, and you just pushed it.
 
+### 6.6 Docs and prose: the same rules, harder
+
+The "no slop" rule is not just about code. It applies just as hard - maybe harder - to prose. README, code comments, the retrospective, your pitch script. AI-generated prose is faster to produce than code, harder to spot at a glance, and ten times more likely to make it through unread.
+
+A few things to internalise:
+
+- **Humans read every word you ship.** AI generates them in seconds; we read them in minutes. A 4000-word README that nobody asked for is not "thorough" - it is wasting reviewer time. Length is not a virtue. Density and honesty are.
+- **A wall of confident-sounding text is slop, even if every sentence is technically correct.** Reviewers can feel the difference between a README written by someone who built the thing and one assembled out of prompts. So can your peers.
+- **Rule of thumb for your README: 90% you, 10% AI.** Use AI for grammar, spelling, formatting cleanup, maybe rephrasing a clunky paragraph. Do **not** use it to draft the document. The structure, the framing, the choices about what to include and what to cut - those need to be yours. Same for the retrospective.
+- **If you expect us to read it, you should have read it yourself. Twice.** End to end. Out loud, even. If you can't be bothered, neither can we, and we will notice.
+- **Same applies to comments in code.** Comments that restate *what* the code does are noise that AI will happily generate by the bucket. Comments that explain *why* something is the way it is - the constraint, the trade-off, the bug you worked around - are the only kind worth committing.
+
+If your README, retrospective, or pitch script reads like it was generated, it will be obvious, and it will count against you more than if you had written something rougher and shorter by hand.
+
 ---
 
 ## 7. Deliverables
@@ -162,26 +176,58 @@ At the end of the program you hand in:
 
 1. **A GitHub repo** with:
    - Working code (backend + frontend).
-   - A README covering: what the project does, which path you picked, how to run it, what works, what doesn't, known limitations.
+   - A README covering: what the project does, which path you picked, how to run it end-to-end, what works, what doesn't, known limitations, design decisions and compromises you made (and would revisit), and the URL of your decentralized deployment.
    - Meaningful commit history.
 2. **A working demo.** Live is preferred. A recorded fallback is always nice in case live is unsafe (e.g. testnet flakiness).
-3. **A 5-minute pitch / demo presentation** on pitch day. See section 8 for what this should look like.
+3. **A 5-minute pitch / demo presentation** on pitch day. See section 9 for what this should look like.
 4. **A retrospective write-up** using [`retrospective-template.md`](./retrospective-template.md). This is the short post-mortem where you tell us what worked, what broke, and - most importantly - **what you'd tell the Parity team about the stack based on what you hit**. Reviewers read this carefully. It is not busywork.
 
 ---
 
-## 8. Pitch Day (The 5-Minute Presentation)
+## 8. Before You Submit
+
+A final pass before you push your last commit. None of this is busywork - every item here is a thing reviewers will notice if you skip it. Run this list at end-of-day on day 12, not the morning of pitch day.
+
+### 8.1 Code
+
+- **It builds.** Clean build, no errors, no warnings. If you have warnings you can't kill, document why in the README.
+- **Tests pass.** The full suite, not just the one you wrote last.
+- **No dead code.** Remove unused functions, storage items, events, errors, scaffolding from earlier directions you abandoned.
+- **No "example" cruft.** If you started from a template, strip the parts you didn't use.
+- **Formatted.** Run your language's standard formatter (`cargo +nightly fmt`, `prettier`, `gofmt`, whatever applies).
+- **No code that can panic on the happy path.** Tests and benchmarks are fine. Production paths are not.
+- **Documented where it isn't obvious.** Comments explain *why*, not *what*. Note the compromises and TODOs you'd revisit.
+
+### 8.2 Repo
+
+- **Meaningful git history.** Reviewers will read your commits. `fix`, `wip`, `more` ten times in a row is a red flag (see section 6.4).
+- **README at the repo root**, covering everything listed in section 7 deliverable 1. Include the Bulletin Chain / DotNS URL of your deployment so reviewers can click straight through.
+- **Retrospective filled in** using [`retrospective-template.md`](./retrospective-template.md). Don't leave this for the morning of pitch day.
+
+### 8.3 Deployment
+
+- **Decentralized deploy is live and reachable** at your DotNS name (see section 3.3). If it isn't, reviewers can't see your work. Test it from a fresh browser session - not the one you've been developing in.
+
+### 8.4 Demo
+
+- **Live demo dry-run.** Run it end-to-end at least once on the network you'll use on pitch day. Have a recorded fallback ready in case the live version flakes (see section 9).
+
+If any of these is "I'll get to it tomorrow" the night before pitch day, you've already lost time.
+
+---
+
+## 9. Pitch Day (The 5-Minute Presentation)
 
 On the final day of the program, every student gives a short presentation. This is not a formality - it is how reviewers (and your peers) first encounter your work. Treat it as the front door to your project.
 
-### 8.1 Format
+### 9.1 Format
 
 - **5 minutes** for your pitch. Strict. Practice with a timer.
 - **Up to 2 extra minutes** afterward for questions from faculty and fellow students.
 - **Slides are expected.** A simple deck is fine - readable, focused, not overstuffed. No template is mandated; use whatever you like.
 - **A demo is expected.** Live is preferred. A recorded fallback is fine (and smart) if going live would be fragile - testnet flakiness, network issues, hardware quirks. Many strong pitches mix both.
 
-### 8.2 What to cover (roughly in this order)
+### 9.2 What to cover (roughly in this order)
 
 1. **The product.** What is it? In one sentence, then show us.
 2. **Why it's interesting / relevant.** Why did you pick this problem? Who is it for? Why does it belong on the Polkadot stack specifically?
@@ -189,13 +235,13 @@ On the final day of the program, every student gives a short presentation. This 
 4. **Learnings, problems, and what broke.** The honest part. Sharp edges you hit on the stack, bug reports you filed, things that surprised you, things you'd do differently. Reviewers value this section more than you'd guess.
 5. **Next steps, future ideas, and feedback to the stack.** Where would you take this next? What's still rough? What should Parity know about the stack based on what you went through?
 
-### 8.3 Tone
+### 9.3 Tone
 
 Short, sharp, honest. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking *"I want to clone that repo and run it."* Aim for that.
 
 ---
 
-## 9. Timeline
+## 10. Timeline
 
 Project time runs during the final portion of the 2-week PBP program. Exact dates and daily schedule are in the cohort's [`syllabus/`](../../syllabus/) schedule.
 
@@ -208,7 +254,7 @@ Rough shape:
 
 ---
 
-## 10. Process & Support
+## 11. Process & Support
 
 - **Office hours with faculty** are available throughout project time. Use them.
 - **If you are on a risky path and stuck, come talk to us early.** "I am 48 hours into this and I don't know if it's possible" is a normal conversation to have. Waiting until day 10 to raise it is not.
@@ -217,7 +263,7 @@ Rough shape:
 
 ---
 
-## 11. A Final Note
+## 12. A Final Note
 
 You are among the first cohorts building on the decentralized Polkadot app stack as a unified thing. A lot of what you find - good and bad - will directly shape how Parity builds this stack for the next few years. Take that seriously. Build something you would actually want to exist. Be honest about what happened. Have fun.
 
