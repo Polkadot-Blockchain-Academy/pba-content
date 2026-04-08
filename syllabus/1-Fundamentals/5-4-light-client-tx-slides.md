@@ -3,6 +3,8 @@ title: LCTX 4 - Submit and Track Transaction
 description: End to End Transaction Flow with a Light Client
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Light Client Transaction
 
 #### Part 4: Submit and Track Transaction
@@ -402,6 +404,6 @@ The transaction will make its way into a block producing node, and eventually in
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

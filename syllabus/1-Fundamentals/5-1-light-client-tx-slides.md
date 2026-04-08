@@ -3,6 +3,8 @@ title: LCTX 1 - What is a Light Client?
 description: End to End Transaction Flow with a Light Client
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 ## Overview
 
 In this presentation we will cover the end to end flow of a transaction.
@@ -304,6 +306,6 @@ Built with:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions
