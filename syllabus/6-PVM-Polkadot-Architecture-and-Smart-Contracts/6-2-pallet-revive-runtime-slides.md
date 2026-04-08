@@ -2,7 +2,7 @@
 title: pallet-revive architecture
 description: Architecture of the pallet-revive smart contract module
 duration: 30min
-url: http://localhost:1948/syllabus/4-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
+url: http://localhost:1948/syllabus/6-PVM-Polkadot-Architecture-and-Smart-Contracts/6-2-pallet-revive-runtime-slides.md
 ---
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->

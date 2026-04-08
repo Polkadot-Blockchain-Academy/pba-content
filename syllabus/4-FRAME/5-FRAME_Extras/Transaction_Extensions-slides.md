@@ -81,13 +81,13 @@ Important, must pause and ask!
 
 ### Shower Thought: Runtime vs STF
 
-<img style="width: 1100px;" src="../../Substrate/img/tx-pool/peter-parker-glasses-off.png" />
+<img style="width: 1100px;" src="../../3-Substrate/img/tx-pool/peter-parker-glasses-off.png" />
 
 ---v
 
 ### Shower Thought: Runtime vs STF
 
-<img style="width: 1100px;" src="../../Substrate/img/tx-pool/peter-parker-glasses-on.png" />
+<img style="width: 1100px;" src="../../3-Substrate/img/tx-pool/peter-parker-glasses-on.png" />
 
 ---v
 

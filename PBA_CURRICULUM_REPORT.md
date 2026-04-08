@@ -581,14 +581,13 @@ pba-content/
 ├── syllabus/                    # Current curriculum (76 lectures)
 │   ├── 1-Fundamentals/          # Core concepts (9 lectures)
 │   ├── 2-Polkadot/              # Polkadot protocol (12 lectures)
-│   ├── 3a-Protocol_On-Chain/    # Substrate, FRAME, XCM (~32 lectures)
-│   │   ├── Substrate/
-│   │   ├── FRAME/
-│   │   └── XCM/
+│   ├── 3-Substrate/             # Substrate (~8 lectures)
+│   ├── 4-FRAME/                 # FRAME (~17 lectures)
+│   ├── 5-XCM/                   # XCM (~7 lectures)
 │   ├── 3b-dApps_Off-Chain/      # dApp development (9 lectures)
-│   ├── 4-PVM-.../               # Smart contracts (4 lectures)
+│   ├── 6-PVM-.../               # Smart contracts (4 lectures)
 │   ├── 5-Governance/            # Governance (3 days)
-│   └── 6-JAM/                   # JAM protocol (7 lectures)
+│   └── 7-JAM/                   # JAM protocol (7 lectures)
 ├── previous_syllabus/           # Archived content (50 lectures)
 ├── assets/                      # Shared images, PDFs, styles
 ├── CONTRIBUTING.md              # Contributor guidelines
