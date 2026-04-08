@@ -3,6 +3,8 @@ title: LCTX 1 - What is a Light Client?
 description: End to End Transaction Flow with a Light Client
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 ## Overview
 
 In this presentation we will cover the end to end flow of a transaction.
@@ -45,7 +47,7 @@ However, in order to "keep up" with the blockchain, you require minimum hardware
 
 ## Scalability Through Speed
 
-As you have learned with Polkadot, we employ lots of advance engineering to achieve a secure, scalable, and resilient blockchain. However, the reality is, if you use a more powerful computer across the nodes in your network, your blockchain will inherently perform better.
+As you have learned with Polkadot, we employ lots of advanced engineering to achieve a secure, scalable, and resilient blockchain. However, the reality is, if you use a more powerful computer across the nodes in your network, your blockchain will inherently perform better.
 
 If you have a blockchain which can directly run on a phone, it is likely not performing at competitive speeds.
 
@@ -76,14 +78,14 @@ These block headers tell the light client everything it needs to know to trustle
 A block is split into two main parts:
 
 - Block Header
-  - Parent Hash, Block Number, State Root, Extrinsic Root, Digest
+  - Parent Hash, Block Number, State Root, Extrinsics Root, Digest
 - Block Body
   - Vector of Extrinsics
 
 > Each block can be uniquely represented by a **Block Hash**.
 
 - Block Hash is simply the hash of the data inside the header.
-  - The block body is already represented by the Extrinsic Root.
+  - The block body is already represented by the Extrinsics Root.
 
 ---
 
@@ -98,7 +100,7 @@ Inside the block header is:
 - **Block Number**: The height of the block in the chain.
 - **State Root**: This single merkle root hash represents all current data stored in the blockchain.
   - Allows clients to create and verify proofs that the blockchain contains some specific state.
-- **Extrinsics Root**: This merkle root of the extrinsics found in the block's body.
+- **Extrinsics Root**: The merkle root of the extrinsics found in the block's body.
   - Allows a client to prove that a specific extrinsic was or was not included in the block without needing to download the entire body.
 - **Digest**: A list of log items containing "auxiliary" information needed to verify the block.
   - This is where consensus-related data lives.
@@ -132,7 +134,7 @@ For a light client, the digest is very important.
 
 ## 1. Confirming Finality
 
-Light Clients will receive new blocks from a full node..
+Light Clients will receive new blocks from a full node.
 
 > But why should it trust that this block is accurate and part of the canonical chain?
 
@@ -304,6 +306,6 @@ Built with:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

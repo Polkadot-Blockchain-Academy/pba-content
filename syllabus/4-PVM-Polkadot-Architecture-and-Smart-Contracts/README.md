@@ -13,7 +13,7 @@ Install:
 
 2. Smart Contracts general introduction [pg]
 3. EVM contracts [pg]
-7. revive stack [pg]
+4. revive stack [pg]
 
 ### Day 2
 

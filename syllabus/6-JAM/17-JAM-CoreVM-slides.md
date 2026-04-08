@@ -4,6 +4,8 @@ description: Tech progression from Polkadot 2.0 to JAM and then a corevm demo sh
 duration: 30 mins
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # JAM
 
 ## Disclaimers & CoreVM Demo
@@ -168,31 +170,31 @@ What actually happens here?
 
 # Continuations
 
-<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_1.png" />
+<img style="width: 1100px;" src="../../assets/img/0-Shared/corevm_1.png" />
 
 ---v
 
 # Continuations
 
-<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_2.png" />
+<img style="width: 1100px;" src="../../assets/img/0-Shared/corevm_2.png" />
 
 ---v
 
 # Continuations
 
-<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_3.png" />
+<img style="width: 1100px;" src="../../assets/img/0-Shared/corevm_3.png" />
 
 ---v
 
 # Continuations
 
-<img style="width: 1100px;" src="../../assets/img/0-Shared/CoreVM_4.png" />
+<img style="width: 1100px;" src="../../assets/img/0-Shared/corevm_4.png" />
 
 ---v
 
 # Continuations
 
-<img style="width: 700px;" src="../../assets/img/0-Shared/CoreVM_5.png" />
+<img style="width: 700px;" src="../../assets/img/0-Shared/corevm_5.png" />
 
 ---v
 

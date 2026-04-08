@@ -3,6 +3,8 @@ title: Signed Extensions
 description: Signed Extensions, Transaction Priority.
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Signed Extensions
 
 ---v

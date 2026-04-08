@@ -4,6 +4,8 @@ description: An introduction into FRAME, a framework for building Substrate runt
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 <!-- ## Lesson Plan
 
 <table class="no-bullet-padding">

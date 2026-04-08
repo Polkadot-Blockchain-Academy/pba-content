@@ -4,6 +4,8 @@ description: FRAME Calls for Web3 engineers.
 duration: 1 hour
 ---
 
+<!-- .slide: data-background-image="../../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # FRAME Calls
 
 ---
@@ -315,6 +317,6 @@ https://paritytech.github.io/polkadot-sdk/master/frame_support/attr.pallet.html#
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

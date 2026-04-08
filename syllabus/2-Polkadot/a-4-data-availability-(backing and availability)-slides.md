@@ -5,6 +5,8 @@ duration: 1 hour
 owner: Maciej Zyszkiewicz (Bradley Olson originally)
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Data Availability
 
 ## Backing & Availability
@@ -686,7 +688,7 @@ Better implemented Reed Solomon: https://github.com/paritytech/reed-solomon-nove
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions
 

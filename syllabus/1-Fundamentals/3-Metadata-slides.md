@@ -3,6 +3,8 @@ title: FRAME Metadata
 description: FRAME Metadata
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # FRAME Metadata
 
 ---

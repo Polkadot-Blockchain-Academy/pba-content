@@ -3,6 +3,8 @@ title: Substrate/FRAME Tips and Tricks
 description: Substrate and FRAME Tips and Tricks for Web3 Engineers
 ---
 
+<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Substrate / FRAME Tips and Tricks
 
 Notes:

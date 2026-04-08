@@ -36,13 +36,12 @@
 </head>
 
 <body class="site">
-  <header class="site-header">
-    <!-- This logo is a link only on the watching server, not the production build -->
+  <footer style="position: fixed; top: 1.5%; left: 2%; z-index: 99;">
     <a href="{{{absoluteUrl}}}">
-      <img style="height: 2.5vw;" class="watermark-logo" src="{{{base}}}/assets/img/0-Shared/logo/pba-logo-white.svg"
+      <img style="height: 3vw;" src="{{{base}}}/assets/img/0-Shared/logo/PBA_Logo_white.png"
         alt="PBA Logo">
     </a>
-  </header>
+  </footer>
   <main class="reveal">
     <article class="slides">
       {{{slides}}}
@@ -109,8 +108,8 @@
             grid: { color: "lightgray" }, // color of grid lines
           },
         },
-        line: { borderColor: ["#ccc", "#E6007A", "#6D3AEE"], "borderDash": [[5, 10], [0, 0]] },
-        bar: { backgroundColor: ["#ccc", "#E6007A", "#6D3AEE"] },
+        line: { borderColor: ["#ccc", "#FFFFFF", "#888888"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#FFFFFF", "#888888"] },
       },
       plugins: [
         RevealMarkdown,

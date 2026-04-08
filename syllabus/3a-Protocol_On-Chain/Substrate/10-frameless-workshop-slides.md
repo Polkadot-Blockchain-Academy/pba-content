@@ -3,6 +3,8 @@ title: Frameless Workshop
 duration: 180 minutes
 ---
 
+<!-- .slide: data-background-image="../../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 ## FRAME-less Workshop
 
 Building Substrate Runtime without the FRAME abstractions.

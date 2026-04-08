@@ -3,6 +3,8 @@ title: LCTX 2 - Verifiable Storage Proofs
 description: End to End Transaction Flow with a Light Client
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Light Client Transaction
 
 #### Part 2: Verifiable Storage Proofs
@@ -514,6 +516,6 @@ What works in memory as simple data structure, also work as a db over disk and a
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

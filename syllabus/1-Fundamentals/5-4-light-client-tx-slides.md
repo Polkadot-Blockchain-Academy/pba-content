@@ -3,6 +3,8 @@ title: LCTX 4 - Submit and Track Transaction
 description: End to End Transaction Flow with a Light Client
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # Light Client Transaction
 
 #### Part 4: Submit and Track Transaction
@@ -62,7 +64,7 @@ graph LR
 - Transaction pool is entirely an **offchain operation**.
   - No state change
 
-Once these checks pass, an subscription update is sent with the `Ready` or `Future` status.
+Once these checks pass, a subscription update is sent with the `Ready` or `Future` status.
 
 Notes:
 
@@ -378,7 +380,7 @@ The nonce helps with transaction ordering and more!
 
 </pba-cols>
 
-Note: The oder in this slide matters and it is top to bottom.
+Note: The order in this slide matters and it is top to bottom.
 
 ---
 
@@ -402,6 +404,6 @@ The transaction will make its way into a block producing node, and eventually in
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions

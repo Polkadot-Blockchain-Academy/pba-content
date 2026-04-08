@@ -1,7 +1,7 @@
  // Mermaid theme and functions
- const pink = '#E6007A';
- const purple = '#442299';
- const lightPurple = '#6D3AEE';
+ const pink = '#FFFFFF';
+ const purple = '#333333';
+ const lightPurple = '#666666';
  const white = '#FFFFFF';
 
  Reveal.addEventListener('ready', event => asyncMermaidRender(event));

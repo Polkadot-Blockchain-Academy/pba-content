@@ -3,6 +3,8 @@ title: The World Computer
 description: Develop an understanding of the Ubiquitous World Computer.
 ---
 
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
 # The World Computer
 
 ---
@@ -81,7 +83,7 @@ Let’s talk about:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Web3
 
@@ -248,7 +250,7 @@ Web3 is:
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Origins of the World Computer
 
@@ -404,7 +406,7 @@ There is a **growing divide** in the mindset of blockchain development.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Components of the World Computer
 
@@ -540,7 +542,7 @@ The World Computer will not replace your personal computer; it's a new type of m
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Products for the World Computer
 
@@ -836,7 +838,7 @@ Unfortunately this was wrong.
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # The Transition to Web3
 
@@ -1027,7 +1029,26 @@ But in fact, do most people want this?
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+## Neutrality and Alegality
+
+A potentially tough pill to swallow.
+
+---
+
+## Neutrality
+
+We must also remember that real blockchains are “neutral”, as Andreas Antonopoulos explained more than 11 years ago.
+
+Replacing his thoughts on “currencies” and “bitcoin” to a more general “blockchain” view:
+
+- Neutrality is not a lack of principles, it is a principle in itself.
+- Neutrality is the most important principle of [blockchains].
+- A neutral [blockchain] can be used for any political system, whether it is the political system you like or not.
+- A neutral [blockchain] isn’t anymore of a libertarian [blockchain] than it is communist [blockchain]. It is just a [blockchain].
+
+---
+
+<!-- .slide: data-background-color="#000000" -->
 
 # The Future of Polkadot
 
@@ -1117,6 +1138,6 @@ To achieve our vision, we need to keep building the different parts of the decen
 
 ---
 
-<!-- .slide: data-background-color="#4A2439" -->
+<!-- .slide: data-background-color="#000000" -->
 
 # Questions
