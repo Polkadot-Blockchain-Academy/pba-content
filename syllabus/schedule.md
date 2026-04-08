@@ -2,8 +2,10 @@
 
 ## Monday, April 13
 
-- 8:00 - 10:00
-  - Welcome to PBP (30 mins) then Fundamentals
+- 8:00 - 8:30
+  - Welcome to PBP (30 mins)
+- 8:30 - 10:00
+  - Fundamentals
   - Kian
   - TODO: specific lecture links
 - 10:00 - 10:30
