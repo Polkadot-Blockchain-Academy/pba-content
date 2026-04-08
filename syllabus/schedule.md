@@ -217,25 +217,27 @@
 - 8:00 - 10:00
   - XCM
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - [Introduction](3a-Protocol_On-Chain/XCM/1-Introduction-slides.md)
+  - [Primitives](3a-Protocol_On-Chain/XCM/2-Primitives-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - XCM
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - [Cross-Consensus Transfers](3a-Protocol_On-Chain/XCM/2.5-Cross-Consensus-Transfers-slides.md)
+  - [Executor](3a-Protocol_On-Chain/XCM/3-Executor-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
-  - XCM
+  - XCM: Hands-on Exercises
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - XCM Fundamentals workshop
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
-  - XCM
+  - XCM: Hands-on Exercises
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - XCM Execution workshop
 
 ---
 
@@ -244,22 +246,24 @@
 - 8:00 - 10:00
   - XCM
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - [Pallet XCM](3a-Protocol_On-Chain/XCM/4-Pallet-Xcm-slides.md)
+  - [XCM Configuration](3a-Protocol_On-Chain/XCM/5-Xcm-config-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - XCM
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - [XCM Configuration](3a-Protocol_On-Chain/XCM/5-Xcm-config-slides.md) (continued)
+  - [XCM Emulator](3a-Protocol_On-Chain/XCM/6-Xcm-emulator-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
-  - XCM
+  - XCM: Hands-on Exercises
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - XCM Configuration workshop
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
-  - XCM
+  - XCM: Hands-on Exercises
   - Cisco Aguirre
-  - TODO: specific lecture links
+  - XCM Emulator workshop
