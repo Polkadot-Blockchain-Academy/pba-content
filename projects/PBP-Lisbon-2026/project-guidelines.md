@@ -165,12 +165,37 @@ At the end of the program you hand in:
    - A README covering: what the project does, which path you picked, how to run it, what works, what doesn't, known limitations.
    - Meaningful commit history.
 2. **A working demo.** Live is preferred. A recorded fallback is always nice in case live is unsafe (e.g. testnet flakiness).
-3. **A 5-minute pitch / demo presentation** on pitch day. Short, sharp, honest.
+3. **A 5-minute pitch / demo presentation** on pitch day. See section 8 for what this should look like.
 4. **A retrospective write-up** using [`retrospective-template.md`](./retrospective-template.md). This is the short post-mortem where you tell us what worked, what broke, and - most importantly - **what you'd tell the Parity team about the stack based on what you hit**. Reviewers read this carefully. It is not busywork.
 
 ---
 
-## 8. Timeline
+## 8. Pitch Day (The 5-Minute Presentation)
+
+On the final day of the program, every student gives a short presentation. This is not a formality - it is how reviewers (and your peers) first encounter your work. Treat it as the front door to your project.
+
+### 8.1 Format
+
+- **5 minutes** for your pitch. Strict. Practice with a timer.
+- **Up to 2 extra minutes** afterward for questions from faculty and fellow students.
+- **Slides are expected.** A simple deck is fine - readable, focused, not overstuffed. No template is mandated; use whatever you like.
+- **A demo is expected.** Live is preferred. A recorded fallback is fine (and smart) if going live would be fragile - testnet flakiness, network issues, hardware quirks. Many strong pitches mix both.
+
+### 8.2 What to cover (roughly in this order)
+
+1. **The product.** What is it? In one sentence, then show us.
+2. **Why it's interesting / relevant.** Why did you pick this problem? Who is it for? Why does it belong on the Polkadot stack specifically?
+3. **The demo.** Walk through the thing working end-to-end - backend, frontend, decentralized deploy. This is the heart of the pitch. Spend time here.
+4. **Learnings, problems, and what broke.** The honest part. Sharp edges you hit on the stack, bug reports you filed, things that surprised you, things you'd do differently. Reviewers value this section more than you'd guess.
+5. **Next steps, future ideas, and feedback to the stack.** Where would you take this next? What's still rough? What should Parity know about the stack based on what you went through?
+
+### 8.3 Tone
+
+Short, sharp, honest. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking *"I want to clone that repo and run it."* Aim for that.
+
+---
+
+## 9. Timeline
 
 Project time runs during the final portion of the 2-week PBP program. Exact dates and daily schedule are in the cohort's [`syllabus/`](../../syllabus/) schedule.
 
@@ -185,7 +210,7 @@ Rough shape:
 
 ---
 
-## 9. Process & Support
+## 10. Process & Support
 
 - **Office hours with faculty** are available throughout project time. Use them.
 - **If you are on a risky path and stuck, come talk to us early.** "I am 48 hours into this and I don't know if it's possible" is a normal conversation to have. Waiting until day 10 to raise it is not.
@@ -194,7 +219,7 @@ Rough shape:
 
 ---
 
-## 10. A Final Note
+## 11. A Final Note
 
 You are among the first cohorts building on the decentralized Polkadot app stack as a unified thing. A lot of what you find - good and bad - will directly shape how Parity builds this stack for the next few years. Take that seriously. Build something you would actually want to exist. Be honest about what happened. Have fun.
 
