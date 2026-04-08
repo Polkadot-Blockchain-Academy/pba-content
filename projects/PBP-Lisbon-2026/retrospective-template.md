@@ -51,16 +51,11 @@
 
 ---
 
-## AI usage
-
-*Be honest about how you used AI in this project. Which parts? How did you verify them? What did AI get wrong that you had to fix by hand? This section is not held against you. We encourage the use of AI.*
-
----
-
 ## Links
 
 - **Bug reports filed:**
 - **PRs submitted to stack repos:**
+- **Pitch slides / presentation:**
 - **Demo video (if any):**
 - **Live deployment (if any):**
 - **Anything else worth sharing:**
