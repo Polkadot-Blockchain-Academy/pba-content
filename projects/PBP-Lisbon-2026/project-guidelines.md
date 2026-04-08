@@ -206,8 +206,6 @@ Rough shape:
 - **Week 2**: build, break, report, fix.
 - **Final day**: pitch day.
 
-**Plan your scope for two weeks, not four.** It is far better to ship a small thing that works than a large thing that half-works.
-
 ---
 
 ## 10. Process & Support
