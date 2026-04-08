@@ -5,6 +5,7 @@
 - 8:00 - 10:00
   - Welcome to PBP (30 mins) then Fundamentals
   - Kian
+  - TODO: specific lecture links
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
@@ -20,11 +21,13 @@
 - 1:30 - 3:00
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 - Evening
   - PBA staff and faculty dinner (Maciej, Kian, Shawn)
 
@@ -35,21 +38,25 @@
 - 8:00 - 10:00
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 
 ---
 
@@ -58,21 +65,25 @@
 - 8:00 - 10:00
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Polkadot
   - Maciej Zyszkiewicz
+  - TODO: specific lecture links
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Substrate
   - Kian
+  - TODO: specific lecture links
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Substrate
   - Kian
+  - TODO: specific lecture links
 
 ---
 
@@ -81,21 +92,25 @@
 - 8:00 - 10:00
   - Substrate
   - Kian
+  - TODO: specific lecture links
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Substrate
   - Kian
+  - TODO: specific lecture links
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Substrate
   - Kian
+  - TODO: specific lecture links
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Substrate
   - Kian
+  - TODO: specific lecture links
 
 ---
 
@@ -104,11 +119,13 @@
 - 8:00 - 10:00
   - Substrate
   - Kian
+  - TODO: specific lecture links
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Substrate
   - Kian
+  - TODO: specific lecture links
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
@@ -198,21 +215,25 @@
 - 8:00 - 10:00
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
 
 ---
 
@@ -221,18 +242,22 @@
 - 8:00 - 10:00
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - XCM
   - Cisco Aguirre
+  - TODO: specific lecture links
