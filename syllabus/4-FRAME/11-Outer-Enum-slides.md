@@ -1,6 +1,6 @@
 ---
 title: Outer Enum
-description: FRAME Outer Enum Web3 Engineers.
+description: FRAME Outer Enum for Web3 Engineers.
 duration: 1 hour
 ---
 
@@ -28,6 +28,8 @@ There are 4 main Enums which you will encounter throughout your FRAME developmen
 - The Event Enum
 - The Error Enum
 - The Origin Enum
+- The Task Enum
+- And more: `RuntimeHoldReason`, `RuntimeFreezeReason`, etc.
 
 All of these enums have some representation within individual pallets, but also the final FRAME runtime you develop.
 
@@ -232,7 +234,7 @@ Runtime Event: [0, 0, 1, 0, 2, 0, 3, 0, 0, 0]
 
 ## Real Runtime
 
-This was directly added to `substrate/bin/node-template/runtime/src/lib.rs`:
+Example test in a runtime:
 
 ```rust [7,9,11,13,15,17]
 #[test]
@@ -241,7 +243,7 @@ fn outer_enum_tests() {
 	use sp_core::crypto::AccountId32;
 	use codec::Encode;
 
-	let balances_call = pallet_balances::Call::<Runtime>::transfer { dest: MultiAddress::Address32([1u8; 32]), value: 12345 };
+	let balances_call = pallet_balances::Call::<Runtime>::transfer_allow_death { dest: MultiAddress::Address32([1u8; 32]), value: 12345 };
 	println!("Pallet Call:   {:?}", balances_call.encode());
 	let runtime_call = crate::RuntimeCall::Balances(balances_call);
 	println!("Runtime Call:  {:?}", runtime_call.encode());
@@ -295,13 +297,18 @@ You can see these "aggregate" types are associated types in FRAME System.
 #[pallet::disable_frame_system_supertrait_check]
 pub trait Config: 'static + Eq + Clone {
 	/// The `RuntimeOrigin` type used by dispatchable calls.
-	type RuntimeOrigin: Into<Result<RawOrigin<Self::AccountId>, Self::RuntimeOrigin>> + From<RawOrigin<Self::AccountId>> + Clone + OriginTrait<Call = Self::RuntimeCall>;
+	type RuntimeOrigin: Into<Result<RawOrigin<Self::AccountId>, Self::RuntimeOrigin>>
+		+ From<RawOrigin<Self::AccountId>> + Clone
+		+ OriginTrait<Call = Self::RuntimeCall, AccountId = Self::AccountId>
+		+ AsTransactionAuthorizedOrigin;
 
 	/// The aggregated `RuntimeCall` type.
-	type RuntimeCall: Parameter + Dispatchable<RuntimeOrigin = Self::RuntimeOrigin> + Debug + From<Call<Self>>;
+	type RuntimeCall: Parameter + Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>
+		+ Debug + From<Call<Self>> + GetDispatchInfo + Authorize;
 
 	/// The aggregated event type of the runtime.
-	type RuntimeEvent: Parameter + Member + From<Event<Self>> + Debug + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+	type RuntimeEvent: Parameter + Member + From<Event<Self>> + Debug
+		+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
 	// -- snip --
 }
@@ -309,17 +316,23 @@ pub trait Config: 'static + Eq + Clone {
 
 ---
 
-## Pallet Event
+### Using Aggregated Types
 
-You can now see why we need to add an `Event` associated type to each pallet which uses events:
+Since every pallet has `Config: frame_system::Config`, you can access the aggregated types anywhere:
+
+Within your pallet:
 
 ```rust
-/// Configure the pallet by specifying the parameters and types on which it depends.
-#[pallet::config]
-pub trait Config: frame_system::Config {
-	/// Because this pallet emits events, it depends on the runtime's definition of an event.
-	type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
-}
+// In a pallet: access the runtime call type
+let call: <T as frame_system::Config>::RuntimeCall = my_call.into();
+```
+
+Or even within your runtime:
+
+```rust
+// In the runtime: use the concrete types directly
+let call: RuntimeCall = pallet_balances::Call::transfer_allow_death { .. }.into();
+let event: RuntimeEvent = pallet_balances::Event::Transfer { .. }.into();
 ```
 
 ---
