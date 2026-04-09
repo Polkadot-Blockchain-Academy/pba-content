@@ -37,7 +37,7 @@ Working with balances is fundamental to blockchain development:
 ## Why Existential Deposit
 
 - Account occupies some state in storage.
-- ED forces accounts to keep a minimum balance, or dusted.
+- ED forces accounts to keep a minimum balance, or get dusted.
 
 <br>
 
@@ -98,7 +98,7 @@ These traits are deprecated. For new code:
 │  └─────────────┴─────────────────┘  │
 └─────────────────────────────────────┘
 
-Spendable = free - max(frozen - reserved, ED)
+Spendable = free - max(frozen - held, ED)
 ```
 
 </pba-flex>
@@ -111,7 +111,7 @@ https://wiki.polkadot.com/learn/learn-account-balances/
 ## Mental Model
 
 - Holds are taken out of total balance
-- Freezes determine minimum total balance account needs.
+- Freezes determine the minimum total balance an account needs.
 
 ---
 
@@ -233,7 +233,8 @@ pub mod pallet {
 #[pallet::config]
 pub trait Config: frame_system::Config {
     /// Type that can mutate balance and place holds on it.
-    type NativeBalance: fungible::Mutate<Self::AccountId>;
+    type NativeBalance: fungible::Mutate<Self::AccountId>
+      + fungible::MutateHold<Self::AccountId, Reason = Self::RuntimeHoldReason>;
     /// Overarching hold-reason type. Must be constructible from `HoldReason`.
     type RuntimeHoldReason: From<HoldReason>;
     // -- snip --
@@ -253,7 +254,7 @@ pub trait Config: frame_system::Config {
     pub fn stake(origin: OriginFor<T>, value: BalanceOf<T>) -> DispatchResult {
       let who = ensure_signed(origin)?;
       // Place a hold
-      <T::NativeBalance as MutateHold<T::AccountId>>::hold(&HoldReason::Stake.into(), &who, value)?;
+      <T::NativeBalance as MutateHold<T::AccountId>>::hold(&HoldReason::Staking.into(), &who, value)?;
       Ok(())
     }
 
@@ -261,7 +262,7 @@ pub trait Config: frame_system::Config {
     pub fn unstake(origin: OriginFor<T>, value: BalanceOf<T>) -> DispatchResult {
       let who = ensure_signed(origin)?;
       // Release some of the hold
-      <T::NativeBalance as MutateHold<T::AccountId>>::release(&HoldReason::Stake.into(), &who, value, Precision::BestEffort)?;
+      <T::NativeBalance as MutateHold<T::AccountId>>::release(&HoldReason::Staking.into(), &who, value, Precision::BestEffort)?;
       Ok(())
     }
   }
@@ -305,11 +306,11 @@ mod runtime {
 
   /// The Balances pallet.
   #[runtime::pallet_index(1)]
-  pub type Balances = pallet_balances::Pallet<Runtime>;
+  pub type Balances = pallet_balances;
 
   /// Your pallet.
   #[runtime::pallet_index(2)]
-  pub type MyPallet = pallet_mypallet::Pallet<Runtime>;
+  pub type MyPallet = pallet_mypallet;
 }
 ```
 
@@ -481,10 +482,10 @@ mod runtime {
 
   /// The Balances pallet.
   #[runtime::pallet_index(1)]
-  pub type Balances = pallet_balances::Pallet<Runtime>;
+  pub type Balances = pallet_balances;
 
   /// Your pallet.
   #[runtime::pallet_index(2)]
-  pub type MyPallet = pallet_mypallet::Pallet<Runtime>;
+  pub type MyPallet = pallet_mypallet;
 }
 ```
