@@ -43,7 +43,7 @@ Notes:
 
 ## Tightly Coupled Pallets
 
-Tightly coupling is often an easier, but less flexible way to have two pallets interact with each other.
+Tight coupling is often an easier, but less flexible way to have two pallets interact with each other.
 
 It looks like this:
 
@@ -148,7 +148,7 @@ ensure!(
 
 ## When To Use Tight Coupling
 
-Tight coupling can make a lot of sense when trying to break apart a single "large" pallet into smaller, yet fully dependant pieces.
+Tight coupling can make a lot of sense when trying to break apart a single "large" pallet into smaller, yet fully dependent pieces.
 
 As mentioned before, you can think of these as "extensions".
 
@@ -171,7 +171,7 @@ pub trait Config<I: 'static = ()>: frame_system::Config {
 }
 ```
 
-Here you can see that this pallet requires some associated type `NativeBalance` to be configured which implements some traits `fungible::Inspect` and `fungible::Mutate`, however there is no requirements on how or where that type is configured.
+Here you can see that this pallet requires some associated type `NativeBalance` which implements `fungible::Inspect` and `fungible::Mutate`. There are no requirements on how or where that type is configured.
 
 ---
 
@@ -257,8 +257,7 @@ Finally, in the runtime configuration, we concretely define which pallet impleme
 ```rust
 /// Configuration of a pallet using the `fungible::*` traits.
 impl pallet_voting::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type NativeBalance = pallet_balances::Pallet<Runtime>;
+	type NativeBalance = Balances;
 }
 ```
 
@@ -290,7 +289,7 @@ Loose coupling is more difficult because you need to think ahead of time about d
 
 You need to try to not let implementation details affect the API, providing maximum flexibility to users and providers of those traits.
 
-When done right, it can be very powerful; like the ERC20 token format.
+When done right, it can be very powerful, like the ERC20 token standard.
 
 ---
 
