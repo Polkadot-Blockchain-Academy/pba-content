@@ -1,6 +1,6 @@
 ---
 title: FRAME Extras
-description: Additional Topics to Talk About
+description: Additional FRAME Topics
 ---
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
@@ -44,7 +44,7 @@ impl<T: Config> Pallet<T> {
 
 ---v
 
-### View Functions: Real World Example
+### View Functions: Real-World Example
 
 From `pallet-proxy`:
 
@@ -98,7 +98,7 @@ impl<T: Config> Pallet<T> {
 | `#[pallet::task_weight(expr)]`             | Weight consumed by this task         |
 
 - The macro generates a `Task<T>` enum from all task functions
-- Tasks are submitted via `frame_system::do_task` as unsigned transactions
+- Tasks are submitted via `frame_system::do_task` (requires `experimental` feature flag)
 - Can be discovered and submitted by offchain workers
 - This API is experimental and may change
 
