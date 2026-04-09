@@ -392,7 +392,7 @@ where Call: Dispatchable,
 ## Grouping Transaction Extensions
 
 - A tuple of extensions is also a transaction extension itself!
-- You can look at the implementation yourself.. but the TLDR is:
+- You can look at the implementation yourself, but the TLDR is:
   - Executes each individually
   - Passes resulting `Origin` from one to the next
   - Combines results
@@ -405,7 +405,7 @@ TODO: how `TransactionValidity` is `combined_with` is super important here, but 
 
 ## Usage In The Runtime
 
-- Each runtime has a bunch of transaction extensions. They can be grouped as a tuple
+- Each runtime has a set of transaction extensions. They are grouped as a tuple.
 
 ```rust
 pub type TxExtension = (
