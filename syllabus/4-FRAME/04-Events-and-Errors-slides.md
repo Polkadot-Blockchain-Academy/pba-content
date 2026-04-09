@@ -53,7 +53,7 @@ From: `substrate/primitives/runtime/src/lib.rs`
 
 ```rust [0|6-10|13-14|15-16]
 /// Reason why a dispatch call failed.
-#[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, PartialEq, MaxEncodedLen)]
+#[derive(Eq, Clone, Copy, Encode, Decode, DecodeWithMemTracking, Debug, TypeInfo, PartialEq, MaxEncodedLen)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub enum DispatchError {
 	/// Some error occurred.
@@ -89,6 +89,8 @@ pub enum DispatchError {
 	Unavailable,
 	/// Root origin is not allowed.
 	RootNotAllowed,
+	/// An error with tries.
+	Trie(TrieError),
 }
 ```
 
@@ -104,7 +106,7 @@ From: `substrate/primitives/runtime/src/lib.rs`
 pub const MAX_MODULE_ERROR_ENCODED_SIZE: usize = 4;
 
 /// Reason why a pallet call failed.
-#[derive(Eq, Clone, Copy, Encode, Decode, Debug, TypeInfo, MaxEncodedLen)]
+#[derive(Eq, Clone, Copy, Encode, Decode, DecodeWithMemTracking, Debug, TypeInfo, MaxEncodedLen)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct ModuleError {
 	/// Module index, matching the metadata module index.
@@ -134,12 +136,8 @@ pub mod pallet {
 	use frame_support::pallet_prelude::*;
 	use frame_system::pallet_prelude::*;
 
-	/// Configure the pallet by specifying the parameters and types on which it depends.
 	#[pallet::config]
-	pub trait Config: frame_system::Config {
-		/// Because this pallet emits events, it depends on the runtime's definition of an event.
-		type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
-	}
+	pub trait Config: frame_system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -167,7 +165,7 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {
 		/// This function allows the current owner to set a new owner.
 		/// If there is no owner, this function will return an error.
-		#[pallet::weight(u64::default())]
+		#[pallet::weight(Weight::default())]
 		#[pallet::call_index(0)]
 		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
 			let who = ensure_signed(origin)?;
@@ -193,11 +191,11 @@ When writing tests, you can use errors to make sure that your functions execute 
 fn errors_example() {
 	new_test_ext().execute_with(|| {
 		assert_noop!(TemplateModule::change_ownership(
-			Origin::signed(1), 2), Error::<T>::NoOwner);
+			RuntimeOrigin::signed(1), 2), Error::<T>::NoOwner);
 		CurrentOwner::<T>::put(1);
-		assert_ok!(TemplateModule::change_ownership(Origin::signed(1), 2));
+		assert_ok!(TemplateModule::change_ownership(RuntimeOrigin::signed(1), 2));
 		assert_noop!(TemplateModule::change_ownership(
-			Origin::signed(1), 2), Error::<T>::NotAuthorized);
+			RuntimeOrigin::signed(1), 2), Error::<T>::NotAuthorized);
 	});
 }
 ```
@@ -253,13 +251,16 @@ Encoding based on configuration:
 <div class="left" style="max-width: 700px;">
 
 ```rust
-// Configure a mock runtime to test the pallet.
-frame_support::construct_runtime!(
-	pub struct Test {
-		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
-		TemplateModule: pallet_template,
-	}
-);
+#[frame_support::runtime]
+mod runtime {
+	#[runtime::runtime]
+	pub struct Test;
+
+	#[runtime::pallet_index(0)]
+	pub type System = frame_system;
+	#[runtime::pallet_index(1)]
+	pub type TemplateModule = pallet_template;
+}
 ```
 
 </div>
@@ -332,65 +333,29 @@ For this you can use events.
 
 ---
 
-## Declaring and Emitting Events
+## Emitting Events
 
-```rust [10-17|34-39|53]
-#![cfg_attr(not(feature = "std"), no_std)]
+Declare your events with `#[pallet::event]` and use `#[pallet::generate_deposit]` to create a helper function:
 
-pub use pallet::*;
+```rust
+#[pallet::event]
+#[pallet::generate_deposit(pub(super) fn deposit_event)]
+pub enum Event<T: Config> {
+	/// The owner has been updated.
+	OwnerChanged,
+}
+```
 
-#[frame_support::pallet]
-pub mod pallet {
-	use frame_support::pallet_prelude::*;
-	use frame_system::pallet_prelude::*;
+Then emit events from your calls:
 
-	/// Configure the pallet by specifying the parameters and types on which it depends.
-	#[pallet::config]
-	pub trait Config: frame_system::Config {
-		/// Because this pallet emits events,
-		/// it depends on the runtime's definition of an event.
-		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as frame_system::Config>::RuntimeEvent>;
-	}
-
-	#[pallet::pallet]
-	pub struct Pallet<T>(_);
-
-	#[pallet::storage]
-	pub type CurrentOwner<T: Config> = StorageValue<_, T::AccountId>;
-
-	// Errors inform users that something went wrong.
-	#[pallet::error]
-	pub enum Error<T> {
-		/// There is currently no owner set.
-		NoOwner,
-		/// The calling user is not authorized to make this call.
-		NotAuthorized,
-	}
-
-	#[pallet::event]
-	#[pallet::generate_deposit(pub(super) fn deposit_event)]
-	pub enum Event<T: Config> {
-		/// The owner has been updated.
-		OwnerChanged,
-	}
-
-	#[pallet::call]
-	impl<T: Config> Pallet<T> {
-		/// This function allows the current owner to set a new owner.
-		/// If there is no owner, this function will return an error.
-		#[pallet::weight(u64::default())]
-		#[pallet::call_index(0)]
-		pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
-			let who = ensure_signed(origin)?;
-			let current_owner = CurrentOwner::<T>::get()
-				.ok_or(Error::<T>::NoOwner)?;
-			ensure!(current_owner == who, Error::<T>::NotAuthorized);
-			CurrentOwner::<T>::put(new);
-			Self::deposit_event(Event::<T>::OwnerChanged);
-			Ok(())
-		}
-	}
+```rust [6]
+pub fn change_ownership(origin: OriginFor<T>, new: T::AccountId) -> DispatchResult {
+	let who = ensure_signed(origin)?;
+	let current_owner = CurrentOwner::<T>::get().ok_or(Error::<T>::NoOwner)?;
+	ensure!(current_owner == who, Error::<T>::NotAuthorized);
+	CurrentOwner::<T>::put(new);
+	Self::deposit_event(Event::<T>::OwnerChanged);
+	Ok(())
 }
 ```
 
@@ -407,9 +372,11 @@ Simply generates:
 ```rust
 impl<T: Config> Pallet<T> {
 	pub(super) fn deposit_event(event: Event<T>) {
-		let event = <<T as Config>::Event as From<Event<T>>>::from(event);
+		let event = <<T as frame_system::Config>::RuntimeEvent as From<Event<T>>>::from(event);
 		let event =
-			<<T as Config>::Event as Into<<T as frame_system::Config>::Event>>::into(event);
+			<<T as frame_system::Config>::RuntimeEvent as Into<
+				<T as frame_system::Config>::RuntimeEvent
+			>>::into(event);
 		<frame_system::Pallet<T>>::deposit_event(event)
 	}
 }
@@ -500,7 +467,7 @@ pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
 ## You Should Not Read Events
 
 - Events are meant for the outside world.
-- The events storage are an unbounded vector of individual events emitted by your pallets.
+- The events storage is an unbounded vector of individual events emitted by your pallets.
 - If you ever read this storage, you will introduce the whole thing into your storage proof!
 - **Never write runtime logic which reads from or depends on events.**
 - Tests are okay.
@@ -517,7 +484,7 @@ pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
 /// Should only be called if you know what you are doing and outside of the runtime block
 /// execution else it can have a large impact on the PoV size of a block.
 pub fn read_events_no_consensus(
-) -> impl sp_std::iter::Iterator<Item = Box<EventRecord<T::RuntimeEvent, T::Hash>>> {
+) -> impl Iterator<Item = Box<EventRecord<T::RuntimeEvent, T::Hash>>> {
 	Events::<T>::stream_iter()
 }
 
@@ -530,10 +497,6 @@ pub fn read_events_no_consensus(
 /// NOTE: Events not registered at the genesis block and quietly omitted.
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn events() -> Vec<EventRecord<T::RuntimeEvent, T::Hash>> {
-	debug_assert!(
-		!Self::block_number().is_zero(),
-		"events not registered at the genesis block"
-	);
 	// Dereferencing the events here is fine since we are not in the
 	// memory-restricted runtime.
 	Self::read_events_no_consensus().map(|e| *e).collect()
@@ -581,9 +544,9 @@ fn events_example() {
 	new_test_ext().execute_with(|| {
 		frame_system::Pallet::<T>::set_block_number(1);
 		CurrentOwner::<T>::put(1);
-		assert_ok!(TemplateModule::change_ownership(Origin::signed(1), 2));
-		assert_ok!(TemplateModule::change_ownership(Origin::signed(2), 3));
-		assert_ok!(TemplateModule::change_ownership(Origin::signed(3), 4));
+		assert_ok!(TemplateModule::change_ownership(RuntimeOrigin::signed(1), 2));
+		assert_ok!(TemplateModule::change_ownership(RuntimeOrigin::signed(2), 3));
+		assert_ok!(TemplateModule::change_ownership(RuntimeOrigin::signed(3), 4));
 
 		let events = frame_system::Pallet::<T>::events();
 		assert_eq!(events.len(), 3);
