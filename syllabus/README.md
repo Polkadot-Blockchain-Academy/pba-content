@@ -1,11 +1,15 @@
 # Syllabus
 
-| Module | Name                                                                                                        | Length   |
-| ------ | ----------------------------------------------------------------------------------------------------------- | -------- |
-| 1      | [Cryptography for Blockchain](./1-Cryptography/README.md)                                                   | 3 Days   |
-| 2      | [Interdisciplinary Concepts for Decentralized Devs (Econ, Polisci)](./2-Economics/README.md)                | 1.5 Days |
-| 3      | [Blockchain & Consensus](./3-Blockchain/README.md)                                                          | 3 Days   |
-| 3      | [PVM, Polkadot Architecture and Smart Contracts](./PVM-Polkadot-Architecture-and-Smart-Contracts/README.md) | 1 Day    |
-| 4      | [Governance](./4-Governance/README.md)                                                                      | 2.5 Days |
-| 6      | [Polkadot-SDK](./6-Polkadot-SDK/README.md) (Substrate, FRAME, XCM)                                          | 10 Days  |
-| 7      | [Polkadot](./7-Polkadot/README.md)                                                                          | 2.5 Days |
+The active syllabus is organized into five numbered modules. For the day-by-day
+lecture schedule of the current cohort, see [`schedule.md`](./schedule.md).
+
+| Module | Name                              | Slides |
+| ------ | --------------------------------- | ------ |
+| 1      | [Fundamentals](./1-Fundamentals/) | 7      |
+| 2      | [Polkadot](./2-Polkadot/)         | 11     |
+| 3      | [Substrate](./3-Substrate/)       | 6      |
+| 4      | [FRAME](./4-FRAME/)               | 15     |
+| 5      | [XCM](./5-XCM/)                   | 7      |
+
+Slides are numbered within each module (`01-…` through `NN-…`) to match the
+order they appear in `schedule.md`.
