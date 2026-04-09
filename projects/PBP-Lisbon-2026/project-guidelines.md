@@ -6,22 +6,22 @@ Read it end to end before you start. If something here is unclear or contradicts
 
 ---
 
-## 1. You Are Building on an Alpha Stack (Read This First)
+## 1. You Are Building on an ever evolving Stack (Read This First)
 
-The Polkadot stack you will build on - Pallets, PVM smart contracts, Bulletin Chain, Statement Store, DotNS, Polkadot Desktop - is **effectively in alpha**. It is real, it works, and it is also still very much under active development. Components ship weekly. Interfaces shift. Some things you expect to work will not work, and the answer will sometimes be "nobody has tried that yet."
+The Polkadot stack you will build on is ever evolving. Some of it like the Pallets are pretty battle tested, but new tech like - PVM smart contracts, Bulletin Chain, Statement Store, DotNS - is **effectively in alpha**. It is real, it works, and it is also still very much under active development. Components ship weekly. Interfaces shift. Some things you expect to work will not work, and the answer will sometimes be "nobody has tried that yet."
 
 This is not a warning so you can lower your ambition. It is a warning so you can **reframe what success looks like**.
 
-- **Hitting sharp edges is expected.** It is not a failure mode, it is a data point.
+- **Hitting sharp edges is expected.** Things are still a work in progress.
 - **Filing a precise, reproducible bug report against the stack is valued.** A good bug report can be worth as much as a working feature.
 - **Submitting a PR that fixes a stack issue you hit is valued highest of all.** It is the clearest possible signal you can give us.
 - **Honest "here is what I tried, here is where I got stuck, here is what I learned" beats a polished demo that hides what broke.**
 
-You are helping us discover the shape of the stack at the same time as you are building on it. That is the deal. Take it seriously and it will be one of the best things on your CV.
+You are helping us discover the shape of the stack at the same time as you are building on it.
 
 ### The vision you are building toward
 
-The Polkadot stack is reaching for a **fully decentralized application stack**: on-chain logic, decentralized storage (Bulletin Chain), verifiable name resolution (DotNS), local-first tooling (Polkadot Desktop), and frictionless deployment. The long-term goal is that an indie developer can ship a real product with no centralized dependencies and no gatekeepers. Your project is a concrete test of how close we are.
+The Polkadot stack is reaching for a **fully decentralized application stack**: on-chain logic, decentralized storage (Bulletin Chain), verifiable name resolution (DotNS), frictionless deployment and more that we wont use yet because its stil learly in the making. The long-term goal is that an indie developer can ship a real product with no centralized dependencies and no gatekeepers. Your project is a concrete test of how close we are.
 
 ---
 
@@ -66,7 +66,7 @@ Every student ships, **solo**, a project with exactly these components:
 
 ### 3.4 Scope rule
 
-The backend + frontend combo is a **strict requirement**, not a default. Pure-infra projects (an indexer, a bridge, a standalone library) do not satisfy the rubric on their own. If you think you have a good reason to deviate, talk to faculty *before* you start building.
+The backend + frontend combo is a **strict requirement**. Pure-infra projects (an indexer, a bridge, a standalone library) do not satisfy the rubric on their own. If you think you have a good reason to deviate, talk to faculty *before* you start building.
 
 ---
 
@@ -79,14 +79,13 @@ The stack is not equally solid in every corner. You get to pick any valid combin
 | Pallet | Web / CLI++ | **~100%** | Well-trodden path, full curriculum support, plenty of prior work to crib from. |
 | Solidity on EVM | Web / CLI++ | **~90%** | Mature tooling, standard ecosystem, mostly-solved problems. Only issues will be if your contracts use really advanced gas optimisation/manipulation. |
 | Solidity on PVM | Web / CLI++ | **~70%** | Expect toolchain quirks. It is technically more optimized than EVM but the compiler struggles with big/complex contracts. |
-| Rust smart contract on PVM | Web / CLI++ | **~50%** | Bleeding edge. Real chance you hit walls nobody has hit yet. Its still early in its development. |
+| Rust smart contract on PVM | Web / CLI++ | **~50%** | Bleeding edge. Real chance you hit walls nobody has hit yet. Its still early in its development and not many people have built with it. |
 
 **Read this carefully:**
 
 - These numbers are **advisory**, not prescriptive. You may pick any row. No faculty sign-off is required for the riskier paths - but we *strongly* recommend talking to us if you go for one.
-- Riskier paths are **higher ceiling**. If you ship a Rust-contract-on-PVM project that actually works, reviewers will notice. Hard.
-- Riskier paths are **higher floor risk**. If you choose the bottom row and get stuck for five days, that is a real outcome - you need to decide whether that trade is worth it for *you*.
-- **Getting stuck is not failure as long as you document it well.** A Rust-on-PVM project that couldn't fully ship but contains two solid bug reports and a PR against the stack is a legitimate deliverable. Plan for that possibility if you pick a risky path.
+- Riskier paths are **higher ceiling**. If you ship a Rust-contract-on-PVM project that actually works, it will help us making sure that the stack works and is getting more mature.
+- **Getting stuck is not failure as long as you document it well.** A Rust-on-PVM project that couldn't fully ship but contains two solid bug reports and a PR against the stack is a legitimate deliverable. Plan for that possibility if you pick a risky path. We truly value help in improving the stack.
 
 ---
 
@@ -99,6 +98,7 @@ These are the things that raise your ceiling beyond "built the required thing." 
 - **PRs to fix stack issues** you hit. Even small ones. This is the strongest possible signal to reviewers.
 - **Protocol ports** - take something interesting from another chain (x402 payments, encrypted/anonymous chat, decentralized file hosting, something else) and bring it to Polkadot.
 - **Projects that gesture at Parity's broader vision** - games, decentralized collaboration tools, things that feel like the stack growing into its promise.
+- **Any tooling to help others build projects** - skills.md files or any other tool reusable by other people to make them ship faster is always appreciated.
 
 ---
 
@@ -154,9 +154,10 @@ These are the tells. Do not let them show up in your repo.
 
 At your 5-minute demo, we may ask you: *"walk me through this file - why is it structured this way?"* You need to be able to answer that question about any file in your repo. If you cannot, you did not ship it - the AI did, and you just pushed it.
 
-### 6.6 Docs and prose: the same rules, harder
+### 6.6 AI in ReadMe
 
-The "no slop" rule is not just about code. It applies just as hard - maybe harder - to prose. README, code comments, the retrospective, your pitch script. AI-generated prose is faster to produce than code, harder to spot at a glance, and ten times more likely to make it through unread.
+The "no slop" rule is not just about code. It applies even harder - to prose. 
+In particular to your README. AI-generated prose is faster to produce than code, harder to spot at a glance, and ten times more likely to make it through unread.
 
 A few things to internalise:
 
@@ -164,9 +165,6 @@ A few things to internalise:
 - **A wall of confident-sounding text is slop, even if every sentence is technically correct.** Reviewers can feel the difference between a README written by someone who built the thing and one assembled out of prompts. So can your peers.
 - **Rule of thumb for your README: 90% you, 10% AI.** Use AI for grammar, spelling, formatting cleanup, maybe rephrasing a clunky paragraph. Do **not** use it to draft the document. The structure, the framing, the choices about what to include and what to cut - those need to be yours. Same for the retrospective.
 - **If you expect us to read it, you should have read it yourself. Twice.** End to end. Out loud, even. If you can't be bothered, neither can we, and we will notice.
-- **Same applies to comments in code.** Comments that restate *what* the code does are noise that AI will happily generate by the bucket. Comments that explain *why* something is the way it is - the constraint, the trade-off, the bug you worked around - are the only kind worth committing.
-
-If your README, retrospective, or pitch script reads like it was generated, it will be obvious, and it will count against you more than if you had written something rougher and shorter by hand.
 
 ---
 
