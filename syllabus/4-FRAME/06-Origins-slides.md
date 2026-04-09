@@ -183,24 +183,15 @@ impl<T: Config> Pallet<T> {
 
 ---
 
-## Examples: Authorized Origin
+## Use Cases for Authorized Origin
 
-Pallets that use unsigned extrinsics (candidates for migration to `Authorized`):
+`Authorized` is useful when an extrinsic does not come from a signed account, but the runtime can verify its validity:
 
-- **GRANDPA** — `report_equivocation_unsigned`: reports equivocation proofs without a signed origin.
-- **BABE / BEEFY** — similar equivocation reporting.
-- **ImOnline** — `heartbeat`: validators signal liveness via unsigned heartbeat transactions.
+- **Offchain workers** — submitting data observed offchain that can be validated onchain.
+- **Inherent-like data** — values that can be cryptographically verified without a signature.
+- **Proofs** — e.g. equivocation proofs or other self-evident claims.
 
-Note: These pallets currently still use the older `ValidateUnsigned` pattern with `None` origin.
-
-Key properties of `#[pallet::authorize]`:
-
-| Feature         | Details                                               |
-| --------------- | ----------------------------------------------------- |
-| Granularity     | Per-call attribute, not a pallet-wide trait           |
-| Syntax          | `#[pallet::authorize(\|source, call\| { ... })]`      |
-| Parameters      | Closure receives call params directly                 |
-| Weight tracking | Separate `#[pallet::weight_of_authorize()]` attribute |
+See the `pallet-example-offchain-worker` and `pallet-example-kitchensink` for working examples.
 
 ---
 
