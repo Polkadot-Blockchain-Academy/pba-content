@@ -12,7 +12,7 @@ duration: 1 hour
 
 ## Origin
 
-This presentation will cover the use of Origin in FRAME, and how you can customize and extend this abstractions.
+This presentation will cover the use of Origin in FRAME, and how you can customize and extend these abstractions.
 
 ([Reference in `polkadot-sdk-docs`](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_docs/reference_docs/frame_origin/index.html))
 
@@ -24,9 +24,9 @@ All dispatchable calls have an `Origin` that describes where the call originates
 
 ```rust
 /// Make some on-chain remark.
-#[pallet::weight(T::SystemWeightInfo::remark(_remark.len() as u32))]
-pub fn remark(origin: OriginFor<T>, _remark: Vec<u8>) -> DispatchResultWithPostInfo {
-	ensure_signed_or_root(origin)?;
+#[pallet::weight(T::SystemWeightInfo::remark(remark.len() as u32))]
+pub fn remark(_origin: OriginFor<T>, remark: Vec<u8>) -> DispatchResultWithPostInfo {
+	let _ = remark; // No need to check the weight witness.
 	Ok(().into())
 }
 ```
@@ -39,7 +39,7 @@ These are origins which are included with FRAME by default.
 
 ```rust
 /// Origin for the System pallet.
-#[derive(PartialEq, Eq, Clone, Debug, Encode, Decode, TypeInfo, MaxEncodedLen)]
+#[derive(PartialEq, Eq, Clone, Debug, Encode, Decode, DecodeWithMemTracking, TypeInfo, MaxEncodedLen)]
 pub enum RawOrigin<AccountId> {
 	/// The system itself ordained this dispatch to happen: this is the highest privilege level.
 	Root,
@@ -97,12 +97,12 @@ A Simple Balance Transfer.
 
 ```rust
 #[pallet::call_index(0)]
-#[pallet::weight(T::WeightInfo::transfer())]
-pub fn transfer(
+#[pallet::weight(T::WeightInfo::transfer_allow_death())]
+pub fn transfer_allow_death(
 	origin: OriginFor<T>,
 	dest: AccountIdLookupOf<T>,
 	#[pallet::compact] value: T::Balance,
-) -> DispatchResultWithPostInfo {
+) -> DispatchResult {
 	let transactor = ensure_signed(origin)?;
 	// -- snip --
 }
@@ -119,12 +119,12 @@ The extrinsic to upgrade a chain.
 ```rust
 /// Set the new runtime code.
 #[pallet::call_index(2)]
-#[pallet::weight((T::BlockWeights::get().max_block, DispatchClass::Operational))]
+#[pallet::weight((T::SystemWeightInfo::set_code(), DispatchClass::Operational))]
 pub fn set_code(origin: OriginFor<T>, code: Vec<u8>) -> DispatchResultWithPostInfo {
 	ensure_root(origin)?;
-	Self::can_set_code(&code)?;
+	Self::can_set_code(&code, true).into_result()?;
 	T::OnSetCode::set_code(code)?;
-	Ok(().into())
+	Ok(Some(T::BlockWeights::get().max_block).into())
 }
 ```
 
@@ -185,11 +185,13 @@ impl<T: Config> Pallet<T> {
 
 ## Examples: Authorized Origin
 
-Core pallets that use `Authorized` for unsigned extrinsics:
+Pallets that use unsigned extrinsics (candidates for migration to `Authorized`):
 
 - **GRANDPA** — `report_equivocation_unsigned`: reports equivocation proofs without a signed origin.
 - **BABE / BEEFY** — similar equivocation reporting.
 - **ImOnline** — `heartbeat`: validators signal liveness via unsigned heartbeat transactions.
+
+Note: These pallets currently still use the older `ValidateUnsigned` pattern with `None` origin.
 
 Key properties of `#[pallet::authorize]`:
 
@@ -256,7 +258,7 @@ You can actually dispatch a call within a call with an origin of your choice.
 
 ```rust [11]
 #[pallet::call_index(0)]
-#[pallet::weight({ let dispatch_info = call.get_dispatch_info(); (dispatch_info.weight, dispatch_info.class) })]
+#[pallet::weight({ let dispatch_info = call.get_dispatch_info(); (dispatch_info.call_weight, dispatch_info.class) })]
 pub fn sudo(
 	origin: OriginFor<T>,
 	call: Box<<T as Config>::RuntimeCall>,
@@ -284,7 +286,7 @@ Here you can see the Collective Pallet creating, and dispatching with the `Membe
 	fn do_approve_proposal(seats: MemberCount, yes_votes: MemberCount, proposal_hash: T::Hash, proposal: <T as Config<I>>::Proposal) -> (Weight, u32) {
 		Self::deposit_event(Event::Approved { proposal_hash });
 
-		let dispatch_weight = proposal.get_dispatch_info().weight;
+		let dispatch_weight = proposal.get_dispatch_info().call_weight;
 		let origin = RawOrigin::Members(yes_votes, seats).into();
 		let result = proposal.dispatch(origin);
 		Self::deposit_event(Event::Executed { proposal_hash, result: result.map(|_| ()).map_err(|e| e.error) });
@@ -313,7 +315,7 @@ These need to be configured in the Runtime, where all custom origins for your ru
 
 ## Example: Alliance Pallet
 
-Pallet's can allow for various origins to be configured by the Runtime.
+Pallets can allow for various origins to be configured by the Runtime.
 
 ```rust
 #[pallet::config]
