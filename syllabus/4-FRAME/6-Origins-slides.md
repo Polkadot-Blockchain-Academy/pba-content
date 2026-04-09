@@ -39,7 +39,7 @@ These are origins which are included with FRAME by default.
 
 ```rust
 /// Origin for the System pallet.
-#[derive(PartialEq, Eq, Clone, RuntimeDebug, Encode, Decode, TypeInfo, MaxEncodedLen)]
+#[derive(PartialEq, Eq, Clone, Debug, Encode, Decode, TypeInfo, MaxEncodedLen)]
 pub enum RawOrigin<AccountId> {
 	/// The system itself ordained this dispatch to happen: this is the highest privilege level.
 	Root,
@@ -49,6 +49,8 @@ pub enum RawOrigin<AccountId> {
 	/// * included and agreed upon by the validators anyway,
 	/// * or unsigned transaction validated by a pallet.
 	None,
+	/// It is signed by nobody, the extrinsic is authorized by the runtime.
+	Authorized,
 }
 ```
 
@@ -145,15 +147,7 @@ Setting the timestamp of the block.
 	}
 ```
 
-`None` origin is not very straight forward. More details next...
-
----
-
-## None for Inherents
-
-`None` origin can be used to represents extrinsics which are specifically included by the block author, also known as an inherent.
-
-In those cases, it includes inherent checking logic with `ProvideInherent`.
+`None` origin is used for **inherents** — extrinsics specifically included by the block author. Inherent validation is handled by `ProvideInherent`.
 
 ```rust
 #[pallet::inherent]
@@ -167,25 +161,44 @@ impl<T: Config> ProvideInherent for Pallet<T> {
 
 ---
 
-## None for Unsigned
+## Authorized Origin
 
-`None` can also be used to represent "unsigned extrinsics", which are intended to be submitted by anyone without a key.
+`Authorized` is used for extrinsics that are not signed by a user, but are authorized by the runtime itself.
 
-In those cases, it includes unsigned validation logic with `ValidateUnsigned`.
+- Pallets define authorization logic using `#[pallet::authorize]` on their calls.
+- The runtime uses `frame_system::AuthorizeCall` to check authorization.
+- Unlike `None`, `Authorized` makes it explicit that the runtime has validated this call.
 
 ```rust
-#[pallet::validate_unsigned]
-impl<T: Config> ValidateUnsigned for Pallet<T> {
-	type Call = Call<T>;
-	fn validate_unsigned(source: TransactionSource, call: &Self::Call) -> TransactionValidity {
-		Self::validate_unsigned(source, call)
-	}
-
-	fn pre_dispatch(call: &Self::Call) -> Result<(), TransactionValidityError> {
-		Self::pre_dispatch(call)
+#[pallet::call]
+impl<T: Config> Pallet<T> {
+	#[pallet::authorize(|_source, call| { /* return validity */ })]
+	#[pallet::weight_of_authorize(|| T::DbWeight::get().reads(1))]
+	pub fn do_something(origin: OriginFor<T>) -> DispatchResult {
+		ensure_none(origin)?;
+		// -- snip --
 	}
 }
 ```
+
+---
+
+## Examples: Authorized Origin
+
+Core pallets that use `Authorized` for unsigned extrinsics:
+
+- **GRANDPA** — `report_equivocation_unsigned`: reports equivocation proofs without a signed origin.
+- **BABE / BEEFY** — similar equivocation reporting.
+- **ImOnline** — `heartbeat`: validators signal liveness via unsigned heartbeat transactions.
+
+Key properties of `#[pallet::authorize]`:
+
+| Feature | Details |
+|---|---|
+| Granularity | Per-call attribute, not a pallet-wide trait |
+| Syntax | `#[pallet::authorize(\|source, call\| { ... })]` |
+| Parameters | Closure receives call params directly |
+| Weight tracking | Separate `#[pallet::weight_of_authorize()]` attribute |
 
 ---
 

@@ -1128,7 +1128,7 @@ override_benchmark {
 
 ```rust
 #[derive(
-	Encode, Decode, MaxEncodedLen, TypeInfo, Eq, PartialEq, Copy, Clone, RuntimeDebug, Default,
+	Encode, Decode, MaxEncodedLen, TypeInfo, Eq, PartialEq, Copy, Clone, Debug, Default,
 )]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Weight {

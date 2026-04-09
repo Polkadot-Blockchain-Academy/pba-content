@@ -76,7 +76,7 @@ The basic origins available in frame are:
 
 ```rust
 /// Origin for the System pallet.
-#[derive(PartialEq, Eq, Clone, RuntimeDebug, Encode, Decode, TypeInfo, MaxEncodedLen)]
+#[derive(PartialEq, Eq, Clone, Debug, Encode, Decode, TypeInfo, MaxEncodedLen)]
 pub enum RawOrigin<AccountId> {
 	/// The system itself ordained this dispatch to happen: this is the highest privilege level.
 	Root,
@@ -86,6 +86,8 @@ pub enum RawOrigin<AccountId> {
 	/// * included and agreed upon by the validators anyway,
 	/// * or unsigned transaction validated by a pallet.
 	None,
+	/// It is signed by nobody, the extrinsic is authorized by the runtime.
+	Authorized,
 }
 ```
 

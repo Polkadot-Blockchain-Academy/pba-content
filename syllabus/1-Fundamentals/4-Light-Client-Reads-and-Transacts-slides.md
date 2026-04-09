@@ -438,17 +438,6 @@ pub type TxExtension = (
   frame_metadata_hash_extension::CheckMetadataHash<Runtime>,
 );
 ```
-
----
-
-## Future: v5 General Extrinsic Format
-
-The `UncheckedExtrinsic` also supports a newer v5 "General" format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions (e.g. `VerifySignature`).
-
-This enables advanced use cases like **meta-transactions**, where someone submits a transaction on behalf of another account.
-
-> Standard Polkadot transactions currently use the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort.
-
 ---
 
 ## Specific Transaction Extensions Explained Simply
@@ -526,6 +515,16 @@ See: `struct SignedPayload`.
 
 ---
 
-<!-- .slide: data-background-color="#000000" -->
+## Future: v5 General Extrinsic Format
+
+The `UncheckedExtrinsic` also supports a newer v5 "General" format where the signature is **not** in the preamble. Instead, authorization is handled entirely by transaction extensions (e.g. `VerifySignature`).
+
+This enables advanced use cases like **meta-transactions**, where someone submits a transaction on behalf of another account.
+
+> Standard Polkadot transactions currently use the v4 Signed format. The transition to v5 General is part of the ongoing [Extrinsic Horizon](https://github.com/paritytech/polkadot-sdk/issues/2415) effort.
+
+---
+
+<!-- .slide: data-background-color="#4A2439" -->
 
 # Questions

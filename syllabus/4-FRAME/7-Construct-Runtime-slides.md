@@ -409,6 +409,60 @@ impl pallet_dpos::Config for Runtime {
 
 ---
 
+## Testing: `derive_impl`
+
+Manually implementing every `Config` type for test mocks is verbose. The `derive_impl` macro fills in sensible defaults so you only specify what you need.
+
+```rust
+// Before: specify every type manually
+impl frame_system::Config for Runtime {
+  type AccountId = u64;
+  type Block = Block;
+  type BlockWeights = ();
+  type Nonce = u32;
+  type RuntimeEvent = RuntimeEvent;
+  type RuntimeCall = RuntimeCall;
+  // ... many more types
+}
+```
+
+```rust
+// After: derive defaults, override only what differs
+#[derive_impl(frame_system::config_preludes::TestDefaultConfig)]
+impl frame_system::Config for Runtime {
+  type Block = Block;
+}
+```
+
+---v
+
+### `derive_impl`: How It Works
+
+- Pallets define `#[pallet::config(with_default)]` to generate a `DefaultConfig` trait.
+- Types marked `#[pallet::no_default]` must always be provided (e.g. `RuntimeEvent`, `RuntimeTask`).
+- Pallets ship `config_preludes::TestDefaultConfig` with sensible test values.
+
+```rust
+// In your pallet definition:
+#[pallet::config(with_default)]
+pub trait Config: frame_system::Config {
+  #[pallet::no_default]  // must be provided by the runtime
+  type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
+
+  type MaxVoters: Get<u32>;  // will have a default
+}
+```
+
+```rust
+// In your test mock:
+#[derive_impl(pallet_balances::config_preludes::TestDefaultConfig)]
+impl pallet_balances::Config for Runtime {
+  type AccountStore = System;
+}
+```
+
+---
+
 ## Testing: Genesis and Builder
 
 - Next, if you want to feed some data into your pallet's genesis state, we must first setup the

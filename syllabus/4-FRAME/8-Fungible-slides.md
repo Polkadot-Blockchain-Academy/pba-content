@@ -320,6 +320,30 @@ mod runtime {
 - Fungible::InspectFreeze
 - Fungible::MutateFreeze
 
+Freezes use the same `#[pallet::composite_enum]` pattern as holds:
+
+```rust
+#[pallet::composite_enum]
+pub enum FreezeReason {
+  /// Pool reward account is restricted from going below ED.
+  #[codec(index = 0)]
+  PoolMinBalance,
+}
+```
+
+---v
+
+## Holds vs Freezes
+
+| | Holds | Freezes |
+|---|---|---|
+| Trait | `MutateHold` | `MutateFreeze` |
+| Composite enum | `HoldReason` | `FreezeReason` |
+| Stacking | Cumulative (each hold adds up) | Overlapping (max of all freezes) |
+| Slashable | Yes | No |
+| Use cases | Deposits, bonds, staking | Voting locks, vesting, min balance |
+| Runtime derive | `RuntimeHoldReason` | `RuntimeFreezeReason` |
+
 ---
 
 ## Considerations

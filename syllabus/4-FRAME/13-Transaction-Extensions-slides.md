@@ -128,7 +128,7 @@ So some code in our Runtime will have to provide this data!
 
 - `provides` and `requires` is a very flexible mechanism; it allows you to:
   - Specify if a transaction is "Ready" or "Future"
-  - Within each, what transactions should ge before which.
+  - Within each, what transactions should go before which.
 
 <diagram class="mermaid" style="display: flex; width: 40%">
 graph LR
@@ -158,11 +158,9 @@ https://github.com/paritytech/polkadot-sdk/blob/bc53b9a03a742f8b658806a01a7bf853
 
 ---
 
-## History
+## What Are Transaction Extensions?
 
-- Transaction Extensions are an evolution of Signed Extensions.
-  - See [the introducing PR](https://github.com/paritytech/polkadot-sdk/pull/3685).
-- In essence, they are
+- Transaction extensions are
   - used to provide ordering and validity information for a transaction (as discussed earlier).
   - a generic way to **extend** the logic executed for every transaction.
 
@@ -316,13 +314,22 @@ where Call: Dispatchable,
         len: usize,
     ) -> Result<Self::Pre, TransactionValidityError>;
 
-	// Provided (but might implement)
-	fn post_dispatch(
+	// Provided (but you may want to implement)
+	fn post_dispatch_details(
+        pre: Self::Pre,
+        info: &<Call as Dispatchable>::Info,
+        post_info: &<Call as Dispatchable>::PostInfo,
+        len: usize,
+        result: &DispatchResult,
+    ) -> Result<Weight, TransactionValidityError> { ... }
+
+    // Wrapper that calls post_dispatch_details and refunds unspent weight.
+    fn post_dispatch(
         pre: Self::Pre,
         info: &<Call as Dispatchable>::Info,
         post_info: &mut <Call as Dispatchable>::PostInfo,
         len: usize,
-        result: &Result<(), DispatchError>,
+        result: &DispatchResult,
     ) -> Result<(), TransactionValidityError> { ... }
 
     // Provided methods
@@ -338,8 +345,8 @@ where Call: Dispatchable,
 
 - `validate` does not mutate state.
   - → writing to storage in here will be reverted and wastes resources
-- `prepare` does write, prepares the state to exectue with.
-- `post_dispatch` cleans up (e.g refunds).
+- `prepare` does write, prepares the state to execute with.
+- `post_dispatch_details` cleans up (e.g. refunds) and returns unspent weight.
 
 ---v
 
@@ -398,7 +405,7 @@ TODO: how `TransactionValidity` is `combined_with` is super important here, but 
 
 ## Usage In The Runtime
 
-- Each runtime has a bunch of signed extensions. They can be grouped as a tuple
+- Each runtime has a bunch of transaction extensions. They can be grouped as a tuple
 
 ```rust
 pub type TxExtension = (
@@ -474,30 +481,14 @@ fn check(self, lookup: &Lookup) -> Result<Self::Checked, TransactionValidityErro
 
 ## Transaction Pool Validation
 
-Notes on `ValidateUnsigned`:
-
-- Each pallet also has `#[pallet::validate_unsigned]`.
-- This kind of overlaps with creating a transaction extension and implementing `bare_validate`.
-- Substrate is in the process of migrating to transaction extensions.
-
-Notes:
-
-https://github.com/paritytech/substrate/issues/6102
-https://github.com/paritytech/substrate/issues/4419
-
----v
-
-### Transaction Pool Validation
-
 - Recall that transaction pool validation should be minimum effort and static.
 - In `executive`, we only do the following:
   - check signature.
-  - call `TransactionExtension::validate`/`TransactionExtension::bare_validate`
-  - call `ValidateUnsigned::validate`, if unsigned.
+  - call `TransactionExtension::validate` / `TransactionExtension::bare_validate`
 
 Notes:
 
-> Transaction queue is not part of the consensus system. Validation of transaction are _free_. Doing
+> Transaction queue is not part of the consensus system. Validation of transactions are _free_. Doing
 > too much work in validation of transactions is essentially opening a door to be DOS-ed.
 
 ---
@@ -556,7 +547,6 @@ Put the genesis hash in `implicit`.
 - interesting story: any account can sign on behalf of the `0x00` account.
 - discovered by [@xlc](https://github.com/xlc). ([Fix PR](https://github.com/paritytech/substrate/issues/10413))
 - uses `validate` to ensure the signing account is not `0x00`.
-  - used to check in both `validate` and `pre_dispatch` in the old `SignedExtension`.
 
 ---v
 
@@ -581,22 +571,24 @@ Put the genesis hash in `implicit`.
 
 ### `CheckNonce`
 
-❌ Incorrect Ordering
+Each nonce transaction: `provides = (account, nonce)`, `requires = (account, nonce - 1)`.
+
+Suppose these 4 transactions arrive at the pool in arbitrary order:
 
 ```
-TX                Account, Nonce
-tx 2 -> requires: [alice,  2]       provides: [alice, 1]
-tx 1 -> requires: [alice,  0]       provides: [alice, 1]
-tx 3 -> requires: [bob,    0]       provides: [bob,   1]
+alice nonce 2 -> requires: [alice, 1]   provides: [alice, 2]  ⏰ Future
+alice nonce 0 -> requires: []           provides: [alice, 0]  ✅ Ready
+bob   nonce 0 -> requires: []           provides: [bob,   0]  ✅ Ready
+alice nonce 1 -> requires: [alice, 0]   provides: [alice, 1]  ⏰ Future
 ```
 
-✅ Correct Ordering
+The pool resolves the dependency graph and executes in the correct order:
 
 ```
-TX                Account, Nonce
-tx 1 -> requires: [alice,  0]       provides: [alice, 1]
-tx 3 -> requires: [bob,    0]       provides: [bob,   1]
-tx 2 -> requires: [alice,  2]       provides: [alice, 1]
+alice nonce 0  ✅ Ready (no requires)
+bob   nonce 0  ✅ Ready (no requires)
+alice nonce 1  ✅ Ready (alice, 0 now provided)
+alice nonce 2  ✅ Ready (alice, 1 now provided)
 ```
 
 ---v
