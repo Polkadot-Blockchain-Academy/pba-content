@@ -29,13 +29,13 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 
 Notes:
 Without FRAME number is based on expanded FRAME-based code.
-A fair comparison would be a frameless sudo pallet that might be shorter (but potentially less featurefull).
+A fair comparison would be a frameless sudo pallet that might be shorter (but potentially less featureful).
 
 ---
 
 ## Goals of FRAME
 
-- Make it easy and concise for developers to do development.
+- Make it easy and concise for developers to build runtimes.
 - Provide maximum flexibility and compatibility for pallet developers.
 - Provide maximum modularity for runtime developers.
 - Be as similar to vanilla Rust as possible.
@@ -82,7 +82,7 @@ And some less important ones:
 - Errors
 - Custom validation/communication with tx-pool
 - Offchain workers
-- A lot more! but you will learn about them later.
+- A lot more! But you will learn about them later.
 
 ---
 
@@ -151,7 +151,7 @@ pub trait Config: frame_system::Config { ... }
 
 ## FRAME System
 
-It contains all the most basic functions and types needed for a blockchain system. Also contains many low level extrinsics to manage your chain directly.
+It contains all the most basic functions and types needed for a blockchain system, and many low-level extrinsics to manage your chain directly.
 
 <div class="flex-container">
 <div class="left-small">
@@ -177,7 +177,7 @@ It contains all the most basic functions and types needed for a blockchain syste
 
 ## FRAME Executive
 
-The FRAME Executive is a "coordinator", defining the order that your FRAME based runtime executes.
+The FRAME Executive is a "coordinator", defining the order that your FRAME-based runtime executes.
 
 ```rust
 /// Actually execute all transitions for `block`.
