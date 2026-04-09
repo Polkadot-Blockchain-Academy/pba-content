@@ -23,12 +23,11 @@
 - 1:30 - 3:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - TODO: specific lecture links
+  - [Introduction to Polkadot](2-Polkadot/a-1-polkadot-introduction-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
-  - Polkadot
-  - Maciej Zyszkiewicz
+  - Shawn Tabrizi
   - TODO: specific lecture links
 - Evening
   - PBA staff and faculty dinner (Maciej, Kian, Shawn)
@@ -40,25 +39,28 @@
 - 8:00 - 10:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - TODO: specific lecture links
+  - [Staking](2-Polkadot/a-2-staking-slides.md)
+  - [Block Production](2-Polkadot/a-3-block-production-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Polkadot
   - Maciej Zyszkiewicz
-  - TODO: specific lecture links
+  - [State Sharding (Collators and Cumulus)](2-Polkadot/a-8-state-sharding-(collators%20and%20cumulus)-slides.md)
+  - [Data Availability (Backing and Availability)](2-Polkadot/a-4-data-availability-(backing%20and%20availability)-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - TODO: specific lecture links
+  - [Execution Sharding (Approvals and Disputes)](2-Polkadot/a-5-execution-sharding-(approvals-and-disputes)-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - TODO: specific lecture links
+  - [Confirmations and Finality](2-Polkadot/a-7-confirmations-and-finality-slides.md)
+  - [Agile Coretime](2-Polkadot/a-9-agile-coretime-slides.md)
 
 ---
 
@@ -67,13 +69,15 @@
 - 8:00 - 10:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - TODO: specific lecture links
+  - [Polkadot SDK and Tools Workshop](2-Polkadot/a-6-polkadot-sdk-and-tools-slides.md)
+  - [Polkadot Cloud and Hub](2-Polkadot/b-10-polkadot-cloud-and-hub-slides.md)
+
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Polkadot
   - Maciej Zyszkiewicz
-  - TODO: specific lecture links
+  - [Polkadot Ecosystem and Economy](2-Polkadot/b-11-polkadot-ecosystem-economy-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
