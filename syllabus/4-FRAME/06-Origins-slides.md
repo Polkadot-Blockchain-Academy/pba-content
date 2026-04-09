@@ -84,7 +84,7 @@ pub fn ensure_none<OuterOrigin, AccountId>(o: OuterOrigin) -> Result<(), BadOrig
 
 ```rust
 /// Ensure that the origin `o` represents either a signed extrinsic (i.e. transaction) or the root.
-/// Returns `Ok` with the account that signed the extrinsic, `None` if it was root,  or an `Err`
+/// Returns `Ok` with the account that signed the extrinsic, `None` if it was root, or an `Err`
 /// otherwise.
 pub fn ensure_signed_or_root<OuterOrigin, AccountId>(o: OuterOrigin) -> Result<Option<AccountId>, BadOrigin>
 ```
@@ -93,7 +93,7 @@ pub fn ensure_signed_or_root<OuterOrigin, AccountId>(o: OuterOrigin) -> Result<O
 
 ## Examples: Signed Origin
 
-A Simple Balance Transfer.
+A simple balance transfer.
 
 ```rust
 #[pallet::call_index(0)]
@@ -137,14 +137,13 @@ pub fn set_code(origin: OriginFor<T>, code: Vec<u8>) -> DispatchResultWithPostIn
 Setting the timestamp of the block.
 
 ```rust
-		/// Set the current time.
-		#[pallet::call_index(0)]
-		#[pallet::weight((T::WeightInfo::set(), DispatchClass::Mandatory))]
-		pub fn set(origin: OriginFor<T>, #[pallet::compact] now: T::Moment) -> DispatchResult {
-			ensure_none(origin)?;
-			// -- snip --
-		}
-	}
+/// Set the current time.
+#[pallet::call_index(0)]
+#[pallet::weight((T::WeightInfo::set(), DispatchClass::Mandatory))]
+pub fn set(origin: OriginFor<T>, #[pallet::compact] now: T::Moment) -> DispatchResult {
+	ensure_none(origin)?;
+	// -- snip --
+}
 ```
 
 `None` origin is used for **inherents** — extrinsics specifically included by the block author. Inherent validation is handled by `ProvideInherent`.
@@ -245,7 +244,7 @@ This is a custom origin which allows us to represent a message that comes from a
 
 ## Re-Dispatching
 
-You can actually dispatch a call within a call with an origin of your choice.
+You can dispatch a call within a call with an origin of your choice.
 
 ```rust [11]
 #[pallet::call_index(0)]
@@ -271,7 +270,7 @@ Here, Sudo Pallet allows a `Signed` origin to elevate itself to a `Root` origin,
 
 ## Example: Collective Pallet
 
-Here you can see the Collective Pallet creating, and dispatching with the `Members` origin we showed previously.
+Here you can see the Collective Pallet creating and dispatching with the `Members` origin we showed previously.
 
 ```rust [5-6]
 	fn do_approve_proposal(seats: MemberCount, yes_votes: MemberCount, proposal_hash: T::Hash, proposal: <T as Config<I>>::Proposal) -> (Weight, u32) {
