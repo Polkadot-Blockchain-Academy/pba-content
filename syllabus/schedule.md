@@ -85,7 +85,7 @@
 - 3:30 - 5:00
   - Substrate
   - Kian
-  - [Workshop: Substrate Interaction](3a-Protocol_On-Chain/Substrate/9-Substrate-Interactions-slides.md)
+  - [Wasm Meta Protocol](3a-Protocol_On-Chain/Substrate/2-Wasm-Meta-Protocol-slides.md)
 
 ---
 
@@ -94,7 +94,7 @@
 - 8:00 - 10:00
   - Substrate
   - Kian
-  - [Wasm Meta Protocol](3a-Protocol_On-Chain/Substrate/2-Wasm-Meta-Protocol-slides.md)
+  - [Workshop: Substrate Interaction](3a-Protocol_On-Chain/Substrate/9-Substrate-Interactions-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
@@ -121,13 +121,13 @@
 - 8:00 - 10:00
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Transaction Pool](3a-Protocol_On-Chain/Substrate/4-Transaction-Pool-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - Closing Session and Q&A
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00

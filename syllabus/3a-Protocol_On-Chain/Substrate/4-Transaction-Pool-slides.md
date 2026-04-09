@@ -168,7 +168,6 @@ we probably also ban the peer who sent us that transaction? but have to learn.
 
 - `provides` and `requires` is a very flexible mechanism; it allows you to:
   - Specify if a transaction is "Ready" or "Future"
-  - Within each, what transactions should ge before which.
 
 Note: it essentially forms a graph.
 
@@ -185,8 +184,8 @@ case, not a big big deal.
 ```
 (
   A,
-  provides: vec![],
-  requires: vec![]
+  provides: [],
+  requires: []
 )
 ```
 
@@ -203,7 +202,7 @@ case, not a big big deal.
 <tbody class="fragment">
   <tr>
     <td>
-    <pre>(A, pr: vec![], rq: vec![])</pre>
+    <pre>(A, pr: [], rq: [])</pre>
     </td>
     <td></td>
   </tr>
@@ -223,8 +222,8 @@ case, not a big big deal.
 ```
 (
   B,
-  provides: vec![2],
-  requires: vec![1]
+  provides: [2],
+  requires: [1]
 )
 ```
 
@@ -241,10 +240,10 @@ case, not a big big deal.
 <tbody class="fragment">
   <tr>
     <td>
-      <pre>(A, pr: vec![], rq: vec![])</pre>
+      <pre>(A, pr: [], rq: [])</pre>
     </td>
     <td>
-      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+      <pre>(B, pr: [2], rq: [1])</pre>
     </td>
   </tr>
 </tbody>
@@ -263,8 +262,8 @@ case, not a big big deal.
 ```
 (
   C,
-  provides: vec![3],
-  requires: vec![2]
+  provides: [3],
+  requires: [2]
 )
 ```
 
@@ -281,17 +280,17 @@ case, not a big big deal.
 <tbody class="fragment">
   <tr>
     <td>
-      <pre>(A, pr: vec![], rq: vec![])</pre>
+      <pre>(A, pr: [], rq: [])</pre>
     </td>
     <td>
-      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+      <pre>(B, pr: [2], rq: [1])</pre>
     </td>
   </tr>
   <tr>
     <td>
     </td>
     <td>
-      <pre>(C, pr: vec![3], rq: vec![2])</pre>
+      <pre>(C, pr: [3], rq: [2])</pre>
     </td>
   </tr>
 </tbody>
@@ -310,8 +309,8 @@ case, not a big big deal.
 ```
 (
   D,
-  provides: vec![1],
-  requires: vec![]
+  provides: [1],
+  requires: []
 )
 ```
 
@@ -328,28 +327,28 @@ case, not a big big deal.
 <tbody class="fragment">
   <tr>
     <td>
-      <pre>(A, pr: vec![], rq: vec![])</pre>
+      <pre>(A, pr: [], rq: [])</pre>
     </td>
     <td>
     </td>
   </tr>
   <tr>
     <td>
-      <pre>(D, pr: vec![1], rq: vec![])</pre>
+      <pre>(D, pr: [1], rq: [])</pre>
     </td>
     <td>
     </td>
   </tr>
   <tr>
     <td>
-      <pre>(B, pr: vec![2], rq: vec![1])</pre>
+      <pre>(B, pr: [2], rq: [1])</pre>
     </td>
     <td>
     </td>
   </tr>
   <tr>
     <td>
-      <pre>(C, pr: vec![3], rq: vec![2])</pre>
+      <pre>(C, pr: [3], rq: [2])</pre>
     </td>
     <td>
     </td>
@@ -451,6 +450,13 @@ But as we can see here, when we put our glasses on, actually only some of the ap
 parts are runtime APIs that are called and use, but don't really contribute to the STF. typically the runtime cannot
 make assumptions about these. From the PoV of the runtime, when doing the main consensus critical work (authoring,
 importing) these did not happen.
+
+---v
+
+### Shower Thought: Runtime vs STF
+
+- Can a node do something different than what was said in this lecture?
+- E.g. it doesn't respect `TransactionValidity` rules?
 
 ---
 

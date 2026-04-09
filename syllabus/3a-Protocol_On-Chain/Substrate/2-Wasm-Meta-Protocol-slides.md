@@ -169,7 +169,7 @@ See https://paritytech.github.io/substrate/master/sp_storage/well_known_keys/ind
 ### Example #2: Block Import
 
 - Node's view of the state -> Opaque.
-- Node's view of the transactions? 🤔
+- Node's view of the transactions/blocks? 🤔
 <!-- .element: class="fragment" -->
 
 Notes:
@@ -178,14 +178,6 @@ Short answer is: anything that is part of the STF definition must be opaque to t
 upgradeable, but we will learn this later.
 
 Another way to think of it: Anything that we want to keep upgrade-able needs to be opaque.
-
----v
-
-### Example #2: Block Import
-
-- Transactions format is by definition part of the state transition function as well -> Opaque
-
-Notes:
 
 What about header, and other fields in a typical block?
 
@@ -251,7 +243,7 @@ this slide is intentionally using the keyword transaction instead of extrinsic.
 
 ```rust [1-100|1-2|4-6|8-9|1-100]
 // fetch the block from the outer world.
-let opaque_block: NodeBlock = import_queue::next_block();
+let opaque_block: NodeBlock = import_queue::next_unimported_block();
 
 // initialize a wasm runtime.
 let code = database::get(well_known_keys::CODE);
@@ -301,11 +293,11 @@ Notes:
 
 ```rust [1-100|1-2|4-6|8-10|12-15|17-100]
 // fetch the block from the outer world.
-let block: NodeBlock = import_queue::next_block();
+let block: NodeBlock = import_queue::next_unimported_block();
 
 // get the parent block's state.
-let parent = block.header.parent_hash;
-let mut state = database::state_at(parent);
+let parent_hash = block.header.parent_hash;
+let mut state = database::state_at(parent_hash);
 
 // initialize a wasm runtime FROM THE PARENT `state`!
 let code = state::get(well_known_keys::CODE);
@@ -316,7 +308,7 @@ state.execute(|| {
   runtime.execute_block(block);
 });
 
-// create the state of the next_block
+// store the state associated with this newly imported block.
 database::store_state(block.header.hash, state)
 ```
 
@@ -615,7 +607,6 @@ This is why forkless upgrades are possible in substrate.
 
 - What about new host functions?
 - <!-- .element: class="fragment" --> What about a new header field*?
-- <!-- .element: class="fragment" --> What about a new Hashing primitive?
 - <!-- .element: class="fragment" --> A new consensus/networking engine?
 
 🥺 No longer forkless.
@@ -648,11 +639,12 @@ time to ask any missing questions.
 
 ### Finding APIs and Host Functions
 
-- look for `impl_runtime_apis! {...}` and `decl_runtime_apis! {...}` macro calls.
-  - Try and find the corresponding the node code calling a given api as well.
-- Look for `#[runtime_interface]` macro, and try and find usage of the host functions!
-  - Look for `sp_io::storage`
-- You have 15 minutes!
+- Runtime API macros:
+  - `impl_runtime_apis! {...}` / `decl_runtime_apis! {...}`
+  - Find: block import, block authoring
+- Host function macros:
+  - `#[runtime_interface]`
+  - Find: storage get/set
 
 ---v
 
@@ -722,7 +714,6 @@ Activity Outcomes:
 
 - `Core` is the essence of import.
 - `TaggedTransactionQueue` and `BlockBuilder` for validators.
-- `header: Header` being passed around.
 
 Notes:
 
@@ -807,15 +798,6 @@ sp_io::storage::root();
     T --> UT(Unsigned)
 </diagram>
 
----v
-
-### Detour: Extrinsic
-
-- An Extrinsic is data that come from outside of the runtime.
-- &shy;<!-- .element: class="fragment" -->Inherents are data that is put into the block by the block author, directly.
-- &shy;<!-- .element: class="fragment" -->Yes, transactions are **a type of extrinsic**, but not all extrinsics are transactions.
-- &shy;<!-- .element: class="fragment" -->So, why is it called _Transaction Pool_ and not _Extrinsic Pool_?
-
 Notes:
 
 extrinsics are just blobs of data which can be included in a block. inherents are types of extrinsic
@@ -831,10 +813,6 @@ transactions are generally statements of opinion which are valuable to the chain
 (because fees are paid or some other good is done). the transaction pool filters out which of these
 are indeed valuable and nodes share them.
 
----v
-
-### Detour: Extrinsic
-
 More change is coming; advance topic; not needed, but FYI:
 
 https://github.com/paritytech/polkadot-sdk/issues/2415
@@ -845,6 +823,7 @@ https://github.com/paritytech/polkadot-sdk/issues/2415
 
 - (new) Wasmtime is near-native 🏎️.
 - (old) `wasmi` is significantly slower 🐢.
+- (future) Polka-VM 🚀
 
 Notes:
 
@@ -975,6 +954,7 @@ workshop idea for FRAME: find all instances where the runtime actually correctly
 
 - This is why, crucially, transaction pool checks always include, despite being costly, at least
   some sort of nonce and payment checks to make sure you can pay the transaction.
+- And as a FRAME developer, you should (*almost*) never let the runtime code panic.
 
 ---v
 
@@ -1206,7 +1186,7 @@ fn root(&mut self, version: StateVersion) -> Vec<u8> { .. }
 - Once you reach the Polkadot module, and you build your first parachain, repeat the same, I promise
   you will learn a thing or two :)
 
----
+<!-- ---
 
 ## Activity: Expected Panics In The Runtime
 
@@ -1222,7 +1202,7 @@ graph LR
 Note:
 
 you should for example find that a real FRAME-based runtime, in `execute_block`, we certainly do
-panic if any transaction fails to apply.
+panic if any transaction fails to apply. -->
 
 ---
 

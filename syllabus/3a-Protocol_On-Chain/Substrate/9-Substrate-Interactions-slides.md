@@ -7,6 +7,26 @@ duration: 60 minutes
 
 # Interacting With a Substrate Blockchain
 
+note:
+
+TODO:
+
+modified flow to use real omni-node + be as fun as possible
+
+Do now!
+
+```
+cargo install polkadot-omni-node
+cargo install staging-chain-spec-builder
+cd polkadot-sdk && cargo build --release -p minimal-template-runtime
+```
+
+* Recap of how a substrate node runs, and interacts with the runtime.
+* Old-school nodes with custom runtime vs. Omni-nodes (actually oblivious to the runtime)
+* Chain-specification file
+
+Then action items.
+
 ---
 
 ## Before we start
