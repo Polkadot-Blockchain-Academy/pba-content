@@ -6,73 +6,6 @@ duration: 1 hour
 
 <!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
 
-<!-- ## Lesson Plan
-
-<table class="no-bullet-padding">
-<tr>
-  <td>Monday</td>
-  <td>Tuesday</td>
-  <td>Wednesday</td>
-  <td>Thursday</td>
-  <td>Friday</td>
-  <td>Weekend</td>
-</tr>
-<tr class="text-small">
-<td>
-
-- Introduction to FRAME
-- 👩‍💻 Exercise: Proof of Existence Runtime
-- Assignment 3 Feedback
-- FRAME Tips and Tricks
-- Announce FRAME Assignment
-
-</td>
-<td>
-
-- Pallet Coupling
-- FRAME Common Knowledge (Pallets & Traits)
-- FRAME Storage
-- Live Coding
-
-</td>
-<td>
-
-- Events & Errors
-- Calls
-- Origins
-- Outer Enum
-- Hooks
-- Live Coding
-
-</td>
-<td>
-
-- Construct Runtime + Tests
-- 👨‍💻 Exercise: Tests
-- FRAME Benchmarking
-- 👨🏾‍💻 Exercise: Benchmarking
-- Live Coding
-
-</td>
-<td>
-
-- FRAME Under the Hood
-  - Deep Dive
-  - Executive
-- Signed Extensions
-- Migrations & Try Runtime
-- Frame Updates
-- Live Coding
-
-</td>
-<td>
-
-- Complete FRAME Assignment
-
-</td>
-</tr>
-</table> -->
-
 # Introduction to FRAME
 
 ---
@@ -96,13 +29,13 @@ FRAME is a Rust framework for more easily building Substrate runtimes.
 
 Notes:
 Without FRAME number is based on expanded FRAME-based code.
-A fair comparison would be a frameless sudo pallet that might be shorter (but potentially less featurefull).
+A fair comparison would be a frameless sudo pallet that might be shorter (but potentially less featureful).
 
 ---
 
 ## Goals of FRAME
 
-- Make it easy and concise for developers to do development.
+- Make it easy and concise for developers to build runtimes.
 - Provide maximum flexibility and compatibility for pallet developers.
 - Provide maximum modularity for runtime developers.
 - Be as similar to vanilla Rust as possible.
@@ -149,7 +82,7 @@ And some less important ones:
 - Errors
 - Custom validation/communication with tx-pool
 - Offchain workers
-- A lot more! but you will learn about them later.
+- A lot more! But you will learn about them later.
 
 ---
 
@@ -218,7 +151,7 @@ pub trait Config: frame_system::Config { ... }
 
 ## FRAME System
 
-It contains all the most basic functions and types needed for a blockchain system. Also contains many low level extrinsics to manage your chain directly.
+It contains all the most basic functions and types needed for a blockchain system, and many low-level extrinsics to manage your chain directly.
 
 <div class="flex-container">
 <div class="left-small">
@@ -244,63 +177,53 @@ It contains all the most basic functions and types needed for a blockchain syste
 
 ## FRAME Executive
 
-The FRAME Executive is a "coordinator", defining the order that your FRAME based runtime executes.
+The FRAME Executive is a "coordinator", defining the order that your FRAME-based runtime executes.
 
 ```rust
 /// Actually execute all transitions for `block`.
-pub fn execute_block(block: Block) { ... }
+pub fn execute_block(block: Block::LazyBlock) { ... }
 ```
 
 - Initialize Block
   - `on_runtime_upgrade` and `on_initialize` hooks
 - Initial Checks
-- Signature Verification
-- Execute Extrinsics
-- `on_idle` and `on_finalize` hooks
+- Apply Inherents
+- `on_poll`
+- Apply Transactions
+- `on_idle`
+- `on_finalize`
 - Final Checks
 
 ---
 
 ## Construct Runtime
 
-Your final runtime is composed of Pallets, which are brought together with the `construct_runtime!` macro.
+Your final runtime is composed of Pallets, which are brought together with the `#[frame_support::runtime]` macro.
+
+<div class="flex-container text-small">
 
 ```rust
-// Create the runtime by composing the FRAME pallets that were previously configured.
-construct_runtime! {
-	pub struct Runtime {
-		System: frame_system,
-
-		Timestamp: pallet_timestamp,
-		Balances: pallet_balances,
-		TransactionPayment: pallet_transaction_payment,
-		Sudo: pallet_sudo,
-	}
-};
-```
-
----
-
-## Construct Runtime
-
-New syntax
-
-```rust
-// Composes the runtime by adding all the used pallets and deriving necessary types.
-#[runtime]
+#[frame_support::runtime]
 mod runtime {
   /// The main runtime type.
   #[runtime::runtime]
-  #[runtime::derive(RuntimeCall, RuntimeEvent, RuntimeError, RuntimeOrigin, RuntimeTask)]
+  #[runtime::derive(RuntimeCall, RuntimeEvent, RuntimeError, RuntimeOrigin, /* snip */)]
   pub struct Runtime;
 
+  #[runtime::pallet_index(0)]
   pub type System = frame_system;
+  #[runtime::pallet_index(1)]
   pub type Timestamp = pallet_timestamp;
+  #[runtime::pallet_index(2)]
   pub type Balances = pallet_balances;
+  #[runtime::pallet_index(3)]
   pub type TransactionPayment = pallet_transaction_payment;
+  #[runtime::pallet_index(4)]
   pub type Sudo = pallet_sudo;
 }
 ```
+
+</div>
 
 ---
 
@@ -317,13 +240,11 @@ In the Pallet:
 /// The timestamp pallet configuration trait.
 #[pallet::config]
 pub trait Config: frame_system::Config {
-  type Moment: Parameter + Default + AtLeast32Bit + Scale<Self::BlockNumber, Output = Self::Moment> + Copy + MaxEncodedLen + scale_info::StaticTypeInfo;
-
+  #[pallet::no_default_bounds]
+  type Moment: Parameter + Default + AtLeast32Bit + Scale<BlockNumberFor<Self>, Output = Self::Moment> + Copy + MaxEncodedLen + scale_info::StaticTypeInfo;
   type OnTimestampSet: OnTimestampSet<Self::Moment>;
-
   #[pallet::constant]
   type MinimumPeriod: Get<Self::Moment>;
-
   type WeightInfo: WeightInfo;
 }
 ```
@@ -335,16 +256,10 @@ pub trait Config: frame_system::Config {
 In the Runtime:
 
 ```rust
-/// The timestamp pallet configuration.
-
 impl pallet_timestamp::Config for Runtime {
   type Moment = u64;
-
   type OnTimestampSet = Aura;
-
-
   type MinimumPeriod = ConstU64<{ SLOT_DURATION / 2 }>;
-
   type WeightInfo = ();
 }
 ```

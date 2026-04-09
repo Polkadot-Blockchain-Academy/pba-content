@@ -213,8 +213,8 @@ type AllPalletsWithSystem = (System, Balances, ..., Dpos);
 - This is used in `Executive` to dispatch pallet hooks.
 
 ```rust
-<AllPallets as OnInitialize>::on_initialize();
-<AllPallets as OnInitialize>::on_finalize();
+<AllPalletsWithSystem as OnInitialize>::on_initialize();
+<AllPalletsWithSystem as OnFinalize>::on_finalize();
 ```
 
 </div>
@@ -224,7 +224,7 @@ type AllPalletsWithSystem = (System, Balances, ..., Dpos);
 Notes:
 
 Question: What will be the order of `fn on_initialize()`?
-There's also `type AllPalletsWithoutSystem` and some other variants that are no longer
+There's also `type AllPalletsWithoutSystem`.
 
 ---v
 
@@ -234,7 +234,10 @@ There's also `type AllPalletsWithoutSystem` and some other variants that are no 
 
   - `RuntimeCall`
   - `RuntimeEvent`
+  - `RuntimeError`
   - `RuntimeOrigin`
+  - `RuntimeHoldReason` / `RuntimeFreezeReason`
+  - `RuntimeTask`
   - `RuntimeGenesisConfig`
 
 Notes:
@@ -439,14 +442,14 @@ impl frame_system::Config for Runtime {
 ### `derive_impl`: How It Works
 
 - Pallets define `#[pallet::config(with_default)]` to generate a `DefaultConfig` trait.
-- Types marked `#[pallet::no_default]` must always be provided (e.g. `RuntimeEvent`, `RuntimeTask`).
+- Types marked `#[pallet::no_default_bounds]` are included in `DefaultConfig` but without trait bounds, allowing runtime injection via `#[inject_runtime_type]`.
 - Pallets ship `config_preludes::TestDefaultConfig` with sensible test values.
 
 ```rust
 // In your pallet definition:
 #[pallet::config(with_default)]
 pub trait Config: frame_system::Config {
-  #[pallet::no_default]  // must be provided by the runtime
+  #[pallet::no_default_bounds]  // included in DefaultConfig but without bounds
   type RuntimeEvent: From<Event<Self>> + IsType<<Self as frame_system::Config>::RuntimeEvent>;
 
   type MaxVoters: Get<u32>;  // will have a default
@@ -543,7 +546,7 @@ fn test_stuff() {
   let mut ext = Builder::default()
     .add_voter_with_vote(2, Vote::Aye)
     .add_voter(3)
-    build_and_execute(|| {
+    .build_and_execute(|| {
       // do stuff
     });
 }
@@ -593,9 +596,9 @@ Note: This uses the given name as a storage key, so be careful with collisions!
 
 ---
 
-## Test ing: Progressing Blocks
+## Testing: Progressing Blocks
 
-- Often times, in your test, you want mimic the progression of an empty block.
+- Often in your test, you want to mimic the progression of an empty block.
 - De-nada! We can fake everything in tests 🤠
 <!-- .element: class="fragment" -->
 
@@ -623,11 +626,11 @@ pub fn next_block() {
 ```rust
 pub fn next_block() {
   let now = System::block_number();
-  AllPallets::on_finalize(now);
+  AllPalletsWithSystem::on_finalize(now);
 
   System::set_block_number(now + 1);
 
-  AllPallets::on_initialize(now + 1)
+  AllPalletsWithSystem::on_initialize(now + 1)
 }
 ```
 
@@ -670,8 +673,8 @@ Notes:
 - This PR was actually an outcome Cambridge PBA: https://github.com/paritytech/substrate/pull/11932
 - https://github.com/paritytech/substrate/pull/11818
 - https://github.com/paritytech/substrate/pull/10043
-- On usage of macros un Substrate: https://github.com/paritytech/substrate/issues/12331
-- Disscussion on advance testing: https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356
+- On usage of macros in Substrate: https://github.com/paritytech/substrate/issues/12331
+- Discussion on advanced testing: https://forum.polkadot.network/t/testing-complex-frame-pallets-discussion-tools/356
 - Reserve topic: Reading events.
 - Reserve-topic: try-state.
 
@@ -695,11 +698,11 @@ The `construct_runtime!` itself does a few things under the hood:
 1. amalgamate `enum RuntimeOrigin` (this is a fixed struct, not an amalgamation);
 1. Create a very important type alias:
 
-- `type AllPallets` / `type AllPalletsWithoutSystem`
+- `type AllPalletsWithSystem` / `type AllPalletsWithoutSystem`
 
 1. run `integrity_test()`.
 
-> Note that there is no such thing as `RuntimeError`. Errors are not amalgamated, they just are. This should be in the error lecture.
+> `RuntimeError` now exists as an amalgamated type, similar to `RuntimeEvent` and `RuntimeCall`.
 
 - Ordering in `construct_runtime` matters.
 - Pallet parts can be optional in `construct_runtime!`.

@@ -221,10 +221,10 @@ Options:
 
 ```rust
 pub trait WeightInfo {
-   fn transfer() -> Weight;
+   fn transfer_allow_death() -> Weight;
    fn transfer_keep_alive() -> Weight;
-   fn set_balance_creating() -> Weight;
-   fn set_balance_killing() -> Weight;
+   fn force_set_balance_creating() -> Weight;
+   fn force_set_balance_killing() -> Weight;
    fn force_transfer() -> Weight;
 }
 ```
@@ -235,10 +235,10 @@ pub trait WeightInfo {
 
 So let’s walk through the steps of a benchmark!
 
-Reference: `frame/benchmarking/src/lib.rs`
+Reference: `frame/support/procedural/src/benchmark.rs`
 
 ```rust
--> fn run_benchmark(...)
+fn run_benchmark
 ```
 
 ---
@@ -314,12 +314,12 @@ The Identity Pallet
 
 ## Identity Pallet
 
-- Identity can have variable amount of information
+- Identity can have a variable amount of information
   - Name
   - Email
   - Twitter
   - etc…
-- Identity can be judged by a variable amount of registrars.
+- Identity can be judged by a variable number of registrars.
 - Identity can have a two-way link to “sub-identities”
   - Other accounts that inherit the identity status of the “super-identity”
 
@@ -339,8 +339,8 @@ pub fn kill_identity(
 
 	// Grab their deposit (and check that they have one).
 	let (subs_deposit, sub_ids) = <SubsOf<T>>::take(&target);
-	let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
-	let deposit = id.total_deposit() + subs_deposit;
+	let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NoIdentity)?;
+	let deposit = id.total_deposit().saturating_add(subs_deposit);
 	for sub in sub_ids.iter() { <SuperOf<T>>::remove(sub); }
 
 	// Slash their deposit from them.
@@ -369,7 +369,7 @@ T::ForceOrigin::ensure_origin(origin)?;
 ///
 /// ** Should be used for benchmarking only!!! **
 #[cfg(feature = "runtime-benchmarks")]
-fn successful_origin() -> OuterOrigin;
+fn try_successful_origin() -> Result<OuterOrigin, ()>;
 ```
 
 ---
@@ -405,11 +405,11 @@ Here you adjust the balance.
 ```rust
 // Grab their deposit (and check that they have one).
 let (subs_deposit, sub_ids) = <SubsOf<T>>::take(&target);
-let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NotNamed)?;
+let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NoIdentity)?;
 ```
 
 - 2 storage reads and writes.
-- The size of these storage items will depends on:
+- The size of these storage items will depend on:
   - Number of Registrars
   - Number of Additional Fields
 
@@ -482,7 +482,7 @@ fn kill_identity(
 		)?;
 	}
 	ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
-	let origin = T::ForceOrigin::successful_origin();
+	let origin = T::ForceOrigin::try_successful_origin().map_err(|_| BenchmarkError::Weightless)?;
 
 	#[extrinsic_call]
 	kill_identity<T::RuntimeOrigin>(origin, target_lookup)
@@ -569,7 +569,7 @@ for i in 0..r {
 
 ```rust
 ensure!(IdentityOf::<T>::contains_key(&target), "Identity not set");
-let origin = T::ForceOrigin::successful_origin();
+let origin = T::ForceOrigin::try_successful_origin().map_err(|_| BenchmarkError::Weightless)?;
 
 #[extrinsic_call]
 kill_identity<T::RuntimeOrigin>(origin, target_lookup)
@@ -1207,7 +1207,7 @@ Example:
 ## Minimize Usage of On Finalize
 
 - `on_finalize` is the last thing to happen in a block, and must execute for the block to be successful.
-- Variable weight needs at can lead to overweight blocks.
+- Variable weight needs can lead to overweight blocks.
 
 <img style="height: 200px;" src="../../assets/img/6-FRAME/benchmark/on-finalize.svg" />
 

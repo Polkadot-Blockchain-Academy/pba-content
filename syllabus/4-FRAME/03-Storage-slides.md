@@ -211,7 +211,7 @@ The overlay stages changes to the underlying database.
 <div class="left-small">
 
 - The actual transfer logic happens in the runtime memory.
-- At some point, the runtime logic writes the new balances to storage, this updates the overlay cache.
+- At some point, the runtime logic writes the new balances to storage. This updates the overlay cache.
 - The underlying database is not updated yet.
 
 </div>
@@ -265,7 +265,7 @@ The overlay stages changes to the underlying database.
 <div class="left-small">
 
 - At the end of the block, staged changes are committed to the database all at once.
-- Then storage root is recomputed a single time for the final block state.
+- Then the storage root is recomputed a single time for the final block state.
 
 </div>
 <div class="right">
@@ -364,7 +364,7 @@ The overlay stages changes to the underlying database.
 
 Notes:
 
-also this means that cross implementation of substrate/polkadot can be tricky to ensure determinism (also true for next slide).
+Also this means that cross-implementation of the runtime can be tricky to ensure determinism (also true for next slide).
 
 ---
 
@@ -450,8 +450,6 @@ https://github.com/paritytech/substrate/issues/10806
 
 https://github.com/paritytech/substrate/pull/10809
 
-In module 6, we can take a closer look at how this functionality is exposed in FRAME.
-
 See: https://github.com/paritytech/substrate/pull/11431
 
 ---
@@ -518,16 +516,19 @@ We will get into more details as we look at the specific storage primitives.
 
 ## Pallet Name
 
-The pallet name comes from the `construct_runtime!`.
+The pallet name comes from the runtime definition.
 
 ```rust
-// Configure a mock runtime to test the pallet.
-frame_support::construct_runtime!(
-	pub enum Test {
-		System: frame_system::{Pallet, Call, Config, Storage, Event<T>},
-		Example: pallet_template,
-	}
-);
+#[frame_support::runtime]
+mod runtime {
+	#[runtime::runtime]
+	pub struct Test;
+
+	#[runtime::pallet_index(0)]
+	pub type System = frame_system;
+	#[runtime::pallet_index(1)]
+	pub type Example = pallet_template;
+}
 ```
 
 This means that changing the name of your pallet here is a **BREAKING** change, since it will change your storage keys.
@@ -541,6 +542,7 @@ This means that changing the name of your pallet here is a **BREAKING** change, 
 - `CountedStorageMap`
 - `StorageDoubleMap`
 - `StorageNMap`
+- `CountedStorageNMap`
 
 We will go over all of them, and many important and subtle details along the way.
 
@@ -613,7 +615,7 @@ use sp_core::hexdisplay::HexDisplay;
 println!("{}", HexDisplay::from(&Item1::<T>::hashed_key()));
 ```
 
-This will depend on your pallet's name of course...
+This will depend on your pallet's name:
 
 ```sh
 e375d60f814d02157aaaa18f3639a254c64445c290236a18189385ed9853fb1e
@@ -703,6 +705,7 @@ fn storage_value() {
 
 - `OptionQuery`: Default choice, represents the actual DB state.
 - `ValueQuery`: Return a value when `None`. (`Default` or configurable)
+- `ResultQuery`: Return a `Result` with a configurable error when `None`.
 
 ```rust
 #[pallet::storage]
@@ -928,9 +931,9 @@ macro_rules! assert_noop {
 		$x:expr,
 		$y:expr $(,)?
 	) => {
-		let h = $crate::storage_root($crate::StateVersion::V1);
+		let h = $crate::__private::storage_root($crate::__private::StateVersion::V1);
 		$crate::assert_err!($x, $y);
-		assert_eq!(h, $crate::storage_root($crate::StateVersion::V1),
+		assert_eq!(h, $crate::__private::storage_root($crate::__private::StateVersion::V1),
 			"storage has been mutated");
 	};
 }
@@ -1063,7 +1066,7 @@ With a storage map, you can introduce a "key" and "value" of arbitrary type.
 pub struct StorageMap<Prefix, Hasher, Key, Value, ...>(_);
 ```
 
-The storage key for a map uses the hash of the key. You can choose the storage hasher, these are the ones currently implemented:
+The storage key for a map uses the hash of the key. You can choose the storage hasher. These are the ones currently implemented:
 
 - Identity (no hash at all)
 - Blake2_128 (cryptographic)
@@ -1077,7 +1080,7 @@ The storage key for a map uses the hash of the key. You can choose the storage h
 
 ## Value Query: Balances
 
-<!-- unclear what the aim is, showing a more complex example? -->
+<div class="text-small">
 
 ```rust
 #[pallet::storage]
@@ -1110,6 +1113,8 @@ fn balance_map() {
 	});
 }
 ```
+
+</div>
 
 ---
 
@@ -1164,6 +1169,8 @@ e375d60f814d02157aaaa18f3639a254ca79d14bc48854f664528f3a696b6c279ea2d098b5f70192
 
 Because all storage items form a prefix trie, you can iterate the content starting with any prefix:
 
+<div class="text-small">
+
 ```rust [0|6-7]
 impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 	type Item = (Vec<u8>, T);
@@ -1193,6 +1200,8 @@ impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 }
 ```
 
+</div>
+
 ---
 
 ## You can...
@@ -1201,7 +1210,7 @@ impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 - Iterate all storage for a pallet using prefix `hash(pallet_name)`
 - Iterate all balances of users using prefix `hash("Balances") ++ hash("Accounts")`
 
-This is not an inherit property!
+This is not an inherent property!
 
 This is only because we "cleverly" chose this pattern for generating keys.
 
@@ -1319,7 +1328,7 @@ Now that we know that transparent hashers are extremely useful, there are really
 
 ## Which Hasher to Use?
 
-Basically, you should just always use `Blake2_128Concat` since it is hardest for a user to influence. The difference in time to execute is probably nominal (but not properly benchmarked afaik).
+Basically, you should just always use `Blake2_128Concat` since it is hardest for a user to influence. The difference in time to execute is probably nominal.
 
 Some reasonable exceptions:
 
@@ -1407,7 +1416,7 @@ Generally you should not iterate on a map. If you do, make sure it is bounded!
 Implemented on Storage Maps:
 
 ```rust
-// Remove all value of the storage.
+// Remove all values of the storage.
 pub fn remove_all(limit: Option<u32>) -> KillStorageResult
 ```
 
@@ -1490,7 +1499,7 @@ We need to manage millions of users, and support balance transfers.
 
 We need to manage millions of users, and support balance transfers.
 
--> We should obviously use a map! Balance transfers touch only 2 accounts at a time. 2 map reads is way more efficient than reading all million users to move the balance.
+> We should obviously use a map! Balance transfers touch only 2 accounts at a time. 2 map reads is way more efficient than reading all million users to move the balance.
 
 ---
 
@@ -1504,7 +1513,7 @@ We need to get the 1,000 validators for the next era.
 
 We need to get the 1,000 validators for the next era.
 
--> We should obviously use a bounded vector! We know there is an upper limit of validators, and we will need to read them all for our logic!
+> We should obviously use a bounded vector! We know there is an upper limit of validators, and we will need to read them all for our logic!
 
 ---
 
@@ -1518,8 +1527,7 @@ We need to store some metadata about the configuration of each validator.
 
 We need to store some metadata about the configuration of each validator.
 
--> We should probably use a map. We will be duplicating some data from the vector mentioned in B, but the way we access configuration usually is on a per-validator basis. So updating one validator's configuration does not have
-to touch the others.
+> We should probably use a map. We will be duplicating some data from the vector mentioned in B, but the way we access configuration usually is on a per-validator basis. So updating one validator's configuration does not have to touch the others.
 
 ---
 
