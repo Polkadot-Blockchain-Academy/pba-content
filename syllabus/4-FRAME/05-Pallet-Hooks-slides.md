@@ -8,7 +8,7 @@ duration: 1 hour
 
 # 🪝 FRAME/Pallet Hooks 🪝
 
-You can not just execute logic in calls, but regularly on events.
+You can not only execute logic in calls, but also regularly on block events.
 
 Notes:
 One of the distinctions from contracts that always need to be called.
@@ -41,14 +41,14 @@ https://paritytech.github.io/substrate/master/frame_support/traits/trait.Hooks.h
 #[pallet::hooks]
 impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
   fn on_runtime_upgrade() -> Weight {}
-  fn on_initialize() -> Weight {}
-  fn on_finalize() {}
-  fn on_idle(remaining_weight: Weight) -> Weight {}
-  fn on_poll(weight: &mut WeightMeter) {}
-  fn offchain_worker() {}
+  fn on_initialize(_n: BlockNumberFor<T>) -> Weight {}
+  fn on_finalize(_n: BlockNumberFor<T>) {}
+  fn on_idle(_n: BlockNumberFor<T>, remaining_weight: Weight) -> Weight {}
+  fn on_poll(_n: BlockNumberFor<T>, _weight: &mut WeightMeter) {}
+  fn offchain_worker(_n: BlockNumberFor<T>) {}
   fn integrity_test() {}
   #[cfg(feature = "try-runtime")]
-  fn try_state() -> Result<(), &'static str> {}
+  fn try_state(_n: BlockNumberFor<T>) -> Result<(), TryRuntimeError> {}
 }
 
 #[pallet::genesis_build]
@@ -90,7 +90,7 @@ Has its own lecture, more over there.
 - `Mandatory` Hooks should really be lightweight and predictable, with a bounded complexity.
 
 ```rust
-fn on_initialize() -> Weight {
+fn on_initialize(_n: BlockNumberFor<T>) -> Weight {
   // any user can create one entry in `MyMap` 😱🔫.
   <MyMap<T>>::iter().for_each(do_stuff);
 }
@@ -108,8 +108,8 @@ fn on_initialize() -> Weight {
 
 Notes:
 
-- The order comes from `construct_runtime!` macro.
-- Panic in mandatory hooks is fatal error. You are pretty much done. Most likely need to fork the chain.
+- The order comes from the `#[runtime::pallet_index]` numbering in the runtime.
+- Panic in mandatory hooks is a fatal error. You are pretty much done. Most likely need to fork the chain.
 - Overweight blocks using mandatory hooks are possible, ONLY in the context of solo-chains. Such a
   block will take longer to produce, but it eventually will. If you have your eyes set on being a
   parachain developer, you should treat overweight blocks as fatal as well.
@@ -138,8 +138,8 @@ See https://github.com/paritytech/substrate/pull/14279 , https://github.com/pari
 - Its weight needs to be known in advance. Therefore, less preferred compared to `on_initialize`.
 
 ```rust
-fn on_finalize() {} // ✅
-fn on_finalize() -> Weight {} // ❌
+fn on_finalize(_n: BlockNumberFor<T>) {} // ✅
+fn on_finalize(_n: BlockNumberFor<T>) -> Weight {} // ❌
 ```
 
 <!-- .element: class="fragment" -->
@@ -152,7 +152,7 @@ fn on_finalize() -> Weight {} // ❌
 
 ### Hooks: `on_finalize`
 
-> Generally, avoid using it unless if something REALLY needs to happen at the end of the block.
+> Generally, avoid using it unless something REALLY needs to happen at the end of the block.
 
 &shy;<!-- .element: class="fragment" --> _Tip_: Sometimes, rather than thinking "at the end of block N", consider writing code "at the beginning of block N+1".
 
@@ -165,24 +165,17 @@ Sometimes, rather than thinking "at the end of block N", consider writing code "
 ## Hooks: `on_idle`
 
 - **_Optional_** variant of `on_finalize`, also executed at the end of the block, that uses left-over weight.
-- Small semantic difference: executes pallets' hooks randomly, rather than in `construct_runtime` order, and only
+- Small semantic difference: executes pallets' hooks randomly, rather than in pallet index order, and only
   if there is weight left.
 
 ---v
 
-## The Future: Moving Away From Mandatory Hooks
+## Best Practice: Prefer Non-Mandatory Hooks
 
-- `on_initialize` -> `on_poll`
-- `on_finalize` -> `on_idle`
-- New primitives for multi-block migrations
-- New primitives for optional service work via extrinsics.
-
-Notes:
-
-This is all in the agenda of the FRAME team at Parity for 2023.
-
-https://github.com/paritytech/substrate/issues/13530
-https://github.com/paritytech/substrate/issues/13690
+- Prefer `on_poll` over `on_initialize`
+- Prefer `on_idle` over `on_finalize`
+- Use multi-block migrations for large state changes
+- Use optional service work via extrinsics where possible
 
 ---
 
@@ -226,9 +219,7 @@ end
 
 Notes:
 
-implicit in this:
-
-Inherents are only first, which is being discussed RIGHT NOW: https://github.com/polkadot-fellows/RFCs/pull/13
+Inherents are always applied first, before user transactions.
 
 ---
 
@@ -244,7 +235,7 @@ Inherents are only first, which is being discussed RIGHT NOW: https://github.com
 ### Hooks: `genesis_build`
 
 ```rust
-#[pallet::genesis_build]
+#[pallet::genesis_config]
 pub struct GenesisConfig<T: Config> {
   pub foo: Option<u32>,
   pub bar: Vec<u8>,
@@ -265,7 +256,7 @@ impl<T: Config> Default for GenesisConfig<T> {
 
 ```rust
 #[pallet::genesis_build]
-impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
+impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
   fn build(&self) {
     // use self.foo, self.bar etc.
   }
@@ -281,12 +272,16 @@ impl<T: Config> GenesisBuild<T> for GenesisConfig<T> {
 - `GenesisConfig` is a composite/amalgamated item at the top level runtime.
 
 ```rust
-construct_runtime!(
-  pub enum Runtime where {
-    System: frame_system,
-    Balances: pallet_balances,
-  }
-);
+#[frame_support::runtime]
+mod runtime {
+  #[runtime::runtime]
+  pub struct Runtime;
+
+  #[runtime::pallet_index(0)]
+  pub type System = frame_system;
+  #[runtime::pallet_index(1)]
+  pub type Balances = pallet_balances;
+}
 ```
 
 ```rust
@@ -306,10 +301,8 @@ https://paritytech.github.io/substrate/master/node_template_runtime/struct.Runti
 
 ### Hooks: `genesis_build`
 
-<!-- check what the state of this is -->
-
-- Recent changes moving `genesis_build` to be used over a runtime API, rather than native runtime.
-- `#[cfg(feature = "std")]` in pallets will go away.
+- `genesis_build` is now invoked via a runtime API, not the native runtime.
+- `#[cfg(feature = "std")]` guards in pallets are no longer needed for genesis.
 
 Notes:
 
@@ -322,7 +315,7 @@ https://github.com/paritytech/substrate/issues/13334
 **Fully offchain application**:
 
 - Read chain state via RPC.
-- submit desired side effects back to the chain as transactions.
+- Submit desired side effects back to the chain as transactions.
 
 **Runtime Offchain Worker**:
 
@@ -334,7 +327,7 @@ https://github.com/paritytech/substrate/issues/13334
 
 Notes:
 
-People have often thought that they can do magic with things with OCW, please don't. BIG warning to
+People have often thought that they can do magic with OCW, please don't. Big warning to
 founders to be careful with this!
 
 https://paritytech.github.io/substrate/master/pallet_examples/index.html
@@ -344,7 +337,7 @@ https://paritytech.github.io/substrate/master/pallet_examples/index.html
 ### Hooks: `offchain_worker`
 
 - Execution entirely up to the client.
-- Has a totally separate thread pool than the normal execution.
+- Has a totally separate thread pool from the normal execution.
 
 ```
 --offchain-worker <ENABLED>
@@ -353,12 +346,6 @@ https://paritytech.github.io/substrate/master/pallet_examples/index.html
     - never:
     - when-authority
 
---execution-offchain-worker <STRATEGY>
-    Possible values:
-    - native:
-    - wasm:
-    - both:
-    - native-else-wasm:
 ```
 
 ---v
@@ -367,7 +354,7 @@ https://paritytech.github.io/substrate/master/pallet_examples/index.html
 
 - Threads can **overlap**, each is reading the state of its corresponding block
 
-<img style="height: 500px" src="../../assets/img//6-FRAME/ocw.svg" />
+<img style="height: 500px" src="../../assets/img/6-FRAME/ocw.svg" />
 
 <!-- .element: class="fragment" -->
 
@@ -384,7 +371,7 @@ https://paritytech.github.io/substrate/master/sp_runtime/offchain/storage_lock/i
 - &shy;<!-- .element: class="fragment" -->Offchain workers have the same **execution limits** as
   Wasm (limited memory, custom allocator).
 
-- &shy;<!-- .element: class="fragment" -->Source of confusion, why OCWs cannot write to state.
+- &shy;<!-- .element: class="fragment" -->This is why OCWs cannot write to state.
 
 Notes:
 
@@ -399,7 +386,7 @@ Word on allocator limit in Substrate Wasm execution (subject to change).
 
 ## Hooks: `integrity_test`
 
-- Put into a test by `construct_runtime!`.
+- Put into a test by the runtime macro.
 
 ```rust
 __construct_runtime_integrity_test::runtime_integrity_tests
@@ -422,7 +409,7 @@ fn integrity_test() {
 
 Notes:
 
-I am in fan of renaming this. If you are too, please comment here
+I am a fan of renaming this.
 
 ---
 
@@ -491,12 +478,11 @@ end
 
 Notes:
 
-What other ideas you can think of?
+What other ideas can you think of?
 
-- a hook called once a pallet is first initialized.
-  https://github.com/paritytech/substrate/issues/14098
-- Local on Post/Pre dispatch: https://github.com/paritytech/substrate/issues/12047
-- Global on Post/Pre dispatch is in fact a signed extension. It has to live in the runtime, because you have to specify order.
+- A hook called once a pallet is first initialized.
+- Local on Post/Pre dispatch.
+- Global on Post/Pre dispatch is in fact a transaction extension. It has to live in the runtime, because you have to specify order.
 
 ---
 
