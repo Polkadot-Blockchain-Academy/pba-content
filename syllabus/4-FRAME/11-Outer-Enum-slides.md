@@ -133,7 +133,7 @@ mod staking {
 		fn into(self) -> DispatchError {
 			DispatchError::Module(
 				ModuleError {
-					pallet: runtime::Runtime::Staking as u8,
+					pallet: runtime::PalletIndex::Staking as u8,
 					error: self as u8,
 				}
 			)
