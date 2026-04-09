@@ -31,7 +31,7 @@ teaching-assistants: [".."]
 
 ### When is a Migration Required?
 
-- In a typical runtime upgrade, you typically only replace `:code:`. This is _**Runtime Upgrade**_.
+- In a typical runtime upgrade, you only replace `:code:`. This is a _**Runtime Upgrade**_.
 - If you change the _storage layout_, then this is also a _**Runtime Migration**_.
 
 > Anything that changes **encoding** is a migration!
@@ -74,7 +74,7 @@ pub struct Foo(i32)
 pub struct Foo(u16, u16)
 ```
 
-- The data still _fits_, but the _interpretations_ is almost certainly different!
+- The data still _fits_, but the _interpretation_ is almost certainly different!
 
 <!-- .element: class="fragment" -->
 
@@ -114,7 +114,7 @@ pub struct Foo { a: u32, b: u32 }
 pub struct Foo { a: u32, b: u32, c: PhantomData<_> }
 ```
 
-- If for whatever reason `c` has a type that its encoding is like `()`, then this would work.
+- If `c` has a type whose encoding is zero-length (like `PhantomData` or `()`), then this would work without a migration.
 
 <!-- .element: class="fragment" -->
 
@@ -166,7 +166,7 @@ pub enum Foo { A(u32), C(u128), B(u32) }
 
 ### 🦀 Rust Recall 🦀
 
-Enums are encoded as the variant enum, followed by the inner data:
+Enums are encoded as the variant index, followed by the inner data:
 
 - The order matters! Both in `struct` and `enum`.
 - Enums that implement `Encode` cannot have more than 255 variants.
@@ -186,7 +186,7 @@ pub type FooValue = StorageValue<_, u32>;
 pub type BarValue = StorageValue<_, u32>;
 ```
 
-- So far everything is changing the _value_ format.<br/>
+- So far everything is changing the _value_ format.
 
 <div>
 
@@ -442,8 +442,8 @@ impl<T: Config> SteppedMigration for LazyMigrationV1<T> {
             }
 
             let mut iter = if let Some(last_key) = cursor {
-                // Resume from where we left off
-                OldStorage::<T>::iter_from(last_key)
+                // Resume from where we left off (iter_from takes a hashed key)
+                OldStorage::<T>::iter_from(OldStorage::<T>::hashed_key_for(last_key))
             } else {
                 // Start from beginning
                 OldStorage::<T>::iter()
@@ -504,10 +504,11 @@ pub type Executive = frame_executive::Executive<
 For multi-block migrations, also configure `pallet-migrations`:
 
 ```rust
-// In construct_runtime!
-construct_runtime! {
-    System: frame_system,
-    Migrations: pallet_migrations,  // Add this pallet
+#[frame_support::runtime]
+mod runtime {
+    // ...
+    #[runtime::pallet_index(1)]
+    pub type Migrations = pallet_migrations;
     // ... other pallets
 }
 
@@ -517,7 +518,7 @@ impl pallet_migrations::Config for Runtime {
     type Migrations = (  // Multi-block migrations here
         big_migration::v1::MigrateMillionItems,
     );
-    type ServiceWeight = MbmServiceWeight;
+    type MaxServiceWeight = MbmServiceWeight;
 }
 ```
 
@@ -587,8 +588,8 @@ Load live chain state for testing:
 ```rust
 let mut ext = Builder::<Block>::new()
     .mode(Mode::Online(OnlineConfig {
-        transport: "wss://rpc.polkadot.io".to_string(),
-        pallets: vec!["System", "Balances"],
+        transport_uris: vec!["wss://rpc.polkadot.io".to_string()],
+        pallets: vec!["System".to_string(), "Balances".to_string()],
         ..Default::default()
     }))
     .build()
@@ -604,7 +605,7 @@ ext.execute_with(|| {
 
 ### Try-Runtime Hooks
 
-Ensure runtime invariants still holds
+Ensure runtime invariants still hold:
 
 ```rust
 #[cfg(feature = "try-runtime")]
