@@ -4,7 +4,7 @@ A living list of project ideas for Protocol Builders Program students.
 
 **This document is open to contributions from the Parity product team, faculty, and instructors.** If you have an idea that would make a great student project add it here via PR.
 
-Students: you are free to pick an idea from this list, remix one, or invent your own. These are starting points, not a menu. The best projects usually come from a student taking an idea here and twisting it to fit something they personally care about.
+Students: you are free to pick an idea from this list, remix one, or invent your own. These are just  suggestions.
 
 Each idea includes:
 - **What it is** - one paragraph.
@@ -52,19 +52,21 @@ A WeTransfer-style ephemeral share: upload a file (up to Bulletin Chain's per-bl
 
 ### 3.1 Fully on-chain turn-based game
 Chess, Go, a card game, a simple strategy game - all state on-chain, turns enforced by the backend, with a web or TUI front.
-- **Paths**: Pallet + Web; Pallet + TUI; Solidity-EVM + Web.
+- **Paths**: Pallet + Web; Pallet + TUI; Solidity-EVM + Web. Be carefull about the complexity of the game, it could be hard to port to EVM if its too much.
 - **Why**: Games are the clearest possible "this stack is for real applications" demo.
 
 ### 3.2 On-chain tournament / leaderboard layer
 Not a game itself - a backend that games can plug into for verifiable leaderboards, tournament brackets, prize pools.
 - **Paths**: Pallet + Web; Solidity-EVM + Web.
-- **Why**: Infra for games is a useful primitive and composable with anything else in this list.
+- **Why**: Infra for games is a useful primitive and composable with anything else in this list. It also promotes interoperability !
 
 ---
 
 ## 4. Pallet Design Showcases
 
-> Projects where the heart of the work is designing a non-trivial Substrate pallet from first principles - economic mechanism, state transitions, edge cases, benchmarks. Each must still ship a frontend (web or CLI++) so it satisfies the rubric. These are the heaviest backend ideas in the bank - pick one if you want to flex pallet design specifically.
+> Projects where the heart of the work is designing a non-trivial Substrate pallet from first principles - economic mechanism, state transitions, edge cases, benchmarks. Each must still ship a frontend (web or CLI++) so it satisfies the rubric.
+
+> Each of these projects have already been done in the past - so they are battle tested and are sure to work. They are just maybe a bit less interesting if taken as is instead of coming up with something new.
 
 ### 4.1 Direct Delegation Proof of Stake
 A pallet that manages validators (self-registered candidates) and delegators (any account staking tokens behind a validator). Every N blocks, top-K winners become the active set. Block rewards split between the producer and their backers.
@@ -94,6 +96,6 @@ A pallet managing a multi-asset treasury with governance-gated spending tracks, 
 
 ## 5. Wildcards
 
-Your idea doesn't have to fit a category above. Some of the best projects in programs like this are genuinely weird things a student cared about. If you have one, bring it to a faculty conversation early and we'll help you shape it.
+Your idea doesn't have to fit a category above. The best projects in programs like this are genuinely weird things a student cared or is passionate about. If you have one, bring it to a faculty conversation early and we'll help you shape it.
 
-Things we'd love to see and would rate highly: anything that *only works* because of what's unique about the Polkadot stack. If your project would work just as well on Ethereum mainnet, it is probably not the most interesting version of itself.
+Things we'd love to see: anything that *only works* because of what's unique about the Polkadot stack. If your project would work just as well on Ethereum mainnet, it is probably not the most interesting version of itself.
