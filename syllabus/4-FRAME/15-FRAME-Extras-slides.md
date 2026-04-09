@@ -90,12 +90,12 @@ impl<T: Config> Pallet<T> {
 
 ### Tasks: Attributes
 
-| Attribute | Purpose |
-|---|---|
-| `#[pallet::task_index(N)]` | Unique identifier for this task type |
+| Attribute                                  | Purpose                              |
+| ------------------------------------------ | ------------------------------------ |
+| `#[pallet::task_index(N)]`                 | Unique identifier for this task type |
 | `#[pallet::task_condition(\|args\| bool)]` | Predicate: should this task execute? |
-| `#[pallet::task_list(iterator)]` | Iterator of pending task items |
-| `#[pallet::task_weight(expr)]` | Weight consumed by this task |
+| `#[pallet::task_list(iterator)]`           | Iterator of pending task items       |
+| `#[pallet::task_weight(expr)]`             | Weight consumed by this task         |
 
 - The macro generates a `Task<T>` enum from all task functions
 - Tasks are submitted via `frame_system::do_task` as unsigned transactions

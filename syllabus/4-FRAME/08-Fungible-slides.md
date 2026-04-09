@@ -335,14 +335,14 @@ pub enum FreezeReason {
 
 ## Holds vs Freezes
 
-| | Holds | Freezes |
-|---|---|---|
-| Trait | `MutateHold` | `MutateFreeze` |
-| Composite enum | `HoldReason` | `FreezeReason` |
-| Stacking | Cumulative (each hold adds up) | Overlapping (max of all freezes) |
-| Slashable | Yes | No |
-| Use cases | Deposits, bonds, staking | Voting locks, vesting, min balance |
-| Runtime derive | `RuntimeHoldReason` | `RuntimeFreezeReason` |
+|                | Holds                          | Freezes                            |
+| -------------- | ------------------------------ | ---------------------------------- |
+| Trait          | `MutateHold`                   | `MutateFreeze`                     |
+| Composite enum | `HoldReason`                   | `FreezeReason`                     |
+| Stacking       | Cumulative (each hold adds up) | Overlapping (max of all freezes)   |
+| Slashable      | Yes                            | No                                 |
+| Use cases      | Deposits, bonds, staking       | Voting locks, vesting, min balance |
+| Runtime derive | `RuntimeHoldReason`            | `RuntimeFreezeReason`              |
 
 ---
 

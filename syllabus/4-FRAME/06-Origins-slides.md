@@ -193,11 +193,11 @@ Core pallets that use `Authorized` for unsigned extrinsics:
 
 Key properties of `#[pallet::authorize]`:
 
-| Feature | Details |
-|---|---|
-| Granularity | Per-call attribute, not a pallet-wide trait |
-| Syntax | `#[pallet::authorize(\|source, call\| { ... })]` |
-| Parameters | Closure receives call params directly |
+| Feature         | Details                                               |
+| --------------- | ----------------------------------------------------- |
+| Granularity     | Per-call attribute, not a pallet-wide trait           |
+| Syntax          | `#[pallet::authorize(\|source, call\| { ... })]`      |
+| Parameters      | Closure receives call params directly                 |
 | Weight tracking | Separate `#[pallet::weight_of_authorize()]` attribute |
 
 ---

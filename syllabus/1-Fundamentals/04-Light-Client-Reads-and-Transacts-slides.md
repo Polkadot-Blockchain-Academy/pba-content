@@ -438,6 +438,7 @@ pub type TxExtension = (
   frame_metadata_hash_extension::CheckMetadataHash<Runtime>,
 );
 ```
+
 ---
 
 ## Specific Transaction Extensions Explained Simply

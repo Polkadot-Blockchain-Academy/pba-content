@@ -67,6 +67,7 @@
 ## Wednesday, April 15
 
 - 8:00 - 10:00
+
   - Polkadot
   - Maciej Zyszkiewicz
   - [Polkadot SDK and Tools Workshop](2-Polkadot/09-Polkadot-SDK-and-Tools-slides.md)
