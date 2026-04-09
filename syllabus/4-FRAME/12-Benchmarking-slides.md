@@ -314,12 +314,12 @@ The Identity Pallet
 
 ## Identity Pallet
 
-- Identity can have variable amount of information
+- Identity can have a variable amount of information
   - Name
   - Email
   - Twitter
   - etc…
-- Identity can be judged by a variable amount of registrars.
+- Identity can be judged by a variable number of registrars.
 - Identity can have a two-way link to “sub-identities”
   - Other accounts that inherit the identity status of the “super-identity”
 
@@ -409,7 +409,7 @@ let id = <IdentityOf<T>>::take(&target).ok_or(Error::<T>::NoIdentity)?;
 ```
 
 - 2 storage reads and writes.
-- The size of these storage items will depends on:
+- The size of these storage items will depend on:
   - Number of Registrars
   - Number of Additional Fields
 
