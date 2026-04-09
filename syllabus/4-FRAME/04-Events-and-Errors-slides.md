@@ -24,7 +24,7 @@ In this presentation, we will go over two of the tools you have access to when d
 
 Not all extrinsics are valid. It could be for a number of reasons:
 
-- The extrinsic itself is badly formatted. (wrong parameters, encoding, etc...)
+- The extrinsic itself is badly formatted (wrong parameters, encoding, etc...).
 - The state transition function does not allow it.
   - Maybe a timing problem.
   - User might be lacking resources.
@@ -126,7 +126,7 @@ So an error is at most just 5 bytes.
 
 ## Declaring Errors
 
-```rust [0|23-30|47-49]
+```rust [0|19-26|43-45]
 #![cfg_attr(not(feature = "std"), no_std)]
 
 pub use pallet::*;
@@ -329,7 +329,7 @@ For example, there may be multiple different ways an extrinsic completes success
 
 Or maybe there is some significant state transition that you know users will want to be notified about, e.g. the amount of locked balance.
 
-For this you can use events.
+For this, you can use events.
 
 ---
 
@@ -430,7 +430,7 @@ pub fn deposit_event(event: impl Into<T::RuntimeEvent>) {
 /// to the corresponding topic indexes.
 ///
 /// This will update storage entries that correspond to the specified topics.
-/// It is expected that light-clients could subscribe to this topics.
+/// It is expected that light-clients could subscribe to these topics.
 pub fn deposit_event_indexed(topics: &[T::Hash], event: T::RuntimeEvent) {
 	let block_number = Self::block_number();
 	// Don't populate events on genesis.
@@ -494,7 +494,7 @@ pub fn read_events_no_consensus(
 /// impact on the PoV size of a block. Users should use alternative and well bounded storage
 /// items for any behavior like this.
 ///
-/// NOTE: Events not registered at the genesis block and quietly omitted.
+/// NOTE: Events are not registered at the genesis block and are quietly omitted.
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn events() -> Vec<EventRecord<T::RuntimeEvent, T::Hash>> {
 	// Dereferencing the events here is fine since we are not in the
@@ -527,7 +527,7 @@ pub fn assert_has_event(event: T::RuntimeEvent) {
 	assert!(Self::events().iter().any(|record| record.event == event))
 }
 
-/// Assert the last event equal to the given `event`.
+/// Assert the last event equals the given `event`.
 #[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 pub fn assert_last_event(event: T::RuntimeEvent) {
 	assert_eq!(Self::events().last().expect("events expected").event, event);
