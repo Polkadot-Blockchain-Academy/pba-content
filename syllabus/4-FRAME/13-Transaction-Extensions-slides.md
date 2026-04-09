@@ -26,7 +26,7 @@ We want to handle different aspects of executing a transaction for every transac
 
 ## Summary
 
-- In this lecture you will learn above one of the more advanced FRAME concepts, [_Transaction Extensions_](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_frame/traits/trait.TransactionExtension.html).
+- In this lecture you will learn about one of the more advanced FRAME concepts, [_Transaction Extensions_](https://paritytech.github.io/polkadot-sdk/master/polkadot_sdk_frame/traits/trait.TransactionExtension.html).
 
   - The goal is to gain a deeper understanding of the transaction lifecycle and when, whether & how to use transaction extensions.
 
@@ -409,11 +409,16 @@ TODO: how `TransactionValidity` is `combined_with` is super important here, but 
 
 ```rust
 pub type TxExtension = (
+	frame_system::AuthorizeCall<Runtime>,
 	frame_system::CheckNonZeroSender<Runtime>,
 	frame_system::CheckSpecVersion<Runtime>,
 	frame_system::CheckTxVersion<Runtime>,
 	frame_system::CheckGenesis<Runtime>,
-	pallet_asset_tx_payment::ChargeAssetTxPayment<Runtime>,
+	frame_system::CheckMortality<Runtime>,
+	frame_system::CheckNonce<Runtime>,
+	frame_system::CheckWeight<Runtime>,
+	pallet_transaction_payment::ChargeTransactionPayment<Runtime>,
+	frame_system::WeightReclaim<Runtime>,
 );
 
 type UncheckedExt = generic::UncheckedExtrinsic<Address, Call, Signature, TxExtension>;
@@ -544,15 +549,15 @@ Put the genesis hash in `implicit`.
 
 ### `CheckNonZeroSender`
 
-- interesting story: any account can sign on behalf of the `0x00` account.
-- discovered by [@xlc](https://github.com/xlc). ([Fix PR](https://github.com/paritytech/substrate/issues/10413))
-- uses `validate` to ensure the signing account is not `0x00`.
+- Interesting story: any account can sign on behalf of the `0x00` account.
+- Discovered by [@xlc](https://github.com/xlc). ([Fix PR](https://github.com/paritytech/substrate/issues/10413))
+- Uses `validate` to ensure the signing account is not `0x00`.
 
 ---v
 
 ### `CheckNonce`
 
-- `validate`: check the nonce, DO NOT WRITE ANYTHING, returns `provides` and `requires`.
+- `validate`: check the nonce (reads storage), DO NOT WRITE ANYTHING, returns `provides` and `requires`.
 - `prepare`: check nonce and actually update it.
 
 <!-- .element: class="fragment" -->
@@ -560,8 +565,7 @@ Put the genesis hash in `implicit`.
 <div>
 
 - remember that:
-  - `validate` is only for lightweight checks, no read/write.
-  - anything you write to storage is reverted anyhow.
+  - `validate` should be lightweight; reads are allowed but writes are reverted.
 
 </div>
 
