@@ -1080,7 +1080,7 @@ The storage key for a map uses the hash of the key. You can choose the storage h
 
 ## Value Query: Balances
 
-<!-- unclear what the aim is, showing a more complex example? -->
+<div class="text-small">
 
 ```rust
 #[pallet::storage]
@@ -1113,6 +1113,8 @@ fn balance_map() {
 	});
 }
 ```
+
+</div>
 
 ---
 
@@ -1167,6 +1169,8 @@ e375d60f814d02157aaaa18f3639a254ca79d14bc48854f664528f3a696b6c279ea2d098b5f70192
 
 Because all storage items form a prefix trie, you can iterate the content starting with any prefix:
 
+<div class="text-small">
+
 ```rust [0|6-7]
 impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 	type Item = (Vec<u8>, T);
@@ -1195,6 +1199,8 @@ impl<T: Decode + Sized> Iterator for StorageIterator<T> {
 	}
 }
 ```
+
+</div>
 
 ---
 
@@ -1493,7 +1499,7 @@ We need to manage millions of users, and support balance transfers.
 
 We need to manage millions of users, and support balance transfers.
 
--> We should obviously use a map! Balance transfers touch only 2 accounts at a time. 2 map reads is way more efficient than reading all million users to move the balance.
+> We should obviously use a map! Balance transfers touch only 2 accounts at a time. 2 map reads is way more efficient than reading all million users to move the balance.
 
 ---
 
@@ -1507,7 +1513,7 @@ We need to get the 1,000 validators for the next era.
 
 We need to get the 1,000 validators for the next era.
 
--> We should obviously use a bounded vector! We know there is an upper limit of validators, and we will need to read them all for our logic!
+> We should obviously use a bounded vector! We know there is an upper limit of validators, and we will need to read them all for our logic!
 
 ---
 
@@ -1521,8 +1527,7 @@ We need to store some metadata about the configuration of each validator.
 
 We need to store some metadata about the configuration of each validator.
 
--> We should probably use a map. We will be duplicating some data from the vector mentioned in B, but the way we access configuration usually is on a per-validator basis. So updating one validator's configuration does not have
-to touch the others.
+> We should probably use a map. We will be duplicating some data from the vector mentioned in B, but the way we access configuration usually is on a per-validator basis. So updating one validator's configuration does not have to touch the others.
 
 ---
 
