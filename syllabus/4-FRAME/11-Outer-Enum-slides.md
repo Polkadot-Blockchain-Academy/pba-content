@@ -16,20 +16,20 @@ duration: 1 hour
 
 In this presentation, you will learn about a common pattern used throughout FRAME, which abstracts many separate types into a single unified type that is used by the Runtime.
 
-This is also known as "aggregate" types.
+These are also known as "aggregate" types.
 
 ---
 
 ## Enums in FRAME
 
-There are 4 main Enums which you will encounter throughout your FRAME development:
+There are 4 main aggregate enums you will encounter throughout your FRAME development:
 
 - The Call Enum
 - The Event Enum
 - The Error Enum
 - The Origin Enum
-- The Task Enum
-- And more: `RuntimeHoldReason`, `RuntimeFreezeReason`, etc.
+
+Others include `RuntimeTask`, `RuntimeHoldReason`, `RuntimeFreezeReason`, etc., which follow the same pattern.
 
 All of these enums have some representation within individual pallets, but also the final FRAME runtime you develop.
 
@@ -173,7 +173,7 @@ mod runtime {
 
 		fn try_from(outer: RuntimeEvent) -> Result<Self, ()> {
 			match outer {
-				Event::BalancesEvent(event) => Ok(event),
+				RuntimeEvent::BalancesEvent(event) => Ok(event),
 				_ => Err(())
 			}
 		}
