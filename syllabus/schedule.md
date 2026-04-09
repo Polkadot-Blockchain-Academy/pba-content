@@ -7,7 +7,7 @@
 - 8:30 - 10:00
   - Fundamentals
   - Kian
-  - TODO: specific lecture links
+  - [What is a Blockchain, Actually?](1-Fundamentals/0-welcome-what-is-a-blockchain.slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
@@ -79,13 +79,13 @@
 - 1:30 - 3:00
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Introduction to Substrate](3a-Protocol_On-Chain/Substrate/1-Intro-to-Substrate-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Workshop: Substrate Interaction](3a-Protocol_On-Chain/Substrate/9-Substrate-Interactions-slides.md)
 
 ---
 
@@ -94,25 +94,25 @@
 - 8:00 - 10:00
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Wasm Meta Protocol](3a-Protocol_On-Chain/Substrate/2-Wasm-Meta-Protocol-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Merklized Storage](3a-Protocol_On-Chain/Substrate/3-Merklized-Storage-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Workshop: Frameless Substrate Chain](3a-Protocol_On-Chain/Substrate/10-frameless-workshop-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Substrate
   - Kian
-  - TODO: specific lecture links
+  - [Workshop: Frameless Substrate Chain](3a-Protocol_On-Chain/Substrate/10-frameless-workshop-slides.md)
 
 ---
 
