@@ -7,28 +7,28 @@
 - 8:30 - 10:00
   - Fundamentals
   - Kian
-  - [What is a Blockchain, Actually?](1-Fundamentals/0-welcome-what-is-a-blockchain.slides.md)
+  - [What is a Blockchain, Actually?](1-Fundamentals/1-What-is-a-Blockchain-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Fundamentals
   - Shawn Tabrizi
-  - [LCTX 1 - What is a Light Client?](1-Fundamentals/5-1-light-client-tx-slides.md)
-  - [LCTX 2 - Verifiable Storage Proofs](1-Fundamentals/5-2-light-client-tx-slides.md)
-  - [LCTX 3 - Light Client Reads and Transacts](1-Fundamentals/5-3-light-client-tx-slides.md)
-  - [LCTX 4 - Submit and Track Transaction](1-Fundamentals/5-4-light-client-tx-slides.md)
-  - [LCTX 5 - The State Transition Function](1-Fundamentals/5-5-light-client-tx-slides.md)
+  - [LCTX 1 - What is a Light Client?](1-Fundamentals/2-Light-Client-What-is-a-Light-Client-slides.md)
+  - [LCTX 2 - Verifiable Storage Proofs](1-Fundamentals/3-Light-Client-Verifiable-Storage-Proofs-slides.md)
+  - [LCTX 3 - Light Client Reads and Transacts](1-Fundamentals/4-Light-Client-Reads-and-Transacts-slides.md)
+  - [LCTX 4 - Submit and Track Transaction](1-Fundamentals/5-Light-Client-Submit-and-Track-Transaction-slides.md)
+  - [LCTX 5 - The State Transition Function](1-Fundamentals/6-Light-Client-State-Transition-Function-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - [Introduction to Polkadot](2-Polkadot/a-1-polkadot-introduction-slides.md)
+  - [Introduction to Polkadot](2-Polkadot/1-Introduction-to-Polkadot-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Shawn Tabrizi
-  - TODO: specific lecture links
+  - [The Polkadot Stack](1-Fundamentals/7-The-Polkadot-Stack-slides.md)
 - Evening
   - PBA staff and faculty dinner (Maciej, Kian, Shawn)
 
@@ -39,28 +39,28 @@
 - 8:00 - 10:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - [Staking](2-Polkadot/a-2-staking-slides.md)
-  - [Block Production](2-Polkadot/a-3-block-production-slides.md)
+  - [Staking](2-Polkadot/2-Staking-slides.md)
+  - [Block Production](2-Polkadot/3-Block-Production-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Polkadot
   - Maciej Zyszkiewicz
-  - [State Sharding (Collators and Cumulus)](2-Polkadot/a-8-state-sharding-(collators%20and%20cumulus)-slides.md)
-  - [Data Availability (Backing and Availability)](2-Polkadot/a-4-data-availability-(backing%20and%20availability)-slides.md)
+  - [State Sharding (Collators and Cumulus)](2-Polkadot/4-State-Sharding-slides.md)
+  - [Data Availability (Backing and Availability)](2-Polkadot/5-Data-Availability-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - [Execution Sharding (Approvals and Disputes)](2-Polkadot/a-5-execution-sharding-(approvals-and-disputes)-slides.md)
+  - [Execution Sharding (Approvals and Disputes)](2-Polkadot/6-Execution-Sharding-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - [Confirmations and Finality](2-Polkadot/a-7-confirmations-and-finality-slides.md)
-  - [Agile Coretime](2-Polkadot/a-9-agile-coretime-slides.md)
+  - [Confirmations and Finality](2-Polkadot/7-Confirmations-and-Finality-slides.md)
+  - [Agile Coretime](2-Polkadot/8-Agile-Coretime-slides.md)
 
 ---
 
@@ -69,27 +69,27 @@
 - 8:00 - 10:00
   - Polkadot
   - Maciej Zyszkiewicz
-  - [Polkadot SDK and Tools Workshop](2-Polkadot/a-6-polkadot-sdk-and-tools-slides.md)
-  - [Polkadot Cloud and Hub](2-Polkadot/b-10-polkadot-cloud-and-hub-slides.md)
+  - [Polkadot SDK and Tools Workshop](2-Polkadot/9-Polkadot-SDK-and-Tools-slides.md)
+  - [Polkadot Cloud and Hub](2-Polkadot/10-Polkadot-Cloud-and-Hub-slides.md)
 
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Polkadot
   - Maciej Zyszkiewicz
-  - [Polkadot Ecosystem and Economy](2-Polkadot/b-11-polkadot-ecosystem-economy-slides.md)
+  - [Polkadot Ecosystem and Economy](2-Polkadot/11-Polkadot-Ecosystem-and-Economy-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Substrate
   - Kian
-  - [Introduction to Substrate](3a-Protocol_On-Chain/Substrate/1-Intro-to-Substrate-slides.md)
+  - [Introduction to Substrate](3-Substrate/1-Introduction-to-Substrate-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Substrate
   - Kian
-  - [Workshop: Substrate Interaction](3a-Protocol_On-Chain/Substrate/9-Substrate-Interactions-slides.md)
+  - [Workshop: Substrate Interaction](3-Substrate/2-Substrate-Interactions-slides.md)
 
 ---
 
@@ -98,25 +98,25 @@
 - 8:00 - 10:00
   - Substrate
   - Kian
-  - [Wasm Meta Protocol](3a-Protocol_On-Chain/Substrate/2-Wasm-Meta-Protocol-slides.md)
+  - [Wasm Meta Protocol](3-Substrate/3-Wasm-Meta-Protocol-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Substrate
   - Kian
-  - [Merklized Storage](3a-Protocol_On-Chain/Substrate/3-Merklized-Storage-slides.md)
+  - [Merklized Storage](3-Substrate/4-Merklized-Storage-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Substrate
   - Kian
-  - [Workshop: Frameless Substrate Chain](3a-Protocol_On-Chain/Substrate/10-frameless-workshop-slides.md)
+  - [Workshop: Frameless Substrate Chain](3-Substrate/5-Frameless-Workshop-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Substrate
   - Kian
-  - [Workshop: Frameless Substrate Chain](3a-Protocol_On-Chain/Substrate/10-frameless-workshop-slides.md)
+  - [Workshop: Frameless Substrate Chain](3-Substrate/5-Frameless-Workshop-slides.md)
 
 ---
 
@@ -136,15 +136,15 @@
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [Introduction to FRAME](3a-Protocol_On-Chain/FRAME/1-Intro_to_FRAME/Intro_to_FRAME-slides.md)
-  - [Substrate/FRAME Tips and Tricks](3a-Protocol_On-Chain/Substrate/9-Substrate-FRAME-Tips-Tricks-slides.md)
+  - [Introduction to FRAME](4-FRAME/1-Introduction-to-FRAME-slides.md)
+  - [Substrate/FRAME Tips and Tricks](3-Substrate/6-Substrate-FRAME-Tips-and-Tricks-slides.md)
   - FRAME with AI
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
   - Shawn Tabrizi
-  - [FRAME Calls](3a-Protocol_On-Chain/FRAME/2-FRAME_Basics/Calls-slides.md)
-  - [FRAME Storage](3a-Protocol_On-Chain/FRAME/2-FRAME_Basics/FRAME_Storage-slides.md)
+  - [FRAME Calls](4-FRAME/2-Calls-slides.md)
+  - [FRAME Storage](4-FRAME/3-Storage-slides.md)
 
 ---
 
@@ -152,14 +152,14 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Events and Errors](3a-Protocol_On-Chain/FRAME/2-FRAME_Basics/Events_and_Errors-slides.md)
-  - [Pallet Hooks](3a-Protocol_On-Chain/FRAME/2-FRAME_Basics/Pallet_Hooks-slides.md)
+  - [Events and Errors](4-FRAME/4-Events-and-Errors-slides.md)
+  - [Pallet Hooks](4-FRAME/5-Pallet-Hooks-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [FRAME Origin](3a-Protocol_On-Chain/FRAME/3-FRAME_Runtime/Origins-slides.md)
-  - [Construct Runtime](3a-Protocol_On-Chain/FRAME/3-FRAME_Runtime/Construct_Runtime-slides.md)
+  - [FRAME Origin](4-FRAME/6-Origins-slides.md)
+  - [Construct Runtime](4-FRAME/7-Construct-Runtime-slides.md)
 
 ---
 
@@ -173,19 +173,19 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Balance Management in FRAME](3a-Protocol_On-Chain/FRAME/1-Intro_to_FRAME/Fungible-slides.md)
-  - [FRAME Pallets & Traits](3a-Protocol_On-Chain/FRAME/1-Intro_to_FRAME/Pallets_Traits-slides.md)
+  - [Balance Management in FRAME](4-FRAME/8-Fungible-slides.md)
+  - [FRAME Pallets & Traits](4-FRAME/9-Pallets-and-Traits-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [Pallet Coupling](3a-Protocol_On-Chain/FRAME/1-Intro_to_FRAME/Pallet_Coupling-slides.md)
-  - [Outer Enum](3a-Protocol_On-Chain/FRAME/5-FRAME_Extras/Outer_Enum-slides.md)
+  - [Pallet Coupling](4-FRAME/10-Pallet-Coupling-slides.md)
+  - [Outer Enum](4-FRAME/11-Outer-Enum-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
   - Shawn Tabrizi
-  - [FRAME Benchmarking](3a-Protocol_On-Chain/FRAME/4-FRAME_Production/Benchmarking-slides.md)
+  - [FRAME Benchmarking](4-FRAME/12-Benchmarking-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
@@ -198,16 +198,16 @@
 
 - 8:00 - 10:00
   - Shawn Tabrizi
-  - [Transaction Extensions](3a-Protocol_On-Chain/FRAME/5-FRAME_Extras/Transaction_Extensions-slides.md)
+  - [Transaction Extensions](4-FRAME/13-Transaction-Extensions-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - Shawn Tabrizi
-  - [Migrations and Try Runtime](3a-Protocol_On-Chain/FRAME/4-FRAME_Production/Migrations_and_try_runtime-slides.md)
+  - [Migrations and Try Runtime](4-FRAME/14-Migrations-and-Try-Runtime-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
-  - [FRAME Extras](3a-Protocol_On-Chain/FRAME/5-FRAME_Extras/FRAME-Extras-slides.md)
+  - [FRAME Extras](4-FRAME/15-FRAME-Extras-slides.md)
 - 3:00 - 3:30
   - Coffee break
 - 3:30 - 5:00
@@ -221,15 +221,15 @@
 - 8:00 - 10:00
   - XCM
   - Cisco Aguirre
-  - [Introduction](3a-Protocol_On-Chain/XCM/1-Introduction-slides.md)
-  - [Primitives](3a-Protocol_On-Chain/XCM/2-Primitives-slides.md)
+  - [Introduction](5-XCM/1-Introduction-slides.md)
+  - [Primitives](5-XCM/2-Primitives-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - XCM
   - Cisco Aguirre
-  - [Cross-Consensus Transfers](3a-Protocol_On-Chain/XCM/2.5-Cross-Consensus-Transfers-slides.md)
-  - [Executor](3a-Protocol_On-Chain/XCM/3-Executor-slides.md)
+  - [Cross-Consensus Transfers](5-XCM/3-Cross-Consensus-Transfers-slides.md)
+  - [Executor](5-XCM/4-Executor-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
@@ -250,15 +250,15 @@
 - 8:00 - 10:00
   - XCM
   - Cisco Aguirre
-  - [Pallet XCM](3a-Protocol_On-Chain/XCM/4-Pallet-Xcm-slides.md)
-  - [XCM Configuration](3a-Protocol_On-Chain/XCM/5-Xcm-config-slides.md)
+  - [Pallet XCM](5-XCM/5-Pallet-XCM-slides.md)
+  - [XCM Configuration](5-XCM/6-XCM-Configuration-slides.md)
 - 10:00 - 10:30
   - Coffee break
 - 10:30 - 12:30
   - XCM
   - Cisco Aguirre
-  - [XCM Configuration](3a-Protocol_On-Chain/XCM/5-Xcm-config-slides.md) (continued)
-  - [XCM Emulator](3a-Protocol_On-Chain/XCM/6-Xcm-emulator-slides.md)
+  - [XCM Configuration](5-XCM/6-XCM-Configuration-slides.md) (continued)
+  - [XCM Emulator](5-XCM/7-XCM-Emulator-slides.md)
 - 12:30 - 1:30
   - Lunch break
 - 1:30 - 3:00
