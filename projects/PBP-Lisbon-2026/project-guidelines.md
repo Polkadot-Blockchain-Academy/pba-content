@@ -62,11 +62,11 @@ Every student ships, **solo**, a project with exactly these components:
 
 ### 3.3 Mandatory integration
 
-- **Web deploy on Bulletin Chain + DotNS.** Every project ships a web presence hosted on Bulletin Chain and reachable via a DotNS name. For web-app frontends, this *is* your app. For CLI++ frontends (TUI or MCP server), you still ship a web presence - at minimum a product / landing page describing what the project does, how to install it, and how to use it. No project is exempt. The point is that every student touches the decentralized deploy path end-to-end.
+- **Web deploy on Bulletin Chain + DotNS.** Every project ships a web presence hosted on Bulletin Chain and reachable via a DotNS name. For web-app frontends, this _is_ your app. For CLI++ frontends (TUI or MCP server), you still ship a web presence - at minimum a product / landing page describing what the project does, how to install it, and how to use it. No project is exempt. The point is that every student touches the decentralized deploy path end-to-end.
 
 ### 3.4 Scope rule
 
-The backend + frontend combo is a **strict requirement**. Pure-infra projects (an indexer, a bridge, a standalone library) do not satisfy the rubric on their own. If you think you have a good reason to deviate, talk to faculty *before* you start building.
+The backend + frontend combo is a **strict requirement**. Pure-infra projects (an indexer, a bridge, a standalone library) do not satisfy the rubric on their own. If you think you have a good reason to deviate, talk to faculty _before_ you start building.
 
 ---
 
@@ -74,16 +74,16 @@ The backend + frontend combo is a **strict requirement**. Pure-infra projects (a
 
 The stack is not equally solid in every corner. You get to pick any valid combination of backend and frontend - this matrix tells you how likely it is to actually work end-to-end in two weeks.
 
-| Backend | Frontend | Confidence it ships | Notes |
-|---|---|---|---|
-| Pallet | Web / CLI++ | **~100%** | Well-trodden path, full curriculum support, plenty of prior work to crib from. |
-| Solidity on EVM | Web / CLI++ | **~90%** | Mature tooling, standard ecosystem, mostly-solved problems. Only issues will be if your contracts use really advanced gas optimisation/manipulation. |
-| Solidity on PVM | Web / CLI++ | **~70%** | Expect toolchain quirks. It is technically more optimized than EVM but the compiler struggles with big/complex contracts. |
-| Rust smart contract on PVM | Web / CLI++ | **~50%** | Bleeding edge. Real chance you hit walls nobody has hit yet. Its still early in its development and not many people have built with it. |
+| Backend                    | Frontend    | Confidence it ships | Notes                                                                                                                                                |
+| -------------------------- | ----------- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Pallet                     | Web / CLI++ | **~100%**           | Well-trodden path, full curriculum support, plenty of prior work to crib from.                                                                       |
+| Solidity on EVM            | Web / CLI++ | **~90%**            | Mature tooling, standard ecosystem, mostly-solved problems. Only issues will be if your contracts use really advanced gas optimisation/manipulation. |
+| Solidity on PVM            | Web / CLI++ | **~70%**            | Expect toolchain quirks. It is technically more optimized than EVM but the compiler struggles with big/complex contracts.                            |
+| Rust smart contract on PVM | Web / CLI++ | **~50%**            | Bleeding edge. Real chance you hit walls nobody has hit yet. Its still early in its development and not many people have built with it.              |
 
 **Read this carefully:**
 
-- These numbers are **advisory**, not prescriptive. You may pick any row. No faculty sign-off is required for the riskier paths - but we *strongly* recommend talking to us if you go for one.
+- These numbers are **advisory**, not prescriptive. You may pick any row. No faculty sign-off is required for the riskier paths - but we _strongly_ recommend talking to us if you go for one.
 - Riskier paths are **higher ceiling**. If you ship a Rust-contract-on-PVM project that actually works, it will help us making sure that the stack works and is getting more mature.
 - **Getting stuck is not failure as long as you document it well.** A Rust-on-PVM project that couldn't fully ship but contains two solid bug reports and a PR against the stack is a legitimate deliverable. Plan for that possibility if you pick a risky path. We truly value help in improving the stack.
 
@@ -114,7 +114,7 @@ You are the engineer. The AI is a tool. The fact that a tool produced the code d
 
 - Does it work?
 - Do you understand it?
-- Is it correct *in your project's context*?
+- Is it correct _in your project's context_?
 - Can you explain it to a reviewer at demo?
 
 If the answer to any of those is "no," do not commit it.
@@ -128,15 +128,17 @@ If the answer to any of those is "no," do not commit it.
 ### 6.3 Good vs. bad examples
 
 **Good:**
+
 - "I used Claude to scaffold the XCM message format, then manually verified the encoding against the spec and added a round-trip test."
 - "My MCP server handler was AI-drafted. I rewrote the auth path after reading how the session store actually works."
 - "I let Cursor generate boilerplate for the React forms, then hand-wrote the signing flow because the generated version called an API that doesn't exist."
 - "Couldn't get the contract compiling. Had Claude explain three possible causes, tested each, found the real one was a linker flag."
 
 **Bad:**
+
 - Copy-pasting 400 lines of generated pallet code, not running it, and watching it break at demo.
 - Commit message: `fix stuff` on a 2000-line AI diff.
-- Accepting an AI fix "because it compiled" without understanding *why* it compiled.
+- Accepting an AI fix "because it compiled" without understanding _why_ it compiled.
 - Generated tests that assert `true == true` and exercise nothing.
 
 ### 6.4 Red flags reviewers will catch
@@ -152,11 +154,11 @@ These are the tells. Do not let them show up in your repo.
 
 ### 6.5 What "ownership" means in practice
 
-At your 5-minute demo, we may ask you: *"walk me through this file - why is it structured this way?"* You need to be able to answer that question about any file in your repo. If you cannot, you did not ship it - the AI did, and you just pushed it.
+At your 5-minute demo, we may ask you: _"walk me through this file - why is it structured this way?"_ You need to be able to answer that question about any file in your repo. If you cannot, you did not ship it - the AI did, and you just pushed it.
 
 ### 6.6 AI in ReadMe
 
-The "no slop" rule is not just about code. It applies even harder - to prose. 
+The "no slop" rule is not just about code. It applies even harder - to prose.
 In particular to your README. AI-generated prose is faster to produce than code, harder to spot at a glance, and ten times more likely to make it through unread.
 
 A few things to internalise:
@@ -194,7 +196,7 @@ A final pass before you push your last commit. None of this is busywork - every 
 - **No "example" cruft.** If you started from a template, strip the parts you didn't use.
 - **Formatted.** Run your language's standard formatter (`cargo +nightly fmt`, `prettier`, `gofmt`, whatever applies).
 - **No code that can panic on the happy path.** Tests and benchmarks are fine. Production paths are not.
-- **Documented where it isn't obvious.** Comments explain *why*, not *what*. Note the compromises and TODOs you'd revisit.
+- **Documented where it isn't obvious.** Comments explain _why_, not _what_. Note the compromises and TODOs you'd revisit.
 
 ### 8.2 Repo
 
@@ -235,7 +237,7 @@ On the final day of the program, every student gives a short presentation. This 
 
 ### 9.3 Tone
 
-Short, sharp, honest. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking *"I want to clone that repo and run it."* Aim for that.
+Short, sharp, honest. The worst pitches hide what broke and pad the demo with filler. The best ones leave a reviewer thinking _"I want to clone that repo and run it."_ Aim for that.
 
 ---
 
