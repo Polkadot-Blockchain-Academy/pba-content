@@ -9,31 +9,155 @@ owner: Shawn Tabrizi
 
 # The Polkadot Stack
 
+---
+
+## The Driving Force
+
+The world we live in has problems:
+
+<div class="flex-container">
+<div class="left">
+
+- Financial Corruption
+- Political Control
+- Digital Servitude
+- Erosion of Sovereignty
+- Systemic Fragility
+- and more…
+
+</div>
+<div class="right">
+
+<img style="width: 400px;" src="./img/world.png" />
+
+</div>
+</div>
+
+These problems all stem from the same place:
+
+> **The growing power of central authorities.**
+
 Notes:
 
-Welcome everyone. In this session we're going to take a tour of the entire Polkadot technology stack, from the infrastructure layer all the way up to the user-facing applications. By the end, you should have a clear mental model of the tools and resources available to you as a developer building on Polkadot.
+Before we dive into tools and technology, let's talk about WHY we're building any of this. The problems in our world, financial corruption, political control, erosion of sovereignty, all share a common root: the concentration of power in central authorities. This isn't abstract philosophy, it's the motivation behind everything Polkadot is building.
 
 ---
 
-## What Are We Building?
+## A Simple Set of Conjectures
 
-Throughout this course, you will build a project using the **polkadot-stack-template**.
+- Central authorities will always (eventually) abuse their powers.
+<!-- .element: class="fragment" -->
+- With the increasing globalization caused by technology, the reach of central authorities is greater than ever.
+<!-- .element: class="fragment" -->
+- Computers play a critical role in providing public digital infrastructure.
+<!-- .element: class="fragment" -->
+- We could create a world more resilient from these powers, if the worlds public digital infrastructure were itself more decentralized and resilient.
+<!-- .element: class="fragment" -->
 
-This template demonstrates the full Polkadot stack through a single concept: **Proof of Existence**.
+> **Web3 describes that resilient public digital infrastructure.**
 
-The same idea (claim a file hash on-chain) is implemented three ways:
-
-- &shy;<!-- .element: class="fragment" --> A **FRAME pallet** (native Substrate)
-- &shy;<!-- .element: class="fragment" --> A **Solidity contract on EVM** (Ethereum bytecode)
-- &shy;<!-- .element: class="fragment" --> A **Solidity contract on PVM** (PolkaVM / RISC-V bytecode)
+<!-- .element: class="fragment" -->
 
 Notes:
 
-The polkadot-stack-template is your hands-on project for this course. It's a full-stack application that touches every layer of the Polkadot ecosystem. The idea is simple: prove that a file existed at a certain time by recording its hash on-chain. But we implement it three different ways to show you the different development paths available on Polkadot. You'll also build a React frontend and a Rust CLI to interact with all three implementations.
+These are the conjectures that drive the Web3 movement. Central authorities will eventually abuse their power, history proves this over and over. Technology has amplified their reach. But technology can also be the solution. If the public digital infrastructure that the world relies on were decentralized and resilient, we'd have a powerful counterbalance. That's what Web3 is: resilient public digital infrastructure.
 
 ---
 
-## Three Layers of Polkadot
+## The Great Mistake
+
+Blockchain is not a product in and of itself.
+
+The world does not want or need "more blockchains".
+
+It is simply a tool that can be used to create **resilient products**.
+
+Notes:
+
+This is a critical insight that many in the blockchain space miss. Nobody wakes up wanting "a blockchain." People want products that work, that they can trust, that can't be shut down or censored. Blockchain is the tool that makes those products possible. This reframing changes everything about how we think about building.
+
+---
+
+## Two Different Products
+
+Both built using blockchain technology.
+
+<pba-cols class="text-small">
+<pba-cols>
+<pba-col>
+
+#### Distributed Ledger Technology
+
+- The primary purpose is to **store** data.
+- The primary part of this product is the blockchain state.
+- The backbone of decentralized finance.
+- Think: Bitcoin, XRP, BNB, Solana.
+- A proven product with clear market demand.
+
+</pba-col>
+<pba-col>
+
+#### Decentralized Computer
+
+- The primary purpose is to **execute** computation.
+- The primary part of this product is the decentralized computation bandwidth.
+- The backbone of the decentralized internet.
+- Think: a decentralized AWS.
+- A speculative but necessary future.
+
+</pba-col>
+</pba-cols>
+
+
+Notes:
+
+There are really two different things people build with blockchain technology. Distributed ledger technology is about storing data, it's the backbone of DeFi and has proven market demand. A decentralized computer is about executing computation, it's the backbone of the decentralized internet. Most blockchains are actually DLTs. Polkadot is building toward something bigger: a decentralized computer, like a Web3 version of AWS, but with resilience, verification, and no single point of control.
+
+---
+
+## Who Does the World Computer Appeal To?
+
+<div class="text-small">
+
+- **A Distributed Computer**
+  - a distributed computer is one which has natural fallback, and can provide incredible uptime and replication guarantees.
+- **A Verifiable Computer**
+  - a verifiable computer is one where people need not require trust in the platform or the other users they interact with.
+- **A Resilient Computer**
+  - a resilient computer is one where applications and services need not worry about the restrictions / laws of any particular nation, and can launch unstoppable applications.
+- **A Financial Computer**
+  - a platform which natively integrates global finances into your platform, and enables direct integration between you and your customers.
+
+</div>
+
+Notes:
+
+The decentralized computer appeals to different audiences for different reasons. Some want distribution for uptime and resilience, think critical infrastructure that can never go down. Others want verifiability, so users don't need to trust anyone. Others want resilience against censorship and regulatory overreach. And some want the native financial primitives. Polkadot is building infrastructure that serves all of these needs.
+
+---
+
+## Polkadot: Infrastructure for the Decentralized Web
+
+Polkadot is building a **decentralized Web3 Cloud**:
+
+- **Compute** - Execution sharding across multiple cores
+- **Storage** - Persistent on-chain state and data availability
+- **Networking** - Cross-chain messaging and trustless bridges
+- **Identity** - On-chain identity, personhood, and name resolution
+- **Finance** - Native token economics and DeFi primitives
+
+> Polkadot will do to Web3 what AWS did to Web2.
+
+
+Notes:
+
+So what is Polkadot actually building? Think of it as a decentralized cloud provider. AWS gives you compute, storage, networking, identity services, and payment processing. Polkadot provides all of these, but decentralized, verifiable, and resilient. Execution sharding gives you multi-core compute. The blockchain state and bulletin chain give you storage. XCM and bridges give you networking. The People chain and DotNS give you identity. And DOT plus the DeFi ecosystem give you finance. The difference? No single entity controls the infrastructure, and every operation is verifiable.
+
+---
+
+## How Polkadot Delivers This
+
+Polkadot fulfills this vision across three layers:
 
 <diagram class="mermaid">
 graph TB
@@ -65,12 +189,31 @@ graph TB
 
 Notes:
 
-Think of Polkadot as three concentric layers. At the bottom is the Platform: the actual blockchain infrastructure, the chains that store state and execute transactions. In the middle is the Stack: the developer tools, SDKs, and frameworks you use to build applications. At the top is the Triangle: the user-facing applications that people actually interact with. We'll go through each layer, starting from the bottom.
+Polkadot delivers this vision through three layers. At the bottom is the Platform: the blockchain infrastructure that provides compute, storage, and security, the decentralized cloud itself. In the middle is the Stack: the developer tools, SDKs, and frameworks that make it possible to build on this cloud. At the top is the Triangle: the user-facing applications, the decentralized browser and app hosts that bring this to real users. Together, these three layers cover the full path from infrastructure to end user.
+
+---
+
+## What Are We Building?
+
+Throughout this course, you will build a project using the **polkadot-stack-template**.
+
+This template demonstrates the full Polkadot stack through a single concept: **Proof of Existence**.
+
+The same idea (claim a file hash on-chain) is implemented three ways:
+
+- A **FRAME pallet** (native Substrate)
+- A **Solidity contract on EVM** (Ethereum bytecode)
+- A **Solidity contract on PVM** (PolkaVM / RISC-V bytecode)
+
+Notes:
+
+The polkadot-stack-template is your hands-on project for this course. It's a full-stack application that touches every layer of the Polkadot ecosystem. The idea is simple: prove that a file existed at a certain time by recording its hash on-chain. But we implement it three different ways to show you the different development paths available on Polkadot. You'll also build a React frontend and a Rust CLI to interact with all three implementations.
 
 ---
 
 ## Agenda
 
+1. **Why Polkadot Exists** - The Decentralized Web
 1. **Polkadot Platform** - The Web3 Cloud Infrastructure
 1. **Polkadot Stack** - Developer Tools & Experience
 1. **Polkadot Triangle** - User Interfaces
@@ -148,9 +291,9 @@ The **primary user-facing chain** in the Polkadot ecosystem.
 <div class="text-left">
 
 **Smart Contracts:**
-- &shy;<!-- .element: class="fragment" --> **pallet-revive**: EVM-compatible smart contracts
-- &shy;<!-- .element: class="fragment" --> Deploy Solidity to both **EVM** and **PolkaVM**
-- &shy;<!-- .element: class="fragment" --> Full Ethereum tooling support (MetaMask, Hardhat, Foundry)
+- **pallet-revive**: EVM-compatible smart contracts
+- Deploy Solidity to both **EVM** and **PolkaVM**
+- Full Ethereum tooling support (MetaMask, Hardhat, Foundry)
 
 **Identity:**
 - Claims, Vesting
@@ -1226,16 +1369,16 @@ Your dApp runs in a **strict sandbox**.
 <div class="text-left">
 
 **What products CANNOT do:**
-- &shy;<!-- .element: class="fragment" --> No network access (`connect-src 'none'`)
-- &shy;<!-- .element: class="fragment" --> No WebSocket, WebRTC, Workers, BroadcastChannel
-- &shy;<!-- .element: class="fragment" --> No localStorage, cookies, or caches
-- &shy;<!-- .element: class="fragment" --> No access to `window.ethereum`, `window.polkadot`, etc.
-- &shy;<!-- .element: class="fragment" --> No auto-approval of signing requests
+- No network access (`connect-src 'none'`)
+- No WebSocket, WebRTC, Workers, BroadcastChannel
+- No localStorage, cookies, or caches
+- No access to `window.ethereum`, `window.polkadot`, etc.
+- No auto-approval of signing requests
 
 **What products CAN do:**
-- &shy;<!-- .element: class="fragment" --> Run JavaScript and WASM
-- &shy;<!-- .element: class="fragment" --> Communicate through `window.host` bridge
-- &shy;<!-- .element: class="fragment" --> Request signatures (user must confirm each one)
+- Run JavaScript and WASM
+- Communicate through `window.host` bridge
+- Request signatures (user must confirm each one)
 
 </div>
 
@@ -1329,13 +1472,13 @@ Here's the end-to-end flow. A developer writes their pallet in Rust, their contr
 
 During this course, using the **polkadot-stack-template**, you will:
 
-1. &shy;<!-- .element: class="fragment" --> Build a **FRAME pallet** with custom storage, calls, events, and errors
-2. &shy;<!-- .element: class="fragment" --> Write and deploy **Solidity contracts** to both EVM and PVM targets
-3. &shy;<!-- .element: class="fragment" --> Build a **React frontend** using PAPI and viem
-4. &shy;<!-- .element: class="fragment" --> Build a **Rust CLI** using subxt and alloy
-5. &shy;<!-- .element: class="fragment" --> Run a **local test network** with zombienet
-6. &shy;<!-- .element: class="fragment" --> Deploy to **IPFS** and register a **.dot domain**
-7. &shy;<!-- .element: class="fragment" --> Optionally integrate with the **Bulletin Chain** for data storage
+1. Build a **FRAME pallet** with custom storage, calls, events, and errors
+2. Write and deploy **Solidity contracts** to both EVM and PVM targets
+3. Build a **React frontend** using PAPI and viem
+4. Build a **Rust CLI** using subxt and alloy
+5. Run a **local test network** with zombienet
+6. Deploy to **IPFS** and register a **.dot domain**
+7. Optionally integrate with the **Bulletin Chain** for data storage
 
 </div>
 
