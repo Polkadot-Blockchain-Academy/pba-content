@@ -1,15 +1,60 @@
+/* Theme tokens (light mode) from Polkadot Design System */
+:root {
+  --color-neutral-white: #ffffff;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-150: #ebebeb;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-850: #1f1f1f;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+  --color-neutral-black: #000000;
+
+  --fg-primary: var(--color-neutral-950);
+  --fg-primary-inverted: var(--color-neutral-100);
+  --fg-secondary: var(--color-neutral-600);
+  --fg-tertiary: var(--color-neutral-500);
+
+  --bg-surface-main: var(--color-neutral-50);
+  --bg-surface-container: var(--color-neutral-white);
+  --bg-surface-nested: var(--color-neutral-50);
+  --bg-surface-container-inverted: var(--color-neutral-900);
+  --bg-selection-container-hover: var(--color-neutral-100);
+
+  --border-divider: var(--color-neutral-100);
+
+  --shadow-1: 0 4px 24px -4px rgba(0, 0, 0, 0.16);
+
+  --radius-container: 16px;
+  --radius-nested: 12px;
+  --radius-small: 8px;
+
+  --focus-ring: #000000;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #f9faf8;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 body {
-  font-family: Tahoma,Verdana, Geneva, sans-serif;
-  font-size: 20px;
-  background: rgb(238, 174, 202);
-  background: #140526;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  background: var(--bg-surface-main);
+  color: var(--fg-primary);
 }
 
 h1 {
@@ -19,6 +64,6 @@ h1 {
 
 @media screen and (max-width: 700px) {
   body {
-    font-size: 18px;
+    font-size: 15px;
   }
 }
