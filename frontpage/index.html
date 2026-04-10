@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8" />
   <title>Polkadot Blockchain Academy</title>
-  <link rel="stylesheet" href="./assets/PBA-theme.css" id="theme" />
   <link rel="icon" href="./assets/favicon.svg" />
   <link rel="shortcut icon" href="./assets/favicon.png" />
   <style>
@@ -12,236 +11,285 @@
       font-family: 'Unbounded';
       font-style: normal;
       font-weight: 300;
-      src: url('./fonts/unbounded/Unbounded-Light.woff2');
-      src: local(''),
-        url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'),
-        /* Super Modern Browsers */
-        url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype'),
-        /* Safari, Android, iOS */
+      src: url('./fonts/unbounded/Unbounded-Light.woff2') format('woff2'),
+        url('./fonts/unbounded/Unbounded-Light.ttf') format('truetype');
     }
 
     @font-face {
       font-family: 'Unbounded';
       font-style: normal;
       font-weight: 400;
-      src: url('./fonts/unbounded/Unbounded-Regular.woff2');
-      src: local(''),
-        url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'),
-        /* Super Modern Browsers */
-        url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype'),
-        /* Safari, Android, iOS */
+      src: url('./fonts/unbounded/Unbounded-Regular.woff2') format('woff2'),
+        url('./fonts/unbounded/Unbounded-Regular.ttf') format('truetype');
     }
 
     @font-face {
       font-family: 'Unbounded';
       font-style: normal;
       font-weight: 700;
-      src: url('./fonts/unbounded/Unbounded-Bold.woff2');
-      src: local(''),
-        url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'),
-        /* Super Modern Browsers */
-        url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype'),
-        /* Safari, Android, iOS */
+      src: url('./fonts/unbounded/Unbounded-Bold.woff2') format('woff2'),
+        url('./fonts/unbounded/Unbounded-Bold.ttf') format('truetype');
     }
 
-    /* local variables */
-    html {
-      --font-size: 16px;
-      --container: 100em;
-      --size: 1.5rem;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* general layout elements */
-    html,
-    body,
+    body {
+      font-family: 'Unbounded', sans-serif;
+      background-color: #f0f0f0;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
 
+    /* Header */
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      background-color: #1a1a1a;
+    }
+
+    .site-logo {
+      height: 2.5rem;
+    }
+
+    .header-title {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #ffffff;
+      letter-spacing: 0.05em;
+    }
+
+    /* Main content */
     .site-main {
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 3rem 2rem 4rem;
     }
 
-    .site {
+    /* Section */
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 1.5rem;
+    }
+
+    /* PBP cards row */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 420px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 1rem;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 200ms ease, box-shadow 200ms ease;
       display: flex;
       flex-direction: column;
     }
 
-    html {
-      align-items: center;
-      font-size: var(--font-size);
-      color: var(--r-main-color);
-      background-color: var(--r-background-color);
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
     }
 
-    /* site layout */
-    .site {
-      max-width: var(--container);
+    .card-image {
+      width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      background-color: #e8e8e8;
     }
 
-    .site-header {
-      position: sticky;
-      top: 0;
-      background-color: var(--r-selection-background-color);
+    .card-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
     }
 
-    .site-footer {
-      position: sticky;
-      bottom: 0;
-      background-color: var(--r-selection-background-color);
-    }
-
-    a:hover {
-      color: var(--r-link-color-dark) !important;
-    }
-
-    a span:first-of-type {
-      color: var(--r-heading-color);
-    }
-
-    h1 {
-      margin: 0;
+    .card-badge {
+      display: inline-block;
+      padding: 0.3rem 0.9rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      letter-spacing: var(--r-heading-letter-spacing);
-      font-family: var(--r-heading-font);
-      font-size: calc(var(--font-size) * 1.5);
-      text-shadow: var(--r-heading1-text-shadow);
     }
 
-    .site-logo {
-      width: calc(var(--size) * 10);
-      margin-left: calc(var(--size) / 2);
+    .badge-pbp {
+      background-color: #1a1a1a;
+      color: #ffffff;
     }
 
-    .slide-list {
-      margin-top: 2rem;
-      width: 75vw;
-      max-width: var(--container);
+    .badge-legacy {
+      background-color: #e0e0e0;
+      color: #555555;
     }
 
-    .slide-list li::before {
-      color: var(--r-link-color);
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1a1a1a;
     }
 
-    .slide-list li {
-      /* Replacing the link-color-hover with the CYAN #00B2FF */
-      /* color: var(--r-link-color-hover); */
-      color: var(--r-hub-cyan);
-      display: flex;
-      align-items: center;
-      list-style-type: none;
-      justify-content: space-around;
-      margin: 1rem 0;
+    .card-description {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: #666666;
+      line-height: 1.6;
     }
 
-    .slide-list li img {
-      border: 0.2rem solid var(--r-heading-font);
+    /* Legacy grid — smaller cards */
+    .card-grid-legacy {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
     }
 
-    .slide-card-name {
-      font-family: var(--r-heading-font);
-      letter-spacing: var(--r-heading-letter-spacing);
+    .card-legacy .card-image {
+      max-height: 200px;
     }
 
-    .slide-card-path {
-      font-style: italic;
-      color: var(--r-link-color);
-      font-size: 0.7em;
+    .card-legacy .card-body {
+      padding: 1rem 1.25rem 1.25rem;
     }
 
-    a:hover .slide-card-path {
-      color: var(--r-hub-cyan);
-      transition: color 200ms ease-in-out;
+    .card-legacy .card-title {
+      font-size: 0.85rem;
     }
 
-    .slide-list li a {
-      font-size: calc(var(--font-size) * 1.2);
-      color: var(--r-main-color);
-      text-decoration: none;
-      word-break: break-word;
+    .card-legacy .card-description {
+      font-size: 0.7rem;
     }
 
-    .slide-list li a:hover {
-      color: var(--r-hub-cyan);
+    /* Divider */
+    .section-divider {
+      border: none;
+      border-top: 1px solid #d0d0d0;
+      margin: 1rem 0 2rem;
     }
 
-    /* menu navigation bar, sticky */
-    .menu {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #1a1a1a;
     }
 
-    .menu--header {
-      flex-grow: 1;
-      justify-content: space-between;
-    }
-
-    .menu--footer {
-      justify-content: center;
-      padding: calc(var(--font-size) * 0.5);
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-    }
-
-    .menu--footer .menu-item {
-      font-size: var(--font-size);
-      font-family: var(--r-heading-font);
+    .footer-logo {
+      height: 2rem;
+      opacity: 0.6;
     }
   </style>
+</head>
 
+<body>
 
-<body class="site">
-  <header class="site-header site-header--small">
-    <menu class="menu menu--header">
-      <li class="menu-item">
-        <img class="site-logo" src="./assets/pba-logo-white.svg" />
-      </li>
-      <li class="menu-item">
-        <h1>PBA Slides</h1>
-      </li>
-    </menu>
+  <header class="site-header">
+    <img class="site-logo" src="./assets/PBA_Logo_white.png" alt="PBA Logo" />
+    <span class="header-title">Slides &amp; Resources</span>
   </header>
 
   <main class="site-main">
-    <ul class="slide-list">
-      <li>
-        <a href="bali-2025&#x2F;index.html" title="Bali 2025" class="slide-card" target="_blank">
-          <img src="./assets/7-bali2.jpg" height="465" />
+
+    <section class="section">
+      <h2 class="section-title">Protocol Builders Program</h2>
+      <div class="card-grid">
+        <a href="current/index.html" title="PBP Lisbon 2026" class="card" target="_blank">
+          <img class="card-image" src="./assets/pbp-lisbon.jpg" alt="Lisbon venue" />
+          <div class="card-body">
+            <span class="card-badge badge-pbp">Current</span>
+            <span class="card-title">Lisbon 2026</span>
+            <span class="card-description">Two-week intensive program combining foundational lectures with hands-on project work on the Polkadot stack.</span>
+          </div>
         </a>
-      </li>
-      <li>
-        <a href="lucerne-2025&#x2F;index.html" title="Lucerne 2025" class="slide-card" target="_blank">
-          <img src="./assets/6-Lucerne.jpg" width="600" />
-        </a>
-        <a href="singapore-2024&#x2F;index.html" title="Lectures during Singapore - 2024" class="slide-card"
-          target="_blank">
-          <img src="./assets/5-singapore.jpg" width="600" />
-        </a>
-      </li>
-      <li>
-        <a href="hong-kong-2024&#x2F;index.html" title="Lectures during Hong Kong (H.K.) - 2024" class="slide-card"
-          target="_blank">
-          <img src="./assets/4-polyu.jpg" width="600" />
-        </a>
-        <a href="berkeley-2023&#x2F;index.html" title="Lectures during Berkeley (U.S.A.) - 2023" class="slide-card"
-          target="_blank">
-          <img src="./assets/3-berkeley.jpg" width="600" />
-        </a>
-      </li>
-      <li>
-        <a href="buenos-aires-2023&#x2F;index.html" title="Lectures during Buenos Aires (Argentina) - 2023"
-          class="slide-card" target="_blank">
-          <img src="./assets/2-buenosaires.jpg" width="600" />
-        </a>
-        <a href="cambridge-2022&#x2F;index.html" title="Lectures during Cambridge (U.K.) - 2022" class="slide-card"
-          target="_blank">
-          <img src="./assets/1-cambridge.jpg" width="600" />
-        </a>
-      </li>
       </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">PBA Campus (Legacy)</h2>
+      <hr class="section-divider" />
+      <div class="card-grid-legacy">
+        <a href="bali-2025/index.html" title="Bali 2025" class="card card-legacy" target="_blank">
+          <img class="card-image" src="./assets/7-bali2.jpg" alt="Bali 2025" />
+          <div class="card-body">
+            <span class="card-badge badge-legacy">2025</span>
+            <span class="card-title">Bali</span>
+            <span class="card-description">August 2025</span>
+          </div>
+        </a>
+        <a href="lucerne-2025/index.html" title="Lucerne 2025" class="card card-legacy" target="_blank">
+          <img class="card-image" src="./assets/6-Lucerne.jpg" alt="Lucerne 2025" />
+          <div class="card-body">
+            <span class="card-badge badge-legacy">2025</span>
+            <span class="card-title">Lucerne</span>
+            <span class="card-description">2025</span>
+          </div>
+        </a>
+        <a href="singapore-2024/index.html" title="Singapore 2024" class="card card-legacy" target="_blank">
+          <img class="card-image" src="./assets/5-singapore.jpg" alt="Singapore 2024" />
+          <div class="card-body">
+            <span class="card-badge badge-legacy">2024</span>
+            <span class="card-title">Singapore</span>
+            <span class="card-description">June 2024</span>
+          </div>
+        </a>
+        <a href="hong-kong-2024/index.html" title="Hong Kong 2024" class="card card-legacy" target="_blank">
+          <img class="card-image" src="./assets/4-polyu.jpg" alt="Hong Kong 2024" />
+          <div class="card-body">
+            <span class="card-badge badge-legacy">2024</span>
+            <span class="card-title">Hong Kong</span>
+            <span class="card-description">January 2024</span>
+          </div>
+        </a>
+        <a href="berkeley-2023/index.html" title="Berkeley 2023" class="card card-legacy" target="_blank">
+          <img class="card-image" src="./assets/3-berkeley.jpg" alt="Berkeley 2023" />
+          <div class="card-body">
+            <span class="card-badge badge-legacy">2023</span>
+            <span class="card-title">Berkeley</span>
+            <span class="card-description">July 2023</span>
+          </div>
+        </a>
+        <a href="buenos-aires-2023/index.html" title="Buenos Aires 2023" class="card card-legacy" target="_blank">
+          <img class="card-image" src="./assets/2-buenosaires.jpg" alt="Buenos Aires 2023" />
+          <div class="card-body">
+            <span class="card-badge badge-legacy">2023</span>
+            <span class="card-title">Buenos Aires</span>
+            <span class="card-description">January 2023</span>
+          </div>
+        </a>
+        <a href="cambridge-2022/index.html" title="Cambridge 2022" class="card card-legacy" target="_blank">
+          <img class="card-image" src="./assets/1-cambridge.jpg" alt="Cambridge 2022" />
+          <div class="card-body">
+            <span class="card-badge badge-legacy">2022</span>
+            <span class="card-title">Cambridge</span>
+            <span class="card-description">August 2022</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
   </main>
+
+  <footer class="site-footer">
+    <img class="footer-logo" src="./assets/PBA_Logo_white.png" alt="PBA Logo" />
+  </footer>
 
 </body>
 
