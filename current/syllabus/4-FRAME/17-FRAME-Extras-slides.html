@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <title>FRAME Extras</title>
+  <link rel="icon" href="./../../assets/favicon.svg" />
+  <link rel="shortcut icon" href="./../../assets/favicon.png" />
+  <link rel="stylesheet" href="./../../dist/reset.css" />
+  <link rel="stylesheet" href="./../../dist/reveal.css" />
+  <link rel="stylesheet" href="./../.././assets/styles/PBA-theme.css" id="theme" />
+  <link rel="stylesheet" href="./../../css/highlight/shades-of-purple.css" />
+
+  <link rel="stylesheet" href="./../.././assets/styles/custom-classes.css" />
+
+</head>
+
+<body class="site">
+  <footer style="position: fixed; top: 1.5%; left: 2%; z-index: 99;">
+    <a href="">
+      <img style="height: 3vw;" src="./../../assets/img/0-Shared/logo/PBA_Logo_white.png"
+        alt="PBA Logo">
+    </a>
+  </footer>
+  <main class="reveal">
+    <article class="slides">
+      <section  data-markdown><script type="text/template">
+
+<!-- .slide: data-background-image="../../assets/img/0-Shared/bg/PBA_Background.png" data-background-size="cover" -->
+
+# FRAME Extras
+</script></section><section  data-markdown><script type="text/template">
+## Follow Along!
+
+These are topics where it can be easier to just learn by looking through the code and discussing.
+</script></section><section  data-markdown><script type="text/template">
+## Runtime Call Filters
+</script></section><section  data-markdown><script type="text/template">
+## Account Reference Counters
+</script></section><section ><section data-markdown><script type="text/template">
+## View Functions
+
+View functions are read-only query methods exposed from a pallet. They are callable via the `state_call` RPC — no transaction needed, no state changes.
+
+```rust
+#[pallet::view_functions]
+impl<T: Config> Pallet<T> {
+  /// Query a single storage value.
+  pub fn get_value() -> Option<u32> {
+    SomeValue::<T>::get()
+  }
+
+  /// Query with input arguments.
+  pub fn get_value_with_arg(key: u32) -> Option<u32> {
+    SomeMap::<T>::get(key)
+  }
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### View Functions: Real-World Example
+
+From `pallet-proxy`:
+
+```rust
+#[pallet::view_functions]
+impl<T: Config> Pallet<T> {
+  /// Check if a `RuntimeCall` is allowed for a given `ProxyType`.
+  pub fn check_permissions(
+    call: <T as Config>::RuntimeCall,
+    proxy_type: T::ProxyType,
+  ) -> bool {
+    proxy_type.filter(&call)
+  }
+}
+```
+
+- Defined in a separate `impl` block with `#[pallet::view_functions]`
+- Functions must be `pub` and return a value
+- Used by off-chain tools, UIs, and other clients to query pallet state
+</script></section></section><section ><section data-markdown><script type="text/template">
+## Tasks (Experimental)
+
+Tasks define background work that can be executed across blocks. They are submitted as unsigned transactions and processed when conditions are met.
+
+```rust
+#[pallet::tasks_experimental]
+impl<T: Config> Pallet<T> {
+  #[pallet::task_list(Numbers::<T>::iter_keys())]
+  #[pallet::task_condition(|i| Numbers::<T>::contains_key(i))]
+  #[pallet::task_weight(T::WeightInfo::add_number_into_total())]
+  #[pallet::task_index(0)]
+  pub fn add_number_into_total(i: u32) -> DispatchResult {
+    let v = Numbers::<T>::take(i).ok_or(Error::<T>::NotFound)?;
+    Total::<T>::mutate(|total| *total += v);
+    Ok(())
+  }
+}
+```
+</script></section><section data-markdown><script type="text/template">
+### Tasks: Attributes
+
+| Attribute                                  | Purpose                              |
+| ------------------------------------------ | ------------------------------------ |
+| `#[pallet::task_index(N)]`                 | Unique identifier for this task type |
+| `#[pallet::task_condition(\|args\| bool)]` | Predicate: should this task execute? |
+| `#[pallet::task_list(iterator)]`           | Iterator of pending task items       |
+| `#[pallet::task_weight(expr)]`             | Weight consumed by this task         |
+
+- The macro generates a `Task<T>` enum from all task functions
+- Tasks are submitted via `frame_system::do_task` (requires `experimental` feature flag)
+- Can be discovered and submitted by offchain workers
+- This API is experimental and may change
+</script></section></section><section  data-markdown><script type="text/template">
+## Pallet Instances
+</script></section>
+    </article>
+  </main>
+
+  <script src="./../../dist/reveal.js"></script>
+
+  <script src="./../../plugin/markdown/markdown.js"></script>
+  <script src="./../../plugin/highlight/highlight.js"></script>
+  <script src="./../../plugin/zoom/zoom.js"></script>
+  <script src="./../../plugin/notes/notes.js"></script>
+  <script src="./../../plugin/math/math.js"></script>
+
+  <script src="./../../assets/plugin/mermaid.js"></script>
+  <script src="./../../assets/plugin/mermaid-theme.js"></script>
+
+  <script src="./../../assets/plugin/chart/chart.js"></script>
+  <script src="./../../assets/plugin/chart/chart.min.js"></script>
+
+  <script src="./../../assets/plugin/tailwindcss.min.js"></script>
+
+  <script>
+    function extend() {
+      var target = {};
+      for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i];
+        for (var key in source) {
+          if (source.hasOwnProperty(key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+      return target;
+    }
+
+    // default options to init reveal.js
+    var defaultOptions = {
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      transition: 'default', // none/fade/slide/convex/concave/zoom
+      slideNumber: true,
+      mermaid: {
+        startOnLoad: false,
+        logLevel: 3,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: purple,
+          primaryTextColor: white,
+          primaryBorderColor: pink,
+          lineColor: pink,
+          secondaryColor: lightPurple,
+          tertiaryColor: lightPurple,
+        },
+      },
+      chart: {
+        defaults: {
+          color: 'lightgray', // color of labels
+          scale: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 },
+            grid: { color: "lightgray" }, // color of grid lines
+          },
+        },
+        line: { borderColor: ["#ccc", "#FFFFFF", "#888888"], "borderDash": [[5, 10], [0, 0]] },
+        bar: { backgroundColor: ["#ccc", "#FFFFFF", "#888888"] },
+      },
+      plugins: [
+        RevealMarkdown,
+        RevealHighlight,
+        RevealZoom,
+        RevealNotes,
+        RevealMath,
+        RevealMermaid,
+        RevealChart
+      ]
+    };
+
+    // options from URL query string
+    var queryOptions = Reveal().getQueryHash() || {};
+
+    var options = extend(defaultOptions, {"width":1400,"height":900,"margin":0,"minScale":0.2,"maxScale":2,"transition":"none","controls":true,"progress":true,"center":true,"slideNumber":true,"backgroundTransition":"fade"}, queryOptions);
+  </script>
+
+
+  <script>
+    Reveal.initialize(options);
+  </script>
+</body>
+
+</html>

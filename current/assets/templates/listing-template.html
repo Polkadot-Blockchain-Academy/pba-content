@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>{{pageTitle}}</title>
+  <link rel="icon" href="./assets/favicon.svg" />
+  <link rel="shortcut icon" href="./assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-neutral-white: #ffffff;
+      --color-neutral-50: #fafafa;
+      --color-neutral-100: #f5f5f5;
+      --color-neutral-150: #ebebeb;
+      --color-neutral-500: #737373;
+      --color-neutral-600: #525252;
+      --color-neutral-900: #171717;
+      --color-neutral-950: #0a0a0a;
+
+      --fg-primary: var(--color-neutral-950);
+      --fg-primary-inverted: var(--color-neutral-100);
+      --fg-secondary: var(--color-neutral-600);
+      --fg-tertiary: var(--color-neutral-500);
+
+      --bg-surface-main: var(--color-neutral-50);
+      --bg-surface-container: var(--color-neutral-white);
+      --bg-surface-container-inverted: var(--color-neutral-900);
+      --bg-selection-container-hover: var(--color-neutral-100);
+
+      --shadow-1: 0 4px 24px -4px rgba(0, 0, 0, 0.16);
+      --radius-container: 16px;
+      --radius-small: 8px;
+      --focus-ring: #000000;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    *:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 16px;
+      background-color: var(--bg-surface-main);
+      color: var(--fg-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background-color: var(--bg-surface-container-inverted);
+    }
+
+    .site-logo {
+      height: 2rem;
+    }
+
+    .header-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--fg-primary-inverted);
+      letter-spacing: 0.02em;
+    }
+
+    .site-main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--fg-primary);
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+    }
+
+    .slide-list {
+      list-style: none;
+      background: var(--bg-surface-container);
+      border-radius: var(--radius-container);
+      box-shadow: var(--shadow-1);
+      overflow: hidden;
+    }
+
+    .slide-list li {
+      border-bottom: 1px solid var(--color-neutral-100);
+    }
+
+    .slide-list li:last-child {
+      border-bottom: none;
+    }
+
+    .slide-list li a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      padding: 0.875rem 1.5rem;
+      text-decoration: none;
+      color: var(--fg-primary);
+      transition: background-color 200ms ease;
+      cursor: pointer;
+    }
+
+    .slide-list li a:hover {
+      background-color: var(--bg-selection-container-hover);
+    }
+
+    .slide-card-name {
+      font-weight: 500;
+      font-size: 0.9375rem;
+      color: var(--fg-primary);
+    }
+
+    .slide-card-path {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--fg-tertiary);
+      font-style: normal;
+    }
+
+    .site-footer {
+      text-align: center;
+      padding: 1.5rem;
+      background-color: var(--bg-surface-container-inverted);
+    }
+
+    .site-footer a {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--fg-primary-inverted);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 200ms ease;
+    }
+
+    .site-footer a:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <img class="site-logo" src="./assets/img/0-Shared/logo/PBA_Logo_white.png" alt="PBA" />
+    <span class="header-title">Slides</span>
+  </header>
+
+  <main class="site-main">
+    <h1 class="page-title">{{pageTitle}}</h1>
+    <ul class="slide-list">
+      {{#files}}
+      <li>
+        <a href="{{filePath}}" title="{{title}}">
+          {{#title}}
+          <span class="slide-card-name">{{.}}</span>
+          <span class="slide-card-path">{{filePath}}</span>
+          {{/title}}
+          {{^title}}
+          <span class="slide-card-name">{{filePath}}</span>
+          {{/title}}
+        </a>
+      </li>
+      {{/files}}
+    </ul>
+  </main>
+
+  {{#watch}}
+  <footer class="site-footer">
+    <a href="https://github.com/Polkadot-Blockchain-Academy/pba-content/">GitHub</a>
+  </footer>
+  {{/watch}}
+
+</body>
+
+</html>
