@@ -51,7 +51,7 @@ FRAME development involves a lot of boilerplate, macros, and patterns. AI tools 
 
 - Always compile and test AI-generated code
 - Use AI to learn patterns, then write your own code
-- Ask AI to explain *why*, not just *what*
+- Ask AI to explain _why_, not just _what_
 - Cross-reference suggestions with the polkadot-sdk source
 
 ---
